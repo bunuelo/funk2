@@ -119,12 +119,22 @@
 		 [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
 		   [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
 		     
-		     [let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
-		       
-		       [semantic-add action_sequence transframe    event_transframe]
-		       [semantic-add semantic_action example_event action_sequence]
-		       
-		       ]]]]
+		     [cond [[or [eq [get [get this layer] name] `builtin_reactive]
+				[eq [get [get this layer] name] `learned_reactive]] [let [[semantic_action [get [get this mind] physical_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
+										      
+										      [semantic-add action_sequence transframe    event_transframe]
+										      [semantic-add semantic_action example_event action_sequence]
+										      
+										      ]]
+			   [[eq [get [get this layer] name] `deliberative]          [let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
+										      
+										      [semantic-add action_sequence transframe    event_transframe]
+										      [semantic-add semantic_action example_event action_sequence]
+										      
+										      ]]
+			   [[eq [get [get this layer] name] `reflective]            [prog]]
+			   [t                                                       [terminal_format standard-terminal '\ntraced_resource warning: layer unrecognized, ' [get [get this layer] name] '.']]
+			   ]]]]
 	   []]
     
     ]]

@@ -117,6 +117,9 @@
   [get [get this layer `deliberative] plan_semantic_plans]]
 
 
+[deftypefunk reflective_mind get physical_semantic_action [phenomenal_name]
+  [get [get this layer `reflective] physical_semantic_action phenomenal_name]]
+
 [deftypefunk reflective_mind get deliberative1_semantic_action [phenomenal_name]
   [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]
 

@@ -35,7 +35,9 @@
 
 'reflective_event_knowledge_agency'
 
-[deframe reflective_event_knowledge_agency [agency] [[deliberative1_semantic_action_phenomenal_name_ptypehash_mutex [new mutex]]
+[deframe reflective_event_knowledge_agency [agency] [[physical_semantic_action_phenomenal_name_ptypehash_mutex      [new mutex]]
+						     [physical_semantic_action_phenomenal_name_ptypehash            [new ptypehash]]
+						     [deliberative1_semantic_action_phenomenal_name_ptypehash_mutex [new mutex]]
 						     [deliberative1_semantic_action_phenomenal_name_ptypehash       [new ptypehash]]]
   [new []
        [construct agency `reflective_event_knowledge]
@@ -46,14 +48,27 @@
 
 
 [deftypefunk reflective_event_knowledge_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `reflective_event_knowledge            [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `deliberative1_action_knowledge        [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `deliberative_causal_concept_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `reflective_event_knowledge     [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `physical_action_knowledge      [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `deliberative1_action_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_event_knowledge_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]
   ]
+
+
+[deftypefunk reflective_event_knowledge_agency get physical_semantic_action [phenomenal_name]
+  [have physical_semantic_action_phenomenal_name_ptypehash_mutex lock]
+  [let [[physical_semantic_action [have physical_semantic_action_phenomenal_name_ptypehash lookup phenomenal_name]]]
+    [if [null physical_semantic_action]
+	[prog [= physical_semantic_action [new semantic_action [get [get this mind] semantic_realm]]]
+	      [set physical_semantic_action phenomenal_name phenomenal_name]
+	      [have physical_semantic_action_phenomenal_name_ptypehash add phenomenal_name physical_semantic_action]
+	      [let [[physical_action_knowledge [get [get this mind] semantic_knowledge_base `physical_action_knowledge]]]
+		[have physical_action_knowledge add_semantic_frame physical_semantic_action]]]]
+    [have physical_semantic_action_phenomenal_name_ptypehash_mutex unlock]
+    physical_semantic_action]]
 
 
 [deftypefunk reflective_event_knowledge_agency get deliberative1_semantic_action [phenomenal_name]

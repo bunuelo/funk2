@@ -17,6 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+'action_transframe_hypothesis_space'
+
+[deframe action_transframe_hypothesis_space [frame] [feature
+						     [concept_version_space [new concept_version_space]]]
+  [new [initial-feature]
+       [= feature initial-feature]
+       nil]]
+
 
 'traced_resource'
 

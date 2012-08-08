@@ -99,8 +99,14 @@
        [construct reflective_resource `execute_plan_in_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
-			  [have [get this mind] wait_to_call `reflective `execution `execute_plan focus_plan]
+			  [if focus_plan
+			      [prog [terminal_format standard-terminal '\n' [get this as-string] ': executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
+				    [have [get this mind] wait_to_call `reflective `execution `execute_plan focus_plan]
+				    [while [get [get [get [get this mind] agency `reflective `plan] semantic_planner] execute_plan]
+				      [sleep 4]]
+				    [terminal_format standard-terminal '\n' [get this as-string] ': done executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']]
+			    [prog [terminal_format standard-terminal '\n' [get this as-string] ': no plan to execute."']
+				  ]]
 			  ]]]]]
 
 [deftypefunk reflective_execute_plan_in_focus_resource get as-english_conslist []

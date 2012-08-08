@@ -264,7 +264,7 @@
 		[= start_operator sequence_operator_iter]]
 	    [set sequence_operator_iter past_operator [car plan_operator_iter]]
 	    [= plan_operator_iter [cdr plan_operator_iter]]]]]]
-    [have this create_reflective_semantic_plan `[prog [wait-to-call |focus on a plan, plan 2|]
+    [have this create_reflective_semantic_plan `[prog [wait-to-call |remember plan for goal|]
 						      [wait-to-call execute_plan_in_focus]
 						      ]
 	  start_operator]]

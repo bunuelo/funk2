@@ -103,38 +103,43 @@
 			     [cond [[eq simulate_knowledge_base_name `physical_type_knowledge]      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 															   'resource, ' name ', waiting for physical type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
 													  [have [get [get this mind] physical_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
-													  ]]
+													  
+													  'Handle learning of transframe here.'
+													  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															   'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and physical_type_knowledge time has also caught up.'
+															   '\n  All information is ready for learning physical_type transframe for resource.']
+													  
+													  [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
+													    [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
+													      
+													      [let [[semantic_action [get [get this mind] physical_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
+														
+														[semantic-add action_sequence transframe    event_transframe]
+														[semantic-add semantic_action example_event action_sequence]
+														
+														]]]]]
 				   [[eq simulate_knowledge_base_name `deliberative1_type_knowledge] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 															   'resource, ' name ', waiting for plan type knowledge stream to reach ' [get [get transframe_end_time value] date_and_time_string] '.']
 													  [have [get [get this mind] deliberative1_type_knowledge_reflective_timer] wait_until_after transframe_end_time]
-													  ]]
+													  
+													  'Handle learning of transframe here.'
+													  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															   'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and deliberative1_type_knowledge time has also caught up.'
+															   '\n  All information is ready for learning deliberative1_type transframe for resource.']
+													  
+													  [let [[deliberative1_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge]]]
+													    [let [[event_transframe [get deliberative1_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
+													      
+													      [let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
+														
+														[semantic-add action_sequence transframe    event_transframe]
+														[semantic-add semantic_action example_event action_sequence]
+														
+														]]]]]
 				   ]]
 		       simulate_knowledge_base_names]
 		 
-		 'Handle learning of transframe here.'
-		 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-				  'resource, ' name ', execution finish has occurred in reflective reflective knowledge time and simulate knowledge-base times have also caught up.'
-				  '\n  All information is ready for learning physical_type transframe for resource.']
-		 
-		 [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
-		   [let [[event_transframe [get physical_type_knowledge_base event_transframe transframe_start_time transframe_end_time]]]
-		     
-		     [cond [[or [eq [get [get this layer] name] `builtin_reactive]
-				[eq [get [get this layer] name] `learned_reactive]] [let [[semantic_action [get [get this mind] physical_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
-										      
-										      [semantic-add action_sequence transframe    event_transframe]
-										      [semantic-add semantic_action example_event action_sequence]
-										      
-										      ]]
-			   [[eq [get [get this layer] name] `deliberative]          [let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
-										      
-										      [semantic-add action_sequence transframe    event_transframe]
-										      [semantic-add semantic_action example_event action_sequence]
-										      
-										      ]]
-			   [[eq [get [get this layer] name] `reflective]            [prog]]
-			   [t                                                       [terminal_format standard-terminal '\ntraced_resource warning: layer unrecognized, ' [get [get this layer] name] '.']]
-			   ]]]]
+		 ]
 	   []]
     
     ]]

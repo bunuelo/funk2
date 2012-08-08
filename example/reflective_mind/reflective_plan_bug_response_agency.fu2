@@ -104,8 +104,20 @@
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: responding to expectation failure bug in plan.']
 			[let [[semantic_expectation_failure [new semantic_expectation_failure [get [get this mind] semantic_realm]]]]
+			  [semantic-add semantic_plan failure semantic_expectation_failure]
+
+			  [let [[arguments `[|focus on a plan, plan 2|]]]
+			    [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action arguments]]]
+			      [if [null action]
+				  [= action [have [get [get this mind] layer `deliberative] lookup_plan_action arguments]]]
+			      [if [null action]
+				  [terminal_format standard-terminal '\nexpectation_failure plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[prog [terminal_format standard-terminal '\nexpectation_failure plan waiting to call: "' [get action as-string] '."']
+				      [have action wait_to_call]
+				      ]]]]
 			  
-			  [semantic-add semantic_plan failure semantic_expectation_failure]]]]
+			  `[have [get this mind] wait_to_call `reflective `execution `execute_plan ]
+			  ]]]
        nil]]
 
 

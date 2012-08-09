@@ -113,15 +113,15 @@
 		    semantic_reflective_object_type_event_target]]
 	goals]]
 
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_reflective_object_copy [phenomenal_name physical_object_type]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_reflective_object_copy [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]
     [have semantic_reflective_object_type_event_mutex lock]
     [let [[copy_phenomenal_name [get [format nil 'physical_type_copy_of_' phenomenal_name] as-symbol]]]
       [= semantic_reflective_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]
       [if [null semantic_reflective_object]
 	  [prog [= semantic_reflective_object [new semantic_reflective_object [get [get this mind] semantic_realm]]]
-		[set semantic_reflective_object phenomenal_name      phenomenal_name]
-		[set semantic_reflective_object physical_object_type physical_object_type]
+		[set semantic_reflective_object phenomenal_name        phenomenal_name]
+		[set semantic_reflective_object reflective_object_type reflective_object_type]
 		[have [get [get this mind] semantic_knowledge_base `type_copy_of_physical_knowledge] add_semantic_frame semantic_reflective_object]
 		[have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame copy_phenomenal_name semantic_reflective_object]
 		]]
@@ -153,13 +153,13 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get all_semantic_reflective_object_type_events [semantic_reflective_object]
   [let [[semantic_reflective_object_type_events nil]]
-    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event [get semantic_reflective_object physical_object_type]]
+    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event [get semantic_reflective_object reflective_object_type]]
 					    semantic_reflective_object_type_events]]
     [have semantic_reflective_object map_type_key_values
 	  [funk [slot_type slot_key slot_value]
 		[if [translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property semantic_reflective_object slot_type slot_key slot_value]
 		    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event_with_property_type
-								       [get semantic_reflective_object physical_object_type]
+								       [get semantic_reflective_object reflective_object_type]
 								       slot_type
 								       slot_key
 								       slot_value]
@@ -274,9 +274,9 @@
 										     [event-value          [get event value]]]
 										 [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[is-type `semantic_reflective_object event-semantic_frame]
-											[let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
+											[let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame reflective_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_reflective_object event-value]
-															     [get this semantic_reflective_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
+															     [get this semantic_reflective_object_copy [get event-value phenomenal_name] [get event-value reflective_object_type]]
 															   event-value]]]
 											  [if debug [terminal_format standard-terminal
 														     '\nadding physical type ' [get event-semantic_frame-copy phenomenal_name]
@@ -290,7 +290,7 @@
 											  
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												 [let [[event-semantic_reflective_object_type_event [get this semantic_reflective_object_type_event_with_property_type
-																		       [get event-semantic_frame-copy physical_object_type]
+																		       [get event-semantic_frame-copy reflective_object_type]
 																		       event-key_type
 																		       event-key
 																		       event-value-copy]]]
@@ -334,15 +334,15 @@
 										     [event-value          [get event value]]]
 										 [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[is-type `semantic_reflective_object event-semantic_frame]
-											[let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame physical_object_type]]]
+											[let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [get event-semantic_frame reflective_object_type]]]
 											      [event-value-copy          [if [is-type `semantic_reflective_object event-value]
-															     [get this semantic_reflective_object_copy [get event-value phenomenal_name] [get event-value physical_object_type]]
+															     [get this semantic_reflective_object_copy [get event-value phenomenal_name] [get event-value reflective_object_type]]
 															   event-value]]]
 											  'should use copy after this point'
 											  
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												 [let [[event-semantic_reflective_object_type_event [get this semantic_reflective_object_type_event_with_property_type
-																		       [get event-semantic_frame-copy physical_object_type]
+																		       [get event-semantic_frame-copy reflective_object_type]
 																		       event-key_type
 																		       event-key
 																		       event-value-copy]]]

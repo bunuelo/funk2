@@ -62,6 +62,7 @@
 [defpackage builtin_reactive_sensory_agency
   :packages [reflective_mind_core
 	     builtin_reactive_resource
+	     semantic_reflective_object
 	     semantic_visual_object
 	     semantic_agent
 	     semantic_event
@@ -195,9 +196,9 @@
 [defpackage deliberative_physical_object_type_goal_agency
   :packages [reflective_mind_core
 	     deliberative_resource
-	     semantic_plan_object
-	     semantic_plan_object_type_event
-	     semantic_plan_object_type_relation_event
+	     semantic_reflective_object
+	     semantic_reflective_object_type_event
+	     semantic_reflective_object_type_relation_event
 	     semantic_goal_event
 	     physical_type_property_relation_goal]
    :sources ['deliberative_physical_object_type_goal_agency.fu2']]

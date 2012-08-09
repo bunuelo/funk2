@@ -237,7 +237,7 @@
 	    `[have this add_type_to_goal_states event_time semantic_reflective_object_type_event_source key_type key target_property_name]
 	    ]
 	[prog [= property [get property_set an_arbitrary_element]]
-	      [set property [+ [get property count] 1]]]]]]]
+	      [set property count [+ [get property count] 1]]]]]]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_property [event_time semantic_reflective_object_type_event_source key_type key target_property_name]
   [if debug [terminal_format standard-terminal '\nremove_type_property ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' target_property_name]]

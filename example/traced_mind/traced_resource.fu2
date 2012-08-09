@@ -101,7 +101,6 @@
     [semantic-remove agent waiting_for_to_finish target]]]
 
 
-
 [deftypefunk traced_resource execute know_of_completed_action_sequence [action_sequence]
   [let [[transframe_start_time [get action_sequence absolute_start_time]]
 	[transframe_end_time   [get action_sequence absolute_end_time]]]
@@ -140,7 +139,8 @@
 										      
 										      [mapc [funk [change]
 												  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														   'resource, ' name ', transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
+														   [get [get this layer] name] ' resource, ' name ', '
+														   'transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
 												  
 												  ]
 											    [let [[element_set [semantic-lookup_set event_transframe change]]]
@@ -162,7 +162,8 @@
 										      
 										      [mapc [funk [change]
 												  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														   'resource, ' name ', transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
+														   [get [get this layer] name] 'resource, ' name ', '
+														   'transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
 												  
 												  ]
 											    [let [[element_set [semantic-lookup_set event_transframe change]]]

@@ -19,7 +19,7 @@
 
 
 
-'reflective_reflective_object_type_goal_agency'
+'reflective_plan_object_type_goal_agency'
 
 [deframe reflective_plan_object_type_goal_agency [agency] []
   [new []
@@ -68,8 +68,8 @@
 
 'translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource'
 
-[deframe translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource [reflective_resource] [[semantic_plan_object_type_event_mutex [new mutex]]
-													   [semantic_plan_object_copy_mutex       [new mutex]]
+[deframe translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource [reflective_resource] [[semantic_reflective_object_type_event_mutex [new mutex]]
+													   [semantic_reflective_object_copy_mutex       [new mutex]]
 													   [goals                                 nil]
 													   [deliberative1_type_knowledge_reflective_timer  [new reflective_timer [new semantic_time `before]]]]
   [new []
@@ -85,84 +85,84 @@
   [= goals [cons goal goals]]]
 
 [deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_to_goal_states [event_time
-															 semantic_plan_object_type_event_source
+															 semantic_reflective_object_type_event_source
 															 key_type
 															 key
-															 semantic_plan_object_type_event_target]
+															 semantic_reflective_object_type_event_target]
   [mapc [funk [goal]
 	      [have goal add_type_event
 		    event_time
-		    semantic_plan_object_type_event_source
+		    semantic_reflective_object_type_event_source
 		    key_type
 		    key
-		    semantic_plan_object_type_event_target]]
+		    semantic_reflective_object_type_event_target]]
 	goals]]
 
 [deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_from_goal_states [event_time
-															      semantic_plan_object_type_event_source
+															      semantic_reflective_object_type_event_source
 															      key_type
 															      key
-															      semantic_plan_object_type_event_target]
+															      semantic_reflective_object_type_event_target]
   [mapc [funk [goal]
 	      [have goal remove_type_event
 		    event_time
-		    semantic_plan_object_type_event_source
+		    semantic_reflective_object_type_event_source
 		    key_type
 		    key
-		    semantic_plan_object_type_event_target]]
+		    semantic_reflective_object_type_event_target]]
 	goals]]
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_copy [phenomenal_name plan_object_type nonsemantic_plan]
-  [let [[semantic_plan_object nil]]
-    [have semantic_plan_object_type_event_mutex lock]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_reflective_object_copy [phenomenal_name plan_object_type nonsemantic_plan]
+  [let [[semantic_reflective_object nil]]
+    [have semantic_reflective_object_type_event_mutex lock]
     [let [[copy_phenomenal_name [get [format nil 'plan_type_copy_of_' phenomenal_name] as-symbol]]]
-      [= semantic_plan_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]
-      [if [null semantic_plan_object]
-	  [prog [= semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] phenomenal_name nonsemantic_plan]]
-		[set semantic_plan_object plan_object_type plan_object_type]
-		[have [get [get this mind] semantic_knowledge_base `type_copy_of_deliberative1_knowledge] add_semantic_frame semantic_plan_object]
-		[have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame copy_phenomenal_name semantic_plan_object]
+      [= semantic_reflective_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame copy_phenomenal_name]]
+      [if [null semantic_reflective_object]
+	  [prog [= semantic_reflective_object [new semantic_reflective_object [get [get this mind] semantic_realm] phenomenal_name nonsemantic_plan]]
+		[set semantic_reflective_object plan_object_type plan_object_type]
+		[have [get [get this mind] semantic_knowledge_base `type_copy_of_deliberative1_knowledge] add_semantic_frame semantic_reflective_object]
+		[have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame copy_phenomenal_name semantic_reflective_object]
 		]]
-      [have semantic_plan_object_type_event_mutex unlock]
-      semantic_plan_object]]]
+      [have semantic_reflective_object_type_event_mutex unlock]
+      semantic_reflective_object]]]
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_type_event [phenomenal_name]
-  [let [[semantic_plan_object_type_event nil]]
-    [have semantic_plan_object_copy_mutex lock]
-    [= semantic_plan_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
-    [if [null semantic_plan_object_type_event]
-	[prog [= semantic_plan_object_type_event [new semantic_plan_object_type_event [get [get this mind] semantic_realm]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_reflective_object_type_event [phenomenal_name]
+  [let [[semantic_reflective_object_type_event nil]]
+    [have semantic_reflective_object_copy_mutex lock]
+    [= semantic_reflective_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
+    [if [null semantic_reflective_object_type_event]
+	[prog [= semantic_reflective_object_type_event [new semantic_reflective_object_type_event [get [get this mind] semantic_realm]
 						      [object_type_event-phenomenal_name phenomenal_name]
 						      phenomenal_name]]
-	      [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_semantic_frame semantic_plan_object_type_event]
-	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_plan_object_type_event]
+	      [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_semantic_frame semantic_reflective_object_type_event]
+	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_reflective_object_type_event]
 	      ]]
-    [have semantic_plan_object_copy_mutex unlock]
-    semantic_plan_object_type_event]]
+    [have semantic_reflective_object_copy_mutex unlock]
+    semantic_reflective_object_type_event]]
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_plan_object_type_event_with_property_type [phenomenal_name property_key property property_value]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get semantic_reflective_object_type_event_with_property_type [phenomenal_name property_key property property_value]
   [let [[object_type_with_propety_phenomenal_name [semantic_object_property_type_event-phenomenal_name phenomenal_name property_key property property_value]]]
-    [get this semantic_plan_object_type_event object_type_with_propety_phenomenal_name]]]
+    [get this semantic_reflective_object_type_event object_type_with_propety_phenomenal_name]]]
 
 [defunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property [source key_type key target]
-  [and [is-type `semantic_plan_object source]
+  [and [is-type `semantic_reflective_object source]
        [not [and [eq `property key_type] [eq `plan_object_type key]]]
        [or [null target] [is-type `symbol target]]]]
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get all_semantic_plan_object_type_events [semantic_plan_object]
-  [let [[semantic_plan_object_type_events nil]]
-    [= semantic_plan_object_type_events [cons [get this semantic_plan_object_type_event [get semantic_plan_object plan_object_type]]
-					    semantic_plan_object_type_events]]
-    [have semantic_plan_object map_type_key_values
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource get all_semantic_reflective_object_type_events [semantic_reflective_object]
+  [let [[semantic_reflective_object_type_events nil]]
+    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event [get semantic_reflective_object plan_object_type]]
+					    semantic_reflective_object_type_events]]
+    [have semantic_reflective_object map_type_key_values
 	  [funk [slot_type slot_key slot_value]
-		[if [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property semantic_plan_object slot_type slot_key slot_value]
-		    [= semantic_plan_object_type_events [cons [get this semantic_plan_object_type_event_with_property_type
-								 [get semantic_plan_object plan_object_type]
+		[if [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property semantic_reflective_object slot_type slot_key slot_value]
+		    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event_with_property_type
+								 [get semantic_reflective_object plan_object_type]
 								 slot_type
 								 slot_key
 								 slot_value]
-							    semantic_plan_object_type_events]]]]]
-    semantic_plan_object_type_events]]
+							    semantic_reflective_object_type_events]]]]]
+    semantic_reflective_object_type_events]]
 
 [defunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_relation-phenomenal_name [source_type_event-phenomenal_name key_type key target_type_event-phenomenal_name]
   [get [string-concat [get source_type_event-phenomenal_name as-string]
@@ -198,47 +198,47 @@
 													    target_property_value]]]
 
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
-  [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_plan_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_plan_object_type_event_target phenomenal_name]]]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute add_type_relation [event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
+  [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_reflective_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
-    [let [[relation_set [have semantic_plan_object_type_event_source lookup_set compound_key [get semantic_plan_object_type_event_target phenomenal_name]]]
+    [let [[relation_set [have semantic_reflective_object_type_event_source lookup_set compound_key [get semantic_reflective_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
-	  [let [[relation-phenomenal_name   [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_relation-phenomenal_name [get semantic_plan_object_type_event_source phenomenal_name]
+	  [let [[relation-phenomenal_name   [translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-type_relation-phenomenal_name [get semantic_reflective_object_type_event_source phenomenal_name]
 																	    key_type
 																	    key
-																	    [get semantic_plan_object_type_event_target phenomenal_name]]]
+																	    [get semantic_reflective_object_type_event_target phenomenal_name]]]
 		[relation-meta_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
-						  semantic_plan_object_type_event_source
+						  semantic_reflective_object_type_event_source
 						  key_type
 						  key
-						  semantic_plan_object_type_event_target]]]
-	    [= relation [new semantic_plan_object_type_relation_event [get [get this mind] semantic_realm]
+						  semantic_reflective_object_type_event_target]]]
+	    [= relation [new semantic_reflective_object_type_relation_event [get [get this mind] semantic_realm]
 			     relation-phenomenal_name
 			     relation-meta_relationship
-			     semantic_plan_object_type_event_target]]
+			     semantic_reflective_object_type_event_target]]
 	    [set relation absolute_start_time [new semantic_time event_time]]
 	    [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_semantic_frame relation]
-	    [have semantic_plan_object_type_event_source add compound_key [get semantic_plan_object_type_event_target phenomenal_name] relation]
-	    [have this add_type_to_goal_states event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]]
+	    [have semantic_reflective_object_type_event_source add compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
+	    [have this add_type_to_goal_states event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
-[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_relation [event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
-  [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_plan_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_plan_object_type_event_target phenomenal_name]]]
+[deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute remove_type_relation [event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
+  [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_reflective_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
-    [let [[relation_set [have semantic_plan_object_type_event_source lookup_set compound_key [get semantic_plan_object_type_event_target phenomenal_name]]]
+    [let [[relation_set [have semantic_reflective_object_type_event_source lookup_set compound_key [get semantic_reflective_object_type_event_target phenomenal_name]]]
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
 	  [prog [terminal_format standard-terminal
-				 '\nwarning: got remove ' [get semantic_plan_object_type_event_source phenomenal_name] ' ' compound_key ' ' [get semantic_plan_object_type_event_target phenomenal_name] ' relation, but no relation found.']
+				 '\nwarning: got remove ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' compound_key ' ' [get semantic_reflective_object_type_event_target phenomenal_name] ' relation, but no relation found.']
 		]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [let [[relation-count [get relation count]]]
 		[if [> relation-count 1]
 		    [set relation count [- relation-count 1]]
-		  [prog [have this remove_type_from_goal_states event_time semantic_plan_object_type_event_source key_type key semantic_plan_object_type_event_target]
-			[have semantic_plan_object_type_event_source remove compound_key [get semantic_plan_object_type_event_target phenomenal_name] relation]
+		  [prog [have this remove_type_from_goal_states event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
+			[have semantic_reflective_object_type_event_source remove compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
 			`[have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_semantic_frame relation]
 			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
@@ -258,19 +258,19 @@
 										     [event-value          [get event value]]]
 										 [set deliberative1_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 										 [cond [[and [eq event-key_type `property] [eq event-key `plan_object_type]]
-											[prog 'create semantic_plan_object_type_event.'
-											      [get this semantic_plan_object_type_event event-value]
+											[prog 'create semantic_reflective_object_type_event.'
+											      [get this semantic_reflective_object_type_event event-value]
 											      [have event-semantic_frame map_type_key_values
 												    [funk [slot_type slot_key slot_value]
 													  [if [is-type `symbol slot_value]
-													      [get this semantic_plan_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
+													      [get this semantic_reflective_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
 											      ]]
 										       [[is-type `semantic_object event-semantic_frame]
-											[prog [let [[event-semantic_frame-copy              [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
+											[prog [let [[event-semantic_frame-copy              [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
 																															   [get event-semantic_frame nonsemantic_plan]
 																															 nil]]]
 												    [event-value-copy                       [if [is-type `semantic_object event-value]
-																		[get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
+																		[get this semantic_reflective_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
 																													     [get event-value nonsemantic_plan]
 																													   nil]]
 																	      event-value]]]
@@ -278,14 +278,14 @@
 															   '\nadding plan type ' [get event-semantic_frame-copy phenomenal_name]
 															   ' '                       event-key_type
 															   ' '                       event-key
-															   ' '                       [if [is-type `semantic_plan_object event-value-copy]
+															   ' '                       [if [is-type `semantic_reflective_object event-value-copy]
 																			 [get event-value-copy phenomenal_name]
 																		       event-value-copy]]]
 												[have event-semantic_frame-copy add event-key_type event-key event-value-copy]
 												'should use copy after this point'
 												
 												[cond [[translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
-												       [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
+												       [let [[event-semantic_reflective_object_type_event [get this semantic_reflective_object_type_event_with_property_type
 																			 [get event-semantic_frame-copy plan_object_type]
 																			 event-key_type
 																			 event-key
@@ -293,26 +293,26 @@
 													 
 													 [have event-semantic_frame-copy map_type_key_values
 													       [funk [slot_type slot_key slot_value]
-														     [if [is-type `semantic_plan_object slot_value]
-															 [mapc [funk [forward_semantic_plan_object_type_event]
-																     [have this add_type_relation event-time event-semantic_plan_object_type_event slot_type slot_key forward_semantic_plan_object_type_event]]
-															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+														     [if [is-type `semantic_reflective_object slot_value]
+															 [mapc [funk [forward_semantic_reflective_object_type_event]
+																     [have this add_type_relation event-time event-semantic_reflective_object_type_event slot_type slot_key forward_semantic_reflective_object_type_event]]
+															       [get this all_semantic_reflective_object_type_events slot_value]]]]]
 													 
 													 [have event-semantic_frame-copy map_reverse_type_key_values
 													       [funk [slot_type slot_key slot_value]
-														     [if [is-type `semantic_plan_object slot_value]
-															 [mapc [funk [backward_semantic_plan_object_type_event]
-																     [have this add_type_relation event-time backward_semantic_plan_object_type_event slot_type slot_key event-semantic_plan_object_type_event]]
-															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+														     [if [is-type `semantic_reflective_object slot_value]
+															 [mapc [funk [backward_semantic_reflective_object_type_event]
+																     [have this add_type_relation event-time backward_semantic_reflective_object_type_event slot_type slot_key event-semantic_reflective_object_type_event]]
+															       [get this all_semantic_reflective_object_type_events slot_value]]]]]
 													 
 													 ]]
-												      [[and [eq event-key_type `preposition] [is-type `semantic_plan_object event-value-copy]]
+												      [[and [eq event-key_type `preposition] [is-type `semantic_reflective_object event-value-copy]]
 												       [let []
-													 [mapc [funk [event-semantic_plan_object_type_event]
-														     [mapc [funk [event-value-semantic_plan_object_type_event]
-																 [have this add_type_relation event-time event-semantic_plan_object_type_event event-key_type event-key event-value-semantic_plan_object_type_event]]
-															   [get this all_semantic_plan_object_type_events event-value-copy]]]
-													       [get this all_semantic_plan_object_type_events event-semantic_frame-copy]]
+													 [mapc [funk [event-semantic_reflective_object_type_event]
+														     [mapc [funk [event-value-semantic_reflective_object_type_event]
+																 [have this add_type_relation event-time event-semantic_reflective_object_type_event event-key_type event-key event-value-semantic_reflective_object_type_event]]
+															   [get this all_semantic_reflective_object_type_events event-value-copy]]]
+													       [get this all_semantic_reflective_object_type_events event-semantic_frame-copy]]
 													 ]]
 												      ]
 												]]]]
@@ -326,18 +326,18 @@
 										 [cond [[and [eq event-key_type `property] [eq event-key `plan_object_type]]
 											[prog ]]
 										       [[is-type `semantic_object event-semantic_frame]
-											[prog [let [[event-semantic_frame-copy [get this semantic_plan_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
+											[prog [let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] [if [is-type `semantic_plan_object event-semantic_frame]
 																													      [get event-semantic_frame nonsemantic_plan]
 																													    nil]]]
 												    [event-value-copy          [if [is-type `semantic_object event-value]
-																   [get this semantic_plan_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
+																   [get this semantic_reflective_object_copy [get event-value phenomenal_name] [type event-value] [if [is-type `semantic_plan_object event-value]
 																												[get event-value nonsemantic_plan]
 																											      nil]]
 																 event-value]]]
 												'should use copy after this point'
 												
 												[cond [[translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
-												       [let [[event-semantic_plan_object_type_event [get this semantic_plan_object_type_event_with_property_type
+												       [let [[event-semantic_reflective_object_type_event [get this semantic_reflective_object_type_event_with_property_type
 																			 [get event-semantic_frame-copy plan_object_type]
 																			 event-key_type
 																			 event-key
@@ -345,26 +345,26 @@
 													 
 													 [have event-semantic_frame-copy map_type_key_values
 													       [funk [slot_type slot_key slot_value]
-														     [if [is-type `semantic_plan_object slot_value]
-															 [mapc [funk [forward_semantic_plan_object_type_event]
-																     [have this remove_type_relation event-time event-semantic_plan_object_type_event slot_type slot_key forward_semantic_plan_object_type_event]]
-															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+														     [if [is-type `semantic_reflective_object slot_value]
+															 [mapc [funk [forward_semantic_reflective_object_type_event]
+																     [have this remove_type_relation event-time event-semantic_reflective_object_type_event slot_type slot_key forward_semantic_reflective_object_type_event]]
+															       [get this all_semantic_reflective_object_type_events slot_value]]]]]
 													 
 													 [have event-semantic_frame-copy map_reverse_type_key_values
 													       [funk [slot_type slot_key slot_value]
-														     [if [is-type `semantic_plan_object slot_value]
-															 [mapc [funk [backward_semantic_plan_object_type_event]
-																     [have this remove_type_relation event-time backward_semantic_plan_object_type_event slot_type slot_key event-semantic_plan_object_type_event]]
-															       [get this all_semantic_plan_object_type_events slot_value]]]]]
+														     [if [is-type `semantic_reflective_object slot_value]
+															 [mapc [funk [backward_semantic_reflective_object_type_event]
+																     [have this remove_type_relation event-time backward_semantic_reflective_object_type_event slot_type slot_key event-semantic_reflective_object_type_event]]
+															       [get this all_semantic_reflective_object_type_events slot_value]]]]]
 													 
 													 ]]
-												      [[and [eq event-key_type `preposition] [is-type `semantic_plan_object event-value-copy]]
+												      [[and [eq event-key_type `preposition] [is-type `semantic_reflective_object event-value-copy]]
 												       [let []
-													 [mapc [funk [event-semantic_plan_object_type_event]
-														     [mapc [funk [event-value-semantic_plan_object_type_event]
-																 [have this remove_type_relation event-time event-semantic_plan_object_type_event event-key_type event-key event-value-semantic_plan_object_type_event]]
-															   [get this all_semantic_plan_object_type_events event-value-copy]]]
-													       [get this all_semantic_plan_object_type_events event-semantic_frame-copy]]
+													 [mapc [funk [event-semantic_reflective_object_type_event]
+														     [mapc [funk [event-value-semantic_reflective_object_type_event]
+																 [have this remove_type_relation event-time event-semantic_reflective_object_type_event event-key_type event-key event-value-semantic_reflective_object_type_event]]
+															   [get this all_semantic_reflective_object_type_events event-value-copy]]]
+													       [get this all_semantic_reflective_object_type_events event-semantic_frame-copy]]
 													 ]]
 												      ]
 												
@@ -374,7 +374,7 @@
 														     '\nremoving plan type ' [get event-semantic_frame-copy phenomenal_name]
 														     ' '                         event-key_type
 														     ' '                         event-key
-														     ' '                         [if [is-type `semantic_plan_object event-value-copy]
+														     ' '                         [if [is-type `semantic_reflective_object event-value-copy]
 																		     [get event-value-copy phenomenal_name]
 																		   event-value-copy]]]
 												[have event-semantic_frame-copy remove event-key_type event-key event-value-copy]

@@ -59,13 +59,13 @@
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute connect_knowledge_reflection []
   nil]
 
-[deftypefunk propogate_visual_objects_to_visual_knowledge_resource get semantic_visual_object [phenomenal_name physical_object_type]
+[deftypefunk propogate_visual_objects_to_visual_knowledge_resource get semantic_visual_object [phenomenal_name reflective_object_type]
   [let [[semantic_visual_object [have semantic_visual_object_ptypehash lookup phenomenal_name]]]
     [if [null semantic_visual_object]
 	[prog [= semantic_visual_object [new semantic_visual_object [get [get this mind] semantic_realm]]]
 	      [have semantic_visual_object_ptypehash add phenomenal_name semantic_visual_object]
-	      [set semantic_visual_object phenomenal_name      phenomenal_name]
-	      [set semantic_visual_object physical_object_type physical_object_type]]]
+	      [set semantic_visual_object phenomenal_name        phenomenal_name]
+	      [set semantic_visual_object reflective_object_type reflective_object_type]]]
     semantic_visual_object]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects []
@@ -99,8 +99,8 @@
       
       [mapc [funk [visual_object]
 		  [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
-			[visual_object-physical_object_type [get visual_object physical_object_type]]]
-		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
+			[visual_object-reflective_object_type [get visual_object reflective_object_type]]]
+		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-reflective_object_type]]]
 		      [if [and [      have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]
 			       [null [have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]]
 			  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] remove_semantic_frame semantic_visual_object]]]]]
@@ -133,7 +133,7 @@
 									       property_values]]]]
 			[have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
 										    [if [not [or [eq semantic_key `phenomenal_name]
-												 [eq semantic_key `physical_object_type]]]
+												 [eq semantic_key `reflective_object_type]]]
 											[let [[visual_object-property_frame-contains_value nil]]
 											  [if visual_object-property_frame
 											      [let [[property_values [have visual_object-property_frame lookup semantic_key]]]
@@ -224,8 +224,8 @@
       
       [mapc [funk [visual_object]
 		  [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
-			[visual_object-physical_object_type [get visual_object physical_object_type]]]
-		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
+			[visual_object-reflective_object_type [get visual_object reflective_object_type]]]
+		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-reflective_object_type]]]
 		      [if [and [null [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]
 			       [      have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]
 			  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame    semantic_visual_object]]]]]

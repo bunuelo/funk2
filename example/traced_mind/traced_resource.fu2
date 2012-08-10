@@ -18,10 +18,28 @@
  rights to redistribute these changes.'
 
 
+'action_transframe_hypothesis_space_feature'
+
+[defunk action_transframe_hypothesis_space_feature-phenomenal_name [meta_relationship]
+  [let [[source_phenomenal_name [get [get meta_relationship source] phenomenal_name]]
+	[key_type                    [get meta_relationship key_type]]
+	[key                         [get meta_relationship key]]
+	[target_phenomenal_name [get [get meta_relationship target] phenomenal_name]]]
+    [format nil source_phenomenal_name '_' key_type '_' key '_' target_phenomenal_name]]]
+
+[deframe action_transframe_hypothesis_space_feature [frame] [meta_relationship]
+  [new [initial-meta_relationship]
+       [= meta_relationship initial-meta_relationship]
+       nil]]
+
+[deftypefunk action_transframe_hypothesis_space_feature get phenomenal_name []
+  [action_transframe_hypothesis_space_feature-phenomenal_name meta_relationship]]
+
+
 'action_transframe_hypothesis_space_change_feature'
 
 [defunk action_transframe_hypothesis_space_change_feature-phenomenal_name [change_type meta_relationship]
-  [format nil change_type '_' meta_relationship]]
+  [format nil change_type '_' [action_transframe_hypothesis_space_feature-phenomenal_name meta_relationship]]]
 
 [deframe action_transframe_hypothesis_space_change_feature [frame] [change_type
 								    meta_relationship]
@@ -48,6 +66,7 @@
 'traced_resource'
 
 [deframe traced_resource [resource] [simulate_knowledge_base_names
+				     [feature_phenomenal_name_ptypehash                      [new ptypehash]]
 				     [change_feature_phenomenal_name_ptypehash               [new ptypehash]]
 				     [precondition_hypothesis_space_change_feature_ptypehash [new ptypehash]]]
   [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
@@ -118,6 +137,14 @@
     [type-have resource this finish]
     [semantic-remove agent waiting_for_to_finish target]]]
 
+[deftypefunk traced_resource get feature [meta_relationship]
+  [let [[feature-phenomenal_name [action_transframe_hypothesis_space_feature-phenomenal_name meta_relationship]]]
+    [let [[feature [have feature_phenomenal_name_ptypehash lookup feature-phenomenal_name]]]
+      [if [null feature]
+	  [prog [= feature [new action_transframe_hypothesis_space_feature meta_relationship]]
+		[have feature_phenomenal_name_ptypehash add feature-phenomenal_name feature]]]
+      feature]]]
+
 [deftypefunk traced_resource get change_feature [change_type change_meta_relationship]
   [let [[change-phenomenal_name [action_transframe_hypothesis_space_change_feature-phenomenal_name change_type change_meta_relationship]]]
     [let [[change_feature [have change_feature_phenomenal_name_ptypehash lookup change-phenomenal_name]]]
@@ -140,6 +167,19 @@
     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		     [get [get this layer] name] ' resource, ' name ', '
 		     'precondition count: ' [length event_preconditions] '.']
+    
+    [let [[concept_version_space_example [new concept_version_space_example t]]
+	  [positive_feature_set          [new set]]]
+      [mapc [funk [event_precondition]
+		  [let [[meta_relationship [get event_precondition meta_relationship]]]
+		    [let [[feature [get this feature meta_relationship]]]
+		      [have positive_feature_set add feature]]]]
+	    event_preconditions]
+      
+      [mapc [funk [feature]
+		  [let [[positive [get positive_feature_set contains feature]]]
+		    [have concept_version_space_example add_variable_value feature positive]]]
+	    [get feature_phenomenal_name_ptypehash values]]]
     
     [mapc [funk [change]
 		[let [[change_type  [get change change_type]]

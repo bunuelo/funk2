@@ -1,0 +1,133 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // x_2^*
+    
+    x2_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    x2_table_1   [texlbl = "{\huge{\tt{Table}}}",color=red];
+    
+    x2_block_2_sitting_on_x2_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    x2_block_2 -> x2_block_2_sitting_on_x2_table_1 [arrowhead=none,color=red];
+    x2_block_2_sitting_on_x2_table_1 -> x2_table_1 [style="-triangle 45",color=red];
+    
+    x_2 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
+    x_2_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> x2_table_1 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> x2_block_2_sitting_on_x2_table_1 [style="-triangle 45,dashed", color=red];
+    
+    // x_3^*
+    
+    x3_gripper_2 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    x3_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    
+    x3_gripper_2_holding_x3_block_1 [shape=box,style=filled,label="{\huge{\tt{holding}}}",color=red];
+    x3_gripper_2 -> x3_gripper_2_holding_x3_block_1 [arrowhead=none,color=red];
+    x3_gripper_2_holding_x3_block_1 -> x3_block_1 [style="-triangle 45",color=red];
+    
+    x_3 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
+    x_3_reflecting -> x3_gripper_2 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_block_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_gripper_2_holding_x3_block_1 [style="-triangle 45,dashed", color=red];
+    
+    // t_1
+    
+    t_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
+    
+    t_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    t_1 -> t_1_percept_x_2 [arrowhead=none];
+    t_1_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // t_3
+    
+    t_3 [texlbl = "{\huge{\tt{Simultaneity}}}"];
+    
+    t_3_percept_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    t_3 -> t_3_percept_x_3 [arrowhead=none];
+    t_3_percept_x_3 -> x_3 [style="-triangle 45"];
+    
+    // remove_1
+    
+    remove_1 [texlbl = "{\huge{\tt{Remove}}}"];
+    
+    remove_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    remove_1 -> remove_1_percept_x_2 [arrowhead=none];
+    remove_1_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // add_1
+    
+    add_1 [texlbl = "{\huge{\tt{Add}}}"];
+    
+    add_1_percept_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    add_1 -> add_1_percept_x_3 [arrowhead=none];
+    add_1_percept_x_3 -> x_3 [style="-triangle 45"];
+    
+    // transframe_1
+    
+    transframe_1 [texlbl = "{\huge{\tt{Transframe}}}"];
+    
+    transframe_1_past_remove_1 [shape=box,style=filled,label="{\huge{\tt{remove}}}"];
+    transframe_1 -> transframe_1_past_remove_1 [arrowhead=none];
+    transframe_1_past_remove_1 -> remove_1 [style="-triangle 45"];
+    
+    transframe_1_future_add_1 [shape=box,style=filled,label="{\huge{\tt{add}}}"];
+    transframe_1 -> transframe_1_future_add_1 [arrowhead=none];
+    transframe_1_future_add_1 -> add_1 [style="-triangle 45"];
+    
+    // activation_1
+    
+    activation_1 [texlbl = "{\huge{\tt{Activation}}}"];
+    
+    activation_1_start_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    activation_1 -> activation_1_start_t_1 [arrowhead=none];
+    activation_1_start_t_1 -> t_1 [style="-triangle 45"];
+    
+    activation_1_end_t_3 [shape=box,style=filled,label="{\huge{\tt{end}}}"];
+    activation_1 -> activation_1_end_t_3 [arrowhead=none];
+    activation_1_end_t_3 -> t_3 [style="-triangle 45"];
+    
+    activation_1_transframe_t_3 [shape=box,style=filled,label="{\huge{\tt{transframe}}}"];
+    activation_1 -> activation_1_transframe_t_3 [arrowhead=none];
+    activation_1_transframe_t_3 -> transframe_1 [style="-triangle 45"];
+    
+    // resource_1^*
+    
+    resource1_gripper_1 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    resource1_grab      [texlbl = "{\huge{\tt{grab}}}",color=red];
+    
+    resource1_gripper_1_executing_resource1_grab [shape=box,style=filled,label="{\huge{\tt{executing}}}",color=red];
+    resource1_gripper_1 -> resource1_gripper_1_executing_resource1_grab [arrowhead=none,color=red];
+    resource1_gripper_1_executing_resource1_grab -> resource1_grab [style="-triangle 45",color=red];
+    
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none,constraint=false];
+    resource_1_reflecting -> resource1_gripper_1 [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_grab [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_gripper_1_executing_resource1_grab [style="-triangle 45,dashed", color=red];
+    
+    resource_1_activation_activation_1 [shape=box,style=filled,label="{\huge{\tt{activation}}}"];
+    resource_1 -> resource_1_activation_activation_1 [arrowhead=none];
+    resource_1_activation_activation_1 -> activation_1 [style="-triangle 45"];
+    
+    // reflective^1
+    
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_event_resource_1 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_1 [arrowhead=none];
+    reflective_1_event_resource_1 -> resource_1 [style="-triangle 45"];
+    
+    
+  }
+}

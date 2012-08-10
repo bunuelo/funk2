@@ -1,0 +1,35 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^2$ Layer}}";
+    color="#007F00"
+    
+    // reflective
+    node [fillcolor = white, color = "#007F00", style = filled];
+    edge [color = "#007F00"];
+        
+    // x_1^*
+    
+    x2_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    x2_table_1   [texlbl = "{\huge{\tt{Table}}}",color=red];
+    
+    x2_block_2_sitting_on_x2_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    x2_block_2 -> x2_block_2_sitting_on_x2_table_1 [arrowhead=none,color=red];
+    x2_block_2_sitting_on_x2_table_1 -> x2_table_1 [style="-triangle 45",color=red];
+    
+    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
+    x_1_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> x2_table_1 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> x2_block_2_sitting_on_x2_table_1 [style="-triangle 45,dashed", color=red];
+    
+    // reflective^2
+    
+    reflective_2 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_2_symbol_x_1 [shape=box,style=filled,label="{\huge{\tt{symbol}}}"];
+    reflective_2 -> reflective_2_symbol_x_1 [arrowhead=none];
+    reflective_2_symbol_x_1 -> x_1 [style="-triangle 45"];
+  }
+}

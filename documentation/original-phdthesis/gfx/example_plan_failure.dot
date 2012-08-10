@@ -1,0 +1,303 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // x_1^*
+    
+    x1_gripper_1   [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    x1_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    
+    x1_gripper_1_being_above_x1_block_1 [shape=box,style=filled,label="{\huge{\tt{being-above}}}",color=red];
+    x1_gripper_1 -> x1_gripper_1_being_above_x1_block_1 [arrowhead=none,color=red];
+    x1_gripper_1_being_above_x1_block_1 -> x1_block_1 [style="-triangle 45",color=red];
+    
+    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
+    x_1_reflecting -> x1_gripper_1 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> x1_block_1 [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> x1_gripper_1_being_above_x1_block_1 [style="-triangle 45,dashed", color=red];
+    
+    // x_2^*
+    
+    x2_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    x2_table_1   [texlbl = "{\huge{\tt{Table}}}",color=red];
+    
+    x2_block_2_sitting_on_x2_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    x2_block_2 -> x2_block_2_sitting_on_x2_table_1 [arrowhead=none,color=red];
+    x2_block_2_sitting_on_x2_table_1 -> x2_table_1 [style="-triangle 45",color=red];
+    
+    x_2 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
+    x_2_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> x2_table_1 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> x2_block_2_sitting_on_x2_table_1 [style="-triangle 45,dashed", color=red];
+    
+    // x_3^*
+    
+    x3_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    x3_gripper_1 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    
+    x3_gripper_1_holding_x3_block_1 [shape=box,style=filled,label="{\huge{\tt{holding}}}",color=red];
+    x3_gripper_1 -> x3_gripper_1_holding_x3_block_1 [arrowhead=none,color=red];
+    x3_gripper_1_holding_x3_block_1 -> x3_block_1 [style="-triangle 45",color=red];
+    
+    x_3 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
+    x_3_reflecting -> x3_gripper_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_block_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> x3_gripper_1_holding_x3_block_1 [style="-triangle 45,dashed", color=red];
+    
+
+    // t_1^
+    
+    t_1 [texlbl = "{\huge{\tt{Precondition}}}"];
+    
+    t_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    t_1 -> t_1_percept_x_2 [arrowhead=none];
+    t_1_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // t_2^
+    
+    t_2 [texlbl = "{\huge{\tt{Precondition}}}"];
+    
+    t_2_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    t_2 -> t_2_percept_x_1 [arrowhead=none];
+    t_2_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+
+    // add_1^
+    
+    add_1 [texlbl = "{\huge{\tt{Add}}}"];
+    
+    add_1_percept_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    add_1 -> add_1_percept_x_3 [arrowhead=none];
+    add_1_percept_x_3 -> x_3 [style="-triangle 45"];
+    
+
+    // hypothesis_1^
+    
+    hypothesis_1 [texlbl = "{\huge{\tt{Hypothesis}}}"];
+    
+    hypothesis_1_and_t_1 [shape=box,style=filled,label="{\huge{\tt{and}}}"];
+    hypothesis_1 -> hypothesis_1_and_t_1 [arrowhead=none];
+    hypothesis_1_and_t_1 -> t_1 [style="-triangle 45"];
+    
+    hypothesis_1_and_t_2 [shape=box,style=filled,label="{\huge{\tt{and}}}"];
+    hypothesis_1 -> hypothesis_1_and_t_2 [arrowhead=none];
+    hypothesis_1_and_t_2 -> t_2 [style="-triangle 45"];
+    
+    // hypothesis_2^
+    
+    hypothesis_2 [texlbl = "{\huge{\tt{Hypothesis}}}"];
+    
+    hypothesis_2_and_t_1 [shape=box,style=filled,label="{\huge{\tt{and}}}"];
+    hypothesis_2 -> hypothesis_2_and_t_1 [arrowhead=none];
+    hypothesis_2_and_t_1 -> t_1 [style="-triangle 45"];
+    
+    hypothesis_2_and_t_2 [shape=box,style=filled,label="{\huge{\tt{and}}}"];
+    hypothesis_2 -> hypothesis_2_and_t_2 [arrowhead=none];
+    hypothesis_2_and_t_2 -> t_2 [style="-triangle 45"];
+    
+
+    // hypothesis_space_1^
+    
+    hypothesis_space_1 [texlbl = "{\huge{\tt{Hypothesis-Space}}}"];
+    
+    hypothesis_space_1_add_add_1 [shape=box,style=filled,label="{\huge{\tt{add}}}"];
+    hypothesis_space_1 -> hypothesis_space_1_add_add_1 [arrowhead=none];
+    hypothesis_space_1_add_add_1 -> add_1 [style="-triangle 45"];
+    
+    hypothesis_space_1_general_hypothesis_1 [shape=box,style=filled,label="{\huge{\tt{general}}}"];
+    hypothesis_space_1 -> hypothesis_space_1_general_hypothesis_1 [arrowhead=none];
+    hypothesis_space_1_general_hypothesis_1 -> hypothesis_1 [style="-triangle 45"];
+    
+    hypothesis_space_1_general_hypothesis_2 [shape=box,style=filled,label="{\huge{\tt{specific}}}"];
+    hypothesis_space_1 -> hypothesis_space_1_general_hypothesis_2 [arrowhead=none];
+    hypothesis_space_1_general_hypothesis_2 -> hypothesis_2 [style="-triangle 45"];
+    
+
+    // resource_1^*
+    
+    resource1_gripper_1 [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    resource1_grab_1    [texlbl = "{\huge{\tt{grab}}}",color=red];
+    
+    resource1_gripper_1_executing_resource1_grab_1 [shape=box,style=filled,label="{\huge{\tt{executing}}}",color=red];
+    resource1_gripper_1 -> resource1_gripper_1_executing_resource1_grab_1 [arrowhead=none,color=red];
+    resource1_gripper_1_executing_resource1_grab_1 -> resource1_grab_1 [style="-triangle 45",color=red];
+    
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none];
+    resource_1_reflecting -> resource1_gripper_1 [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_grab_1 [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> resource1_gripper_1_executing_resource1_grab_1 [style="-triangle 45,dashed", color=red];
+
+    resource_1_hypothesis_space_hypothesis_space_1 [shape=box,style=filled,label="{\huge{\tt{hypothesis-space}}}"];
+    resource_1 -> resource_1_hypothesis_space_hypothesis_space_1 [arrowhead=none];
+    resource_1_hypothesis_space_hypothesis_space_1 -> hypothesis_space_1 [style="-triangle 45"];
+    
+
+
+    // counterfactual_transframe_1
+    
+    counterfactual_transframe_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Counterfactual-}}}\\\text{\huge{\tt{Transframe}}}\end{array}$"];
+    
+    counterfactual_transframe_1_activation_dependency_resource_1 [shape=box,style=filled,label="{\huge{\tt{activation-dependency}}}"];
+    counterfactual_transframe_1 -> counterfactual_transframe_1_activation_dependency_resource_1 [arrowhead=none];
+    counterfactual_transframe_1_activation_dependency_resource_1 -> resource_1 [style="-triangle 45"];
+    
+    counterfactual_transframe_1_add_add_1 [shape=box,style=filled,label="{\huge{\tt{add}}}"];
+    counterfactual_transframe_1 -> counterfactual_transframe_1_add_add_1 [arrowhead=none];
+    counterfactual_transframe_1_add_add_1 -> add_1 [style="-triangle 45"];
+    
+    counterfactual_transframe_1_hypothesis_dependency_hypothesis_1 [shape=box,style=filled,label="{\huge{\tt{hypothesis-dependency}}}"];
+    counterfactual_transframe_1 -> counterfactual_transframe_1_hypothesis_dependency_hypothesis_1 [arrowhead=none];
+    counterfactual_transframe_1_hypothesis_dependency_hypothesis_1 -> hypothesis_1 [style="-triangle 45"];
+    
+
+    // activation_operator_1
+    
+    activation_operator_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Activation-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    activation_operator_1_resource_counterfactual_transframe_1 [shape=box,style=filled,label="{\huge{\tt{counterfactual-transframe}}}"];
+    activation_operator_1 -> activation_operator_1_resource_counterfactual_transframe_1 [arrowhead=none];
+    activation_operator_1_resource_counterfactual_transframe_1 -> counterfactual_transframe_1 [style="-triangle 45"];
+    
+
+
+
+
+
+
+    // ef1_x_3^*
+    
+    //ef1_x3_block_1   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    //ef1_x3_block_2   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    
+    //ef1_x3_block_2_sitting_on_ef1_x3_block_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    //ef1_x3_block_2 -> ef1_x3_block_2_sitting_on_ef1_x3_block_1 [arrowhead=none,color=red];
+    //ef1_x3_block_2_sitting_on_ef1_x3_block_1 -> ef1_x3_block_1 [style="-triangle 45",color=red];
+    
+    //ef1_x_3 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    //ef1_x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    //ef1_x_3 -> ef1_x_3_reflecting [style=dashed,arrowhead=none];
+    //ef1_x_3_reflecting -> ef1_x3_block_2 [style="-triangle 45,dashed", color=red];
+    //ef1_x_3_reflecting -> ef1_x3_block_1 [style="-triangle 45,dashed", color=red];
+    //ef1_x_3_reflecting -> ef1_x3_block_2_sitting_on_ef1_x3_block_1 [style="-triangle 45,dashed", color=red];
+    
+    // ef1_t_1
+    
+    ef1_t_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
+    
+    ef1_t_1_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    ef1_t_1 -> ef1_t_1_percept_x_1 [arrowhead=none];
+    ef1_t_1_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    ef1_t_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    ef1_t_1 -> ef1_t_1_percept_x_2 [arrowhead=none];
+    ef1_t_1_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // ef1_t_3
+    
+    ef1_t_3 [texlbl = "{\huge{\tt{Simultaneity}}}"];
+    
+    ef1_t_3_percept_x_1 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    ef1_t_3 -> ef1_t_3_percept_x_1 [arrowhead=none];
+    ef1_t_3_percept_x_1 -> x_1 [style="-triangle 45"];
+    
+    ef1_t_3_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    ef1_t_3 -> ef1_t_3_percept_x_2 [arrowhead=none];
+    ef1_t_3_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    //ef1_t_3_percept_ef1_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    //ef1_t_3 -> ef1_t_3_percept_ef1_x_3 [arrowhead=none];
+    //ef1_t_3_percept_ef1_x_3 -> ef1_x_3 [style="-triangle 45"];
+    
+    // ef1_remove_1
+    
+    //ef1_remove_1 [texlbl = "{\huge{\tt{Remove}}}"];
+    
+    //ef1_remove_1_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    //ef1_remove_1 -> ef1_remove_1_percept_x_2 [arrowhead=none];
+    //ef1_remove_1_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // ef1_add_1
+    
+    //ef1_add_1 [texlbl = "{\huge{\tt{Add}}}"];
+    
+    //ef1_add_1_percept_ef1_x_3 [shape=box,style=filled,label="{\huge{\tt{percept}}}"];
+    //ef1_add_1 -> ef1_add_1_percept_ef1_x_3 [arrowhead=none];
+    //ef1_add_1_percept_ef1_x_3 -> ef1_x_3 [style="-triangle 45"];
+    
+    // ef1_transframe_1
+    
+    ef1_transframe_1 [texlbl = "{\huge{\tt{Transframe}}}"];
+    
+    //ef1_transframe_1_past_ef1_remove_1 [shape=box,style=filled,label="{\huge{\tt{remove}}}"];
+    //ef1_transframe_1 -> ef1_transframe_1_past_ef1_remove_1 [arrowhead=none];
+    //ef1_transframe_1_past_ef1_remove_1 -> ef1_remove_1 [style="-triangle 45"];
+    
+    //ef1_transframe_1_future_ef1_add_1 [shape=box,style=filled,label="{\huge{\tt{add}}}"];
+    //ef1_transframe_1 -> ef1_transframe_1_future_ef1_add_1 [arrowhead=none];
+    //ef1_transframe_1_future_ef1_add_1 -> ef1_add_1 [style="-triangle 45"];
+    
+
+
+
+    // expectation_failure_1
+    
+    expectation_failure_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Expectation-}}}\\\text{\huge{\tt{Failure}}}\end{array}$"];
+    
+    expectation_failure_1_start_operator_activation_operator_1 [shape=box,style=filled,label="{\huge{\tt{activation-operator}}}"];
+    expectation_failure_1 -> expectation_failure_1_start_operator_activation_operator_1 [arrowhead=none];
+    expectation_failure_1_start_operator_activation_operator_1 -> activation_operator_1 [style="-triangle 45"];
+    
+    expectation_failure_1_start_ef1_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    expectation_failure_1 -> expectation_failure_1_start_ef1_t_1 [arrowhead=none];
+    expectation_failure_1_start_ef1_t_1 -> ef1_t_1 [style="-triangle 45"];
+    
+    expectation_failure_1_end_ef1_t_3 [shape=box,style=filled,label="{\huge{\tt{end}}}"];
+    expectation_failure_1 -> expectation_failure_1_end_ef1_t_3 [arrowhead=none];
+    expectation_failure_1_end_ef1_t_3 -> ef1_t_3 [style="-triangle 45"];
+    
+    expectation_failure_1_transframe_ef1_t_3 [shape=box,style=filled,label="{\huge{\tt{transframe}}}"];
+    expectation_failure_1 -> expectation_failure_1_transframe_ef1_t_3 [arrowhead=none];
+    expectation_failure_1_transframe_ef1_t_3 -> ef1_transframe_1 [style="-triangle 45"];
+
+
+
+    
+    
+    // plan_1
+    
+    plan_1 [texlbl = "{\huge{\tt{Plan}}}"];
+    
+    plan_1_start_operator_activation_operator_1 [shape=box,style=filled,label="{\huge{\tt{start-operator}}}"];
+    plan_1 -> plan_1_start_operator_activation_operator_1 [arrowhead=none];
+    plan_1_start_operator_activation_operator_1 -> activation_operator_1 [style="-triangle 45"];
+    
+    plan_1_expectation_failure_expectation_failure_1 [shape=box,style=filled,label="{\huge{\tt{expectation-failure}}}"];
+    plan_1 -> plan_1_expectation_failure_expectation_failure_1 [arrowhead=none];
+    plan_1_expectation_failure_expectation_failure_1 -> expectation_failure_1 [style="-triangle 45"];
+    
+
+    // reflective^1
+    
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_plan_plan_1 [shape=box,style=filled,label="{\huge{\tt{plan}}}"];
+    reflective_1 -> reflective_1_plan_plan_1 [arrowhead=none];
+    reflective_1_plan_plan_1 -> plan_1 [style="-triangle 45"];
+    
+    
+  }
+}

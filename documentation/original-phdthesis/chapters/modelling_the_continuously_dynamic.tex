@@ -1,0 +1,555 @@
+%************************************************
+\chapter{Modelling the Continuously Dynamic}
+\label{chapter:modelling_the_continuously_dynamic}
+%************************************************
+
+\vspace{5mm}
+\begin{center}
+\emph{You can't find love in a dictionary.} \\ \medskip
+    --- \cite{dennett:2009}
+\end{center}
+\vspace{5mm}
+
+In this dissertation the focus will be a description of thinking that
+reflectively learns to accomplish goals.  \autoref{part:the_model}
+begins with a clear distinction between dynamic continuity and static
+arrangements of symbols, which are \emph{the} fundamental key
+distinctions in my model.  The model of reflective thinking grows
+quickly within this initial foundational conception, and leads
+necessarily and naturally to the goals of this dissertation.
+
+In \autoref{part:the_simulation}, the simulation, I will describe an
+example of a mathematical description of the model, which I will use
+to evaluate the model in terms of the performance of a search
+algorithm implemented in a reflective simulation.
+
+In \autoref{part:the_implementation}, the implementation, an example
+of a computational implementation of reflective thinking will be
+described.  The implementation is a layered cognitive architecture
+with three working layers.  I will focus on a very simple physical
+block stacking problem domain as a tool for explaining simply, through
+examples, the layered classes of reflective learning.  In describing
+the working model implementation, I will maintain an awareness of the
+explicit distinction between a static model and the dynamic referent.
+
+\section{Symbols and Continuity}
+
+Symbols are static referential tools of thought.  Words are examples
+of symbols.  Mathematical expressions are composed of arrangements of
+symbols.  All written language and spoken language is composed of
+sequences of symbols.  While various fonts, writing styles, and
+speaking accents do influence the appearance of symbols, the fact
+remains that without symbols there is no language.  A symbol is
+discrete and distinctly separate from other symbols.  Symbols do not
+blend into one another when they are put side by side.  Using symbols,
+models can be created.  Therefore, the crux of my AI modelling problem
+is in understanding the continuous activity of reflective thinking.  I
+have found understanding the reflective focus to be centered around
+understanding how to answer the following two questions:
+\begin{enumerate}
+\item What is continuous space?
+\item What is the continuous activity that fills this space?
+\end{enumerate}
+Any written or spoken answer to any question must be composed of
+discrete symbols.  Some questions have clearly discrete and satisfying
+answers.  For example, when asked, ``What is $1+1$?'', a satisfying
+answer is clearly ``$2$''.  In this case, the question asks for
+another representation for the already symbolic focus of the question,
+``$1+1$''.  When we ask, ``What is continuous space?'', this is a
+question that refers to something that is not a discrete symbolic
+representation.  Because any answer must be specified in discrete
+symbols, the answer can never be equivalent to the focus of the
+question.  The focus of the question is not the words, ``continuous
+space'', but instead, the question is about the referent of these
+words.  There is no exact discrete symbolic answer that is equivalent
+to the focus of the question.  Answers, therefore, to a question about
+continuous activity are necessarily approximated with discrete
+symbolic language.
+
+Answers to these questions abound, depending on the goals of the
+responder.  My goal is to build an AI model that makes arbitrarily
+greater improvements given \emph{any} non-reflective goal-oriented
+learning algorithm.  In other words, my AI must be able to abstract
+and use models of its own continuously dynamic reasoning activities.
+The goal hinges on the AI's ability to deal with the inherent
+contradiction in answering these two basic and simple questions for
+itself.  If it is understood that any answer must be based on
+language, then it becomes obvious that there is no general or final
+answer that can be predetermined for as yet unknown goals.  Many
+philosophers, scientists, and spiritualists have provided different
+answers to these questions in order to accomplish different goals.
+Here are some caricatured answers to these two questions that
+apparently have very different explanatory goals:
+\begin{itemize}
+\item {\bf{Physicist:}} Continuous time can be approximated by an
+  infinite number of symbols that are arbitrarily close together.  For
+  example, if we have the integers $0$ and $1$, then we know that
+  between these symbols, rationally, we can define the symbol $1/2$
+  that exists between them.  We know that if we are describing
+  continuity that there must be a discrete point between any two given
+  discrete points in our model.  We use many dimensions of these
+  symbolic numbers, in order to define laws describing the dynamic
+  continuous potential and kinetic energies in multiple continuous
+  spaces and times.
+\item {\bf{Spiritualist:}} There is a continuous indivisible flux of
+  energy that is the being of everything and nothing together as one.
+  All beings are part of this energy that flows among and between us
+  without any separations actually existing.  We call this God, the
+  energy that is in each and every one of us that contains all time
+  and space, life and death, in one experiential existence.
+\item {\bf{Philosopher:}} The continuous amorphous perceptual
+  experience is the real dynamic ongoing activity of being in the
+  present, from which all discrete perceptions are abstracted.  From
+  these artificial, man-made symbolic abstractions, all models of
+  discrete activities in the discrete dimensions of time and space are
+  constructed.
+\end{itemize}
+Each of these caricatures, presents a very different model of the
+continuously dynamic activity in continuous space.  The key idea to
+understand here is that each of these models \emph{describes but is
+  not equivalent to} this common continuous space and the dynamic
+activities that exist within it.  \cite{magritte:1919} visually
+explains this point with ``The Treason of Images'' reproduced in
+\autoref{figure:magritte_pipe}.  The different descriptions that are
+used are good for different goals, but they are all similar in that
+they are all based on symbols.  They are all necessarily discrete
+descriptions of something that is not fundamentally discrete.  The
+physicist uses an infinite number of symbols to describe this
+continuity.  A model that includes an infinite number of symbols, like
+the mathematician's real number line, does not magically make this
+model not symbolic.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/magritte_pipe}
+\caption[``The Treason of Images'' (``This is not a pipe'') by
+  \cite{magritte:1919} is an image of a pipe.]{``The Treason of
+  Images'' (``This is not a pipe'') by \cite{magritte:1919} is an
+  image of a pipe.  The symbolic image is not equivalent to its actual
+  referent, which is neither symbolic nor an image.}
+\label{figure:magritte_pipe}
+\end{figure}
+
+Models are all intentionally created, based on discrete symbols, in
+order to reference and describe this continuous space of continuously
+dynamic activities.  A reflective AI, therefore, must be a model of
+the relationship between the goals of the responder and the creation
+of relevant models of continuously dynamic activity.  In other words,
+a reflective AI, must explicitly be a programmed model of this
+fundamental modelling problem, a model of learning when a given model
+is good or bad for accomplishing its own goals.  A reflective AI would
+be able to question the utility of these caricatured models of
+physicists, spiritualists, and philosophers, based on whether or not
+they help it to accomplish its own goals.
+
+\section{Dynamically Grounded Description}
+
+A grounded description references the dynamic.  Symbols, words and
+language refer to undifferentiated amorphous perceptions or ongoing
+general experience and have grounding only in this way and create the
+tools with which the undifferentiated can be manipulated, understood,
+or communicated.
+
+The further ability of symbols to also reference other symbols allows
+the additional possibility of creating a referential circularity in a
+static model.  An illusion of a primitive grounding is possible in
+such a cycle because all of the symbols have a referent; however,
+because all references within such a closed cycle appear to be
+exclusively kept within the static model and do not seem any longer to
+refer to anything dynamic, there is a danger of there being no meaning
+other than circularity to such a purely static construct.  Symbols are
+tools for modelling and are useful only if the circularity is not
+mistaken for a grounded reference.  Thus, I strictly avoid presenting
+such illusions of grounding as primitive in this dissertation.  To
+allow for grounded descriptions, I will first outline my conception of
+the dynamic, to which my description ultimately must refer.  A
+description of reflective thinking referring to an \emph{a~priori}
+concept that has not been derived in terms of symbols allows for
+something to remain outside of the static model as the dynamic
+referent.  This last step avoids the creation of a purely
+self-referential cycle and prevents illusions from becoming mistaken
+for grounded parts of the model.  In the next section I will describe
+the necessary conception of the dynamic to which my description of
+reflective thinking will refer.
+
+\section{Activities in Duration}
+
+\cite{bergson:1910}, in his seminal \underline{Time and Free Will},
+discusses the dynamic as heterogeneous activities in Duration.
+Activities in Duration will serve as my conception of the dynamic for
+my description of reflective thinking.  Activities in Duration are the
+dynamic ongoing activity, heterogeneous activities that are neither
+distinct nor separate.  There is a trick, a sort of slight of hand,
+required here in describing Bergson's conception of the activities in
+Duration because, even though referred to through symbolization, these
+activities exist independently of symbolization.
+
+For example, when I look at a tree, I may say that the tree has green
+leaves and a brown trunk; the symbols, green and brown, refer to the
+activities in Duration, which I am seeing.  When I focus carefully on
+the dynamic activity of my situation, I see that the leaves and trunk
+could be described by a greater combination of various greens,
+yellows, grays, browns and reds.  Symbols limit perception to a
+discrete sort of projective presupposition.  Therefore, as I introduce
+more symbolic references in my increasingly limited description of the
+dynamic, a growing danger of losing focus on something dynamic
+emerges, creating a cycle of symbols seemingly referring exclusively
+to symbols.
+
+The motivation to tangentially define more clearly what I mean by the
+symbol green or brown by using more symbols results in a circularity
+from which there is no exit, and therefore, a false dilemma from which
+I will never again be able to see or talk about any dynamic tree as
+the referent.  In order to avoid the danger of purely cyclic symbolic
+references in my model, I will continue to relate the parts of my
+model to the dynamic activity of reflective thinking, which exists as
+activities in Duration.
+
+\section{Actual Reflection}
+
+The activities in Duration are the given dynamic ongoing.  These
+activities are the inseparable actions that are currently available to
+reflection.  Reflection is the ability to symbolize this ongoing
+activity.  For example, the activity of perceiving a table can be
+symbolized as the name ``table''.  Similarly, the activity of walking,
+can be symbolized as present participle ``walking''.  Note that my
+model of reflective thinking assumes that there is ongoing activity
+before any symbols exist for the actions of thinking to manipulate.
+Thinking is an auxiliary activity that manipulates static symbolic
+constructions that refer to the primary ongoing activity of existence.
+Thus, the activity of perceiving a table requires neither that this
+activity itself be reflectively symbolized nor that a secondary
+thinking activity manipulates the resulting symbols.  I will use the
+phrase \emph{actual reflection} to refer to the activity of
+symbolizing ongoing activities.
+
+\section{Order of Space}
+
+Activities in Duration may be symbolized in a homogeneous medium
+without activity.  \cite{bergson:1910} calls this medium Space,
+allowing symbolic references to activities in Duration to be related.
+This is the primary fundamental distinction in both the mathematical
+simulation and computer implementation of reflective thinking.  Of
+major importance is the fact that one does not derive the other, but
+activity and order coexist with neither Duration being a derivative of
+Space nor Space containing the fundamental activities in Duration.
+Obviously, Bergson has gone through painstaking efforts to leave room
+in his description for the dynamic as some independent, non-contingent
+activity not derived from either Space or Duration.  He makes the
+necessary concession that a description of something dynamic is only
+grounded in that it leaves room for this dynamic to exist
+independently of its own symbolization.  This modelling work is meant
+to be similarly grounded in the necessarily separate dynamic activity
+of reflectively learning to accomplish goals.
+
+\section{Modelling the Dynamic}
+\label{section:modelling_the_dynamic}
+
+Duration and Space are the fundamental duality that forms the basis of
+my model of the dynamic activity of reflectively thinking.  Thus this
+duality exists pre-reflectively, prior to symbols being created from
+the activities in Duration and prior to these symbolic references
+being related in Space.  Note the fundamental contradiction of
+intentionally describing the dynamic only in static symbolic terms.
+For example, if Space has no activity and is not itself composed of
+activities in Duration, to what is the symbol ``Space'' referring?
+Symbol ``Space'' refers only to the logical potential for an absence
+of activity, the potential for itself as not existing; thus, it is the
+logical necessity of the negative implication of positive existence,
+to which no alternative can be assigned.  Again, my model explicitly
+does not provide a definition of this implicit, fundamental and
+irresolvable contradiction.  Thus, my description will appear to begin
+in the middle of something endlessly dynamic and ongoing, the \emph{in
+  medias res} of an underived time and space, maintaining an explicit
+awareness that static descriptions are only tools for dynamic
+reflections.  Duration and Space are not placeholders for the dynamic;
+they are intermediate programmed fictions in the implementation that I
+use here to model the dynamic ongoing, the actual activity, which is
+not a static arrangement of symbols.
+
+\section{Spatial Reflection}
+
+The activities in Duration are the dynamic activity of being in the
+present.  Symbols, like the photographic, are static references to
+this dynamic.  Again, there is a fundamental distinction here between
+the dynamic and the static.  Because AI already refers to an AI model,
+I use an asterisk notation to refer a model that the AI learns in
+simulation.  In this way, Spatial arrangements of symbols can actually
+exist in the dynamic as an actively maintained static construction, a
+model* within the AI.  The ongoing activities that hold symbols in a
+specific Spatial arrangement can be symbolically reified.  I will
+refer to the activity of symbolizing the activities of a Spatial
+arrangement of symbols as \emph{Spatial reflection} or
+\emph{reification}.  Spatial reflection is a form of actual
+reflection.
+
+\section{The Physical Layer}
+
+My model includes three layers of ongoing dynamic activity.  I will
+use the phrase \emph{physical layer} to refer to the pre-reflective
+layer of activities that exist necessarily prior to any subsequent
+reflective symbolization activity.  The physical layer is the only
+pre-reflective layer of activity in my model.  Therefore, a clear line
+is drawn between the physical layer and those activities that
+symbolize and Spatially arrange symbols.  Thus, they are not included
+in what I will refer to as physical activity.  Note that in most AI
+models, there is a distinction between the mind and the body or the
+environment.  In my model, \emph{all} activities that exist are
+referred to as \emph{the mind}.
+\footnote{Because my model of mind is an absolute reference to the
+  dynamic, it makes very few modelling assumptions.  Because my model
+  has been previously mistaken for the philosophy of ``Subjective
+  Idealism'', I have included a description of the mistake of
+  Subjective Idealism, and a clarification that my model does not make
+  this mistake, an important difference between my model and this
+  problematic philosophy; I explain in
+  \autoref{section:the_mistake_of_subjective_idealism}.}  Thus, the
+dynamic mental activities that I am referring to in my model are not
+an object that is viewed subjectively.  Critical to an understanding
+of the goals of objective science is that the creation of object and
+subject distinctions is allowed to be a part of the activities of the
+mind that can be simulated with my AI; because this understanding is
+so critical to an advancement of scientific understanding, I will
+clarify the mental derivation of objective science in
+\autoref{chapter:science}.  Because the abstract creation of object
+and subject relationships is a relatively advanced mental activity and
+not key to my thesis, I will discuss this as future research in
+\autoref{chapter:future}, which would be a promising place to extend
+my model to include ideas like physical bodies and other subjective
+and objective environmental perspectives.
+
+\section{Orders of Reflective Layers}
+
+In addition to the pre-reflective physical layer of activity, my model
+includes two additional layers of reflective thinking activity that
+use two different classes of causal models in order to accomplish two
+different classes of goals.  I will use the phrase \emph{first-order
+  reflective layer} to refer to the reflective layer of thinking that
+creates symbols and Spatial arrangements that refer to physical
+activities.  I will refer to reflectively symbolizing physical
+activities as \emph{physical reflection}.  Physical reflection is a
+form of actual reflection and is one of the primary reflective
+thinking activities; remember that physical activities are
+pre-reflective, so physical reflection is not itself a physical
+activity.
+
+Obviously, the first-order reflective layer cannot create symbols or
+Spatial arrangements that refer to its own activities.  The
+first-order reflective layer has the \emph{a~priori} ability to
+maintain its own actively reified Spatial relationships as existing
+between symbols that refer to physical activities.  The lack of the
+ability for the first-order reflective layer to refer to its own
+symbolically creative or Spatially manipulative activities acts as a
+sort of protective ``firewall'' that clarifies my model by keeping
+clear distinctions between each class of causal knowledge in each
+subsequent reflective layer of thinking.  Before describing
+distinctions between classes of causal models, I will spend the next
+few sections describing the composition of temporal transitions and
+causal hypotheses.
+
+Reflection over the activity of the first-order reflective layer
+necessarily creates a second layer of reflection and thinking.  Thus,
+clearly deriving and describing this second layer of reflective
+thinking additionally necessitates an implicit and arbitrary number of
+layers.  This condition is the focus of this dissertation.
+\cite{minsky:2006} describes a six-layer reflective model of thinking
+about thinking.  The first three layers of my model and
+implementation, including these two layers of reflective thinking, can
+be compared to the first four layers of Minsky's model.  There are
+many close parallels between my model and Minsky's model, and I will
+describe these modelling parallels in
+\autoref{chapter:related_models}.
+
+\section{Consciousness, Awareness, and Experience}
+
+There are many terms that are used in the literature when referring to
+the concept of the dynamic.  Each of these terms has a different
+associated collection of necessary contingencies that, as isolated and
+independent, tend to become absurdities.  For example, the general
+term consciousness always begs the question \emph{of what} one is
+specifically conscious.  There is an implicit independence of subject
+and object when using this transitive term, which is not assumed when
+the term is used as a reference to the dynamic.
+
+The terms awareness and experience are used similarly and have the
+same logical contradictions as the term consciousness when they are
+considered as independent isolated references to the dynamic.  Each of
+these terms has different meaningful uses when they are not used in
+this independent sense.  For example, in this dissertation an
+awareness of the potential confusions these terms introduce when they
+are used singularly in abstract isolation as reference to the dynamic
+will be maintained.
+
+Thus, I will not argue that these conceptions of the dynamic are
+incorrect.  Rather, they are limited to particular and less
+generalized models that are restricted descriptions of the dynamic.
+In this dissertation, however, in order to avoid confusion, I will
+never use these terms in their limited and abstracted sense.  Instead,
+I will conflate all of these uses of these terms as all being the same
+as my conception of the dynamic, the ongoing activity that my model
+accepts, symbolizes, and thinks about as given.
+
+\section{Extensive and Intensive Quantities}
+\label{section:extensive_and_intensive_quantities}
+
+Sometimes it is hard to imagine how a fundamentally symbolic model can
+ever refer to the ``intensities'' of perceptual stimuli.  Thus, in
+this section, I make a distinction between two types of intensities,
+the ``extensive'' and the ``intensive''.  This distinction is used to
+explain how the basic symbolic component of the model can come to
+represent various aspects of everyday thinking that, according to
+common sense, are fundamentally of a certain intensity.
+
+\cite{bergson:1910} makes a key distinction between comparisons of
+``extensive'' quantities and comparisons of ``intensive'' quantities.
+Extensive quantities are Spatial comparisons.  \emph{Extensive
+  quantities} are between two symbolic references that share a
+containment relationship in terms of their referents: one symbolic
+referent is inclusively contained by another symbolic referent in
+Space.  For example, one body may be said to be larger than another in
+terms of its Spatial extent.  Intensive quantities are more subtle and
+an example is in terms of pain, which can be said to be more or less
+intense.  \emph{Intensive quantities} are similar to neither
+numerically nor Spatially extensive containment relationships but,
+instead, refer to different fundamental activities in Duration.  For
+example, a pain that has no intensity is not a pain at all; a pain
+that has a mild intensity may be equivalently referred to as an
+irritation or an itch; a pain of high intensity may be equivalently
+referred to as a sharp pain or a throbbing pain.  The point is that
+these intensities of quality are actually very different from
+extensive quantities in that they are not greater than or less than
+one another in the sense of a containment relationship.  For example,
+a very intense pain, such as a shooting pain or a throbbing pain, does
+not in any sense contain a lesser mild pain, such as an irritation or
+an itch.  This same pattern exists with detailed descriptions of other
+qualities that are often thought of as having comparable intensities:
+heat and cold; light; pressure; sound; pitch; aesthetic feelings, such
+as grace and beauty in music, poetry and art; emotions, such as rage
+and fear; moral feelings, such as pity; affective sensations,
+including pleasure, pain and disgust.  Each of these examples points
+out that the apparent relationships of greater than or less than with
+respect to intensity are static Spatial arrangements of different
+fundamental activities in Duration.
+
+\section{Number}
+\label{section:number}
+
+Some models make the complicating assumption that numbers are an
+additional component to every symbolic perception just for this
+purpose of modelling intensity.  In this section, I describe how
+numbers are related to the model: numbers are thought of in my model
+as arrangements of symbols in Space.
+
+\cite{bergson:1910} shows the derivation of all numerical
+representations as requiring an accompanying extension in Space.  For
+example, in referring to the individual sheep in a flock of sheep, he
+explains counting:
+
+% pg. 75-77
+\begin{quote}
+Number may be defined in general as a collection of units, or,
+speaking more exactly, as the synthesis of the one and the
+many\ldots
+
+No doubt we can count the sheep in a flock and say that there are
+fifty, although they are all different from one another and are easily
+recognized by the shepherd: but the reason is that we agree in that
+case to neglect their individual differences and to take into account
+only what they have in common.  On the other hand, as soon as we fix
+our attention on the particular features of objects or individuals, we
+can of course make an enumeration of them, but not a total\ldots
+
+Hence we may conclude that the idea of number implies the simple
+intuition of a multiplicity of parts or units, which are absolutely
+alike.
+
+And yet they must be somehow distinct from one another, since
+otherwise they would merge into a single unit.  Let us assume that all
+the sheep in the flock are identical; they differ at least by the
+position which they occupy in space, otherwise they would not form a
+flock.
+\end{quote}
+
+The last point here illustrates the idea that numbers are always
+derived from symbols situated in Space.  Therefore, a model for
+thinking based directly on symbols cannot, by definition, be more
+complicated than a model based on a numerical representation.  A
+number is, after all, only the reified result of an axiomatic
+construction of Spatial organization of symbolic references to the
+dynamic.  In other words, they are specific sheep of the dynamic.  The
+explicit implication is, therefore, that, in building an AI that is
+capable of reflective thought, the model building process and its use
+of numerical representations must be explicitly available for
+inspection by the AI itself.  Here, I employ Occam's razor to simplify
+the loop of reflective representation in order to ease building the
+first proof-of-concept examples of AIs capable of reflective thinking.
+
+\section{Time as Space}
+
+Symbolic references can be ordered Spatially.  These symbolic
+relationships can be reified and treated symbolically by further
+ordering Spatial relationships.  Thus, Bergson explains time as a form
+of Space:
+
+% pg. 98
+\begin{quote}
+Now, if space is to be defined as the homogeneous, it seems that
+inversely every homogeneous and unbounded medium will be space.  For,
+homogeneity here consisting in the absence of every activity, it is
+hard to see how two forms of the homogeneous could be distinguished
+from one another.  Nevertheless it is generally agreed to regard time
+as an unbounded medium, different from space but homogeneous like the
+latter: the homogeneous is thus supposed to take two forms, according
+as its contents co-exist or follow one another.  It is true that, when
+we make time a homogeneous medium in which conscious states unfold
+themselves, we take it to be given all at once, which amounts to
+saying that we abstract it from duration.  This simple consideration
+ought to warn us that we are thus unwittingly falling back upon space,
+and really giving up time.
+\end{quote}
+
+Time exists as a static creation, a derivative arrangement of symbols
+in Space.  Understanding time to be static is important because this
+allows the dynamic heterogeneous activities of Duration and a static
+homogeneous unqualified Space to remain, respectfully, neither
+distinct nor separate.  By prohibiting this separation, and, thereby,
+their independent existences, I avoid defining the dynamic activities
+in Duration in terms of static symbols, which, in turn, avoids the
+creation of a self-referential cycle, thus sidestepping the potential
+illusion of a false dynamism.  Being clear in our understanding of
+time used intentionally as a static tool of thought avoids confusing
+the focus of the modelling process to focus on modelling the dynamic.
+Again, a model that is purely of a model leads to an AI based on a
+tautology because models are only grounded in that they reference the
+dynamic.
+
+\section{Temporal Reflection}
+
+Spatial arrangements of symbols can be used to represent a past
+through memory and subsequently project that distinction as an
+analogous ``future'', through imaginative action, thus constructing a
+derivative conception of time.  The past and the future, therefore,
+remain static constructions that are actively maintained by the model
+as Spatial relationships in the dynamic present.  I will refer to the
+reification of Spatial relationships that order the past and the
+future as \emph{temporal reflection}.  Sequential time is created
+through temporal reflection.  Thus, temporal reflection is a form of
+Spatial reflection.  Like Spatial reflection, temporal reflection is
+also a form of actual reflection, symbolizing the active maintenance
+of a temporal Spatial relationship between static symbolic references.
+
+\section{Simultaneity and Transition}
+
+Correlation requires two symbols to be related in Space.  As symbols
+are correlated in the Space called time, these temporal correlations
+are referred to as either simultaneities or transitions.
+Simultaneities represent two symbols that are both actively symbolized
+in Duration.  Transitions represent the change from the past to the
+future.  Transitions can be extended in time in order to create
+counterfactual temporal extensions, called inferences.  Inferences of
+the past and the future can be created by matching and repeating these
+transitions.  A transition implies the removal of one symbol and the
+addition of another as a progression is made through a temporal
+sequence.  If correlations are counted and compared in ratios, then
+these are called probabilistic correlations, and the resulting
+inference would be a probabilistic inference.
+

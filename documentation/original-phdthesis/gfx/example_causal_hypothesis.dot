@@ -1,0 +1,100 @@
+digraph G {
+  
+  subgraph cluster_0 {
+    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+    color=black;
+    
+    // physical
+    node [fillcolor = white, color = "#000000", style = filled];
+    edge [color = "#000000"];
+    
+    gripper_1 [texlbl = "{\huge{\tt{Gripper-1}}}"];
+    block_1   [texlbl = "{\huge{\tt{Block-1}}}"];
+    table_1   [texlbl = "{\huge{\tt{Table-1}}}"];
+    
+    gripper_1_dropping_block_1 [shape=box,label="{\huge{\tt{dropping}}}"];
+    gripper_1 -> gripper_1_dropping_block_1 [arrowhead=none];
+    gripper_1_dropping_block_1 -> block_1 [style="-triangle 45"];
+    
+    block_1_sitting_on_table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
+    block_1_sitting_on_table_1 -> table_1 [style="-triangle 45"];
+    
+  }
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // x_2^*
+    
+    x_2 [texlbl = "{\huge{\tt{x-1*}}}"];
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
+    x_2_reflecting -> block_1 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> table_1 [style="-triangle 45,dashed", color=red];
+    x_2_reflecting -> block_1_sitting_on_table_1 [style="-triangle 45,dashed", color=red];
+    
+    // x_3^*
+    
+    x_3 [texlbl = "{\huge{\tt{x-3*}}}"];
+    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
+    x_3_reflecting -> gripper_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> block_1 [style="-triangle 45,dashed", color=red];
+    x_3_reflecting -> gripper_1_dropping_block_1 [style="-triangle 45,dashed", color=red];
+    
+    // simult_4^*
+    
+    simult_4 [texlbl = "{\huge{\tt{simult-3*}}}"];
+    
+    simult_4_not_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{not-percept*}}}"];
+    simult_4 -> simult_4_not_percept_x_2 [arrowhead=none];
+    simult_4_not_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // simult_6^*
+    
+    simult_6 [texlbl = "{\huge{\tt{simult-5*}}}"];
+    
+    simult_6_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_6 -> simult_6_percept_x_2 [arrowhead=none];
+    simult_6_percept_x_2 -> x_2 [style="-triangle 45"];
+    
+    // simult_7^*
+    
+    simult_7 [texlbl = "{\huge{\tt{simult-7*}}}"];
+    
+    simult_7_percept_x_2 [shape=box,style=filled,label="{\huge{\tt{percept*}}}"];
+    simult_7 -> simult_7_percept_x_2 [arrowhead=none];
+    simult_7_percept_x_2 -> x_3 [style="-triangle 45"];
+    
+    // transframe_2
+    
+    transframe_2 [texlbl = "{\huge{\tt{transframe-2*}}}"];
+    
+    transframe_2_past_simult_4 [shape=box,style=filled,label="{\huge{\tt{remove*}}}"];
+    transframe_2 -> transframe_2_past_simult_4 [arrowhead=none];
+    transframe_2_past_simult_4 -> simult_4 [style="-triangle 45"];
+    
+    transframe_2_future_simult_6 [shape=box,style=filled,label="{\huge{\tt{add*}}}"];
+    transframe_2 -> transframe_2_future_simult_6 [arrowhead=none];
+    transframe_2_future_simult_6 -> simult_6 [style="-triangle 45"];
+    
+    // h_1^*
+    
+    h_1 [texlbl = "{\huge{\tt{h-1*}}}"];
+    
+    h_1_effect_transframe_2 [shape=box,style=filled,label="{\huge{\tt{effect*}}}"];
+    h_1 -> h_1_effect_transframe_2 [arrowhead=none];
+    h_1_effect_transframe_2 -> transframe_2 [style="-triangle 45"];
+    
+    h_1_cause_transframe_2 [shape=box,style=filled,label="{\huge{\tt{cause*}}}"];
+    h_1 -> h_1_cause_transframe_2 [arrowhead=none];
+    h_1_cause_transframe_2 -> simult_7 [style="-triangle 45"];
+    
+  }
+}

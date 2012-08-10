@@ -1,0 +1,245 @@
+%************************************************
+\chapter{Evaluation}
+\label{chapter:evaulation}
+%************************************************
+
+The focus of this thesis has been the implementation of a
+computational model of the dynamic activity of reflective thinking.  I
+began in {\mbox{\autoref{part:the_model}}} with a basic model.  In
+order to put this basic model into mathematical terms,
+{\mbox{\autoref{part:the_simulation}}} introduced the assumption that
+the activities in duration can be modelled as an arrangement of
+symbols in graph theoretic relationships.  Further, while maintaining
+an awareness of the primary modelling focus on actual reflective
+thinking, {\mbox{\autoref{part:the_implementation}}} made the further
+assumption that the dynamic activity of simulation is a static logical
+combinational device.  In this chapter, I evaluate the thesis in terms
+of the following three guiding questions:
+\begin{enumerate}
+\item How well have the goals of the model described in
+  {\mbox{\autoref{part:the_model}}} been accomplished?
+\item How well have the goals of the mathematical simulation model
+  described in {\mbox{\autoref{part:the_simulation}}} been
+  accomplished?
+\item How well have the goals of the computational implementation
+  described in {\mbox{\autoref{part:the_implementation}}} been
+  accomplished?
+\end{enumerate}
+Next I will review the goals of each of the contributions of this
+thesis, followed by a discussion and evaluation of the more specific
+goals of each of the three larger contributions.
+
+\section{The Model}
+
+The model described in {\mbox{\autoref{part:the_model}}} serves a
+number of purposes:
+\begin{enumerate}
+\item To communicate an understanding of the distinction between
+  actual continuous dynamic activity as opposed to the static symbolic
+  references and models that reflective thinking manipulates, guiding
+  thinking about reflective thinking away from ``loopy'' models and
+  toward a layered theory of mind that avoids the tautologies inherent
+  in such ``loopy'' theories as described by \cite{perlis:2008}.
+\item To provide a foundational model that does not assume a
+  subjective view of objects, so that this model may lead to models of
+  the analogical abstraction of subjective views of objects from
+  symbolic goal-oriented plans.
+\item To explain how actual logical problem solving may benefit from
+  the refinement of symbolic perceptions and action resources in order
+  to create better hypothetical models for accomplishing symbolic
+  goals.
+\item To explain how probabilistic causal models are rationally
+  constructed from the more fundamental symbolic perceptions and
+  action resources, and therefore, must keep track of these more basic
+  symbolic models, so that they may be debugged when they end up
+  failing.
+\item To explain how neural networks and other objective models of
+  ``sub-symbolic'' perception and thinking are at least constructions
+  of second-order reflective thinking, more abstract and symbolic than
+  the perceptions of the first-order reflective layer that they are
+  created to describe.
+\item To explain that a model that is grounded in the actual dynamic
+  activities that exist can not only represent factual perceptual
+  memories of physical activities but also factual perceptual memories
+  of thinking activities, such as actual plan failures of the
+  reflective thinking layers.
+\end{enumerate}
+While I have attempted to make {\mbox{\autoref{part:the_model}}}
+accessible in non-technical language, an evaluation of the
+communicative purposes of this part can only be evaluated in
+retrospect.  The evaluation of how well this part serves as a strong
+and basic foundation for the subsequent contributions of this thesis
+is next evaluated in the terms of those contributions, respectively.
+
+\section{The Simulation}
+
+To review, the simulation model described in
+{\mbox{\autoref{part:the_simulation}}} serves the following purposes:
+\begin{enumerate}
+\item To explicitly represent the dynamic continuous activities
+  otherwise left undescribed in {\mbox{\autoref{part:the_model}}} by
+  using a discrete static symbolic mathematical representation.
+\item To provide a graph theoretic definition of symbolic reference
+  that maintains explicit distinctions between the existence of
+  symbolic references and symbolic referents, enabling a grounded,
+  recursively applicable, and non-tautological model of symbolic
+  perception.
+\item To mathematically clarify four of the most important yet
+  potentially confusing distinctions in the reflective theory: (1)
+  continuous dynamic activities, (2) discrete static symbolic
+  references, (3) $n$ layers of distinct ordered sets of temporal
+  relationships, and (4) the steps of computational simulation
+  introduced in {\mbox{\autoref{part:the_implementation}}}.  In
+  non-reflective theories, only one of these concepts may be needed,
+  but these concepts are important to distinguish in this recursive
+  model of thinking in order to maintain the grounded,
+  non-tautological organization.
+\end{enumerate}
+This part serves the purpose of communicating the technical foundation
+of the implementation.  The communication goals of this part cannot be
+evaluated except in retrospect, but the foundational goals of this
+part will be next evaluated in terms of the implementation goals.
+
+\section{The Implementation}
+
+The computational implementation described in
+{\mbox{\autoref{part:the_implementation}}} serves the following
+purposes:
+\begin{enumerate}
+\item To describe $n$ layers of procedurally reflective heuristic
+  learning that do not affect the ``big O'' time complexity of the
+  algorithm under focus.
+\item To describe $n$ layers of planning machines that operate by
+  executing a number of simple constant time, $O(1)$, planning
+  activities that are combined in order to perform all search-like
+  operations within the model, avoiding any primitives that would
+  imply declarative or logical searches ``behind the scenes'', so that
+  all search-like activities may be reflectively optimized.
+\item To describe $n$ layers of efficient causal hypothesis learning
+  and knowledge maintenance from the failure of counterfactual
+  decisions back to bases in factual perceptual memories.  In this
+  way, planning heuristics are defined to be hypotheses of planning
+  machine operations by the reflective thinking layers of second-order
+  and above.
+\end{enumerate}
+There are two key features that must be evaluated in the
+implementation: (1) reflecting over a basic planning algorithm does
+not slow down the basic planning algorithm, and (2) reflective
+learning improves the efficiency of the basic planning algorithm.  I
+will discuss how and when these two points are true in general.  Also,
+there is a question as to increased space complexity required by each
+layer of reflection.  Evaluations of these issues will be covered in
+the following sections.
+
+\section{No Theoretical Slowdown of Original Algorithm}
+
+In order to assume that there is no theoretical slowdown of the
+original planning algorithm when reflective heuristic learning is
+applied, it must be assumed that the reflective implementation is an
+ideal concurrent shared memory architecture.  In practice, the
+underlying Funk virtual operating system slows down when more
+concurrent and parallel fibers are executing.  This is beside the
+theoretical point of this thesis, but the following table shows a
+real-time test of the actual slowdown experienced by the Funk
+operating system as different numbers of parallel fiber tasks are
+executed to perform a simple numerical processing task.  The test was
+done on a dual Pentium processor computer, each with ``core duo''
+technology with each core implementing ``hyper-threading'', which ends
+up appearing as eight processors to the Linux operating system
+underlying the Funk virtual operating system:
+
+\vspace{5mm}
+\begin{tabular}{ll}
+Tasks & Real-Time (s) \\
+1 & 29\\
+2 & 36\\
+3 & 46\\
+4 & 44\\
+5 & 68\\
+6 & 67\\
+7 & 73\\
+8 & 110\\
+\end{tabular}
+\vspace{5mm}
+
+If a non-reflective learning algorithm is running on this hardware
+implementation of a concurrent shared memory architecture and uses one
+fiber and each reflective learning algorithm uses an additional fiber,
+the Funk virtual operating system underlying SALS will experience
+slowdown similar to that shown in this table.
+
+\section{All Activities are Performed in Constant Time}
+
+In order for all activities in my model to be reflectively optimized
+by the $n$ layers of procedural reflective learning and planning, all
+activities must be composed of primitive activities that are known to
+complete in constant time, $O(1)$.  I have clearly described a
+planning machine that operates based on constant time operations,
+similar to a virtual machine.
+
+In order to maintain this invariant in every aspect of the
+implementation, I have needed to make some limiting assumptions in
+order to avoid the general NP-complete problem of subgraph isomorphism
+as a means of implementing symbolic perception.  If symbolic
+perception is implemented as a subgraph isomorphism, then the
+reflective optimization benefits of my model of reflective thinking no
+longer apply.  In order to avoid this dangerous problem in my
+implementation, I have made two temporary proof-of-concept simplifying
+assumptions: (1) restricting learned symbolic perceptions to subgraphs
+of 4 nodes and 4 edges or less of a constant upper-bound in
+complexity, and (2) by hand-coding a small number of procedural
+critics in the second-order reflective thinking layer that observe
+specific properties of plans, such as similarly restricted subgraph
+combinations of expected transframe additions and removals of plans in
+different planning machine registers.
+
+The general solution to the problem of symbolic perception in my model
+is the planning-to-perceive problem as described by
+\cite{pryorcollins:1995}.  In this way, the first-order planning
+machine is responsible for creating plans that can be compiled into
+perceptual resources that are composed of constant time, $O(1)$, steps
+that respond to the perceptual event stream originating from the
+layers below.  These plans must be composed of actions that traverse
+and compare node and edge labels of the event stream as well as the
+reflectively reconstructed representation of the layers below in order
+to implement different planned ways to recognize the same symbol
+depending on the order of the events in the stream.
+
+It is imperative to not confuse the symbolic perception problem in my
+model with the general NP-complete subgraph isomorphism problem.  In
+this way, every aspect of my model, including symbolic perception,
+recognizing isomorphic subgraphs in the layers below, becomes a
+problem that can be optimized through procedural reflection, depending
+on the order of reflective events.
+
+\section{Efficiency Gains of Heuristic Learning}
+
+\cite{mitchell:1997} defines the \emph{inductive learning hypothesis}
+as follows:
+\begin{definition}\emph{
+\emph{The inductive learning hypothesis.} Any hypothesis found to
+approximate the target function well over a sufficiently large set of
+training examples will also approximate the target function well over
+other unobserved examples.  }\end{definition} As the first-order
+reflective learning algorithm learns hypotheses that generalize the
+effects of actions from symbolic perceptions, the inductive learning
+hypothesis is assumed of the target $\text{reflective}^0$ or physical
+layer under the reflective focus.  In order to see efficiency gains in
+the second-order reflective learning layer, I define here the
+\emph{reflective inductive learning hypothesis}:
+\begin{definition}\emph{
+\emph{The reflective inductive learning hypothesis.} Any heuristic
+found to approximate the target planning failure well over a
+sufficiently large set of plan execution examples will also
+approximate the target execution failure well over other unobserved
+plan executions.}\end{definition} As long as the reflective inductive
+learning hypothesis holds for a given planning domain, arbitrarily
+greater planning efficiencies can be expected for each reflective
+layer where this hypothesis holds true.
+
+\section{Space Complexity}
+
+\section{Conclusion}
+
+
+

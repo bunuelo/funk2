@@ -1,0 +1,41 @@
+digraph G {
+  
+  node [fillcolor = white, color = "#000000", style = filled];
+  edge [color = "#000000"];
+  
+  node_type     [texlbl = "$\text{\tt{type}}^*$"];
+  node_symbol   [texlbl = "$\text{\tt{symbol}}^*$"];
+  node_goal     [texlbl = "$\text{\tt{goal}}^*$"];
+  node_percept  [texlbl = "$\text{\tt{percept}}^*$"];
+  node_resource [texlbl = "$\text{\tt{resource}}^*$"];
+  
+  node_symbol_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_symbol -> node_symbol_type_node_type [arrowhead=none];
+  node_symbol_type_node_type -> node_type;
+  
+  node_goal_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_goal -> node_goal_type_node_type [arrowhead=none];
+  node_goal_type_node_type -> node_type;
+  
+  node_goal_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_goal -> node_goal_parent_node_symbol [arrowhead=none];
+  node_goal_parent_node_symbol -> node_symbol;
+  
+  node_percept_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_percept -> node_percept_type_node_type [arrowhead=none];
+  node_percept_type_node_type -> node_type;
+  
+  node_percept_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_percept -> node_percept_parent_node_symbol [arrowhead=none];
+  node_percept_parent_node_symbol -> node_symbol;
+  
+  node_resource_type_node_type [shape=box,style=filled,label="$\text{\tt{type}}^*$"];
+  node_resource -> node_resource_type_node_type [arrowhead=none];
+  node_resource_type_node_type -> node_type;
+  
+  node_resource_parent_node_symbol [shape=box,style=filled,label="$\text{\tt{parent}}^*$"];
+  node_resource -> node_resource_parent_node_symbol [arrowhead=none];
+  node_resource_parent_node_symbol -> node_symbol;
+  
+  
+}

@@ -1,0 +1,42 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    
+    reflective_symbol_x_1 [shape=box,label="{\huge{\tt{symbol}}}"];
+    reflective -> reflective_symbol_x_1 [arrowhead=none];
+    reflective_symbol_x_1 -> x_1 [style="-triangle 45"];
+
+    gripper [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    block   [texlbl = "{\huge{\tt{Block}}}",color=red];
+    table   [texlbl = "{\huge{\tt{Table}}}",color=red];
+    
+    gripper_being_above_table [shape=box,label="{\huge{\tt{being-above}}}",color=red];
+    gripper -> gripper_being_above_table [arrowhead=none,color=red];
+    gripper_being_above_table -> table [style="-triangle 45",color=red];
+    
+    block_sitting_on_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}",color=red];
+    block -> block_sitting_on_table [arrowhead=none,color=red];
+    block_sitting_on_table -> table [style="-triangle 45",color=red];
+    
+    // node references
+    
+    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
+    x_1_reflecting -> gripper [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> block [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> table [style="-triangle 45,dashed", color=red];
+    x_1_reflecting -> gripper_being_above_table [style="-triangle 45,dashed",color=red];
+    x_1_reflecting -> block_sitting_on_table [style="-triangle 45,dashed",color=red];
+    
+  }
+}

@@ -1,0 +1,61 @@
+digraph G {
+
+  subgraph cluster_0 {
+    label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+    color=black;
+    
+    // physical
+    node [fillcolor = white, color = "#000000", style = filled];
+    edge [color = "#000000"];
+    
+    reflective0_gripper [texlbl = "{\huge{\tt{Gripper}}}"];
+    reflective0_block   [texlbl = "{\huge{\tt{Block}}}"];
+    reflective0_table   [texlbl = "{\huge{\tt{Table}}}"];
+    reflective0_left    [texlbl = "{\huge{\tt{left}}}"];
+    
+    reflective0_gripper_being_above_reflective0_table [shape=box,label="{\huge{\tt{being-above}}}"];
+    reflective0_gripper -> reflective0_gripper_being_above_reflective0_table [arrowhead=none];
+    reflective0_gripper_being_above_reflective0_table -> reflective0_table [style="-triangle 45"];
+    
+    reflective0_gripper_moving_reflective0_left [shape=box,label="{\huge{\tt{moving}}}"];
+    reflective0_gripper -> reflective0_gripper_moving_reflective0_left [arrowhead=none];
+    reflective0_gripper_moving_reflective0_left -> reflective0_left [style="-triangle 45"];
+    
+    reflective0_block_sitting_on_reflective0_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+    reflective0_block -> reflective0_block_sitting_on_reflective0_table [arrowhead=none];
+    reflective0_block_sitting_on_reflective0_table -> reflective0_table [style="-triangle 45"];
+    
+  }
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    gripper [texlbl = "{\huge{\tt{Gripper}}}",color=red];
+    left    [texlbl = "{\huge{\tt{left}}}",color=red];
+    
+    gripper_sitting_on_left [shape=box,style=filled,label="{\huge{\tt{moving}}}",color=red];
+    gripper -> gripper_sitting_on_left [arrowhead=none,color=red];
+    gripper_sitting_on_left -> left [style="-triangle 45",color=red];
+    
+    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    // resource_1^*
+    
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none];
+    resource_1_reflecting -> gripper [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> left [style="-triangle 45,dashed", color=red];
+    resource_1_reflecting -> gripper_sitting_on_left [style="-triangle 45,dashed", color=red];
+    
+    reflective_resource_resource_1 [shape=box,label="{\huge{\tt{resource}}}"];
+    reflective -> reflective_resource_resource_1 [arrowhead=none];
+    reflective_resource_resource_1 -> resource_1 [style="-triangle 45"];
+    
+  }
+}

@@ -1,0 +1,50 @@
+digraph G {
+  
+  node [fillcolor = white, color = "#000000", style = filled];
+  edge [color = "#000000"];
+  
+  Gripper_1 [texlbl = "{\huge{\tt{Gripper}}}"];
+  Block_1   [texlbl = "{\huge{\tt{Block}}}"];
+  Block_2   [texlbl = "{\huge{\tt{Block}}}"];
+  Table_1   [texlbl = "{\huge{\tt{Table}}}"];
+  
+  gripper_1 [texlbl = "{\huge{\tt{gripper-1}}}"];
+  block_1   [texlbl = "{\huge{\tt{block-1}}}"];
+  block_2   [texlbl = "{\huge{\tt{block-2}}}"];
+  table_1   [texlbl = "{\huge{\tt{table-1}}}"];
+  left      [texlbl = "{\huge{\tt{left}}}"];
+  
+  Gripper_1_name_gripper_1 [shape=box,style=filled,label="{\huge{\tt{name}}}"];
+  Gripper_1 -> Gripper_1_name_gripper_1 [arrowhead=none];
+  Gripper_1_name_gripper_1 -> gripper_1;
+  
+  Block_1_name_block_1 [shape=box,style=filled,label="{\huge{\tt{name}}}"];
+  Block_1 -> Block_1_name_block_1 [arrowhead=none];
+  Block_1_name_block_1 -> block_1;
+  
+  Block_2_name_block_2 [shape=box,style=filled,label="{\huge{\tt{name}}}"];
+  Block_2 -> Block_2_name_block_2 [arrowhead=none];
+  Block_2_name_block_2 -> block_2;
+  
+  Table_1_name_table_1 [shape=box,style=filled,label="{\huge{\tt{name}}}"];
+  Table_1 -> Table_1_name_table_1 [arrowhead=none];
+  Table_1_name_table_1 -> table_1;
+  
+  Gripper_1_being_above_Table_1 [shape=box,style=filled,label="{\huge{\tt{being-above}}}"];
+  Gripper_1 -> Gripper_1_being_above_Table_1 [arrowhead=none];
+  Gripper_1_being_above_Table_1 -> Table_1;
+  
+  Gripper_1_moving_left [shape=box,style=filled,label="{\huge{\tt{moving}}}"];
+  Gripper_1 -> Gripper_1_moving_left [arrowhead=none];
+  Gripper_1_moving_left -> left;
+  
+  Block_1_sitting_on_Table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+  Block_1 -> Block_1_sitting_on_Table_1 [arrowhead=none];
+  Block_1_sitting_on_Table_1 -> Table_1;
+  
+  Block_2_sitting_on_Table_1 [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+  Block_2 -> Block_2_sitting_on_Table_1 [arrowhead=none];
+  Block_2_sitting_on_Table_1 -> Table_1;
+  
+  
+}

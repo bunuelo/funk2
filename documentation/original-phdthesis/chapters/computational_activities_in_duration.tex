@@ -1,0 +1,506 @@
+%************************************************
+\chapter{Computational Activities in Duration}
+\label{chapter:computational_activities_in_duration}
+%************************************************
+
+%\newcommand{\FibR}{$\text{Fib}^\text{R }$}
+%\newcommand{\SALS}{SALS}
+
+My implementation is based on a virtual machine that allows parallel
+and concurrent scheduling of Lisp-like programs.  I refer to this
+virtual machine as \emph{SALS}, the substrate for accountable layered
+systems, the focus of this dissertation.  The purpose of SALS is to
+provide a simulation of the actual dynamic activities in Duration, the
+activities in Duration that actually exist.
+
+In this dissertation, I am focusing on how SALS demonstrates
+reflective learning in two distinct causal classes of knowledge from a
+single physical expectation failure.  I must begin my description with
+the dynamic activities in Duration.  Thus, first, I will describe how
+SALS simulates the activities in Duration.  I will explain the
+symbolization of these activities in the context of a block building
+physical simulation.  I will describe how causal models are learned.
+I will give examples of how causal models are put together into plan
+objects that are simple serial and parallel SALS programs.  I will
+explain how a plan may begin executing and fail.  Finally, I will
+describe how the expectation failure response updates causal models in
+both reflective layers.  This, in total, shows how learning how to
+plan is simulated by SALS.
+
+\section{The Funk Virtual Operating System}
+
+The virtual concurrent machine and operating system underlying SALS is
+called \emph{Funk} \cite[]{morgan:2009} for two reasons: (1) the
+``slap'' style of bass guitar playing \cite[]{graham:1969,
+  johnson:1984}, which emphasizes the fundamentals of the dynamic
+actual ongoing, and (2) the focus on reflective tracing of concurrent
+procedural ``funktions'' as opposed to purely declarative or logical
+approaches, which have no means of optimizing the underlying search
+problem.  In this dissertation, I focus on the implementation of
+second-order reflective thinking within this virtual operating system.
+In order to come to this point, a very general underlying substrate
+has been programmed, which will largely not be discussed.  To briefly
+give an idea of the complexity of the implementation, the following
+table gives quantification of the size of the SALS codebase:
+
+\vspace{5mm}
+\begin{tabular}{lr}
+Lines of C code:             &    141,138 \\
+Lines of Funk code:          &     50,346 \\
+Total lines of code:         &    192,868 \\
+Total characters of code:    & 10,117,671
+\end{tabular}
+\vspace{5mm}
+
+The project is small compared to other virtual operating systems and
+programming languages, but represents a non-trivial effort toward a
+fully reflective parallel and concurrent virtual operating system for
+implementing large-scale practical applications, such as word
+processors, web browsers, as well as scientific data processing tools.
+
+\section{The Global Environment}
+
+In SALS, the simulation state graph, $S$, becomes the \emph{global
+  environment}.  The global environment is SALS' static graph
+representation of the dynamic activities in Duration.  The previous
+part described the simulation state as the mathematical representation
+for the mind.  I previously defined this simulation state graph to
+represent all subgraphs that actually exist in
+Equation\ \ref{equation:define_exists}, reproduced here:
+\begin{equation*}
+\text{exists}(G) \longleftrightarrow (G ~{\subseteq}~ S)
+\end{equation*}
+Environments are organized into hierarchies that have two parts: (1) a
+frame containing slots containing variable definitions, and (2) a
+reference to a parent environment.  The global environment is a
+special environment because it is the only environment that has no
+parent environment.  The entire SALS computational implementation is
+contained within the static global environment or its directed
+references.
+
+\section{The Global Scheduler}
+
+SALS is able to take advantage of multi-core and multi-processor
+hardware, which makes it a concurrent processing system.  SALS
+explicitly represents these hardware processors in an object called
+the \emph{global scheduler}.  The global scheduler is contained in the
+global environment frame under the slot name {\tt global-scheduler}.
+The global scheduler object contains references to a number of
+processors that reflect the number of actual hardware processors in
+the current system.  For example, the implementation has been
+successfully tested on 1 through 32 processors, although most of the
+demonstration simulations were computed using a machine with two
+processors, each with 4 cores, which appears as 8 concurrent
+processors within SALS.
+
+\section{Fibers Simulate Activities}
+
+SALS introduces an object that represents a virtual machine that can
+run user programs, the \emph{fiber}.  Fibers are the fundamental
+element for simulating parallel user programs in SALS.  Each
+concurrent processor contains references to a collection of fibers
+that it is responsible for simulating.  Fibers execute bytecode
+programs.  In each concurrent processor's execution cycle, it runs a
+given finite number of bytecodes for each of its fibers, simulating
+parallel execution.
+
+SALS begins the simulation with only one fiber that serves a
+predefined ``boot-up'' function that starts all of the other
+concurrent fibers that are necessary for simulating the mind.  Fibers
+are the discrete elements that I have used as a model of the
+concurrent, actually inseparable, activities in Duration.
+
+My simulation of mind uses hundreds of thousands of fibers in order to
+demonstrate two layers of reflective learning.  Fibers are often very
+short-lived processes; for example, not execution, but simply
+compiling a single Lisp-like expression in SALS can lead to the
+creation and destruction of hundreds of fibers of activity.  Fibers
+are generally useful in programs that could use an extra perspective
+on a problem.  {\mbox{\autoref{figure:example_global_environment}}}
+shows an example global environment, containing the global scheduler,
+concurrent processors, and parallel executing user-programmable fiber
+objects.
+\begin{figure}
+\center
+\includegraphics[width=12cm]{gfx/example_global_environment}
+\caption[An example of a global environment with concurrent processors
+  and parallel fibers.]{An example of a global environment with its
+  frame object and a definition of the global scheduler object.  The
+  global scheduler contains references to concurrent processors, which
+  organize the parallel fibers, virtual machines that execute user
+  programs.}
+\label{figure:example_global_environment}
+\end{figure}
+
+\section{Stepping the Simulation State}
+
+For the purposes of description and evaluation of the complexity of my
+implementation of the reflective simulation, I assume that each
+concurrent processor executes at the same speed and steps the
+simulation forward at the same time.  Given a simulation state graph,
+$S$, all of the concurrent processors step the simulation forward to
+the next simulation state graph.
+Equations\ \ref{equation:define_simulation_step_first}
+and\ \ref{equation:define_simulation_step_last} define the initial
+simulation state and recursive definition of the step function that
+computationally creates the next simulation state graph.
+\begin{align}
+\label{equation:define_simulation_step_first}
+    S[0] &\equiv \text{\emph{Initial simulation state graph}} \\
+\label{equation:define_simulation_step_last}
+  S[n+1] &= \text{step}(S[n])
+\end{align}
+Note that until this point, I have not previously introduced a
+computational step function for the simulation state.  I have
+previously defined the temporal transitions that compose $n$ layers of
+distinct temporal orderings, one for each reflective layer in the
+model, but these layers of temporal transition representations are
+within the static state of the mind.  This computational step function
+allows all of the previously described static structures to change to
+new static representations.  The computational step function does not
+exist within the mind, and the mind does not have any access to
+symbolizing these different simulation state graphs that are now
+introduced in the computational implementation.
+
+Causally traced procedural reflection is the key component that allows
+SALS to monitor changes to its own simulation state graph
+representation.  Before discussing how procedural reflection must be
+embedded into the definition of SALS' fundamental memory
+representation, I must first briefly describe how fibers are
+programmed in order to simulate simple non-reflective programs.
+
+\section{Programming Language}
+
+SALS includes a Lisp-like programming language, which is programmed
+by typing statements that are called \emph{expressions}.  If
+expression \ref{expression:print_hello} were typed into SALS, the
+symbol ``green'' would be printed to the user's terminal screen.
+\begin{equation}
+\label{expression:print_hello}
+\text{\tt [print `green]}
+\end{equation}
+The {\tt print} command is a useful debugging tool that can report
+status messages to the programmer as the fiber reaches a specific
+point in the program.
+
+\section{Sequential and Parallel Programs}
+
+SALS includes expressions for describing serial and parallel
+programs.  For example, the expression
+\begin{equation*}
+\begin{array}{l}
+\text{\tt [prog [print 1]} \\
+\text{\tt ~~~~~~[print 2]} \\
+\text{\tt ~~~~~~[print 3]]}
+\end{array}
+\end{equation*}
+results in the output trace
+\begin{equation*}
+\begin{array}{l}
+\text{\tt 1} \\
+\text{\tt 2} \\
+\text{\tt 3.}
+\end{array}
+\end{equation*}
+The command {\tt prog} is a way for expressing a sequence of commands
+to be executed in serial order.  SALS also includes the {\tt parog}
+command for executing a list of commands in parallel, waiting for them
+all to complete, and then continuing.
+\begin{equation*}
+\begin{array}{l}
+\text{\tt [parog [print 1]} \\
+\text{\tt ~~~~~~~[print 2]} \\
+\text{\tt ~~~~~~~[print 3]]}
+\end{array}
+\end{equation*}
+When {\tt parog} is used, it is unclear what command will complete
+first because they are all running concurrently, in parallel, starting
+at slightly different times.  Here is an example output trace from the
+{\tt parog} expression:
+\begin{equation*}
+\begin{array}{l}
+\text{\tt 3} \\
+\text{\tt 1} \\
+\text{\tt 2.}
+\end{array}
+\end{equation*}
+The {\tt parog} expression is one way to easily start a number of
+parallel fibers to simultaneously execute a number of different tasks
+and wait for these tasks to complete.
+
+\section{Fibers Create Objects}
+
+SALS includes an object type system.  Every expression in SALS,
+besides {\tt nil}, has an object type.  Objects in SALS are in most
+cases based on a frame knowledge representation.  Objects have three
+main classes of functionality: {\tt get}, {\tt set}, and {\tt have}.
+The uses of these types of functionality are as follows:
+\begin{itemize}
+\item {\tt [get <object> <slot-name>]}
+
+The object-oriented {\tt get} command retrieves the value from the
+named slot of the object's frame.
+\item {\tt [set <object> <slot-name> <new-value>]}
+
+The object-oriented {\tt set} command mutates the value at the named
+slot of the object's frame to be the given new value.
+\item {\tt [have <object> <slot-name> <arguments>]}
+
+The object-oriented {\tt have} command performs other types of
+activities that are not simple frame slot accessors and mutators.  The
+{\tt have} commands sometimes involve complex mutations or other
+side-effects.
+\end{itemize}
+
+\section{Creating Parallel Fibers}
+
+The {\tt apply} operator is the normal way for a SALS program to
+evaluate a given function with arguments:
+\begin{equation*}
+\text{\tt [apply <function> <arguments>]}
+\end{equation*}
+The fundamental operator of SALS's parallel programming language is
+the {\tt fiber} operator:
+\begin{equation*}
+\text{\tt [fiber <function> <arguments>]}
+\end{equation*}
+The {\tt fiber} operator does not evaluate the given function with
+arguments.  The {\tt fiber} operator starts a new parallel fiber that
+will evaluate the given function and arguments; the new fiber object
+is returned.  The intermediate state or final result can be monitored
+through the fiber object.
+
+\section{Monitoring Simulated Activities}
+
+SALS includes a tool named \emph{FiberMon} that is written in the SALS
+programming language.  FiberMon helps the programmer to introspect on
+all fibers currently in the simulation scheduler and is shown in
+\autoref{figure:fibermon_many_fibers}.  Fibers may be easily removed
+or added to the scheduler, which enables efficient scheduler
+optimizations to be implemented at the highest levels of the language.
+If any bugs arise in any parallel fiber, that fiber shows up in red in
+the monitoring application, so that it may be inspected and debugged
+by hand.
+\begin{figure}[bth]
+  \center
+  \includegraphics[width=11cm]{gfx/fibermon_many_fibers}
+  \caption[FiberMon application monitoring many fibers]{FiberMon
+    application monitoring hundreds of parallel fibers, simulated
+    activities in Duration, executing on eight different physical
+    processor cores.}
+  \label{figure:fibermon_many_fibers}
+\end{figure}
+
+\section{Pausing and Resuming Activities}
+
+SALS includes a {\tt pause} command to pause the current fiber:
+\begin{equation*}
+\text{\tt [pause]}
+\end{equation*}
+The {\tt pause} command causes the executing fiber to remove itself
+from the scheduler, after removing itself, it yields the rest of the
+scheduler cycle.  A fiber that is paused in this sense uses none of
+SALS's processor resources because it is completely removed from
+the scheduler.
+
+If a fiber has paused, it cannot restart itself.  In order for a fiber
+to resume execution, another executing fiber must use the
+{\tt resume} command with the fiber object as an argument:
+\begin{equation*}
+\text{\tt [resume <fiber>]}
+\end{equation*}
+
+The {\tt pause} and {\tt resume} commands are extremely efficient for
+managing large simulations in which most fibers will be inactive at
+any given time, but they are a little cumbersome, so I have written a
+lightweight and helpful \emph{fiber trigger} object, which I will
+explain after explaining one more object that is used to program fiber
+triggers.
+
+\section{Mutual Exclusion}
+
+SALS provides a primitive object called a \emph{mutex} for handling
+the mutually exclusive access to resources.  A mutex object has two
+possible states: locked and unlocked.  If the mutex object is unlocked
+then when a fiber tries to locks the mutex, the mutex switches to the
+locked state and the fiber continues execution.  If the mutex object
+is already locked when a fiber tries to lock the mutex, the fiber will
+pause until the mutex is unlocked, at which point the mutex will be
+locked and the waiting fiber will resume execution.  Mutexes are used
+for protecting shared resources from being used by more than one fiber
+at a time.
+
+Mutexes are a special type of object that must be supported by the
+hardware of a concurrent computer.  Almost every parallel programming
+language has a mutex construct that derives from this hardware mutex.
+So, mutexes are common to parallel programming, but they are
+notoriously difficult to debug, resulting in bugs affectionately
+referred to as ``race conditions'' or ``deadlocks''.  In order to help
+with debugging these types of problems, mutexes in SALS keep track of
+which fibers are waiting for the lock or holding the lock.  I have
+found this extra information invaluable in debugging complicated mutex
+related bugs.
+
+\section{Fiber Triggers}
+
+The fiber trigger organizes sets of paused fibers so that they can be
+woken up at the same time.  Basically, the fiber trigger is an object
+that provides a useful abstraction for controlling fiber execution
+that combines a mutex with the {\tt pause} and {\tt resume} commands.
+
+A fiber can be added to the resume set of a fiber trigger by using the
+{\tt wait-for-trigger} command as in the following example:
+\begin{equation*}
+\text{\tt [wait-for-trigger <fiber-trigger>]}
+\end{equation*}
+The {\tt wait-for-trigger} command atomically pauses the current fiber
+and then adds the fiber to resume queue of the fiber trigger object.
+
+\section{Fiber Complete and Bug-Found Triggers}
+
+Fibers have two primary ways of completing their execution: by (1)
+successfully reaching the end of their execution task, or by (2)
+encountering a bug.  Each fiber has a special fiber trigger for each
+of these two possible events: (1) a {\tt complete} trigger, and (2) a
+{\tt bug-found} trigger.  When a parallel fiber is created, further
+parallel fibers can be created in order to listen for one or both of
+these triggers.  Within the internals of the Funk operating system, an
+object called a \emph{larva} is created when a C function encounters
+an error.  A larva object is similar to an exception in other
+programming languages such as C++ or Java.  The larva object
+propagates up the C execution stack until it reaches the {\tt value}
+register of the Funk virtual operating system fiber object.  The Funk
+virtual operating system never sees the larva object because when the
+C code detects a larva object in the {\tt value} register of the
+virtual machine represented by the fiber object, the larva object is
+immediately converted to a bug object and the fiber is also
+immediately paused by the C code.  When a bug is encountered the {\tt
+  bug-found} trigger is triggered, and a reflective parallel fiber can
+respond and inspect the paused fiber that contains the bug in its {\tt
+  value} register.  Larva and bugs are very versatile frame-based
+objects, so they can pass an arbitrary amount of information from the
+depths of the C code internals of the virtual machine to the very
+abstract reflective thinking capabilities of the SALS first-order
+reflective learning-to-act and second-order reflective
+learning-to-plan systems.
+
+%\section{leftovers...}
+
+%\section{Symbols and Simulated Symbols}
+
+%It becomes important at this point to keep track of the layer of
+%modelling that results when one simulates thinking.  The danger is in
+%losing an awareness of the difference between what one is thinking and
+%what a simulation is simulating as thought.  For example, a programmer
+%types symbols to express commands to the computer in a programming
+%language.  These symbols have grounding for the programmer.  The
+%computer continually repeats the same symbolic manipulation function,
+%the combinational device.  So, when the simulation appears to create
+%new symbols by manipulating the symbols contained within its
+%programming, this is an illusion.  The observer of output from the
+%simulation may create new symbols, but the computational process only
+%has grounding in terms of the symbols of its programming.  Therefore,
+%I will use the previously introduced asterisk notation for referring
+%to different classes of simulated modelling.
+
+%Now that I have described the difference between the symbols the
+%programmer types and the symbols* that the AI simulates as being
+%created, the first goal of my description of the implementation is to
+%describe how SALS simulates the creation of a symbol.  The rest of
+%this chapter will cover the creation of a symbol*, but first, I must
+%discuss how the activities in Duration begin simulating by programming
+%lists of symbols into SALS' interactive programming language.
+
+%get fiber triggers from fiber objects.
+%
+%execution complete versus bug found.
+%
+%
+%\section{{\tt par-fib}}
+%
+%\begin{equation*}
+%\begin{array}{l}
+%\text{\tt [defunk par-fib [n]} \\
+%\text{\tt ~~[if [== n 0]} \\
+%\text{\tt ~~~~~~0} \\
+%\text{\tt ~~~~[if [== n 1]} \\
+%\text{\tt ~~~~~~~~1} \\
+%\text{\tt ~~~~~~[let [[x []]} \\
+%\text{\tt ~~~~~~~~~~~~[y []]]} \\
+%\text{\tt ~~~~~~~~[parog [= x [par-fib [- n 2]]]} \\
+%\text{\tt ~~~~~~~~~~~~~~~[= y [par-fib [- n 1]]]]} \\
+%\text{\tt ~~~~~~~~[+ x y]]]]]}
+%\end{array}
+%\end{equation*}
+%
+%
+%\section{Symbolic Statements in SALS}
+%
+%\section{Three Categories of Symbol}
+%
+%SALS programming expressions are combinations of symbols in lists.
+%It is important to keep all of these symbols straight.  I have so far
+%introduced three slightly different conceptions of symbols: (1) the
+%symbols that are reflectively symbolized from the activities of
+%Duration, (2) the symbols that a programmer types into a computer, and
+%(3) the simulated symbols that are generated by the simulated
+%first-order reflective layer of thinking.
+%
+%\section{Concurrent Memory Allocation Pools}
+%
+%SALS works off of a multiple pool memory allocation system that
+%allows separate pools for each concurrent virtual processor,
+%eliminating the need for many lock situations that occur with shared
+%memory pools.
+%
+%\section{Garbage Collection}
+%
+%
+%
+%\section{Layered Cognitive Architecture}
+%
+%On this computational substrate, I have built a layered cognitive
+%architecture that is inspired by Minsky's description of the bottom
+%four layers of his Emotion Machine, or Model-6 architecture.  This
+%includes, a physical world, a reactive mapping of the physical world
+%to pre-symbolic activities, a first-order reflective thinking layer
+%that creates symbols, causal models, and plans for accomplishing
+%physical goals, as well as a second-order reflective thinking layer
+%that creates symbols, causal models, and plans for accomplishing
+%first-order thinking goals.  The model behind this implementation
+%inductively explains how this implementation can be extended to an
+%arbitrary number of reflective thinking layers.  While this part of
+%the thesis is primarily focused on the simulation of a static,
+%modelled representation of this model, I derive the fundamental basis
+%of my model of mind in non-technical English in
+%\autoref{part:the_model}.
+%
+%\section{Block Building Domain}
+%
+%My architecture exists in three main parts: the physical layer, the
+%first-order reflective layer, and the second-order reflective layer.
+%In order to explain how my model allows for learning at multiple
+%levels, I use a simulation of a physical domain that is easy to
+%understand.  I use this simulation primarily for communication of my
+%working model by demonstrating learning at multiple reflective levels
+%in response to a single physical failure.
+%
+%My simulation of the physical block building domain is meant to appear
+%as similar to the canonical toy problem, \emph{Blocks World}, with one
+%key exception: my model is meant to have a different interpretation
+%than the original Blocks World.  The primary point to emphasize here
+%is that my physical simulation is meant to represent a dynamic
+%physical world as opposed to the logical and completely static
+%reference for the Blocks World physical domain.
+%
+%
+%
+%\section{Reactive Layer}
+%
+%The physical layer in my model is implemented by combining the
+%physical simulation with a reactive layer that maps the physical
+%simulator perceptual and motor functions to ``sub-symbolic''
+%activities that are available to first-order reflection.
+
+
+

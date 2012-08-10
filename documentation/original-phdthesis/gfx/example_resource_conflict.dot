@@ -1,0 +1,101 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+    // t_1
+    
+    t_1 [texlbl = "{\huge{\tt{Simultaneity}}}"];
+    
+    // activation_1
+    
+    activation_1 [texlbl = "{\huge{\tt{Activation}}}"]; 
+
+    activation_1_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    activation_1 -> activation_1_activation_t_1 [arrowhead=none];
+    activation_1_activation_t_1 -> t_1 [style="-triangle 45"];
+
+    // resource_1^*
+    
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    resource_1_activation_activation_1 [shape=box,style=filled,label="{\huge{\tt{activation}}}"];
+    resource_1 -> resource_1_activation_activation_1 [arrowhead=none];
+    resource_1_activation_activation_1 -> activation_1 [style="-triangle 45"];
+    
+    // suppression_1
+    
+    suppression_1 [texlbl = "{\huge{\tt{Suppression}}}"];
+    
+    suppression_1_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    suppression_1 -> suppression_1_activation_t_1 [arrowhead=none];
+    suppression_1_activation_t_1 -> t_1 [style="-triangle 45"];
+
+    // resource_2^*
+    
+    resource_2 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    resource_2_activation_suppression_1 [shape=box,style=filled,label="{\huge{\tt{suppression}}}"];
+    resource_2 -> resource_2_activation_suppression_1 [arrowhead=none];
+    resource_2_activation_suppression_1 -> suppression_1 [style="-triangle 45"];
+    
+    // resource_3^*
+    
+    resource_3 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    // activation_2
+    
+    activation_2 [texlbl = "{\huge{\tt{Activation}}}"];
+    
+    activation_2_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    activation_2 -> activation_2_activation_t_1 [arrowhead=none];
+    activation_2_activation_t_1 -> t_1 [style="-triangle 45"];
+
+    // suppression_2
+    
+    suppression_2 [texlbl = "{\huge{\tt{Suppression}}}"];
+    
+    suppression_2_activation_t_1 [shape=box,style=filled,label="{\huge{\tt{start}}}"];
+    suppression_2 -> suppression_2_activation_t_1 [arrowhead=none];
+    suppression_2_activation_t_1 -> t_1 [style="-triangle 45"];
+
+    // resource_4^*
+    
+    resource_4 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    resource_4_activation_activation_2 [shape=box,style=filled,label="{\huge{\tt{activation}}}"];
+    resource_4 -> resource_4_activation_activation_2 [arrowhead=none];
+    resource_4_activation_activation_2 -> activation_2 [style="-triangle 45"];
+    
+    resource_4_activation_suppression_2 [shape=box,style=filled,label="{\huge{\tt{suppression}}}"];
+    resource_4 -> resource_4_activation_suppression_2 [arrowhead=none];
+    resource_4_activation_suppression_2 -> suppression_2 [style="-triangle 45"];
+    
+    // reflective^1
+    
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_event_resource_1 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_1 [arrowhead=none];
+    reflective_1_event_resource_1 -> resource_1 [style="-triangle 45"];
+    
+    reflective_1_event_resource_2 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_2 [arrowhead=none];
+    reflective_1_event_resource_2 -> resource_2 [style="-triangle 45"];
+    
+    reflective_1_event_resource_3 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_3 [arrowhead=none];
+    reflective_1_event_resource_3 -> resource_3 [style="-triangle 45"];
+    
+    reflective_1_event_resource_4 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    reflective_1 -> reflective_1_event_resource_4 [arrowhead=none];
+    reflective_1_event_resource_4 -> resource_4 [style="-triangle 45"];
+    
+    
+  }
+}

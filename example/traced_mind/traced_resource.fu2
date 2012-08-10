@@ -161,11 +161,17 @@
 												       'resource, ' name ', learned deliberative1_type_knowledge transframe.']
 										      
 										      [mapc [funk [change]
-												  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														   [get [get this layer] name] 'resource, ' name ', '
-														   'transframe_change: ' [get change change_type] ' - ' [get change change_event] '.']
-												  
-												  ]
+												  [let [[change_type  [get change change_type]]
+													[change_event [get change change_event]]]
+												    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														     [get [get this layer] name] ' resource, ' name ', '
+														     'transframe_change: ' change_type ' - ' change_event '.']
+												    [cond [[is-type `semantic_reflective_object_type_relation_event change_event] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+																									 [get [get this layer] name] ' resource, ' name ', '
+																									 'meta_relationship: ' change_type ' - ' [get change_event meta_relationship] '.']
+																							]]
+													  
+													  ]]]
 											    [let [[element_set [semantic-lookup_set event_transframe change]]]
 											      [if element_set
 												  [get element_set elements]

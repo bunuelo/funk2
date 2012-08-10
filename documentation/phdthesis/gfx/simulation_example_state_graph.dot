@@ -1,0 +1,28 @@
+digraph G {
+  
+  node [fillcolor = white, color = "#000000", style = filled];
+  edge [color = "#000000"];
+  
+  gripper_1 [texlbl = "$v_1$"];
+  block_1   [texlbl = "$v_2$"];
+  block_2   [texlbl = "$v_3$"];
+  table_1   [texlbl = "$v_4$"];
+  left      [texlbl = "$v_5$"];
+  
+  gripper_1_being_above_table_1 [shape=box,style=filled,label="$(v_1, v_4)$"];
+  gripper_1 -> gripper_1_being_above_table_1 [arrowhead=none];
+  gripper_1_being_above_table_1 -> table_1;
+  
+  gripper_1_moving_left [shape=box,style=filled,label="$(v_1, v_5)$"];
+  gripper_1 -> gripper_1_moving_left [arrowhead=none];
+  gripper_1_moving_left -> left;
+  
+  block_1_sitting_on_table_1 [shape=box,style=filled,label="$(v_2, v_4)$"];
+  block_1 -> block_1_sitting_on_table_1 [arrowhead=none];
+  block_1_sitting_on_table_1 -> table_1;
+  
+  block_2_sitting_on_table_1 [shape=box,style=filled,label="$(v_3, v_4)$"];
+  block_2 -> block_2_sitting_on_table_1 [arrowhead=none];
+  block_2_sitting_on_table_1 -> table_1;
+  
+}

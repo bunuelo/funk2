@@ -566,11 +566,7 @@ f2ptr f2__relationship_meta_semantic_object__terminal_print_with_frame(f2ptr cau
   assert_argument_type(terminal_print_frame,              terminal_print_frame);
   return raw__relationship_meta_semantic_object__terminal_print_with_frame(cause, this, terminal_print_frame);
 }
-def_pcfunk2(relationship_meta_semantic_object__terminal_print_with_frame, this, terminal_print_frame,
-	    "",
-	    return f2__relationship_meta_semantic_object__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
+export_cefunk2(relationship_meta_semantic_object__terminal_print_with_frame, this, terminal_print_frame, 0, "");
 
 
 f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {

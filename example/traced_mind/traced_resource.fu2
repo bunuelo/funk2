@@ -191,35 +191,45 @@
       [mapc [funk [feature]
 		  [let [[positive [get positive_feature_set contains feature]]]
 		    [have concept_version_space_example add_variable_value feature positive]]]
-	    [get feature_phenomenal_name_ptypehash values]]]
-    
-    [mapc [funk [change]
-		[let [[change_type  [get change change_type]]
-		      [change_event [get change change_event]]]
-		  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-				   [get [get this layer] name] ' resource, ' name ', '
-				   'transframe_change: ' change_type ' - ' change_event '.']
-		  [cond [[is-type `semantic_reflective_object_type_relation_event change_event] [let [[meta_relationship [get change_event meta_relationship]]]
-												  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														   [get [get this layer] name] ' resource, ' name ', '
-														   'meta_relationship: ' change_type ' - ' meta_relationship '.']
-												  [let [[change_feature [get this change_feature change_type meta_relationship]]]
-												    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-												      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														       [get [get this layer] name] ' resource, ' name ', '
-														       'precondition_hypothesis_space: ' precondition_hypothesis_space '.']
-												      
-												      ]]]]
-			
-			[t                                                                      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-														       [get [get this layer] name] ' resource, ' name ', '
-														       'change event: ' change_type ' - ' change_event '.']
-												      ]]
-			]]]
-	  [let [[element_set [semantic-lookup_set event_transframe change]]]
-	    [if element_set
-		[get element_set elements]
-	      nil]]]]]
+	    [get feature_phenomenal_name_ptypehash values]]
+      
+      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		       [get [get this layer] name] ' resource, ' name ', '
+		       'precondition training example: ' concept_version_space_example '.']
+      
+      [mapc [funk [change]
+		  [let [[change_type  [get change change_type]]
+			[change_event [get change change_event]]]
+		    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+				     [get [get this layer] name] ' resource, ' name ', '
+				     'transframe_change: ' change_type ' - ' change_event '.']
+		    [cond [[is-type `semantic_reflective_object_type_relation_event change_event] [let [[meta_relationship [get change_event meta_relationship]]]
+												    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														     [get [get this layer] name] ' resource, ' name ', '
+														     'meta_relationship: ' change_type ' - ' meta_relationship '.']
+												    [let [[change_feature [get this change_feature change_type meta_relationship]]]
+												      [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
+													[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															 [get [get this layer] name] ' resource, ' name ', '
+															 'training change feature hypothesis space on precondition example.']
+													
+													[have precondition_hypothesis_space train_on_example concept_version_space_example]
+													
+													[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															 [get [get this layer] name] ' resource, ' name ', '
+															 'precondition_hypothesis_space: ' precondition_hypothesis_space '.']
+													
+													]]]]
+			  
+			  [t                                                                      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															 [get [get this layer] name] ' resource, ' name ', '
+															 'change event: ' change_type ' - ' change_event ' (not learning hypothesis space for change).']
+													]]
+			  ]]]
+	    [let [[element_set [semantic-lookup_set event_transframe change]]]
+	      [if element_set
+		  [get element_set elements]
+		nil]]]]]]
 
 [deftypefunk traced_resource execute know_of_completed_action_sequence [action_sequence]
   [let [[transframe_start_time [get action_sequence absolute_start_time]]

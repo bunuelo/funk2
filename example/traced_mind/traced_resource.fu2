@@ -17,6 +17,24 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'action_transframe_hypothesis_space_feature'
+
+[defunk action_transframe_hypothesis_space_feature-phenomenal_name [change_type meta_relationship]
+  [format nil change_type '_' meta_relationship]]
+
+[deframe action_transframe_hypothesis_space_feature [frame] [change_type
+							     meta_relationship]
+  [new [initial-change_type
+	initial-meta_relationship]
+       [= change_type       initial-change_type]
+       [= meta_relationship initial-meta_relationship]
+       nil]]
+
+[deftypefunk action_transframe_hypothesis_space_feature get phenomenal_name []
+  [action_transframe_hypothesis_space_feature-phenomenal_name change_type meta_relationship]]
+
+
 'action_transframe_hypothesis_space'
 
 [deframe action_transframe_hypothesis_space [frame] [feature
@@ -25,13 +43,13 @@
        [= feature initial-feature]
        nil]]
 
-[defunk action_transframe_hypothesis_space-compute_symbol_from_semantic_event [semantic_event]
-  nil]
+
 
 'traced_resource'
 
 [deframe traced_resource [resource] [simulate_knowledge_base_names
-				     ]
+				     [feature_phenomenal_name_ptypehash               [new ptypehash]]
+				     [precondition_hypothesis_space_feature_ptypehash [new ptypehash]]]
   [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
 	 [construct resource initial-name wrapped_active_funk]
@@ -100,6 +118,20 @@
     [type-have resource this finish]
     [semantic-remove agent waiting_for_to_finish target]]]
 
+[deftypefunk traced_resource get feature [change_type change_meta_relationship]
+  [let [[change-phenomenal_name [action_transframe_hypothesis_space_feature-phenomenal_name change_type change_meta_relationship]]]
+    [let [[feature [have feature_phenomenal_name_ptypehash lookup change-phenomenal_name]]]
+      [if [null feature]
+	  [prog [= feature [new action_transframe_hypothesis_space_feature]]
+		[have feature_phenomenal_name_ptypehash add change-phenomenal_name feature]]]
+      feature]]]
+
+[deftypefunk traced_resource get precondition_hypothesis_space [feature]
+  [let [[precondition_hypothesis_space [have precondition_hypothesis_space_feature_ptypehash lookup feature]]]
+    [if [null precondition_hypothesis_space]
+	[prog [= precondition_hypothesis_space [new action_transframe_hypothesis_space feature]]
+	      [have precondition_hypothesis_space_feature_ptypehash add feature precondition_hypothesis_space]]]
+    precondition_hypothesis_space]]
 
 [deftypefunk traced_resource execute know_of_completed_action_sequence [action_sequence]
   [let [[transframe_start_time [get action_sequence absolute_start_time]]
@@ -166,10 +198,16 @@
 												    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 														     [get [get this layer] name] ' resource, ' name ', '
 														     'transframe_change: ' change_type ' - ' change_event '.']
-												    [cond [[is-type `semantic_reflective_object_type_relation_event change_event] [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																									 [get [get this layer] name] ' resource, ' name ', '
-																									 'meta_relationship: ' change_type ' - ' [get change_event meta_relationship] '.']
-																							]]
+												    [cond [[is-type `semantic_reflective_object_type_relation_event change_event] [let [[meta_relationship [get change_event meta_relationship]]]
+																						    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+																								     [get [get this layer] name] ' resource, ' name ', '
+																								     'meta_relationship: ' change_type ' - ' meta_relationship '.']
+																						    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_type meta_relationship]]]
+																						      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+																								       [get [get this layer] name] ' resource, ' name ', '
+																								       'precondition_hypothesis_space: ' precondition_hypothesis_space '.']
+																						      
+																						      ]]]
 													  
 													  ]]]
 											    [let [[element_set [semantic-lookup_set event_transframe change]]]

@@ -67,6 +67,8 @@
        [= change_feature initial-change_feature]
        nil]]
 
+[deftypefunk action_transframe_hypothesis_space execute train_on_example [example]
+  [have concept_version_space train_on_example example]]
 
 
 'traced_resource'

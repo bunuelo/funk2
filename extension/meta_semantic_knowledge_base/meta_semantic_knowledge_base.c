@@ -546,6 +546,33 @@ f2ptr f2__relationship_meta_semantic_object__add_trans_level_edges_to_graph_with
 export_cefunk3(relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash, this, graph, node_ptypehash, 0, "Adds the trans-level source and target edges to a given graph using the given node_ptypehash.");
 
 
+f2ptr raw__relationship_meta_semantic_object__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"), new__symbol(cause, "relationship_meta_semantic_object"),
+						new__symbol(cause, "source"),            f2__relationship_meta_semantic_object__source(cause, this),
+						new__symbol(cause, "key_type"),          f2__relationship_meta_semantic_object__key_type(cause, this),
+						new__symbol(cause, "key"),               f2__relationship_meta_semantic_object__key(cause, this),
+						new__symbol(cause, "target"),            f2__relationship_meta_semantic_object__target(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__relationship_meta_semantic_object__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(relationship_meta_semantic_object, this);
+  assert_argument_type(terminal_print_frame,              terminal_print_frame);
+  return raw__relationship_meta_semantic_object__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(relationship_meta_semantic_object__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__relationship_meta_semantic_object__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+
+
 f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "meta_semantic_object")));
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "new"),                                                f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__new")));}
@@ -561,6 +588,7 @@ f2ptr f2__relationship_meta_semantic_object_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_name"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_name")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, "as-graphviz_edge_code"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__as__graphviz_edge_code")));}
   {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "add_trans_level_edges_to_graph_with_node_ptypehash"), f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__add_trans_level_edges_to_graph_with_node_ptypehash")));}
+  {f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, "terminal_print_with_frame"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "meta_semantic_knowledge_base"), new__symbol(cause, "relationship_meta_semantic_object__terminal_print_with_frame")));}
   return this;
 }
 

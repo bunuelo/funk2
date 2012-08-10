@@ -21,11 +21,17 @@
 'action_transframe_hypothesis_space_feature'
 
 [defunk action_transframe_hypothesis_space_feature-phenomenal_name [meta_relationship]
-  [let [[source_phenomenal_name [get [get meta_relationship source] phenomenal_name]]
-	[key_type                    [get meta_relationship key_type]]
-	[key                         [get meta_relationship key]]
-	[target_phenomenal_name [get [get meta_relationship target] phenomenal_name]]]
-    [format nil source_phenomenal_name '_' key_type '_' key '_' target_phenomenal_name]]]
+  [let [[source [get meta_relationship source]]
+	[target [get meta_relationship target]]]
+    [let [[source_phenomenal_name [if [is-type `semantic_object source]
+				      [get source phenomenal_name]
+				    [get [get source as-string] as-symbol]]]
+	  [key_type                    [get meta_relationship key_type]]
+	  [key                         [get meta_relationship key]]
+	  [target_phenomenal_name [if [is-type `semantic_object target]
+				      [get target phenomenal_name]
+				    [get [get target as-string] as-symbol]]]]
+      [format nil source_phenomenal_name '_' key_type '_' key '_' target_phenomenal_name]]]]
 
 [deframe action_transframe_hypothesis_space_feature [frame] [meta_relationship]
   [new [initial-meta_relationship]

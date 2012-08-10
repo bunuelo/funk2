@@ -171,9 +171,14 @@
     [let [[concept_version_space_example [new concept_version_space_example t]]
 	  [positive_feature_set          [new set]]]
       [mapc [funk [event_precondition]
-		  [let [[meta_relationship [get event_precondition meta_relationship]]]
-		    [let [[feature [get this feature meta_relationship]]]
-		      [have positive_feature_set add feature]]]]
+		  [cond [[is-type `semantic_reflective_object_type_relation_event event_precondition] [let [[meta_relationship [get event_precondition meta_relationship]]]
+													[let [[feature [get this feature meta_relationship]]]
+													  [have positive_feature_set add feature]]]]
+			[t                                                                            [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															     [get [get this layer] name] ' resource, ' name ', '
+															     'precondition event: ' event_precondition '.']
+													    ]]
+			]]
 	    event_preconditions]
       
       [mapc [funk [feature]
@@ -199,6 +204,10 @@
 												      
 												      ]]]]
 			
+			[t                                                                      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+														       [get [get this layer] name] ' resource, ' name ', '
+														       'change event: ' change_type ' - ' change_event '.']
+												      ]]
 			]]]
 	  [let [[element_set [semantic-lookup_set event_transframe change]]]
 	    [if element_set

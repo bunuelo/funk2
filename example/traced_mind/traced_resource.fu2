@@ -193,7 +193,8 @@
 		    [have concept_version_space_example add_variable_value feature positive]]]
 	    [get feature_phenomenal_name_ptypehash values]]
       
-      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+      'too large to print.'
+      `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		       [get [get this layer] name] ' resource, ' name ', '
 		       'precondition training example: ' concept_version_space_example '.']
       

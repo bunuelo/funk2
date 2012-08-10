@@ -19,6 +19,7 @@
 
 [defpackage traced_resource
   :packages [resource
+	     concept_version_space
 	     semantic_knowledge_base
 	     semantic_resource
 	     semantic_resource_action_event

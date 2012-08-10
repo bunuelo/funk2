@@ -24,7 +24,7 @@
   [format nil change_type '_' meta_relationship]]
 
 [deframe action_transframe_hypothesis_space_change_feature [frame] [change_type
-							     meta_relationship]
+								    meta_relationship]
   [new [initial-change_type
 	initial-meta_relationship]
        [= change_type       initial-change_type]
@@ -122,7 +122,7 @@
   [let [[change-phenomenal_name [action_transframe_hypothesis_space_change_feature-phenomenal_name change_type change_meta_relationship]]]
     [let [[change_feature [have change_feature_phenomenal_name_ptypehash lookup change-phenomenal_name]]]
       [if [null change_feature]
-	  [prog [= change_feature [new action_transframe_hypothesis_space_change_feature]]
+	  [prog [= change_feature [new action_transframe_hypothesis_space_change_feature change_type change_meta_relationship]]
 		[have change_feature_phenomenal_name_ptypehash add change-phenomenal_name change_feature]]]
       change_feature]]]
 

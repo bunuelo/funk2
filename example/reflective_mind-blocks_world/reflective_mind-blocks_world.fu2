@@ -117,7 +117,7 @@
 						    [wait-for-time 1]
 						    [wait-for-relationship block shape cube below gripper is-me t]
 						    [wait-to-call grab]
-						    [wait-for-time 1]
+						    [wait-for-time 10]
 						    [wait-for-property gripper is-me t movement_command stop]
 						    [wait-to-call move_right]
 						    [wait-for-time 1]

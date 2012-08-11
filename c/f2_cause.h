@@ -74,8 +74,8 @@ declare_object_type_15_slot(cause,
 
 // cause
 
-#define cause__allocate_traced_arrays__default_value (nil)
-//#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
+//#define cause__allocate_traced_arrays__default_value (nil)
+#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
 declare_primobject_15_slot(cause,
 			   fibers_cmutex,

@@ -408,15 +408,17 @@ export_cefunk2(concept_version_space_hypothesis__minimal_specializations_consist
 
 
 f2ptr raw__concept_version_space_hypothesis__call_removal_callbacks(f2ptr cause, f2ptr this) {
-  f2ptr removal_callback_funks = raw__concept_version_space_hypothesis__removal_callbacks(cause, removed_hypothesis);
-  f2ptr iter = removal_callbacks;
-  while (iter != nil) {
-    f2ptr removal_callback = assert_value(f2__cons__car(cause, iter));
-    catch_value(raw__concept_version_space_hypothesis_callback__call(cause, removal_callback),
-		f2list4__new(cause,
-			     new__symbol(cause, "description"), new__string(cause, "Bug encountered while calling removal callbacks for concept_version_space_hypothesis."),
-			     new__symbol(cause, "this"),        this));
-    iter = assert_value(f2__cons__cdr(cause, iter));
+  f2ptr removal_callback_funks = raw__concept_version_space_hypothesis__removal_callbacks(cause, this);
+  {
+    f2ptr iter = removal_callbacks;
+    while (iter != nil) {
+      f2ptr removal_callback = assert_value(f2__cons__car(cause, iter));
+      catch_value(raw__concept_version_space_hypothesis_callback__call(cause, removal_callback),
+		  f2list4__new(cause,
+			       new__symbol(cause, "description"), new__string(cause, "Bug encountered while calling removal callbacks for concept_version_space_hypothesis."),
+			       new__symbol(cause, "this"),        this));
+      iter = assert_value(f2__cons__cdr(cause, iter));
+    }
   }
   return nil;
 }

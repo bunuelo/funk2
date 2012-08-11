@@ -36,8 +36,7 @@
 	      [have this add_resource [new reflective_focus_plan_add_before_resource]]
 	      [have this add_resource [new reflective_focus_plan_add_in_parallel_resource]]
 	      [have this add_resource [new reflective_remember_plan_for_goal_resource]]
-	      [have this add_resource [new reflective_remember_plan_from_reflective_memory_for_goal_resource]]
-	      [have this add_resource [new reflective_remember_plan_from_social_advice_for_goal_resource]]]
+	      ]
        
        this]]
 
@@ -60,8 +59,7 @@
   [have-apply [get this mind] create_reflective_action `[reflective plan focus_plan_add_before]]
   [have-apply [get this mind] create_reflective_action `[reflective plan focus_plan_add_in_parallel]]
   [have-apply [get this mind] create_reflective_action `[reflective plan remember_plan_for_goal]]
-  [have-apply [get this mind] create_reflective_action `[reflective plan remember_plan_from_reflective_memory_for_goal]]
-  [have-apply [get this mind] create_reflective_action `[reflective plan remember_plan_from_social_advice_for_goal]]]
+  ]
 
 [deftypefunk reflective_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
   [have-apply [get this mind] create_reflective_action `[reflective plan focus_on_plan ,semantic_plan_phenomenal_name]]
@@ -245,34 +243,6 @@
 
 [deftypefunk reflective_remember_plan_for_goal_resource get as-english_conslist []
   `[remember plan for goal]]
-
-
-
-'reflective_remember_plan_from_reflective_memory_for_goal_resource'
-
-[deframe reflective_remember_plan_from_reflective_memory_for_goal_resource [reflective_resource] []
-  [new []
-       [construct reflective_resource `remember_plan_from_reflective_memory_for_goal
-		  [funk []
-			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
-			]]]]
-
-[deftypefunk reflective_remember_plan_from_reflective_memory_for_goal_resource get as-english_conslist []
-  `[remember plan from reflective memory for goal]]
-
-
-
-'reflective_remember_plan_from_social_advice_for_goal_resource'
-
-[deframe reflective_remember_plan_from_social_advice_for_goal_resource [reflective_resource] []
-  [new []
-       [construct reflective_resource `remember_plan_from_social_advice_for_goal
-		  [funk []
-			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
-			]]]]
-
-[deftypefunk reflective_remember_plan_from_social_advice_for_goal_resource get as-english_conslist []
-  `[remember plan from social advice for goal]]
 
 
 

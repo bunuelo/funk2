@@ -117,6 +117,7 @@ f2ptr raw__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr th
 	      f2list4__new(cause,
 			   new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for concept_version_space_hypothesis_callback."),
 			   new__symbol(cause, "this"),        this));
+  return nil;
 }
 
 f2ptr f2__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr this) {

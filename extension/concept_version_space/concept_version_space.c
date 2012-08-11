@@ -113,11 +113,10 @@ f2ptr raw__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr th
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr funk  = raw__concept_version_space_hypothesis_callback__funk(cause, this);
   f2ptr args  = raw__concept_version_space_hypothesis_callback__args(cause, this);
-  catch_value(f2__force_funk_apply(cause, fiber, funk, args),
-	      f2list4__new(cause,
-			   new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for concept_version_space_hypothesis_callback."),
-			   new__symbol(cause, "this"),        this));
-  return nil;
+  return catch_value(f2__force_funk_apply(cause, fiber, funk, args),
+		     f2list4__new(cause,
+				  new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for concept_version_space_hypothesis_callback."),
+				  new__symbol(cause, "this"),        this));
 }
 
 f2ptr f2__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr this) {

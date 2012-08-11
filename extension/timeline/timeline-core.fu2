@@ -103,7 +103,7 @@
 [deftypefunk timeline get image_height [scale]
   [have this calculate_positions]
   [let [[y_height [get this y_height]]]
-    [let [[pixel_height [get [* y_width scale] as-integer]]]
+    [let [[pixel_height [get [* y_height scale] as-integer]]]
       pixel_height]]]
 
 [deftypefunk timeline execute save_to_pdf [filename scale]

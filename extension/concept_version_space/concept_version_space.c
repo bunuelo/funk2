@@ -92,16 +92,55 @@ f2ptr f2__concept_version_space_example_type__new_aux(f2ptr cause) {
 }
 
 
+// concept_version_space_hypothesis_callback
+
+def_ceframe2(concept_version_space, concept_version_space_hypothesis_callback,
+	     funk,
+	     args);
+
+f2ptr raw__concept_version_space_hypothesis_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
+  return f2concept_version_space_hypothesis_callback__new(cause, funk, args);
+}
+
+f2ptr f2__concept_version_space_hypothesis_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
+  assert_argument_type(funkable, funk);
+  assert_argument_type(conslist, args);
+  return raw__concept_version_space_hypothesis_callback__new(cause, funk, args);
+}
+export_cefunk2(concept_version_space_hypothesis_callback__new, funk, args, 0, "Returns a new concept_version_space_hypothesis_callback object.");
+
+f2ptr raw__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr this) {
+  f2ptr fiber = f2__this__fiber(cause);
+  catch_value(f2__force_funk_apply(cause, fiber, removal_callback_funk, f2list2__new(cause, this, removed_hypothesis)),
+	      f2list6__new(cause,
+			   new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for concept_version_space_hypothesis_callback."),
+			   new__symbol(cause, "this"),        this));
+}
+
+f2ptr f2__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr this) {
+  assert_argument_type(concept_version_space_hypothesis_callback, this);
+  return raw__concept_version_space_hypothesis_callback__call(cause, this);
+}
+export_cefunk1(concept_version_space_hypothesis_callback__call, this, 0, "Calls this hypothesis_version_space_hypothesis_callback.");
+
+
+f2ptr f2__concept_version_space_hypothesis_callback_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__concept_version_space_hypothesis_callback_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "call"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis_callback__call")));}
+  return this;
+}
+
+
 // concept_version_space_hypothesis
 
 def_ceframe2(concept_version_space, concept_version_space_hypothesis,
 	     value_variable_name_ptypehash,
-	     removal_callback_funks);
+	     removal_callbacks);
 
 f2ptr raw__concept_version_space_hypothesis__new(f2ptr cause) {
   f2ptr value_variable_name_ptypehash = f2__ptypehash__new(cause);
-  f2ptr removal_callback_funks        = nil;
-  return f2concept_version_space_hypothesis__new(cause, value_variable_name_ptypehash, removal_callback_funks);
+  f2ptr removal_callbacks             = nil;
+  return f2concept_version_space_hypothesis__new(cause, value_variable_name_ptypehash, removal_callbacks);
 }
 
 f2ptr f2__concept_version_space_hypothesis__new(f2ptr cause) {
@@ -366,6 +405,24 @@ f2ptr f2__concept_version_space_hypothesis__minimal_specializations_consistent_w
 export_cefunk2(concept_version_space_hypothesis__minimal_specializations_consistent_with_example, this, example, 0, "Returns the minimal specializations of this hypothesis that is also consistent with the given negative example.");
 
 
+f2ptr raw__concept_version_space_hypothesis__call_removal_callbacks(f2ptr cause, f2ptr this) {
+  f2ptr removal_callback_funks = raw__concept_version_space_hypothesis__removal_callbacks(cause, removed_hypothesis);
+  f2ptr iter = removal_callbacks;
+  while (iter != nil) {
+    f2ptr removal_callback = assert_value(f2__cons__car(cause, iter));
+    assert_value(raw__concept_version_space_hypothesis_callback__call(cause, removal_callback));
+    iter = assert_value(f2__cons__cdr(cause, iter));
+  }
+  return nil;
+}
+
+f2ptr f2__concept_version_space_hypothesis__call_removal_callbacks(f2ptr cause, f2ptr this) {
+  assert_argument_type(concept_version_space_hypothesis, this);
+  return raw__concept_version_space_hypothesis__call_removal_callbacks(cause, this);
+}
+export_cefunk1(concept_version_space_hypothesis__call_removal_callbacks, this, 0, "Calls all removal callbacks registered with this hypothesis.");
+
+
 f2ptr raw__concept_version_space_hypothesis__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -404,6 +461,7 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_specific_than_hypothesis"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "minimal_generalizations_consistent_with_example"),     f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__minimal_generalizations_consistent_with_example")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "minimal_specializations_consistent_with_example"),     f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__minimal_specializations_consistent_with_example")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "call_removal_callbacks"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__call_removal_callbacks")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),                           f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__terminal_print_with_frame")));}
   return this;
 }
@@ -715,22 +773,11 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
       }
     }
   }
-  // call removal_callback_funks for each removed hypothesis
+  // call removal_callbacks for each removed hypothesis
   {
-    f2ptr fiber = f2__this__fiber(cause);
     set__iteration(cause, all_removed_hypothesis_set, removed_hypothesis,
-		   f2ptr removal_callback_funks = raw__concept_version_space__removal_callback_funks(cause, removed_hypothesis);
-		   f2ptr iter = removal_callback_funks;
-		   while (iter != nil) {
-		     f2ptr removal_callback_funk = f2__cons__car(cause, iter);
-		     catch_value(f2__force_funk_apply(cause, fiber, removal_callback_funk, f2list3__new(cause, this, removed_hypothesis)),
-				 f2list6__new(cause,
-					      new__symbol(cause, "description"),        new__string(cause, "Bug encountered while executing removal_callback_funk for removed hypothesis during concept_version_space training."),
-					      new__symbol(cause, "this"),               this,
-					      new__symbol(cause, "removed_hypothesis"), removed_hypothesis));
-		     iter = f2__cons__cdr(cause, iter);
-		   }
-		   );
+		   assert_value(raw__concept_version_space_hypothesis__call_removal_callbacks(cause, removed_hypothesis));
+  		   );
   }
   return nil;
 }
@@ -766,9 +813,10 @@ f2ptr f2__concept_version_space__core_extension__initialize(f2ptr cause) {
 export_cefunk0(concept_version_space__core_extension__initialize, 0, "");
 
 f2ptr f2__concept_version_space__core_extension__define_types(f2ptr cause) {
-  f2__add_type(cause, new__symbol(cause, "concept_version_space_example"),    f2__concept_version_space_example_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "concept_version_space_hypothesis"), f2__concept_version_space_hypothesis_type__new_aux(cause));
-  f2__add_type(cause, new__symbol(cause, "concept_version_space"),            f2__concept_version_space_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space_example"),             f2__concept_version_space_example_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space_hypothesis_callback"), f2__concept_version_space_hypothesis_callback_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space_hypothesis"),          f2__concept_version_space_hypothesis_type__new_aux(cause));
+  f2__add_type(cause, new__symbol(cause, "concept_version_space"),                     f2__concept_version_space_type__new_aux(cause));
   status("concept_version_space types defined.");
   return nil;
 }

@@ -35,8 +35,8 @@
        [set timeline x_width [get timeline_width as-double]]
        [= gtk_scrolled_window [gtk-scrolled_window-new]]
        
-       [let [[max_image_width  [>> 32767 1]]
-	     [max_image_height [>> 32767 1]]
+       [let [[max_image_width  32767]
+	     [max_image_height 32767]
 	     [image_scale_okay nil]]
 	 [while [not image_scale_okay]
 	   [terminal_format standard-terminal '\ngtk_timeline note: timeline_scale=' timeline_scale]

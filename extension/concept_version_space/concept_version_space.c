@@ -784,7 +784,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
   {
     set__iteration(cause, all_removed_hypothesis_set, removed_hypothesis,
 		   catch_value(raw__concept_version_space_hypothesis__call_removal_callbacks(cause, removed_hypothesis),
-			       f2list4__new(cause,
+			       f2list6__new(cause,
 					    new__symbol(cause, "description"), new__string(cause, "Bug encountered while calling removal callbacks for removed concept_version_space_hypotheses during training on example."),
 					    new__symbol(cause, "this"),        this,
 					    new__symbol(cause, "example"),     example));

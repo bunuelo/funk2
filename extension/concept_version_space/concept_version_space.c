@@ -408,7 +408,7 @@ export_cefunk2(concept_version_space_hypothesis__minimal_specializations_consist
 
 
 f2ptr raw__concept_version_space_hypothesis__call_removal_callbacks(f2ptr cause, f2ptr this) {
-  f2ptr removal_callback_funks = raw__concept_version_space_hypothesis__removal_callbacks(cause, this);
+  f2ptr removal_callbacks = raw__concept_version_space_hypothesis__removal_callbacks(cause, this);
   {
     f2ptr iter = removal_callbacks;
     while (iter != nil) {

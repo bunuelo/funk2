@@ -246,7 +246,10 @@ export_cefunk2(semantic_resource__waiting_to_call__add, this, that, 0, "");
 
 
 f2ptr raw__semantic_resource__waiting_to_call__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "waiting_to_call"), that);
+  return catch_value(raw__semantic_frame__remove(cause, this, new__symbol(cause, "relationship"), new__symbol(cause, "waiting_to_call"), that),
+		     f2list4__new(cause,
+				  new__symbol(cause, "this"), this,
+				  new__symbol(cause, "that"), that));
 }
 
 f2ptr f2__semantic_resource__waiting_to_call__remove(f2ptr cause, f2ptr this, f2ptr that) {

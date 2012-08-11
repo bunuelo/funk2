@@ -129,7 +129,10 @@
 	[target [get this                                                   resource_semantic_frame]]]
     [semantic-add agent waiting_to_call target]
     [type-have-apply resource this wait_to_call args]
-    [semantic-remove agent waiting_to_call target]]]
+    [let [[result [shelter [semantic-remove agent waiting_to_call target]]]]
+      [if [is-type `bug result]
+	  [prog [terminal_format standard-terminal '\ntraced_resource ' name ' warning: ' result]
+		]]]]]
 
 [deftypefunk traced_resource execute call [:rest args]
   [let [[agent  [get [if [cause-lookup cause-resource] cause-resource this] resource_semantic_frame]]

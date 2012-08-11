@@ -744,18 +744,20 @@ f2ptr f2__timeline_event_type__new_aux(f2ptr cause) {
 
 // timeline_connected_part
 
-def_ceframe4(timeline, timeline_connected_part,
+def_ceframe5(timeline, timeline_connected_part,
 	     event_set,
 	     sorted_event_array,
 	     maximum_y,
-	     y_position);
+	     y_position,
+	     minimum_x);
 
 f2ptr raw__timeline_connected_part__new(f2ptr cause) {
   f2ptr event_set          = f2__set__new(cause);
   f2ptr sorted_event_array = nil;
   f2ptr maximum_y          = nil;
   f2ptr y_position         = nil;
-  return f2timeline_connected_part__new(cause, event_set, sorted_event_array, maximum_y, y_position);
+  f2ptr minimum_x          = nil;
+  return f2timeline_connected_part__new(cause, event_set, sorted_event_array, maximum_y, y_position, minimum_x);
 }
 
 f2ptr f2__timeline_connected_part__new(f2ptr cause) {
@@ -1023,6 +1025,31 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
       }
     }
   }
+  // calculate minimum_x for each connected part
+  {
+    f2ptr connected_part_iter = connected_parts;
+    while (connected_part_iter != nil) {
+      f2ptr connected_part = f2__cons__car(cause, connected_part_iter);
+      {
+	f2ptr minimum_x     = nil;
+	f2ptr connected_set = raw__timeline_connected_part__event_set(cause, connected_part);
+	set__iteration(cause, connected_set, connected_event,
+		       f2ptr start_time = assert_value(f2__timeline_event__start_time(cause, connected_event));
+		       if ((minimum_x == nil) ||
+			   (assert_value(f2__is_less_than(cause, start_time, minimum_x)) != nil)) {
+			 minimum_x = start_time;
+		       }
+		       );
+	f2__timeline_connected_part__event_set__set(cause, connected_part, minimum_x);
+      }
+      connected_part_iter = f2__cons__cdr(cause, connected_part_iter);
+    }
+  }
+  // sort connected parts by minimum_x
+  {
+    
+  }
+  // 
   double y_event_distance = f2double__d(raw__timeline__y_event_distance(cause, this), cause);
   {
     s64 connected_part_count = 0;

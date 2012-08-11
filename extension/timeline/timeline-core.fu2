@@ -94,6 +94,18 @@
 [deftypefunk timeline get as-image [scale]
   [timeline-as-image this scale]]
 
+[deftypefunk timeline get image_width [scale]
+  [have this calculate_positions]
+  [let [[x_width [get this x_width]]]
+    [let [[pixel_width [get [* x_width scale] as-integer]]]
+      pixel_width]]]
+
+[deftypefunk timeline get image_height [scale]
+  [have this calculate_positions]
+  [let [[y_height [get this y_height]]]
+    [let [[pixel_height [get [* y_width scale] as-integer]]]
+      pixel_height]]]
+
 [deftypefunk timeline execute save_to_pdf [filename scale]
   [have this calculate_positions]
   [let [[x_width  [* scale [get this x_width]]]

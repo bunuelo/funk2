@@ -94,11 +94,14 @@ f2ptr f2__concept_version_space_example_type__new_aux(f2ptr cause) {
 
 // concept_version_space_hypothesis
 
-def_ceframe1(concept_version_space, concept_version_space_hypothesis, value_variable_name_ptypehash);
+def_ceframe2(concept_version_space, concept_version_space_hypothesis,
+	     value_variable_name_ptypehash,
+	     removal_callback_funks);
 
 f2ptr raw__concept_version_space_hypothesis__new(f2ptr cause) {
   f2ptr value_variable_name_ptypehash = f2__ptypehash__new(cause);
-  return f2concept_version_space_hypothesis__new(cause, value_variable_name_ptypehash);
+  f2ptr removal_callback_funks        = nil;
+  return f2concept_version_space_hypothesis__new(cause, value_variable_name_ptypehash, removal_callback_funks);
 }
 
 f2ptr f2__concept_version_space_hypothesis__new(f2ptr cause) {
@@ -448,10 +451,11 @@ f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr va
 }
 
 f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
-  f2ptr variable_name_set   = raw__concept_version_space__variable_name_set(cause, this);
-  f2ptr general_hypotheses  = raw__concept_version_space__general_hypotheses(cause, this);
-  f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
-  f2ptr example__positive   = raw__concept_version_space_example__positive(cause, example);
+  f2ptr variable_name_set          = raw__concept_version_space__variable_name_set(cause, this);
+  f2ptr general_hypotheses         = raw__concept_version_space__general_hypotheses(cause, this);
+  f2ptr specific_hypotheses        = raw__concept_version_space__specific_hypotheses(cause, this);
+  f2ptr example__positive          = raw__concept_version_space_example__positive(cause, example);
+  f2ptr all_removed_hypothesis_set = f2__set__new(cause);
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
     ptypehash__key__iteration(cause, example__value_variable_name_ptypehash, example__variable_name,
@@ -471,6 +475,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  {
 	    if (raw__concept_version_space_hypothesis__is_consistent_with_example(cause, general_hypothesis, example) != nil) {
 	      new_general_hypotheses = f2cons__new(cause, general_hypothesis, new_general_hypotheses);
+	    } else {
+	      f2__set__add(cause, all_removed_hypothesis_set, general_hypothesis);
 	    }
 	  }
 	  iter = f2__cons__cdr(cause, iter);
@@ -493,6 +499,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		new_specific_hypotheses     = f2cons__new(cause, specific_hypothesis, new_specific_hypotheses);
 	      } else {
 		removed_specific_hypotheses = f2cons__new(cause, specific_hypothesis, removed_specific_hypotheses);
+		f2__set__add(cause, all_removed_hypothesis_set, specific_hypothesis);
 	      }
 	    }
 	    iter = f2__cons__cdr(cause, iter);
@@ -571,6 +578,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	    raw__concept_version_space__train_on_example__specific_hypothesis_is_more_general_than_another__done:
 	      if (! specific_hypothesis_is_more_general_than_another) {
 		new_specific_hypotheses = f2cons__new(cause, specific_hypothesis, new_specific_hypotheses);
+	      } else {
+		f2__set__add(cause, all_removed_hypothesis_set, specific_hypothesis);
 	      }
 	    }
 	    iter = f2__cons__cdr(cause, iter);
@@ -591,6 +600,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  {
 	    if (raw__concept_version_space_hypothesis__is_consistent_with_example(cause, specific_hypothesis, example) != nil) {
 	      new_specific_hypotheses = f2cons__new(cause, specific_hypothesis, new_specific_hypotheses);
+	    } else {
+	      f2__set__add(cause, all_removed_hypothesis_set, specific_hypothesis);
 	    }
 	  }
 	  iter = f2__cons__cdr(cause, iter);
@@ -613,6 +624,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		new_general_hypotheses     = f2cons__new(cause, general_hypothesis, new_general_hypotheses);
 	      } else {
 		removed_general_hypotheses = f2cons__new(cause, general_hypothesis, removed_general_hypotheses);
+		f2__set__add(cause, all_removed_hypothesis_set, general_hypothesis);
 	      }
 	    }
 	    iter = f2__cons__cdr(cause, iter);
@@ -652,6 +664,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		  raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done:
 		    if (is_consistent_or_more_specific_than_at_least_one_specific_hypothesis) {
 		      new_general_hypotheses = f2cons__new(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, new_general_hypotheses);
+		    } else {
+		      f2__set__add(cause, all_removed_hypothesis_set, removed_general_hypothesis__minimal_specialization_consistent_with_example);
 		    }
 		  }
 		  removed_general_hypothesis__minimal_specializations_consistent_with_example__iter = f2__cons__cdr(cause, removed_general_hypothesis__minimal_specializations_consistent_with_example__iter);
@@ -689,6 +703,8 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	    raw__concept_version_space__train_on_example__general_hypothesis_is_more_specific_than_another__done:
 	      if (! general_hypothesis_is_more_specific_than_another) {
 		new_general_hypotheses = f2cons__new(cause, general_hypothesis, new_general_hypotheses);
+	      } else {
+		f2__set__add(cause, all_removed_hypothesis_set, general_hypothesis);
 	      }
 	    }
 	    iter = f2__cons__cdr(cause, iter);
@@ -699,10 +715,29 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
       }
     }
   }
+  // call removal_callback_funks for each removed hypothesis
+  {
+    f2ptr fiber = f2__this__fiber(cause);
+    set__iteration(cause, all_removed_hypothesis_set, removed_hypothesis,
+		   f2ptr removal_callback_funks = raw__concept_version_space__removal_callback_funks(cause, removed_hypothesis);
+		   f2ptr iter = removal_callback_funks;
+		   while (iter != nil) {
+		     f2ptr removal_callback_funk = f2__cons__car(cause, iter);
+		     catch_value(f2__force_funk_apply(cause, fiber, removal_callback_funk, f2list3__new(cause, this, removed_hypothesis)),
+				 f2list6__new(cause,
+					      new__symbol(cause, "description"),        new__string(cause, "Bug encountered while executing removal_callback_funk for removed hypothesis during concept_version_space training."),
+					      new__symbol(cause, "this"),               this,
+					      new__symbol(cause, "removed_hypothesis"), removed_hypothesis));
+		     iter = f2__cons__cdr(cause, iter);
+		   }
+		   );
+  }
   return nil;
 }
 
 f2ptr f2__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
+  assert_argument_type(concept_version_space,         this);
+  assert_argument_type(concept_version_space_example, example);
   return raw__concept_version_space__train_on_example(cause, this, example);
 }
 export_cefunk2(concept_version_space__train_on_example, this, example, 0, "Trains this concept_version_space on the given example.");

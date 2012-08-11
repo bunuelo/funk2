@@ -1042,7 +1042,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 		       );
 	f2__timeline_connected_part__event_set__set(cause, connected_part, minimum_x);
       }
-      connected_part_iter = f2__cons__cdr(cause, connected_part_iter);
+      connected_part_iter = assert_value(f2__cons__cdr(cause, connected_part_iter));
     }
   }
   // sort connected parts by minimum_x

@@ -111,7 +111,9 @@ export_cefunk2(concept_version_space_hypothesis_callback__new, funk, args, 0, "R
 
 f2ptr raw__concept_version_space_hypothesis_callback__call(f2ptr cause, f2ptr this) {
   f2ptr fiber = f2__this__fiber(cause);
-  catch_value(f2__force_funk_apply(cause, fiber, removal_callback_funk, f2list2__new(cause, this, removed_hypothesis)),
+  f2ptr funk  = raw__concept_version_space_hypothesis_callback__funk(cause, this);
+  f2ptr args  = raw__concept_version_space_hypothesis_callback__args(cause, this);
+  catch_value(f2__force_funk_apply(cause, fiber, removal_callback_funk, args),
 	      f2list4__new(cause,
 			   new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for concept_version_space_hypothesis_callback."),
 			   new__symbol(cause, "this"),        this));

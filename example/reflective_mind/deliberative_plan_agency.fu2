@@ -68,6 +68,7 @@
 [deftypefunk deliberative_plan_agency get semantic_planner []
   [if [null internal-semantic_planner]
       [prog [= internal-semantic_planner [new semantic_planner [get [get this mind] semantic_realm]]]
+	    [set internal-semantic_planner planner_type `deliberative1]
 	    [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame internal-semantic_planner]]]
   internal-semantic_planner]
 

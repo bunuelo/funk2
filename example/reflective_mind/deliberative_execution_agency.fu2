@@ -41,7 +41,7 @@
 			  [if [is-type `bug result]
 			      [let [[bug result]]
 				[terminal_format standard-terminal '\ndeliberative_layer: executing plan has a bug.']
-				[semantic-add semantic_plan failed_plan_type [have [get bug frame] lookup `bug_name]]
+				[semantic-add semantic_plan bug_name [have [get bug frame] lookup `bug_name]]
 				[set [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan nil]
 				[terminal_format standard-terminal '\ndeliberative_layer: waiting to call reflective initial plan bug response.']
 				[have [get this mind] wait_to_activate `reflective `plan_bug_response `initial_plan_bug_response semantic_plan bug]

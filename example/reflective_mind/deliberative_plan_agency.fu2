@@ -59,6 +59,7 @@
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_before]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_in_parallel]]
   [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_for_goal]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan imagine_executing_plan_in_focus]]
   ]
 
 [deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
@@ -254,6 +255,22 @@
 
 [deftypefunk deliberative_remember_plan_for_goal_resource get as-english_conslist []
   `[remember plan for goal]]
+
+
+'deliberative_imagine_executing_plan_in_focus_resource'
+
+[deframe deliberative_imagine_executing_plan_in_focus_resource [deliberative_resource] []
+  [new []
+       [construct deliberative_resource `imagine_executing_plan_in_focus
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			
+			
+			]]]]
+
+[deftypefunk deliberative_imagine_executing_plan_in_focus_resource get as-english_conslist []
+  `[imagine executing plan in focus]]
 
 
 

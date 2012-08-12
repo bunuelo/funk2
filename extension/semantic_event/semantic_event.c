@@ -28,12 +28,7 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_event"));
   }
-  {
-    f2ptr result = raw__semantic_temporal_object__type_create(cause, this, semantic_realm);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  assert_value(raw__semantic_temporal_object__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
@@ -52,16 +47,8 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
 }
 
 f2ptr raw__semantic_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr action_name) {
-  f2ptr this = f2__frame__new(cause, nil);
-  if (raw__larva__is_type(cause, this)) {
-    return this;
-  }
-  {
-    f2ptr result = raw__semantic_event__type_create(cause, this, semantic_realm, action_name);
-    if (raw__larva__is_type(cause, result)) {
-      return result;
-    }
-  }
+  f2ptr this = assert_value(f2__frame__new(cause, nil));
+  assert_value(raw__semantic_event__type_create(cause, this, semantic_realm, action_name));
   return this;
 }
 

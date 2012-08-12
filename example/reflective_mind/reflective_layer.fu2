@@ -128,3 +128,24 @@
 [deftypefunk reflective_layer get deliberative1_type_knowledge_reflective_timer []
   [get [get this agency `plan_object_type_goal] deliberative1_type_knowledge_reflective_timer]]
 
+[deftypefunk reflective_layer execute create_deliberative1_type_relationship_goal [source_deliberative1_object_type key_type key target_deliberative1_object_type]
+  [have [get this agency `plan_object_type_goal] create_deliberative1_type_relationship_goal source_deliberative1_object_type key_type key target_deliberative1_object_type]]
+
+[deftypefunk reflective_layer execute create_deliberative1_type_property_relationship_goal [source_type
+											    source_type_property
+											    source_type_property_value
+											    key_type
+											    key
+											    target_type
+											    target_type_property
+											    target_type_property_value]
+  [have [get this agency `plan_object_type_goal] create_deliberative1_type_property_relationship_goal
+	source_type
+	source_type_property
+	source_type_property_value
+	key_type
+	key
+	target_type
+	target_type_property
+	target_type_property_value]]
+

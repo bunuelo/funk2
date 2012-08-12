@@ -135,7 +135,7 @@
 											   target_type
 											   target_type_property
 											   target_type_property_value]
-  [have [get this layer `deliberative] create_deliberative1_type_property_relationship_goal
+  [have [get this layer `reflective] create_deliberative1_type_property_relationship_goal
 	source_type
 	source_type_property
 	source_type_property_value

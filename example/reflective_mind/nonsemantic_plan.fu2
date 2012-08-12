@@ -78,7 +78,7 @@
 											   [property_value        [elt arguments 4]]]
 										       [append `[wait until]
 											       [object_type_property_property_goal-english_conslist source_type source_property source_property_value property property_value]]]]]
-					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]
+					      [[eq `wait-for-physical-relationship command] [if [not [eq 7 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
 										     [let [[source_type           [elt arguments 0]]
 											   [source_property       [elt arguments 1]]
@@ -89,7 +89,7 @@
 											   [target_property_value [elt arguments 6]]]
 										       [append `[wait until]
 											       [object_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value `preposition key target_type target_property target_property_value]]]]]
-					      [[eq `assure-relationship   command] [if [not [eq 7 arguments-length]]
+					      [[eq `assure-physical-relationship   command] [if [not [eq 7 arguments-length]]
 										       `[error punctuation-colon ,[flatten_constree expression]]
 										     [let [[source_type           [elt arguments 0]]
 											   [source_property       [elt arguments 1]]
@@ -137,7 +137,7 @@
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk nonsemantic_plan execute wait_for_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk nonsemantic_plan execute wait_for_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
@@ -155,14 +155,14 @@
 	  [mapc [funk [current_event]
 		      `[terminal_format standard-terminal '\nwaiting for relationship: current_event, ' [get current_event phenomenal_name] '.']
 		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			  [prog [terminal_format standard-terminal '\nwait_for_relationship: done waiting!']
+			  [prog [terminal_format standard-terminal '\nwait_for_physical_relationship: done waiting!']
 				[= done t]]]]
 		current_events]]
 	[if [not done]
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk nonsemantic_plan execute assure_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk nonsemantic_plan execute assure_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
@@ -179,12 +179,12 @@
 	[mapc [funk [current_event]
 		    `[terminal_format standard-terminal '\nwaiting for relationship: current_event, ' [get current_event phenomenal_name] '.']
 		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			[prog [terminal_format standard-terminal '\nassure_relationship: found relationship!']
+			[prog [terminal_format standard-terminal '\nassure_physical_relationship: found relationship!']
 			      [= found t]]]]
 	      current_events]]
       [if [not found]
-	  [error bug_name    `nonsemantic_plan-assure_relationship-failed
-		 description `[assure_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
+	  [error bug_name    `nonsemantic_plan-assure_physical_relationship-failed
+		 description `[assure_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
 	nil]]]]
 
 [defunk nonsemantic_plan-expression-compile [expression]
@@ -238,25 +238,25 @@
 												    [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
 												    [have this wait_for_property [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,property] [quote ,property_value]]
 												    ]]]]]
-					      [[eq `wait-for-relationship command] [if [not [eq 7 arguments-length]]
+					      [[eq `wait-for-physical-relationship command] [if [not [eq 7 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `wait-for-physical-relationship
+												       expression expression]
+											      [let [[source_type           [elt arguments 0]]
+												    [source_property       [elt arguments 1]]
+												    [source_property_value [elt arguments 2]]
+												    [key                   [elt arguments 3]]
+												    [target_type           [elt arguments 4]]
+												    [target_property       [elt arguments 5]]
+												    [target_property_value [elt arguments 6]]]
+												[eval `[funk [this]
+													     [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
+															      ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
+													     [have this wait_for_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
+													     ]]]]]
+					      [[eq `assure-physical-relationship   command] [if [not [eq 7 arguments-length]]
 										       [error bug_name   `plan_compile_error-wrong_number_of_arguments
-											      funkname   `wait-for-relationship
-											      expression expression]
-										     [let [[source_type           [elt arguments 0]]
-											   [source_property       [elt arguments 1]]
-											   [source_property_value [elt arguments 2]]
-											   [key                   [elt arguments 3]]
-											   [target_type           [elt arguments 4]]
-											   [target_property       [elt arguments 5]]
-											   [target_property_value [elt arguments 6]]]
-										       [eval `[funk [this]
-												    [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
-														     ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
-												    [have this wait_for_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
-												    ]]]]]
-					      [[eq `assure-relationship   command] [if [not [eq 7 arguments-length]]
-										       [error bug_name   `plan_compile_error-wrong_number_of_arguments
-											      funkname   `assure-relationship
+											      funkname   `assure-physical-relationship
 											      expression expression]
 										     [let [[source_type           [elt arguments 0]]
 											   [source_property       [elt arguments 1]]
@@ -268,7 +268,7 @@
 										       [eval `[funk [this]
 												    [terminal_format standard-terminal '\nplan assuring relationship exists: "'
 														     ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
-												    [have this assure_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
+												    [have this assure_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
 												    ]]]]]
 					      [t                                   [error bug_name `nonsemantic_plan_compile_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]

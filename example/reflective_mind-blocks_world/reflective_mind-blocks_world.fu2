@@ -34,11 +34,22 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating resources.']
   
   'create blocks_world agent specific physical commands in parallel'
-  [parog [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_left_resource]]
+  [parog 'builtin resources'
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_left_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
-	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-stop_resource]]
+	 
+	 'learned resources'
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-move_left_until_over_triangle_resource]]
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-move_right_until_over_triangle_resource]]
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-move_left_until_over_square_resource]]
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-move_right_until_over_square_resource]]
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving_resource]]
+	 [have this add_resource `learned_reactive `physical [new reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall_resource]]
+	 
+	 ]
   
   nil]
 
@@ -68,6 +79,11 @@
   [have-apply this create_physical_action `[builtin_reactive physical grab]]
   [have-apply this create_physical_action `[builtin_reactive physical drop]]
   [have-apply this create_physical_action `[builtin_reactive physical stop]] 
+
+  [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_triangle]] 
+  [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_triangle]] 
+  [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_square]] 
+  [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_square]] 
   
   nil]
 

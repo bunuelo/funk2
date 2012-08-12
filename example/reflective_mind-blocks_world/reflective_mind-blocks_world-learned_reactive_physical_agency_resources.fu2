@@ -18,3 +18,81 @@
  rights to redistribute these changes.'
 
 
+'reflective_mind-blocks_world-move_left_until_over_triangle'
+
+[deframe reflective_mind-blocks_world-move_left_until_over_triangle_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `move_left_until_over_triangle
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_left_until_over_triangle_resource get as-english_conslist []
+  `[move left until over triangle]]
+
+
+'reflective_mind-blocks_world-move_left_until_over_square'
+
+[deframe reflective_mind-blocks_world-move_left_until_over_square_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `move_left_until_over_square
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_left_until_over_square_resource get as-english_conslist []
+  `[move left until over square]]
+
+
+'reflective_mind-blocks_world-move_right_until_over_triangle'
+
+[deframe reflective_mind-blocks_world-move_right_until_over_triangle_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `move_right_until_over_triangle
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_right_until_over_triangle_resource get as-english_conslist []
+  `[move right until over triangle]]
+
+
+'reflective_mind-blocks_world-move_right_until_over_square'
+
+[deframe reflective_mind-blocks_world-move_right_until_over_square_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `move_right_until_over_square
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-move_right_until_over_square_resource get as-english_conslist []
+  `[move right until over square]]
+
+
+'reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving'
+
+[deframe reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `attempt_to_grab_block_until_gripper_stops_moving
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving_resource get as-english_conslist []
+  `[attempt to grab block until gripper stops moving]]
+
+
+'reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall'
+
+[deframe reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall_resource [learned_reactive_resource] []
+  [new []
+       [construct learned_reactive_resource `drop_block_and_wait_for_block_to_fall
+		  [funk []
+			
+			]]]]
+
+[deftypefunk reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall_resource get as-english_conslist []
+  `[drop block and wait for block to fall]]
+
+

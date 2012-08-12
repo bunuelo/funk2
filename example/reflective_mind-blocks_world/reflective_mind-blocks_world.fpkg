@@ -20,12 +20,17 @@
 
 [defpackage reflective_mind-blocks_world
   :packages [reflective_mind-blocks_world-core
-	     reflective_mind-blocks_world-builtin_reactive_physical_agency_resources]
+	     reflective_mind-blocks_world-builtin_reactive_physical_agency_resources
+	     reflective_mind-blocks_world-learned_reactive_physical_agency_resources]
    :sources ['reflective_mind-blocks_world.fu2']]
 
 [defpackage reflective_mind-blocks_world-builtin_reactive_physical_agency_resources
   :packages [reflective_mind-blocks_world-core]
    :sources ['reflective_mind-blocks_world-builtin_reactive_physical_agency_resources.fu2']]
+
+[defpackage reflective_mind-blocks_world-learned_reactive_physical_agency_resources
+  :packages [reflective_mind-blocks_world-core]
+   :sources ['reflective_mind-blocks_world-learned_reactive_physical_agency_resources.fu2']]
 
 [defpackage reflective_mind-blocks_world-core
   :packages [reflective_mind

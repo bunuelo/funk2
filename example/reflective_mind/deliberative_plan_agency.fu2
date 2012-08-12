@@ -36,6 +36,7 @@
 	      [have this add_resource [new deliberative_focus_plan_add_before_resource]]
 	      [have this add_resource [new deliberative_focus_plan_add_in_parallel_resource]]
 	      [have this add_resource [new deliberative_remember_plan_for_goal_resource]]
+	      [have this add_resource [new deliberative_imagine_executing_plan_in_focus_resource]]
 	      ]
        
        this]]

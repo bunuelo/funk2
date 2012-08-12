@@ -104,8 +104,10 @@
 		  [funk [semantic_plan bug]
 			[terminal_format standard-terminal '\nreflective_layer: responding to expectation failure bug in plan.']
 			[let [[semantic_expectation_failure [new semantic_expectation_failure [get [get this mind] semantic_realm]]]]
+			  [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame semantic_expectation_failure]
+			  
 			  [semantic-add semantic_plan failure semantic_expectation_failure]
-
+			  
 			  [let [[arguments `[|focus on a plan, plan 6|]]]
 			    [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			      [if [null action]

@@ -63,7 +63,10 @@
 		     target_type
 		     target_type_property
 		     target_type_property_value]]]
-      [have resource add_goal goal]]]]
+      [have resource add_goal goal]
+      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		       'agency, ' name ', adding physical goal "' [get goal as-declarative_string] '."']
+      ]]]
 
 
 

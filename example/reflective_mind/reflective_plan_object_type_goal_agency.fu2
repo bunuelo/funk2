@@ -53,7 +53,7 @@
 													  target_type_property
 													  target_type_property_value]
   [let [[resource [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge]]]
-    [let [[goal [new reflective_type_property_relation_goal
+    [let [[goal [new deliberative1_type_property_relation_goal
 		     [get this mind]
 		     source_type
 		     source_type_property

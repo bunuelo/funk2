@@ -463,33 +463,33 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
   f2ptr     current_value       = nil;
   if (value_set != nil) {
     if (! raw__set__is_type(cause, value_set)) {
-      return f2larva__new(cause, 92734, f2__bug__new(cause, f2integer__new(cause, 92734), f2__frame__new(cause, f2list10__new(cause,
-															      new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
-															      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
-															      new__symbol(cause, "this"),     this,
-															      new__symbol(cause, "key_type"), key_type,
-															      new__symbol(cause, "key"),      key))));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
+				      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
+				      new__symbol(cause, "this"),     this,
+				      new__symbol(cause, "key_type"), key_type,
+				      new__symbol(cause, "key"),      key));
     }
     set__iteration(cause, value_set, value,
 		   if (found_current_value) {
-		     return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
-																	     new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
-																	     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
-																	     new__symbol(cause, "this"),     this,
-																	     new__symbol(cause, "key_type"), key_type,
-																	     new__symbol(cause, "key"),      key))));
+		     return new__error(f2list10__new(cause,
+						     new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
+						     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
+						     new__symbol(cause, "this"),     this,
+						     new__symbol(cause, "key_type"), key_type,
+						     new__symbol(cause, "key"),      key));
 		   }
 		   current_value = value;
 		   found_current_value = boolean__true;
 		   );
   }
   if (! found_current_value) {
-    return f2larva__new(cause, 92347, f2__bug__new(cause, f2integer__new(cause, 92346), f2__frame__new(cause, f2list10__new(cause,
-															    new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
-															    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
-															    new__symbol(cause, "this"),     this,
-															    new__symbol(cause, "key_type"), key_type,
-															    new__symbol(cause, "key"),      key))));
+    return new__error(f2list10__new(cause,
+				    new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
+				    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
+				    new__symbol(cause, "this"),     this,
+				    new__symbol(cause, "key_type"), key_type,
+				    new__symbol(cause, "key"),      key));
   }
   return current_value;
 }

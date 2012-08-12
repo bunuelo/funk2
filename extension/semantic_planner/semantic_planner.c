@@ -29,10 +29,10 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_planner"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "execute_plan"),    nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "focus_plan"),      nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "register_a_plan"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "register_b_plan"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),    nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_plan"),      nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a_plan"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b_plan"), nil);
   return this;
 }
 

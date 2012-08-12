@@ -63,11 +63,11 @@
   [have [get this layer `deliberative] create_builtin_actions]
   [have [get this layer `reflective]   create_builtin_actions]]
 
+
+'physical'
+
 [deftypefunk reflective_mind get physical_type_knowledge_reflective_timer []
   [get [get this layer `deliberative] physical_type_knowledge_reflective_timer]]
-
-[deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []
-  [get [get this layer `reflective] deliberative1_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_mind execute create_physical_type_relationship_goal [source_physical_object_type key_type key target_physical_object_type]
   [have [get this layer `deliberative] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
@@ -89,7 +89,6 @@
 	target_type
 	target_type_property
 	target_type_property_value]]
-
 
 [deftypefunk reflective_mind execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `deliberative] create_physical_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
@@ -119,6 +118,32 @@
 
 [deftypefunk reflective_mind get physical_semantic_action [phenomenal_name]
   [get [get this layer `reflective] physical_semantic_action phenomenal_name]]
+
+'deliberative1'
+
+[deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []
+  [get [get this layer `reflective] deliberative1_type_knowledge_reflective_timer]]
+
+[deftypefunk reflective_mind execute create_deliberative1_type_relationship_goal [source_deliberative1_object_type key_type key target_deliberative1_object_type]
+  [have [get this layer `reflective] create_deliberative1_type_relationship_goal source_deliberative1_object_type key_type key target_deliberative1_object_type]]
+
+[deftypefunk reflective_mind execute create_deliberative1_type_property_relationship_goal [source_type
+											   source_type_property
+											   source_type_property_value
+											   key_type
+											   key
+											   target_type
+											   target_type_property
+											   target_type_property_value]
+  [have [get this layer `deliberative] create_deliberative1_type_property_relationship_goal
+	source_type
+	source_type_property
+	source_type_property_value
+	key_type
+	key
+	target_type
+	target_type_property
+	target_type_property_value]]
 
 [deftypefunk reflective_mind get deliberative1_semantic_action [phenomenal_name]
   [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]

@@ -46,18 +46,13 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
   
   'create blocks_world agent specific learning goals in parallel'
-  `[have-apply this create_physical_type_property_relationship_goal `[block color red   preposition below    gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color red   preposition right-of gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color red   preposition left-of  gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color green preposition below    gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color green preposition right-of gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color green preposition left-of  gripper is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition below    gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition right-of gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color blue  preposition left-of  gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color brown preposition below    gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color brown preposition right-of gripper is-me t]]
-  `[have-apply this create_physical_type_property_relationship_goal `[block color brown preposition left-of  gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color green   preposition below gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block color blue    preposition below gripper is-me t]]
+  [have-apply this create_physical_type_property_relationship_goal `[block shape pyramid preposition on    block   shape cube]]
+  [have-apply this create_physical_type_property_relationship_goal `[block shape cube    preposition on    block   shape pyramid]]
+  
+  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object plan_object_type physical relationship failure semantic_expectation_failure reflective_object_type semantic_expectation_failure]]
+  `[have-apply this create_deliberative1_type_property_relationship_goal `[semantic_planner plan_object_type physical relationship failure semantic_expectation_failure reflective_object_type semantic_expectation_failure]]
   
   nil]
 

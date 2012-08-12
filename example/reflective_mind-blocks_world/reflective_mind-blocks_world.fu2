@@ -85,7 +85,7 @@
   [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_square]]
   [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_square]]
   [have-apply this create_physical_action `[learned_reactive physical attempt_to_grab_block_until_gripper_stops_moving]]
-  [have-apply this create_physical_action `[learned_reactive physical drop_block_and_wait_for_block_to_fall_resource]]
+  [have-apply this create_physical_action `[learned_reactive physical drop_block_and_wait_for_block_to_fall]]
   
   nil]
 

@@ -25,7 +25,7 @@
   [new []
        [construct agency `imagination]
        
-       [have this add_resource [new deliberative_forget_all_imagined_events_imagination_resource]]
+       [have this add_resource [new deliberative_forget_all_imagined_events_resource]]
        [have this add_resource [new deliberative_imagine_current_situation_resource]]
        [have this add_resource [new deliberative_imagine_plan_resource]]
        

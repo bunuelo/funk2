@@ -302,3 +302,10 @@
 	   []]
     
     ]]
+
+
+[deftypefunk traced_resource execute imagine_waiting_to_call [:rest args]
+  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		   'resource, ' name ', imagining waiting to call.']
+  ]
+

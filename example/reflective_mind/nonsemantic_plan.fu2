@@ -266,7 +266,7 @@
 												    [if [null action]
 													[terminal_format standard-terminal '\nplan error: "' [conslist-as-english_string [quote ,arguments]] '" action not defined.']
 												      [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-													    `[have action imagine_waiting_to_call]
+													    [have action imagine_waiting_to_call]
 													    ]]]]]]]
 					      [[eq `wait-for-physical-property     command] [if [not [eq 5 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments

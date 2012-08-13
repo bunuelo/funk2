@@ -64,6 +64,14 @@
   [have [get this layer `reflective]   create_builtin_actions]]
 
 
+'general actions'
+
+[deftypefunk reflective_mind execute imagine_waiting_to_call [layer_name agency_name resource_name :rest args]
+  [let [[resource [get this resource layer_name agency_name resource_name]]]
+    [have-apply resource imagine_waiting_to_call args]]]
+
+
+
 'physical'
 
 [deftypefunk reflective_mind get physical_type_knowledge_reflective_timer []

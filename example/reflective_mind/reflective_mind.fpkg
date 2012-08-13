@@ -150,6 +150,7 @@
 	     deliberative_resource
 	     deliberative_plan_agency
 	     deliberative_execution_agency
+	     deliberative_imagination_agency
 	     deliberative_physical_object_type_goal_agency]
    :sources ['deliberative_layer.fu2']]
 
@@ -184,6 +185,12 @@
 	     deliberative_resource
 	     nonsemantic_plan]
    :sources ['deliberative_execution_agency.fu2']]
+
+[defpackage deliberative_imagination_agency
+  :packages [reflective_mind_core
+	     deliberative_resource
+	     nonsemantic_plan]
+   :sources ['deliberative_imagination_agency.fu2']]
 
 [defpackage object_type_property_relation_goal
   :packages [reflective_mind_core]

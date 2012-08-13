@@ -27,6 +27,7 @@
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
+	      [have this add_agency [new deliberative_imagination_agency]]
 	      [have this add_agency [new deliberative_physical_object_type_goal_agency]]
 	      [have this add_agency [new deliberative_plan_agency]]]
        this]]

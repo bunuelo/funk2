@@ -255,6 +255,19 @@ export_cefunk4(semantic_event_tree__most_recent_filtered_events, this, filter_fu
 	       "Returns the most recent semantic_events that occur at or before the given semantic_time and which the given filter_funk returns true.");
 
 
+f2ptr raw__semantic_event_tree__events(f2ptr cause, f2ptr this) {
+  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
+  return assert_value(f2__interval_tree__intervals(cause, interval_tree));
+}
+
+f2ptr f2__semantic_event_tree__events(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_event_tree, this);
+  return raw__semantic_event_tree__events(cause, this);
+}
+export_cefunk1(semantic_event_tree__events, this, 0,
+	       "Returns all events in this semantic_event_tree.");
+
+
 f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_event_tree_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "insert"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__insert")));}
@@ -262,6 +275,7 @@ f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events_containing_time")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_overlapping_event"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events_overlapping_event")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_events"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__most_recent_filtered_events")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events")));}
   return this;
 }
 

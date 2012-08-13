@@ -129,6 +129,9 @@
 [deftypefunk nonsemantic_plan execute assure_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
   [have [get this mind] assure_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
 
+[deftypefunk nonsemantic_plan execute imagine_assuring_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+  [have [get this mind] imagine_assuring_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+
 [defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
@@ -308,7 +311,7 @@
 												[eval `[funk [this]
 													     [terminal_format standard-terminal '\nplan imagining assuring relationship exists: "'
 															      ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
-													     `[have this imagine_assuring_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
+													     [have this imagine_assuring_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
 													     ]]]]]
 					      [t                                   [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]

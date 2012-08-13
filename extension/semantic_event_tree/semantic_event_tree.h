@@ -42,6 +42,8 @@ f2ptr raw__semantic_event_tree__events_overlapping_event   (f2ptr cause, f2ptr t
 f2ptr  f2__semantic_event_tree__events_overlapping_event   (f2ptr cause, f2ptr this, f2ptr semantic_event);
 f2ptr raw__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time);
 f2ptr  f2__semantic_event_tree__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time);
+f2ptr raw__semantic_event_tree__events                     (f2ptr cause, f2ptr this);
+f2ptr  f2__semantic_event_tree__events                     (f2ptr cause, f2ptr this);
 
 f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause);
 

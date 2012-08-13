@@ -222,7 +222,17 @@ f2ptr f2__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr thi
 export_cefunk3(semantic_event_knowledge_base__event_transframe, this, start_semantic_time, end_semantic_time, 0,
 	       "Returns a new semantic_event_transframe derived from this semantic_event_knowledge_base that represents the change in events between start_semantic_time and end_semantic_time.");
 
+f2ptr raw__semantic_event_knowledge_base__events(f2ptr cause, f2ptr this) {
+  f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
+  return raw__semantic_event_tree__events(cause, semantic_event_tree);
+}
 
+f2ptr f2__semantic_event_knowledge_base__events(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_event_knowledge_base, this);
+  return raw__semantic_event_knowledge_base__events(cause, this);
+}
+export_cefunk1(semantic_event_knowledge_base__events, this, 0,
+	       "Returns all events within this semantic_event_knowledge_base.");
 
 
 
@@ -235,6 +245,7 @@ f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_containing_time")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_events"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__most_recent_filtered_events")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "event_transframe"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__event_transframe")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events")));}
   return this;
 }
 

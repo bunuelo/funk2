@@ -208,14 +208,14 @@
     reflective_knowledge
     
     deliberative2_knowledge
-    deliberative1_counterfactual_type_knowledge
+    deliberative1_type_counterfactual_knowledge
     deliberative1_action_knowledge
     deliberative1_goal_knowledge
     deliberative1_type_knowledge
     type_copy_of_deliberative1_knowledge
     
     deliberative1_knowledge    
-    physical_counterfactual_knowledge
+    physical_type_counterfactual_knowledge
     physical_action_knowledge
     physical_goal_knowledge
     physical_type_knowledge

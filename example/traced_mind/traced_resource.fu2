@@ -337,8 +337,12 @@
 	      
 	      [mapc [funk [change_feature]
 			  [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-			    
-			    ]]
+			    [let [[change_hypothesis_dependencies [get precondition_hypothesis_space specific_hypotheses_consistent_with_example]]]
+			      
+			      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+					       'resource, ' name ', found ' [length change_hypothesis_dependencies] ' specific hypotheses consistent with change.']
+			      
+			      ]]]
 		    [get this change_features]]
 	      
 	      ]]]]

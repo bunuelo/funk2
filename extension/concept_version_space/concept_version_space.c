@@ -801,9 +801,34 @@ f2ptr f2__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr
 export_cefunk2(concept_version_space__train_on_example, this, example, 0, "Trains this concept_version_space on the given example.");
 
 
+f2ptr raw__concept_version_space__specific_hypotheses_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  f2ptr consistent_hypotheses = nil;
+  f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
+  {
+    f2ptr iter = specific_hypotheses;
+    while (iter != nil) {
+      f2ptr hypothesis = f2__cons__car(cause, iter);
+      if (assert_value(raw__concept_version_space_hypothesis__is_consistent_with_example(cause, hypothesis, example)) != nil) {
+	consistent_hypotheses = f2cons__new(cause, hypothesis, consistent_hypotheses);
+      }
+      iter = f2__cons__cdr(cause, iter);
+    }
+  }
+  return consistent_hypotheses;
+}
+
+f2ptr f2__concept_version_space__specific_hypotheses_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+  assert_argument_type(concept_version_space,         this);
+  assert_argument_type(concept_version_space_example, example);
+  return raw__concept_version_space__specific_hypotheses_consistent_with_example(cause, this, example);
+}
+export_cefunk2(concept_version_space__specific_hypotheses_consistent_with_example, this, example, 0, "Returns all specific hypotheses that are consistent with the given example.");
+
+
 f2ptr f2__concept_version_space_type__new_aux(f2ptr cause) {
   f2ptr this = f2__concept_version_space_type__new(cause);
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "train_on_example"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__train_on_example")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "train_on_example"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__train_on_example")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "specific_hypotheses_consistent_with_example"), f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space__specific_hypotheses_consistent_with_example")));}
   return this;
 }
 

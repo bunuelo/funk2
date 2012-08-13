@@ -164,12 +164,38 @@
 		[have change_feature_phenomenal_name_ptypehash add change-phenomenal_name change_feature]]]
       change_feature]]]
 
+[deftypefunk traced_traced get change_features []
+  [get change_feature_phenomenal_name_ptypehash values]]
+
 [deftypefunk traced_resource get precondition_hypothesis_space [change_feature]
   [let [[precondition_hypothesis_space [have precondition_hypothesis_space_change_feature_ptypehash lookup change_feature]]]
     [if [null precondition_hypothesis_space]
 	[prog [= precondition_hypothesis_space [new action_transframe_hypothesis_space change_feature]]
 	      [have precondition_hypothesis_space_change_feature_ptypehash add change_feature precondition_hypothesis_space]]]
     precondition_hypothesis_space]]
+
+[deftypefunk traced_resource get concept_version_space_example_from_precondition_events [precondition_events]
+  [let [[concept_version_space_example [new concept_version_space_example t]]
+	[positive_feature_set          [new set]]]
+    [mapc [funk [precondition_event]
+		[cond [[or [is-type `semantic_reflective_object_type_property_event precondition_event]
+			   [is-type `semantic_reflective_object_type_relation_event precondition_event]] [let [[meta_relationship [get precondition_event meta_relationship]]]
+													   [let [[feature [get this feature meta_relationship]]]
+													     [have positive_feature_set add feature]]]]
+		      [t                                                                                 [prog `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+																 [get [get this layer] name] ' resource, ' name ', '
+																 'precondition event: ' precondition_event '.']
+													       ]]
+		      ]]
+	  precondition_events]
+    
+    [mapc [funk [feature]
+		[let [[positive [get positive_feature_set contains feature]]]
+		  [have concept_version_space_example add_variable_value feature positive]]]
+	  [get feature_phenomenal_name_ptypehash values]]
+    
+    concept_version_space_example]]
+
 
 [deftypefunk traced_resource execute learn_precondition_hypothesis_space [knowledge_base start_time end_time]
   [let [[event_preconditions [get knowledge_base events_containing_time start_time]]
@@ -184,24 +210,7 @@
 		       [get [get this layer] name] ' resource, ' name ', '
 		       'precondition count: ' [length event_preconditions] '.  change count: ' [length event_transframe_changes] '.']
       
-      [let [[concept_version_space_example [new concept_version_space_example t]]
-	    [positive_feature_set          [new set]]]
-	[mapc [funk [event_precondition]
-		    [cond [[or [is-type `semantic_reflective_object_type_property_event event_precondition]
-			       [is-type `semantic_reflective_object_type_relation_event event_precondition]] [let [[meta_relationship [get event_precondition meta_relationship]]]
-													       [let [[feature [get this feature meta_relationship]]]
-														 [have positive_feature_set add feature]]]]
-			  [t                                                                                 [prog `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																     [get [get this layer] name] ' resource, ' name ', '
-																     'precondition event: ' event_precondition '.']
-														   ]]
-			  ]]
-	      event_preconditions]
-	
-	[mapc [funk [feature]
-		    [let [[positive [get positive_feature_set contains feature]]]
-		      [have concept_version_space_example add_variable_value feature positive]]]
-	      [get feature_phenomenal_name_ptypehash values]]
+      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events event_preconditions]]]
 	
 	'too large to print.'
 	`[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
@@ -307,5 +316,33 @@
 [deftypefunk traced_resource execute imagine_waiting_to_call [:rest args]
   [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		   'resource, ' name ', imagining waiting to call.']
-  ]
+  
+  [let [[counterfactual_knowledge_base nil]
+	[semantic_planner              nil]]
+    [cond [[or [eq [get [get this layer] name] `builtin_reactive]
+	       [eq [get [get this layer] name] `learned_reactive]] [prog [= counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]
+									 [= semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]
+									 ]]
+	  [[eq [get [get this layer] name] `deliberative]          [prog [= counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_counterfactual_knowledge]]
+									 [= semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]
+									 ]]
+	  [[eq [get [get this layer] name] `reflective]            nil]
+	  [t                                                       [prog [terminal_format standard-terminal '\ntraced_resource warning: layer unrecognized, ' [get [get this layer] name] '.']
+									 nil]]]
+    
+    [if counterfactual_knowledge_base
+	[let [[imagine_time [get semantic_planner imagine_time]]]
+	  [let [[precondition_events [get counterfactual_knowledge_base events_containing_time imagine_time]]]
+	    [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events]]]
+	      
+	      [mapc [funk [change_feature]
+			  [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
+			    
+			    ]]
+		    [get this change_features]]
+	      
+	      ]]]]
+    
+    ]]
+
 

@@ -236,8 +236,9 @@
 			      [= found t]]]]
 	      current_events]]
       [if [not found]
-	  [error bug_name    `assure_physical_relationship-failed
-		 description `[assure_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
+	  [prog [terminal_format standard-terminal '\nassure_physical_relationship: did not find relationship.']
+		[error bug_name    `assure_physical_relationship-failed
+		       description `[assure_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]]
 	nil]]]]
 
 [deftypefunk deliberative_layer execute imagine_assuring_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
@@ -261,7 +262,8 @@
 			      [= found t]]]]
 	      current_events]]
       [if [not found]
-	  [error bug_name    `imagine_assuring_physical_relationship-failed
-		 description `[imagine_assuring_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]
+	  [prog [terminal_format standard-terminal '\nimagine_assuring_physical_relationship: did not find relationship.']
+		[error bug_name    `imagine_assuring_physical_relationship-failed
+		       description `[imagine_assuring_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]]
 	nil]]]]
 

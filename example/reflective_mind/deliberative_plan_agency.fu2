@@ -27,6 +27,7 @@
        
        [parog [have this add_resource [new deliberative_focus_on_plan_resource]]
 	      [have this add_resource [new deliberative_execute_plan_in_focus_resource]]
+	      [have this add_resource [new deliberative_imagine_executing_plan_in_focus_resource]]
 	      [have this add_resource [new deliberative_focus_on_execute_plan_resource]]
 	      [have this add_resource [new deliberative_register_a_plan_from_focus_resource]]
 	      [have this add_resource [new deliberative_register_b_plan_from_focus_resource]]
@@ -36,7 +37,6 @@
 	      [have this add_resource [new deliberative_focus_plan_add_before_resource]]
 	      [have this add_resource [new deliberative_focus_plan_add_in_parallel_resource]]
 	      [have this add_resource [new deliberative_remember_plan_for_goal_resource]]
-	      [have this add_resource [new deliberative_imagine_executing_plan_in_focus_resource]]
 	      ]
        
        this]]
@@ -51,6 +51,7 @@
 
 [deftypefunk deliberative_plan_agency execute create_builtin_actions []
   [have-apply [get this mind] create_plan_action `[deliberative plan execute_plan_in_focus]]
+  [have-apply [get this mind] create_plan_action `[deliberative plan imagine_executing_plan_in_focus]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_execute_plan]]
   [have-apply [get this mind] create_plan_action `[deliberative plan register_a_plan_from_focus]]
   [have-apply [get this mind] create_plan_action `[deliberative plan register_b_plan_from_focus]]
@@ -60,7 +61,6 @@
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_before]]
   [have-apply [get this mind] create_plan_action `[deliberative plan focus_plan_add_in_parallel]]
   [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_for_goal]]
-  [have-apply [get this mind] create_plan_action `[deliberative plan imagine_executing_plan_in_focus]]
   ]
 
 [deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
@@ -101,18 +101,35 @@
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
 			  [if focus_plan
-			      [prog [terminal_format standard-terminal '\n' [get this as-string] ': executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
-				    [have [get this mind] wait_to_call `deliberative `execution `execute_plan focus_plan]
-				    [while [get [get [get [get this mind] agency `deliberative `plan] semantic_planner] execute_plan]
+			      [prog [terminal_format standard-terminal '\n' [get this as-string] ': imagining ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
+				    [have [get this mind] wait_to_call `deliberative `imagination `imagine_plan focus_plan]
+				    [while [get [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan]
 				      [sleep 4]]
-				    [terminal_format standard-terminal '\n' [get this as-string] ': done executing ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']]
-			    [prog [terminal_format standard-terminal '\n' [get this as-string] ': no plan to execute."']
+				    [terminal_format standard-terminal '\n' [get this as-string] ': done imagining ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']]
+			    [prog [terminal_format standard-terminal '\n' [get this as-string] ': no plan to imagine."']
 				  ]]
 			  
 			  ]]]]]
 
 [deftypefunk deliberative_execute_plan_in_focus_resource get as-english_conslist []
   `[execute plan in focus]]
+
+
+
+'deliberative_imagine_executing_plan_in_focus_resource'
+
+[deframe deliberative_imagine_executing_plan_in_focus_resource [deliberative_resource] []
+  [new []
+       [construct deliberative_resource `imagine_executing_plan_in_focus
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			
+			
+			]]]]
+
+[deftypefunk deliberative_imagine_executing_plan_in_focus_resource get as-english_conslist []
+  `[imagine executing plan in focus]]
 
 
 
@@ -256,22 +273,5 @@
 
 [deftypefunk deliberative_remember_plan_for_goal_resource get as-english_conslist []
   `[remember plan for goal]]
-
-
-'deliberative_imagine_executing_plan_in_focus_resource'
-
-[deframe deliberative_imagine_executing_plan_in_focus_resource [deliberative_resource] []
-  [new []
-       [construct deliberative_resource `imagine_executing_plan_in_focus
-		  [funk []
-			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
-			
-			
-			
-			]]]]
-
-[deftypefunk deliberative_imagine_executing_plan_in_focus_resource get as-english_conslist []
-  `[imagine executing plan in focus]]
-
 
 

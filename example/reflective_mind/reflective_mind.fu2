@@ -130,7 +130,7 @@
   [have [get this layer `deliberative] assure_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
 
 [deftypefunk reflective_mind execute wait_to_call_physical_action [arguments]
-  [let [[action [have [get [get this mind] layer `deliberative] lookup_reflective_action arguments]]]
+  [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action arguments]]]
     [if [null action]
 	[terminal_format standard-terminal '\nreflective_mind lookup action error: "' [conslist-as-english_string arguments] '" action not defined.']
       [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '

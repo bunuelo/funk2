@@ -55,16 +55,16 @@
 			    [let [[physical_type_events                   [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time imagine_time]]
 				  [physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
 			      [mapc [funk [physical_type_event]
-					  [cond [[is-type `semantic_reflective_object_type_relation_event physical_type_event] [let [[meta_relationship        [get                 physical_type_event meta_relationship]]
-																     [phenomenal_name          [get                 physical_type_event phenomenal_name]]
-																     [target_property_name_set [semantic-lookup_set physical_type_event target_property_name]]
-																     [absolute_start_time      [get                 physical_type_event absolute_start_time]]
-																     [absolute_end_time        [get                 physical_type_event absolute_end_time]]]
+					  [cond [[is-type `semantic_reflective_object_type_relation_event physical_type_event] [let [[meta_relationship      [get                 physical_type_event meta_relationship]]
+																     [phenomenal_name        [get                 physical_type_event phenomenal_name]]
+																     [target_object_type_set [semantic-lookup_set physical_type_event target_object_type]]
+																     [absolute_start_time    [get                 physical_type_event absolute_start_time]]
+																     [absolute_end_time      [get                 physical_type_event absolute_end_time]]]
 																 [let [[imagine_event [new semantic_reflective_object_type_relation_event
 																			   [get [get this mind] semantic_realm]
 																			   phenomenal_name
 																			   meta_relationship
-																			   [get target_property_name_set an_arbitrary_element]]]]
+																			   [get target_object_type_set an_arbitrary_element]]]]
 																   [set imagine_event absolute_start_time absolute_start_time]
 																   [set imagine_event absolute_end_time   absolute_end_time]
 																   

@@ -39,7 +39,14 @@
 			  [terminal_format standard-terminal '\ndeliberative_layer: forgetting all imagined events.']
 			  [set semantic_planner imagine_time nil]
 			  [let [[physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
-			    [have physical_counterfactual_knowledge_base remove_all]
+			    
+			    'generates interval tree removal errors'
+			    `[have physical_counterfactual_knowledge_base remove_all]
+			    
+			    'so, create whole new knowledge base.'
+			    [have [get [get [get this mind] semantic_realm] semantic_knowledge_base_frame] remove `physical_type_counterfactual_knowledge]
+			    [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
+			    
 			    nil]]]]
        nil]]
 

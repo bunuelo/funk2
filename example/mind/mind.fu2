@@ -42,6 +42,9 @@
        [= semantic_knowledge_base_add_event_callback_funks nil]
        this]]
 
+[deftypefunk mind get mind []
+  this]
+
 [deftypefunk mind get name_type_index [name_type]
   [let [[result [have index_name_type_ptypehash lookup name_type]]]
     [if [null result]

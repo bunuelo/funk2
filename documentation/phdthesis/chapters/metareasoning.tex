@@ -1,0 +1,32 @@
+%************************************************
+\chapter{Metareasoning}
+\label{chapter:metareasoning}
+%************************************************
+
+\section{An Example Storyboard}
+
+{\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
+shows a storyboard of the implemented example of second-order
+learning.
+\begin{figure}
+\begin{center}
+\begin{tabular}{p{4cm}p{4cm}p{4cm}}
+1. \includegraphics[width=4cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=4cm]{gfx/blocks_world_example-2}  & 3. \includegraphics[width=4cm]{gfx/blocks_world_example-3} \\
+4. \includegraphics[width=4cm]{gfx/blocks_world_example-4}  & 5. \includegraphics[width=4cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=4cm]{gfx/blocks_world_example-6} \\
+7. \includegraphics[width=4cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=4cm]{gfx/blocks_world_example-8}  & 9. \includegraphics[width=4cm]{gfx/blocks_world_example-9} \\
+10. \includegraphics[width=4cm]{gfx/blocks_world_example-10} & 11. \includegraphics[width=4cm]{gfx/blocks_world_example-11} & 12. \includegraphics[width=4cm]{gfx/blocks_world_example-12}
+\end{tabular}
+\end{center}
+\caption[A storyboard of the implemented example of second-order
+  learning.]{A storyboarded example of second-order learning, where
+  the goal is to create a stack of two blocks.  (1) A plan that is
+  hypothesized to stack the square block on top of the triangular
+  block is executed.  (2--8) The plan completes execution and results
+  in the square falling off of the triangle, an expectation failure.
+  (9) The second-order hypothetical heuristic is learned that predicts
+  plan failure will result by executing plans that try to stack
+  squares on top of triangles.  A plan that is hypothesized to stack
+  the triangle on top of the square is executed.  (9-12) The second
+  plan completes execution, accomplishing the physical goal.}
+\label{figure:implemented_example_learning_storyboard}
+\end{figure}

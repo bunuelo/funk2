@@ -53,7 +53,7 @@
 						 [have [get semantic_plan nonsemantic_plan] imagine_eval]]]]
 			    [if [is-type `bug result]
 				[let [[bug result]]
-				  [terminal_format standard-terminal '\ndeliberative_layer: imagining plan has a bug.']
+				  [terminal_format standard-terminal '\ndeliberative_layer: imagining plan has a bug: ' bug]
 				  [set semantic_planner imagine_plan nil]
 				  ]
 			      [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed imagining plan.']

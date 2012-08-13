@@ -54,9 +54,9 @@
 					 '\n                  buggy plan = "' [get [get semantic_plan nonsemantic_plan] as-string] '."'
 					 '\n                         bug = "' [get bug as-string] '."']
 			[let [[bug_name [have [get bug frame] lookup `bug_name]]]
-			  [cond [[eq bug_name `nonsemantic_plan-assure_physical_relationship-failed] [have [get this mind] wait_to_call `reflective `plan_bug_response `expectation_failure_response                  semantic_plan bug]]
-				[[eq bug_name `expected_precondition_does_not_exist]                 [have [get this mind] wait_to_call `reflective `plan_bug_response `expected_precondition_does_not_exist_response semantic_plan bug]]
-				[t                                                                   [have [get this mind] wait_to_call `reflective `plan_bug_response `unknown_bug_name_response                     semantic_plan bug]]]]]]
+			  [cond [[eq bug_name `assure_physical_relationship-failed]  [have [get this mind] wait_to_call `reflective `plan_bug_response `expectation_failure_response                  semantic_plan bug]]
+				[[eq bug_name `expected_precondition_does_not_exist] [have [get this mind] wait_to_call `reflective `plan_bug_response `expected_precondition_does_not_exist_response semantic_plan bug]]
+				[t                                                   [have [get this mind] wait_to_call `reflective `plan_bug_response `unknown_bug_name_response                     semantic_plan bug]]]]]]
        nil]]
 
 

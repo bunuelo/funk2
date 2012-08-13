@@ -63,9 +63,9 @@
   [have-apply this create_physical_type_property_relationship_goal `[block shape cube    preposition on    block   shape pyramid]]
   
   [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object plan_object_type       physical      relationship failure  semantic_expectation_failure reflective_object_type semantic_expectation_failure]]
-  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_planner     planner_type           deliberative1 relation     bug_plan semantic_plan_object         bug_name               nonsemantic_plan-assure_physical_relationship-failed]]
+  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_planner     planner_type           deliberative1 relation     bug_plan semantic_plan_object         bug_name               assure_physical_relationship-failed]]
   
-  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object bug_name nonsemantic_plan-assure_physical_relationship-failed      physical      relationship failure  semantic_expectation_failure reflective_object_type semantic_expectation_failure]]
+  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object bug_name assure_physical_relationship-failed      physical      relationship failure  semantic_expectation_failure reflective_object_type semantic_expectation_failure]]
 
   nil]
 
@@ -133,7 +133,7 @@
 						    [wait-for-physical-relationship block shape cube below gripper is-me t]
 						    [wait-to-call grab]
 						    [wait-for-time 10]
-						    [wait-for-property gripper is-me t movement_command stop]
+						    [wait-for-physical-property gripper is-me t movement_command stop]
 						    [wait-to-call move_right]
 						    [wait-for-time 1]
 						    [wait-for-physical-relationship block shape pyramid below gripper is-me t]
@@ -179,7 +179,7 @@
     `[have this create_physical_semantic_plan `[prog [wait-to-call move_right]
 						    [wait-for-physical-relationship block shape pyramid below gripper is-me t]
 						    [wait-to-call grab]
-						    [wait-for-property gripper is-me t movement_command stop]
+						    [wait-for-physical-property gripper is-me t movement_command stop]
 						    [wait-to-call move_left]
 						    [wait-for-physical-relationship block shape cube below gripper is-me t]
 						    [wait-to-call drop]
@@ -189,7 +189,7 @@
 	  start_operator]
     [have this create_physical_semantic_plan `[prog [wait-to-call grab]
 						    [wait-for-time 10]
-						    [wait-for-property gripper is-me t movement_command stop]
+						    [wait-for-physical-property gripper is-me t movement_command stop]
 						    [wait-to-call move_right]
 						    [wait-for-time 1]
 						    [wait-for-physical-relationship block shape cube below gripper is-me t]

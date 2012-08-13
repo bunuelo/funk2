@@ -119,6 +119,17 @@
 [deftypefunk reflective_mind get physical_semantic_action [phenomenal_name]
   [get [get this layer `reflective] physical_semantic_action phenomenal_name]]
 
+
+[deftypefunk reflective_mind execute wait_for_physical_property [source_type source_property source_property_value property property_value]
+  [have [get this layer `deliberative] wait_for_physical_property source_type source_property source_property_value property property_value]]
+
+[deftypefunk reflective_mind execute wait_for_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+  [have [get this layer `deliberative] wait_for_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+
+[deftypefunk reflective_mind execute assure_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+  [have [get this layer `deliberative] assure_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+
+
 'deliberative1'
 
 [deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []

@@ -25,10 +25,24 @@
   [new []
        [construct agency `imagination]
        
+       [have this add_resource [new deliberative_forget_all_imagined_events_imagination_resource]]
        [have this add_resource [new deliberative_imagine_current_situation_resource]]
        [have this add_resource [new deliberative_imagine_plan_resource]]
        
        this]]
+
+[deframe deliberative_forget_all_imagined_events_resource [deliberative_resource] []
+  [new []
+       [construct deliberative_resource `forget_all_imagined_events
+		  [funk []
+			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			  [terminal_format standard-terminal '\ndeliberative_layer: forgetting all imagined events.']
+			  [set semantic_planner imagine_time nil]
+			  [let [[physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
+			    [have physical_counterfactual_knowledge_base remove_all]
+			    nil]]]]
+       nil]]
+
 
 [deframe deliberative_imagine_current_situation_resource [deliberative_resource] []
   [new []

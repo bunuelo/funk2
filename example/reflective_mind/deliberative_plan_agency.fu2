@@ -62,6 +62,7 @@
   [have-apply [get this mind] create_plan_action `[deliberative plan        focus_plan_add_in_parallel]]
   [have-apply [get this mind] create_plan_action `[deliberative plan        remember_plan_for_goal]]
   [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_current_situation]]
+  [have-apply [get this mind] create_plan_action `[deliberative imagination forget_all_imagined_events]]
   ]
 
 [deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]

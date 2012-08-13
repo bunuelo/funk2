@@ -36,8 +36,15 @@
 		  [funk []
 			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\ndeliberative_layer: imagining current situation.']
-			  [set semantic_planner imagine_time [new semantic_time [time]]]
-			  nil]]]
+			  [let [[imagine_time [new semantic_time [time]]]]
+			    [set semantic_planner imagine_time imagine_time]
+			    [let [[imagine_events                         [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time imagine_time]]
+				  [physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
+			      [mapc [funk [imagine_event]
+					  `[terminal_format standard-terminal '\nimagining event: ' [get event phenomenal_name] '.']
+					  [have physical_counterfactual_knowledge_base add_semantic_frame imagine_event]]
+				    imagine_events]
+			      nil]]]]]
        nil]]
 
 

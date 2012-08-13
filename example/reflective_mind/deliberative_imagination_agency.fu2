@@ -25,28 +25,40 @@
   [new []
        [construct agency `imagination]
        
+       [have this add_resource [new deliberative_imagine_current_situation_resource]]
        [have this add_resource [new deliberative_imagine_plan_resource]]
        
        this]]
+
+[deframe deliberative_imagine_current_situation_resource [deliberative_resource] []
+  [new []
+       [construct deliberative_resource `imagine_current_situation
+		  [funk []
+			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			  [terminal_format standard-terminal '\ndeliberative_layer: imagining current situation.']
+			  [set semantic_planner imagine_time [new semantic_time [time]]]
+			  nil]]]
+       nil]]
+
 
 [deframe deliberative_imagine_plan_resource [deliberative_resource] []
   [new []
        [construct deliberative_resource `imagine_plan
 		  [funk [semantic_plan]
 			[assert-type semantic_plan_object semantic_plan]
-			[terminal_format standard-terminal '\ndeliberative_layer: imagining plan.']
-			[set [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan semantic_plan]
-			[let [[result [shelter [cause-define cause-name `plan]
-					       [have [get semantic_plan nonsemantic_plan] imagine_eval]]]]
-			  [if [is-type `bug result]
-			      [let [[bug              result]
-				    [semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
-				[terminal_format standard-terminal '\ndeliberative_layer: imagining plan has a bug.']
-				[set semantic_planner imagine_plan nil]
-				]
-			    [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed imagining plan.']
-				  [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan nil]]]]
-			nil]]
+			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			  [terminal_format standard-terminal '\ndeliberative_layer: imagining plan.']
+			  [set semantic_planner imagine_plan semantic_plan]
+			  [let [[result [shelter [cause-define cause-name `plan]
+						 [have [get semantic_plan nonsemantic_plan] imagine_eval]]]]
+			    [if [is-type `bug result]
+				[let [[bug result]]
+				  [terminal_format standard-terminal '\ndeliberative_layer: imagining plan has a bug.']
+				  [set semantic_planner imagine_plan nil]
+				  ]
+			      [prog [terminal_format standard-terminal '\ndeliberative_layer: successfully completed imagining plan.']
+				    [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan nil]]]]
+			  nil]]]
        nil]]
 
 

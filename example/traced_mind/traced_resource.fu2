@@ -164,7 +164,7 @@
 		[have change_feature_phenomenal_name_ptypehash add change-phenomenal_name change_feature]]]
       change_feature]]]
 
-[deftypefunk traced_traced get change_features []
+[deftypefunk traced_resource get change_features []
   [get change_feature_phenomenal_name_ptypehash values]]
 
 [deftypefunk traced_resource get precondition_hypothesis_space [change_feature]

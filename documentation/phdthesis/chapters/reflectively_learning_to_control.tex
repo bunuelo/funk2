@@ -3,14 +3,41 @@
 \label{chapter:reflectively_learning_to_control}
 %************************************************
 
+In order to demonstrate my solution to the problem of reflectively
+learning-to-control, my examples will be within the physical block
+building domain shown in \autoref{figure:an_example_problem_domain}.
 
 \begin{figure}
 \begin{center}
-\includegraphics[width=4cm]{gfx/blocks_world_example-1}
+\includegraphics[width=8cm]{gfx/blocks_world_example-1}
 \end{center}
 \caption[An example problem domain.]{An example problem domain.}
 \label{figure:an_example_problem_domain}
 \end{figure}
+
+\section{The Physical Knowledge-Base}
+
+The block building domain is a simulation based on two-dimensional
+ridid-body physical laws, including floating point numerical
+representations for object positions, velocities and accellerations.
+These numerical representations and the processes that manipulate them
+are part of the $\text{reflective}^0$ physical layer of the model, but
+in order to focus the efficiency of the procedural reflection, a much
+simpler relational graph representation has been specifically
+represented in semantic frame-based objects in a semantic
+knowledge-base, referred to as the \emph{physical knowledge-base}.
+The physical knowledge-base includes objects with shapes, colors, and
+multiple prepositional spatial relationships.
+{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
+physical knowledge-base.
+\begin{sidewaysfigure}
+\begin{center}
+\includegraphics[width=24cm]{gfx/implemented_physical_knowledge}
+\end{center}
+\hspace{4cm}\parbox{15cm}{\caption[The physical knowledge-base.]{The
+    physical
+    knowledge-base.}\label{figure:implemented_physical_knowledge}}
+\end{sidewaysfigure}
 
 \section{An Example Storyboard}
 

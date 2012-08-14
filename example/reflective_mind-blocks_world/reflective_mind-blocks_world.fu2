@@ -99,6 +99,11 @@
 	`addition
 	`block `shape `cube `preposition `on `block `shape `pyramid]
   
+  [have [get this mind] add_resource_change_relationship_hypothesis
+	`learned_reactive `physical `drop_block_and_wait_for_block_to_fall
+	`addition
+	`block `shape `pyramid `preposition `on `block `shape `cube]
+  
   
   'create blocks_world agent specific plans'
   

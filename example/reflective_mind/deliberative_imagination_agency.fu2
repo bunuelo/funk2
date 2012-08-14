@@ -26,6 +26,7 @@
        [construct agency `imagination]
        
        [have this add_resource [new deliberative_forget_all_imagined_events_resource]]
+       [have this add_resource [new deliberative_set_imagine_time_to_be_now_resource]]
        [have this add_resource [new deliberative_imagine_current_situation_resource]]
        [have this add_resource [new deliberative_imagine_plan_resource]]
        
@@ -47,6 +48,18 @@
 			    [have [get [get [get this mind] semantic_realm] semantic_knowledge_base_frame] remove `physical_type_counterfactual_knowledge]
 			    [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
 			    
+			    nil]]]]
+       nil]]
+
+
+[deframe deliberative_set_imagine_time_to_be_now_resource [deliberative_resource] []
+  [new []
+       [construct deliberative_resource `set_imagine_time_to_be_now
+		  [funk []
+			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			  [terminal_format standard-terminal '\ndeliberative_layer: setting imagine time to be now.']
+			  [let [[imagine_time [new semantic_time [time]]]]
+			    [set semantic_planner imagine_time imagine_time]
 			    nil]]]]
        nil]]
 

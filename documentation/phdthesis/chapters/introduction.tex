@@ -316,61 +316,6 @@ with a different learning opportunity.
 \label{figure:tracing_bug_dependencies}
 \end{figure}
 
-\section{Comparing Temporal and Reflective Learning}
-
-A reflective learning algorithm implies arbitrarily better learning
-algorithms, including one-shot learning algorithms.  In many domains,
-the opportunity to learn is rare.  When the cost of failure is high,
-it is important to learn as much as possible from each failure.
-
-I will refer to machine learning algorithms that learn by assigning
-credit for failures to the temporally previous action as
-\emph{temporal learning} algorithms.  Contemporary temporal learning
-algorithms are relatively advanced, some even having relational
-object-oriented models of actions and the world.  Temporal learning
-algorithms learn by assigning credit for a failure to the previous
-time step or the previous action.  A reinforcement learning algorithm
-that learns in this immediately temporal sense is called the
-\emph{temporal difference learning} algorithm as described by
-\cite*{kaelbling:1996}.  In temporal learning, the previous physical
-action is considered in the context of the previous physical state of
-the world.  Preconditions and postconditions for the action are
-updated.  In other words, the categories of the world are updated for
-this action, given the unexpected reward or punishment, a failure in
-expectations.  In the temporal difference learning algorithm, there is
-a focus on the previous physical action and physical state combination
-in order to assign credit for failures.  Temporal learning algorithms
-assign credit back, sequentially in time, from action to action.
-
-Reflective learning algorithms can be thought of as having a temporal
-learning algorithm within each necessarily distinct layer of
-knowledge.  Reflective learning can take advantage of concurrent
-processors for each separate layer of activity without slowing down
-the primary learning algorithm under focus.  Let $n$ be the number of
-reflective layers in a learning algorithm with each layer on a
-concurrent processor.  If there is a memory of actions and the state
-of the world for the previous time step, a temporal learning algorithm
-spends $O(1)$ time relearning the effects of the temporally previous
-action.  This process can be repeated for probabilistic algorithms,
-resulting in a statistical spreading of credit through the uncertainty
-of a number of previous actions.  The reflective algorithm also spends
-$O(1)$ time but relearns the effects of $n$ actions, where $n$ is
-limited by memory and processors.
-{\mbox{\autoref{figure:learning_complexities}}} shows a comparison of
-the time and space complexities of temporal and reflective learning
-algorithms as well as the number of learning opportunities afforded by
-one failure.
-\begin{figure}
-\center
-\begin{tabular}{p{2cm}|p{2cm}|p{2cm}|p{3cm}}
-Learning Algorithm & Time   & Space  & One-shot Learning Opportunities \\ \hline
-Temporal           & $O(1)$ & $O(1)$ & $1$ \\
-Reflective         & $O(1)$ & $O(n)$ & $n$ \\
-\end{tabular}
-\caption{Temporal and reflective learning complexities with one-shot learning opportunities.}
-\label{figure:learning_complexities}
-\end{figure}
-
 \section{Reflection}
 
 The term reflection is a commonly used word in computer science and

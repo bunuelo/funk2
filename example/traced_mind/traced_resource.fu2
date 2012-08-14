@@ -147,7 +147,7 @@
   [let [[change-phenomenal_name [action_transframe_hypothesis_space_change_feature-phenomenal_name change_type feature_phenomenal_name]]]
     [let [[change_feature [have change_feature_phenomenal_name_ptypehash lookup change-phenomenal_name]]]
       [if [null change_feature]
-	  [prog [= change_feature [new action_transframe_hypothesis_space_change_feature change_type change_meta_relationship]]
+	  [prog [= change_feature [new action_transframe_hypothesis_space_change_feature change_type feature_phenomenal_name]]
 		[have change_feature_phenomenal_name_ptypehash add change-phenomenal_name change_feature]]]
       change_feature]]]
 

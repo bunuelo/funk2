@@ -13,50 +13,95 @@ algorithms that work behind-the-scenes without a reflective learning
 focus.  Without increasing the computational time complexity of basic
 search, this approach learns to search in $n$ concurrent layers of
 goal-oriented optimization, learning to plan physical actions, while
-concurrently learning to plan planning actions, etc.  Physical
-activities are presented as analogous to thinking activities, allowing
-a recursive application of the model to itself.  The contributions of
+concurrently learning to plan planning actions.  Physical activities
+are presented as analogous to thinking activities, allowing a
+recursive application of the model to itself.  The contributions of
 this thesis are:
 
 \begin{itemize}
-\item \emph{The Model}: A basic description of the dynamic activity of
-  reflective thinking.
-\item \emph{The Simulation}: A mathematical basis in graph theory for
-  representing the simulation state of the model.
-\item \emph{The Substrate}: A computational implementation of three
-  working layers of the simulation in a block building domain.
+\item \emph{Emotion Machine Cognitive Architecture}: A computational
+  implementation of metacognition that contains a physical simulation
+  that is controlled by a deliberative physical object-level reasoning
+  layer with another reflective meta-level reasoning layer that learns
+  to control the first-order problem solving resources.  This is the
+  result of stacking two very similar planning machines on top of one
+  another, pointing toward future reflective architectures that will
+  be able to recursively ``grow'' layers of reflective planning over
+  any given preexisting problem solving resources.
+\item \emph{Grounded Learning of Knowledge Utility}: A dependency
+  tracing learning algorithm that is capable of learning both from
+  ``being told'' as well as from experience, learning what types of
+  knowledge are useful in different contexts, correcting knowledge
+  when it turns out to be wrong, learning and correcting assumptions
+  of the utility of knowledge through experience acting in the
+  physical world.
+\item \emph{The Substrate for Accountable Layered Systems}: A
+  concurrent and parallel lisp-like virtual machine and programming
+  language with procedural tracing features that facilitate the
+  automatic monitoring of control systems running many concurrent
+  tasks.
 \end{itemize}
-  
-\section{The Substrate}
 
-The primary contribution is the substrate.  This is a system for
-developing large software applications, which enables parallel and
-concurrent process control.  The advantage is the system's ability to
-selectively pause these parallel processes when bugs are encountered,
-so that they can be easily examined in this paused state.
-Additionally, there are intricate thread control operations for these
-processes.  When they ``sleep'', they are removed from the scheduler,
-allowing the substrate to focus computational resources on other
-processes.  When required, thousands of sleeping processes can
-efficiently be ``triggered'' awake.  The primary point of the system
-is that while running many different problem solvers at the same time,
-it has the ability to conveniently trace the interactions between
-those problem solvers.  Thus, all of the memory in this substrate
-allows for the tracing of all memory allocations and mutations.  It is
-a frame-based system.  Many AI systems are implemented in an
-object-oriented or frame-based representation.  This allows for all of
-the commonly associated programming methodologies to exist, i.e.
-object types and inheritance, etc.  The substrate includes a
-high-level lisp-like programming language, so the compiler can be
-redefined by the running program.  There are layered ``cognitive
-architecture'' structural primitives included in the language.  This
-allows the programmer to build a ``layer'' which contains ``agencies''
-which contain ``resources''.  These resources then are able to exist
-as ``minds'' which control ``physical worlds'' because these
-primitives already exist in this substrate.  This substrate, which can
-be downloaded as open-source software, serves as an extensible
-platform for continuing research on this implementation of reflective
-thinking.
+\section{Closed-loop Control and Learning}
+
+There are many artificial intelligence algorithms that provide
+explanations for how to accomplish goals or gather rewards in a
+domain. A basic artificial intelligence system consists of three
+processes: (1) perceptual data are generalized and categorized to
+learn induced abstract models, (2) abstract models are used to infer
+expected hypothetical states, i.e. states of future, past, or
+otherwise ``hidden'' variables, (3) actions are chosen based on
+considerations of different action-dependent inferences.  While there
+are many types of machine learning algorithms that focus on this
+abstract 3-step closed-loop process of learning to control, the field
+of metacognition \cite[]{cox_and_raja:2008} focuses on making at least
+two layers of closed-loop systems. The first closed-loop learning
+algorithm learns how to deal with the external world, while the second
+closed-loop learning algorithm perceives the state of the algorithm
+below. I see metacognition as a layering of learning algorithms, such
+that the second layer algorithm learns from perceiving the activity of
+the first layer and controls or modifies this first layer. While it
+may be clear how to trace changes in the perceptual inputs of layer
+one of the algorithm, it is less than clear how the second layer
+learner should monitor the changes in the state of the first layer
+learner.
+
+\section{A Review of the Emotion Machine v1.0}
+
+One system that implements commonsense reasoning, based on Minsky's
+Emotion Machine theory of mind \cite[]{minsky:2006}, is a
+metareasoning system for correcting faulty plans, called EM1 (Emotion
+Machine, v1) \cite[]{singh:2005b}. EM1 is written in Lisp, using a
+Prolog extension as the logical resolution tool. EM1 is a layered
+architecture consisting of reactive, deliberative, and reflective
+layers. Mental critics are represented as commonsense narratives that
+result in queries to a collection of different Prolog knowledge
+bases. The commonsense narratives are given to the system in a Lisp
+format that is compiled into the knowledge bases as collections of
+horn clauses. These knowledge bases consist of collections of
+domain-specific horn clauses that are divided into physical, social,
+and mental domains of reasoning. On top of this Prolog logical
+substrate, the Lisp program is organized into layers as a
+critic-selector model of mind. The narrative plans that are generated
+by the deliberative layer are executed by a lower-layer, called the
+reactive layer. Part of the reactive layer of the algorithm is written
+in C and runs PID control loops in a simulated social two-wheeled
+inverted pendulum type robot. EM1 demonstrates how a system can use
+commonsense narratives in order to reason by analogy in order to
+generate plans. Also, EM1 demonstrates a learning process that is
+driven by reflective critical recognition of failure. Because of the
+complexity of the rigid-body physics in the world, sometimes even the
+most carefully constructed plans fail. EM1 has a layer of reflective
+critics that debug deliberative narratives as they are being
+interpreted by using a collection of commonsense narrative debugging
+critics.  Using narratives about social situations, EM1 infers the
+goals of the other agents in the world given partial knowledge of
+their visible physical actions. When mistakes are made in this
+inference process, the failure is recognized reflectively, after the
+fact. Specific types of debugging responses are implemented for
+different forms of critical failures. EM1 is a step toward a large and
+complex commonsense reasoning agent with multiple layers of
+metareasoning that inspect, control, and debug mental representations.
 
 \section{The Simulation}
 
@@ -91,20 +136,42 @@ relationships require search algorithms to evaluate the implications
 of the declarative forms.  These systems fail because there is this
 explosion of exponential search.  In my model, in analyzing the
 simulation, the curse of dimensionality is reduced through layers of
-planned heuristic learning.  My main point is that anything that
-involves search can be improved by being in terms of a simulation of
-reflective learning.  The details of the simulation model are the
-basis of the computational substrate that allows for this improvement.
+planned heuristic learning.  Any given algorithm can be procedurally
+traced, resulting in a stream of events that do not change the time
+complexity of the original algorithm, while a reflective algorithm can
+learn to optimize this original algorithm.  The details of the
+simulation model are the basis of the computational substrate that
+allows for this improvement.
 
-\section{The Model}
+\section{The Substrate}
 
-The third thesis contribution is a reflective model of mind that gives
-a description of how to think about thinking reflectively.  There are
-many models for reflective thinking, and I will compare my model to
-other related layered, reflective, and metacognitive models of mind.
-The model I describe here has not been explored by many of the current
-machine learning disciplines.  Thus, this model will be the basis of
-my mathematical simulation.
+The substrate is a system for developing large software applications,
+which enables parallel and concurrent process control.  The advantage
+is the system's ability to selectively pause these parallel processes
+when bugs are encountered, so that they can be easily examined in this
+paused state.  Additionally, there are intricate thread control
+operations for these processes.  When they ``sleep'', they are removed
+from the scheduler, allowing the substrate to focus computational
+resources on other processes.  When required, thousands of sleeping
+processes can efficiently be ``triggered'' awake.  The primary point
+of the system is that while running many different problem solvers at
+the same time, it has the ability to conveniently trace the
+interactions between those problem solvers.  Thus, all of the memory
+in this substrate allows for the tracing of all memory allocations and
+mutations.  It is a frame-based system.  Many AI systems are
+implemented in an object-oriented or frame-based representation.  This
+allows for all of the commonly associated programming methodologies to
+exist, e.g.  object types and inheritance.  The substrate includes a
+high-level lisp-like programming language, so the compiler can be
+redefined by the running program.  There are layered ``cognitive
+architecture'' structural primitives included in the language.  This
+allows the programmer to build a ``layer'' which contains ``agencies''
+which contain ``resources''.  These resources then are able to exist
+as ``minds'' which control ``physical worlds'' because these
+primitives already exist in this substrate.  This substrate, which can
+be downloaded as open-source software, serves as an extensible
+platform for continuing research on this implementation of reflective
+thinking.
 
 \section{Document Overview}
 
@@ -195,8 +262,7 @@ state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
 processed one billion plans per second in parallel, this search would
 still take over ten thousand years to complete, and that is just to
 play the first move!  The fastest algorithms include good heuristics,
-e.g. a count of the number of pieces on the board for each player,
-etc.
+e.g. a count of the number of pieces on the board for each player.
 
 \section{Heuristics}
 

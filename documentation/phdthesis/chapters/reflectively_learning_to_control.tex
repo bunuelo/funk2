@@ -3,20 +3,32 @@
 \label{chapter:reflectively_learning_to_control}
 %************************************************
 
+
 In order to demonstrate my solution to the problem of reflectively
 learning-to-control, I will focus on a running example within the
 physical block building domain shown in
-\autoref{figure:an_example_problem_domain}.  The block building domain
-is implemented as a simulation based on two-dimensional ridid-body
-physical laws, including floating point numerical representations for
-object positions, velocities and accellerations.  These numerical
-representations and the processes that manipulate them are part of the
-physical layer of the model, but in order to focus the efficiency of
-the procedural reflection, a much simpler relational graph
-representation has been specifically represented as semantic
-frame-based objects in a semantic knowledge-base, referred to as the
-\emph{physical knowledge-base}.  For example, the semantic knowledge
-can be thought of as a list of the following types of sentences:
+\autoref{figure:an_example_problem_domain}.
+\begin{figure}
+\begin{center}
+\includegraphics[width=8cm]{gfx/blocks_world_example-1}
+\end{center}
+\caption[An example problem domain.]{An example problem domain.}
+\label{figure:an_example_problem_domain}
+\end{figure}
+
+\section{The Physical Simulation}
+
+The block building domain is implemented as a simulation based on
+two-dimensional ridid-body physical laws, including floating point
+numerical representations for object positions, velocities and
+accellerations.  These numerical representations and the processes
+that manipulate them are part of the physical layer of the model, but
+in order to focus the efficiency of the procedural reflection, a much
+simpler relational graph representation has been specifically
+represented as semantic frame-based objects in a semantic
+knowledge-base, referred to as the \emph{physical knowledge-base}.
+For example, the semantic knowledge can be thought of as a list of the
+following types of sentences:
 \begin{itemize}
 \item Block-1 is a block.
 \item Block-2 is a block.
@@ -53,18 +65,42 @@ subject-verb-object triples as in the following list:
 \item Block-1 is-to-the-left-of Gripper-1.
 \item Block-2 is-to-the-right-of Gripper-1.
 \end{itemize}
-These simple subject-verb-object triples are the physical knowledge
-that the AI reflects over and learns to control by performing physical
-actions in order to change this knowledge into goal configurations.
-{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
-physical knowledge-base.
-\begin{figure}
+The physical simulation maintains a list of these simple
+subject-verb-object sentences in its internal state.  The actual
+internal lisp-like representation of the physical simulation is shown
+in \autoref{table:internal_lisp_like_physical_representation}.
+\begin{table}
 \begin{center}
-\includegraphics[width=8cm]{gfx/blocks_world_example-1}
+{\fbox{
+\begin{tabular}{l}
+ {\tt{[Block-1 left-of Gripper-1]}} \\
+ {\tt{[Block-1 on Table-1]}} \\
+ {\tt{[Block-1 shape cube]}} \\
+ {\tt{[Block-1 color blue]}} \\
+ {\tt{[Block-1 is-a block]}} \\
+ {\tt{[Block-2 right-of Gripper-1]}} \\
+ {\tt{[Block-2 on Table-1]}} \\
+ {\tt{[Block-2 shape pyramid]}} \\
+ {\tt{[Block-2 color green]}} \\
+ {\tt{[Block-2 is-a block]}} \\
+ {\tt{[Table-1 left-of Gripper-1]}} \\
+ {\tt{[Table-1 shape cube]}} \\
+ {\tt{[Table-1 color white]}} \\
+ {\tt{[Table-1 is-a table]}} \\
+ {\tt{[Gripper-1 is-holding []]}} \\
+ {\tt{[Gripper-1 color black]}} \\
+ {\tt{[Gripper-1 is-a gripper]}} \\
+ {\tt{[Gripper-1 movement\_command stop]}} \\
+ {\tt{[Gripper-1 is me]}}
+\end{tabular}
+}}
 \end{center}
-\caption[An example problem domain.]{An example problem domain.}
-\label{figure:an_example_problem_domain}
-\end{figure}
+\caption[Internal representation for physical simulation.]{Internal representation for physical simulation.}
+\label{table:internal_lisp_like_physical_representation}
+\end{table}
+{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
+physical knowledge-base that is reconstructed from these reflective
+change events.
 \begin{sidewaysfigure}
 \begin{center}
 \includegraphics[width=24cm]{gfx/implemented_physical_knowledge}

@@ -31,18 +31,22 @@
 
 'action_transframe_hypothesis_space_change_feature'
 
-[defunk action_transframe_hypothesis_space_change_feature-phenomenal_name [change_type phenomenal_name]
-  [assert-type symbol phenomenal_name]
-  [format nil change_type '_' phenomenal_name]]
+[defunk action_transframe_hypothesis_space_change_feature-phenomenal_name [change_type feature_phenomenal_name]
+  [assert-type symbol feature_phenomenal_name]
+  [format nil change_type '_' feature_phenomenal_name]]
 
 [deframe action_transframe_hypothesis_space_change_feature [frame] [change_type
-								    phenomenal_name]
+								    feature_phenomenal_name
+								    relative_start_time_from_action_start
+								    relative_duration_time]
   [new [initial-change_type
-	initial-phenomenal_name]
+	initial-feature_phenomenal_name]
        [assert-type symbol initial-change_type]
-       [assert-type symbol initial-phenomenal_name]
+       [assert-type symbol initial-feature_phenomenal_name]
        [= change_type     initial-change_type]
-       [= phenomenal_name initial-phenomenal_name]
+       [= phenomenal_name initial-feature_phenomenal_name]
+       [= relative_start_time_from_action_start [new relative_time [* 30 1000000000]]]
+       [= relative_duration_time                [new relative_time [* 60 1000000000]]]
        nil]]
 
 
@@ -331,9 +335,18 @@
 			      
 			      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					       'resource, ' name ', found ' [length change_hypothesis_dependencies] ' specific hypotheses consistent with change.']
-			      
+			      [if change_hypothesis_dependencies
+				  [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
+					[relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
+					[relative_duration_time                [get change_feature relative_duration_time]]
+					[counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
+				    [set counterfactual_event absolute_start_time [new semantic_time [+ [get imagine_time time] relative_start_time_from_action_start]]]
+				    [set counterfactual_event absolute_end_time   [new semantic_time [+ [get imagine_time time] relative_start_time_from_action_start relative_duration_time]]]
+				    ]]
 			      ]]]
 		    [get this change_features]]
+	      
+	      [set semantic_planner imagine_time [new semantic_time [+ [get imagine_time time] [new relative_time [* 60 1000000000]]]]]
 	      
 	      ]]]]
     

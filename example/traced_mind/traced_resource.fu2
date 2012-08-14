@@ -337,6 +337,26 @@
     ]]
 
 
-`[deftypefunk traced_resource execute add_change_meta_relationship_hypothesis [meta_relationship]
-   ]
+[deftypefunk traced_resource execute add_change_phenomenal_name_hypothesis [change_type feature_phenomenal_name]
+  [let [[change_feature [get this change_feature change_type feature_phenomenal_name]]]
+    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
+      
+      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		       'resource, ' name ', adding change hypothesis space for ' change_type ' of ' feature_phenomenal_name '.']
+      
+      ]]]
+
+
+[deftypefunk traced_resource execute add_change_relationship_hypothesis [change_type source_type source_property source_property_value key_type key target_type target_property target_property_value]
+  [let [[relationship-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
+																						   `property
+																						   source_property
+																						   source_property_value]]
+											   key_type
+											   key
+											   [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
+																						   `property
+																						   target_property
+																						   target_property_value]]]]]
+    [have this add_change_phenomenal_name_hypothesis change_type relationship-phenomenal_name]]]
 

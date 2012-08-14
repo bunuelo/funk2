@@ -35,12 +35,25 @@ this thesis are:
   when it turns out to be wrong, learning and correcting assumptions
   of the utility of knowledge through experience acting in the
   physical world.
-\item \emph{The Substrate for Accountable Layered Systems}: A
-  concurrent and parallel lisp-like virtual machine and programming
+\item \emph{Funk Virtual Machine and Programming Language}: A
+  concurrent and parallel virtual machine and lisp-like programming
   language with procedural tracing features that facilitate the
   automatic monitoring of control systems running many concurrent
   tasks.
 \end{itemize}
+
+\section{Document Overview}
+
+The focus of the dissertation will be a description of the reflective
+problem of learning-to-control.  I describe control in terms of layers
+of reflective credit assignment because this simplifies understanding
+the problem of learning-to-control.  Throughout this dissertation I
+will use a running example of learning to accomplish goals in a simple
+block building domain, similar to the Blocks World planning domain
+\cite[]{winograd:1970}.
+\autoref{chapter:reflectively_learning_to_control} describes my
+implemented solution to the problem of reflectively learning to
+control.
 
 \section{Closed-loop Control and Learning}
 
@@ -66,273 +79,34 @@ one of the algorithm, it is less than clear how the second layer
 learner should monitor the changes in the state of the first layer
 learner.
 
-\section{A Review of the Emotion Machine v1.0}
+\section{Reflection in Computer Science}
 
-One system that implements commonsense reasoning, based on Minsky's
-Emotion Machine theory of mind \cite[]{minsky:2006}, is a
-metareasoning system for correcting faulty plans, called EM1 (Emotion
-Machine, v1) \cite[]{singh:2005b}. EM1 is written in Lisp, using a
-Prolog extension as the logical resolution tool. EM1 is a layered
-architecture consisting of reactive, deliberative, and reflective
-layers. Mental critics are represented as commonsense narratives that
-result in queries to a collection of different Prolog knowledge
-bases. The commonsense narratives are given to the system in a Lisp
-format that is compiled into the knowledge bases as collections of
-horn clauses. These knowledge bases consist of collections of
-domain-specific horn clauses that are divided into physical, social,
-and mental domains of reasoning. On top of this Prolog logical
-substrate, the Lisp program is organized into layers as a
-critic-selector model of mind. The narrative plans that are generated
-by the deliberative layer are executed by a lower-layer, called the
-reactive layer. Part of the reactive layer of the algorithm is written
-in C and runs PID control loops in a simulated social two-wheeled
-inverted pendulum type robot. EM1 demonstrates how a system can use
-commonsense narratives in order to reason by analogy in order to
-generate plans. Also, EM1 demonstrates a learning process that is
-driven by reflective critical recognition of failure. Because of the
-complexity of the rigid-body physics in the world, sometimes even the
-most carefully constructed plans fail. EM1 has a layer of reflective
-critics that debug deliberative narratives as they are being
-interpreted by using a collection of commonsense narrative debugging
-critics.  Using narratives about social situations, EM1 infers the
-goals of the other agents in the world given partial knowledge of
-their visible physical actions. When mistakes are made in this
-inference process, the failure is recognized reflectively, after the
-fact. Specific types of debugging responses are implemented for
-different forms of critical failures. EM1 is a step toward a large and
-complex commonsense reasoning agent with multiple layers of
-metareasoning that inspect, control, and debug mental representations.
-
-\section{The Simulation}
-
-The second thesis contribution is an example of a mathematical
-simulation model that gives answers for the following questions:
-\begin{itemize}
-\item How do we assign credit to the planning process and learn to
-  plan?
-\item When many individual processes interact in the solution of a
-  common problem, for example, controlling a complicated parallel
-  system, how is credit traced for decisions that have been made in
-  performing actions?
-\item How do we learn what particular knowledge is either good or bad
-  at solving different types of problems?
-\item How do we trace dependencies back to the point that models of
-  planning can be learned?
-\item How do algorithms currently assign credit backwards in time and
-  how does this model relate to these methods?
-\end{itemize}
-
-In this thesis, I evaluate how well this model is able to learn, not
-only at the ground level but also at the hypothesis manipulation
-level, improving the ground learning performance.  This simulation
-will be described as a potential path around the exponential search
-explosion problem.  There is a certain ``curse of dimensionality,''
-which limits a search algorithm from considering an exponentially
-vanishing percentage of the possible search paths as the length of the
-paths is increased.  The simulations are often defined in abstract
-terms, such as logical relationships, in order to make abstract
-simulations of large domains.  Large systems that have logical
-relationships require search algorithms to evaluate the implications
-of the declarative forms.  These systems fail because there is this
-explosion of exponential search.  In my model, in analyzing the
-simulation, the curse of dimensionality is reduced through layers of
-planned heuristic learning.  Any given algorithm can be procedurally
-traced, resulting in a stream of events that do not change the time
-complexity of the original algorithm, while a reflective algorithm can
-learn to optimize this original algorithm.  The details of the
-simulation model are the basis of the computational substrate that
-allows for this improvement.
-
-\section{The Substrate}
-
-The substrate is a system for developing large software applications,
-which enables parallel and concurrent process control.  The advantage
-is the system's ability to selectively pause these parallel processes
-when bugs are encountered, so that they can be easily examined in this
-paused state.  Additionally, there are intricate thread control
-operations for these processes.  When they ``sleep'', they are removed
-from the scheduler, allowing the substrate to focus computational
-resources on other processes.  When required, thousands of sleeping
-processes can efficiently be ``triggered'' awake.  The primary point
-of the system is that while running many different problem solvers at
-the same time, it has the ability to conveniently trace the
-interactions between those problem solvers.  Thus, all of the memory
-in this substrate allows for the tracing of all memory allocations and
-mutations.  It is a frame-based system.  Many AI systems are
-implemented in an object-oriented or frame-based representation.  This
-allows for all of the commonly associated programming methodologies to
-exist, e.g.  object types and inheritance.  The substrate includes a
-high-level lisp-like programming language, so the compiler can be
-redefined by the running program.  There are layered ``cognitive
-architecture'' structural primitives included in the language.  This
-allows the programmer to build a ``layer'' which contains ``agencies''
-which contain ``resources''.  These resources then are able to exist
-as ``minds'' which control ``physical worlds'' because these
-primitives already exist in this substrate.  This substrate, which can
-be downloaded as open-source software, serves as an extensible
-platform for continuing research on this implementation of reflective
-thinking.
-
-\section{Document Overview}
-
-{\mbox{\autoref{part:the_model}}} begins with a non-technical
-description of the model of mind that is used as the basis of both the
-mathematical simulation and the computational implementations.  In
-{\mbox{\autoref{part:the_simulation}}}, I explain the modelling
-assumptions that I make in transitioning to the mathematical notation
-of the simulation model.  Using this notation, I explain how this
-model can be used to reduce the complexity of search algorithms.  In
-{\mbox{\autoref{part:the_implementation}}}, I give an explanation of
-how this simulation is automated on a concurrent computer, the thesis
-implementation, SALS, the substrate for accountable layered systems.
-In conclusion, in {\mbox{\autoref{part:conclusion}}}, I discuss
-promising directions for future research in not only AI but also the
-other cognitive sciences.
-
-The focus of the dissertation will be a description of the reflective
-problem of learning-to-control.  I describe control in terms of layers
-of reflective credit assignment because this simplifies understanding
-the problem of learning-to-control.  The focus will be on the
-implementation of credit assignment at the level of planning
-activities and then describe an example of a computational simulations
-of reflective learning in a block building physical domain.
-
-\section{Programming}
-
-An example problem domain called the block building domain is shown in
-{\mbox{\autoref{figure:example_problem_domain}}}.  In this case, we
-have two blocks, which have relationships with the objects in the
-room, such as the table.  If the goal state is to get the physical
-world to exist in a particular configuration, the stack of {\tt
-  Block-2} on top of {\tt Block-1},
-{\mbox{\autoref{figure:example_program}}} shows an example of a
-program that a programmer might write to move this gripper around in
-this block building domain.  In this program, the gripper has very
-simple symbolic commands: {\tt move-right}, {\tt reach}, {\tt grab},
-{\tt move-left}, {\tt drop}.  One can imagine that this program might
-intend to pick up the green block and put it on the blue block.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/blocks_world_example-1}
-\caption{An example problem domain.}
-\label{figure:example_problem_domain}
-\end{figure}
-\begin{figure}
-\center
-\begin{tabular}{l}
-\\
-  {\tt ~~[defunk example-program []}~~ \\
-  {\tt ~~~~[move-right]} ~~\\
-  {\tt ~~~~[reach]} ~~\\
-  {\tt ~~~~[grab]} ~~\\
-  {\tt ~~~~[move-left]} ~~\\
-  {\tt ~~~~[drop]]} ~~\\
-\\
-\end{tabular}
-\caption{An example program.}
-\label{figure:example_program}
-\end{figure}
-
-\section{State Space Planning}
-
-State space planning can be thought of as automatic programming.
-Planning refers to the computer's ability to write its own program.
-In an algorithm that plans by using a search algorithm, there is an
-initial state with a number of possible actions that may lead away
-from this state.  We can move left; we can stop; we can move right.
-We can imagine what the possible future states would be after each
-action.  In an imagined future state, the gripper may be in a
-different position.  An example of the exponential growth resulting
-from continuing a planning search is shown in
-{\mbox{\autoref{figure:combinatorial_explosion_example}}}.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
-\caption{Exponential growth in planning as search.}
-\label{figure:combinatorial_explosion_example}
-\end{figure}
-If every considered state in a search has the same number of possible
-actions, this search becomes an exponential search problem.  The
-number of actions from each state is the \emph{branch factor} of the
-search.  Exponential searches quickly become intractable, even in
-state spaces with a reasonable number of actions.  For example, games
-of chess are played to 20 levels deep with about 30 moves from each
-state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
-10^{29}$ plans.  If there were one billion computers that each
-processed one billion plans per second in parallel, this search would
-still take over ten thousand years to complete, and that is just to
-play the first move!  The fastest algorithms include good heuristics,
-e.g. a count of the number of pieces on the board for each player.
-
-\section{Heuristics}
-
-When a problem is exponential, it progresses for as long as can be
-afforded computationally, traversing the state space, hopefully
-finding the goal state in this large space of all possible
-alternatives, but then stops, usually not able to find the required
-answer to the problem in the given time or space limitations.
-\emph{Heuristics} are one way to alleviate the problematic exponential
-growth of the search tree.  In order to search more efficiently,
-heuristics provide weightings over the search tree that give a metric
-of distance to a completed plan.  Beam search is an example of a
-heuristically weighted search that has a finite number of plans that
-it considers, forgetting the rest.  As used in beam search, a
-heuristic is a function that defines an ordering on search paths.  A
-heuristic function defines whether or not a given plan will
-successfully accomplish the goal, also, a heuristic gives a metric of
-the planning time required until a plan is created that will
-accomplish the goal.  The algorithm uses this information to guide the
-search, thus reducing the branch factor of the search tree, reducing
-the search problem.
-{\mbox{\autoref{figure:combinatorial_explosion_example_with_heuristics}}}
-shows the same exponential growth example with heuristic weightings
-overlayed with blue arrows.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/combinatorial_explosion_example_with_heuristics}
-\caption{Exponential growth example with heuristics.}
-\label{figure:combinatorial_explosion_example_with_heuristics}
-\end{figure}
-
-\section{Representing Actions}
-
-The planning as search problem assumes that we have a representation
-of the world and a representation for the changes that actions
-perform.  Given these models, the physical world can be simulated
-according to different plans.  \cite{fikes:1972} describe an action
-representation, called ``STRIPS'', that includes an object called a
-\emph{transframe} for simulating actions.  In the STRIPS model, the
-world is a set of symbols.  A transframe is composed of two sets: one
-for the removals from the world and one for the additions to the
-world.  A transframe represents a change between two states of the
-world.  In a symbolic relational domain, the state space is a set of
-symbolic relationships rather than just symbols.  Here is an example
-of a symbolic relationship that could exist in a relational domain:
-{\tt [block-1 is-on block-2]}.  Here is an example of a transframe for
-the world in a relational domain: \emph{remove} {\tt [block-1 on
-    table-1]} and \emph{add} {\tt [block-1 on block-2]}.  In
-predicting the effects of an action on the world, STRIPS considers one
-transframe for each action.  Transframes can also be dependent on the
-current state of the world.  Although many function approximation
-methods could be used, in my simulation model I have addressed the
-problem of learning to predict the correct transframes in the terms of
-{\mbox{\citeauthor{mitchell:1997}'s~\citeyearpar{mitchell:1997}}}
-``hypothesis spaces,'' which provide a simple and understandable
-formulation of the category hypothesis learning problem, given
-labelled examples.  Hypothetical models are learned to predict the
-effects of actions.  The physical state space informs sets of
-hypotheses that can be used to support assumptions, thus, the creation
-of new knowledge from an absence of knowledge, given the listed
-assumptions.
+The term reflection is a commonly used word in computer science and
+AI.  The idea is extremely simple and is a modelling contribution of
+this thesis, but, because of its simplicity, it is a widely applicable
+idea.  In fact, \cite{maes:1988} distinguishes over 30 different types
+of \emph{computational reflection}, grounded in the computer science
+literature.  The type of computational reflection that is introduced
+in this dissertation is not included in Maes' overview, although the
+implementation of this model is based on many of the forms of
+computational reflection that Maes does describe, e.g. procedural
+reflection, type reflection, frame reflection, and others.  She does
+not mention the type of reflection that I am focused on in this thesis
+because it was not, at the time, commonly considered computational.
+The type of reflection that is modelled here is a psychological type
+of reflection: the ability to think about thinking in addition to the
+ground problem.  This psychological form of reflection is modelled as
+a learning-to-control problem in this thesis.
 
 \section{Learning to Plan for Successful Execution}
 
 Dependency traces for a hypothesized successful plan creation compose
 an important set of knowledge to associate with a plan for debugging
 the planning process when, later, it is realized that the plan fails
-to execute.  {\mbox{\autoref{figure:dependency_traces}}} shows a
-picture of dependency traces with hypothesis creation events being
-pictured as shapes on a time line.  These hypotheses have arrows
+to execute.
+{\mbox{\autoref{figure:dependency_traces_and_tracing_bug_dependencies}}}
+shows a picture of dependency traces with hypothesis creation events
+being pictured as shapes on a time line.  These hypotheses have arrows
 between them that represent the derivation dependencies of each
 hypothesis creating decision.  The circles in the picture represent
 the symbolic states of the world that are used to create hypotheses,
@@ -348,13 +122,6 @@ traced dependencies represents a learning opportunity.  Every
 additional layer of reflective control in the model, represents
 another hypothetical learning opportunity, leading to more efficient
 search toward plans that succeed in execution.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/dependency_traces}
-\caption[Dependency traces.]{Dependency traces, where circles are
-  symbols, squares are hypotheses, and arrows are dependencies.}
-\label{figure:dependency_traces}
-\end{figure}
 
 \section{Finding a Bug}
 
@@ -365,82 +132,32 @@ knowledge dependency algorithms that work at this physical knowledge
 level.  In this thesis, a layered reflective knowledge representation
 is presented for propagating failures to knowledge manipulation
 actions as well as physical actions.
-{\mbox{\autoref{figure:tracing_bug_dependencies}}} represents a bug
-found in a planning hypothesis.  For example, the planning hypothesis
-could be that some certain planning activity leads from one type of
-plan to a plan that will successfully complete execution without
-failing.  Failure propagates through reflective layers of goals and
-distinct classes of hypotheses.  Bugs are propagated through every
-reflective layer and, therefore, each reflective layer is presented
-with a different learning opportunity.
+{\mbox{\autoref{figure:dependency_traces_and_tracing_bug_dependencies}}}
+represents a bug found in a planning hypothesis.  For example, the
+planning hypothesis could be that some certain planning activity leads
+from one type of plan to a plan that will successfully complete
+execution without failing.  Failure propagates through reflective
+layers of goals and distinct classes of hypotheses.  Bugs are
+propagated through every reflective layer and, therefore, each
+reflective layer is presented with a different learning opportunity.
 \begin{figure}
 \center
-\includegraphics[width=10cm]{gfx/tracing_bug_dependencies}
-\caption[Tracing bug dependencies.]{Tracing bug dependencies, where
-  the bold arrows represent the credit assignment path for a failure
-  in a hypothesis, represented by the red square on the far right.}
-\label{figure:tracing_bug_dependencies}
-\end{figure}
-
-\section{Reflection}
-
-The term reflection is a commonly used word in computer science and
-AI.  The idea is extremely simple and is the focus of this thesis,
-but, because of its simplicity, it is a widely applicable idea.  In
-fact, \cite{maes:1988} distinguishes over 30 different types of
-\emph{computational reflection}, grounded in the computer science
-literature.  The type of computational reflection that is introduced
-in this dissertation is not included in Maes' overview, although the
-implementation of this model is based on many of the forms of
-computational reflection that Maes does describe, e.g. procedural
-reflection, type reflection, frame reflection, and others.  She does
-not mention the type of reflection that I am focused on in this thesis
-because it was not, at the time, commonly considered computational.
-The type of reflection that is modelled here is a psychological type
-of reflection: the ability to think about thinking in addition to the
-ground problem.  This psychological form of reflection is the focus of
-this thesis.
-
-In terms of this model, reflection is the ability to perceive, act,
-and plan mental activities.  A planning process is a type of mental
-activity, weighing decisions, making plans, and trying to accomplish
-goals.  A process that optimizes this planning activity by, for
-example, learning heuristics for the planning search, is an example of
-a reflective process.  In general, this layered reflective model
-learns in reaction to bugs and relearns the planning processes through
-dependency tracing for credit assignment.  This model is similar to
-current models of \emph{metacognition}, which will be described as
-related research.
-
-\section{The Derivative Nature of the Contributions}
-
-The three primary contributions of the thesis are: (1) the
-implementation, (2) the simulation, and (3) the model of mind.  My
-primary contribution is explained last because it is a derivative of
-the first two.  The model of mind is the simplest contribution and
-serves as a foundation for the other two.  The simulation model
-introduces a discrete state space to the model of mind, so that a
-mathematical description can be given of the model of mind.  The
-implementation model introduces a computational definition of the
-transfer function for the state space introduced in the simulation
-model.  Each of these contributions builds on the simpler, prior
-contribution.  Therefore, in order to explain the implementation, I
-begin with the simplest contribution and work through each additional
-component in order to accomplish the primary goal of explaining the
-computational implementation of reflective thinking.
-{\mbox{\autoref{figure:layers_of_contributions}}} shows the derivative
-nature of the contributions of the thesis in the order that they will
-be described from most foundational to most abstract.
-\begin{figure}
-\center
-\begin{tabular}{p{3.5cm}p{6.5cm}}
-The Model:          & A foundation for how to think about reflective thinking. \\
-The Simulation:     & Introduces a discrete state space to the model for a mathematical description of reflective thinking. \\
-The Implementation: & Introduces a computational transfer function to the model for automatically simulating the mathematical description of reflective thinking.
+\begin{tabular}{c}
+  \includegraphics[width=10cm]{gfx/dependency_traces} \\
+  \includegraphics[width=10cm]{gfx/tracing_bug_dependencies}
 \end{tabular}
-\caption{The derivative nature of the contributions.}
-\label{figure:layers_of_contributions}
+\caption[Dependency traces and tracing bug dependencies.]{\emph{(Top)}
+  Dependency traces, where circles are symbols, squares are
+  hypotheses, and arrows are dependencies.  \emph{(Bottom)} Tracing
+  bug dependencies, where the bold arrows represent the credit
+  assignment path for a failure in a hypothesis, represented by the
+  square on the far right.}
+\label{figure:dependency_traces_and_tracing_bug_dependencies}
 \end{figure}
+
+
+
+
 
 %\section{Hypotheses and Decisions}
 

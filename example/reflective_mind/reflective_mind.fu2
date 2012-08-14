@@ -149,7 +149,17 @@
 	    [have action wait_to_call]
 	    ]]]]
 
+`[deftypefunk reflective_mind execute add_resource_change_property_hypothesis [layer_name agency_name resource_name
+											  change_type
+											  source_type source_property source_property_value property property_value]
+   [have [get this resource layer_name agency_name resource_name] add_change_property_hypothesis change_type source_type source_property source_property_value property property_value]]
 
+[deftypefunk reflective_mind execute add_resource_change_relationship_hypothesis [layer_name agency_name resource_name
+										  change_type
+										  source_type source_property source_property_value key_type key target_type target_property target_property_value]
+  [have [get this resource layer_name agency_name resource_name] add_change_relationship_hypothesis change_type source_type source_property source_property_value key_type key target_type target_property target_property_value]]
+
+  
 
 
 'deliberative1'

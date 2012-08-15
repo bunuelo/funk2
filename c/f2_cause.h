@@ -28,11 +28,11 @@
 
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
 declare_object_type_6_slot(cause_group,
-			   bytecode_count_cmutex,
+			   bytecode_count_scheduler_cmutex,
 			   bytecode_count,
-			   execution_nanoseconds_cmutex,
+			   execution_nanoseconds_scheduler_cmutex,
 			   execution_nanoseconds_chunk,
-			   bytes_allocated_count_cmutex,
+			   bytes_allocated_count_scheduler_cmutex,
 			   bytes_allocated_count_chunk,
 			   f2ptr increase_bytecode_count__symbol;
 			   f2ptr increase_bytecode_count__funk;
@@ -106,11 +106,11 @@ declare_object_type_16_slot(cause,
 // cause_group
 
 declare_primobject_6_slot(cause_group,
-			  bytecode_count_cmutex,
+			  bytecode_count_scheduler_cmutex,
 			  bytecode_count,
-			  execution_nanoseconds_cmutex,
+			  execution_nanoseconds_scheduler_cmutex,
 			  execution_nanoseconds_chunk,
-			  bytes_allocated_count_cmutex,
+			  bytes_allocated_count_scheduler_cmutex,
 			  bytes_allocated_count_chunk);
 
 f2ptr  f2__cause_group__new                           (f2ptr cause);

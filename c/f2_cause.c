@@ -44,7 +44,7 @@ void raw__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, u64 rela
   f2ptr bytecode_count_cmutex = f2cause_group__bytecode_count_cmutex(this, cause);
   f2cmutex__lock(bytecode_count_cmutex, cause);
   f2ptr bytecode_count     = f2cause_group__bytecode_count(this, cause);
-  u64   bytecode_count__i  = (u64)f2integer__i(bytecode_cause, cause);
+  u64   bytecode_count__i  = (u64)f2integer__i(bytecode_count, cause);
   f2cause_group__bytecode_count__set(this, cause, f2integer__new(cause, (u64)(bytecode_count__i + relative_bytecode_count)));
   f2cmutex__unlock(bytecode_count_cmutex, cause);
 }

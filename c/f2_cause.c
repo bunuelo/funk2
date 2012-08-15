@@ -24,16 +24,41 @@
 
 // cause_group
 
-def_primobject_1_slot(cause_group,
+def_primobject_2_slot(cause_group,
+		      bytecode_count_cmutex,
 		      bytecode_count);
 
 f2ptr f2__cause_group__new(f2ptr cause) {
-  f2ptr bytecode_count = f2integer__new(cause, 0);
-  return f2cause_group__new(cause, bytecode_count);
+  f2ptr bytecode_count_cmutex = f2cmutex__new(cause);
+  f2ptr bytecode_count        = f2integer__new(cause, 0);
+  return f2cause_group__new(cause,
+			    bytecode_count_cmutex,
+			    bytecode_count);
 }
 def_pcfunk0(cause_group__new,
 	    "",
 	    return f2__cause_group__new(this_cause));
+
+
+void raw__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
+  f2ptr bytecode_count_cmutex = f2cause_group__bytecode_count_cmutex(this, cause);
+  f2cmutex__lock(bytecode_count_cmutex, cause);
+  f2ptr bytecode_count     = f2cause_group__bytecode_count(this, cause);
+  u64   bytecode_count__i  = (u64)f2integer__i(bytecode_cause, cause);
+  f2cause_group__bytecode_count__set(this, cause, f2integer__new(cause, (u64)(bytecode_count__i + relative_bytecode_count)));
+  f2cmutex__unlock(bytecode_count_cmutex, cause);
+}
+
+f2ptr f2__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, f2ptr relative_bytecode_count) {
+  assert_argument_type(cause_group, this);
+  assert_argument_type(integer,     relative_bytecode_count);
+  u64 relative_bytecode_count__i = (u64)f2integer__i(relative_bytecode_count, cause);
+  raw__cause_group__increase_bytecode_count(cause, this, relative_bytecode_count__i);
+  return nil;
+}
+def_pcfunk2(cause_group__increase_bytecode_count, this, relative_bytecode_count,
+	    "",
+	    return f2__cause_group__increate_bytecode_count(this_cause, this, relative_bytecode_count));
 
 
 // cause_group
@@ -62,6 +87,7 @@ def_pcfunk2(cause_group__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause_group__primobject_type__new(cause);
+  {char* slot_name = "increase_bytecode_count";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
 }
@@ -540,8 +566,13 @@ void f2__cause__defragment__fix_pointers() {
   
   // cause_group
   
-  initialize_primobject_1_slot__defragment__fix_pointers(cause_group,
+  initialize_primobject_2_slot__defragment__fix_pointers(cause_group,
+							 bytecode_count_cmutex,
 							 bytecode_count);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__increase_bytecode_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__terminal_print_with_frame);
@@ -623,8 +654,12 @@ void f2__cause__reinitialize_globalvars() {
   
   // cause_group
   
-  initialize_primobject_1_slot(cause_group,
+  initialize_primobject_2_slot(cause_group,
+			       bytecode_count_cmutex,
 			       bytecode_count);
+  
+  {char* symbol_str = "increase_bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__increase_bytecode_count, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

@@ -27,8 +27,11 @@
 // cause_group
 
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
-declare_object_type_1_slot(cause_group,
+declare_object_type_2_slot(cause_group,
+			   bytecode_count_cmutex,
 			   bytecode_count,
+			   f2ptr increase_bytecode_count__symbol;
+			   f2ptr increase_bytecode_count__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -86,10 +89,13 @@ declare_object_type_16_slot(cause,
 
 // cause_group
 
-declare_primobject_1_slot(cause_group,
+declare_primobject_2_slot(cause_group,
+			  bytecode_count_cmutex,
 			  bytecode_count);
 
-f2ptr f2__cause_group__new(f2ptr cause);
+f2ptr  f2__cause_group__new                    (f2ptr cause);
+void  raw__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count);
+f2ptr  f2__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 

@@ -292,6 +292,56 @@ Reflective         & $O(1)$ & $O(n)$ & $n$ \\
 \label{figure:learning_complexities}
 \end{figure}
 
+\section{Empirical Run-time Tests}
+
+
+\begin{figure}
+\center
+\begin{tikzpicture}[y=.2cm, x=.7cm,font=\sffamily]
+ 	%axis
+	\draw (0,0) -- coordinate (x axis mid) (10,0);
+    	\draw (0,0) -- coordinate (y axis mid) (0,30);
+    	%ticks
+    	\foreach \x in {0,...,10}
+     		\draw (\x,1pt) -- (\x,-3pt)
+			node[anchor=north] {\x};
+    	\foreach \y in {0,5,...,30}
+     		\draw (1pt,\y) -- (-3pt,\y) 
+     			node[anchor=east] {\y}; 
+	%labels      
+	\node[below=0.8cm] at (x axis mid) {MOPS};
+	\node[rotate=90, above=0.8cm] at (y axis mid) {Power [mW]};
+
+	%plots
+	\draw plot[mark=*, mark options={fill=white}] 
+		file {div_soft.data};
+	\draw plot[mark=triangle*, mark options={fill=white} ] 
+		file {div_ciu.data};
+	\draw plot[mark=square*, mark options={fill=white}]
+		file {div_ciu_oscar.data};
+	\draw plot[mark=square*]
+		file {div_ciu_oscar_extrapolated.data};  
+    
+	%legend
+	\begin{scope}[shift={(4,4)}] 
+	\draw (0,0) -- 
+		plot[mark=*, mark options={fill=white}] (0.25,0) -- (0.5,0) 
+		node[right]{soft};
+	\draw[yshift=\baselineskip] (0,0) -- 
+		plot[mark=triangle*, mark options={fill=white}] (0.25,0) -- (0.5,0)
+		node[right]{ciu};
+	\draw[yshift=2\baselineskip] (0,0) -- 
+		plot[mark=square*, mark options={fill=white}] (0.25,0) -- (0.5,0)
+		node[right]{ciu + oscar};
+	\draw[yshift=3\baselineskip] (0,0) -- 
+		plot[mark=square*, mark options={fill=black}] (0.25,0) -- (0.5,0)
+		node[right]{ciu + oscar extrapolated};
+	\end{scope}
+\end{tikzpicture}
+\caption{Sample tikz plot.}
+\label{figure:sample_tikz}
+\end{figure}
+
 \section{Space Complexity}
 
 \section{Conclusion}

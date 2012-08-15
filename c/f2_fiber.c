@@ -557,7 +557,7 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
       u64 execution_nanoseconds = raw__fiber__execution_nanoseconds(cause, this);
       raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds + increase_execution_nanoseconds);
       if (cause != nil) {
-	f2ptr cause_groups = f2cause__cause_groups(cause, this);
+	f2ptr cause_groups = f2cause__cause_groups(cause, cause);
 	{
 	  f2ptr iter = cause_groups;
 	  while (iter != nil) {

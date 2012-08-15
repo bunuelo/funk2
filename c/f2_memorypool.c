@@ -28,6 +28,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->pool_index                           = pool_index;
   this->should_enlarge_memory_now            = boolean__false;
   this->total_allocated_memory_since_last_gc = 0;
+  this->bytes_allocated_count                = 0;
   this->next_unique_block_id                 = 0;
   this->total_global_memory                  = ((((sizeof(funk2_memblock_t) + F2__INITIAL_MEMORY) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num;
   f2dynamicmemory__init_and_alloc(&(this->dynamic_memory), this->total_global_memory);

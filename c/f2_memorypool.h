@@ -56,6 +56,7 @@ struct funk2_memorypool_s {
   
   ptr                     global_f2ptr_offset; // one byte less than __global_memory_block_data (to preserve [NULL -> 0] for [ptr -> f2ptr])
   f2size_t                total_allocated_memory_since_last_gc;
+  u64                     bytes_allocated_count;
   u64                     next_unique_block_id;
   s64                     temporary_compressed_data_for_loading__length;
   u8*                     temporary_compressed_data_for_loading;

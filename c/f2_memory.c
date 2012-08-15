@@ -333,13 +333,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (block_f2ptr) {
     funk2_garbage_collector_pool__add_protected_alloc_f2ptr(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
     funk2_garbage_collector_pool__add_used_exp(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
-    if (! this->bootstrapping_mode) {
-      f2ptr fiber                    = f2__this__fiber(nil);
-      f2ptr cause                    = f2fiber__cause_reg(fiber, nil);
-      f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(fiber, cause);
-      u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
-      f2fiber__bytes_allocated_count__set(fiber, cause, f2integer__new(cause, bytes_allocated_count__i + byte_num));
-    }
+    this->pool[pool_index].bytes_allocated_count += byte_num;
   }
   return block_f2ptr;
 }
@@ -394,6 +388,26 @@ f2ptr f2__memory__pool__maximum_block__byte_num(f2ptr cause, f2ptr pool_index) {
 def_pcfunk1(memory__pool__maximum_block__byte_num, pool_index,
 	    "Returns the maximum block size in bytes of the memory pool with the given index.",
 	    return f2__memory__pool__maximum_block__byte_num(this_cause, pool_index));
+
+
+u64 raw__memory__pool__bytes_allocated_count(f2ptr cause, s64 pool_index) {
+  if (pool_index < 0 || pool_index > memory_pool_num) {
+    error(nil, "raw__memory__pool__bytes_allocated_count fatal error: pool_index is out of range.");
+  }
+  return __funk2.memory.pool[pool_index].bytes_allocated_count;
+}
+
+f2ptr f2__memory__pool__bytes_allocated_count(f2ptr cause, f2ptr pool_index) {
+  assert_argument_type(integer, pool_index);
+  s64 pool_index__i = f2integer__i(pool_index, cause);
+  if (pool_index__i < 0 || pool_index__i > memory_pool_num) {
+    return f2larva__new(cause, 235242, nil);
+  }
+  return f2integer__new(cause, raw__memory__pool__bytes_allocated_count(cause, pool_index__i));
+}
+def_pcfunk1(memory__pool__bytes_allocated_count, pool_index,
+	    "Returns the total number of bytes allocated from the memory pool of the given pool_index.",
+	    return f2__memory__pool__bytes_allocated_count(this_cause, pool_index));
 
 
 void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
@@ -798,6 +812,7 @@ void f2__memory__reinitialize_globalvars() {
   //f2ptr cause = f2_memory_c__cause__new(initial_cause());
   
   f2__primcfunk__init__1(memory__pool__maximum_block__byte_num, pool_index);
+  f2__primcfunk__init__1(memory__pool__bytes_allocated_count,   pool_index);
 }
 
 void f2__memory__defragment__fix_pointers() {
@@ -809,6 +824,7 @@ void f2__memory__defragment__fix_pointers() {
   __funk2.memory.global_environment_ptr = raw__f2ptr_to_ptr(__funk2.memory.global_environment_f2ptr);
   
   f2__primcfunk__init__defragment__fix_pointers(memory__pool__maximum_block__byte_num);
+  f2__primcfunk__init__defragment__fix_pointers(memory__pool__bytes_allocated_count);
   
 }
 

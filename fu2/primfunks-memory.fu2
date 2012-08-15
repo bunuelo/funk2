@@ -18,4 +18,5 @@
  rights to redistribute these changes.'
 
 [globalize-funk memory-pool-maximum_block-byte_num &primfunk:memory__pool__maximum_block__byte_num]
+[globalize-funk memory-pool-bytes_allocated_count  &primfunk:memory__pool__bytes_allocated_count]
 

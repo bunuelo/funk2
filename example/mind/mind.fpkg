@@ -28,10 +28,15 @@
   :packages [story]
    :sources ['story-graph.fu2']]
 
+[defpackage mind_runtime_metric
+  :packages [math]
+   :sources ['mind_runtime_metric.fu2']]
+
 [defpackage resource
   :packages [math
 	     semantic_knowledge_base
-	     story]
+	     story
+	     mind_runtime_metric]
    :sources ['resource.fu2']]
 
 [defpackage self_model

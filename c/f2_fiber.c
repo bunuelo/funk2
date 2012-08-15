@@ -1065,6 +1065,24 @@ void f2__fiber__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(fiber__start_cycle_execution_nanoseconds__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__funk);
   
+
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_allocated_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__bytes_allocated_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_allocated_count__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_allocated_count__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__bytes_allocated_count__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_allocated_count__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_processor_bytes_allocated_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__start_cycle_processor_bytes_allocated_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_processor_bytes_allocated_count__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_processor_bytes_allocated_count__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__start_cycle_processor_bytes_allocated_count__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_processor_bytes_allocated_count__set__funk);
+  
+
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(fiber__increase_bytecode_count);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);

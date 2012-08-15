@@ -24,7 +24,7 @@
 
 #define global_scheduler() __global__scheduler
 
-#include "f2_primobjects.h"
+#include "funk2.h"
 
 
 // funk2_operating_system

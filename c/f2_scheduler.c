@@ -100,12 +100,15 @@ def_primobject_3_slot(scheduler,
 		      bytecode_count);
 
 f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
-  f2ptr bytecode_count = f2integer__new(cause, 0);
+  f2ptr bytecode_count_mutex = f2cmutex__new(cause);
+  f2ptr bytecode_count       = f2integer__new(cause, 0);
   return f2scheduler__new(cause,
 			  processors,
+			  bytecode_count_mutex,
 			  bytecode_count);
 }
 def_pcfunk1(scheduler__new, processors,
+
 	    "",
 	    return f2__scheduler__new(this_cause, processors));
 
@@ -187,7 +190,7 @@ f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list6__new(cause,
+    frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"),    new__symbol(cause, "scheduler"),
 					       new__symbol(cause, "processors"),           f2__scheduler__processors(          cause, this),
 					       new__symbol(cause, "bytecode_count_mutex"), f2__scheduler__bytecode_count_mutex(cause, this),

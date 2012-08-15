@@ -531,7 +531,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		      u64   fiber__bytecode_count__i     = (u64)f2integer__i(fiber__bytecode_count, cause);
 		      f2ptr processor__bytecode_count    = f2processor__bytecode_count(processor, cause);
 		      u64   processor__bytecode_count__i = (u64)f2integer__i(processor__bytecode_count, cause);
-		      f2processor__bytecode_count__set(processor, cause, f2integer__new(cause, processor__bytecode_count__i + (fiber__bytecode_count__i - fiber__before_bytecode_count__i)));
+		      f2processor__bytecode_count__set(processor, cause, f2integer__new(cause, processor__bytecode_count__i + (fiber__bytecode_count__i - before_fiber__bytecode_count__i)));
 		    }
 		    resume_gc();
 		    

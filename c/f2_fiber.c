@@ -556,8 +556,9 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
     if (increase_execution_nanoseconds != 0) {
       u64 execution_nanoseconds = raw__fiber__execution_nanoseconds(cause, this);
       raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds + increase_execution_nanoseconds);
-      if (cause != nil) {
-	f2ptr cause_groups = f2cause__cause_groups(cause, cause);
+      f2ptr cause_reg = f2fiber__cause_ref(this, cause);
+      if (cause_reg != nil) {
+	f2ptr cause_groups = f2cause__cause_groups(cause_reg, cause);
 	{
 	  f2ptr iter = cause_groups;
 	  while (iter != nil) {
@@ -576,8 +577,9 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
     if (increase_bytes_allocated_count != 0) {
       u64 bytes_allocated_count = raw__fiber__bytes_allocated_count(cause, this);
       raw__fiber__bytes_allocated_count__set(cause, this, bytes_allocated_count + increase_bytes_allocated_count);
-      if (cause != nil) {
-	f2ptr cause_groups = f2cause__cause_groups(cause, cause);
+      f2ptr cause_reg = f2fiber__cause_ref(this, cause);
+      if (cause_reg != nil) {
+	f2ptr cause_groups = f2cause__cause_groups(cause_reg, cause);
 	{
 	  f2ptr iter = cause_groups;
 	  while (iter != nil) {

@@ -168,15 +168,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__yield error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
-  boolean_t more_than_one_virtual_processor_thread_executing = boolean__false;
-  {
-    funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-    if (this->assigned_virtual_processor_thread_count > 1) {
-      more_than_one_virtual_processor_thread_executing = boolean__true;
-    }
-    funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
-  }
-  if (more_than_one_virtual_processor_thread_executing) {
+  if (this->assigned_virtual_processor_thread_count > 1) {
     funk2_virtual_processor_thread_t* yielding_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
     this->execute_bytecodes_current_virtual_processor_thread = NULL;
     f2ptr yielding_fiber = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);

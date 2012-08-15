@@ -572,8 +572,22 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
   {
     int pool_index                                  = this_processor_thread__pool_index();
     u64 start_cycle_processor_bytes_allocated_count = raw__fiber__start_cycle_processor_bytes_allocated_count(cause, this);
-    u64 bytes_allocated_count                       = raw__fiber__bytes_allocated_count(cause, this);
-    raw__fiber__bytes_allocated_count__set(cause, this, bytes_allocated_count + __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count);
+    u64 increase_bytes_allocated_count              = __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count;
+    if (increase_bytes_allocated_count != 0) {
+      u64 bytes_allocated_count = raw__fiber__bytes_allocated_count(cause, this);
+      raw__fiber__bytes_allocated_count__set(cause, this, bytes_allocated_count + increase_bytes_allocated_count);
+      if (cause != nil) {
+	f2ptr cause_groups = f2cause__cause_groups(cause, cause);
+	{
+	  f2ptr iter = cause_groups;
+	  while (iter != nil) {
+	    f2ptr cause_group = f2cons__car(iter, cause);
+	    raw__cause_group__increase_bytes_allocated_count(cause, cause_group, increase_bytes_allocated_count);
+	    iter = f2cons__cdr(iter, cause);
+	  }
+	}
+      }
+    }
   }
 }
 

@@ -52,7 +52,7 @@
        [= cause_group initial-cause_group]
        [= fiber       [fiber [funk []
 				   [while [not done]
-				     [sleep 30]
+				     [sleep 60]
 				     [let [[metric [mind_runtime_metric_point-new_from_cause_group cause_group]]]
 				       [= metric_sequence [cons metric metric_sequence]]]]]
 			     nil]]

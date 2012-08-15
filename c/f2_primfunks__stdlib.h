@@ -28,7 +28,7 @@
 
 f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite);
 
-void f2__primfunks__stdlib__reinitialize_globalvars();
+oid f2__primfunks__stdlib__reinitialize_globalvars();
 void f2__primfunks__stdlib__initialize();
 
 #endif // F2__PRIMFUNKS__STDLIB__H

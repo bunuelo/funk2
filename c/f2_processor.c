@@ -444,6 +444,10 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   
   pause_gc();
   raw__fiber__increase_bytecode_count(cause, fiber, execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
+  //{
+  //  int pool_index = this_processor_thread__pool_index();
+  //  __funk2.memory.pool[pool_index].bytes_allocated_count 
+  //}
   resume_gc();
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);

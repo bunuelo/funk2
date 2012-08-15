@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_28_slot(fiber,
+def_primobject_29_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -52,6 +52,7 @@ def_primobject_28_slot(fiber,
 		       execution_nanoseconds,
 		       bytecode_count,
 		       bytes_allocated_count,
+		       start_cycle_processor_bytes_allocated_count,
 		       processor_assignment_scheduler_cmutex,
 		       processor_assignment_index,
 		       should_quit,
@@ -61,32 +62,33 @@ def_primobject_28_slot(fiber,
 		       complete_trigger);
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
-  f2ptr program_counter                       = nil;
-  f2ptr stack                                 = nil;
-  f2ptr iter                                  = nil;
-  f2ptr env                                   = parent_env;
-  f2ptr args                                  = nil;
-  f2ptr return_reg                            = nil;
-  f2ptr value                                 = nil;
-  f2ptr trace                                 = nil;
-  f2ptr cause_reg_cmutex                      = f2__cmutex__new(cause);
-  f2ptr cause_reg                             = nil;
-  f2ptr keep_undead                           = __funk2.globalenv.true__symbol;
-  f2ptr is_zombie                             = nil;
-  f2ptr execute_cmutex                        = f2cmutex__new(cause);
-  f2ptr paused                                = nil;
-  f2ptr last_executed_time                    = nil;
-  f2ptr sleep_until_time                      = nil;
-  f2ptr execution_nanoseconds                 = f2integer__new(cause, 0);
-  f2ptr bytecode_count                        = f2integer__new(cause, 0);
-  f2ptr bytes_allocated_count                 = f2integer__new(cause, 0);
-  f2ptr processor_assignment_scheduler_cmutex = f2scheduler_cmutex__new(cause);
-  f2ptr processor_assignment_index            = nil;
-  f2ptr should_quit                           = nil;
-  f2ptr exit_cmutex                           = f2__cmutex__new(cause);
-  f2ptr exit_status                           = nil;
-  f2ptr bug_trigger                           = f2__fiber_trigger__new(cause);
-  f2ptr complete_trigger                      = f2__fiber_trigger__new(cause);
+  f2ptr program_counter                             = nil;
+  f2ptr stack                                       = nil;
+  f2ptr iter                                        = nil;
+  f2ptr env                                         = parent_env;
+  f2ptr args                                        = nil;
+  f2ptr return_reg                                  = nil;
+  f2ptr value                                       = nil;
+  f2ptr trace                                       = nil;
+  f2ptr cause_reg_cmutex                            = f2__cmutex__new(cause);
+  f2ptr cause_reg                                   = nil;
+  f2ptr keep_undead                                 = __funk2.globalenv.true__symbol;
+  f2ptr is_zombie                                   = nil;
+  f2ptr execute_cmutex                              = f2cmutex__new(cause);
+  f2ptr paused                                      = nil;
+  f2ptr last_executed_time                          = nil;
+  f2ptr sleep_until_time                            = nil;
+  f2ptr execution_nanoseconds                       = f2integer__new(cause, 0);
+  f2ptr bytecode_count                              = f2integer__new(cause, 0);
+  f2ptr bytes_allocated_count                       = f2integer__new(cause, 0);
+  f2ptr start_cycle_processor_bytes_allocated_count = nil;
+  f2ptr processor_assignment_scheduler_cmutex       = f2scheduler_cmutex__new(cause);
+  f2ptr processor_assignment_index                  = nil;
+  f2ptr should_quit                                 = nil;
+  f2ptr exit_cmutex                                 = f2__cmutex__new(cause);
+  f2ptr exit_status                                 = nil;
+  f2ptr bug_trigger                                 = f2__fiber_trigger__new(cause);
+  f2ptr complete_trigger                            = f2__fiber_trigger__new(cause);
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
 				 stack,
@@ -109,6 +111,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 execution_nanoseconds,
 				 bytecode_count,
 				 bytes_allocated_count,
+				 start_cycle_processor_bytes_allocated_count,
 				 processor_assignment_scheduler_cmutex,
 				 processor_assignment_index,
 				 should_quit,
@@ -854,7 +857,7 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_28_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_29_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack,
 							  iter,
@@ -876,6 +879,7 @@ void f2__fiber__defragment__fix_pointers() {
 							  execution_nanoseconds,
 							  bytecode_count,
 							  bytes_allocated_count,
+							  start_cycle_processor_bytes_allocated_count,
 							  processor_assignment_scheduler_cmutex,
 							  processor_assignment_index,
 							  should_quit,
@@ -985,7 +989,7 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_28_slot(fiber,
+  initialize_primobject_29_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -1007,6 +1011,7 @@ void f2__fiber__reinitialize_globalvars() {
 				execution_nanoseconds,
 				bytecode_count,
 				bytes_allocated_count,
+				start_cycle_processor_bytes_allocated_count,
 				processor_assignment_scheduler_cmutex,
 				processor_assignment_index,
 				should_quit,

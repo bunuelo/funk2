@@ -468,7 +468,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
       fiber_num ++;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
       if (f2cmutex__trylock(f2fiber__execute_cmutex(fiber, processor_cause), processor_cause) == 0) { // successful lock
-	f2ptr cause = f2fiber__cause_ref(fiber, processor_cause);
+	f2ptr cause = f2fiber__cause_reg(fiber, processor_cause);
 	if (! f2fiber__paused(fiber, cause)) {
 	  f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
 	  boolean_t fiber_needs_sleep = boolean__false;

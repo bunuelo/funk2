@@ -522,14 +522,10 @@ void f2__scheduler__initialize() {
   
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {
-    f2ptr processor = f2processor__new(cause, 
-				       scheduler,
-				       nil,
-				       f2scheduler_cmutex__new(cause),
-				       nil, // active_fibers
-				       nil, // active_fibers_iter
-				       f2integer__new(cause, i),
-				       f2integer__new(cause, i));
+    f2ptr processor = f2__processor__new(cause,
+					 scheduler,
+					 f2integer__new(cause, i),
+					 f2integer__new(cause, i));
     raw__array__elt__set(cause, processors, i, processor);
   }
   

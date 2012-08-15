@@ -33,14 +33,11 @@ def_primobject_8_slot(processor,
 		      desc,
 		      bytecode_count);
 
-f2ptr f2__processor__new(f2ptr cause) {
-  f2ptr scheduler                      = nil;
+f2ptr f2__processor__new(f2ptr cause, f2ptr scheduler, f2ptr pool_index, f2ptr desc) {
   f2ptr processor_thread               = nil;
-  f2ptr active_fibers_scheduler_cmutex = nil;
+  f2ptr active_fibers_scheduler_cmutex = f2scheduler_cmutex__new(cause);
   f2ptr active_fibers                  = nil;
   f2ptr active_fibers_iter             = nil;
-  f2ptr pool_index                     = nil;
-  f2ptr desc                           = nil;
   f2ptr bytecode_count                 = f2integer__new(cause, 0);
   return f2processor__new(cause,
 			  scheduler,
@@ -52,9 +49,9 @@ f2ptr f2__processor__new(f2ptr cause) {
 			  desc,
 			  bytecode_count);
 }
-def_pcfunk0(processor__new,
+def_pcfunk3(processor__new, scheduler, pool_index, desc,
 	    "",
-	    return f2__processor__new(this_cause));
+	    return f2__processor__new(this_cause, scheduler, pool_index, desc));
 
 
 boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {

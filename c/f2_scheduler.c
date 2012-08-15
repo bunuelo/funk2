@@ -19,7 +19,8 @@
 // rights to redistribute these changes.
 // 
 
-#include "primobjects.h"
+#include "f2_scheduler.h"
+#include "f2_primobjects.h"
 
 // funk2_operating_system
 

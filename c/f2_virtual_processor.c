@@ -171,8 +171,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   boolean_t more_than_one_virtual_processor_thread_executing = boolean__false;
   {
     funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-    assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
-    if (assigned_virtual_processor_thread_count > 1) {
+    if (this->assigned_virtual_processor_thread_count > 1) {
       more_than_one_virtual_processor_thread_executing = boolean__true;
     }
     funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
@@ -223,6 +222,8 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
     this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
     raw__fiber__handle_enter_virtual_processor(cause, yielding_fiber);
+  } else {
+    raw__fast_spin_sleep_yield();
   }
 }
 

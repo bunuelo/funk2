@@ -218,7 +218,7 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
 
 // cause
 
-def_primobject_16_slot(cause,
+def_primobject_17_slot(cause,
 		       fibers_cmutex,
 		       fibers,
 		       frame,
@@ -234,6 +234,7 @@ def_primobject_16_slot(cause,
 		       read_other_memory_callbacks,
 		       write_other_memory_callbacks,
 		       critics,
+		       cause_groups_cmutex,
 		       cause_groups);
 
 f2ptr f2__cause__new(f2ptr cause,
@@ -250,26 +251,28 @@ f2ptr f2__cause__new(f2ptr cause,
 		     f2ptr write_other_memory_callbacks,
 		     f2ptr critics,
 		     f2ptr cause_groups) {
-  f2ptr fibers_cmutex = f2cmutex__new(cause);
-  f2ptr fibers       = nil;
-  f2ptr frame        = f2__frame__new(cause, nil);
-  f2ptr this         = f2cause__new(cause,
-				    fibers_cmutex,
-				    fibers,
-				    frame,
-				    allocate_traced_arrays,
-				    bytecode_tracing_on,
-				    memory_tracing_on,
-				    imagination_name,
-				    bytecode_branch_callbacks,
-				    bytecode_funk_callbacks,
-				    bytecode_tracer_callbacks,
-				    bytecode_endfunk_callbacks,
-				    complete_funk_callbacks,
-				    read_other_memory_callbacks,
-				    write_other_memory_callbacks,
-				    critics,
-				    cause_groups);
+  f2ptr fibers_cmutex       = f2cmutex__new(cause);
+  f2ptr fibers              = nil;
+  f2ptr frame               = f2__frame__new(cause, nil);
+  f2ptr cause_groups_cmutex = f2cmutex__new(cause);
+  f2ptr this                = f2cause__new(cause,
+					   fibers_cmutex,
+					   fibers,
+					   frame,
+					   allocate_traced_arrays,
+					   bytecode_tracing_on,
+					   memory_tracing_on,
+					   imagination_name,
+					   bytecode_branch_callbacks,
+					   bytecode_funk_callbacks,
+					   bytecode_tracer_callbacks,
+					   bytecode_endfunk_callbacks,
+					   complete_funk_callbacks,
+					   read_other_memory_callbacks,
+					   write_other_memory_callbacks,
+					   critics,
+					   cause_groups_cmutex,
+					   cause_groups);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
   return this;
 }
@@ -637,6 +640,25 @@ def_pcfunk0(cause,
 	    return f2__cause(this_cause));
 
 
+void raw__cause__add_cause_group(f2ptr cause, f2ptr this, f2ptr cause_group) {
+  f2ptr cause_groups_cmutex = f2cause__cause_groups_cmutex(this, cause);
+  raw__cmutex__lock(cause, cause_groups_cmutex);
+  f2ptr cause_groups = f2cause__cause_groups(this, cause);
+  f2cause__cause_groups__set(this, cause, f2cons__new(cause, cause_group, cause_groups));
+  raw__cmutex__unlock(cause, cause_groups_cmutex);
+}
+
+f2ptr f2__cause__add_cause_group(f2ptr cause, f2ptr this, f2ptr cause_group) {
+  assert_argument_type(cause,       this);
+  assert_argument_type(cause_group, cause_group);
+  raw__cause__add_cause_group(cause, this, cause_group);
+  return nil;
+}
+def_pcfunk2(cause__add_cause_group, this, cause_group,
+	    "Adds a cause_group to this cause object in a thread-safe way.",
+	    return f2__cause__add_cause_group(this_cause, this, cause_group));
+
+
 // cause
 
 f2ptr raw__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -674,6 +696,7 @@ f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "define-funk";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
   {char* slot_name = "lookup";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk);}
   {char* slot_name = "lookup-funk";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);}
+  {char* slot_name = "add_cause_group";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk);}
   return this;
 }
@@ -731,7 +754,7 @@ void f2__cause__defragment__fix_pointers() {
   
   // cause
   
-  initialize_primobject_16_slot__defragment__fix_pointers(cause,
+  initialize_primobject_17_slot__defragment__fix_pointers(cause,
 							  fibers_cmutex,
 							  fibers,
 							  frame,
@@ -747,6 +770,7 @@ void f2__cause__defragment__fix_pointers() {
 							  read_other_memory_callbacks,
 							  write_other_memory_callbacks,
 							  critics,
+							  cause_groups_cmutex,
 							  cause_groups);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__symbol);
@@ -780,6 +804,10 @@ void f2__cause__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause__lookup__funk);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__add_cause_group__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause__terminal_print_with_frame);
@@ -839,7 +867,7 @@ void f2__cause__reinitialize_globalvars() {
   
   // cause
   
-  initialize_primobject_16_slot(cause,
+  initialize_primobject_17_slot(cause,
 				fibers_cmutex,
 				fibers,
 				frame,
@@ -855,6 +883,7 @@ void f2__cause__reinitialize_globalvars() {
 				read_other_memory_callbacks,
 				write_other_memory_callbacks,
 				critics,
+				cause_groups_cmutex,
 				cause_groups);
   
   {char* symbol_str = "type_var_defined"; __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__symbol = new__symbol(cause, symbol_str);}
@@ -873,6 +902,8 @@ void f2__cause__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__lookup, this, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk = never_gc(cfunk);}
   {char* symbol_str = "lookup-funk"; __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__lookup__funk, this, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk = never_gc(cfunk);}
+  {char* symbol_str = "add_cause_group"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__add_cause_group, this, cause_group, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk = never_gc(cfunk);}
   

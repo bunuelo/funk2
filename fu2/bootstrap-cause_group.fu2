@@ -30,7 +30,7 @@
 	 [relative_time         nil]]
      [let [[begin_time [time]]]
        [let [[cause_group [new cause_group]]]
-	 [set [this-cause] cause_groups [cons cause_group nil]]
+	 [have [this-cause] add_cause_group cause_group]
 	 [prog ,exp]
 	 [set [this-cause] cause_groups nil]
 	 [let [[end_time [time]]]

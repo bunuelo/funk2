@@ -19,7 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "funk2.h"
+#include "primobjects.h"
 
 // funk2_operating_system
 

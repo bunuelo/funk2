@@ -28,7 +28,7 @@ typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor
 
 // processor
 
-declare_object_type_7_slot(processor,
+declare_object_type_8_slot(processor,
 			   scheduler,
 			   processor_thread,
 			   active_fibers_scheduler_cmutex,
@@ -36,6 +36,7 @@ declare_object_type_7_slot(processor,
 			   active_fibers_iter,
 			   pool_index,
 			   desc,
+			   bytecode_count,
 			   
 			   f2ptr add_active_fiber__symbol;
 			   f2ptr add_active_fiber__funk;
@@ -64,14 +65,15 @@ declare_object_type_7_slot(processor,
 
 // processor
 
-declare_primobject_7_slot(processor,
+declare_primobject_8_slot(processor,
 			  scheduler,
 			  processor_thread,
 			  active_fibers_scheduler_cmutex,
 			  active_fibers,
 			  active_fibers_iter,
 			  pool_index,
-			  desc);
+			  desc,
+			  bytecode_count);
 
 f2ptr      f2__processor__new                                          (f2ptr cause);
 boolean_t raw__processor__add_active_fiber__thread_unsafe              (f2ptr cause, f2ptr this, f2ptr fiber);

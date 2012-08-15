@@ -94,18 +94,11 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
 
 // scheduler
 
-def_primobject_3_slot(scheduler,
-		      processors,
-		      bytecode_count_mutex,
-		      bytecode_count);
+def_primobject_1_slot(scheduler,
+		      processors);
 
 f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
-  f2ptr bytecode_count_mutex = f2cmutex__new(cause);
-  f2ptr bytecode_count       = f2integer__new(cause, 0);
-  return f2scheduler__new(cause,
-			  processors,
-			  bytecode_count_mutex,
-			  bytecode_count);
+  return f2scheduler__new(cause, processors);
 }
 def_pcfunk1(scheduler__new, processors,
 
@@ -190,11 +183,9 @@ f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list8__new(cause,
-					       new__symbol(cause, "print_object_type"),    new__symbol(cause, "scheduler"),
-					       new__symbol(cause, "processors"),           f2__scheduler__processors(          cause, this),
-					       new__symbol(cause, "bytecode_count_mutex"), f2__scheduler__bytecode_count_mutex(cause, this),
-					       new__symbol(cause, "bytecode_count"),       f2__scheduler__bytecode_count(      cause, this)));
+    frame = f2__frame__new(cause, f2list4__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
+					       new__symbol(cause, "processors"),        f2__scheduler__processors(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -441,10 +432,8 @@ void f2__scheduler__defragment__fix_pointers() {
   
   // scheduler
   
-  initialize_primobject_3_slot__defragment__fix_pointers(scheduler,
-							 processors,
-							 bytecode_count_mutex,
-							 bytecode_count);
+  initialize_primobject_1_slot__defragment__fix_pointers(scheduler,
+							 processors);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol);
   f2__primcfunk__init__defragment__fix_pointers(scheduler__active_fibers);
@@ -492,10 +481,8 @@ void f2__scheduler__reinitialize_globalvars() {
   
   // scheduler
   
-  initialize_primobject_3_slot(scheduler,
-			       processors,
-			       bytecode_count_mutex,
-			       bytecode_count);
+  initialize_primobject_1_slot(scheduler,
+			       processors);
   
   {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}

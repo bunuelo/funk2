@@ -23,17 +23,34 @@
 
 // processor
 
-def_primobject_7_slot(processor,
+def_primobject_8_slot(processor,
 		      scheduler,
 		      processor_thread,
 		      active_fibers_scheduler_cmutex,
 		      active_fibers,
 		      active_fibers_iter,
 		      pool_index,
-		      desc);
+		      desc,
+		      bytecode_count);
 
 f2ptr f2__processor__new(f2ptr cause) {
-  return f2processor__new(cause, nil, nil, nil, nil, nil, nil, nil);
+  f2ptr scheduler                      = nil;
+  f2ptr processor_thread               = nil;
+  f2ptr active_fibers_scheduler_cmutex = nil;
+  f2ptr active_fibers                  = nil;
+  f2ptr active_fibers_iter             = nil;
+  f2ptr pool_index                     = nil;
+  f2ptr desc                           = nil;
+  f2ptr bytecode_count                 = f2integer__new(cause, 0);
+  return f2processor__new(cause,
+			  scheduler,
+			  processor_thread,
+			  active_fibers_scheduler_cmutex,
+			  active_fibers,
+			  active_fibers_iter,
+			  pool_index,
+			  desc,
+			  bytecode_count);
 }
 def_pcfunk0(processor__new,
 	    "",
@@ -613,14 +630,15 @@ void f2__processor__defragment__fix_pointers() {
   
   // processor
   
-  initialize_primobject_7_slot__defragment__fix_pointers(processor,
+  initialize_primobject_8_slot__defragment__fix_pointers(processor,
 							 scheduler,
 							 processor_thread,
 							 active_fibers_scheduler_cmutex,
 							 active_fibers,
 							 active_fibers_iter,
 							 pool_index,
-							 desc);
+							 desc,
+							 bytecode_count);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__symbol);
   f2__primcfunk__init__defragment__fix_pointers(processor__add_active_fiber);
@@ -661,14 +679,15 @@ void f2__processor__reinitialize_globalvars() {
   
   // processor
   
-  initialize_primobject_7_slot(processor,
+  initialize_primobject_8_slot(processor,
 			       scheduler,
 			       processor_thread,
 			       active_fibers_scheduler_cmutex,
 			       active_fibers,
 			       active_fibers_iter,
 			       pool_index,
-			       desc);
+			       desc,
+			       bytecode_count);
   
   {char* symbol_str = "add_active_fiber"; __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(processor__add_active_fiber, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_processor.add_active_fiber__funk = never_gc(cfunk);}

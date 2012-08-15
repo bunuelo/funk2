@@ -45,8 +45,8 @@ declare_object_type_30_slot(fiber,
 			    paused,
 			    last_executed_time,
 			    sleep_until_time,
-			    execution_nanoseconds,
-			    start_cycle_execution_nanoseconds,
+			    execution_nanoseconds_chunk,
+			    start_cycle_execution_nanoseconds_chunk,
 			    bytecode_count,
 			    bytes_allocated_count,
 			    start_cycle_processor_bytes_allocated_count,
@@ -58,6 +58,14 @@ declare_object_type_30_slot(fiber,
 			    bug_trigger,
 			    complete_trigger,
 			    
+			    f2ptr execution_nanoseconds__symbol;   // get
+			    f2ptr execution_nanoseconds__funk;
+			    f2ptr execution_nanoseconds__set__symbol;   // set
+			    f2ptr execution_nanoseconds__set__funk;
+			    f2ptr start_cycle_execution_nanoseconds__symbol;   // get
+			    f2ptr start_cycle_execution_nanoseconds__funk;
+			    f2ptr start_cycle_execution_nanoseconds__set__symbol;   // set
+			    f2ptr start_cycle_execution_nanoseconds__set__funk;
 			    f2ptr increase_bytecode_count__symbol;   // execute
 			    f2ptr increase_bytecode_count__funk;
 			    f2ptr do_sleep_until_time__symbol;   // execute
@@ -174,8 +182,8 @@ declare_primobject_30_slot(fiber,
 			   paused,
 			   last_executed_time,
 			   sleep_until_time,
-			   execution_nanoseconds,
-			   start_cycle_execution_nanoseconds,
+			   execution_nanoseconds_chunk,
+			   start_cycle_execution_nanoseconds_chunk,
 			   bytecode_count,
 			   bytes_allocated_count,
 			   start_cycle_processor_bytes_allocated_count,

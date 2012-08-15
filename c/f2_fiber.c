@@ -49,8 +49,8 @@ def_primobject_30_slot(fiber,
 		       paused,
 		       last_executed_time,
 		       sleep_until_time,
-		       execution_nanoseconds,
-		       start_cycle_execution_nanoseconds,
+		       execution_nanoseconds_chunk,
+		       start_cycle_execution_nanoseconds_chunk,
 		       bytecode_count,
 		       bytes_allocated_count,
 		       start_cycle_processor_bytes_allocated_count,
@@ -79,8 +79,8 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr paused                                      = nil;
   f2ptr last_executed_time                          = nil;
   f2ptr sleep_until_time                            = nil;
-  f2ptr execution_nanoseconds                       = f2integer__new(cause, 0);
-  f2ptr start_cycle_execution_nanoseconds           = nil;
+  f2ptr execution_nanoseconds_chunk                 = raw__chunk__new(cause, sizeof(u64));
+  f2ptr start_cycle_execution_nanoseconds_chunk     = raw__chunk__new(cause, sizeof(u64));
   f2ptr bytecode_count                              = f2integer__new(cause, 0);
   f2ptr bytes_allocated_count                       = f2integer__new(cause, 0);
   f2ptr start_cycle_processor_bytes_allocated_count = nil;
@@ -110,8 +110,8 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 paused,
 				 last_executed_time,
 				 sleep_until_time,
-				 execution_nanoseconds,
-				 start_cycle_execution_nanoseconds,
+				 execution_nanoseconds_chunk,
+				 start_cycle_execution_nanoseconds_chunk,
 				 bytecode_count,
 				 bytes_allocated_count,
 				 start_cycle_processor_bytes_allocated_count,
@@ -133,6 +133,66 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args,
 	    "",
 	    return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
+
+
+u64 raw__fiber__execution_nanoseconds(f2ptr cause, f2ptr this) {
+  f2ptr execution_nanoseconds_chunk = f2fiber__execution_nanoseconds_chunk(this, cause);
+  return f2chunk__bit64__elt(execution_nanoseconds_chunk, 0, cause);
+}
+
+f2ptr f2__fiber__execution_nanoseconds(f2ptr cause, f2ptr this) {
+  assert_argument_type(fiber, this);
+  return f2integer__new(cause, raw__fiber__execution_nanoseconds(cause, this));
+}
+def_pcfunk1(fiber__execution_nanoseconds, this,
+	    "",
+	    return f2__fiber__execution_nanoseconds(this_cause, this));
+
+
+void raw__fiber__execution_nanoseconds__set(f2ptr cause, f2ptr this, u64 execution_nanoseconds) {
+  f2ptr execution_nanoseconds_chunk = f2fiber__execution_nanoseconds_chunk(this, cause);
+  f2chunk__bit64__elt__set(execution_nanoseconds_chunk, 0, cause, execution_nanoseconds);
+}
+
+f2ptr f2__fiber__execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr execution_nanoseconds) {
+  assert_argument_type(fiber,   this);
+  assert_argument_type(integer, execution_nanoseconds);
+  u64 execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
+  return raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds__i);
+}
+def_pcfunk2(fiber__execution_nanoseconds__set, this, execution_nanoseconds,
+	    "",
+	    return f2__fiber__execution_nanoseconds__set(this_cause, this, execution_nanoseconds));
+
+
+u64 raw__fiber__start_cycle_execution_nanoseconds(f2ptr cause, f2ptr this) {
+  f2ptr start_cycle_execution_nanoseconds_chunk = f2fiber__start_cycle_execution_nanoseconds_chunk(this, cause);
+  return f2chunk__bit64__elt(start_cycle_execution_nanoseconds_chunk, 0, cause);
+}
+
+f2ptr f2__fiber__start_cycle_execution_nanoseconds(f2ptr cause, f2ptr this) {
+  assert_argument_type(fiber, this);
+  return f2integer__new(cause, raw__fiber__start_cycle_execution_nanoseconds(cause, this));
+}
+def_pcfunk1(fiber__start_cycle_execution_nanoseconds, this,
+	    "",
+	    return f2__fiber__start_cycle_execution_nanoseconds(this_cause, this));
+
+
+void raw__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, u64 start_cycle_execution_nanoseconds) {
+  f2ptr start_cycle_execution_nanoseconds_chunk = f2fiber__start_cycle_execution_nanoseconds_chunk(this, cause);
+  f2chunk__bit64__elt__set(start_cycle_execution_nanoseconds_chunk, 0, cause, start_cycle_execution_nanoseconds);
+}
+
+f2ptr f2__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr start_cycle_execution_nanoseconds) {
+  assert_argument_type(fiber,   this);
+  assert_argument_type(integer, start_cycle_execution_nanoseconds);
+  u64 start_cycle_execution_nanoseconds__i = f2integer__i(start_cycle_execution_nanoseconds, cause);
+  return raw__fiber__start_cycle_execution_nanoseconds__set(cause, this, start_cycle_execution_nanoseconds__i);
+}
+def_pcfunk2(fiber__start_cycle_execution_nanoseconds__set, this, start_cycle_execution_nanoseconds,
+	    "",
+	    return f2__fiber__start_cycle_execution_nanoseconds__set(this_cause, this, start_cycle_execution_nanoseconds));
 
 
 void raw__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
@@ -435,34 +495,15 @@ void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
       f2fiber__start_cycle_processor_bytes_allocated_count__set(this, cause, f2integer__new(cause, __funk2.memory.pool[pool_index].bytes_allocated_count));
     }
   }
-  {
-    u64       begin_execution_nanoseconds_since_1970         = raw__nanoseconds_since_1970();
-    f2ptr     start_cycle_execution_nanoseconds              = f2fiber__start_cycle_execution_nanoseconds(this, cause);
-    boolean_t allocate_new_start_cycle_execution_nanoseconds = boolean__false;
-    if (start_cycle_execution_nanoseconds != nil) {
-      u64 start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
-      if (begin_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
-	allocate_new_start_cycle_execution_nanoseconds = boolean__true;
-      }
-    } else {
-      allocate_new_start_cycle_execution_nanoseconds = boolean__true;
-    }
-    if (allocate_new_start_cycle_execution_nanoseconds) {
-      f2fiber__start_cycle_execution_nanoseconds__set(this, cause, f2integer__new(cause, begin_execution_nanoseconds_since_1970));
-    }
-  }
+  raw__fiber__start_cycle_execution_nanoseconds__set(this, cause, raw__nanoseconds_since_1970());
 }
 
 void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
   {
-    u64   end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    f2ptr start_cycle_execution_nanoseconds    = f2fiber__start_cycle_execution_nanoseconds(this, cause);
-    u64   start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
-    if (end_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
-      f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(this, cause);
-      u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
-      f2fiber__execution_nanoseconds__set(this, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds__i)));
-    }
+    u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    u64 start_cycle_execution_nanoseconds    = raw__fiber__start_cycle_execution_nanoseconds(cause, this);
+    u64 execution_nanoseconds                = raw__fiber__execution_nanoseconds(cause, this);
+    raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds));
   }
   {
     int   pool_index                                     = this_processor_thread__pool_index();
@@ -515,6 +556,10 @@ def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber__primobject_type__new(cause);
+  {char* slot_name = "execution_nanoseconds";                                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__funk);}
+  {char* slot_name = "execution_nanoseconds";                                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__set__funk);}
+  {char* slot_name = "start_cycle_execution_nanoseconds";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__funk);}
+  {char* slot_name = "start_cycle_execution_nanoseconds";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__funk);}
   {char* slot_name = "increase_bytecode_count";                                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);}
   {char* slot_name = "do_sleep_until_time";                                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
   {char* slot_name = "sleep_for_nanoseconds";                                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
@@ -954,6 +999,22 @@ void f2__fiber__defragment__fix_pointers() {
 							  bug_trigger,
 							  complete_trigger);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__execution_nanoseconds);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__execution_nanoseconds__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__start_cycle_execution_nanoseconds);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__start_cycle_execution_nanoseconds__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(fiber__increase_bytecode_count);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);
@@ -1074,8 +1135,8 @@ void f2__fiber__reinitialize_globalvars() {
 				paused,
 				last_executed_time,
 				sleep_until_time,
-				execution_nanoseconds,
-				start_cycle_execution_nanoseconds,
+				execution_nanoseconds_chunk,
+				start_cycle_execution_nanoseconds_chunk,
 				bytecode_count,
 				bytes_allocated_count,
 				start_cycle_processor_bytes_allocated_count,
@@ -1087,6 +1148,14 @@ void f2__fiber__reinitialize_globalvars() {
 				bug_trigger,
 				complete_trigger);
   
+  {char* symbol_str = "execution_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__execution_nanoseconds, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__funk = never_gc(cfunk);}
+  {char* symbol_str = "execution_nanoseconds-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__execution_nanoseconds__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.execution_nanoseconds__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "start_cycle_execution_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__start_cycle_execution_nanoseconds, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__funk = never_gc(cfunk);}
+  {char* symbol_str = "start_cycle_execution_nanoseconds-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__start_cycle_execution_nanoseconds__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_execution_nanoseconds__set__funk = never_gc(cfunk);}
   {char* symbol_str = "increase_bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__increase_bytecode_count, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk = never_gc(cfunk);}
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = new__symbol(cause, symbol_str);}

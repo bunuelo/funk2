@@ -69,7 +69,7 @@ def_pcfunk2(cause_group__increase_bytecode_count, this, relative_bytecode_count,
 
 u64 raw__cause_group__execution_nanoseconds(f2ptr cause, f2ptr this) {
   f2ptr execution_nanoseconds_chunk = f2cause_group__execution_nanoseconds_chunk(this, cause);
-  return f2chunk__64bit__elt(execution_nanoseconds_chunk, 0, cause);
+  return f2chunk__bit64__elt(execution_nanoseconds_chunk, 0, cause);
 }
 
 f2ptr f2__cause_group__execution_nanoseconds(f2ptr cause, f2ptr this) {
@@ -83,7 +83,7 @@ def_pcfunk1(cause_group__execution_nanoseconds, this,
 
 void raw__cause_group__execution_nanoseconds__set(f2ptr cause, f2ptr this, u64 execution_nanoseconds) {
   f2ptr execution_nanoseconds_chunk = f2cause_group__execution_nanoseconds_chunk(this, cause);
-  f2chunk__64bit__elt__set(execution_nanoseconds_chunk, 0, cause, execution_nanoseconds);
+  f2chunk__bit64__elt__set(execution_nanoseconds_chunk, 0, cause, execution_nanoseconds);
 }
 
 f2ptr f2__cause_group__execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr execution_nanoseconds) {

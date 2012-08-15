@@ -552,8 +552,22 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
   {
     u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     u64 start_cycle_execution_nanoseconds    = raw__fiber__start_cycle_execution_nanoseconds(cause, this);
-    u64 execution_nanoseconds                = raw__fiber__execution_nanoseconds(cause, this);
-    raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds));
+    u64 increase_nanoseconds                 = end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds;
+    if (increase_nanoseconds != 0) {
+      u64 execution_nanoseconds = raw__fiber__execution_nanoseconds(cause, this);
+      raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds + increase_nanoseconds);
+      if (cause != nil) {
+	f2ptr cause_groups = f2cause__cause_groups(cause, this);
+	{
+	  f2ptr iter = cause_groups;
+	  while (iter != nil) {
+	    f2ptr cause_group = f2cons__car(iter, cause);
+	    raw__cause_group__increase_execution_nanoseconds(cause, cause_group, increase_execution_nanoseconds);
+	    iter = f2cons__cdr(iter, cause);
+	  }
+	}
+      }
+    }
   }
   {
     int pool_index                                  = this_processor_thread__pool_index();

@@ -58,7 +58,7 @@ f2ptr f2__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, f2ptr re
 }
 def_pcfunk2(cause_group__increase_bytecode_count, this, relative_bytecode_count,
 	    "",
-	    return f2__cause_group__increate_bytecode_count(this_cause, this, relative_bytecode_count));
+	    return f2__cause_group__increase_bytecode_count(this_cause, this, relative_bytecode_count));
 
 
 // cause_group

@@ -522,7 +522,7 @@ void f2__scheduler__initialize() {
   // allocate scheduler and processors
   
   f2ptr processors = raw__array__new(cause, scheduler_processor_num);
-  f2ptr scheduler = f2scheduler__new(cause, processors);
+  f2ptr scheduler  = f2__scheduler__new(cause, processors);
   
   int i;
   for (i = 0; i < scheduler_processor_num; i ++) {

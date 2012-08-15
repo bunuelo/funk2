@@ -455,19 +455,20 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   return exit_reason;
 }
 
-f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
+f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause) {
   //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something = nil;
   
-  raw__processor__reset_current_active_fiber(cause, processor);
+  raw__processor__reset_current_active_fiber(processor_cause, processor);
   
   int fiber_num = 0;
   {
     f2ptr fiber;
-    while ((fiber = raw__processor__current_active_fiber(cause, processor)) != nil) {
+    while ((fiber = raw__processor__current_active_fiber(processor_cause, processor)) != nil) {
       fiber_num ++;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
-      if (f2cmutex__trylock(f2fiber__execute_cmutex(fiber, cause), cause) == 0) { // successful lock
+      if (f2cmutex__trylock(f2fiber__execute_cmutex(fiber, processor_cause), processor_cause) == 0) { // successful lock
+	f2ptr cause = f2fiber__cause_ref(fiber, processor_cause);
 	if (! f2fiber__paused(fiber, cause)) {
 	  f2ptr sleep_until_time = f2fiber__sleep_until_time(fiber, cause);
 	  boolean_t fiber_needs_sleep = boolean__false;
@@ -578,21 +579,21 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
       }
       
       if (need_to_launch_larva_handling_critic_fiber) {
-	f2ptr cause_reg = f2fiber__cause_reg(fiber, cause);
-	f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, cause) : nil;
+	f2ptr cause_reg = f2fiber__cause_reg(fiber, processor_cause);
+	f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, processor_cause) : nil;
 	if (critics) {
-	  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-	  if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
-	    f2ptr larva      = f2fiber__value(fiber, cause);
-	    u64   larva_type = raw__larva__larva_type(cause, larva);
+	  f2ptr fiber_cause = f2fiber__cause_reg(fiber, processor_cause);
+	  if (raw__larva__is_type(processor_cause, f2fiber__value(fiber, processor_cause))) {
+	    f2ptr larva      = f2fiber__value(fiber, processor_cause);
+	    u64   larva_type = raw__larva__larva_type(processor_cause, larva);
 	    status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
-	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, cause), critics, f2cons__new(cause, fiber, nil));
+	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critics, f2cons__new(processor_cause, fiber, nil));
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
-	    if (raw__larva__is_type(cause, result)) {
+	    if (raw__larva__is_type(processor_cause, result)) {
 	      status(    "processor-execute_next_bytecodes: error adding critic fiber.");
 	      error(nil, "processor-execute_next_bytecodes: error adding critic fiber.");
 	    }
@@ -600,11 +601,11 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	  resume_gc();
 	} else {
 	  char status_msg[1024];
-	  if (raw__bug__is_type(cause, f2fiber__value(fiber, cause))) {
-	    f2ptr bug      = f2fiber__value(fiber, cause);
-	    f2ptr bug_type = f2__bug__bug_type(cause, bug);
-	    if (raw__integer__is_type(cause, bug_type)) {
-	      u64 bug_type__i = f2integer__i(bug_type, cause);
+	  if (raw__bug__is_type(processor_cause, f2fiber__value(fiber, processor_cause))) {
+	    f2ptr bug      = f2fiber__value(fiber, processor_cause);
+	    f2ptr bug_type = f2__bug__bug_type(processor_cause, bug);
+	    if (raw__integer__is_type(processor_cause, bug_type)) {
+	      u64 bug_type__i = f2integer__i(bug_type, processor_cause);
 	      snprintf(status_msg, 1023, "bug type (" u64__fstr ") found in fiber and fiber has no critics, so doing nothing.", bug_type__i);
 	    } else {
 	      snprintf(status_msg, 1023, "larva found in fiber (but bug_type is not integer) and fiber has no critics, so doing nothing.");
@@ -616,7 +617,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 	}
       }
     
-      raw__processor__increment_current_active_fiber(cause, processor);
+      raw__processor__increment_current_active_fiber(processor_cause, processor);
     } // end of fiber while
   }
   

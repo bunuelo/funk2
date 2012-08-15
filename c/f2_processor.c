@@ -320,6 +320,8 @@ def_pcfunk2(processor__active_fibers__contains, this, fiber,
 	    return f2__processor__active_fibers__contains(this_cause, this, fiber));
 
 
+// processor
+
 f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -330,7 +332,8 @@ f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 						new__symbol(cause, "active_fibers_scheduler_cmutex"), f2__processor__active_fibers_scheduler_cmutex(cause, this),
 						new__symbol(cause, "active_fibers"),                  f2__processor__active_fibers(                cause, this),
 						new__symbol(cause, "pool_index"),                     f2__processor__pool_index(                   cause, this),
-						new__symbol(cause, "desc"),                           f2__processor__desc(                         cause, this)));
+						new__symbol(cause, "desc"),                           f2__processor__desc(                         cause, this),
+						new__symbol(cause, "bytecode_count"),                 f2__processor__bytecode_count(               cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -508,21 +511,33 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		  
 		  u64 begin_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 		  
-		  // fast inner loop
-		  scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
-		  
-		  u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-		  
-		  f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
-		  u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
-		  
-		  pause_gc();
-		  f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
-		  f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
-		  resume_gc();
-		  
-		  if(exit_reason == exit_reason__found_larva) {
-		    need_to_launch_larva_handling_critic_fiber = 1;
+		  {
+		    f2ptr before_fiber__bytecode_count    = f2fiber__bytecode_count(fiber, cause);;
+		    u64   before_fiber__bytecode_count__i = (u64)f2integer__i(before_fiber__bytecode_count, cause);
+		    
+		    // fast inner loop
+		    scheduler_fast_loop_exit_reason_t exit_reason = execute_next_bytecodes__helper__fast_loop(cause, fiber);
+		    
+		    u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+		    
+		    f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
+		    u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
+		    
+		    pause_gc();
+		    f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
+		    f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
+		    {
+		      f2ptr fiber__bytecode_count        = f2fiber__bytecode_count(fiber, cause);;
+		      u64   fiber__bytecode_count__i     = (u64)f2integer__i(fiber__bytecode_count, cause);
+		      f2ptr processor__bytecode_count    = f2processor__bytecode_count(processor, cause);
+		      u64   processor__bytecode_count__i = (u64)f2integer__i(processor__bytecode_count, cause);
+		      f2processor__bytecode_count__set(processor, cause, f2integer__new(cause, processor__bytecode_count__i + (fiber__bytecode_count__i - fiber__before_bytecode_count__i)));
+		    }
+		    resume_gc();
+		    
+		    if(exit_reason == exit_reason__found_larva) {
+		      need_to_launch_larva_handling_critic_fiber = 1;
+		    }
 		  }
 		}
 		

@@ -523,17 +523,17 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause) {
 		    f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
 		    u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
 		    
-		    pause_gc();
-		    f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
-		    f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
 		    {
 		      f2ptr fiber__bytecode_count        = f2fiber__bytecode_count(fiber, cause);;
 		      u64   fiber__bytecode_count__i     = (u64)f2integer__i(fiber__bytecode_count, cause);
 		      f2ptr processor__bytecode_count    = f2processor__bytecode_count(processor, cause);
 		      u64   processor__bytecode_count__i = (u64)f2integer__i(processor__bytecode_count, cause);
+		      pause_gc();
+		      f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - begin_execution_nanoseconds_since_1970)));
+		      f2fiber__last_executed_time__set(fiber, cause, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970())));
 		      f2processor__bytecode_count__set(processor, cause, f2integer__new(cause, processor__bytecode_count__i + (fiber__bytecode_count__i - before_fiber__bytecode_count__i)));
+		      resume_gc();
 		    }
-		    resume_gc();
 		    
 		    if(exit_reason == exit_reason__found_larva) {
 		      need_to_launch_larva_handling_critic_fiber = 1;

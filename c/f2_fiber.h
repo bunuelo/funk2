@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_29_slot(fiber,
+declare_object_type_30_slot(fiber,
 			    program_counter,
 			    stack,
 			    iter,
@@ -46,6 +46,7 @@ declare_object_type_29_slot(fiber,
 			    last_executed_time,
 			    sleep_until_time,
 			    execution_nanoseconds,
+			    start_cycle_execution_nanoseconds,
 			    bytecode_count,
 			    bytes_allocated_count,
 			    start_cycle_processor_bytes_allocated_count,
@@ -154,7 +155,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_29_slot(fiber,
+declare_primobject_30_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,
@@ -174,6 +175,7 @@ declare_primobject_29_slot(fiber,
 			   last_executed_time,
 			   sleep_until_time,
 			   execution_nanoseconds,
+			   start_cycle_execution_nanoseconds,
 			   bytecode_count,
 			   bytes_allocated_count,
 			   start_cycle_processor_bytes_allocated_count,

@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_29_slot(fiber,
+def_primobject_30_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -50,6 +50,7 @@ def_primobject_29_slot(fiber,
 		       last_executed_time,
 		       sleep_until_time,
 		       execution_nanoseconds,
+		       start_cycle_execution_nanoseconds,
 		       bytecode_count,
 		       bytes_allocated_count,
 		       start_cycle_processor_bytes_allocated_count,
@@ -79,6 +80,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr last_executed_time                          = nil;
   f2ptr sleep_until_time                            = nil;
   f2ptr execution_nanoseconds                       = f2integer__new(cause, 0);
+  f2ptr start_cycle_execution_nanoseconds           = nil;
   f2ptr bytecode_count                              = f2integer__new(cause, 0);
   f2ptr bytes_allocated_count                       = f2integer__new(cause, 0);
   f2ptr start_cycle_processor_bytes_allocated_count = nil;
@@ -109,6 +111,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 last_executed_time,
 				 sleep_until_time,
 				 execution_nanoseconds,
+				 start_cycle_execution_nanoseconds,
 				 bytecode_count,
 				 bytes_allocated_count,
 				 start_cycle_processor_bytes_allocated_count,
@@ -891,7 +894,7 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_29_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_30_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack,
 							  iter,
@@ -911,6 +914,7 @@ void f2__fiber__defragment__fix_pointers() {
 							  last_executed_time,
 							  sleep_until_time,
 							  execution_nanoseconds,
+							  start_cycle_execution_nanoseconds,
 							  bytecode_count,
 							  bytes_allocated_count,
 							  start_cycle_processor_bytes_allocated_count,
@@ -1023,7 +1027,7 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_29_slot(fiber,
+  initialize_primobject_30_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -1043,6 +1047,7 @@ void f2__fiber__reinitialize_globalvars() {
 				last_executed_time,
 				sleep_until_time,
 				execution_nanoseconds,
+				start_cycle_execution_nanoseconds,
 				bytecode_count,
 				bytes_allocated_count,
 				start_cycle_processor_bytes_allocated_count,

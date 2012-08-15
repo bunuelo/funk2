@@ -37,7 +37,7 @@ declare_object_type_1_slot(cause_group,
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_15_slot(cause,
+declare_object_type_16_slot(cause,
 			    fibers_cmutex,
 			    fibers,
 			    frame,
@@ -53,6 +53,7 @@ declare_object_type_15_slot(cause,
 			    read_other_memory_callbacks,
 			    write_other_memory_callbacks,
 			    critics,
+			    cause_groups,
 			    
 			    f2ptr type_var_defined__symbol;
 			    f2ptr type_var_defined__funk;
@@ -98,7 +99,7 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 #define cause__allocate_traced_arrays__default_value (nil)
 //#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
 
-declare_primobject_15_slot(cause,
+declare_primobject_16_slot(cause,
 			   fibers_cmutex,
 			   fibers,
 			   frame,
@@ -113,8 +114,8 @@ declare_primobject_15_slot(cause,
 			   complete_funk_callbacks,
 			   read_other_memory_callbacks,
 			   write_other_memory_callbacks,
-			   critics
-			   );
+			   critics,
+			   cause_groups);
 
 f2ptr      f2__cause__new_with_inherited_properties(f2ptr cause, f2ptr source);
 f2ptr     raw__cause__add_fiber                    (f2ptr cause, f2ptr this, f2ptr fiber);

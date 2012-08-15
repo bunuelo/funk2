@@ -415,6 +415,24 @@ def_pcfunk1(fiber__wait_for_either_complete_or_encounter_bug__without_yield, thi
 
 
 
+void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
+  int pool_index = this_processor_thread__pool_index();
+  f2fiber__start_cycle_processor_bytes_allocated_count__set(this, cause, f2integer__new(cause, __funk2.memory.pool[pool_index].bytes_allocated_count));
+}
+
+void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
+  int   pool_index                                  = this_processor_thread__pool_index();
+  f2ptr start_cycle_processor_bytes_allocated_count = f2fiber__start_cycle_processor_bytes_allocated_count(this, cause);
+  if (start_cycle_processor_bytes_allocated_count != nil) {
+    u64 start_cycle_processor_bytes_allocated_count__i = f2integer__i(start_cycle_processor_bytes_allocated_count, cause);
+    f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(this, cause);
+    u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
+    f2fiber__bytes_allocated_count__set(this, cause, f2integer__new(cause, bytes_allocated_count__i + __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count__i));
+  }
+}
+
+
+
 f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -462,6 +480,8 @@ f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "terminal_print_with_frame";                               f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.terminal_print_with_frame__funk);}
   return this;
 }
+
+
 
 
 

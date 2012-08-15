@@ -422,8 +422,9 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   //status("bytecode fast loop beginning.");
   scheduler_fast_loop_exit_reason_t exit_reason = exit_reason__none;
   
-  int pool_index = this_processor_thread__pool_index();
-  f2fiber__start_cycle_processor_bytes_allocated_count__set(fiber, cause, f2integer__new(cause, __funk2.memory.pool[pool_index].bytes_allocated_count));
+  pause_gc();
+  raw__fiber__handle_enter_virtual_processor(cause, fiber);
+  resume_gc();
   
   int i = execute_next_bytecodes__helper__fast_loop__max_bytecode_count;
   while (! exit_reason) {
@@ -447,15 +448,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   
   pause_gc();
   raw__fiber__increase_bytecode_count(cause, fiber, execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
-  {
-    f2ptr start_cycle_processor_bytes_allocated_count = f2fiber__start_cycle_processor_bytes_allocated_count(fiber, cause);
-    if (start_cycle_processor_bytes_allocated_count != nil) {
-      u64 start_cycle_processor_bytes_allocated_count__i = f2integer__i(start_cycle_processor_bytes_allocated_count, cause);
-      f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(fiber, cause);
-      u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
-      f2fiber__bytes_allocated_count__set(fiber, cause, f2integer__new(cause, bytes_allocated_count__i + __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count__i));
-    }
-  }
+  raw__fiber__handle_exit_virtual_processor(cause, fiber);
   resume_gc();
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);

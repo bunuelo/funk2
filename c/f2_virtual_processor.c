@@ -171,6 +171,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   funk2_virtual_processor_thread_t* yielding_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
   f2ptr yielding_fiber = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
+  raw__fiber__handle_exit_virtual_processor(cause, yielding_fiber);
   {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
@@ -210,5 +211,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   }
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
+  raw__fiber__handle_enter_virtual_processor(cause, yielding_fiber);
 }
 

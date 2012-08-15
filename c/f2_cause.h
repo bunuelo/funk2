@@ -29,6 +29,8 @@
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
 declare_object_type_1_slot(cause_group,
 			   bytecode_count,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
 			   );
 
 

@@ -611,6 +611,16 @@ void f2__cause__reinitialize_globalvars() {
   
   //--
   
+  
+  // cause_group
+  
+  initialize_primobject_1_slot(cause_group,
+			       bytecode_count);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  
   // cause
   
   initialize_primobject_15_slot(cause,

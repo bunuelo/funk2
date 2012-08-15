@@ -189,7 +189,8 @@ f2ptr f2__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this,
   assert_argument_type(fiber,   this);
   assert_argument_type(integer, start_cycle_execution_nanoseconds);
   u64 start_cycle_execution_nanoseconds__i = f2integer__i(start_cycle_execution_nanoseconds, cause);
-  return raw__fiber__start_cycle_execution_nanoseconds__set(cause, this, start_cycle_execution_nanoseconds__i);
+  raw__fiber__start_cycle_execution_nanoseconds__set(cause, this, start_cycle_execution_nanoseconds__i);
+  return nil;
 }
 def_pcfunk2(fiber__start_cycle_execution_nanoseconds__set, this, start_cycle_execution_nanoseconds,
 	    "",

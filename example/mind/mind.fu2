@@ -110,9 +110,27 @@
   [have other_cause_groups_mutex unlock]]
 
 [deftypefunk mind execute save_all_plots [time_offset filename_root]
-  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' name]]
+  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' [get this name]]]
   [mapc [funk [layer]
-	      [have layer save_all_plots time_offset [format nil filename_root '-' name]]]
+	      [have layer save_all_plots time_offset [format nil filename_root '-' [get this name]]]]
+	[get this layers]]]
+
+[deftypefunk mind execute save_bytecode_count_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_bytecode_count_plot time_offset [format nil filename_root '-' [get this name]]]
+  [mapc [funk [layer]
+	      [have layer save_bytecode_count_plots time_offset [format nil filename_root '-' [get this name]]]]
+	[get this layers]]]
+
+[deftypefunk mind execute save_execution_nanoseconds_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_execution_nanoseconds_plot time_offset [format nil filename_root '-' [get this name]]]
+  [mapc [funk [layer]
+	      [have layer save_execution_nanoseconds_plots time_offset [format nil filename_root '-' [get this name]]]]
+	[get this layers]]]
+
+[deftypefunk mind execute save_bytes_allocated_count_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_bytes_allocated_count_plot time_offset [format nil filename_root '-' [get this name]]]
+  [mapc [funk [layer]
+	      [have layer save_bytes_allocated_count_plots time_offset [format nil filename_root '-' [get this name]]]]
 	[get this layers]]]
 
 [defmetro mind-create_layer [mind layer_index layer_name]

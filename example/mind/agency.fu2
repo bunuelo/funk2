@@ -26,13 +26,15 @@
 			 trace_story
 			 [cause_group              [new cause_group]]
 			 [other_cause_groups_mutex [new mutex]]
-			 [other_cause_groups       nil]]
+			 [other_cause_groups       nil]
+			 runtime_metric_monitor]
   [new [new-name]
        [terminal_format standard-terminal '\ncreating ' new-name ' agency.']
-       [= name           new-name]
-       [= layer          nil] 'We set this when we add the resource to a layer.'
-       [= resource_frame [frame]]
-       [= trace_story    [new story]]
+       [= name                   new-name]
+       [= layer                  nil] 'We set this when we add the resource to a layer.'
+       [= resource_frame         [frame]]
+       [= trace_story            [new story]]
+       [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        this]]
 
 [deftypefunk agency execute add_resource [resource]
@@ -57,6 +59,12 @@
 	      [have resource add_cause_group cause_group]]
 	[get this resources]]
   [have other_cause_groups_mutex unlock]]
+
+[deftypefunk agency execute save_all_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' name]]
+  [mapc [funk [resource]
+	      [have resource save_all_plots time_offset [format nil filename_root '-' name]]]
+	[get this resources]]]
 
 [deftypefunk agency get resource [name]
   [let [[resource [have resource_frame lookup name]]]

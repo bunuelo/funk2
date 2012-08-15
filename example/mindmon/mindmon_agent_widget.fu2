@@ -223,21 +223,30 @@
 
 
 [deframe mindmon_agent_widget_mind_menu [frame] [mindmon_agent_widget
-					  
-					  mind_menu_item
-					  mind_menu
-					  
-					  enable_debugging_all_menu_item
-					  disable_debugging_all_menu_item
-					  
-					  mindmon_layer_menus
-					  ]
+						 
+						 mind_menu_item
+						 mind_menu
+						 
+						 save_plots_menu_item
+						 enable_debugging_all_menu_item
+						 disable_debugging_all_menu_item
+						 
+						 mindmon_layer_menus
+						 ]
   [new [initial-mindmon_agent_widget]
        [= mindmon_agent_widget initial-mindmon_agent_widget]
        
        [= mind_menu_item [gtk-menu_item-new 'Mind']]
        [= mind_menu      [gtk-menu-new]]
        [set mind_menu_item submenu mind_menu]
+       
+       [= save_plots_menu_item [gtk-menu_item-new 'Save Plots']]
+       [have mind_menu append save_plots_menu_item]
+       [have save_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_all_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
        
        [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
        [have mind_menu append enable_debugging_all_menu_item]
@@ -478,6 +487,9 @@
        [have this update]
        
        nil]]
+
+[deftypefunk mindmon_agent_widget get mind []
+  [get mindmon_agent mind]]
 
 [deftypefunk mindmon_agent_widget execute add_mindmon_knowledge [mindmon_knowledge_name]
   [have mindmon_knowledge_mutex lock]

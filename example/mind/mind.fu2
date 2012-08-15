@@ -20,7 +20,8 @@
 
 'mind'
 
-[deframe mind [frame] [body
+[deframe mind [frame] [creation_time
+		       body
 		       layer_frame
 		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
@@ -32,17 +33,20 @@
 		       [ready_for_physical_world_step_trigger [new fiber_trigger]]
 		       [cause_group                           [new cause_group]]
 		       [other_cause_groups_mutex              [new mutex]]
-		       [other_cause_groups                    nil]]
+		       [other_cause_groups                    nil]
+		       runtime_metric_monitor]
   [new []
        [terminal_format standard-terminal '\ncreating mind.']
        [cause-define semantic_frame-trace_add                            t]
        [cause-define semantic_frame-trace_remove                         t]
        [cause-define semantic_knowledge_base-trace_add_semantic_frame    t]
        [cause-define semantic_knowledge_base-trace_remove_semantic_frame t]
+       [= creation_time                                    [time]]
        [= layer_frame                                      [frame]]
        [= knowledge_event_stream_iterator_frame            [frame]]
        [= semantic_knowledge_base_ptypehash                [new ptypehash]]
        [= semantic_knowledge_base_add_event_callback_funks nil]
+       [= runtime_metric_monitor                           [new mind_runtime_metric_monitor cause_group]]
        this]]
 
 [deftypefunk mind get mind []
@@ -104,6 +108,12 @@
 	      [have layer add_cause_group cause_group]]
 	[get this layers]]
   [have other_cause_groups_mutex unlock]]
+
+[deftypefunk mind execute save_all_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' name]]
+  [mapc [funk [layer]
+	      [have layer save_all_plots time_offset [format nil filename_root '-' name]]]
+	[get this layers]]]
 
 [defmetro mind-create_layer [mind layer_index layer_name]
   `[have ,mind add_layer [new mental_layer ,layer_index [quote ,layer_name]]]]

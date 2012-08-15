@@ -26,13 +26,15 @@
 			       agency_frame
 			       [cause_group              [new cause_group]]
 			       [other_cause_groups_mutex [new mutex]]
-			       [other_cause_groups       nil]]
+			       [other_cause_groups       nil]
+			       runtime_metric_monitor]
   [new [new-index new-name]
        [terminal_format standard-terminal '\ncreating ' new-name ' mental_layer.']
-       [= index        new-index]
-       [= name         new-name]
-       [= mind         nil] 'We set this when we add the layer to a mind.'
-       [= agency_frame [frame]]
+       [= index                  new-index]
+       [= name                   new-name]
+       [= mind                   nil] 'We set this when we add the layer to a mind.'
+       [= agency_frame           [frame]]
+       [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        this]]
 
 [deftypefunk mental_layer get body []
@@ -68,6 +70,12 @@
 	      [have agency add_cause_group cause_group]]
 	[get this agencies]]
   [have other_cause_groups_mutex unlock]]
+
+[deftypefunk mental_layer execute save_all_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' name]]
+  [mapc [funk [agency]
+	      [have agency save_all_plots time_offset [format nil filename_root '-' name]]]
+	[get this agencies]]]
 
 [deftypefunk mental_layer get agency [name]
   [let [[agency [have agency_frame lookup name]]]

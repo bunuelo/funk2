@@ -119,6 +119,9 @@
        [have fiber_starting_mutex unlock]
        this]]
 
+[deftypefunk resource execute save_all_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_all_plots time_offset [format nil filename_root '-' name]]]
+
 [deftypefunk resource execute add_cause_group [cause_group]
   [have [get fiber cause_reg] add_cause_group cause_group]]
 

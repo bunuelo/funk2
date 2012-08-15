@@ -18,23 +18,6 @@
  rights to redistribute these changes.'
 
 
-'relative_mind_runtime_metric'
-
-[deframe relative_mind_runtime_metric [frame] [real_time
-					       bytecode_count
-					       execution_nanoseconds
-					       bytes_allocated_count]
-  [new [initial-real_time
-	initial-bytecode_count
-	initial-execution_nanoseconds
-	initial-bytes_allocated_count]
-       [= real_time             initial-real_time]
-       [= bytecode_count        initial-bytecode_count]
-       [= execution_nanoseconds initial-execution_nanoseconds]
-       [= bytes_allocated_count initial-bytes_allocated_count]
-       nil]]
-
-
 'mind_runtime_metric_point'
 
 [deframe mind_runtime_metric_point [frame] [real_time
@@ -58,15 +41,8 @@
        [get cause_group execution_nanoseconds]
        [get cause_group bytes_allocated_count]]]
 
-[deftypefunk mind_runtime_metric_point get minus [that]
-  [assert-type mind_runtime_metric_point that]
-  [new relative_mind_runtime_metric
-       [- [get this real_time]             [get that real_time]]
-       [- [get this bytecode_count]        [get that bytecode_count]]
-       [- [get this execution_nanoseconds] [get that execution_nanoseconds]]
-       [- [get this bytes_allocated_count] [get that bytes_allocated_count]]]]
 
-
+'mind_runtime_metric_monitor'
 
 [deframe mind_runtime_metric_monitor [frame] [cause_group
 					      fiber
@@ -79,7 +55,90 @@
 				     [sleep 30]
 				     [let [[metric [mind_runtime_metric_point-new_from_cause_group cause_group]]]
 				       [= metric_sequence [cons metric metric_sequence]]]]]
-			     nil]]]]
+			     nil]]
+       nil]]
+
+[deftypefunk mind_runtime_metric_monitor get bytecode_count_plot_text [time_offset]
+  [assert-type string filename_root]
+  [let [[line_strings nil]
+	[prev_metric  nil]
+	[metric_iter  metric_sequence]]
+    [while metric_iter
+      [let [[metric [car metric_iter]]]
+	[if prev_metric
+	    [let [[prev_metric_value     [get prev_metric bytecode_count]]
+		  [prev_metric_real_time [get prev_metric real_time]]
+		  [metric_value          [get metric      bytecode_count]]
+		  [metric_real_time      [get metric      real_time]]]
+	      [let [[real_time_diff [- prev_metric_real_time metric_real_time]]
+		    [value_diff     [- prev_metric_value     metric_value]]]
+		[let [[line_string [format nil [/ value_diff [get real_time_diff total_nanoseconds]] ' ' [get [- metric_real_time time_offset] total_nanoseconds] '\n']]]
+		  [= line_strings [cons line_string line_strings]]]]]]
+	[= prev_metric metric]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_bytecode_count_plot [time_offset filename]
+  [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving bytecode_count plot "' filename '"']
+  [have [get this bytecode_count_plot_text time_offset] save filename]]
+
+
+[deftypefunk mind_runtime_metric_monitor get execution_nanoseconds_plot_text [time_offset]
+  [assert-type string filename_root]
+  [let [[line_strings nil]
+	[prev_metric  nil]
+	[metric_iter  metric_sequence]]
+    [while metric_iter
+      [let [[metric [car metric_iter]]]
+	[if prev_metric
+	    [let [[prev_metric_value     [get prev_metric execution_nanoseconds]]
+		  [prev_metric_real_time [get prev_metric real_time]]
+		  [metric_value          [get metric      execution_nanoseconds]]
+		  [metric_real_time      [get metric      real_time]]]
+	      [let [[real_time_diff [- prev_metric_real_time metric_real_time]]
+		    [value_diff     [- prev_metric_value     metric_value]]]
+		[let [[line_string [format nil [/ value_diff [get real_time_diff total_nanoseconds]] ' ' [get [- metric_real_time time_offset] total_nanoseconds] '\n']]]
+		  [= line_strings [cons line_string line_strings]]]]]]
+	[= prev_metric metric]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_execution_nanoseconds_plot [time_offset filename]
+  [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving execution_nanoseconds plot "' filename '"']
+  [have [get this execution_nanoseconds_plot_text time_offset] save filename]]
+
+
+[deftypefunk mind_runtime_metric_monitor get bytes_allocated_count_plot_text [time_offset]
+  [assert-type string filename_root]
+  [let [[line_strings nil]
+	[prev_metric  nil]
+	[metric_iter  metric_sequence]]
+    [while metric_iter
+      [let [[metric [car metric_iter]]]
+	[if prev_metric
+	    [let [[prev_metric_value     [get prev_metric bytes_allocated_count]]
+		  [prev_metric_real_time [get prev_metric real_time]]
+		  [metric_value          [get metric      bytes_allocated_count]]
+		  [metric_real_time      [get metric      real_time]]]
+	      [let [[real_time_diff [- prev_metric_real_time metric_real_time]]
+		    [value_diff     [- prev_metric_value     metric_value]]]
+		[let [[line_string [format nil [/ value_diff [get real_time_diff total_nanoseconds]] ' ' [get [- metric_real_time time_offset] total_nanoseconds] '\n']]]
+		  [= line_strings [cons line_string line_strings]]]]]]
+	[= prev_metric metric]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_bytes_allocated_count_plot [time_offset filename]
+  [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving bytes_allocated_count plot "' filename '"']
+  [have [get this bytes_allocated_count_plot_text time_offset] save filename]]
+
+
+[deftypefunk mind_runtime_metric_monitor execute save_all_plots [time_offset filename_root]
+  [have this save_bytecode_count_plot        time_offset [format nil filename_root '-bytecode_count.data']]
+  [have this save_execution_nanoseconds_plot time_offset [format nil filename_root '-execution_nanoseconds.data']]
+  [have this save_bytes_allocated_count_plot time_offset [format nil filename_root '-bytes_allocated_count.data']]]
+
+
 
 [deftypefunk mind_runtime_metric_monitor execute quit []
   [= done t]

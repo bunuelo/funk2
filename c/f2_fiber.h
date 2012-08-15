@@ -197,6 +197,15 @@ declare_primobject_30_slot(fiber,
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
+u64   raw__fiber__execution_nanoseconds                 (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__execution_nanoseconds                 (f2ptr cause, f2ptr this);
+void  raw__fiber__execution_nanoseconds__set            (f2ptr cause, f2ptr this, u64 execution_nanoseconds);
+f2ptr  f2__fiber__execution_nanoseconds__set            (f2ptr cause, f2ptr this, f2ptr execution_nanoseconds);
+u64   raw__fiber__start_cycle_execution_nanoseconds     (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__start_cycle_execution_nanoseconds     (f2ptr cause, f2ptr this);
+void  raw__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, u64 start_cycle_execution_nanoseconds);
+f2ptr  f2__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr start_cycle_execution_nanoseconds);
+
 #define __pure__f2fiber__is_complete(this, cause)  (f2fiber__program_counter(this, cause) == nil)
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)
 

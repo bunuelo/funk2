@@ -806,7 +806,7 @@ void f2__cause__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cause__add_cause_group__funk);
+  f2__primcfunk__init__defragment__fix_pointers(cause__add_cause_group);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol);

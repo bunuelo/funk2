@@ -24,7 +24,7 @@
 
 #define global_scheduler() __global__scheduler
 
-#include "funk2.h"
+#include "f2_primobjects.h"
 
 
 // funk2_operating_system
@@ -47,7 +47,7 @@ typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler
 
 // scheduler
 
-declare_object_type_2_slot(scheduler, processors, total_bytecodes_executed,
+declare_object_type_1_slot(scheduler, processors,
 			   f2ptr active_fibers__symbol;
 			   f2ptr active_fibers__funk;
 			   f2ptr processor_with_fewest_fibers__symbol;
@@ -75,9 +75,7 @@ f2ptr funk2_operating_system__pop_current_fiber( funk2_operating_system_t* this,
 
 // scheduler
 
-declare_primobject_2_slot(scheduler,
-			  processors,
-			  total_bytecodes_executed);
+declare_primobject_1_slot(scheduler, processors);
 
 f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);
 

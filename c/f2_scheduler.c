@@ -19,8 +19,7 @@
 // rights to redistribute these changes.
 // 
 
-//#include "f2_scheduler.h"
-#include "f2_primobjects.h"
+#include "funk2.h"
 
 // funk2_operating_system
 
@@ -95,16 +94,9 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
 
 // scheduler
 
-def_primobject_2_slot(scheduler,
-		      processors,
-		      total_bytecodes_executed);
+def_primobject_1_slot(scheduler, processors);
 
-f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
-  f2ptr total_bytecodes_executed = new__integer(cause, 0);
-  return f2scheduler__new(cause,
-			  processors,
-			  total_bytecodes_executed);
-}
+f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {return f2scheduler__new(cause, processors);}
 def_pcfunk1(scheduler__new, processors,
 	    "",
 	    return f2__scheduler__new(this_cause, processors));
@@ -434,7 +426,7 @@ void f2__scheduler__defragment__fix_pointers() {
   
   // scheduler
   
-  initialize_primobject_2_slot__defragment__fix_pointers(scheduler, processors, total_bytecodes_executed);
+  initialize_primobject_1_slot__defragment__fix_pointers(scheduler, processors);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol);
   f2__primcfunk__init__defragment__fix_pointers(scheduler__active_fibers);
@@ -482,7 +474,7 @@ void f2__scheduler__reinitialize_globalvars() {
   
   // scheduler
   
-  initialize_primobject_2_slot(scheduler, processors, total_bytecodes_executed);
+  initialize_primobject_1_slot(scheduler, processors);
   
   {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}

@@ -14,10 +14,30 @@ decide upon a plan of action, either creating a new plan from scratch,
 or recalling a plan from memory that with some modifications seems
 like it might work in this case.  When the AI considers the plans that
 it knows, it remembers a plan that it has been told will result in a
-stack of two blocks.  Specifically, the plan states that if you move
-to the left until you are above a block, grab the block, move to the
-right until you are above a block, and drop the block you are holding,
-the result will be a stack of two blocks.
+stack of two blocks.  For example, consider that the following plan has been recalled from memory:
+\begin{enumerate}
+\item Move to the left until you are above a block.
+\item Reach and grab.
+\item Move to the right until you are above a block.
+\item Drop any block you are holding.
+\item Assure that there is a stack of two blocks.
+\end{enumerate}
+In this case, my AI encounters a failure of expectations at the final
+assertion of the expected post-conditions of this plan.  In all
+learning algorithms, in the case of a failure of expectations, a
+better model of the physical world is learned, so that the same
+planning mistake would never be made again.  What a reflective
+learning algorithm gains is the ability to also learn a better model
+of the planning process itself---the planning process itself being a
+plan of the metacognitive reasoning layer.  The meta-cognitive planner
+creates plans for how to plan.  A plan for physical action is created
+by resources in the deliberative layer, while a plan for deliberative
+action is created by resources in the reflective layer.
+
+     what types of planning
+actions that should be performed in order to create the types of plans
+that avoid failures during execution.
+
 {\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
 shows how executing this plan in this situation might fail to result
 in a stack of two blocks: the pyramidal block does not support the

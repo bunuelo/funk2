@@ -140,7 +140,7 @@ void raw__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_b
 	f2ptr iter = cause_groups;
 	while (iter != nil) {
 	  f2ptr cause_group = f2cons__car(iter, cause);
-	  raw__cause_group__increase_bytecode_count(cause, cause_group);
+	  raw__cause_group__increase_bytecode_count(cause, cause_group, relative_bytecode_count);
 	  iter = f2cons__cdr(iter, cause);
 	}
       }

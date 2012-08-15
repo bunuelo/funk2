@@ -126,6 +126,40 @@ def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args,
 	    return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
 
+void raw__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
+  {
+    f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
+    u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
+    f2fiber__bytecode_count__set(fiber, cause, f2integer__new(cause, bytecode_count__i + relative_bytecode_count));
+  }
+  {
+    f2ptr cause_reg = f2fiber__cause_reg(this, cause);
+    if (cause_reg != nil) {
+      f2ptr cause_groups = f2cause__cause_groups(cause_reg, cause);
+      {
+	f2ptr iter = cause_groups;
+	while (iter != nil) {
+	  f2ptr cause_group = f2cons__car(iter, cause);
+	  raw__cause_group__increase_bytecode_count(cause, cause_group);
+	  iter = f2cons__cdr(iter, cause);
+	}
+      }
+    }
+  }
+}
+
+f2ptr f2__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, f2ptr relative_bytecode_count) {
+  assert_argument_type(fiber,   this);
+  assert_argument_type(integer, relative_bytecode_count);
+  u64 relative_bytecode_count__i = f2integer__i(relative_bytecode_count, cause);
+  raw__fiber__increase_bytecode_count(cause, this, relative_bytecode_count__i);
+  return nil;
+}
+def_pcfunk2(fiber__increase_bytecode_count, this, relative_bytecode_count,
+	    "",
+	    return f2__fiber__increase_bytecode_count(this_cause, this, relative_bytecode_count));
+
+
 f2ptr raw__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) {
   f2fiber__sleep_until_time__set(this, cause, until_time);
   return nil;
@@ -140,6 +174,7 @@ f2ptr f2__fiber__do_sleep_until_time(f2ptr cause, f2ptr this, f2ptr until_time) 
 def_pcfunk2(fiber__do_sleep_until_time, this, until_time,
 	    "",
 	    return f2__fiber__do_sleep_until_time(this_cause, this, until_time));
+
 
 f2ptr raw__fiber__sleep_for_nanoseconds(f2ptr cause, f2ptr this, s64 nanoseconds) {
   return f2__fiber__do_sleep_until_time(cause, this, f2time__new(cause, f2integer__new(cause, raw__nanoseconds_since_1970() + nanoseconds)));
@@ -410,6 +445,7 @@ def_pcfunk2(fiber__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2fiber__primobject_type__new(cause);
+  {char* slot_name = "increase_bytecode_count";                                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);}
   {char* slot_name = "do_sleep_until_time";                                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
   {char* slot_name = "sleep_for_nanoseconds";                                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
   {char* slot_name = "is_complete";                                             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.is_complete__funk);}
@@ -843,6 +879,10 @@ void f2__fiber__defragment__fix_pointers() {
 							  bug_trigger,
 							  complete_trigger);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(fiber__increase_bytecode_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol);
   f2__primcfunk__init__defragment__fix_pointers(fiber__do_sleep_until_time);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);
@@ -969,6 +1009,8 @@ void f2__fiber__reinitialize_globalvars() {
 				bug_trigger,
 				complete_trigger);
   
+  {char* symbol_str = "increase_bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__increase_bytecode_count, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk = never_gc(cfunk);}
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__do_sleep_until_time, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk = never_gc(cfunk);}
   {char* symbol_str = "sleep_for_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__symbol = new__symbol(cause, symbol_str);}

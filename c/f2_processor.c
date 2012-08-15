@@ -443,13 +443,7 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   }
   
   pause_gc();
-  {
-    f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
-    u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
-    bytecode_count__i       += (execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
-    bytecode_count           = f2integer__new(cause, bytecode_count__i);
-    f2fiber__bytecode_count__set(fiber, cause, bytecode_count);
-  }
+  raw__fiber__increase_bytecode_count(cause, fiber, execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
   resume_gc();
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);

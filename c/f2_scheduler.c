@@ -94,9 +94,16 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
 
 // scheduler
 
-def_primobject_1_slot(scheduler, processors);
+def_primobject_2_slot(scheduler,
+		      processors,
+		      total_bytecodes_executed);
 
-f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {return f2scheduler__new(cause, processors);}
+f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
+  f2ptr total_bytecodes_executed = new__integer(cause, 0);
+  return f2scheduler__new(cause,
+			  processors,
+			  total_bytecodes_executed);
+}
 def_pcfunk1(scheduler__new, processors,
 	    "",
 	    return f2__scheduler__new(this_cause, processors));

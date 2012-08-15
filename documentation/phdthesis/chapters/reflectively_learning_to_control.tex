@@ -3,11 +3,25 @@
 \label{chapter:reflectively_learning_to_control}
 %************************************************
 
-
-In order to demonstrate my solution to the problem of reflectively
+In order to explain my solution to the problem of reflectively
 learning-to-control, I will focus on a running example within the
 physical block building domain shown in
-\autoref{figure:an_example_problem_domain}.
+\autoref{figure:an_example_problem_domain}.  Consider that the AI has
+the goal of making a stack of two blocks.  The AI is now confronted
+with the task of reasoning about how to get the physical world into a
+state that matches this goal condition.  Specifically, the AI must
+decide upon a plan of action, either creating a new plan from scratch,
+or recalling a plan from memory that with some modifications seems
+like it might work in this case.  When the AI considers the plans that
+it knows, it remembers a plan that it has been told will result in a
+stack of two blocks.  Specifically, the plan states that if you move
+to the left until you are above a block, grab the block, move to the
+right until you are above a block, and drop the block you are holding,
+the result will be a stack of two blocks.
+{\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
+shows how executing this plan in this situation might fail to result
+in a stack of two blocks: the pyramidal block does not support the
+cubic block, so the cube falls off of the pyramid and onto the table.
 \begin{figure}
 \begin{center}
 \includegraphics[width=8cm]{gfx/blocks_world_example-1}
@@ -15,6 +29,20 @@ physical block building domain shown in
 \caption[An example problem domain.]{An example problem domain.}
 \label{figure:an_example_problem_domain}
 \end{figure}
+\begin{figure}
+\begin{center}
+\begin{tabular}{p{4cm}p{4cm}}
+1. \includegraphics[width=5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=5cm]{gfx/blocks_world_example-2} \\
+3. \includegraphics[width=5cm]{gfx/blocks_world_example-3}  & 4. \includegraphics[width=5cm]{gfx/blocks_world_example-4} \\
+5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
+7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
+\end{tabular}
+\end{center}
+\caption[An example of failing to accomplish a goal.]{An example of
+  failing to accomplish the goal of creating a stack of two blocks.}
+\label{figure:implemented_example_learning_storyboard}
+\end{figure}
+
 
 \section{The Physical Simulation}
 

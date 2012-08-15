@@ -128,9 +128,9 @@ def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args,
 
 void raw__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
   {
-    f2ptr bytecode_count     = f2fiber__bytecode_count(fiber, cause);
+    f2ptr bytecode_count     = f2fiber__bytecode_count(this, cause);
     u64   bytecode_count__i  = f2integer__i(bytecode_count, cause);
-    f2fiber__bytecode_count__set(fiber, cause, f2integer__new(cause, bytecode_count__i + relative_bytecode_count));
+    f2fiber__bytecode_count__set(this, cause, f2integer__new(cause, bytecode_count__i + relative_bytecode_count));
   }
   {
     f2ptr cause_reg = f2fiber__cause_reg(this, cause);

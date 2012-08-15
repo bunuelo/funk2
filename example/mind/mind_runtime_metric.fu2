@@ -17,6 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'relative_mind_runtime_metric'
+
 [deframe relative_mind_runtime_metric [frame] [real_time
 					       bytecode_count
 					       execution_nanoseconds
@@ -30,6 +33,9 @@
        [= execution_nanoseconds initial-execution_nanoseconds]
        [= bytes_allocated_count initial-bytes_allocated_count]
        nil]]
+
+
+'mind_runtime_metric_point'
 
 [deframe mind_runtime_metric_point [frame] [real_time
 					    bytecode_count
@@ -59,4 +65,24 @@
        [- [get this bytecode_count]        [get that bytecode_count]]
        [- [get this execution_nanoseconds] [get that execution_nanoseconds]]
        [- [get this bytes_allocated_count] [get that bytes_allocated_count]]]]
+
+
+
+[deframe mind_runtime_metric_monitor [frame] [cause_group
+					      fiber
+					      [done            nil]
+					      [metric_sequence nil]]
+  [new [initial-cause_group]
+       [= cause_group initial-cause_group]
+       [= fiber       [fiber [funk []
+				   [while [not done]
+				     [sleep 30]
+				     [let [[metric [mind_runtime_metric_point-new_from_cause_group cause_group]]]
+				       [= metric_sequence [cons metric metric_sequence]]]]]
+			     nil]]]]
+
+[deftypefunk mind_runtime_metric_monitor execute quit []
+  [= done t]
+  [have fiber quit]]
+
 

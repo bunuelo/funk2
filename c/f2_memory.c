@@ -335,7 +335,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     funk2_garbage_collector_pool__add_used_exp(&(__funk2.garbage_collector.gc_pool[pool_index]), block_f2ptr);
     {
       f2ptr fiber                    = f2__this__fiber(nil);
-      f2ptr cause                    = f2fiber__cause_ref(fiber, cause);
+      f2ptr cause                    = f2fiber__cause_ref(fiber, nil);
       f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(fiber, cause);
       u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
       f2fiber__bytes_allocated_count__set(fiber, cause, f2integer__new(cause, bytes_allocated_count__i + byte_num));

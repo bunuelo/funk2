@@ -435,16 +435,44 @@ void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
       f2fiber__start_cycle_processor_bytes_allocated_count__set(this, cause, f2integer__new(cause, __funk2.memory.pool[pool_index].bytes_allocated_count));
     }
   }
+  {
+    u64       begin_execution_nanoseconds_since_1970         = raw__nanoseconds_since_1970();
+    f2ptr     start_cycle_execution_nanoseconds              = f2fiber__start_cycle_execution_nanoseconds(this, cause);
+    boolean_t allocate_new_start_cycle_execution_nanoseconds = boolean__false;
+    if (start_cycle_execution_nanoseconds != nil) {
+      u64 start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
+      if (begin_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
+	allocate_new_start_cycle_execution_nanoseconds = boolean__true;
+      }
+    } else {
+      allocate_new_start_cycle_execution_nanoseconds = boolean__true;
+    }
+    if (allocate_new_start_cycle_execution_nanoseconds) {
+      f2fiber__start_cycle_execution_nanoseconds__set(this, cause, f2integer__new(cause, begin_execution_nanoseconds_since_1970));
+    }
+  }
 }
 
 void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
-  int   pool_index                                     = this_processor_thread__pool_index();
-  f2ptr start_cycle_processor_bytes_allocated_count    = f2fiber__start_cycle_processor_bytes_allocated_count(this, cause);
-  u64   start_cycle_processor_bytes_allocated_count__i = f2integer__i(start_cycle_processor_bytes_allocated_count, cause);
-  if (__funk2.memory.pool[pool_index].bytes_allocated_count != start_cycle_processor_bytes_allocated_count__i) {
-    f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(this, cause);
-    u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
-    f2fiber__bytes_allocated_count__set(this, cause, f2integer__new(cause, bytes_allocated_count__i + __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count__i));
+  {
+    u64   end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    f2ptr start_cycle_execution_nanoseconds    = f2fiber__start_cycle_execution_nanoseconds(fiber, cause);
+    u64   start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
+    if (end_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
+      f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
+      u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
+      f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds__i)));
+    }
+  }
+  {
+    int   pool_index                                     = this_processor_thread__pool_index();
+    f2ptr start_cycle_processor_bytes_allocated_count    = f2fiber__start_cycle_processor_bytes_allocated_count(this, cause);
+    u64   start_cycle_processor_bytes_allocated_count__i = f2integer__i(start_cycle_processor_bytes_allocated_count, cause);
+    if (__funk2.memory.pool[pool_index].bytes_allocated_count != start_cycle_processor_bytes_allocated_count__i) {
+      f2ptr bytes_allocated_count    = f2fiber__bytes_allocated_count(this, cause);
+      u64   bytes_allocated_count__i = f2integer__i(bytes_allocated_count, cause);
+      f2fiber__bytes_allocated_count__set(this, cause, f2integer__new(cause, bytes_allocated_count__i + __funk2.memory.pool[pool_index].bytes_allocated_count - start_cycle_processor_bytes_allocated_count__i));
+    }
   }
 }
 

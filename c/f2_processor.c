@@ -426,23 +426,6 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   raw__fiber__handle_enter_virtual_processor(cause, fiber);
   resume_gc();
   
-  {
-    u64       begin_execution_nanoseconds_since_1970         = raw__nanoseconds_since_1970();
-    f2ptr     start_cycle_execution_nanoseconds              = f2fiber__start_cycle_execution_nanoseconds(fiber, cause);
-    boolean_t allocate_new_start_cycle_execution_nanoseconds = boolean__false;
-    if (start_cycle_execution_nanoseconds != nil) {
-      u64 start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
-      if (begin_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
-	allocate_new_start_cycle_execution_nanoseconds = boolean__true;
-      }
-    } else {
-      allocate_new_start_cycle_execution_nanoseconds = boolean__true;
-    }
-    if (allocate_new_start_cycle_execution_nanoseconds) {
-      f2fiber__start_cycle_execution_nanoseconds__set(fiber, cause, f2integer__new(cause, begin_execution_nanoseconds_since_1970));
-    }
-  }
-  
   int i = execute_next_bytecodes__helper__fast_loop__max_bytecode_count;
   while (! exit_reason) {
     if(i == 0) {
@@ -464,20 +447,8 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   }
   
   pause_gc();
-  {
-    {
-      u64   end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-      f2ptr start_cycle_execution_nanoseconds    = f2fiber__start_cycle_execution_nanoseconds(fiber, cause);
-      u64   start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
-      if (end_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
-	f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
-	u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
-	f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds__i)));
-      }
-    }
-    raw__fiber__increase_bytecode_count(cause, fiber, execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
-    raw__fiber__handle_exit_virtual_processor(cause, fiber);
-  }
+  raw__fiber__handle_exit_virtual_processor(cause, fiber);
+  raw__fiber__increase_bytecode_count(cause, fiber, execute_next_bytecodes__helper__fast_loop__max_bytecode_count - i);
   resume_gc();
   
   //status("bytecode fast loop done with %d loop fast cycles.", 1000-i);

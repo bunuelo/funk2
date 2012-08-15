@@ -48,8 +48,8 @@ declare_object_type_30_slot(fiber,
 			    execution_nanoseconds_chunk,
 			    start_cycle_execution_nanoseconds_chunk,
 			    bytecode_count,
-			    bytes_allocated_count,
-			    start_cycle_processor_bytes_allocated_count,
+			    bytes_allocated_count_chunk,
+			    start_cycle_processor_bytes_allocated_count_chunk,
 			    processor_assignment_scheduler_cmutex,
 			    processor_assignment_index,
 			    should_quit,
@@ -185,8 +185,8 @@ declare_primobject_30_slot(fiber,
 			   execution_nanoseconds_chunk,
 			   start_cycle_execution_nanoseconds_chunk,
 			   bytecode_count,
-			   bytes_allocated_count,
-			   start_cycle_processor_bytes_allocated_count,
+			   bytes_allocated_count_chunk,
+			   start_cycle_processor_bytes_allocated_count_chunk,
 			   processor_assignment_scheduler_cmutex,
 			   processor_assignment_index,
 			   should_quit,
@@ -197,14 +197,22 @@ declare_primobject_30_slot(fiber,
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args);
 
-u64   raw__fiber__execution_nanoseconds                 (f2ptr cause, f2ptr this);
-f2ptr  f2__fiber__execution_nanoseconds                 (f2ptr cause, f2ptr this);
-void  raw__fiber__execution_nanoseconds__set            (f2ptr cause, f2ptr this, u64 execution_nanoseconds);
-f2ptr  f2__fiber__execution_nanoseconds__set            (f2ptr cause, f2ptr this, f2ptr execution_nanoseconds);
-u64   raw__fiber__start_cycle_execution_nanoseconds     (f2ptr cause, f2ptr this);
-f2ptr  f2__fiber__start_cycle_execution_nanoseconds     (f2ptr cause, f2ptr this);
-void  raw__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, u64 start_cycle_execution_nanoseconds);
-f2ptr  f2__fiber__start_cycle_execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr start_cycle_execution_nanoseconds);
+u64   raw__fiber__execution_nanoseconds                           (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__execution_nanoseconds                           (f2ptr cause, f2ptr this);
+void  raw__fiber__execution_nanoseconds__set                      (f2ptr cause, f2ptr this, u64 execution_nanoseconds);
+f2ptr  f2__fiber__execution_nanoseconds__set                      (f2ptr cause, f2ptr this, f2ptr execution_nanoseconds);
+u64   raw__fiber__start_cycle_execution_nanoseconds               (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__start_cycle_execution_nanoseconds               (f2ptr cause, f2ptr this);
+void  raw__fiber__start_cycle_execution_nanoseconds__set          (f2ptr cause, f2ptr this, u64 start_cycle_execution_nanoseconds);
+f2ptr  f2__fiber__start_cycle_execution_nanoseconds__set          (f2ptr cause, f2ptr this, f2ptr start_cycle_execution_nanoseconds);
+u64   raw__fiber__bytes_allocated_count                           (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__bytes_allocated_count                           (f2ptr cause, f2ptr this);
+void  raw__fiber__bytes_allocated_count__set                      (f2ptr cause, f2ptr this, u64 bytes_allocated_count);
+f2ptr  f2__fiber__bytes_allocated_count__set                      (f2ptr cause, f2ptr this, f2ptr bytes_allocated_count);
+u64   raw__fiber__start_cycle_processor_bytes_allocated_count     (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__start_cycle_processor_bytes_allocated_count     (f2ptr cause, f2ptr this);
+void  raw__fiber__start_cycle_processor_bytes_allocated_count__set(f2ptr cause, f2ptr this, u64 start_cycle_processor_bytes_allocated_count);
+f2ptr  f2__fiber__start_cycle_processor_bytes_allocated_count__set(f2ptr cause, f2ptr this, f2ptr start_cycle_processor_bytes_allocated_count);
 
 #define __pure__f2fiber__is_complete(this, cause)  (f2fiber__program_counter(this, cause) == nil)
 #define f2fiber__is_complete(this, cause)          __pure__f2fiber__is_complete(this, cause)

@@ -158,7 +158,8 @@ f2ptr f2__fiber__execution_nanoseconds__set(f2ptr cause, f2ptr this, f2ptr execu
   assert_argument_type(fiber,   this);
   assert_argument_type(integer, execution_nanoseconds);
   u64 execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
-  return raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds__i);
+  raw__fiber__execution_nanoseconds__set(cause, this, execution_nanoseconds__i);
+  return nil;
 }
 def_pcfunk2(fiber__execution_nanoseconds__set, this, execution_nanoseconds,
 	    "",

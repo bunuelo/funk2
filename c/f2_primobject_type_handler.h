@@ -121,6 +121,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__doublelinklist__slot_t                   primobject_type_doublelinklist;
   funk2_object_type__circular_buffer__slot_t                  primobject_type_circular_buffer;
   funk2_object_type__hash__slot_t                             primobject_type_hash;
+  funk2_object_type__cause_group__slot_t                      primobject_type_cause_group;
   funk2_object_type__cause__slot_t                            primobject_type_cause;
   funk2_object_type__largeinteger__slot_t                     primobject_type_largeinteger;
   funk2_object_type__redblacktree__slot_t                     primobject_type_redblacktree;

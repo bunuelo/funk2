@@ -26,7 +26,7 @@
 
 // cause_group
 
-typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
+typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
 declare_object_type_1_slot(cause_group,
 			   bytecode_count,
 			   );
@@ -80,12 +80,15 @@ declare_object_type_15_slot(cause,
 
 #include "f2_primobjects.h"
 
+
 // cause_group
 
 declare_primobject_1_slot(cause_group,
 			  bytecode_count);
 
 f2ptr f2__cause_group__new(f2ptr cause);
+
+f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 
 
 // cause

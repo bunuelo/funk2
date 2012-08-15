@@ -456,12 +456,12 @@ void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
 void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
   {
     u64   end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    f2ptr start_cycle_execution_nanoseconds    = f2fiber__start_cycle_execution_nanoseconds(fiber, cause);
+    f2ptr start_cycle_execution_nanoseconds    = f2fiber__start_cycle_execution_nanoseconds(this, cause);
     u64   start_cycle_execution_nanoseconds__i = (u64)f2integer__i(start_cycle_execution_nanoseconds, cause);
     if (end_execution_nanoseconds_since_1970 != start_cycle_execution_nanoseconds__i) {
-      f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(fiber, cause);
+      f2ptr execution_nanoseconds    = f2fiber__execution_nanoseconds(this, cause);
       u64   execution_nanoseconds__i = f2integer__i(execution_nanoseconds, cause);
-      f2fiber__execution_nanoseconds__set(fiber, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds__i)));
+      f2fiber__execution_nanoseconds__set(this, cause, f2integer__new(cause, execution_nanoseconds__i + (end_execution_nanoseconds_since_1970 - start_cycle_execution_nanoseconds__i)));
     }
   }
   {

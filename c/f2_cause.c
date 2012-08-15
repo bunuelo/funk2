@@ -61,7 +61,7 @@ def_pcfunk2(cause_group__terminal_print_with_frame, this, terminal_print_frame,
 
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
-  f2ptr this = f2cause__primobject_type__new(cause);
+  f2ptr this = f2cause_group__primobject_type__new(cause);
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
 }

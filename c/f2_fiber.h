@@ -66,6 +66,14 @@ declare_object_type_30_slot(fiber,
 			    f2ptr start_cycle_execution_nanoseconds__funk;
 			    f2ptr start_cycle_execution_nanoseconds__set__symbol;   // set
 			    f2ptr start_cycle_execution_nanoseconds__set__funk;
+			    f2ptr bytes_allocated_count__symbol;   // get
+			    f2ptr bytes_allocated_count__funk;
+			    f2ptr bytes_allocated_count__set__symbol;   // set
+			    f2ptr bytes_allocated_count__set__funk;
+			    f2ptr start_cycle_processor_bytes_allocated_count__symbol;   // get
+			    f2ptr start_cycle_processor_bytes_allocated_count__funk;
+			    f2ptr start_cycle_processor_bytes_allocated_count__set__symbol;   // set
+			    f2ptr start_cycle_processor_bytes_allocated_count__set__funk;
 			    f2ptr increase_bytecode_count__symbol;   // execute
 			    f2ptr increase_bytecode_count__funk;
 			    f2ptr do_sleep_until_time__symbol;   // execute

@@ -659,7 +659,7 @@ void f2__cause__reinitialize_globalvars() {
 			       bytecode_count);
   
   {char* symbol_str = "increase_bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__increase_bytecode_count, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__increase_bytecode_count, this, relative_bytecode_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

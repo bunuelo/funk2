@@ -20,7 +20,13 @@
 
 'agency'
 
-[deframe agency [frame] [name layer resource_frame trace_story]
+[deframe agency [frame] [name
+			 layer
+			 resource_frame
+			 trace_story
+			 [cause_group              [new cause_group]]
+			 [other_cause_groups_mutex [new mutex]]
+			 [other_cause_groups       nil]]
   [new [new-name]
        [terminal_format standard-terminal '\ncreating ' new-name ' agency.']
        [= name           new-name]
@@ -36,7 +42,21 @@
       [error bug_type `type_error
 	     description 'resource should be type resource.']]
   [set resource agency this]
+  [have resource add_cause_group cause_group]
+  [have other_cause_groups_mutex lock]
+  [mapc [funk [other_cause_group]
+	      [have resource add_cause_group other_cause_group]]
+	other_cause_groups]
+  [have other_cause_groups_mutex unlock]
   [have resource_frame add [get resource name] resource]]
+
+[deftypefunk agency execute add_cause_group [cause_group]
+  [have other_cause_groups_mutex lock]
+  [= other_cause_groups [cons cause_group other_cause_groups]]
+  [mapc [funk [resource]
+	      [have resource add_cause_group cause_group]]
+	[get this resources]]
+  [have other_cause_groups_mutex unlock]]
 
 [deftypefunk agency get resource [name]
   [let [[resource [have resource_frame lookup name]]]

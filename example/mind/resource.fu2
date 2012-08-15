@@ -39,6 +39,7 @@
 			   [initialized       nil]
 			   [vital             nil]
 			   [debug             nil]
+			   [cause_group       [new cause_group]]
 			   [continue_trigger  [new fiber_trigger]]
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]]
@@ -48,6 +49,7 @@
        [= fiber_starting_mutex        [new mutex]] [have fiber_starting_mutex        lock]
        [= fiber                       [fiber [funk []
 						   [cause-enable_reactive_critics [this-cause]]
+						   [have [this-cause] add_cause_group cause_group]
 						   
 						   'Turn on appropriate causal tracing.'
 						   [cause-define semantic_frame-trace_add                            t]
@@ -114,6 +116,9 @@
        [have fiber_starting_mutex lock]
        [have fiber_starting_mutex unlock]
        this]]
+
+[deftypefunk resource execute add_cause_group [cause_group]
+  [have [get fiber cause_reg] add_cause_group cause_group]]
 
 [deftypefunk resource get local_time []
   [get fiber bytecode_count]]

@@ -20,7 +20,13 @@
 
 'mental_layer'
 
-[deframe mental_layer [frame] [index name mind agency_frame]
+[deframe mental_layer [frame] [index
+			       name
+			       mind
+			       agency_frame
+			       [cause_group              [new cause_group]]
+			       [other_cause_groups_mutex [new mutex]]
+			       [other_cause_groups       nil]]
   [new [new-index new-name]
        [terminal_format standard-terminal '\ncreating ' new-name ' mental_layer.']
        [= index        new-index]
@@ -47,7 +53,21 @@
       [error bug_type `type_error
 	     description 'agency should be type agency.']]
   [set agency layer this]
+  [have agency add_cause_group cause_group]
+  [have other_cause_groups_mutex lock]
+  [mapc [funk [other_cause_group]
+	      [have agency add_cause_group other_cause_group]]
+	other_cause_groups]
+  [have other_cause_groups_mutex unlock]
   [have agency_frame add [get agency name] agency]]
+
+[deftypefunk mental_layer execute add_cause_group [cause_group]
+  [have other_cause_groups_mutex lock]
+  [= other_cause_groups [cons cause_group other_cause_groups]]
+  [mapc [funk [agency]
+	      [have agency add_cause_group cause_group]]
+	[get this agencies]]
+  [have other_cause_groups_mutex unlock]]
 
 [deftypefunk mental_layer get agency [name]
   [let [[agency [have agency_frame lookup name]]]

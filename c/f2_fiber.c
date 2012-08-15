@@ -497,7 +497,7 @@ void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
       f2fiber__start_cycle_processor_bytes_allocated_count__set(this, cause, f2integer__new(cause, __funk2.memory.pool[pool_index].bytes_allocated_count));
     }
   }
-  raw__fiber__start_cycle_execution_nanoseconds__set(this, cause, raw__nanoseconds_since_1970());
+  raw__fiber__start_cycle_execution_nanoseconds__set(cause, this, raw__nanoseconds_since_1970());
 }
 
 void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {

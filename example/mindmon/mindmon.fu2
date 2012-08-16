@@ -379,7 +379,7 @@
 				  
 				  play_button
 				  stop_button
-				  step_button
+				  trigger_button
 				  update_button
 				  cameras_enabled_check_button
 				  record_movie_check_button
@@ -414,13 +414,13 @@
        [= controller_button_hbox [gtk-hbox-new 2]]
        [= play_button                  [gtk-button-new_with_label 'Play']]
        [= stop_button                  [gtk-button-new_with_label 'Stop']]
-       [= step_button                  [gtk-button-new_with_label 'Step 1 Second']]
+       [= trigger_button               [gtk-button-new_with_label 'Trigger']]
        [= update_button                [gtk-button-new_with_label 'Update']]
        [= cameras_enabled_check_button [gtk-check_button-new      'Cameras Enabled']]
        [= record_movie_check_button    [gtk-check_button-new      'Record Movie']]
        [have controller_button_hbox pack_start play_button                  nil nil 0]
        [have controller_button_hbox pack_start stop_button                  nil nil 0]
-       [have controller_button_hbox pack_start step_button                  nil nil 0]
+       [have controller_button_hbox pack_start trigger_button               nil nil 0]
        [have controller_button_hbox pack_start update_button                nil nil 0]
        [have controller_button_hbox pack_start cameras_enabled_check_button nil nil 0]
        [have controller_button_hbox pack_start record_movie_check_button    nil nil 0]
@@ -441,12 +441,15 @@
 		   [= simulation_playing nil]
 		   [have [get this cycle_trigger] trigger]]
 	     nil]
-       [have step_button signal_connect 'clicked'
+       [have trigger_button signal_connect 'clicked'
 	     [funk []
-		   [let [[seconds 1.0]]
-		     [terminal_format standard-terminal '\nMindMon: Stepping ' seconds ' seconds.']
-		     [have mindmon_world raw_step_simulation seconds]
-		     [have [get this cycle_trigger] trigger]]]
+		   [terminal_format standard-terminal '\nMindMon: Triggering minds.']
+		   [mapc [funk [mindmon_agent_widget]
+			       [let [[mindmon_agent [get agent_widget mindmon_agent]]]
+				 [terminal_format standard-terminal '\nMindMon: Triggering ' [get [get mindmon_agent mind] name] '\'s mind.']
+				 [have [get [get mindmon_agent mind] ready_for_physical_world_step_trigger] trigger]]]
+			 [get this agent_widgets]]
+		   [have [get this cycle_trigger] trigger]]
 	     nil]
        [have update_button signal_connect 'clicked'
 	     [funk []
@@ -673,7 +676,7 @@
 		      [let [[substep_seconds [/ [get step_size as-double] [get movie_resolution as-integer]]]]
 			[= need_update t]
 			[dotimes [i [get movie_resolution as-integer]]
-			  `[terminal_format standard-terminal '\nStepping simulation by ' substep_seconds ' seconds.']
+			  [terminal_format standard-terminal '\nStepping simulation by ' substep_seconds ' seconds.']
 			  [have mindmon_world raw_step_simulation substep_seconds]
 			  [have mindmon_world update_after_step_simulation]
 			  [have this update_movie_display]

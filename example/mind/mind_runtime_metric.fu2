@@ -43,9 +43,9 @@
 
 'mind_runtime_metric_monitor_ticker'
 
-[deframe mind_runtime_metric_monitor_ticker [[trigger [new fiber_trigger]]
-					     [done    nil]
-					     fiber]
+[deframe mind_runtime_metric_monitor_ticker [frame] [[trigger [new fiber_trigger]]
+						     [done    nil]
+						     fiber]
   [new []
        [= fiber [fiber [funk []
 			     [while [not done]

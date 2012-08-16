@@ -80,8 +80,8 @@
 [deftypefunk mind_runtime_metric_monitor execute save_bytecode_count_plot [time_offset filename_root]
   [assert-type string filename_root]
   [let [[filename [format nil filename_root '-bytecode_count.data']]]
-    [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving bytecode_count plot "' filename '"']
-    [have [get this bytecode_count_plot_text time_offset] save filename]]]
+    [have [get this bytecode_count_plot_text time_offset] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving bytecode_count plot "' filename '"']]]
 
 
 [deftypefunk mind_runtime_metric_monitor get execution_nanoseconds_plot_text [time_offset]
@@ -106,8 +106,8 @@
 [deftypefunk mind_runtime_metric_monitor execute save_execution_nanoseconds_plot [time_offset filename_root]
   [assert-type string filename_root]
   [let [[filename [format nil filename_root '-execution_seconds.data']]]
-    [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving execution_nanoseconds plot "' filename '"']
-    [have [get this execution_nanoseconds_plot_text time_offset] save filename]]]
+    [have [get this execution_nanoseconds_plot_text time_offset] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving execution_nanoseconds plot "' filename '"']]]
 
 
 [deftypefunk mind_runtime_metric_monitor get bytes_allocated_count_plot_text [time_offset]
@@ -132,14 +132,14 @@
 [deftypefunk mind_runtime_metric_monitor execute save_bytes_allocated_count_plot [time_offset filename_root]
   [assert-type string filename_root]
   [let [[filename [format nil filename_root '-bytes_allocated_count.data']]]
-    [terminal_format standard-terminal '\nmind_runtime_metric_monitor saving bytes_allocated_count plot "' filename '"']
-    [have [get this bytes_allocated_count_plot_text time_offset] save filename]]]
+    [have [get this bytes_allocated_count_plot_text time_offset] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving bytes_allocated_count plot "' filename '"']]]
 
 
 [deftypefunk mind_runtime_metric_monitor execute save_all_plots [time_offset filename_root]
-  [have this save_bytecode_count_plot        time_offset filename_root]
-  [have this save_execution_nanoseconds_plot time_offset filename_root]
-  [have this save_bytes_allocated_count_plot time_offset filename_root]]
+  [parog [have this save_bytecode_count_plot        time_offset filename_root]
+	 [have this save_execution_nanoseconds_plot time_offset filename_root]
+	 [have this save_bytes_allocated_count_plot time_offset filename_root]]]
 
 
 

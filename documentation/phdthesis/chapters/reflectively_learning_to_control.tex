@@ -17,28 +17,55 @@ it knows, it remembers a plan that it has been told will result in a
 stack of two blocks.  For example, the following plan assures that
 there is a stack of two blocks as its final operation:
 \begin{enumerate}
-\item Move to the left until you are above a block.
+\item Move to the left until you are above a cube.
 \item Reach and grab.
-\item Assure that you are holding a block.
-\item Move to the right until you are above a block.
-\item Drop any block you are holding.
-\item Assure that there is a stack of two blocks.
+\item Assure that you are holding a cube.
+\item Move to the right until you are above a pyramid.
+\item Drop the block you are holding.
+\item Assure that there is a cube on a pyramid.
 \end{enumerate}
 If the AI were to recall this plan and execute it in the situation
 shown in \autoref{figure:an_example_problem_domain}, the AI would
 encounter an expectation failure at the final assertion of the
 expected post-conditions of this plan.  In the case of a failure of
-expectations, a better model of the physical world is learned, so that
-the same planning mistake will never be made again.  In my AI,
-learning a new physical model of the world amounts to relearning the
-hypotheses for expected transframes based on different preconditions.
-Also, because my AI is a reflective learning algorithm, it has the
-additional ability to learn a better model of the planning process
-itself---the planning process being a plan in the metacognitive
-reasoning layer.  The meta-cognitive planner creates, reasons about,
-and executes plans for how to control the first-level planner.  A plan
-for physical action is created by resources in the deliberative layer,
-while a plan for deliberative action is created by resources in the
+expectations, a refined hypothetical model of the physical world is
+learned, so that the same planning mistake will never be made again.
+In my AI, learning a new physical model of the world amounts to
+relearning the hypotheses for the expected transframes that result
+from executing different physical actions in different physical
+preconditions.  In this case, the AI learns many new refined
+hypotheses about the physical world.  For example, the AI learns that
+executing the action of moving to the left until a block is below the
+gripper results in a block being below the gripper.  Of course, this
+may not generally be true, but the AI's physical action hypotheses are
+refined in light of this added experiential knowledge that predicts
+this change given the specific preconditions.  The AI still retains
+many hypotheses that leave room for the possibility that executing
+this action in other preconditions may or may not result in this
+specific change.  For example, at this point, the AI has no experience
+executing this action when there is not a block to the left of the
+gripper.  In that case, the AI cannot be sure that moving to the left
+until a block is below the gripper will result in a block being below
+the gripper, and this uncertainty is represented in the hypothesis
+space of the AI's concept learning algorithm.
+
+In addition to learning a refined hypothetical model of the physical
+world, the AI also learns a better model of how to control its
+planning machine that chose this plan for some reason and decided to
+execute it.  In other words, not only has the AI failed to act
+physically but also the AI has failed to think correctly about its
+plans.  It decided to execute a plan that ended up failing.  Because
+the AI has a reflective learning algorithm, it has the additional
+ability to learn a better model of the planning process itself---the
+planning process that selected this plan, modified it, and decided to
+execute it.  These deliberative reasoning processes are plans in the
+reflective metacognitive reasoning layer.  The metacognitive planning
+machine creates, reasons about, and executes plans for how to control
+the first-level planning machine.  This requires two layers of
+planners: one planner that learns about physical processes and another
+planner that learns about planning processes.  A plan for physical
+action is manipulated by resources in the deliberative layer, while a
+plan for deliberative action is manipulated by resources in the
 reflective layer.
 
      what types of planning

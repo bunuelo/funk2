@@ -41,6 +41,7 @@
        [get cause_group execution_nanoseconds]
        [get cause_group bytes_allocated_count]]]
 
+'mind_runtime_metric_monitor_ticker'
 
 [deframe mind_runtime_metric_monitor_ticker [[trigger [new fiber_trigger]]
 					     [done    nil]

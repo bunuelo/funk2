@@ -445,7 +445,7 @@
 	     [funk []
 		   [terminal_format standard-terminal '\nMindMon: Triggering minds.']
 		   [mapc [funk [mindmon_agent_widget]
-			       [let [[mindmon_agent [get agent_widget mindmon_agent]]]
+			       [let [[mindmon_agent [get mindmon_agent_widget mindmon_agent]]]
 				 [terminal_format standard-terminal '\nMindMon: Triggering ' [get [get mindmon_agent mind] name] '\'s mind.']
 				 [have [get [get mindmon_agent mind] ready_for_physical_world_step_trigger] trigger]]]
 			 [get this agent_widgets]]

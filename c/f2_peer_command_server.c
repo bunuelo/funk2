@@ -120,6 +120,10 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2ptype__cause:
   case funk2_packet_type__pcs_request__f2ptype__cause__set:
   case funk2_packet_type__pcs_respond__f2ptype__cause__set:
+  case funk2_packet_type__pcs_request__f2ptype__creation_fiber:
+  case funk2_packet_type__pcs_respond__f2ptype__creation_fiber:
+  case funk2_packet_type__pcs_request__f2ptype__creation_fiber__set:
+  case funk2_packet_type__pcs_respond__f2ptype__creation_fiber__set:
   case funk2_packet_type__pcs_request__f2integer__new:
   case funk2_packet_type__pcs_respond__f2integer__new:
   case funk2_packet_type__pcs_request__f2integer__i:

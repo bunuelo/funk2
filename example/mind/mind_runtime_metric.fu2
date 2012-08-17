@@ -23,23 +23,33 @@
 [deframe mind_runtime_metric_point [frame] [real_time
 					    bytecode_count
 					    execution_nanoseconds
-					    bytes_allocated_count]
+					    bytes_allocated_count
+					    bytes_freed_count]
   [new [initial-real_time
 	initial-bytecode_count
 	initial-execution_nanoseconds
-	initial-bytes_allocated_count]
+	initial-bytes_allocated_count
+	initial-bytes_freed_count]
        [= real_time             initial-real_time]
        [= bytecode_count        initial-bytecode_count]
        [= execution_nanoseconds initial-execution_nanoseconds]
        [= bytes_allocated_count initial-bytes_allocated_count]
+       [= bytes_freed_count     initial-bytes_freed_count]
        nil]]
+
+[deftypefunk mind_runtime_metric_point get bytes_footprint []
+  [let [[bytes_footprint [- bytes_allocated_count bytes_freed_count]]]
+    [if [< bytes_footprint 0]
+	0
+      bytes_footprint]]]
 
 [defunk mind_runtime_metric_point-new_from_cause_group [cause_group]
   [new mind_runtime_metric_point
        [time]
        [get cause_group bytecode_count]
        [get cause_group execution_nanoseconds]
-       [get cause_group bytes_allocated_count]]]
+       [get cause_group bytes_allocated_count]
+       [get cause_group bytes_freed_count]]]
 
 'mind_runtime_metric_monitor_ticker'
 
@@ -173,10 +183,35 @@
     [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving bytes_allocated_count plot "' filename '"']]]
 
 
+[deftypefunk mind_runtime_metric_monitor get bytes_footprint_plot_text [time_offset]
+  [let [[line_strings nil]
+	[metric_iter  metric_sequence]]
+    [while metric_iter
+      [let [[metric [car metric_iter]]]
+	[let [[metric_value     [get metric bytes_footprint]]
+	      [metric_real_time [get metric      real_time]]]
+	  [let [[output_x [/ [/ [get [get [- metric_real_time time_offset] total_nanoseconds] as-double]
+				1000000000]
+			     60]]
+		[output_y [/ [get metric_value as-double]
+			     [* 1024.0 1024.0]]]]
+	    [let [[line_string [format nil output_x ' ' output_y '\n']]]
+	      [= line_strings [cons line_string line_strings]]]]]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_bytes_footprint_plot [time_offset filename_root]
+  [assert-type string filename_root]
+  [let [[filename [format nil filename_root '-bytes_footprint.data']]]
+    [have [get this bytes_footprint_plot_text time_offset] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving bytes_footprint plot "' filename '"']]]
+
+
 [deftypefunk mind_runtime_metric_monitor execute save_all_plots [time_offset filename_root]
   [parog [have this save_bytecode_count_plot        time_offset filename_root]
 	 [have this save_execution_nanoseconds_plot time_offset filename_root]
-	 [have this save_bytes_allocated_count_plot time_offset filename_root]]]
+	 [have this save_bytes_allocated_count_plot time_offset filename_root]
+	 [have this save_bytes_footprint_plot       time_offset filename_root]]]
 
 
 

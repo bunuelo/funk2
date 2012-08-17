@@ -95,6 +95,12 @@
 	      [have agency save_bytes_allocated_count_plots time_offset [format nil filename_root '-' name]]]
 	[get this agencies]]]
 
+[deftypefunk mental_layer execute save_bytes_footprint_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_bytes_footprint_plot time_offset [format nil filename_root '-' name]]
+  [parc [funk [agency]
+	      [have agency save_bytes_footprint_plots time_offset [format nil filename_root '-' name]]]
+	[get this agencies]]]
+
 [deftypefunk mental_layer get agency [name]
   [let [[agency [have agency_frame lookup name]]]
     [if [null agency]

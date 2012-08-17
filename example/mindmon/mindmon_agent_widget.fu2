@@ -231,6 +231,7 @@
 						 save_bytecode_count_plots_menu_item
 						 save_execution_nanoseconds_plots_menu_item
 						 save_bytes_allocated_count_plots_menu_item
+						 save_bytes_footprint_plots_menu_item
 						 enable_debugging_all_menu_item
 						 disable_debugging_all_menu_item
 						 
@@ -273,6 +274,14 @@
 	     [funk []
 		   [let [[mind [get mindmon_agent_widget mind]]]
 		     [have mind save_bytes_allocated_count_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Save Bytes Footprint Plots']]
+       [have mind_menu append save_bytes_footprint_plots_menu_item]
+       [have save_bytes_footprint_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_bytes_footprint_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
        [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]

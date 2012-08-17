@@ -51,7 +51,6 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->free_memory_heap__load_buffer         = NULL;
   
   funk2_hash__init(&(this->temporary_bytes_freed_count_fiber_hash), 10);
-  funk2_set__init( &(this->temporary_current_fiber_set));
   
   funk2_memorypool__debug_memory_test(this, 1);
 }
@@ -59,7 +58,6 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
   funk2_hash__destroy(&(this->temporary_bytes_freed_count_fiber_hash));
-  funk2_set__destroy( &(this->temporary_current_fiber_set));
   funk2_heap__destroy(&(this->free_memory_heap));
 }
 
@@ -375,15 +373,12 @@ void funk2_memorypool__increment_creation_fibers_bytes_freed_count(funk2_memoryp
 }
 
 
-void funk2_memorypool__remove_all_current_fibers(funk2_memorypool_t* this) {
-  funk2_set__remove_all(&(this->temporary_current_fiber_set));
-}
-
-void funk2_memorypool__remove_noncurrent_fiber_bytes_freed_counts(funk2_memorypool_t* this) {
+void funk2_memorypool__remove_freed_fiber_bytes_freed_counts(funk2_memorypool_t* this) {
   funk2_set_t remove_creation_fiber_set;
   funk2_set__init(&remove_creation_fiber_set);
   funk2_hash__key__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber,
-			     if (! funk2_set__contains(&(this->temporary_current_fiber_set), creation_fiber)) {
+			     funk2_memblock_t* creation_fiber_memblock = ((funk2_memblock_t*)(__f2ptr_to_ptr(creation_fiber)))
+			     if (! creation_fiber_memblock->used) {
 			       funk2_set__add(&remove_creation_fiber_set, creation_fiber);
 			     }
 			     );
@@ -416,7 +411,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
       u64 new_value = old_value + funk2_memblock__byte_num(block);
       funk2_hash__add(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, new_value);
-      funk2_set__add(&(this->temporary_current_fiber_set), creation_fiber);
     }
   }
   

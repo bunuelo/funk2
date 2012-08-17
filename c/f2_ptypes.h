@@ -79,9 +79,11 @@ boolean_t    raw__ptype__is_type(f2ptr cause, f2ptr thing);
 f2ptr         f2__ptype__is_type(f2ptr cause, f2ptr thing);
 f2ptr         f2__ptype__type(   f2ptr cause, f2ptr this);
 
-ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause);
-f2ptr   pfunk2__f2ptype__cause(f2ptr this, f2ptr cause);
-f2ptr   pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value);
+ptype_t pfunk2__f2ptype__raw                (f2ptr this, f2ptr cause);
+f2ptr   pfunk2__f2ptype__cause              (f2ptr this, f2ptr cause);
+f2ptr   pfunk2__f2ptype__cause__set         (f2ptr this, f2ptr cause, f2ptr value);
+f2ptr   pfunk2__f2ptype__creation_fiber     (f2ptr this, f2ptr cause);
+f2ptr   pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value);
 
 // integer
 

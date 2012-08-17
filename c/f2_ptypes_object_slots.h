@@ -997,6 +997,10 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr cause__funk;
   f2ptr cause__set__symbol;
   f2ptr cause__set__funk;
+  f2ptr creation_fiber__symbol;
+  f2ptr creation_fiber__funk;
+  f2ptr creation_fiber__set__symbol;
+  f2ptr creation_fiber__set__funk;
   funk2_object_type__integer__slot_t          ptype_integer;
   funk2_object_type__double__slot_t           ptype_double;
   funk2_object_type__float__slot_t            ptype_float;

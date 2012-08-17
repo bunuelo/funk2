@@ -374,18 +374,20 @@ void funk2_memorypool__increment_creation_fibers_bytes_freed_count(funk2_memoryp
 
 
 void funk2_memorypool__remove_freed_fiber_bytes_freed_counts(funk2_memorypool_t* this) {
-  funk2_set_t remove_creation_fiber_set;
-  funk2_set__init(&remove_creation_fiber_set);
-  funk2_hash__key__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber,
-			     funk2_memblock_t* creation_fiber_memblock = ((funk2_memblock_t*)(__f2ptr_to_ptr(creation_fiber)));
-			     if (! creation_fiber_memblock->used) {
-			       funk2_set__add(&remove_creation_fiber_set, creation_fiber);
-			     }
-			     );
-  funk2_set__iteration(&remove_creation_fiber_set, creation_fiber,
-		       funk2_hash__remove(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber);
-		       );
-  funk2_set__destroy(&remove_creation_fiber_set);
+  {
+    funk2_set_t remove_creation_fiber_set;
+    funk2_set__init(&remove_creation_fiber_set);
+    funk2_hash__key__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber,
+			       funk2_memblock_t* creation_fiber_memblock = ((funk2_memblock_t*)(__f2ptr_to_ptr(creation_fiber)));
+			       if (! creation_fiber_memblock->used) {
+				 funk2_set__add(&remove_creation_fiber_set, creation_fiber);
+			       }
+			       );
+    funk2_set__iteration(&remove_creation_fiber_set, creation_fiber,
+			 funk2_hash__remove(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber);
+			 );
+    funk2_set__destroy(&remove_creation_fiber_set);
+  }
 }
 
 void funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(f2ptr cause, funk2_memorypool_t* this) {

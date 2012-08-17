@@ -40,13 +40,16 @@
 
 struct ptype_block_s {
   funk2_memblock_t block;
-  f2ptr            cause : f2ptr__bit_num;
+  f2ptr            cause          : f2ptr__bit_num;
+  f2ptr            creation_fiber : f2ptr__bit_num;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 
-#define __pure__f2ptype__raw(this)                             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype)
-#define __pure__f2ptype__cause(this)                           (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
-#define __pure__f2ptype__cause__set(this, value)               (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__raw(this)                        (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype)
+#define __pure__f2ptype__cause(this)                      (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
+#define __pure__f2ptype__cause__set(this, value)          (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
+#define __pure__f2ptype__creation_fiber(this)             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_fiber)
+#define __pure__f2ptype__creation_fiber__set(this, value) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_fiber = (value))
 
 
 // integer

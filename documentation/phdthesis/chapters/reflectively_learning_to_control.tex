@@ -81,11 +81,28 @@ physical objects, while the reflective layer learns how to control
 relationships between deliberative objects, such as plans, planners,
 hypotheses, and failures.
 
+The reflective layer learns models of how deliberative actions change
+the abstract knowledge relationships between objects in the
+deliberative layer.  The reflective planning machine attempts to
+accomplish abstract goals computed from this deliberative knowledge.
+Here is a list of the types of abstract knowledge in the reflective
+layer about the objects in the deliberative layer:
+\begin{itemize}
+\item A plan that asserts that a cube is on a triangle is under the
+  focus on the deliberative planning machine.
+\item A plan that has had an expectation failure is being executed by
+  the deliberative planning machine.
+\item There is no plan currently executing in the deliberative
+  planning machine.
+\item There is a plan to drop a block that you is holding before
+  reaching and grabbing.
+\item There is a plan to move to the left while concurrently moving to
+  the right.
+\end{itemize}
 
 
-Further, when a plan does not encounter
-failure during execution, the plan is associated with a
-successful-execution event.
+Further, when a plan does not encounter failure during execution, the
+plan is associated with a successful-execution event.
 
      what types of planning
 actions that should be performed in order to create the types of plans

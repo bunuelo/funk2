@@ -370,7 +370,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     f2ptr creation_fiber = ((ptype_block_t*)block)->creation_fiber;
     if (creation_fiber != nil) {
-      raw__fiber__increment_bytes_freed_count(cause, creation_fiber, funk2_memblock__byte_num(block));
+      raw__fiber__increment_bytes_freed_count(nil, creation_fiber, funk2_memblock__byte_num(block));
     }
   }
   

@@ -367,7 +367,8 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
-
+  // free here
+  
   // remove reference counts
   {
     ptype_block_t* ptype_block = (ptype_block_t*)block;

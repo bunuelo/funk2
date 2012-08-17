@@ -298,6 +298,26 @@ def_pcfunk2(fiber__bytes_freed_count__set, this, bytes_freed_count,
 
 
 
+void raw__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, u64 relative_bytes_freed_count) {
+  f2ptr bytes_freed_count_scheduler_cmutex = f2fiber__bytes_freed_count_scheduler_cmutex(this, cause);
+  f2scheduler_cmutex__lock(bytes_freed_count_scheduler_cmutex, cause);
+  raw__fiber__bytes_freed_count__set(cause, this, raw__fiber__bytes_freed_count(cause, this) + relative_bytes_freed_count);
+  f2scheduler_cmutex__unlock(bytes_freed_count_scheduler_cmutex, cause);
+}
+
+f2ptr f2__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count) {
+  assert_argument_type(fiber,   this);
+  assert_argument_type(integer, relative_bytes_freed_count);
+  u64 relative_bytes_freed_count__i = f2integer__i(relative_bytes_freed_count, cause);
+  raw__fiber__increment_bytes_freed_count(cause, this, relative_bytes_freed_count__i);
+  return nil;
+}
+def_pcfunk2(fiber__increment_bytes_freed_count, this, bytes_freed_count,
+	    "",
+	    return f2__fiber__increment_bytes_freed_count(this_cause, this, bytes_freed_count));
+
+
+
 void raw__fiber__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
   {
     f2ptr bytecode_count     = f2fiber__bytecode_count(this, cause);
@@ -682,6 +702,7 @@ f2ptr f2fiber__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "start_cycle_processor_bytes_allocated_count";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.start_cycle_processor_bytes_allocated_count__set__funk);}
   {char* slot_name = "bytes_freed_count";                                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_freed_count__funk);}
   {char* slot_name = "bytes_freed_count";                                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_freed_count__set__funk);}
+  {char* slot_name = "increment_bytes_freed_count";                             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.increment_bytes_freed_count__funk);}
   {char* slot_name = "increase_bytecode_count";                                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk);}
   {char* slot_name = "do_sleep_until_time";                                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__funk);}
   {char* slot_name = "sleep_for_nanoseconds";                                   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_fiber.sleep_for_nanoseconds__funk);}
@@ -1312,6 +1333,8 @@ void f2__fiber__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__bytes_freed_count, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_freed_count__funk = never_gc(cfunk);}
   {char* symbol_str = "bytes_freed_count-set"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_freed_count__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__bytes_freed_count__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.bytes_freed_count__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "increment_bytes_freed_count"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.increment_bytes_freed_count__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__increment_bytes_freed_count, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.increment_bytes_freed_count__funk = never_gc(cfunk);}
   {char* symbol_str = "increase_bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(fiber__increase_bytecode_count, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_fiber.increase_bytecode_count__funk = never_gc(cfunk);}
   {char* symbol_str = "do_sleep_until_time"; __funk2.globalenv.object_type.primobject.primobject_type_fiber.do_sleep_until_time__symbol = new__symbol(cause, symbol_str);}

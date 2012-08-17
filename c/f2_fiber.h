@@ -80,6 +80,8 @@ declare_object_type_32_slot(fiber,
 			    f2ptr bytes_freed_count__funk;
 			    f2ptr bytes_freed_count__set__symbol;   // set
 			    f2ptr bytes_freed_count__set__funk;
+			    f2ptr increment_bytes_freed_count__symbol;   // get
+			    f2ptr increment_bytes_freed_count__funk;
 			    f2ptr increase_bytecode_count__symbol;   // execute
 			    f2ptr increase_bytecode_count__funk;
 			    f2ptr do_sleep_until_time__symbol;   // execute
@@ -225,6 +227,12 @@ u64   raw__fiber__bytes_allocated_count                           (f2ptr cause, 
 f2ptr  f2__fiber__bytes_allocated_count                           (f2ptr cause, f2ptr this);
 void  raw__fiber__bytes_allocated_count__set                      (f2ptr cause, f2ptr this, u64 bytes_allocated_count);
 f2ptr  f2__fiber__bytes_allocated_count__set                      (f2ptr cause, f2ptr this, f2ptr bytes_allocated_count);
+u64   raw__fiber__bytes_freed_count                               (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__bytes_freed_count                               (f2ptr cause, f2ptr this);
+void  raw__fiber__bytes_freed_count__set                          (f2ptr cause, f2ptr this, u64 bytes_freed_count);
+f2ptr  f2__fiber__bytes_freed_count__set                          (f2ptr cause, f2ptr this, f2ptr bytes_freed_count);
+void  raw__fiber__increment_bytes_freed_count                     (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
+f2ptr  f2__fiber__increment_bytes_freed_count                     (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
 u64   raw__fiber__start_cycle_processor_bytes_allocated_count     (f2ptr cause, f2ptr this);
 f2ptr  f2__fiber__start_cycle_processor_bytes_allocated_count     (f2ptr cause, f2ptr this);
 void  raw__fiber__start_cycle_processor_bytes_allocated_count__set(f2ptr cause, f2ptr this, u64 start_cycle_processor_bytes_allocated_count);

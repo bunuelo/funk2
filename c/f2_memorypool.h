@@ -106,8 +106,9 @@ void              funk2_memorypool__change_total_memory_available               
 void              funk2_memorypool__shrink_last_free_block                         (funk2_memorypool_t* this, f2size_t byte_num);
 void              funk2_memorypool__free_memory_heap__insert                       (funk2_memorypool_t* this, funk2_memblock_t* block);
 u8                funk2_memorypool__defragment_free_memory_blocks_in_place         (funk2_memorypool_t* this);
-void              funk2_memorypool__increment_creation_fibers_bytes_freed_count    (funk2_memorypool_t* this);
+void              funk2_memorypool__remove_all_current_fibers                      (funk2_memorypool_t* this);
 void              funk2_memorypool__remove_noncurrent_fiber_bytes_freed_counts     (funk2_memorypool_t* this);
+void              funk2_memorypool__increment_creation_fibers_bytes_freed_count    (funk2_memorypool_t* this);
 void              funk2_memorypool__free_used_block                                (funk2_memorypool_t* this, funk2_memblock_t* block);
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree          (funk2_memorypool_t* this, f2size_t byte_num);
 u64               funk2_memorypool__maximum_block__byte_num                        (funk2_memorypool_t* this);

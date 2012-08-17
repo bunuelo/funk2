@@ -784,7 +784,6 @@ void funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_
     user_data[2]     = (void*)(&freed_byte_count);
     funk2_tricolor_set__white_set__mapc(&(this->tricolor_set), &funk2_garbage_collector_pool__free_white_exps__helper, user_data);
   }
-  funk2_memorypool__remove_freed_fiber_bytes_freed_counts(&(__funk2.memory.pool[pool_index]));
   status("funk2_garbage_collector_pool: free_whiteness pool_index=" u64__fstr " freed_byte_count=" u64__fstr ".", (u64)this_processor_thread__pool_index(), freed_byte_count);
 }
 

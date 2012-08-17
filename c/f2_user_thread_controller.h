@@ -79,6 +79,20 @@ void funk2_user_thread_controller__free_white_exps__destroy(funk2_user_thread_co
 void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_thread_controller__free_white_exps_t* this);
 void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thread_controller__free_white_exps_t* this);
 
+// funk2_user_thread_controller__remove_freed_fibers
+
+typedef struct funk2_user_thread_controller__remove_freed_fibers_s {
+  boolean_t               start;
+  funk2_processor_mutex_t done_mutex;
+  s64                     done_count;
+  boolean_t               everyone_done;
+} funk2_user_thread_controller__remove_freed_fibers_t;
+
+void funk2_user_thread_controller__remove_freed_fibers__init(funk2_user_thread_controller__remove_freed_fibers_t* this);
+void funk2_user_thread_controller__remove_freed_fibers__destroy(funk2_user_thread_controller__remove_freed_fibers_t* this);
+void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_user_thread_controller__remove_freed_fibers_t* this);
+void funk2_user_thread_controller__remove_freed_fibers__user_process(funk2_user_thread_controller__remove_freed_fibers_t* this);
+
 // funk2_user_thread_controller__exit
 
 typedef struct funk2_user_thread_controller__exit_s {
@@ -137,6 +151,7 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__blacken_grey_nodes_t                           blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t                        grey_from_other_nodes;
   funk2_user_thread_controller__free_white_exps_t                              free_white_exps;
+  funk2_user_thread_controller__remove_freed_fibers_t                          remove_freed_fibers;
   funk2_user_thread_controller__exit_t                                         exit;
   funk2_user_thread_controller__defragment__move_memory_t                      defragment__move_memory;
   funk2_user_thread_controller__defragment__fix_pointers_t                     defragment__fix_pointers;
@@ -153,6 +168,7 @@ void  funk2_user_thread_controller__touch_all_protected_alloc_arrays( funk2_user
 void  funk2_user_thread_controller__blacken_grey_nodes(               funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__grey_from_other_nodes(            funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__free_white_exps(                  funk2_user_thread_controller_t* this);
+void  funk2_user_thread_controller__remove_freed_fibers(              funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__exit(                             funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__defragment__move_memory(          funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__defragment__fix_pointers(         funk2_user_thread_controller_t* this);

@@ -155,6 +155,7 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   funk2_garbage_collector__touch_all_roots(this);
   funk2_garbage_collector__spread_all_blackness(this);
   funk2_user_thread_controller__free_white_exps(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__remove_freed_fibers(&(__funk2.user_thread_controller));
   funk2_processor_mutex__lock(&(this->total_garbage_collection_count__mutex));
   this->total_garbage_collection_count ++;
   funk2_processor_mutex__unlock(&(this->total_garbage_collection_count__mutex));

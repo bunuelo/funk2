@@ -47,6 +47,7 @@ struct funk2_set_s {
 
 void  funk2_set__init(funk2_set_t* this);
 void  funk2_set__destroy(funk2_set_t* this);
+void  funk2_set__remove_all(funk2_set_t* this);
 u64   funk2_set__element_count(funk2_set_t* this);
 u64   funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element);
 void  funk2_set__double_size(funk2_set_t* this);

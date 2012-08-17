@@ -31,6 +31,11 @@ void funk2_set__init(funk2_set_t* this) {
 }
 
 void funk2_set__destroy(funk2_set_t* this) {
+  funk2_set__remove_all(this);
+  f2__free(to_ptr(this->bin));
+}
+
+void funk2_set__remove_all(funk2_set_t* this) {
   u64 i;
   u64 bin_num = 1ull << this->bin_power;
   for (i = 0; i < bin_num; i ++) {
@@ -41,7 +46,6 @@ void funk2_set__destroy(funk2_set_t* this) {
       iter = next;
     }
   }
-  f2__free(to_ptr(this->bin));
 }
 
 u64 funk2_set__element_bin_index(funk2_set_t* this, funk2_set_element_t element) {

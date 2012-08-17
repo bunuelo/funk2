@@ -44,6 +44,7 @@ struct funk2_hash_s {
 u64                         funk2_hash__bin_count           (funk2_hash_t* this);
 void                        funk2_hash__init                (funk2_hash_t* this, u64 bin_num_power);
 void                        funk2_hash__destroy             (funk2_hash_t* this);
+void                        funk2_hash__remove_all          (funk2_hash_t* this);
 void                        funk2_hash__add                 (funk2_hash_t* this, u64 key, u64 value);
 boolean_t                   funk2_hash__remove              (funk2_hash_t* this, u64 key);
 funk2_hash_keyvalue_pair_t* funk2_hash__lookup_keyvalue_pair(funk2_hash_t* this, u64 key);

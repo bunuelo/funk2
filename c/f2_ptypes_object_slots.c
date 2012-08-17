@@ -65,13 +65,34 @@ def_pcfunk2(ptype__cause__set, x, value,
 	    return f2__ptype__cause__set(this_cause, x, value));
 
 
+f2ptr f2__ptype__creation_fiber(f2ptr cause, f2ptr x) {
+  assert_argument_type(ptype, x);
+  return f2ptype__creation_fiber(x, cause);
+}
+def_pcfunk1(ptype__creation_fiber, x,
+	    "",
+	    return f2__ptype__creation_fiber(this_cause, x));
+
+
+f2ptr f2__ptype__creation_fiber__set(f2ptr cause, f2ptr x, f2ptr value) {
+  assert_argument_type(ptype, x);
+  f2ptype__creation_fiber__set(x, cause, value);
+  return nil;
+}
+def_pcfunk2(ptype__creation_fiber__set, x, value,
+	    "",
+	    return f2__ptype__creation_fiber__set(this_cause, x, value));
+
+
 f2ptr f2ptype__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, nil);
-  {char* slot_name = "is_type"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.is_type__funk);}
-  {char* slot_name = "type";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.type__funk);}
-  {char* slot_name = "raw";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.raw__funk);}
-  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.cause__funk);}
-  {char* slot_name = "cause";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.cause__set__funk);}
+  {char* slot_name = "is_type";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.is_type__funk);}
+  {char* slot_name = "type";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.type__funk);}
+  {char* slot_name = "raw";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.raw__funk);}
+  {char* slot_name = "cause";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.cause__funk);}
+  {char* slot_name = "cause";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.cause__set__funk);}
+  {char* slot_name = "creation_fiber"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.creation_fiber__funk);}
+  {char* slot_name = "creation_fiber"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.creation_fiber__set__funk);}
   return this;
 }
 
@@ -4169,6 +4190,14 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(ptype__cause__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__set__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__cause);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.creation_fiber__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__creation_fiber__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.creation_fiber__set__funk);
+  
   // integer
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_integer.is_type__symbol);
@@ -5024,6 +5053,10 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__cause, this, cfunk); __funk2.globalenv.object_type.ptype.cause__funk = never_gc(cfunk);}
   {char* str = "cause-set"; __funk2.globalenv.object_type.ptype.cause__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptype__cause__set, this, value, cfunk); __funk2.globalenv.object_type.ptype.cause__set__funk = never_gc(cfunk);}
+  {char* str = "creation_fiber"; __funk2.globalenv.object_type.ptype.creation_fiber__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(ptype__creation_fiber, this, cfunk); __funk2.globalenv.object_type.ptype.creation_fiber__funk = never_gc(cfunk);}
+  {char* str = "creation_fiber-set"; __funk2.globalenv.object_type.ptype.creation_fiber__set__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(ptype__creation_fiber__set, this, value, cfunk); __funk2.globalenv.object_type.ptype.creation_fiber__set__funk = never_gc(cfunk);}
   
   // integer
   

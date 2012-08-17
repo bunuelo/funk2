@@ -30,6 +30,8 @@ f2ptr f2__ptype__type(f2ptr cause, f2ptr this);
 f2ptr f2__ptype__raw(f2ptr cause, f2ptr x);
 f2ptr f2__ptype__cause(f2ptr cause, f2ptr x);
 f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value);
+f2ptr f2__ptype__creation_fiber(f2ptr cause, f2ptr x);
+f2ptr f2__ptype__creation_fiber__set(f2ptr cause, f2ptr x, f2ptr value);
 
 f2ptr f2ptype__primobject_type__new(f2ptr cause);
 

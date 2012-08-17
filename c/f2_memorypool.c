@@ -394,7 +394,7 @@ void funk2_memorypool__remove_noncurrent_fiber_bytes_freed_counts(funk2_memorypo
 }
 
 void funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(f2ptr cause, funk2_memorypool_t* this) {
-  if (funk2_hash__key_count(&(this->temporary_bytes_freed_count_fiber_hash)) != 0) {
+  if (this->temporary_bytes_freed_count_fiber_hash.key_count != 0) {
     funk2_hash__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, relative_bytes_freed_count,
 			  raw__fiber__increment_bytes_freed_count(cause, creation_fiber, relative_bytes_freed_count);
 			  );

@@ -367,7 +367,12 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   debug__assert(block->used, nil, "attempting to free a block that is already free.");
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
-  // free here
+  {
+    f2ptr creation_fiber = ((ptype_block_t*)block)->creation_fiber;
+    if (creation_fiber != nil) {
+      raw__fiber__increment_bytes_freed_count(cause, creation_fiber, funk2_memblock__byte_num(block));
+    }
+  }
   
   // remove reference counts
   {

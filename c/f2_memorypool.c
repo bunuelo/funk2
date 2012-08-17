@@ -382,11 +382,11 @@ void funk2_memorypool__remove_all_current_fibers(funk2_memorypool_t* this) {
 void funk2_memorypool__remove_noncurrent_fiber_bytes_freed_counts(funk2_memorypool_t* this) {
   funk2_set_t remove_creation_fiber_set;
   funk2_set__init(&remove_creation_fiber_set);
-  funk2_hash__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, relative_bytes_freed_count,
-			if (! funk2_set__contains(&(this->temporary_current_fiber_set), creation_fiber)) {
-			  funk2_set__add(&remove_creation_fiber_set, creation_fiber);
-			}
-			);
+  funk2_hash__key__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber,
+			     if (! funk2_set__contains(&(this->temporary_current_fiber_set), creation_fiber)) {
+			       funk2_set__add(&remove_creation_fiber_set, creation_fiber);
+			     }
+			     );
   funk2_set__iteration(&remove_creation_fiber_set, creation_fiber,
 		       funk2_hash__remove(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber);
 		       );

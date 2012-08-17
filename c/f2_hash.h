@@ -69,5 +69,39 @@ boolean_t                   funk2_hash__contains            (funk2_hash_t* this,
     }									\
   }
 
+#define funk2_hash__key__iteration(this, funk2_hash__iteration__user_key, code) {			\
+    funk2_hash_t* funk2_hash__iteration__this  = (this);		\
+    u64           funk2_hash__iteration__index = 0;			\
+    u64           funk2_hash__iteration__this__bin_num = 1ull << (funk2_hash__iteration__this->bin_num_power); \
+    while (funk2_hash__iteration__index < funk2_hash__iteration__this__bin_num) { \
+      funk2_hash_bin_node_t* funk2_hash__iteration__bin_node = funk2_hash__iteration__this->bin_array[funk2_hash__iteration__index]; \
+      while (funk2_hash__iteration__bin_node != NULL) {			\
+	u64 funk2_hash__iteration__user_key = funk2_hash__iteration__bin_node->keyvalue_pair.key; \
+	{								\
+	  code;								\
+	}								\
+	funk2_hash__iteration__bin_node = funk2_hash__iteration__bin_node->next; \
+      }									\
+      funk2_hash__iteration__index ++;					\
+    }									\
+  }
+
+#define funk2_hash__value__iteration(this, funk2_hash__iteration__user_value, code) {			\
+    funk2_hash_t* funk2_hash__iteration__this  = (this);		\
+    u64           funk2_hash__iteration__index = 0;			\
+    u64           funk2_hash__iteration__this__bin_num = 1ull << (funk2_hash__iteration__this->bin_num_power); \
+    while (funk2_hash__iteration__index < funk2_hash__iteration__this__bin_num) { \
+      funk2_hash_bin_node_t* funk2_hash__iteration__bin_node = funk2_hash__iteration__this->bin_array[funk2_hash__iteration__index]; \
+      while (funk2_hash__iteration__bin_node != NULL) {			\
+	u64 funk2_hash__iteration__user_value = funk2_hash__iteration__bin_node->keyvalue_pair.value; \
+	{								\
+	  code;								\
+	}								\
+	funk2_hash__iteration__bin_node = funk2_hash__iteration__bin_node->next; \
+      }									\
+      funk2_hash__iteration__index ++;					\
+    }									\
+  }
+
 #endif // F2__HASH__H
 

@@ -304,13 +304,13 @@ void raw__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, u64 relati
   raw__fiber__bytes_freed_count__set(cause, this, raw__fiber__bytes_freed_count(cause, this) + relative_bytes_freed_count);
   f2scheduler_cmutex__unlock(bytes_freed_count_scheduler_cmutex, cause);
   {
-    f2ptr cause_reg    = f2fiber__cause_reg(this, cause);
+    f2ptr cause_reg    = f2fiber__cause_reg(this , cause);
     f2ptr cause_groups = f2cause__cause_groups(cause_reg, cause);
     {
       f2ptr iter = cause_groups;
       while (iter != nil) {
 	f2ptr cause_group = f2cons__car(iter, cause);
-	raw__cause_group__increment_bytes_freed_count(cause, cause_group, relative_bytes_freed_count);
+	raw__cause_group__increase_bytes_freed_count(cause, cause_group, relative_bytes_freed_count);
 	iter = f2cons__cdr(iter, cause);
       }
     }
@@ -321,7 +321,7 @@ f2ptr f2__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, f2ptr rela
   assert_argument_type(fiber,   this);
   assert_argument_type(integer, relative_bytes_freed_count);
   u64 relative_bytes_freed_count__i = f2integer__i(relative_bytes_freed_count, cause);
-  raw__fiber__increase_bytes_freed_count(cause, this, relative_bytes_freed_count__i);
+  raw__fiber__increment_bytes_freed_count(cause, this, relative_bytes_freed_count__i);
   return nil;
 }
 def_pcfunk2(fiber__increment_bytes_freed_count, this, bytes_freed_count,

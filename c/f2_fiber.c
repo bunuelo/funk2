@@ -321,7 +321,7 @@ f2ptr f2__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, f2ptr rela
   assert_argument_type(fiber,   this);
   assert_argument_type(integer, relative_bytes_freed_count);
   u64 relative_bytes_freed_count__i = f2integer__i(relative_bytes_freed_count, cause);
-  raw__fiber__increment_bytes_freed_count(cause, this, relative_bytes_freed_count__i);
+  raw__fiber__increase_bytes_freed_count(cause, this, relative_bytes_freed_count__i);
   return nil;
 }
 def_pcfunk2(fiber__increment_bytes_freed_count, this, bytes_freed_count,

@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_31_slot(fiber,
+def_primobject_32_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -54,6 +54,7 @@ def_primobject_31_slot(fiber,
 		       bytecode_count,
 		       bytes_allocated_count_chunk,
 		       start_cycle_processor_bytes_allocated_count_chunk,
+		       bytes_freed_count_scheduler_cmutex,
 		       bytes_freed_count_chunk,
 		       processor_assignment_scheduler_cmutex,
 		       processor_assignment_index,
@@ -85,6 +86,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr bytecode_count                                    = f2integer__new(cause, 0);
   f2ptr bytes_allocated_count_chunk                       = raw__chunk__new(cause, sizeof(u64));
   f2ptr start_cycle_processor_bytes_allocated_count_chunk = raw__chunk__new(cause, sizeof(u64));
+  f2ptr bytes_freed_count_scheduler_cmutex                = f2scheduler_cmutex__new(cause);
   f2ptr bytes_freed_count_chunk                           = raw__chunk__new(cause, sizeof(u64));
   f2ptr processor_assignment_scheduler_cmutex             = f2scheduler_cmutex__new(cause);
   f2ptr processor_assignment_index                        = nil;
@@ -117,6 +119,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 bytecode_count,
 				 bytes_allocated_count_chunk,
 				 start_cycle_processor_bytes_allocated_count_chunk,
+				 bytes_freed_count_scheduler_cmutex,
 				 bytes_freed_count_chunk,
 				 processor_assignment_scheduler_cmutex,
 				 processor_assignment_index,
@@ -1086,7 +1089,7 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_31_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_32_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack,
 							  iter,
@@ -1110,6 +1113,7 @@ void f2__fiber__defragment__fix_pointers() {
 							  bytecode_count,
 							  bytes_allocated_count_chunk,
 							  start_cycle_processor_bytes_allocated_count_chunk,
+							  bytes_freed_count_scheduler_cmutex,
 							  bytes_freed_count_chunk,
 							  processor_assignment_scheduler_cmutex,
 							  processor_assignment_index,
@@ -1254,7 +1258,7 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_31_slot(fiber,
+  initialize_primobject_32_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -1278,6 +1282,7 @@ void f2__fiber__reinitialize_globalvars() {
 				bytecode_count,
 				bytes_allocated_count_chunk,
 				start_cycle_processor_bytes_allocated_count_chunk,
+				bytes_freed_count_scheduler_cmutex,
 				bytes_freed_count_chunk,
 				processor_assignment_scheduler_cmutex,
 				processor_assignment_index,

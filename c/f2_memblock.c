@@ -28,10 +28,6 @@ void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t 
   funk2_garbage_collector_block_header__init(&(block->gc));
   atomic_set(&(block->reference_count), 0);
   block->used                     = used;
-  {
-    ptype_block_t* ptype_block = (ptype_block_t*)block;
-    ptype_block->creation_fiber = nil;
-  }
 }
 
 
@@ -124,7 +120,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
 }
 
 void funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector) {
-  if (this_f2ptr) {
+  if (this_f2ptr != nil) {
     boolean_t no_more_references = atomic_dec_and_test(&(this->reference_count));
     if (no_more_references) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).

@@ -29,6 +29,7 @@
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]
 	      [have this add_agency [new reflective_plan_agency]]
+	      [have this add_agency [new reflective_imagination_agency]]
 	      [have this add_agency [new reflective_execution_agency]]]
        this]]
 

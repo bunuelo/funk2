@@ -224,6 +224,7 @@
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     reflective_plan_agency
+	     reflective_imagination_agency
 	     reflective_execution_agency
 	     english_language
 	     ]
@@ -273,6 +274,12 @@
 	     semantic_planner
 	     nonsemantic_plan]
    :sources ['reflective_plan_agency.fu2']]
+
+[defpackage reflective_imagination_agency
+  :packages [reflective_mind_core
+	     reflective_resource
+	     nonsemantic_plan]
+   :sources ['reflective_imagination_agency.fu2']]
 
 [defpackage reflective_execution_agency
   :packages [reflective_mind_core

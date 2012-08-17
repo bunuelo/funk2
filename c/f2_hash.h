@@ -51,15 +51,15 @@ funk2_hash_keyvalue_pair_t* funk2_hash__lookup_keyvalue_pair(funk2_hash_t* this,
 u64                         funk2_hash__lookup              (funk2_hash_t* this, u64 key);
 boolean_t                   funk2_hash__contains            (funk2_hash_t* this, u64 key);
 
-#define funk2_hash__iteration(this, key, value, code) {			\
+#define funk2_hash__iteration(this, funk2_hash__iteration__user_key, funk2_hash__iteration__user_value, code) {			\
     funk2_hash_t* funk2_hash__iteration__this  = (this);		\
     u64           funk2_hash__iteration__index = 0;			\
     u64           funk2_hash__iteration__this__bin_num = 1ull << (funk2_hash__iteration__this->bin_num_power); \
     while (funk2_hash__iteration__index < funk2_hash__iteration__this__bin_num) { \
       funk2_hash_bin_node_t* funk2_hash__iteration__bin_node = funk2_hash__iteration__this->bin_array[funk2_hash__iteration__index]; \
       while (funk2_hash__iteration__bin_node != NULL) {			\
-	u64 key   = funk2_hash__iteration__bin_node->keyvalue_pair.key;	\
-	u64 value = funk2_hash__iteration__bin_node->keyvalue_pair.value; \
+	u64 funk2_hash__iteration__user_key   = funk2_hash__iteration__bin_node->keyvalue_pair.key;	\
+	u64 funk2_hash__iteration__user_value = funk2_hash__iteration__bin_node->keyvalue_pair.value; \
 	{								\
 	  code;								\
 	}								\

@@ -304,7 +304,7 @@ void raw__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, u64 relati
   raw__fiber__bytes_freed_count__set(cause, this, raw__fiber__bytes_freed_count(cause, this) + relative_bytes_freed_count);
   f2scheduler_cmutex__unlock(bytes_freed_count_scheduler_cmutex, cause);
   {
-    f2ptr cause_reg    = f2fiber__cause_reg(fiber, cause);
+    f2ptr cause_reg    = f2fiber__cause_reg(this, cause);
     f2ptr cause_groups = f2cause__cause_groups(cause_reg, cause);
     {
       f2ptr iter = cause_groups;

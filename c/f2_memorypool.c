@@ -377,6 +377,12 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }
+    {
+      f2ptr             creation_fiber       = ptype_block->creation_fiber;
+      ptr               creation_fiber_ptr   = __f2ptr_to_ptr(creation_fiber);
+      funk2_memblock_t* creation_fiber_block = (funk2_memblock_t*)from_ptr(creation_fiber_ptr);
+      funk2_memblock__decrement_reference_count(creation_fiber_block, creation_fiber, &(__funk2.garbage_collector));
+    }
     switch(ptype_block->block.ptype) {
     case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
     case ptype_integer:          break;

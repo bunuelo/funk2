@@ -50,11 +50,14 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->free_memory_heap__load_buffer__length = 0;
   this->free_memory_heap__load_buffer         = NULL;
   
+  funk2_hash__init(&(this->temporary_bytes_freed_count_fiber_hash), 10);
+  
   funk2_memorypool__debug_memory_test(this, 1);
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {
   f2dynamicmemory__destroy_and_free(&(this->dynamic_memory));
+  funk2_hash__destroy(&(this->temporary_bytes_freed_count_fiber_hash));
   funk2_heap__destroy(&(this->free_memory_heap));
 }
 
@@ -370,7 +373,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     f2ptr creation_fiber = ((ptype_block_t*)block)->creation_fiber;
     if (creation_fiber != nil) {
-      raw__fiber__increment_bytes_freed_count(nil, creation_fiber, funk2_memblock__byte_num(block));
+      u64 old_value = 0;
+      if (funk2_hash__contains(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber)) {
+	old_value = funk2_hash__lookup(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber);
+      }
+      u64 new_value = old_value + funk2_memblock__byte_num(block);
+      funk2_hash__add(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, new_value);
+      //raw__fiber__increment_bytes_freed_count(nil, creation_fiber, relative_bytes_freed_count);
     }
   }
   

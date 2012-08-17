@@ -62,6 +62,8 @@ struct funk2_memorypool_s {
   u8*                     temporary_compressed_data_for_loading;
   s64                     temporary_compressed_data_for_saving__length;
   u8*                     temporary_compressed_data_for_saving;
+  
+  funk2_hash_t            temporary_bytes_freed_count_fiber_hash;
 };
 
 #define funk2_memorypool__end_of_blocks(this) ({			\

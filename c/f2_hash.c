@@ -38,15 +38,18 @@ void funk2_hash__destroy(funk2_hash_t* this) {
 }
 
 void funk2_hash__remove_all(funk2_hash_t* this) {
-  s64 index;
-  for (index = 0; index < funk2_hash__bin_count(this); index ++) {
-    funk2_hash_bin_node_t* keyvalue_pair_iter = this->bin_array[index];
-    while(keyvalue_pair_iter) {
-      funk2_hash_bin_node_t* next = keyvalue_pair_iter->next;
-      f2__free(to_ptr(keyvalue_pair_iter));
-      keyvalue_pair_iter = next;
+  this->key_count = 0;
+  {
+    s64 index;
+    for (index = 0; index < funk2_hash__bin_count(this); index ++) {
+      funk2_hash_bin_node_t* keyvalue_pair_iter = this->bin_array[index];
+      while(keyvalue_pair_iter) {
+	funk2_hash_bin_node_t* next = keyvalue_pair_iter->next;
+	f2__free(to_ptr(keyvalue_pair_iter));
+	keyvalue_pair_iter = next;
+      }
+      this->bin_array[index] = NULL;
     }
-    this->bin_array[index] = NULL;
   }
 }
 

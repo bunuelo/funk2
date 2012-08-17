@@ -36,14 +36,17 @@ void funk2_set__destroy(funk2_set_t* this) {
 }
 
 void funk2_set__remove_all(funk2_set_t* this) {
-  u64 i;
-  u64 bin_num = 1ull << this->bin_power;
-  for (i = 0; i < bin_num; i ++) {
-    funk2_set_node_t* iter = this->bin[i];
-    while (iter) {
-      funk2_set_node_t* next = iter->next;
-      f2__free(to_ptr(iter));
-      iter = next;
+  this->element_count = 0;
+  {
+    u64 i;
+    u64 bin_num = 1ull << this->bin_power;
+    for (i = 0; i < bin_num; i ++) {
+      funk2_set_node_t* iter = this->bin[i];
+      while (iter) {
+	funk2_set_node_t* next = iter->next;
+	f2__free(to_ptr(iter));
+	iter = next;
+      }
     }
   }
 }

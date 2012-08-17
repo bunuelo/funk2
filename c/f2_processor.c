@@ -461,6 +461,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   
   raw__processor__reset_current_active_fiber(processor_cause, processor);
   
+  funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(nil, &(__funk2.memory.pool[this_processor_thread__pool_index()]));
+  
   int fiber_num = 0;
   {
     f2ptr fiber;

@@ -109,6 +109,7 @@ u8                funk2_memorypool__defragment_free_memory_blocks_in_place      
 void              funk2_memorypool__remove_all_current_fibers                      (funk2_memorypool_t* this);
 void              funk2_memorypool__remove_noncurrent_fiber_bytes_freed_counts     (funk2_memorypool_t* this);
 void              funk2_memorypool__increment_creation_fibers_bytes_freed_count    (funk2_memorypool_t* this);
+void              funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts   (f2ptr cause, funk2_memorypool_t* this);
 void              funk2_memorypool__free_used_block                                (funk2_memorypool_t* this, funk2_memblock_t* block);
 funk2_memblock_t* funk2_memorypool__find_splittable_free_block_and_unfree          (funk2_memorypool_t* this, f2size_t byte_num);
 u64               funk2_memorypool__maximum_block__byte_num                        (funk2_memorypool_t* this);

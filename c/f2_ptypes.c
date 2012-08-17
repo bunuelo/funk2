@@ -172,6 +172,24 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   return nil;
 }
 
+f2ptr pfunk2__f2ptype__creation_fiber(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  f2ptr value = __pure__f2ptype__creation_fiber(this);
+  debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
+  return value;
+}
+
+f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
+  f2ptr old_value = __pure__f2ptype__creation_fiber(this);
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  __pure__f2ptype__creation_fiber(this) = value;
+  return nil;
+}
+
 
 
 // integer

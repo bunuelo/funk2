@@ -48,6 +48,10 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2ptype__cause                             ,
   funk2_packet_type__pcs_request__f2ptype__cause__set                        , //f2ptr            (f2ptr cause, f2ptr this, f2ptr value);
   funk2_packet_type__pcs_respond__f2ptype__cause__set                        ,
+  funk2_packet_type__pcs_request__f2ptype__creation_fiber                             , //f2ptr            (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2ptype__creation_fiber                             ,
+  funk2_packet_type__pcs_request__f2ptype__creation_fiber__set                        , //f2ptr            (f2ptr cause, f2ptr this, f2ptr value);
+  funk2_packet_type__pcs_respond__f2ptype__creation_fiber__set                        ,
   funk2_packet_type__pcs_request__f2integer__new                             , //f2ptr            (f2ptr cause, s64 i);
   funk2_packet_type__pcs_respond__f2integer__new                             ,
   funk2_packet_type__pcs_request__f2integer__i                               , //s64              (f2ptr cause, f2ptr this);
@@ -488,6 +492,84 @@ void recv_packet__respond__f2ptype__cause__set(funk2_node_t* funk2_node, pcs_res
 
 void funk2_node__f2ptype__cause__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value);
 void f2ptype__cause__set(f2ptr cause, f2ptr this, f2ptr value);
+
+
+//  funk2_packet_type__pcs_request__f2ptype__creation_fiber                               = 0x07, //f2ptr            (f2ptr cause, f2ptr this);
+
+// request f2ptype__creation_fiber
+
+struct pcs_packet_payload_request__f2ptype__creation_fiber_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2ptype__creation_fiber_s pcs_packet_payload_request__f2ptype__creation_fiber_t;
+
+struct pcs_request__f2ptype__creation_fiber_s {
+  funk2_packet_header_t                      header;
+  pcs_packet_payload_request__f2ptype__creation_fiber_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2ptype__creation_fiber_s pcs_request__f2ptype__creation_fiber_t;
+
+// respond f2ptype__creation_fiber
+
+struct pcs_packet_payload_respond__f2ptype__creation_fiber_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              ptype__creation_fiber;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2ptype__creation_fiber_s pcs_packet_payload_respond__f2ptype__creation_fiber_t;
+
+struct pcs_respond__f2ptype__creation_fiber_s {
+  funk2_packet_header_t                        header;
+  pcs_packet_payload_respond__f2ptype__creation_fiber_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2ptype__creation_fiber_s pcs_respond__f2ptype__creation_fiber_t;
+
+void send_packet__request__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2ptype__creation_fiber(funk2_node_t* funk2_node, pcs_request__f2ptype__creation_fiber_t* packet);
+void send_packet__respond__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr ptype__creation_fiber);
+void recv_packet__respond__f2ptype__creation_fiber(funk2_node_t* funk2_node, pcs_respond__f2ptype__creation_fiber_t* packet);
+
+f2ptr funk2_node__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+f2ptr f2ptype__creation_fiber(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2ptype__creation_fiber__set                          = 0x08, //f2ptr            (f2ptr cause, f2ptr this, f2ptr value);
+
+// request f2ptype__creation_fiber__set
+
+struct pcs_packet_payload_request__f2ptype__creation_fiber__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  f2ptr                                              value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2ptype__creation_fiber__set_s pcs_packet_payload_request__f2ptype__creation_fiber__set_t;
+
+struct pcs_request__f2ptype__creation_fiber__set_s {
+  funk2_packet_header_t                             header;
+  pcs_packet_payload_request__f2ptype__creation_fiber__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2ptype__creation_fiber__set_s pcs_request__f2ptype__creation_fiber__set_t;
+
+// respond f2ptype__creation_fiber__set
+
+struct pcs_packet_payload_respond__f2ptype__creation_fiber__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2ptype__creation_fiber__set_s pcs_packet_payload_respond__f2ptype__creation_fiber__set_t;
+
+struct pcs_respond__f2ptype__creation_fiber__set_s {
+  funk2_packet_header_t                             header;
+  pcs_packet_payload_respond__f2ptype__creation_fiber__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2ptype__creation_fiber__set_s pcs_respond__f2ptype__creation_fiber__set_t;
+
+void send_packet__request__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value);
+void recv_packet__request__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, pcs_request__f2ptype__creation_fiber__set_t* packet);
+void send_packet__respond__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, pcs_respond__f2ptype__creation_fiber__set_t* packet);
+
+void funk2_node__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value);
+void f2ptype__creation_fiber__set(f2ptr cause, f2ptr this, f2ptr value);
 
 
 //  funk2_packet_type__pcs_request__f2integer__new                             = 0x09, //f2ptr            (f2ptr cause, s64 i);

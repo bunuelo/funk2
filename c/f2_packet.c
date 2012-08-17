@@ -289,6 +289,10 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2ptype__cause:                              recv_packet__respond__f2ptype__cause(funk2_node, (pcs_respond__f2ptype__cause_t*)packet);                                                           break;
   case funk2_packet_type__pcs_request__f2ptype__cause__set:                         recv_packet__request__f2ptype__cause__set(funk2_node, (pcs_request__f2ptype__cause__set_t*)packet);                                                 break;
   case funk2_packet_type__pcs_respond__f2ptype__cause__set:                         recv_packet__respond__f2ptype__cause__set(funk2_node, (pcs_respond__f2ptype__cause__set_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_request__f2ptype__creation_fiber:                     recv_packet__request__f2ptype__creation_fiber(funk2_node, (pcs_request__f2ptype__creation_fiber_t*)packet);                                         break;
+  case funk2_packet_type__pcs_respond__f2ptype__creation_fiber:                     recv_packet__respond__f2ptype__creation_fiber(funk2_node, (pcs_respond__f2ptype__creation_fiber_t*)packet);                                         break;
+  case funk2_packet_type__pcs_request__f2ptype__creation_fiber__set:                recv_packet__request__f2ptype__creation_fiber__set(funk2_node, (pcs_request__f2ptype__creation_fiber__set_t*)packet);                               break;
+  case funk2_packet_type__pcs_respond__f2ptype__creation_fiber__set:                recv_packet__respond__f2ptype__creation_fiber__set(funk2_node, (pcs_respond__f2ptype__creation_fiber__set_t*)packet);                               break;
   case funk2_packet_type__pcs_request__f2integer__new:                              recv_packet__request__f2integer__new(funk2_node, (pcs_request__f2integer__new_t*)packet);                                                           break;
   case funk2_packet_type__pcs_respond__f2integer__new:                              recv_packet__respond__f2integer__new(funk2_node, (pcs_respond__f2integer__new_t*)packet);                                                           break;
   case funk2_packet_type__pcs_request__f2integer__i:                                recv_packet__request__f2integer__i(funk2_node, (pcs_request__f2integer__i_t*)packet);                                                               break;
@@ -305,26 +309,26 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2pointer__new:                              recv_packet__respond__f2pointer__new(funk2_node, (pcs_respond__f2pointer__new_t*)packet);                                                           break;
   case funk2_packet_type__pcs_request__f2pointer__p:                                recv_packet__request__f2pointer__p(funk2_node, (pcs_request__f2pointer__p_t*)packet);                                                               break;
   case funk2_packet_type__pcs_respond__f2pointer__p:                                recv_packet__respond__f2pointer__p(funk2_node, (pcs_respond__f2pointer__p_t*)packet);                                                               break;
-  case funk2_packet_type__pcs_request__f2scheduler_cmutex__new:                      recv_packet__request__f2scheduler_cmutex__new(funk2_node, (pcs_request__f2scheduler_cmutex__new_t*)packet);                                           break;
-  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__new:                      recv_packet__respond__f2scheduler_cmutex__new(funk2_node, (pcs_respond__f2scheduler_cmutex__new_t*)packet);                                           break;
-  case funk2_packet_type__pcs_request__f2scheduler_cmutex__is_locked:                recv_packet__request__f2scheduler_cmutex__is_locked(funk2_node, (pcs_request__f2scheduler_cmutex__is_locked_t*)packet);                               break;
-  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__is_locked:                recv_packet__respond__f2scheduler_cmutex__is_locked(funk2_node, (pcs_respond__f2scheduler_cmutex__is_locked_t*)packet);                               break;
-  case funk2_packet_type__pcs_request__f2scheduler_cmutex__lock:                     recv_packet__request__f2scheduler_cmutex__lock(funk2_node, (pcs_request__f2scheduler_cmutex__lock_t*)packet);                                         break;
-  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__lock:                     recv_packet__respond__f2scheduler_cmutex__lock(funk2_node, (pcs_respond__f2scheduler_cmutex__lock_t*)packet);                                         break;
-  case funk2_packet_type__pcs_request__f2scheduler_cmutex__unlock:                   recv_packet__request__f2scheduler_cmutex__unlock(funk2_node, (pcs_request__f2scheduler_cmutex__unlock_t*)packet);                                     break;
-  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__unlock:                   recv_packet__respond__f2scheduler_cmutex__unlock(funk2_node, (pcs_respond__f2scheduler_cmutex__unlock_t*)packet);                                     break;
-  case funk2_packet_type__pcs_request__f2scheduler_cmutex__trylock:                  recv_packet__request__f2scheduler_cmutex__trylock(funk2_node, (pcs_request__f2scheduler_cmutex__trylock_t*)packet);                                   break;
-  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__trylock:                  recv_packet__respond__f2scheduler_cmutex__trylock(funk2_node, (pcs_respond__f2scheduler_cmutex__trylock_t*)packet);                                   break;
-  case funk2_packet_type__pcs_request__f2cmutex__new:                                recv_packet__request__f2cmutex__new(funk2_node, (pcs_request__f2cmutex__new_t*)packet);                                                               break;
-  case funk2_packet_type__pcs_respond__f2cmutex__new:                                recv_packet__respond__f2cmutex__new(funk2_node, (pcs_respond__f2cmutex__new_t*)packet);                                                               break;
-  case funk2_packet_type__pcs_request__f2cmutex__is_locked:                          recv_packet__request__f2cmutex__is_locked(funk2_node, (pcs_request__f2cmutex__is_locked_t*)packet);                                                   break;
-  case funk2_packet_type__pcs_respond__f2cmutex__is_locked:                          recv_packet__respond__f2cmutex__is_locked(funk2_node, (pcs_respond__f2cmutex__is_locked_t*)packet);                                                   break;
-  case funk2_packet_type__pcs_request__f2cmutex__lock:                               recv_packet__request__f2cmutex__lock(funk2_node, (pcs_request__f2cmutex__lock_t*)packet);                                                             break;
-  case funk2_packet_type__pcs_respond__f2cmutex__lock:                               recv_packet__respond__f2cmutex__lock(funk2_node, (pcs_respond__f2cmutex__lock_t*)packet);                                                             break;
-  case funk2_packet_type__pcs_request__f2cmutex__unlock:                             recv_packet__request__f2cmutex__unlock(funk2_node, (pcs_request__f2cmutex__unlock_t*)packet);                                                         break;
-  case funk2_packet_type__pcs_respond__f2cmutex__unlock:                             recv_packet__respond__f2cmutex__unlock(funk2_node, (pcs_respond__f2cmutex__unlock_t*)packet);                                                         break;
-  case funk2_packet_type__pcs_request__f2cmutex__trylock:                            recv_packet__request__f2cmutex__trylock(funk2_node, (pcs_request__f2cmutex__trylock_t*)packet);                                                       break;
-  case funk2_packet_type__pcs_respond__f2cmutex__trylock:                            recv_packet__respond__f2cmutex__trylock(funk2_node, (pcs_respond__f2cmutex__trylock_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_request__f2scheduler_cmutex__new:                     recv_packet__request__f2scheduler_cmutex__new(funk2_node, (pcs_request__f2scheduler_cmutex__new_t*)packet);                                         break;
+  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__new:                     recv_packet__respond__f2scheduler_cmutex__new(funk2_node, (pcs_respond__f2scheduler_cmutex__new_t*)packet);                                         break;
+  case funk2_packet_type__pcs_request__f2scheduler_cmutex__is_locked:               recv_packet__request__f2scheduler_cmutex__is_locked(funk2_node, (pcs_request__f2scheduler_cmutex__is_locked_t*)packet);                             break;
+  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__is_locked:               recv_packet__respond__f2scheduler_cmutex__is_locked(funk2_node, (pcs_respond__f2scheduler_cmutex__is_locked_t*)packet);                             break;
+  case funk2_packet_type__pcs_request__f2scheduler_cmutex__lock:                    recv_packet__request__f2scheduler_cmutex__lock(funk2_node, (pcs_request__f2scheduler_cmutex__lock_t*)packet);                                       break;
+  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__lock:                    recv_packet__respond__f2scheduler_cmutex__lock(funk2_node, (pcs_respond__f2scheduler_cmutex__lock_t*)packet);                                       break;
+  case funk2_packet_type__pcs_request__f2scheduler_cmutex__unlock:                  recv_packet__request__f2scheduler_cmutex__unlock(funk2_node, (pcs_request__f2scheduler_cmutex__unlock_t*)packet);                                   break;
+  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__unlock:                  recv_packet__respond__f2scheduler_cmutex__unlock(funk2_node, (pcs_respond__f2scheduler_cmutex__unlock_t*)packet);                                   break;
+  case funk2_packet_type__pcs_request__f2scheduler_cmutex__trylock:                 recv_packet__request__f2scheduler_cmutex__trylock(funk2_node, (pcs_request__f2scheduler_cmutex__trylock_t*)packet);                                 break;
+  case funk2_packet_type__pcs_respond__f2scheduler_cmutex__trylock:                 recv_packet__respond__f2scheduler_cmutex__trylock(funk2_node, (pcs_respond__f2scheduler_cmutex__trylock_t*)packet);                                 break;
+  case funk2_packet_type__pcs_request__f2cmutex__new:                               recv_packet__request__f2cmutex__new(funk2_node, (pcs_request__f2cmutex__new_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_respond__f2cmutex__new:                               recv_packet__respond__f2cmutex__new(funk2_node, (pcs_respond__f2cmutex__new_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_request__f2cmutex__is_locked:                         recv_packet__request__f2cmutex__is_locked(funk2_node, (pcs_request__f2cmutex__is_locked_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_respond__f2cmutex__is_locked:                         recv_packet__respond__f2cmutex__is_locked(funk2_node, (pcs_respond__f2cmutex__is_locked_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_request__f2cmutex__lock:                              recv_packet__request__f2cmutex__lock(funk2_node, (pcs_request__f2cmutex__lock_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_respond__f2cmutex__lock:                              recv_packet__respond__f2cmutex__lock(funk2_node, (pcs_respond__f2cmutex__lock_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_request__f2cmutex__unlock:                            recv_packet__request__f2cmutex__unlock(funk2_node, (pcs_request__f2cmutex__unlock_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_respond__f2cmutex__unlock:                            recv_packet__respond__f2cmutex__unlock(funk2_node, (pcs_respond__f2cmutex__unlock_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_request__f2cmutex__trylock:                           recv_packet__request__f2cmutex__trylock(funk2_node, (pcs_request__f2cmutex__trylock_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_respond__f2cmutex__trylock:                           recv_packet__respond__f2cmutex__trylock(funk2_node, (pcs_respond__f2cmutex__trylock_t*)packet);                                                     break;
   case funk2_packet_type__pcs_request__f2char__new:                                 recv_packet__request__f2char__new(funk2_node, (pcs_request__f2char__new_t*)packet);                                                                 break;
   case funk2_packet_type__pcs_respond__f2char__new:                                 recv_packet__respond__f2char__new(funk2_node, (pcs_respond__f2char__new_t*)packet);                                                                 break;
   case funk2_packet_type__pcs_request__f2char__ch:                                  recv_packet__request__f2char__ch(funk2_node, (pcs_request__f2char__ch_t*)packet);                                                                   break;
@@ -782,6 +786,126 @@ void f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
     f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2ptype__cause__set(funk2_node, fiber, cause, this, value);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2ptype__creation_fiber: executing.");
+  pcs_request__f2ptype__creation_fiber_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2ptype__creation_fiber;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2ptype__creation_fiber(funk2_node_t* funk2_node, pcs_request__f2ptype__creation_fiber_t* packet) {
+  packet_status("recv_packet__request__f2ptype__creation_fiber: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr f2ptype__creation_fiber = pfunk2__f2ptype__creation_fiber(this, cause);
+  send_packet__respond__f2ptype__creation_fiber(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, f2ptype__creation_fiber);
+}
+
+void send_packet__respond__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr ptype__creation_fiber) {
+  packet_status("send_packet__respond__f2ptype__creation_fiber: executing.");
+  pcs_respond__f2ptype__creation_fiber_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2ptype__creation_fiber;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.ptype__creation_fiber                              = ptype__creation_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2ptype__creation_fiber(funk2_node_t* funk2_node, pcs_respond__f2ptype__creation_fiber_t* packet) {
+  packet_status("recv_packet__respond__f2ptype__creation_fiber: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2ptype__creation_fiber(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2ptype__creation_fiber(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2ptype__creation_fiber_t* packet = (pcs_respond__f2ptype__creation_fiber_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2ptr ptype__creation_fiber = rf2_to_lf2(packet->payload.ptype__creation_fiber);
+  f2__free(to_ptr(packet));
+  return ptype__creation_fiber;
+}
+
+f2ptr f2ptype__creation_fiber(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2ptype__creation_fiber(this, cause);
+  } else {
+    f2ptr         fiber      = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2ptype__creation_fiber(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value) {
+  packet_status("send_packet__request__f2ptype__creation_fiber__set: executing.");
+  pcs_request__f2ptype__creation_fiber__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2ptype__creation_fiber__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, pcs_request__f2ptype__creation_fiber__set_t* packet) {
+  packet_status("recv_packet__request__f2ptype__creation_fiber__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  f2ptr value  = rf2_to_lf2(packet->payload.value);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2ptype__creation_fiber__set(this, cause, value);
+  send_packet__respond__f2ptype__creation_fiber__set(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2ptype__creation_fiber__set: executing.");
+  pcs_respond__f2ptype__creation_fiber__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2ptype__creation_fiber__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, pcs_respond__f2ptype__creation_fiber__set_t* packet) {
+  packet_status("recv_packet__respond__f2ptype__creation_fiber__set: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2ptype__creation_fiber__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr value) {
+  send_packet__request__f2ptype__creation_fiber__set(funk2_node, this_fiber, cause, this, value);
+  pcs_respond__f2ptype__creation_fiber__set_t* packet = (pcs_respond__f2ptype__creation_fiber__set_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    pfunk2__f2ptype__creation_fiber__set(this, cause, value);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2ptype__creation_fiber__set(funk2_node, fiber, cause, this, value);
   }
 }
 

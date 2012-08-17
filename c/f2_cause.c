@@ -24,13 +24,15 @@
 
 // cause_group
 
-def_primobject_6_slot(cause_group,
+def_primobject_8_slot(cause_group,
 		      bytecode_count_scheduler_cmutex,
 		      bytecode_count,
 		      execution_nanoseconds_scheduler_cmutex,
 		      execution_nanoseconds_chunk,
 		      bytes_allocated_count_scheduler_cmutex,
-		      bytes_allocated_count_chunk);
+		      bytes_allocated_count_chunk,
+		      bytes_freed_count_scheduler_cmutex,
+		      bytes_freed_count_chunk);
 
 f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytecode_count_scheduler_cmutex        = f2scheduler_cmutex__new(cause);

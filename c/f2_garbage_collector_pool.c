@@ -777,7 +777,6 @@ void funk2_garbage_collector_pool__free_white_exps__helper(f2ptr element, void**
 void funk2_garbage_collector_pool__free_white_exps(funk2_garbage_collector_pool_t* this) {
   int pool_index       = this_processor_thread__pool_index();
   u64 freed_byte_count = 0;
-  funk2_memorypool__remove_all_current_fibers(&(__funk2.memory.pool[pool_index]));
   {
     void** user_data = (void**)alloca(sizeof(void*) * 3);
     user_data[0]     = (void*)this;

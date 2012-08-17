@@ -93,6 +93,19 @@ void funk2_set__add(funk2_set_t* this, funk2_set_element_t element) {
   funk2_set__add_node(this, node);
 }
 
+boolean_t funk2_set__contains(funk2_set_t* this, funk2_set_element_t element) {
+  u64 i = funk2_set__element_bin_index(this, element);
+  funk2_set_node_t* iter = this->bin[i];
+  while (iter) {
+    funk2_set_node_t* next = iter->next;
+    if (iter->element == element) {
+      return boolean__true;
+    }
+    iter = next;
+  }
+  return boolean__false;
+}
+
 funk2_set_node_t* funk2_set__remove_node(funk2_set_t* this, funk2_set_element_t element) {
   u64 i = funk2_set__element_bin_index(this, element);
   funk2_set_node_t* prev = NULL;

@@ -33,10 +33,10 @@
        this]]
 
 [deftypefunk reflective_imagination_agency execute create_builtin_actions []
-  [have-apply [get this mind] create_plan_action `[reflective imagination forget_all_imagined_events]]
-  [have-apply [get this mind] create_plan_action `[reflective imagination set_imagine_time_to_be_now]]
-  [have-apply [get this mind] create_plan_action `[reflective imagination imagine_current_situation]]
-  [have-apply [get this mind] create_plan_action `[reflective imagination imagine_plan]]]
+  [have-apply [get this mind] create_reflective_action `[reflective imagination forget_all_imagined_events]]
+  [have-apply [get this mind] create_reflective_action `[reflective imagination set_imagine_time_to_be_now]]
+  [have-apply [get this mind] create_reflective_action `[reflective imagination imagine_current_situation]]
+  [have-apply [get this mind] create_reflective_action `[reflective imagination imagine_plan]]]
 
 [deframe reflective_forget_all_imagined_events_resource [reflective_resource] []
   [new []

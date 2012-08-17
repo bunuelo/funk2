@@ -68,6 +68,25 @@ action is manipulated by resources in the deliberative layer, while a
 plan for deliberative action is manipulated by resources in the
 reflective layer.
 
+In this example, the plan resulted in an expectation failure.  The
+plan attempted to assert that a cube is supported by a pyramid, which
+was not true at the point when the assertion was executed in the
+deliberative planning machine.  When a plan encounters a specific type
+of failure, properties of the failure event are represented as a
+failure object that is associated with the plan object that failed.
+The failure is related to the plan in a way that is analogous to a
+physical block being on top of another physical block.  The
+deliberative layer learns how to control relationships between
+physical objects, while the reflective layer learns how to control
+relationships between deliberative objects, such as plans, planners,
+hypotheses, and failures.
+
+
+
+Further, when a plan does not encounter
+failure during execution, the plan is associated with a
+successful-execution event.
+
      what types of planning
 actions that should be performed in order to create the types of plans
 that avoid failures during execution.

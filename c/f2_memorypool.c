@@ -377,7 +377,7 @@ void funk2_memorypool__remove_freed_fiber_bytes_freed_counts(funk2_memorypool_t*
   funk2_set_t remove_creation_fiber_set;
   funk2_set__init(&remove_creation_fiber_set);
   funk2_hash__key__iteration(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber,
-			     funk2_memblock_t* creation_fiber_memblock = ((funk2_memblock_t*)(__f2ptr_to_ptr(creation_fiber)))
+			     funk2_memblock_t* creation_fiber_memblock = ((funk2_memblock_t*)(__f2ptr_to_ptr(creation_fiber)));
 			     if (! creation_fiber_memblock->used) {
 			       funk2_set__add(&remove_creation_fiber_set, creation_fiber);
 			     }

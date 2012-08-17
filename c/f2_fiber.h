@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_30_slot(fiber,
+declare_object_type_31_slot(fiber,
 			    program_counter,
 			    stack,
 			    iter,
@@ -50,6 +50,7 @@ declare_object_type_30_slot(fiber,
 			    bytecode_count,
 			    bytes_allocated_count_chunk,
 			    start_cycle_processor_bytes_allocated_count_chunk,
+			    bytes_freed_count_chunk,
 			    processor_assignment_scheduler_cmutex,
 			    processor_assignment_index,
 			    should_quit,
@@ -74,6 +75,10 @@ declare_object_type_30_slot(fiber,
 			    f2ptr start_cycle_processor_bytes_allocated_count__funk;
 			    f2ptr start_cycle_processor_bytes_allocated_count__set__symbol;   // set
 			    f2ptr start_cycle_processor_bytes_allocated_count__set__funk;
+			    f2ptr bytes_freed_count__symbol;   // get
+			    f2ptr bytes_freed_count__funk;
+			    f2ptr bytes_freed_count__set__symbol;   // set
+			    f2ptr bytes_freed_count__set__funk;
 			    f2ptr increase_bytecode_count__symbol;   // execute
 			    f2ptr increase_bytecode_count__funk;
 			    f2ptr do_sleep_until_time__symbol;   // execute
@@ -171,7 +176,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_30_slot(fiber,
+declare_primobject_31_slot(fiber,
 			   program_counter,
 			   stack,
 			   iter,
@@ -195,6 +200,7 @@ declare_primobject_30_slot(fiber,
 			   bytecode_count,
 			   bytes_allocated_count_chunk,
 			   start_cycle_processor_bytes_allocated_count_chunk,
+			   bytes_freed_count_chunk,
 			   processor_assignment_scheduler_cmutex,
 			   processor_assignment_index,
 			   should_quit,

@@ -49,7 +49,7 @@
   [new []
        [= fiber [fiber [funk []
 			     [while [not done]
-			       [sleep 60]
+			       [sleep 120]
 			       [have trigger trigger]]]
 		       nil]]
        nil]]

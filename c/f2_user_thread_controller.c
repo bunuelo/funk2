@@ -569,7 +569,7 @@ void funk2_user_thread_controller__remove_freed_fibers(funk2_user_thread_control
   funk2_user_thread_controller__remove_freed_fibers__signal_execute(&(this->remove_freed_fibers));
 }
 
-oid funk2_user_thread_controller__exit(funk2_user_thread_controller_t* this) {
+void funk2_user_thread_controller__exit(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__exit__signal_execute(&(this->exit));
 }
 

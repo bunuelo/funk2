@@ -32,6 +32,12 @@
        
        this]]
 
+[deftypefunk deliberative_imagination_agency execute create_builtin_actions []
+  [have-apply [get this mind] create_plan_action `[deliberative imagination forget_all_imagined_events]]
+  [have-apply [get this mind] create_plan_action `[deliberative imagination set_imagine_time_to_be_now]]
+  [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_current_situation]]
+  [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_plan]]]
+
 [deframe deliberative_forget_all_imagined_events_resource [deliberative_resource] []
   [new []
        [construct deliberative_resource `forget_all_imagined_events

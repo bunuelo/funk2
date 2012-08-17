@@ -19,24 +19,30 @@
 
 
 
-'deliberative_imagination_agency'
+'reflective_imagination_agency'
 
-[deframe deliberative_imagination_agency [agency] []
+[deframe reflective_imagination_agency [agency] []
   [new []
        [construct agency `imagination]
        
-       [have this add_resource [new deliberative_forget_all_imagined_events_resource]]
-       [have this add_resource [new deliberative_set_imagine_time_to_be_now_resource]]
-       [have this add_resource [new deliberative_imagine_current_situation_resource]]
-       [have this add_resource [new deliberative_imagine_plan_resource]]
+       [have this add_resource [new reflective_forget_all_imagined_events_resource]]
+       [have this add_resource [new reflective_set_imagine_time_to_be_now_resource]]
+       [have this add_resource [new reflective_imagine_current_situation_resource]]
+       [have this add_resource [new reflective_imagine_plan_resource]]
        
        this]]
 
-[deframe deliberative_forget_all_imagined_events_resource [deliberative_resource] []
+[deftypefunk reflective_imagination_agency execute create_builtin_actions []
+  [have-apply [get this mind] create_plan_action `[reflective imagination forget_all_imagined_events]]
+  [have-apply [get this mind] create_plan_action `[reflective imagination set_imagine_time_to_be_now]]
+  [have-apply [get this mind] create_plan_action `[reflective imagination imagine_current_situation]]
+  [have-apply [get this mind] create_plan_action `[reflective imagination imagine_plan]]]
+
+[deframe reflective_forget_all_imagined_events_resource [reflective_resource] []
   [new []
-       [construct deliberative_resource `forget_all_imagined_events
+       [construct reflective_resource `forget_all_imagined_events
 		  [funk []
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			[let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					   [type [get this layer]] 'resource, ' [get name as-english_string] ', forgetting all imagined events.']
 			  [set semantic_planner imagine_time nil]
@@ -53,11 +59,11 @@
        nil]]
 
 
-[deframe deliberative_set_imagine_time_to_be_now_resource [deliberative_resource] []
+[deframe reflective_set_imagine_time_to_be_now_resource [reflective_resource] []
   [new []
-       [construct deliberative_resource `set_imagine_time_to_be_now
+       [construct reflective_resource `set_imagine_time_to_be_now
 		  [funk []
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			[let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					   [type [get this layer]] 'resource, ' [get name as-english_string] ', setting imagine time to be now..']
 			  [let [[imagine_time [new semantic_time [time]]]]
@@ -66,11 +72,11 @@
        nil]]
 
 
-[deframe deliberative_imagine_current_situation_resource [deliberative_resource] []
+[deframe reflective_imagine_current_situation_resource [reflective_resource] []
   [new []
-       [construct deliberative_resource `imagine_current_situation
+       [construct reflective_resource `imagine_current_situation
 		  [funk []
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			[let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					   [type [get this layer]] 'resource, ' [get name as-english_string] ', imagining current situation.']
 			  [let [[imagine_time [new semantic_time [time]]]]
@@ -123,12 +129,12 @@
        nil]]
 
 
-[deframe deliberative_imagine_plan_resource [deliberative_resource] []
+[deframe reflective_imagine_plan_resource [reflective_resource] []
   [new []
-       [construct deliberative_resource `imagine_plan
+       [construct reflective_resource `imagine_plan
 		  [funk [semantic_plan]
 			[assert-type semantic_plan_object semantic_plan]
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
+			[let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					   [type [get this layer]] 'resource, ' [get name as-english_string] ', imagining plan.']
 			  [set semantic_planner imagine_plan semantic_plan]
@@ -142,7 +148,7 @@
 				  ]
 			      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 						     [type [get this layer]] 'resource, ' [get name as-english_string] ', successfully completed imagining plan']
-				    [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan nil]]]]
+				    [set [get [get [get this mind] agency `reflective `plan] semantic_planner] imagine_plan nil]]]]
 			  nil]]]
        nil]]
 

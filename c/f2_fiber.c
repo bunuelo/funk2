@@ -635,7 +635,7 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list30__new(cause,
+    frame = f2__frame__new(cause, f2list32__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
 						new__symbol(cause, "cause_reg_cmutex"),           f2__fiber__cause_reg_cmutex(          cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
@@ -649,6 +649,7 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 						new__symbol(cause, "execution_nanoseconds"),      f2__fiber__execution_nanoseconds(     cause, this),
 						new__symbol(cause, "bytecode_count"),             f2__fiber__bytecode_count(            cause, this),
 						new__symbol(cause, "bytes_allocated_count"),      f2__fiber__bytes_allocated_count(     cause, this),
+						new__symbol(cause, "bytes_freed_count"),          f2__fiber__bytes_freed_count(         cause, this),
 						new__symbol(cause, "processor_assignment_index"), f2__fiber__processor_assignment_index(cause, this),
 						new__symbol(cause, "stack_trace"),                f2__fiber__stack_trace(               cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

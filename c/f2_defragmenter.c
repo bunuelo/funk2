@@ -169,8 +169,14 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   ptype_block_t* ptype_block = (ptype_block_t*)memblock;
   {
     f2ptr cause = ptype_block->cause;
-    if (cause) {
+    if (cause != nil) {
       ptype_block->cause = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause);
+    }
+  }
+  {
+    f2ptr creation_fiber = ptype_block->creation_fiber;
+    if (creation_fiber != nil) {
+      ptype_block->creation_fiber = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, creation_fiber);
     }
   }
   switch(ptype_block->block.ptype) {

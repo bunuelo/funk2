@@ -65,7 +65,7 @@ void      funk2_set__print              (funk2_set_t* this);
 
 void funk2_set__test();
 
-#define funk2_set__iteration(this, element, body) {			\
+#define funk2_set__iteration(this, funk2_set__iteration__element, body) {			\
     funk2_set_t*       funk2_set__iteration__this            = this;	\
     u64                funk2_set__iteration__index;			\
     u64                funk2_set__iteration__this__bin_count = 1ull << funk2_set__iteration__this->bin_power; \
@@ -73,7 +73,7 @@ void funk2_set__test();
     for (funk2_set__iteration__index = 0; funk2_set__iteration__index < funk2_set__iteration__this__bin_count; funk2_set__iteration__index ++) { \
       funk2_set_node_t* funk2_set__iteration__index__iter = funk2_set__iteration__this__bin[funk2_set__iteration__index]; \
       while (funk2_set__iteration__index__iter != NULL) {		\
-	funk2_set_element_t element = funk2_set__iteration__index__iter->element; \
+	funk2_set_element_t funk2_set__iteration__element = funk2_set__iteration__index__iter->element; \
 	{								\
 	  body;								\
 	}								\

@@ -4191,7 +4191,7 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(ptype__cause);
+  f2__primcfunk__init__defragment__fix_pointers(ptype__creation_fiber);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.cause__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.creation_fiber__set__symbol);

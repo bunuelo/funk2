@@ -24,6 +24,7 @@
 
 #include "f2_funk2_node.h"
 #include "f2_buffered_socket.h"
+#include "f2_ptypes.h"
 #include "f2_ptypes_memory.h"
 #include "f2_scheduler.h"
 

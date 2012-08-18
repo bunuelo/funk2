@@ -3,9 +3,9 @@
 \label{chapter:reflectively_learning_to_control}
 %************************************************
 
-In order to explain my solution to the problem of reflectively
-learning-to-control, I will focus on a running example within the
-physical block building domain shown in
+In order to explain my implemented solution to the problem of
+reflectively learning-to-control, I will focus on a running example
+within the physical block building domain shown in
 \autoref{figure:an_example_problem_domain}.  Consider that the AI has
 the goal of making a stack of two blocks.  The AI is now confronted
 with the task of reasoning about how to get the physical world into a
@@ -27,27 +27,52 @@ there is a stack of two blocks as its final operation:
 If the AI were to recall this plan and execute it in the situation
 shown in \autoref{figure:an_example_problem_domain}, the AI would
 encounter an expectation failure at the final assertion of the
-expected post-conditions of this plan.  In the case of a failure of
-expectations, a refined hypothetical model of the physical world is
-learned, so that the same planning mistake will never be made again.
-In my AI, learning a new physical model of the world amounts to
-relearning the hypotheses for the expected abstract transframes that
-result from executing different physical actions in different abstract
-physical preconditions.  In this case, the AI learns many new refined
-hypotheses about the physical world.  For example, the AI learns that
-executing the action of moving to the left until a cube is below the
-gripper results in a cube being below the gripper.  Of course, this
-may not generally be true, but the AI's physical action hypotheses are
-refined in light of this added experiential knowledge that predicts
-this change given the specific preconditions.  The AI still retains
-many hypotheses that leave room for the possibility that executing
-this action in other preconditions may or may not result in this
-specific change.  For example, at this point, the AI has no experience
-executing this action when there is not a block to the left of the
-gripper.  In that case, the AI cannot be sure that this action will
-result in a block being below the gripper, and this uncertainty is
-represented in the hypothesis space of the AI's concept learning
-algorithm.
+expected post-conditions of this plan.
+{\mbox{\autoref{figure:failure_to_stack_cube_on_pyramid}}} shows how
+executing this plan in this situation might fail to result in a stack
+of two blocks: the pyramidal block does not support the cubic block,
+so the cube falls off of the pyramid and onto the table.  In the case
+of a failure of expectations, a refined hypothetical model of the
+physical world is learned, so that the same planning mistake will
+never be made again.  In my AI, learning a new physical model of the
+world amounts to relearning the hypotheses for the expected abstract
+transframes that result from executing different physical actions in
+different abstract physical preconditions.  In this case, the AI
+learns many new refined hypotheses about the physical world.  For
+example, the AI learns that executing the action of moving to the left
+until a cube is below the gripper results in a cube being below the
+gripper.  Of course, this may not generally be true, but the AI's
+physical action hypotheses are refined in light of this added
+experiential knowledge that predicts this change given the specific
+preconditions.  The AI still retains many hypotheses that leave room
+for the possibility that executing this action in other preconditions
+may or may not result in this specific change.  For example, at this
+point, the AI has no experience executing this action when there is
+not a block to the left of the gripper.  In that case, the AI cannot
+be sure that this action will result in a block being below the
+gripper, and this uncertainty is represented in the hypothesis space
+of the AI's concept learning algorithm.
+\begin{figure}
+\begin{center}
+\includegraphics[width=8cm]{gfx/blocks_world_example-1}
+\end{center}
+\caption[An example problem domain.]{An example problem domain.}
+\label{figure:an_example_problem_domain}
+\end{figure}
+\begin{figure}
+\begin{center}
+\begin{tabular}{p{4cm}p{4cm}}
+1. \includegraphics[width=5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=5cm]{gfx/blocks_world_example-2} \\
+3. \includegraphics[width=5cm]{gfx/blocks_world_example-3}  & 4. \includegraphics[width=5cm]{gfx/blocks_world_example-4} \\
+5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
+7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
+\end{tabular}
+\end{center}
+\caption[A example of an expectation failure.]{A example of an
+  expectation failure.  A plan is executed that asserts that a
+  post-condition must be a stack of a cube on top of a triangle.}
+\label{figure:failure_to_stack_cube_on_pyramid}
+\end{figure}
 
 In addition to learning a refined hypothetical model of the physical
 world, the AI also learns a better model of how to control its
@@ -76,19 +101,21 @@ was not true at the point when the assertion was executed in the
 deliberative planning machine.  When a plan encounters a specific type
 of failure, properties of the failure event are represented as a
 failure object that is associated with the plan object that failed.
-The failure is related to the plan in a way that is analogous to a
-physical block being on top of another physical block.  The
-deliberative layer learns how to control relationships between
-physical objects, while the reflective layer learns how to control
-relationships between deliberative objects, such as plans, planners,
-hypotheses, and failures.
+As seen by the reflective layer, the deliberative failure knowledge is
+related to the plan in a way that is analogous to the way that the
+deliberative layer sees a physical block being on top of another
+physical block.  The deliberative layer learns how to control
+relationships between physical objects, while the reflective layer
+learns how to control relationships between deliberative objects, such
+as the deliberative planning machine, plans, hypotheses, and execution
+failures.
 
 The reflective layer learns models of how deliberative actions change
 the abstract knowledge relationships between objects in the
 deliberative layer.  The reflective planning machine attempts to
 accomplish abstract goals computed from this deliberative knowledge.
-Here is a list of the types of abstract knowledge in the reflective
-layer about the objects in the deliberative layer:
+Here is a list of a few types of abstract knowledge that the
+reflective layer can know about the objects in the deliberative layer:
 \begin{itemize}
 \item A plan that asserts that a cube is on a triangle is under the
   focus of the deliberative planning machine.
@@ -101,51 +128,33 @@ layer about the objects in the deliberative layer:
 \item The deliberative planning machine is focused on a plan to move
   to the left while concurrently moving to the right.
 \end{itemize}
-These abstract states are learned from a procedurally reflective event
-stream generated by the deliberative layer planning processes.  These
-abstract states form potential goals, preconditions, and effects of
-reflective hypotheses about the planning resources in the deliberative
-layer.  The reflective layer learns hypotheses for predicting abstract
-types of execution failures based on abstract states of the
-deliberative knowledge.  In the example, executing the plan that the
-deliberative planner is focus on may result in a plan having an
-expectation failure.  Further, the preconditions of this hypothesis
-are based on all of the abstract perceptions of the plan, including
-that this plan contains an assertion that a cube is stacked on a
-pyramid.
+These abstract states are learned in the reflective layer by
+processing a procedurally reflective event stream generated by the
+deliberative layer planning processes.  These abstract states are
+potential goals, preconditions, and effects in the reflective planning
+machine that abstractly model how deliberative actions effect the
+state of the deliberative layer.  Reflective hypotheses about the
+deliberative layer are learned in terms of these abstract states.  The
+reflective layer learns hypotheses for predicting abstract types of
+plan execution failure knowledge from other abstract deliberative
+knowledge preconditions.
 
-Further, when a plan does not encounter failure during execution, the
-plan is associated with a successful-execution event.
+In the example, executing the plan that the deliberative planner is
+focused on is hypothesized to result in a plan having an expectation
+failure event.  In this case, the reflectively planned execution of
+the deliberative execution of the plan under deliberative focus
+results in a stream of reflective event knowledge.  This stream of
+reflective event knowledge is processed in parallel with the
+deliberative planning machine operations.  The reflective layer
+abstracts representations of the preconditions and effects of the
+deliberative execution action.  In the example, this abstract
+knowledge includes that the plan currently under focus contains an
+assertion that a cube must be stacked on a pyramid.  The AI refines
+many of its hypotheses given this limited experience, retaining the
+hypothesis that executing the plan under focus might result in failure
+due to the plan's assertion that a cube is on top of a pyramid.
 
-     what types of planning
-actions that should be performed in order to create the types of plans
-that avoid failures during execution.
-
-{\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
-shows how executing this plan in this situation might fail to result
-in a stack of two blocks: the pyramidal block does not support the
-cubic block, so the cube falls off of the pyramid and onto the table.
-\begin{figure}
-\begin{center}
-\includegraphics[width=8cm]{gfx/blocks_world_example-1}
-\end{center}
-\caption[An example problem domain.]{An example problem domain.}
-\label{figure:an_example_problem_domain}
-\end{figure}
-\begin{figure}
-\begin{center}
-\begin{tabular}{p{4cm}p{4cm}}
-1. \includegraphics[width=5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=5cm]{gfx/blocks_world_example-2} \\
-3. \includegraphics[width=5cm]{gfx/blocks_world_example-3}  & 4. \includegraphics[width=5cm]{gfx/blocks_world_example-4} \\
-5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
-7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
-\end{tabular}
-\end{center}
-\caption[An example of failing to accomplish a goal.]{An example of
-  failing to accomplish the goal of creating a stack of two blocks.}
-\label{figure:implemented_example_learning_storyboard}
-\end{figure}
-
+\section{The Three Layers of the Implementation}
 
 \section{The Physical Simulation}
 
@@ -249,7 +258,7 @@ change events.
 
 
 
-\section{An Example Storyboard}
+\section{The Result of Reflective Learning}
 
 {\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
 shows a storyboard of the implemented example of second-order

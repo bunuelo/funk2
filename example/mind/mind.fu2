@@ -133,6 +133,12 @@
 	      [have layer save_bytes_allocated_count_plots time_offset [format nil filename_root '-' [get this name]]]]
 	[get this layers]]]
 
+[deftypefunk mind execute save_bytes_freed_count_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_bytes_freed_count_plot time_offset [format nil filename_root '-' [get this name]]]
+  [parc [funk [layer]
+	      [have layer save_bytes_freed_count_plots time_offset [format nil filename_root '-' [get this name]]]]
+	[get this layers]]]
+
 [deftypefunk mind execute save_bytes_footprint_plots [time_offset filename_root]
   [have runtime_metric_monitor save_bytes_footprint_plot time_offset [format nil filename_root '-' [get this name]]]
   [parc [funk [layer]

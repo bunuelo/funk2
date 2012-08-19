@@ -131,6 +131,9 @@
 [deftypefunk resource execute save_bytes_allocated_count_plots [time_offset filename_root]
   [have runtime_metric_monitor save_bytes_allocated_count_plot time_offset [format nil filename_root '-' name]]]
 
+[deftypefunk resource execute save_bytes_freed_count_plots [time_offset filename_root]
+  [have runtime_metric_monitor save_bytes_freed_count_plot time_offset [format nil filename_root '-' name]]]
+
 [deftypefunk resource execute save_bytes_footprint_plots [time_offset filename_root]
   [have runtime_metric_monitor save_bytes_footprint_plot time_offset [format nil filename_root '-' name]]]
 

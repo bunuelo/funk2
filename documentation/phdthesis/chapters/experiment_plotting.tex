@@ -1,0 +1,538 @@
+
+
+\newcommand{\experimentmarkscale}{0.75}
+\newcommand{\experimentxaxispertick}{10}
+
+\newcommand{\experimentaxes}[3][]{
+  %axes
+  \draw (0,0) -- coordinate (x axis mid) (#1,0);
+  \draw (0,0) -- coordinate (y axis mid) (0,#3);
+  
+  %ticks
+  \foreach \x in {0,\experimentxaxispertick,...,#1}
+    \draw (\x,1pt) -- (\x,-3pt)
+      node[anchor=north] {\x};
+  \foreach \y in {0,#2,...,#3}
+    \draw (1pt,\y) -- (-3pt,\y) 
+      node[anchor=east] {\y}; 
+}
+
+\newcommand{\experimentdataone}[3][]{
+  %plots
+  \begin{scope}
+    \clip (0,0) rectangle (#1,#2);
+    
+    \draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
+      file {#3};
+  \end{scope}
+}
+
+\newcommand{\experimentdatatwo}[3][]{
+  %plots
+  \begin{scope}
+    \clip (0,0) rectangle (#1,#2);
+    
+    \draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
+      file {#3};
+  \end{scope}
+}
+
+\newcommand{\experimentdatathree}[3][]{
+  %plots
+  \begin{scope}
+    \clip (0,0) rectangle (#1,#2);
+    
+    \draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
+      file {#3};
+  \end{scope}
+}
+
+\newcommand{\experimentdatafour}[3][]{
+  %plots
+  \begin{scope}
+    \clip (0,0) rectangle (#1,#2);
+    
+    \draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
+      file {#3};
+  \end{scope}
+}
+
+\newcommand{\experimentdatafive}[3][]{
+  %plots
+  \begin{scope}
+    \clip (0,0) rectangle (#1,#2);
+    
+    \draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}]
+      file {#3};
+  \end{scope}
+}
+
+\newcommand{\experimentlegendone}[2][]{
+  %legend
+  \begin{scope}[shift={(10,#1)}]
+    \draw (0,0) -- 
+      plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      node[right]{#2};
+  \end{scope}
+}
+
+\newcommand{\experimentlegendtwo}[2][]{
+  %legend
+  \begin{scope}[shift={(10,#1)}]
+    \draw (0,0) -- 
+      plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      node[right]{#2};
+  \end{scope}
+}
+
+\newcommand{\experimentlegendthree}[2][]{
+  %legend
+  \begin{scope}[shift={(10,#1)}]
+    \draw (0,0) -- 
+      plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      node[right]{#2};
+  \end{scope}
+}
+
+\newcommand{\experimentlegendfour}[2][]{
+  %legend
+  \begin{scope}[shift={(10,#1)}]
+    \draw (0,0) -- 
+      plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      node[right]{#2};
+  \end{scope}
+}
+
+\newcommand{\experimentlegendfive}[2][]{
+  %legend
+  \begin{scope}[shift={(10,#1)}]
+    \draw (0,0) -- 
+      plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      node[right]{#2};
+  \end{scope}
+}
+
+\newcommand{\experimentdatalegendone}[4][]{
+  \experimentdataone[#1]{#2}{#3};
+  \experimentlegendone[#2]{#4};
+}
+
+\newcommand{\experimentdatalegendtwo}[4][]{
+  \experimentdatatwo[#1]{#2}{#3};
+  \experimentlegendtwo[#2]{#4};
+}
+
+\newcommand{\experimentdatalegendthree}[4][]{
+  \experimentdatathree[#1]{#2}{#3};
+  \experimentlegendthree[#2]{#4};
+}
+
+\newcommand{\experimentdatalegendfour}[4][]{
+  \experimentdatafour[#1]{#2}{#3};
+  \experimentlegendfour[#2]{#4};
+}
+
+\newcommand{\experimentdatalegendfive}[4][]{
+  \experimentdatafive[#1]{#2}{#3};
+  \experimentlegendfive[#2]{#4};
+}
+
+\newcommand{\experimentxaxislabel}{
+  \node[below=0.8cm] at (x axis mid) {Minutes};
+}
+
+\newcommand{\experimentxaxiscloselabel}{
+  \node[below=0.5cm] at (x axis mid) {Minutes};
+}
+
+\newcommand{\experimentyaxisbytecodes}{
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
+  %\node[rotate=90, above=0.8cm] at (y axis mid) {Thousands of Bytecodes/s};
+}
+
+\newcommand{\experimentyaxisbytes}{
+  \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
+}
+
+\newcommand{\experimentyaxismemory}{
+  \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
+}
+
+
+
+% bytecode rate, memory allocation, garbage collection, memory usage triple plots
+\newcommand{\causegroupplotsexecution}[5][]{
+  \experimentaxes[#1]{#2}{#3}
+  
+  %labels
+  \experimentxaxislabel
+  \experimentyaxisbytecodes
+  
+  \experimentdatalegendone[#1]{#3}{#4-bytecode_count.data}{#5};
+}
+
+\newcommand{\causegroupplotsallocation}[5][]{
+  \experimentaxes[#1]{#2}{#3}
+  
+  %labels
+  \experimentxaxislabel
+  \experimentyaxisbytes
+  
+  \experimentdatalegendtwo[#1]{#3}{#4-bytes_allocated_count.data}{#5};
+}
+
+\newcommand{\causegroupplotscollection}[5][]{
+  \experimentaxes[#1]{#2}{#3}
+  
+  %labels
+  \experimentxaxislabel
+  \experimentyaxisbytes
+  
+  \experimentdatalegendtwo[#1]{#3}{#4-bytes_freed_count.data}{#5};
+}
+
+\newcommand{\causegroupplotsmemory}[5][]{
+  \experimentaxes[#1]{#2}{#3}
+  
+  %labels
+  \experimentxaxislabel
+  \experimentyaxismemory
+  
+  \experimentdatalegendthree[#1]{#3}{#4-bytes_footprint.data}{#5};
+}
+
+\newcommand{\causegroupplots}[9][]{
+  \begin{tabular}{r}
+    {\raggedleft
+      \begin{tikzpicture}[y=3cm/#2, x=8cm/#1,font=\sffamily]
+        #3
+      \end{tikzpicture}
+    }\\
+    {\raggedleft
+      \begin{tikzpicture}[y=3cm/#4, x=8cm/#1,font=\sffamily]
+        #5
+      \end{tikzpicture}
+    }\\
+    {\raggedleft
+      \begin{tikzpicture}[y=3cm/#6, x=8cm/#1,font=\sffamily]
+        #7
+      \end{tikzpicture}
+    }\\
+    {\raggedleft
+      \begin{tikzpicture}[y=3cm/#8, x=8cm/#1,font=\sffamily]
+        #9
+      \end{tikzpicture}
+    }\\
+  \end{tabular}
+}
+
+
+
+\newcommand\experimentcausegroupplots[9][]{%
+  \def\argI{#1}%
+  \def\argII{#2}%
+  \def\argIII{#3}%
+  \def\argIV{#4}%
+  \def\argV{#5}%
+  \def\argVI{#6}%
+  \def\argVII{#7}%
+  \def\argVIII{#8}%
+  \def\argIX{#9}%
+}
+\newcommand\experimentcausegroupplotscontinued[3][]{%
+  \begin{figure}[ht]
+    
+    {\causegroupplots[\argIX]
+      {\argII}{
+        \causegroupplotsexecution[\argIX]
+                                 {\argI}{\argII}
+                                 {#1}
+                                 {Execution in {#2}};
+      }{\argIV}{
+        \causegroupplotsallocation[\argIX]
+                                  {\argIII}{\argIV}
+                                  {#1}
+                                  {Allocation in {#2}};
+      }{\argVI}{
+        \causegroupplotscollection[\argIX]
+                                  {\argV}{\argVI}
+                                  {#1}
+                                  {Collection in {#2}};
+      }{\argVIII}{
+        \causegroupplotsmemory[\argIX]
+                              {\argVII}{\argVIII}
+                              {#1}
+                              {Memory Used in {#2}};
+      }
+    }
+    \caption[Total rate of bytecode execution, rate of memory
+      allocation, rate of garbage collection and overall memory usage
+      in {#2}.]  {Total rate of bytecode execution, rate of memory
+      allocation, garbage collection and overall memory usage in
+      {#2} during a demonstration of mind initialization, plan
+      execution, failure, physical learning, and reflective learning.
+      \autoref{table:#3} shows an index of other data from this
+      experiment.}
+    \label{figure:#1}
+  \end{figure}%
+}
+
+
+
+\newcommand{\experimentdatatable}[3][]{
+  \begin{table}
+    \centering
+    \begin{tabular}{llll}
+      ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                             \\
+      \hline AI &                   &                    & \autoref{figure:data/#1/mind_plot-Gripper-1}                                       \\
+      ~         & Reflective        &                    & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective}                             \\
+      ~         &                   & Event Knowledge    & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-reflective_event_knowledge}  \\
+      ~         &                   & Execution          & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-execution}                   \\
+      ~         &                   & Imagination        & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-imagination}                 \\
+      ~         &                   & Object Type Goal   & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-plan_object_type_goal}       \\
+      ~         &                   & Plan               & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-plan}                        \\
+      ~         &                   & Plan Bug Response  & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-plan_bug_response}           \\
+      ~         & Deliberative      &                    & \autoref{figure:data/#1/mind_plot-Gripper-1-deliberative}                           \\
+      ~         &                   & Execution          & \autoref{figure:data/#1/mind_plot-Gripper-1-deliberative-execution}                 \\
+      ~         &                   & Imagination        & \autoref{figure:data/#1/mind_plot-Gripper-1-deliberative-imagination}               \\
+      ~         &                   & Object Type Goal   & \autoref{figure:data/#1/mind_plot-Gripper-1-deliberative-physical_object_type_goal} \\
+      ~         &                   & Plan               & \autoref{figure:data/#1/mind_plot-Gripper-1-deliberative-plan}                      \\
+      ~         & Learned Reactive  &                    & \autoref{figure:data/#1/mind_plot-Gripper-1-learned_reactive}                       \\
+      ~         &                   & Physical Action    & \autoref{figure:data/#1/mind_plot-Gripper-1-learned_reactive-physical}              \\
+      ~         &                   & Physical Knowledge & \autoref{figure:data/#1/mind_plot-Gripper-1-learned_reactive-physical_knowledge}    \\
+      ~         & Built-in Reactive &                    & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive}                       \\
+      ~         &                   & Neural Plug        & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-neural_plug}           \\
+      ~         &                   & Physical Action    & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-physical}              \\
+      ~         &                   & Sensory            & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-sensory}               \\
+    \end{tabular}
+    \caption[Data from #1.]{Data from #2.  #3}
+    \label{table:#1}
+  \end{table}
+}
+
+
+
+
+\newcommand{\experimentdatafigures}[2][]{
+  % AI
+  {\clearpage
+    \experimentcausegroupplots[10]{50}
+                              {1}{6}
+                              {1}{6}
+                              {200}{600}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1]
+                                                                 {AI}
+                                                                 {#2}
+  }                                                            
+  % reflective
+  {\clearpage
+    \experimentcausegroupplots[5]{25}
+                              {1}{5}
+                              {1}{5}
+                              {100}{400}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective]
+                                                                 {Reflective Layer}
+                                                                 {#2}
+  }
+  % reflective event knowledge
+  {\clearpage
+    \experimentcausegroupplots[5]{20}
+                              {0.5}{3}
+                              {0.5}{3}
+                              {50}{300}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-reflective_event_knowledge]
+                                                                 {Reflective Event Knowledge Agency}
+                                                                 {#2}
+  }
+  % reflective execution
+  {\clearpage
+    \experimentcausegroupplots[0.5]{2}
+                              {0.25}{0.5}
+                              {0.25}{0.5}
+                              {5}{20}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-execution]
+                                                                 {Reflective Execution Agency}
+                                                                 {#2}
+  }
+  % reflective imagination
+  {\clearpage
+    \experimentcausegroupplots[1]{4}
+                              {0.1}{0.5}
+                              {0.1}{0.5}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-imagination]
+                                                                 {Reflective Imagination Agency}
+                                                                 {#2}
+  }
+  % reflective object type goal
+  {\clearpage
+    \experimentcausegroupplots[5]{20}
+                              {1}{4}
+                              {1}{4}
+                              {20}{80}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan_object_type_goal]
+                                                                 {Reflective Object Type Goal Agency}
+                                                                 {#2}
+  }
+  % reflective plan
+  {\clearpage
+    \experimentcausegroupplots[2]{10}
+                              {0.25}{1.5}
+                              {0.25}{1.5}
+                              {0.25}{1}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan]
+                                                                 {Reflective Plan Agency}
+                                                                 {#2}
+  }
+  % reflective plan bug response
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.25}{1}
+                              {0.25}{1}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan_bug_response]
+                                                                 {Reflective Plan Bug Response Agency}
+                                                                 {#2}
+  }
+  % deliberative
+  {\clearpage
+    \experimentcausegroupplots[5]{20}
+                              {1}{4}
+                              {1}{4}
+                              {50}{200}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative]
+                                                                 {Deliberative Layer}
+                                                                 {#2}
+  }                                                                 
+  % deliberative execution
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {5}{40}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-execution]
+                                                                 {Deliberative Execution Agency}
+                                                                 {#2}
+  }
+  % deliberative imagination
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {5}{40}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-imagination]
+                                                                 {Deliberative Imagination Agency}
+                                                                 {#2}
+  }
+  % deliberative object type goal
+  {\clearpage
+    \experimentcausegroupplots[3]{12}
+                              {0.5}{2}
+                              {0.5}{2}
+                              {40}{160}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-physical_object_type_goal]
+                                                                 {Deliberative Object Type Goal Agency}
+                                                                 {#2}
+  }
+  % deliberative plan
+  {\clearpage
+    \experimentcausegroupplots[4]{16}
+                              {0.5}{2.5}
+                              {0.5}{2.5}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-plan]
+                                                                 {Deliberative Plan Agency}
+                                                                 {#2}
+  }
+  % learned reactive
+  {\clearpage
+    \experimentcausegroupplots[2]{10}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {20}{60}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive]
+                                                                 {Learned Reactive Layer}
+                                                                 {#2}
+  }
+  % learned reactive physical action
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {5}{20}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive-physical]
+                                                                 {L.R. Physical Action Agency}
+                                                                 {#2}
+  }
+  % learned reactive physical knowledge
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {5}{40}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive-physical_knowledge]
+                                                                 {L.R. Physical Knowledge Agency}
+                                                                 {#2}
+  }
+  % built-in reactive
+  {\clearpage
+    \experimentcausegroupplots[5]{15}
+                              {0.5}{2}
+                              {0.5}{2}
+                              {10}{50}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive]
+                                                                 {Built-in Reactive Layer}
+                                                                 {#2}
+  }
+  % built-in reactive physical action
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-physical]
+                                                                 {B.R. Physical Action Agency}
+                                                                 {#2}
+  }
+  % built-in reactive neural plug
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-neural_plug]
+                                                                 {B.R. Neural Plug Agency}
+                                                                 {#2}
+  }
+  % built-in reactive sensory
+  {\clearpage
+    \experimentcausegroupplots[5]{20}
+                              {0.5}{3}
+                              {0.5}{3}
+                              {10}{50}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-sensory]
+                                                                 {B.R. Sensory Agency}
+                                                                 {#2}
+  }
+}

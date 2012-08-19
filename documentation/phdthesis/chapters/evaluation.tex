@@ -6,197 +6,56 @@
 \section{Empirical Run-time Tests}
 
 
-\newcommand{\experimentlength}{94.297655}
-\newcommand{\experimentxaxismax}{100}
-\newcommand{\experimentxscale}{0.08cm}
-\newcommand{\experimentmarkscale}{0.75}
-\newcommand{\experimentxaxispertick}{10}
-
-% bytecode execution and memory allocation rates for the entire AI
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=.133cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,45);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,5,...,45}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels      
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Thousands of Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-bytecode_count.data};
-    
-	%legend
-	\begin{scope}[shift={(10,45)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Total Rate of Bytecode Execution in AI};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=1cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,6);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,6}
-     		\draw (1pt,\y) -- (-3pt,\y)
-     			node[anchor=east] {\y};
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,6)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Total Rate of Memory Allocation in AI};
-	\end{scope}
-\end{tikzpicture}
-\caption[Total rate of bytecode execution and memory allocation in the
-  AI.]{Total rate of bytecode execution and memory allocation in the
-  AI during a demonstration of mind initialization, plan execution,
-  failure, physical learning, and reflective learning..}
-\label{figure:mind_plot_data}
-\end{figure}
+                                                             
 
 
 % bytecode execution rate for each layer
 \begin{figure}
 \raggedleft
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,20);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,5,...,20}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-bytecode_count.data};
+\begin{tikzpicture}[y=0.15cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{5}{20}
         
-	%legend
-	\begin{scope}[shift={(10,20)}] 
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Reflective Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytecodes
+        
+        \experimentdatalegendone[80]{20}{data/mind_plot-Gripper-1-reflective-bytecode_count.data}{Reflective Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,20);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,5,...,20}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-bytecode_count.data};
+\begin{tikzpicture}[y=0.15cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{5}{20}
         
-	%legend
-	\begin{scope}[shift={(10,20)}] 
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Deliberative Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytecodes
+
+        \experimentdatalegendtwo[80]{20}{data/mind_plot-Gripper-1-deliberative-bytecode_count.data}{Deliberative Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,20);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,5,...,20}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-bytecode_count.data};
+\begin{tikzpicture}[y=0.15cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{5}{20}
         
-	%legend
-	\begin{scope}[shift={(10,20)}] 
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Learned Reactive Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytecodes
+        
+        \experimentdatalegendthree[80]{20}{data/mind_plot-Gripper-1-learned_reactive-bytecode_count.data}{Learned Reactive Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,20);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,5,...,20}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-bytecode_count.data};
+\begin{tikzpicture}[y=0.15cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{5}{20}
         
-	%legend
-	\begin{scope}[shift={(10,20)}] 
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytecodes
+
+        \experimentdatalegendfour[80]{20}{data/mind_plot-Gripper-1-builtin_reactive-bytecode_count.data}{Built-in Reactive Layer};
 \end{tikzpicture}
 \caption[Rate of bytecode execution in each layer of the AI during a
   demonstration.]{Rate of bytecode execution in each layer of the AI
@@ -209,118 +68,50 @@
 % memory allocation rate for each layer
 \begin{figure}
 \raggedleft
-\begin{tikzpicture}[y=1cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,3);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,3}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-bytes_allocated_count.data};
+\begin{tikzpicture}[y=1cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{1}{3}
         
-	%legend
-	\begin{scope}[shift={(10,3)}] 
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Reflective Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytes
+
+        \experimentdatalegendone[80]{3}{data/mind_plot-Gripper-1-reflective-bytes_allocated_count.data}{Reflective Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=1cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,3);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,3}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-bytes_allocated_count.data};
+\begin{tikzpicture}[y=1cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{1}{3}
         
-	%legend
-	\begin{scope}[shift={(10,3)}] 
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Deliberative Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytes
+
+        \experimentdatalegendtwo[80]{3}{data/mind_plot-Gripper-1-deliberative-bytes_allocated_count.data}{Deliberative Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=1cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,3);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,3}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-bytes_allocated_count.data};
+\begin{tikzpicture}[y=1cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{1}{3}
         
-	%legend
-	\begin{scope}[shift={(10,3)}] 
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0)
-		node[right]{Learned Reactive Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytes
+
+        \experimentdatalegendthree[80]{3}{data/mind_plot-Gripper-1-learned_reactive-bytes_allocated_count.data}{Learned Reactive Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=1cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,3);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,3}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-bytes_allocated_count.data};
+\begin{tikzpicture}[y=1cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{1}{3}
         
-	%legend
-	\begin{scope}[shift={(10,3)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Layer};
-	\end{scope}
+	%labels
+        \experimentxaxislabel
+        \experimentyaxisbytes
+        
+        \experimentdatalegendfour[80]{3}{data/mind_plot-Gripper-1-builtin_reactive-bytes_allocated_count.data}{Built-in Reactive Layer};
 \end{tikzpicture}
 \caption[Rate of memory allocation in each layer of the AI during a
   demonstration.]{Rate of memory allocation in each layer of the AI
@@ -330,906 +121,86 @@
 \end{figure}
 
 
-% built-in reactive agency bytecode rate plots
+% memory usage for each layer
 \begin{figure}
 \raggedleft
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,3,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
+\begin{tikzpicture}[y=0.0066cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{100}{400}
         
 	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
+        \experimentxaxislabel
+        \experimentyaxismemory
 
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-physical-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Physical Agency};
-	\end{scope}
+        \experimentdatalegendone[80]{400}{data/mind_plot-Gripper-1-reflective-bytes_footprint.data}{Reflective Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,3,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
+\begin{tikzpicture}[y=0.0066cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{100}{400}
         
 	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
+        \experimentxaxislabel
+        \experimentyaxismemory
 
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-neural_plug-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Neural Plug Agency};
-	\end{scope}
+        \experimentdatalegendtwo[80]{400}{data/mind_plot-Gripper-1-deliberative-bytes_footprint.data}{Deliberative Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,3,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
+\begin{tikzpicture}[y=0.0066cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{100}{400}
         
 	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
+        \experimentxaxislabel
+        \experimentyaxismemory
 
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-sensory-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Sensory Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of bytecode execution in each agency of the built-in
-  reactive layer of the AI during a demonstration.]{Rate of bytecode
-  execution in each agency of the built-in reactive layer of the AI
-  during a demonstration of mind initialization, plan execution,
-  failure, physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
-
-
-% built-in reactive agency memory allocation rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=2cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,1.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,1.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-physical-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,1.5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Physical Agency};
-	\end{scope}
+        \experimentdatalegendthree[80]{400}{data/mind_plot-Gripper-1-learned_reactive-bytes_footprint.data}{Learned Reactive Layer};
 \end{tikzpicture}
 
 \vspace{5mm}
 
-\begin{tikzpicture}[y=2cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,1.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,1.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
+\begin{tikzpicture}[y=0.0066cm, x=8cm/80,font=\sffamily]
+        \experimentaxes[80]{100}{400}
         
 	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
+        \experimentxaxislabel
+        \experimentyaxismemory
         
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-neural_plug-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,1.5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Neural Plug Agency};
-	\end{scope}
+        \experimentdatalegendfour[80]{400}{data/mind_plot-Gripper-1-builtin_reactive-bytes_footprint.data}{Built-in Reactive Layer};
 \end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=2cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,1.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,1.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-builtin_reactive-sensory-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,1.5)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Built-in Reactive Sensory Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of memory allocation in each agency of the built-in
-  reactive layer of the AI during a demonstration.]{Rate of memory
-  allocation in each agency of the built-in reactive layer of the AI
-  during a demonstration of mind initialization, plan execution,
-  failure, physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
-
-
-% learned reactive agency bytecode rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=0.6cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-physical-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Learned Reactive Physical Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=0.6cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,1,...,5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-physical_knowledge-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Learned Reactive Physical Knowledge Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-% learned reactive agency memory allocation rate plots
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-physical-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Learned Reactive Physical Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-learned_reactive-physical_knowledge-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Learned Reactive Physical Knowledge Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\caption[Rate of bytecode execution and memory allocation in each
-  agency of the learned reactive layer of the AI during a
-  demonstration.]{Rate of bytecode execution and memory allocation in
-  each agency of the learned reactive layer of the AI during a
+\caption[Memory usage in each layer of the AI during a
+  demonstration.]{Memory usage in each layer of the AI during a
   demonstration of mind initialization, plan execution, failure,
   physical learning, and reflective learning.}
 \label{figure:mind_plot_data}
 \end{figure}
 
 
-
-% deliberative agency bytecode rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,2,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-execution-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Plan Execution Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,2,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-imagination-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Plan Imagination Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,2,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-physical_object_type_goal-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Physical Object Type Goal Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=0.25cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,12);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,2,...,12}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-plan-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,12)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Plan Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of bytecode execution in each agency of the deliberative
-  layer of the AI during a demonstration.]{Rate of bytecode execution
-  in each agency of the deliberative layer of the AI during a
-  demonstration of mind initialization, plan execution, failure,
-  physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
-
-
-% deliberative agency memory allocation rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-execution-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Execution Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-        
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-imagination-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Imagination Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-physical_object_type_goal-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Object Type Goal Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\vspace{5mm}
-
-\begin{tikzpicture}[y=1.5cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.8cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-deliberative-plan-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Deliberative Plan Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of memory allocation in each agency of the deliberative
-  layer of the AI during a demonstration.]{Rate of memory allocation
-  in each agency of the deliberative layer of the AI during a
-  demonstration of mind initialization, plan execution, failure,
-  physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
-
-
-% reflective agency bytecode rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,16);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,4,...,16}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-execution-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,16)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Execution Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,16);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,4,...,16}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-imagination-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,16)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Imagination Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,16);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,4,...,16}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-plan_bug_response-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,16)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Plan Bug Response Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,16);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,4,...,16}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-plan-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,16)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Plan Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.15cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,16);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,4,...,16}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-reflective_event_knowledge-bytecode_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,16)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Event Knowledge Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of bytecode execution in each agency of the reflective
-  layer of the AI during a demonstration.]{Rate of bytecode execution
-  in each agency of the reflective layer of the AI during a
-  demonstration of mind initialization, plan execution, failure,
-  physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
-
-
-% reflective agency memory allocation rate plots
-\begin{figure}
-\raggedleft
-\begin{tikzpicture}[y=0.96cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-execution-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2.5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Execution Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.96cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-        
-	%plots
-	\draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-imagination-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2.5)}]
-	\draw (0,0) -- 
-		plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Imagination Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.96cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-plan_bug_response-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2.5)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Plan Bug Response Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.96cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-plan-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2.5)}]
-	\draw (0,0) -- 
-		plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Plan Agency};
-	\end{scope}
-\end{tikzpicture}
-
-\begin{tikzpicture}[y=0.96cm, x=\experimentxscale,font=\sffamily]
- 	%axis
-	\draw (0,0) -- coordinate (x axis mid) (\experimentxaxismax,0);
-    	\draw (0,0) -- coordinate (y axis mid) (0,2.5);
-    	%ticks
-    	\foreach \x in {0,\experimentxaxispertick,...,\experimentxaxismax}
-     		\draw (\x,1pt) -- (\x,-3pt)
-			node[anchor=north] {\x};
-    	\foreach \y in {0,0.5,...,2.5}
-     		\draw (1pt,\y) -- (-3pt,\y) 
-     			node[anchor=east] {\y}; 
-        
-	%labels
-	\node[below=0.5cm] at (x axis mid) {Minutes};
-	\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
-
-	%plots
-	\draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}]
-		file {data/mind_plot-Gripper-1-reflective-reflective_event_knowledge-bytes_allocated_count.data};
-        
-	%legend
-	\begin{scope}[shift={(10,2.5)}]
-	\draw (0,0) -- 
-		plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
-		node[right]{Reflective Event Knowledge Agency};
-	\end{scope}
-\end{tikzpicture}
-\caption[Rate of memory allocation in each agency of the reflective
-  layer of the AI during a demonstration.]{Rate of memory allocation
-  in each agency of the reflective layer of the AI during a
-  demonstration of mind initialization, plan execution, failure,
-  physical learning, and reflective learning.}
-\label{figure:mind_plot_data}
-\end{figure}
+% mind_plot-Gripper-1-builtin_reactive-physical
+%\begin{figure}
+%  \causegroupplots[0.25cm]{
+%    \causegroupplotsexecution[3]{12}
+%                             {data/mind_plot-Gripper-1-builtin_reactive-physical}
+%                             {Built-in Reactive Physical Agency};
+%  }{}{
+%    \causegroupplotsallocation[3]{12}
+%                              {data/mind_plot-Gripper-1-builtin_reactive-physical}
+%                              {};
+%  }{}{
+%    \causegroupplotsmemory[3]{12}
+%                          {data/mind_plot-Gripper-1-builtin_reactive-physical}
+%                          {};
+%  }
+%  \caption[Total rate of bytecode execution, rate of memory allocation
+%    and overall memory usage in the built-in reactive physical
+%    agency.]  {Total rate of bytecode execution, rate of memory
+%    allocation and overall memory usage in the built-in reactive
+%    physical agency during a demonstration of mind initialization,
+%    plan execution, failure, physical learning, and reflective
+%    learning.}
+%  \label{figure:mind_plot_data}
+%\end{figure}
 
 
 

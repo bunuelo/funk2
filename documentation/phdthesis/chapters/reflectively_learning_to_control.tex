@@ -184,10 +184,17 @@ kitchen cooking domain (see
 of butter in the refrigerator.  Subsequently, the AI sees the same
 stick of butter on a table.  The AI must resolve the fact the either
 (1) the table is small enough to fit into the refrigerator or (2) the
-stick of butter is no longer in the refrigerator.  In the block
-building domain, the physical knowledge base is a faithful
-reconstruction of the visual knowledge base, slightly behind the
-times.
+stick of butter is no longer in the refrigerator.  The reactive layers
+of the AI that are necessary for navigating the kitchen domain are
+factors that complicate explaining the reflective thinking layers of
+the AI.  The learning and planning agencies of the deliberative and
+reflective thinking layers are exactly the same for the block building
+domain as they are for the kitchen domain.  Thus, I will focus on
+explaining the AI's reflective thinking processes in terms of the
+simpler block building domain as the reflective thinking capabilities
+are the focus of this thesis.  In the block building domain, the
+physical knowledge base is a faithful reconstruction of the visual
+knowledge base, slightly behind the times.
 \begin{figure}
 \begin{center}
 \includegraphics[width=10cm]{gfx/three_layers_overview}
@@ -218,7 +225,25 @@ behavior at a more steady and often slower pace.  This allows the
 reactive layer to operate at full speed, often in bursts of activity,
 while a buffered stream of events is reasoned about more carefully by
 the deliberative layer without slowing the primary activity of
-physical reaction.
+physical reaction.  The deliberative layer first induces common
+structures from the semantic knowledge in its reconstruction of the
+physical knowledge base.  The deliberative layer stores these
+abstractions of types of knowledge are stored in a knowledge base
+called \emph{the physical type knowledge base}.  The physical type
+knowledge base counts the occurrences of types of knowledge in the
+deliberative layer's reconstruction of the physical knowledge base.
+The following are a list of types of abstract knowledge that is
+accounted for in the physical type knowledge base:
+\begin{itemize}
+\item A block is sitting on another block.
+\item A block with a pyramid shape is sitting on Block-1.
+\item A green block is sitting on a blue block.
+\item A block is to the left of a gripper that is me.
+\end{itemize}
+In addition to events about knowledge in the physical knowledge base
+of the reactive layer, the deliberative layer also receives events
+that specify the beginning and ending times of reactive layer resource
+executions.
 
 \section{The Physical Simulation}
 

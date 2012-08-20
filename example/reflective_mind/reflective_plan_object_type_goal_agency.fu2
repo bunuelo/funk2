@@ -31,7 +31,7 @@
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_deliberative1_knowledge        [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_type_knowledge                [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_goal_knowledge                [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_counterfactual_type_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative1_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute connect_knowledge_reflection []

@@ -33,10 +33,10 @@ itself.  The contributions of this thesis are:
 \item \emph{Grounded Learning of Knowledge Utility}: A dependency
   tracing learning algorithm that is capable of learning both from
   ``being told'' as well as from experience, learning what types of
-  knowledge are useful in different contexts, correcting knowledge
-  when it turns out to be wrong, learning and correcting assumptions
-  of the utility of knowledge through experience acting in the
-  physical world.
+  knowledge are useful in different contexts, refining hypotheses for
+  the utility of knowledge when they turn out to be wrong, learning by
+  tracing these assumptions from expectation failures experienced
+  during the execution of plans.
 \item \emph{Funk Virtual Machine and Programming Language}: A
   concurrent and parallel virtual machine and lisp-like programming
   language with procedural tracing features that facilitate the
@@ -66,20 +66,20 @@ processes: (1) perceptual data are generalized and categorized to
 learn induced abstract models, (2) abstract models are used to infer
 expected hypothetical states, i.e. states of future, past, or
 otherwise ``hidden'' variables, (3) actions are chosen based on
-considerations of different action-dependent inferences.  While there
-are many types of machine learning algorithms that focus on this
-abstract 3-step closed-loop process of learning to control, the field
-of metacognition \cite[]{cox_and_raja:2008} focuses on making at least
-two layers of closed-loop systems. The first closed-loop learning
-algorithm learns how to deal with the external world, while the second
-closed-loop learning algorithm perceives the state of the algorithm
-below. I see metacognition as a layering of learning algorithms, such
-that the second layer algorithm learns from perceiving the activity of
-the first layer and controls or modifies this first layer. While it
-may be clear how to trace changes in the perceptual inputs of layer
-one of the algorithm, it is less than clear how the second layer
-learner should monitor the changes in the state of the first layer
-learner.
+considerations of different action and hypothesis dependent
+inferences.  While there are many types of machine learning algorithms
+that focus on this abstract 3-step closed-loop process of learning to
+control, the field of metacognition \cite[]{cox_and_raja:2008} focuses
+on making at least two layers of closed-loop systems. The first
+closed-loop learning algorithm learns how to deal with the external
+world, while the second closed-loop learning algorithm perceives the
+state of the algorithm below. I see metacognition as a layering of
+learning algorithms, such that the second layer algorithm learns from
+perceiving the activity of the first layer and controls or modifies
+this first layer. While it may be clear how to trace changes in the
+perceptual inputs of layer one of the algorithm, it is less than clear
+how the second layer learner should monitor the changes in the state
+of the first layer learner.
 
 \section{Reflection in Computer Science}
 

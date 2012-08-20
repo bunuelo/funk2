@@ -38,6 +38,9 @@
   [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_current_situation]]
   [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_plan]]]
 
+
+'deliberative_forget_all_imagined_events_resource'
+
 [deframe deliberative_forget_all_imagined_events_resource [deliberative_resource] []
   [new []
        [construct deliberative_resource `forget_all_imagined_events
@@ -58,6 +61,11 @@
 			    nil]]]]
        nil]]
 
+[deftypefunk deliberative_forget_all_imagined_events_resource get as-english_conslist []
+  `[forget all imagined events]]
+
+
+'deliberative_set_imagine_time_to_be_now_resource'
 
 [deframe deliberative_set_imagine_time_to_be_now_resource [deliberative_resource] []
   [new []
@@ -71,6 +79,11 @@
 			    nil]]]]
        nil]]
 
+[deftypefunk deliberative_set_imagine_time_to_be_now_resource get as-english_conslist []
+  `[set imagine time to be now]]
+
+
+'deliberative_imagine_current_situation_resource'
 
 [deframe deliberative_imagine_current_situation_resource [deliberative_resource] []
   [new []
@@ -128,6 +141,11 @@
 			      nil]]]]]
        nil]]
 
+[deftypefunk deliberative_imagine_current_situation_resource get as-english_conslist []
+  `[imagine current situation]]
+
+
+'deliberative_imagine_plan_resource'
 
 [deframe deliberative_imagine_plan_resource [deliberative_resource] []
   [new []
@@ -151,5 +169,8 @@
 				    [set [get [get [get this mind] agency `deliberative `plan] semantic_planner] imagine_plan nil]]]]
 			  nil]]]
        nil]]
+
+[deftypefunk deliberative_imagine_plan_resource get as-english_conslist []
+  `[imagine plan]]
 
 

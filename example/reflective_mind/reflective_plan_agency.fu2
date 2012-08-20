@@ -240,6 +240,48 @@
        [construct reflective_resource `remember_plan_for_goal
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+
+			[let [[arguments `[|forget all imagined events|]]]
+			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
+			    [if [null action]
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
+				    [have action wait_to_call]
+				    ]]]]
+			
+			[let [[arguments `[|set imagine time to be now|]]]
+			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
+			    [if [null action]
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
+				    [have action wait_to_call]
+				    ]]]]
+			
+			[let [[arguments `[|imagine current situation|]]]
+			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
+			    [if [null action]
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
+				    [have action wait_to_call]
+				    ]]]]
+			
+			[let [[arguments `[|focus on a plan, plan 6|]]]
+			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
+			    [if [null action]
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
+				    [have action wait_to_call]
+				    ]]]]
+			
+			[let [[arguments `[|imagine plan|]]]
+			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
+			    [if [null action]
+				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
+				    [have action wait_to_call]
+				    ]]]]
+			
+
 			]]]]
 
 [deftypefunk reflective_remember_plan_for_goal_resource get as-english_conslist []

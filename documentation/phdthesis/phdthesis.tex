@@ -81,7 +81,7 @@
 % tocaligned eulerchapternumbers drafting linedheaders listsseparated 
 % subfig nochapters beramono eulermath parts minionpro pdfspacing 
 % listings dottedtoc minionprospacing manychapters
-\usepackage[eulerchapternumbers,drafting,listings,listsseparated,%pdfspacing,%listings,
+\usepackage[eulerchapternumbers,listings,listsseparated,%pdfspacing,%listings,
             subfig,beramono,eulermath,parts,manychapters]{classicthesis}
 
 %*******************************************************
@@ -112,7 +112,24 @@
 \makeatother 
 
 
+%\addtolength{\oddsidemargin}{-.875in}
+%\addtolength{\evensidemargin}{-.875in}
+%\addtolength{\textwidth}{1.75in}
 
+\newcommand{\mymargins}{%
+%  \setlength{\textwidth}{4in}%
+%  \setlength{\oddsidemargin}{1in}%
+  
+  \areaset[current]{345pt}{768pt} % ~ 345 * factor 2 + 33 head + 42 \the\footskip 
+  %\areaset{345pt}{815pt} % 740 (factor 2.2) + 33 head + 42 head \the\footskip    
+  \areaset{345pt}{8.75in} % 740 (factor 2.2) + 33 head + 42 head \the\footskip    
+  \setlength{\marginparwidth}{7em}%
+  \setlength{\marginparsep}{2em}%
+  
+  \setlength{\topmargin}{0in}%
+  %\setlength{\textheight}{6in}%
+}
+\mymargins
 
 \usepackage{amsthm} % defines \newtheorem
 \newtheorem{expression}{Expression}[section] % Funk2 expression
@@ -126,6 +143,9 @@
 % Thanks to the ``Daily rant: A random blog about everything, mostly
 % programming''
 
+%\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+%\usepackage[top=1in,bottom=1in]{geometry}
+\usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{type1cm}
 \usepackage{eso-pic}
@@ -241,60 +261,6 @@
 \usetikzlibrary{plotmarks}
 
 
-%%% test files for tikz
-
-% The data files, written on the first run.
-\begin{filecontents}{div_soft.data}
-#MOPS 	Power [mW]
-1.33E-02	10.403432
-1.33E-01	12.53108
-2.66E-01	14.90265
-3.99E-01	17.22483
-5.31E-01	19.58292
-6.64E-01	21.89876
-7.97E-01	24.44624
-9.30E-01	26.6708
-\end{filecontents}
-
-\begin{filecontents}{div_ciu.data}
-# MOPS 	Power [mW]
-4.35E-02	9.562436
-4.35E-01	10.845494
-8.69E-01	12.24356
-1.30E+00	13.66974
-1.74E+00	15.13008
-2.17E+00	16.57845
-2.61E+00	17.97894
-3.04E+00	19.41534
-\end{filecontents}
-
-\begin{filecontents}{div_ciu_oscar.data}
-#MOPS 	Power [mW]
-8.57E-01	11.255013
-9.99E-01	11.4804
-1.14E+00	11.718
-1.29E+00	11.9916
-1.64E+00	12.65854
-2.00E+00	13.308
-2.64E+00	14.484
-3.85E+00	16.8
-\end{filecontents}
-
-\begin{filecontents}{div_ciu_oscar_extrapolated.data}
-# MOPS 	Power [mW]
-4.28E+00	17.56312023
-5.71E+00	20.21127914
-7.14E+00	22.85943805
-8.57E+00	25.50759696
-9.99E+00	28.15575587
-\end{filecontents}
-
-%%% end test files for tikz
-
-
-
-
-
 % BEGIN LONG DIVISION DIGIT SPACING
 %
 \newdimen\digitwidth
@@ -327,7 +293,6 @@
 
 
 
-
 \include{chapters/experiment_plotting}
 
 
@@ -354,14 +319,22 @@
 %********************************************************************
 % Frontmatter
 %*******************************************************
+\mymargins
 \include{frontbackmatter/dirtytitlepage}
+\mymargins
 \include{frontbackmatter/titlepage}
+\mymargins
 \include{frontbackmatter/titleback}
+\mymargins
 \cleardoublepage\include{frontbackmatter/dedication}
+\mymargins
 \cleardoublepage\include{frontbackmatter/abstract}
+\mymargins
 \cleardoublepage\include{frontbackmatter/publication}
+\mymargins
 \cleardoublepage\include{frontbackmatter/acknowledgments}
 \pagestyle{scrheadings}
+\mymargins
 \cleardoublepage\include{frontbackmatter/contents}
 %\cleardoublepage\include{frontbackmatter/preface}
 %*******************************************************
@@ -371,26 +344,38 @@
 %% remarked for starting pages with 1
 %\pagenumbering{arabic}
 
+\mymargins
 \include{chapters/introduction}
 
+\mymargins
 \cleardoublepage\part{The Substrate}\label{part:the_substrate}
+\mymargins
 \include{chapters/reflectively_learning_to_control}
+\mymargins
 \include{chapters/the_mind_monitor_application}
+\mymargins
 \include{chapters/related_models}
 
+\mymargins
 \cleardoublepage\part{Conclusion}\label{part:conclusion}
+\mymargins
 \include{chapters/evaluation}
+\mymargins
 \include{chapters/future}
 
 %*******************************************************
 % Backmatter
 %*******************************************************
 \appendix
+\mymargins
 \cleardoublepage\part{Appendix}
 %\include{chapters/science}
 %\include{chapters/education}
+\mymargins
 \include{chapters/experiment_data}
+\mymargins
 \include{chapters/causal_reflective_tracing_tutorial}
+\mymargins
 \include{chapters/the_code}
 
 %\cleardoublepage\part{The Implementation}\label{part:the_implementation}
@@ -419,8 +404,11 @@
 %*******************************************************
 % Other Stuff in the Back
 %*******************************************************
+\mymargins
 \cleardoublepage\include{frontbackmatter/bibliography}
+\mymargins
 \cleardoublepage\include{frontbackmatter/colophon}
+\mymargins
 \cleardoublepage\include{frontbackmatter/declaration}
 % ******************************************************
 % Game Over: Restart, Restore or Quit?

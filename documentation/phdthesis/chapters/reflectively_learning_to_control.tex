@@ -161,6 +161,36 @@ top of a pyramid.
 
 \section{The Three Layers of the Implementation}
 
+{\mbox{\autoref{figure:three_layers_overview}}} shows an overview of
+the four layers.  The first layer is the reactive layer, which
+monitors an event stream of changes of object knowledge in the
+physical simulation.  The reactive layer can also respond by
+activating predefined resources in the physical simulation.  The
+physical simulation maintains a representation of the perceptual state
+of the body of the AI, the visual knowledge that the body is currently
+seeing.  The representation of the perceptual state of the body that
+the AI is controlling is referred to as \emph{the visual knowledge
+  base}.  Changes to the visual knowledge constitute the stream of
+events that the reactive layer receives and reconstructs into a
+representation of the physical world.  The AI's current representation
+of the physical world is referred to as \emph{the physical knowledge
+  base}.  I have found the distinction between visual and physical
+knowledge to be useful in domains where only partial information about
+the physical world is available through the senses.  In the block
+building domain, the physical knowledge base is a faithful
+reconstruction of the visual knowledge base, slightly behind the
+times.  
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=10cm]{gfx/three_layers_overview}
+\end{center}
+\caption[The layers of the AI.]{The layers of the AI form cascaded
+  control loops, where each layer reflectively controls the layers
+  below.}
+\label{figure:three_layers_overview}
+\end{figure}
+
 \section{The Physical Simulation}
 
 The block building domain is implemented as a simulation based on
@@ -248,7 +278,7 @@ physical knowledge-base that is reconstructed from these reflective
 change events.
 \begin{sidewaysfigure}
 \begin{center}
-\includegraphics[width=24cm]{gfx/implemented_physical_knowledge}
+\includegraphics[width=7.5in]{gfx/implemented_physical_knowledge}
 \end{center}
 \hspace{4cm}\parbox{15cm}{\caption[The physical knowledge-base.]{The
     physical

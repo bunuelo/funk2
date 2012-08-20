@@ -122,7 +122,8 @@ phdthesis.pdf: \
   gfx/state_action.pdf \
   gfx/transframe.pdf \
   gfx/fibermon_many_fibers.pdf \
-  gfx/magritte_pipe.pdf
+  gfx/magritte_pipe.pdf \
+  gfx/three_layers_overview.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

@@ -159,27 +159,27 @@ failure, retaining the hypothesis that executing the plan under focus
 might result in failure due to the plan's assertion that a cube is on
 top of a pyramid.
 
-\section{The Three Layers of the Implementation}
+\section{The Layers of the Implementation}
 
 {\mbox{\autoref{figure:three_layers_overview}}} shows an overview of
-the four layers.  The first layer is the reactive layer, which
-monitors an event stream of changes of object knowledge in the
-physical simulation.  The reactive layer can also respond by
-activating predefined resources in the physical simulation.  The
-physical simulation maintains a representation of the perceptual state
-of the body of the AI, the visual knowledge that the body is currently
-seeing.  The representation of the perceptual state of the body that
-the AI is controlling is referred to as \emph{the visual knowledge
-  base}.  Changes to the visual knowledge constitute the stream of
-events that the reactive layer receives and reconstructs into a
-representation of the physical world.  The AI's current representation
-of the physical world is referred to as \emph{the physical knowledge
-  base}.  I have found the distinction between visual and physical
-knowledge to be useful in domains where only partial information about
-the physical world is available through the senses.  In this case,
-some reasoning must be done in order to debug the physical knowledge
-when contradictory visual input is detected.  For example, in a
-kitchen cooking domain (see
+the three layers of the AI with the physical simulation.  The first
+layer is the reactive layer, which monitors an event stream of changes
+of object knowledge in the physical simulation.  The reactive layer
+can also respond by activating predefined resources in the physical
+simulation.  The physical simulation maintains a representation of the
+perceptual state of the body of the AI, the visual knowledge that the
+body is currently seeing.  The representation of the perceptual state
+of the body that the AI is controlling is referred to as \emph{the
+  visual knowledge base}.  Changes to the visual knowledge constitute
+the stream of events that the reactive layer receives and reconstructs
+into a representation of the physical world.  The AI's current
+representation of the physical world is referred to as \emph{the
+  physical knowledge base}.  I have found the distinction between
+visual and physical knowledge to be useful in domains where only
+partial information about the physical world is available through the
+senses.  In this case, some reasoning must be done in order to debug
+the physical knowledge when contradictory visual input is detected.
+For example, in a kitchen cooking domain (see
 {\mbox{\autoref{figure:isis_world_two_agents}}}), the AI sees a stick
 of butter in the refrigerator.  Subsequently, the AI sees the same
 stick of butter on a table.  The AI must resolve the fact the either
@@ -225,25 +225,72 @@ behavior at a more steady and often slower pace.  This allows the
 reactive layer to operate at full speed, often in bursts of activity,
 while a buffered stream of events is reasoned about more carefully by
 the deliberative layer without slowing the primary activity of
-physical reaction.  The deliberative layer first induces common
-structures from the semantic knowledge in its reconstruction of the
-physical knowledge base.  The deliberative layer stores these
-abstractions of types of knowledge are stored in a knowledge base
-called \emph{the physical type knowledge base}.  The physical type
-knowledge base counts the occurrences of types of knowledge in the
-deliberative layer's reconstruction of the physical knowledge base.
-The following are a list of types of abstract knowledge that is
-accounted for in the physical type knowledge base:
+physical reaction.  The deliberative layer first reconstructs a copy
+of the physical knowledge base that it can use as reference for the
+slower deliberative learning processes.  From this reconstruction of
+the physical knowledge base, the deliberative layer induces and counts
+common types of knowledge.  This abstraction process is focused only
+on the parts of the physical knowledge base that have changed.  The
+deliberative layer stores counts of these abstract types of knowledge
+in a knowledge base in the deliberative layer called \emph{the
+  physical type knowledge base}.  The physical type knowledge base
+counts the occurrences of types of knowledge in the deliberative
+layer's reconstruction of the physical knowledge base.
+{\mbox{\autoref{figure:physical_type_knowledge_abstraction}}} shows
+the knowledge bases involved in the abstraction of physical type
+knowledge.  The following is a list of types of abstract knowledge
+that is accounted for in the physical type knowledge base:
 \begin{itemize}
 \item A block is sitting on another block.
 \item A block with a pyramid shape is sitting on Block-1.
 \item A green block is sitting on a blue block.
 \item A block is to the left of a gripper that is me.
 \end{itemize}
+\begin{figure}
+\begin{center}
+\includegraphics[width=10cm]{gfx/physical_type_knowledge_abstraction}
+\end{center}
+\caption[The knowledge bases involved in physical type knowledge
+  abstraction.]{The knowledge bases involved in physical type
+  knowledge abstraction.  The creation of a reconstruction of the
+  physical knowledge base by the deliberative layer allows the full
+  speed concurrent execution of the reactive layer, despite the slower
+  speed of the more careful deliberative learning processes.}
+\label{figure:physical_type_knowledge_abstraction}
+\end{figure}
+
 In addition to events about knowledge in the physical knowledge base
 of the reactive layer, the deliberative layer also receives events
 that specify the beginning and ending times of reactive layer resource
-executions.
+executions.  Resource execution events are causally traced, so that
+execution call graphs are easily reconstructed asynchronously by the
+deliberative layer.
+{\mbox{\autoref{figure:implemented_reflective_event_knowledge_base}}}
+shows a time-line visualization of the reflective event knowledge base
+that is constructed from the execution events of the reactive
+resources.  Once a beginning and an ending time for an execution event
+in the reactive layer is received by the deliberative layer, a future
+task to learn the abstract physical type knowledge transframe for this
+resource execution is created.  The learning of an abstract physical
+knowledge transframe for the execution of reactive resource must wait
+for the abstract physical knowledge base to catch up with processing
+the current information from the visual and physical knowledge bases
+in the reactive layer.
+\begin{figure}
+\begin{center}
+\includegraphics[width=10cm]{gfx/implemented_reflective_event_knowledge_base}
+\end{center}
+\caption[A time-line visualization of the reflective event knowledge
+  base that is constructed from the execution events from the reactive
+  resources.]{A time-line visualization of the reflective event
+  knowledge base that is constructed from the execution events from
+  the reactive resources has a hierarchical causal structure.  The
+  horizontal axis represents time, while rounded rectangles represent
+  execution events of different reactive resources.  Notice that some
+  rectangles have a jagged right edge.  This represents that the event
+  does not yet have an ending time.}
+\label{figure:physical_type_knowledge_abstraction}
+\end{figure}
 
 \section{The Physical Simulation}
 

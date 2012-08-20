@@ -296,8 +296,11 @@
 [deftypefunk resource get as-english_conslist []
   `[,name]]
 
-[deftypefunk resource get as-string []
+[deftypefunk resource get as-english_string []
   [conslist-as-english_string [get this as-english_conslist]]]
+
+[deftypefunk resource get as-string []
+  [get this as-english_string]]
 
 'defined in traced_resource'
 [deftypefunk resource execute know_of_completed_action_sequence [action_sequence]

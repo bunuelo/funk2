@@ -70,7 +70,8 @@ of the AI's concept learning algorithm.
 \end{center}
 \caption[A example of an expectation failure.]{A example of an
   expectation failure.  A plan is executed that asserts that a
-  post-condition must be a stack of a cube on top of a triangle.}
+  post-condition must be a stack of a cube on top of a triangle, but
+  when the plan finishes executing this assertion fails.}
 \label{figure:failure_to_stack_cube_on_pyramid}
 \end{figure}
 
@@ -141,18 +142,22 @@ knowledge preconditions.
 
 In the example, executing the plan that the deliberative planner is
 focused on is hypothesized to result in a plan having an expectation
-failure event.  In this case, the reflectively planned execution of
-the deliberative execution of the plan under deliberative focus
-results in a stream of reflective event knowledge.  This stream of
-reflective event knowledge is processed in parallel with the
-deliberative planning machine operations.  The reflective layer
-abstracts representations of the preconditions and effects of the
-deliberative execution action.  In the example, this abstract
-knowledge includes that the plan currently under focus contains an
-assertion that a cube must be stacked on a pyramid.  The AI refines
-many of its hypotheses given this limited experience, retaining the
-hypothesis that executing the plan under focus might result in failure
-due to the plan's assertion that a cube is on top of a pyramid.
+failure event.  The reflectively planned execution of the deliberative
+execution of the plan is processed concurrently with the deliberative
+planning machine operations, slightly behind the times, not
+necessarily slowing down the deliberative planning resources.  The
+reflective layer induces abstract representations of this reflectively
+reconstructed representation of the deliberative planning machine and
+its relationships to its plans.  The preconditions and effects of the
+deliberative execution actions are learned from the abstractions of
+this reflective reconstruction, learning to predict, abstractly, the
+effects of planning actions on plans in general.  In the example, this
+abstract knowledge includes that the plan currently under focus
+contains an assertion that a cube must be stacked on a pyramid.  The
+AI refines many of its hypotheses given this limited experience of
+failure, retaining the hypothesis that executing the plan under focus
+might result in failure due to the plan's assertion that a cube is on
+top of a pyramid.
 
 \section{The Three Layers of the Implementation}
 

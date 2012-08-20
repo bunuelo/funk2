@@ -209,12 +209,16 @@ times.
 \label{figure:isis_world_two_agents}
 \end{figure}
 
-The deliberative layer sees changes as in the physical knowledge base
-as well as changes in reactive resource activations as a stream of
-events from the reactive layer to the deliberative layer.  While the
+The deliberative layer receives a stream of events from the reactive
+layer including changes to the physical knowledge base as well as
+changes in the activation states of reactive resources.  While the
 reactive layer may react to visual or physical knowledge immediately,
 the deliberative layer learns abstract models of this reactive
-behavior.
+behavior at a more steady and often slower pace.  This allows the
+reactive layer to operate at full speed, often in bursts of activity,
+while a buffered stream of events is reasoned about more carefully by
+the deliberative layer without slowing the primary activity of
+physical reaction.
 
 \section{The Physical Simulation}
 

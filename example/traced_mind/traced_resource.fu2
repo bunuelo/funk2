@@ -340,13 +340,13 @@
 					[relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
 					[relative_duration_time                [get change_feature relative_duration_time]]
 					[counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
-				    [set counterfactual_event absolute_start_time [new semantic_time [+ [get imagine_time time] relative_start_time_from_action_start]]]
-				    [set counterfactual_event absolute_end_time   [new semantic_time [+ [get imagine_time time] relative_start_time_from_action_start relative_duration_time]]]
+				    [set counterfactual_event absolute_start_time [new semantic_time [+ [get imagine_time value] relative_start_time_from_action_start]]]
+				    [set counterfactual_event absolute_end_time   [new semantic_time [+ [get imagine_time value] relative_start_time_from_action_start relative_duration_time]]]
 				    ]]
 			      ]]]
 		    [get this change_features]]
 	      
-	      [set semantic_planner imagine_time [new semantic_time [+ [get imagine_time time] [new relative_time [* 60 1000000000]]]]]
+	      [set semantic_planner imagine_time [new semantic_time [+ [get imagine_time value] [new relative_time [* 60 1000000000]]]]]
 	      
 	      ]]]]
     

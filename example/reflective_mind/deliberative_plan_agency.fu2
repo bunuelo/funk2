@@ -299,7 +299,7 @@
 				    [have action wait_to_call]
 				    ]]]]
 			
-			[let [[arguments `[|imagine plan|]]]
+			[let [[arguments `[|imagine executing plan in focus|]]]
 			  [let [[action [have [get [get this mind] layer `deliberative] lookup_plan_action arguments]]]
 			    [if [null action]
 				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']

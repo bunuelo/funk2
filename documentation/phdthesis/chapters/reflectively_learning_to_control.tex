@@ -159,51 +159,213 @@ failure, retaining the hypothesis that executing the plan under focus
 might result in failure due to the plan's assertion that a cube is on
 top of a pyramid.
 
-\section{The Layers of the Implementation}
+{\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
+shows an example of how reflectively learning about the deliberative
+planning machine can lead to the successful achievement of a physical
+goal.  In this example, the reflective layer infers the results of
+executing plans and tries to predict their failure based on the
+structure of the plan and its relationship to other deliberative
+knowledge, such as different types of failure events.  The reflective
+layer recalls a plan from memory that it has ``been told'' but does
+not have experience executing.  Because of the AI's lack of
+experience, the reflective layer does not imagine that this plan will
+lead to a failure based on its structure.  Also, because of the AI's
+inexperience with physical actions, it deliberatively infers that this
+plan will actually create a stack of two blocks.  Both of these forms
+of ignorance are corrected when the AI attempts to execute the chosen
+plan.  This is an example of how a reflective layer can plan new
+strategies for how to plan.  Not only is a new model of the physical
+world learned but also a new model of the deliberative planning
+machine is learned by the reflective layer.  In this way, the failure
+to predict the effects of physical actions, can also be considered a
+failure to predict the effects of deliberative actions.  In other
+words, the reflective layer made a mistake in controlling the planning
+machine by having it execute a plan that ended up failing.  In
+general, the reflective goal to control the deliberative machine to
+avoid execution failures is not absolutely necessary.  In other
+situations it may be desirable for physical failures to occur.  For
+example, if the AI is performing an experiment or ``playing'' in a
+physical domain, it may be desirable to fail in order to accomplish
+knowledge level goals.  In this example, the reflective goal is to
+control the deliberative planning machine to avoid plan execution
+failures.
+\begin{figure}
+\centering
+\begin{tabular}{p{3.5cm}p{3.5cm}p{3.5cm}}
+1. \includegraphics[width=3.5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=3.5cm]{gfx/blocks_world_example-2}  & 3. \includegraphics[width=3.5cm]{gfx/blocks_world_example-3} \\
+4. \includegraphics[width=3.5cm]{gfx/blocks_world_example-4}  & 5. \includegraphics[width=3.5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=3.5cm]{gfx/blocks_world_example-6} \\
+7. \includegraphics[width=3.5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=3.5cm]{gfx/blocks_world_example-8}  & 9. \includegraphics[width=3.5cm]{gfx/blocks_world_example-9} \\
+10. \includegraphics[width=3.5cm]{gfx/blocks_world_example-10} & 11. \includegraphics[width=3.5cm]{gfx/blocks_world_example-11} & 12. \includegraphics[width=3.5cm]{gfx/blocks_world_example-12}
+\end{tabular}
+\caption[Adaptation due to reflectively learning how to
+  deliberate.]{Adaptation due to reflectively learning how to
+  deliberate.  The AI has the goal of creating a stack of two blocks.
+  (1) A plan is recalled from memory and executed because it asserts
+  that a square block is on top of a triangular block.  (2--8) The
+  deliberative layer executes the plan and because the cube falls off
+  of the pyramid, the plan's assertion fails, an expectation failure
+  that is reported to the reflective layer.  (8) The reflective layer
+  hypothesizes that plans asserting a stack of a cube on a triangle
+  will lead to failure when executed.  The reflective layer selects a
+  new planning strategy that it infers will not lead to failure:
+  recalling a plan from memory that is hypothesized to stack a pyramid
+  on top of a cube.  (9-12) The second plan completes execution,
+  successfully asserting that a pyramid is stacked on a cube.}
+\label{figure:implemented_example_learning_storyboard}
+\end{figure}
 
+\section{The Four Layers of the AI}
+
+The AI is a four-layered real-time reflective control system.  Each
+layer is informed by receiving streams of events from the layers
+below.  Also, each layer sends activation and suppression commands in
+order to control the layers below.  This four-layered model is
+inspired by the bottom four layers of the six-layered Emotion Machine
+architecture for human commonsense thinking \cite[]{minsky:2006}.  The
+four layers of the AI reflectively control a physical simulation.
 {\mbox{\autoref{figure:three_layers_overview}}} shows an overview of
-the three layers of the AI with the physical simulation.  The first
-layer is the reactive layer, which monitors an event stream of changes
-of object knowledge in the physical simulation.  The reactive layer
-can also respond by activating predefined resources in the physical
-simulation.  The physical simulation maintains a representation of the
-perceptual state of the body of the AI, the visual knowledge that the
-body is currently seeing.  The representation of the perceptual state
-of the body that the AI is controlling is referred to as \emph{the
-  visual knowledge base}.  Changes to the visual knowledge constitute
-the stream of events that the reactive layer receives and reconstructs
-into a representation of the physical world.  The AI's current
-representation of the physical world is referred to as \emph{the
-  physical knowledge base}.  I have found the distinction between
-visual and physical knowledge to be useful in domains where only
-partial information about the physical world is available through the
-senses.  In this case, some reasoning must be done in order to debug
-the physical knowledge when contradictory visual input is detected.
-For example, in a kitchen cooking domain (see
-{\mbox{\autoref{figure:isis_world_two_agents}}}), the AI sees a stick
-of butter in the refrigerator.  Subsequently, the AI sees the same
-stick of butter on a table.  The AI must resolve the fact the either
-(1) the table is small enough to fit into the refrigerator or (2) the
-stick of butter is no longer in the refrigerator.  The reactive layers
-of the AI that are necessary for navigating the kitchen domain are
-factors that complicate explaining the reflective thinking layers of
-the AI.  The learning and planning agencies of the deliberative and
-reflective thinking layers are exactly the same for the block building
-domain as they are for the kitchen domain.  Thus, I will focus on
-explaining the AI's reflective thinking processes in terms of the
-simpler block building domain as the reflective thinking capabilities
-are the focus of this thesis.  In the block building domain, the
-physical knowledge base is a faithful reconstruction of the visual
-knowledge base, slightly behind the times.
+the four layers of the AI in relation to the physical simulation.
 \begin{figure}
 \begin{center}
 \includegraphics[width=10cm]{gfx/three_layers_overview}
 \end{center}
-\caption[The layers of the AI.]{The layers of the AI form cascaded
-  control loops, where each layer reflectively controls the layers
-  below.}
+\caption[The four layers of the AI in relation to the physical
+  simulation.]{The layers of the AI in relation to the physical
+  simulation.  The four layers of the AI form cascaded control loops,
+  where each layer reflectively controls the layers below.}
 \label{figure:three_layers_overview}
 \end{figure}
+
+In the following sections, I give an overview of the types of
+knowledge and processes that comprise the physical simulation as well
+as each of the four layers of reflective control in the AI that
+simulate this example of reflectively learning not only to physically
+act but also to deliberatively plan.  These following sections will
+only be a cursory overview of the layers.  The AI is organized into
+layers of reflection that are each themselves composed of
+\emph{agencies} that are in turn composed of \emph{resources} that can
+be controlled and executed concurrently by the layers above.  A more
+detailed explanation of each agency and its resources will be
+discussed in the next chapter.
+
+\subsection{The Physical Simulation}
+
+The block building domain is implemented as a simulation based on
+two-dimensional ridid-body physical laws, including floating point
+numerical representations for object positions, velocities and
+accelerations.  Changes in the semantic relationships between objects
+in the physical simulation are sent in a stream of perceptual events
+from the physical simulation to the AI.  The semantic relationships
+that are computed by the physical simulation are basic visual
+relationships, such as the prepositional relationships, ``$X$ is on
+top of $Y$'' and ``$X$ is to the left of $Y$'', as well as visual
+properties, such as ``$X$ is the color $Y$'' or ``$X$ has the shape
+$Y$''.  This semantic visual knowledge is represented as frame-based
+objects in the physical simulation, which reports any changes to this
+knowledge to the AI as a stream of visual events.  For example, the
+semantic knowledge can be thought of as a list of the following types
+of subject-verb-object sentences:
+\begin{itemize}
+\item Block-1 is-a block.
+\item Table-1 is-a table.
+\item Gripper-1 is-a gripper.
+\item Block-1 has-the-color blue.
+\item Block-2 has-the-shape pyramid.
+\item Block-1 is-on Table-1.
+\item Block-2 is-on Table-1.
+\item Gripper-1 is-holding Block-1.
+\item Gripper-1 is-above Table-1.
+\item Block-2 is-to-the-left-of Gripper-1.
+\end{itemize}
+The physical simulation generates a list of these simple
+subject-verb-object sentences in its internal state.  The actual
+internal lisp-like representation of the physical simulation is shown
+in \autoref{table:internal_lisp_like_physical_representation}.
+\begin{table}[h]
+\begin{center}
+{\fbox{
+\begin{tabular}{l}
+ {\tt{[Block-1 left-of Gripper-1]}} \\
+ {\tt{[Block-1 on Table-1]}} \\
+ {\tt{[Block-1 shape cube]}} \\
+ {\tt{[Block-1 color blue]}} \\
+ {\tt{[Block-1 is-a block]}} \\
+ {\tt{[Block-2 right-of Gripper-1]}} \\
+ {\tt{[Block-2 on Table-1]}} \\
+ {\tt{[Block-2 shape pyramid]}} \\
+ {\tt{[Block-2 color green]}} \\
+ {\tt{[Block-2 is-a block]}} \\
+ {\tt{[Table-1 left-of Gripper-1]}} \\
+ {\tt{[Table-1 shape cube]}} \\
+ {\tt{[Table-1 color white]}} \\
+ {\tt{[Table-1 is-a table]}} \\
+ {\tt{[Gripper-1 is-holding []]}} \\
+ {\tt{[Gripper-1 color black]}} \\
+ {\tt{[Gripper-1 is-a gripper]}} \\
+ {\tt{[Gripper-1 movement\_command stop]}} \\
+ {\tt{[Gripper-1 is me]}}
+\end{tabular}
+}}
+\end{center}
+\caption[Internal semantic visual representation generated by the body
+  in the physical simulation.]{Internal semantic visual representation
+  generated by the body in the physical simulation.  Changes to this
+  representation are sent as a stream of visual change events to the
+  built-in reactive layer of the AI.}
+\label{table:internal_lisp_like_physical_representation}
+\end{table}
+
+\subsection{The Built-in Reactive Layer}
+
+The physical simulation generates a stream of events that represent
+changes in the perceptual state of the body of the AI.  The first
+layer of the AI is \emph{the built-in reactive layer}, which monitors
+this event stream of perceptual changes in object knowledge from the
+physical simulation.  These changes in the perceptual state of the
+AI's body in the physical simulation are reconstructed in the built-in
+reactive layer.  In this way, the built-in reactive layer maintains a
+representation of the visual knowledge that the body is currently
+seeing.  The representation of the perceptual state of the body that
+informs the AI about the physical world is referred to as \emph{the
+  visual knowledge base}.  The built-in reactive layer also contains
+predefined physical action resources that are available in the
+physical body of the AI in the physical simulation.  Because the
+built-in reactive layer is the primary interface to the physical body
+that the AI controls, many of the resources of the built-in layer are
+actually defined by the physical simulation during the initial boot-up
+process of the entire AI-physical-simulation system.
+
+\subsection{The Learned Reactive Layer}
+
+Changes to the visual knowledge base in the built-in reactive layer
+constitute the stream of events that \emph{the learned reactive layer}
+receives and reconstructs into a more stable representation of the
+physical world.  The AI's current representation of the physical world
+is referred to as \emph{the physical knowledge base}.  I have found
+the distinction between visual and physical knowledge to be useful in
+domains where only partial information about the physical world is
+available through the senses.  In this case, some reasoning must be
+done in order to debug the physical knowledge when contradictory
+visual input is detected.  For example, in a kitchen cooking domain
+(see {\mbox{\autoref{figure:isis_world_two_agents}}}), the AI sees a
+stick of butter in the refrigerator.  Subsequently, the AI sees the
+same stick of butter on a table.  The AI must resolve the fact the
+either (1) the table is small enough to fit into the refrigerator or
+(2) the stick of butter is no longer in the refrigerator.  The
+reactive layers of the AI that are necessary for navigating the
+kitchen domain are factors that complicate explaining the reflective
+thinking layers of the AI.  The learning and planning agencies of the
+deliberative and reflective thinking layers are exactly the same for
+the block building domain as they are for the kitchen domain.  Thus, I
+will focus on explaining the AI's reflective thinking processes in
+terms of the simpler block building domain as the reflective thinking
+capabilities are the focus of this thesis.  In the block building
+domain, the physical knowledge base is a faithful reconstruction of
+the visual knowledge base, slightly behind the times.
+{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
+physical knowledge base that is reconstructed from the reflective
+change events that the learned reactive layer receives from changes in
+the visual knowledge base of the built-in reactive layer.
 \begin{figure}
 \begin{center}
 \includegraphics[width=12cm]{gfx/isis_world_two_agents}
@@ -215,31 +377,41 @@ knowledge base, slightly behind the times.
   the right contain the objects that each agent can actually see.}
 \label{figure:isis_world_two_agents}
 \end{figure}
+\begin{sidewaysfigure}
+\begin{center}
+\includegraphics[width=8.5in]{gfx/implemented_physical_knowledge}
+\end{center}
+\hspace{4cm}\parbox{15cm}{\caption[The physical knowledge base.]{The
+    physical
+    knowledge base.}\label{figure:implemented_physical_knowledge}}
+\end{sidewaysfigure}
 
-The deliberative layer receives a stream of events from the reactive
-layer including changes to the physical knowledge base as well as
-changes in the activation states of reactive resources.  While the
-reactive layer may react to visual or physical knowledge immediately,
-the deliberative layer learns abstract models of this reactive
-behavior at a more steady and often slower pace.  This allows the
-reactive layer to operate at full speed, often in bursts of activity,
-while a buffered stream of events is reasoned about more carefully by
-the deliberative layer without slowing the primary activity of
-physical reaction.  The deliberative layer first reconstructs a copy
-of the physical knowledge base that it can use as reference for the
-slower deliberative learning processes.  From this reconstruction of
-the physical knowledge base, the deliberative layer induces and counts
-common types of knowledge.  This abstraction process is focused only
-on the parts of the physical knowledge base that have changed.  The
-deliberative layer stores counts of these abstract types of knowledge
-in a knowledge base in the deliberative layer called \emph{the
-  physical type knowledge base}.  The physical type knowledge base
-counts the occurrences of types of knowledge in the deliberative
-layer's reconstruction of the physical knowledge base.
-{\mbox{\autoref{figure:physical_type_knowledge_abstraction}}} shows
-the knowledge bases involved in the abstraction of physical type
-knowledge.  The following is a list of types of abstract knowledge
-that is accounted for in the physical type knowledge base:
+\subsection{The Deliberative Layer}
+
+\emph{The deliberative layer} receives a stream of events from the
+learned reactive layer including changes to the physical knowledge
+base as well as changes in the activation states of reactive
+resources.  While the reactive layer may react to visual or physical
+knowledge immediately, the deliberative layer learns abstract models
+of this reactive behavior at a more steady and often slower pace.
+This allows the reactive layer to operate at full speed, often in
+bursts of activity, while a buffered stream of events is reasoned
+about more carefully by the deliberative layer without slowing the
+primary activity of physical reaction.  The deliberative layer first
+reconstructs a copy of the physical knowledge base that it can use as
+reference for the slower deliberative learning processes.  From this
+reconstruction of the physical knowledge base, the deliberative layer
+induces and counts common types of knowledge.  This abstraction
+process is focused only on the parts of the physical knowledge base
+that have changed.  The deliberative layer stores counts of these
+abstract types of knowledge in a knowledge base in the deliberative
+layer called \emph{the physical type knowledge base}.  The physical
+type knowledge base counts the occurrences of types of knowledge in
+the deliberative layer's reconstruction of the physical knowledge
+base.  {\mbox{\autoref{figure:physical_type_knowledge_abstraction}}}
+shows the knowledge bases involved in the abstraction of physical type
+knowledge.  The following is a list of types of physical type
+knowledge that is accounted for in the physical type knowledge base:
 \begin{itemize}
 \item A block is sitting on another block.
 \item A block with a pyramid shape is sitting on Block-1.
@@ -270,12 +442,12 @@ shows a time-line visualization of the reflective event knowledge base
 that is constructed from the execution events of the reactive
 resources.  Once a beginning and an ending time for an execution event
 in the reactive layer is received by the deliberative layer, a future
-task to learn the abstract physical type knowledge transframe for this
-resource execution is created.  The learning of an abstract physical
-knowledge transframe for the execution of reactive resource must wait
-for the abstract physical knowledge base to catch up with processing
-the current information from the visual and physical knowledge bases
-in the reactive layer.
+task is created to learn the physical type knowledge transframe for
+this resource execution.  The learning of an physical type knowledge
+transframe for the execution of a reactive resource must wait for the
+physical type knowledge base to catch up with processing the current
+information from the visual and physical knowledge bases in the
+reactive layer.
 \begin{figure}
 \begin{center}
 \includegraphics[width=10cm]{gfx/implemented_reflective_event_knowledge_base}
@@ -292,99 +464,60 @@ in the reactive layer.
 \label{figure:physical_type_knowledge_abstraction}
 \end{figure}
 
-\section{The Physical Simulation}
-
-The block building domain is implemented as a simulation based on
-two-dimensional ridid-body physical laws, including floating point
-numerical representations for object positions, velocities and
-accellerations.  These numerical representations and the processes
-that manipulate them are part of the physical layer of the model, but
-in order to focus the efficiency of the procedural reflection, a much
-simpler relational graph representation has been specifically
-represented as semantic frame-based objects in a semantic
-knowledge-base, referred to as the \emph{physical knowledge-base}.
-For example, the semantic knowledge can be thought of as a list of the
-following types of sentences:
-\begin{itemize}
-\item Block-1 is a block.
-\item Block-2 is a block.
-\item Table-1 is a table.
-\item Gripper-1 is a gripper.
-\item Block-1 has a blue color.
-\item Block-1 has a cube shape.
-\item Block-2 has a green color.
-\item Block-2 has a pyramid shape.
-\item Table-1 has a white color.
-\item Gripper-1 has a black color.
-\item Block-1 is on Table-1.
-\item Block-2 is on Table-1.
-\item Gripper-1 is above Table-1.
-\item Block-1 is to the left of Gripper-1.
-\item Block-2 is to the right of Gripper-1.
-\end{itemize}
-These sentences can be slightly rearranged to be thought of as
-subject-verb-object triples as in the following list:
-\begin{itemize}
-\item Block-1 is-a block.
-\item Block-2 is-a block.
-\item Table-1 is-a table.
-\item Gripper-1 is-a gripper.
-\item Block-1 has-a-color blue.
-\item Block-1 has-a-shape cube.
-\item Block-2 has-a-color green.
-\item Block-2 has-a-shape pyramid.
-\item Table-1 has-a-color white.
-\item Gripper-1 has-a-color black.
-\item Block-1 is-on Table-1.
-\item Block-2 is-on Table-1.
-\item Gripper-1 is-above Table-1.
-\item Block-1 is-to-the-left-of Gripper-1.
-\item Block-2 is-to-the-right-of Gripper-1.
-\end{itemize}
-The physical simulation maintains a list of these simple
-subject-verb-object sentences in its internal state.  The actual
-internal lisp-like representation of the physical simulation is shown
-in \autoref{table:internal_lisp_like_physical_representation}.
-\begin{table}
-\begin{center}
-{\fbox{
-\begin{tabular}{l}
- {\tt{[Block-1 left-of Gripper-1]}} \\
- {\tt{[Block-1 on Table-1]}} \\
- {\tt{[Block-1 shape cube]}} \\
- {\tt{[Block-1 color blue]}} \\
- {\tt{[Block-1 is-a block]}} \\
- {\tt{[Block-2 right-of Gripper-1]}} \\
- {\tt{[Block-2 on Table-1]}} \\
- {\tt{[Block-2 shape pyramid]}} \\
- {\tt{[Block-2 color green]}} \\
- {\tt{[Block-2 is-a block]}} \\
- {\tt{[Table-1 left-of Gripper-1]}} \\
- {\tt{[Table-1 shape cube]}} \\
- {\tt{[Table-1 color white]}} \\
- {\tt{[Table-1 is-a table]}} \\
- {\tt{[Gripper-1 is-holding []]}} \\
- {\tt{[Gripper-1 color black]}} \\
- {\tt{[Gripper-1 is-a gripper]}} \\
- {\tt{[Gripper-1 movement\_command stop]}} \\
- {\tt{[Gripper-1 is me]}}
+Once a physical type transframe is computed for a reactive event, a
+version space concept learning algorithm \cite[]{mitchell:1997} is
+created for each add or remove physical type knowledge change in the
+transframe.  In the concept learning algorithm, a conjunctive
+hypothesis space of predictive physical type preconditions is
+represented in terms of a version space generalization lattice, so
+that all possibly correct hypotheses that predict the transframe
+change evidence are represented in a relatively compact way.  Once a
+hypothesis space is created for a transframe change, this hypothesis
+space is associated with the reactive action so that it may be used by
+the deliberative layer to imagine executing the action in its planning
+machine.  {\mbox{\autoref{table:abstract_physical_transframe}}} shows
+an example of a physical type knowledge transframe based on the
+changes in the physical type knowledge base over time.
+\begin{table}[h]
+\centering
+\begin{tabular}{c}
+  Hypothesized Physical Type Knowledge Transframe for Action \\
+  \begin{tabular}{|l|l|}
+    \hline
+    \emph{action:}        & Reach and grab. \\
+    \hline
+    \emph{preconditions:} & A block is below a gripper that is me. \\
+    ~                     & A gripper that is me is holding nothing. \\
+    \hline
+    \emph{additions:}     & A gripper that is me is holding a block. \\
+    \hline
+    \emph{removals:}      & A gripper that is me is holding nothing. \\
+    \hline
+  \end{tabular}
 \end{tabular}
-}}
-\end{center}
-\caption[Internal representation for physical simulation.]{Internal representation for physical simulation.}
-\label{table:internal_lisp_like_physical_representation}
+\caption[Hypothesized physical type knowledge transframe for
+  action.]{Hypothesized physical type knowledge transframe including
+  action dependent sets of physical type knowledge \emph{add} and
+  \emph{remove} changes with learned conjunctive hypothesis spaces
+  based on a set of physical type knowledge preconditions.}
+\label{table:abstract_physical_transframe}
 \end{table}
-{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
-physical knowledge-base that is reconstructed from these reflective
-change events.
-\begin{sidewaysfigure}
-\begin{center}
-\includegraphics[width=7.5in]{gfx/implemented_physical_knowledge}
-\end{center}
-\hspace{4cm}\parbox{15cm}{\caption[The physical knowledge-base.]{The
-    physical
-    knowledge-base.}\label{figure:implemented_physical_knowledge}}
-\end{sidewaysfigure}
+
+In order to learn transframes from physical type knowledge, it is
+useful to have the physical type knowledge base able to be indexed at
+arbitrary points in the past.  This is achieved by representing
+physical type knowledge in the form of events that have beginning and
+ending times.  All events in the physical type knowledge base are
+automatically organized into an interval tree, so that any temporal
+indexing of the physical type knowledge base can be done with $O(\log
+n)$ time complexity as $n$ increases linearly with the number of
+physical type knowledge events in the knowledge base.  Thus, computing
+the physical type knowledge transframe between any two points in the
+past can be done relatively quickly.
+
+\subsection{The Reflective Layer}
+
+
 
 \section{Procedurally Reflective Event Stream}
 

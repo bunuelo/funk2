@@ -100,6 +100,141 @@ of reflection: the ability to think about thinking in addition to the
 ground problem.  This psychological form of reflection is modelled as
 a learning-to-control problem in this thesis.
 
+\section{Programming}
+
+An example problem domain called the block building domain is shown in
+{\mbox{\autoref{figure:example_problem_domain}}}.  In this case, we
+have two blocks, which have relationships with the objects in the
+room, such as the table.  If the goal state is to get the physical
+world to exist in a particular configuration, the stack of {\tt
+  Block-2} on top of {\tt Block-1},
+{\mbox{\autoref{figure:example_program}}} shows an example of a
+program that a programmer might write to move this gripper around in
+this block building domain.  In this program, the gripper has very
+simple symbolic commands: {\tt move-right}, {\tt reach}, {\tt grab},
+{\tt move-left}, {\tt drop}.  One can imagine that this program might
+intend to pick up the green block and put it on the blue block.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/blocks_world_example-1}
+\caption{An example problem domain.}
+\label{figure:example_problem_domain}
+\end{figure}
+\begin{figure}
+\center
+\begin{tabular}{l}
+\\
+  {\tt ~~[defunk example-program []}~~ \\
+  {\tt ~~~~[move-right]} ~~\\
+  {\tt ~~~~[reach]} ~~\\
+  {\tt ~~~~[grab]} ~~\\
+  {\tt ~~~~[move-left]} ~~\\
+  {\tt ~~~~[drop]]} ~~\\
+\\
+\end{tabular}
+\caption{An example program.}
+\label{figure:example_program}
+\end{figure}
+
+\section{State Space Planning}
+
+State space planning can be thought of as automatic programming.
+Planning refers to the computer's ability to write its own program.
+In an algorithm that plans by using a search algorithm, there is an
+initial state with a number of possible actions that may lead away
+from this state.  We can move left; we can stop; we can move right.
+We can imagine what the possible future states would be after each
+action.  In an imagined future state, the gripper may be in a
+different position.  An example of the exponential growth resulting
+from continuing a planning search is shown in
+{\mbox{\autoref{figure:combinatorial_explosion_example}}}.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
+\caption{Exponential growth in planning as search.}
+\label{figure:combinatorial_explosion_example}
+\end{figure}
+If every considered state in a search has the same number of possible
+actions, this search becomes an exponential search problem.  The
+number of actions from each state is the \emph{branch factor} of the
+search.  Exponential searches quickly become intractable, even in
+state spaces with a reasonable number of actions.  For example, games
+of chess are played to 20 levels deep with about 30 moves from each
+state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
+10^{29}$ plans.  If there were one billion computers that each
+processed one billion plans per second in parallel, this search would
+still take over ten thousand years to complete, and that is just to
+play the first move!  The fastest algorithms include good heuristics,
+e.g. a count of the number of pieces on the board for each player,
+etc.
+
+\section{Heuristics}
+
+When a problem is exponential, it progresses for as long as can be
+afforded computationally, traversing the state space, hopefully
+finding the goal state in this large space of all possible
+alternatives, but then stops, usually not able to find the required
+answer to the problem in the given time or space limitations.
+\emph{Heuristics} are one way to alleviate the problematic exponential
+growth of the search tree.  In order to search more efficiently,
+heuristics provide weightings over the search tree that give a metric
+of distance to a completed plan.  Beam search is an example of a
+heuristically weighted search that has a finite number of plans that
+it considers, forgetting the rest.  As used in beam search, a
+heuristic is a function that gives a metric, usually in the range
+$[0.0, 1.0]$ that defines an ordering on search paths.  A heuristic is
+a metric that estimates the distance to a completed plan from a given
+plan.  In a real-time planning and plan execution system that learns
+to plan from failure, a heuristic for a distance to a plan that will
+execute successfully can become part of a heuristic estimation.  The
+algorithm uses this information to guide the search, thus reducing the
+branch factor of the search tree, reducing the search problem.
+{\mbox{\autoref{figure:combinatorial_explosion_example_with_heuristics}}}
+shows the same exponential growth example with heuristic weightings
+overlayed with blue arrows.
+\begin{figure}
+\center
+\includegraphics[width=10cm]{gfx/combinatorial_explosion_example_with_heuristics}
+\caption{Exponential growth example with heuristics.}
+\label{figure:combinatorial_explosion_example_with_heuristics}
+\end{figure}
+
+\section{Representing Actions}
+
+The planning as search problem assumes that we have a representation
+of the world and a representation for the changes that actions
+perform.  Given these models, the physical world can be simulated
+according to different plans.  \cite{fikes:1972} describe an action
+representation, called ``STRIPS'', that includes an \emph{add list}
+and a \emph{remove list} to represent the change between states in the
+world.  In the STRIPS model, the world is a set of symbols.  A
+transframe is composed of two sets: one for the removals from the
+world and one for the additions to the world.  An object called a
+\emph{frame transition} \cite[]{minsky:1975} or a \emph{transframe}
+\cite[]{minsky:1988} is similar to a STRIPS operator with add and
+remove lists but that is also able to simulate actions in frame-based
+and other relational domains.  A transframe represents a change
+between two relational states of the world.  In a symbolic relational
+domain, the state space is a set of symbolic relationships rather than
+just symbols.  Here is an example of a symbolic relationship that
+could exist in a relational domain: {\tt [block-1 is-on block-2]}.
+Here is an example of a transframe for the world in a relational
+domain: \emph{remove} {\tt [block-1 on table-1]} and \emph{add} {\tt
+  [block-1 on block-2]}.  In predicting the effects of an action on
+the world, STRIPS considers one transframe for each action.
+Transframes can also be dependent on the current state of the world.
+Although many function approximation methods could be used, in my
+simulation model I have addressed the problem of learning to predict
+the correct transframes in the terms of
+{\mbox{\citeauthor{mitchell:1997}'s~\citeyearpar{mitchell:1997}}}
+``hypothesis spaces,'' which provide a simple and understandable
+formulation of the category hypothesis learning problem, given
+labelled examples.  Hypothetical models are learned to predict the
+effects of actions.  The physical state space informs sets of
+hypotheses that can be used to support assumptions, thus, the creation
+of new knowledge from an absence of knowledge, given the listed
+assumptions.
+
 \section{Learning to Plan for Successful Execution}
 
 Dependency traces for a hypothesized successful plan creation compose

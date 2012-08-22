@@ -8,12 +8,20 @@ reflective tracing features of the underlying Funk garbage collected
 memory system, upon which the virtual operating system is built.  This
 low level memory tracing functionality allows easily tracing events at
 any level of abstraction in the entire system using the Funk causal
-reflective tracing features.  \autoref{table:reflective_learning}
-shows a list of figures showing data from an experiment with the AI
-reflectively tracing, and building models of the deliberative planning
-process.  \autoref{table:no_reflective_learning} shows a list of
-figures showing data from an experiment with the reflective learning
-disabled.
+reflective tracing features.  \autoref{table:bootup} shows a list of
+figures showing data from an experiment where the AI simply booting up
+and then perceiving the world over time.  This experiment is a sort of
+control reference that shows that the AI memory usage and execution is
+stable if it does not have any goals and the physical world is not
+changing.  \autoref{table:reflective_learning} shows a list of figures
+showing data from an experiment with the AI reflectively tracing, and
+building models of the deliberative planning process.
+\autoref{table:no_reflective_learning} shows a list of figures showing
+data from an experiment with the reflective learning disabled.
+Comparing the execution of the experiment with no reflective learning
+with that of reflective learning shows a rough estimate of how much
+more memory is used when the reflective learning about the
+deliberative planning machine is enabled.
 
 \experimentdatatable[bootup]{an experiment that simply boots up the AI
   and simply allows it to perceive the physical world and not
@@ -58,7 +66,7 @@ disabled.
 \clearpage
 \section{Figures from Learning Experiment without Reflection}
 
-%\experimentdatafigures[80]{no_reflective_learning}{an experiment
+%\experimentdatafigures[90]{no_reflective_learning}{an experiment
 %  without the AI reflectively tracing, and building models of the
 %  deliberative planning process}
 

@@ -134,7 +134,7 @@
 \newcommand{\experimentdataone}[3][]{
   %plots
   \begin{scope}
-    \clip (0,0) rectangle (#1 / 100 * 103,#2 / 100 * 103);
+    \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
     \draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
       file {#3};
@@ -144,7 +144,7 @@
 \newcommand{\experimentdatatwo}[3][]{
   %plots
   \begin{scope}
-    \clip (0,0) rectangle (#1 / 100 * 103,#2 / 100 * 103);
+    \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
     \draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
       file {#3};
@@ -154,7 +154,7 @@
 \newcommand{\experimentdatathree}[3][]{
   %plots
   \begin{scope}
-    \clip (0,0) rectangle (#1 / 100 * 103,#2 / 100 * 103);
+    \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
     \draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
       file {#3};
@@ -164,7 +164,7 @@
 \newcommand{\experimentdatafour}[3][]{
   %plots
   \begin{scope}
-    \clip (0,0) rectangle (#1 / 100 * 103,#2 / 100 * 103);
+    \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
     \draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
       file {#3};
@@ -174,7 +174,7 @@
 \newcommand{\experimentdatafive}[3][]{
   %plots
   \begin{scope}
-    \clip (0,0) rectangle (#1 / 100 * 103,#2 / 100 * 103);
+    \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
     \draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}]
       file {#3};
@@ -448,7 +448,7 @@
       ~         &                   & Physical Action    & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-physical}              & \pageref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-physical} \\
       ~         &                   & Sensory            & \autoref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-sensory}               & \pageref{figure:data/#1/mind_plot-Gripper-1-builtin_reactive-sensory} \\
     \end{tabular}
-    \caption[Data from #1.]{Data from #2.  #3}
+    \caption[Data from #2.]{Data from #2.  #3}
     \label{table:#1}
   \end{table}
 }
@@ -661,18 +661,6 @@
                                                                  {#2}
                                                                  {#3}
   }
-  % built-in reactive physical action
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-physical]
-                                                                 {B.R. Physical Action Agency}
-                                                                 {#2}
-                                                                 {#3}
-  }
   % built-in reactive neural plug
   {\clearpage
     \experimentcausegroupplots[1]{5}
@@ -682,6 +670,18 @@
                               {#1}
                               \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-neural_plug]
                                                                  {B.R. Neural Plug Agency}
+                                                                 {#2}
+                                                                 {#3}
+  }
+  % built-in reactive physical action
+  {\clearpage
+    \experimentcausegroupplots[1]{5}
+                              {0.5}{1}
+                              {0.5}{1}
+                              {2}{10}
+                              {#1}
+                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-physical]
+                                                                 {B.R. Physical Action Agency}
                                                                  {#2}
                                                                  {#3}
   }

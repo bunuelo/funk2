@@ -18,6 +18,7 @@ phdthesis.pdf: \
   frontbackmatter/titlepage.tex \
   chapters/introduction.tex \
   chapters/reflectively_learning_to_control.tex \
+  chapters/grounded_learning_of_knowledge_utility.tex \
   chapters/modelling_the_continuously_dynamic.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \

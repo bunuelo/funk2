@@ -6,36 +6,42 @@
 In order to explain my implemented solution to the problem of
 reflectively learning-to-control, I will focus on a running example
 within the physical block building domain shown in
-\autoref{figure:an_example_problem_domain}.  Consider that the AI has
-the goal of making a stack of two blocks.  The AI is now confronted
-with the task of reasoning about how to get the physical world into a
-state that matches this goal condition.  Specifically, the AI must
-decide upon a plan of action, either creating a new plan from scratch,
-or recalling a plan from memory that with some modifications seems
-like it might work in this case.  When the AI considers the plans that
-it knows, it remembers a plan that it has been told will result in a
-stack of two blocks.  For example, the plan in
-{\mbox{\autoref{table:a_plan_learned_from_being_told}}} asserts that
-there is a stack of two blocks as its final operation:
-\begin{table}[h]
+\autoref{figure:an_example_problem_domain}.  Consider that the AI 
+\begin{wrapfigure}{r}{6cm}
+  \centering
+  \includegraphics[width=6cm]{gfx/blocks_world_example-1}
+  \caption[An example problem domain.]{An example problem domain.}
+  \label{figure:an_example_problem_domain}
+\end{wrapfigure}
+has the goal of making a stack of two blocks.  The AI is now
+confronted with the task of reasoning about how to get the physical
+world into a state that matches this goal condition.  Specifically,
+the AI must decide upon a plan of action, either creating a new plan
+from scratch, or recalling a plan from memory that with some
+modifications seems like it might work in this case.  When the AI
+considers the plans that it knows, it remembers a plan that it has
+been told will result in a stack of two blocks.  For example, the plan
+in {\mbox{\autoref{table:a_plan_learned_from_being_told}}} asserts
+that there is a stack of two blocks as its final operation:
+\begin{wraptable}{l}{6cm}
 \centering
 \begin{tabular}{|rl|}
 \hline
  1. & Move left.\\
- 2. & Wait until a gripper that is me is above a cube.\\
+ 2. & Wait until a gripper is above a cube.\\
  3. & Reach and grab.\\
- 4. & Wait until a gripper that is me stops moving.\\
+ 4. & Wait until a gripper me stops moving.\\
  5. & Move right.\\
- 6. & Wait until a gripper that is me is above a pyramid.\\
+ 6. & Wait until a gripper is above a pyramid.\\
  7. & Drop.\\
  8. & Wait long enough for block to drop.\\
- 9. & Assert that there is a cube sitting on a pyramid.\\
+ 9. & Assert a cube is sitting on a pyramid.\\
 \hline
 \end{tabular}
 \caption[A plan learned from ``being told''.]{A plan learned from
   ``being told''.}
 \label{table:a_plan_learned_from_being_told}
-\end{table}
+\end{wraptable}
 If the AI were to recall this plan and execute it in the situation
 shown in \autoref{figure:an_example_problem_domain}, the AI would
 encounter an expectation failure at the final assertion of the
@@ -47,30 +53,23 @@ falls off of the pyramid and onto the table.  In the case of a failure
 of expectations, a refined hypothetical model of the physical world is
 learned, so that the same planning mistake will never be made again.
 In my AI, learning a new physical model of the world amounts to
-relearning the hypotheses for the expected abstract transframes that
-result from executing different physical actions in different abstract
-physical preconditions.  In this case, the AI learns many new refined
-hypotheses about the physical world.  For example, the AI learns that
-executing the action of moving to the left until a cube is below the
-gripper results in a cube being below the gripper.  Of course, this
-may not generally be true, but the AI's physical action hypotheses are
-refined in light of this added experiential knowledge that predicts
-this change given the specific preconditions.  The AI still retains
-many hypotheses that leave room for the possibility that executing
-this action in other preconditions may or may not result in this
-specific change.  For example, at this point, the AI has no experience
-executing this action when there is not a block to the left of the
-gripper.  In that case, the AI cannot be sure that this action will
-result in a block being below the gripper, and this uncertainty is
-represented in the hypothesis space of the AI's concept learning
-algorithm.
-\begin{figure}
-\begin{center}
-\includegraphics[width=8cm]{gfx/blocks_world_example-1}
-\end{center}
-\caption[An example problem domain.]{An example problem domain.}
-\label{figure:an_example_problem_domain}
-\end{figure}
+relearning the hypotheses for the expected transframes that result
+from executing different physical actions, leading from one collection
+of physical situation type events to another.  In this case, the AI
+learns many new refined hypotheses about the physical world.  For
+example, the AI learns that executing the action of moving to the left
+until a cube is below the gripper results in a cube being below the
+gripper.  Of course, this may not generally be true, but the AI's
+physical action hypotheses are refined in light of this added
+experiential knowledge that predicts this change given the specific
+preconditions.  The AI still retains many hypotheses that leave room
+for the possibility that executing this action in other preconditions
+may or may not result in this specific change.  For example, at this
+point, the AI has no experience executing this action when there is
+not a block to the left of the gripper.  In that case, the AI cannot
+be sure that this action will result in a block being below the
+gripper, and this uncertainty is represented in the hypothesis space
+of the AI's concept learning algorithm.
 \begin{figure}
 \begin{center}
 \begin{tabular}{p{4cm}p{4cm}}
@@ -124,11 +123,12 @@ as the deliberative planning machine, plans, hypotheses, and execution
 failures.
 
 The reflective layer learns models of how deliberative actions change
-the abstract knowledge relationships between objects in the
+the types of knowledge relationships between objects in the
 deliberative layer.  The reflective planning machine attempts to
-accomplish abstract goals computed from this deliberative knowledge.
-Here is a list of a few types of abstract knowledge that the
-reflective layer can know about the objects in the deliberative layer:
+accomplish deliberative type knowledge goals computed from this
+deliberative knowledge.  Here is a list of deliberative type knowledge
+that the reflective layer can know about the objects in the
+deliberative layer:
 \begin{itemize}
 \item A plan that asserts that a cube is on a triangle is under the
   focus of the deliberative planning machine.
@@ -141,16 +141,16 @@ reflective layer can know about the objects in the deliberative layer:
 \item The deliberative planning machine is focused on a plan to move
   to the left while concurrently moving to the right.
 \end{itemize}
-These abstract states are learned in the reflective layer by
+These types of states are learned in the reflective layer by
 processing a procedurally reflective event stream generated by the
-deliberative layer planning processes.  These abstract states are
+deliberative layer planning processes.  These types of states are
 potential goals, preconditions, and effects in the reflective planning
-machine that abstractly model how deliberative actions effect the
-state of the deliberative layer.  Reflective hypotheses about the
-deliberative layer are learned in terms of these abstract states.  The
-reflective layer learns hypotheses for predicting abstract types of
-plan execution failure knowledge from other abstract deliberative
-knowledge preconditions.
+machine that models how deliberative actions effect the types of
+states in the deliberative planning-machine knowledge.  Reflective
+hypotheses about the deliberative layer are learned in terms of these
+types of states.  The reflective layer learns hypotheses for
+predicting types of plan execution failure knowledge from other
+deliberative types of knowledge preconditions.
 
 In the example, executing the plan that the deliberative planner is
 focused on is hypothesized to result in a plan having an expectation
@@ -158,18 +158,18 @@ failure event.  The reflectively planned execution of the deliberative
 execution of the plan is processed concurrently with the deliberative
 planning machine operations, slightly behind the times, not
 necessarily slowing down the deliberative planning resources.  The
-reflective layer induces abstract representations of this reflectively
+reflective layer induces types of representations of this reflectively
 reconstructed representation of the deliberative planning machine and
 its relationships to its plans.  The preconditions and effects of the
-deliberative execution actions are learned from the abstractions of
-this reflective reconstruction, learning to predict, abstractly, the
-effects of planning actions on plans in general.  In the example, this
-abstract knowledge includes that the plan currently under focus
-contains an assertion that a cube must be stacked on a pyramid.  The
-AI refines many of its hypotheses given this limited experience of
-failure, retaining the hypothesis that executing the plan under focus
-might result in failure due to the plan's assertion that a cube is on
-top of a pyramid.
+deliberative execution actions are learned from the types of this
+reflective reconstruction, learning to predict, in terms of types of
+knowledge, the effects of planning actions on plans in general.  In
+the example, these types of knowledge include: ``The plan currently
+under focus contains an assertion that a cube must be stacked on a
+pyramid.''  The AI refines many of its hypotheses given this limited
+experience of failure, retaining the hypothesis that executing the
+plan under focus might result in failure due to the plan's assertion
+that a cube is on top of a pyramid.
 
 {\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
 shows an example of how reflectively learning about the deliberative
@@ -185,22 +185,20 @@ lead to a failure based on its structure.  Also, because of the AI's
 inexperience with physical actions, it deliberatively infers that this
 plan will actually create a stack of two blocks.  Both of these forms
 of ignorance are corrected when the AI attempts to execute the chosen
-plan.  This is an example of how a reflective layer can plan new
-strategies for how to plan.  Not only is a new model of the physical
-world learned but also a new model of the deliberative planning
-machine is learned by the reflective layer.  In this way, the failure
-to predict the effects of physical actions, can also be considered a
-failure to predict the effects of deliberative actions.  In other
-words, the reflective layer made a mistake in controlling the planning
-machine by having it execute a plan that ended up failing.  In
-general, the reflective goal to control the deliberative machine to
-avoid execution failures is not absolutely necessary.  In other
-situations it may be desirable for physical failures to occur.  For
-example, if the AI is performing an experiment or ``playing'' in a
-physical domain, it may be desirable to fail in order to accomplish
-knowledge level goals.  In this example, the reflective goal is to
-control the deliberative planning machine to avoid plan execution
-failures.
+plan.  Not only is a new model of the physical world learned but also
+a new model of the deliberative planning machine is learned by the
+reflective layer.  In this way, the failure to predict the effects of
+physical actions can also be considered a failure to predict the
+effects of deliberative actions.  In other words, the reflective layer
+made a mistake in controlling the planning machine by having it
+execute a plan that ended up failing.  In general, the reflective goal
+to control the deliberative machine to avoid execution failures is not
+absolutely necessary.  In other situations it may be desirable for
+physical failures to occur.  For example, if the AI is performing an
+experiment or ``playing'' in a physical domain, it may be desirable to
+fail in order to accomplish knowledge level goals.  In this example,
+the reflective goal is to control the deliberative planning machine to
+avoid plan execution failures.
 \begin{figure}
 \centering
 \begin{tabular}{p{3.5cm}p{3.5cm}p{3.5cm}}
@@ -404,26 +402,27 @@ the visual knowledge base of the built-in reactive layer.
 learned reactive layer including changes to the physical knowledge
 base as well as changes in the activation states of reactive
 resources.  While the reactive layer may react to visual or physical
-knowledge immediately, the deliberative layer learns abstract models
-of this reactive behavior at a more steady and often slower pace.
-This allows the reactive layer to operate at full speed, often in
-bursts of activity, while a buffered stream of events is reasoned
-about more carefully by the deliberative layer without slowing the
-primary activity of physical reaction.  The deliberative layer first
+knowledge immediately, the deliberative layer learns models of this
+reactive behavior at a more steady and often slower pace.  This allows
+the reactive layer to operate at full speed, often in bursts of
+activity, while a buffered stream of events is reasoned about more
+carefully by the deliberative layer without slowing the primary
+activity of physical reaction.  The deliberative layer first
 reconstructs a copy of the physical knowledge base that it can use as
 reference for the slower deliberative learning processes.  From this
 reconstruction of the physical knowledge base, the deliberative layer
-induces and counts common types of knowledge.  This abstraction
+induces and counts common types of knowledge.  This type induction
 process is focused only on the parts of the physical knowledge base
 that have changed.  The deliberative layer stores counts of these
-abstract types of knowledge in a knowledge base in the deliberative
-layer called \emph{the physical type knowledge base}.  The physical
-type knowledge base counts the occurrences of types of knowledge in
-the deliberative layer's reconstruction of the physical knowledge
-base.  {\mbox{\autoref{figure:physical_type_knowledge_abstraction}}}
-shows the knowledge bases involved in the abstraction of physical type
+types of knowledge in a knowledge base in the deliberative layer
+called \emph{the physical type knowledge base}.  The physical type
+knowledge base counts the occurrences of types of knowledge in the
+deliberative layer's reconstruction of the physical knowledge base.
+{\mbox{\autoref{figure:physical_type_knowledge_abstraction}}} shows
+the knowledge bases involved in the abstraction of physical type
 knowledge.  The following is a list of types of physical type
-knowledge that is accounted for in the physical type knowledge base:
+knowledge that is accounted for in the physical type knowledge base at
+any given point in time:
 \begin{itemize}
 \item A block is sitting on another block.
 \item A block with a pyramid shape is sitting on Block-1.
@@ -455,7 +454,7 @@ that is constructed from the execution events of the reactive
 resources.  Once a beginning and an ending time for an execution event
 in the reactive layer is received by the deliberative layer, a future
 task is created to learn the physical type knowledge transframe for
-this resource execution.  The learning of an physical type knowledge
+this resource execution.  The learning of a physical type knowledge
 transframe for the execution of a reactive resource must wait for the
 physical type knowledge base to catch up with processing the current
 information from the visual and physical knowledge bases in the
@@ -531,13 +530,7 @@ still be added to the architecture is a \emph{forgetful} physical type
 knowledge base.  There are many forgetful event streams in the
 language, and the ability to treat an entire event knowledge base as a
 forgetful streaming object is a way to allow indefinitely long
-run-time in future research.  Currently, the inability to forget,
-limits the bytecode execution time of the AI to be a linear factor of
-the total memory and processors in the computer.  Roughly according to
-the following equation:
-\begin{equation}
-M = kT
-\end{equation}
+run-time in future research.
 
 Once the deliberative layer learns action dependent transframe
 hypotheses in terms of the physical type knowledge, these hypotheses

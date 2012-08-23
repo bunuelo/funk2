@@ -14,44 +14,56 @@ decide upon a plan of action, either creating a new plan from scratch,
 or recalling a plan from memory that with some modifications seems
 like it might work in this case.  When the AI considers the plans that
 it knows, it remembers a plan that it has been told will result in a
-stack of two blocks.  For example, the following plan assures that
+stack of two blocks.  For example, the plan in
+{\mbox{\autoref{table:a_plan_learned_from_being_told}}} asserts that
 there is a stack of two blocks as its final operation:
-\begin{enumerate}
-\item Move to the left until you are above a cube.
-\item Reach and grab.
-\item Assure that you are holding a cube.
-\item Move to the right until you are above a pyramid.
-\item Drop the block you are holding.
-\item Assure that there is a cube on a pyramid.
-\end{enumerate}
+\begin{table}[h]
+\centering
+\begin{tabular}{|rl|}
+\hline
+ 1. & Move left.\\
+ 2. & Wait until a gripper that is me is above a cube.\\
+ 3. & Reach and grab.\\
+ 4. & Wait until a gripper that is me stops moving.\\
+ 5. & Move right.\\
+ 6. & Wait until a gripper that is me is above a pyramid.\\
+ 7. & Drop.\\
+ 8. & Wait long enough for block to drop.\\
+ 9. & Assert that there is a cube sitting on a pyramid.\\
+\hline
+\end{tabular}
+\caption[A plan learned from ``being told''.]{A plan learned from
+  ``being told''.}
+\label{table:a_plan_learned_from_being_told}
+\end{table}
 If the AI were to recall this plan and execute it in the situation
 shown in \autoref{figure:an_example_problem_domain}, the AI would
 encounter an expectation failure at the final assertion of the
 expected post-conditions of this plan.
 {\mbox{\autoref{figure:failure_to_stack_cube_on_pyramid}}} shows how
 executing this plan in this situation might fail to result in a stack
-of two blocks: the pyramidal block does not support the cubic block,
-so the cube falls off of the pyramid and onto the table.  In the case
-of a failure of expectations, a refined hypothetical model of the
-physical world is learned, so that the same planning mistake will
-never be made again.  In my AI, learning a new physical model of the
-world amounts to relearning the hypotheses for the expected abstract
-transframes that result from executing different physical actions in
-different abstract physical preconditions.  In this case, the AI
-learns many new refined hypotheses about the physical world.  For
-example, the AI learns that executing the action of moving to the left
-until a cube is below the gripper results in a cube being below the
-gripper.  Of course, this may not generally be true, but the AI's
-physical action hypotheses are refined in light of this added
-experiential knowledge that predicts this change given the specific
-preconditions.  The AI still retains many hypotheses that leave room
-for the possibility that executing this action in other preconditions
-may or may not result in this specific change.  For example, at this
-point, the AI has no experience executing this action when there is
-not a block to the left of the gripper.  In that case, the AI cannot
-be sure that this action will result in a block being below the
-gripper, and this uncertainty is represented in the hypothesis space
-of the AI's concept learning algorithm.
+of two blocks: the pyramid does not support the cube, so the cube
+falls off of the pyramid and onto the table.  In the case of a failure
+of expectations, a refined hypothetical model of the physical world is
+learned, so that the same planning mistake will never be made again.
+In my AI, learning a new physical model of the world amounts to
+relearning the hypotheses for the expected abstract transframes that
+result from executing different physical actions in different abstract
+physical preconditions.  In this case, the AI learns many new refined
+hypotheses about the physical world.  For example, the AI learns that
+executing the action of moving to the left until a cube is below the
+gripper results in a cube being below the gripper.  Of course, this
+may not generally be true, but the AI's physical action hypotheses are
+refined in light of this added experiential knowledge that predicts
+this change given the specific preconditions.  The AI still retains
+many hypotheses that leave room for the possibility that executing
+this action in other preconditions may or may not result in this
+specific change.  For example, at this point, the AI has no experience
+executing this action when there is not a block to the left of the
+gripper.  In that case, the AI cannot be sure that this action will
+result in a block being below the gripper, and this uncertainty is
+represented in the hypothesis space of the AI's concept learning
+algorithm.
 \begin{figure}
 \begin{center}
 \includegraphics[width=8cm]{gfx/blocks_world_example-1}
@@ -168,7 +180,7 @@ structure of the plan and its relationship to other deliberative
 knowledge, such as different types of failure events.  The reflective
 layer recalls a plan from memory that it has ``been told'' but does
 not have experience executing.  Because of the AI's lack of
-experience, the reflective layer does not imagine that this plan will
+experience, the reflective layer does not infer that this plan will
 lead to a failure based on its structure.  Also, because of the AI's
 inexperience with physical actions, it deliberatively infers that this
 plan will actually create a stack of two blocks.  Both of these forms
@@ -248,7 +260,7 @@ be controlled and executed concurrently by the layers above.  A more
 detailed explanation of each agency and its resources will be
 discussed in the next chapter.
 
-\subsection{The Physical Simulation}
+\section{The Physical Simulation}
 
 The block building domain is implemented as a simulation based on
 two-dimensional ridid-body physical laws, including floating point
@@ -315,7 +327,7 @@ in \autoref{table:internal_lisp_like_physical_representation}.
 \label{table:internal_lisp_like_physical_representation}
 \end{table}
 
-\subsection{The Built-in Reactive Layer}
+\section{The Built-in Reactive Layer}
 
 The physical simulation generates a stream of events that represent
 changes in the perceptual state of the body of the AI.  The first
@@ -335,7 +347,7 @@ that the AI controls, many of the resources of the built-in layer are
 actually defined by the physical simulation during the initial boot-up
 process of the entire AI-physical-simulation system.
 
-\subsection{The Learned Reactive Layer}
+\section{The Learned Reactive Layer}
 
 Changes to the visual knowledge base in the built-in reactive layer
 constitute the stream of events that \emph{the learned reactive layer}
@@ -386,7 +398,7 @@ the visual knowledge base of the built-in reactive layer.
     knowledge base.}\label{figure:implemented_physical_knowledge}}
 \end{sidewaysfigure}
 
-\subsection{The Deliberative Layer}
+\section{The Deliberative Layer}
 
 \emph{The deliberative layer} receives a stream of events from the
 learned reactive layer including changes to the physical knowledge
@@ -474,10 +486,11 @@ that all possibly correct hypotheses that predict the transframe
 change evidence are represented in a relatively compact way.  Once a
 hypothesis space is created for a transframe change, this hypothesis
 space is associated with the reactive action so that it may be used by
-the deliberative layer to imagine executing the action in its planning
-machine.  {\mbox{\autoref{table:abstract_physical_transframe}}} shows
-an example of a physical type knowledge transframe based on the
-changes in the physical type knowledge base over time.
+the deliberative layer to infer the counterfactual results of
+executing the action in its planning machine.
+{\mbox{\autoref{table:abstract_physical_transframe}}} shows an example
+of a physical type knowledge transframe based on the changes in the
+physical type knowledge base over time.
 \begin{table}[h]
 \centering
 \begin{tabular}{c}
@@ -515,43 +528,19 @@ physical type knowledge events in the knowledge base.  Thus, computing
 the physical type knowledge transframe between any two points in the
 past can be done relatively quickly.
 
-\subsection{The Reflective Layer}
+Once the deliberative layer learns action dependent transframe
+hypotheses in terms of the physical type knowledge, these hypotheses
+can be used for imagining the hypothetical effects of actions.  This
+hypothetically supported knowledge is stored by the deliberative layer
+in \emph{the counterfactual physical type knowledge base}.  The
+counterfactual knowledge physical type knowledge is used for imagining
+the execution of plans, a step in the planning process.  Plans
+sometimes reference conditions that may or may not exist in the
+physical type knowledge base in order to guide the plan execution.
+For example, {\mbox{\autoref{table:a_plan_learned_from_being_told}}}
+shows a plan that the AI has ``been told'' but has no experience
+executing.
 
+\section{The Reflective Layer}
 
-
-\section{Procedurally Reflective Event Stream}
-
-
-
-\section{Abstraction}
-
-
-
-\section{The Result of Reflective Learning}
-
-{\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
-shows a storyboard of the implemented example of second-order
-learning.
-\begin{figure}
-\begin{center}
-\begin{tabular}{p{4cm}p{4cm}p{4cm}}
-1. \includegraphics[width=4cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=4cm]{gfx/blocks_world_example-2}  & 3. \includegraphics[width=4cm]{gfx/blocks_world_example-3} \\
-4. \includegraphics[width=4cm]{gfx/blocks_world_example-4}  & 5. \includegraphics[width=4cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=4cm]{gfx/blocks_world_example-6} \\
-7. \includegraphics[width=4cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=4cm]{gfx/blocks_world_example-8}  & 9. \includegraphics[width=4cm]{gfx/blocks_world_example-9} \\
-10. \includegraphics[width=4cm]{gfx/blocks_world_example-10} & 11. \includegraphics[width=4cm]{gfx/blocks_world_example-11} & 12. \includegraphics[width=4cm]{gfx/blocks_world_example-12}
-\end{tabular}
-\end{center}
-\caption[A storyboard of the implemented example of second-order
-  learning.]{A storyboarded example of second-order learning, where
-  the goal is to create a stack of two blocks.  (1) A plan that is
-  hypothesized to stack the square block on top of the triangular
-  block is executed.  (2--8) The plan completes execution and results
-  in the square falling off of the triangle, an expectation failure.
-  (9) The second-order hypothetical heuristic is learned that predicts
-  plan failure will result by executing plans that try to stack
-  squares on top of triangles.  A plan that is hypothesized to stack
-  the triangle on top of the square is executed.  (9-12) The second
-  plan completes execution, accomplishing the physical goal.}
-\label{figure:implemented_example_learning_storyboard}
-\end{figure}
 

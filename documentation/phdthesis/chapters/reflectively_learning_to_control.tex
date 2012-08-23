@@ -7,8 +7,7 @@ In order to explain my implemented solution to the problem of
 reflectively learning-to-control, I will focus on a running example
 within the physical block building domain shown in
 \autoref{figure:an_example_problem_domain}.  Consider that the AI 
-\begin{wrapfigure}{r}{6cm}
-  \centering
+\begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_example-1}
   \caption[An example problem domain.]{An example problem domain.}
   \label{figure:an_example_problem_domain}
@@ -21,16 +20,26 @@ from scratch, or recalling a plan from memory that with some
 modifications seems like it might work in this case.  When the AI
 considers the plans that it knows, it remembers a plan that it has
 been told will result in a stack of two blocks.  For example, the plan
-in {\mbox{\autoref{table:a_plan_learned_from_being_told}}} asserts
-that there is a stack of two blocks as its final operation:
-\begin{wraptable}{l}{6cm}
+shown in {\mbox{\autoref{table:a_plan_learned_from_being_told}}}
+asserts that there is a stack of two blocks as its final operation.
+If the AI were to recall this plan and execute it in the situation
+shown in \autoref{figure:an_example_problem_domain}, the AI would
+encounter an expectation failure at the final assertion of the
+expected post-conditions of this plan.
+{\mbox{\autoref{figure:failure_to_stack_cube_on_pyramid}}} shows how
+executing this plan in this situation might fail to result in a stack
+of two blocks: the pyramid does not support the cube, so the cube
+falls off of the pyramid and onto the table.  In the case of a failure
+of expectations, a refined hypothetical model of the physical world is
+learned, so that the same planning mistake will never be made again.
+\begin{wraptable}{l}{8cm}
 \centering
 \begin{tabular}{|rl|}
 \hline
  1. & Move left.\\
  2. & Wait until a gripper is above a cube.\\
  3. & Reach and grab.\\
- 4. & Wait until a gripper me stops moving.\\
+ 4. & Wait until a gripper stops moving.\\
  5. & Move right.\\
  6. & Wait until a gripper is above a pyramid.\\
  7. & Drop.\\
@@ -42,16 +51,6 @@ that there is a stack of two blocks as its final operation:
   ``being told''.}
 \label{table:a_plan_learned_from_being_told}
 \end{wraptable}
-If the AI were to recall this plan and execute it in the situation
-shown in \autoref{figure:an_example_problem_domain}, the AI would
-encounter an expectation failure at the final assertion of the
-expected post-conditions of this plan.
-{\mbox{\autoref{figure:failure_to_stack_cube_on_pyramid}}} shows how
-executing this plan in this situation might fail to result in a stack
-of two blocks: the pyramid does not support the cube, so the cube
-falls off of the pyramid and onto the table.  In the case of a failure
-of expectations, a refined hypothetical model of the physical world is
-learned, so that the same planning mistake will never be made again.
 In my AI, learning a new physical model of the world amounts to
 relearning the hypotheses for the expected transframes that result
 from executing different physical actions, leading from one collection
@@ -70,21 +69,6 @@ not a block to the left of the gripper.  In that case, the AI cannot
 be sure that this action will result in a block being below the
 gripper, and this uncertainty is represented in the hypothesis space
 of the AI's concept learning algorithm.
-\begin{figure}
-\begin{center}
-\begin{tabular}{p{4cm}p{4cm}}
-1. \includegraphics[width=5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=5cm]{gfx/blocks_world_example-2} \\
-3. \includegraphics[width=5cm]{gfx/blocks_world_example-3}  & 4. \includegraphics[width=5cm]{gfx/blocks_world_example-4} \\
-5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
-7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
-\end{tabular}
-\end{center}
-\caption[A example of an expectation failure.]{A example of an
-  expectation failure.  A plan is executed that asserts that a
-  post-condition must be a stack of a cube on top of a triangle, but
-  when the plan finishes executing this assertion fails.}
-\label{figure:failure_to_stack_cube_on_pyramid}
-\end{figure}
 
 In addition to learning a refined hypothetical model of the physical
 world, the AI also learns a better model of how to control its
@@ -115,10 +99,24 @@ of failure, properties of the failure event are represented as a
 failure object that is associated with the plan object that failed.
 As seen by the reflective layer, the deliberative failure knowledge is
 related to the plan in a way that is analogous to the way that the
-deliberative layer sees a physical block being on top of another
-physical block.  The deliberative layer learns how to control
-relationships between physical objects, while the reflective layer
-learns how to control relationships between deliberative objects, such
+deliberative layer sees a physical block sitting on another physical
+block.  The deliberative layer learns how to control relationships
+between physical objects, while the reflective layer learns how to
+control relationships between deliberative objects, such
+\begin{figure}{h}
+  \centering
+  \begin{tabular}{p{5cm}p{5cm}}
+    1. \includegraphics[width=5cm]{gfx/blocks_world_example-1}  & 2. \includegraphics[width=5cm]{gfx/blocks_world_example-2} \\
+    3. \includegraphics[width=5cm]{gfx/blocks_world_example-3}  & 4. \includegraphics[width=5cm]{gfx/blocks_world_example-4} \\
+    5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
+    7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
+  \end{tabular}
+  \caption[A example of an expectation failure.]{A example of an
+    expectation failure.  A plan is executed that asserts that a
+    post-condition must be a stack of a cube sitting on a triangle,
+    but when the plan finishes executing this assertion fails.}
+  \label{figure:failure_to_stack_cube_on_pyramid}
+\end{figure}
 as the deliberative planning machine, plans, hypotheses, and execution
 failures.
 
@@ -130,8 +128,8 @@ deliberative knowledge.  Here is a list of deliberative type knowledge
 that the reflective layer can know about the objects in the
 deliberative layer:
 \begin{itemize}
-\item A plan that asserts that a cube is on a triangle is under the
-  focus of the deliberative planning machine.
+\item A plan that asserts that a cube is sitting on a triangle is
+  under the focus of the deliberative planning machine.
 \item A plan that has had an expectation failure is being executed by
   the deliberative planning machine.
 \item There is no plan currently executing in the deliberative
@@ -158,18 +156,18 @@ failure event.  The reflectively planned execution of the deliberative
 execution of the plan is processed concurrently with the deliberative
 planning machine operations, slightly behind the times, not
 necessarily slowing down the deliberative planning resources.  The
-reflective layer induces types of representations of this reflectively
-reconstructed representation of the deliberative planning machine and
-its relationships to its plans.  The preconditions and effects of the
-deliberative execution actions are learned from the types of this
-reflective reconstruction, learning to predict, in terms of types of
-knowledge, the effects of planning actions on plans in general.  In
-the example, these types of knowledge include: ``The plan currently
-under focus contains an assertion that a cube must be stacked on a
-pyramid.''  The AI refines many of its hypotheses given this limited
-experience of failure, retaining the hypothesis that executing the
-plan under focus might result in failure due to the plan's assertion
-that a cube is on top of a pyramid.
+reflective layer induces deliberative types of knowledge from this
+reflectively reconstructed deliberative planning machine knowledge
+base.  The preconditions and effects of the deliberative execution
+actions are learned from the types of this reflective reconstruction,
+learning to predict, in terms of types of knowledge, the effects of
+planning actions on plans in general.  In the example, these types of
+knowledge include: ``The plan currently under focus contains an
+assertion that a cube must be stacked on a pyramid.''  The AI refines
+many of its hypotheses given this limited experience of failure,
+retaining the hypothesis that executing the plan under focus might
+result in failure due to the plan's assertion that a cube is sitting
+on a pyramid.
 
 {\mbox{\autoref{figure:implemented_example_learning_storyboard}}}
 shows an example of how reflectively learning about the deliberative
@@ -211,7 +209,7 @@ avoid plan execution failures.
   deliberate.]{Adaptation due to reflectively learning how to
   deliberate.  The AI has the goal of creating a stack of two blocks.
   (1) A plan is recalled from memory and executed because it asserts
-  that a square block is on top of a triangular block.  (2--8) The
+  that a square block is sitting on a triangular block.  (2--8) The
   deliberative layer executes the plan and because the cube falls off
   of the pyramid, the plan's assertion fails, an expectation failure
   that is reported to the reflective layer.  (8) The reflective layer
@@ -219,8 +217,8 @@ avoid plan execution failures.
   will lead to failure when executed.  The reflective layer selects a
   new planning strategy that it infers will not lead to failure:
   recalling a plan from memory that is hypothesized to stack a pyramid
-  on top of a cube.  (9-12) The second plan completes execution,
-  successfully asserting that a pyramid is stacked on a cube.}
+  on a cube.  (9-12) The second plan completes execution, successfully
+  asserting that a pyramid is stacked on a cube.}
 \label{figure:implemented_example_learning_storyboard}
 \end{figure}
 

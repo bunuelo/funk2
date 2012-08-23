@@ -124,7 +124,7 @@ phdthesis.pdf: \
   gfx/transframe.pdf \
   gfx/fibermon_many_fibers.pdf \
   gfx/magritte_pipe.pdf \
-  gfx/three_layers_overview.pdf \
+  gfx/four_layers_overview.pdf \
   gfx/isis_world_two_agents.pdf \
   gfx/physical_type_knowledge_abstraction.pdf
 	pdflatex phdthesis

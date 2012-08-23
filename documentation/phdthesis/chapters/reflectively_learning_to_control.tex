@@ -235,17 +235,17 @@ order to control the layers below.  This four-layered model is
 inspired by the bottom four layers of the six-layered Emotion Machine
 architecture for human commonsense thinking \cite[]{minsky:2006}.  The
 four layers of the AI reflectively control a physical simulation.
-{\mbox{\autoref{figure:three_layers_overview}}} shows an overview of
+{\mbox{\autoref{figure:four_layers_overview}}} shows an overview of
 the four layers of the AI in relation to the physical simulation.
 \begin{figure}
 \begin{center}
-\includegraphics[width=10cm]{gfx/three_layers_overview}
+\includegraphics[width=10cm]{gfx/four_layers_overview}
 \end{center}
 \caption[The four layers of the AI in relation to the physical
   simulation.]{The layers of the AI in relation to the physical
   simulation.  The four layers of the AI form cascaded control loops,
   where each layer reflectively controls the layers below.}
-\label{figure:three_layers_overview}
+\label{figure:four_layers_overview}
 \end{figure}
 
 In the following sections, I give an overview of the types of
@@ -526,7 +526,18 @@ indexing of the physical type knowledge base can be done with $O(\log
 n)$ time complexity as $n$ increases linearly with the number of
 physical type knowledge events in the knowledge base.  Thus, computing
 the physical type knowledge transframe between any two points in the
-past can be done relatively quickly.
+past can be done relatively quickly.  A necessary feature that must
+still be added to the architecture is a \emph{forgetful} physical type
+knowledge base.  There are many forgetful event streams in the
+language, and the ability to treat an entire event knowledge base as a
+forgetful streaming object is a way to allow indefinitely long
+run-time in future research.  Currently, the inability to forget,
+limits the bytecode execution time of the AI to be a linear factor of
+the total memory and processors in the computer.  Roughly according to
+the following equation:
+\begin{equation}
+M = kT
+\end{equation}
 
 Once the deliberative layer learns action dependent transframe
 hypotheses in terms of the physical type knowledge, these hypotheses

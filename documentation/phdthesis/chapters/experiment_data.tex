@@ -13,15 +13,15 @@ figures showing data from an experiment where the AI simply booting up
 and then perceiving the world over time.  This experiment is a sort of
 control reference that shows that the AI memory usage and execution is
 stable if it does not have any goals and the physical world is not
-changing.  \autoref{table:reflective_learning} shows a list of figures
+changing.  \autoref{table:no_reflective_learning} shows a list of
+figures showing data from an experiment with the reflective learning
+disabled.  \autoref{table:reflective_learning} shows a list of figures
 showing data from an experiment with the AI reflectively tracing, and
-building models of the deliberative planning process.
-\autoref{table:no_reflective_learning} shows a list of figures showing
-data from an experiment with the reflective learning disabled.
-Comparing the execution of the experiment with no reflective learning
-with that of reflective learning shows a rough estimate of how much
-more memory is used when the reflective learning about the
-deliberative planning machine is enabled.
+building models of the deliberative planning process.  Comparing the
+execution of the experiment with no reflective learning with that of
+reflective learning shows a rough estimate of how much more memory is
+used when the reflective learning about the deliberative planning
+machine is enabled.
 
 \experimentdatatable[bootup]{an experiment that simply boots up the AI
   and simply allows it to perceive the physical world and not
@@ -31,6 +31,12 @@ deliberative planning machine is enabled.
   learns from its initial perceptions, and when these do not change,
   it has nothing to learn and memory usage is stable.}
 
+\experimentdatatable[no_reflective_learning]{an experiment without the
+  AI reflectively tracing, and building models of the deliberative
+  planning process} {This experiment serves to show the memory
+  performance of the system when the reflective perception, learning,
+  and prediction of deliberative actions is disabled.}
+
 \experimentdatatable[reflective_learning]{an experiment with the AI
   reflectively tracing, and building models of the deliberative
   planning process} {This experiment serves as a demonstration of the
@@ -39,12 +45,6 @@ deliberative planning machine is enabled.
   blocks, and also reflectively perceiving and learning to predict the
   effects of its deliberative actions, including how planning can lead
   to execution failures.}
-
-\experimentdatatable[no_reflective_learning]{an experiment without the
-  AI reflectively tracing, and building models of the deliberative
-  planning process} {This experiment serves to show the memory
-  performance of the system when the reflective perception, learning,
-  and prediction of deliberative actions is disabled.}
 
 
 \clearpage
@@ -58,16 +58,16 @@ deliberative planning machine is enabled.
 %  stable.}
 
 \clearpage
-\section{Figures from Reflective Learning Experiment}
-
-%\experimentdatafigures[140]{reflective_learning}{an experiment with
-%  the AI reflectively tracing, and building models of the deliberative
-%  planning process}
-
-\clearpage
 \section{Figures from Learning Experiment without Reflection}
 
 %\experimentdatafigures[90]{no_reflective_learning}{an experiment
 %  without the AI reflectively tracing, and building models of the
 %  deliberative planning process}
+
+\clearpage
+\section{Figures from Reflective Learning Experiment}
+
+%\experimentdatafigures[140]{reflective_learning}{an experiment with
+%  the AI reflectively tracing, and building models of the deliberative
+%  planning process}
 

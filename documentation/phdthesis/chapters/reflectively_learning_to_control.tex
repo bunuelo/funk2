@@ -209,16 +209,17 @@ avoid plan execution failures.
   deliberate.]{Adaptation due to reflectively learning how to
   deliberate.  The AI has the goal of creating a stack of two blocks.
   (1) A plan is recalled from memory and executed because it asserts
-  that a square block is sitting on a triangular block.  (2--8) The
-  deliberative layer executes the plan and because the cube falls off
-  of the pyramid, the plan's assertion fails, an expectation failure
-  that is reported to the reflective layer.  (8) The reflective layer
-  hypothesizes that plans asserting a stack of a cube on a triangle
-  will lead to failure when executed.  The reflective layer selects a
-  new planning strategy that it infers will not lead to failure:
-  recalling a plan from memory that is hypothesized to stack a pyramid
-  on a cube.  (9-12) The second plan completes execution, successfully
-  asserting that a pyramid is stacked on a cube.}
+  that a square block is sitting on a triangular block, which
+  hypothetically accomplishes the goal.  (2--8) The deliberative layer
+  executes the plan and because the cube falls off of the pyramid, the
+  plan's assertion fails, an expectation failure that is reported to
+  the reflective layer.  (8) The reflective layer hypothesizes that
+  plans asserting a stack of a cube on a triangle will lead to failure
+  when executed.  The reflective layer selects a new planning strategy
+  that it infers will not lead to failure: recalling a plan from
+  memory that is hypothesized to stack a pyramid on a cube.  (9-12)
+  The second plan completes execution, successfully asserting that a
+  pyramid is stacked on a cube.}
 \label{figure:implemented_example_learning_storyboard}
 \end{figure}
 
@@ -416,11 +417,11 @@ types of knowledge in a knowledge base in the deliberative layer
 called \emph{the physical type knowledge base}.  The physical type
 knowledge base counts the occurrences of types of knowledge in the
 deliberative layer's reconstruction of the physical knowledge base.
-{\mbox{\autoref{figure:physical_type_knowledge_induction}}} shows
-the knowledge bases involved in the abstraction of physical type
-knowledge.  The following is a list of types of physical type
-knowledge that is accounted for in the physical type knowledge base at
-any given point in time:
+{\mbox{\autoref{figure:physical_type_knowledge_induction}}} shows the
+knowledge bases involved in the induction of physical type knowledge.
+The following is a list of types of physical type knowledge that is
+accounted for in the physical type knowledge base at any given point
+in time:
 \begin{itemize}
 \item A block is sitting on another block.
 \item A block with a pyramid shape is sitting on Block-1.
@@ -432,11 +433,11 @@ any given point in time:
 \includegraphics[width=10cm]{gfx/physical_type_knowledge_induction}
 \end{center}
 \caption[The knowledge bases involved in physical type knowledge
-  abstraction.]{The knowledge bases involved in physical type
-  knowledge abstraction.  The creation of a reconstruction of the
-  physical knowledge base by the deliberative layer allows the full
-  speed concurrent execution of the reactive layer, despite the slower
-  speed of the more careful deliberative learning processes.}
+  induction.]{The knowledge bases involved in physical type knowledge
+  induction.  The creation of a reconstruction of the physical
+  knowledge base by the deliberative layer allows the full speed
+  concurrent execution of the reactive layer, despite the slower speed
+  of the more careful deliberative learning processes.}
 \label{figure:physical_type_knowledge_induction}
 \end{figure}
 
@@ -540,18 +541,20 @@ imagining the execution of plans, a step in the planning process.
 Plans sometimes assert conditions in the physical type knowledge base.
 During the imagination of the plan execution, the counterfactual
 physical type knowledge is used for determining whether assertions
-will succeed or fail.  For example,
-{\mbox{\autoref{table:a_plan_learned_from_being_told}}} shows a plan
-that contains the assertion that ``a cube is sitting on a pyramid''.
-The AI has no experience executing this plan because it has only
-``been told'' this plan.  The AI adds the types of knowledge asserted
-within the plan to the possible hypothetical transframes for the
-actions in the plan.  This causes the AI to have a concept learner for
-predicting the change that would satisfy the assertion in the plan.
-During the inference of the counterfactual physical type knowledge,
-both the possibility that an action in the plan will cause the
-asserted knowledge to exist as well as the possibility that no action
-in the plan will cause the asserted knowledge to exist.  Notice that
+will succeed or fail in the imagination of the plan's counterfactual
+execution knowledge.  For example,
+{\mbox{\autoref{table:a_plan_learned_from_being_told}}} on
+{\mbox{page~\pageref{table:a_plan_learned_from_being_told}}} shows a
+plan that contains the assertion that ``a cube is sitting on a
+pyramid''.  The AI has no experience executing this plan because it
+has only ``been told'' this plan.  The AI adds the types of knowledge
+asserted within the plan to the possible hypothetical transframes for
+the actions in the plan.  This causes the AI to have a concept learner
+for predicting the change that would satisfy the assertion in the
+plan.  Inferred counterfactual physical type knowledge can predict
+both that an action in the plan will cause the knowledge necessary for
+the assertion to succeed as well as that the knowledge for the
+assertion will not be caused and the assertion will fail.  Notice that
 even if a plan fails given certain preconditions, there is always the
 potential that this plan will successfully complete under some
 possible future preconditions.  The utility of the plan is learned
@@ -563,9 +566,16 @@ the plan.
 Finally, the deliberative layer goes through a list of the plans that
 it knows and imagines executing them.  If the imagined plan succeeds
 and accomplishes the physical type goals of the deliberative planning
-machine, then the plan is executed.  The process that controls the
-individual actions of the deliberative planning machine is a plan
-executing concurrently in the reflective planning machine.
+machine, then the plan is executed.  The deliberative planning machine
+has the following goal: ``A block is sitting on a block.''  When the
+AI imagines executing the plan in
+{\mbox{\autoref{table:a_plan_learned_from_being_told}}} on
+{\mbox{page~\pageref{table:a_plan_learned_from_being_told}}}, there is
+hypothetical support for the counterfactual knowledge: ``A cube is
+sitting on a pyramid.''  Executing the plan and accomplishing the goal
+is hypothetically supported, so the plan is executed, resulting in the
+learning of a more refined model of the physical world as well as a
+more refined model of the deliberative planning machine.
 
 \section{The Reflective Layer}
 
@@ -575,18 +585,32 @@ reflective layer learns hypothetical models of how deliberative
 actions affect the types of deliberative knowledge.  The reflective
 layer receives a stream of deliberative planning machine knowledge
 events, which it uses to reconstruct a copy of the deliberative
-planning machine knowledge that can be used for inducing types of
-deliberative knowledge at a steadier pace than the shorter-lived
-executions of the deliberative planning machine resources.
+planning machine knowledge base that it can use for inducing
+deliberative type knowledge at a steadier pace than the shorter-lived
+``bursty'' executions of the deliberative planning machine resources.
+The process that controls the individual actions of the deliberative
+planning machine can be a plan executing concurrently in the
+reflective planning machine.
 {\mbox{\autoref{figure:deliberative_type_knowledge_induction}}} shows
 an overview of the knowledge bases and processes involved in
-deliberative type knowledge induction by the reflective layer without
-slowing down the deliberative process under focus.
-\begin{figure}
+deliberative type knowledge induction by the reflective layer.
+\begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{gfx/deliberative_type_knowledge_induction}
 \caption[The knowledge bases and processes involved in deliberative
   type knowledge induction.]{The knowledge bases and processes
   involved in deliberative type knowledge induction.}
 \label{figure:deliberative_type_knowledge_induction}
+\end{figure}
+
+The reflective layer perceives the deliberative planning machine
+knowledge.
+{\mbox{\autoref{figure:deliberative_planning_machine_knowledge_base}}}
+shows the deliberative planning machine knowledge base.
+\begin{figure}[h]
+\centering
+\includegraphics[width=10cm]{gfx/deliberative_planning_machine_knowledge_base}
+\caption[The deliberative planning machine knowledge base.]{The
+  deliberative planning machine knowledge base.}
+\label{figure:deliberative_planning_machine_knowledge_base}
 \end{figure}

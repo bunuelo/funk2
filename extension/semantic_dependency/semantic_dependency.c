@@ -104,74 +104,37 @@ f2ptr f2__semantic_dependency__reflective_object_type__set(f2ptr cause, f2ptr th
 export_cefunk2(semantic_dependency__reflective_object_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_dependency__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"));
+f2ptr raw__semantic_dependency__precondition_event__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "precondition_event"));
 }
 
-f2ptr f2__semantic_dependency__preposition__on__lookup_set(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_dependency__precondition_event__lookup_set(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_dependency, this);
-  return raw__semantic_dependency__preposition__on__lookup_set(cause, this);
+  return raw__semantic_dependency__precondition_event__lookup_set(cause, this);
 }
-export_cefunk1(semantic_dependency__preposition__on__lookup_set, this, 0, "Returns the set of preposition-ons.");
+export_cefunk1(semantic_dependency__precondition_event__lookup_set, this, 0, "Returns the set of precondition_events.");
 
 
-f2ptr raw__semantic_dependency__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+f2ptr raw__semantic_dependency__precondition_event__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "precondition_event"), that);
 }
 
-f2ptr f2__semantic_dependency__preposition__on__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_dependency__precondition_event__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_dependency, this);
-  assert_argument_type(semantic_dependency, that);
-  return raw__semantic_dependency__preposition__on__add(cause, this, that);
+  return raw__semantic_dependency__precondition_event__add(cause, this, that);
 }
-export_cefunk2(semantic_dependency__preposition__on__add, this, that, 0, "");
+export_cefunk2(semantic_dependency__precondition_event__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_dependency__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "on"), that);
+f2ptr raw__semantic_dependency__precondition_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "precondition_event"), that);
 }
 
-f2ptr f2__semantic_dependency__preposition__on__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_dependency__precondition_event__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_dependency, this);
-  assert_argument_type(semantic_dependency, that);
-  return raw__semantic_dependency__preposition__on__remove(cause, this, that);
+  return raw__semantic_dependency__precondition_event__remove(cause, this, that);
 }
-export_cefunk2(semantic_dependency__preposition__on__remove, this, that, 0, "");
-
-
-f2ptr raw__semantic_dependency__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"));
-}
-
-f2ptr f2__semantic_dependency__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_dependency, this);
-  return raw__semantic_dependency__preposition__in__lookup_set(cause, this);
-}
-export_cefunk1(semantic_dependency__preposition__in__lookup_set, this, 0, "Returns the set of preposition-ins.");
-
-
-f2ptr raw__semantic_dependency__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_dependency__preposition__in__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_dependency, this);
-  assert_argument_type(semantic_dependency, that);
-  return raw__semantic_dependency__preposition__in__add(cause, this, that);
-}
-export_cefunk2(semantic_dependency__preposition__in__add, this, that, 0, "");
-
-
-f2ptr raw__semantic_dependency__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "preposition"), new__symbol(cause, "in"), that);
-}
-
-f2ptr f2__semantic_dependency__preposition__in__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_dependency, this);
-  assert_argument_type(semantic_dependency, that);
-  return raw__semantic_dependency__preposition__in__remove(cause, this, that);
-}
-export_cefunk2(semantic_dependency__preposition__in__remove, this, that, 0, "");
+export_cefunk2(semantic_dependency__precondition_event__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_dependency__primobject_type__new(f2ptr cause) {
@@ -181,12 +144,9 @@ f2ptr f2__semantic_dependency__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "reflective_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__reflective_object_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "reflective_object_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__reflective_object_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-in"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__in__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__in__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__in__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-on"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__on__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__on__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__preposition__on__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "precondition_event"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "precondition_event"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "precondition_event"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__remove")));}
   return this;
 }
 

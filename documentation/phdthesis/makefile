@@ -126,7 +126,8 @@ phdthesis.pdf: \
   gfx/magritte_pipe.pdf \
   gfx/four_layers_overview.pdf \
   gfx/isis_world_two_agents.pdf \
-  gfx/physical_type_knowledge_abstraction.pdf
+  gfx/physical_type_knowledge_induction.pdf \
+  gfx/deliberative_type_knowledge_induction.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

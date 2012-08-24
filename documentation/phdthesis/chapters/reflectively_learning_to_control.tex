@@ -588,12 +588,73 @@ events, which it uses to reconstruct a copy of the deliberative
 planning machine knowledge base that it can use for inducing
 deliberative type knowledge at a steadier pace than the shorter-lived
 ``bursty'' executions of the deliberative planning machine resources.
-The process that controls the individual actions of the deliberative
-planning machine can be a plan executing concurrently in the
-reflective planning machine.
+{\mbox{\autoref{figure:deliberative_planning_machine_knowledge_base}}}
+shows the deliberative planning machine knowledge base that the
+reflective layer reconstructs and learns hypotheses for how to
+control.
+\begin{sidewaysfigure}
+  \begin{tabular}{p{8in}}
+    % define source coordinates
+    \begin{itemize}
+    \item Plan for Physical Action in Deliberative Execution Register \tikz[na] \coordinate (executing-plan-label);
+    \item Plan for Physical Action in Deliberative Focus Register \tikz[na] \coordinate (focus-plan-label);
+    \item Deliberative Planning Machine \tikz[na] \coordinate (deliberative-planning-machine-label);
+    \end{itemize} \\
+    % Use a background grid to make it easier to find coordinates
+    % When the coordinates have been found, remove the 
+    % 'show background grid' option. 
+    %\tikzstyle{background grid}=[draw, black!50,step=.5cm]
+    \begin{tikzpicture}%[show background grid]
+      % Put the graphic inside a node. This makes it easy to place the
+      % graphic and to draw on top of it. 
+      % The above right option is used to place the lower left corner
+      % of the image at the (0,0) coordinate. 
+      
+      \node [inner sep=0pt,above right] {\includegraphics[width=8in]{gfx/deliberative_planning_machine_knowledge_base}};
+      
+      % show origin
+      %\fill (0,0) circle (2pt);
+      % define destination coordinates
+      \path (17.5,2) coordinate (executing-plan)
+      (6,2.25) coordinate (focus-plan)
+      (1.75,4.5) coordinate (deliberative-planning-machine);
+    \end{tikzpicture}
+  \end{tabular}
+  
+  % define overlays
+  % Note the use of the overlay option. This is required when 
+  % you want to access nodes in different pictures.
+  \begin{tikzpicture}[overlay]
+    \draw (executing-plan) node[ellipse, dashed, dash pattern=on 10pt off 10pt, red, minimum height=4cm,minimum width=6cm, line width=1.5, draw] {};
+    \path[->,red,thick, line width=1.5] (executing-plan-label) edge [out=0, in=120] (executing-plan);
+    
+    \draw (focus-plan) node[ellipse, dashed, dash pattern=on 10pt off 10pt, red, minimum height=4cm,minimum width=6cm, line width=1.5, draw] {};
+    \path[->,red,thick, line width=1.5] (focus-plan-label) edge [out=0, in=60] (focus-plan);
+    
+    \draw (deliberative-planning-machine) node[ellipse, dashed, dash pattern=on 10pt off 10pt, red, minimum height=0.5cm,minimum width=1.5cm, line width=1.5, draw] {};
+    \path[->,red,thick, line width=1.5] (deliberative-planning-machine-label) edge [out=0, in=-60] (deliberative-planning-machine);
+  \end{tikzpicture}
+  \hspace{4cm}\parbox{15cm}{\caption[The deliberative planning machine
+      knowledge base.]{The deliberative planning machine knowledge
+      base.}\label{figure:deliberative_planning_machine_knowledge_base}}
+\end{sidewaysfigure}
+
 {\mbox{\autoref{figure:deliberative_type_knowledge_induction}}} shows
-an overview of the knowledge bases and processes involved in
-deliberative type knowledge induction by the reflective layer.
+an overview of the knowledge bases and processes involved in the
+induction of the deliberative planning machine type knowledge base by
+the reflective layer.  The reflective layer uses an analogous type
+knowledge induction process as the deliberative layer.  Plans in the
+reflective planning machine knowledge base are imagined in terms of
+the deliberative type knowledge.  This allows the reflective layer
+planning machine to learn models of plan execution that have no
+physical simulation component.  The ability to imagine executing a
+plan and predicting its failure based on the structure of the plan in
+relation to the planning machine and not in terms of the physical
+world, is \emph{not} an advantage provided by physical knowledge
+induction.  In this case, the ability to reason abstractly about
+physical plans for action without any physical simulation component
+necessary is provided by the reflective planning machine in the
+reflective layer.
 \begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{gfx/deliberative_type_knowledge_induction}
@@ -603,14 +664,37 @@ deliberative type knowledge induction by the reflective layer.
 \label{figure:deliberative_type_knowledge_induction}
 \end{figure}
 
-The reflective layer perceives the deliberative planning machine
-knowledge.
-{\mbox{\autoref{figure:deliberative_planning_machine_knowledge_base}}}
-shows the deliberative planning machine knowledge base.
-\begin{figure}[h]
+The deliberative planning process can be thought of as a plan
+executing in the reflective planning machine.  The reflective planning
+machine makes and executes plans that control the deliberative
+planning process in order to avoid execution failures.  Hypotheses are
+learned by the reflective layer that predict plan failure due to
+conjunctions of deliberative type knowledge features.  One of the
+hypothetical deliberative type knowledge transframes that the AI
+learns is the example expectation failure is shown in
+{\mbox{\autoref{table:hypothesized_deliberative_transframe}}}.
+\begin{table}[h]
 \centering
-\includegraphics[width=10cm]{gfx/deliberative_planning_machine_knowledge_base}
-\caption[The deliberative planning machine knowledge base.]{The
-  deliberative planning machine knowledge base.}
-\label{figure:deliberative_planning_machine_knowledge_base}
-\end{figure}
+\begin{tabular}{c}
+  Hypothesized Deliberative Type Knowledge Transframe for Action \\
+  \begin{tabular}{|l|p{8cm}|}
+    \hline
+    \emph{action:}        & Execute and wait to complete. \\
+    \hline
+    \emph{preconditions:} & A plan is in focus that asserts a cube is sitting on a triangle. \\
+    ~                     & No plans have failed. \\
+    \hline
+    \emph{additions:}     & A plan has that just encountered a failure encountered an expectation failure. \\
+    \hline
+    \emph{removals:}      & \\
+    \hline
+  \end{tabular}
+\end{tabular}
+\caption[Hypothesized deliberative type knowledge transframe for
+  action.]{Hypothesized deliberative type knowledge transframe
+  including action dependent sets of deliberative type knowledge
+  \emph{add} and \emph{remove} changes with learned conjunctive
+  hypothesis spaces based on a set of deliberative type knowledge
+  preconditions.}
+\label{table:hypothesized_deliberative_transframe}
+\end{table}

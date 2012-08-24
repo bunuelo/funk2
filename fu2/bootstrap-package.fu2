@@ -187,6 +187,7 @@
 						     'extension/semantic_goal_action_causal_hypothesis/'
 						     'extension/semantic_causal_event/'
 						     'extension/semantic_causal_object/'
+						     'extension/semantic_dependency/'
 						     'extension/semantic_event_sequence/'
 						     'extension/semantic_event_tree/'
 						     'extension/semantic_expectation_failure/'

@@ -167,8 +167,7 @@ f2ptr raw__semantic_reflective_object_type_event__dependency__add(f2ptr cause, f
 }
 
 f2ptr f2__semantic_reflective_object_type_event__dependency__add(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object_type_event,          this);
-  assert_argument_type(semantic_reflective_object_type_relation_event, that);
+  assert_argument_type(semantic_reflective_object_type_event, this);
   return raw__semantic_reflective_object_type_event__dependency__add(cause, this, that);
 }
 export_cefunk2(semantic_reflective_object_type_event__dependency__add, this, that, 0, "");
@@ -179,8 +178,7 @@ f2ptr raw__semantic_reflective_object_type_event__dependency__remove(f2ptr cause
 }
 
 f2ptr f2__semantic_reflective_object_type_event__dependency__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object_type_event,          this);
-  assert_argument_type(semantic_reflective_object_type_relation_event, that);
+  assert_argument_type(semantic_reflective_object_type_event, this);
   return raw__semantic_reflective_object_type_event__dependency__remove(cause, this, that);
 }
 export_cefunk2(semantic_reflective_object_type_event__dependency__remove, this, that, 0, "");

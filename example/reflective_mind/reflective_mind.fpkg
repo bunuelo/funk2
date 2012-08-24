@@ -189,7 +189,8 @@
 [defpackage deliberative_imagination_agency
   :packages [reflective_mind_core
 	     deliberative_resource
-	     nonsemantic_plan]
+	     nonsemantic_plan
+	     semantic_dependency]
    :sources ['deliberative_imagination_agency.fu2']]
 
 [defpackage object_type_property_relation_goal

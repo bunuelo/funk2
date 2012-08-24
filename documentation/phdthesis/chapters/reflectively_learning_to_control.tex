@@ -425,7 +425,7 @@ any given point in time:
 \item A block is sitting on another block.
 \item A block with a pyramid shape is sitting on Block-1.
 \item A green block is sitting on a blue block.
-\item A block is to the left of a gripper that is me.
+\item A block is to the left of a gripper.
 \end{itemize}
 \begin{figure}
 \begin{center}
@@ -496,12 +496,12 @@ physical type knowledge base over time.
     \hline
     \emph{action:}        & Reach and grab. \\
     \hline
-    \emph{preconditions:} & A block is below a gripper that is me. \\
-    ~                     & A gripper that is me is holding nothing. \\
+    \emph{preconditions:} & A block is below a gripper. \\
+    ~                     & A gripper is holding nothing. \\
     \hline
-    \emph{additions:}     & A gripper that is me is holding a block. \\
+    \emph{additions:}     & A gripper is holding a block. \\
     \hline
-    \emph{removals:}      & A gripper that is me is holding nothing. \\
+    \emph{removals:}      & A gripper is holding nothing. \\
     \hline
   \end{tabular}
 \end{tabular}
@@ -528,21 +528,54 @@ still be added to the architecture is a \emph{forgetful} physical type
 knowledge base.  There are many forgetful event streams in the
 language, and the ability to treat an entire event knowledge base as a
 forgetful streaming object is a way to allow indefinitely long
-run-time in future research.
+run-time.
 
 Once the deliberative layer learns action dependent transframe
 hypotheses in terms of the physical type knowledge, these hypotheses
-can be used for imagining the hypothetical effects of actions.  This
-hypothetically supported knowledge is stored by the deliberative layer
-in \emph{the counterfactual physical type knowledge base}.  The
-counterfactual knowledge physical type knowledge is used for imagining
-the execution of plans, a step in the planning process.  Plans
-sometimes reference conditions that may or may not exist in the
-physical type knowledge base in order to guide the plan execution.
-For example, {\mbox{\autoref{table:a_plan_learned_from_being_told}}}
-shows a plan that the AI has ``been told'' but has no experience
-executing.
+can be used for imagining the hypothetical types of effects of
+actions.  This hypothetically supported knowledge is stored by the
+deliberative layer in \emph{the counterfactual physical type knowledge
+  base}.  The counterfactual physical type knowledge is used for
+imagining the execution of plans, a step in the planning process.
+Plans sometimes assert conditions in the physical type knowledge base.
+During the imagination of the plan execution, the counterfactual
+physical type knowledge is used for determining whether assertions
+will succeed or fail.  For example,
+{\mbox{\autoref{table:a_plan_learned_from_being_told}}} shows a plan
+that contains the assertion that ``a cube is sitting on a pyramid''.
+The AI has no experience executing this plan because it has only
+``been told'' this plan.  The AI adds the types of knowledge asserted
+within the plan to the possible hypothetical transframes for the
+actions in the plan.  This causes the AI to have a concept learner for
+predicting the change that would satisfy the assertion in the plan.
+During the inference of the counterfactual physical type knowledge,
+both the possibility that an action in the plan will cause the
+asserted knowledge to exist as well as the possibility that no action
+in the plan will cause the asserted knowledge to exist.  Notice that
+even if a plan fails given certain preconditions, there is always the
+potential that this plan will successfully complete under some
+possible future preconditions.  The utility of the plan is learned
+through experiences in different physical type preconditions.  In this
+way, the inferred hypothetical effects of an action can be learned
+from ``being told'' as well as eliminated through experience executing
+the plan.
+
+Finally, the deliberative layer goes through a list of the plans that
+it knows and imagines executing them.  If the imagined plan succeeds
+and accomplishes the physical type goals of the deliberative planning
+machine, then the plan is executed.  The process that controls the
+individual actions of the deliberative planning machine is a plan
+executing concurrently in the reflective planning machine.
 
 \section{The Reflective Layer}
 
+While the deliberative layer learns hypothetical models of how
+physical actions affect the types of physical knowledge, the
+reflective layer learns hypothetical models of how deliberative
+actions affect the types of deliberative knowledge.  The reflective
+layer receives a stream of deliberative planning machine knowledge
+events, which it uses to reconstruct a copy of the deliberative
+planning machine knowledge that can be used for inducing types of
+deliberative knowledge at a steadier pace than the shorter-lived
+executions of the deliberative planning machine resources.
 

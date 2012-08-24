@@ -3,7 +3,30 @@
 \label{chapter:evaulation}
 %************************************************
 
-\section{Empirical Run-time Tests}
+\section{``Boot-up'' and Perceive Experiment}
+
+\autoref{figure:data/bootup/mind_plot-Gripper-1-builtin_reactive-sensory}
+on page
+\pageref{figure:data/bootup/mind_plot-Gripper-1-builtin_reactive-sensory}
+shows the Built-in Reactive Sensory Agency during a boot-up experiment
+where the AI is created and simply perceives each new state of the
+physical world over time.  The built-in reactive sensory agency is
+responsible for detecting changes between two collections of physical
+knowledge, these detected changes are propagated in the visual event
+stream that is integrated into physical knowledge by the learned
+reactive physical knowledge agency.  This agency shows that over the
+$70$ minute experiment, this agency uses an additional 833 bytes per
+second, resulting in 3 million bytes used seventy minutes later when
+the experiment was ended.  This agency is not idle.  This agency
+contains resources that allocate an average of 1.2 million bytes per
+second in the process of detecting visual changes in the next state
+from the physical simulation, a total of 4.3 gigabytes allocated over
+the entire 60 minutes of continuous visual perception.  This
+experiment is to show that the garbage collector is working to
+minimize the memory footprint of processes that allocate a lot of new
+memory in their routine processing.
+
+\section{Deliberative and Reflective Learning Experiments}
 
 
                                                              

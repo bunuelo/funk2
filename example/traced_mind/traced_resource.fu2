@@ -349,6 +349,31 @@
 				      [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
 					[set semantic_dependency precondition_time   precondition_time]
 					[set semantic_dependency resource_activation [get this resource_semantic_frame]]
+					[have semantic_dependency add_invalidated_callback
+					      [funk []
+						    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+								     'resource, ' name ', dependency has become invalidated.']
+						    
+						    'could attempt to find new hypothetical support for this dependency at this point in order to avoid announcing its complete loss of support.'
+						    
+						    [have semantic_dependency know_is_unsupported]
+						    ]
+					      nil]
+					[have semantic_dependency add_unsupported_callback
+					      [funk []
+						    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+								     'resource, ' name ', dependency has become unsupported.']
+						    [let [[result [shelter [prog [have counterfactual_knowledge_base remove_semantic_frame semantic_dependency]
+										 [have counterfactual_knowledge_base remove_semantic_frame counterfactual_event]]]]]
+						      [if [is-type `bug result]
+							  [let [[bug result]]
+							    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+									     'resource, ' name ', warning: received bug ' bug]
+							    ]
+							[prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+									       'resource, ' name ', successfully removed unsupported counterfactual event and dependency.']
+							      ]]]]
+					      nil]
 					[mapc [funk [precondition_event]
 						    [semantic-add semantic_dependency precondition_event precondition_event]
 						    [have precondition_event add_lost_grounding_callback

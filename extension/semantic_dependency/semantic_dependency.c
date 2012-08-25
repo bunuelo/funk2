@@ -22,13 +22,58 @@
 #include "semantic_dependency.h"
 
 
+// dependency_callback
+
+def_ceframe2(semantic_dependency, dependency_callback,
+	     funk,
+	     args);
+
+f2ptr raw__dependency_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
+  return f2dependency_callback__new(cause, funk, args);
+}
+
+f2ptr f2__dependency_callback__new(f2ptr cause, f2ptr funk, f2ptr args) {
+  assert_argument_type(funkable, funk);
+  assert_argument_type(conslist, args);
+  return raw__dependency_callback__new(cause, funk, args);
+}
+export_cefunk2(dependency_callback__new, funk, args, 0, "Returns a new dependency_callback object.");
+
+f2ptr raw__dependency_callback__call(f2ptr cause, f2ptr this) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = raw__dependency_callback__funk(cause, this);
+  f2ptr args  = raw__dependency_callback__args(cause, this);
+  return catch_value(f2__force_funk_apply(cause, fiber, funk, args),
+		     f2list4__new(cause,
+				  new__symbol(cause, "description"), new__string(cause, "Bug encountered while executing callback funk for dependency_callback."),
+				  new__symbol(cause, "this"),        this));
+}
+
+f2ptr f2__dependency_callback__call(f2ptr cause, f2ptr this) {
+  assert_argument_type(dependency_callback, this);
+  return raw__dependency_callback__call(cause, this);
+}
+export_cefunk1(dependency_callback__call, this, 0, "Calls this hypothesis_version_space_hypothesis_callback.");
+
+
+f2ptr f2__dependency_callback_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__dependency_callback_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "call"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "dependency_callback__call")));}
+  return this;
+}
+
+
 // semantic_dependency
 
 f2ptr raw__semantic_dependency__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                  new__symbol(cause, "semantic_dependency"));
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"), nil);
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                         new__symbol(cause, "semantic_dependency"));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"),        nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "is_invalidated"),               nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"),        nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "is_unsupported"),               nil);
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
@@ -83,6 +128,276 @@ f2ptr f2__semantic_dependency__type(f2ptr cause, f2ptr this) {
   return raw__semantic_dependency__type(cause, this);
 }
 export_cefunk1(semantic_dependency__type, thing, 0, "Returns the specific type of object that this semantic_dependency is.");
+
+
+f2ptr raw__semantic_dependency__invalidated_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"));
+}
+
+f2ptr f2__semantic_dependency__invalidated_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__invalidated_callbacks_cmutex(cause, this);
+}
+export_cefunk1(semantic_dependency__invalidated_callbacks_cmutex, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__invalidated_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"), that);
+}
+
+f2ptr f2__semantic_dependency__invalidated_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__invalidated_callbacks_cmutex__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__invalidated_callbacks_cmutex__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__invalidated_callbacks(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"));
+}
+
+f2ptr f2__semantic_dependency__invalidated_callbacks(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__invalidated_callbacks(cause, this);
+}
+export_cefunk1(semantic_dependency__invalidated_callbacks, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__invalidated_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"), that);
+}
+
+f2ptr f2__semantic_dependency__invalidated_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__invalidated_callbacks__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__invalidated_callbacks__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__is_invalidated(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_invalidated"));
+}
+
+f2ptr f2__semantic_dependency__is_invalidated(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__is_invalidated(cause, this);
+}
+export_cefunk1(semantic_dependency__is_invalidated, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__is_invalidated__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "is_invalidated"), that);
+}
+
+f2ptr f2__semantic_dependency__is_invalidated__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__is_invalidated__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__is_invalidated__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__add_invalidated_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  f2ptr     invalidated_callbacks_cmutex = raw__semantic_dependency__invalidated_callbacks_cmutex(cause, this);
+  boolean_t already_invalidated          = boolean__false;
+  {
+    raw__cmutex__lock(cause, invalidated_callbacks_cmutex);
+    {
+      f2ptr is_invalidated = raw__semantic_dependency__is_invalidated(cause, this);
+      if (is_invalidated != nil) {
+	already_invalidated = boolean__true;
+      } else {
+	f2ptr invalidated_callbacks = raw__semantic_dependency__invalidated_callbacks(cause, this);
+	invalidated_callbacks = f2cons__new(cause, dependency_callback, invalidated_callbacks);
+	raw__semantic_dependency__invalidated_callbacks__set(cause, this, invalidated_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, invalidated_callbacks_cmutex);
+  }
+  if (already_invalidated) {
+    raw__dependency_callback__call(cause, dependency_callback);
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_dependency__add_invalidated_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  assert_argument_type(semantic_dependency, this);
+  assert_argument_type(dependency_callback, dependency_callback);
+  return raw__semantic_dependency__add_invalidated_callback(cause, this, dependency_callback);
+}
+export_cefunk2(semantic_dependency__add_invalidated_callback, this, dependency_callback, 0, "");
+
+
+f2ptr raw__semantic_dependency__know_is_invalidated(f2ptr cause, f2ptr this) {
+  f2ptr invalidated_callbacks_cmutex = raw__semantic_dependency__invalidated_callbacks_cmutex(cause, this);
+  f2ptr old_invalidated_callbacks = nil;
+  {
+    raw__cmutex__lock(cause, invalidated_callbacks_cmutex);
+    {
+      f2ptr is_invalidated = raw__semantic_dependency__is_invalidated(cause, this);
+      if (is_invalidated == nil) {
+	is_invalidated = f2bool__new(boolean__true);
+	raw__semantic_dependency__is_invalidated__set(cause, this, is_invalidated);
+	f2ptr invalidated_callbacks = raw__semantic_dependency__invalidated_callbacks(cause, this);
+	old_invalidated_callbacks = invalidated_callbacks;
+	invalidated_callbacks     = nil;
+	raw__semantic_dependency__invalidated_callbacks__set(cause, this, invalidated_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, invalidated_callbacks_cmutex);
+  }
+  {
+    f2ptr iter = old_invalidated_callbacks;
+    while (iter != nil) {
+      f2ptr dependency_callback = f2cons__car(iter, cause);
+      {
+	raw__dependency_callback__call(cause, dependency_callback);
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_dependency__know_is_invalidated(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__know_is_invalidated(cause, this);
+}
+export_cefunk1(semantic_dependency__know_is_invalidated, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__unsupported_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"));
+}
+
+f2ptr f2__semantic_dependency__unsupported_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__unsupported_callbacks_cmutex(cause, this);
+}
+export_cefunk1(semantic_dependency__unsupported_callbacks_cmutex, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__unsupported_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"), that);
+}
+
+f2ptr f2__semantic_dependency__unsupported_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__unsupported_callbacks_cmutex__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__unsupported_callbacks_cmutex__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__unsupported_callbacks(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"));
+}
+
+f2ptr f2__semantic_dependency__unsupported_callbacks(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__unsupported_callbacks(cause, this);
+}
+export_cefunk1(semantic_dependency__unsupported_callbacks, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__unsupported_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"), that);
+}
+
+f2ptr f2__semantic_dependency__unsupported_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__unsupported_callbacks__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__unsupported_callbacks__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__is_unsupported(f2ptr cause, f2ptr this) {
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_unsupported"));
+}
+
+f2ptr f2__semantic_dependency__is_unsupported(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__is_unsupported(cause, this);
+}
+export_cefunk1(semantic_dependency__is_unsupported, this, 0, "");
+
+
+f2ptr raw__semantic_dependency__is_unsupported__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "is_unsupported"), that);
+}
+
+f2ptr f2__semantic_dependency__is_unsupported__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__is_unsupported__set(cause, this, that);
+}
+export_cefunk2(semantic_dependency__is_unsupported__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_dependency__add_unsupported_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  f2ptr     unsupported_callbacks_cmutex = raw__semantic_dependency__unsupported_callbacks_cmutex(cause, this);
+  boolean_t already_unsupported          = boolean__false;
+  {
+    raw__cmutex__lock(cause, unsupported_callbacks_cmutex);
+    {
+      f2ptr is_unsupported = raw__semantic_dependency__is_unsupported(cause, this);
+      if (is_unsupported != nil) {
+	already_unsupported = boolean__true;
+      } else {
+	f2ptr unsupported_callbacks = raw__semantic_dependency__unsupported_callbacks(cause, this);
+	unsupported_callbacks = f2cons__new(cause, dependency_callback, unsupported_callbacks);
+	raw__semantic_dependency__unsupported_callbacks__set(cause, this, unsupported_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, unsupported_callbacks_cmutex);
+  }
+  if (already_unsupported) {
+    raw__dependency_callback__call(cause, dependency_callback);
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_dependency__add_unsupported_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  assert_argument_type(semantic_dependency, this);
+  assert_argument_type(dependency_callback, dependency_callback);
+  return raw__semantic_dependency__add_unsupported_callback(cause, this, dependency_callback);
+}
+export_cefunk2(semantic_dependency__add_unsupported_callback, this, dependency_callback, 0, "");
+
+
+f2ptr raw__semantic_dependency__know_is_unsupported(f2ptr cause, f2ptr this) {
+  f2ptr unsupported_callbacks_cmutex = raw__semantic_dependency__unsupported_callbacks_cmutex(cause, this);
+  f2ptr old_unsupported_callbacks = nil;
+  {
+    raw__cmutex__lock(cause, unsupported_callbacks_cmutex);
+    {
+      f2ptr is_unsupported = raw__semantic_dependency__is_unsupported(cause, this);
+      if (is_unsupported == nil) {
+	is_unsupported = f2bool__new(boolean__true);
+	raw__semantic_dependency__is_unsupported__set(cause, this, is_unsupported);
+	f2ptr unsupported_callbacks = raw__semantic_dependency__unsupported_callbacks(cause, this);
+	old_unsupported_callbacks = unsupported_callbacks;
+	unsupported_callbacks     = nil;
+	raw__semantic_dependency__unsupported_callbacks__set(cause, this, unsupported_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, unsupported_callbacks_cmutex);
+  }
+  {
+    f2ptr iter = old_unsupported_callbacks;
+    while (iter != nil) {
+      f2ptr dependency_callback = f2cons__car(iter, cause);
+      {
+	raw__dependency_callback__call(cause, dependency_callback);
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_dependency__know_is_unsupported(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_dependency, this);
+  return raw__semantic_dependency__know_is_unsupported(cause, this);
+}
+export_cefunk1(semantic_dependency__know_is_unsupported, this, 0, "");
 
 
 f2ptr raw__semantic_dependency__resource_activation(f2ptr cause, f2ptr this) {
@@ -196,7 +511,7 @@ export_cefunk2(semantic_dependency__change_hypothesis__remove, this, that, 0, ""
 
 
 f2ptr raw__semantic_dependency__know_of_precondition_lost_grounding(f2ptr cause, f2ptr this) {
-  return nil;
+  return raw__semantic_dependency__know_of_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_precondition_lost_grounding(f2ptr cause, f2ptr this) {
@@ -207,7 +522,7 @@ export_cefunk1(semantic_dependency__know_of_precondition_lost_grounding, this, 0
 
 
 f2ptr raw__semantic_dependency__know_of_change_hypothesis_removal(f2ptr cause, f2ptr this) {
-  return nil;
+  return raw__semantic_dependency__know_of_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_change_hypothesis_removal(f2ptr cause, f2ptr this) {
@@ -218,7 +533,7 @@ export_cefunk1(semantic_dependency__know_of_change_hypothesis_removal, this, 0, 
 
 
 f2ptr raw__semantic_dependency__know_of_decision_to_not_activate_resource(f2ptr cause, f2ptr this) {
-  return nil;
+  return raw__semantic_dependency__know_of_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_decision_to_not_activate_resource(f2ptr cause, f2ptr this) {
@@ -256,6 +571,22 @@ f2ptr f2__semantic_dependency__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "invalidated_callbacks_cmutex"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__invalidated_callbacks_cmutex")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "invalidated_callbacks_cmutex"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__invalidated_callbacks_cmutex__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "invalidated_callbacks"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__invalidated_callbacks")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "invalidated_callbacks"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__invalidated_callbacks__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "is_invalidated"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_invalidated")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "is_invalidated"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_invalidated__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "add_invalidated_callback"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__add_invalidated_callback")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "know_is_invalidated"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__know_is_invalidated")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "unsupported_callbacks_cmutex"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__unsupported_callbacks_cmutex")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "unsupported_callbacks_cmutex"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__unsupported_callbacks_cmutex__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "unsupported_callbacks"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__unsupported_callbacks")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "unsupported_callbacks"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__unsupported_callbacks__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "is_unsupported"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_unsupported")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "is_unsupported"),                            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_unsupported__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "add_unsupported_callback"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__add_unsupported_callback")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "know_is_unsupported"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__know_is_unsupported")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "resource_activation"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "resource_activation"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "precondition_time"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_time")));}
@@ -294,6 +625,7 @@ export_cefunk0(semantic_dependency__core_extension__initialize, 0, "");
 
 
 f2ptr f2__semantic_dependency__core_extension__define_types(f2ptr cause) {
+  f2__add_type(cause, new__symbol(cause, "dependency_callback"), f2__dependency_callback__primobject_type__new_aux(cause));
   f2__add_type(cause, new__symbol(cause, "semantic_dependency"), f2__semantic_dependency__primobject_type__new(cause));
   status("semantic_dependency define types.");
   return nil;

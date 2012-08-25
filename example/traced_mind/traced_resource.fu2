@@ -331,37 +331,37 @@
 	[let [[imagine_time [get semantic_planner imagine_time]]]
 	  [let [[precondition_time imagine_time]]
 	    [let [[precondition_events [get counterfactual_knowledge_base events_containing_time precondition_time]]]
-	    [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events]]]
-	      
-	      [mapc [funk [change_feature]
-			  [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-			    [let [[change_hypothesis_dependencies [get precondition_hypothesis_space specific_hypotheses_consistent_with_example concept_version_space_example]]]
-			      
-			      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-					       'resource, ' name ', found ' [length change_hypothesis_dependencies] ' specific hypotheses consistent with change.']
-			      [if change_hypothesis_dependencies
-				  [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
-					[relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
-					[relative_duration_time                [get change_feature relative_duration_time]]
-					[counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
-				    [set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
-				    [set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
-				    [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
-				      [set semantic_dependency precondition_time   precondition_time]
-				      [set semantic_dependency resource_activation [get this resource_semantic_frame]]
-				      [mapc [funk [precondition_event]
-						  [semantic-add semantic_dependency precondition_event precondition_event]]
-					    precondition_events]
-				      [mapc [funk [change_hypothesis_dependency]
-						  [semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]]
-					    change_hypothesis_dependencies]
-				      ]]]
-			      ]]]
-		    [get this change_features]]
-	      
-	      [set semantic_planner imagine_time [new semantic_time [+ [get imagine_time value] [new relative_time [* 60 1000000000]]]]]
-	      
-	      ]]]]
+	      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events]]]
+		
+		[mapc [funk [change_feature]
+			    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
+			      [let [[change_hypothesis_dependencies [get precondition_hypothesis_space specific_hypotheses_consistent_with_example concept_version_space_example]]]
+				
+				[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+						 'resource, ' name ', found ' [length change_hypothesis_dependencies] ' specific hypotheses consistent with change.']
+				[if change_hypothesis_dependencies
+				    [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
+					  [relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
+					  [relative_duration_time                [get change_feature relative_duration_time]]
+					  [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
+				      [set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
+				      [set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
+				      [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
+					[set semantic_dependency precondition_time   precondition_time]
+					[set semantic_dependency resource_activation [get this resource_semantic_frame]]
+					[mapc [funk [precondition_event]
+						    [semantic-add semantic_dependency precondition_event precondition_event]]
+					      precondition_events]
+					[mapc [funk [change_hypothesis_dependency]
+						    [semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]]
+					      change_hypothesis_dependencies]
+					]]]
+				]]]
+		      [get this change_features]]
+		
+		[set semantic_planner imagine_time [new semantic_time [+ [get imagine_time value] [new relative_time [* 60 1000000000]]]]]
+		
+		]]]]]
     
     ]]
 

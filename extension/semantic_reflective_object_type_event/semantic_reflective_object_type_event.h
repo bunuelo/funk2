@@ -24,6 +24,7 @@
 
 #include "../semantic_object_type_event/semantic_object_type_event.h"
 #include "../semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.h"
+#include "../semantic_dependency/semantic_dependency.h"
 
 
 f2ptr     raw__semantic_reflective_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);

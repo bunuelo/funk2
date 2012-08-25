@@ -511,7 +511,7 @@ export_cefunk2(semantic_dependency__change_hypothesis__remove, this, that, 0, ""
 
 
 f2ptr raw__semantic_dependency__know_of_precondition_lost_grounding(f2ptr cause, f2ptr this) {
-  return raw__semantic_dependency__know_of_invalidated(cause, this);
+  return raw__semantic_dependency__know_is_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_precondition_lost_grounding(f2ptr cause, f2ptr this) {
@@ -522,7 +522,7 @@ export_cefunk1(semantic_dependency__know_of_precondition_lost_grounding, this, 0
 
 
 f2ptr raw__semantic_dependency__know_of_change_hypothesis_removal(f2ptr cause, f2ptr this) {
-  return raw__semantic_dependency__know_of_invalidated(cause, this);
+  return raw__semantic_dependency__know_is_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_change_hypothesis_removal(f2ptr cause, f2ptr this) {
@@ -533,7 +533,7 @@ export_cefunk1(semantic_dependency__know_of_change_hypothesis_removal, this, 0, 
 
 
 f2ptr raw__semantic_dependency__know_of_decision_to_not_activate_resource(f2ptr cause, f2ptr this) {
-  return raw__semantic_dependency__know_of_invalidated(cause, this);
+  return raw__semantic_dependency__know_is_invalidated(cause, this);
 }
 
 f2ptr f2__semantic_dependency__know_of_decision_to_not_activate_resource(f2ptr cause, f2ptr this) {

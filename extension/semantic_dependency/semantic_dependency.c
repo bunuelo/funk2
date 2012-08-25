@@ -56,7 +56,7 @@ f2ptr f2__dependency_callback__call(f2ptr cause, f2ptr this) {
 export_cefunk1(dependency_callback__call, this, 0, "Calls this hypothesis_version_space_hypothesis_callback.");
 
 
-f2ptr f2__dependency_callback_type__new_aux(f2ptr cause) {
+f2ptr f2__dependency_callback__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2__dependency_callback_type__new(cause);
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "call"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "dependency_callback__call")));}
   return this;
@@ -131,7 +131,7 @@ export_cefunk1(semantic_dependency__type, thing, 0, "Returns the specific type o
 
 
 f2ptr raw__semantic_dependency__invalidated_callbacks_cmutex(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"));
 }
 
 f2ptr f2__semantic_dependency__invalidated_callbacks_cmutex(f2ptr cause, f2ptr this) {
@@ -153,7 +153,7 @@ export_cefunk2(semantic_dependency__invalidated_callbacks_cmutex__set, this, tha
 
 
 f2ptr raw__semantic_dependency__invalidated_callbacks(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"));
 }
 
 f2ptr f2__semantic_dependency__invalidated_callbacks(f2ptr cause, f2ptr this) {
@@ -175,7 +175,7 @@ export_cefunk2(semantic_dependency__invalidated_callbacks__set, this, that, 0, "
 
 
 f2ptr raw__semantic_dependency__is_invalidated(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_invalidated"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "is_invalidated"));
 }
 
 f2ptr f2__semantic_dependency__is_invalidated(f2ptr cause, f2ptr this) {
@@ -266,7 +266,7 @@ export_cefunk1(semantic_dependency__know_is_invalidated, this, 0, "");
 
 
 f2ptr raw__semantic_dependency__unsupported_callbacks_cmutex(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"));
 }
 
 f2ptr f2__semantic_dependency__unsupported_callbacks_cmutex(f2ptr cause, f2ptr this) {
@@ -288,7 +288,7 @@ export_cefunk2(semantic_dependency__unsupported_callbacks_cmutex__set, this, tha
 
 
 f2ptr raw__semantic_dependency__unsupported_callbacks(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"));
 }
 
 f2ptr f2__semantic_dependency__unsupported_callbacks(f2ptr cause, f2ptr this) {
@@ -310,7 +310,7 @@ export_cefunk2(semantic_dependency__unsupported_callbacks__set, this, that, 0, "
 
 
 f2ptr raw__semantic_dependency__is_unsupported(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "is_unsupported"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "is_unsupported"));
 }
 
 f2ptr f2__semantic_dependency__is_unsupported(f2ptr cause, f2ptr this) {

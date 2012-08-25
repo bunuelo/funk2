@@ -36,7 +36,7 @@ f2ptr  f2__dependency_callback__new (f2ptr cause, f2ptr funk, f2ptr args);
 f2ptr raw__dependency_callback__call(f2ptr cause, f2ptr this);
 f2ptr  f2__dependency_callback__call(f2ptr cause, f2ptr this);
 
-f2ptr f2__dependency_callback_type__new_aux(f2ptr cause);
+f2ptr f2__dependency_callback_type__primobject_type__new_aux(f2ptr cause);
 
 
 // semantic_dependency

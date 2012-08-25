@@ -26,7 +26,9 @@
 
 f2ptr raw__semantic_dependency__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_dependency"));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                  new__symbol(cause, "semantic_dependency"));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"), nil);
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
@@ -193,21 +195,45 @@ f2ptr f2__semantic_dependency__change_hypothesis__remove(f2ptr cause, f2ptr this
 export_cefunk2(semantic_dependency__change_hypothesis__remove, this, that, 0, "");
 
 
+f2ptr raw__semantic_dependency__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list10__new(cause,
+						new__symbol(cause, "print_object_type"),   f2__object__type(cause, this),
+						new__symbol(cause, "precondition_time"),   raw__semantic_dependency__precondition_time(cause, this),
+						new__symbol(cause, "resource_activation"), raw__semantic_dependency__resource_activation(cause, this),
+						new__symbol(cause, "precondition_event"),  raw__semantic_dependency__precondition_event__lookup_set(cause, this),
+						new__symbol(cause, "change_hypothesis"),   raw__semantic_dependency__precondition_event__lookup_set(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__semantic_dependency__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(semantic_dependency,       this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__semantic_dependency__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+export_cefunk2(semantic_dependency__terminal_print_with_frame, this, terminal_print_frame, 0, "");
+
+
 f2ptr f2__semantic_dependency__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "resource_activation"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "resource_activation"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "precondition_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_time")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "precondition_time"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_time__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "precondition_event"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "precondition_event"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "precondition_event"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "change_hypothesis"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "change_hypothesis"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "change_hypothesis"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "resource_activation"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "resource_activation"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__resource_activation__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "precondition_time"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "precondition_time"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "precondition_event"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "precondition_event"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "precondition_event"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__precondition_event__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "change_hypothesis"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "change_hypothesis"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "change_hypothesis"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_dependency"), new__symbol(cause, "semantic_dependency__change_hypothesis__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "terminal_print_with_frame"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_frame"), new__symbol(cause, "semantic_frame__terminal_print_with_frame")));}
   return this;
 }
 

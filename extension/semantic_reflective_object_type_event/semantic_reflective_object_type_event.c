@@ -358,6 +358,7 @@ export_cefunk0(semantic_reflective_object_type_event__core_extension__ping, 0, "
 
 f2ptr f2__semantic_reflective_object_type_event__core_extension__initialize(f2ptr cause) {
   core_extension__ping(semantic_reflective_object_type_event, semantic_object_type_event);
+  core_extension__ping(semantic_dependency,                   semantic_dependency);
   status("semantic_reflective_object_type_event initialized.");
   return nil;
 }

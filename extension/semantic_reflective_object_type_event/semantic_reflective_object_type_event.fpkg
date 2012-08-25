@@ -19,7 +19,8 @@
 
 [defpackage semantic_reflective_object_type_event
   :documentation        'Basic knowledge for dealing with reflective object types.'
-   :packages            [semantic_object_type_event]
+   :packages            [semantic_object_type_event
+			 semantic_dependency]
     :sources            ['semantic_reflective_object_type_event-core.fu2']
      :dynamic_libraries ['libf2e_semantic_reflective_object_type_event.so']]
 

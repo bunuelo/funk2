@@ -166,10 +166,16 @@
   [get [get this body] physical_world]]
 
 [deftypefunk resource execute add_new_trace_story_event [character_name action_name prepositional_frame]
-  [have trace_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
+  `[have trace_story add_new_event [get this local_time] character_name action_name prepositional_frame]
+  `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		    'resource, ' name ', using deprecated add_new_trace_story_event.']
+  ]
 
 [deftypefunk resource execute add_new_think_story_event [character_name action_name prepositional_frame]
-  [have think_story add_new_event [get this local_time] character_name action_name prepositional_frame]]
+  `[have think_story add_new_event [get this local_time] character_name action_name prepositional_frame]
+  `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		    'resource, ' name ', using deprecated add_new_think_story_event.']
+  ]
 
 [deftypefunk resource execute think_to_self [:rest expressions]
   [if [cause-lookup cause-resource]

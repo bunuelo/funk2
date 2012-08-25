@@ -68,10 +68,10 @@ f2ptr f2__dependency_callback__primobject_type__new_aux(f2ptr cause) {
 f2ptr raw__semantic_dependency__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                         new__symbol(cause, "semantic_dependency"));
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks_cmutex"), f2cmutex__new(cause));
     raw__frame__add_var_value(cause, this, new__symbol(cause, "invalidated_callbacks"),        nil);
     raw__frame__add_var_value(cause, this, new__symbol(cause, "is_invalidated"),               nil);
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"), nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks_cmutex"), f2cmutex__new(cause));
     raw__frame__add_var_value(cause, this, new__symbol(cause, "unsupported_callbacks"),        nil);
     raw__frame__add_var_value(cause, this, new__symbol(cause, "is_unsupported"),               nil);
   }

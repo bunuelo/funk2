@@ -26,7 +26,10 @@
 
 f2ptr raw__semantic_reflective_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_reflective_object_type_event"));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                             new__symbol(cause, "semantic_reflective_object_type_event"));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2cmutex__new(cause));
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks"),        nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "has_lost_dependency"),              nil);
   }
   assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name, object_phenomenal_name));
   return this;
@@ -79,6 +82,141 @@ f2ptr f2__semantic_reflective_object_type_event__type(f2ptr cause, f2ptr this) {
   return raw__semantic_reflective_object_type_event__type(cause, this);
 }
 export_cefunk1(semantic_reflective_object_type_event__type, thing, 0, "Returns the specific type of object that this semantic_reflective_object_type_event is.");
+
+
+f2ptr raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks_cmutex"), nil);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(cause, this);
+}
+export_cefunk1(semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex, this, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks_cmutex"), that);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set(cause, this, that);
+}
+export_cefunk2(semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__lost_dependency_callbacks(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks"), nil);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__lost_dependency_callbacks(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__lost_dependency_callbacks(cause, this);
+}
+export_cefunk1(semantic_reflective_object_type_event__lost_dependency_callbacks, this, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__lost_dependency_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks"), that);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__lost_dependency_callbacks__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__lost_dependency_callbacks__set(cause, this, that);
+}
+export_cefunk2(semantic_reflective_object_type_event__lost_dependency_callbacks__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__has_lost_dependency(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "has_lost_dependency"), nil);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__has_lost_dependency(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__has_lost_dependency(cause, this);
+}
+export_cefunk1(semantic_reflective_object_type_event__has_lost_dependency, this, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__has_lost_dependency__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "has_lost_dependency"), that);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__has_lost_dependency__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__has_lost_dependency__set(cause, this, that);
+}
+export_cefunk2(semantic_reflective_object_type_event__has_lost_dependency__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__add_lost_dependency_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  f2ptr     lost_dependency_callbacks_cmutex = raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(cause, this);
+  boolean_t already_lost_dependency          = boolean__false;
+  {
+    raw__cmutex__lock(cause, lost_dependency_callbacks_cmutex);
+    {
+      f2ptr has_lost_dependency = raw__semantic_reflective_object_type_event__has_lost_dependency(cause, this);
+      if (has_lost_dependency != nil) {
+	already_lost_dependency = boolean__true;
+      } else {
+	f2ptr lost_dependency_callbacks = raw__semantic_reflective_object_type_event__lost_dependency_callbacks(cause, this);
+	lost_dependency_callbacks = f2cons__new(cause, dependency_callback, lost_dependency_callbacks);
+	raw__semantic_reflective_object_type_event__lost_dependency_callbacks__set(cause, this, lost_dependency_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, lost_dependency_callbacks_cmutex);
+  }
+  if (already_lost_dependency) {
+    raw__dependency_callback__call(cause, dependency_callback);
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_reflective_object_type_event__add_lost_dependency_callback(f2ptr cause, f2ptr this, f2ptr dependency_callback) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  assert_argument_type(dependency_callback, dependency_callback);
+  return raw__semantic_reflective_object_type_event__add_lost_dependency_callback(cause, this, dependency_callback);
+}
+export_cefunk2(semantic_reflective_object_type_event__add_lost_dependency_callback, this, dependency_callback, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__know_has_lost_dependency(f2ptr cause, f2ptr this) {
+  f2ptr lost_dependency_callbacks_cmutex = raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(cause, this);
+  f2ptr old_lost_dependency_callbacks = nil;
+  {
+    raw__cmutex__lock(cause, lost_dependency_callbacks_cmutex);
+    {
+      f2ptr has_lost_dependency = raw__semantic_reflective_object_type_event__has_lost_dependency(cause, this);
+      if (has_lost_dependency == nil) {
+	has_lost_dependency = f2bool__new(boolean__true);
+	raw__semantic_reflective_object_type_event__has_lost_dependency__set(cause, this, has_lost_dependency);
+	f2ptr lost_dependency_callbacks = raw__semantic_reflective_object_type_event__lost_dependency_callbacks(cause, this);
+	old_lost_dependency_callbacks = lost_dependency_callbacks;
+	lost_dependency_callbacks     = nil;
+	raw__semantic_reflective_object_type_event__lost_dependency_callbacks__set(cause, this, lost_dependency_callbacks);
+      }
+    }
+    raw__cmutex__unlock(cause, lost_dependency_callbacks_cmutex);
+  }
+  {
+    f2ptr iter = old_lost_dependency_callbacks;
+    while (iter != nil) {
+      f2ptr dependency_callback = f2cons__car(iter, cause);
+      {
+	raw__dependency_callback__call(cause, dependency_callback);
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return nil;
+}
+
+f2ptr f2__semantic_reflective_object_type_event__know_has_lost_dependency(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__know_has_lost_dependency(cause, this);
+}
+export_cefunk1(semantic_reflective_object_type_event__know_has_lost_dependency, this, 0, "");
 
 
 f2ptr raw__semantic_reflective_object_type_event__preposition__in__lookup_set(f2ptr cause, f2ptr this) {
@@ -186,18 +324,26 @@ export_cefunk2(semantic_reflective_object_type_event__dependency__remove, this, 
 
 f2ptr f2__semantic_reflective_object_type_event_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object_type_event")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-in"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-on"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "dependency"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "dependency"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "dependency"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "lost_dependency_callbacks"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "lost_dependency_callbacks"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "has_lost_dependency"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__has_lost_dependency")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "has_lost_dependency"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__has_lost_dependency__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "add_lost_dependency_callback"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__add_lost_dependency_callback")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "know_has_lost_dependency"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__know_has_lost_dependency")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-in"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-in"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-in"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__in__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "preposition-on"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "preposition-on"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "preposition-on"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__preposition__on__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "dependency"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "dependency"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "dependency"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__dependency__remove")));}
   return this;
 }
 

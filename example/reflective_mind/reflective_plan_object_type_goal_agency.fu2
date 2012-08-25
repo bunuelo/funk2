@@ -252,7 +252,8 @@
   [let [[deliberative1_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `deliberative1_knowledge->deliberative1_type_knowledge]]]
     [while t
       [let [[event [have deliberative1_knowledge_iterator wait_for_current]]]
-	[if [not [null event]]
+	[if [and [not no_reflective_learning]
+		 [not [null event]]]
 	    [prog [if debug `[terminal_format standard-terminal '\n  translate plan->plan_type event: ' event]]
 		  [let [[event_type [get event event_type]]
 			[event-time [get event time]]]

@@ -307,7 +307,7 @@
     ]]
 
 
-[globalize no_reflective_learning t]
+[globalize no_reflective_learning nil]
 
 [deftypefunk traced_resource execute imagine_waiting_to_call [:rest args]
   [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
@@ -353,7 +353,14 @@
 						    [semantic-add semantic_dependency precondition_event precondition_event]]
 					      precondition_events]
 					[mapc [funk [change_hypothesis_dependency]
-						    [semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]]
+						    [semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]
+						    [have change_hypothesis_dependency add_removal_callback
+							  [funk []
+								[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+										 'resource, ' name ', counterfactual knowledge change hypothesis dependency removed.']
+								`[have semantic_dependency know_of_change_hypothesis_removal]
+								]
+							  nil]]
 					      change_hypothesis_dependencies]
 					]]]
 				]]]

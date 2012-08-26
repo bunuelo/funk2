@@ -78,8 +78,8 @@ physically but also the AI has failed in thinking about its plans.
 The AI decided to execute a plan that ended up failing.  Because the
 AI has a reflective learning algorithm, it has the additional ability
 to learn a better model of the planning process itself---the planning
-process that selected this plan, modified it, and decided to execute
-it.
+process that selected this plan, imagined its physical effects, and
+decided to execute it.
 
 Deliberative reasoning processes are plans in the reflective
 metacognitive reasoning layer.  The metacognitive planning machine
@@ -91,18 +91,19 @@ action is manipulated by resources in the deliberative layer, while a
 plan for deliberative action is manipulated by resources in the
 reflective layer.
 
-In this example, the plan resulted in an expectation failure.  The
-plan attempted to assert that a cube is supported by a pyramid, which
-was not true at the point when the assertion was executed in the
-deliberative planning machine.  When a plan encounters a specific type
-of failure, properties of the failure event are represented as a
-failure object that is associated with the plan object that failed.
-As seen by the reflective layer, the deliberative failure knowledge is
-related to the plan in a way that is analogous to the way that the
-deliberative layer sees a physical block sitting on another physical
-block.  The deliberative layer learns how to control relationships
-between physical objects, while the reflective layer learns how to
-control relationships between deliberative objects, such
+In this example, the plan executed in the first planner resulted in a
+physical expectation failure.  The plan attempted to assert that a
+cube is supported by a pyramid, which was not true at the point when
+the assertion was executed in the deliberative planning machine.  When
+a plan encounters a specific type of failure, properties of the
+failure event are represented as a failure object that is associated
+with the plan object that failed.  As seen by the reflective layer,
+the deliberative failure knowledge is related to the plan in a way
+that is analogous to the way that the deliberative layer sees a
+physical block sitting on another physical block.  The deliberative
+layer learns how to control relationships between physical objects,
+while the reflective layer learns how to control relationships between
+deliberative objects, such
 \begin{figure}{h}
   \centering
   \begin{tabular}{p{5cm}p{5cm}}
@@ -175,27 +176,59 @@ planning machine can lead to the successful achievement of a physical
 goal.  In this example, the reflective layer infers the results of
 executing plans and tries to predict their failure based on the
 structure of the plan and its relationship to other deliberative
-knowledge, such as different types of failure events.  The reflective
-layer recalls a plan from memory that it has ``been told'' but does
-not have experience executing.  Because of the AI's lack of
-experience, the reflective layer does not infer that this plan will
-lead to a failure based on its structure.  Also, because of the AI's
-inexperience with physical actions, it deliberatively infers that this
-plan will actually create a stack of two blocks.  Both of these forms
-of ignorance are corrected when the AI attempts to execute the chosen
-plan.  Not only is a new model of the physical world learned but also
-a new model of the deliberative planning machine is learned by the
-reflective layer.  In this way, the failure to predict the effects of
-physical actions can also be considered a failure to predict the
-effects of deliberative actions.  In other words, the reflective layer
-made a mistake in controlling the planning machine by having it
-execute a plan that ended up failing.  In general, the reflective goal
-to control the deliberative machine to avoid execution failures is not
-absolutely necessary.  In other situations it may be desirable for
-physical failures to occur.  For example, if the AI is performing an
-experiment or ``playing'' in a physical domain, it may be desirable to
-fail in order to accomplish knowledge level goals.  In this example,
-the reflective goal is to control the deliberative planning machine to
+knowledge, such as different types of failure events.
+{\mbox{\autoref{table:a_metacognitive_plan_learned_from_being_told}}}
+shows an example metacognitive plan that the reflective layer is
+executing in order to control the deliberative planning machine.
+Based on these planned resource activations from the reflective layer,
+the deliberative layer recalls a plan from memory that it has ``been
+told'' but does not have experience executing.
+\begin{wraptable}{l}{8cm}
+\centering
+\begin{tabular}{|rl|}
+\hline
+ 1. & While no plans for goal, repeat 2--6.\\
+ 2. & ~~Forget all imagined events.\\
+ 3. & ~~Set imagine time to be now.\\
+ 4. & ~~Imagine current situation.\\
+ 5. & ~~Recall plan from memory.\\
+ 6. & ~~Imagine executing plan in focus.\\
+ 7. & Recall plan for goal.\\
+ 8. & Execute plan in focus.\\
+\hline
+\end{tabular}
+\caption[A metacognitive plan in the reflective layer learned from
+  ``being told''.]{A metacognitive plan in the reflective layer
+  learned from ``being told''.}
+\label{table:a_metacognitive_plan_learned_from_being_told}
+\end{wraptable}
+The reflective layer imagines executing the plan for deliberation in
+terms of the planning machine of the deliberative layer.  The
+reflective layer imagination does not include physical effects of
+physical actions.  The reflective layer only learns from and predicts
+the types of knowledge in the deliberative layer, such as the
+properties and relationships between the planning machine, plans, and
+failure events.  Because of the AI's lack of experience, the
+reflective layer does not infer that this plan for deliberative will
+lead to a failure in the deliberative planning machine based on its
+structure.  Further, because of the AI's inexperience with physical
+actions, when it reflectively decides to execute this deliberative
+plan, it deliberatively infers that this plan will actually create a
+stack of two blocks.  Both of these forms of ignorance are corrected
+when the AI attempts to execute the chosen plan.  Not only is a new
+model of the physical world learned but also a new model of the
+deliberative planning machine is learned by the reflective layer.  In
+this way, the failure to predict the effects of physical actions can
+also be considered a failure to predict the effects of deliberative
+actions.  In other words, the reflective layer made a mistake in
+controlling the planning machine by having it execute a plan that
+ended up failing.  In general, the reflective goal to control the
+deliberative machine to avoid execution failures is not absolutely
+necessary.  In other situations it may be desirable for physical
+failures to occur.  For example, if the AI is performing an experiment
+or ``playing'' in a physical domain, it may be desirable to fail in
+order to accomplish knowledge level goals.  In this example, the
+reflective goal is to control the deliberative planning machine to
 avoid plan execution failures.
 \begin{figure}
 \centering
@@ -342,7 +375,12 @@ physical body of the AI in the physical simulation.  Because the
 built-in reactive layer is the primary interface to the physical body
 that the AI controls, many of the resources of the built-in layer are
 actually defined by the physical simulation during the initial boot-up
-process of the entire AI-physical-simulation system.
+process of the entire AI-physical-simulation system.  Also, the
+specific types of semantic visual objects and prepositional
+relationships and properties are not known to the mind until they are
+received from the physical simulation.  The AI simply expects to
+receive a stream of visual objects, their relationships, and
+properties.
 
 \section{The Learned Reactive Layer}
 
@@ -362,17 +400,17 @@ same stick of butter on a table.  The AI must resolve the fact the
 either (1) the table is small enough to fit into the refrigerator or
 (2) the stick of butter is no longer in the refrigerator.  The
 reactive layers of the AI that are necessary for navigating the
-kitchen domain are factors that complicate explaining the reflective
-thinking layers of the AI.  The learning and planning agencies of the
-deliberative and reflective thinking layers are exactly the same for
-the block building domain as they are for the kitchen domain.  Thus, I
-will focus on explaining the AI's reflective thinking processes in
-terms of the simpler block building domain as the reflective thinking
-capabilities are the focus of this thesis.  In the block building
-domain, the physical knowledge base is a faithful reconstruction of
-the visual knowledge base, slightly behind the times.
-{\mbox{\autoref{figure:implemented_physical_knowledge}}} shows the
-physical knowledge base that is reconstructed from the reflective
+kitchen domain are factors that complicate explaining the deliberative
+and reflective thinking layers of the AI.  The learning and planning
+agencies of the deliberative and reflective thinking layers are
+exactly the same for the block building domain as they are for the
+kitchen domain.  Thus, I will focus on explaining the AI's reflective
+thinking processes in terms of the simpler block building domain as
+the reflective thinking capabilities are the focus of this thesis.  In
+the block building domain, the physical knowledge base is a faithful
+reconstruction of the visual knowledge base, slightly behind the
+times.  {\mbox{\autoref{figure:implemented_physical_knowledge}}} shows
+the physical knowledge base that is reconstructed from the reflective
 change events that the learned reactive layer receives from changes in
 the visual knowledge base of the built-in reactive layer.
 \begin{figure}
@@ -383,7 +421,7 @@ the visual knowledge base of the built-in reactive layer.
   physical domain.]{Kitchen cooking domain with only partial visual
   knowledge of the physical domain available to the AI.  The image on
   the left is a bird's-eye-view of the situation, while the images on
-  the right contain the objects that each agent can actually see.}
+  the right contain the objects that each AI can actually see.}
 \label{figure:isis_world_two_agents}
 \end{figure}
 \begin{sidewaysfigure}
@@ -528,8 +566,8 @@ past can be done relatively quickly.  A necessary feature that must
 still be added to the architecture is a \emph{forgetful} physical type
 knowledge base.  There are many forgetful event streams in the
 language, and the ability to treat an entire event knowledge base as a
-forgetful streaming object is a way to allow indefinitely long
-run-time.
+forgetful streaming object is a way to allow this knowledge base to
+not grown indefinitely over the run-time of the algorithm.
 
 Once the deliberative layer learns action dependent transframe
 hypotheses in terms of the physical type knowledge, these hypotheses
@@ -686,7 +724,7 @@ learns is the example expectation failure is shown in
     \hline
     \emph{additions:}     & A plan has that just encountered a failure encountered an expectation failure. \\
     \hline
-    \emph{removals:}      & \\
+    \emph{removals:}      & No plans have failed. \\
     \hline
   \end{tabular}
 \end{tabular}

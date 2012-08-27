@@ -128,7 +128,8 @@ phdthesis.pdf: \
   gfx/isis_world_two_agents.pdf \
   gfx/physical_type_knowledge_induction.pdf \
   gfx/deliberative_type_knowledge_induction.pdf \
-  gfx/deliberative_planning_machine_knowledge_base.pdf
+  gfx/deliberative_planning_machine_knowledge_base.pdf \
+  gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

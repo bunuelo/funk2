@@ -3,42 +3,48 @@
 \label{chapter:grounded_learning_of_knowledge_utility}
 %************************************************
 
-
-Hypothetical physical type knowledge transframes are used by the
-deliberative planning machine in order to infer the effects of
+Hypothetical type knowledge transframes are used by the deliberative
+and reflective planning machines in order to infer the effects of
 executing multi-step plans.  There is a distinction here made between
-the knowledge that is directly an abstraction of knowledge grounded in
-visual perception events, not based on any learned action hypotheses,
-and the type of knowledge that is inferred based on hypotheses either
-that it has ``been told'' or that the AI has learned in the course of
-acting in the physical world.  In order to maintain this distinction
-in the AI, the physical type knowledge that the AI infers is dependent
-on hypotheses of resource execution effects and is stored in \emph{the
-  counterfactual physical type knowledge base}.  Counterfactual
-physical type knowledge is exactly the same as the previously
-introduced physical type knowledge except for the key distinction that
-it has three types of dependencies that can cause it to lose its
-factual grounding:
+the \emph{factual} knowledge that is directly an abstraction of
+knowledge grounded in the physical or deliberative planning machine
+knowledge bases, which are not based on any learned action hypotheses,
+and the \emph{counterfactual} knowledge that is inferred and supported
+by hypotheses of the effects of resource executions that the AI has
+either ``been told'' or has learned in the course of actually
+executing those resources in different contexts.  In order to maintain
+this distinction in the AI, different knowledge bases are used to
+separate the factual knowledge from counterfactual knowledge.  Factual
+knowledge is induced into factual type knowledge abstractions.  The
+factually grounded knowledge bases include the visual, physical,
+physical type, deliberative planning machine, and deliberative
+planning machine type knowledge bases.  However, the addition of
+factually grounded knowledge causes a loss of hypotheses from the
+resource execution type knowledge transframe hypothesis spaces in both
+the deliberative and reflective layers.  Each counterfactual event in
+the counterfactual knowledge bases has a list of dependencies that
+must maintain their support in order for the counterfactual knowledge
+to continue to exist.  Dependencies in the AI have three types of
+support that a dependency can rearrange in order to maintain its
+support of its dependent counterfactual knowledge events:
 \begin{enumerate}
 \item Future resource activation dependencies.
 \item Resource execution transframe change hypothesis dependencies.
 \item Resource execution transframe precondition knowledge dependencies.
 \end{enumerate}
-If any of these three types of dependencies loses its hypothetical
-factual grounding, this loss of hypothetical factual grounding is
-propagated backwards through dependencies to the counterfactual
-knowledge that it has supported.  In this way, factual perceptual
-knowledge is abstracted into factual abstractions, which means more
-factually grounded knowledge is in the visual, physical, and physical
-type knowledge bases.  However, this addition of factually grounded
-knowledge causes a loss of hypotheses from the resource execution
-physical type knowledge transframe hypothesis spaces.  This loss of
-hypotheses propagates to cause counterfactual knowledge that the AI
-has inferred to no longer have hypothetical factual grounding.  As
-some counterfactual knowledge forms the preconditions for further
-counterfactual knowledge inference, this causes the loss of grounding
-for counterfactual knowledge that was generated with correct
-hypotheses but based on counterfactual preconditions that have lost
-their factual grounding.  In this way, additional factual knowledge
-refines and reduces the counterfactual knowledge that is considered to
-be hypothetically factually grounded by the AI.
+If any of these three types of supports loses its hypothetical factual
+grounding, this loss of hypothetical factual grounding causes the
+dependency to become \emph{invalidated}.  Once a dependency has become
+invalidated, it has a chance to find new hypothetical grounding before
+it becomes \emph{unsupported}.  Counterfactual event knowledge is
+notified when a dependency has become unsupported, causing the
+counterfactual events to be removed from the counterfactual event
+knowledge bases.  Also, as some counterfactual knowledge may form
+hypothetical grounding of further dependencies of further
+counterfactual event knowledge, the loss of support for a dependency
+can cause a chain reaction through events and their dependent
+dependencies.  In this way, additional factual knowledge refines and
+reduces the counterfactual knowledge that has been inferred in the
+counterfactual event knowledge bases of the deliberative and
+reflective layers of the AI.
+

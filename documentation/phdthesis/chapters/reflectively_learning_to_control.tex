@@ -193,6 +193,7 @@ told'' but does not have experience executing.
  4. & ~~Imagine current situation.\\
  5. & ~~Recall plan from memory.\\
  6. & ~~Imagine executing plan in focus.\\
+ 6. & ~~Check goals in imagination.\\
  7. & Recall plan for goal.\\
  8. & Execute plan in focus.\\
 \hline
@@ -613,7 +614,12 @@ hypothetical support for the counterfactual knowledge: ``A cube is
 sitting on a pyramid.''  Executing the plan and accomplishing the goal
 is hypothetically supported, so the plan is executed, resulting in the
 learning of a more refined model of the physical world as well as a
-more refined model of the deliberative planning machine.
+more refined model of the deliberative planning machine.  The details
+of how the deliberative infers hypothetically supported counterfactual
+knowledge so that it can be corrected as hypotheses are refined in the
+learning process is described in detail in the next chapter,
+\autoref{chapter:grounded_learning_of_knowledge_utility},
+``\nameref{chapter:grounded_learning_of_knowledge_utility}.''
 
 \section{The Reflective Layer}
 
@@ -626,10 +632,14 @@ events, which it uses to reconstruct a copy of the deliberative
 planning machine knowledge base that it can use for inducing
 deliberative type knowledge at a steadier pace than the shorter-lived
 ``bursty'' executions of the deliberative planning machine resources.
+The deliberative planning machine knowledge base does not contain
+physical objects but instead contains deliberative objects, such as
+the planning machine, goals, plans, and failure events.
 {\mbox{\autoref{figure:deliberative_planning_machine_knowledge_base}}}
 shows the deliberative planning machine knowledge base that the
-reflective layer reconstructs and learns hypotheses for how to
-control.
+reflective layer concurrently reconstructs from a procedural events
+stream and learns hypotheses for how to control by imagining plans
+involving the deliberative planning resources.
 \begin{sidewaysfigure}
   \begin{tabular}{p{8in}}
     % define source coordinates
@@ -673,26 +683,32 @@ control.
     \path[->,red,thick, line width=1.5] (deliberative-planning-machine-label) edge [out=0, in=-60] (deliberative-planning-machine);
   \end{tikzpicture}
   \hspace{4cm}\parbox{15cm}{\caption[The deliberative planning machine
-      knowledge base.]{The deliberative planning machine knowledge
-      base.}\label{figure:deliberative_planning_machine_knowledge_base}}
+      knowledge base with the deliberative planning machine and two
+      plans.]{The deliberative planning machine knowledge base with
+      the deliberative planning machine and two plans are circled.
+      These plans are each on one of the planning machine's registers,
+      the \emph{focus} register and the \emph{execution}
+      register.}\label{figure:deliberative_planning_machine_knowledge_base}}
 \end{sidewaysfigure}
 
+The reflective layer learns to make plans for accomplishing and
+avoiding types of deliberative knowledge states.  Analagously to how
+physical type knowledge is induced from the specific physical states,
+the reflective layer induces types of deliberative planning machine
+knowledge from the specific deliberative planning machine states.  If
+a specific planning machine state is ``Plan-1 is in
+Planning-Machine-1's focus register and has had the failure
+Expectation-Failure-1,'' the following type knowledge can be induced
+from this specific state: ``A plan is in a planning machine's focus
+register,'' and ``A plan has had a failure.''
 {\mbox{\autoref{figure:deliberative_type_knowledge_induction}}} shows
 an overview of the knowledge bases and processes involved in the
-induction of the deliberative planning machine type knowledge base by
-the reflective layer.  The reflective layer uses an analogous type
-knowledge induction process as the deliberative layer.  Plans in the
-reflective planning machine knowledge base are imagined in terms of
-the deliberative type knowledge.  This allows the reflective layer
-planning machine to learn models of plan execution that have no
-physical simulation component.  The ability to imagine executing a
-plan and predicting its failure based on the structure of the plan in
-relation to the planning machine and not in terms of the physical
-world, is \emph{not} an advantage provided by physical knowledge
-induction.  In this case, the ability to reason abstractly about
-physical plans for action without any physical simulation component
-necessary is provided by the reflective planning machine in the
-reflective layer.
+induction of the deliberative planning machine type knowledge base
+from the deliberative planning machine knowledge base by the
+reflective layer.  The reflective layer uses an analogous type
+knowledge induction process as the deliberative layer, previously
+shown in {\mbox{\autoref{figure:physical_type_knowledge_induction}}}
+on {\mbox{page~\pageref{figure:physical_type_knowledge_induction}}}.
 \begin{figure}[h]
 \centering
 \includegraphics[width=10cm]{gfx/deliberative_type_knowledge_induction}
@@ -702,14 +718,21 @@ reflective layer.
 \label{figure:deliberative_type_knowledge_induction}
 \end{figure}
 
-The deliberative planning process can be thought of as a plan
-executing in the reflective planning machine.  The reflective planning
-machine makes and executes plans that control the deliberative
-planning process in order to avoid execution failures.  Hypotheses are
-learned by the reflective layer that predict plan failure due to
-conjunctions of deliberative type knowledge features.  One of the
-hypothetical deliberative type knowledge transframes that the AI
-learns is the example expectation failure is shown in
+Plans in the reflective planning machine knowledge base are imagined
+in terms of the deliberative type knowledge.  This allows the
+reflective layer planning machine to learn models of plan execution
+that have no physical simulation component.  The ability to imagine
+executing a plan and predicting its failure based on the structure of
+the plan in relation to the planning machine and not in terms of the
+physical world, is \emph{not} an advantage provided by physical
+knowledge induction.  In this case, the ability to reason abstractly
+about physical plans for action without any physical simulation
+component necessary is provided by the reflective planning machine in
+the reflective layer.  Hypotheses are learned by the reflective layer
+that predict plan failure due to conjunctions of deliberative type
+knowledge features.  One of the hypothetical deliberative type
+knowledge transframes that the AI learns is the example expectation
+failure is shown in
 {\mbox{\autoref{table:hypothesized_deliberative_transframe}}}.
 \begin{table}[h]
 \centering
@@ -736,3 +759,10 @@ learns is the example expectation failure is shown in
   preconditions.}
 \label{table:hypothesized_deliberative_transframe}
 \end{table}
+
+The details of how the deliberative and reflective layers infer
+hypothetically supported counterfactual knowledge so that it can be
+corrected as hypotheses are refined in the learning process is
+described in terms of detailed examples in the next chapter,
+\autoref{chapter:grounded_learning_of_knowledge_utility},
+``\nameref{chapter:grounded_learning_of_knowledge_utility}.''

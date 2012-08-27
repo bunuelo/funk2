@@ -33,13 +33,70 @@
   \draw (0,0) -- coordinate (x axis mid) (#1,0);
   \draw (0,0) -- coordinate (y axis mid) (0,#3);
   
-  %ticks
-  {\foreach \x in {0,\experimentxaxispertick,...,#1}
-    \draw (\x,1pt) -- (\x,-3pt)
-    node[anchor=north] {\x};
+  % x ticks
+  \ifthenelse{\lengthtest{0.125 pt > #1 pt}}{
+    {\foreach \x in {0,0.05,...,#1}
+      \draw (\x,1pt) -- (\x,-3pt)
+      node[anchor=north] {\x};
+    }
+  }{
+    \ifthenelse{\lengthtest{0.25 pt > #1 pt}}{
+      {\foreach \x in {0,0.1,...,#1}
+        \draw (\x,1pt) -- (\x,-3pt)
+        node[anchor=north] {\x};
+      }
+    }{
+      \ifthenelse{\lengthtest{1 pt > #1 pt}}{
+        {\foreach \x in {0,0.25,...,#1}
+          \draw (\x,1pt) -- (\x,-3pt)
+          node[anchor=north] {\x};
+        }
+      }{
+        \ifthenelse{\lengthtest{2.5 pt > #1 pt}}{
+          {\foreach \x in {0,0.5,...,#1}
+            \draw (\x,1pt) -- (\x,-3pt)
+            node[anchor=north] {\x};
+          }
+        }{
+          \ifthenelse{\lengthtest{10 pt > #1 pt}}{
+            {\foreach \x in {0,2.5,...,#1}
+              \draw (\x,1pt) -- (\x,-3pt)
+              node[anchor=north] {\x};
+            }
+          }{
+            \ifthenelse{\lengthtest{25 pt > #1 pt}}{
+              {\foreach \x in {0,5,...,#1}
+                \draw (\x,1pt) -- (\x,-3pt)
+                node[anchor=north] {\x};
+              }
+            }{
+              \ifthenelse{\lengthtest{100 pt > #1 pt}}{
+                {\foreach \x in {0,15,...,#1}
+                  \draw (\x,1pt) -- (\x,-3pt)
+                  node[anchor=north] {\x};
+                }
+              }{
+                \ifthenelse{\lengthtest{250 pt > #1 pt}}{
+                  {\foreach \x in {0,30,...,#1}
+                    \draw (\x,1pt) -- (\x,-3pt)
+                    node[anchor=north] {\x};
+                  }
+                }{
+                  {\foreach \x in {0,60,...,#1}
+                    \draw (\x,1pt) -- (\x,-3pt)
+                    node[anchor=north] {\x};
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
   \draw (#1,1pt) -- (#1,0pt)
     node[anchor=north] {};
+  % y ticks
   \ifthenelse{\lengthtest{0.125 pt > #3 pt}}{
     {\foreach \y in {0,0.05,...,#3}
       \ifthenelse{\lengthtest{\y pt > #3 pt}}{
@@ -255,7 +312,7 @@
 }
 
 \newcommand{\experimentxaxislabel}{
-  \node[below=0.8cm] at (x axis mid) {Minutes};
+  \node[below=0.6cm] at (x axis mid) {Minutes};
 }
 
 \newcommand{\experimentxaxiscloselabel}{
@@ -328,7 +385,7 @@
       \experimentxaxislabel
       \experimentyaxisbytes
       
-      \experimentdatalegendtwo[#1]{\experimentmaxvalue}{#4-bytes_freed_count.data}{#5};
+      \experimentdatalegendthree[#1]{\experimentmaxvalue}{#4-bytes_freed_count.data}{#5};
     \end{tikzpicture}
   }
 }
@@ -346,7 +403,7 @@
       \experimentxaxislabel
       \experimentyaxismemory
       
-      \experimentdatalegendthree[#1]{\experimentmaxvalue}{#4-bytes_footprint.data}{#5};
+      \experimentdatalegendfour[#1]{\experimentmaxvalue}{#4-bytes_footprint.data}{#5};
     \end{tikzpicture}
   }
 }

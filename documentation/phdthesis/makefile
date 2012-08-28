@@ -4,6 +4,10 @@ phdthesis.pdf: \
   makefile \
   phdthesis.tex \
   bibliography.bib \
+  frontbackmatter/dirtytitlepage.tex \
+  frontbackmatter/reader_signature_page_01.tex \
+  frontbackmatter/reader_signature_page_02.tex \
+  frontbackmatter/reader_signature_page_03.tex \
   frontbackmatter/abstract.tex \
   frontbackmatter/acknowledgments.tex \
   frontbackmatter/bibliography.tex \
@@ -11,7 +15,6 @@ phdthesis.pdf: \
   frontbackmatter/contents.tex \
   frontbackmatter/declaration.tex \
   frontbackmatter/dedication.tex \
-  frontbackmatter/dirtytitlepage.tex \
   frontbackmatter/preface.tex \
   frontbackmatter/publication.tex \
   frontbackmatter/titleback.tex \

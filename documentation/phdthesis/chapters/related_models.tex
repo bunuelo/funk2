@@ -5,11 +5,12 @@
 
 \section{The Emotion Machine v1.0}
 
-One system that implements commonsense reasoning, based on Minsky's
-Emotion Machine theory of mind \cite[]{minsky:2006}, is a
-metareasoning system for correcting faulty plans, called EM1 (Emotion
-Machine, v1) \cite[]{singh:2005b}. EM1 is written in Lisp, using a
-Prolog extension as the logical resolution tool. EM1 is a layered
+One previsouly developed cognitive architecture that implements
+commonsense reasoning, based on Minsky's Emotion Machine theory of
+mind \cite[]{minsky:2006}, is a metareasoning system for correcting
+faulty plans, called EM-ONE (Emotion Machine, v1)
+\cite[]{singh:2005b}. EM-ONE is written in Lisp, using a Prolog
+extension as a logical resolution tool. EM-ONE is a layered
 architecture consisting of reactive, deliberative, and reflective
 layers. Mental critics are represented as commonsense narratives that
 result in queries to a collection of different Prolog knowledge
@@ -23,99 +24,113 @@ critic-selector model of mind. The narrative plans that are generated
 by the deliberative layer are executed by a lower-layer, called the
 reactive layer. Part of the reactive layer of the algorithm is written
 in C and runs PID control loops in a simulated social two-wheeled
-inverted pendulum type robot. EM1 demonstrates how a system can use
+inverted pendulum type robot. EM-ONE demonstrates how a system can use
 commonsense narratives in order to reason by analogy in order to
-generate plans. Also, EM1 demonstrates a learning process that is
-driven by reflective critical recognition of failure. Because of the
-complexity of the rigid-body physics in the world, sometimes even the
-most carefully constructed plans fail. EM1 has a layer of reflective
-critics that debug deliberative narratives as they are being
-interpreted by using a collection of commonsense narrative debugging
-critics.  Using narratives about social situations, EM1 infers the
-goals of the other agents in the world given partial knowledge of
-their visible physical actions. When mistakes are made in this
-inference process, the failure is recognized reflectively, after the
-fact. Specific types of debugging responses are implemented for
-different forms of critical failures. EM1 is a step toward a large and
-complex commonsense reasoning agent with multiple layers of
+generate plans. Also, EM-ONE demonstrates a learning process that is a
+carefully crafted collection of reflective critics that recognize
+types of social failures to infer the goals of other AIs.  Because of
+the complexity of the rigid-body physics in the world, sometimes even
+the most carefully constructed plans fail. EM-ONE has a layer of
+reflective critics that debug deliberative narratives as they are
+being interpreted by using a collection of commonsense narrative
+debugging critics.  Using narratives about social situations, EM-ONE
+infers the goals of the other agents in the world given partial
+knowledge of their visible physical actions. When mistakes are made in
+this inference process, the failure is recognized reflectively, after
+the fact. Specific types of debugging responses are implemented for
+different forms of critical failures. EM-ONE is a step toward a large
+and complex commonsense reasoning agent with multiple layers of
 metareasoning that inspect, control, and debug mental representations.
+
+In my AI, I have focused on implementing a form of learning where
+resource executions are of constant time complexity, $O(1)$, so that
+there are no search algorithms operating ``behind the scenes'', such
+as those in any system based on prolog with its implicit logical
+resolution of declarative program statements.  The substrate presented
+in this thesis is developed with the intension of building a stable
+platform for larger cognitive architectures in the same vein as
+EM-ONE.  For this reason, the substrate presented in this thesis is
+distributed as an extensible open-source program that can be easily
+downloaded, modified and used by others.  The rigid body physics
+simulation implemented in EM-ONE has been extended in capability with
+our kitchen cooking simulator, IsisWorld \cite[]{smith:2010}, which
+allows multiple social agents in a rigid-body physical kitchen to work
+together to learn how to perform basic cooperative cooking tasks.
 
 \section{Interior Grounding}
 
 \cite{minsky:2005} describes an evolutionary reflective model of mind
-that he calls \emph{interior grounding}.  Interior grounding states
-that each layer of reflective thinking could be genetically
-predestined to each have different and specific types of useful ways
-of thinking.  Minsky rejects the \emph{physical grounding hypothesis},
-which stipulates that thoughts must necessarily develop from the
-lowest layer first and only subsequently to the higher layers of
-thinking.
+called \emph{interior grounding}.  Interior grounding states that each
+layer of reflective thinking could be genetically predestined to each
+have different and specific types of useful ways of thinking.  Minsky
+rejects the \emph{physical grounding hypothesis}, which stipulates
+that thoughts must necessarily develop from the lowest layer first and
+only subsequently to the higher layers of thinking.
 
-In terms of my model, activities in the mind can create and manipulate
+Because my AI is modelled after Minsky's Emotion Machine cognitive
+architecture, activities in the mind can create and manipulate
 symbolic arrangements without these symbols necessarily referring to
-the physical layer of activity.  My model does not conflict with
-modelling different developmental stages of minds or genetic
-differences between minds; the implementation begins the simulation in
-a specific physical state, where the reflective layers of the mind are
-already all actively thinking with explicit sets of pre-existing
-knowledge, such as plans.  My model learns new knowledge and debugs
-the knowledge it already has as the simulation proceeds.
+the physical layer of activity.  My model considers factual grounding
+in both the perception of physical knowledge as well as the perception
+of internal mental states, such as the deliberative planning machine
+knowledge.
 
 In terms of Model\nobreakdash-6, each reflective layer of my model can
 be considered to have a unique built-in reactive layer, which makes
 room for these genetic dispositions that Minsky describes as the basis
-for interior grounding.  Also, my use of the term grounding is
-consistent in the sense that dynamic activity is the grounding for
-symbolic references in each layer of activity of my model, so this
-grounding need not begin by reasoning about physical activity, growing
-from lower layers to higher layers, but may instead begin reasoning
-about any layer at any given height in the model.
+for interior grounding.  My AI demonstrates interior grounding by
+having sets of factual knowledge as the control domain for both the
+deliberative as well as the reflective planning machines, so factual
+grounding of hypothetical counterfactual inferences in my AI need not
+begin by reasoning about physical activity, growing from lower layers
+to higher layers, but may instead begin by reasoning about the factual
+events in the deliberative planning machine knowledge bases.
 
 \section{Metareasoning}
 
-\cite{cox_and_raja:2008} present a reflective model of mind that they
-refer to as \emph{metareasoning}.  The metareasoning model they
-present begins with a ``ground level'', which corresponds to the
-physical, $\text{reflective}^0$, layer, then describe how a second
-level, the ``object level'', is a control loop that receives
-perceptions from the ground level, processes these, and sends
-actionable commands back to the ground level.  Their object level
-corresponds with the first-order reflective layer.  They then proceed
-to a third level, which completes two cascaded control loops: one
-controlling the ground level with another controlling the object
+\cite{cox_and_raja:2008} present a reflective model of mind called
+\emph{metareasoning}.  My AI demonstrates metareasoning in the
+reflective layer, which controls the deliberative planning machine.
+The metareasoning described by Cox and Raja begins with a ``ground
+level'', which corresponds to the physical knowledge base in my AI,
+then describe how a second level, the ``object level'', is a control
+loop that receives perceptions from the ground level, processes these,
+and sends actionable commands back to the ground level.  The
+metacognitive object level corresponds with the deliberative layer and
+the deliberative planning machine knowledge base in my AI.  They then
+proceed to a third level, which completes two cascaded control loops:
+one controlling the ground level with another controlling the object
 level.  This third level is called the ``meta-level''.  Cox and Raja's
-meta-level corresponds to the second-order reflective layer, but Cox
-and Raja's model might be interpretted to limit the meta-level to
-thinking about the object level, which is not true of the
-$\text{reflective}^2$ layer in the sense that this layer can symbolize
-any of the activities in the layers below it.
+meta-level corresponds to the reflective layer and reflective planning
+machine knowledge base in my AI.
 \begin{figure}[bth]
 \begin{align*}
-\text{Cox and Raja's Ground Level } &{\approx} \text{ reflective}^0 \\
-\text{Cox and Raja's Object Level } &{\approx} \text{ reflective}^1 \\
-\text{Cox and Raja's Meta-Level }   &{\approx} \text{ reflective}^2 \\
-\text{Cox and Raja's $\text{Meta}^2$-Level } &{\approx} \text{ reflective}^3 \\
-\text{Cox and Raja's $\text{Meta}^n$-Level } &{\approx} \text{ reflective}^{(n+1)} \\
+\text{Cox and Raja's Ground Level } &{\approx} \text{ Reactive Layers} \\
+\text{Cox and Raja's Object Level } &{\approx} \text{ Deliberative Layer} \\
+\text{Cox and Raja's Meta-Level }   &{\approx} \text{ Reflective Layer}
 \end{align*}
 \caption{The lower levels of Cox and Raja's metareasoning model mapped
-  to the suggested $\text{reflective}^n$ order notation.}
+  to the Emotion Machine cognitive architecture present in this
+  thesis.}
 \label{figure:metareasoning_as_reflective_order_notation}
 \end{figure}
 \autoref{figure:metareasoning_as_reflective_order_notation} shows how
-Cox and Raja's levels map to the suggested $\text{reflective}^n$ order
-notation.  Here they explain what happens when the object level fails
-in either the creation or execution of a plan:
+Cox and Raja's levels map to the Emotion Machine cognitive
+architecture presented in this thesis.  Here they explain what happens
+when the object level fails in either the creation or execution of a
+plan:
 \begin{quote}
 When reasoning fails at some task, it may involve the explanation of
-the causal contributions of failure and the diagnosis of the object-
-level reasoning process.
+the causal contributions of failure and the diagnosis of the
+object-level reasoning process.
 \end{quote}
 Cox and Raja explain how debugging causal models of the reasoning
-process itself is a form of meta-level reasoning, or second-order
-reflective thinking.  My model has a separate distinct class of causal
-model for each layer of reflective thinking, so learning physical
-causal models is a distinct activity from learning first-order
-reflective thinking causal models.  The implementation demonstrates
-how two distinct layers of causal models allow not only learning to
-act but also learning to think about acting.
+process itself is a form of meta-level reasoning, or reflective layer
+of thinking.  My model has a separate distinct class of resource
+activation hypotheses for the separate layers of deliberative and
+reflective thinking, so learning physical causal models is a distinct
+activity from reflectively learning deliberative thinking causal
+models.  The implementation demonstrates how two distinct layers of
+hypothetical inference models allow not only learning to act but also
+learning to think about acting.
 

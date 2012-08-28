@@ -42,9 +42,8 @@ learned, so that the same planning mistake will never be made again.
  4. & Wait until a gripper stops moving.\\
  5. & Move right.\\
  6. & Wait until a gripper is above a pyramid.\\
- 7. & Drop.\\
- 8. & Wait long enough for block to drop.\\
- 9. & Assert a cube is sitting on a pyramid.\\
+ 7. & Drop and wait for block to fall.\\
+ 8. & Assert a cube is sitting on a pyramid.\\
 \hline
 \end{tabular}
 \caption[A plan learned from ``being told''.]{A plan learned from
@@ -114,7 +113,7 @@ deliberative objects, such
   \end{tabular}
   \caption[A example of an expectation failure.]{A example of an
     expectation failure.  A plan is executed that asserts that a
-    post-condition must be a stack of a cube sitting on a triangle,
+    post-condition must be a stack of a cube sitting on a pyramid,
     but when the plan finishes executing this assertion fails.}
   \label{figure:failure_to_stack_cube_on_pyramid}
 \end{figure}
@@ -129,7 +128,7 @@ deliberative knowledge.  Here is a list of deliberative type knowledge
 that the reflective layer can know about the objects in the
 deliberative layer:
 \begin{itemize}
-\item A plan that asserts that a cube is sitting on a triangle is
+\item A plan that asserts that a cube is sitting on a pyramid is
   under the focus of the deliberative planning machine.
 \item A plan that has had an expectation failure is being executed by
   the deliberative planning machine.
@@ -248,7 +247,7 @@ avoid plan execution failures.
   executes the plan and because the cube falls off of the pyramid, the
   plan's assertion fails, an expectation failure that is reported to
   the reflective layer.  (8) The reflective layer hypothesizes that
-  plans asserting a stack of a cube on a triangle will lead to failure
+  plans asserting a stack of a cube on a pyramid will lead to failure
   when executed.  The reflective layer selects a new planning strategy
   that it infers will not lead to failure: recalling a plan from
   memory that is hypothesized to stack a pyramid on a cube.  (9-12)
@@ -742,7 +741,7 @@ failure is shown in
     \hline
     \emph{action:}        & Execute and wait to complete. \\
     \hline
-    \emph{preconditions:} & A plan is in focus that asserts a cube is sitting on a triangle. \\
+    \emph{preconditions:} & A plan is in focus that asserts a cube is sitting on a pyramid. \\
     ~                     & No plans have failed. \\
     \hline
     \emph{additions:}     & A plan has that just encountered a failure encountered an expectation failure. \\
@@ -766,3 +765,7 @@ corrected as hypotheses are refined in the learning process is
 described in terms of detailed examples in the next chapter,
 \autoref{chapter:grounded_learning_of_knowledge_utility},
 ``\nameref{chapter:grounded_learning_of_knowledge_utility}.''
+
+
+
+

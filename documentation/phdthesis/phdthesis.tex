@@ -143,42 +143,26 @@
 % Thanks to the ``Daily rant: A random blog about everything, mostly
 % programming''
 
-%\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
-%\usepackage[top=1in,bottom=1in]{geometry}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{type1cm}
-\usepackage{eso-pic}
-\usepackage{color}
-
-\makeatletter
-\AddToShipoutPicture{
-  \setlength{\@tempdimb}{.5\paperwidth}
-  \setlength{\@tempdimc}{.5\paperheight}
-  \setlength{\unitlength}{1pt}
-  \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){
+%\usepackage{geometry}
+%\usepackage{graphicx}
+%\usepackage{type1cm}
+%\usepackage{eso-pic}
+%\usepackage{color}
+%
+%\makeatletter
+%\AddToShipoutPicture{
+%  \setlength{\@tempdimb}{.5\paperwidth}
+%  \setlength{\@tempdimc}{.5\paperheight}
+%  \setlength{\unitlength}{1pt}
+%  \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){
 %    \makebox(0,0){
 %      \rotatebox{45}{
-%        \makebox(-72,0){
-%          \vspace{3cm}\textcolor[gray]{0.875}{{\fontsize{3cm}{3cm}\selectfont{UNOFFICIAL}}}
-%        }
+%        \vspace{-6cm}\textcolor[gray]{0.9375}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
 %      }
 %    }
-%    \makebox(0,0){
-%      \rotatebox{45}{
-%        \makebox(-72,0){
-%          \vspace{-6cm}\textcolor[gray]{0.875}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
-%        }
-%      }
-%    }
-    \makebox(0,0){
-      \rotatebox{45}{
-        \vspace{-6cm}\textcolor[gray]{0.9375}{{\fontsize{6cm}{6cm}\selectfont{DRAFT}}}
-      }
-    }
-  }
-}
-\makeatother
+%  }
+%}
+%\makeatother
 
 % END DRAFT WATERMARK CODE
 
@@ -238,7 +222,7 @@
 \hypersetup{%
     %colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
     % uncomment the following line if you want to have black links (e.g., for printing)
-    colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=3, pdfstartview=FitV,% 
+    colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=9, pdfstartview=FitV,% 
     breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
     plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=0,%
     hypertexnames=true, pdfhighlight=/O,%hyperfootnotes=true,%nesting=true,%frenchlinks,%
@@ -323,6 +307,8 @@
 \mymargins
 \include{frontbackmatter/dirtytitlepage}
 \mymargins
+\cleardoublepage\include{frontbackmatter/abstract}
+\mymargins
 \include{frontbackmatter/reader_signature_page_01}
 \mymargins
 \include{frontbackmatter/reader_signature_page_02}
@@ -334,8 +320,6 @@
 \include{frontbackmatter/titleback}
 \mymargins
 \cleardoublepage\include{frontbackmatter/dedication}
-\mymargins
-\cleardoublepage\include{frontbackmatter/abstract}
 \mymargins
 \cleardoublepage\include{frontbackmatter/publication}
 \mymargins

@@ -251,7 +251,7 @@ Deliberative-Planner-1 just having had an execution failure.''
   reflective layer.  (8) The reflective layer hypothesizes that plans
   asserting a stack of a cube on a pyramid will lead to failure when
   executed.  The reflective layer selects a new planning strategy that
-  it infers will not lead to failure: recalling a plan from memory
+  it infers will not lead to failure: executing a plan from memory
   that is hypothesized to stack a pyramid on a cube.  (9-12) The
   second plan completes execution, successfully asserting that a
   pyramid is stacked on a cube.}
@@ -512,7 +512,9 @@ reactive layer.
   beginning and an ending time in this knowledge base, which a
   reflective process recognizes, the action transframe hypotheses are
   refined, given the new physical change correlations for the resource
-  execution.}
+  execution.  These physical change correlations are computed by an
+  asynchronous process, so a new parallel learning task is created to
+  wait for this event.}
 \label{figure:implemented_reflective_event_knowledge_base}
 \end{figure}
 

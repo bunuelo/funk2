@@ -172,7 +172,6 @@ reflective fiber can be created to process an
         [have knowledge_base add_semantic_frame planner]
         
         [set planner imagine_time [new semantic_time [time]]]]
-
 out-> []
 \end{Verbatim}
 }
@@ -252,5 +251,140 @@ out-> []
 \label{figure:remove_add_set_events}
 \end{figure}
 
-\section{Creating a Reflective Concurrent Process}
+\section{Causal Tracing of Statistics}
 
+Every parallel fiber in Funk is part of a causal scope of execution.
+Every fiber is created with a unique {\tt{cause}} object that provides
+a consolidation of reflective tracing features for the fiber.  While a
+fiber's cause may be changed so that multiple fibers share the same
+cause object, a convenient solution to organizing very dynamic causal
+reflection is provided by the {\tt{cause\_group}} object.  Cause
+groups are added to cause objects and inherited from parent to child
+when new causes are created.  Because {\tt{cause}} objects and
+{\tt{cause\_group}} objects exist at the locus of every single memory
+creation or mutation event in the entire Funk operating system, they
+are a valuable and necessarily efficient means of tracing any event
+that modifies any part of the operating system.  For example,
+{\mbox{\autoref{figure:cause_group_statistics}}} the simplest type of
+causal reflective tracing simply gathers run-time statistics of a
+fiber execution by using a {\tt{cause\_group}} object.
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [globalize cause_group [new cause_group]]
+out-> []
+
+ in-> [with-new-cause
+        [have [this-cause] add_cause_group cause_group]
+        [partimes [i 10]
+          [print i]]]
+0
+1
+2
+3
+4
+6
+7
+
+58
+9
+out-> []
+
+ in-> cause_group
+out-> [cause_group
+        execution_nanoseconds 533248657
+        bytes_allocated_count 2766181
+        bytecode_count        19495
+        bytes_freed_count     0]
+\end{Verbatim}
+}
+\caption[Using a {\tt{cause\_group}} object to gather statistics from
+  causally scoped executions.]{Using a {\tt{cause\_group}} object to
+  gather statistics from causally scoped executions.  First, a new
+  {\tt{cause\_group}} object is created in the global environment.
+  Then, the gathering of run-time statistics involves creating a new
+  cause with the {\tt{with-new-cause}} operator, adding this cause to
+  the {\tt{cause\_group}} object, and then running an experiment.  The
+  experiment in this case creates ten parallel fibers that each simply
+  print their index, a number from $0$ to $9$.  Finally, the global
+  {\tt{cause\_group}} object is printed to the screen, showing
+  processor execution time, total bytes allocated, total bytecodes
+  executed, and also the number of bytes garbage collected during the
+  experiment.  Note that multiple experiments could be run in parallel
+  and have separately scoped cause groups and statistics.}
+\label{figure:cause_group_statistics}
+\end{figure}
+
+\section{Causal Tracing of Memory Creation}
+
+Sometimes it is helpful to know which fiber or cause created a
+specific piece of memory.  For this reason, every piece of memory in
+the entire Funk operating system includes a reference to its creation
+cause as well as its creation fiber.  This increases memory usage by a
+constant factor, not making any algorithms in the operating system
+require any greater time or memory complexity, but for small objects
+it does triple the memory requirements.  This information can be
+useful in many statistical ways, such as keeping track of memory
+interactions between {\tt{cause\_group}} objects.  The focus of this
+thesis is not, however, a statistical point.
+{\mbox{\autoref{figure:reflective_event_causal_tracing}}} shows how a
+reflective fiber can retrieve the creation cause of a procedurally
+generated event, a reflective tracing experiment where the creation
+cause of the reflective event is a useful piece of information to know
+for non-statistical reasons, such as learning from the separate
+effects of different causal scopes on a given knowledge base.
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [let* [[realm          [new semantic_realm]]
+             [knowledge_base [new semantic_event_knowledge_base
+                                  nil realm]]
+             [iterator       [get knowledge_base
+                                  new-event_stream_iterator]]
+             [planner        [new semantic_planner realm]]]
+
+        'Start parallel reflective fiber.'
+        [fiber [funk []
+                 [while t
+                   [let* [[event       [have iterator
+                                             wait_for_current]]
+                          [event-cause [get event cause]]]
+                     [if [eq `my-test [have event-cause lookup
+                                            `cause-name]]
+                         [print `event-in-causal-focus]
+                       [print `event-out-of-causal-focus]]
+                     [have iterator increment]]]]
+               []]
+        
+        [set planner trace_add    t]
+        [set planner trace_remove t]
+        
+        [have knowledge_base add_semantic_frame planner]
+        
+        [with-new-cause
+          [cause-define cause-name `my-test]
+          [set planner imagine_time [new semantic_time [time]]]]]
+out-> []
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-out-of-causal-focus
+event-in-causal-focus
+event-in-causal-focus
+\end{Verbatim}
+}
+\caption[Causally scoped reflective event tracing.]{Causally scoped
+  reflective event tracing.  Since every piece of memory in the Funk
+  virtual operating system has a reference to its {\tt{cause}} object,
+  causally focusing the reflective tracing example shown in
+  {\mbox{\autoref{figure:reflective_fiber}}} is simply a matter of
+  accessing the creation cause of each event, using the expression,
+  {\tt{[get event cause]}}.}
+\label{figure:reflective_event_causal_tracing}
+\end{figure}

@@ -91,21 +91,20 @@ the deliberative layer, while a plan for deliberative action is
 manipulated by resources in the reflective layer.
 
 In this example, the goal of the reflective planning machine is to
-execute plans in the deliberative planning machine, while also
-learning to predict and avoid plan failures in the deliberative
-planning machine.  The plan executed in the first planner resulted in
-a physical expectation failure.  The plan attempted to assert that a
-cube is supported by a pyramid, which was not true at the point when
-the assertion was executed in the deliberative planning machine.  When
-a plan encounters a specific type of failure, properties of the
-failure event are represented as a failure object that is associated
-with the plan object that failed.  As seen by the reflective layer,
-the deliberative failure knowledge is related to the plan in a way
-that is analogous to the way that the deliberative layer sees a
-physical block sitting on another physical block.  The deliberative
-layer learns how to control relationships between physical objects,
-while the reflective layer learns how to control relationships between
-deliberative objects, such
+attempt to avoid plan execution failures, while executing plans that
+are hypothesized to accomplish physical goals.  The plan executed in
+the deliberative planner resulted in a physical expectation failure.
+The plan attempted to assert that a cube is supported by a pyramid,
+which was not true at the point when the assertion was executed in the
+deliberative planning machine.  When a plan encounters a specific type
+of failure, properties of the failure event are represented as a
+failure object that is associated with the plan object that failed.
+As seen by the reflective layer, the deliberative failure knowledge is
+related to the plan in a way that is analogous to the way that the
+deliberative layer sees a physical block sitting on another physical
+block.  The deliberative layer learns how to control relationships
+between physical objects, while the reflective layer learns how to
+control relationships between deliberative objects, such
 \begin{figure}{h}
   \centering
   \begin{tabular}{p{5cm}p{5cm}}
@@ -231,8 +230,8 @@ absolutely necessary.  In other situations it may be desirable for
 physical failures to occur.  For example, if the AI is performing an
 experiment or ``playing'' in a physical domain, it may be desirable to
 fail in order to accomplish knowledge level goals.  In this example,
-the reflective goal is to control the deliberative planning machine to
-avoid plan execution failures.
+the reflective planner has a negative goal, which is: ``Avoid
+Deliberative-Planner-1 just having had an execution failure.''
 \begin{figure}
 \centering
 \begin{tabular}{p{3.5cm}p{3.5cm}p{3.5cm}}

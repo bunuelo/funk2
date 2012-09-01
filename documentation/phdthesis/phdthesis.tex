@@ -222,7 +222,7 @@
 \hypersetup{%
     %colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
     % uncomment the following line if you want to have black links (e.g., for printing)
-    colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=1, pdfstartview=FitV,% 
+    colorlinks=false, linktocpage=false, pdfborder={0 0 0}, pdfstartpage=11, pdfstartview=FitV,% 
     breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
     plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=0,%
     hypertexnames=true, pdfhighlight=/O,%hyperfootnotes=true,%nesting=true,%frenchlinks,%
@@ -244,6 +244,8 @@
 \usepackage{tikz}
 \usetikzlibrary{plotmarks}
 \usetikzlibrary{arrows,shapes,backgrounds}
+\usepackage{fancyvrb}
+\usepackage{cprotect}
 
 
 % BEGIN LONG DIVISION DIGIT SPACING
@@ -319,9 +321,9 @@
 \mymargins
 \include{frontbackmatter/titleback}
 \mymargins
-\cleardoublepage\include{frontbackmatter/abstract}
-\mymargins
 \cleardoublepage\include{frontbackmatter/dedication}
+\mymargins
+\cleardoublepage\include{frontbackmatter/abstract}
 \mymargins
 \cleardoublepage\include{frontbackmatter/publication}
 \mymargins
@@ -366,8 +368,8 @@
 %\include{chapters/education}
 \mymargins
 \include{chapters/experiment_data}
-%\mymargins
-%\include{chapters/causal_reflective_tracing_tutorial}
+\mymargins
+\include{chapters/causal_reflective_tracing_tutorial}
 \mymargins
 \include{chapters/the_code}
 

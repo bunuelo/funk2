@@ -9,7 +9,7 @@ memory system, upon which the virtual operating system is built.  This
 low level memory tracing functionality allows easily tracing events at
 any level of abstraction in the entire system using the Funk causal
 reflective tracing features.  \autoref{table:bootup} shows a list of
-figures showing data from an experiment where the AI simply boots up
+figures showing data from an experiment where the AI boots up
 and then perceives the world over time.  This experiment is a control
 that shows that the AI memory usage and execution is stable if it does
 not have any goals and the physical world is not changing.
@@ -25,13 +25,13 @@ enabled.  The evaluation chapter, \autoref{chapter:evaluation}, has a
 more detailed analysis of the data in this appendix, comparing the
 three experiments.
 
-\experimentdatatable[bootup]{an experiment that simply boots up the AI
-  and simply allows it to perceive the physical world and not
-  stimulating it to achieve any goals} {This experiment serves as a
-  control for the subsequent two experiments.  This experiment shows
-  that when the AI is not given any deliberative goals, it simply
-  learns from its initial perceptions, and when these do not change,
-  it has nothing to learn and memory usage is stable.}
+\experimentdatatable[bootup]{an experiment that boots up the AI and
+  allows it to perceive the physical world and not stimulating it to
+  achieve any goals} {This experiment serves as a control for the
+  subsequent two experiments.  This experiment shows that when the AI
+  is not given any deliberative goals, it learns from its initial
+  perceptions, and when these do not change, it has nothing to learn
+  and memory usage is stable.}
 
 \experimentdatatable[no_reflective_learning]{an experiment without the
   AI reflectively tracing, and building models of the deliberative
@@ -52,28 +52,28 @@ three experiments.
 \clearpage
 \section{Figures from Mind Bootup Experiment}
 
-%\experimentdatafigures[60]{bootup}{an experiment that simply boots up
-%  the AI, allowing it to continue to perceive the physical world over
-%  time without stimulating it to achieve any goals.  This experiment
-%  shows that the AI learns from its initial perceptions, and when
-%  these do not change, it has nothing to learn and memory usage is
-%  stable.}
+\experimentdatafigures[60]{bootup}{an experiment that boots up
+  the AI, allowing it to continue to perceive the physical world over
+  time without stimulating it to achieve any goals.  This experiment
+  shows that the AI learns from its initial perceptions, and when
+  these do not change, it has nothing to learn and memory usage is
+  stable.}
 
 \clearpage
 \section{Figures from Learning Experiment without Reflection}
 
-%\experimentdatafigures[75]{no_reflective_learning}{an experiment with
-%  the reflective tracing of the deliberative process disabled.  This
-%  experiment can be compared with run-time behavior of the full AI
-%  cognitive architecture, which can learn from the failure and
-%  initiate a second attempt at plan selection and execution.}
+\experimentdatafigures[75]{no_reflective_learning}{an experiment with
+  the reflective tracing of the deliberative process disabled.  This
+  experiment can be compared with run-time behavior of the full AI
+  cognitive architecture, which can learn from the failure and
+  initiate a second attempt at plan selection and execution.}
 
 \clearpage
 \section{Figures from Reflective Learning Experiment}
 
-%\experimentdatafigures[180]{reflective_learning}{an experiment testing
-%  the full AI cognitive architecture, including the reflective tracing
-%  of the deliberative planning process, imagining the potential
-%  failures of the deliberative planning machine as well as the
-%  physical effects of physical actions.}
+\experimentdatafigures[180]{reflective_learning}{an experiment testing
+  the full AI cognitive architecture, including the reflective tracing
+  of the deliberative planning process, imagining the potential
+  failures of the deliberative planning machine as well as the
+  physical effects of physical actions.}
 

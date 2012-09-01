@@ -1,17 +1,18 @@
 %************************************************
 \chapter{Evaluation}
-\label{chapter:evaulation}
+\label{chapter:evaluation}
 %************************************************
 
 The AI consists of 86 resources, organized into 15 agencies, which
-comprise the 4 layers.  The underlying Funk virtual machine and
-programming language takes advantage of concurrent hardware and
-simulates further parallelism through a 8 virtual bytecode machine
-processors.  Causal procedurally reflective tracing allows for the
-run-time evaluation of every separate causally scoped component of the
-architecture.  Resource-resource activation events are automatically
-traced with causal scope.  In order to evaluate the cognitive
-architecture, three run-time evaluations have been performed:
+comprise the 4 layers.  The underlying \emph{Funk} virtual machine and
+programming language \cite[]{morgan:2009} takes advantage of
+concurrent hardware and simulates further parallelism through a 8
+virtual bytecode machine processors.  Causal procedurally reflective
+tracing allows for the run-time evaluation of every separate causally
+scoped component of the architecture.  Resource-resource activation
+events are automatically traced with causal scope.  In order to
+evaluate the cognitive architecture, three run-time evaluations have
+been performed:
 \begin{enumerate}
 \item \emph{Boot-up and Perceive}: The mind initializes without goals
   and simply perceives the world over time.  This experiment functions
@@ -83,13 +84,14 @@ which takes the same $10$ minutes as in the initial experiment.  The
 AI is then told to execute a deliberative plan, which causes it to
 execute a plan that attempts to stack a cube on top of a pyramid.  In
 learning the effects of reactive resource executions on the physical
-type knowledge bases the deliberative AI uses an increasing overall
-memory footprint of $5.3$ megabytes per second over the $75$ minutes
-that it takes to fail to accomplish this goal.  The AI does not
-respond to the failure because the reflective layers are not active.
-The AI allocates an average of $1.2$ megabytes of memory per second
-for the length of the experiment, which results in a total of $5.4$
-gigabytes over the course of the experiment.  The architecture
+type knowledge bases the deliberative AI allocates $5.3$ megabytes per
+second, while the memory footprint only grows at a rate of $90$
+thousand bytes per second due to the learning that occurs over the
+$60$ minutes that it takes to fail to accomplish this goal.  The AI
+does not respond to the failure because the reflective layers are not
+active.  The AI allocates an average of $1.2$ megabytes of memory per
+second for the length of the experiment, which results in a total of
+$5.4$ gigabytes over the course of the experiment.  The architecture
 executes an average of $11$ thousand bytecodes per second over the
 course of the experiment.  This shows that the architecture slows down
 when more resources are active than simply the reactive perceptual

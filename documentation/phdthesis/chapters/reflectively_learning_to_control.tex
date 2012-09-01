@@ -90,8 +90,11 @@ processes.  A plan for physical action is manipulated by resources in
 the deliberative layer, while a plan for deliberative action is
 manipulated by resources in the reflective layer.
 
-In this example, the plan executed in the first planner resulted in a
-physical expectation failure.  The plan attempted to assert that a
+In this example, the goal of the reflective planning machine is to
+execute plans in the deliberative planning machine, while also
+learning to predict and avoid plan failures in the deliberative
+planning machine.  The plan executed in the first planner resulted in
+a physical expectation failure.  The plan attempted to assert that a
 cube is supported by a pyramid, which was not true at the point when
 the assertion was executed in the deliberative planning machine.  When
 a plan encounters a specific type of failure, properties of the
@@ -111,7 +114,7 @@ deliberative objects, such
     5. \includegraphics[width=5cm]{gfx/blocks_world_example-5}  & 6. \includegraphics[width=5cm]{gfx/blocks_world_example-6} \\
     7. \includegraphics[width=5cm]{gfx/blocks_world_example-7}  & 8. \includegraphics[width=5cm]{gfx/blocks_world_example-8}
   \end{tabular}
-  \caption[A example of an expectation failure.]{A example of an
+  \caption[An example of an expectation failure.]{An example of an
     expectation failure.  A plan is executed that asserts that a
     post-condition must be a stack of a cube sitting on a pyramid,
     but when the plan finishes executing this assertion fails.}
@@ -186,15 +189,15 @@ told'' but does not have experience executing.
 \centering
 \begin{tabular}{|rl|}
 \hline
- 1. & While no plans for goal, repeat 2--6.\\
+ 1. & While no plans for goal, repeat 2--7.\\
  2. & ~~Forget all imagined events.\\
  3. & ~~Set imagine time to be now.\\
  4. & ~~Imagine current situation.\\
  5. & ~~Recall plan from memory.\\
  6. & ~~Imagine executing plan in focus.\\
- 6. & ~~Check goals in imagination.\\
- 7. & Recall plan for goal.\\
- 8. & Execute plan in focus.\\
+ 7. & ~~Check goals in imagination.\\
+ 8. & Recall plan for goal.\\
+ 9. & Execute plan in focus.\\
 \hline
 \end{tabular}
 \caption[A metacognitive plan in the reflective layer learned from
@@ -209,26 +212,26 @@ physical actions.  The reflective layer only learns from and predicts
 the types of knowledge in the deliberative layer, such as the
 properties and relationships between the planning machine, plans, and
 failure events.  Because of the AI's lack of experience, the
-reflective layer does not infer that this plan for deliberative will
-lead to a failure in the deliberative planning machine based on its
-structure.  Further, because of the AI's inexperience with physical
-actions, when it reflectively decides to execute this deliberative
-plan, it deliberatively infers that this plan will actually create a
-stack of two blocks.  Both of these forms of ignorance are corrected
-when the AI attempts to execute the chosen plan.  Not only is a new
-model of the physical world learned but also a new model of the
-deliberative planning machine is learned by the reflective layer.  In
-this way, the failure to predict the effects of physical actions can
-also be considered a failure to predict the effects of deliberative
-actions.  In other words, the reflective layer made a mistake in
-controlling the planning machine by having it execute a plan that
-ended up failing.  In general, the reflective goal to control the
-deliberative machine to avoid execution failures is not absolutely
-necessary.  In other situations it may be desirable for physical
-failures to occur.  For example, if the AI is performing an experiment
-or ``playing'' in a physical domain, it may be desirable to fail in
-order to accomplish knowledge level goals.  In this example, the
-reflective goal is to control the deliberative planning machine to
+reflective layer does not infer that this plan for physical action
+will lead to a failure in the deliberative planning machine based on
+its structure.  Further, because of the AI's inexperience with
+physical actions, when it reflectively decides to execute this
+deliberative plan, it deliberatively infers that this plan will
+actually create a stack of two blocks.  Both of these forms of
+ignorance are corrected when the AI attempts to execute the chosen
+plan.  Not only is a new model of the physical world learned but also
+a new model of the deliberative planning machine is learned by the
+reflective layer.  In this way, the failure to predict the effects of
+physical actions can also be considered a failure to predict the
+effects of deliberative actions.  In other words, the reflective layer
+made a mistake in controlling the planning machine by having it
+execute a plan that ended up failing.  In general, the reflective goal
+to control the deliberative machine to avoid execution failures is not
+absolutely necessary.  In other situations it may be desirable for
+physical failures to occur.  For example, if the AI is performing an
+experiment or ``playing'' in a physical domain, it may be desirable to
+fail in order to accomplish knowledge level goals.  In this example,
+the reflective goal is to control the deliberative planning machine to
 avoid plan execution failures.
 \begin{figure}
 \centering
@@ -242,16 +245,16 @@ avoid plan execution failures.
   deliberate.]{Adaptation due to reflectively learning how to
   deliberate.  The AI has the goal of creating a stack of two blocks.
   (1) A plan is recalled from memory and executed because it asserts
-  that a square block is sitting on a triangular block, which
-  hypothetically accomplishes the goal.  (2--8) The deliberative layer
-  executes the plan and because the cube falls off of the pyramid, the
-  plan's assertion fails, an expectation failure that is reported to
-  the reflective layer.  (8) The reflective layer hypothesizes that
-  plans asserting a stack of a cube on a pyramid will lead to failure
-  when executed.  The reflective layer selects a new planning strategy
-  that it infers will not lead to failure: recalling a plan from
-  memory that is hypothesized to stack a pyramid on a cube.  (9-12)
-  The second plan completes execution, successfully asserting that a
+  that a cube is sitting on a pyramid, which hypothetically
+  accomplishes the goal.  (2--8) The deliberative layer executes the
+  plan and because the cube falls off of the pyramid, the plan's
+  assertion fails, an expectation failure that is reported to the
+  reflective layer.  (8) The reflective layer hypothesizes that plans
+  asserting a stack of a cube on a pyramid will lead to failure when
+  executed.  The reflective layer selects a new planning strategy that
+  it infers will not lead to failure: recalling a plan from memory
+  that is hypothesized to stack a pyramid on a cube.  (9-12) The
+  second plan completes execution, successfully asserting that a
   pyramid is stacked on a cube.}
 \label{figure:implemented_example_learning_storyboard}
 \end{figure}
@@ -286,9 +289,7 @@ act but also to deliberatively plan.  These following sections will
 only be a cursory overview of the layers.  The AI is organized into
 layers of reflection that are each themselves composed of
 \emph{agencies} that are in turn composed of \emph{resources} that can
-be controlled and executed concurrently by the layers above.  A more
-detailed explanation of each agency and its resources will be
-discussed in the next chapter.
+be controlled and executed concurrently by the layers above.
 
 \section{The Physical Simulation}
 
@@ -508,7 +509,11 @@ reactive layer.
   horizontal axis represents time, while rounded rectangles represent
   execution events of different reactive resources.  Notice that some
   rectangles have a jagged right edge.  This represents that the event
-  does not yet have an ending time.}
+  does not yet have an ending time.  Once an event has both a
+  beginning and an ending time in this knowledge base, which a
+  reflective process recognizes, the action transframe hypotheses are
+  refined, given the new physical change correlations for the resource
+  execution.}
 \label{figure:implemented_reflective_event_knowledge_base}
 \end{figure}
 
@@ -610,13 +615,18 @@ AI imagines executing the plan in
 {\mbox{\autoref{table:a_plan_learned_from_being_told}}} on
 {\mbox{page~\pageref{table:a_plan_learned_from_being_told}}}, there is
 hypothetical support for the counterfactual knowledge: ``A cube is
-sitting on a pyramid.''  Executing the plan and accomplishing the goal
-is hypothetically supported, so the plan is executed, resulting in the
-learning of a more refined model of the physical world as well as a
-more refined model of the deliberative planning machine.  The details
-of how the deliberative infers hypothetically supported counterfactual
-knowledge so that it can be corrected as hypotheses are refined in the
-learning process is described in detail in the next chapter,
+sitting on a pyramid.''  The deliberative imagination agency infers
+the hypothetical effects of the plan.  The counterfactual physical
+type knowledge base contains the assertion of the plan, an instance of
+the current physical type goal, ``A block is sitting on a block.''
+Since the goal is hypothetically supported, the plan is executed by
+the deliberative execution agency.  The experienced gained from
+actually executing the plan results in the learning of a more refined
+model of the physical world as well as a more refined model of the
+deliberative planning machine.  The details of how the deliberative
+infers hypothetically supported counterfactual knowledge so that it
+can be corrected as hypotheses are refined in the learning process is
+described in detail in the next chapter,
 \autoref{chapter:grounded_learning_of_knowledge_utility},
 ``\nameref{chapter:grounded_learning_of_knowledge_utility}.''
 
@@ -643,8 +653,8 @@ involving the deliberative planning resources.
   \begin{tabular}{p{8in}}
     % define source coordinates
     \begin{itemize}
-    \item Plan for Physical Action in Deliberative Execution Register \tikz[na] \coordinate (executing-plan-label);
-    \item Plan for Physical Action in Deliberative Focus Register \tikz[na] \coordinate (focus-plan-label);
+    \item Plan for Physical Action in Deliberative Planning Machine Focus Register \tikz[na] \coordinate (executing-plan-label);
+    \item Plan for Physical Action in Deliberative Planning Machine Execute Register \tikz[na] \coordinate (focus-plan-label);
     \item Deliberative Planning Machine \tikz[na] \coordinate (deliberative-planning-machine-label);
     \end{itemize} \\
     % Use a background grid to make it easier to find coordinates
@@ -712,8 +722,13 @@ on {\mbox{page~\pageref{figure:physical_type_knowledge_induction}}}.
 \centering
 \includegraphics[width=10cm]{gfx/deliberative_type_knowledge_induction}
 \caption[The knowledge bases and processes involved in deliberative
-  type knowledge induction.]{The knowledge bases and processes
-  involved in deliberative type knowledge induction.}
+  planning machine type knowledge induction.]{The knowledge bases and
+  processes involved in deliberative planning machine type knowledge
+  induction.  The creation of a reconstruction of the deliberative
+  planning machine knowledge base by the reflective layer allows the
+  full speed concurrent execution of the deliberative planning
+  machine, despite the slower speed of the more careful reflective
+  learning processes.}
 \label{figure:deliberative_type_knowledge_induction}
 \end{figure}
 

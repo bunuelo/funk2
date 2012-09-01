@@ -52,10 +52,25 @@ of reflective credit assignment because this simplifies understanding
 the problem of learning-to-control.  Throughout this dissertation I
 will use a running example of learning to accomplish goals in a simple
 block building domain, similar to the Blocks World planning domain
-\cite[]{winograd:1970}.
-\autoref{chapter:reflectively_learning_to_control} describes my
-implemented solution to the problem of reflectively learning to
+{\cite[]{winograd:1970}}.
+{\mbox{\autoref{chapter:reflectively_learning_to_control}}} describes
+my implemented solution to the problem of reflectively learning to
 control.
+{\mbox{\autoref{chapter:grounded_learning_of_knowledge_utility}}}
+describes my implemented solution to the problem of learning from both
+``being told'' and from factual knowledge gained through action.
+{\mbox{\autoref{chapter:related_models}}} relates my AI to related
+implementations and models of Emotion Machine architectures, grounded
+layered learning, and metacognition.
+{\mbox{\autoref{chapter:evaluation}}} evaluates the run-time
+performance of my AI in three experiments: (1) boot-up and perceive
+over time, (2) deliberative learning without reflective learning, and
+(3) the full architecture deliberatively learning about physical
+actions while also reflectively learning about planning actions.  In
+{\mbox{\autoref{chapter:future}}}, I discuss promising directions of
+future research for extending this architecture to learn at the top
+two layers of the Emotion Machine theory, the self-reflective and
+self-conscious layers.
 
 \section{Closed-loop Control and Learning}
 
@@ -69,17 +84,18 @@ otherwise ``hidden'' variables, (3) actions are chosen based on
 considerations of different action and hypothesis dependent
 inferences.  While there are many types of machine learning algorithms
 that focus on this abstract 3-step closed-loop process of learning to
-control, the field of metacognition \cite[]{cox_and_raja:2008} focuses
-on making at least two layers of closed-loop systems. The first
-closed-loop learning algorithm learns how to deal with the external
-world, while the second closed-loop learning algorithm perceives the
-state of the algorithm below. I see metacognition as a layering of
-learning algorithms, such that the second layer algorithm learns from
-perceiving the activity of the first layer and controls or modifies
-this first layer. While it may be clear how to trace changes in the
-perceptual inputs of layer one of the algorithm, it is less than clear
-how the second layer learner should monitor the changes in the state
-of the first layer learner.
+control, the field of metacognition
+\cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
+layers of closed-loop systems. The first closed-loop learning
+algorithm learns how to deal with the external world, while the second
+closed-loop learning algorithm perceives the state of the algorithm
+below. I see metacognition as a layering of learning algorithms, such
+that the second layer algorithm learns from perceiving the activity of
+the first layer and controls or modifies this first layer. While it
+may be clear how to trace changes in the perceptual inputs of layer
+one of the algorithm, it is less than clear how the second layer
+learner should monitor the changes in the state of the first layer
+learner.
 
 \section{Reflection in Computer Science}
 
@@ -165,8 +181,7 @@ state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
 processed one billion plans per second in parallel, this search would
 still take over ten thousand years to complete, and that is just to
 play the first move!  The fastest algorithms include good heuristics,
-e.g. a count of the number of pieces on the board for each player,
-etc.
+e.g. a count of the number of pieces on the board for each player.
 
 \section{Heuristics}
 

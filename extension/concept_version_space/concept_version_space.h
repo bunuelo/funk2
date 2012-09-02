@@ -59,8 +59,6 @@ f2ptr raw__concept_version_space_hypothesis__add_variable_value                 
 f2ptr  f2__concept_version_space_hypothesis__add_variable_value                                 (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value);
 f2ptr raw__concept_version_space_hypothesis__lookup_variable_value                              (f2ptr cause, f2ptr this, f2ptr variable_name);
 f2ptr  f2__concept_version_space_hypothesis__lookup_variable_value                              (f2ptr cause, f2ptr this, f2ptr variable_name);
-f2ptr raw__concept_version_space_hypothesis__exclude_variable_value                             (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value);
-f2ptr  f2__concept_version_space_hypothesis__exclude_variable_value                             (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value);
 f2ptr raw__concept_version_space_hypothesis__include_variable_value                             (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value);
 f2ptr  f2__concept_version_space_hypothesis__include_variable_value                             (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value);
 f2ptr raw__concept_version_space_hypothesis__is_consistent_with_example                         (f2ptr cause, f2ptr this, f2ptr example);
@@ -77,8 +75,8 @@ f2ptr raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific
 f2ptr  f2__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(f2ptr cause, f2ptr this, f2ptr hypothesis);
 f2ptr raw__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example);
 f2ptr  f2__concept_version_space_hypothesis__minimal_generalizations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example);
-f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example);
-f2ptr  f2__concept_version_space_hypothesis__minimal_specializations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example);
+f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example, f2ptr concept_version_space);
+f2ptr  f2__concept_version_space_hypothesis__minimal_specializations_consistent_with_example    (f2ptr cause, f2ptr this, f2ptr example, f2ptr concept_version_space);
 f2ptr raw__concept_version_space_hypothesis__add_removal_callback                               (f2ptr cause, f2ptr this, f2ptr funk, f2ptr args);
 f2ptr  f2__concept_version_space_hypothesis__add_removal_callback                               (f2ptr cause, f2ptr this, f2ptr funk, f2ptr args);
 f2ptr raw__concept_version_space_hypothesis__know_of_removal                                    (f2ptr cause, f2ptr this);
@@ -92,7 +90,7 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause);
 // concept_version_space
 
 def_header_ceframe3(concept_version_space,
-		    variable_name_set,
+		    variable_value_set_name_ptypehash,
 		    specific_hypotheses,
 		    general_hypotheses);
 

@@ -203,23 +203,6 @@ f2ptr f2__concept_version_space_hypothesis__lookup_variable_value(f2ptr cause, f
 export_cefunk2(concept_version_space_hypothesis__lookup_variable_value, this, variable_name, 0, "Lookup a variable value from this concept_version_space_hypothesis.");
 
 
-f2ptr raw__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
-  f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
-  if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
-    return f2larva__new(cause, 1351365, nil);
-  } else {
-    raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
-  }
-  return nil;
-}
-
-f2ptr f2__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
-  assert_argument_type(concept_version_space_hypothesis, this);
-  return raw__concept_version_space_hypothesis__exclude_variable_value(cause, this, variable_name, value);
-}
-export_cefunk3(concept_version_space_hypothesis__exclude_variable_value, this, variable_name, value, 0, "Exclude a variable value from being consistent with this concept_version_space_hypothesis by specializing the hypothesis.");
-
-
 f2ptr raw__concept_version_space_hypothesis__include_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr value) {
   f2ptr value_variable_name_ptypehash = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
   if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
@@ -384,30 +367,40 @@ f2ptr f2__concept_version_space_hypothesis__minimal_generalizations_consistent_w
 export_cefunk2(concept_version_space_hypothesis__minimal_generalizations_consistent_with_example, this, example, 0, "Returns the minimal generalizations of this hypothesis that is also consistent with the given positive example.");
 
 
-f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example, f2ptr concept_version_space) {
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
   if (example__positive != nil) {
     // example must be negative in order to specialize based on it.
     return f2larva__new(cause, 232465, nil);
   }
-  f2ptr new_hypotheses = nil;
+  f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, concept_version_space);
+  f2ptr new_hypotheses                    = nil;
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-			 f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
-			 raw__concept_version_space_hypothesis__exclude_variable_value(cause, hypothesis, example__variable_name, example__value);
-			 new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+			 // add all *other* variables from concept version space that wouldn't match this one (no negative concepts in conjunctive hypothesis language...).
+			 f2ptr possible_variable_value_set = raw__ptypehash__lookup(cause, variable_value_set_name_ptypehash, example__variable_name);
+			 set__iteration(cause, possible_variable_value_set, possible__value,
+					if (! raw__eq(cause, example__value, possible__value)) {
+					  f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
+					  assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, possible__value));
+					  new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+					}
+					);
 			 );
   }
   return new_hypotheses;
 }
 
-f2ptr f2__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example) {
+f2ptr f2__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(f2ptr cause, f2ptr this, f2ptr example, f2ptr concept_version_space) {
   assert_argument_type(concept_version_space_hypothesis, this);
   assert_argument_type(concept_version_space_example,    example);
-  return raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, this, example);
+  assert_argument_type(concept_version_space,            concept_version_space);
+  return raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, this, example, concept_version_space);
 }
-export_cefunk2(concept_version_space_hypothesis__minimal_specializations_consistent_with_example, this, example, 0, "Returns the minimal specializations of this hypothesis that is also consistent with the given negative example.");
+export_cefunk3(concept_version_space_hypothesis__minimal_specializations_consistent_with_example, this, example, concept_version_space, 0,
+	       "Returns the minimal specializations of this hypothesis that is also consistent with the given negative example"
+	       "and given other variable values already known in concept_version_space.");
 
 
 f2ptr raw__concept_version_space_hypothesis__add_removal_callback(f2ptr cause, f2ptr this, f2ptr funk, f2ptr args) {
@@ -505,7 +498,6 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "new_copy"),                                            f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__new_copy")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_variable_value"),                                  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__add_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "lookup_variable_value"),                               f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__lookup_variable_value")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "exclude_variable_value"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__exclude_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "include_variable_value"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__include_variable_value")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_example"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_example")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "is_consistent_with_or_more_general_than_hypothesis"),  f2__core_extension_funk__new(cause, new__symbol(cause, "concept_version_space"), new__symbol(cause, "concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis")));}
@@ -524,13 +516,13 @@ f2ptr f2__concept_version_space_hypothesis_type__new_aux(f2ptr cause) {
 
 // concept_version_space
 
-def_ceframe3(concept_version_space, concept_version_space, variable_name_set, specific_hypotheses, general_hypotheses);
+def_ceframe3(concept_version_space, concept_version_space, variable_value_set_name_ptypehash, specific_hypotheses, general_hypotheses);
 
 f2ptr raw__concept_version_space__new(f2ptr cause) {
-  f2ptr variable_name_set   = f2__set__new(cause);
-  f2ptr specific_hypotheses = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
-  f2ptr general_hypotheses  = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
-  return f2concept_version_space__new(cause, variable_name_set, specific_hypotheses, general_hypotheses);
+  f2ptr variable_value_set_name_ptypehash = f2__ptypehash__new(cause);
+  f2ptr specific_hypotheses               = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
+  f2ptr general_hypotheses                = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
+  return f2concept_version_space__new(cause, variable_value_set_name_ptypehash, specific_hypotheses, general_hypotheses);
 }
 
 f2ptr f2__concept_version_space__new(f2ptr cause) {
@@ -540,42 +532,52 @@ export_cefunk0(concept_version_space__new, 0, "Returns a new concept_version_spa
 
 
 f2ptr raw__concept_version_space__add_variable(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  f2ptr variable_name_set   = raw__concept_version_space__variable_name_set(  cause, this);
-  f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
-  f2ptr general_hypotheses  = raw__concept_version_space__general_hypotheses( cause, this);
-  {
-    f2ptr iter = specific_hypotheses;
-    while (iter != nil) {
-      f2ptr hypothesis = f2__cons__car(cause, iter);
-      raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "-"));
-      iter = f2__cons__cdr(cause, iter);
+  f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, this);
+  if (! raw__ptypehash__contains(cause, variable_value_set_name_ptypehash, variable_name)) {
+    f2ptr specific_hypotheses               = raw__concept_version_space__specific_hypotheses(              cause, this);
+    f2ptr general_hypotheses                = raw__concept_version_space__general_hypotheses(               cause, this);
+    {
+      f2ptr iter = specific_hypotheses;
+      while (iter != nil) {
+	f2ptr hypothesis = f2__cons__car(cause, iter);
+	raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "-"));
+	iter = f2__cons__cdr(cause, iter);
+      }
     }
-  }
-  {
-    f2ptr iter = general_hypotheses;
-    while (iter != nil) {
-      f2ptr hypothesis = f2__cons__car(cause, iter);
-      raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "?"));
-      iter = f2__cons__cdr(cause, iter);
+    {
+      f2ptr iter = general_hypotheses;
+      while (iter != nil) {
+	f2ptr hypothesis = f2__cons__car(cause, iter);
+	raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, variable_name, new__symbol(cause, "?"));
+	iter = f2__cons__cdr(cause, iter);
+      }
     }
+    raw__ptypehash__add(cause, variable_value_set_name_ptypehash, variable_name, f2__set__new(cause));
   }
-  raw__set__add(cause, variable_name_set, variable_name);
+  return nil;
+}
+
+f2ptr raw__concept_version_space__add_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr variable_value) {
+  assert_value(raw__concept_version_space__add_variable(cause, this, variable_name));
+  f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, this);
+  f2ptr variable_value_set                = raw__ptypehash__lookup(cause, variable_value_set_name_ptypehash, variable_name);
+  raw__set__add(cause, variable_value_set, variable_value);
   return nil;
 }
 
 f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
-  f2ptr variable_name_set          = raw__concept_version_space__variable_name_set(cause, this);
-  f2ptr general_hypotheses         = raw__concept_version_space__general_hypotheses(cause, this);
-  f2ptr specific_hypotheses        = raw__concept_version_space__specific_hypotheses(cause, this);
-  f2ptr example__positive          = raw__concept_version_space_example__positive(cause, example);
-  f2ptr all_removed_hypothesis_set = f2__set__new(cause);
+  f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, this);
+  f2ptr general_hypotheses                = raw__concept_version_space__general_hypotheses(cause, this);
+  f2ptr specific_hypotheses               = raw__concept_version_space__specific_hypotheses(cause, this);
+  f2ptr example__positive                 = raw__concept_version_space_example__positive(cause, example);
+  f2ptr all_removed_hypothesis_set        = f2__set__new(cause);
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
-    ptypehash__key__iteration(cause, example__value_variable_name_ptypehash, example__variable_name,
-			      if (! raw__set__contains(cause, variable_name_set, example__variable_name)) {
-				assert_value(raw__concept_version_space__add_variable(cause, this, example__variable_name));
-			      }
-			      );
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example_variable_value,
+			 if (! raw__ptypehash__contains(cause, variable_value_set_name_ptypehash, example__variable_name)) {
+			   assert_value(raw__concept_version_space__add_variable_value(cause, this, example__variable_name, example__variable_value));
+			 }
+			 );
   }
   if (example__positive != nil) {
     {
@@ -754,7 +756,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	  while (iter != nil) {
 	    f2ptr removed_general_hypothesis = f2__cons__car(cause, iter);
 	    {
-	      f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, removed_general_hypothesis, example));
+	      f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example = assert_value(raw__concept_version_space_hypothesis__minimal_specializations_consistent_with_example(cause, removed_general_hypothesis, example, this));
 	      {
 		f2ptr removed_general_hypothesis__minimal_specializations_consistent_with_example__iter = removed_general_hypothesis__minimal_specializations_consistent_with_example;
 		while (removed_general_hypothesis__minimal_specializations_consistent_with_example__iter != nil) {

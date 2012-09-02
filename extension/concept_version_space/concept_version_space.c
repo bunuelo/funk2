@@ -635,7 +635,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	specific_hypotheses = new_specific_hypotheses;
 	raw__concept_version_space__specific_hypotheses__set(cause, this, specific_hypotheses);
       }
-      // for each removed specific_hypothesis, add all minimal generalizations that are consistent with example AND are more general than at least one general_hypothesis.
+      // for each removed specific_hypothesis, add all minimal generalizations that are consistent with example AND are consistent with or more specific than at least one general_hypothesis.
       {
 	f2ptr new_specific_hypotheses = specific_hypotheses;
 	{
@@ -650,22 +650,22 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		  f2ptr removed_specific_hypothesis__minimal_generalization_consistent_with_example = f2__cons__car(cause, removed_specific_hypothesis__minimal_generalizations_consistent_with_example__iter);
 		  {
 		    {
-		      boolean_t is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__false;
+		      boolean_t is_consistent_or_more_specific_than_at_least_one_general_hypothesis = boolean__false;
 		      {
 			f2ptr general_iter = general_hypotheses;
 			while (general_iter != nil) {
 			  f2ptr general_hypothesis = f2__cons__car(cause, general_iter);
 			  {
-			    if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, general_hypothesis, removed_specific_hypothesis__minimal_generalization_consistent_with_example)) {
-			      is_consistent_or_more_general_than_at_least_one_general_hypothesis = boolean__true;
-			      goto raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done;
+			    if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(cause, removed_specific_hypothesis__minimal_generalization_consistent_with_example, general_hypothesis)) {
+			      is_consistent_or_more_specific_than_at_least_one_general_hypothesis = boolean__true;
+			      goto raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_general_hypothesis__done;
 			    }
 			  }
 			  general_iter = f2__cons__cdr(cause, general_iter);
 			}
 		      }
-		    raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_general_hypothesis__done:
-		      if (is_consistent_or_more_general_than_at_least_one_general_hypothesis) {
+		    raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_general_hypothesis__done:
+		      if (is_consistent_or_more_specific_than_at_least_one_general_hypothesis) {
 			new_specific_hypotheses = f2cons__new(cause, removed_specific_hypothesis__minimal_generalization_consistent_with_example, new_specific_hypotheses);
 		      }
 		    }
@@ -694,7 +694,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		while (iter_compare != nil) {
 		  f2ptr specific_hypothesis_compare = f2__cons__car(cause, iter_compare);
 		  if (! raw__eq(cause, specific_hypothesis, specific_hypothesis_compare)) {
-		    if (raw__concept_version_space_hypothesis__is_more_specific_than_hypothesis(cause, specific_hypothesis, specific_hypothesis_compare)) {
+		    if (raw__concept_version_space_hypothesis__is_more_general_than_hypothesis(cause, specific_hypothesis, specific_hypothesis_compare)) {
 		      specific_hypothesis_is_more_general_than_another = boolean__true;
 		      goto raw__concept_version_space__train_on_example__specific_hypothesis_is_more_general_than_another__done;
 		    }
@@ -760,7 +760,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 	general_hypotheses = new_general_hypotheses;
 	raw__concept_version_space__general_hypotheses__set(cause, this, general_hypotheses);
       }
-      // for each removed general_hypothesis, add all minimal specializations that are consistent with example AND are more specific than at least one specific_hypothesis.
+      // for each removed general_hypothesis, add all minimal specializations that are consistent with example AND is consistent with or more general than at least one specific_hypothesis.
       {
 	f2ptr new_general_hypotheses = general_hypotheses;
 	{
@@ -774,22 +774,22 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 		while (removed_general_hypothesis__minimal_specializations_consistent_with_example__iter != nil) {
 		  f2ptr removed_general_hypothesis__minimal_specialization_consistent_with_example = f2__cons__car(cause, removed_general_hypothesis__minimal_specializations_consistent_with_example__iter);
 		  {
-		    boolean_t is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__false;
+		    boolean_t is_consistent_or_more_general_than_at_least_one_specific_hypothesis = boolean__false;
 		    {
 		      f2ptr specific_iter = specific_hypotheses;
 		      while (specific_iter != nil) {
 			f2ptr specific_hypothesis = f2__cons__car(cause, specific_iter);
 			{
-			  if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_specific_than_hypothesis(cause, specific_hypothesis, removed_general_hypothesis__minimal_specialization_consistent_with_example)) {
+			  if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, specific_hypothesis)) {
 			    is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__true;
-			    goto raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done;
+			    goto raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_specific_hypothesis__done;
 			  }
 			}
 			specific_iter = f2__cons__cdr(cause, specific_iter);
 		      }
 		    }
-		  raw__concept_version_space__train_on_example__is_consistent_or_more_specific_than_at_least_one_specific_hypothesis__done:
-		    if (is_consistent_or_more_specific_than_at_least_one_specific_hypothesis) {
+		  raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_specific_hypothesis__done:
+		    if (is_consistent_or_more_general_than_at_least_one_specific_hypothesis) {
 		      new_general_hypotheses = f2cons__new(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, new_general_hypotheses);
 		    } else {
 		      f2__set__add(cause, all_removed_hypothesis_set, removed_general_hypothesis__minimal_specialization_consistent_with_example);

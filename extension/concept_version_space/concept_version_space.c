@@ -381,11 +381,13 @@ f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_
 			 // add all *other* variables from concept version space that wouldn't match this one (no negative concepts in conjunctive hypothesis language...).
 			 f2ptr possible_variable_value_set = raw__ptypehash__lookup(cause, variable_value_set_name_ptypehash, example__variable_name);
 			 set__iteration(cause, possible_variable_value_set, possible__value,
-					if (! raw__eq(cause, example__value, possible__value)) {
-					  f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
+					f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
+					if (raw__eq(cause, example__value, possible__value)) {
+					  assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, new__symbol(cause, "-")));
+					} else {
 					  assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, possible__value));
-					  new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
 					}
+					new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
 					);
 			 );
   }

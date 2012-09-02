@@ -374,21 +374,27 @@ f2ptr raw__concept_version_space_hypothesis__minimal_specializations_consistent_
     return f2larva__new(cause, 232465, nil);
   }
   f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, concept_version_space);
+  f2ptr value_variable_name_ptypehash     = raw__concept_version_space_hypothesis__value_variable_name_ptypehash(cause, this);
   f2ptr new_hypotheses                    = nil;
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__value,
-			 // add all *other* variables from concept version space that wouldn't match this one (no negative concepts in conjunctive hypothesis language...).
-			 f2ptr possible_variable_value_set = raw__ptypehash__lookup(cause, variable_value_set_name_ptypehash, example__variable_name);
-			 set__iteration(cause, possible_variable_value_set, possible__value,
-					f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
-					if (raw__eq(cause, example__value, possible__value)) {
-					  assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, new__symbol(cause, "-")));
-					} else {
-					  assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, possible__value));
-					}
-					new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
-					);
+			 f2ptr hypothesis__value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, example__variable_name);
+			 if (raw__eq(cause, hypothesis__value, new__symbol(cause, "?"))) {
+			   // add all *other* variables from concept version space that wouldn't match this one (no negative concepts in conjunctive hypothesis language...).
+			   f2ptr possible_variable_value_set = raw__ptypehash__lookup(cause, variable_value_set_name_ptypehash, example__variable_name);
+			   set__iteration(cause, possible_variable_value_set, possible__value,
+					  if (! raw__eq(cause, example__value, possible__value)) {
+					    f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
+					    assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, possible__value));
+					    new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+					  }
+					  );
+			 } else if (! raw__eq(cause, hypothesis__value, new__symbol(cause, "-"))) {
+			   f2ptr hypothesis = raw__concept_version_space_hypothesis__new_copy(cause, this);
+			   assert_value(raw__concept_version_space_hypothesis__add_variable_value(cause, hypothesis, example__variable_name, new__symbol(cause, "-")));
+			   new_hypotheses = f2cons__new(cause, hypothesis, new_hypotheses);
+			 }
 			 );
   }
   return new_hypotheses;

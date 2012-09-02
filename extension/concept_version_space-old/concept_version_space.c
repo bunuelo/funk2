@@ -208,12 +208,12 @@ f2ptr raw__concept_version_space_hypothesis__exclude_variable_value(f2ptr cause,
   if (! raw__ptypehash__contains(cause, value_variable_name_ptypehash, variable_name)) {
     return f2larva__new(cause, 1351365, nil);
   } else {
-    f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
-    if (raw__eq(cause, current_value, new__symbol(cause, "?"))) {
-      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
-    } else if (! raw__eq(cause, current_value, value)) {
-      raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
-    }
+    //f2ptr current_value = raw__ptypehash__lookup(cause, value_variable_name_ptypehash, variable_name);
+    //if (raw__eq(cause, current_value, new__symbol(cause, "?"))) {
+    //  raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, value);
+    //} else if (! raw__eq(cause, current_value, value)) {
+    raw__ptypehash__add(cause, value_variable_name_ptypehash, variable_name, new__symbol(cause, "-"));
+    //}
   }
   return nil;
 }

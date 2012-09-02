@@ -268,6 +268,10 @@ that modifies any part of the operating system.  For example,
 {\mbox{\autoref{figure:cause_group_statistics}}} the simplest type of
 causal reflective tracing simply gathers run-time statistics of a
 fiber execution by using a {\tt{cause\_group}} object.
+{\mbox{\autoref{figure:hierarchical_cause_group_statistics}}} shows an
+example of using a hierarchy of causal scopes in order to trace a
+total of $30$ parallel fibers that are organized into $3$ groups of
+$10$.
 \begin{figure}[h]
 \centering
 {\small
@@ -304,16 +308,75 @@ out-> [cause_group
   gather statistics from causally scoped executions.  First, a new
   {\tt{cause\_group}} object is created in the global environment.
   Then, the gathering of run-time statistics involves creating a new
-  cause with the {\tt{with-new-cause}} operator, adding this cause to
-  the {\tt{cause\_group}} object, and then running an experiment.  The
-  experiment in this case creates ten parallel fibers that each simply
-  print their index, a number from $0$ to $9$.  Finally, the global
-  {\tt{cause\_group}} object is printed to the screen, showing
+  cause with the ``{\tt{with-new-cause}}'' operator, adding this cause
+  to the {\tt{cause\_group}} object, and then running an experiment.
+  The experiment in this case creates ten parallel fibers that each
+  simply print their index, a number from $0$ to $9$.  Finally, the
+  global {\tt{cause\_group}} object is printed to the screen, showing
   processor execution time, total bytes allocated, total bytecodes
   executed, and also the number of bytes garbage collected during the
   experiment.  Note that multiple experiments could be run in parallel
   and have separately scoped cause groups and statistics.}
 \label{figure:cause_group_statistics}
+\end{figure}
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [globalize cause_group [new cause_group]]
+out-> []
+
+ in-> [let [[begin_time [time]]
+            [frame      [new frame]]]
+        [with-new-cause
+          [have [this-cause] add_cause_group cause_group]
+          [partimes [i 3]
+            [let [[subcause_group [new cause_group]]]
+              [have frame add i subcause_group]
+              [with-new-cause
+                [have [this-cause] add_cause_group subcause_group]
+                [partimes [j 10]
+                  [terminal_format standard-terminal j]]]]]]
+        [have frame add `real-time [- [time] begin_time]]
+        frame]
+024031548162062794915695337878                      
+out-> [frame
+        0         [cause_group
+                    execution_nanoseconds 3535418608
+                    bytes_allocated_count 7715763
+                    ...]
+        2         [cause_group
+                    execution_nanoseconds 3012761500
+                    bytes_allocated_count 7590735
+                    ...]
+        1         [cause_group
+                    execution_nanoseconds 3976116760
+                    bytes_allocated_count 9598095
+                    ...]
+        real-time [relative_time
+                    seconds      1
+                    milliseconds 694
+                    ...]]
+
+ in-> cause_group
+out-> [cause_group
+        execution_nanoseconds 10730429054
+        bytes_allocated_count 25622218
+        bytecode_count        215649
+        bytes_freed_count     0]
+\end{Verbatim}
+}
+\caption[Gathering run-time statistics using parallel hierarchies of
+  causal scopes.]{Gathering run-time statistics using parallel
+  hierarchies of causal scopes.  Overall, $30$ parallel fibers are
+  created, each prints a number from $0$ to $9$, and run-time
+  statistics are gathered in two layers of causal scope hierarchy.
+  The overall {\tt{cause\_group}} object is shown last, while three
+  sub-{\tt{cause\_group}} objects are printed as the return value of
+  the second expression.  Notice that the algorithm uses $10.7$
+  seconds of processor time, while only using $1.7$ seconds of
+  real-time.}
+\label{figure:hierarchical_cause_group_statistics}
 \end{figure}
 
 \section{Causal Tracing of Memory Creation}
@@ -333,7 +396,12 @@ reflective fiber can retrieve the creation cause of a procedurally
 generated event, a reflective tracing experiment where the creation
 cause of the reflective event is a useful piece of information to know
 for non-statistical reasons, such as learning from the separate
-effects of different causal scopes on a given knowledge base.
+effects of different causal scopes on a given knowledge base.  Causal
+tracing in the AI is used to detect when one resource interacts with
+another resource, for example, by activating that resource or waiting
+for that resource to complete execution.  An entire reflective
+knowledge base of current parallel resource interactions is maintained
+in this way.
 \begin{figure}[h]
 \centering
 {\small
@@ -388,3 +456,89 @@ event-in-causal-focus
   {\tt{[get event cause]}}.}
 \label{figure:reflective_event_causal_tracing}
 \end{figure}
+
+\section{Inter-fiber Communication Through Trigger Events}
+
+Creating a parallel fiber can be an efficient way to execute
+functionality that must occur at some uncertain future point in time.
+
+\section{Conjunctive Hypothesis Space Concept Learning}
+
+I have implemented a learning algorithm that is inspired by
+\citeauthor{mitchell:1997}'s \citeyear{mitchell:1997} version-space
+hypothesis space concept learning algorithm.  My implementation
+predicts a binary output feature given a frame of slots and symbolic
+slot values as input features with a relatively compact representation
+of the entire conjunctive hypothesis space by only representing the
+most general and most specific boundaries in the overall hypothesis
+generality lattice, thus the entire space is represented without
+redundancy of hypotheses that predict the same things as other
+hypotheses, given the training data seen so far.  The algorithm is
+incremental, meaning that it learns incrementally in real-time by
+being given new examples whenever they become available.  Also, I've
+implemented hooks into the concept version space learning algorithm,
+so that the most specific hypotheses or most general hypotheses that
+support a positive or negative outcome, respectively, can be easily
+retrieved from the version space, and each of these hypotheses have
+``removal callbacks'' that will be called if this hypothesis is ever
+removed from the version space.  These hooks allow the implementation
+of the dependency tracing learning algorithm for correcting
+hypothetically supported counterfactual knowledge by having these
+callbacks invalidate dependency objects that are the supports for all
+counterfactual knowledge.
+{\mbox{\autoref{figure:concept_version_space}}} shows how to create a
+{\tt{concept\_version\_space}} object that can be trained.
+{\mbox{\autoref{figure:concept_version_space_training}}} shows an
+example of training the {\tt{concept\_version\_space}} object, given
+training examples.
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [new concept_version_space]
+
+out-> [concept_version_space
+        specific_hypotheses [[concept_version_space_hypothesis]]
+        general_hypotheses  [[concept_version_space_hypothesis]]
+        variable_name_set   [set elements []]]
+\end{Verbatim}
+}
+\caption[Creating a new {\tt{concept\_version\_space}} conjunctive
+  hypothesis learning algorithm.]{Creating a new
+  {\tt{concept\_version\_space}} conjunctive hypothesis learning
+  algorithm.  Notice that this object keeps a list of specific
+  hypotheses that support positive output predictions as well as
+  general hypotheses that support negative output predictions.  Also,
+  there is a set of variable names, or frame slot names, that the
+  algorithm has seen previously.}
+\label{figure:concept_version_space}
+\end{figure}
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [let [[concept [new concept_version_space]]]
+
+        'Add a training example to the concept.'
+        [let [[example [new concept_version_space_example t]]]
+          [have example add_variable_value `color `blue]
+          [have example add_variable_value `shape `cube]
+          [have concept train_on_example example]]
+        
+        'Add a training example to the concept.'
+        [let [[example [new concept_version_space_example nil]]]
+          [have example add_variable_value `color `blue]
+          [have example add_variable_value `shape `cube]
+          [have concept train_on_example example]]
+        
+        concept]
+        
+\end{Verbatim}
+}
+\caption[Training a {\tt{concept\_version\_space}} conjunctive
+  hypothesis learning algorithm.]{Training a
+  {\tt{concept\_version\_space}} conjunctive hypothesis learning
+  algorithm.}
+\label{figure:concept_version_space_training}
+\end{figure}
+

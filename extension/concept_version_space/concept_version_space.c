@@ -781,7 +781,7 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
 			f2ptr specific_hypothesis = f2__cons__car(cause, specific_iter);
 			{
 			  if (raw__concept_version_space_hypothesis__is_consistent_with_or_more_general_than_hypothesis(cause, removed_general_hypothesis__minimal_specialization_consistent_with_example, specific_hypothesis)) {
-			    is_consistent_or_more_specific_than_at_least_one_specific_hypothesis = boolean__true;
+			    is_consistent_or_more_general_than_at_least_one_specific_hypothesis = boolean__true;
 			    goto raw__concept_version_space__train_on_example__is_consistent_or_more_general_than_at_least_one_specific_hypothesis__done;
 			  }
 			}

@@ -566,11 +566,10 @@ f2ptr raw__concept_version_space__add_variable_value(f2ptr cause, f2ptr this, f2
 }
 
 f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2ptr example) {
-  f2ptr variable_value_set_name_ptypehash = raw__concept_version_space__variable_value_set_name_ptypehash(cause, this);
-  f2ptr general_hypotheses                = raw__concept_version_space__general_hypotheses(cause, this);
-  f2ptr specific_hypotheses               = raw__concept_version_space__specific_hypotheses(cause, this);
-  f2ptr example__positive                 = raw__concept_version_space_example__positive(cause, example);
-  f2ptr all_removed_hypothesis_set        = f2__set__new(cause);
+  f2ptr general_hypotheses         = raw__concept_version_space__general_hypotheses(cause, this);
+  f2ptr specific_hypotheses        = raw__concept_version_space__specific_hypotheses(cause, this);
+  f2ptr example__positive          = raw__concept_version_space_example__positive(cause, example);
+  f2ptr all_removed_hypothesis_set = f2__set__new(cause);
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
     ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__variable_value,

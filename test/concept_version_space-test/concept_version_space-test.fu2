@@ -41,6 +41,22 @@
 	  ]]]]
   ]
 
+[let [[h1 [new concept_version_space_hypothesis]]
+      [h2 [new concept_version_space_hypothesis]]]
+  [have h1 add_variable_value `color `?]
+  [have h1 add_variable_value `shape `?]
+  [have h2 add_variable_value `color `blue]
+  [have h2 add_variable_value `shape `cube]
+  [get h1 is_consistent_with_or_more_general_than_hypothesis h2]]
+
+[let [[e [new concept_version_space_example nil]]
+      [h [new concept_version_space_hypothesis]]]
+  [have e add_variable_value `color `green]
+  [have e add_variable_value `shape `pyramid]
+  [have h add_variable_value `color `green]
+  [have h add_variable_value `shape `cube]
+  [get h is_consistent_with_example e]]
+
 [defunk concept_version_space-test []
   [let [[cvs [new concept_version_space]]]
     [have cvs add_variable_value `color `green]

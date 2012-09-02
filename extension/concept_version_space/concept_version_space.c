@@ -573,9 +573,9 @@ f2ptr raw__concept_version_space__train_on_example(f2ptr cause, f2ptr this, f2pt
   f2ptr all_removed_hypothesis_set        = f2__set__new(cause);
   {
     f2ptr example__value_variable_name_ptypehash = raw__concept_version_space_example__value_variable_name_ptypehash(cause, example);
-    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example_variable_value,
+    ptypehash__iteration(cause, example__value_variable_name_ptypehash, example__variable_name, example__variable_value,
 			 if (! raw__ptypehash__contains(cause, variable_value_set_name_ptypehash, example__variable_name)) {
-			   assert_value(raw__concept_version_space__add_variable_value(cause, this, example__variable_name, example__value));
+			   assert_value(raw__concept_version_space__add_variable_value(cause, this, example__variable_name, example__variable_value));
 			 }
 			 );
   }

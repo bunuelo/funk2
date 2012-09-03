@@ -556,4 +556,62 @@ out-> [concept_version_space
   after being trained on both examples.}
 \label{figure:concept_version_space_training}
 \end{figure}
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+ in-> [let [[concept [new concept_version_space]]]
+   
+        [print 'Training on positive example.']
+        [let [[example [new concept_version_space_example t]]]
+          [have example add_variable_value `color `blue]
+          [have example add_variable_value `shape `cube]
+          [have concept train_on_example example]]
+
+        [print 'Adding removal callbacks to hypotheses.']
+        [let [[example [new concept_version_space_example t]]]
+          [have example add_variable_value `color `green]
+          [have example add_variable_value `shape `pyramid]
+          [mapc [funk [hypothesis]
+                  [have hypothesis add_removal_callback
+                                   [funk []
+                                     [print 'Lost support.']]
+                                   []]]
+                [print [get concept supporting_hypotheses example]]]]
+        
+        [print 'Training on negative example.']
+        [let [[example [new concept_version_space_example nil]]]
+          [have example add_variable_value `color `blue]
+          [have example add_variable_value `shape `pyramid]
+          [have concept train_on_example example]]
+        
+        [print 'Done.']
+
+        concept]
+train-1: [concept_version_space
+           specific_hypotheses [[concept_version_space_hypothesis
+                                  shape cube
+                                  color blue]]
+           general_hypotheses  [[concept_version_space_hypothesis
+                                  shape ?
+                                  color ?]]]
+out-> [concept_version_space
+        specific_hypotheses [[concept_version_space_hypothesis
+                               shape cube
+                               color blue]]
+        general_hypotheses  [[concept_version_space_hypothesis
+                               shape cube
+                               color ?]]]
+\end{Verbatim}
+}
+\caption[Training a {\tt{concept\_version\_space}} conjunctive
+  hypothesis learning algorithm.]{Training a
+  {\tt{concept\_version\_space}} conjunctive hypothesis learning
+  algorithm.  First, a new {\tt{concept\_version\_space}} is created,
+  then two {\tt{concept\_version\_space\_example}}s are created, one
+  positive and one negative.  The concept is printed after learning
+  from the positive example, and then the final concept is returned
+  after being trained on both examples.}
+\label{figure:concept_version_space_training}
+\end{figure}
 

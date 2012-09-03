@@ -866,7 +866,7 @@ export_cefunk2(concept_version_space__train_on_example, this, example, 0, "Train
 f2ptr raw__concept_version_space__supporting_hypotheses(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr supporting_hypotheses = nil;
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
-  if (example__positive != nil) {
+  if (example__positive == nil) {
     f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
     {
       f2ptr iter = specific_hypotheses;
@@ -878,7 +878,7 @@ f2ptr raw__concept_version_space__supporting_hypotheses(f2ptr cause, f2ptr this,
 	iter = f2__cons__cdr(cause, iter);
       }
     }
-  } else { // (example__positive == nil)
+  } else { // (example__positive != nil)
     f2ptr general_hypotheses = raw__concept_version_space__general_hypotheses(cause, this);
     {
       f2ptr iter = general_hypotheses;
@@ -906,7 +906,7 @@ export_cefunk2(concept_version_space__supporting_hypotheses, this, example, 0,
 f2ptr raw__concept_version_space__opposing_hypotheses(f2ptr cause, f2ptr this, f2ptr example) {
   f2ptr opposing_hypotheses = nil;
   f2ptr example__positive = raw__concept_version_space_example__positive(cause, example);
-  if (example__positive != nil) {
+  if (example__positive == nil) {
     f2ptr specific_hypotheses = raw__concept_version_space__specific_hypotheses(cause, this);
     {
       f2ptr iter = specific_hypotheses;
@@ -918,7 +918,7 @@ f2ptr raw__concept_version_space__opposing_hypotheses(f2ptr cause, f2ptr this, f
 	iter = f2__cons__cdr(cause, iter);
       }
     }
-  } else { // (example__positive == nil)
+  } else { // (example__positive != nil)
     f2ptr general_hypotheses = raw__concept_version_space__general_hypotheses(cause, this);
     {
       f2ptr iter = general_hypotheses;

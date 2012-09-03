@@ -912,7 +912,7 @@ f2ptr raw__concept_version_space__opposing_hypotheses(f2ptr cause, f2ptr this, f
       f2ptr iter = specific_hypotheses;
       while (iter != nil) {
 	f2ptr hypothesis = f2__cons__car(cause, iter);
-	if (assert_value(raw__concept_version_space_hypothesis__is_consistent_with_example(cause, hypothesis, example)) != nil) {
+	if (assert_value(raw__concept_version_space_hypothesis__is_consistent_with_example(cause, hypothesis, example)) == nil) {
 	  opposing_hypotheses = f2cons__new(cause, hypothesis, opposing_hypotheses);
 	}
 	iter = f2__cons__cdr(cause, iter);
@@ -924,7 +924,7 @@ f2ptr raw__concept_version_space__opposing_hypotheses(f2ptr cause, f2ptr this, f
       f2ptr iter = general_hypotheses;
       while (iter != nil) {
 	f2ptr hypothesis = f2__cons__car(cause, iter);
-	if (assert_value(raw__concept_version_space_hypothesis__is_consistent_with_example(cause, hypothesis, example)) != nil) {
+	if (assert_value(raw__concept_version_space_hypothesis__is_consistent_with_example(cause, hypothesis, example)) == nil) {
 	  opposing_hypotheses = f2cons__new(cause, hypothesis, opposing_hypotheses);
 	}
 	iter = f2__cons__cdr(cause, iter);

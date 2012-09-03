@@ -61,8 +61,11 @@
 [deftypefunk action_transframe_hypothesis_space execute train_on_example [example]
   [have concept_version_space train_on_example example]]
 
-[deftypefunk action_transframe_hypothesis_space get specific_hypotheses_consistent_with_example [example]
-  [get concept_version_space specific_hypotheses_consistent_with_example example]]
+[deftypefunk action_transframe_hypothesis_space get supporting_hypotheses [example]
+  [get concept_version_space supporting_hypotheses example]]
+
+[deftypefunk action_transframe_hypothesis_space get opposing_hypotheses [example]
+  [get concept_version_space opposing_hypotheses example]]
 
 
 'traced_resource'
@@ -336,10 +339,10 @@
 		
 		[mapc [funk [change_feature]
 			    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-			      [let [[change_hypothesis_dependencies [get precondition_hypothesis_space specific_hypotheses_consistent_with_example concept_version_space_example]]]
+			      [let [[change_hypothesis_dependencies [get precondition_hypothesis_space supporting_hypotheses concept_version_space_example]]]
 				
 				[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-						 'resource, ' name ', found ' [length change_hypothesis_dependencies] ' specific hypotheses consistent with change.']
+						 'resource, ' name ', found ' [length change_hypothesis_dependencies] ' supporting hypotheses for change.']
 				[if change_hypothesis_dependencies
 				    [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
 					  [relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]

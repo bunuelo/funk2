@@ -457,11 +457,6 @@ event-in-causal-focus
 \label{figure:reflective_event_causal_tracing}
 \end{figure}
 
-\section{Inter-fiber Communication Through Trigger Events}
-
-Creating a parallel fiber can be an efficient way to execute
-functionality that must occur at some uncertain future point in time.
-
 \section{Conjunctive Hypothesis Space Concept Learning}
 
 I have implemented a learning algorithm that is inspired by
@@ -518,27 +513,47 @@ out-> [concept_version_space
 {\small
 \begin{Verbatim}[frame=single]
  in-> [let [[concept [new concept_version_space]]]
-
-        'Add a training example to the concept.'
+   
+        'Add a positive training example to the concept.'
         [let [[example [new concept_version_space_example t]]]
           [have example add_variable_value `color `blue]
           [have example add_variable_value `shape `cube]
           [have concept train_on_example example]]
+
+        [terminal_format standard-terminal
+                         '\ntrain-1: ' concept]
         
-        'Add a training example to the concept.'
+        'Add a negative training example to the concept.'
         [let [[example [new concept_version_space_example nil]]]
           [have example add_variable_value `color `blue]
-          [have example add_variable_value `shape `cube]
+          [have example add_variable_value `shape `pyramid]
           [have concept train_on_example example]]
         
         concept]
-        
+train-1: [concept_version_space
+           specific_hypotheses [[concept_version_space_hypothesis
+                                  shape cube
+                                  color blue]]
+           general_hypotheses  [[concept_version_space_hypothesis
+                                  shape ?
+                                  color ?]]]
+out-> [concept_version_space
+        specific_hypotheses [[concept_version_space_hypothesis
+                               shape cube
+                               color blue]]
+        general_hypotheses  [[concept_version_space_hypothesis
+                               shape cube
+                               color ?]]]
 \end{Verbatim}
 }
 \caption[Training a {\tt{concept\_version\_space}} conjunctive
   hypothesis learning algorithm.]{Training a
   {\tt{concept\_version\_space}} conjunctive hypothesis learning
-  algorithm.}
+  algorithm.  First, a new {\tt{concept\_version\_space}} is created,
+  then two {\tt{concept\_version\_space\_example}}s are created, one
+  positive and one negative.  The concept is printed after learning
+  from the positive example, and then the final concept is returned
+  after being trained on both examples.}
 \label{figure:concept_version_space_training}
 \end{figure}
 

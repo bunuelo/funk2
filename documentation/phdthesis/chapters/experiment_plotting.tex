@@ -515,19 +515,22 @@
 
 
 
+\newcommand{\experimentAIdatafigures}[3][]{
+  \experimentcausegroupplots[10]{50}
+                            {1}{6}
+                            {1}{6}
+                            {200}{600}
+                            {#1}
+                            \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1]
+                                                               {AI}
+                                                               {#2}
+                                                               {#3}
+}
 
 \newcommand{\experimentdatafigures}[3][]{
   % AI
   {\clearpage
-    \experimentcausegroupplots[10]{50}
-                              {1}{6}
-                              {1}{6}
-                              {200}{600}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1]
-                                                                 {AI}
-                                                                 {#2}
-                                                                 {#3}
+    \experimentAIdatafigures[#1]{#2}{#3}
   }                                                            
   % reflective
   {\clearpage

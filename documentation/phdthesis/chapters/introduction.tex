@@ -12,13 +12,14 @@ a purely procedural approach that does not assume any logical search
 algorithms that work behind-the-scenes without a reflective learning
 focus.  This approach learns to plan in two concurrent layers of
 goal-oriented optimization without increasing the computational time
-complexity of a single non-reflective planning algorithm.  Learning to
-plan real-time physical actions, while concurrently learning to plan
-real-time planning actions.  Deliberative planning activities are
-thought of reflectively in an analogous way to how the deliberative
-activities think of physical activities, implying a recursive
-application of the concurrent real-time reflective planning model to
-itself.  The contributions of this thesis are:
+complexity of a single non-reflective planning algorithm.  The first
+layer of deliberative planning learns to plan real-time physical
+actions, while the second layer of reflective planning concurrently
+learns to plan real-time deliberative planning actions.  Deliberative
+planning activities are thought of reflectively in an analogous way to
+how the deliberative activities think of physical activities, implying
+a recursive application of the concurrent real-time reflective
+planning model to itself.  The contributions of this thesis are:
 
 \begin{itemize}
 \item \emph{Emotion Machine Cognitive Architecture}: A computational
@@ -59,18 +60,18 @@ control.
 {\mbox{\autoref{chapter:grounded_learning_of_knowledge_utility}}}
 describes my implemented solution to the problem of learning from both
 ``being told'' and from factual knowledge gained through action.
-{\mbox{\autoref{chapter:related_models}}} relates my AI to related
-implementations and models of Emotion Machine architectures, grounded
-layered learning, and metacognition.
-{\mbox{\autoref{chapter:evaluation}}} evaluates the run-time
-performance of my AI in three experiments: (1) boot-up and perceive
-over time, (2) deliberative learning without reflective learning, and
-(3) the full architecture deliberatively learning about physical
-actions while also reflectively learning about planning actions.  In
-{\mbox{\autoref{chapter:future}}}, I discuss promising directions of
-future research for extending this architecture to learn at the top
-two layers of the Emotion Machine theory, the self-reflective and
-self-conscious layers.
+{\mbox{\autoref{chapter:related_models}}} relates my AI to other
+contemporary approaches to reflective thinking, metacognition,
+grounded learning of knowledge utility, as well as massively
+multithreaded computer systems.  {\mbox{\autoref{chapter:evaluation}}}
+evaluates the run-time performance of my AI in three experiments: (1)
+boot-up and perceive over time, (2) deliberative learning without
+reflective learning, and (3) the full architecture deliberatively
+learning about physical actions while also reflectively learning about
+planning actions.  In {\mbox{\autoref{chapter:future}}}, I discuss
+promising directions of future research for extending this
+architecture to learn at the top two layers of the Emotion Machine
+theory, the self-reflective and self-conscious layers.
 
 \section{Closed-loop Control and Learning}
 
@@ -129,7 +130,7 @@ program that a programmer might write to move this gripper around in
 this block building domain.  In this program, the gripper has very
 simple symbolic commands: {\tt move-right}, {\tt reach}, {\tt grab},
 {\tt move-left}, {\tt drop}.  One can imagine that this program might
-intend to pick up the green block and put it on the blue block.
+intend to pick up the pyramid and put it on the cube.
 \begin{figure}
 \center
 \includegraphics[width=10cm]{gfx/blocks_world_example-1}

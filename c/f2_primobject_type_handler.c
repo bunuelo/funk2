@@ -188,6 +188,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "doublelinklist";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2doublelinklist__primobject_type__new_aux(cause));}
   {char* type_name = "circular_buffer";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2circular_buffer__primobject_type__new_aux(cause));}
   {char* type_name = "hash";                             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                             f2hash__primobject_type__new_aux(cause));}
+  {char* type_name = "cause_group_interaction";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2cause_group_interaction__primobject_type__new_aux(cause));}
   {char* type_name = "cause_group";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2cause_group__primobject_type__new_aux(cause));}
   {char* type_name = "cause";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2cause__primobject_type__new_aux(cause));}
   {char* type_name = "largeinteger";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2largeinteger__primobject_type__new_aux(cause));}

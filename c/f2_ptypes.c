@@ -82,7 +82,7 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
 
 // monitor cause-cause read/write interactions
 
-void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr container, f2ptr data) {
+void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
   f2ptr reflective_cause = nil;
   f2ptr container__cause = (container == nil) ? nil : f2ptype__cause(container, reflective_cause);
   f2ptr data__cause      = (data      == nil) ? nil : f2ptype__cause(data,      reflective_cause);
@@ -100,7 +100,7 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
 	      {
 		f2ptr cause_group_interaction = raw__ptypehash__lookup(cause, cause__cause_group__cause_group_interaction_ptypehash, container__cause__cause_group);
 		raw__cause_group_interaction__increase_read_events_count(reflective_cause, cause_group_interaction, 1);
-		raw__cause_group_interaction__increase_bytes_read_count( reflective_cause, cause_group_interaction, sizeof(f2ptr));
+		raw__cause_group_interaction__increase_bytes_read_count( reflective_cause, cause_group_interaction, sizeof_data);
 	      }
 	      container__cause__cause_group_iter = f2cons__cdr(reflective_cause, container__cause__cause_group_iter);
 	    }
@@ -112,7 +112,7 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
   }
 }
 
-void raw__container__reflectively_know_of_writing_to(f2ptr cause, f2ptr container, f2ptr data) {
+void raw__container__reflectively_know_of_writing_to(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
   f2ptr reflective_cause = nil;
   f2ptr container__cause         = (container == nil) ? nil : f2ptype__cause(container, reflective_cause);
   f2ptr data__cause              = (data      == nil) ? nil : f2ptype__cause(data,      reflective_cause);
@@ -129,6 +129,7 @@ f2ptr initial_cause() {
 // this.system
 
 f2ptr pfunk2__system__environment(f2ptr cause) {
+  raw__container__reflectively_know_of_reading_from(cause, nil, __funk2.memory.global_environment_f2ptr, sizeof(f2ptr));
   return __funk2.memory.global_environment_f2ptr;
 }
 
@@ -191,6 +192,7 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   ptype_t retval = __pure__f2ptype__raw(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -199,6 +201,7 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   //int pool_index = __f2ptr__pool_index(this);
   f2ptr value = __pure__f2ptype__cause(this);
   debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
+  raw__container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
   return value;
 }
 
@@ -209,12 +212,14 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   f2ptr old_value = __pure__f2ptype__cause(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   __pure__f2ptype__cause(this) = value;
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
 f2ptr pfunk2__f2ptype__creation_fiber(f2ptr this, f2ptr cause) {
   check_wait_politely();
   f2ptr value = __pure__f2ptype__creation_fiber(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
   return value;
 }
 
@@ -223,6 +228,7 @@ f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value)
   f2ptr old_value = __pure__f2ptype__creation_fiber(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   __pure__f2ptype__creation_fiber(this) = value;
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -244,7 +250,7 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     integer_block->ptype.creation_fiber = creation_fiber;
   }
-  integer_block->i                    = i;
+  integer_block->i = i;
   return integer_f2ptr;
 }
 
@@ -264,6 +270,7 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   s64 i = __pure__f2integer__i(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(i));
   return i;
 }
 
@@ -284,7 +291,7 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     double_block->ptype.creation_fiber = creation_fiber;
   }
-  double_block->d                    = d;
+  double_block->d = d;
   return double_f2ptr;
 }
 
@@ -304,6 +311,7 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   double d = __pure__f2double__d(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(d));
   return d;
 }
 
@@ -325,7 +333,7 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     float_block->ptype.creation_fiber = creation_fiber;
   }
-  float_block->f                    = f;
+  float_block->f = f;
   return float_f2ptr;
 }
 
@@ -345,6 +353,7 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   float f = __pure__f2float__f(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(f));
   return f;
 }
 
@@ -367,7 +376,7 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     pointer_block->ptype.creation_fiber = creation_fiber;
   }
-  pointer_block->p                    = p;
+  pointer_block->p = p;
   return pointer_f2ptr;
 }
 
@@ -387,6 +396,7 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   ptr p = __pure__f2pointer__p(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(p));
   return p;
 }
 
@@ -425,6 +435,7 @@ funk2_processor_mutex_t* ptype_scheduler_cmutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2scheduler_cmutex__m(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
   return m;
 }
 
@@ -437,6 +448,7 @@ boolean_t pfunk2__f2scheduler_cmutex__is_locked(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   //int pool_index = this_processor_thread__pool_index();
   boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_scheduler_cmutex__m(this, cause));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(is_locked));
   return is_locked;
 }
 
@@ -466,6 +478,8 @@ void pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause) {
     }
   }
   __pure__f2scheduler_cmutex__locked_state__set(this, boolean__true);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
 }
 
 void pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause) {
@@ -479,6 +493,7 @@ void pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause) {
   // note that this assumes the scheduler_cmutex is locked.
   __pure__f2scheduler_cmutex__locked_state__set(this, boolean__false);
   funk2_processor_mutex__unlock(ptype_scheduler_cmutex__m(this, cause));
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
 }
 
 int pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause) {
@@ -492,7 +507,9 @@ int pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause) {
   int return_value = funk2_processor_mutex__trylock(ptype_scheduler_cmutex__m(this, cause));
   if (return_value == 0) {
     __pure__f2scheduler_cmutex__locked_state__set(this, boolean__true);
+    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
   }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -531,6 +548,7 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2cmutex__m(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
   return m;
 }
 
@@ -543,6 +561,7 @@ boolean_t pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   //int pool_index = this_processor_thread__pool_index();
   boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_cmutex__m(this, cause));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
   return is_locked;
 }
 
@@ -563,6 +582,8 @@ void pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause) {
     }
   }
   __pure__f2cmutex__locked_state__set(this, boolean__true);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
 }
 
 void pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause) {
@@ -576,6 +597,7 @@ void pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause) {
   // note that this assumes the cmutex is locked.
   __pure__f2cmutex__locked_state__set(this, boolean__false);
   funk2_processor_mutex__unlock(ptype_cmutex__m(this, cause));
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
 }
 
 int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
@@ -589,7 +611,9 @@ int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
   int return_value = funk2_processor_mutex__trylock(ptype_cmutex__m(this, cause));
   if (return_value == 0) {
     __pure__f2cmutex__locked_state__set(this, boolean__true);
+    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
   }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -632,6 +656,7 @@ funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 ch = __pure__f2char__ch(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -676,6 +701,7 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length = __pure__f2string__length(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -687,6 +713,7 @@ funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2string__str(this)[index];
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -698,6 +725,7 @@ void pfunk2__f2string__elt__set(f2ptr this, int index, f2ptr cause, funk2_charac
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2string__str(this)[index] = ch;
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(ch));
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
@@ -708,7 +736,9 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str)
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2string__str(this), __pure__f2string__length(this) * sizeof(funk2_character_t));
+  u64 total_length = __pure__f2string__length(this) * sizeof(funk2_character_t);
+  memcpy(str, __pure__f2string__str(this), total_length);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
@@ -719,7 +749,9 @@ u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  return (u64)this;
+  u64 return_value = (u64)this;
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
 }
 
 
@@ -752,6 +784,7 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2symbol__length(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -764,6 +797,7 @@ u64 pfunk2__f2symbol__eq_hash_value(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 eq_hash_value = __pure__f2symbol__eq_hash_value(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(eq_hash_value));
   return eq_hash_value;
 }
 
@@ -776,6 +810,7 @@ funk2_character_t pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2symbol__str(this)[index];
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -787,7 +822,9 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str)
     ptype_error(cause, this, __funk2.globalenv.ptype_symbol__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2symbol__str(this), __pure__f2symbol__length(this) * sizeof(funk2_character_t));
+  u64 total_length = __pure__f2symbol__length(this) * sizeof(funk2_character_t);
+  memcpy(str, __pure__f2symbol__str(this), total_length);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 
@@ -844,6 +881,7 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8* bytes = __pure__f2chunk__bytes(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(bytes));
   return bytes;
 }
 
@@ -870,6 +908,7 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2chunk__length(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -881,7 +920,9 @@ void pfunk2__f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  memcpy(str, __pure__f2chunk__bytes(this), __pure__f2chunk__length(this));
+  u64 total_length = __pure__f2chunk__length(this);
+  memcpy(str, __pure__f2chunk__bytes(this), total_length);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
@@ -892,7 +933,9 @@ u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  return (u64)this;
+  u64 return_value = (u64)this;
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
 }
 
 u64 pfunk2__f2chunk__equals_hash_value(f2ptr this, f2ptr cause) {
@@ -905,7 +948,9 @@ u64 pfunk2__f2chunk__equals_hash_value(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 len   = __pure__f2chunk__length(this);
   u8* bytes = __pure__f2chunk__bytes(this);
-  return (u64)chararray__hash_value(len, bytes);
+  u64 return_value = (u64)chararray__hash_value(len, bytes);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
 }
 
 u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -917,6 +962,7 @@ u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8 retval = __pure__f2chunk__bit8__elt(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -927,6 +973,7 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
   __pure__f2chunk__bit8__elt__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -938,6 +985,7 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u16 retval = __pure__f2chunk__bit16__elt(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -950,6 +998,7 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit16__elt__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -961,6 +1010,7 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 retval = __pure__f2chunk__bit32__elt(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -973,6 +1023,7 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit32__elt__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -984,6 +1035,7 @@ u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 retval = __pure__f2chunk__bit64__elt(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -996,6 +1048,7 @@ void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit64__elt__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args) {
@@ -1007,6 +1060,7 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr en
   }
 #endif // F2__PTYPE__TYPE_CHECK
   cfunkptr_t jump = (cfunkptr_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
   printf("\nchunk-cfunk_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   return jump(cause, fiber, env, args);
 }
@@ -1020,6 +1074,7 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   bytecode_jump_t jump = (bytecode_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   f2ptr bytecode = nil;
   return jump(fiber, bytecode);
@@ -1034,6 +1089,7 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, length);
   return rv;
 }
 
@@ -1046,6 +1102,7 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, length);
   return rv;
 }
 
@@ -1090,6 +1147,7 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
     ptype_error(cause, init_array, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
+  raw__container__reflectively_know_of_reading_from(cause, init_array, nil, sizeof(f2ptr) * length);
   return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->slot));
 }
 
@@ -1097,6 +1155,7 @@ u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   u8 retval = __pure__f2simple_array__immutable(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1104,6 +1163,7 @@ void pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2simple_array__immutable__set(this, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
@@ -1115,6 +1175,7 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2simple_array__length(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -1133,6 +1194,7 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
     //error(nil, "f2array__elt error: index out of range.");
   }
   f2ptr rv = __pure__f2simple_array__elt(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1157,6 +1219,7 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2simple_array__elt__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1257,6 +1320,7 @@ u8 pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   u8 retval = __pure__f2traced_array__immutable(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1275,6 +1339,7 @@ u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2traced_array__length(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -1344,6 +1409,8 @@ f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr caus
       }
     }
   }
+  
+  raw__container__reflectively_know_of_reading_from(cause, this, return_value, sizeof(return_value));
   
   return return_value;
 }
@@ -1430,6 +1497,8 @@ f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr
     }
   }
   
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  
   return nil;
 }
 
@@ -1450,6 +1519,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__tracing_on(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1470,6 +1540,7 @@ f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr 
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2traced_array__elt__tracing_on__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1487,6 +1558,7 @@ f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__trace(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1507,6 +1579,7 @@ f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2traced_array__elt__trace__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1524,6 +1597,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2pt
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__imagination_frame(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1544,6 +1618,7 @@ f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index,
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2traced_array__elt__imagination_frame__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1561,6 +1636,7 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cau
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__mutate_funks(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1581,6 +1657,7 @@ f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2pt
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2traced_array__elt__mutate_funks__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1598,6 +1675,7 @@ f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
   }
   f2ptr rv = __pure__f2traced_array__elt__read_funks(this, index);
+  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1618,6 +1696,7 @@ f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr 
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2traced_array__elt__read_funks__set(this, index, value);
+  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -1662,6 +1741,7 @@ u32 pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 type = __pure__f2larva__larva_type(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(type));
   return type;
 }
 
@@ -1674,6 +1754,7 @@ f2ptr pfunk2__f2larva__bug(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr bug = __pure__f2larva__bug(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, bug, sizeof(bug));
   return bug;
 }
 

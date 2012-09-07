@@ -238,7 +238,7 @@ f2ptr raw__cause_group_interaction__terminal_print_with_frame(f2ptr cause, f2ptr
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list12__new(cause,
+    frame = f2__frame__new(cause, f2list10__new(cause,
 						new__symbol(cause, "print_object_type"),     new__symbol(cause, "cause_group_interaction"),
 						new__symbol(cause, "bytecode_count"),        f2__cause_group_interaction__bytecode_count(       cause, this),
 						new__symbol(cause, "execution_nanoseconds"), f2__cause_group_interaction__execution_nanoseconds(cause, this),

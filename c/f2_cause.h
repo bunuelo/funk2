@@ -225,8 +225,8 @@ void  raw__cause_group__bytes_freed_count__set        (f2ptr cause, f2ptr this, 
 f2ptr  f2__cause_group__bytes_freed_count__set        (f2ptr cause, f2ptr this, f2ptr bytes_freed_count);
 void  raw__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
 f2ptr  f2__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
-void  raw__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
-f2ptr  f2__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
+void  raw__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction);
+f2ptr  f2__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction);
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 

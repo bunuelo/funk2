@@ -28,34 +28,34 @@
 
 typedef struct funk2_object_type__cause_group_interaction__slot_s funk2_object_type__cause_group_interaction__slot_t;
 declare_object_type_8_slot(cause_group_interaction,
-			   bytecode_count_scheduler_cmutex,
-			   bytecode_count,
-			   execution_nanoseconds_scheduler_cmutex,
-			   execution_nanoseconds_chunk,
-			   bytes_allocated_count_scheduler_cmutex,
-			   bytes_allocated_count_chunk,
-			   bytes_freed_count_scheduler_cmutex,
-			   bytes_freed_count_chunk,
-			   f2ptr increase_bytecode_count__symbol;
-			   f2ptr increase_bytecode_count__funk;
-			   f2ptr execution_nanoseconds__symbol;
-			   f2ptr execution_nanoseconds__funk;
-			   f2ptr execution_nanoseconds__set__symbol;
-			   f2ptr execution_nanoseconds__set__funk;
-			   f2ptr increase_execution_nanoseconds__symbol;
-			   f2ptr increase_execution_nanoseconds__funk;
-			   f2ptr bytes_allocated_count__symbol;
-			   f2ptr bytes_allocated_count__funk;
-			   f2ptr bytes_allocated_count__set__symbol;
-			   f2ptr bytes_allocated_count__set__funk;
-			   f2ptr increase_bytes_allocated_count__symbol;
-			   f2ptr increase_bytes_allocated_count__funk;
-			   f2ptr bytes_freed_count__symbol;
-			   f2ptr bytes_freed_count__funk;
-			   f2ptr bytes_freed_count__set__symbol;
-			   f2ptr bytes_freed_count__set__funk;
-			   f2ptr increase_bytes_freed_count__symbol;
-			   f2ptr increase_bytes_freed_count__funk;
+			   read_events_count_scheduler_cmutex,
+			   read_events_count,
+			   bytes_read_count_scheduler_cmutex,
+			   bytes_read_count_chunk,
+			   write_events_count_scheduler_cmutex,
+			   write_events_count_chunk,
+			   bytes_written_count_scheduler_cmutex,
+			   bytes_written_count_chunk,
+			   f2ptr increase_read_events_count__symbol;
+			   f2ptr increase_read_events_count__funk;
+			   f2ptr bytes_read_count__symbol;
+			   f2ptr bytes_read_count__funk;
+			   f2ptr bytes_read_count__set__symbol;
+			   f2ptr bytes_read_count__set__funk;
+			   f2ptr increase_bytes_read_count__symbol;
+			   f2ptr increase_bytes_read_count__funk;
+			   f2ptr write_events_count__symbol;
+			   f2ptr write_events_count__funk;
+			   f2ptr write_events_count__set__symbol;
+			   f2ptr write_events_count__set__funk;
+			   f2ptr increase_write_events_count__symbol;
+			   f2ptr increase_write_events_count__funk;
+			   f2ptr bytes_written_count__symbol;
+			   f2ptr bytes_written_count__funk;
+			   f2ptr bytes_written_count__set__symbol;
+			   f2ptr bytes_written_count__set__funk;
+			   f2ptr increase_bytes_written_count__symbol;
+			   f2ptr increase_bytes_written_count__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -155,36 +155,36 @@ declare_object_type_17_slot(cause,
 // cause_group_interaction
 
 declare_primobject_8_slot(cause_group_interaction,
-			  bytecode_count_scheduler_cmutex,
-			  bytecode_count,
-			  execution_nanoseconds_scheduler_cmutex,
-			  execution_nanoseconds_chunk,
-			  bytes_allocated_count_scheduler_cmutex,
-			  bytes_allocated_count_chunk,
-			  bytes_freed_count_scheduler_cmutex,
-			  bytes_freed_count_chunk);
+			  read_events_count_scheduler_cmutex,
+			  read_events_count,
+			  bytes_read_count_scheduler_cmutex,
+			  bytes_read_count_chunk,
+			  write_events_count_scheduler_cmutex,
+			  write_events_count_chunk,
+			  bytes_written_count_scheduler_cmutex,
+			  bytes_written_count_chunk);
 
 f2ptr  f2__cause_group_interaction__new                           (f2ptr cause);
-void  raw__cause_group_interaction__increase_bytecode_count       (f2ptr cause, f2ptr this, u64 relative_bytecode_count);
-f2ptr  f2__cause_group_interaction__increase_bytecode_count       (f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);
-u64   raw__cause_group_interaction__execution_nanoseconds         (f2ptr cause, f2ptr this);
-f2ptr  f2__cause_group_interaction__execution_nanoseconds         (f2ptr cause, f2ptr this);
-void  raw__cause_group_interaction__execution_nanoseconds__set    (f2ptr cause, f2ptr this, u64 execution_nanoseconds);
-f2ptr  f2__cause_group_interaction__execution_nanoseconds__set    (f2ptr cause, f2ptr this, f2ptr execution_nanoseconds);
-void  raw__cause_group_interaction__increase_execution_nanoseconds(f2ptr cause, f2ptr this, u64 relative_execution_nanoseconds);
-f2ptr  f2__cause_group_interaction__increase_execution_nanoseconds(f2ptr cause, f2ptr this, f2ptr relative_execution_nanoseconds);
-u64   raw__cause_group_interaction__bytes_allocated_count         (f2ptr cause, f2ptr this);
-f2ptr  f2__cause_group_interaction__bytes_allocated_count         (f2ptr cause, f2ptr this);
-void  raw__cause_group_interaction__bytes_allocated_count__set    (f2ptr cause, f2ptr this, u64 bytes_allocated_count);
-f2ptr  f2__cause_group_interaction__bytes_allocated_count__set    (f2ptr cause, f2ptr this, f2ptr bytes_allocated_count);
-void  raw__cause_group_interaction__increase_bytes_allocated_count(f2ptr cause, f2ptr this, u64 relative_bytes_allocated_count);
-f2ptr  f2__cause_group_interaction__increase_bytes_allocated_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_allocated_count);
-u64   raw__cause_group_interaction__bytes_freed_count             (f2ptr cause, f2ptr this);
-f2ptr  f2__cause_group_interaction__bytes_freed_count             (f2ptr cause, f2ptr this);
-void  raw__cause_group_interaction__bytes_freed_count__set        (f2ptr cause, f2ptr this, u64 bytes_freed_count);
-f2ptr  f2__cause_group_interaction__bytes_freed_count__set        (f2ptr cause, f2ptr this, f2ptr bytes_freed_count);
-void  raw__cause_group_interaction__increase_bytes_freed_count    (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
-f2ptr  f2__cause_group_interaction__increase_bytes_freed_count    (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
+void  raw__cause_group_interaction__increase_read_events_count    (f2ptr cause, f2ptr this, u64 relative_read_events_count);
+f2ptr  f2__cause_group_interaction__increase_read_events_count    (f2ptr cause, f2ptr this, f2ptr relative_read_events_count);
+u64   raw__cause_group_interaction__bytes_read_count         (f2ptr cause, f2ptr this);
+f2ptr  f2__cause_group_interaction__bytes_read_count         (f2ptr cause, f2ptr this);
+void  raw__cause_group_interaction__bytes_read_count__set    (f2ptr cause, f2ptr this, u64 bytes_read_count);
+f2ptr  f2__cause_group_interaction__bytes_read_count__set    (f2ptr cause, f2ptr this, f2ptr bytes_read_count);
+void  raw__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, u64 relative_bytes_read_count);
+f2ptr  f2__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_read_count);
+u64   raw__cause_group_interaction__write_events_count         (f2ptr cause, f2ptr this);
+f2ptr  f2__cause_group_interaction__write_events_count         (f2ptr cause, f2ptr this);
+void  raw__cause_group_interaction__write_events_count__set    (f2ptr cause, f2ptr this, u64 write_events_count);
+f2ptr  f2__cause_group_interaction__write_events_count__set    (f2ptr cause, f2ptr this, f2ptr write_events_count);
+void  raw__cause_group_interaction__increase_write_events_count(f2ptr cause, f2ptr this, u64 relative_write_events_count);
+f2ptr  f2__cause_group_interaction__increase_write_events_count(f2ptr cause, f2ptr this, f2ptr relative_write_events_count);
+u64   raw__cause_group_interaction__bytes_written_count             (f2ptr cause, f2ptr this);
+f2ptr  f2__cause_group_interaction__bytes_written_count             (f2ptr cause, f2ptr this);
+void  raw__cause_group_interaction__bytes_written_count__set        (f2ptr cause, f2ptr this, u64 bytes_written_count);
+f2ptr  f2__cause_group_interaction__bytes_written_count__set        (f2ptr cause, f2ptr this, f2ptr bytes_written_count);
+void  raw__cause_group_interaction__increase_bytes_written_count    (f2ptr cause, f2ptr this, u64 relative_bytes_written_count);
+f2ptr  f2__cause_group_interaction__increase_bytes_written_count    (f2ptr cause, f2ptr this, f2ptr relative_bytes_written_count);
 
 f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause);
 

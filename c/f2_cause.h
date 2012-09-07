@@ -94,6 +94,8 @@ declare_object_type_9_slot(cause_group,
 			   f2ptr bytes_freed_count__set__funk;
 			   f2ptr increase_bytes_freed_count__symbol;
 			   f2ptr increase_bytes_freed_count__funk;
+			   f2ptr add_cause_group_interaction__symbol;
+			   f2ptr add_cause_group_interaction__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -223,6 +225,8 @@ void  raw__cause_group__bytes_freed_count__set        (f2ptr cause, f2ptr this, 
 f2ptr  f2__cause_group__bytes_freed_count__set        (f2ptr cause, f2ptr this, f2ptr bytes_freed_count);
 void  raw__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
 f2ptr  f2__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
+void  raw__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, u64 relative_bytes_freed_count);
+f2ptr  f2__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 

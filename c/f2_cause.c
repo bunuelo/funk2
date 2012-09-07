@@ -490,6 +490,23 @@ def_pcfunk2(cause_group__increase_bytes_freed_count, this, relative_bytes_freed_
 	    return f2__cause_group__increase_bytes_freed_count(this_cause, this, relative_bytes_freed_count));
 
 
+void raw__cause_group__add_cause_group_interaction(f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction) {
+  f2ptr cause_group_interaction_ptypehash = raw__cause_group__cause_group_interaction_ptypehash(cause, this);
+  raw__ptypehash__add(cause, cause_group_interaction_ptypehash, cause_group, cause_group_interaction);
+}
+
+f2ptr f2__cause_group__add_cause_group_interaction(f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction) {
+  assert_argument_type(cause_group,             this);
+  assert_argument_type(cause_group,             cause_group);
+  assert_argument_type(cause_group_interaction, cause_group);
+  raw__cause_group__add_cause_group_interaction(cause, this, cause_group, cause_group_interaction);
+  return nil;
+}
+def_pcfunk3(cause_group__add_cause_group_interaction, this, cause_group, cause_group_interaction,
+	    "",
+	    return f2__cause_group__add_cause_group_interaction(this_cause, this, cause_group, cause_group_interaction));
+
+
 // cause_group
 
 f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -530,6 +547,7 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__funk);}
   {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__set__funk);}
   {char* slot_name = "increase_bytes_freed_count";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk);}
+  {char* slot_name = "add_cause_group_interaction";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);}
   {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
 }
@@ -1139,6 +1157,10 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__increase_bytes_freed_count);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__add_cause_group_interaction);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);
@@ -1310,6 +1332,9 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "increase_bytes_freed_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__increase_bytes_freed_count, this, relative_bytes_freed_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "add_cause_group_interaction"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__add_cause_group_interaction, this, cause_group, cause_group_interaction, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

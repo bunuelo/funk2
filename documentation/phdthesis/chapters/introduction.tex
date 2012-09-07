@@ -33,16 +33,15 @@ planning model to itself.  The contributions of this thesis are:
   any given preexisting problem solving resources.
 \item \emph{Grounded Learning of Knowledge Utility}: A dependency
   tracing learning algorithm that is capable of learning both from
-  ``being told'' as well as from experience, learning what types of
-  knowledge are useful in different contexts, refining hypotheses for
-  the utility of knowledge when they turn out to be wrong, learning by
-  tracing these assumptions from expectation failures experienced
-  during the execution of plans.
-\item \emph{Funk Virtual Machine and Programming Language}: A
-  concurrent and parallel virtual machine and lisp-like programming
-  language with procedural tracing features that facilitate the
-  automatic monitoring of control systems running many concurrent
-  tasks.
+  ``being told'' as well as from experience.  New experiences allow
+  the AI to learning what types of knowledge are useful in different
+  contexts by refining reflective hypotheses about whether or not
+  plans will lead to the successful accomplishment of goals or to
+  different potential types of failures during execution.
+\item \emph{Virtual Machine and Programming Language}: A concurrent
+  and parallel virtual machine and lisp-like programming language with
+  procedural tracing features that facilitate the automatic monitoring
+  of control systems running many concurrent tasks.
 \end{itemize}
 
 \section{Document Overview}
@@ -85,24 +84,24 @@ otherwise ``hidden'' variables, (3) actions are chosen based on
 considerations of different action and hypothesis dependent
 inferences.  While there are many types of machine learning algorithms
 that focus on this abstract 3-step closed-loop process of learning to
-control, the field of metacognition
+control, the field of computational metacognition
 \cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
 layers of closed-loop systems. The first closed-loop learning
 algorithm learns how to deal with the external world, while the second
-closed-loop learning algorithm perceives the state of the algorithm
-below. I see metacognition as a layering of learning algorithms, such
-that the second layer algorithm learns from perceiving the activity of
-the first layer and controls or modifies this first layer. While it
-may be clear how to trace changes in the perceptual inputs of layer
-one of the algorithm, it is less than clear how the second layer
-learner should monitor the changes in the state of the first layer
-learner.
+closed-loop learning algorithm perceives and controls the state of the
+algorithm below. I see metacognition as a layering of learning
+algorithms, such that the second layer algorithm learns from
+perceiving the activity of the first layer and controls or modifies
+this first layer. While it may be clear how to trace changes in the
+perceptual inputs of layer one of the algorithm, it is less than clear
+how the second layer learner should monitor the changes in the state
+of the first layer learner.
 
 \section{Reflection in Computer Science}
 
 The term reflection is a commonly used word in computer science and
 AI.  The idea is extremely simple and is a modelling contribution of
-this thesis, but, because of its simplicity, it is a widely applicable
+this thesis, but because of its simplicity, it is a widely applicable
 idea.  In fact, \cite{maes:1988} distinguishes over 30 different types
 of \emph{computational reflection}, grounded in the computer science
 literature.  The type of computational reflection that is introduced
@@ -110,12 +109,14 @@ in this dissertation is not included in Maes' overview, although the
 implementation of this model is based on many of the forms of
 computational reflection that Maes does describe, e.g. procedural
 reflection, type reflection, frame reflection, and others.  She does
-not mention the type of reflection that I am focused on in this thesis
-because it was not, at the time, commonly considered computational.
-The type of reflection that is modelled here is a psychological type
-of reflection: the ability to think about thinking in addition to the
-ground problem.  This psychological form of reflection is modelled as
-a learning-to-control problem in this thesis.
+not mention the type of reflection that I focus on in this thesis
+because it was not at the time commonly considered computational.  The
+type of reflection that is modelled here is a psychological type of
+reflection: the ability to think about accomplishing thinking goals in
+addition to thinking about accomplishing physical goals.  This
+psychological form of reflection is modelled as two layers of control
+in this thesis.  The first layer learns to control the physical world,
+while the second layer learns to control the first layer.
 
 \section{Programming}
 
@@ -222,22 +223,25 @@ of the world and a representation for the changes that actions
 perform.  Given these models, the physical world can be simulated
 according to different plans.  \cite{fikes:1972} describe an action
 representation, called ``STRIPS'', that includes an \emph{add list}
-and a \emph{remove list} to represent the change between states in the
+and a \emph{delete list} to represent the change between states in the
 world.  In the STRIPS model, the world is a set of symbols.  A
 transframe is composed of two sets: one for the removals from the
-world and one for the additions to the world.  An object called a
-\emph{frame transition} \cite[]{minsky:1975} or a \emph{transframe}
-\cite[]{minsky:1988} is similar to a STRIPS operator with add and
-remove lists but that is also able to simulate actions in frame-based
-and other relational domains.  A transframe represents a change
-between two relational states of the world.  In a symbolic relational
-domain, the state space is a set of symbolic relationships rather than
-just symbols.  Here is an example of a symbolic relationship that
-could exist in a relational domain: {\tt [block-1 is-on block-2]}.
-Here is an example of a transframe for the world in a relational
-domain: \emph{remove} {\tt [block-1 on table-1]} and \emph{add} {\tt
-  [block-1 on block-2]}.  In predicting the effects of an action on
-the world, STRIPS considers one transframe for each action.
+world and one for the additions to the world.
+
+An object called a \emph{frame transition} \cite[]{minsky:1975} or a
+\emph{transframe} \cite[]{minsky:1988} is similar to a STRIPS operator
+with add and delete lists but that is also able to simulate actions in
+frame-based and other relational domains.  A transframe represents a
+change between two relational states of the world.  In a symbolic
+relational domain, the state space is a set of symbolic relationships
+rather than just symbols.  Here is an example of a symbolic
+relationship that could exist in a relational domain: {\tt [block-1
+    is-on block-2]}.  Here is an example of a transframe for the world
+in a relational domain: \emph{delete} {\tt [block-1 on table-1]} and
+\emph{add} {\tt [block-1 on block-2]}.  In predicting the effects of
+an action on the world, STRIPS considers one transframe for each
+action.
+
 Transframes can also be dependent on the current state of the world.
 Although many function approximation methods could be used, in my
 simulation model I have addressed the problem of learning to predict

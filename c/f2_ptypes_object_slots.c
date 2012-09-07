@@ -46,13 +46,17 @@ def_pcfunk1(ptype__raw, x,
 	    return f2__ptype__raw(this_cause, x));
 
 
-f2ptr f2__ptype__cause(f2ptr cause, f2ptr x) {
-  assert_argument_type(ptype, x);
-  return f2ptype__cause(x, cause);
+f2ptr raw__ptype__cause(f2ptr cause, f2ptr this) {
+  return f2ptype__cause(this, cause);
 }
-def_pcfunk1(ptype__cause, x,
+
+f2ptr f2__ptype__cause(f2ptr cause, f2ptr this) {
+  assert_argument_type(ptype, this);
+  return raw__ptype__cause(cause, this);
+}
+def_pcfunk1(ptype__cause, this,
 	    "",
-	    return f2__ptype__cause(this_cause, x));
+	    return f2__ptype__cause(this_cause, this));
 
 
 f2ptr f2__ptype__cause__set(f2ptr cause, f2ptr x, f2ptr value) {

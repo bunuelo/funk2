@@ -1,62 +1,62 @@
-\chapter{Causal Reflective Tracing Tutorial}
-\label{appendix:causal_reflective_tracing_tutorial}
+\chapter{Virtual Operating System and Programming Language}
+\label{appendix:virtual_operating_system_and_programming_language}
 
 Large concurrent and parallel systems are difficult to build and debug
 because of the complex causal interactions between all of the
-different processes.  For this reason, every process fiber in Funk has
-an associated \emph{cause} object.  If any process fiber creates a new
-process fiber, then a new cause object is created for the child
-process thread with a parent cause object reference.  Cause objects
-represent the properties of a process, which can be used for causally
-organizing parallel tasks, controlling and monitoring the occurrence
-of any type of event through any of the procedural abstraction
-barriers of the Funk virtual machine.
+different processes.  For this reason, every parallel task in
+\emph{SALS}, or \emph{Substrate for Accountable Layered Systems}, has
+an associated \emph{cause} object.  If any task creates a new parallel
+task, then a new cause object is created for the child task with a
+parent cause object reference.  Cause objects represent the properties
+of a task, which can be used for causally organizing groups of
+parallel tasks, controlling and monitoring the occurrence of any type
+of event through any of the procedural abstraction barriers of the
+SALS virtual machine.
 
-\section{Funk Virtual Operating System}
+\section{Virtual Operating System}
 
-Parallel tasks in the Funk virtual operating system are called
+Parallel tasks in the virtual operating system are called
 \emph{fibers} in order to distinguish them from the \emph{threads} in
 the underlying non-virtual operating system.  The parallel fibers
 create, mutate, and read from memory as they execute sequences of
-bytecodes.  At any point between bytecode executions, the Funk memory
+bytecodes.  At any point between bytecode executions, the memory
 system is static.  The current execution state of every fiber is
-represented in the global environment.  In order for Funk to be fully
-reflective on all of the procedural effects of any given fiber, I
-introduce a technique that I call \emph{causal reflective tracing}.
-Causal reflective tracing is a way of defining variables that are
-specific to each fiber that can be used to control the low-level
-memory access, mutation, and creation functions.  This allows one
-fiber within Funk to subscribe to the procedural trace events of
-another fiber without receiving procedural trace events of its own
-execution, which would lead to an infinite regress, halting the
-system.  Further, because Funk is inherently a parallel processing
-system, a given fiber will often start a number of child fibers that
-handle part of the processing for the parent fiber.  When a new fiber
-is created, the child fiber inherits the causal variable bindings of
-its parent fiber, enabling the same procedural tracing options for the
-child as well.  So, causal reflective tracing is one of the basic
-tools for keeping track of which pieces of memory were created,
-mutated, or read by which other fibers.  When evaluating the
-theoretical time complexity of concurrent procedurally reflective
-control algorithms, it should be noted that creating procedural trace
-events for the execution of a given fiber slows the fiber down only by
-a constant factor, not affecting the algorithm's ``big-O'' time
-complexity on an ideal concurrent shared-memory system, of which the
-Funk virtual operating system is an approximation.
+represented in the global environment.  To be fully reflective on all
+of the procedural effects of any given fiber, I introduce a technique
+that I call \emph{causal reflective tracing}.  Causal reflective
+tracing is a way of defining variables that are specific to each fiber
+that can be used to control the low-level memory access, mutation, and
+creation functions.  This allows one fiber to subscribe to the
+procedural trace events of another fiber without receiving procedural
+trace events of its own execution, which would lead to an infinite
+regress, halting the system.  Further, because the virtual operating
+system is inherently a parallel processing system, a given fiber will
+often start a number of child fibers that handle part of the
+processing for the parent fiber.  When a new fiber is created, the
+child fiber inherits the causal variable bindings of its parent fiber,
+enabling the same procedural tracing options for the child as well.
+So, causal reflective tracing is one of the basic tools for keeping
+track of which pieces of memory were created, mutated, or read by
+which other fibers.  When evaluating the theoretical time complexity
+of concurrent procedurally reflective control algorithms, it should be
+noted that creating procedural trace events for the execution of a
+given fiber slows the fiber down only by a constant factor, not
+affecting the algorithm's ``big-O'' time complexity on an ideal
+concurrent shared-memory system, of which the virtual operating system
+is an approximation.
 
 \section{Semantic Memory Focuses Reflective Tracing}
 
 While causal reflective tracing focuses the procedural event tracing
 to memory interactions of specific fibers, this still results in
 millions of events to consider every real-time second of execution.
-In order to further focus on specific objects within the Funk memory
-system, specific pieces of memory can be created called
-``\emph{semantic memory}''.  Semantic memory objects are created,
-mutated, and accessed in roughly the same way as all of the
-frame-based objects in the Funk memory system with a few extra
-reflective tracing features.  For example, semantic objects provide
-event streams that can be subscribed to by a number of different
-parallel listeners in different fibers.
+In order to further focus on specific objects within the memory
+system, specific pieces of memory can be created called \emph{semantic
+  memory}.  Semantic memory objects are created, mutated, and accessed
+in roughly the same way as all of the frame-based objects in the
+memory system with a few extra reflective tracing features.  For
+example, semantic objects provide event streams that can be subscribed
+to by a number of different parallel listeners in different fibers.
 
 Because it becomes awkward to subscribe to each an every frame-based
 object that may be interesting to the reflective focus, semantic
@@ -253,18 +253,18 @@ out-> []
 
 \section{Causal Tracing of Statistics}
 
-Every parallel fiber in Funk is part of a causal scope of execution.
-Every fiber is created with a unique {\tt{cause}} object that provides
-a consolidation of reflective tracing features for the fiber.  While a
+Every parallel fiber is part of a causal scope of execution.  Every
+fiber is created with a unique {\tt{cause}} object that provides a
+consolidation of reflective tracing features for the fiber.  While a
 fiber's cause may be changed so that multiple fibers share the same
 cause object, a convenient solution to organizing very dynamic causal
 reflection is provided by the {\tt{cause\_group}} object.  Cause
 groups are added to cause objects and inherited from parent to child
 when new causes are created.  Because {\tt{cause}} objects and
 {\tt{cause\_group}} objects exist at the locus of every single memory
-creation or mutation event in the entire Funk operating system, they
-are a valuable and necessarily efficient means of tracing any event
-that modifies any part of the operating system.  For example,
+creation or mutation event in the entire virtual operating system,
+they are a valuable and necessarily efficient means of tracing any
+event that modifies any part of the operating system.  For example,
 {\mbox{\autoref{figure:cause_group_statistics}}} the simplest type of
 causal reflective tracing simply gathers run-time statistics of a
 fiber execution by using a {\tt{cause\_group}} object.
@@ -383,12 +383,12 @@ out-> [cause_group
 
 Sometimes it is helpful to know which fiber or cause created a
 specific piece of memory.  For this reason, every piece of memory in
-the entire Funk operating system includes a reference to its creation
-cause as well as its creation fiber.  This increases memory usage by a
-constant factor, not making any algorithms in the operating system
-require any greater time or memory complexity, but for small objects
-it does triple the memory requirements.  This information can be
-useful in many statistical ways, such as keeping track of memory
+the entire virtual operating system includes a reference to its
+creation cause as well as its creation fiber.  This increases memory
+usage by a constant factor, not making any algorithms in the operating
+system require any greater time or memory complexity, but for small
+objects it does triple the memory requirements.  This information can
+be useful in many statistical ways, such as keeping track of memory
 interactions between {\tt{cause\_group}} objects.  The focus of this
 thesis is not, however, a statistical point.
 {\mbox{\autoref{figure:reflective_event_causal_tracing}}} shows how a
@@ -448,7 +448,7 @@ event-in-causal-focus
 \end{Verbatim}
 }
 \caption[Causally scoped reflective event tracing.]{Causally scoped
-  reflective event tracing.  Since every piece of memory in the Funk
+  reflective event tracing.  Since every piece of memory in the
   virtual operating system has a reference to its {\tt{cause}} object,
   causally focusing the reflective tracing example shown in
   {\mbox{\autoref{figure:reflective_fiber}}} is simply a matter of

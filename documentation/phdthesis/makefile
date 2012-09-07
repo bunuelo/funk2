@@ -21,6 +21,7 @@ phdthesis.pdf: \
   frontbackmatter/titleback.tex \
   frontbackmatter/titlepage.tex \
   chapters/introduction.tex \
+  chapters/emotion_machine_cognitive_architecture.tex \
   chapters/reflectively_learning_to_control.tex \
   chapters/grounded_learning_of_knowledge_utility.tex \
   chapters/modelling_the_continuously_dynamic.tex \
@@ -28,6 +29,7 @@ phdthesis.pdf: \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
+  chapters/virtual_operating_system_and_programming_language.tex \
   chapters/related_models.tex \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
@@ -48,7 +50,6 @@ phdthesis.pdf: \
   chapters/education.tex \
   chapters/experiment_data.tex \
   chapters/experiment_plotting.tex \
-  chapters/causal_reflective_tracing_tutorial.tex \
   chapters/the_code.tex \
   gfx/agent_environment.pdf \
   gfx/blocks_world_screenshot-1.pdf \

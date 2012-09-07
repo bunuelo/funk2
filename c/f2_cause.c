@@ -498,7 +498,7 @@ void raw__cause_group__add_cause_group_interaction(f2ptr cause, f2ptr this, f2pt
 f2ptr f2__cause_group__add_cause_group_interaction(f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction) {
   assert_argument_type(cause_group,             this);
   assert_argument_type(cause_group,             cause_group);
-  assert_argument_type(cause_group_interaction, cause_group);
+  assert_argument_type(cause_group_interaction, cause_group_interaction);
   raw__cause_group__add_cause_group_interaction(cause, this, cause_group, cause_group_interaction);
   return nil;
 }

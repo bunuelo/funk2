@@ -491,7 +491,7 @@ def_pcfunk2(cause_group__increase_bytes_freed_count, this, relative_bytes_freed_
 
 
 void raw__cause_group__add_cause_group_interaction(f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction) {
-  f2ptr cause_group_interaction_ptypehash = raw__cause_group__cause_group_interaction_ptypehash(cause, this);
+  f2ptr cause_group_interaction_ptypehash = f2cause_group__cause_group_interaction_ptypehash(this, cause);
   raw__ptypehash__add(cause, cause_group_interaction_ptypehash, cause_group, cause_group_interaction);
 }
 

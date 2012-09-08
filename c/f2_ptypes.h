@@ -556,6 +556,7 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol            (funk2_symbol_has
 // ptypes
 
 struct funk2_ptypes_s {
+  boolean_t           read_write_reflective_tracing_enabled;
   funk2_symbol_hash_t symbol_hash;
 };
 

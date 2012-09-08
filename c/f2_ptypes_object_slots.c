@@ -21,6 +21,19 @@
 
 #include "funk2.h"
 
+void raw__ptypes__read_write_reflective_tracing_enabled__set(boolean_t value) {
+  __funk2.ptypes.read_write_reflective_tracing_enabled = value;
+}
+
+f2ptr f2__ptypes__read_write_reflective_tracing_enabled__set(f2ptr cause, f2ptr value) {
+  raw__ptypes__read_write_reflective_tracing_enabled__set(value != nil);
+  return nil;
+}
+def_pcfunk1(ptypes__read_write_reflective_tracing_enabled__set, value,
+	    "Enables or disables ptypes read/write reflective tracing.",
+	    return f2__ptypes__read_write_reflective_tracing_enabled__set(this_cause, value));
+
+
 // ptype
 
 boolean_t raw__ptype__is_type(f2ptr cause, f2ptr thing) {
@@ -4172,6 +4185,12 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
   
+  // ptypes
+  
+  f2__primcfunk__init__defragment__fix_pointers(ptypes__read_write_reflective_tracing_enabled__set);
+  
+	      
+
   // ptype
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.is_type__symbol);
@@ -5045,6 +5064,10 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   
   f2ptr cause = initial_cause();
   
+  // ptypes
+  
+  f2__primcfunk__init__1(ptypes__read_write_reflective_tracing_enabled__set, value);
+  
   // ptype
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.is_type__symbol = new__symbol(cause, str);}
@@ -5504,6 +5527,7 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
   
   // gensym
   f2__primcfunk__init__0(gensym);

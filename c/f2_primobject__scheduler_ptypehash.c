@@ -47,16 +47,18 @@ f2ptr raw__scheduler_ptypehash__new(f2ptr cause, s64 bin_num_power__i) {
   f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
   f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
   f2ptr this = f2scheduler_ptypehash__new(cause,
-				write_cmutex,
-				key_count,
-				bin_num_power,
-				bin_array);
+					  write_cmutex,
+					  key_count,
+					  bin_num_power,
+					  bin_array);
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "raw__scheduler_ptypehash__new assert failed: f2__scheduler_ptypehash__valid(this)");
   return this;
 }
 
 #define scheduler_ptypehash__default_start_bin_num_power 5
-f2ptr f2__scheduler_ptypehash__new(f2ptr cause) {return raw__scheduler_ptypehash__new(cause, scheduler_ptypehash__default_start_bin_num_power);}
+f2ptr f2__scheduler_ptypehash__new(f2ptr cause) {
+  return raw__scheduler_ptypehash__new(cause, scheduler_ptypehash__default_start_bin_num_power);
+}
 def_pcfunk0(scheduler_ptypehash__new,
 	    "",
 	    return f2__scheduler_ptypehash__new(this_cause));
@@ -408,17 +410,17 @@ def_pcfunk1(scheduler_ptypehash__as__frame, this,
 
 f2ptr raw__scheduler_ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
-  f2ptr frame               = raw__scheduler_ptypehash__lookup(cause, print_as_frame_hash, this);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = raw__scheduler_ptypehash__as__frame(cause, this);
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler_ptypehash"));
-    f2__scheduler_ptypehash__add(cause, print_as_frame_hash, this, frame);
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
 f2ptr f2__scheduler_ptypehash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(scheduler_ptypehash,            this);
+  assert_argument_type(scheduler_ptypehash,  this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);
   return raw__scheduler_ptypehash__terminal_print_with_frame(cause, this, terminal_print_frame);
 }

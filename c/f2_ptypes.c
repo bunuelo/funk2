@@ -83,11 +83,11 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
 // monitor cause-cause read/write interactions
 
 void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
-  f2ptr reflective_cause = nil;
-  f2ptr container__cause = (container == nil) ? nil : f2ptype__cause(container, reflective_cause);
-  f2ptr data__cause      = (data      == nil) ? nil : f2ptype__cause(data,      reflective_cause);
-  {
-    if (cause != nil) {
+  if (cause != nil) {
+    f2ptr reflective_cause = nil;
+    f2ptr container__cause = (container == nil) ? nil : f2ptype__cause(container, reflective_cause);
+    f2ptr data__cause      = (data      == nil) ? nil : f2ptype__cause(data,      reflective_cause);
+    {
       f2ptr cause__cause_group_iter = f2cause__cause_groups(cause, reflective_cause);
       while (cause__cause_group_iter != nil) {
 	f2ptr cause__cause_group = f2cons__car(reflective_cause, cause__cause_group_iter);

@@ -80,6 +80,8 @@ declare_object_type_9_slot(cause_group,
 			   f2ptr execution_nanoseconds__set__funk;
 			   f2ptr increase_execution_nanoseconds__symbol;
 			   f2ptr increase_execution_nanoseconds__funk;
+			   f2ptr execution_time__symbol;
+			   f2ptr execution_time__funk;
 			   f2ptr bytes_allocated_count__symbol;
 			   f2ptr bytes_allocated_count__funk;
 			   f2ptr bytes_allocated_count__set__symbol;
@@ -209,6 +211,8 @@ void  raw__cause_group__execution_nanoseconds__set    (f2ptr cause, f2ptr this, 
 f2ptr  f2__cause_group__execution_nanoseconds__set    (f2ptr cause, f2ptr this, f2ptr execution_nanoseconds);
 void  raw__cause_group__increase_execution_nanoseconds(f2ptr cause, f2ptr this, u64 relative_execution_nanoseconds);
 f2ptr  f2__cause_group__increase_execution_nanoseconds(f2ptr cause, f2ptr this, f2ptr relative_execution_nanoseconds);
+f2ptr raw__cause_group__execution_time                (f2ptr cause, f2ptr this);
+f2ptr  f2__cause_group__execution_time                (f2ptr cause, f2ptr this);
 u64   raw__cause_group__bytes_allocated_count         (f2ptr cause, f2ptr this);
 f2ptr  f2__cause_group__bytes_allocated_count         (f2ptr cause, f2ptr this);
 void  raw__cause_group__bytes_allocated_count__set    (f2ptr cause, f2ptr this, u64 bytes_allocated_count);

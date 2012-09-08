@@ -384,6 +384,20 @@ def_pcfunk2(cause_group__increase_execution_nanoseconds, this, relative_executio
 	    return f2__cause_group__increase_execution_nanoseconds(this_cause, this, relative_execution_nanoseconds));
 
 
+f2ptr raw__cause_group__execution_time(f2ptr cause, f2ptr this) {
+  f2ptr execution_nanoseconds = f2__cause_group__execution_nanoseconds(cause, this);
+  return f2__relative_time__new(cause, execution_nanoseconds);
+}
+
+f2ptr f2__cause_group__execution_time(f2ptr cause, f2ptr this) {
+  assert_argument_type(cause_group, this);
+  return raw__cause_group__execution_time(cause, this);
+}
+def_pcfunk1(cause_group__execution_time, this,
+	    "",
+	    return f2__cause_group__execution_time(this_cause, this));
+
+
 u64 raw__cause_group__bytes_allocated_count(f2ptr cause, f2ptr this) {
   f2ptr bytes_allocated_count_chunk = f2cause_group__bytes_allocated_count_chunk(this, cause);
   return f2chunk__bit64__elt(bytes_allocated_count_chunk, 0, cause);
@@ -510,11 +524,11 @@ f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list12__new(cause,
-						new__symbol(cause, "print_object_type"),                 new__symbol(cause, "cause_group"),
-						new__symbol(cause, "bytecode_count"),                    f2__cause_group__bytecode_count(                   cause, this),
-						new__symbol(cause, "execution_nanoseconds"),             f2__cause_group__execution_nanoseconds(            cause, this),
-						new__symbol(cause, "bytes_allocated_count"),             f2__cause_group__bytes_allocated_count(            cause, this),
-						new__symbol(cause, "bytes_freed_count"),                 f2__cause_group__bytes_freed_count(                cause, this),
+						new__symbol(cause, "print_object_type"),                           new__symbol(cause, "cause_group"),
+						new__symbol(cause, "bytecode_count"),                              f2__cause_group__bytecode_count(                             cause, this),
+						new__symbol(cause, "execution_time"),                              f2__cause_group__execution_time(                             cause, this),
+						new__symbol(cause, "bytes_allocated_count"),                       f2__cause_group__bytes_allocated_count(                      cause, this),
+						new__symbol(cause, "bytes_freed_count"),                           f2__cause_group__bytes_freed_count(                          cause, this),
 						new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"), f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
@@ -537,6 +551,7 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__funk);}
   {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__set__funk);}
   {char* slot_name = "increase_execution_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__funk);}
+  {char* slot_name = "execution_time";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__funk);}
   {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__funk);}
   {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__set__funk);}
   {char* slot_name = "increase_bytes_allocated_count"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_allocated_count__funk);}
@@ -1127,6 +1142,10 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__increase_execution_nanoseconds);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__execution_time);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__bytes_allocated_count);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__funk);
@@ -1306,6 +1325,9 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "increase_execution_nanoseconds"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__increase_execution_nanoseconds, this, relative_execution_nanoseconds, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "execution_time"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__execution_time, this, relative_execution_time, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__funk = never_gc(cfunk);}
   
   {char* symbol_str = "bytes_allocated_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__bytes_allocated_count, this, relative_bytes_allocated_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__funk = never_gc(cfunk);}

@@ -24,31 +24,25 @@
 
 // cause_group_interaction
 
-def_primobject_8_slot(cause_group_interaction,
-		      read_events_count_scheduler_cmutex,
-		      read_events_count,
+def_primobject_6_slot(cause_group_interaction,
+		      read_events_count_chunk,
 		      bytes_read_count_scheduler_cmutex,
 		      bytes_read_count_chunk,
-		      write_events_count_scheduler_cmutex,
 		      write_events_count_chunk,
 		      bytes_written_count_scheduler_cmutex,
 		      bytes_written_count_chunk);
 
 f2ptr f2__cause_group_interaction__new(f2ptr cause) {
-  f2ptr read_events_count_scheduler_cmutex   = f2scheduler_cmutex__new(cause);
-  f2ptr read_events_count                    = f2integer__new(cause, 0);
+  f2ptr read_events_count_chunk              = raw__chunk__new(cause, sizeof(u64));
   f2ptr bytes_read_count_scheduler_cmutex    = f2scheduler_cmutex__new(cause);
   f2ptr bytes_read_count_chunk               = raw__chunk__new(cause, sizeof(u64));
-  f2ptr write_events_count_scheduler_cmutex  = f2scheduler_cmutex__new(cause);
   f2ptr write_events_count_chunk             = raw__chunk__new(cause, sizeof(u64));
   f2ptr bytes_written_count_scheduler_cmutex = f2scheduler_cmutex__new(cause);
   f2ptr bytes_written_count_chunk            = raw__chunk__new(cause, sizeof(u64));
   return f2cause_group_interaction__new(cause,
-			    read_events_count_scheduler_cmutex,
 			    read_events_count,
 			    bytes_read_count_scheduler_cmutex,
 			    bytes_read_count_chunk,
-			    write_events_count_scheduler_cmutex,
 			    write_events_count_chunk,
 			    bytes_written_count_scheduler_cmutex,
 			    bytes_written_count_chunk);
@@ -58,25 +52,35 @@ def_pcfunk0(cause_group_interaction__new,
 	    return f2__cause_group_interaction__new(this_cause));
 
 
-void raw__cause_group_interaction__increase_read_events_count(f2ptr cause, f2ptr this, u64 relative_read_events_count) {
-  f2ptr read_events_count_scheduler_cmutex = f2cause_group_interaction__read_events_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(read_events_count_scheduler_cmutex, cause);
-  f2ptr read_events_count     = f2cause_group_interaction__read_events_count(this, cause);
-  u64   read_events_count__i  = (u64)f2integer__i(read_events_count, cause);
-  f2cause_group_interaction__read_events_count__set(this, cause, f2integer__new(cause, (u64)(read_events_count__i + relative_read_events_count)));
-  f2scheduler_cmutex__unlock(read_events_count_scheduler_cmutex, cause);
+u64 raw__cause_group_interaction__read_events_count(f2ptr cause, f2ptr this) {
+  f2ptr read_events_count_chunk = f2cause_group_interaction__read_events_count_chunk(this, cause);
+  return f2chunk__bit64__elt(read_events_count_chunk, 0, cause);
 }
 
-f2ptr f2__cause_group_interaction__increase_read_events_count(f2ptr cause, f2ptr this, f2ptr relative_read_events_count) {
+f2ptr f2__cause_group_interaction__read_events_count(f2ptr cause, f2ptr this) {
   assert_argument_type(cause_group_interaction, this);
-  assert_argument_type(integer,     relative_read_events_count);
-  u64 relative_read_events_count__i = (u64)f2integer__i(relative_read_events_count, cause);
-  raw__cause_group_interaction__increase_read_events_count(cause, this, relative_read_events_count__i);
+  return f2integer__new(cause, raw__cause_group_interaction__read_events_count(cause, this));
+}
+def_pcfunk1(cause_group_interaction__read_events_count, this,
+	    "",
+	    return f2__cause_group_interaction__read_events_count(this_cause, this));
+
+
+void raw__cause_group_interaction__read_events_count__set(f2ptr cause, f2ptr this, u64 read_events_count) {
+  f2ptr read_events_count_chunk = f2cause_group_interaction__read_events_count_chunk(this, cause);
+  f2chunk__bit64__elt__set(read_events_count_chunk, 0, cause, read_events_count);
+}
+
+f2ptr f2__cause_group_interaction__read_events_count__set(f2ptr cause, f2ptr this, f2ptr read_events_count) {
+  assert_argument_type(cause_group_interaction, this);
+  assert_argument_type(integer,     read_events_count);
+  u64 read_events_count__i = f2integer__i(read_events_count, cause);
+  raw__cause_group_interaction__read_events_count__set(cause, this, read_events_count__i);
   return nil;
 }
-def_pcfunk2(cause_group_interaction__increase_read_events_count, this, relative_read_events_count,
+def_pcfunk2(cause_group_interaction__read_events_count__set, this, read_events_count,
 	    "",
-	    return f2__cause_group_interaction__increase_read_events_count(this_cause, this, relative_read_events_count));
+	    return f2__cause_group_interaction__read_events_count__set(this_cause, this, read_events_count));
 
 
 u64 raw__cause_group_interaction__bytes_read_count(f2ptr cause, f2ptr this) {
@@ -113,8 +117,14 @@ def_pcfunk2(cause_group_interaction__bytes_read_count__set, this, bytes_read_cou
 void raw__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, u64 relative_bytes_read_count) {
   f2ptr bytes_read_count_scheduler_cmutex = f2cause_group_interaction__bytes_read_count_scheduler_cmutex(this, cause);
   f2scheduler_cmutex__lock(bytes_read_count_scheduler_cmutex, cause);
-  u64 bytes_read_count = raw__cause_group_interaction__bytes_read_count(cause, this);
-  raw__cause_group_interaction__bytes_read_count__set(cause, this, bytes_read_count + relative_bytes_read_count);
+  {
+    u64 read_events_count = raw__cause_group_interaction__read_events_count(cause, this);
+    raw__cause_group_interaction__read_events_count__set(cause, this, read_events_count + 1);
+  }
+  {
+    u64 bytes_read_count = raw__cause_group_interaction__bytes_read_count(cause, this);
+    raw__cause_group_interaction__bytes_read_count__set(cause, this, bytes_read_count + relative_bytes_read_count);
+  }
   f2scheduler_cmutex__unlock(bytes_read_count_scheduler_cmutex, cause);
 }
 
@@ -161,26 +171,6 @@ def_pcfunk2(cause_group_interaction__write_events_count__set, this, write_events
 	    return f2__cause_group_interaction__write_events_count__set(this_cause, this, write_events_count));
 
 
-void raw__cause_group_interaction__increase_write_events_count(f2ptr cause, f2ptr this, u64 relative_write_events_count) {
-  f2ptr write_events_count_scheduler_cmutex = f2cause_group_interaction__write_events_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(write_events_count_scheduler_cmutex, cause);
-  u64 write_events_count = raw__cause_group_interaction__write_events_count(cause, this);
-  raw__cause_group_interaction__write_events_count__set(cause, this, write_events_count + relative_write_events_count);
-  f2scheduler_cmutex__unlock(write_events_count_scheduler_cmutex, cause);
-}
-
-f2ptr f2__cause_group_interaction__increase_write_events_count(f2ptr cause, f2ptr this, f2ptr relative_write_events_count) {
-  assert_argument_type(cause_group_interaction, this);
-  assert_argument_type(integer,     relative_write_events_count);
-  u64 relative_write_events_count__i = (u64)f2integer__i(relative_write_events_count, cause);
-  raw__cause_group_interaction__increase_write_events_count(cause, this, relative_write_events_count__i);
-  return nil;
-}
-def_pcfunk2(cause_group_interaction__increase_write_events_count, this, relative_write_events_count,
-	    "",
-	    return f2__cause_group_interaction__increase_write_events_count(this_cause, this, relative_write_events_count));
-
-
 u64 raw__cause_group_interaction__bytes_written_count(f2ptr cause, f2ptr this) {
   f2ptr bytes_written_count_chunk = f2cause_group_interaction__bytes_written_count_chunk(this, cause);
   return f2chunk__bit64__elt(bytes_written_count_chunk, 0, cause);
@@ -215,8 +205,14 @@ def_pcfunk2(cause_group_interaction__bytes_written_count__set, this, bytes_writt
 void raw__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2ptr this, u64 relative_bytes_written_count) {
   f2ptr bytes_written_count_scheduler_cmutex = f2cause_group_interaction__bytes_written_count_scheduler_cmutex(this, cause);
   f2scheduler_cmutex__lock(bytes_written_count_scheduler_cmutex, cause);
-  u64 bytes_written_count = raw__cause_group_interaction__bytes_written_count(cause, this);
-  raw__cause_group_interaction__bytes_written_count__set(cause, this, bytes_written_count + relative_bytes_written_count);
+  {
+    u64 write_events_count = raw__cause_group_interaction__write_events_count(cause, this);
+    raw__cause_group_interaction__write_events_count__set(cause, this, write_events_count + 1);
+  }
+  {
+    u64 bytes_written_count = raw__cause_group_interaction__bytes_written_count(cause, this);
+    raw__cause_group_interaction__bytes_written_count__set(cause, this, bytes_written_count + relative_bytes_written_count);
+  }
   f2scheduler_cmutex__unlock(bytes_written_count_scheduler_cmutex, cause);
 }
 
@@ -261,13 +257,13 @@ def_pcfunk2(cause_group_interaction__terminal_print_with_frame, this, terminal_p
 
 f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause_group_interaction__primobject_type__new(cause);
-  {char* slot_name = "increase_read_events_count";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_read_events_count__funk);}
+  {char* slot_name = "read_events_count";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__funk);}
+  {char* slot_name = "read_events_count";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__set__funk);}
   {char* slot_name = "bytes_read_count";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_read_count__funk);}
   {char* slot_name = "bytes_read_count";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_read_count__set__funk);}
   {char* slot_name = "increase_bytes_read_count";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_bytes_read_count__funk);}
   {char* slot_name = "write_events_count";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__funk);}
   {char* slot_name = "write_events_count";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__set__funk);}
-  {char* slot_name = "increase_write_events_count";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_write_events_count__funk);}
   {char* slot_name = "bytes_written_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_written_count__funk);}
   {char* slot_name = "bytes_written_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_written_count__set__funk);}
   {char* slot_name = "increase_bytes_written_count"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_bytes_written_count__funk);}
@@ -1049,19 +1045,21 @@ void f2__cause__defragment__fix_pointers() {
   
   // cause_group_interaction
   
-  initialize_primobject_8_slot__defragment__fix_pointers(cause_group_interaction,
-							 read_events_count_scheduler_cmutex,
-							 read_events_count,
+  initialize_primobject_6_slot__defragment__fix_pointers(cause_group_interaction,
+							 read_events_count_chunk,
 							 bytes_read_count_scheduler_cmutex,
 							 bytes_read_count_chunk,
-							 write_events_count_scheduler_cmutex,
 							 write_events_count_chunk,
 							 bytes_written_count_scheduler_cmutex,
 							 bytes_written_count_chunk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_read_events_count__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__increase_read_events_count);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_read_events_count__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__read_events_count);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__read_events_count__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__set__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_read_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__bytes_read_count);
@@ -1082,10 +1080,6 @@ void f2__cause__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__set__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__write_events_count__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__set__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_write_events_count__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__increase_write_events_count);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_write_events_count__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_written_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group_interaction__bytes_written_count);
@@ -1246,18 +1240,19 @@ void f2__cause__reinitialize_globalvars() {
   
   // cause_group_interaction
   
-  initialize_primobject_8_slot(cause_group_interaction,
-			       read_events_count_scheduler_cmutex,
-			       read_events_count,
+  initialize_primobject_6_slot(cause_group_interaction,
+			       read_events_count_chunk,
 			       bytes_read_count_scheduler_cmutex,
 			       bytes_read_count_chunk,
-			       write_events_count_scheduler_cmutex,
 			       write_events_count_chunk,
 			       bytes_written_count_scheduler_cmutex,
 			       bytes_written_count_chunk);
   
-  {char* symbol_str = "increase_read_events_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_read_events_count__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__increase_read_events_count, this, relative_read_events_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_read_events_count__funk = never_gc(cfunk);}
+  {char* symbol_str = "read_events_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__read_events_count, this, relative_read_events_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "read_events_count-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__read_events_count__set, this, relative_read_events_count__set, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__set__funk = never_gc(cfunk);}
   
   {char* symbol_str = "bytes_read_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_read_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__bytes_read_count, this, relative_bytes_read_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_read_count__funk = never_gc(cfunk);}
@@ -1273,9 +1268,6 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "write_events_count-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__write_events_count__set, this, relative_write_events_count__set, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.write_events_count__set__funk = never_gc(cfunk);}
-  
-  {char* symbol_str = "increase_write_events_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_write_events_count__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__increase_write_events_count, this, relative_write_events_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.increase_write_events_count__funk = never_gc(cfunk);}
   
   {char* symbol_str = "bytes_written_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_written_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group_interaction__bytes_written_count, this, relative_bytes_written_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.bytes_written_count__funk = never_gc(cfunk);}

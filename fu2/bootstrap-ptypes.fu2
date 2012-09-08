@@ -17,6 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+'ptypes'
+
+[defunk enable_ptypes_reflection []
+  [ptypes-read_write_reflective_tracing_enabled-set t]]
+
+[defunk disable_ptypes_reflection []
+  [ptypes-read_write_reflective_tracing_enabled-set nil]]
+
 'double'
 
 [deftypefunk double get degree_sine       [] [get [get  [get  this   multiplied_by   pi]  divided_by  180.0] radian_sine]]

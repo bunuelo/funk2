@@ -124,10 +124,43 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
 }
 
 void raw__container__reflectively_know_of_writing_to(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
-  if (cause != nil) {
-    f2ptr reflective_cause = nil;
-    //f2ptr container__cause = (container == nil) ? nil : f2ptype__cause(container, reflective_cause);
-    //f2ptr data__cause      = (data      == nil) ? nil : f2ptype__cause(data,      reflective_cause);
+  if (__funk2.ptypes.read_write_reflective_tracing_enabled) {
+    if (cause != nil) {
+      if (container != nil) {
+	f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+	if (current_fiber != nil) {
+	  f2ptr reflective_cause = nil;
+	  f2ptr container__cause = f2ptype__cause(container, reflective_cause);
+	  if (container__cause != nil) {
+	    f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
+	    f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
+	    if ((cause__cause_groups            != nil) &&
+		(container__cause__cause_groups != nil)) {
+	      f2ptr cause__cause_group_iter = cause__cause_groups;
+	      while (cause__cause_group_iter != nil) {
+		f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
+		{
+		  f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
+		  while (container__cause__cause_group_iter != nil) {
+		    f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
+		    {
+		      f2ptr cause__cause_group__cause_group_interaction_ptypehash = f2cause_group__cause_group_interaction_ptypehash(cause__cause_group, reflective_cause);
+		      f2ptr cause_group_interaction                               = raw__ptypehash__lookup(reflective_cause, cause__cause_group__cause_group_interaction_ptypehash, container__cause__cause_group);
+		      if (cause_group_interaction) {
+			raw__cause_group_interaction__increase_write_events_count( reflective_cause, cause_group_interaction, 1);
+			raw__cause_group_interaction__increase_bytes_written_count(reflective_cause, cause_group_interaction, sizeof_data);
+		      }
+		    }
+		    container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
+		  }
+		}
+		cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
+	      }
+	    }
+	  }
+	}
+      }
+    }
   }
 }
 

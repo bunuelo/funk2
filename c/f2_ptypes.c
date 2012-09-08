@@ -83,10 +83,10 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
 // monitor cause-cause read/write interactions
 
 void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
-  f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
-  if (current_fiber != nil) {
-    if (cause != nil) {
-      if (container != nil) {
+  if (cause != nil) {
+    if (container != nil) {
+      f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+      if (current_fiber != nil) {
 	f2ptr reflective_cause = nil;
 	f2ptr container__cause = f2ptype__cause(container, reflective_cause);
 	if (container__cause != nil) {

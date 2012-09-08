@@ -1148,6 +1148,14 @@ def_pcfunk1(trace, value,
 	    f2fiber__trace__set(simple_fiber, this_cause, f2cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
 	    return value);
 
+boolean_t raw__scheduler_eq(f2ptr cause, f2ptr x, f2ptr y) {
+  return (x == y);
+}
+
+u64 raw__scheduler_eq_hash_value(f2ptr cause, f2ptr x) {
+  return (u64)(x);
+}
+
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   if (x == y) {return boolean__true;}
   if (!x || !y) {return boolean__false;}

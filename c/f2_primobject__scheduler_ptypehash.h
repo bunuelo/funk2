@@ -25,7 +25,7 @@
 // scheduler_ptypehash
 
 typedef struct funk2_object_type__scheduler_ptypehash__slot_s funk2_object_type__scheduler_ptypehash__slot_t;
-declare_object_type_4_slot(scheduler_ptypehash, write_cmutex, key_count, bin_num_power, bin_array,
+declare_object_type_4_slot(scheduler_ptypehash, write_scheduler_cmutex, key_count, bin_num_power, bin_array,
 			   f2ptr contains__symbol;
 			   f2ptr contains__funk;
 			   f2ptr an_arbitrary_keyvalue_pair__symbol;
@@ -65,7 +65,7 @@ declare_object_type_4_slot(scheduler_ptypehash, write_cmutex, key_count, bin_num
 
 // scheduler_ptypehash
 
-declare_primobject_4_slot(scheduler_ptypehash, write_cmutex, key_count, bin_num_power, bin_array);
+declare_primobject_4_slot(scheduler_ptypehash, write_scheduler_cmutex, key_count, bin_num_power, bin_array);
 
 f2ptr     raw__scheduler_ptypehash__new                       (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__scheduler_ptypehash__new                       (f2ptr cause);

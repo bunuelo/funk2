@@ -1536,6 +1536,12 @@ double    raw__number__to_double(f2ptr cause, f2ptr this);
 
 f2ptr f2__time(f2ptr cause);
 
+
+// scheduler_eq
+
+boolean_t raw__scheduler_eq(f2ptr cause, f2ptr x, f2ptr y);
+u64 raw__scheduler_eq_hash_value(f2ptr cause, f2ptr x);
+
 // primobject ptypehash
 
 u64 raw__eq_hash_value(f2ptr cause, f2ptr exp);

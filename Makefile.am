@@ -422,6 +422,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__object_type.c \
   c/f2_primobject__ptypehash.c \
   c/f2_primobject__redblacktree.c \
+  c/f2_primobject__scheduler_ptypehash.c \
   c/f2_primobject__set.c \
   c/f2_primobject__stream.c \
   c/f2_primobject__tensor.c \

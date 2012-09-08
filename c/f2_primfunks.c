@@ -1779,7 +1779,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_traced_array: {
     if (raw__primobject__is_type(cause, exp)) {
       if (f2primobject__is__cause_group(exp, cause)) {
-	return (u64)cause_group;
+	return (u64)exp;
       } else if (f2primobject__is__largeinteger(exp, cause)) {
 	return raw__largeinteger__equals_hash_value(cause, exp);
       }

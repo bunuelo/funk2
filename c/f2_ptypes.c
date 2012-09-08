@@ -90,25 +90,25 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
       if (container__cause != nil) {
 	f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
 	f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
-	if ((cause__cause_groups != nil) &&
+	if ((cause__cause_groups            != nil) &&
 	    (container__cause__cause_groups != nil)) {
 	  f2ptr cause__cause_group_iter = cause__cause_groups;
 	  while (cause__cause_group_iter != nil) {
-	    f2ptr cause__cause_group = f2cons__car(reflective_cause, cause__cause_group_iter);
+	    f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
 	    {
 	      f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
 	      while (container__cause__cause_group_iter != nil) {
-		f2ptr container__cause__cause_group = f2cons__car(reflective_cause, container__cause__cause_group_iter);
+		f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
 		{
 		  f2ptr cause__cause_group__cause_group_interaction_ptypehash = f2cause_group__cause_group_interaction_ptypehash(cause__cause_group, reflective_cause);
 		  f2ptr cause_group_interaction                               = raw__ptypehash__lookup(cause, cause__cause_group__cause_group_interaction_ptypehash, container__cause__cause_group);
 		  raw__cause_group_interaction__increase_read_events_count(reflective_cause, cause_group_interaction, 1);
 		  raw__cause_group_interaction__increase_bytes_read_count( reflective_cause, cause_group_interaction, sizeof_data);
 		}
-		container__cause__cause_group_iter = f2cons__cdr(reflective_cause, container__cause__cause_group_iter);
+		container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 	      }
 	    }
-	    cause__cause_group_iter = f2cons__cdr(reflective_cause, cause__cause_group_iter);
+	    cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
 	  }
 	}
       }

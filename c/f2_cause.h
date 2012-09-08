@@ -71,7 +71,7 @@ declare_object_type_9_slot(cause_group,
 			   bytes_allocated_count_chunk,
 			   bytes_freed_count_scheduler_cmutex,
 			   bytes_freed_count_chunk,
-			   cause_group_interaction_ptypehash,
+			   cause_group_interaction_scheduler_ptypehash,
 			   f2ptr increase_bytecode_count__symbol;
 			   f2ptr increase_bytecode_count__funk;
 			   f2ptr execution_nanoseconds__symbol;
@@ -198,7 +198,7 @@ declare_primobject_9_slot(cause_group,
 			  bytes_allocated_count_chunk,
 			  bytes_freed_count_scheduler_cmutex,
 			  bytes_freed_count_chunk,
-			  cause_group_interaction_ptypehash);
+			  cause_group_interaction_scheduler_ptypehash);
 
 f2ptr  f2__cause_group__new                           (f2ptr cause);
 void  raw__cause_group__increase_bytecode_count       (f2ptr cause, f2ptr this, u64 relative_bytecode_count);

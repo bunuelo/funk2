@@ -104,8 +104,10 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
 		  {
 		    f2ptr cause__cause_group__cause_group_interaction_ptypehash = f2cause_group__cause_group_interaction_ptypehash(cause__cause_group, reflective_cause);
 		    f2ptr cause_group_interaction                               = raw__ptypehash__lookup(cause, cause__cause_group__cause_group_interaction_ptypehash, container__cause__cause_group);
-		    raw__cause_group_interaction__increase_read_events_count(reflective_cause, cause_group_interaction, 1);
-		    raw__cause_group_interaction__increase_bytes_read_count( reflective_cause, cause_group_interaction, sizeof_data);
+		    if (cause_group_interaction) {
+		      raw__cause_group_interaction__increase_read_events_count(reflective_cause, cause_group_interaction, 1);
+		      raw__cause_group_interaction__increase_bytes_read_count( reflective_cause, cause_group_interaction, sizeof_data);
+		    }
 		  }
 		  container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 		}

@@ -17,5 +17,6 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk symbol-as-string &primfunk:symbol__as__string]
+[globalize-funk ptypes-read_write_reflective_tracing_enabled-set &primfunk:ptypes__read_write_reflective_tracing_enabled__set]
+[globalize-funk symbol-as-string                                 &primfunk:symbol__as__string]
 

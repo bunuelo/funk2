@@ -1026,25 +1026,101 @@ f2ptr raw__relative_time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list20__new(cause,
-						new__symbol(cause, "print_object_type"), new__symbol(cause, "relative_time"),
-						new__symbol(cause, "print_object_slot_order"), f2list8__new(cause,
-													    new__symbol(cause, "is_past"),
-													    new__symbol(cause, "days"),
-													    new__symbol(cause, "hours"),
-													    new__symbol(cause, "minutes"),
-													    new__symbol(cause, "seconds"),
-													    new__symbol(cause, "milliseconds"),
-													    new__symbol(cause, "microseconds"),
-													    new__symbol(cause, "nanoseconds")),
-						new__symbol(cause, "is_past"),      f2__relative_time__is_past(     cause, this),
-						new__symbol(cause, "days"),         f2__relative_time__days(        cause, this),
-						new__symbol(cause, "hours"),        f2__relative_time__hours(       cause, this),
-						new__symbol(cause, "minutes"),      f2__relative_time__minutes(     cause, this),
-						new__symbol(cause, "seconds"),      f2__relative_time__seconds(     cause, this),
-						new__symbol(cause, "milliseconds"), f2__relative_time__milliseconds(cause, this),
-						new__symbol(cause, "microseconds"), f2__relative_time__microseconds(cause, this),
-						new__symbol(cause, "nanoseconds"),  f2__relative_time__nanoseconds( cause, this)));
+    frame = f2__frame__new(cause, f2list2__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "relative_time")));
+    f2ptr print_object_slot_order = nil;
+    boolean_t printed_is_past = boolean__false;
+    {
+      f2ptr is_past = f2__relative_time__is_past(cause, this);
+      if (is_past != nil) {
+	printed_is_past = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "is_past"), is_past);
+      }
+    }
+    boolean_t printed_days = boolean__false;
+    {
+      f2ptr days = f2__relative_time__days(cause, this);
+      if (f2integer__i(days, cause) != 0) {
+	printed_days = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "days"), days);
+      }
+    }
+    boolean_t printed_hours = boolean__false;
+    {
+      f2ptr hours = f2__relative_time__hours(cause, this);
+      if (printed_days ||
+	  (f2integer__i(hours, cause) != 0)) {
+	printed_hours = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "hours"), hours);
+      }
+    }
+    boolean_t printed_minutes = boolean__false;
+    {
+      f2ptr minutes = f2__relative_time__minutes(cause, this);
+      if (printed_hours ||
+	  (f2integer__i(minutes, cause) != 0)) {
+	printed_minutes = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "minutes"), minutes);
+      }
+    }
+    boolean_t printed_seconds = boolean__false;
+    {
+      f2ptr seconds = f2__relative_time__seconds(cause, this);
+      if (printed_minutes ||
+	  (f2integer__i(seconds, cause) != 0)) {
+	printed_seconds = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "seconds"), seconds);
+      }
+    }
+    boolean_t printed_milliseconds = boolean__false;
+    {
+      f2ptr milliseconds = f2__relative_time__milliseconds(cause, this);
+      if (printed_seconds ||
+	  (f2integer__i(milliseconds, cause) != 0)) {
+	printed_milliseconds = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "milliseconds"), milliseconds);
+      }
+    }
+    boolean_t printed_microseconds = boolean__false;
+    {
+      f2ptr microseconds = f2__relative_time__microseconds(cause, this);
+      if (printed_milliseconds ||
+	  (f2integer__i(microseconds, cause) != 0)) {
+	printed_microseconds = boolean__true;
+	f2__frame__add_var_value(cause, frame, new__symbol(cause, "microseconds"), microseconds);
+      }
+    }
+    boolean_t printed_nanoseconds = boolean__false;
+    {
+      f2ptr nanoseconds = f2__relative_time__nanoseconds(cause, this);
+      printed_nanoseconds = boolean__true;
+      f2__frame__add_var_value(cause, frame, new__symbol(cause, "nanoseconds"), nanoseconds);
+    }
+    if (printed_nanoseconds) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "nanoseconds"), print_object_slot_order);
+    }
+    if (printed_microseconds) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "microseconds"), print_object_slot_order);
+    }
+    if (printed_milliseconds) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "milliseconds"), print_object_slot_order);
+    }
+    if (printed_seconds) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "seconds"), print_object_slot_order);
+    }
+    if (printed_minutes) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "minutes"), print_object_slot_order);
+    }
+    if (printed_hours) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "hours"), print_object_slot_order);
+    }
+    if (printed_days) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "days"), print_object_slot_order);
+    }
+    if (printed_is_past) {
+      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "is_past"), print_object_slot_order);
+    }
+    f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_slot_order"), print_object_slot_order);
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

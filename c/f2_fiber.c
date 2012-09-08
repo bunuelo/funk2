@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_32_slot(fiber,
+def_primobject_31_slot(fiber,
 		       program_counter,
 		       stack,
 		       iter,
@@ -47,7 +47,6 @@ def_primobject_32_slot(fiber,
 		       parent_env,
 		       execute_cmutex,
 		       paused,
-		       last_executed_time,
 		       sleep_until_time,
 		       execution_nanoseconds_chunk,
 		       start_cycle_execution_nanoseconds_chunk,
@@ -79,7 +78,6 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr is_zombie                                         = nil;
   f2ptr execute_cmutex                                    = f2cmutex__new(cause);
   f2ptr paused                                            = nil;
-  f2ptr last_executed_time                                = nil;
   f2ptr sleep_until_time                                  = nil;
   f2ptr execution_nanoseconds_chunk                       = raw__chunk__new(cause, sizeof(u64));
   f2ptr start_cycle_execution_nanoseconds_chunk           = raw__chunk__new(cause, sizeof(u64));
@@ -112,7 +110,6 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 parent_env,
 				 execute_cmutex,
 				 paused,
-				 last_executed_time,
 				 sleep_until_time,
 				 execution_nanoseconds_chunk,
 				 start_cycle_execution_nanoseconds_chunk,
@@ -672,7 +669,7 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list32__new(cause,
+    frame = f2__frame__new(cause, f2list30__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
 						new__symbol(cause, "cause_reg_cmutex"),           f2__fiber__cause_reg_cmutex(          cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
@@ -681,7 +678,6 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 						new__symbol(cause, "is_complete"),                f2__fiber__is_complete(               cause, this),
 						new__symbol(cause, "execute_cmutex"),             f2__fiber__execute_cmutex(            cause, this),
 						new__symbol(cause, "paused"),                     f2__fiber__paused(                    cause, this),
-						new__symbol(cause, "last_executed_time"),         f2__fiber__last_executed_time(        cause, this),
 						new__symbol(cause, "sleep_until_time"),           f2__fiber__sleep_until_time(          cause, this),
 						new__symbol(cause, "execution_nanoseconds"),      f2__fiber__execution_nanoseconds(     cause, this),
 						new__symbol(cause, "bytecode_count"),             f2__fiber__bytecode_count(            cause, this),
@@ -1124,7 +1120,7 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_32_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_31_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack,
 							  iter,
@@ -1141,7 +1137,6 @@ void f2__fiber__defragment__fix_pointers() {
 							  parent_env,
 							  execute_cmutex,
 							  paused,
-							  last_executed_time,
 							  sleep_until_time,
 							  execution_nanoseconds_chunk,
 							  start_cycle_execution_nanoseconds_chunk,
@@ -1293,7 +1288,7 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_32_slot(fiber,
+  initialize_primobject_31_slot(fiber,
 				program_counter,
 				stack,
 				iter,
@@ -1310,7 +1305,6 @@ void f2__fiber__reinitialize_globalvars() {
 				parent_env,
 				execute_cmutex,
 				paused,
-				last_executed_time,
 				sleep_until_time,
 				execution_nanoseconds_chunk,
 				start_cycle_execution_nanoseconds_chunk,

@@ -107,6 +107,7 @@
 #include "f2_primobject__object_type.h"
 #include "f2_primobject__ptypehash.h"
 #include "f2_primobject__redblacktree.h"
+#include "f2_primobject__scheduler_ptypehash.h"
 #include "f2_primobject__set.h"
 #include "f2_primobject__stream.h"
 #include "f2_primobject__tensor.h"

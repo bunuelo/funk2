@@ -45,11 +45,13 @@ void f2__initialize() {
       f2__primobjects__preinitialize_globalvars();
       f2__cause__preinitialize_globalvars();
       f2__primobject__ptypehash__preinitialize_globalvars(); 
+      f2__primobject__scheduler_ptypehash__preinitialize_globalvars(); 
       f2__primobject_frame__preinitialize_globalvars();
     }
     f2__primobject_environment__initialize();
     f2__globalenv__initialize();
     f2__primobject__ptypehash__initialize();
+    f2__primobject__scheduler_ptypehash__initialize();
     f2__primobject_frame__initialize();
   }
   // ** 

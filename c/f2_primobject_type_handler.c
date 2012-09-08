@@ -181,6 +181,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "bytecode_event";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2bytecode_event__primobject_type__new(cause));}
   {char* type_name = "stream";                           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                           f2stream__primobject_type__new_aux(cause));}
   {char* type_name = "ptypehash";                        funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                        f2ptypehash__primobject_type__new_aux(cause));}
+  {char* type_name = "scheduler_ptypehash";              funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),              f2scheduler_ptypehash__primobject_type__new_aux(cause));}
   {char* type_name = "frame";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2frame__primobject_type__new_aux(cause));}
   {char* type_name = "environment";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2environment__primobject_type__new_aux(cause));}
   {char* type_name = "set";                              funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                              f2set__primobject_type__new_aux(cause));}

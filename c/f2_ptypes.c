@@ -1993,7 +1993,7 @@ void funk2_symbol_hash__defragment__fix_pointers(funk2_symbol_hash_t* this) {
 // ptypes
 
 void funk2_ptypes__init(funk2_ptypes_t* this) {
-  this->read_write_reflective_tracing_enabled = boolean__true;
+  this->read_write_reflective_tracing_enabled = boolean__false;
   funk2_symbol_hash__init(&(this->symbol_hash));
 }
 

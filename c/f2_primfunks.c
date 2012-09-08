@@ -1170,10 +1170,14 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_simple_array:
   case ptype_traced_array:
     if (raw__primobject__is_type(cause, x) &&
-	raw__primobject__is_type(cause, y) &&
-	f2primobject__is__largeinteger(x, cause) &&
-	f2primobject__is__largeinteger(y, cause)) {
-      return raw__largeinteger__equals(cause, x, y);
+	raw__primobject__is_type(cause, y)) {
+      if (f2primobject__is__cause_group(x, cause) &&
+	  f2primobject__is__cause_group(y, cause)) {
+	return (x == y);
+      } else if (f2primobject__is__largeinteger(x, cause) &&
+		 f2primobject__is__largeinteger(y, cause)) {
+	return raw__largeinteger__equals(cause, x, y);
+      }
     }
     return f2__object__eq(cause, x, y);
   case ptype_chunk:
@@ -1773,9 +1777,12 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_chunk:            return raw__chunk__eq_hash_value(           cause, exp);
   case ptype_simple_array:
   case ptype_traced_array: {
-    if (raw__primobject__is_type(cause, exp) &&
-	f2primobject__is__largeinteger(exp, cause)) {
-      return raw__largeinteger__equals_hash_value(cause, exp);
+    if (raw__primobject__is_type(cause, exp)) {
+      if (f2primobject__is__cause_group(exp, cause)) {
+	return (u64)cause_group;
+      } else if (f2primobject__is__largeinteger(exp, cause)) {
+	return raw__largeinteger__equals_hash_value(cause, exp);
+      }
     }
     f2ptr hash_value = f2__object__eq_hash_value(cause, exp);
     u64 hash_value__i = 0;

@@ -218,7 +218,7 @@ void raw__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2p
 
 f2ptr f2__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_written_count) {
   assert_argument_type(cause_group_interaction, this);
-  assert_argument_type(integer,     relative_bytes_written_count);
+  assert_argument_type(integer,                 relative_bytes_written_count);
   u64 relative_bytes_written_count__i = (u64)f2integer__i(relative_bytes_written_count, cause);
   raw__cause_group_interaction__increase_bytes_written_count(cause, this, relative_bytes_written_count__i);
   return nil;

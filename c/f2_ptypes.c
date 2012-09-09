@@ -90,7 +90,8 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
 	if (current_fiber != nil) {
 	  f2ptr reflective_cause = nil;
 	  f2ptr container__cause = f2ptype__cause(container, reflective_cause);
-	  if (container__cause != nil) {
+	  if ((container__cause != nil) &&
+	      (container__cause != cause)) {
 	    f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
 	    f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
 	    if ((cause__cause_groups            != nil) &&

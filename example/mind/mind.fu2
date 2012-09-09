@@ -109,7 +109,6 @@
 		[have [get layer       cause_group] add_cause_group_interaction [get other_layer cause_group] cause_group_interaction-1]
 		[have [get other_layer cause_group] add_cause_group_interaction [get other_layer cause_group] cause_group_interaction-2]]]
 	[get this layers]]
-  [have this connect_layer_cause_group_interactions layer]
   [have [get this layer_frame] add [get layer name] layer]]
 
 [deftypefunk mind execute add_cause_group [cause_group]
@@ -319,6 +318,14 @@
 	connect_agency_cause_group_interactions_agencies]
   [= connect_agency_cause_group_interactions_agencies [cons agency connect_agency_cause_group_interactions_agencies]]
   [have connect_agency_cause_group_interactions_mutex unlock]]
+
+[deftypefunk mind execute connect_all_cause_group_interactions []
+  [mapc [funk [agency]
+	      [have this connect_agency_cause_group_interactions agency]]
+	[get this agencies]]
+  [mapc [funk [layer]
+	      [have this connect_layer_cause_group_interactions layer]]
+	[get this layers]]]
 
 [deftypefunk mind execute activate_vital_resources []
   [mapc [funk [resource]

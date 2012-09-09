@@ -56,7 +56,9 @@
   [have [get this layer `builtin_reactive] connect_knowledge_reflection]
   [have [get this layer `learned_reactive] connect_knowledge_reflection]
   [have [get this layer `deliberative]     connect_knowledge_reflection]
-  [have [get this layer `reflective]       connect_knowledge_reflection]]
+  [have [get this layer `reflective]       connect_knowledge_reflection]
+  [terminal_format standard-terminal '\nreflective_mind: connecting all cause group interactions.']
+  [have this connect_all_cause_group_interactions]]
 
 [deftypefunk reflective_mind execute create_builtin_actions []
   [terminal_format standard-terminal '\nreflective_mind: creating built-in actions.']

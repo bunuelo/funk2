@@ -61,7 +61,6 @@
 	      [have agency add_cause_group other_cause_group]]
 	other_cause_groups]
   [have other_cause_groups_mutex unlock]
-  [have [get this mind] connect_agency_cause_group_interactions agency]
   [have agency_frame add [get agency name] agency]]
 
 [deftypefunk mental_layer execute add_cause_group [cause_group]

@@ -21,20 +21,23 @@
 'mind_runtime_metric_point'
 
 [deframe mind_runtime_metric_point [frame] [real_time
+					    simulation_relative_time
 					    bytecode_count
 					    execution_nanoseconds
 					    bytes_allocated_count
 					    bytes_freed_count]
   [new [initial-real_time
+	initial-simulation_relative_time
 	initial-bytecode_count
 	initial-execution_nanoseconds
 	initial-bytes_allocated_count
 	initial-bytes_freed_count]
-       [= real_time             initial-real_time]
-       [= bytecode_count        initial-bytecode_count]
-       [= execution_nanoseconds initial-execution_nanoseconds]
-       [= bytes_allocated_count initial-bytes_allocated_count]
-       [= bytes_freed_count     initial-bytes_freed_count]
+       [= real_time                initial-real_time]
+       [= simulation_relative_time initial-simulation_relative_time]
+       [= bytecode_count           initial-bytecode_count]
+       [= execution_nanoseconds    initial-execution_nanoseconds]
+       [= bytes_allocated_count    initial-bytes_allocated_count]
+       [= bytes_freed_count        initial-bytes_freed_count]
        nil]]
 
 [deftypefunk mind_runtime_metric_point get bytes_footprint []
@@ -44,30 +47,34 @@
       bytes_footprint]]]
 
 [defunk mind_runtime_metric_point-new_from_cause_group [cause_group]
-  [new mind_runtime_metric_point
-       [time]
-       [get cause_group bytecode_count]
-       [get cause_group execution_nanoseconds]
-       [get cause_group bytes_allocated_count]
-       [get cause_group bytes_freed_count]]]
+  [let [[simulation_relative_time [get global_mind_runtime_metric_monitor_ticker simulation_relative_time]]]
+    [new mind_runtime_metric_point
+	 [time]
+	 simulation_relative_time
+	 [get cause_group bytecode_count]
+	 [get cause_group execution_nanoseconds]
+	 [get cause_group bytes_allocated_count]
+	 [get cause_group bytes_freed_count]]]]
+
 
 'mind_runtime_metric_monitor_ticker'
 
-[deframe mind_runtime_metric_monitor_ticker [frame] [[trigger [new fiber_trigger]]
-						     [done    nil]
+[deframe mind_runtime_metric_monitor_ticker [frame] [[trigger                  [new fiber_trigger]]
+						     [simulation_relative_time [new relative_time 0]]
+						     [done                     nil]
 						     fiber]
   [new []
-       [= fiber [fiber [funk []
-			     [while [not done]
-			       [sleep 120]
-			       [have trigger trigger]]]
-		       nil]]
        nil]]
 
 [deftypefunk mind_runtime_metric_monitor_ticker execute wait_for_tick []
   [wait-for-trigger trigger]]
 
+[deftypefunk mind_runtime_metric_monitor_ticker execute tick [new_simulation_relative_time]
+  [= simulation_relative_time new_simulation_relative_time]
+  [have trigger trigger]]
+
 [globalize global_mind_runtime_metric_monitor_ticker [new mind_runtime_metric_monitor_ticker]]
+
 
 'mind_runtime_metric_monitor'
 

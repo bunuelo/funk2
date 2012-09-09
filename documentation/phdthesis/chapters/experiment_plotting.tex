@@ -9,7 +9,11 @@
 \tikzstyle{every picture}+=[remember picture]
 \tikzstyle{na} = [baseline=-.5ex]
 
-\newcommand{\experimentmarkscale}{0.75}
+\newcommand{\experimentmarkscaleone}{0.75}
+\newcommand{\experimentmarkscaletwo}{0.75}
+\newcommand{\experimentmarkscalethree}{1.0}
+\newcommand{\experimentmarkscalefour}{0.75}
+\newcommand{\experimentmarkscalefive}{0.75}
 \newcommand{\experimentxaxispertick}{10}
 
 \newcommand{\getlength}[1][]{\strip@pt#1}
@@ -28,10 +32,13 @@
   \let\experimentminvalue=\pgfplotsretval%
 }
 
-\newcommand{\experimentaxes}[3][]{
+% #1 - max x
+% #2 - max y
+
+\newcommand{\experimentaxes}[2][]{
   %axes
   \draw (0,0) -- coordinate (x axis mid) (#1,0);
-  \draw (0,0) -- coordinate (y axis mid) (0,#3);
+  \draw (0,0) -- coordinate (y axis mid) (0,#2);
   
   % x ticks
   \ifthenelse{\lengthtest{0.125 pt > #1 pt}}{
@@ -97,80 +104,80 @@
   \draw (#1,1pt) -- (#1,0pt)
     node[anchor=north] {};
   % y ticks
-  \ifthenelse{\lengthtest{0.125 pt > #3 pt}}{
-    {\foreach \y in {0,0.05,...,#3}
-      \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+  \ifthenelse{\lengthtest{0.125 pt > #2 pt}}{
+    {\foreach \y in {0,0.05,...,#2}
+      \ifthenelse{\lengthtest{\y pt > #2 pt}}{
       }{
         \draw (1pt,\y) -- (-3pt,\y) 
         node[anchor=east] {\y}; 
       };
     }
   }{
-    \ifthenelse{\lengthtest{0.25 pt > #3 pt}}{
-      {\foreach \y in {0,0.1,...,#3}
-        \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+    \ifthenelse{\lengthtest{0.25 pt > #2 pt}}{
+      {\foreach \y in {0,0.1,...,#2}
+        \ifthenelse{\lengthtest{\y pt > #2 pt}}{
         }{
           \draw (1pt,\y) -- (-3pt,\y) 
           node[anchor=east] {\y}; 
         };
       }
     }{
-      \ifthenelse{\lengthtest{1 pt > #3 pt}}{
-        {\foreach \y in {0,0.25,...,#3}
-          \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+      \ifthenelse{\lengthtest{1 pt > #2 pt}}{
+        {\foreach \y in {0,0.25,...,#2}
+          \ifthenelse{\lengthtest{\y pt > #2 pt}}{
           }{
             \draw (1pt,\y) -- (-3pt,\y) 
             node[anchor=east] {\y}; 
           };
         }
       }{
-        \ifthenelse{\lengthtest{2.5 pt > #3 pt}}{
-          {\foreach \y in {0,0.5,...,#3}
-            \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+        \ifthenelse{\lengthtest{2.5 pt > #2 pt}}{
+          {\foreach \y in {0,0.5,...,#2}
+            \ifthenelse{\lengthtest{\y pt > #2 pt}}{
             }{
               \draw (1pt,\y) -- (-3pt,\y) 
               node[anchor=east] {\y}; 
             };
           }
         }{
-          \ifthenelse{\lengthtest{10 pt > #3 pt}}{
-            {\foreach \y in {0,2.5,...,#3}
-              \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+          \ifthenelse{\lengthtest{10 pt > #2 pt}}{
+            {\foreach \y in {0,2.5,...,#2}
+              \ifthenelse{\lengthtest{\y pt > #2 pt}}{
               }{
                 \draw (1pt,\y) -- (-3pt,\y) 
                 node[anchor=east] {\y}; 
               };
             }
           }{
-            \ifthenelse{\lengthtest{25 pt > #3 pt}}{
-              {\foreach \y in {0,5,...,#3}
-                \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+            \ifthenelse{\lengthtest{25 pt > #2 pt}}{
+              {\foreach \y in {0,5,...,#2}
+                \ifthenelse{\lengthtest{\y pt > #2 pt}}{
                 }{
                   \draw (1pt,\y) -- (-3pt,\y) 
                   node[anchor=east] {\y}; 
                 };
               }
             }{
-              \ifthenelse{\lengthtest{100 pt > #3 pt}}{
-                {\foreach \y in {0,25,...,#3}
-                  \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+              \ifthenelse{\lengthtest{100 pt > #2 pt}}{
+                {\foreach \y in {0,25,...,#2}
+                  \ifthenelse{\lengthtest{\y pt > #2 pt}}{
                   }{
                     \draw (1pt,\y) -- (-3pt,\y) 
                     node[anchor=east] {\y}; 
                   };
                 }
               }{
-                \ifthenelse{\lengthtest{250 pt > #3 pt}}{
-                  {\foreach \y in {0,50,...,#3}
-                    \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+                \ifthenelse{\lengthtest{250 pt > #2 pt}}{
+                  {\foreach \y in {0,50,...,#2}
+                    \ifthenelse{\lengthtest{\y pt > #2 pt}}{
                     }{
                       \draw (1pt,\y) -- (-3pt,\y) 
                       node[anchor=east] {\y}; 
                     };
                   }
                 }{
-                  {\foreach \y in {0,#2,...,#3}
-                    \ifthenelse{\lengthtest{\y pt > #3 pt}}{
+                  {\foreach \y in {0,100,...,#2}
+                    \ifthenelse{\lengthtest{\y pt > #2 pt}}{
                     }{
                       \draw (1pt,\y) -- (-3pt,\y) 
                       node[anchor=east] {\y}; 
@@ -184,10 +191,10 @@
       }
     }
   }
-  %  \foreach \y in {0,#2,...,#3}
+  %  \foreach \y in {0,#2,...,#2}
   %    \draw (1pt,\y) -- (-3pt,\y) 
   %    node[anchor=east] {\y}; 
-  \draw (1pt,#3) -- (0pt,#3) 
+  \draw (1pt,#2) -- (0pt,#2) 
   node[anchor=east] {}; 
 }
 
@@ -196,7 +203,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}]
+    \draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscalefour}]
       file {#3};
   \end{scope}
 }
@@ -206,7 +213,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}]
+    \draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscaletwo}]
       file {#3};
   \end{scope}
 }
@@ -216,7 +223,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}]
+    \draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscalethree}]
       file {#3};
   \end{scope}
 }
@@ -226,7 +233,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}]
+    \draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscaleone}]
       file {#3};
   \end{scope}
 }
@@ -236,7 +243,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}]
+    \draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscalefive}]
       file {#3};
   \end{scope}
 }
@@ -245,7 +252,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=square*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      plot[mark=*, mark options={fill=white,scale=\experimentmarkscalefour}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -254,7 +261,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=square*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      plot[mark=square*, mark options={fill=white,scale=\experimentmarkscaletwo}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -263,7 +270,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscalethree}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -272,7 +279,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=*, mark options={fill=white,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      plot[mark=square*, mark options={fill=black,scale=\experimentmarkscaleone}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -281,7 +288,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscale}] (0.25,0) -- (0.5,0) 
+      plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscalefive}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -334,150 +341,277 @@
 }
 
 
-
 % bytecode rate, memory allocation, garbage collection, memory usage triple plots
-\newcommand{\causegroupplotsexecution}[5][]{
-  \experimentfindmax[#4-bytecode_count.data]
-  \ifthenelse{\lengthtest{0.01 pt > \experimentmaxvalue pt}}{
+
+\newcommand{\causegroupplotsexecution}[9]{
+  \begingroup%
+  \def\causegroupplotsexecutionplotmaxtime{#1}%
+  \def\causegroupplotsexecutionexperimentonemaxtime{#2}%
+  \def\causegroupplotsexecutionexperimenttwomaxtime{#3}%
+  \def\causegroupplotsexecutionexperimentthreemaxtime{#4}%
+  \def\causegroupplotsexecutionexperimentonename{#5}%
+  \def\causegroupplotsexecutionexperimenttwoname{#6}%
+  \def\causegroupplotsexecutionexperimentthreename{#7}%
+  \def\causegroupplotsexecutioncausegroupfilenameroot{#8}%
+  \def\causegroupplotsexecutionlegendlabel{#9}%
+  \experimentfindmax[data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \let\causegroupplotsexecutionexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \let\causegroupplotsexecutionexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \let\causegroupplotsexecutionexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentonemaxvalue%
+    }{
+      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentthreemaxvalue%
+    }
   }{
-    \begin{tikzpicture}[y=2.5cm/\experimentmaxvalue, x=8cm/#1,font=\sffamily]
-      \experimentaxes[#1]{#2}{\experimentmaxvalue}
-      
-      %\experimentaxes[#1]{#2}{#3}
+    \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimenttwomaxvalue pt > \causegroupplotsexecutionexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsexecutionexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=6cm/\causegroupplotsexecutionexperimentmaxvalue, x=8cm/\causegroupplotsexecutionplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxisbytecodes
       
-      \experimentdatalegendone[#1]{\experimentmaxvalue}{#4-bytecode_count.data}{#5};
+      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
+      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
+      \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
     \end{tikzpicture}
   }
+  \endgroup%
 }
 
-\newcommand{\causegroupplotsallocation}[5][]{
-  \experimentfindmax[#4-bytes_allocated_count.data]
-  \ifthenelse{\lengthtest{0.01 pt > \experimentmaxvalue pt}}{
+\newcommand{\causegroupplotsallocation}[9]{
+  \begingroup%
+  \def\causegroupplotsallocationplotmaxtime{#1}%
+  \def\causegroupplotsallocationexperimentonemaxtime{#2}%
+  \def\causegroupplotsallocationexperimenttwomaxtime{#3}%
+  \def\causegroupplotsallocationexperimentthreemaxtime{#4}%
+  \def\causegroupplotsallocationexperimentonename{#5}%
+  \def\causegroupplotsallocationexperimenttwoname{#6}%
+  \def\causegroupplotsallocationexperimentthreename{#7}%
+  \def\causegroupplotsallocationcausegroupfilenameroot{#8}%
+  \def\causegroupplotsallocationlegendlabel{#9}%
+  \experimentfindmax[data/\causegroupplotsallocationexperimentonename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
+  \let\causegroupplotsallocationexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsallocationexperimenttwoname/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
+  \let\causegroupplotsallocationexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsallocationexperimentthreename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
+  \let\causegroupplotsallocationexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsallocationexperimentonemaxvalue pt > \causegroupplotsallocationexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsallocationexperimentonemaxvalue pt > \causegroupplotsallocationexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentonemaxvalue%
+    }{
+      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentthreemaxvalue%
+    }
   }{
-    \begin{tikzpicture}[y=2.5cm/\experimentmaxvalue, x=8cm/#1,font=\sffamily]
-      \experimentaxes[#1]{#2}{\experimentmaxvalue}
-      
-      %\experimentaxes[#1]{#2}{#3}
+    \ifthenelse{\lengthtest{\causegroupplotsallocationexperimenttwomaxvalue pt > \causegroupplotsallocationexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsallocationexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=6cm/\causegroupplotsallocationexperimentmaxvalue, x=8cm/\causegroupplotsallocationplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxisbytes
       
-      \experimentdatalegendtwo[#1]{\experimentmaxvalue}{#4-bytes_allocated_count.data}{#5};
+      \experimentdataone[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimentonename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
+      \experimentdatatwo[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimenttwoname/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
+      \experimentdatathree[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimentthreename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
     \end{tikzpicture}
   }
+  \endgroup%
 }
 
-\newcommand{\causegroupplotscollection}[5][]{
-  \experimentfindmax[#4-bytes_freed_count.data]
-  \ifthenelse{\lengthtest{0.01 pt > \experimentmaxvalue pt}}{
+\newcommand{\causegroupplotscollection}[9]{
+  \begingroup%
+  \def\causegroupplotscollectionplotmaxtime{#1}%
+  \def\causegroupplotscollectionexperimentonemaxtime{#2}%
+  \def\causegroupplotscollectionexperimenttwomaxtime{#3}%
+  \def\causegroupplotscollectionexperimentthreemaxtime{#4}%
+  \def\causegroupplotscollectionexperimentonename{#5}%
+  \def\causegroupplotscollectionexperimenttwoname{#6}%
+  \def\causegroupplotscollectionexperimentthreename{#7}%
+  \def\causegroupplotscollectioncausegroupfilenameroot{#8}%
+  \def\causegroupplotscollectionlegendlabel{#9}%
+  \experimentfindmax[data/\causegroupplotscollectionexperimentonename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
+  \let\causegroupplotscollectionexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotscollectionexperimenttwoname/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
+  \let\causegroupplotscollectionexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotscollectionexperimentthreename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
+  \let\causegroupplotscollectionexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotscollectionexperimentonemaxvalue pt > \causegroupplotscollectionexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotscollectionexperimentonemaxvalue pt > \causegroupplotscollectionexperimentthreemaxvalue pt}}{
+      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentonemaxvalue%
+    }{
+      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentthreemaxvalue%
+    }
   }{
-    \begin{tikzpicture}[y=2.5cm/\experimentmaxvalue, x=8cm/#1,font=\sffamily]
-      \experimentaxes[#1]{#2}{\experimentmaxvalue}
-      
-      %\experimentaxes[#1]{#2}{#3}
+    \ifthenelse{\lengthtest{\causegroupplotscollectionexperimenttwomaxvalue pt > \causegroupplotscollectionexperimentthreemaxvalue pt}}{
+      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotscollectionexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=6cm/\causegroupplotscollectionexperimentmaxvalue, x=8cm/\causegroupplotscollectionplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxisbytes
       
-      \experimentdatalegendthree[#1]{\experimentmaxvalue}{#4-bytes_freed_count.data}{#5};
+      \experimentdataone[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimentonename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
+      \experimentdatatwo[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimenttwoname/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
+      \experimentdatathree[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimentthreename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
     \end{tikzpicture}
   }
+  \endgroup%
 }
 
-\newcommand{\causegroupplotsmemory}[5][]{
-  \experimentfindmax[#4-bytes_footprint.data]
-  \ifthenelse{\lengthtest{0.01 pt > \experimentmaxvalue pt}}{
+\newcommand{\causegroupplotsmemory}[9]{
+  \begingroup%
+  \def\causegroupplotsmemoryplotmaxtime{#1}%
+  \def\causegroupplotsmemoryexperimentonemaxtime{#2}%
+  \def\causegroupplotsmemoryexperimenttwomaxtime{#3}%
+  \def\causegroupplotsmemoryexperimentthreemaxtime{#4}%
+  \def\causegroupplotsmemoryexperimentonename{#5}%
+  \def\causegroupplotsmemoryexperimenttwoname{#6}%
+  \def\causegroupplotsmemoryexperimentthreename{#7}%
+  \def\causegroupplotsmemorycausegroupfilenameroot{#8}%
+  \def\causegroupplotsmemorylegendlabel{#9}%
+  \experimentfindmax[data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \let\causegroupplotsmemoryexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \let\causegroupplotsmemoryexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \let\causegroupplotsmemoryexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsmemoryexperimentonemaxvalue pt > \causegroupplotsmemoryexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsmemoryexperimentonemaxvalue pt > \causegroupplotsmemoryexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsmemoryexperimentmaxvalue\causegroupplotsmemoryexperimentonemaxvalue%
+    }{
+      \let\causegroupplotsmemoryexperimentmaxvalue\causegroupplotsmemoryexperimentthreemaxvalue%
+    }
   }{
-    \begin{tikzpicture}[y=2.5cm/\experimentmaxvalue, x=8cm/#1,font=\sffamily]
-      \experimentaxes[#1]{#2}{\experimentmaxvalue}
-      
-      %\experimentaxes[#1]{#2}{#3}
+    \ifthenelse{\lengthtest{\causegroupplotsmemoryexperimenttwomaxvalue pt > \causegroupplotsmemoryexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsmemoryexperimentmaxvalue\causegroupplotsmemoryexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotsmemoryexperimentmaxvalue\causegroupplotsmemoryexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsmemoryexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=6cm/\causegroupplotsmemoryexperimentmaxvalue, x=8cm/\causegroupplotsmemoryplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxismemory
       
-      \experimentdatalegendfour[#1]{\experimentmaxvalue}{#4-bytes_footprint.data}{#5};
+      \experimentdataone[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
+      \experimentdatatwo[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
+      \experimentdatathree[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
     \end{tikzpicture}
   }
+  \endgroup%
 }
 
-\newcommand{\causegroupplots}[9][]{
+\newcommand{\causegroupplots}[4]{
   \begin{tabular}{r}
+    {\raggedleft
+      #1
+    }\\
+    {\raggedleft
+      #2
+    }\\
     {\raggedleft
       #3
     }\\
     {\raggedleft
-      #5
-    }\\
-    {\raggedleft
-      #7
-    }\\
-    {\raggedleft
-      #9
+      #4
     }\\
   \end{tabular}
 }
 
 
-
-\newcommand\experimentcausegroupplots[9][]{%
-  \def\argI{#1}%
-  \def\argII{#2}%
-  \def\argIII{#3}%
-  \def\argIV{#4}%
-  \def\argV{#5}%
-  \def\argVI{#6}%
-  \def\argVII{#7}%
-  \def\argVIII{#8}%
-  \def\argIX{#9}%
+\newcommand\experimentcausegroupplots[9]{%
+  \begingroup%
+  \def\experimentcausegroupplotsplotmaxtime{#1}%
+  \def\experimentcausegroupplotsexperimentonemaxtime{#2}%
+  \def\experimentcausegroupplotsexperimenttwomaxtime{#3}%
+  \def\experimentcausegroupplotsexperimentthreemaxtime{#4}%
+  \def\experimentcausegroupplotsexperimentonename{#5}%
+  \def\experimentcausegroupplotsexperimenttwoname{#6}%
+  \def\experimentcausegroupplotsexperimentthreename{#7}%
+  \def\experimentcausegroupplotsexperimentoneprettyname{#8}%
+  \def\experimentcausegroupplotsexperimenttwoprettyname{#9}%
 }
-\newcommand\experimentcausegroupplotscontinued[4][]{%
+\newcommand\experimentcausegroupplotscontinued[4]{%
+  \def\experimentcausegroupplotsexperimentthreeprettyname{#1}%
+  \def\experimentcausegroupplotscausegroupfilenameroot{#2}%
+  \def\experimentcausegroupplotscausegroupprettyname{#3}%
+  \def\experimentdescription{#4}%
   \begin{figure}[ht]
-    
-    {\causegroupplots[\argIX]
-      {\argII}{
-        \causegroupplotsexecution[\argIX]
-                                 {\argI}{\argII}
-                                 {#1}
-                                 {Execution in {#2}}
-      }{\argIV}{
-        \causegroupplotsallocation[\argIX]
-                                  {\argIII}{\argIV}
-                                  {#1}
-                                  {Allocation in {#2}}
-      }{\argVI}{
-        \causegroupplotscollection[\argIX]
-                                  {\argV}{\argVI}
-                                  {#1}
-                                  {Collection in {#2}}
-      }{\argVIII}{
-        \causegroupplotsmemory[\argIX]
-                              {\argVII}{\argVIII}
-                              {#1}
-                              {Memory Used in {#2}}
-      }
-    }
-%    \caption[Total rate of bytecode execution, rate of memory
-%      allocation, rate of garbage collection and overall memory usage
-%      in {#2}.]  {Total rate of bytecode execution, rate of memory
-%      allocation, garbage collection and overall memory usage in {#2}
-%      during {#4} {\mbox{\autoref{table:#3}}} on
-%      {\mbox{page~\pageref{table:#3}}} shows an index of other data
-%      from this experiment.}
+    {\causegroupplots{\causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
+                                               {\experimentcausegroupplotsexperimentonemaxtime}
+                                               {\experimentcausegroupplotsexperimenttwomaxtime}
+                                               {\experimentcausegroupplotsexperimentthreemaxtime}
+                                               {\experimentcausegroupplotsexperimentonename}
+                                               {\experimentcausegroupplotsexperimenttwoname}
+                                               {\experimentcausegroupplotsexperimentthreename}
+                                               {\experimentcausegroupplotscausegroupfilenameroot}
+                                               {Execution in {\experimentcausegroupplotscausegroupprettyname}}}
+                     {%\causegroupplotsallocation{\experimentcausegroupplotsplotmaxtime}
+                      %                          {\experimentcausegroupplotsexperimentonemaxtime}
+                      %                          {\experimentcausegroupplotsexperimenttwomaxtime}
+                      %                          {\experimentcausegroupplotsexperimentthreemaxtime}
+                      %                          {\experimentcausegroupplotsexperimentonename}
+                      %                          {\experimentcausegroupplotsexperimenttwoname}
+                      %                          {\experimentcausegroupplotsexperimentthreename}
+                      %                          {\experimentcausegroupplotscausegroupfilenameroot}
+                      %                          {Allocation in {\experimentcausegroupplotscausegroupprettyname}}
+                      }
+                     {%\causegroupplotscollection{\experimentcausegroupplotsplotmaxtime}
+                      %                          {\experimentcausegroupplotsexperimentonemaxtime}
+                      %                          {\experimentcausegroupplotsexperimenttwomaxtime}
+                      %                          {\experimentcausegroupplotsexperimentthreemaxtime}
+                      %                          {\experimentcausegroupplotsexperimentonename}
+                      %                          {\experimentcausegroupplotsexperimenttwoname}
+                      %                          {\experimentcausegroupplotsexperimentthreename}
+                      %                          {\experimentcausegroupplotscausegroupfilenameroot}
+                      %                          {Collection in {\experimentcausegroupplotscausegroupprettyname}}
+                      }
+                     {\causegroupplotsmemory{\experimentcausegroupplotsplotmaxtime}
+                                            {\experimentcausegroupplotsexperimentonemaxtime}
+                                            {\experimentcausegroupplotsexperimenttwomaxtime}
+                                            {\experimentcausegroupplotsexperimentthreemaxtime}
+                                            {\experimentcausegroupplotsexperimentonename}
+                                            {\experimentcausegroupplotsexperimenttwoname}
+                                            {\experimentcausegroupplotsexperimentthreename}
+                                            {\experimentcausegroupplotscausegroupfilenameroot}
+                                            {Memory Used in {\experimentcausegroupplotscausegroupprettyname}}}}
     \caption[] {Total rate of bytecode execution, rate of memory
-      allocation, garbage collection and overall memory usage in {#2}
-      during {#4}}
-    \label{figure:#1}
+      allocation, garbage collection and overall memory usage in {\experimentcausegroupplotscausegroupprettyname}
+      during {\experimentdescription}}
+    \label{figure:\experimentcausegroupplotscausegroupfilenameroot}
   \end{figure}%
+  \endgroup%
 }
-
 
 
 \newcommand{\experimentdatatable}[3][]{
@@ -513,289 +647,14 @@
 
 
 
-\newcommand{\experimentAIdatafigures}[3][]{
-  \experimentcausegroupplots[10]{50}
-                            {1}{6}
-                            {1}{6}
-                            {200}{600}
-                            {#1}
-                            \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1]
-                                                               {AI}
-                                                               {#2}
-                                                               {#3}
-}
+\newcommand{\dataappendixmaxtime}{180}
+\newcommand{\dataappendixexperimentonemaxtime}{60}
+\newcommand{\dataappendixexperimenttwomaxtime}{75}
+\newcommand{\dataappendixexperimentthreemaxtime}{180}
+\newcommand{\dataappendixexperimentonename}{bootup}
+\newcommand{\dataappendixexperimenttwoname}{no_reflective_learning}
+\newcommand{\dataappendixexperimentthreename}{reflective_learning}
+\newcommand{\dataappendixexperimentoneprettyname}{Bootup and Perceive}
+\newcommand{\dataappendixexperimenttwoprettyname}{Deliberative Learning without Reflection}
+\newcommand{\dataappendixexperimentthreeprettyname}{Deliberative and Reflective Learning}
 
-\newcommand{\experimentdatafigures}[3][]{
-  % AI
-  {\clearpage
-    \experimentAIdatafigures[#1]{#2}{#3 {\mbox{\autoref{table:#2}}} on
-      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-      from this experiment.}
-  }                                                            
-  % reflective
-  {\clearpage
-    \experimentcausegroupplots[5]{25}
-                              {1}{5}
-                              {1}{5}
-                              {100}{400}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective]
-                                                                 {Reflective Layer}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective event knowledge
-  {\clearpage
-    \experimentcausegroupplots[5]{20}
-                              {0.5}{3}
-                              {0.5}{3}
-                              {50}{300}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-reflective_event_knowledge]
-                                                                 {Reflective Event Knowledge Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective execution
-  {\clearpage
-    \experimentcausegroupplots[0.5]{2}
-                              {0.25}{0.5}
-                              {0.25}{0.5}
-                              {5}{20}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-execution]
-                                                                 {Reflective Execution Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective imagination
-  {\clearpage
-    \experimentcausegroupplots[1]{4}
-                              {0.1}{0.5}
-                              {0.1}{0.5}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-imagination]
-                                                                 {Reflective Imagination Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective object type goal
-  {\clearpage
-    \experimentcausegroupplots[5]{20}
-                              {1}{4}
-                              {1}{4}
-                              {20}{80}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan_object_type_goal]
-                                                                 {Reflective Object Type Goal Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective plan
-  {\clearpage
-    \experimentcausegroupplots[2]{10}
-                              {0.25}{1.5}
-                              {0.25}{1.5}
-                              {0.25}{1}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan]
-                                                                 {Reflective Plan Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % reflective plan bug response
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.25}{1}
-                              {0.25}{1}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-reflective-plan_bug_response]
-                                                                 {Reflective Plan Bug Response Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % deliberative
-  {\clearpage
-    \experimentcausegroupplots[5]{20}
-                              {1}{4}
-                              {1}{4}
-                              {50}{200}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative]
-                                                                 {Deliberative Layer}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }                                                                 
-  % deliberative execution
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {5}{40}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-execution]
-                                                                 {Deliberative Execution Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % deliberative imagination
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {5}{40}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-imagination]
-                                                                 {Deliberative Imagination Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % deliberative object type goal
-  {\clearpage
-    \experimentcausegroupplots[3]{12}
-                              {0.5}{2}
-                              {0.5}{2}
-                              {40}{160}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-physical_object_type_goal]
-                                                                 {Deliberative Object Type Goal Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % deliberative plan
-  {\clearpage
-    \experimentcausegroupplots[4]{16}
-                              {0.5}{2.5}
-                              {0.5}{2.5}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-deliberative-plan]
-                                                                 {Deliberative Plan Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % learned reactive
-  {\clearpage
-    \experimentcausegroupplots[2]{10}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {20}{60}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive]
-                                                                 {Learned Reactive Layer}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % learned reactive physical action
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {5}{20}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive-physical]
-                                                                 {L.R. Physical Action Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % learned reactive physical knowledge
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {5}{40}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-learned_reactive-physical_knowledge]
-                                                                 {L.R. Physical Knowledge Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % built-in reactive
-  {\clearpage
-    \experimentcausegroupplots[5]{15}
-                              {0.5}{2}
-                              {0.5}{2}
-                              {10}{50}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive]
-                                                                 {Built-in Reactive Layer}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % built-in reactive neural plug
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-neural_plug]
-                                                                 {B.R. Neural Plug Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % built-in reactive physical action
-  {\clearpage
-    \experimentcausegroupplots[1]{5}
-                              {0.5}{1}
-                              {0.5}{1}
-                              {2}{10}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-physical]
-                                                                 {B.R. Physical Action Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-  % built-in reactive sensory
-  {\clearpage
-    \experimentcausegroupplots[5]{20}
-                              {0.5}{3}
-                              {0.5}{3}
-                              {10}{50}
-                              {#1}
-                              \experimentcausegroupplotscontinued[data/#2/mind_plot-Gripper-1-builtin_reactive-sensory]
-                                                                 {B.R. Sensory Agency}
-                                                                 {#2}
-                                                                 {#3  {\mbox{\autoref{table:#2}}} on
-                                                                      {\mbox{page~\pageref{table:#2}}} shows an index of other data
-                                                                      from this experiment.}
-  }
-}

@@ -959,7 +959,7 @@ f2ptr raw__relative_time__minus(f2ptr cause, f2ptr this, f2ptr that) {
 f2ptr f2__relative_time__minus(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(relative_time, this);
   assert_argument_type(relative_time, that);
-  return f2bool__new(raw__relative_time__minus(cause, this, that));
+  return raw__relative_time__minus(cause, this, that);
 }
 def_pcfunk2(relative_time__minus, this, that,
 	    "Returns t if this relative_time is further in the past than that relative_time.",

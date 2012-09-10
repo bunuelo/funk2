@@ -70,6 +70,7 @@
   [wait-for-trigger trigger]]
 
 [deftypefunk mind_runtime_metric_monitor_ticker execute tick [new_simulation_relative_time]
+  [assert-type relative_time new_simulation_relative_time]
   [= simulation_relative_time new_simulation_relative_time]
   [have trigger trigger]]
 
@@ -285,7 +286,7 @@
 	[metric_iter  metric_sequence]]
     [while metric_iter
       [let [[metric [car metric_iter]]]
-	[let [[metric_value                    [get metric simulation_bytes_footprint]]
+	[let [[metric_value                    [get metric bytes_footprint]]
 	      [metric_simulation_relative_time [get metric simulation_relative_time]]]
 	  [let [[output_x [/ [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
 				1000000000]

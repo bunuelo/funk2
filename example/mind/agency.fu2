@@ -72,6 +72,12 @@
 	      [have resource save_bytecode_count_plots time_offset [format nil filename_root '-' name]]]
 	[get this resources]]]
 
+[deftypefunk agency execute save_simulation_bytecode_count_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_bytecode_count_plot [format nil filename_root '-' name]]
+  [parc [funk [resource]
+	      [have resource save_simulation_bytecode_count_plots [format nil filename_root '-' name]]]
+	[get this resources]]]
+
 [deftypefunk agency execute save_execution_nanoseconds_plots [time_offset filename_root]
   [have runtime_metric_monitor save_execution_nanoseconds_plot time_offset [format nil filename_root '-' name]]
   [parc [funk [resource]
@@ -94,6 +100,12 @@
   [have runtime_metric_monitor save_bytes_footprint_plot time_offset [format nil filename_root '-' name]]
   [parc [funk [resource]
 	      [have resource save_bytes_footprint_plots time_offset [format nil filename_root '-' name]]]
+	[get this resources]]]
+
+[deftypefunk agency execute save_simulation_bytes_footprint_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_bytes_footprint_plot [format nil filename_root '-' name]]
+  [parc [funk [resource]
+	      [have resource save_simulation_bytes_footprint_plots [format nil filename_root '-' name]]]
 	[get this resources]]]
 
 [deftypefunk agency get resource [name]

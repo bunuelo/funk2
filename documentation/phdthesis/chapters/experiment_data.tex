@@ -8,48 +8,52 @@ reflective tracing features of the underlying Funk garbage collected
 memory system, upon which the virtual operating system is built.  This
 low level memory tracing functionality allows easily tracing events at
 any level of abstraction in the entire system using the Funk causal
-reflective tracing features.  \autoref{table:bootup} shows a list of
-figures showing data from an experiment where the AI boots up
-and then perceives the world over time.  This experiment is a control
-that shows that the AI memory usage and execution is stable if it does
-not have any goals and the physical world is not changing.
-\autoref{table:no_reflective_learning} shows a list of figures showing
-data from an experiment with the reflective learning disabled.
-\autoref{table:reflective_learning} shows a list of figures showing
-data from an experiment with the AI reflectively tracing, and building
-models of the deliberative planning process.  Comparing the execution
-of the experiment with no reflective learning with that of reflective
-learning shows a rough estimate of how much more memory is used when
-the reflective learning about the deliberative planning machine is
-enabled.  The evaluation chapter, \autoref{chapter:evaluation}, has a
-more detailed analysis of the data in this appendix, comparing the
-three experiments.
-
-\experimentdatatable[bootup]{an experiment that boots up the AI and
-  allows it to perceive the physical world and not stimulating it to
-  achieve any goals} {This experiment serves as a control for the
-  subsequent two experiments.  This experiment shows that when the AI
-  is not given any deliberative goals, it learns from its initial
-  perceptions, and when these do not change, it has nothing to learn
-  and memory usage is stable.}
-
-\experimentdatatable[no_reflective_learning]{an experiment without the
-  AI reflectively tracing, and building models of the deliberative
-  planning process} {This experiment serves to show the memory
-  performance of the system when the reflective perception, learning,
-  and prediction of deliberative actions is disabled.}
-
-\experimentdatatable[reflective_learning]{an experiment with the AI
-  reflectively tracing, and building models of the deliberative
-  planning process} {This experiment serves as a demonstration of the
-  complete AI system running, learning from its physical perceptions,
-  trying to accomplish the given deliberative goal of stacking two
-  blocks, and also reflectively perceiving and learning to predict the
-  effects of its deliberative actions, including how planning can lead
-  to execution failures.}
+reflective tracing features.  \autoref{table:experiment_data} shows a
+list of figures showing data from three experiments.  In the first
+experiment, the AI boots up and then perceives the world over time.
+This experiment is a control that shows that the AI memory usage and
+execution is stable if it does not have any goals and the physical
+world is not changing.  In the second experiment, the reflective
+learning is disabled.  In the third experiment, the AI reflectively
+traces and builds models of the deliberative planning process.
+Comparing the execution of the experiment with no reflective learning
+with that of reflective learning shows a rough estimate of how much
+more memory is used when the reflective learning about the
+deliberative planning machine is enabled.  The evaluation chapter,
+\autoref{chapter:evaluation}, has a more detailed analysis of the data
+in this appendix, comparing the three experiments.
 
 
 
+
+\begin{table}
+  \centering
+  \begin{tabular}{lllrr}
+    ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                      & Page \\
+    \hline AI &                   &                    & \autoref{figure:mind_plot-Gripper-1}                                        & \pageref{figure:mind_plot-Gripper-1} \\
+    ~         & Reflective        &                    & \autoref{figure:mind_plot-Gripper-1-reflective}                             & \pageref{figure:mind_plot-Gripper-1-reflective} \\
+    ~         &                   & Event Knowledge    & \autoref{figure:mind_plot-Gripper-1-reflective-reflective_event_knowledge}  & \pageref{figure:mind_plot-Gripper-1-reflective-reflective_event_knowledge} \\
+    ~         &                   & Execution          & \autoref{figure:mind_plot-Gripper-1-reflective-execution}                   & \pageref{figure:mind_plot-Gripper-1-reflective-execution} \\
+    ~         &                   & Imagination        & \autoref{figure:mind_plot-Gripper-1-reflective-imagination}                 & \pageref{figure:mind_plot-Gripper-1-reflective-imagination} \\
+    ~         &                   & Object Type Goal   & \autoref{figure:mind_plot-Gripper-1-reflective-plan_object_type_goal}       & \pageref{figure:mind_plot-Gripper-1-reflective-plan_object_type_goal} \\
+    ~         &                   & Plan               & \autoref{figure:mind_plot-Gripper-1-reflective-plan}                        & \pageref{figure:mind_plot-Gripper-1-reflective-plan} \\
+    ~         &                   & Plan Bug Response  & \autoref{figure:mind_plot-Gripper-1-reflective-plan_bug_response}           & \pageref{figure:mind_plot-Gripper-1-reflective-plan_bug_response} \\
+    ~         & Deliberative      &                    & \autoref{figure:mind_plot-Gripper-1-deliberative}                           & \pageref{figure:mind_plot-Gripper-1-deliberative} \\
+    ~         &                   & Execution          & \autoref{figure:mind_plot-Gripper-1-deliberative-execution}                 & \pageref{figure:mind_plot-Gripper-1-deliberative-execution} \\
+    ~         &                   & Imagination        & \autoref{figure:mind_plot-Gripper-1-deliberative-imagination}               & \pageref{figure:mind_plot-Gripper-1-deliberative-imagination} \\
+    ~         &                   & Object Type Goal   & \autoref{figure:mind_plot-Gripper-1-deliberative-physical_object_type_goal} & \pageref{figure:mind_plot-Gripper-1-deliberative-physical_object_type_goal} \\
+    ~         &                   & Plan               & \autoref{figure:mind_plot-Gripper-1-deliberative-plan}                      & \pageref{figure:mind_plot-Gripper-1-deliberative-plan} \\
+    ~         & Learned Reactive  &                    & \autoref{figure:mind_plot-Gripper-1-learned_reactive}                       & \pageref{figure:mind_plot-Gripper-1-learned_reactive} \\
+    ~         &                   & Physical Action    & \autoref{figure:mind_plot-Gripper-1-learned_reactive-physical}              & \pageref{figure:mind_plot-Gripper-1-learned_reactive-physical} \\
+    ~         &                   & Physical Knowledge & \autoref{figure:mind_plot-Gripper-1-learned_reactive-physical_knowledge}    & \pageref{figure:mind_plot-Gripper-1-learned_reactive-physical_knowledge} \\
+    ~         & Built-in Reactive &                    & \autoref{figure:mind_plot-Gripper-1-builtin_reactive}                       & \pageref{figure:mind_plot-Gripper-1-builtin_reactive} \\
+    ~         &                   & Neural Plug        & \autoref{figure:mind_plot-Gripper-1-builtin_reactive-neural_plug}           & \pageref{figure:mind_plot-Gripper-1-builtin_reactive-neural_plug} \\
+    ~         &                   & Physical Action    & \autoref{figure:mind_plot-Gripper-1-builtin_reactive-physical}              & \pageref{figure:mind_plot-Gripper-1-builtin_reactive-physical} \\
+    ~         &                   & Sensory            & \autoref{figure:mind_plot-Gripper-1-builtin_reactive-sensory}               & \pageref{figure:mind_plot-Gripper-1-builtin_reactive-sensory} \\
+  \end{tabular}
+  \caption[Data from three experiments.]{Data from three experiments.}
+  \label{table:experiment_data}
+\end{table}
 
 % AI
 {\clearpage
@@ -65,8 +69,8 @@ three experiments.
                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
                                                                {mind_plot-Gripper-1}
                                                                {AI}
-                                                               { {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-                                                                 {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+                                                               { {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
                                                                  from this experiment.}
 }                                                            
 %% % reflective
@@ -83,8 +87,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective}
 %%                                                                {Reflective Layer}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective event knowledge
@@ -101,8 +105,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
 %%                                                                {Reflective Event Knowledge Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective execution
@@ -119,8 +123,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-execution}
 %%                                                                {Reflective Execution Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective imagination
@@ -137,8 +141,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-imagination}
 %%                                                                {Reflective Imagination Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective object type goal
@@ -155,8 +159,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-plan_object_type_goal}
 %%                                                                {Reflective Object Type Goal Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective plan
@@ -173,8 +177,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-plan}
 %%                                                                {Reflective Plan Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % reflective plan bug response
@@ -191,8 +195,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-reflective-plan_bug_response}
 %%                                                                {Reflective Plan Bug Response Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % deliberative
@@ -209,8 +213,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-deliberative}
 %%                                                                {Deliberative Layer}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }                                                                 
 %% % deliberative execution
@@ -227,8 +231,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-deliberative-execution}
 %%                                                                {Deliberative Execution Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % deliberative imagination
@@ -245,8 +249,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-deliberative-imagination}
 %%                                                                {Deliberative Imagination Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % deliberative object type goal
@@ -263,8 +267,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
 %%                                                                {Deliberative Object Type Goal Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % deliberative plan
@@ -281,8 +285,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-deliberative-plan}
 %%                                                                {Deliberative Plan Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % learned reactive
@@ -299,8 +303,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-learned_reactive}
 %%                                                                {Learned Reactive Layer}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % learned reactive physical action
@@ -317,8 +321,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-learned_reactive-physical}
 %%                                                                {L.R. Physical Action Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % learned reactive physical knowledge
@@ -335,8 +339,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
 %%                                                                {L.R. Physical Knowledge Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % built-in reactive
@@ -353,8 +357,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-builtin_reactive}
 %%                                                                {Built-in Reactive Layer}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % built-in reactive neural plug
@@ -371,8 +375,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-builtin_reactive-neural_plug}
 %%                                                                {B.R. Neural Plug Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % built-in reactive physical action
@@ -389,8 +393,8 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-builtin_reactive-physical}
 %%                                                                {B.R. Physical Action Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 %% % built-in reactive sensory
@@ -407,11 +411,35 @@ three experiments.
 %%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
 %%                                                                {mind_plot-Gripper-1-builtin_reactive-sensory}
 %%                                                                {B.R. Sensory Agency}
-%%                                                                {  {\mbox{\autoref{table:\dataappendixexperimentonename}}} on
-%%                                                                  {\mbox{page~\pageref{table:\dataappendixexperimentonename}}} shows an index of other data
+%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
+%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
 %%                                                                  from this experiment.}
 %% }
 
+
+
+%\experimentdatatable[bootup]{an experiment that boots up the AI and
+%  allows it to perceive the physical world and not stimulating it to
+%  achieve any goals} {This experiment serves as a control for the
+%  subsequent two experiments.  This experiment shows that when the AI
+%  is not given any deliberative goals, it learns from its initial
+%  perceptions, and when these do not change, it has nothing to learn
+%  and memory usage is stable.}
+
+%\experimentdatatable[no_reflective_learning]{an experiment without the
+%  AI reflectively tracing, and building models of the deliberative
+%  planning process} {This experiment serves to show the memory
+%  performance of the system when the reflective perception, learning,
+%  and prediction of deliberative actions is disabled.}
+
+%\experimentdatatable[reflective_learning]{an experiment with the AI
+%  reflectively tracing, and building models of the deliberative
+%  planning process} {This experiment serves as a demonstration of the
+%  complete AI system running, learning from its physical perceptions,
+%  trying to accomplish the given deliberative goal of stacking two
+%  blocks, and also reflectively perceiving and learning to predict the
+%  effects of its deliberative actions, including how planning can lead
+%  to execution failures.}
 
 
 %\clearpage

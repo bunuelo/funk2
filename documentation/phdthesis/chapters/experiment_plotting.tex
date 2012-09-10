@@ -198,12 +198,20 @@
   node[anchor=east] {}; 
 }
 
+\usepackage{xcolor}
+
+\definecolor{experimentdataonecolor}  {rgb}{0, 0.5, 0}
+\definecolor{experimentdatatwocolor}  {rgb}{1, 0, 0}
+\definecolor{experimentdatathreecolor}{rgb}{0, 0, 1}
+\definecolor{experimentdatafourcolor} {rgb}{0.5, 0, 0.5}
+\definecolor{experimentdatafivecolor} {rgb}{0.75, 0.5, 0}
+
 \newcommand{\experimentdataone}[3][]{
   %plots
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=*, mark options={fill=white,scale=\experimentmarkscalefour}]
+    \draw[color=experimentdataonecolor] plot[mark=*, mark options={fill=white,draw=experimentdataonecolor,scale=\experimentmarkscalefour}]
       file {#3};
   \end{scope}
 }
@@ -213,7 +221,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=square*, mark options={fill=white,scale=\experimentmarkscaletwo}]
+    \draw[color=experimentdatatwocolor] plot[mark=square*, mark options={fill=white,draw=experimentdatatwocolor,scale=\experimentmarkscaletwo}]
       file {#3};
   \end{scope}
 }
@@ -223,7 +231,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscalethree}]
+    \draw[color=experimentdatathreecolor] plot[mark=triangle*, mark options={fill=white,draw=experimentdatathreecolor,scale=\experimentmarkscalethree}]
       file {#3};
   \end{scope}
 }
@@ -233,7 +241,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=square*, mark options={fill=black,scale=\experimentmarkscaleone}]
+    \draw[color=experimentdatafourcolor] plot[mark=square*, mark options={fill=experimentdatafourcolor,draw=experimentdatafourcolor,scale=\experimentmarkscaleone}]
       file {#3};
   \end{scope}
 }
@@ -243,7 +251,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscalefive}]
+    \draw[color=experimentdatafivecolor] plot[mark=triangle*, mark options={fill=experimentdatafivecolor,draw=experimentdatafivecolor,scale=\experimentmarkscalefive}]
       file {#3};
   \end{scope}
 }
@@ -252,7 +260,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=*, mark options={fill=white,scale=\experimentmarkscalefour}] (0.25,0) -- (0.5,0) 
+      plot[mark=*, mark options={fill=white,draw=experimentdataonecolor,scale=\experimentmarkscalefour}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -261,7 +269,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=square*, mark options={fill=white,scale=\experimentmarkscaletwo}] (0.25,0) -- (0.5,0) 
+      plot[mark=square*, mark options={fill=white,draw=experimentdatatwocolor,scale=\experimentmarkscaletwo}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -270,7 +278,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=triangle*, mark options={fill=white,scale=\experimentmarkscalethree}] (0.25,0) -- (0.5,0) 
+      plot[mark=triangle*, mark options={fill=white,draw=experimentdatathreecolor,scale=\experimentmarkscalethree}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -279,7 +287,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=square*, mark options={fill=black,scale=\experimentmarkscaleone}] (0.25,0) -- (0.5,0) 
+      plot[mark=square*, mark options={fill=experimentdatafourcolor,draw=experimentdatafourcolor,scale=\experimentmarkscaleone}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -288,7 +296,7 @@
   %legend
   \begin{scope}[shift={(#1,#2)}]
     \draw (0,0) -- 
-      plot[mark=triangle*, mark options={fill=black,scale=\experimentmarkscalefive}] (0.25,0) -- (0.5,0) 
+      plot[mark=triangle*, mark options={fill=experimentdatafivecolor,draw=experimentdatafivecolor,scale=\experimentmarkscalefive}] (0.25,0) -- (0.5,0) 
       node[right]{#3};
   \end{scope}
 }
@@ -382,6 +390,10 @@
       \experimentxaxislabel
       \experimentyaxisbytecodes
       
+      \experimentlegendthree[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 11 / 10}{Deliberative and Reflective Learning};
+      \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10 / 10}{Only Deliberative Learning};
+      \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 9 / 10}{Boot-up and Perceive without Goals};
+
       \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
       \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
       \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
@@ -567,44 +579,30 @@
   \def\experimentcausegroupplotscausegroupprettyname{#3}%
   \def\experimentdescription{#4}%
   \begin{figure}[ht]
-    {\causegroupplots{\causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
-                                               {\experimentcausegroupplotsexperimentonemaxtime}
-                                               {\experimentcausegroupplotsexperimenttwomaxtime}
-                                               {\experimentcausegroupplotsexperimentthreemaxtime}
-                                               {\experimentcausegroupplotsexperimentonename}
-                                               {\experimentcausegroupplotsexperimenttwoname}
-                                               {\experimentcausegroupplotsexperimentthreename}
-                                               {\experimentcausegroupplotscausegroupfilenameroot}
-                                               {Execution in {\experimentcausegroupplotscausegroupprettyname}}}
-                     {%\causegroupplotsallocation{\experimentcausegroupplotsplotmaxtime}
-                      %                          {\experimentcausegroupplotsexperimentonemaxtime}
-                      %                          {\experimentcausegroupplotsexperimenttwomaxtime}
-                      %                          {\experimentcausegroupplotsexperimentthreemaxtime}
-                      %                          {\experimentcausegroupplotsexperimentonename}
-                      %                          {\experimentcausegroupplotsexperimenttwoname}
-                      %                          {\experimentcausegroupplotsexperimentthreename}
-                      %                          {\experimentcausegroupplotscausegroupfilenameroot}
-                      %                          {Allocation in {\experimentcausegroupplotscausegroupprettyname}}
-                      }
-                     {%\causegroupplotscollection{\experimentcausegroupplotsplotmaxtime}
-                      %                          {\experimentcausegroupplotsexperimentonemaxtime}
-                      %                          {\experimentcausegroupplotsexperimenttwomaxtime}
-                      %                          {\experimentcausegroupplotsexperimentthreemaxtime}
-                      %                          {\experimentcausegroupplotsexperimentonename}
-                      %                          {\experimentcausegroupplotsexperimenttwoname}
-                      %                          {\experimentcausegroupplotsexperimentthreename}
-                      %                          {\experimentcausegroupplotscausegroupfilenameroot}
-                      %                          {Collection in {\experimentcausegroupplotscausegroupprettyname}}
-                      }
-                     {\causegroupplotsmemory{\experimentcausegroupplotsplotmaxtime}
-                                            {\experimentcausegroupplotsexperimentonemaxtime}
-                                            {\experimentcausegroupplotsexperimenttwomaxtime}
-                                            {\experimentcausegroupplotsexperimentthreemaxtime}
-                                            {\experimentcausegroupplotsexperimentonename}
-                                            {\experimentcausegroupplotsexperimenttwoname}
-                                            {\experimentcausegroupplotsexperimentthreename}
-                                            {\experimentcausegroupplotscausegroupfilenameroot}
-                                            {Memory Used in {\experimentcausegroupplotscausegroupprettyname}}}}
+    \begin{tabular}{r}
+      {\raggedleft
+         \causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
+                                  {\experimentcausegroupplotsexperimentonemaxtime}
+                                  {\experimentcausegroupplotsexperimenttwomaxtime}
+                                  {\experimentcausegroupplotsexperimentthreemaxtime}
+                                  {\experimentcausegroupplotsexperimentonename}
+                                  {\experimentcausegroupplotsexperimenttwoname}
+                                  {\experimentcausegroupplotsexperimentthreename}
+                                  {\experimentcausegroupplotscausegroupfilenameroot}
+                                  {Execution in {\experimentcausegroupplotscausegroupprettyname}}
+      }\\
+      {\raggedleft
+        \causegroupplotsmemory{\experimentcausegroupplotsplotmaxtime}
+                              {\experimentcausegroupplotsexperimentonemaxtime}
+                              {\experimentcausegroupplotsexperimenttwomaxtime}
+                              {\experimentcausegroupplotsexperimentthreemaxtime}
+                              {\experimentcausegroupplotsexperimentonename}
+                              {\experimentcausegroupplotsexperimenttwoname}
+                              {\experimentcausegroupplotsexperimentthreename}
+                              {\experimentcausegroupplotscausegroupfilenameroot}
+                              {Memory Used in {\experimentcausegroupplotscausegroupprettyname}}
+      }\\
+    \end{tabular}
     \caption[] {Total rate of bytecode execution, rate of memory
       allocation, garbage collection and overall memory usage in {\experimentcausegroupplotscausegroupprettyname}
       during {\experimentdescription}}

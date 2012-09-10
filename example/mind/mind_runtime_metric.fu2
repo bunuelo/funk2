@@ -144,7 +144,7 @@
 		      [output_y [/ [/ [get value_diff as-double]
 				      [/ [get [get simulation_relative_time_diff total_nanoseconds] as-double]
 					 1000000000]]
-				   1000]]]
+				   1000000]]]
 		  [let [[line_string [format nil output_x ' ' output_y '\n']]]
 		    [= line_strings [cons line_string line_strings]]]]]]]
 	[= prev_metric metric]

@@ -327,11 +327,11 @@
 }
 
 \newcommand{\experimentxaxislabel}{
-  \node[below=0.6cm] at (x axis mid) {Minutes};
+  \node[below=0.6cm] at (x axis mid) {Seconds};
 }
 
 \newcommand{\experimentxaxiscloselabel}{
-  \node[below=0.5cm] at (x axis mid) {Minutes};
+  \node[below=0.5cm] at (x axis mid) {Seconds};
 }
 
 \newcommand{\experimentyaxisbytecodes}{
@@ -362,11 +362,11 @@
   \def\causegroupplotsexecutionexperimentthreename{#7}%
   \def\causegroupplotsexecutioncausegroupfilenameroot{#8}%
   \def\causegroupplotsexecutionlegendlabel{#9}%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \experimentfindmax[data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
   \let\causegroupplotsexecutionexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \experimentfindmax[data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
   \let\causegroupplotsexecutionexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data]
+  \experimentfindmax[data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
   \let\causegroupplotsexecutionexperimentthreemaxvalue\experimentmaxvalue%
   \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimenttwomaxvalue pt}}{
     \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimentthreemaxvalue pt}}{
@@ -394,103 +394,9 @@
       \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10 / 10}{Only Deliberative Learning};
       \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 9 / 10}{Boot-up and Perceive without Goals};
 
-      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
-      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
-      \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-bytecode_count.data};
-    \end{tikzpicture}
-  }
-  \endgroup%
-}
-
-\newcommand{\causegroupplotsallocation}[9]{
-  \begingroup%
-  \def\causegroupplotsallocationplotmaxtime{#1}%
-  \def\causegroupplotsallocationexperimentonemaxtime{#2}%
-  \def\causegroupplotsallocationexperimenttwomaxtime{#3}%
-  \def\causegroupplotsallocationexperimentthreemaxtime{#4}%
-  \def\causegroupplotsallocationexperimentonename{#5}%
-  \def\causegroupplotsallocationexperimenttwoname{#6}%
-  \def\causegroupplotsallocationexperimentthreename{#7}%
-  \def\causegroupplotsallocationcausegroupfilenameroot{#8}%
-  \def\causegroupplotsallocationlegendlabel{#9}%
-  \experimentfindmax[data/\causegroupplotsallocationexperimentonename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
-  \let\causegroupplotsallocationexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsallocationexperimenttwoname/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
-  \let\causegroupplotsallocationexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsallocationexperimentthreename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data]
-  \let\causegroupplotsallocationexperimentthreemaxvalue\experimentmaxvalue%
-  \ifthenelse{\lengthtest{\causegroupplotsallocationexperimentonemaxvalue pt > \causegroupplotsallocationexperimenttwomaxvalue pt}}{
-    \ifthenelse{\lengthtest{\causegroupplotsallocationexperimentonemaxvalue pt > \causegroupplotsallocationexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentonemaxvalue%
-    }{
-      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentthreemaxvalue%
-    }
-  }{
-    \ifthenelse{\lengthtest{\causegroupplotsallocationexperimenttwomaxvalue pt > \causegroupplotsallocationexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimenttwomaxvalue%
-    }{
-      \let\causegroupplotsallocationexperimentmaxvalue\causegroupplotsallocationexperimentthreemaxvalue%
-    }
-  }
-  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsallocationexperimentmaxvalue pt}}{
-  }{
-    \begin{tikzpicture}[y=6cm/\causegroupplotsallocationexperimentmaxvalue, x=8cm/\causegroupplotsallocationplotmaxtime,font=\sffamily]
-      \experimentaxes[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}
-      
-      %labels
-      \experimentxaxislabel
-      \experimentyaxisbytes
-      
-      \experimentdataone[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimentonename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
-      \experimentdatatwo[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimenttwoname/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
-      \experimentdatathree[\causegroupplotsallocationplotmaxtime]{\causegroupplotsallocationexperimentmaxvalue}{data/\causegroupplotsallocationexperimentthreename/\causegroupplotsallocationcausegroupfilenameroot-bytes_allocated_count.data};
-    \end{tikzpicture}
-  }
-  \endgroup%
-}
-
-\newcommand{\causegroupplotscollection}[9]{
-  \begingroup%
-  \def\causegroupplotscollectionplotmaxtime{#1}%
-  \def\causegroupplotscollectionexperimentonemaxtime{#2}%
-  \def\causegroupplotscollectionexperimenttwomaxtime{#3}%
-  \def\causegroupplotscollectionexperimentthreemaxtime{#4}%
-  \def\causegroupplotscollectionexperimentonename{#5}%
-  \def\causegroupplotscollectionexperimenttwoname{#6}%
-  \def\causegroupplotscollectionexperimentthreename{#7}%
-  \def\causegroupplotscollectioncausegroupfilenameroot{#8}%
-  \def\causegroupplotscollectionlegendlabel{#9}%
-  \experimentfindmax[data/\causegroupplotscollectionexperimentonename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
-  \let\causegroupplotscollectionexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotscollectionexperimenttwoname/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
-  \let\causegroupplotscollectionexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotscollectionexperimentthreename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data]
-  \let\causegroupplotscollectionexperimentthreemaxvalue\experimentmaxvalue%
-  \ifthenelse{\lengthtest{\causegroupplotscollectionexperimentonemaxvalue pt > \causegroupplotscollectionexperimenttwomaxvalue pt}}{
-    \ifthenelse{\lengthtest{\causegroupplotscollectionexperimentonemaxvalue pt > \causegroupplotscollectionexperimentthreemaxvalue pt}}{
-      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentonemaxvalue%
-    }{
-      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentthreemaxvalue%
-    }
-  }{
-    \ifthenelse{\lengthtest{\causegroupplotscollectionexperimenttwomaxvalue pt > \causegroupplotscollectionexperimentthreemaxvalue pt}}{
-      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimenttwomaxvalue%
-    }{
-      \let\causegroupplotscollectionexperimentmaxvalue\causegroupplotscollectionexperimentthreemaxvalue%
-    }
-  }
-  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotscollectionexperimentmaxvalue pt}}{
-  }{
-    \begin{tikzpicture}[y=6cm/\causegroupplotscollectionexperimentmaxvalue, x=8cm/\causegroupplotscollectionplotmaxtime,font=\sffamily]
-      \experimentaxes[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}
-      
-      %labels
-      \experimentxaxislabel
-      \experimentyaxisbytes
-      
-      \experimentdataone[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimentonename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
-      \experimentdatatwo[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimenttwoname/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
-      \experimentdatathree[\causegroupplotscollectionplotmaxtime]{\causegroupplotscollectionexperimentmaxvalue}{data/\causegroupplotscollectionexperimentthreename/\causegroupplotscollectioncausegroupfilenameroot-bytes_freed_count.data};
+      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
     \end{tikzpicture}
   }
   \endgroup%
@@ -507,11 +413,11 @@
   \def\causegroupplotsmemoryexperimentthreename{#7}%
   \def\causegroupplotsmemorycausegroupfilenameroot{#8}%
   \def\causegroupplotsmemorylegendlabel{#9}%
-  \experimentfindmax[data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \experimentfindmax[data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data]
   \let\causegroupplotsmemoryexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \experimentfindmax[data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data]
   \let\causegroupplotsmemoryexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data]
+  \experimentfindmax[data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data]
   \let\causegroupplotsmemoryexperimentthreemaxvalue\experimentmaxvalue%
   \ifthenelse{\lengthtest{\causegroupplotsmemoryexperimentonemaxvalue pt > \causegroupplotsmemoryexperimenttwomaxvalue pt}}{
     \ifthenelse{\lengthtest{\causegroupplotsmemoryexperimentonemaxvalue pt > \causegroupplotsmemoryexperimentthreemaxvalue pt}}{
@@ -535,9 +441,9 @@
       \experimentxaxislabel
       \experimentyaxismemory
       
-      \experimentdataone[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
-      \experimentdatatwo[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
-      \experimentdatathree[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-bytes_footprint.data};
+      \experimentdataone[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
+      \experimentdatatwo[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
+      \experimentdatathree[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
     \end{tikzpicture}
   }
   \endgroup%

@@ -2,6 +2,7 @@
 
 emacs start_emacs.sh \
       README \
+      funk2.sh \
       configure.ac \
       Makefile.am \
       funk-mode.el \

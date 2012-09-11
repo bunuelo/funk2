@@ -29,7 +29,7 @@ in this appendix, comparing the three experiments.
 \begin{table}
   \centering
   \begin{tabular}{lllrr}
-    ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                      & Page \\
+    ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                      & \emph{Page} \\
     \hline AI &                   &                    & \autoref{figure:mind_plot-Gripper-1}                                        & \pageref{figure:mind_plot-Gripper-1} \\
     ~         & Reflective        &                    & \autoref{figure:mind_plot-Gripper-1-reflective}                             & \pageref{figure:mind_plot-Gripper-1-reflective} \\
     ~         &                   & Event Knowledge    & \autoref{figure:mind_plot-Gripper-1-reflective-reflective_event_knowledge}  & \pageref{figure:mind_plot-Gripper-1-reflective-reflective_event_knowledge} \\
@@ -57,6 +57,51 @@ in this appendix, comparing the three experiments.
 
 % AI
 {\clearpage
+  \begin{samepage}
+    \section{Comparison of AI in Three Experiments}
+    \experimentcausegroupplots{\dataappendixmaxtime}
+                              {\dataappendixexperimentonemaxtime}
+                              {\dataappendixexperimenttwomaxtime}
+                              {\dataappendixexperimentthreemaxtime}
+                              {\dataappendixexperimentonename}
+                              {\dataappendixexperimenttwoname}
+                              {\dataappendixexperimentthreename}
+                              {\dataappendixexperimentoneprettyname}
+                              {\dataappendixexperimenttwoprettyname}
+                              \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                                 {mind_plot-Gripper-1}
+                                                                 {AI}
+                                                                 { {\mbox{\autoref{table:experiment_data}}} on
+                                                                   {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                   from this experiment.}
+                                                                 {5.5cm}
+  \end{samepage}
+}
+% reflective
+{\clearpage
+  \begin{samepage}
+    \section{Comparison of Reflective Layer in Three Experiments}
+    \experimentcausegroupplots{\dataappendixmaxtime}
+                              {\dataappendixexperimentonemaxtime}
+                              {\dataappendixexperimenttwomaxtime}
+                              {\dataappendixexperimentthreemaxtime}
+                              {\dataappendixexperimentonename}
+                              {\dataappendixexperimenttwoname}
+                              {\dataappendixexperimentthreename}
+                              {\dataappendixexperimentoneprettyname}
+                              {\dataappendixexperimenttwoprettyname}
+                              \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                                 {mind_plot-Gripper-1-reflective}
+                                                                 {Reflective Layer}
+                                                                 {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                   {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                   from this experiment.}
+                                                                 {5cm}
+  \end{samepage}
+}
+% reflective event knowledge
+{\clearpage
+  \section{Comparison of Reflective Event Knowledge Agency in Three Experiments}
   \experimentcausegroupplots{\dataappendixmaxtime}
                             {\dataappendixexperimentonemaxtime}
                             {\dataappendixexperimenttwomaxtime}
@@ -67,354 +112,353 @@ in this appendix, comparing the three experiments.
                             {\dataappendixexperimentoneprettyname}
                             {\dataappendixexperimenttwoprettyname}
                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1}
-                                                               {AI}
-                                                               { {\mbox{\autoref{table:experiment_data}}} on
+                                                               {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
+                                                               {Reflective Event Knowledge Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
                                                                  from this experiment.}
-}                                                            
-%% % reflective
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective}
-%%                                                                {Reflective Layer}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective event knowledge
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
-%%                                                                {Reflective Event Knowledge Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective execution
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-execution}
-%%                                                                {Reflective Execution Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective imagination
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-imagination}
-%%                                                                {Reflective Imagination Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective object type goal
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-plan_object_type_goal}
-%%                                                                {Reflective Object Type Goal Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective plan
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-plan}
-%%                                                                {Reflective Plan Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % reflective plan bug response
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-reflective-plan_bug_response}
-%%                                                                {Reflective Plan Bug Response Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % deliberative
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-deliberative}
-%%                                                                {Deliberative Layer}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }                                                                 
-%% % deliberative execution
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-deliberative-execution}
-%%                                                                {Deliberative Execution Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % deliberative imagination
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-deliberative-imagination}
-%%                                                                {Deliberative Imagination Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % deliberative object type goal
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
-%%                                                                {Deliberative Object Type Goal Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % deliberative plan
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-deliberative-plan}
-%%                                                                {Deliberative Plan Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % learned reactive
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-learned_reactive}
-%%                                                                {Learned Reactive Layer}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % learned reactive physical action
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-learned_reactive-physical}
-%%                                                                {L.R. Physical Action Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % learned reactive physical knowledge
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
-%%                                                                {L.R. Physical Knowledge Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % built-in reactive
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-builtin_reactive}
-%%                                                                {Built-in Reactive Layer}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % built-in reactive neural plug
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-builtin_reactive-neural_plug}
-%%                                                                {B.R. Neural Plug Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % built-in reactive physical action
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-builtin_reactive-physical}
-%%                                                                {B.R. Physical Action Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
-%% % built-in reactive sensory
-%% {\clearpage
-%%   \experimentcausegroupplots{\dataappendixmaxtime}
-%%                             {\dataappendixexperimentonemaxtime}
-%%                             {\dataappendixexperimenttwomaxtime}
-%%                             {\dataappendixexperimentthreemaxtime}
-%%                             {\dataappendixexperimentonename}
-%%                             {\dataappendixexperimenttwoname}
-%%                             {\dataappendixexperimentthreename}
-%%                             {\dataappendixexperimentoneprettyname}
-%%                             {\dataappendixexperimenttwoprettyname}
-%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-%%                                                                {mind_plot-Gripper-1-builtin_reactive-sensory}
-%%                                                                {B.R. Sensory Agency}
-%%                                                                {  {\mbox{\autoref{table:experiment_data}}} on
-%%                                                                  {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
-%%                                                                  from this experiment.}
-%% }
+                                                               {5.5cm}
+}
+% reflective execution
+{\clearpage
+  \section{Comparison of Reflective Execution Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-reflective-execution}
+                                                               {Reflective Execution Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% reflective imagination
+{\clearpage
+  \section{Comparison of Reflective Imagination Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-reflective-imagination}
+                                                               {Reflective Imagination Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% reflective object type goal
+{\clearpage
+  \section{Comparison of Reflective Object Type Goal Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-reflective-plan_object_type_goal}
+                                                               {Reflective Object Type Goal Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}
+% reflective plan
+{\clearpage
+  \section{Comparison of Reflective Plan Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-reflective-plan}
+                                                               {Reflective Plan Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% reflective plan bug response
+{\clearpage
+  \section{Comparison of Reflective Plan Bug Response Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-reflective-plan_bug_response}
+                                                               {Reflective Plan Bug Response Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% deliberative
+{\clearpage
+  \section{Comparison of Deliberative Layer in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-deliberative}
+                                                               {Deliberative Layer}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}                                                                 
+% deliberative execution
+{\clearpage
+  \section{Comparison of Deliberative Execution Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-deliberative-execution}
+                                                               {Deliberative Execution Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% deliberative imagination
+{\clearpage
+  \section{Comparison of Deliberative Imagination Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-deliberative-imagination}
+                                                               {Deliberative Imagination Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% deliberative object type goal
+{\clearpage
+  \section{Comparison of Deliberative Object Type Goal Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
+                                                               {Deliberative Object Type Goal Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}
+% deliberative plan
+{\clearpage
+  \section{Comparison of Deliberative Plan Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-deliberative-plan}
+                                                               {Deliberative Plan Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% learned reactive
+{\clearpage
+  \section{Comparison of Learned Reactive Layer in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-learned_reactive}
+                                                               {Learned Reactive Layer}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% learned reactive physical action
+{\clearpage
+  \section{Comparison of Learned Reactive Physical Action Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-learned_reactive-physical}
+                                                               {L.R. Physical Action Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% learned reactive physical knowledge
+{\clearpage
+  \section{Comparison of Learned Reactive Physical Knowledge Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
+                                                               {L.R. Physical Knowledge Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}
+% built-in reactive
+{\clearpage
+  \section{Comparison of Built-in Reactive Layer in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-builtin_reactive}
+                                                               {Built-in Reactive Layer}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}
+% built-in reactive neural plug
+{\clearpage
+  \section{Comparison of Built-in Reactive Neural Plug Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-builtin_reactive-neural_plug}
+                                                               {B.R. Neural Plug Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% built-in reactive physical action
+{\clearpage
+  \section{Comparison of Built-in Reactive Physical Action Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-builtin_reactive-physical}
+                                                               {B.R. Physical Action Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5.5cm}
+}
+% built-in reactive sensory
+{\clearpage
+  \section{Comparison of Built-in Reactive Sensory Agency in Three Experiments}
+  \experimentcausegroupplots{\dataappendixmaxtime}
+                            {\dataappendixexperimentonemaxtime}
+                            {\dataappendixexperimenttwomaxtime}
+                            {\dataappendixexperimentthreemaxtime}
+                            {\dataappendixexperimentonename}
+                            {\dataappendixexperimenttwoname}
+                            {\dataappendixexperimentthreename}
+                            {\dataappendixexperimentoneprettyname}
+                            {\dataappendixexperimenttwoprettyname}
+                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                               {mind_plot-Gripper-1-builtin_reactive-sensory}
+                                                               {B.R. Sensory Agency}
+                                                               {  {\mbox{\autoref{table:experiment_data}}} on
+                                                                 {\mbox{page~\pageref{table:experiment_data}}} shows an index of other data
+                                                                 from this experiment.}
+                                                               {5cm}
+}
 
 
 

@@ -335,9 +335,9 @@
 }
 
 \newcommand{\experimentyaxisbytecodes}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Thousands of};
-  \node[rotate=90, above=0.8cm] at (y axis mid) {Bytecodes/s};
-  %\node[rotate=90, above=0.8cm] at (y axis mid) {Thousands of Bytecodes/s};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Execution Rate};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytecodes/s)};
+  %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
 \newcommand{\experimentyaxisbytes}{
@@ -345,7 +345,9 @@
 }
 
 \newcommand{\experimentyaxismemory}{
-  \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Memory Footprint};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytes)};
+  %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
 }
 
 
@@ -362,6 +364,9 @@
   \def\causegroupplotsexecutionexperimentthreename{#7}%
   \def\causegroupplotsexecutioncausegroupfilenameroot{#8}%
   \def\causegroupplotsexecutionlegendlabel{#9}%
+}
+\newcommand{\causegroupplotsexecutioncontinued}[1]{
+  \def\causegroupplotsexecutionplotheight{#1}%
   \experimentfindmax[data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
   \let\causegroupplotsexecutionexperimentonemaxvalue\experimentmaxvalue%
   \experimentfindmax[data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
@@ -383,7 +388,7 @@
   }
   \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsexecutionexperimentmaxvalue pt}}{
   }{
-    \begin{tikzpicture}[y=6cm/\causegroupplotsexecutionexperimentmaxvalue, x=8cm/\causegroupplotsexecutionplotmaxtime,font=\sffamily]
+    \begin{tikzpicture}[y=\causegroupplotsexecutionplotheight/\causegroupplotsexecutionexperimentmaxvalue, x=8cm/\causegroupplotsexecutionplotmaxtime,font=\sffamily]
       \experimentaxes[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}
       
       %labels
@@ -394,9 +399,9 @@
       \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10 / 10}{Only Deliberative Learning};
       \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 9 / 10}{Boot-up and Perceive without Goals};
 
-      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
-      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
       \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
     \end{tikzpicture}
   }
   \endgroup%
@@ -413,6 +418,9 @@
   \def\causegroupplotsmemoryexperimentthreename{#7}%
   \def\causegroupplotsmemorycausegroupfilenameroot{#8}%
   \def\causegroupplotsmemorylegendlabel{#9}%
+}
+\newcommand{\causegroupplotsmemorycontinued}[1]{
+  \def\causegroupplotsmemoryplotheight{#1}%
   \experimentfindmax[data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data]
   \let\causegroupplotsmemoryexperimentonemaxvalue\experimentmaxvalue%
   \experimentfindmax[data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data]
@@ -434,16 +442,16 @@
   }
   \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsmemoryexperimentmaxvalue pt}}{
   }{
-    \begin{tikzpicture}[y=6cm/\causegroupplotsmemoryexperimentmaxvalue, x=8cm/\causegroupplotsmemoryplotmaxtime,font=\sffamily]
+    \begin{tikzpicture}[y=\causegroupplotsmemoryplotheight/\causegroupplotsmemoryexperimentmaxvalue, x=8cm/\causegroupplotsmemoryplotmaxtime,font=\sffamily]
       \experimentaxes[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxismemory
       
-      \experimentdataone[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
-      \experimentdatatwo[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
       \experimentdatathree[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentthreename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
+      \experimentdatatwo[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimenttwoname/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
+      \experimentdataone[\causegroupplotsmemoryplotmaxtime]{\causegroupplotsmemoryexperimentmaxvalue}{data/\causegroupplotsmemoryexperimentonename/\causegroupplotsmemorycausegroupfilenameroot-simulation_bytes_footprint.data};
     \end{tikzpicture}
   }
   \endgroup%
@@ -479,11 +487,12 @@
   \def\experimentcausegroupplotsexperimentoneprettyname{#8}%
   \def\experimentcausegroupplotsexperimenttwoprettyname{#9}%
 }
-\newcommand\experimentcausegroupplotscontinued[4]{%
+\newcommand\experimentcausegroupplotscontinued[5]{%
   \def\experimentcausegroupplotsexperimentthreeprettyname{#1}%
   \def\experimentcausegroupplotscausegroupfilenameroot{#2}%
   \def\experimentcausegroupplotscausegroupprettyname{#3}%
   \def\experimentdescription{#4}%
+  \def\experimentcausegroupplotsplotheight{#5}%
   \begin{figure}[ht]
     \begin{tabular}{r}
       {\raggedleft
@@ -496,6 +505,7 @@
                                   {\experimentcausegroupplotsexperimentthreename}
                                   {\experimentcausegroupplotscausegroupfilenameroot}
                                   {Execution in {\experimentcausegroupplotscausegroupprettyname}}
+                                  \causegroupplotsexecutioncontinued{\experimentcausegroupplotsplotheight}
       }\\
       {\raggedleft
         \causegroupplotsmemory{\experimentcausegroupplotsplotmaxtime}
@@ -507,6 +517,7 @@
                               {\experimentcausegroupplotsexperimentthreename}
                               {\experimentcausegroupplotscausegroupfilenameroot}
                               {Memory Used in {\experimentcausegroupplotscausegroupprettyname}}
+                              \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
       }\\
     \end{tabular}
     \caption[] {Total rate of bytecode execution, rate of memory
@@ -522,7 +533,7 @@
   \begin{table}
     \centering
     \begin{tabular}{lllrr}
-      ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                              & Page \\
+      ~         & \emph{Layer}      & \emph{Agency}      & \emph{Experiment Data}                                                              & \emph{Page} \\
       \hline AI &                   &                    & \autoref{figure:data/#1/mind_plot-Gripper-1}                                        & \pageref{figure:data/#1/mind_plot-Gripper-1} \\
       ~         & Reflective        &                    & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective}                             & \pageref{figure:data/#1/mind_plot-Gripper-1-reflective} \\
       ~         &                   & Event Knowledge    & \autoref{figure:data/#1/mind_plot-Gripper-1-reflective-reflective_event_knowledge}  & \pageref{figure:data/#1/mind_plot-Gripper-1-reflective-reflective_event_knowledge} \\
@@ -551,10 +562,10 @@
 
 
 
-\newcommand{\dataappendixmaxtime}{180}
-\newcommand{\dataappendixexperimentonemaxtime}{60}
-\newcommand{\dataappendixexperimenttwomaxtime}{75}
-\newcommand{\dataappendixexperimentthreemaxtime}{180}
+\newcommand{\dataappendixmaxtime}{20}
+\newcommand{\dataappendixexperimentonemaxtime}{20}
+\newcommand{\dataappendixexperimenttwomaxtime}{20}
+\newcommand{\dataappendixexperimentthreemaxtime}{20}
 \newcommand{\dataappendixexperimentonename}{bootup}
 \newcommand{\dataappendixexperimenttwoname}{no_reflective_learning}
 \newcommand{\dataappendixexperimentthreename}{reflective_learning}

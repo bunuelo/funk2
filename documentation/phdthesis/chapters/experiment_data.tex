@@ -3,6 +3,8 @@
 \label{chapter:experiment_data}
 %************************************************
 
+\section{Comparisons of Computational Speed and Space Requirements in Three Experiments}
+
 This appendix chapter includes empirical data gathered using the
 reflective tracing features of the underlying Funk garbage collected
 memory system, upon which the virtual operating system is built.  This
@@ -22,9 +24,6 @@ more memory is used when the reflective learning about the
 deliberative planning machine is enabled.  The evaluation chapter,
 \autoref{chapter:evaluation}, has a more detailed analysis of the data
 in this appendix, comparing the three experiments.
-
-
-
 
 \begin{table}
   \centering
@@ -63,8 +62,6 @@ in this appendix, comparing the three experiments.
   experiments.
 }
 
-\section{Three Experiments}
-
 % AI
 {\clearpage
   \begin{samepage}
@@ -85,350 +82,350 @@ in this appendix, comparing the three experiments.
                                                                  {4cm}
   \end{samepage}
 }
-% reflective
-{\clearpage
-  \begin{samepage}
-    \subsection{The Reflective Layer}
-    \experimentcausegroupplots{\dataappendixmaxtime}
-                              {\dataappendixexperimentonemaxtime}
-                              {\dataappendixexperimenttwomaxtime}
-                              {\dataappendixexperimentthreemaxtime}
-                              {\dataappendixexperimentonename}
-                              {\dataappendixexperimenttwoname}
-                              {\dataappendixexperimentthreename}
-                              {\dataappendixexperimentoneprettyname}
-                              {\dataappendixexperimenttwoprettyname}
-                              \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                                 {mind_plot-Gripper-1-reflective}
-                                                                 {Reflective Layer}
-                                                                 {\experimentdatacommontablereference}
-                                                                 {4cm}
-  \end{samepage}
-}
-% reflective event knowledge
-{\clearpage
-  \subsection{The Reflective Event Knowledge Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
-                                                               {Reflective Event Knowledge Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% reflective execution
-{\clearpage
-  \subsection{The Reflective Execution Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-execution}
-                                                               {Reflective Execution Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% reflective imagination
-{\clearpage
-  \subsection{The Reflective Imagination Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-imagination}
-                                                               {Reflective Imagination Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% reflective object type goal
-{\clearpage
-  \subsection{The Reflective Object-Type-Goal Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-plan_object_type_goal}
-                                                               {Reflective Object-Type-Goal Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% reflective plan
-{\clearpage
-  \subsection{The Reflective Plan Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-plan}
-                                                               {Reflective Plan Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4.5cm}
-}
-% reflective plan bug response
-{\clearpage
-  \subsection{The Reflective Plan-Bug-Response Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-reflective-plan_bug_response}
-                                                               {Reflective Plan-Bug-Response Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4.5cm}
-}
-% deliberative
-{\clearpage
-  \subsection{The Deliberative Layer}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-deliberative}
-                                                               {Deliberative Layer}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}                                                                 
-% deliberative execution
-{\clearpage
-  \subsection{The Deliberative Execution Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-deliberative-execution}
-                                                               {Deliberative Execution Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% deliberative imagination
-{\clearpage
-  \subsection{The Deliberative Imagination Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-deliberative-imagination}
-                                                               {Deliberative Imagination Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% deliberative object type goal
-{\clearpage
-  \subsection{The Deliberative Object-Type-Goal Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
-                                                               {Deliberative Object Type Goal Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% deliberative plan
-{\clearpage
-  \subsection{The Deliberative Plan Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-deliberative-plan}
-                                                               {Deliberative Plan Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% learned reactive
-{\clearpage
-  \subsection{The Learned Reactive Layer}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-learned_reactive}
-                                                               {Learned Reactive Layer}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% learned reactive physical action
-{\clearpage
-  \subsection{Learned Reactive Physical Action Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-learned_reactive-physical}
-                                                               {Learned Reactive Physical Action Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% learned reactive physical knowledge
-{\clearpage
-  \subsection{The Learned Reactive Physical-Knowledge Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
-                                                               {Learned Reactive Physical-Knowledge Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% built-in reactive
-{\clearpage
-  \subsection{The Built-in Reactive Layer in Three Experiments}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-builtin_reactive}
-                                                               {Built-in Reactive Layer}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% built-in reactive neural plug
-{\clearpage
-  \subsection{The Built-in Reactive Neural Plug Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-builtin_reactive-neural_plug}
-                                                               {Built-in Reactive Neural Plug Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% built-in reactive physical action
-{\clearpage
-  \subsection{The Built-in Reactive Physical Action Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-builtin_reactive-physical}
-                                                               {Built-in Reactive Physical Action Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
-% built-in reactive sensory
-{\clearpage
-  \subsection{The Built-in Reactive Sensory Agency}
-  \experimentcausegroupplots{\dataappendixmaxtime}
-                            {\dataappendixexperimentonemaxtime}
-                            {\dataappendixexperimenttwomaxtime}
-                            {\dataappendixexperimentthreemaxtime}
-                            {\dataappendixexperimentonename}
-                            {\dataappendixexperimenttwoname}
-                            {\dataappendixexperimentthreename}
-                            {\dataappendixexperimentoneprettyname}
-                            {\dataappendixexperimenttwoprettyname}
-                            \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                               {mind_plot-Gripper-1-builtin_reactive-sensory}
-                                                               {Built-in Reactive Sensory Agency}
-                                                               {\experimentdatacommontablereference}
-                                                               {4cm}
-}
+%% % reflective
+%% {\clearpage
+%%   \begin{samepage}
+%%     \subsection{The Reflective Layer}
+%%     \experimentcausegroupplots{\dataappendixmaxtime}
+%%                               {\dataappendixexperimentonemaxtime}
+%%                               {\dataappendixexperimenttwomaxtime}
+%%                               {\dataappendixexperimentthreemaxtime}
+%%                               {\dataappendixexperimentonename}
+%%                               {\dataappendixexperimenttwoname}
+%%                               {\dataappendixexperimentthreename}
+%%                               {\dataappendixexperimentoneprettyname}
+%%                               {\dataappendixexperimenttwoprettyname}
+%%                               \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                  {mind_plot-Gripper-1-reflective}
+%%                                                                  {Reflective Layer}
+%%                                                                  {\experimentdatacommontablereference}
+%%                                                                  {4cm}
+%%   \end{samepage}
+%% }
+%% % reflective event knowledge
+%% {\clearpage
+%%   \subsection{The Reflective Event Knowledge Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
+%%                                                                {Reflective Event Knowledge Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % reflective execution
+%% {\clearpage
+%%   \subsection{The Reflective Execution Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-execution}
+%%                                                                {Reflective Execution Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % reflective imagination
+%% {\clearpage
+%%   \subsection{The Reflective Imagination Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-imagination}
+%%                                                                {Reflective Imagination Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % reflective object type goal
+%% {\clearpage
+%%   \subsection{The Reflective Object-Type-Goal Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-plan_object_type_goal}
+%%                                                                {Reflective Object-Type-Goal Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % reflective plan
+%% {\clearpage
+%%   \subsection{The Reflective Plan Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-plan}
+%%                                                                {Reflective Plan Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4.5cm}
+%% }
+%% % reflective plan bug response
+%% {\clearpage
+%%   \subsection{The Reflective Plan-Bug-Response Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-reflective-plan_bug_response}
+%%                                                                {Reflective Plan-Bug-Response Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4.5cm}
+%% }
+%% % deliberative
+%% {\clearpage
+%%   \subsection{The Deliberative Layer}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-deliberative}
+%%                                                                {Deliberative Layer}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }                                                                 
+%% % deliberative execution
+%% {\clearpage
+%%   \subsection{The Deliberative Execution Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-deliberative-execution}
+%%                                                                {Deliberative Execution Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % deliberative imagination
+%% {\clearpage
+%%   \subsection{The Deliberative Imagination Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-deliberative-imagination}
+%%                                                                {Deliberative Imagination Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % deliberative object type goal
+%% {\clearpage
+%%   \subsection{The Deliberative Object-Type-Goal Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
+%%                                                                {Deliberative Object Type Goal Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % deliberative plan
+%% {\clearpage
+%%   \subsection{The Deliberative Plan Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-deliberative-plan}
+%%                                                                {Deliberative Plan Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % learned reactive
+%% {\clearpage
+%%   \subsection{The Learned Reactive Layer}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-learned_reactive}
+%%                                                                {Learned Reactive Layer}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % learned reactive physical action
+%% {\clearpage
+%%   \subsection{Learned Reactive Physical Action Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-learned_reactive-physical}
+%%                                                                {Learned Reactive Physical Action Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % learned reactive physical knowledge
+%% {\clearpage
+%%   \subsection{The Learned Reactive Physical-Knowledge Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
+%%                                                                {Learned Reactive Physical-Knowledge Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % built-in reactive
+%% {\clearpage
+%%   \subsection{The Built-in Reactive Layer in Three Experiments}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-builtin_reactive}
+%%                                                                {Built-in Reactive Layer}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % built-in reactive neural plug
+%% {\clearpage
+%%   \subsection{The Built-in Reactive Neural Plug Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-builtin_reactive-neural_plug}
+%%                                                                {Built-in Reactive Neural Plug Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % built-in reactive physical action
+%% {\clearpage
+%%   \subsection{The Built-in Reactive Physical Action Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-builtin_reactive-physical}
+%%                                                                {Built-in Reactive Physical Action Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
+%% % built-in reactive sensory
+%% {\clearpage
+%%   \subsection{The Built-in Reactive Sensory Agency}
+%%   \experimentcausegroupplots{\dataappendixmaxtime}
+%%                             {\dataappendixexperimentonemaxtime}
+%%                             {\dataappendixexperimenttwomaxtime}
+%%                             {\dataappendixexperimentthreemaxtime}
+%%                             {\dataappendixexperimentonename}
+%%                             {\dataappendixexperimenttwoname}
+%%                             {\dataappendixexperimentthreename}
+%%                             {\dataappendixexperimentoneprettyname}
+%%                             {\dataappendixexperimenttwoprettyname}
+%%                             \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+%%                                                                {mind_plot-Gripper-1-builtin_reactive-sensory}
+%%                                                                {Built-in Reactive Sensory Agency}
+%%                                                                {\experimentdatacommontablereference}
+%%                                                                {4cm}
+%% }
 
 
 

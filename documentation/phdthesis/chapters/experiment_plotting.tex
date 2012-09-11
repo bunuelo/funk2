@@ -395,9 +395,9 @@
       \experimentxaxislabel
       \experimentyaxisbytecodes
       
-      \experimentlegendthree[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 11 / 10}{Deliberative and Reflective Learning};
-      \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10 / 10}{Only Deliberative Learning};
-      \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 9 / 10}{Boot-up and Perceive without Goals};
+      \experimentlegendthree[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
+      \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
+      \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
 
       \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
       \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
@@ -491,7 +491,7 @@
   \def\experimentcausegroupplotsexperimentthreeprettyname{#1}%
   \def\experimentcausegroupplotscausegroupfilenameroot{#2}%
   \def\experimentcausegroupplotscausegroupprettyname{#3}%
-  \def\experimentdescription{#4}%
+  \def\experimentcausegroupplotsexperimentdescription{#4}%
   \def\experimentcausegroupplotsplotheight{#5}%
   \begin{figure}[ht]
     \begin{tabular}{r}
@@ -520,9 +520,13 @@
                               \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
       }\\
     \end{tabular}
-    \caption[] {Total rate of bytecode execution, rate of memory
-      allocation, garbage collection and overall memory usage in {\experimentcausegroupplotscausegroupprettyname}
-      during {\experimentdescription}}
+    \caption[] {All of the resources in the entire
+       {\experimentcausegroupplotscausegroupprettyname} have been
+       causally traced and these two plots show: (top) the bytecode
+       execution rate for the entire
+       {\experimentcausegroupplotscausegroupprettyname}, as well as
+       (bottom) the memory footprint of the same causal scope.
+       {\experimentcausegroupplotsexperimentdescription}}
     \label{figure:\experimentcausegroupplotscausegroupfilenameroot}
   \end{figure}%
   \endgroup%
@@ -562,10 +566,10 @@
 
 
 
-\newcommand{\dataappendixmaxtime}{20}
+\newcommand{\dataappendixmaxtime}{22.75}
 \newcommand{\dataappendixexperimentonemaxtime}{20}
 \newcommand{\dataappendixexperimenttwomaxtime}{20}
-\newcommand{\dataappendixexperimentthreemaxtime}{20}
+\newcommand{\dataappendixexperimentthreemaxtime}{22.75}
 \newcommand{\dataappendixexperimentonename}{bootup}
 \newcommand{\dataappendixexperimenttwoname}{no_reflective_learning}
 \newcommand{\dataappendixexperimentthreename}{reflective_learning}

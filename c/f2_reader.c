@@ -85,11 +85,11 @@ f2ptr f2__exp__comma_filter_backquoted(f2ptr cause, f2ptr this) {
     if(raw__cons__is_type(cause, car) && (raw__eq(cause, f2cons__car(car, cause), __funk2.globalenv.comma__symbol) || raw__eq(cause, f2cons__car(car, cause), __funk2.globalenv.cdr_comma__symbol))) {
       f2cons__car__set(this, cause, f2cons__car(f2cons__cdr(f2cons__car(this, cause), cause), cause));
     } else if (! (raw__exp__contains_comma(cause, car) || raw__exp__contains_cdr_comma(cause, car))) {
-      f2cons__car__set(this, cause, f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, car, nil)));
+      f2cons__car__set(this, cause, raw__cons__new(cause, __funk2.globalenv.quote__symbol, raw__cons__new(cause, car, nil)));
     } else if (! raw__exp__contains_cdr_comma_at_this_level(cause, car)) {
-      f2cons__car__set(this, cause, f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, f2__exp__comma_filter_backquoted(cause, car)));
+      f2cons__car__set(this, cause, raw__cons__new(cause, __funk2.globalenv.backquote__list__symbol, f2__exp__comma_filter_backquoted(cause, car)));
     } else {
-      f2cons__car__set(this, cause, f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, f2__exp__comma_filter_backquoted(cause, car)));
+      f2cons__car__set(this, cause, raw__cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, f2__exp__comma_filter_backquoted(cause, car)));
     }
     f2__exp__comma_filter_backquoted(cause, f2cons__cdr(this, cause));
   }
@@ -205,7 +205,7 @@ f2ptr f2__stream__try_read_list(f2ptr cause, f2ptr stream) {
 	reader_status("f2__stream__try_read_list note: other exception being propogated.");
 	return exp;
       }
-      new_cons = f2cons__new(cause, exp, nil);
+      new_cons = raw__cons__new(cause, exp, nil);
       if (seq) {
 	f2cons__cdr__set(iter, cause, new_cons);
 	iter = new_cons;
@@ -261,7 +261,7 @@ f2ptr f2__stream__try_read_quoted(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __funk2.reader.char__quote)) {
     f2ptr exp = f2__stream__try_read(cause, stream);
     if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, exp, nil));
+    return raw__cons__new(cause, __funk2.globalenv.quote__symbol, raw__cons__new(cause, exp, nil));
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
@@ -281,14 +281,14 @@ f2ptr f2__stream__try_read_backquoted(f2ptr cause, f2ptr stream) {
       if (raw__exp__contains_cdr_comma_at_this_level(cause, exp)) {
 	exp = f2__exp__comma_filter_backquoted(cause, exp);
 	if (raw__exception__is_type(cause, exp)) {return exp;}
-	return f2cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
+	return raw__cons__new(cause, __funk2.globalenv.backquote__list_append__symbol, exp);
       } else {
 	exp = f2__exp__comma_filter_backquoted(cause, exp);
 	if (raw__exception__is_type(cause, exp)) {return exp;}
-	return f2cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
+	return raw__cons__new(cause, __funk2.globalenv.backquote__list__symbol, exp);
       }
     }
-    return f2cons__new(cause, __funk2.globalenv.quote__symbol, f2cons__new(cause, exp, nil));
+    return raw__cons__new(cause, __funk2.globalenv.quote__symbol, raw__cons__new(cause, exp, nil));
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
@@ -304,7 +304,7 @@ f2ptr f2__stream__try_read_comma_exp(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __funk2.reader.char__comma)) {
     f2ptr exp = f2__stream__try_read(cause, stream);
     if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.comma__symbol, f2cons__new(cause, exp, nil));
+    return raw__cons__new(cause, __funk2.globalenv.comma__symbol, raw__cons__new(cause, exp, nil));
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
@@ -320,7 +320,7 @@ f2ptr f2__stream__try_read_cdr_comma_exp(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __funk2.reader.char__cdr_comma)) {
     f2ptr exp = f2__stream__try_read(cause, stream);
     if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.cdr_comma__symbol, f2cons__new(cause, exp, nil));
+    return raw__cons__new(cause, __funk2.globalenv.cdr_comma__symbol, raw__cons__new(cause, exp, nil));
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
@@ -336,7 +336,7 @@ f2ptr f2__stream__try_read_funktion_name(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, first_char, __funk2.reader.char__funktion)) {
     f2ptr exp = f2__stream__try_read(cause, stream);
     if (raw__exception__is_type(cause, exp)) {return exp;}
-    return f2cons__new(cause, __funk2.globalenv.funkvar__symbol, f2cons__new(cause, exp, nil));
+    return raw__cons__new(cause, __funk2.globalenv.funkvar__symbol, raw__cons__new(cause, exp, nil));
   } else {
     f2__stream__ungetc(cause, stream, first_char);
   }
@@ -390,7 +390,7 @@ f2ptr f2__stream__try_read_hex_digits(f2ptr cause, f2ptr stream) {
     f2__stream__ungetc(cause, stream, read_ch);
     return rest_list;
   }
-  return f2cons__new(cause, read_ch, rest_list);
+  return raw__cons__new(cause, read_ch, rest_list);
 }
 
 s64 raw__char__decimal_digit_value(f2ptr cause, f2ptr this) {
@@ -531,7 +531,7 @@ f2ptr f2__stream__try_read_decimal_digits(f2ptr cause, f2ptr stream) {
     f2__stream__ungetc(cause, stream, read_ch);
     return rest_list;
   }
-  return f2cons__new(cause, read_ch, rest_list);
+  return raw__cons__new(cause, read_ch, rest_list);
 }
 
 f2ptr f2__stream__try_read_unescaped_larva(f2ptr cause, f2ptr stream) {
@@ -623,7 +623,7 @@ f2ptr f2__stream__read_array_sequence_of_elements(f2ptr cause, f2ptr stream) {
   if (raw__exception__is_type(cause, rest_sequence)) {
     return rest_sequence;
   }
-  return f2cons__new(cause, subexp, rest_sequence);
+  return raw__cons__new(cause, subexp, rest_sequence);
 }
 
 f2ptr f2__stream__try_read_array(f2ptr cause, f2ptr stream) {
@@ -791,7 +791,7 @@ f2ptr f2__stream__try_read_number_list_without_sign_or_decimal(f2ptr cause, f2pt
   if (raw__char__is_decimal_digit(cause, read_ch)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
-      return f2cons__new(cause, read_ch, number_list);
+      return raw__cons__new(cause, read_ch, number_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
@@ -812,14 +812,14 @@ f2ptr f2__stream__try_read_number_list_without_sign(f2ptr cause, f2ptr stream) {
   if (raw__eq(cause, read_ch, __funk2.reader.char__decimal_point)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign_or_decimal(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
-      return f2cons__new(cause, read_ch, number_list);
+      return raw__cons__new(cause, read_ch, number_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
   } else if (raw__char__is_decimal_digit(cause, read_ch)) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
     if ((! number_list) || raw__cons__is_type(cause, number_list)) {
-      return f2cons__new(cause, read_ch, number_list);
+      return raw__cons__new(cause, read_ch, number_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
@@ -845,7 +845,7 @@ f2ptr f2__stream__try_read_number_list(f2ptr cause, f2ptr stream) {
     f2ptr number_list = f2__stream__try_read_number_list_without_sign(cause, stream);
     // cannot except nil here, because '-' should be a symbol if not followed by a number.
     if (raw__cons__is_type(cause, number_list)) {
-      return f2cons__new(cause, read_ch, number_list);
+      return raw__cons__new(cause, read_ch, number_list);
     } else {
       f2__stream__ungetc(cause, stream, read_ch);
     }
@@ -972,7 +972,7 @@ f2ptr f2__stream__try_read_symbol_list(f2ptr cause, f2ptr stream) {
   if (raw__char__is_symbolizable(cause, read_ch)) {
     f2ptr symbol_list = f2__stream__try_read_symbol_list(cause, stream);
     if ((! symbol_list) || raw__cons__is_type(cause, symbol_list)) {
-      return f2cons__new(cause, read_ch, symbol_list);
+      return raw__cons__new(cause, read_ch, symbol_list);
     } else {
       return symbol_list;
     }

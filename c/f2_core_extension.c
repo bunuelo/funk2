@@ -234,7 +234,7 @@ f2ptr raw__core_extension_handler__unload_changed(f2ptr cause, f2ptr this) {
 				f2ptr changed_on_disk = f2__core_extension__changed_on_disk(cause, core_extension);
 				if (! raw__larva__is_type(cause, changed_on_disk)) {
 				  if (changed_on_disk != nil) {
-				    changed_core_extensions = f2cons__new(cause, core_extension, changed_core_extensions);
+				    changed_core_extensions = raw__cons__new(cause, core_extension, changed_core_extensions);
 				  }
 				}
 				);

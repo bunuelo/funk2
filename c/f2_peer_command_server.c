@@ -565,7 +565,7 @@ f2ptr f2__peer_command_server__active_client_info(f2ptr cause) {
 	f2ptr client_object__computer_id = client->registered_funk2_node ? f2integer__new(cause, client->registered_funk2_node->computer_id) : nil;
 	raw__array__elt__set(cause, client_object, 0, client_object__client_id);
 	raw__array__elt__set(cause, client_object, 1, client_object__computer_id);
-	seq = f2cons__new(cause, client_object, seq);
+	seq = raw__cons__new(cause, client_object, seq);
       }
       socket_server_client_iter = socket_server_client_iter->next;
     }

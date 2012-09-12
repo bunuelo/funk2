@@ -387,7 +387,7 @@ f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
     char* alias = *aliases_iter;
     //printf("\nalias: %d \"%s\"", strlen(alias), alias);
     f2ptr new_string = new__string(cause, alias);
-    f2ptr new_cons = f2cons__new(cause, new_string, nil);
+    f2ptr new_cons = raw__cons__new(cause, new_string, nil);
     if (iter) {
       f2cons__cdr__set(iter, cause, new_cons);
     } else {
@@ -449,7 +449,7 @@ f2ptr raw__hostent__h_addr_list(f2ptr cause, f2ptr this) {
     for (i = 0; i < h_length; i ++) {
       raw__array__elt__set(cause, new_array, i, f2integer__new(cause, (unsigned char)(addr[i])));
     }
-    f2ptr new_cons = f2cons__new(cause, new_array, nil);
+    f2ptr new_cons = raw__cons__new(cause, new_array, nil);
     if (iter) {
       f2cons__cdr__set(iter, cause, new_cons);
     } else {

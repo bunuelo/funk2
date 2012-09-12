@@ -191,7 +191,7 @@ f2ptr raw__graph__add_node(f2ptr cause, f2ptr this, f2ptr node) {
   if (already_contains_node == nil) {
     f2ptr nodes_label_hash = f2__graph__nodes_label_hash(cause, this);
     f2ptr node_label       = f2__graph_node__label(cause, node);
-    f2__ptypehash__add(cause, nodes_label_hash, node_label, f2cons__new(cause, node, f2__ptypehash__lookup(cause, nodes_label_hash, node_label)));
+    f2__ptypehash__add(cause, nodes_label_hash, node_label, raw__cons__new(cause, node, f2__ptypehash__lookup(cause, nodes_label_hash, node_label)));
   }
   return already_contains_node;
 }
@@ -241,7 +241,7 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
 	f2__ptypehash__add(cause, edges_label_hash_right_node_hash, right_node, edges_label_hash);
       }
       f2ptr edges = f2__ptypehash__lookup(cause, edges_label_hash, label);
-      f2__ptypehash__add(cause, edges_label_hash, label, f2cons__new(cause, edge, edges));
+      f2__ptypehash__add(cause, edges_label_hash, label, raw__cons__new(cause, edge, edges));
     }
     {
       f2ptr edges_label_hash_left_node_hash_right_node_hash = f2__graph__edges_label_hash_left_node_hash_right_node_hash(cause, this);
@@ -256,7 +256,7 @@ f2ptr raw__graph__add_edge(f2ptr cause, f2ptr this, f2ptr edge) {
 	f2__ptypehash__add(cause, edges_label_hash_left_node_hash, left_node, edges_label_hash);
       }
       f2ptr edges = f2__ptypehash__lookup(cause, edges_label_hash, label);
-      f2__ptypehash__add(cause, edges_label_hash, label, f2cons__new(cause, edge, edges));
+      f2__ptypehash__add(cause, edges_label_hash, label, raw__cons__new(cause, edge, edges));
     }
   }
   return already_contains_edge;
@@ -582,7 +582,7 @@ f2ptr raw__graph__node_isomorphisms(f2ptr cause, f2ptr this, f2ptr node) {
 		   if (raw__eq(cause, node__label, this__node__label)) {
 		     f2ptr isomorphism = f2__graph_isomorphism__new(cause);
 		     f2__graph_isomorphism__add_mapping(cause, isomorphism, node, this__node);
-		     isomorphisms = f2cons__new(cause, isomorphism, isomorphisms);
+		     isomorphisms = raw__cons__new(cause, isomorphism, isomorphisms);
 		   }
 		   );
   }
@@ -695,7 +695,7 @@ f2ptr raw__graph__connected_node_sets(f2ptr cause, f2ptr this) {
 	return result;
       }
     }
-    connected_node_sets = f2cons__new(cause, connected_node_set, connected_node_sets);
+    connected_node_sets = raw__cons__new(cause, connected_node_set, connected_node_sets);
   }
   return connected_node_sets;
 }
@@ -758,7 +758,7 @@ f2ptr raw__graph__as__dot_code(f2ptr cause, f2ptr this) {
     f2ptr node_set = f2__graph__node_set(cause, this);
     set__iteration(cause, node_set, node,
 		   f2ptr node_code = raw__graph_node__as__dot_code(cause, node);
-		   node_codes = f2cons__new(cause, node_code, node_codes);
+		   node_codes = raw__cons__new(cause, node_code, node_codes);
 		   );
   }    
   f2ptr edge_codes = nil;
@@ -766,7 +766,7 @@ f2ptr raw__graph__as__dot_code(f2ptr cause, f2ptr this) {
     f2ptr edge_set = f2__graph__edge_set(cause, this);
     set__iteration(cause, edge_set, edge,
 		   f2ptr edge_code = raw__graph_edge__as__dot_code(cause, edge);
-		   edge_codes = f2cons__new(cause, edge_code, edge_codes);
+		   edge_codes = raw__cons__new(cause, edge_code, edge_codes);
 		   );
   }
   return f2__graphviz__digraph(cause, f2list4__new(cause,
@@ -1133,7 +1133,7 @@ f2ptr raw__graph_decomposition_lattice_node__combine_children_isomorphisms(f2ptr
 	    raw__graph_decomposition_lattice_node__combine_children_isomorphisms__found_unmatched_edge:
 	      if (combined_isomorphism_is_valid) {
 		f2ptr isomorphism = f2__graph_isomorphism__union(cause, left_isomorphism, right_isomorphism);
-		isomorphisms = f2cons__new(cause, isomorphism, isomorphisms);
+		isomorphisms = raw__cons__new(cause, isomorphism, isomorphisms);
 	      }
 	    } else {
 	      //printf("\ndebug -5");
@@ -1408,7 +1408,7 @@ f2ptr raw__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr
 		     f2ptr root_graph_set = f2__graph_decomposition_lattice_node__root_graph_set(cause, lattice_node);
 		     //f2__print(cause, root_graph_set);
 		     set__iteration(cause, root_graph_set, root_graph,
-				    root_graph_isomorphisms_pairs = f2cons__new(cause, f2list2__new(cause, root_graph, isomorphisms), root_graph_isomorphisms_pairs);
+				    root_graph_isomorphisms_pairs = raw__cons__new(cause, f2list2__new(cause, root_graph, isomorphisms), root_graph_isomorphisms_pairs);
 				    );
 		   }
 		 }
@@ -1451,7 +1451,7 @@ f2ptr raw__graph_decomposition_lattice__subgraph_max_isomorphisms(f2ptr cause, f
 	    iter = f2__cons__cdr(cause, iter);
 	  }
 	}
-	max_root_graph_isomorphism_pairs = f2cons__new(cause, f2list2__new(cause, root_graph, max_isomorphism), max_root_graph_isomorphism_pairs);
+	max_root_graph_isomorphism_pairs = raw__cons__new(cause, f2list2__new(cause, root_graph, max_isomorphism), max_root_graph_isomorphism_pairs);
       }
       pair_iter = f2__cons__cdr(cause, pair_iter);
     }

@@ -23,9 +23,9 @@
 
 f2ptr f2__graphviz__digraph(f2ptr cause, f2ptr codes) {
   return f2__stringlist__rawcode(cause, f2__conslistlist__append(cause, f2list3__new(cause,
-										     f2cons__new(cause, new__string(cause, "digraph G {"), nil),
+										     raw__cons__new(cause, new__string(cause, "digraph G {"), nil),
 										     codes,
-										     f2cons__new(cause, new__string(cause, "}"), nil))));
+										     raw__cons__new(cause, new__string(cause, "}"), nil))));
 }
 def_pcfunk0_and_rest(graphviz__digraph, codes,
 		     "",

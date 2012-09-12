@@ -430,7 +430,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2
 			 assert_value(filename);
 			 assert_value(dlfcn_dynamic_library);
 			 if (raw__eq(cause, dynamic_library, dlfcn_dynamic_library)) {
-			   keys_to_remove = f2cons__new(cause, filename, keys_to_remove);
+			   keys_to_remove = raw__cons__new(cause, filename, keys_to_remove);
 			 }
 			 );
     {
@@ -449,7 +449,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_dynamic_library(f2ptr cause, f2
 			 assert_value(pointer);
 			 assert_value(dlfcn_dynamic_library);
 			 if (raw__eq(cause, dynamic_library, dlfcn_dynamic_library)) {
-			   keys_to_remove = f2cons__new(cause, pointer, keys_to_remove);
+			   keys_to_remove = raw__cons__new(cause, pointer, keys_to_remove);
 			 }
 			 );
     {
@@ -483,7 +483,7 @@ f2ptr raw__dlfcn_dynamic_library_handler__unload_changed(f2ptr cause, f2ptr this
 				assert_argument_type(dlfcn_dynamic_library, dynamic_library);
 				f2ptr changed_on_disk = assert_value(f2__dlfcn_dynamic_library__changed_on_disk(cause, dynamic_library, search_pathnames));
 				if (changed_on_disk != nil) {
-				  changed_libraries = f2cons__new(cause, dynamic_library, changed_libraries);
+				  changed_libraries = raw__cons__new(cause, dynamic_library, changed_libraries);
 				}
 				);
   }

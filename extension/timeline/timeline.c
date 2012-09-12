@@ -949,7 +949,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	  f2ptr connected_part = raw__ptypehash__lookup(cause, connected_part_event_hash, event);
 	  if (connected_part == nil) {
 	    connected_part  = f2__timeline_connected_part__new(cause);
-	    connected_parts = f2cons__new(cause, connected_part, connected_parts);
+	    connected_parts = raw__cons__new(cause, connected_part, connected_parts);
 	    f2ptr connected_set = raw__timeline_connected_part__event_set(cause, connected_part);
 	    f2ptr expansion_event_set = f2__set__new(cause);
 	    raw__set__add(cause, expansion_event_set, event);

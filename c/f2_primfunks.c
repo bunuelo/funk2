@@ -514,7 +514,7 @@ f2ptr raw__conslist__new(f2ptr cause, f2ptr conslist) {
   }
   f2ptr car = f2cons__car(conslist, cause);
   f2ptr cdr = f2cons__cdr(conslist, cause);
-  return f2cons__new(cause, car, raw__conslist__new(cause, cdr));
+  return raw__cons__new(cause, car, raw__conslist__new(cause, cdr));
 }
 
 f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
@@ -570,7 +570,7 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   f2ptr iter = this;
   while (iter && index < raw_n) {
     f2ptr car = f2cons__car(iter, cause);
-    f2ptr new_cons = f2cons__new(cause, car, nil);
+    f2ptr new_cons = raw__cons__new(cause, car, nil);
     if (! new_seq) {
       new_seq = new_cons;
     }
@@ -597,7 +597,7 @@ f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
       f2ptr iter = conslist;
       while (iter) {
 	f2ptr elt = f2__cons__car(cause, iter);
-	f2ptr new_cons = f2cons__new(cause, elt, nil);
+	f2ptr new_cons = raw__cons__new(cause, elt, nil);
 	if (new_list_iter) {
 	  f2__cons__cdr__set(cause, new_list_iter, new_cons);
 	} else {
@@ -959,7 +959,7 @@ f2ptr raw__conslist__reverse(f2ptr cause, f2ptr this) {
   f2ptr iter    = this;
   while (iter != nil) {
     f2ptr exp = f2cons__car(iter, cause);
-    new_seq   = f2cons__new(cause, exp, new_seq);
+    new_seq   = raw__cons__new(cause, exp, new_seq);
     iter      = f2cons__cdr(iter, cause);
   }
   return new_seq;
@@ -1145,7 +1145,7 @@ def_pcfunk1(debug, value,
 
 def_pcfunk1(trace, value,
 	    "",
-	    f2fiber__trace__set(simple_fiber, this_cause, f2cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
+	    f2fiber__trace__set(simple_fiber, this_cause, raw__cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
 	    return value);
 
 boolean_t raw__scheduler_eq(f2ptr cause, f2ptr x, f2ptr y) {
@@ -1378,9 +1378,9 @@ f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp
   if (raw__larva__is_type(cause, demetropolize_exps_result)) {
     return demetropolize_exps_result;
   }
-  return f2cons__new(cause,
-		     f2cons__cdr(demetropolize_result, cause),
-		     demetropolize_exps_result);
+  return raw__cons__new(cause,
+			f2cons__cdr(demetropolize_result, cause),
+			demetropolize_exps_result);
 }
 
 def_pcfunk1(exps_demetropolize_full, exp,

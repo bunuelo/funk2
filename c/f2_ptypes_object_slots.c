@@ -501,7 +501,7 @@ f2ptr f2__integer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 }
 
 f2ptr f2integer__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_integer.new__funk);}
@@ -983,7 +983,7 @@ f2ptr f2__double__slot__execute_funk(f2ptr cause, f2ptr this, f2ptr slot) {
 }
 
 f2ptr f2double__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_double.new__funk);}
@@ -1344,7 +1344,7 @@ f2ptr f2__float__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 }
 
 f2ptr f2float__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.is_type__funk);}
   {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.type__funk);}
   {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_float.new__funk);}
@@ -1555,7 +1555,7 @@ f2ptr f2__pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2p
 }
 
 f2ptr f2pointer__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.is_type__funk);}
   {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.type__funk);}
   {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_pointer.new__funk);}
@@ -1726,7 +1726,7 @@ f2ptr f2__scheduler_cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_
 }
 
 f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk);}
@@ -1959,7 +1959,7 @@ f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 
 f2ptr f2cmutex__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_cmutex.is_type__funk);}
   {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_cmutex.type__funk);}
   {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_cmutex.new__funk);}
@@ -2165,7 +2165,7 @@ f2ptr f2__char__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr 
 }
 
 f2ptr f2char__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_char.new__funk);}
@@ -2617,7 +2617,7 @@ f2ptr f2__string__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 
 f2ptr f2string__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.new__funk);}
@@ -3054,7 +3054,7 @@ f2ptr f2__symbol__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 }
 
 f2ptr f2symbol__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.is_type__funk);}
   {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.type__funk);}
   {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_symbol.new__funk);}
@@ -3535,7 +3535,7 @@ f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 }
 
 f2ptr f2chunk__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.new__funk);}
@@ -3709,7 +3709,7 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 }
 
 f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk);}
@@ -3940,7 +3940,7 @@ f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 }
 
 f2ptr f2traced_array__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_traced_array.new__funk);}
@@ -4132,7 +4132,7 @@ f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 }
 
 f2ptr f2larva__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "ptype"), nil));
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_larva.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_larva.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_larva.new__funk);}

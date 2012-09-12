@@ -1363,7 +1363,7 @@ def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to, this, value,
 f2ptr raw__redblacktree__leaves__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr leaves = nil;
   redblacktree__iteration_backward(cause, this, key,
-				   leaves = f2cons__new(cause, key, leaves);
+				   leaves = raw__cons__new(cause, key, leaves);
 				   );
   return leaves;
 }
@@ -1438,7 +1438,7 @@ f2ptr raw__redblacktree__leaves_within_range__thread_unsafe(f2ptr cause, f2ptr t
 			 {
 			   s64 index;
 			   for (index = 0; index < count__i; index ++) {
-			     sequence = f2cons__new(cause, key, sequence);
+			     sequence = raw__cons__new(cause, key, sequence);
 			   }
 			 }
 			 );

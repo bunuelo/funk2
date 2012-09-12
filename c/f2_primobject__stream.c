@@ -346,7 +346,7 @@ f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
     }
   }
   if (byte && f2stream__rewindable(this, cause)) {
-    f2stream__rewind_stack__set(this, cause, f2cons__new(cause, byte, f2stream__rewind_stack(this, cause)));
+    f2stream__rewind_stack__set(this, cause, raw__cons__new(cause, byte, f2stream__rewind_stack(this, cause)));
     f2ptr rewind_length = f2stream__rewind_length(this, cause);
     if (! raw__integer__is_type(cause, rewind_length)) {
       return f2larva__new(cause, 1135, nil);
@@ -403,7 +403,7 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   }
   f2ptr byte = f2cons__car(rewind_stack, cause);
   f2stream__rewind_stack__set(this, cause, f2cons__cdr(rewind_stack, cause));
-  f2stream__ungetb_stack__set(this, cause, f2cons__new(cause, byte, f2stream__ungetb_stack(this, cause)));
+  f2stream__ungetb_stack__set(this, cause, raw__cons__new(cause, byte, f2stream__ungetb_stack(this, cause)));
   f2ptr rewind_length = f2stream__rewind_length(this, cause);
   if (! raw__integer__is_type(cause, rewind_length)) {
     return f2larva__new(cause, 3, nil);

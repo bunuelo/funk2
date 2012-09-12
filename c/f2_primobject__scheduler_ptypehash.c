@@ -109,8 +109,8 @@ f2ptr raw__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
   if (! keyvalue_pair) {
-    keyvalue_pair = f2cons__new(cause, key, value);
-    raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
+    keyvalue_pair = raw__cons__new(cause, key, value);
+    raw__array__elt__set(cause, bin_array, index, raw__cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
     { // increase key count only if didn't already have this key.
       s64 key_count__i = f2integer__i(f2scheduler_ptypehash__key_count(this, cause), cause);
       key_count__i ++;
@@ -359,7 +359,7 @@ f2ptr f2__scheduler_ptypehash__keys(f2ptr cause, f2ptr this) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__keys assert failed: f2__scheduler_ptypehash__valid(this)");
   f2ptr new_list = nil;
   scheduler_ptypehash__key__iteration(cause, this, key,
-                            new_list = f2cons__new(cause, key, new_list));
+                            new_list = raw__cons__new(cause, key, new_list));
   return new_list;
 }
 def_pcfunk1(scheduler_ptypehash__keys, this,
@@ -370,7 +370,7 @@ f2ptr f2__scheduler_ptypehash__values(f2ptr cause, f2ptr this) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__values assert failed: f2__scheduler_ptypehash__valid(this)");
   f2ptr new_list = nil;
   scheduler_ptypehash__value__iteration(cause, this, value,
-			      new_list = f2cons__new(cause, value, new_list));
+			      new_list = raw__cons__new(cause, value, new_list));
   return new_list;
 }
 def_pcfunk1(scheduler_ptypehash__values, this,

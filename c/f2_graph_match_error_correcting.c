@@ -107,17 +107,17 @@ f2ptr raw__graph_edit_sequence__combine(f2ptr cause, f2ptr this, f2ptr that, f2p
   f2ptr temp_list        = nil;
   f2ptr operations__iter = f2__graph_edit_sequence__operations(cause, this);
   while (operations__iter) {
-    temp_list = f2cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
+    temp_list = raw__cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
     operations__iter = f2__cons__cdr(cause, operations__iter);
   }
   operations__iter = f2__graph_edit_sequence__operations(cause, that);
   while (operations__iter) {
-    temp_list = f2cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
+    temp_list = raw__cons__new(cause, f2__cons__car(cause, operations__iter), temp_list);
     operations__iter = f2__cons__cdr(cause, operations__iter);
   }
   operations__iter = temp_list;
   while (operations__iter) {
-    new_operations = f2cons__new(cause, f2__cons__car(cause, operations__iter), new_operations);
+    new_operations = raw__cons__new(cause, f2__cons__car(cause, operations__iter), new_operations);
     operations__iter = f2__cons__cdr(cause, operations__iter);
   }
   f2__graph_edit_sequence__operations__set(cause, new_graph_edit_sequence, new_operations);

@@ -89,7 +89,7 @@ u64 raw__hash__hash_value_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr obje
   if (hash_value_funk == nil) {
     key__hash_value = raw__eq_hash_value(cause, object);
   } else {
-    f2ptr hash_value_integer = f2__force_funk_apply(cause, fiber, hash_value_funk, f2cons__new(cause, object, nil));
+    f2ptr hash_value_integer = f2__force_funk_apply(cause, fiber, hash_value_funk, raw__cons__new(cause, object, nil));
     key__hash_value = f2integer__i(hash_value_integer, cause);
   }
   return key__hash_value;
@@ -101,7 +101,7 @@ boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr ob
   if (equals_funk == nil) {
     equals = raw__eq(cause, object_a, object_b);
   } else {
-    equals = (f2__force_funk_apply(cause, fiber, equals_funk, f2cons__new(cause, object_a, f2cons__new(cause, object_b, nil))) != nil);
+    equals = (f2__force_funk_apply(cause, fiber, equals_funk, raw__cons__new(cause, object_a, raw__cons__new(cause, object_b, nil))) != nil);
   }
   return equals;
 }
@@ -129,8 +129,8 @@ f2ptr raw__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
   if (! keyvalue_pair) {
-    keyvalue_pair = f2cons__new(cause, key, value);
-    raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
+    keyvalue_pair = raw__cons__new(cause, key, value);
+    raw__array__elt__set(cause, bin_array, index, raw__cons__new(cause, keyvalue_pair, raw__array__elt(cause, bin_array, index)));
     {
       s64 key_count__i = f2integer__i(f2hash__key_count(this, cause), cause);
       key_count__i ++;
@@ -280,7 +280,7 @@ f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__slot_names assert failed: f2__hash__valid(this)");
   f2ptr new_list = nil;
   hash__key__iteration(cause, this, key,
-                            new_list = f2cons__new(cause, key, new_list));
+                            new_list = raw__cons__new(cause, key, new_list));
   return new_list;
 }
 def_pcfunk1(hash__slot_names, this,

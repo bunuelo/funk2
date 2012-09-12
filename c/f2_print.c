@@ -1332,7 +1332,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 			slot_value = new__symbol(cause, "<>");
 		      }
 		    }
-		    keyvalue_pairs = f2cons__new(cause, f2cons__new(cause, slot_name, slot_value), keyvalue_pairs);
+		    keyvalue_pairs = raw__cons__new(cause, raw__cons__new(cause, slot_name, slot_value), keyvalue_pairs);
 		  }
 		  slot_iter = assert_value(f2__cons__cdr(cause, slot_iter));
 		}
@@ -1574,18 +1574,18 @@ f2ptr raw__exp__printable_value__with_ptypehash(f2ptr cause, f2ptr this, f2ptr m
 	    }
 	  }
 	  if (last_cons) {
-	    f2ptr new_cons = f2cons__new(cause, element_print_value, nil);
+	    f2ptr new_cons = raw__cons__new(cause, element_print_value, nil);
 	    f2__cons__cdr__set(cause, last_cons, new_cons);
 	    last_cons = new_cons;
 	  } else {
-	    last_cons = f2cons__new(cause, element_print_value, nil);
+	    last_cons = raw__cons__new(cause, element_print_value, nil);
 	    print_seq = last_cons;
 	  }
 	  list_element_count ++;
 	  if (list_element_count < 10) {
 	    iter = f2__cons__cdr(cause, iter);
 	  } else {
-	    f2ptr new_cons = f2cons__new(cause, new__symbol(cause, "..."), nil);
+	    f2ptr new_cons = raw__cons__new(cause, new__symbol(cause, "..."), nil);
 	    f2__cons__cdr__set(cause, last_cons, new_cons);
 	    last_cons = new_cons;
 	    iter = nil;

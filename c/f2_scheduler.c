@@ -118,7 +118,7 @@ f2ptr raw__scheduler__active_fibers(f2ptr cause, f2ptr this) {
       f2ptr iter = active_fibers;
       while (iter) {
 	f2ptr fiber = f2__cons__car(cause, iter);
-	seq = f2cons__new(cause, fiber, seq);
+	seq = raw__cons__new(cause, fiber, seq);
 	iter = f2__cons__cdr(cause, iter);
       }
     }

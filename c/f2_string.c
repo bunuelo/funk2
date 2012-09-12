@@ -283,7 +283,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 	f2ptr iter            = exp;
 	while (iter) {
 	  f2ptr element = f2__cons__car(cause, iter);
-	  f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, element, element_hash), nil);
+	  f2ptr new_cons = raw__cons__new(cause, f2__exp__as__string__with_hash(cause, element, element_hash), nil);
 	  if (stringlist_iter) {
 	    f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 	  } else {
@@ -303,7 +303,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 	f2ptr stringlist_iter = nil;
 	frame__var__iteration(cause, exp, slot_name, slot_value,
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, slot_name, element_hash), nil);
+				f2ptr new_cons = raw__cons__new(cause, f2__exp__as__string__with_hash(cause, slot_name, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -312,7 +312,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 				stringlist_iter = new_cons;
 			      }
 			      {
-				f2ptr new_cons = f2cons__new(cause, f2__exp__as__string__with_hash(cause, slot_value, element_hash), nil);
+				f2ptr new_cons = raw__cons__new(cause, f2__exp__as__string__with_hash(cause, slot_value, element_hash), nil);
 				if (stringlist_iter) {
 				  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
 				} else {
@@ -322,7 +322,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
 			      }
 			      );
       }
-      stringlist = f2cons__new(cause, new__string(cause, "frame"), stringlist);
+      stringlist = raw__cons__new(cause, new__string(cause, "frame"), stringlist);
       return f2__stringlist__concat(cause, f2list3__new(cause,
 							new__string(cause, "["),
 							f2__stringlist__intersperse(cause, stringlist, new__string(cause, " ")),
@@ -504,7 +504,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
 	error(nil, "\nstring-split assert failed.\n");
       }
       f2ptr new_substr     = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
-      f2ptr new_cons       = f2cons__new(cause, new_substr, nil);
+      f2ptr new_cons       = raw__cons__new(cause, new_substr, nil);
       if (iter == nil) {
 	new_seq = new_cons;
       } else {
@@ -523,7 +523,7 @@ f2ptr f2__string__split(f2ptr cause, f2ptr this, f2ptr token) {
       error(nil, "\nstring-split assert failed.\n");
     }
     f2ptr new_substr = f2string__new(cause, substr__length, this__str + end_of_last_match_index);
-    f2ptr new_cons   = f2cons__new(cause, new_substr, nil);
+    f2ptr new_cons   = raw__cons__new(cause, new_substr, nil);
     if (iter == nil) {
       new_seq = new_cons;
     } else {

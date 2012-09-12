@@ -83,7 +83,7 @@ boolean_t raw__gtk_widget__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_widget_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_widget_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -114,7 +114,7 @@ boolean_t raw__gtk_box__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_box_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_box_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -144,7 +144,7 @@ boolean_t raw__gtk_text_buffer__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_text_buffer_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_text_buffer_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -175,7 +175,7 @@ boolean_t raw__gtk_label__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_label_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_label_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -205,7 +205,7 @@ boolean_t raw__gtk_scale__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_scale_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_scale_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -236,7 +236,7 @@ boolean_t raw__gtk_entry__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_entry_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_entry_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -266,7 +266,7 @@ boolean_t raw__gtk_image__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_image_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_image_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -404,7 +404,7 @@ boolean_t raw__gdk_pixbuf__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gdk_pixbuf_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gdk_pixbuf_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "g_object"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -478,7 +478,7 @@ boolean_t raw__gtk_progress_bar__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_progress_bar_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_progress_bar_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -507,7 +507,7 @@ boolean_t raw__gtk_menu__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_menu_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_menu_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -536,7 +536,7 @@ boolean_t raw__gtk_menu_bar__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_menu_bar_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_menu_bar_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -565,7 +565,7 @@ boolean_t raw__gtk_check_button__is_from_this_session(f2ptr cause, f2ptr this) {
 
 f2ptr f2__gtk_check_button_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_check_button_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -594,7 +594,7 @@ boolean_t raw__gtk_file_chooser_dialog__is_from_this_session(f2ptr cause, f2ptr 
 
 f2ptr f2__gtk_file_chooser_dialog_type__new_aux(f2ptr cause) {
   f2ptr this = f2__gtk_file_chooser_dialog_type__new(cause);
-  f2__primobject_type__parents__set(cause, this, f2cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
+  f2__primobject_type__parents__set(cause, this, raw__cons__new(cause, new__symbol(cause, "gtk_widget"), f2__primobject_type__parents(cause, this)));
   return this;
 }
 
@@ -2089,7 +2089,7 @@ f2ptr funk2_gtk__file_chooser_dialog__get_filenames(funk2_gtk_t* this, f2ptr cau
     while (gs_list != NULL) {
       char* filename_str = (char*)(gs_list->data);
       {
-	filenames = f2cons__new(cause, new__string(cause, filename_str), filenames);
+	filenames = raw__cons__new(cause, new__string(cause, filename_str), filenames);
 	g_free(filename_str);
       }
       gs_list = gs_list->next;
@@ -4067,7 +4067,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								       new__symbol(cause, "region"),     f2pointer__new(cause, to_ptr(expose->region)),
 								       new__symbol(cause, "count"),      f2integer__new(cause, expose->count)));
 	f2__free(to_ptr(expose));
-	args = f2cons__new(cause, expose_event_frame, funk_args);
+	args = raw__cons__new(cause, expose_event_frame, funk_args);
       } break;
       case funk2_gtk_callback_args_type__key_press: {
 	GdkEventKey* key = (GdkEventKey*)(callback_event->args);
@@ -4091,14 +4091,14 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 								    new__symbol(cause, "group"),            f2integer__new(cause, key->group),
 								    new__symbol(cause, "is_modifier"),      f2bool__new(key->is_modifier)));
 	f2__free(to_ptr(key));
-	args = f2cons__new(cause, key_event_frame, funk_args);
+	args = raw__cons__new(cause, key_event_frame, funk_args);
       } break;
       case funk2_gtk_callback_args_type__response: {
 	gint* response_id = (gint*)(callback_event->args);
 	f2ptr key_event_frame = f2__frame__new(cause, f2list2__new(cause,
 								   new__symbol(cause, "response_id"), f2integer__new(cause, *response_id)));
 	f2__free(to_ptr(response_id));
-	args = f2cons__new(cause, key_event_frame, funk_args);
+	args = raw__cons__new(cause, key_event_frame, funk_args);
       } break;
       case funk2_gtk_callback_args_type__update_preview: {
 	args = funk_args;
@@ -4114,7 +4114,7 @@ f2ptr f2__gtk__pop_callback_event(f2ptr cause) {
 									     new__symbol(cause, "width"),  f2integer__new(cause, allocation->width),
 									     new__symbol(cause, "height"), f2integer__new(cause, allocation->height)));
 	f2__free(to_ptr(allocation));
-	args = f2cons__new(cause, size_allocate_event_frame, funk_args);
+	args = raw__cons__new(cause, size_allocate_event_frame, funk_args);
       } break;
       default:
 	error(nil, "invalid gtk callback event args_type.");

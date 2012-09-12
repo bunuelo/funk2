@@ -161,7 +161,7 @@ f2ptr raw__semantic_reflective_object_type_event__add_lost_dependency_callback(f
 	already_lost_dependency = boolean__true;
       } else {
 	f2ptr lost_dependency_callbacks = raw__semantic_reflective_object_type_event__lost_dependency_callbacks(cause, this);
-	lost_dependency_callbacks = f2cons__new(cause, dependency_callback, lost_dependency_callbacks);
+	lost_dependency_callbacks = raw__cons__new(cause, dependency_callback, lost_dependency_callbacks);
 	raw__semantic_reflective_object_type_event__lost_dependency_callbacks__set(cause, this, lost_dependency_callbacks);
       }
     }

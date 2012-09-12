@@ -1097,28 +1097,28 @@ f2ptr raw__relative_time__terminal_print_with_frame(f2ptr cause, f2ptr this, f2p
       f2__frame__add_var_value(cause, frame, new__symbol(cause, "nanoseconds"), nanoseconds);
     }
     if (printed_nanoseconds) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "nanoseconds"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "nanoseconds"), print_object_slot_order);
     }
     if (printed_microseconds) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "microseconds"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "microseconds"), print_object_slot_order);
     }
     if (printed_milliseconds) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "milliseconds"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "milliseconds"), print_object_slot_order);
     }
     if (printed_seconds) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "seconds"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "seconds"), print_object_slot_order);
     }
     if (printed_minutes) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "minutes"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "minutes"), print_object_slot_order);
     }
     if (printed_hours) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "hours"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "hours"), print_object_slot_order);
     }
     if (printed_days) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "days"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "days"), print_object_slot_order);
     }
     if (printed_is_past) {
-      print_object_slot_order = f2cons__new(cause, new__symbol(cause, "is_past"), print_object_slot_order);
+      print_object_slot_order = raw__cons__new(cause, new__symbol(cause, "is_past"), print_object_slot_order);
     }
     f2__frame__add_var_value(cause, frame, new__symbol(cause, "print_object_slot_order"), print_object_slot_order);
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);

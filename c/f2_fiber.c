@@ -894,7 +894,7 @@ f2ptr raw__fiber_stack_trace__as__printable(f2ptr cause, f2ptr this) {
 	if (raw__larva__is_type(cause, printable_block)) {
 	  return printable_block;
 	}
-	printable_seq_reverse = f2cons__new(cause, printable_block, printable_seq_reverse);
+	printable_seq_reverse = raw__cons__new(cause, printable_block, printable_seq_reverse);
       }
       iter = f2__fiber_stack_trace__next(cause, iter);
     }
@@ -918,10 +918,10 @@ f2ptr raw__fiber_stack_trace__blocks(f2ptr cause, f2ptr this) {
   while (iter) {
     f2ptr block = raw__fiber_stack_trace__first(cause, iter);
     if (blocks == nil) {
-      blocks      = f2cons__new(cause, block, nil);
+      blocks      = raw__cons__new(cause, block, nil);
       blocks_iter = blocks;
     } else {
-      f2ptr next_blocks_iter = f2cons__new(cause, block, nil);
+      f2ptr next_blocks_iter = raw__cons__new(cause, block, nil);
       f2__cons__cdr__set(cause, blocks_iter, next_blocks_iter);
       blocks_iter = next_blocks_iter;
     }

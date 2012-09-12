@@ -836,7 +836,7 @@
 
 #define def_f2frame_object__primobject_type__new__slot_body(name, slot_body) \
   f2ptr f2frame_object__primobject_type__new__funkvar(name)(f2ptr cause) { \
-    f2ptr this = f2__primobject_type__new(cause, f2cons__new(cause, new__symbol(cause, "frame"), nil)); \
+    f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "frame"), nil)); \
     {char* slot_name = "is_type";  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), frame_object__slot__funk__var(name, is_type));} \
     {char* slot_name = "type";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), frame_object__slot__funk__var(name, type));} \
     slot_body; \

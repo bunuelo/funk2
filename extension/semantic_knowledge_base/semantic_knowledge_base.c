@@ -349,7 +349,7 @@ f2ptr raw__semantic_knowledge_base__remove_all(f2ptr cause, f2ptr this) {
   f2ptr semantic_frame_set = raw__semantic_knowledge_base__semantic_frame_set(cause, this);
   f2ptr semantic_frames    = nil;
   set__iteration(cause, semantic_frame_set, semantic_frame,
-		 semantic_frames = f2cons__new(cause, semantic_frame, semantic_frames));
+		 semantic_frames = raw__cons__new(cause, semantic_frame, semantic_frames));
   {
     f2ptr iter = semantic_frames;
     while (iter != nil) {
@@ -387,7 +387,7 @@ export_cefunk2(semantic_knowledge_base__add_semantic_knowledge_base, this, seman
 void raw__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr this, f2ptr trace_callback_name, f2ptr trace_callback_funk) {
   f2ptr trace_callback_funks_frame = raw__semantic_knowledge_base__trace_callback_funks_frame(cause, this);
   f2ptr trace_callback_funks       = f2__frame__lookup_var_value(cause, trace_callback_funks_frame, trace_callback_name, nil);
-  f2__frame__add_var_value(cause, trace_callback_funks_frame, trace_callback_name, f2cons__new(cause, trace_callback_funk, trace_callback_funks));
+  f2__frame__add_var_value(cause, trace_callback_funks_frame, trace_callback_name, raw__cons__new(cause, trace_callback_funk, trace_callback_funks));
 }
 
 f2ptr f2__semantic_knowledge_base__add_trace_callback_funk(f2ptr cause, f2ptr this, f2ptr trace_callback_name, f2ptr trace_callback_funk) {
@@ -705,14 +705,14 @@ f2ptr raw__semantic_knowledge_base__as__digraph_dot_code(f2ptr cause, f2ptr this
       {
 	f2ptr node_codes = nil;
 	ptypehash__value__iteration(cause, node_code_ptypehash, node_code,
-				    node_codes = f2cons__new(cause, node_code, node_codes));
+				    node_codes = raw__cons__new(cause, node_code, node_codes));
 	nodes_code = f2__stringlist__intersperse(cause, node_codes, new__string(cause, "\n"));
       }
       f2ptr edges_code;
       {
 	f2ptr edge_codes = nil;
 	ptypehash__value__iteration(cause, edge_code_ptypehash, edge_code,
-				    edge_codes = f2cons__new(cause, edge_code, edge_codes));
+				    edge_codes = raw__cons__new(cause, edge_code, edge_codes));
 	edges_code = f2__stringlist__intersperse(cause, edge_codes, new__string(cause, "\n"));
       }
       code = f2__stringlist__intersperse(cause, f2list2__new(cause, nodes_code, edges_code), new__string(cause, "\n"));

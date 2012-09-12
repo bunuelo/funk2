@@ -60,7 +60,7 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
     return boolean__false;
   }
   pause_gc();
-  f2processor__active_fibers__set(this, cause, f2cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
+  f2processor__active_fibers__set(this, cause, raw__cons__new(cause, fiber, f2processor__active_fibers(this, cause)));
   f2fiber__processor_assignment_index__set(fiber, cause, f2processor__pool_index(this, cause));
   resume_gc();
   return boolean__true;
@@ -593,7 +593,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
-	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critics, f2cons__new(processor_cause, fiber, nil));
+	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critics, raw__cons__new(processor_cause, fiber, nil));
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
 	    if (raw__larva__is_type(processor_cause, result)) {

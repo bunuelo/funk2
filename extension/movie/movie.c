@@ -541,7 +541,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
 	  // encode the image
 	  out_size = avcodec_encode_video(funk2_movie_context->av_codec_context, funk2_movie_context->out_buffer, funk2_movie_context->out_buffer_size, funk2_movie_context->yuv_picture_frame);
 	  f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
-	  video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+	  video_chunk_list = raw__cons__new(cause, chunk, video_chunk_list);
 	  
 	  iter = f2__doublelink__next(cause, iter);
 	}
@@ -551,7 +551,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
       while (out_size != 0) {
 	out_size = avcodec_encode_video(funk2_movie_context->av_codec_context, funk2_movie_context->out_buffer, funk2_movie_context->out_buffer_size, NULL);
 	f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
-	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+	video_chunk_list = raw__cons__new(cause, chunk, video_chunk_list);
       }
       
       /* add sequence end code to have a real mpeg file */
@@ -562,7 +562,7 @@ f2ptr raw__libavcodec__video_chunk__new_from_image_sequence(f2ptr cause, f2ptr m
 	funk2_movie_context->out_buffer[3] = 0xb7;
 	out_size = 4;
 	f2ptr chunk      = f2chunk__new(cause, out_size, funk2_movie_context->out_buffer);
-	video_chunk_list = f2cons__new(cause, chunk, video_chunk_list);
+	video_chunk_list = raw__cons__new(cause, chunk, video_chunk_list);
       }
     }
   }

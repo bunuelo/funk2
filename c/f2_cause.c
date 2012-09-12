@@ -729,7 +729,7 @@ f2ptr raw__cause__add_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr result    = nil;
   if (cause_reg == nil) {
     f2fiber__cause_reg__set(fiber, cause, this);
-    f2cause__fibers__set(   this,  cause, f2cons__new(cause, fiber, f2cause__fibers(this, cause)));
+    f2cause__fibers__set(   this,  cause, raw__cons__new(cause, fiber, f2cause__fibers(this, cause)));
   } else {
     result = f2larva__new(cause, 827152, nil);
   }
@@ -805,7 +805,7 @@ f2ptr f2__cause__remove_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 
 f2ptr f2__cause__new_imaginary(f2ptr cause, f2ptr imagination_name) {
   f2ptr new_cause = f2__cause__new_with_inherited_properties(cause, cause);
-  f2cause__imagination_stack__set(new_cause, cause, f2cons__new(cause, imagination_name, f2cause__imagination_stack(cause, new_cause)));
+  f2cause__imagination_stack__set(new_cause, cause, raw__cons__new(cause, imagination_name, f2cause__imagination_stack(cause, new_cause)));
   return new_cause;
 }
 
@@ -1025,7 +1025,7 @@ void raw__cause__add_cause_group(f2ptr cause, f2ptr this, f2ptr cause_group) {
   f2ptr cause_groups_cmutex = f2cause__cause_groups_cmutex(this, cause);
   raw__cmutex__lock(cause, cause_groups_cmutex);
   f2ptr cause_groups = f2cause__cause_groups(this, cause);
-  f2cause__cause_groups__set(this, cause, f2cons__new(cause, cause_group, cause_groups));
+  f2cause__cause_groups__set(this, cause, raw__cons__new(cause, cause_group, cause_groups));
   raw__cmutex__unlock(cause, cause_groups_cmutex);
 }
 

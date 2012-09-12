@@ -207,7 +207,7 @@ f2ptr raw__semantic_dependency__add_invalidated_callback(f2ptr cause, f2ptr this
 	already_invalidated = boolean__true;
       } else {
 	f2ptr invalidated_callbacks = raw__semantic_dependency__invalidated_callbacks(cause, this);
-	invalidated_callbacks = f2cons__new(cause, dependency_callback, invalidated_callbacks);
+	invalidated_callbacks = raw__cons__new(cause, dependency_callback, invalidated_callbacks);
 	raw__semantic_dependency__invalidated_callbacks__set(cause, this, invalidated_callbacks);
       }
     }
@@ -342,7 +342,7 @@ f2ptr raw__semantic_dependency__add_unsupported_callback(f2ptr cause, f2ptr this
 	already_unsupported = boolean__true;
       } else {
 	f2ptr unsupported_callbacks = raw__semantic_dependency__unsupported_callbacks(cause, this);
-	unsupported_callbacks = f2cons__new(cause, dependency_callback, unsupported_callbacks);
+	unsupported_callbacks = raw__cons__new(cause, dependency_callback, unsupported_callbacks);
 	raw__semantic_dependency__unsupported_callbacks__set(cause, this, unsupported_callbacks);
       }
     }

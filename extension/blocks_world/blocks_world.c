@@ -376,7 +376,7 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
 
 f2ptr raw__blocks_world_gripper__add_perception(f2ptr cause, f2ptr this, f2ptr perception) {
   f2ptr perception_list = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "perception_list"), nil));
-  perception_list = f2cons__new(cause, perception, perception_list);
+  perception_list = raw__cons__new(cause, perception, perception_list);
   assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "perception_list"), perception_list));
   return nil;
 }

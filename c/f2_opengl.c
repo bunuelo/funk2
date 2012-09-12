@@ -41,13 +41,13 @@ boolean_t funk2_opengl__load_library(funk2_opengl_t* this, f2ptr cause) {
     status("funk2_opengl__load_library: dlfcn is not supported on this system, so could not load opengl.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGL.so"),  nil);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libGL.so"),   filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libGL.so"),      filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGL.so"), filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGL.so"),  filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGL.so"),        filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGL.so"),            filenames);
+  f2ptr filenames = raw__cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGL.so"),  nil);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/xorg/libGL.so"),   filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/libGL.so"),      filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGL.so"), filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/local/lib/libGL.so"),  filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/libGL.so"),        filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/lib/libGL.so"),            filenames);
   f2ptr dlfcn_pointer = nil;
   {
     f2ptr filename_iter = filenames;
@@ -421,13 +421,13 @@ boolean_t funk2_openglu__load_library(funk2_openglu_t* this, f2ptr cause) {
     status("funk2_openglu__load_library: dlfcn is not supported on this system, so could not load openglu.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGLU.so"),  nil);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libGLU.so"),   filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libGLU.so"),      filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGLU.so"), filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libGLU.so"),  filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libGLU.so"),        filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/lib/libGLU.so"),            filenames);
+  f2ptr filenames = raw__cons__new(cause, new__string(cause, "/usr/X11R6/lib/libGLU.so"),  nil);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/xorg/libGLU.so"),   filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/libGLU.so"),      filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/xorg/libGLU.so"), filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/local/lib/libGLU.so"),  filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/libGLU.so"),        filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/lib/libGLU.so"),            filenames);
   f2ptr dlfcn_pointer = nil;
   {
     f2ptr filename_iter = filenames;
@@ -492,13 +492,13 @@ boolean_t funk2_xxf86vm__load_library(funk2_xxf86vm_t* this, f2ptr cause) {
     status("funk2_xxf86vm__load_library: dlfcn is not supported on this system, so could not load xxf86vm.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libXxf86vm.so"),  nil);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libXxf86vm.so"),   filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libXxf86vm.so"),      filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libXxf86vm.so"), filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libXxf86vm.so"),  filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libXxf86vm.so"),        filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/lib/libXxf86vm.so"),            filenames);
+  f2ptr filenames = raw__cons__new(cause, new__string(cause, "/usr/X11R6/lib/libXxf86vm.so"),  nil);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/xorg/libXxf86vm.so"),   filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/libXxf86vm.so"),      filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/xorg/libXxf86vm.so"), filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/local/lib/libXxf86vm.so"),  filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/libXxf86vm.so"),        filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/lib/libXxf86vm.so"),            filenames);
   f2ptr dlfcn_pointer = nil;
   {
     f2ptr filename_iter = filenames;
@@ -576,13 +576,13 @@ boolean_t funk2_xlib__load_library(funk2_xlib_t* this, f2ptr cause) {
     status("funk2_xlib__load_library: dlfcn is not supported on this system, so could not load xlib.");
     return boolean__false;
   }
-  f2ptr filenames = f2cons__new(cause, new__string(cause, "/usr/X11R6/lib/libX11.so"),  nil);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/xorg/libX11.so"),   filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/libX11.so"),      filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib64/xorg/libX11.so"), filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/local/lib/libX11.so"),  filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/usr/lib/libX11.so"),        filenames);
-  filenames       = f2cons__new(cause, new__string(cause, "/lib/libX11.so"),            filenames);
+  f2ptr filenames = raw__cons__new(cause, new__string(cause, "/usr/X11R6/lib/libX11.so"),  nil);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/xorg/libX11.so"),   filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/libX11.so"),      filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib64/xorg/libX11.so"), filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/local/lib/libX11.so"),  filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/usr/lib/libX11.so"),        filenames);
+  filenames       = raw__cons__new(cause, new__string(cause, "/lib/libX11.so"),            filenames);
   f2ptr dlfcn_pointer = nil;
   {
     f2ptr filename_iter = filenames;

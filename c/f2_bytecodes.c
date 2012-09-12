@@ -233,7 +233,7 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
       f2cons__car__set(new_cons, cause, value);
       f2cons__cdr__set(new_cons, cause, old_stack);
     } else {
-      new_cons = f2cons__new(cause, value, old_stack);
+      new_cons = raw__cons__new(cause, value, old_stack);
     }
   }
   f2fiber__stack__set(this, cause, new_cons);
@@ -310,7 +310,7 @@ void f2__fiber__increment_pc(f2ptr fiber, f2ptr cause) {
 #endif
 
 f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr funk, f2ptr funk_args) {
-  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, funk, f2cons__new(cause, funk_args, nil)))));
+  f2ptr args             = raw__cons__new(cause, object_cause, raw__cons__new(cause, fiber, raw__cons__new(cause, bytecode, raw__cons__new(cause, funk, raw__cons__new(cause, funk_args, nil)))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_funk_funk, args);
   return reflective_value;
 }
@@ -545,7 +545,7 @@ int f2__fiber__bytecode__array(f2ptr fiber, f2ptr bytecode, f2ptr length) {
 // bytecode cons []
 
 int f2__fiber__bytecode__cons__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2ptr new_cons = f2cons__new(cause, nil, nil);
+  f2ptr new_cons = raw__cons__new(cause, nil, nil);
   if (! new_cons) {error(nil, "cons bytecode error: new cons is nil");}
   f2fiber__iter__set(fiber, cause, new_cons);
   return 0;
@@ -1760,7 +1760,7 @@ int f2__fiber__bytecode__jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_cou
 }
 
 f2ptr f2__bytecode_branch_funk__call_with_event(f2ptr cause, f2ptr bytecode_branch_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr program_counter, f2ptr branch_program_counter, f2ptr value) {
-  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, program_counter, f2cons__new(cause, branch_program_counter, f2cons__new(cause, value, nil))))));
+  f2ptr args             = raw__cons__new(cause, object_cause, raw__cons__new(cause, fiber, raw__cons__new(cause, bytecode, raw__cons__new(cause, program_counter, raw__cons__new(cause, branch_program_counter, raw__cons__new(cause, value, nil))))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_branch_funk, args);
   return reflective_value;
 }
@@ -1884,7 +1884,7 @@ int f2__fiber__bytecode__debug(f2ptr fiber, f2ptr bytecode, f2ptr value) {
 
 
 f2ptr f2__bytecode_tracer_funk__call_with_event(f2ptr cause, f2ptr bytecode_tracer_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value) {
-  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, nil))));
+  f2ptr args             = raw__cons__new(cause, object_cause, raw__cons__new(cause, fiber, raw__cons__new(cause, bytecode, raw__cons__new(cause, value, nil))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_tracer_funk, args);
   return reflective_value;
 }
@@ -1927,7 +1927,7 @@ int f2__fiber__bytecode__tracer(f2ptr fiber, f2ptr bytecode, f2ptr name, f2ptr a
 
 
 f2ptr f2__bytecode_endfunk_funk__call_with_event(f2ptr cause, f2ptr bytecode_endfunk_funk, f2ptr object_cause, f2ptr fiber, f2ptr bytecode, f2ptr value, f2ptr funk) {
-  f2ptr args             = f2cons__new(cause, object_cause, f2cons__new(cause, fiber, f2cons__new(cause, bytecode, f2cons__new(cause, value, f2cons__new(cause, funk, nil)))));
+  f2ptr args             = raw__cons__new(cause, object_cause, raw__cons__new(cause, fiber, raw__cons__new(cause, bytecode, raw__cons__new(cause, value, raw__cons__new(cause, funk, nil)))));
   f2ptr reflective_value = f2__force_funk_apply(cause, fiber, bytecode_endfunk_funk, args);
   return reflective_value;
 }

@@ -467,7 +467,7 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 																				    new__symbol(cause, "slot"),     slot,
 																				    new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
     f2__terminal_print(cause, result);
   }
@@ -494,7 +494,7 @@ f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 																				    new__symbol(cause, "slot"),     slot,
 																				    new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
     f2__terminal_print(cause, result);
   }
@@ -521,7 +521,7 @@ f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 																					    new__symbol(cause, "slot"),     slot,
 																					    new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
     f2__terminal_print(cause, result);
   }
@@ -543,7 +543,7 @@ f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
     }
     return f2larva__new(cause, object__get__no_such_slot, nil);
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, nil));
 }
 
 f2ptr object__get_0(f2ptr cause, f2ptr this, char* slot_cstr) {
@@ -559,7 +559,7 @@ f2ptr f2__object__get_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
     }
     return f2larva__new(cause, object__get__no_such_slot, nil);
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, nil)));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, raw__cons__new(cause, arg0, nil)));
 }
 
 f2ptr object__get_1(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0) {
@@ -575,7 +575,7 @@ f2ptr f2__object__set_1(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0) {
     }
     return f2larva__new(cause, object__set__no_such_slot, nil);
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, nil)));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, raw__cons__new(cause, arg0, nil)));
 }
 
 f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0, f2ptr arg1) {
@@ -587,7 +587,7 @@ f2ptr f2__object__get_2(f2ptr cause, f2ptr this, f2ptr slot, f2ptr arg0, f2ptr a
     }
     return f2larva__new(cause, object__get__no_such_slot, nil);
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, arg0, f2cons__new(cause, arg1, nil))));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, raw__cons__new(cause, arg0, raw__cons__new(cause, arg1, nil))));
 }
 
 f2ptr object__get_2(f2ptr cause, f2ptr this, char* slot_cstr, f2ptr arg0, f2ptr arg1) {
@@ -603,7 +603,7 @@ f2ptr f2__object__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__funkable__is_type(cause, funk)) {
     return f2bool__new(this == that);
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, f2cons__new(cause, that, nil)));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, raw__cons__new(cause, that, nil)));
 }
 def_pcfunk2(object__eq, this, that,
 	    "returns whether two objects are eq according to the source object eq function.",
@@ -615,7 +615,7 @@ f2ptr f2__object__eq_hash_value(f2ptr cause, f2ptr this) {
   if (! raw__funkable__is_type(cause, funk)) {
     return ((this == nil) ? f2integer__new(cause, 1) : f2integer__new(cause, (u64)this));
   }
-  return f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, nil));
+  return f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, nil));
 }
 def_pcfunk1(object__eq_hash_value, this,
 	    "returns the eq_hash_value of the object.",
@@ -654,7 +654,7 @@ def_pcfunk1(object__equals_hash_value, this,
 
 f2ptr object__property_scan__property_scan(f2ptr cause, f2ptr fiber, f2ptr property_funk, f2ptr object, f2ptr type_name, f2ptr slot_name, f2ptr slot_value) {
   if (property_funk) {
-    return f2__force_funk_apply(cause, fiber, property_funk, f2cons__new(cause, type_name, f2cons__new(cause, slot_name, f2cons__new(cause, slot_value, nil))));
+    return f2__force_funk_apply(cause, fiber, property_funk, raw__cons__new(cause, type_name, raw__cons__new(cause, slot_name, raw__cons__new(cause, slot_value, nil))));
   }
   return nil;
 }
@@ -670,7 +670,7 @@ void object__property_scan__map_funk(f2ptr cause, f2ptr slot_name, f2ptr aux_dat
   if (raw__larva__is_type(cause, slot_funk)) {
     larva_found = slot_funk;
   } else {
-    f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, f2cons__new(cause, object, nil));
+    f2ptr slot_value = f2__force_funk_apply(cause, fiber, slot_funk, raw__cons__new(cause, object, nil));
     if (raw__larva__is_type(cause, slot_value)) {
       slot_value = f2__bug__new_from_larva(cause, slot_value);
     }

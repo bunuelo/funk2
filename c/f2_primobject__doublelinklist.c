@@ -58,7 +58,7 @@ def_pcfunk1(doublelinklist__cdr, this,
 
 f2ptr f2__doublelinklist__add(f2ptr cause, f2ptr this, f2ptr element) {
   f2cmutex__lock(f2doublelinklist__write_cmutex(this, cause), cause);
-  f2doublelinklist__cons_cells__set(this, cause, f2cons__new(cause, element, f2doublelinklist__cons_cells(this, cause)));
+  f2doublelinklist__cons_cells__set(this, cause, raw__cons__new(cause, element, f2doublelinklist__cons_cells(this, cause)));
   f2ptr length = f2doublelinklist__length(this, cause);
   s64 length__i = f2integer__i(length, cause);
   f2doublelinklist__length__set(this, cause, f2integer__new(cause, length__i + 1));

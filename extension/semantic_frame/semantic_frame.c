@@ -942,7 +942,7 @@ f2ptr f2__object__semantic__lookup_set(f2ptr cause, f2ptr this, f2ptr slot, f2pt
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__lookup_set, this, slot, args, 0, "");
@@ -989,7 +989,7 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__add, this, slot, args, 0, "");
@@ -1036,7 +1036,7 @@ f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr ar
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   if (raw__larva__is_type(cause, result)) {
     f2__terminal_print(cause, result);
   }

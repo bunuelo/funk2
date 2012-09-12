@@ -53,7 +53,7 @@ f2ptr f2__object__semantic__causal__causes__lookup_set(f2ptr cause, f2ptr this, 
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__causes__lookup_set, this, slot, args, 0, "");
@@ -95,7 +95,7 @@ f2ptr f2__object__semantic__causal__causes__add(f2ptr cause, f2ptr this, f2ptr s
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__causes__add, this, slot, args, 0, "");
@@ -137,7 +137,7 @@ f2ptr f2__object__semantic__causal__causes__remove(f2ptr cause, f2ptr this, f2pt
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__causes__remove, this, slot, args, 0, "");
@@ -180,7 +180,7 @@ f2ptr f2__object__semantic__causal__is_caused_by__lookup_set(f2ptr cause, f2ptr 
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__is_caused_by__lookup_set, this, slot, args, 0, "");
@@ -222,7 +222,7 @@ f2ptr f2__object__semantic__causal__is_caused_by__add(f2ptr cause, f2ptr this, f
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__is_caused_by__add, this, slot, args, 0, "");
@@ -264,7 +264,7 @@ f2ptr f2__object__semantic__causal__is_caused_by__remove(f2ptr cause, f2ptr this
 															  new__symbol(cause, "slot"),     slot,
 															  new__symbol(cause, "args"),     args))));
   }
-  f2ptr result = f2__force_funk_apply(cause, fiber, funk, f2cons__new(cause, this, args));
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
   return result;
 }
 export_cefunk2_and_rest(object__semantic__causal__is_caused_by__remove, this, slot, args, 0, "");

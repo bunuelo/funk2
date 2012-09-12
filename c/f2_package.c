@@ -476,7 +476,7 @@ f2ptr f2__pathname__scan_for_filenames(f2ptr cause, f2ptr pathname) {
 	directory_entry = readdir(dirp);
 	if (directory_entry) {
 	  f2ptr relative_filename = f2__pathname__concat(cause, pathname, new__string(cause, directory_entry->d_name));
-	  relative_filenames = f2cons__new(cause, relative_filename, relative_filenames);
+	  relative_filenames = raw__cons__new(cause, relative_filename, relative_filenames);
 	}
       } while (directory_entry);
       closedir(dirp);
@@ -537,7 +537,7 @@ f2ptr f2__pathname__scan_for_filenames_by_extension(f2ptr cause, f2ptr pathname,
       funk2_character_t* rindex_ptr = (filename__last_period_index != -1) ? filename__str + filename__last_period_index : NULL;
       if ((rindex_ptr != NULL) && (funk2_character__strcmp(extension__str, rindex_ptr + 1) == 0)) {
 	f2ptr matching_filename = filename;
-	matching_filenames = f2cons__new(cause, matching_filename, matching_filenames);
+	matching_filenames = raw__cons__new(cause, matching_filename, matching_filenames);
       }
       f2__free(to_ptr(filename__str));
       iter = f2__cons__cdr(cause, iter);

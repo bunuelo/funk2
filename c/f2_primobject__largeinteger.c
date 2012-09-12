@@ -936,7 +936,7 @@ f2ptr raw__largeinteger__quotient_and_remainder(f2ptr cause, f2ptr this, f2ptr t
   if (raw__larva__is_type(cause, result__quotient_array)) {
     return result__quotient_array; // catch and propagate divide by zero
   }
-  f2ptr quotient_and_remainder = f2cons__new(cause, f2largeinteger__new(cause, result__is_negative, result__quotient_array), f2largeinteger__new(cause, result__is_negative, result__remainder_array));
+  f2ptr quotient_and_remainder = raw__cons__new(cause, f2largeinteger__new(cause, result__is_negative, result__quotient_array), f2largeinteger__new(cause, result__is_negative, result__remainder_array));
   return quotient_and_remainder;
 }
 
@@ -1249,7 +1249,7 @@ f2ptr f2__largeinteger__prime_factor_indices(f2ptr cause, f2ptr this) {
     remainder_is_zero = raw__largeinteger__is_zero(cause, remainder);
     if (remainder_is_zero) {
       this_reduced   = quotient;
-      factor_indices = f2cons__new(cause, f2integer__new(cause, prime_factor_index), factor_indices);
+      factor_indices = raw__cons__new(cause, f2integer__new(cause, prime_factor_index), factor_indices);
     }
   }
   return factor_indices;

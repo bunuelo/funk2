@@ -560,7 +560,7 @@ f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr ca
 	ptypehash__key__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter,
 				  f2ptr filter_success = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), filter_funk, f2list2__new(cause, user_filter_data, element_iter)));
 				  if (filter_success != nil) {
-				    return_intervals = f2cons__new(cause, element_iter, return_intervals);
+				    return_intervals = raw__cons__new(cause, element_iter, return_intervals);
 				  }
 				  );
 	if (return_intervals != nil) {

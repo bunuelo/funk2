@@ -702,7 +702,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 	    f2ptr iter = object_slot_order;
 	    while (iter != nil) {
 	      f2ptr object_slot = f2__cons__car(cause, iter);
-	      object_type_slot_pairs = f2cons__new(cause, f2cons__new(cause, __funk2.primobject__frame.variable__symbol, object_slot), object_type_slot_pairs);
+	      object_type_slot_pairs = raw__cons__new(cause, raw__cons__new(cause, __funk2.primobject__frame.variable__symbol, object_slot), object_type_slot_pairs);
 	      iter = f2__cons__cdr(cause, iter);
 	    }
 	  }
@@ -733,7 +733,7 @@ f2ptr raw__frame__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 				     }
 				   }
 				   if (! found_slot_in_order) {
-				     object_type_slot_pairs = f2cons__new(cause, f2cons__new(cause, type_slot_name, slot_name), object_type_slot_pairs);
+				     object_type_slot_pairs = raw__cons__new(cause, raw__cons__new(cause, type_slot_name, slot_name), object_type_slot_pairs);
 				   }
 				 }
 				 );

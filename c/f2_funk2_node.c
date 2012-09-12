@@ -473,13 +473,13 @@ f2ptr f2__funk2_node_handler__known_node_info(f2ptr cause) {
   funk2_node_list_t* iter = __funk2.node_handler.node_list;
   while (iter) {
     funk2_node_t* node = &(iter->node);
-    seq = f2cons__new(cause,
-		      f2__funk2_node_info__new(cause,
-					       f2pointer__new(cause, node->node_id),
-					       f2integer__new(cause, node->computer_id),
-					       raw__client_id__new_from_client_id(cause, &(node->socket_client.client_id)),
-					       node->socket_client.socket.disconnected ? new__symbol(cause, "disconnected") : nil),
-		      seq);
+    seq = raw__cons__new(cause,
+			 f2__funk2_node_info__new(cause,
+						  f2pointer__new(cause, node->node_id),
+						  f2integer__new(cause, node->computer_id),
+						  raw__client_id__new_from_client_id(cause, &(node->socket_client.client_id)),
+						  node->socket_client.socket.disconnected ? new__symbol(cause, "disconnected") : nil),
+			 seq);
     iter = iter->next;
   }
   return seq;

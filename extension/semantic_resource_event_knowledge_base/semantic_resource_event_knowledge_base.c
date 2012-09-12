@@ -92,7 +92,7 @@ f2ptr raw__semantic_resource_event_knowledge_base__resource_targeting_events_con
 	  if (raw__relationship_meta_semantic_object__is_type(cause, meta_relationship)) {
 	    f2ptr target = f2__relationship_meta_semantic_object__target(cause, meta_relationship);
 	    if (raw__eq(cause, target, semantic_resource)) {
-	      resource_targeting_events = f2cons__new(cause, event_containing_time, resource_targeting_events);
+	      resource_targeting_events = raw__cons__new(cause, event_containing_time, resource_targeting_events);
 	    }
 	  }
 	}

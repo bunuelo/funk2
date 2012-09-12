@@ -92,7 +92,7 @@ f2ptr raw__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_file
     }
     key_iter = f2cons__cdr(key_iter, cause);
   }
-  raw__array__elt__set(cause, bin_array, index, f2cons__new(cause, key, raw__array__elt(cause, bin_array, index)));
+  raw__array__elt__set(cause, bin_array, index, raw__cons__new(cause, key, raw__array__elt(cause, bin_array, index)));
   s64 key_count__i = f2integer__i(f2set__key_count(this, cause), cause);
   {
     key_count__i ++;
@@ -290,7 +290,7 @@ f2ptr raw__set__elements(f2ptr cause, f2ptr this) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__elements assert failed: f2__set__valid(this)");
   f2ptr new_list = nil;
   set__iteration(cause, this, element,
-		 new_list = f2cons__new(set__iteration__cause, element, new_list));
+		 new_list = raw__cons__new(set__iteration__cause, element, new_list));
   return new_list;
 }
 

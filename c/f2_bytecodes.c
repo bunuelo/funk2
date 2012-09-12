@@ -225,6 +225,7 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
   {
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);
     if (old_free_stack != nil) {
+      status("reusing old_free_stack!");
       {
 	new_cons = old_free_stack;
 	f2ptr new_free_stack = f2cons__cdr(old_free_stack, cause);
@@ -249,12 +250,12 @@ f2ptr raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
     f2ptr new_stack = f2cons__cdr(free_cons, cause);
     f2fiber__stack__set(this, cause, new_stack);
   }
-  //{
-  //  f2ptr old_free_stack = f2fiber__free_stack(this, cause);
-  //  f2ptr new_free_stack = free_cons;
-  //  f2cons__cdr__set(free_cons, cause, old_free_stack);
-  //  f2fiber__free_stack__set(this, cause, new_free_stack);
-  //}
+  {
+    f2ptr old_free_stack = f2fiber__free_stack(this, cause);
+    f2ptr new_free_stack = free_cons;
+    f2cons__cdr__set(free_cons, cause, old_free_stack);
+    f2fiber__free_stack__set(this, cause, new_free_stack);
+  }
   return return_value;
 }
 

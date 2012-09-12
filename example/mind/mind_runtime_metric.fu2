@@ -169,7 +169,7 @@
 	[if [null first_metric_value]
 	    [= first_metric_value metric_value]]
 	[let [[metric_simulation_relative_time [get metric simulation_relative_time]]
-	      [value_offset                    [- first_metric_value metric_value]]]
+	      [value_offset                    [- metric_value first_metric_value]]]
 	  [let [[output_x [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
 			     1000000000]]
 		[output_y [/ [get value_offset as-double]

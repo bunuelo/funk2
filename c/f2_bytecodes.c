@@ -220,16 +220,18 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
 // raw push and pop stack
 
 void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
-  f2ptr old_stack      = f2fiber__stack(this, cause);
-  f2ptr new_free_stack = nil;
-  f2ptr new_cons       = nil;
+  f2ptr     old_stack          = f2fiber__stack(this, cause);
+  boolean_t changed_free_stack = boolean__false;
+  f2ptr     new_free_stack     = nil;
+  f2ptr     new_cons           = nil;
   {
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);
     if (old_free_stack != nil) {
       //status("reusing old_free_stack!");
       {
-	new_cons       = old_free_stack;
-	new_free_stack = f2cons__cdr(old_free_stack, cause);
+	new_cons           = old_free_stack;
+	new_free_stack     = f2cons__cdr(old_free_stack, cause);
+	changed_free_stack = boolean__true;
       }
       f2cons__car__set(new_cons, cause, value);
       f2cons__cdr__set(new_cons, cause, old_stack);
@@ -238,7 +240,7 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
     }
   }
   f2fiber__stack__set(this, cause, new_cons);
-  if (new_free_stack != nil) {
+  if (changed_free_stack) {
     f2fiber__free_stack__set(this, cause, new_free_stack);
   }
 }

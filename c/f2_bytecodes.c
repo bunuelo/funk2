@@ -227,7 +227,7 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
     if (old_free_stack != nil) {
       {
 	new_cons = old_free_stack;
-	f2ptr new_free_stack = f2cons__cdr(free_stack, cause);
+	f2ptr new_free_stack = f2cons__cdr(old_free_stack, cause);
 	f2fiber__free_stack__set(this, cause, new_free_stack);
       }
       f2cons__car__set(new_cons, cause, value);

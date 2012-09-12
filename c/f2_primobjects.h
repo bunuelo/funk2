@@ -1767,7 +1767,7 @@ f2ptr f2__place__new(f2ptr cause, f2ptr thing);
 
 // cons
 
-declare_primobject_2_slot(cons, car, cdr, is_stack);
+declare_primobject_3_slot(cons, car, cdr, is_stack);
 
 f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 

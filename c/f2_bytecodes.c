@@ -228,53 +228,55 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
 f2ptr raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
   f2ptr free_cons    = f2fiber__stack(this, cause);
   f2ptr return_value = f2cons__car(free_cons, cause);
+  f2ptr new_stack    = f2cons__cdr(free_cons, cause);
+  f2fiber__stack__set(this, cause, new_stack);
   return return_value;
 }
 
 // push registers
 
-//void raw__fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {raw__fiber__stack__raw_push(cause, this, constant);}
-//void raw__fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__value(          this, cause));}
-//void raw__fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__iter(           this, cause));}
-//void raw__fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__program_counter(this, cause));}
-//void raw__fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__args(           this, cause));}
-//void raw__fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__return_reg(     this, cause));}
-//void raw__fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__env(            this, cause));}
-//void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__trace(          this, cause));}
+void raw__fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {raw__fiber__stack__raw_push(cause, this, constant);}
+void raw__fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__value(          this, cause));}
+void raw__fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__iter(           this, cause));}
+void raw__fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__program_counter(this, cause));}
+void raw__fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__args(           this, cause));}
+void raw__fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__return_reg(     this, cause));}
+void raw__fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__env(            this, cause));}
+void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)                 {raw__fiber__stack__raw_push(cause, this, f2fiber__trace(          this, cause));}
 
 // pop registers
 
-//void  raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
-//void  raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {                                           raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
+void  raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {                                           raw__fiber__stack__raw_pop(cause, this);}
 
 
 // push registers
 
-void raw__fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {f2fiber__stack__set(this, cause, f2cons__new(cause, constant, f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__value(          this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__iter(           this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__program_counter(this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__args(           this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__return_reg(     this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__env(            this, cause), f2fiber__stack(this, cause)));}
-void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__trace(          this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_constant       (f2ptr cause, f2ptr this, f2ptr constant) {raw__fiber__stack__raw_push(cause, this, constant);}
+//void raw__fiber__stack__push_value          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__value(          this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_iter           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__iter(           this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_program_counter(f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__program_counter(this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_args           (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__args(           this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_return_reg     (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__return_reg(     this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_env            (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__env(            this, cause), f2fiber__stack(this, cause)));}
+//void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)                 {f2fiber__stack__set(this, cause, f2cons__new(cause, f2fiber__trace(          this, cause), f2fiber__stack(this, cause)));}
 
 // pop registers
 
-void raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
-void raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {f2fiber__stack__set(          this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, f2cons__car(f2fiber__stack(this, cause), cause)); f2fiber__stack__set(this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
+//void raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {f2fiber__stack__set(          this, cause, f2cons__cdr(f2fiber__stack(this, cause), cause));}
 
 f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {return f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, funktion);}
 

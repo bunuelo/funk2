@@ -1767,7 +1767,7 @@ f2ptr f2__place__new(f2ptr cause, f2ptr thing);
 
 // cons
 
-declare_primobject_2_slot(cons, car, cdr);
+declare_primobject_2_slot(cons, car, cdr, is_stack);
 
 f2ptr f2cons__primobject_type__new_aux(f2ptr cause);
 
@@ -2370,7 +2370,7 @@ declare_object_type_1_slot(place, thing, );
 
 // cons
 
-declare_object_type_2_slot(cons, car, cdr,
+declare_object_type_3_slot(cons, car, cdr, is_stack,
 			   f2ptr length__symbol;
 			   f2ptr length__funk;
 			   f2ptr terminal_print_with_frame__symbol;

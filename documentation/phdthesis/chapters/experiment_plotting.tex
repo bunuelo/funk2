@@ -493,9 +493,6 @@
   \def\experimentcausegroupplotscausegroupprettyname{#3}%
   \def\experimentcausegroupplotsexperimentdescription{#4}%
   \def\experimentcausegroupplotsplotheight{#5}%
-  \newpage
-  \noindent\begin{minipage}{\textwidth}
-  \subsection{\experimentcausegroupplotscausegroupprettyname}
     \begin{tabular}{r}
       {\raggedleft
          \causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
@@ -522,15 +519,6 @@
                               \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
       }\\
     \end{tabular}
-    \captionof{figure}[Plots for {\experimentcausegroupplotscausegroupprettyname}.]{All of the resources in the entire
-       {\experimentcausegroupplotscausegroupprettyname} have been
-       causally traced and these two plots show: (top) the bytecode
-       execution rate for the entire
-       {\experimentcausegroupplotscausegroupprettyname}, as well as
-       (bottom) the memory footprint of the same causal scope.
-       {\experimentcausegroupplotsexperimentdescription}}
-    \label{figure:\experimentcausegroupplotscausegroupfilenameroot}
-  \end{minipage}
   \endgroup%
 }
 

@@ -3,7 +3,7 @@
 \label{chapter:experiment_data}
 %************************************************
 
-\section{Comparisons of Computational Speed and Space Requirements in Three Experiments}
+\section{Time and Space Complexities in Three Experiments}
 
 This appendix chapter includes empirical data gathered using the
 reflective tracing features of the underlying Funk garbage collected
@@ -62,39 +62,88 @@ in this appendix, comparing the three experiments.
   experiments.
 }
 
+\newcommand{\experimentdatacaptionbegin}[1]{
+  \def\experimentdatacausegroupprettyname{#1}%
+  All of the resources in the entire
+  {\experimentdatacausegroupprettyname} have been causally traced and
+  these two plots show: (top) the bytecode execution rate for the
+  entire {\experimentdatacausegroupprettyname}, as well as (bottom)
+  the memory footprint of the same causal scope.}
+
+\newcommand{\experimentdatablocksworldexample}{
+  \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    0 seconds\\
+    \emph{Initialization}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-1}
+  \end{minipage}%
+    \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    15 seconds\\
+    \emph{Deliberative Failure}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-8}
+  \end{minipage}%
+  \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    25 seconds\\
+    \emph{Reflective Success}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-12}
+  \end{minipage}%
+}
+
 % AI
-{\experimentcausegroupplots{\dataappendixmaxtime}
-                           {\dataappendixexperimentonemaxtime}
-                           {\dataappendixexperimenttwomaxtime}
-                           {\dataappendixexperimentthreemaxtime}
-                           {\dataappendixexperimentonename}
-                           {\dataappendixexperimenttwoname}
-                           {\dataappendixexperimentthreename}
-                           {\dataappendixexperimentoneprettyname}
-                           {\dataappendixexperimenttwoprettyname}
-                           \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                              {mind_plot-Gripper-1}
-                                                              {AI}
-                                                              {\experimentdatacommontablereference}
-                                                              {4cm}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsection{AI}
+    \experimentcausegroupplots{\dataappendixmaxtime}
+                              {\dataappendixexperimentonemaxtime}
+                              {\dataappendixexperimenttwomaxtime}
+                              {\dataappendixexperimentthreemaxtime}
+                              {\dataappendixexperimentonename}
+                              {\dataappendixexperimenttwoname}
+                              {\dataappendixexperimentthreename}
+                              {\dataappendixexperimentoneprettyname}
+                              {\dataappendixexperimenttwoprettyname}
+                              \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                                 {mind_plot-Gripper-1}
+                                                                 {AI}
+                                                                 {\experimentdatacommontablereference}
+                                                                 {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      AI.]{\experimentdatacaptionbegin{AI}}
+  \label{figure:mind_plot-Gripper-1}
+  \end{minipage}
 }
 % reflective
-{\experimentcausegroupplots{\dataappendixmaxtime}
-                           {\dataappendixexperimentonemaxtime}
-                           {\dataappendixexperimenttwomaxtime}
-                           {\dataappendixexperimentthreemaxtime}
-                           {\dataappendixexperimentonename}
-                           {\dataappendixexperimenttwoname}
-                           {\dataappendixexperimentthreename}
-                           {\dataappendixexperimentoneprettyname}
-                           {\dataappendixexperimenttwoprettyname}
-                           \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
-                                                              {mind_plot-Gripper-1-reflective}
-                                                              {Reflective Layer}
-                                                              {\experimentdatacommontablereference}
-                                                              {4cm}}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsection{Reflective Layer}
+    \experimentcausegroupplots{\dataappendixmaxtime}
+                              {\dataappendixexperimentonemaxtime}
+                              {\dataappendixexperimenttwomaxtime}
+                              {\dataappendixexperimentthreemaxtime}
+                              {\dataappendixexperimentonename}
+                              {\dataappendixexperimenttwoname}
+                              {\dataappendixexperimentthreename}
+                              {\dataappendixexperimentoneprettyname}
+                              {\dataappendixexperimenttwoprettyname}
+                              \experimentcausegroupplotscontinued{\dataappendixexperimentthreeprettyname}
+                                                                 {mind_plot-Gripper-1-reflective}
+                                                                 {Reflective Layer}
+                                                                 {\experimentdatacommontablereference}
+                                                                 {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Layer.]{\experimentdatacaptionbegin{Reflective Layer}}
+  \label{figure:mind_plot-Gripper-1-reflective}
+  \end{minipage}
+}
 % reflective event knowledge
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Event Knowledge Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -107,9 +156,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-reflective_event_knowledge}
                                                               {Reflective Event Knowledge Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Event Knowledge Agency.]{\experimentdatacaptionbegin{Reflective Event Knowledge Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-reflective_event_knowledge}
+  \end{minipage}
+}
 % reflective execution
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Execution Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -122,9 +180,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-execution}
                                                               {Reflective Execution Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Execution Agency.]{\experimentdatacaptionbegin{Reflective Execution Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-execution}
+  \end{minipage}
+}
 % reflective imagination
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Imagination Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -137,9 +204,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-imagination}
                                                               {Reflective Imagination Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Imagination Agency.]{\experimentdatacaptionbegin{Reflective Imagination Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-imagination}
+  \end{minipage}
+}
 % reflective object type goal
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Object-Type-Goal Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -152,9 +228,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-plan_object_type_goal}
                                                               {Reflective Object-Type-Goal Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Object-Type-Goal Agency.]{\experimentdatacaptionbegin{Reflective Object-Type-Goal Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-plan_object_type_goal}
+  \end{minipage}
+}
 % reflective plan
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Plan Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -167,9 +252,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-plan}
                                                               {Reflective Plan Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4.5cm}}
+                                                              {4.5cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Plan Agency.]{\experimentdatacaptionbegin{Reflective Plan Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-plan}
+  \end{minipage}
+}
 % reflective plan bug response
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Reflective Plan-Bug-Response Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -182,9 +276,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-reflective-plan_bug_response}
                                                               {Reflective Plan-Bug-Response Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4.5cm}}
+                                                              {4.5cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Reflective Plan-Bug-Response Agency.]{\experimentdatacaptionbegin{Reflective Plan-Bug-Response Agency}}
+  \label{figure:mind_plot-Gripper-1-reflective-plan_bug_response}
+  \end{minipage}
+}
 % deliberative
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsection{Deliberative Layer}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -198,8 +301,17 @@ in this appendix, comparing the three experiments.
                                                               {Deliberative Layer}
                                                               {\experimentdatacommontablereference}
                                                               {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Deliberative Layer.]{\experimentdatacaptionbegin{Deliberative Layer}}
+  \label{figure:mind_plot-Gripper-1-deliberative}
+  \end{minipage}
+}
 % deliberative execution
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Deliberative Execution Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -212,9 +324,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-deliberative-execution}
                                                               {Deliberative Execution Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Deliberative Execution Agency.]{\experimentdatacaptionbegin{Deliberative Execution Agency}}
+  \label{figure:mind_plot-Gripper-1-deliberative-execution}
+  \end{minipage}
+}
 % deliberative imagination
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Deliberative Imagination Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -227,9 +348,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-deliberative-imagination}
                                                               {Deliberative Imagination Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Deliberative Imagination Agency.]{\experimentdatacaptionbegin{Deliberative Imagination Agency}}
+  \label{figure:mind_plot-Gripper-1-deliberative-imagination}
+  \end{minipage}
+}
 % deliberative object type goal
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Deliberative Object Type Goal Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -242,9 +372,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-deliberative-physical_object_type_goal}
                                                               {Deliberative Object Type Goal Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Deliberative Object Type Goal Agency.]{\experimentdatacaptionbegin{Deliberative Object Type Goal Agency}}
+  \label{figure:mind_plot-Gripper-1-deliberative-physical_object_type_goal}
+  \end{minipage}
+}
 % deliberative plan
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Deliberative Plan Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -257,9 +396,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-deliberative-plan}
                                                               {Deliberative Plan Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Deliberative Plan Agency.]{\experimentdatacaptionbegin{Deliberative Plan Agency}}
+  \label{figure:mind_plot-Gripper-1-deliberative-plan}
+  \end{minipage}
+}
 % learned reactive
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsection{Learned Reactive Layer}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -272,9 +420,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-learned_reactive}
                                                               {Learned Reactive Layer}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Learned Reactive Layer.]{\experimentdatacaptionbegin{Learned Reactive Layer}}
+  \label{figure:mind_plot-Gripper-1-learned_reactive}
+  \end{minipage}
+}
 % learned reactive physical action
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Learned Reactive Physical Action Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -287,9 +444,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-learned_reactive-physical}
                                                               {Learned Reactive Physical Action Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Learned Reactive Physical Action Agency.]{\experimentdatacaptionbegin{Learned Reactive Physical Action Agency}}
+  \label{figure:mind_plot-Gripper-1-learned_reactive-physical}
+  \end{minipage}
+}
 % learned reactive physical knowledge
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Learned Reactive Physical-Knowledge Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -302,9 +468,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-learned_reactive-physical_knowledge}
                                                               {Learned Reactive Physical-Knowledge Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Learned Reactive Physical-Knowledge Agency.]{\experimentdatacaptionbegin{Learned Reactive Physical-Knowledge Agency}}
+  \label{figure:mind_plot-Gripper-1-learned_reactive-physical_knowledge}
+  \end{minipage}
+}
 % built-in reactive
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsection{Built-in Reactive Layer}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -317,9 +492,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-builtin_reactive}
                                                               {Built-in Reactive Layer}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Built-in Reactive Layer.]{\experimentdatacaptionbegin{Built-in Reactive Layer}}
+  \label{figure:mind_plot-Gripper-1-builtin_reactive}
+  \end{minipage}
+}
 % built-in reactive neural plug
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Built-in Reactive Neural Plug Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -332,9 +516,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-builtin_reactive-neural_plug}
                                                               {Built-in Reactive Neural Plug Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Built-in Reactive Neural Plug Agency.]{\experimentdatacaptionbegin{Built-in Reactive Neural Plug Agency}}
+  \label{figure:mind_plot-Gripper-1-builtin_reactive-neural_plug}
+  \end{minipage}
+}
 % built-in reactive physical action
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Built-in Reactive Physical Action Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -347,9 +540,18 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-builtin_reactive-physical}
                                                               {Built-in Reactive Physical Action Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Built-in Reactive Physical Action Agency.]{\experimentdatacaptionbegin{Built-in Reactive Physical Action Agency}}
+  \label{figure:mind_plot-Gripper-1-builtin_reactive-physical}
+  \end{minipage}
+}
 % built-in reactive sensory
-{\experimentcausegroupplots{\dataappendixmaxtime}
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \subsubsection{Built-in Reactive Sensory Agency}
+    \experimentcausegroupplots{\dataappendixmaxtime}
                            {\dataappendixexperimentonemaxtime}
                            {\dataappendixexperimenttwomaxtime}
                            {\dataappendixexperimentthreemaxtime}
@@ -362,7 +564,13 @@ in this appendix, comparing the three experiments.
                                                               {mind_plot-Gripper-1-builtin_reactive-sensory}
                                                               {Built-in Reactive Sensory Agency}
                                                               {\experimentdatacommontablereference}
-                                                              {4cm}}
+                                                              {4cm}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Plots for the entire
+      Built-in Reactive Sensory Agency.]{\experimentdatacaptionbegin{Built-in Reactive Sensory Agency}}
+  \label{figure:mind_plot-Gripper-1-builtin_reactive-sensory}
+  \end{minipage}
+}
 
 
 

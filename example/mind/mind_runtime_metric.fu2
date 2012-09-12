@@ -309,16 +309,21 @@
 
 
 [deftypefunk mind_runtime_metric_monitor get simulation_bytes_footprint_plot_text []
-  [let [[line_strings       nil]
-	[metric_iter        metric_sequence]
-	[first_metric_value nil]]
+  [let [[line_strings         nil]
+	[metric_iter          metric_sequence]
+	[minimum_metric_value nil]]
     [while metric_iter
       [let* [[metric       [car metric_iter]]
 	     [metric_value [get metric bytes_footprint]]]
-	[if [null first_metric_value]
-	    [= first_metric_value metric_value]]
+	[if [or [null minimum_metric_value]
+		[< metric_value minimum_metric_value]]
+	    [= minimum_metric_value metric_value]]]
+      [= metric_iter [cdr metric_iter]]]
+    [while metric_iter
+      [let* [[metric       [car metric_iter]]
+	     [metric_value [get metric bytes_footprint]]]
 	[let [[metric_simulation_relative_time [get metric simulation_relative_time]]
-	      [value_offset                    [- metric_value first_metric_value]]]
+	      [value_offset                    [- metric_value minimum_metric_value]]]
 	  [let [[output_x [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
 			     1000000000]]
 		[output_y [/ [get value_offset as-double]

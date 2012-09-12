@@ -30,9 +30,10 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_31_slot(fiber,
+def_primobject_32_slot(fiber,
 		       program_counter,
 		       stack,
+		       free_stack,
 		       iter,
 		       env,
 		       args,
@@ -1120,9 +1121,10 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_31_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_32_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack,
+							  free_stack,
 							  iter,
 							  env,
 							  args,
@@ -1288,9 +1290,10 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_31_slot(fiber,
+  initialize_primobject_32_slot(fiber,
 				program_counter,
 				stack,
+				free_stack,
 				iter,
 				env,
 				args,

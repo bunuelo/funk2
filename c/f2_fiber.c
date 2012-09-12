@@ -67,6 +67,7 @@ def_primobject_32_slot(fiber,
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
   f2ptr program_counter                                   = nil;
   f2ptr stack                                             = nil;
+  f2ptr free_stack                                        = nil;
   f2ptr iter                                              = nil;
   f2ptr env                                               = parent_env;
   f2ptr args                                              = nil;
@@ -97,6 +98,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
 				 stack,
+				 free_stack,
 				 iter,
 				 env,
 				 args,

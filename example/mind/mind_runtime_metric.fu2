@@ -126,6 +126,38 @@
     [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving bytecode_count plot "' filename '"']]]
 
 
+[deftypefunk mind_runtime_metric_monitor get simulation_bytecode_rate_plot_text []
+  [let [[line_strings nil]
+	[prev_metric  nil]
+	[metric_iter  metric_sequence]]
+    [while metric_iter
+      [let [[metric [car metric_iter]]]
+	[if prev_metric
+	    [let [[prev_metric_value                    [get prev_metric bytecode_count]]
+		  [prev_metric_simulation_relative_time [get prev_metric simulation_relative_time]]
+		  [metric_value                         [get metric      bytecode_count]]
+		  [metric_simulation_relative_time      [get metric      simulation_relative_time]]]
+	      [let [[simulation_relative_time_diff [- prev_metric_simulation_relative_time metric_simulation_relative_time]]
+		    [value_diff                    [- prev_metric_value                    metric_value]]]
+		[let [[output_x [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
+				   1000000000]]
+		      [output_y [/ [/ [get value_diff as-double]
+				      [/ [get [get simulation_relative_time_diff total_nanoseconds] as-double]
+					 1000000000]]
+				   1000000]]]
+		  [let [[line_string [format nil output_x ' ' output_y '\n']]]
+		    [= line_strings [cons line_string line_strings]]]]]]]
+	[= prev_metric metric]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_simulation_bytecode_rate_plot [filename_root]
+  [assert-type string filename_root]
+  [let [[filename [format nil filename_root '-simulation_bytecode_rate.data']]]
+    [have [get this simulation_bytecode_rate_plot_text] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving simulation_bytecode_rate plot "' filename '"']]]
+
+
 [deftypefunk mind_runtime_metric_monitor get simulation_bytecode_count_plot_text []
   [let [[line_strings nil]
 	[prev_metric  nil]
@@ -301,6 +333,7 @@
 
 [deftypefunk mind_runtime_metric_monitor execute save_all_plots [time_offset filename_root]
   [parog [have this save_bytecode_count_plot             time_offset filename_root]
+	 [have this save_simulation_bytecode_rate_plot               filename_root]
 	 [have this save_simulation_bytecode_count_plot              filename_root]
 	 [have this save_execution_nanoseconds_plot      time_offset filename_root]
 	 [have this save_bytes_allocated_count_plot      time_offset filename_root]

@@ -335,8 +335,8 @@
 }
 
 \newcommand{\experimentyaxisbytecodes}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Execution Rate};
-  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytecodes/s)};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Time Complexity};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytecodes)};
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
@@ -345,7 +345,7 @@
 }
 
 \newcommand{\experimentyaxismemory}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Memory Footprint};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Space Complexity};
   \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytes)};
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
 }
@@ -493,7 +493,9 @@
   \def\experimentcausegroupplotscausegroupprettyname{#3}%
   \def\experimentcausegroupplotsexperimentdescription{#4}%
   \def\experimentcausegroupplotsplotheight{#5}%
-  \begin{figure}[ht]
+  \newpage
+  \noindent\begin{minipage}{\textwidth}
+  \subsection{\experimentcausegroupplotscausegroupprettyname}
     \begin{tabular}{r}
       {\raggedleft
          \causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
@@ -520,7 +522,7 @@
                               \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
       }\\
     \end{tabular}
-    \caption[] {All of the resources in the entire
+    \captionof{figure}[Plots for {\experimentcausegroupplotscausegroupprettyname}.]{All of the resources in the entire
        {\experimentcausegroupplotscausegroupprettyname} have been
        causally traced and these two plots show: (top) the bytecode
        execution rate for the entire
@@ -528,7 +530,7 @@
        (bottom) the memory footprint of the same causal scope.
        {\experimentcausegroupplotsexperimentdescription}}
     \label{figure:\experimentcausegroupplotscausegroupfilenameroot}
-  \end{figure}%
+  \end{minipage}
   \endgroup%
 }
 

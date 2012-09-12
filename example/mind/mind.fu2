@@ -131,6 +131,12 @@
 	      [have layer save_bytecode_count_plots time_offset [format nil filename_root '-' [get this name]]]]
 	[get this layers]]]
 
+[deftypefunk mind execute save_simulation_bytecode_rate_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_bytecode_rate_plot [format nil filename_root '-' [get this name]]]
+  [parc [funk [layer]
+	      [have layer save_simulation_bytecode_rate_plots [format nil filename_root '-' [get this name]]]]
+	[get this layers]]]
+
 [deftypefunk mind execute save_simulation_bytecode_count_plots [filename_root]
   [have runtime_metric_monitor save_simulation_bytecode_count_plot [format nil filename_root '-' [get this name]]]
   [parc [funk [layer]

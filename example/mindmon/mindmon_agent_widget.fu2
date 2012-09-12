@@ -229,6 +229,7 @@
 						 
 						 save_all_plots_menu_item
 						 save_bytecode_count_plots_menu_item
+						 save_simulation_bytecode_rate_plots_menu_item
 						 save_simulation_bytecode_count_plots_menu_item
 						 save_execution_nanoseconds_plots_menu_item
 						 save_bytes_allocated_count_plots_menu_item
@@ -260,6 +261,14 @@
 	     [funk []
 		   [let [[mind [get mindmon_agent_widget mind]]]
 		     [have mind save_bytecode_count_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytecode_rate_plots_menu_item [gtk-menu_item-new 'Save Simulation Bytecode Rate Plots']]
+       [have mind_menu append save_simulation_bytecode_rate_plots_menu_item]
+       [have save_simulation_bytecode_rate_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytecode_rate_plots '/tmp/mind_plot']]]
 	     nil]
        
        [= save_simulation_bytecode_count_plots_menu_item [gtk-menu_item-new 'Save Simulation Bytecode Count Plots']]

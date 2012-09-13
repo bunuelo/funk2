@@ -245,7 +245,16 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
   }
 }
 
-f2ptr raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
+f2ptr raw__fiber__stack__raw_peek(f2ptr cause, f2ptr this) {
+  f2ptr stack = f2fiber__stack(this, cause);
+  if (stack == nil) {
+    error(nil, "fiber stack is nil.");
+  }
+  f2ptr return_value = f2cons__car(stack, cause);
+  return return_value;
+}
+
+void raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
   f2ptr free_cons = f2fiber__stack(this, cause);
   if (free_cons == nil) {
     error(nil, "fiber stack is nil.");
@@ -254,14 +263,13 @@ f2ptr raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
   f2ptr new_stack    = f2cons__cdr(     free_cons, cause);
   f2ptr is_stack     = f2cons__is_stack(free_cons, cause);
   if (is_stack != nil) {
-    //status("found stack cons that is not a stack cons.");
+    //status("found stack cons that is a stack cons.");
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);
     f2cons__cdr__set(free_cons, cause, old_free_stack);
     f2ptr new_free_stack = free_cons;
     f2fiber__free_stack__set(this, cause, new_free_stack);
   }
   f2fiber__stack__set(this, cause, new_stack);
-  return return_value;
 }
 
 // push registers
@@ -277,14 +285,14 @@ void raw__fiber__stack__push_trace          (f2ptr cause, f2ptr this)           
 
 // pop registers
 
-void  raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, raw__fiber__stack__raw_pop(cause, this));}
-void  raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {                                           raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_value          (f2ptr cause, f2ptr this) {f2fiber__value__set(          this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_iter           (f2ptr cause, f2ptr this) {f2fiber__iter__set(           this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_program_counter(f2ptr cause, f2ptr this) {f2fiber__program_counter__set(this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_args           (f2ptr cause, f2ptr this) {f2fiber__args__set(           this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_return_reg     (f2ptr cause, f2ptr this) {f2fiber__return_reg__set(     this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_env            (f2ptr cause, f2ptr this) {f2fiber__env__set(            this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_trace          (f2ptr cause, f2ptr this) {f2fiber__trace__set(          this, cause, raw__fiber__stack__raw_peek(cause, this)); raw__fiber__stack__raw_pop(cause, this);}
+void  raw__fiber__stack__pop_nil            (f2ptr cause, f2ptr this) {                                                                                      raw__fiber__stack__raw_pop(cause, this);}
 
 
 f2ptr f2__expression_not_funkable__exception__new(f2ptr cause, f2ptr funktion) {return f2exception__new(cause, __funk2.bytecode.expression_not_funkable__exception__tag, funktion);}

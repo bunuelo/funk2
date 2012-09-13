@@ -154,7 +154,7 @@ def_pcfunk1(compound_object__new, compound_object_type,
 
 // cons
 
-def_primobject_3_slot(cons, car, cdr, is_stack);
+def_primobject_2_slot(cons, car, cdr);
 
 f2ptr raw__stack_cons__new(f2ptr cause, f2ptr x, f2ptr y) {
   return f2cons__new(cause, x, y, f2bool__new(boolean__true));
@@ -1410,7 +1410,7 @@ void f2__primobjects__defragment__fix_pointers() {
 
   // cons 
   
-  initialize_primobject_3_slot__defragment__fix_pointers(cons, car, cdr, is_stack);
+  initialize_primobject_2_slot__defragment__fix_pointers(cons, car, cdr);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cons__length);
@@ -1663,7 +1663,7 @@ void f2__primobjects__reinitialize_globalvars() {
 
   // cons 
   
-  initialize_primobject_3_slot(cons, car, cdr, is_stack);
+  initialize_primobject_2_slot(cons, car, cdr);
   
   {char* symbol_str = "length"; __funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk = never_gc(cfunk);}

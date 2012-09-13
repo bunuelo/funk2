@@ -50,7 +50,7 @@ void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* th
       switch(block->block.ptype) {
       case ptype_scheduler_cmutex: {
 	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-	funk2_processor_mutex__destroy(scheduler_cmutex_block->m);
+	funk2_processor_spinlock__destroy(scheduler_cmutex_block->m);
       } break;
       case ptype_cmutex: {
 	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
@@ -74,9 +74,9 @@ void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t*
       switch(block->block.ptype) {
       case ptype_scheduler_cmutex: {
 	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-	funk2_processor_mutex__init(scheduler_cmutex_block->m);
+	funk2_processor_spinlock__init(scheduler_cmutex_block->m, PTHREAD_PROCESS_PRIVATE);
 	if (scheduler_cmutex_block->locked_state) {
-	  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+	  funk2_processor_spinlock__lock(scheduler_cmutex_block->m);
 	}
       } break;
       case ptype_cmutex: {

@@ -617,9 +617,9 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	      } break;
 	      case ptype_scheduler_cmutex: {
 		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-		funk2_processor_mutex__init(scheduler_cmutex_block->m);
+		funk2_processor_spinlock__init(scheduler_cmutex_block->m);
 		if (scheduler_cmutex_block->locked_state) {
-		  funk2_processor_mutex__lock(scheduler_cmutex_block->m);
+		  funk2_processor_spinlock__lock(scheduler_cmutex_block->m);
 		}
 	      } break;
 	      case ptype_cmutex: {

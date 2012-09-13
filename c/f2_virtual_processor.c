@@ -189,7 +189,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	u64 lock_tries = 0;
 	while ((! locked_mutex) &&
 	       (! (yielding_virtual_processor_thread->exit))) {
-	  if (funk2_processor_spinlock_trylock(&(this->execute_bytecodes_mutex)) == 0) {
+	  if (funk2_processor_spinlock__trylock(&(this->execute_bytecodes_mutex)) == 0) {
 	    locked_mutex = boolean__true;
 	  }
 	  if (! locked_mutex) {

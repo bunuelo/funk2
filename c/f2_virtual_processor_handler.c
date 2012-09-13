@@ -213,7 +213,7 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     cons->next                                  = this->free_virtual_processor_threads;
     cons->virtual_processor_thread              = virtual_processor_thread;
     this->free_virtual_processor_threads        = cons;
-    funk2_processor_spinlock_unlock(&(this->free_virtual_processor_threads_mutex));
+    funk2_processor_spinlock__unlock(&(this->free_virtual_processor_threads_mutex));
   }
 }
 

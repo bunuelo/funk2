@@ -2370,7 +2370,7 @@ declare_object_type_1_slot(place, thing, );
 
 // cons
 
-declare_object_type_3_slot(cons, car, cdr, is_stack
+declare_object_type_3_slot(cons, car, cdr, is_stack,
 			   f2ptr length__symbol;
 			   f2ptr length__funk;
 			   f2ptr terminal_print_with_frame__symbol;

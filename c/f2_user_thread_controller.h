@@ -22,6 +22,8 @@
 #ifndef F2__USER_THREAD_CONTROLLER__H
 #define F2__USER_THREAD_CONTROLLER__H
 
+#include "f2_processor_spinlock.h"
+
 // funk2_user_thread_controller__touch_all_protected_alloc_arrays
 
 typedef struct funk2_user_thread_controller__touch_all_protected_alloc_arrays_s {

@@ -194,7 +194,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	  }
 	  if (! locked_mutex) {
 	    lock_tries ++;
-	    if ((lock_tries > 1000) ||
+	    if ((lock_tries > 10) ||
 		__funk2.scheduler_thread_controller.please_wait ||
 		__funk2.user_thread_controller.please_wait) {
 	      raw__spin_sleep_yield();

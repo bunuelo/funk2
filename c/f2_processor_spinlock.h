@@ -28,13 +28,13 @@
 
 typedef struct funk2_processor_spinlock_s {
 #if defined(F2__PROCESSOR_SPINLOCK__DEBUG)
-  boolean_t      is_initialized;
-  boolean_t      is_locked;
-  char*          lock_source_file;
-  int            lock_line_num;
-  pthread_t      lock_tid;
+  boolean_t          is_initialized;
+  boolean_t          is_locked;
+  char*              lock_source_file;
+  int                lock_line_num;
+  pthread_t          lock_tid;
 #endif
-  pthread_spin_t pthread_spin;
+  pthread_spinlock_t pthread_spin;
 } funk2_processor_spinlock_t;
 
 typedef enum funk2_processor_spinlock_trylock_result_e {

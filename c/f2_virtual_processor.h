@@ -48,12 +48,12 @@ void funk2_processor_thread_array__destroy(funk2_processor_thread_array_t* this)
 
 struct funk2_virtual_processor_s {
   u64                                    index;
-  funk2_processor_spinlock_t             execute_bytecodes_mutex;
+  funk2_processor_mutex_t                execute_bytecodes_mutex;
   funk2_virtual_processor_thread_t*      execute_bytecodes_current_virtual_processor_thread;
-  funk2_processor_spinlock_t             virtual_processor_thread_count_mutex;
+  funk2_processor_mutex_t                virtual_processor_thread_count_mutex;
   s64                                    assigned_virtual_processor_thread_count;
   s64                                    spinning_virtual_processor_thread_count;
-  funk2_processor_spinlock_t             virtual_processor_thread_stack_mutex;
+  funk2_processor_mutex_t                virtual_processor_thread_stack_mutex;
   funk2_virtual_processor_thread_cons_t* virtual_processor_thread_stack;
 };
 

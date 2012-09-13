@@ -36,14 +36,14 @@ struct funk2_virtual_processor_thread_cons_s {
 };
 
 struct funk2_virtual_processor_thread_s {
-  pid_t                      tid; // as returned by gettid()
-  funk2_processor_spinlock_t assignment_mutex;
-  u64                        virtual_processor_assignment_index;
-  u64                        processor_affinity_index;
-  funk2_processor_thread_t*  processor_thread;
-  boolean_t                  exit;
-  boolean_t                  exited;
-  u64                        virtual_processor_stack_index;
+  pid_t                     tid; // as returned by gettid()
+  funk2_processor_mutex_t   assignment_mutex;
+  u64                       virtual_processor_assignment_index;
+  u64                       processor_affinity_index;
+  funk2_processor_thread_t* processor_thread;
+  boolean_t                 exit;
+  boolean_t                 exited;
+  u64                       virtual_processor_stack_index;
 };
 
 void* funk2_virtual_processor_thread__start_function(                 void* args);

@@ -36,12 +36,12 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_start(args, msg);
   vsprintf(temp_msg, msg, args);
   va_end(args);
-  funk2_processor_mutex__lock(&(__funk2.status.trace_mutex));
+  funk2_processor_spinlock__lock(&(__funk2.status.trace_mutex));
   int trace_fd = open("funk2_debug.log", O_CREAT | O_APPEND | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
   if (trace_fd == -1) {
     __funk2_status_disabled = boolean__true;
     //printf("[WARNING] funk2_status couldn't open funk2_trace.log");
-    funk2_processor_mutex__unlock(&(__funk2.status.trace_mutex));
+    funk2_processor_spinlock__unlock(&(__funk2.status.trace_mutex));
     return;
   }
   pthread_t self_thread = pthread_self();
@@ -62,7 +62,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
     error_writing_status_message();
   }
   close(trace_fd);
-  funk2_processor_mutex__unlock(&(__funk2.status.trace_mutex));
+  funk2_processor_spinlock__unlock(&(__funk2.status.trace_mutex));
 }
 
 ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...) {
@@ -134,10 +134,10 @@ void f2__status__initialize() {
   f2__status__reinitialize_globalvars();
   //f2ptr cause = f2_status_c__cause__new(initial_cause(), nil, nil);
   
-  funk2_processor_mutex__init(&(__funk2.status.trace_mutex));
+  funk2_processor_spinlock__init(&(__funk2.status.trace_mutex));
 }
 
 void f2__status__destroy() {
-  funk2_processor_mutex__destroy(&(__funk2.status.trace_mutex));
+  funk2_processor_spinlock__destroy(&(__funk2.status.trace_mutex));
 }
 

@@ -163,7 +163,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
       cons->virtual_processor_thread              = virtual_processor_thread;
       {
 	funk2_processor_spinlock__lock(&(this->all_virtual_processor_threads_mutex));
-	cons->next                  = this->all_virtual_processor_threads;
+	cons->next                          = this->all_virtual_processor_threads;
 	this->all_virtual_processor_threads = cons;
 	funk2_processor_spinlock__unlock(&(this->all_virtual_processor_threads_mutex));
       }

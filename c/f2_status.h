@@ -25,7 +25,7 @@
 #include "f2_global.h"
 
 typedef struct funk2_status_s {
-  funk2_processor_mutex_t trace_mutex;
+  funk2_processor_spinlock_t trace_mutex;
 } funk2_status_t;
 
 void funk2_status(char* filename, int line_num, char* msg, ...);

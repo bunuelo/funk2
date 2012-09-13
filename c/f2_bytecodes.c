@@ -236,7 +236,7 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
       f2cons__car__set(new_cons, cause, value);
       f2cons__cdr__set(new_cons, cause, old_stack);
     } else {
-      new_cons = raw__cons__new(cause, value, old_stack);
+      new_cons = raw__stack_cons__new(cause, value, old_stack);
     }
   }
   f2fiber__stack__set(this, cause, new_cons);
@@ -250,9 +250,10 @@ f2ptr raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
   if (free_cons == nil) {
     error(nil, "fiber stack is nil.");
   }
-  f2ptr return_value   = f2cons__car(free_cons, cause);
-  f2ptr new_stack      = f2cons__cdr(free_cons, cause);
-  {
+  f2ptr return_value = f2cons__car(     free_cons, cause);
+  f2ptr new_stack    = f2cons__cdr(     free_cons, cause);
+  f2ptr is_stack     = f2cons__is_stack(free_cons, cause);
+  if (is_stack != nil) {
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);
     f2cons__cdr__set(free_cons, cause, old_free_stack);
     f2ptr new_free_stack = free_cons;

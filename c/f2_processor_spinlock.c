@@ -91,17 +91,7 @@ void funk2_processor_spinlock__raw_lock(funk2_processor_spinlock_t* this, const 
     funk2_processor_spinlock__error();
   }
 #endif
-  {
-    u64 lock_tries = 0;
-    while (funk2_processor_spinlock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_spinlock_trylock_result__success) {
-      lock_tries ++;
-      if (lock_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
-    }
-  }
+  pthread_spin_lock(&(this->pthread_spin));
 }
 
 void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, const char* lock_source_file, const int lock_line_num) {

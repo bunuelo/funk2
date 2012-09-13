@@ -219,13 +219,14 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
 
 // raw push and pop stack
 
+boolean_t fiber__enable_stack_reuse = boolean__false;
+
 void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
-  pause_gc();
   f2ptr     old_stack          = f2fiber__stack(this, cause);
   boolean_t changed_free_stack = boolean__false;
   f2ptr     new_free_stack     = nil;
   f2ptr     new_cons           = nil;
-  {
+  if (fiber__enable_stack_reuse) {
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);
     if (old_free_stack != nil) {
       //status("reusing old_free_stack!");
@@ -239,12 +240,13 @@ void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
     } else {
       new_cons = raw__stack_cons__new(cause, value, old_stack);
     }
+  } else {
+    new_cons = raw__stack_cons__new(cause, value, old_stack);
   }
   f2fiber__stack__set(this, cause, new_cons);
   if (changed_free_stack) {
     f2fiber__free_stack__set(this, cause, new_free_stack);
   }
-  resume_gc();
 }
 
 f2ptr raw__fiber__stack__raw_peek(f2ptr cause, f2ptr this) {
@@ -257,19 +259,20 @@ f2ptr raw__fiber__stack__raw_peek(f2ptr cause, f2ptr this) {
 }
 
 void raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
-  pause_gc();
   f2ptr free_cons = f2fiber__stack(this, cause);
   if (free_cons == nil) {
     error(nil, "fiber stack is nil.");
   }
-  f2ptr new_stack      = f2cons__cdr(free_cons, cause);
-  f2ptr old_free_stack = f2fiber__free_stack(this, cause);
-  f2cons__car__set(free_cons, cause, nil);
-  f2cons__cdr__set(free_cons, cause, old_free_stack);
-  f2ptr new_free_stack = free_cons;
-  f2fiber__free_stack__set(this, cause, new_free_stack);
+  f2ptr new_stack = f2cons__cdr(free_cons, cause);
+  if (fiber__enable_stack_reuse) {
+    //status("adding to free_stack!");
+    f2ptr old_free_stack = f2fiber__free_stack(this, cause);
+    f2cons__car__set(free_cons, cause, nil);
+    f2cons__cdr__set(free_cons, cause, old_free_stack);
+    f2ptr new_free_stack = free_cons;
+    f2fiber__free_stack__set(this, cause, new_free_stack);
+  }
   f2fiber__stack__set(this, cause, new_stack);
-  resume_gc();
 }
 
 // push registers

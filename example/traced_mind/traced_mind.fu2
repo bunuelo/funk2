@@ -24,7 +24,7 @@
   [new []
        [construct mind]
        
-       [have this add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_knowledge [get this semantic_realm]]]
+       `[have this add_semantic_knowledge_base [new semantic_event_knowledge_base `reflective_knowledge [get this semantic_realm]]]
        
        ]]
 

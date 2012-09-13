@@ -48,6 +48,7 @@
 
 
 [deftypefunk reflective_event_knowledge_agency execute create_knowledge []
+  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `reflective_knowledge           [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `reflective_event_knowledge     [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `physical_action_knowledge      [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `deliberative1_action_knowledge [get [get this mind] semantic_realm]]]

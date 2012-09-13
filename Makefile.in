@@ -1007,6 +1007,7 @@ am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_array.lo \
 	c/lib_libfunk2_la-f2_primfunks__stdlib.lo \
 	c/lib_libfunk2_la-f2_processor.lo \
 	c/lib_libfunk2_la-f2_processor_mutex.lo \
+	c/lib_libfunk2_la-f2_processor_spinlock.lo \
 	c/lib_libfunk2_la-f2_processor_thread.lo \
 	c/lib_libfunk2_la-f2_processor_thread_handler.lo \
 	c/lib_libfunk2_la-f2_protected_alloc_array.lo \
@@ -1631,6 +1632,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primfunks__stdlib.c \
   c/f2_processor.c \
   c/f2_processor_mutex.c \
+  c/f2_processor_spinlock.c \
   c/f2_processor_thread.c \
   c/f2_processor_thread_handler.c \
   c/f2_protected_alloc_array.c \
@@ -3109,6 +3111,8 @@ c/lib_libfunk2_la-f2_processor.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_processor_mutex.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_processor_spinlock.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_processor_thread.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_processor_thread_handler.lo: c/$(am__dirstamp) \
@@ -3371,6 +3375,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_processor.lo
 	-rm -f c/lib_libfunk2_la-f2_processor_mutex.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_processor_mutex.lo
+	-rm -f c/lib_libfunk2_la-f2_processor_spinlock.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_processor_spinlock.lo
 	-rm -f c/lib_libfunk2_la-f2_processor_thread.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_processor_thread.lo
 	-rm -f c/lib_libfunk2_la-f2_processor_thread_handler.$(OBJEXT)
@@ -3700,6 +3706,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_print.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_mutex.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_spinlock.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_thread.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_processor_thread_handler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_protected_alloc_array.Plo@am__quote@
@@ -5065,6 +5072,13 @@ c/lib_libfunk2_la-f2_processor_mutex.lo: c/f2_processor_mutex.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='c/f2_processor_mutex.c' object='c/lib_libfunk2_la-f2_processor_mutex.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_processor_mutex.lo `test -f 'c/f2_processor_mutex.c' || echo '$(srcdir)/'`c/f2_processor_mutex.c
+
+c/lib_libfunk2_la-f2_processor_spinlock.lo: c/f2_processor_spinlock.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_processor_spinlock.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_processor_spinlock.Tpo -c -o c/lib_libfunk2_la-f2_processor_spinlock.lo `test -f 'c/f2_processor_spinlock.c' || echo '$(srcdir)/'`c/f2_processor_spinlock.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_processor_spinlock.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_processor_spinlock.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='c/f2_processor_spinlock.c' object='c/lib_libfunk2_la-f2_processor_spinlock.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_processor_spinlock.lo `test -f 'c/f2_processor_spinlock.c' || echo '$(srcdir)/'`c/f2_processor_spinlock.c
 
 c/lib_libfunk2_la-f2_processor_thread.lo: c/f2_processor_thread.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_processor_thread.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_processor_thread.Tpo -c -o c/lib_libfunk2_la-f2_processor_thread.lo `test -f 'c/f2_processor_thread.c' || echo '$(srcdir)/'`c/f2_processor_thread.c

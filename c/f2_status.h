@@ -23,6 +23,7 @@
 #define F2__STATUS__H
 
 #include "f2_global.h"
+#include "f2_processor_spinlock.h"
 
 typedef struct funk2_status_s {
   funk2_processor_spinlock_t trace_mutex;

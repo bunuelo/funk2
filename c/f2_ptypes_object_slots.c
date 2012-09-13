@@ -1651,7 +1651,7 @@ def_pcfunk2(scheduler_cmutex__equals_hash_value__loop_free, this, node_ptypehash
 
 u64 raw__scheduler_cmutex__equals_hash_value(f2ptr cause, f2ptr this) {
   funk2_processor_spinlock_t* m = __pure__f2scheduler_cmutex__m(this);
-  return funk2_processor_mutex__equals_hash_value(m);
+  return funk2_processor_spinlock__equals_hash_value(m);
 }
 
 f2ptr f2__scheduler_cmutex__equals_hash_value(f2ptr cause, f2ptr this) {

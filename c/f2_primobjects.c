@@ -157,11 +157,11 @@ def_pcfunk1(compound_object__new, compound_object_type,
 def_primobject_2_slot(cons, car, cdr);
 
 f2ptr raw__stack_cons__new(f2ptr cause, f2ptr x, f2ptr y) {
-  return f2cons__new(cause, x, y, f2bool__new(boolean__true));
+  return f2cons__new(cause, x, y);
 }
 
 f2ptr raw__cons__new(f2ptr cause, f2ptr x, f2ptr y) {
-  return f2cons__new(cause, x, y, f2bool__new(boolean__false));
+  return f2cons__new(cause, x, y);
 }
 
 f2ptr f2__cons__new(f2ptr cause, f2ptr x, f2ptr y) {

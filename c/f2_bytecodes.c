@@ -259,9 +259,8 @@ void raw__fiber__stack__raw_pop(f2ptr cause, f2ptr this) {
   if (free_cons == nil) {
     error(nil, "fiber stack is nil.");
   }
-  f2ptr return_value = f2cons__car(     free_cons, cause);
-  f2ptr new_stack    = f2cons__cdr(     free_cons, cause);
-  f2ptr is_stack     = f2cons__is_stack(free_cons, cause);
+  f2ptr new_stack = f2cons__cdr(     free_cons, cause);
+  f2ptr is_stack  = f2cons__is_stack(free_cons, cause);
   if (is_stack != nil) {
     //status("found stack cons that is a stack cons.");
     f2ptr old_free_stack = f2fiber__free_stack(this, cause);

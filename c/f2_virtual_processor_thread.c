@@ -73,7 +73,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  raw__spin_sleep_yield();
+	  f2__nanosleep(20 * deep_sleep_nanoseconds);
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {
@@ -132,7 +132,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
 	  funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
 	} else {
-	  f2__nanosleep(2 * (line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
+	  f2__nanosleep(2 * (line_length + 2) * (line_length + 2) * deep_sleep_nanoseconds);
 	}
 	//raw__spin_sleep_yield();
       }

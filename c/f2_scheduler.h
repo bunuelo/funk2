@@ -25,7 +25,7 @@
 #define global_scheduler() __global__scheduler
 
 #include "f2_primobjects.h"
-
+#include "f2_processor_spinlock.h"
 
 // funk2_operating_system
 

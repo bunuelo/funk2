@@ -111,9 +111,9 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 // scheduler_cmutex
 
 struct ptype_scheduler_cmutex_block_s {
-  ptype_block_t           ptype;
-  boolean_t               locked_state; // this state is persistent between boots.
-  funk2_processor_mutex_t m[1];         // this state is reinitialized at each boot.
+  ptype_block_t              ptype;
+  boolean_t                  locked_state; // this state is persistent between boots.
+  funk2_processor_spinlock_t m[1];         // this state is reinitialized at each boot.
 } __attribute__((__packed__));
 typedef struct ptype_scheduler_cmutex_block_s ptype_scheduler_cmutex_block_t;
 

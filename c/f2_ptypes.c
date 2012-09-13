@@ -463,8 +463,8 @@ f2ptr ptype_scheduler_cmutex__new(int pool_index, f2ptr cause) {
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     scheduler_cmutex_block->ptype.creation_fiber = creation_fiber;
   }
-  scheduler_cmutex_block->locked_state         = boolean__false;
-  funk2_processor_mutex__init(scheduler_cmutex_block->m);
+  scheduler_cmutex_block->locked_state = boolean__false;
+  funk2_processor_spinlock__init(scheduler_cmutex_block->m);
   return scheduler_cmutex_f2ptr;
 }
 
@@ -475,10 +475,10 @@ f2ptr pfunk2__f2scheduler_cmutex__new(f2ptr cause) {
   return retval;
 }
 
-funk2_processor_mutex_t* ptype_scheduler_cmutex__m(f2ptr this, f2ptr cause) {
+funk2_processor_spinlock_t* ptype_scheduler_cmutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
-  funk2_processor_mutex_t* m = __pure__f2scheduler_cmutex__m(this);
+  funk2_processor_spinlock_t* m = __pure__f2scheduler_cmutex__m(this);
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
   return m;
 }
@@ -491,7 +491,7 @@ boolean_t pfunk2__f2scheduler_cmutex__is_locked(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   //int pool_index = this_processor_thread__pool_index();
-  boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_scheduler_cmutex__m(this, cause));
+  boolean_t is_locked = funk2_processor_spinlock__is_locked(ptype_scheduler_cmutex__m(this, cause));
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(is_locked));
   return is_locked;
 }
@@ -503,24 +503,7 @@ void pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_cmutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
-  {
-    u64 lock_tries = 0;
-    while (1) {
-      trylock_result = funk2_processor_mutex__trylock(ptype_scheduler_cmutex__m(this, cause));
-      if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
-	lock_tries ++;
-	if (lock_tries > 1000) {
-	  raw__spin_sleep_yield();
-	} else {
-	  raw__fast_spin_sleep_yield();
-	}
-	// no user process yield, thus is safe for scheduler and cannot be used by user process.
-      } else {
-	break;
-      }
-    }
-  }
+  funk2_processor_spinlock__lock(ptype_scheduler_cmutex__m(this, cause));
   __pure__f2scheduler_cmutex__locked_state__set(this, boolean__true);
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
   raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
@@ -536,7 +519,7 @@ void pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   // note that this assumes the scheduler_cmutex is locked.
   __pure__f2scheduler_cmutex__locked_state__set(this, boolean__false);
-  funk2_processor_mutex__unlock(ptype_scheduler_cmutex__m(this, cause));
+  funk2_processor_spinlock__unlock(ptype_scheduler_cmutex__m(this, cause));
   raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
 }
 
@@ -548,7 +531,7 @@ int pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_cmutex__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  int return_value = funk2_processor_mutex__trylock(ptype_scheduler_cmutex__m(this, cause));
+  int return_value = funk2_processor_spinlock__trylock(ptype_scheduler_cmutex__m(this, cause));
   if (return_value == 0) {
     __pure__f2scheduler_cmutex__locked_state__set(this, boolean__true);
     raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
@@ -588,7 +571,7 @@ f2ptr pfunk2__f2cmutex__new(f2ptr cause) {
   return retval;
 }
 
-funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause) {
+funk2_processor_mutex_t* ptype_cmutex__(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2cmutex__m(this);

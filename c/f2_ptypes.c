@@ -571,7 +571,7 @@ f2ptr pfunk2__f2cmutex__new(f2ptr cause) {
   return retval;
 }
 
-funk2_processor_mutex_t* ptype_cmutex__(f2ptr this, f2ptr cause) {
+funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2cmutex__m(this);

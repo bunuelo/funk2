@@ -136,7 +136,7 @@ struct ptype_cmutex_block_s {
 } __attribute__((__packed__));
 typedef struct ptype_cmutex_block_s ptype_cmutex_block_t;
 
-ptype_cmutex_block_t*     ptype_cmutex_block__new(int pool_index, f2ptr cause);
+ptype_cmutex_block_t*    ptype_cmutex_block__new(int pool_index, f2ptr cause);
 funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 
 #define __pure__f2cmutex__new(pool_index, cause)         ptype_cmutex__new(pool_index, cause)

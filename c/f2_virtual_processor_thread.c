@@ -73,7 +73,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  f2__nanosleep(20 * deep_sleep_nanoseconds);
+	  f2__nanosleep(100 * deep_sleep_nanoseconds);
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {

@@ -42,6 +42,7 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_processor_mutex__init(&(this->free_virtual_processor_threads_mutex));
     this->free_virtual_processor_threads = NULL;
   }
+  this->free_virtual_processor_thread_count = 0;
   {
     funk2_processor_mutex__init(&(this->virtual_processor_thread_processor_thread_hash_mutex));
     funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 10);
@@ -173,6 +174,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
     this->free_virtual_processor_threads        = cons->next;
     virtual_processor_thread                    = cons->virtual_processor_thread;
     f2__free(to_ptr(cons));
+    this->free_virtual_processor_thread_count --;
     funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }
   return virtual_processor_thread;
@@ -207,12 +209,17 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
   }
   funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
-  { // add to free processor thread list
+  { // add to free processor thread list if we don't already have too many free threads
     funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
-    funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
-    cons->next                                  = this->free_virtual_processor_threads;
-    cons->virtual_processor_thread              = virtual_processor_thread;
-    this->free_virtual_processor_threads        = cons;
+    if (this->free_virtual_processor_thread_count < 100) {
+      funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
+      cons->next                                  = this->free_virtual_processor_threads;
+      cons->virtual_processor_thread              = virtual_processor_thread;
+      this->free_virtual_processor_threads        = cons;
+      this->free_virtual_processor_thread_count ++;
+    } else {
+      funk2_virtual_processor_thread__signal_exit(virtual_processor_thread);
+    }
     funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }
 }

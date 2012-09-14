@@ -191,7 +191,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     // let spinning processor execute some bytecodes before returning from yield...
     if (__funk2.scheduler_thread_controller.please_wait ||
 	__funk2.user_thread_controller.please_wait) {
-      raw__spin_sleep_yield();
+      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
     } else {
       raw__fast_spin_sleep_yield();
     }
@@ -209,7 +209,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    if ((lock_tries > 1000) ||
 		__funk2.scheduler_thread_controller.please_wait ||
 		__funk2.user_thread_controller.please_wait) {
-	      f2__nanosleep((working_virtual_processor_thread_count + 1) * deep_sleep_nanoseconds);
+	      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }

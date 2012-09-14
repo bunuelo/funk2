@@ -171,8 +171,8 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     s64 spinning_virtual_processor_thread_count;
     {
       funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-      assigned_virtual_processor_thread_count = virtual_processor->assigned_virtual_processor_thread_count;
-      spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
+      assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
+      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
       funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
     }
     working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;

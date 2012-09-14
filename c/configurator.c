@@ -139,7 +139,7 @@ int main(int argc, char** argv) {
     {
       u64    sleep_nanoseconds = 1;
       double processor_usage   = 100.0;
-      double target_usage      = (10.0 / 100.0);
+      double target_usage      = (5.0 / 100.0);
       while (processor_usage > target_usage) {
 	s64 spin_nanoseconds = nanoseconds_per_second / 2;
 	{
@@ -150,7 +150,7 @@ int main(int argc, char** argv) {
 	    while (pthread_mutex_trylock(&mutex) && (raw__nanoseconds_since_1970() - begin__nanoseconds_since_1970) < spin_nanoseconds) {
 	      {
 		unsigned int i;
-		for (i = 0; i < 1000; i++) {
+		for (i = 0; i < 100; i++) {
 		  if ((i & 1) == 0) {
 		    task_counter ++;
 		  }

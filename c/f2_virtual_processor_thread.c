@@ -190,6 +190,7 @@ void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread
   this->paused = boolean__true;
   funk2_processor_mutex__lock(&(this->pause_doublelock_mutex));
   funk2_processor_mutex__lock(&(this->pause_doublelock_mutex));
+  funk2_processor_mutex__unlock(&(this->pause_doublelock_mutex));
   this->paused = boolean__false;
 }
 

@@ -135,9 +135,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
 	} else {
 	  // ****
-	  funk2_virtual_processor_thread__pause_myself(this);
+	  //funk2_virtual_processor_thread__pause_myself(this);
 	  // ****
-	  //f2__nanosleep((line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
+	  f2__nanosleep((line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
 	}
 	//raw__spin_sleep_yield();
       }

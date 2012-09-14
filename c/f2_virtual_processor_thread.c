@@ -76,7 +76,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_processor_mutex__lock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
 	  u64 free_virtual_processor_thread_count = __funk2.virtual_processor_handler.free_virtual_processor_thread_count;
 	  funk2_processor_mutex__unlock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
-	  f2__nanosleep(free_virtual_processor_thread_count * 100 * deep_sleep_nanoseconds);
+	  // ****
+	  funk2_virtual_processor_thread__pause_myself(this);
+	  // ****
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {
@@ -154,20 +156,25 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->virtual_processor_stack_index      = 0;
   this->processor_affinity_index           = -1;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
-  //funk2_processor_thread__init(&(this->processor_thread), -1, funk2_virtual_processor_thread__start_function, this);
+  this->paused = boolean__false;
+  funk2_processor_mutex__init(&(this->pause_doublelock_mutex));
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
   funk2_virtual_processor_thread__exit(this);
   funk2_processor_thread__destroy(this->processor_thread);
+  funk2_processor_mutex__destroy(&(this->pause_doublelock_mutex));
 }
 
 void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_t* this) {
-  status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
+  if (this->paused) {
+    funk2_virtual_processor_thread__unpause(this);
+  }
   this->exit = boolean__true;
 }
 
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
+  status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
   while (! (this->exited)) {
     raw__spin_sleep_yield();
   }
@@ -179,6 +186,17 @@ void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this
   funk2_virtual_processor_thread__finalize_exit(this);
 }
 
+void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread_t* this) {
+  this->paused = boolean__true;
+  funk2_processor_mutex__lock(&(this->pause_doublelock_mutex));
+  funk2_processor_mutex__lock(&(this->pause_doublelock_mutex));
+  this->paused = boolean__false;
+}
+
+void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* this) {
+  funk2_processor_mutex__unlock(&(this->pause_doublelock_mutex));
+}
+
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {
   funk2_processor_mutex__lock(&(this->assignment_mutex));
   //status("funk2_virtual_processor_thread__assign_to_virtual_processor: virtual_processor_thread assigned to virtual_processor " u64__fstr ".", virtual_processor_assignment_index);
@@ -188,6 +206,9 @@ void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_p
   this->virtual_processor_assignment_index = virtual_processor_assignment_index;
   funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignment_to_virtual_processor(&(__funk2.virtual_processor_handler), this, virtual_processor_assignment_index);
   funk2_processor_mutex__unlock(&(this->assignment_mutex));
+  if (this->paused) {
+    funk2_virtual_processor_thread__unpause(this);
+  }
 }
 
 void funk2_virtual_processor_thread__unassign_from_virtual_processor(funk2_virtual_processor_thread_t* this) {

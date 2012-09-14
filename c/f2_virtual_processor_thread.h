@@ -44,6 +44,8 @@ struct funk2_virtual_processor_thread_s {
   boolean_t                 exit;
   boolean_t                 exited;
   u64                       virtual_processor_stack_index;
+  boolean_t                 paused;
+  funk2_processor_mutex_t   pause_doublelock_mutex;
 };
 
 void* funk2_virtual_processor_thread__start_function(                 void* args);

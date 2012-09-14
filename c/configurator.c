@@ -139,7 +139,7 @@ int main(int argc, char** argv) {
     {
       u64    sleep_nanoseconds = 1;
       double processor_usage   = 100.0;
-      double target_usage      = (1.0 / 100.0);
+      double target_usage      = (50.0 / 100.0);
       while (processor_usage > target_usage) {
 	s64 spin_nanoseconds = nanoseconds_per_second / 2;
 	{

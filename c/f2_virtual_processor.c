@@ -165,6 +165,18 @@ void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread
 }
 
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
+  s64 working_virtual_processor_thread_count;
+  {
+    s64 assigned_virtual_processor_thread_count;
+    s64 spinning_virtual_processor_thread_count;
+    {
+      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
+      assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
+      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
+      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
+    }
+    working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;
+  }
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__yield error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
@@ -197,7 +209,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    if ((lock_tries > 1000) ||
 		__funk2.scheduler_thread_controller.please_wait ||
 		__funk2.user_thread_controller.please_wait) {
-	      raw__spin_sleep_yield();
+	      f2__nanosleep((working_virtual_processor_thread_count + 1) * deep_sleep_nanoseconds);
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }

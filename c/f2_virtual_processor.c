@@ -200,10 +200,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
     funk2_virtual_processor__unpause_threads(this);
-    // ****
-    funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
-    // ****
-    /*
     // let spinning processor execute some bytecodes before returning from yield...
     if (__funk2.scheduler_thread_controller.please_wait ||
 	__funk2.user_thread_controller.please_wait) {
@@ -236,11 +232,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	yielding_virtual_processor_thread->exited = boolean__true;
 	pthread_exit(0);
       }
-    }
-    */
-    if (yielding_virtual_processor_thread->exit) {
-      yielding_virtual_processor_thread->exited = boolean__true;
-      pthread_exit(0);
     }
   }
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);

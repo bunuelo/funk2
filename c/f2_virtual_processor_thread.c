@@ -54,7 +54,15 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 }
 
 void* funk2_virtual_processor_thread__start_function(void* args) {
-  funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
+  funk2_virtual_processor_thread_t* this                         = (funk2_virtual_processor_thread_t*)args;
+  u64                               unassigned_sleep_nanoseconds = 1000 * deep_sleep_nanoseconds;
+  u64                               spinning_sleep_nanoseconds   =  100 * deep_sleep_nanoseconds;
+  if (unassigned_sleep_nanoseconds > 2 * nanoseconds_per_second) {
+    unassigned_sleep_nanoseconds = 2 * nanoseconds_per_second;
+  }
+  if (spinning_sleep_nanoseconds > 1 * nanoseconds_per_millisecond) {
+    spinning_sleep_nanoseconds = 1 * nanoseconds_per_millisecond;
+  }
   this->tid = (pid_t)syscall(SYS_gettid);
   while (__funk2.memory.bootstrapping_mode) {
     raw__spin_sleep_yield();
@@ -73,7 +81,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  f2__nanosleep(100 * deep_sleep_nanoseconds);
+	  f2__nanosleep(unassigned_sleep_nanoseconds);
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {
@@ -132,7 +140,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
 	  funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
 	} else {
-	  f2__nanosleep(2 * (line_length + 2) * (line_length + 2) * deep_sleep_nanoseconds);
+	  f2__nanosleep((line_length + 1) * (line_length + 1) * spinning_sleep_nanoseconds);
 	}
 	//raw__spin_sleep_yield();
       }

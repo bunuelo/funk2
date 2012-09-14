@@ -165,69 +165,52 @@ void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread
 }
 
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
-  s64 working_virtual_processor_thread_count;
-  {
-    s64 assigned_virtual_processor_thread_count;
-    s64 spinning_virtual_processor_thread_count;
-    {
-      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-      assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
-      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
-    }
-    working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;
+  if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
+    error(nil, "funk2_virtual_processor__yield error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
-  if (working_virtual_processor_thread_count == 1) {
-    // we are the only thread working in this virtual_processor.
-    raw__fast_spin_sleep_yield();
-  } else {
-    if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
-      error(nil, "funk2_virtual_processor__yield error: execute_bytecodes_current_virtual_processor_thread is NULL.");
+  funk2_virtual_processor_thread_t* yielding_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
+  this->execute_bytecodes_current_virtual_processor_thread = NULL;
+  f2ptr yielding_fiber   = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
+  f2ptr reflective_cause = nil;
+  raw__fiber__handle_exit_virtual_processor(reflective_cause, yielding_fiber);
+  {
+    funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
+    funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
+    // let spinning processor execute some bytecodes before returning from yield...
+    if (__funk2.scheduler_thread_controller.please_wait ||
+	__funk2.user_thread_controller.please_wait) {
+      raw__spin_sleep_yield();
+    } else {
+      raw__fast_spin_sleep_yield();
     }
-    funk2_virtual_processor_thread_t* yielding_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
-    this->execute_bytecodes_current_virtual_processor_thread = NULL;
-    f2ptr yielding_fiber   = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
-    f2ptr reflective_cause = nil;
-    raw__fiber__handle_exit_virtual_processor(reflective_cause, yielding_fiber);
     {
-      funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
-      funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-      // let spinning processor execute some bytecodes before returning from yield...
-      if (__funk2.scheduler_thread_controller.please_wait ||
-	  __funk2.user_thread_controller.please_wait) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      boolean_t locked_mutex = boolean__false;
       {
-	boolean_t locked_mutex = boolean__false;
-	{
-	  u64 lock_tries = 0;
-	  while ((! locked_mutex) &&
-		 (! (yielding_virtual_processor_thread->exit))) {
-	    if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-	      locked_mutex = boolean__true;
-	    }
-	    if (! locked_mutex) {
-	      lock_tries ++;
-	      if ((lock_tries > 1000) ||
-		  __funk2.scheduler_thread_controller.please_wait ||
-		  __funk2.user_thread_controller.please_wait) {
-		raw__spin_sleep_yield();
-	      } else {
-		raw__fast_spin_sleep_yield();
-	      }
+	u64 lock_tries = 0;
+	while ((! locked_mutex) &&
+	       (! (yielding_virtual_processor_thread->exit))) {
+	  if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+	    locked_mutex = boolean__true;
+	  }
+	  if (! locked_mutex) {
+	    lock_tries ++;
+	    if ((lock_tries > 1000) ||
+		__funk2.scheduler_thread_controller.please_wait ||
+		__funk2.user_thread_controller.please_wait) {
+	      raw__spin_sleep_yield();
+	    } else {
+	      raw__fast_spin_sleep_yield();
 	    }
 	  }
 	}
-	if (yielding_virtual_processor_thread->exit) {
-	  yielding_virtual_processor_thread->exited = boolean__true;
-	  pthread_exit(0);
-	}
+      }
+      if (yielding_virtual_processor_thread->exit) {
+	yielding_virtual_processor_thread->exited = boolean__true;
+	pthread_exit(0);
       }
     }
-    funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
-    this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
-    raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);
   }
+  funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
+  this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
+  raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);
 }

@@ -124,7 +124,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
 	}
 	if (! did_something) {
-	  f2__nanosleep(1000000);
+	  f2__nanosleep(deep_sleep_nanoseconds);
 	}
       } else {
 	//

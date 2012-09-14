@@ -76,7 +76,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_processor_mutex__lock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
 	  u64 free_virtual_processor_thread_count = __funk2.virtual_processor_handler.free_virtual_processor_thread_count;
 	  funk2_processor_mutex__unlock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
-	  f2__nanosleep(free_virtual_processor_thread_count * 10 * deep_sleep_nanoseconds);
+	  f2__nanosleep(free_virtual_processor_thread_count * 100 * deep_sleep_nanoseconds);
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {

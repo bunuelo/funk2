@@ -170,7 +170,8 @@ void funk2_virtual_processor__unpause_threads(funk2_virtual_processor_t* this) {
   while (cons != NULL) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = cons->virtual_processor_thread;
     {
-      s64 line_length = virtual_processor_thread->virtual_processor_stack_index - this->working_virtual_processor_thread_count;
+      s64 working_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count - this->spinning_virtual_processor_thread_count;
+      s64 line_length                            = virtual_processor_thread->virtual_processor_stack_index - this->working_virtual_processor_thread_count;
       if (line_length >= 0 &&
 	  line_length <= 2) {
 	funk2_virtual_processor_thread__unpause(virtual_processor_thread);

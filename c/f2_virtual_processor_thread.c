@@ -73,9 +73,6 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	}
 	not_assigned_to_virtual_processor = (virtual_processor_assignment_index == -1);
 	if (not_assigned_to_virtual_processor) {
-	  funk2_processor_mutex__lock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
-	  u64 free_virtual_processor_thread_count = __funk2.virtual_processor_handler.free_virtual_processor_thread_count;
-	  funk2_processor_mutex__unlock(&(__funk2.virtual_processor_handler.free_virtual_processor_threads_mutex));
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);
 	  // ****

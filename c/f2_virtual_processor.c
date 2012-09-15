@@ -297,7 +297,7 @@ void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_vir
   }
   while (boolean__true) {
     funk2_virtual_processor_thread_t* circle_virtual_processor_thread = doublelink->virtual_processor_thread;
-    if (circle_virtual_processor_thread = virtual_processor_thread) {
+    if (circle_virtual_processor_thread == virtual_processor_thread) {
       break;
     }
     doublelink = doublelink->next;

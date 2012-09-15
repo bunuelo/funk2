@@ -272,8 +272,10 @@ void funk2_virtual_processor__add_yielding_virtual_processor_thread(funk2_virtua
   } else {
     doublelink->prev       = this->yielding_virtual_processor_thread_circle->prev;
     doublelink->next       = this->yielding_virtual_processor_thread_circle;
-    doublelink->prev->next = doublelink;
-    doublelink->next->prev = doublelink;
+    funk2_virtual_processor_thread_doublelink_t* doublelink__prev = doublelink->prev;
+    funk2_virtual_processor_thread_doublelink_t* doublelink__next = doublelink->next;
+    doublelink__prev->next = doublelink;
+    doublelink__next->prev = doublelink;
   }
   this->yielding_virtual_processor_thread_circle = doublelink;
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
@@ -310,8 +312,10 @@ void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_vir
   if (doublelink->next == doublelink) {
     this->yielding_virtual_processor_thread_circle = NULL;
   } else {
-    doublelink->next->prev = doublelink->prev;
-    doublelink->prev->next = doublelink->next;
+    funk2_virtual_processor_thread_doublelink_t* doublelink__prev = doublelink->prev;
+    funk2_virtual_processor_thread_doublelink_t* doublelink__next = doublelink->next;
+    doublelink__next->prev = doublelink__prev;
+    doublelink__prev->next = doublelink__next;
   }
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
   f2__free(to_ptr(doublelink));

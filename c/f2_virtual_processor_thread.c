@@ -186,8 +186,8 @@ void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread
 
 void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* this) {
   pthread_mutex_lock(&(this->pause_cond_mutex));
-  this->paused = boolean__false;
   pthread_cond_signal(&(this->pause_cond));
+  this->paused = boolean__false;
   pthread_mutex_unlock(&(this->pause_cond_mutex));
 }
 

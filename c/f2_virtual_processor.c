@@ -263,8 +263,8 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virt
 
 void funk2_virtual_processor__add_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   funk2_virtual_processor_thread_doublelink_t* doublelink = (funk2_virtual_processor_thread_doublelink_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_doublelink_t)));
-  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   doublelink->virtual_processor_thread = virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   if (this->yielding_virtual_processor_thread_circle == NULL) {
     doublelink->prev = doublelink;
     doublelink->next = doublelink;

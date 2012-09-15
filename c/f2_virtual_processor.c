@@ -50,7 +50,7 @@ void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  funk2_virtual_processor_thread_t* next_spinning_virtual_processor_thread = funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread(this);
+  funk2_virtual_processor_thread_t* next_spinning_virtual_processor_thread = funk2_virtual_processor__peek_spinning_virtual_processor_thread(this);
   if (next_spinning_virtual_processor_thread == NULL) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__get_free_virtual_processor_thread(&(__funk2.virtual_processor_handler));
     funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);

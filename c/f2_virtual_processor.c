@@ -40,6 +40,10 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
     this->spinning_virtual_processor_thread_stack     = NULL;
     this->spinning_virtual_processor_thread_stack_end = NULL;
   }
+  {
+    funk2_processor_mutex__init(&(this->yielding_virtual_processor_thread_circle_mutex), NULL);
+    this->yielding_virtual_processor_thread_circle = NULL;
+  }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
 }
@@ -48,6 +52,7 @@ void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__destroy(&(this->execute_bytecodes_mutex));
   funk2_processor_mutex__destroy(&(this->virtual_processor_thread_count_mutex));
   funk2_processor_mutex__destroy(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_processor_mutex__destroy(&(this->yielding_virtual_processor_thread_circle_mutex));
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
@@ -256,6 +261,75 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virt
   return virtual_processor_thread;
 }
 
+void funk2_virtual_processor__add_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = (funk2_virtual_processor_thread_doublelink_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_doublelink_t)));
+  doublelink->virtual_processor_thread                    = virtual_processor_thread;
+  if (this->yielding_virtual_processor_thread_circle == NULL) {
+    doublelink->prev = doublelink;
+    doublelink->next = doublelink;
+  } else {
+    doublelink->prev = this->yielding_virtual_processor_thread_circle->prev;
+    doublelink->next = this->yielding_virtual_processor_thread_circle;
+    this->yielding_virtual_processor_thread_circle->next = doublelink;
+  }
+  this->yielding_virtual_processor_thread_circle = doublelink;
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->yielding_virtual_processor_thread_circle;
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  if (doublelink == NULL) {
+    return NULL;
+  }
+  virtual_processor_thread = doublelink->virtual_processor_thread;
+  return virtual_processor_thread;
+}
+
+void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->yielding_virtual_processor_thread_circle;
+  if (doublelink == NULL) {
+    error(nil, "attempted to remove yielding virtual processor thread but no yielding threads exist.");
+  }
+  while (boolean__true) {
+    funk2_virtual_processor_thread_t* circle_virtual_processor_thread = doublelink->virtual_processor_thread;
+    if (circle_virtual_processor_thread = virtual_processor_thread) {
+      break;
+    }
+    doublelink = doublelink->next;
+    if (doublelink == this->yielding_virtual_processor_thread_circle) {
+      error(nil, "attempted to remove yielding virtual processor thread but does not exist.");
+    }
+  }
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  doublelink->next->prev = doublelink->prev;
+  doublelink->prev->next = doublelink->next;
+  f2__free(to_ptr(doublelink));
+}
+
+void funk2_virtual_processor__cycle_yielding_virtual_processor_threads(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  if (this->yielding_virtual_processor_thread_circle != NULL) {
+    this->yielding_virtual_processor_thread_circle = this->yielding_virtual_processor_thread_circle->next;
+  }
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+}
+
+void funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  if (this->yielding_virtual_processor_thread_circle == NULL) {
+    error(nil, "no yielding virtual processors to unpause");
+  }
+  funk2_virtual_processor_thread_t* virtual_processor_thread = this->yielding_virtual_processor_thread_circle->virtual_processor_thread;
+  funk2_virtual_processor_thread__unpause(virtual_processor_thread);
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+}
+
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   s64 working_virtual_processor_thread_count;
   {
@@ -279,8 +353,10 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   raw__fiber__handle_exit_virtual_processor(reflective_cause, yielding_fiber);
   {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
+    funk2_virtual_processor__add_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
     funk2_virtual_processor__unpause_next_spinning_thread(this);
+    
     // let spinning processor execute some bytecodes before returning from yield...
     if (__funk2.scheduler_thread_controller.please_wait ||
 	__funk2.user_thread_controller.please_wait) {
@@ -302,10 +378,16 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    if ((lock_tries > 1000) ||
 		__funk2.scheduler_thread_controller.please_wait ||
 		__funk2.user_thread_controller.please_wait) {
+	      funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
+	      funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
 	      funk2_virtual_processor__unpause_next_spinning_thread(this);
+	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
 	    } else {
+	      funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
+	      funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
 	      funk2_virtual_processor__unpause_next_spinning_thread(this);
+	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      raw__fast_spin_sleep_yield();
 	    }
 	  }
@@ -317,6 +399,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
       }
     }
   }
+  funk2_virtual_processor__remove_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
   raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);

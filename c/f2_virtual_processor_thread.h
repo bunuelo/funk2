@@ -64,6 +64,7 @@ void  funk2_virtual_processor_thread__finalize_exit                  (funk2_virt
 void  funk2_virtual_processor_thread__exit                           (funk2_virtual_processor_thread_t* this);
 void  funk2_virtual_processor_thread__pause_myself                   (funk2_virtual_processor_thread_t* this);
 void  funk2_virtual_processor_thread__unpause                        (funk2_virtual_processor_thread_t* this);
+void  funk2_virtual_processor_thread__pause_myself_and_unpause_other (funk2_virtual_processor_thread_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
 void  funk2_virtual_processor_thread__assign_to_virtual_processor    (funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index);
 void  funk2_virtual_processor_thread__unassign_from_virtual_processor(funk2_virtual_processor_thread_t* this);
 

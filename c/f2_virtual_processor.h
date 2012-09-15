@@ -81,6 +81,7 @@ void                              funk2_virtual_processor__add_yielding_virtual_
 funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual_processor_thread               (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__remove_yielding_virtual_processor_thread             (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
 void                              funk2_virtual_processor__cycle_yielding_virtual_processor_threads             (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread       (funk2_virtual_processor_t* this);
 
 #endif // F2__VIRTUAL_PROCESSOR__H
 

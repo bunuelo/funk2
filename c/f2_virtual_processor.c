@@ -271,7 +271,7 @@ void funk2_virtual_processor__add_yielding_virtual_processor_thread(funk2_virtua
   } else {
     doublelink->prev = this->yielding_virtual_processor_thread_circle->prev;
     doublelink->next = this->yielding_virtual_processor_thread_circle;
-    this->yielding_virtual_processor_thread_circle->next = doublelink;
+    this->yielding_virtual_processor_thread_circle->prev = doublelink;
   }
   this->yielding_virtual_processor_thread_circle = doublelink;
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));

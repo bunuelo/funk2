@@ -218,10 +218,12 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       raw__fast_spin_sleep_yield();
     }
   }
+  
   virtual_processor_thread->paused = boolean__false;
   pthread_cond_signal(&(virtual_processor_thread->pause_cond));
-  this->paused                     = boolean__true;
   pthread_mutex_unlock(&(virtual_processor_thread->pause_cond_mutex));
+  
+  this->paused = boolean__true;
   pthread_cond_wait(&(this->pause_cond), &(this->pause_cond_mutex));
   pthread_mutex_unlock(&(this->pause_cond_mutex));
 }

@@ -382,24 +382,25 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    locked_mutex = boolean__true;
 	  }
 	  if (! locked_mutex) {
-	    funk2_virtual_processor__unpause_next_spinning_thread(this);
-	    funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
-	    funk2_virtual_processor_thread_t* next_yielding_virtual_processor_thread = funk2_virtual_processor__peek_yielding_virtual_processor_thread(this);
-	    if (next_yielding_virtual_processor_thread == yielding_virtual_processor_thread) {
-	      lock_tries ++;
-	      if ((lock_tries > 1000) ||
-		  __funk2.scheduler_thread_controller.please_wait ||
-		  __funk2.user_thread_controller.please_wait) {
-		f2__nanosleep(deep_sleep_nanoseconds);
-	      } else {
-		raw__fast_spin_sleep_yield();
-	      }
+	    lock_tries ++;
+	    if ((lock_tries > 1000) ||
+		__funk2.scheduler_thread_controller.please_wait ||
+		__funk2.user_thread_controller.please_wait) {
+	      f2__nanosleep(deep_sleep_nanoseconds);
 	    } else {
-	      funk2_virtual_processor_thread__pause_myself_and_unpause_other(yielding_virtual_processor_thread, next_yielding_virtual_processor_thread);
-	      //f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
-	      // ****
-	      //funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
-	      // ****
+	      raw__fast_spin_sleep_yield();
+	    }
+	    {
+	      funk2_virtual_processor__unpause_next_spinning_thread(this);
+	      funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
+	      funk2_virtual_processor_thread_t* next_yielding_virtual_processor_thread = funk2_virtual_processor__peek_yielding_virtual_processor_thread(this);
+	      if (next_yielding_virtual_processor_thread != yielding_virtual_processor_thread) {
+		funk2_virtual_processor_thread__pause_myself_and_unpause_other(yielding_virtual_processor_thread, next_yielding_virtual_processor_thread);
+		//f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
+		// ****
+		//funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
+		// ****
+	      }
 	    }
 	  }
 	}

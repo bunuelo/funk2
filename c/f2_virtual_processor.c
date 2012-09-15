@@ -199,6 +199,9 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
   funk2_virtual_processor_thread_cons_t* cons = this->spinning_virtual_processor_thread_stack;
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  if (cons == NULL) {
+    error(nil, "tried to peek at next spinning virtual processor thread but none exist.");
+  }
   virtual_processor_thread = cons->virtual_processor_thread;
   return virtual_processor_thread;
 }

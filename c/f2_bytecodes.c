@@ -219,7 +219,7 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
 
 // raw push and pop stack
 
-boolean_t fiber__enable_stack_reuse = boolean__false;
+boolean_t fiber__enable_stack_reuse = boolean__true;
 
 void raw__fiber__stack__raw_push(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr     old_stack          = f2fiber__stack(this, cause);

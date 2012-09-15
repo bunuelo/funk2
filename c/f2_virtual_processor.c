@@ -234,7 +234,6 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_vir
     return NULL;
   }
   virtual_processor_thread = doublelink->virtual_processor_thread;
-  f2__free(to_ptr(doublelink));
   return virtual_processor_thread;
 }
 

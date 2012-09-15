@@ -305,9 +305,13 @@ void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_vir
       error(nil, "attempted to remove yielding virtual processor thread but does not exist.");
     }
   }
+  if (doublelink->next == doublelink) {
+    this->yielding_virtual_processor_thread_circle = NULL;
+  } else {
+    doublelink->next->prev = doublelink->prev;
+    doublelink->prev->next = doublelink->next;
+  }
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
-  doublelink->next->prev = doublelink->prev;
-  doublelink->prev->next = doublelink->next;
   f2__free(to_ptr(doublelink));
 }
 

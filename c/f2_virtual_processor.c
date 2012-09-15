@@ -290,7 +290,6 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual
 }
 
 void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
-  funk2_virtual_processor_thread_t* virtual_processor_thread;
   funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   funk2_virtual_processor_thread_doublelink_t* doublelink = this->yielding_virtual_processor_thread_circle;
   if (doublelink == NULL) {

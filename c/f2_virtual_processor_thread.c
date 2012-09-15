@@ -112,8 +112,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	//
 	// We could unassign virtual_processor_thread from virtual_processor here, but we don't want to very often.
 	//
-	if ((spinning_virtual_processor_thread_count > 8) &&
-	    (line_length == (spinning_virtual_processor_thread_count - 1))) {
+	if (virtual_processor->spinning_virtual_processor_thread_count > 8) {
 	  funk2_virtual_processor_thread_t* last_spinning_virtual_processor_thread = funk2_virtual_processor__end_peek_spinning_virtual_processor_thread(virtual_processor);
 	  if (this == last_spinning_virtual_processor_thread) {
 	    funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);

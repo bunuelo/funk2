@@ -397,7 +397,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    } else {
 	      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
 	      // ****
-	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
+	      //funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      // ****
 	    }
 	  }

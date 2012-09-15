@@ -187,8 +187,8 @@ void funk2_virtual_processor__unpause_next_spinning_thread(funk2_virtual_process
 
 void funk2_virtual_processor__push_spinning_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
-  cons->vitual_processor_thread                 = virtual_processor_thread;
+  funk2_virtual_processor_thread_cons_t* cons   = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
+  cons->virtual_processor_thread                = virtual_processor_thread;
   cons->next                                    = this->spinning_virtual_processor_thread_stack;
   this->spinning_virtual_processor_thread_stack = cons;
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));

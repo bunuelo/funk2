@@ -208,7 +208,6 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
   funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack;
   this->spinning_virtual_processor_thread_stack           = doublelink->next;
-  this->spinning_virtual_processor_thread_stack->prev     = NULL;
   if (this->spinning_virtual_processor_thread_stack != NULL) {
     this->spinning_virtual_processor_thread_stack->prev = NULL;
   } else {

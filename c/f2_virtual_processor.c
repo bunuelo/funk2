@@ -50,14 +50,8 @@ void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
-  s64 spinning_virtual_processor_thread_count;
-  {
-    funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-    spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-    funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
-  }
-  while (spinning_virtual_processor_thread_count < 1) {
-    //status("funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread: assigning free virtual_processor_thread to virtual_processor (" u64__fstr ")", this->index);
+  funk2_virtual_processor_thread_t* next_spinning_virtual_processor_thread = funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread(this);
+  if (next_spinning_virtual_processor_thread == NULL) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__get_free_virtual_processor_thread(&(__funk2.virtual_processor_handler));
     funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);

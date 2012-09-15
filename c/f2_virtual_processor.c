@@ -390,11 +390,12 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	      if ((lock_tries > 1000) ||
 		  __funk2.scheduler_thread_controller.please_wait ||
 		  __funk2.user_thread_controller.please_wait) {
-		f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
+		f2__nanosleep(deep_sleep_nanoseconds);
 	      } else {
 		raw__fast_spin_sleep_yield();
 	      }
 	    } else {
+	      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
 	      // ****
 	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      // ****

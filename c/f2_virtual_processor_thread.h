@@ -22,9 +22,9 @@
 #ifndef F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 #define F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 
-typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_cons_t;
-typedef struct funk2_virtual_processor_thread_cons_s funk2_virtual_processor_thread_doublelink_t;
-typedef struct funk2_virtual_processor_thread_s      funk2_virtual_processor_thread_t;
+typedef struct funk2_virtual_processor_thread_cons_s       funk2_virtual_processor_thread_cons_t;
+typedef struct funk2_virtual_processor_thread_doublelink_s funk2_virtual_processor_thread_doublelink_t;
+typedef struct funk2_virtual_processor_thread_s            funk2_virtual_processor_thread_t;
 
 #endif // F2__VIRTUAL_PROCESSOR_THREAD__TYPES__H
 

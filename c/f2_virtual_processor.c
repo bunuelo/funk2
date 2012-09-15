@@ -137,7 +137,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     did_something = f2processor__execute_next_bytecodes(processor, cause);
     funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
     this->execute_bytecodes_current_virtual_processor_thread = NULL;
-    funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread)
+    funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
   }
   if (locked_mutex) {

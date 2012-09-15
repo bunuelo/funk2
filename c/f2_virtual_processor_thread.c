@@ -205,7 +205,7 @@ void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* t
 void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtual_processor_thread_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   int this__lock_failed                     = 1;
   int virtual_processor_thread__lock_failed = 1;
-  while ((this__lock_failed != 0) ||
+  while ((this__lock_failed                     != 0) ||
 	 (virtual_processor_thread__lock_failed != 0)) {
     this__lock_failed = pthread_mutex_trylock(&(this->pause_cond_mutex));
     if (this__lock_failed == 0) {
@@ -218,12 +218,12 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       raw__fast_spin_sleep_yield();
     }
   }
+  virtual_processor_thread->paused = boolean__false;
   pthread_cond_signal(&(virtual_processor_thread->pause_cond));
   this->paused                     = boolean__true;
-  virtual_processor_thread->paused = boolean__false;
+  pthread_mutex_unlock(&(virtual_processor_thread->pause_cond_mutex));
   pthread_cond_wait(&(this->pause_cond), &(this->pause_cond_mutex));
   pthread_mutex_unlock(&(this->pause_cond_mutex));
-  pthread_mutex_unlock(&(virtual_processor_thread->pause_cond_mutex));
 }
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {

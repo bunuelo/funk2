@@ -173,13 +173,15 @@ void funk2_virtual_processor__unpause_next_spinning_thread(funk2_virtual_process
   do {
     funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
     doublelink = this->spinning_virtual_processor_thread_stack;
+    if (doublelink != NULL) {
+      funk2_virtual_processor_thread_t* virtual_processor_thread = doublelink->virtual_processor_thread;
+      funk2_virtual_processor_thread__unpause(virtual_processor_thread);
+    }
     funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
     if (doublelink == NULL) {
       funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
     }
   } while (doublelink == NULL);
-  funk2_virtual_processor_thread_t* virtual_processor_thread = doublelink->virtual_processor_thread;
-  funk2_virtual_processor_thread__unpause(virtual_processor_thread);
 }
 
 void funk2_virtual_processor__push_spinning_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {

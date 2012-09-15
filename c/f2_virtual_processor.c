@@ -383,9 +383,9 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	  }
 	  if (! locked_mutex) {
 	    funk2_virtual_processor__unpause_next_spinning_thread(this);
-	    funk2_virtual_processor__cycle_yielding_virtual_processor_threads(virtual_processor);
-	    funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(virtual_processor);
-	    if(funk2_virtual_processor__peek_yielding_virtual_processor_thread(virtual_processor) == yielding_virtual_processor_thread) {
+	    funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
+	    funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
+	    if(funk2_virtual_processor__peek_yielding_virtual_processor_thread(this) == yielding_virtual_processor_thread) {
 	      lock_tries ++;
 	      if ((lock_tries > 1000) ||
 		  __funk2.scheduler_thread_controller.please_wait ||

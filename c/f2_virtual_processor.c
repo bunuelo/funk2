@@ -381,18 +381,10 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    if ((lock_tries > 1000) ||
 		__funk2.scheduler_thread_controller.please_wait ||
 		__funk2.user_thread_controller.please_wait) {
-	      if(funk2_virtual_processor__peek_yielding_virtual_processor_thread(this) != NULL) {
-		funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
-		funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
-	      }
 	      funk2_virtual_processor__unpause_next_spinning_thread(this);
 	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
 	    } else {
-	      if(funk2_virtual_processor__peek_yielding_virtual_processor_thread(this) != NULL) {
-		funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
-		funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
-	      }
 	      funk2_virtual_processor__unpause_next_spinning_thread(this);
 	      funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
 	      raw__fast_spin_sleep_yield();
@@ -407,10 +399,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     }
   }
   funk2_virtual_processor__remove_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
-  if(funk2_virtual_processor__peek_yielding_virtual_processor_thread(this) != NULL) {
-    funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
-    funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
-  }
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
   raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);

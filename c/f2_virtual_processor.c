@@ -41,7 +41,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
     this->spinning_virtual_processor_thread_stack_end = NULL;
   }
   {
-    funk2_processor_mutex__init(&(this->yielding_virtual_processor_thread_circle_mutex), NULL);
+    funk2_processor_mutex__init(&(this->yielding_virtual_processor_thread_circle_mutex));
     this->yielding_virtual_processor_thread_circle = NULL;
   }
   // start running at least one thread.

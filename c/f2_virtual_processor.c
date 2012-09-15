@@ -66,6 +66,7 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
       spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
       funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
     }
+    funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);
     {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
       cons->virtual_processor_thread = virtual_processor_thread;

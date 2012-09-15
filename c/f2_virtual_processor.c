@@ -55,11 +55,6 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
     funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__get_free_virtual_processor_thread(&(__funk2.virtual_processor_handler));
     funk2_virtual_processor_thread__assign_to_virtual_processor(virtual_processor_thread, this->index);
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
-    {
-      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
-    }
     funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);
     {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));

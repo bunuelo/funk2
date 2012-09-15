@@ -35,6 +35,10 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
     funk2_processor_mutex__init(&(this->virtual_processor_thread_stack_mutex));
     this->virtual_processor_thread_stack = NULL;
   }
+  {
+    funk2_processor_mutex__init(&(this->spinning_virtual_processor_thread_stack_mutex));
+    this->spinning_virtual_processor_thread_stack = NULL;
+  }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
 }
@@ -42,6 +46,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__destroy(&(this->execute_bytecodes_mutex));
   funk2_processor_mutex__destroy(&(this->virtual_processor_thread_count_mutex));
+  funk2_processor_mutex__destroy(&(this->spinning_virtual_processor_thread_stack_mutex));
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
@@ -106,6 +111,10 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     }
   }
   if (! (virtual_processor_thread->exit)) {
+    funk2_virtual_processor_thread_t* old_spinning_virtual_processor_thread = funk2_virtual_processor__pop_spinning_virtual_processor_thread(this);
+    if (virtual_processor_thread != old_spinning_virtual_processor_thread) {
+      error(nil, "(virtual_processor_thread != old_spinning_virtual_processor_thread): executing bytecodes must be done by next spinning processor thread.");
+    }
     funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
     this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
     f2ptr cause      = nil;
@@ -128,6 +137,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     did_something = f2processor__execute_next_bytecodes(processor, cause);
     funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
     this->execute_bytecodes_current_virtual_processor_thread = NULL;
+    funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread)
     funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
   }
   if (locked_mutex) {
@@ -164,22 +174,44 @@ void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread
   funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
 }
 
-void funk2_virtual_processor__unpause_threads(funk2_virtual_processor_t* this) {
-  funk2_processor_mutex__lock(&(this->virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons = this->first_spinning_in_stack;
-  while (cons != NULL) {
-    funk2_virtual_processor_thread_t* virtual_processor_thread = cons->virtual_processor_thread;
-    {
-      s64 working_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count - this->spinning_virtual_processor_thread_count;
-      s64 line_length                            = virtual_processor_thread->virtual_processor_stack_index - working_virtual_processor_thread_count;
-      if (line_length >= 0 &&
-	  line_length <= 2) {
-	funk2_virtual_processor_thread__unpause(virtual_processor_thread);
-      }
-    }
-    cons = cons->next;
+void funk2_virtual_processor__unpause_next_spinning_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_cons_t* cons = this->spinning_virtual_processor_thread_stack;
+  if (cons == NULL) {
+    error(nil, "tried to unpause next spinning thread when no spinning threads exist.");
   }
-  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_t* virtual_processor_thread = cons->virtual_processor_thread;
+  funk2_virtual_processor_thread__unpause(virtual_processor_thread);
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+}
+
+void funk2_virtual_processor__push_spinning_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_cons_t cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
+  cons->vitual_processor_thread                 = virtual_processor_thread;
+  cons->next                                    = this->spinning_virtual_processor_thread_stack;
+  this->spinning_virtual_processor_thread_stack = cons;
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_cons_t cons = this->spinning_virtual_processor_thread_stack;
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  virtual_processor_thread = cons->virtual_processor_thread;
+  return virtual_processor_thread;
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_cons_t cons    = this->spinning_virtual_processor_thread_stack;
+  this->spinning_virtual_processor_thread_stack = cons->next;
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  virtual_processor_thread = cons->virtual_processor_thread;
+  f2__free(to_ptr(cons));
+  return virtual_processor_thread;
 }
 
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
@@ -206,7 +238,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-    funk2_virtual_processor__unpause_threads(this);
+    funk2_virtual_processor__unpause_next_spinning_thread(this);
     // let spinning processor execute some bytecodes before returning from yield...
     if (__funk2.scheduler_thread_controller.please_wait ||
 	__funk2.user_thread_controller.please_wait) {

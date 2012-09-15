@@ -167,6 +167,10 @@ void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
   status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
   while (! (this->exited)) {
+    this->exit = boolean__true;
+    if (this->paused) {
+      funk2_virtual_processor_thread__unpause(this);
+    }
     raw__spin_sleep_yield();
   }
   status("funk2_virtual_processor_thread__exit: virtual_processor_thread exited.");

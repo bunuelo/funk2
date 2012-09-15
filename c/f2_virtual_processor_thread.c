@@ -172,10 +172,10 @@ void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* t
 }
 
 void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_t* this) {
+  this->exit = boolean__true;
   if (this->paused) {
     funk2_virtual_processor_thread__unpause(this);
   }
-  this->exit = boolean__true;
 }
 
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {

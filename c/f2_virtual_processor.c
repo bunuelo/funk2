@@ -166,7 +166,7 @@ void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread
 
 void funk2_virtual_processor__unpause_threads(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons = this->virtual_processor_thread_stack;
+  funk2_virtual_processor_thread_cons_t* cons = this->first_spinning_in_stack;
   while (cons != NULL) {
     funk2_virtual_processor_thread_t* virtual_processor_thread = cons->virtual_processor_thread;
     {

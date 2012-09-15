@@ -95,32 +95,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       }
     }
     if (! (this->exit)) {
-      funk2_virtual_processor_t* virtual_processor              = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
-      boolean_t                  we_are_next_in_line_to_execute = boolean__false;
-      s64                        assigned_virtual_processor_thread_count;
-      s64                        spinning_virtual_processor_thread_count;
-      s64                        working_virtual_processor_thread_count;
-      {
-	funk2_processor_mutex__lock(&(virtual_processor->virtual_processor_thread_count_mutex));
-	assigned_virtual_processor_thread_count = virtual_processor->assigned_virtual_processor_thread_count;
-	spinning_virtual_processor_thread_count = virtual_processor->spinning_virtual_processor_thread_count;
-	funk2_processor_mutex__unlock(&(virtual_processor->virtual_processor_thread_count_mutex));
-      }
-      working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;
-      s64 line_length = this->virtual_processor_stack_index - working_virtual_processor_thread_count;
+      funk2_virtual_processor_t*        virtual_processor                      = __funk2.virtual_processor_handler.virtual_processor[virtual_processor_assignment_index];
       funk2_virtual_processor_thread_t* next_spinning_virtual_processor_thread = funk2_virtual_processor__peek_spinning_virtual_processor_thread(virtual_processor);
       if (this == next_spinning_virtual_processor_thread) {
-	//if (line_length <= 1) {
-	we_are_next_in_line_to_execute = boolean__true;
-      }
-      //else if (line_length < 1) {
-      //	status("funk2_virtual_processor_thread__start_function error: line length is less than one.  line_length=" s64__fstr, line_length);
-      //	status("                                                      assigned_virtual_processor_thread_count = " s64__fstr, assigned_virtual_processor_thread_count);
-      //	status("                                                      spinning_virtual_processor_thread_count = " s64__fstr, spinning_virtual_processor_thread_count);
-      //	status("                                                      working_virtual_processor_thread_count  = " s64__fstr, working_virtual_processor_thread_count);
-      //	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than one.");
-      //}
-      if (we_are_next_in_line_to_execute) {
 	boolean_t did_something = boolean__true;
 	while (did_something) {
 	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);

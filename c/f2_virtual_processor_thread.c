@@ -178,15 +178,15 @@ void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this
 }
 
 void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread_t* this) {
-  this->paused = boolean__true;
   pthread_mutex_lock(&(this->pause_cond_mutex));
+  this->paused = boolean__true;
   pthread_cond_wait(&(this->pause_cond), &(this->pause_cond_mutex));
   pthread_mutex_unlock(&(this->pause_cond_mutex));
-  this->paused = boolean__false;
 }
 
 void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* this) {
   pthread_mutex_lock(&(this->pause_cond_mutex));
+  this->paused = boolean__false;
   pthread_cond_signal(&(this->pause_cond));
   pthread_mutex_unlock(&(this->pause_cond_mutex));
 }

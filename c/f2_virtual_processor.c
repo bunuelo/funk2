@@ -37,7 +37,8 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
   }
   {
     funk2_processor_mutex__init(&(this->spinning_virtual_processor_thread_stack_mutex));
-    this->spinning_virtual_processor_thread_stack = NULL;
+    this->spinning_virtual_processor_thread_stack     = NULL;
+    this->spinning_virtual_processor_thread_stack_end = NULL;
   }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
@@ -166,44 +167,86 @@ void funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread
 
 void funk2_virtual_processor__unpause_next_spinning_thread(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons = this->spinning_virtual_processor_thread_stack;
-  if (cons == NULL) {
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack;
+  if (doublelink == NULL) {
     error(nil, "tried to unpause next spinning thread when no spinning threads exist.");
   }
-  funk2_virtual_processor_thread_t* virtual_processor_thread = cons->virtual_processor_thread;
+  funk2_virtual_processor_thread_t* virtual_processor_thread = doublelink->virtual_processor_thread;
   funk2_virtual_processor_thread__unpause(virtual_processor_thread);
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
 }
 
 void funk2_virtual_processor__push_spinning_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons   = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
-  cons->virtual_processor_thread                = virtual_processor_thread;
-  cons->next                                    = this->spinning_virtual_processor_thread_stack;
-  this->spinning_virtual_processor_thread_stack = cons;
+  funk2_virtual_processor_thread_doublelink_t* doublelink = (funk2_virtual_processor_thread_doublelink_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_doublelink_t)));
+  doublelink->virtual_processor_thread                    = virtual_processor_thread;
+  doublelink->prev                                        = NULL;
+  doublelink->next                                        = this->spinning_virtual_processor_thread_stack;
+  if (doublelink->next != NULL) {
+    doublelink->next->prev = doublelink;
+  } else {
+    this->spinning_virtual_processor_thread_stack_end = doublelink;
+  }
+  this->spinning_virtual_processor_thread_stack = doublelink;
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_virtual_processor_thread_t* virtual_processor_thread;
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons = this->spinning_virtual_processor_thread_stack;
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack;
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  if (cons == NULL) {
+  if (doublelink == NULL) {
     return NULL;
   }
-  virtual_processor_thread = cons->virtual_processor_thread;
+  virtual_processor_thread = doublelink->virtual_processor_thread;
   return virtual_processor_thread;
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_virtual_processor_thread_t* virtual_processor_thread;
   funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  funk2_virtual_processor_thread_cons_t* cons   = this->spinning_virtual_processor_thread_stack;
-  this->spinning_virtual_processor_thread_stack = cons->next;
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack;
+  this->spinning_virtual_processor_thread_stack           = doublelink->next;
+  this->spinning_virtual_processor_thread_stack->prev     = NULL;
+  if (this->spinning_virtual_processor_thread_stack != NULL) {
+    this->spinning_virtual_processor_thread_stack->prev = NULL;
+  } else {
+    this->spinning_virtual_processor_thread_stack_end = NULL;
+  }
   funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
-  virtual_processor_thread = cons->virtual_processor_thread;
-  f2__free(to_ptr(cons));
+  virtual_processor_thread = doublelink->virtual_processor_thread;
+  f2__free(to_ptr(doublelink));
+  return virtual_processor_thread;
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack_end;
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  if (doublelink == NULL) {
+    return NULL;
+  }
+  virtual_processor_thread = doublelink->virtual_processor_thread;
+  f2__free(to_ptr(doublelink));
+  return virtual_processor_thread;
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack_end;
+  this->spinning_virtual_processor_thread_stack_end       = doublelink->prev;
+  this->spinning_virtual_processor_thread_stack_end->next = NULL;
+  if (this->spinning_virtual_processor_thread_stack_end != NULL) {
+    this->spinning_virtual_processor_thread_stack_end->next = NULL;
+  } else {
+    this->spinning_virtual_processor_thread_stack = NULL;
+  }
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  virtual_processor_thread = doublelink->virtual_processor_thread;
+  f2__free(to_ptr(doublelink));
   return virtual_processor_thread;
 }
 

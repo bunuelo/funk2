@@ -35,6 +35,12 @@ struct funk2_virtual_processor_thread_cons_s {
   struct funk2_virtual_processor_thread_cons_s* next;
 };
 
+struct funk2_virtual_processor_thread_doublelink_s {
+  funk2_virtual_processor_thread_t*                   virtual_processor_thread;
+  struct funk2_virtual_processor_thread_doublelink_s* prev;
+  struct funk2_virtual_processor_thread_doublelink_s* next;
+};
+
 struct funk2_virtual_processor_thread_s {
   pid_t                     tid; // as returned by gettid()
   funk2_processor_mutex_t   assignment_mutex;

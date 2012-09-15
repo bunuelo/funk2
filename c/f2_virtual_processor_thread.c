@@ -112,13 +112,14 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       if (this == next_spinning_virtual_processor_thread) {
 	//if (line_length <= 1) {
 	we_are_next_in_line_to_execute = boolean__true;
-      } else if (line_length < 1) {
-	status("funk2_virtual_processor_thread__start_function error: line length is less than one.  line_length=" s64__fstr, line_length);
-	status("                                                      assigned_virtual_processor_thread_count = " s64__fstr, assigned_virtual_processor_thread_count);
-	status("                                                      spinning_virtual_processor_thread_count = " s64__fstr, spinning_virtual_processor_thread_count);
-	status("                                                      working_virtual_processor_thread_count  = " s64__fstr, working_virtual_processor_thread_count);
-	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than one.");
       }
+      //else if (line_length < 1) {
+      //	status("funk2_virtual_processor_thread__start_function error: line length is less than one.  line_length=" s64__fstr, line_length);
+      //	status("                                                      assigned_virtual_processor_thread_count = " s64__fstr, assigned_virtual_processor_thread_count);
+      //	status("                                                      spinning_virtual_processor_thread_count = " s64__fstr, spinning_virtual_processor_thread_count);
+      //	status("                                                      working_virtual_processor_thread_count  = " s64__fstr, working_virtual_processor_thread_count);
+      //	error(nil, "funk2_virtual_processor_thread__start_function error: line length is less than one.");
+      //}
       if (we_are_next_in_line_to_execute) {
 	boolean_t did_something = boolean__true;
 	while (did_something) {
@@ -136,8 +137,15 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	//
 	if ((spinning_virtual_processor_thread_count > 8) &&
 	    (line_length == (spinning_virtual_processor_thread_count - 1))) {
-	  funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
-	  funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
+	  funk2_virtual_processor_thread_t* last_spinning_virtual_processor_thread = funk2_virtual_processor__end_peek_spinning_virtual_processor_thread(virtual_processor);
+	  if (this == last_spinning_virtual_processor_thread) {
+	    funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(virtual_processor);
+	    funk2_virtual_processor_thread__unassign_from_virtual_processor(this);
+	    funk2_virtual_processor_thread_t* popped_virtual_processor_thread = funk2_virtual_processor__end_pop_spinning_virtual_processor_thread(virtual_processor);
+	    if (popped_virtual_processor_thread != last_spinning_virtual_processor_thread) {
+	      error(nil, "(popped_virtual_processor_thread != last_spinning_virtual_processor_thread)");
+	    }
+	  }
 	} else {
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);

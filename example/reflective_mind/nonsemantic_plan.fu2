@@ -25,7 +25,7 @@
 				   unique_name
 				   variables
 				   expression
-				   [internal-semantic_plan         nil]
+				   [internal-semantic_plan_object  nil]
 				   [internal-compiled_funk         nil]
 				   [internal-compiled_imagine_funk nil]
 				   [internal-english_conslist      `uninitialized]
@@ -33,10 +33,10 @@
   [new [initial-mind
 	initial-variables
 	initial-expression]
-       [= mind                     initial-mind]
-       [= unique_name              [get mind new-name `plan]]
-       [= variables                initial-variables]
-       [= expression               initial-expression]
+       [= mind        initial-mind]
+       [= unique_name [get mind new-name `plan]]
+       [= variables   initial-variables]
+       [= expression  initial-expression]
        ]]
 
 [defunk flatten_constree [expression]
@@ -235,7 +235,6 @@
   [funkall [get this compiled_funk] this]]
 
 
-
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
@@ -331,4 +330,80 @@
 
 [deftypefunk nonsemantic_plan execute imagine_eval []
   [funkall [get this compiled_imagine_funk] this]]
+
+
+
+[defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
+  [cond [[is-type `cons expression] [let [[command           [car expression]]
+					  [command_arguments [cdr expression]]]
+				      [let [[command_arguments-length [length command_arguments]]]
+					[cond [[eq `eval                           command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `eval
+												       expression expression]
+											      [let [[eval-expression [elt command_arguments 0]]]
+												[let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												  semantic_plan_operator_activation]]]]
+					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+											      semantic_plan_operator_activation]]
+					      [[eq `wait-for-time                  command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `wait-for-time
+												       expression expression]
+											      [let [[time_to_wait [elt command_arguments 0]]]
+												[let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												  semantic_plan_operator_activation]]]]
+					      [[eq `wait-to-call                   command] [let [[action_name [elt command_arguments 0]]]
+											      [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												semantic_plan_operator_activation]]]
+					      [[eq `wait-for-physical-property     command] [if [not [eq 5 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `wait-for-physical-property
+												       expression expression]
+											      [let [[source_type           [elt command_arguments 0]]
+												    [source_property       [elt command_arguments 1]]
+												    [source_property_value [elt command_arguments 2]]
+												    [property              [elt command_arguments 3]]
+												    [property_value        [elt command_arguments 4]]]
+												[let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												  semantic_plan_operator_activation]]]]
+					      [[eq `wait-for-physical-relationship command] [if [not [eq 7 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `wait-for-physical-relationship
+												       expression expression]
+											      [let [[source_type           [elt command_arguments 0]]
+												    [source_property       [elt command_arguments 1]]
+												    [source_property_value [elt command_arguments 2]]
+												    [key                   [elt command_arguments 3]]
+												    [target_type           [elt command_arguments 4]]
+												    [target_property       [elt command_arguments 5]]
+												    [target_property_value [elt command_arguments 6]]]
+												[let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												  semantic_plan_operator_activation]]]]
+					      [[eq `assure-physical-relationship   command] [if [not [eq 7 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `assure-physical-relationship
+												       expression expression]
+											      [let [[source_type           [elt command_arguments 0]]
+												    [source_property       [elt command_arguments 1]]
+												    [source_property_value [elt command_arguments 2]]
+												    [key                   [elt command_arguments 3]]
+												    [target_type           [elt command_arguments 4]]
+												    [target_property       [elt command_arguments 5]]
+												    [target_property_value [elt command_arguments 6]]]
+												[let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+												  semantic_plan_operator_activation]]]]
+					      [t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
+	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
+
+[deftypefunk nonsemantic_plan get __semantic_plan_object []
+  [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]
+	[start_plan_operator  [nonsemantic_plan-expression-semantic_compile expression [get [get this mind] semantic_realm]]]]
+    [set semantic_plan_object start_plan_operator start_plan_operator]
+    semantic_plan_object]]
+
+[deftypefunk nonsemantic_plan get semantic_plan_object []
+  [if [null internal-semantic_plan_object]
+      [= internal-semantic_plan_object [get this __semantic_plan_object]]]
+  internal-semantic_plan_object]
 

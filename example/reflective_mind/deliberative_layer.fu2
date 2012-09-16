@@ -128,15 +128,15 @@
 		     resource_arguments]]]
     [have this add_physical_action action]]]
 
-[deftypefunk deliberative_layer execute create_physical_semantic_plan [arguments expression start_plan_operator]
+[deftypefunk deliberative_layer execute create_physical_semantic_plan [arguments expression]
   [let [[plan [new nonsemantic_plan 
 		   [get this mind]
 		   arguments
 		   expression]]]
-    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
-      [set semantic_plan plan_object_type `physical]
-      [set semantic_plan start_plan_operator start_plan_operator]
-      [have this add_physical_semantic_plan semantic_plan]]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type `physical]
+      [have this add_physical_semantic_plan semantic_plan_object]]]]
+
 
 
 
@@ -160,15 +160,6 @@
 		     resource_name
 		     resource_arguments]]]
     [have this add_plan_action action]]]
-
-[deftypefunk deliberative_layer execute create_plan_semantic_plan [expression start_plan_operator]
-  [let [[plan [new nonsemantic_plan 
-		   [get this mind]
-		   expression]]]
-    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
-      [set semantic_plan plan_object_type `plan]
-      [set semantic_plan start_plan_operator start_plan_operator]
-      [have this add_plan_semantic_plan semantic_plan]]]]
 
 
 

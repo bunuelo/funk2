@@ -347,15 +347,15 @@ void funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(fun
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
 }
 
-void funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
+void funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   if (this->yielding_virtual_processor_thread_circle != NULL) {
     this->yielding_virtual_processor_thread_circle = this->yielding_virtual_processor_thread_circle->next;
-    funk2_virtual_processor_thread_t* virtual_processor_thread = this->yielding_virtual_processor_thread_circle->virtual_processor_thread;
-    if ((virtual_processor_thread != NULL) &&
-	(virtual_processor_thread != this)) {
+    funk2_virtual_processor_thread_t* next_virtual_processor_thread = this->yielding_virtual_processor_thread_circle->virtual_processor_thread;
+    if ((next_virtual_processor_thread != NULL) &&
+	(next_virtual_processor_thread != virtual_processor_thread)) {
       funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
-      funk2_virtual_processor_thread__pause_myself_and_unpause_other(this, virtual_processor_thread);
+      funk2_virtual_processor_thread__pause_myself_and_unpause_other(virtual_processor_thread, next_virtual_processor_thread);
     } else {
       funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
     }

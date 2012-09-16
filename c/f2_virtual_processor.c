@@ -145,6 +145,13 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
   return did_something;
 }
 
+s64 funk2_virtual_processor__working_virtual_processor_thread_count(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
+  s64 working_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count - this->spinning_virtual_processor_thread_count;
+  funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
+  return working_virtual_processor_thread_count;
+}
+
 void funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
   this->assigned_virtual_processor_thread_count --;

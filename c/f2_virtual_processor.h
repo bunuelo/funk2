@@ -67,6 +67,7 @@ void                              funk2_virtual_processor__destroy              
 void                              funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread                        (funk2_virtual_processor_t* this);
 boolean_t                         funk2_virtual_processor__already_executing_next_bytecodes                                             (funk2_virtual_processor_t* this);
 boolean_t                         funk2_virtual_processor__execute_next_bytecodes                                                       (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+s64                               funk2_virtual_processor__working_virtual_processor_thread_count                                       (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread                           (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread                           (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread                           (funk2_virtual_processor_t* this);

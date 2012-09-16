@@ -103,9 +103,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
 	}
 	if (! did_something) {
-	  funk2_processor_mutex__lock(&(virtual_processor->virtual_processor_thread_count_mutex));
-	  s64 working_virtual_processor_thread_count = virtual_processor->assigned_virtual_processor_thread_count - virtual_processor->spinning_virtual_processor_thread_count;
-	  funk2_processor_mutex__unlock(&(virtual_processor->virtual_processor_thread_count_mutex));
+	  s64 working_virtual_processor_thread_count = funk2_virtual_processor__working_virtual_processor_thread_count(virtual_processor);
 	  if (working_virtual_processor_thread_count == 0) {
 	    f2__nanosleep(deep_sleep_nanoseconds);
 	  } else {

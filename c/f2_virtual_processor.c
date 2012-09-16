@@ -417,7 +417,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	      raw__fast_spin_sleep_yield();
 	    }
 	    funk2_virtual_processor__unpause_next_spinning_thread(this);
-	    funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this);
+	    funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
 	  }
 	}
       }

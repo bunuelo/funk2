@@ -109,12 +109,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  if (working_virtual_processor_thread_count == 0) {
 	    f2__nanosleep(deep_sleep_nanoseconds);
 	  } else {
-	    {
-	      funk2_virtual_processor_thread_t* next_yielding_virtual_processor_thread = funk2_virtual_processor__peek_yielding_virtual_processor_thread(virtual_processor);
-	      if (next_yielding_virtual_processor_thread != NULL) {
-		funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(virtual_processor);
-	      }
-	    }
+	    funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(virtual_processor);
 	    f2__nanosleep(deep_sleep_nanoseconds);
 	    // ****
 	    //funk2_virtual_processor_thread__pause_myself(this);

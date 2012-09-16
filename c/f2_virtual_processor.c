@@ -328,6 +328,15 @@ void funk2_virtual_processor__cycle_yielding_virtual_processor_threads(funk2_vir
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
 }
 
+void funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  if (this->yielding_virtual_processor_thread_circle != NULL) {
+    funk2_virtual_processor_thread_t* virtual_processor_thread = this->yielding_virtual_processor_thread_circle->virtual_processor_thread;
+    funk2_virtual_processor_thread__unpause(virtual_processor_thread);
+  }
+  funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+}
+
 void funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
   funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   if (this->yielding_virtual_processor_thread_circle == NULL) {
@@ -412,12 +421,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     }
   }
   funk2_virtual_processor__remove_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
-  {
-    funk2_virtual_processor_thread_t* next_yielding_virtual_processor_thread = funk2_virtual_processor__peek_yielding_virtual_processor_thread(this);
-    if (next_yielding_virtual_processor_thread != NULL) {
-      funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(this);
-    }
-  }
+  funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(this);
   funk2_virtual_processor__unpause_next_spinning_thread(this);
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;

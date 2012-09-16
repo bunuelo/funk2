@@ -134,6 +134,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);
 	  // ****
+	  
 	  //f2__nanosleep((line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
 	}
 	//raw__spin_sleep_yield();

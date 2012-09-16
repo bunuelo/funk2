@@ -347,6 +347,23 @@ void funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread(fun
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
 }
 
+void funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
+  funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  if (this->yielding_virtual_processor_thread_circle != NULL) {
+    this->yielding_virtual_processor_thread_circle = this->yielding_virtual_processor_thread_circle->next;
+    funk2_virtual_processor_thread_t* virtual_processor_thread = this->yielding_virtual_processor_thread_circle->virtual_processor_thread;
+    if ((virtual_processor_thread != NULL) &&
+	(virtual_processor_thread != this)) {
+      funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+      funk2_virtual_processor_thread__pause_myself_and_unpause_other(this, virtual_processor_thread);
+    } else {
+      funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+    }
+  } else {
+    funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  }
+}
+
 void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   s64 working_virtual_processor_thread_count;
   {
@@ -399,18 +416,8 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }
-	    {
-	      funk2_virtual_processor__unpause_next_spinning_thread(this);
-	      funk2_virtual_processor__cycle_yielding_virtual_processor_threads(this);
-	      funk2_virtual_processor_thread_t* next_yielding_virtual_processor_thread = funk2_virtual_processor__peek_yielding_virtual_processor_thread(this);
-	      if (next_yielding_virtual_processor_thread != yielding_virtual_processor_thread) {
-		funk2_virtual_processor_thread__pause_myself_and_unpause_other(yielding_virtual_processor_thread, next_yielding_virtual_processor_thread);
-		//f2__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
-		// ****
-		//funk2_virtual_processor_thread__pause_myself(yielding_virtual_processor_thread);
-		// ****
-	      }
-	    }
+	    funk2_virtual_processor__unpause_next_spinning_thread(this);
+	    funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this);
 	  }
 	}
       }

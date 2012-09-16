@@ -62,27 +62,28 @@ struct funk2_virtual_processor_s {
   funk2_virtual_processor_thread_doublelink_t* yielding_virtual_processor_thread_circle;
 };
 
-void                              funk2_virtual_processor__init                                                 (funk2_virtual_processor_t* this, u64 index);
-void                              funk2_virtual_processor__destroy                                              (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this);
-boolean_t                         funk2_virtual_processor__already_executing_next_bytecodes                     (funk2_virtual_processor_t* this);
-boolean_t                         funk2_virtual_processor__execute_next_bytecodes                               (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-void                              funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread   (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread   (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread   (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread   (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__yield                                                (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__push_spinning_virtual_processor_thread               (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread               (funk2_virtual_processor_t* this);
-funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_processor_thread                (funk2_virtual_processor_t* this);
-funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_virtual_processor_thread           (funk2_virtual_processor_t* this);
-funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virtual_processor_thread            (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__add_yielding_virtual_processor_thread                (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual_processor_thread               (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__remove_yielding_virtual_processor_thread             (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
-void                              funk2_virtual_processor__cycle_yielding_virtual_processor_threads             (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread   (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread       (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__init                                                                         (funk2_virtual_processor_t* this, u64 index);
+void                              funk2_virtual_processor__destroy                                                                      (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread                        (funk2_virtual_processor_t* this);
+boolean_t                         funk2_virtual_processor__already_executing_next_bytecodes                                             (funk2_virtual_processor_t* this);
+boolean_t                         funk2_virtual_processor__execute_next_bytecodes                                                       (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+void                              funk2_virtual_processor__know_of_one_less_assigned_virtual_processor_thread                           (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread                           (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread                           (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread                           (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__yield                                                                        (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__push_spinning_virtual_processor_thread                                       (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread                                       (funk2_virtual_processor_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_processor_thread                                        (funk2_virtual_processor_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_virtual_processor_thread                                   (funk2_virtual_processor_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virtual_processor_thread                                    (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__add_yielding_virtual_processor_thread                                        (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual_processor_thread                                       (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__remove_yielding_virtual_processor_thread                                     (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
+void                              funk2_virtual_processor__cycle_yielding_virtual_processor_threads                                     (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread                           (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread                               (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this);
 
 #endif // F2__VIRTUAL_PROCESSOR__H
 

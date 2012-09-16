@@ -24,11 +24,14 @@
 [deframe nonsemantic_plan [frame] [mind
 				   unique_name
 				   expression
+				   semantic_plan
 				   [internal-compiled_funk         nil]
 				   [internal-compiled_imagine_funk nil]
 				   [internal-english_conslist      `uninitialized]
 				   [internal-english_string        nil]]
-  [new [initial-mind initial-expression]
+  [new [initial-mind
+	initial-variables
+	initial-expression]
        [= mind                     initial-mind]
        [= unique_name              [get mind new-name `plan]]
        [= expression               initial-expression]

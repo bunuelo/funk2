@@ -397,7 +397,7 @@
 	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
 
 [deftypefunk nonsemantic_plan get __semantic_plan_object []
-  [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]
+  [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get this unique_name] this]]
 	[start_plan_operator  [nonsemantic_plan-expression-semantic_compile expression [get [get this mind] semantic_realm]]]]
     [set semantic_plan_object start_plan_operator start_plan_operator]
     semantic_plan_object]]

@@ -109,14 +109,14 @@
 		     resource_arguments]]]
     [have this add_reflective_action action]]]
 
-[deftypefunk reflective_layer execute create_reflective_semantic_plan [expression start_plan_operator]
+[deftypefunk reflective_layer execute create_reflective_semantic_plan [arguments expression]
   [let [[plan [new nonsemantic_plan 
 		   [get this mind]
+		   arguments
 		   expression]]]
-    [let [[semantic_plan [new semantic_plan_object [get [get this mind] semantic_realm] [get plan unique_name] plan]]]
-      [set semantic_plan plan_object_type `reflective]
-      [set semantic_plan start_plan_operator start_plan_operator]
-      [have this add_reflective_semantic_plan semantic_plan]]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type `reflective]
+      [have this add_reflective_semantic_plan semantic_plan_object]]]]
 
 
 

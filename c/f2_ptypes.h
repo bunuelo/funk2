@@ -256,6 +256,40 @@ boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
+// scheduler_creadwritelock
+
+f2ptr     pfunk2__f2scheduler_creadwritelock__new           (f2ptr cause);
+boolean_t pfunk2__f2scheduler_creadwritelock__is_writelocked(f2ptr this, f2ptr cause);
+boolean_t pfunk2__f2scheduler_creadwritelock__is_readlocked (f2ptr this, f2ptr cause);
+void      pfunk2__f2scheduler_creadwritelock__writelock     (f2ptr this, f2ptr cause);
+void      pfunk2__f2scheduler_creadwritelock__readlock      (f2ptr this, f2ptr cause);
+void      pfunk2__f2scheduler_creadwritelock__unlock        (f2ptr this, f2ptr cause);
+int       pfunk2__f2scheduler_creadwritelock__trywritelock  (f2ptr this, f2ptr cause);
+int       pfunk2__f2scheduler_creadwritelock__tryreadlock   (f2ptr this, f2ptr cause);
+
+f2ptr      f2__scheduler_creadwritelock__new           (f2ptr cause);
+boolean_t raw__scheduler_creadwritelock__is_writelocked(f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__is_writelocked(f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__writelock     (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__writelock     (f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__readlock      (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__readlock      (f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__unlock        (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__unlock        (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__trywritelock  (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__trywritelock  (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__tryreadlock   (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__tryreadlock   (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__is_type       (f2ptr cause, f2ptr exp);
+f2ptr      f2__scheduler_creadwritelock__is_type       (f2ptr cause, f2ptr exp);
+boolean_t raw__scheduler_creadwritelock__eq            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_creadwritelock__eq            (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__scheduler_creadwritelock__eq_hash_value (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__eq_hash_value (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__equals        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_creadwritelock__equals        (f2ptr cause, f2ptr this, f2ptr that);
+
+
 // creadwritelock
 
 f2ptr     pfunk2__f2creadwritelock__new           (f2ptr cause);

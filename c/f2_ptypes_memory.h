@@ -146,6 +146,21 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 #define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
+// scheduler_creadwritelock
+
+struct ptype_scheduler_creadwritelock_block_s {
+  ptype_block_t                   ptype;
+  funk2_processor_readwritelock_t rwlock[1];
+} __attribute__((__packed__));
+typedef struct ptype_scheduler_creadwritelock_block_s ptype_scheduler_creadwritelock_block_t;
+
+ptype_scheduler_creadwritelock_block_t*    ptype_scheduler_creadwritelock_block__new(int pool_index, f2ptr cause);
+funk2_processor_readwritelock_t* ptype_scheduler_creadwritelock__rwlock   (f2ptr this, f2ptr cause);
+
+#define __pure__f2scheduler_creadwritelock__new(pool_index, cause) ptype_scheduler_creadwritelock__new(pool_index, cause)
+#define __pure__f2scheduler_creadwritelock__rwlock(this)           (((ptype_scheduler_creadwritelock_block_t*)(from_ptr(f2ptr_to_ptr(this))))->rwlock)
+
+
 // creadwritelock
 
 struct ptype_creadwritelock_block_s {

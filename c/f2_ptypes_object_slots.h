@@ -238,6 +238,43 @@ f2ptr      f2__cmutex__slot__type_funk             (f2ptr cause, f2ptr this, f2p
 f2ptr f2cmutex__primobject_type__new(f2ptr cause);
 
 
+// scheduler_creadwritelock
+
+boolean_t raw__scheduler_creadwritelock__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__scheduler_creadwritelock__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__scheduler_creadwritelock__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__scheduler_creadwritelock__new                         (f2ptr cause);
+boolean_t raw__scheduler_creadwritelock__is_writelocked              (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__is_writelocked              (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__is_readlocked               (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__is_readlocked               (f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__writelock                   (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__writelock                   (f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__readlock                    (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__readlock                    (f2ptr cause, f2ptr this);
+void      raw__scheduler_creadwritelock__unlock                      (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__unlock                      (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__trywritelock                (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__trywritelock                (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__tryreadlock                 (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__tryreadlock                 (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_creadwritelock__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__scheduler_creadwritelock__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__scheduler_creadwritelock__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__scheduler_creadwritelock__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__scheduler_creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__scheduler_creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+u64       raw__scheduler_creadwritelock__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__scheduler_creadwritelock__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__scheduler_creadwritelock__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__scheduler_creadwritelock__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__scheduler_creadwritelock__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+
+f2ptr f2scheduler_creadwritelock__primobject_type__new(f2ptr cause);
+
+
 // creadwritelock
 
 boolean_t raw__creadwritelock__is_type                     (f2ptr cause, f2ptr x);
@@ -762,6 +799,39 @@ typedef struct funk2_object_type__cmutex__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__cmutex__slot_t;
 
+// scheduler_creadwritelock
+
+typedef struct funk2_object_type__scheduler_creadwritelock__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr is_writelocked__symbol;
+  f2ptr is_writelocked__funk;
+  f2ptr is_readlocked__symbol;
+  f2ptr is_readlocked__funk;
+  f2ptr unlock__symbol;
+  f2ptr unlock__funk;
+  f2ptr trywritelock__symbol;
+  f2ptr trywritelock__funk;
+  f2ptr tryreadlock__symbol;
+  f2ptr tryreadlock__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__scheduler_creadwritelock__slot_t;
+
 // creadwritelock
 
 typedef struct funk2_object_type__creadwritelock__slot_s {
@@ -1072,20 +1142,21 @@ typedef struct funk2_ptype_object_types_s {
   f2ptr creation_fiber__funk;
   f2ptr creation_fiber__set__symbol;
   f2ptr creation_fiber__set__funk;
-  funk2_object_type__integer__slot_t          ptype_integer;
-  funk2_object_type__double__slot_t           ptype_double;
-  funk2_object_type__float__slot_t            ptype_float;
-  funk2_object_type__pointer__slot_t          ptype_pointer;
-  funk2_object_type__scheduler_cmutex__slot_t ptype_scheduler_cmutex;
-  funk2_object_type__cmutex__slot_t           ptype_cmutex;
-  funk2_object_type__creadwritelock__slot_t   ptype_creadwritelock;
-  funk2_object_type__char__slot_t             ptype_char;
-  funk2_object_type__string__slot_t           ptype_string;
-  funk2_object_type__symbol__slot_t           ptype_symbol;
-  funk2_object_type__chunk__slot_t            ptype_chunk;
-  funk2_object_type__simple_array__slot_t     ptype_simple_array;
-  funk2_object_type__traced_array__slot_t     ptype_traced_array;
-  funk2_object_type__larva__slot_t            ptype_larva;
+  funk2_object_type__integer__slot_t                  ptype_integer;
+  funk2_object_type__double__slot_t                   ptype_double;
+  funk2_object_type__float__slot_t                    ptype_float;
+  funk2_object_type__pointer__slot_t                  ptype_pointer;
+  funk2_object_type__scheduler_cmutex__slot_t         ptype_scheduler_cmutex;
+  funk2_object_type__cmutex__slot_t                   ptype_cmutex;
+  funk2_object_type__scheduler_creadwritelock__slot_t ptype_scheduler_creadwritelock;
+  funk2_object_type__creadwritelock__slot_t           ptype_creadwritelock;
+  funk2_object_type__char__slot_t                     ptype_char;
+  funk2_object_type__string__slot_t                   ptype_string;
+  funk2_object_type__symbol__slot_t                   ptype_symbol;
+  funk2_object_type__chunk__slot_t                    ptype_chunk;
+  funk2_object_type__simple_array__slot_t             ptype_simple_array;
+  funk2_object_type__traced_array__slot_t             ptype_traced_array;
+  funk2_object_type__larva__slot_t                    ptype_larva;
 } funk2_ptype_object_types_t;
 
 #endif // F2__PTYPES_OBJECT_SLOTS__TYPES__H

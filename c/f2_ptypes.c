@@ -649,6 +649,153 @@ int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
 
 
 
+// scheduler_creadwritelock
+
+f2ptr ptype_scheduler_creadwritelock__new(int pool_index, f2ptr cause) {
+  f2ptr scheduler_creadwritelock_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_scheduler_creadwritelock_block_t));
+  ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)from_ptr(raw__f2ptr_to_ptr(scheduler_creadwritelock_f2ptr));
+  debug__assert(scheduler_creadwritelock_block, nil, "block is nil.");
+  if (cause) {raw__exp__increment_reference_count(cause);}
+  scheduler_creadwritelock_block->ptype.block.ptype    = ptype_scheduler_creadwritelock;
+  scheduler_creadwritelock_block->ptype.cause          = cause;
+  {
+    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
+    scheduler_creadwritelock_block->ptype.creation_fiber = creation_fiber;
+  }
+  funk2_processor_readwritelock__init(scheduler_creadwritelock_block->rwlock);
+  return scheduler_creadwritelock_f2ptr;
+}
+
+f2ptr pfunk2__f2scheduler_creadwritelock__new(f2ptr cause) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr retval = __pure__f2scheduler_creadwritelock__new(pool_index, cause);
+  return retval;
+}
+
+funk2_processor_readwritelock_t* ptype_scheduler_creadwritelock__rwlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  funk2_processor_readwritelock_t* rwlock = __pure__f2scheduler_creadwritelock__rwlock(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(rwlock));
+  return rwlock;
+}
+
+boolean_t pfunk2__f2scheduler_creadwritelock__is_writelocked(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  boolean_t is_writelocked = funk2_processor_readwritelock__is_writelocked(ptype_scheduler_creadwritelock__rwlock(this, cause));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  return is_writelocked;
+}
+
+boolean_t pfunk2__f2scheduler_creadwritelock__is_readlocked(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  boolean_t is_readlocked = funk2_processor_readwritelock__is_readlocked(ptype_scheduler_creadwritelock__rwlock(this, cause));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  return is_readlocked;
+}
+
+void pfunk2__f2scheduler_creadwritelock__writelock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  funk2_processor_readwritelock_trylock_result_t trylock_result = funk2_processor_readwritelock_trylock_result__failure;
+  while (1) {
+    trylock_result = funk2_processor_readwritelock__trywritelock(ptype_scheduler_creadwritelock__rwlock(this, cause));
+    if (trylock_result == funk2_processor_readwritelock_trylock_result__failure) {
+      f2__this__fiber__yield(cause);
+    } else {
+      break;
+    }
+  }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
+}
+
+void pfunk2__f2scheduler_creadwritelock__readlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  funk2_processor_readwritelock_trylock_result_t trylock_result = funk2_processor_readwritelock_trylock_result__failure;
+  while (1) {
+    trylock_result = funk2_processor_readwritelock__tryreadlock(ptype_scheduler_creadwritelock__rwlock(this, cause));
+    if (trylock_result == funk2_processor_readwritelock_trylock_result__failure) {
+      f2__this__fiber__yield(cause);
+    } else {
+      break;
+    }
+  }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
+}
+
+void pfunk2__f2scheduler_creadwritelock__unlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  // note that this assumes the scheduler_creadwritelock is locked.
+  funk2_processor_readwritelock__unlock(ptype_scheduler_creadwritelock__rwlock(this, cause));
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+}
+
+int pfunk2__f2scheduler_creadwritelock__trywritelock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  int return_value = funk2_processor_readwritelock__trywritelock(ptype_scheduler_creadwritelock__rwlock(this, cause));
+  if (return_value == 0) {
+    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+  }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
+}
+
+int pfunk2__f2scheduler_creadwritelock__tryreadlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_scheduler_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_scheduler_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  int return_value = funk2_processor_readwritelock__tryreadlock(ptype_scheduler_creadwritelock__rwlock(this, cause));
+  if (return_value == 0) {
+    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+  }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
+}
+
+
+
+
+
+
 // creadwritelock
 
 f2ptr ptype_creadwritelock__new(int pool_index, f2ptr cause) {

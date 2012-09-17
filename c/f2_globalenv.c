@@ -129,20 +129,21 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->read_event__symbol   = new__symbol(cause, "read_event");
   this->write_event__symbol  = new__symbol(cause, "write_event");
   
-  this->ptype_integer__symbol          = new__symbol(cause, "ptype_integer");
-  this->ptype_double__symbol           = new__symbol(cause, "ptype_double");
-  this->ptype_float__symbol            = new__symbol(cause, "ptype_float");
-  this->ptype_pointer__symbol          = new__symbol(cause, "ptype_pointer");
-  this->ptype_scheduler_cmutex__symbol = new__symbol(cause, "ptype_scheduler_cmutex");
-  this->ptype_cmutex__symbol           = new__symbol(cause, "ptype_cmutex");
+  this->ptype_integer__symbol                  = new__symbol(cause, "ptype_integer");
+  this->ptype_double__symbol                   = new__symbol(cause, "ptype_double");
+  this->ptype_float__symbol                    = new__symbol(cause, "ptype_float");
+  this->ptype_pointer__symbol                  = new__symbol(cause, "ptype_pointer");
+  this->ptype_scheduler_cmutex__symbol         = new__symbol(cause, "ptype_scheduler_cmutex");
+  this->ptype_cmutex__symbol                   = new__symbol(cause, "ptype_cmutex");
+  this->ptype_scheduler_creadwritelock__symbol = new__symbol(cause, "ptype_scheduler_creadwritelock");
   this->ptype_creadwritelock__symbol           = new__symbol(cause, "ptype_creadwritelock");
-  this->ptype_char__symbol             = new__symbol(cause, "ptype_char");
-  this->ptype_string__symbol           = new__symbol(cause, "ptype_string");
-  this->ptype_symbol__symbol           = new__symbol(cause, "ptype_symbol");
-  this->ptype_chunk__symbol            = new__symbol(cause, "ptype_chunk");
-  this->ptype_simple_array__symbol     = new__symbol(cause, "ptype_simple_array");
-  this->ptype_traced_array__symbol     = new__symbol(cause, "ptype_traced_array");
-  this->ptype_larva__symbol            = new__symbol(cause, "ptype_larva");
+  this->ptype_char__symbol                     = new__symbol(cause, "ptype_char");
+  this->ptype_string__symbol                   = new__symbol(cause, "ptype_string");
+  this->ptype_symbol__symbol                   = new__symbol(cause, "ptype_symbol");
+  this->ptype_chunk__symbol                    = new__symbol(cause, "ptype_chunk");
+  this->ptype_simple_array__symbol             = new__symbol(cause, "ptype_simple_array");
+  this->ptype_traced_array__symbol             = new__symbol(cause, "ptype_traced_array");
+  this->ptype_larva__symbol                    = new__symbol(cause, "ptype_larva");
   
   this->get__symbol     = new__symbol(cause, "get");
   this->set__symbol     = new__symbol(cause, "set");
@@ -256,6 +257,7 @@ void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {
   defragment__fix_pointer(this->ptype_pointer__symbol);
   defragment__fix_pointer(this->ptype_scheduler_cmutex__symbol);
   defragment__fix_pointer(this->ptype_cmutex__symbol);
+  defragment__fix_pointer(this->ptype_scheduler_creadwritelock__symbol);
   defragment__fix_pointer(this->ptype_creadwritelock__symbol);
   defragment__fix_pointer(this->ptype_char__symbol);
   defragment__fix_pointer(this->ptype_string__symbol);

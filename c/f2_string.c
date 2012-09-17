@@ -188,6 +188,11 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<cmutex " pointer__fstr ">", to_ptr(exp));
     return f2string__new(cause, temp_str__length, temp_str);
   }
+  case ptype_scheduler_creadwritelock: {
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<scheduler_creadwritelock " pointer__fstr ">", to_ptr(exp));
+    return f2string__new(cause, temp_str__length, temp_str);
+  }
   case ptype_creadwritelock: {
     funk2_character_t temp_str[1024];
     u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<creadwritelock " pointer__fstr ">", to_ptr(exp));

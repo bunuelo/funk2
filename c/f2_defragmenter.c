@@ -56,6 +56,10 @@ void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* th
 	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
 	funk2_processor_mutex__destroy(cmutex_block->m);
       } break;
+      case ptype_scheduler_creadwritelock: {
+	ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)block;
+	funk2_processor_readwritelock__destroy(scheduler_creadwritelock_block->rwlock);
+      } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
 	funk2_processor_readwritelock__destroy(creadwritelock_block->rwlock);
@@ -89,6 +93,11 @@ void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t*
 	if (cmutex_block->locked_state) {
 	  funk2_processor_mutex__lock(cmutex_block->m);
 	}
+      } break;
+      case ptype_scheduler_creadwritelock: {
+	ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)block;
+	funk2_processor_readwritelock__init(scheduler_creadwritelock_block->rwlock);
+	// we don't current reinitialize readwritelocks to old states.
       } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
@@ -190,17 +199,18 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   }
   switch(ptype_block->block.ptype) {
   case ptype_free_memory: error(nil, "block of type free_memory in defragmenter.");
-  case ptype_integer:          return;
-  case ptype_double:           return;
-  case ptype_float:            return;
-  case ptype_pointer:          return;
-  case ptype_scheduler_cmutex: return;
-  case ptype_cmutex:           return;
-  case ptype_creadwritelock:   return;
-  case ptype_char:             return;
-  case ptype_string:           return;
-  case ptype_symbol:           return;
-  case ptype_chunk:            return;
+  case ptype_integer:                  return;
+  case ptype_double:                   return;
+  case ptype_float:                    return;
+  case ptype_pointer:                  return;
+  case ptype_scheduler_cmutex:         return;
+  case ptype_cmutex:                   return;
+  case ptype_scheduler_creadwritelock: return;
+  case ptype_creadwritelock:           return;
+  case ptype_char:                     return;
+  case ptype_string:                   return;
+  case ptype_symbol:                   return;
+  case ptype_chunk:                    return;
   case ptype_simple_array: {
     s64 i;
     f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;

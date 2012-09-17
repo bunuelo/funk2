@@ -432,18 +432,19 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       funk2_memblock__decrement_reference_count(creation_fiber_block, creation_fiber, &(__funk2.garbage_collector));
     }
     switch(ptype_block->block.ptype) {
-    case ptype_free_memory:     error(nil, "block of type free_memory in garbage collector.");
-    case ptype_integer:          break;
-    case ptype_double:           break;
-    case ptype_float:            break;
-    case ptype_pointer:          break;
-    case ptype_scheduler_cmutex: break;
-    case ptype_cmutex:           break;
-    case ptype_creadwritelock:   break;
-    case ptype_char:             break;
-    case ptype_string:           break;
-    case ptype_symbol:           break;
-    case ptype_chunk:            break;
+    case ptype_free_memory:              error(nil, "block of type free_memory in garbage collector.");
+    case ptype_integer:                  break;
+    case ptype_double:                   break;
+    case ptype_float:                    break;
+    case ptype_pointer:                  break;
+    case ptype_scheduler_cmutex:         break;
+    case ptype_cmutex:                   break;
+    case ptype_scheduler_creadwritelock: break;
+    case ptype_creadwritelock:           break;
+    case ptype_char:                     break;
+    case ptype_string:                   break;
+    case ptype_symbol:                   break;
+    case ptype_chunk:                    break;
     case ptype_simple_array: {
       s64 i;
       f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;

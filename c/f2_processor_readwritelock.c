@@ -118,7 +118,7 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
 }
 
 void funk2_processor_readwritelock__raw_unlock(funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num) {
-  pthread_rwlock_unwritelock(&(this->pthread_rwlock));
+  pthread_rwlock_unlock(&(this->pthread_rwlock));
 }
 
 u64 funk2_processor_readwritelock__eq_hash_value(funk2_processor_readwritelock_t* this) {

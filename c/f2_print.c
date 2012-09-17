@@ -381,9 +381,9 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	
 	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "is_locked "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	f2ptr is_locked = f2bool__new(f2creadwritelock__is_locked(exp, cause));
-	f2__write_pretty(cause, fiber, stream, is_locked, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
+	sprintf(temp_str, "is_writelocked "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
+	f2ptr is_writelocked = f2bool__new(f2creadwritelock__is_writelocked(exp, cause));
+	f2__write_pretty(cause, fiber, stream, is_writelocked, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);

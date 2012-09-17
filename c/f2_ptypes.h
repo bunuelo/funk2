@@ -227,11 +227,11 @@ f2ptr      f2__scheduler_cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 // cmutex
 
-f2ptr            pfunk2__f2cmutex__new(f2ptr cause);
-boolean_t        pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause);
-void             pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause);
-void             pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause);
-int              pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause);
+f2ptr     pfunk2__f2cmutex__new(f2ptr cause);
+boolean_t pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause);
+void      pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause);
+void      pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause);
+int       pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause);
 
 f2ptr      f2__cmutex__new(f2ptr cause);
 boolean_t raw__cmutex__is_locked(f2ptr cause, f2ptr this);
@@ -258,33 +258,36 @@ f2ptr      f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 // creadwritelock
 
-f2ptr            pfunk2__f2creadwritelock__new(f2ptr cause);
-boolean_t        pfunk2__f2creadwritelock__is_locked(f2ptr this, f2ptr cause);
-void             pfunk2__f2creadwritelock__lock(f2ptr this, f2ptr cause);
-void             pfunk2__f2creadwritelock__unlock(f2ptr this, f2ptr cause);
-int              pfunk2__f2creadwritelock__trylock(f2ptr this, f2ptr cause);
+f2ptr     pfunk2__f2creadwritelock__new           (f2ptr cause);
+boolean_t pfunk2__f2creadwritelock__is_writelocked(f2ptr this, f2ptr cause);
+boolean_t pfunk2__f2creadwritelock__is_readlocked (f2ptr this, f2ptr cause);
+void      pfunk2__f2creadwritelock__writelock     (f2ptr this, f2ptr cause);
+void      pfunk2__f2creadwritelock__readlock      (f2ptr this, f2ptr cause);
+void      pfunk2__f2creadwritelock__unlock        (f2ptr this, f2ptr cause);
+int       pfunk2__f2creadwritelock__trywritelock  (f2ptr this, f2ptr cause);
+int       pfunk2__f2creadwritelock__tryreadlock   (f2ptr this, f2ptr cause);
 
-f2ptr      f2__creadwritelock__new(f2ptr cause);
-boolean_t raw__creadwritelock__is_locked(f2ptr cause, f2ptr this);
-f2ptr      f2__creadwritelock__is_locked(f2ptr cause, f2ptr this);
-void      raw__creadwritelock__lock(f2ptr cause, f2ptr this);
-f2ptr      f2__creadwritelock__lock(f2ptr cause, f2ptr this);
-void      raw__creadwritelock__unlock(f2ptr cause, f2ptr this);
-f2ptr      f2__creadwritelock__unlock(f2ptr cause, f2ptr this);
-boolean_t raw__creadwritelock__trylock(f2ptr cause, f2ptr this);
-f2ptr      f2__creadwritelock__trylock(f2ptr cause, f2ptr this);
-
-boolean_t raw__creadwritelock__is_type(f2ptr cause, f2ptr exp);
-f2ptr      f2__creadwritelock__is_type(f2ptr cause, f2ptr exp);
-
-boolean_t raw__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that);
-
-u64   raw__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this);
-
-boolean_t raw__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__new           (f2ptr cause);
+boolean_t raw__creadwritelock__is_writelocked(f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__is_writelocked(f2ptr cause, f2ptr this);
+void      raw__creadwritelock__writelock     (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__writelock     (f2ptr cause, f2ptr this);
+void      raw__creadwritelock__readlock      (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__readlock      (f2ptr cause, f2ptr this);
+void      raw__creadwritelock__unlock        (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__unlock        (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__trywritelock  (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__trywritelock  (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__tryreadlock   (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__tryreadlock   (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__is_type       (f2ptr cause, f2ptr exp);
+f2ptr      f2__creadwritelock__is_type       (f2ptr cause, f2ptr exp);
+boolean_t raw__creadwritelock__eq            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__eq            (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__creadwritelock__eq_hash_value (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__eq_hash_value (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__equals        (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__equals        (f2ptr cause, f2ptr this, f2ptr that);
 
 
 // char

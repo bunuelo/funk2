@@ -31,9 +31,9 @@ void funk2_processor_readwritelock__error() {
 void funk2_processor_readwritelock__init(funk2_processor_readwritelock_t* this) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   this->is_initialized   = boolean__true;
-  this->is_locked        = boolean__false;
-  this->lock_source_file = NULL;
-  this->lock_line_num    = 0;
+  this->is_writelocked        = boolean__false;
+  this->writelock_source_file = NULL;
+  this->writelock_line_num    = 0;
 #endif
   pthread_rwlock_init(&(this->pthread_rwlock), NULL);
 }
@@ -45,13 +45,13 @@ void funk2_processor_readwritelock__destroy(funk2_processor_readwritelock_t* thi
     funk2_processor_readwritelock__error();
   }
   this->is_initialized   = boolean__false;
-  this->lock_source_file = "destroyed";
-  this->lock_line_num    = 0;
+  this->writelock_source_file = "destroyed";
+  this->writelock_line_num    = 0;
 #endif
   pthread_rwlock_destroy(&(this->pthread_rwlock));
 }
 
-boolean_t funk2_processor_readwritelock__is_locked(funk2_processor_readwritelock_t* this) {
+boolean_t funk2_processor_readwritelock__is_writelocked(funk2_processor_readwritelock_t* this) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__is_locked error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);
@@ -65,26 +65,26 @@ boolean_t funk2_processor_readwritelock__is_locked(funk2_processor_readwritelock
   return boolean__true;
 }
 
-funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__raw_trylock(funk2_processor_readwritelock_t* this, const char* lock_source_file, const int lock_line_num) {
+funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__raw_trywritelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__raw_trylock error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);
     funk2_processor_readwritelock__error();
   }
 #endif
-  if (pthread_rwlock_trylock(&(this->pthread_rwlock)) == 0) {
+  if (pthread_rwlock_trywrlock(&(this->pthread_rwlock)) == 0) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
-    this->is_locked        = boolean__true;
-    this->lock_source_file = (char*)lock_source_file;
-    this->lock_line_num    = (int)lock_line_num;
-    this->lock_tid         = pthread_self();
+    this->is_writelocked        = boolean__true;
+    this->writelock_source_file = (char*)writelock_source_file;
+    this->writelock_line_num    = (int)writelock_line_num;
+    this->writelock_tid         = pthread_self();
 #endif
     return funk2_processor_readwritelock_trylock_result__success;
   }
   return funk2_processor_readwritelock_trylock_result__failure;
 }
 
-void funk2_processor_readwritelock__raw_lock(funk2_processor_readwritelock_t* this, const char* lock_source_file, const int lock_line_num) {
+void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__raw_lock error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);
@@ -92,10 +92,10 @@ void funk2_processor_readwritelock__raw_lock(funk2_processor_readwritelock_t* th
   }
 #endif
   {
-    u64 lock_tries = 0;
-    while (funk2_processor_readwritelock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
-      lock_tries ++;
-      if (lock_tries > 1000) {
+    u64 writelock_tries = 0;
+    while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
+      writelock_tries ++;
+      if (writelock_tries > 1000) {
 	raw__spin_sleep_yield();
       } else {
 	raw__fast_spin_sleep_yield();
@@ -104,7 +104,7 @@ void funk2_processor_readwritelock__raw_lock(funk2_processor_readwritelock_t* th
   }
 }
 
-void funk2_processor_readwritelock__raw_user_lock(funk2_processor_readwritelock_t* this, const char* lock_source_file, const int lock_line_num) {
+void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__raw_lock error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);
@@ -112,14 +112,14 @@ void funk2_processor_readwritelock__raw_user_lock(funk2_processor_readwritelock_
   }
 #endif
   {
-    u64 lock_tries = 0;
-    while (funk2_processor_readwritelock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
+    u64 writelock_tries = 0;
+    while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
       if (__funk2.user_thread_controller.please_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
 	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
       }
       {
-	lock_tries ++;
-	if (lock_tries > 1000) {
+	writelock_tries ++;
+	if (writelock_tries > 1000) {
 	  raw__spin_sleep_yield();
 	} else {
 	  raw__fast_spin_sleep_yield();
@@ -129,15 +129,15 @@ void funk2_processor_readwritelock__raw_user_lock(funk2_processor_readwritelock_
   }
 }
 
-void funk2_processor_readwritelock__raw_unlock(funk2_processor_readwritelock_t* this, const char* unlock_source_file, const int unlock_line_num) {
+void funk2_processor_readwritelock__raw_unwritelock(funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__raw_unlock error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);
     funk2_processor_readwritelock__error();
   }
-  this->is_locked = boolean__false;
+  this->is_writelocked = boolean__false;
 #endif
-  pthread_rwlock_unlock(&(this->pthread_rwlock));
+  pthread_rwlock_unwritelock(&(this->pthread_rwlock));
 }
 
 u64 funk2_processor_readwritelock__eq_hash_value(funk2_processor_readwritelock_t* this) {
@@ -145,7 +145,7 @@ u64 funk2_processor_readwritelock__eq_hash_value(funk2_processor_readwritelock_t
 }
 
 u64 funk2_processor_readwritelock__equals_hash_value(funk2_processor_readwritelock_t* this) {
-  boolean_t is_locked = funk2_processor_readwritelock__is_locked(this);
-  return is_locked ? 1 : 0;
+  boolean_t is_writelocked = funk2_processor_readwritelock__is_writelocked(this);
+  return is_writelocked ? 1 : 0;
 }
 

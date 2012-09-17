@@ -226,6 +226,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.la \
                       extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.la \
                       extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.la \
+                      extension/semantic_partial_state/libf2e_semantic_partial_state.la \
                       extension/semantic_reflective_object/libf2e_semantic_reflective_object.la \
                       extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.la \
                       extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.la \

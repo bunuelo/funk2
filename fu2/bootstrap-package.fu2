@@ -199,6 +199,7 @@
 						     'extension/semantic_object/'
 						     'extension/semantic_ordered_object/'
 						     'extension/semantic_packable_object/'
+						     'extension/semantic_partial_state/'
 						     'extension/semantic_reflective_object/'
 						     'extension/semantic_reflective_object_type_event/'
 						     'extension/semantic_reflective_object_type_property_event/'

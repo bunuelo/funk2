@@ -219,7 +219,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_object/libf2e_semantic_object.la \
                       extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                       extension/semantic_partial_state/libf2e_semantic_partial_state.la \
-                      extension/semantic_reflective_object/libf2e_semantic_reflective_object.la \
                       extension/semantic_plan_object/libf2e_semantic_plan_object.la \
                       extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.la \
                       extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.la \
@@ -227,13 +226,14 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.la \
                       extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.la \
                       extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.la \
+                      extension/semantic_reflective_object/libf2e_semantic_reflective_object.la \
+                      extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.la \
+                      extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.la \
+                      extension/semantic_reflective_object_type_relation_event/libf2e_semantic_reflective_object_type_relation_event.la \
                       extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la \
                       extension/semantic_goal/libf2e_semantic_goal.la \
                       extension/semantic_goal_event/libf2e_semantic_goal_event.la \
                       extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la \
-                      extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.la \
-                      extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.la \
-                      extension/semantic_reflective_object_type_relation_event/libf2e_semantic_reflective_object_type_relation_event.la \
                       extension/semantic_planner/libf2e_semantic_planner.la \
                       extension/semantic_proprioception/libf2e_semantic_proprioception.la \
                       extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.la \

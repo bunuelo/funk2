@@ -40,6 +40,7 @@ ansi_color_t print__ansi__float__foreground            = ansi_color__light_blue;
 ansi_color_t print__ansi__pointer__foreground          = ansi_color__light_blue;
 ansi_color_t print__ansi__scheduler_cmutex__foreground = ansi_color__white;
 ansi_color_t print__ansi__cmutex__foreground           = ansi_color__white;
+ansi_color_t print__ansi__creadwritelock__foreground   = ansi_color__white;
 ansi_color_t print__ansi__char__foreground             = ansi_color__light_blue;
 ansi_color_t print__ansi__string__foreground           = ansi_color__light_red;
 ansi_color_t print__ansi__symbol__foreground           = ansi_color__light_blue;

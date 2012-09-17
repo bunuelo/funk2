@@ -440,6 +440,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primfunks__stdlib.c \
   c/f2_processor.c \
   c/f2_processor_mutex.c \
+  c/f2_processor_readwritelock.c \
   c/f2_processor_spinlock.c \
   c/f2_processor_thread.c \
   c/f2_processor_thread_handler.c \

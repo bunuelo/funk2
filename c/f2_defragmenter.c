@@ -58,7 +58,7 @@ void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* th
       } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
-	funk2_processor_mutex__destroy(creadwritelock_block->m);
+	funk2_processor_readwritelock__destroy(creadwritelock_block->rwlock);
       } break;
       default:
 	break;
@@ -92,10 +92,8 @@ void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t*
       } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
-	funk2_processor_mutex__init(creadwritelock_block->m);
-	if (creadwritelock_block->locked_state) {
-	  funk2_processor_mutex__lock(creadwritelock_block->m);
-	}
+	funk2_processor_readwritelock__init(creadwritelock_block->rwlock);
+	// we don't current reinitialize readwritelocks to old states.
       } break;
       default:
 	break;

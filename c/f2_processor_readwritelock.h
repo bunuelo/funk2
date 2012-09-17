@@ -24,16 +24,7 @@
 
 #include "f2_global.h"
 
-//#define F2__PROCESSOR_READWRITELOCK__DEBUG
-
 typedef struct funk2_processor_readwritelock_s {
-#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
-  boolean_t        is_initialized;
-  boolean_t        is_writelocked;
-  char*            writelock_source_file;
-  int              writelock_line_num;
-  pthread_t        writelock_tid;
-#endif
   pthread_rwlock_t pthread_rwlock;
 } funk2_processor_readwritelock_t;
 
@@ -45,16 +36,23 @@ typedef enum funk2_processor_readwritelock_trylock_result_e {
 void                                           funk2_processor_readwritelock__init              (funk2_processor_readwritelock_t* this);
 void                                           funk2_processor_readwritelock__destroy           (funk2_processor_readwritelock_t* this);
 boolean_t                                      funk2_processor_readwritelock__is_writelocked    (funk2_processor_readwritelock_t* this);
+boolean_t                                      funk2_processor_readwritelock__is_readlocked     (funk2_processor_readwritelock_t* this);
 funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__raw_trywritelock  (funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
+funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__raw_tryreadlock   (funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num);
 void                                           funk2_processor_readwritelock__raw_writelock     (funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
+void                                           funk2_processor_readwritelock__raw_readlock      (funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num);
 void                                           funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
+void                                           funk2_processor_readwritelock__raw_user_readlock (funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num);
 void                                           funk2_processor_readwritelock__raw_unlock        (funk2_processor_readwritelock_t* this, const char* unlock_source_file, const int unlock_line_num);
 u64                                            funk2_processor_readwritelock__eq_hash_value     (funk2_processor_readwritelock_t* this);
 u64                                            funk2_processor_readwritelock__equals_hash_value (funk2_processor_readwritelock_t* this);
 
 #define funk2_processor_readwritelock__trywritelock(  this) funk2_processor_readwritelock__raw_trywritelock(  this, __FILE__, __LINE__)
+#define funk2_processor_readwritelock__tryreadlock(   this) funk2_processor_readwritelock__raw_tryreadlock(   this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__writelock(     this) funk2_processor_readwritelock__raw_writelock(     this, __FILE__, __LINE__)
+#define funk2_processor_readwritelock__readlock(      this) funk2_processor_readwritelock__raw_readlock(      this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__user_writelock(this) funk2_processor_readwritelock__raw_user_writelock(this, __FILE__, __LINE__)
+#define funk2_processor_readwritelock__user_readlock( this) funk2_processor_readwritelock__raw_user_readlock( this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__unwritelock(   this) funk2_processor_readwritelock__raw_unwritelock(   this, __FILE__, __LINE__)
 
 

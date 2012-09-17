@@ -631,10 +631,8 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 	      } break;
 	      case ptype_creadwritelock: {
 		ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
-		funk2_processor_mutex__init(creadwritelock_block->m);
-		if (creadwritelock_block->locked_state) {
-		  funk2_processor_mutex__lock(creadwritelock_block->m);
-		}
+		funk2_processor_readwritelock__init(creadwritelock_block->rwlock);
+		// we currently don't reinitialize creadwritelocks to old states...
 	      } break;
 	      default:
 		break;

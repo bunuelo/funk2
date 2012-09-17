@@ -58,8 +58,8 @@ boolean_t funk2_processor_readwritelock__is_writelocked(funk2_processor_readwrit
     funk2_processor_readwritelock__error();
   }
 #endif
-  if (pthread_rwlock_trylock(&(this->pthread_rwlock)) == 0) {
-    pthread_rwlock_unlock(&(this->pthread_rwlock));
+  if (pthread_rwlock_trywrlock(&(this->pthread_rwlock)) == 0) {
+    pthread_rwlock_unwrlock(&(this->pthread_rwlock));
     return boolean__false;
   }
   return boolean__true;

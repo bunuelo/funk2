@@ -48,7 +48,7 @@ boolean_t                                      funk2_processor_readwritelock__is
 funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__raw_trywritelock  (funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
 void                                           funk2_processor_readwritelock__raw_writelock     (funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
 void                                           funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num);
-void                                           funk2_processor_readwritelock__raw_unwritelock   (funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num);
+void                                           funk2_processor_readwritelock__raw_unlock        (funk2_processor_readwritelock_t* this, const char* unlock_source_file, const int unlock_line_num);
 u64                                            funk2_processor_readwritelock__eq_hash_value     (funk2_processor_readwritelock_t* this);
 u64                                            funk2_processor_readwritelock__equals_hash_value (funk2_processor_readwritelock_t* this);
 

@@ -59,7 +59,7 @@ boolean_t funk2_processor_readwritelock__is_writelocked(funk2_processor_readwrit
   }
 #endif
   if (pthread_rwlock_trywrlock(&(this->pthread_rwlock)) == 0) {
-    pthread_rwlock_unwrlock(&(this->pthread_rwlock));
+    pthread_rwlock_unlock(&(this->pthread_rwlock));
     return boolean__false;
   }
   return boolean__true;
@@ -129,7 +129,7 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
   }
 }
 
-void funk2_processor_readwritelock__raw_unwritelock(funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num) {
+void funk2_processor_readwritelock__raw_unlock(funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_readwritelock__raw_unlock error: attempted to use uninitialized readwritelock.\n"); fflush(stdout);

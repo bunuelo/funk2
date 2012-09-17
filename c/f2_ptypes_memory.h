@@ -32,6 +32,7 @@
 #include "f2_ptypes.h"
 #include "f2_memory.h"
 #include "f2_processor_mutex.h"
+#include "f2_processor_readwritelock.h"
 #include "f2_processor_spinlock.h"
 
 // memblock

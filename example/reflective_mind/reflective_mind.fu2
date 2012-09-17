@@ -130,14 +130,59 @@
 [deftypefunk reflective_mind execute wait_for_physical_property [source_type source_property source_property_value property property_value]
   [have [get this layer `deliberative] wait_for_physical_property source_type source_property source_property_value property property_value]]
 
-[deftypefunk reflective_mind execute wait_for_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [have [get this layer `deliberative] wait_for_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+[deftypefunk reflective_mind execute wait_for_physical_relationship [source_type
+								     source_property
+								     source_property_value
+								     key_type
+								     key
+								     target_type
+								     target_property
+								     target_property_value]
+  [have [get this layer `deliberative] wait_for_physical_relationship
+	source_type
+	source_property
+	source_property_value
+	key_type
+	key
+	target_type
+	target_property
+	target_property_value]]
 
-[deftypefunk reflective_mind execute assure_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [have [get this layer `deliberative] assure_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+[deftypefunk reflective_mind execute assure_physical_relationship [source_type
+								   source_property
+								   source_property_value
+								   key_type
+								   key
+								   target_type
+								   target_property
+								   target_property_value]
+  [have [get this layer `deliberative] assure_physical_relationship
+	source_type
+	source_property
+	source_property_value
+	key_type
+	key
+	target_type
+	target_property
+	target_property_value]]
 
-[deftypefunk reflective_mind execute imagine_assuring_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [have [get this layer `deliberative] imagine_assuring_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+[deftypefunk reflective_mind execute imagine_assuring_physical_relationship [source_type
+									     source_property
+									     source_property_value
+									     key_type
+									     key
+									     target_type
+									     target_property
+									     target_property_value]
+  [have [get this layer `deliberative] imagine_assuring_physical_relationship
+	source_type
+	source_property
+	source_property_value
+	key_type
+	key
+	target_type
+	target_property
+	target_property_value]]
 
 [deftypefunk reflective_mind execute wait_to_call_physical_action [arguments]
   [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action arguments]]]

@@ -183,12 +183,19 @@
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk deliberative_layer execute wait_for_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk deliberative_layer execute wait_for_physical_relationship [source_type
+									source_property
+									source_property_value
+									key_type
+									key
+									target_type
+									target_property
+									target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
 																							source_property_value]]
-												`preposition
+												key_type
 												key
 												[object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
 																							`property
@@ -208,12 +215,19 @@
 	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
-[deftypefunk deliberative_layer execute assure_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk deliberative_layer execute assure_physical_relationship [source_type
+								      source_property
+								      source_property_value
+								      key_type
+								      key
+								      target_type
+								      target_property
+								      target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
 																							source_property_value]]
-												`preposition
+												key_type
 												key
 												[object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
 																							`property
@@ -231,15 +245,29 @@
       [if [not found]
 	  [prog [terminal_format standard-terminal '\nassure_physical_relationship: did not find relationship.']
 		[error bug_name    `assure_physical_relationship-failed
-		       description `[assure_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]]
+		       description `[assure_physical_relationship ,source_type
+								  ,source_property
+								  ,source_property_value
+								  ,key_type
+								  ,key
+								  ,target_type
+								  ,target_property
+								  ,target_property_value]]]
 	nil]]]]
 
-[deftypefunk deliberative_layer execute imagine_assuring_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
+[deftypefunk deliberative_layer execute imagine_assuring_physical_relationship [source_type
+										source_property
+										source_property_value
+										key_type
+										key
+										target_type
+										target_property
+										target_property_value]
   [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
 																							`property
 																							source_property
 																							source_property_value]]
-												`preposition
+												key_type
 												key
 												[object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
 																							`property

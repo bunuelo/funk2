@@ -40,6 +40,7 @@ extern ansi_color_t print__ansi__float__foreground;
 extern ansi_color_t print__ansi__pointer__foreground;
 extern ansi_color_t print__ansi__scheduler_cmutex__foreground;
 extern ansi_color_t print__ansi__cmutex__foreground;
+extern ansi_color_t print__ansi__scheduler_creadwritelock__foreground;
 extern ansi_color_t print__ansi__creadwritelock__foreground;
 extern ansi_color_t print__ansi__char__foreground;
 extern ansi_color_t print__ansi__string__foreground;

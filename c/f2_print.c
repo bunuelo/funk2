@@ -32,29 +32,30 @@
 
 f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int recursion_depth, int indent_space_num, int available_width, int return_size[2], boolean_t try_wide, boolean_t wide_success[1], boolean_t show_slot_causes, boolean_t use_ansi_colors, boolean_t use_html, boolean_t brief_mode);
 
-ansi_color_t print__ansi__default__foreground          = ansi_color__light_gray;
-ansi_color_t print__ansi__nil__foreground              = ansi_color__white;
-ansi_color_t print__ansi__integer__foreground          = ansi_color__light_blue;
-ansi_color_t print__ansi__double__foreground           = ansi_color__light_blue;
-ansi_color_t print__ansi__float__foreground            = ansi_color__light_blue;
-ansi_color_t print__ansi__pointer__foreground          = ansi_color__light_blue;
-ansi_color_t print__ansi__scheduler_cmutex__foreground = ansi_color__white;
-ansi_color_t print__ansi__cmutex__foreground           = ansi_color__white;
-ansi_color_t print__ansi__creadwritelock__foreground   = ansi_color__white;
-ansi_color_t print__ansi__char__foreground             = ansi_color__light_blue;
-ansi_color_t print__ansi__string__foreground           = ansi_color__light_red;
-ansi_color_t print__ansi__symbol__foreground           = ansi_color__light_blue;
-ansi_color_t print__ansi__symbol__key__foreground      = ansi_color__dark_gray;
-ansi_color_t print__ansi__symbol__type__foreground     = ansi_color__dark_cyan;
-ansi_color_t print__ansi__chunk__foreground            = ansi_color__white;
-ansi_color_t print__ansi__simple_array__foreground     = ansi_color__white;
-ansi_color_t print__ansi__traced_array__foreground     = ansi_color__white;
-ansi_color_t print__ansi__larva__foreground            = ansi_color__dark_red;
-ansi_color_t print__ansi__end_recursion__foreground    = ansi_color__white;
-ansi_color_t print__ansi__error__foreground            = ansi_color__dark_red;
-ansi_color_t print__ansi__cons__foreground             = ansi_color__white;
-ansi_color_t print__ansi__doublelink__foreground       = ansi_color__white;
-ansi_color_t print__ansi__frame__foreground            = ansi_color__white;
+ansi_color_t print__ansi__default__foreground                  = ansi_color__light_gray;
+ansi_color_t print__ansi__nil__foreground                      = ansi_color__white;
+ansi_color_t print__ansi__integer__foreground                  = ansi_color__light_blue;
+ansi_color_t print__ansi__double__foreground                   = ansi_color__light_blue;
+ansi_color_t print__ansi__float__foreground                    = ansi_color__light_blue;
+ansi_color_t print__ansi__pointer__foreground                  = ansi_color__light_blue;
+ansi_color_t print__ansi__scheduler_cmutex__foreground         = ansi_color__white;
+ansi_color_t print__ansi__cmutex__foreground                   = ansi_color__white;
+ansi_color_t print__ansi__scheduler_creadwritelock__foreground = ansi_color__white;
+ansi_color_t print__ansi__creadwritelock__foreground           = ansi_color__white;
+ansi_color_t print__ansi__char__foreground                     = ansi_color__light_blue;
+ansi_color_t print__ansi__string__foreground                   = ansi_color__light_red;
+ansi_color_t print__ansi__symbol__foreground                   = ansi_color__light_blue;
+ansi_color_t print__ansi__symbol__key__foreground              = ansi_color__dark_gray;
+ansi_color_t print__ansi__symbol__type__foreground             = ansi_color__dark_cyan;
+ansi_color_t print__ansi__chunk__foreground                    = ansi_color__white;
+ansi_color_t print__ansi__simple_array__foreground             = ansi_color__white;
+ansi_color_t print__ansi__traced_array__foreground             = ansi_color__white;
+ansi_color_t print__ansi__larva__foreground                    = ansi_color__dark_red;
+ansi_color_t print__ansi__end_recursion__foreground            = ansi_color__white;
+ansi_color_t print__ansi__error__foreground                    = ansi_color__dark_red;
+ansi_color_t print__ansi__cons__foreground                     = ansi_color__white;
+ansi_color_t print__ansi__doublelink__foreground               = ansi_color__white;
+ansi_color_t print__ansi__frame__foreground                    = ansi_color__white;
 
 void f2__write__ansi_color(f2ptr cause, f2ptr stream, ansi_color_t color, boolean_t use_ansi_colors, boolean_t use_html) {
   if (use_ansi_colors && stream) {f2__ansi__stream__reset(cause, stream); raw__ansi__stream__foreground(cause, stream, color);}

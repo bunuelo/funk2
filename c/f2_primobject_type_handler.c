@@ -145,6 +145,7 @@ void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobje
   {char* type_name = "pointer";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2pointer__primobject_type__new(cause));}
   {char* type_name = "scheduler_cmutex"; funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name), f2scheduler_cmutex__primobject_type__new(cause));}
   {char* type_name = "cmutex";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2cmutex__primobject_type__new(cause));}
+  {char* type_name = "creadwritelock";   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),   f2creadwritelock__primobject_type__new(cause));}
   {char* type_name = "char";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2char__primobject_type__new(cause));}
   {char* type_name = "string";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2string__primobject_type__new_aux(cause));}
   {char* type_name = "symbol";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2symbol__primobject_type__new(cause));}

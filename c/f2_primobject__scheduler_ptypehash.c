@@ -24,7 +24,7 @@
 // scheduler_ptypehash
 
 def_primobject_4_slot(scheduler_ptypehash,
-		      write_scheduler_cmutex,
+		      scheduler_creadwritelock,
 		      key_count,
 		      bin_num_power,
 		      bin_array);
@@ -42,12 +42,12 @@ boolean_t raw__scheduler_ptypehash__valid(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__scheduler_ptypehash__new(f2ptr cause, s64 bin_num_power__i) {
-  f2ptr write_scheduler_cmutex  = f2scheduler_cmutex__new(cause);
-  f2ptr key_count     = f2integer__new(cause, 0);
-  f2ptr bin_num_power = f2integer__new(cause, bin_num_power__i);
-  f2ptr bin_array     = raw__array__new(cause, 1ll << bin_num_power__i);
+  f2ptr scheduler_creadwritelock = f2scheduler_creadwritelock__new(cause);
+  f2ptr key_count                = f2integer__new(cause, 0);
+  f2ptr bin_num_power            = f2integer__new(cause, bin_num_power__i);
+  f2ptr bin_array                = raw__array__new(cause, 1ll << bin_num_power__i);
   f2ptr this = f2scheduler_ptypehash__new(cause,
-					  write_scheduler_cmutex,
+					  scheduler_creadwritelock,
 					  key_count,
 					  bin_num_power,
 					  bin_array);
@@ -89,7 +89,7 @@ void raw__scheduler_ptypehash__double_size__thread_unsafe__debug(f2ptr cause, f2
 
 f2ptr raw__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__add assert failed: f2__scheduler_ptypehash__valid(this)");
-  f2scheduler_cmutex__lock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__writelock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   f2ptr bin_num_power      = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2scheduler_ptypehash__bin_array(this, cause);
@@ -122,7 +122,7 @@ f2ptr raw__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f
   } else {
     f2cons__cdr__set(keyvalue_pair, cause, value);
   }
-  f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   return nil;
 }
 
@@ -138,7 +138,7 @@ def_pcfunk3(scheduler_ptypehash__add, this, slot_name, value,
 boolean_t raw__scheduler_ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__add assert failed: f2__scheduler_ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2scheduler_cmutex__lock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__writelock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   {
     f2ptr bin_num_power    = f2scheduler_ptypehash__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -173,7 +173,7 @@ boolean_t raw__scheduler_ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
       }
     }
   }
-  f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   return key_was_removed;
 }
 
@@ -205,7 +205,7 @@ def_pcfunk2(scheduler_ptypehash__copy_from, this, that,
 f2ptr raw__scheduler_ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__lookup_keyvalue_pair assert failed: f2__scheduler_ptypehash__valid(this)");
   //status("scheduler_ptypehash (" u64__fstr ") attempting to lock write scheduler_cmutex.", this);
-  f2scheduler_cmutex__lock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__readlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   //status("scheduler_ptypehash (" u64__fstr ") successfully locked write scheduler_cmutex.", this);
   f2ptr bin_num_power      = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -219,12 +219,12 @@ f2ptr raw__scheduler_ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2
     f2ptr keyvalue_pair      = f2cons__car(keyvalue_pair_iter, cause);
     f2ptr keyvalue_pair__key = f2cons__car(keyvalue_pair,      cause);
     if (raw__scheduler_eq(cause, key, keyvalue_pair__key)) {
-      f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+      f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
       return keyvalue_pair;
     }
     keyvalue_pair_iter = f2cons__cdr(keyvalue_pair_iter, cause);
   }
-  f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   return nil;
 }
 
@@ -269,7 +269,7 @@ def_pcfunk2(scheduler_ptypehash__contains, this, key,
 
 
 f2ptr raw__scheduler_ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
-  f2scheduler_cmutex__lock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__readlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   {
     f2ptr bin_array         = f2__scheduler_ptypehash__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -278,12 +278,12 @@ f2ptr raw__scheduler_ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr th
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, index);
       if (keyvalue_pair_iter) {
 	f2ptr keyvalue_pair = f2cons__car(keyvalue_pair_iter, cause);
-	f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+	f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
 	return keyvalue_pair;
       }
     }
   }
-  f2scheduler_cmutex__unlock(f2scheduler_ptypehash__write_scheduler_cmutex(this, cause), cause);
+  f2scheduler_creadwritelock__unlock(f2scheduler_ptypehash__scheduler_creadwritelock(this, cause), cause);
   return nil;
 }
 
@@ -464,7 +464,7 @@ void f2__primobject__scheduler_ptypehash__reinitialize_globalvars() {
   
   // scheduler_ptypehash
   
-  initialize_primobject_4_slot(scheduler_ptypehash, write_scheduler_cmutex, key_count, bin_num_power, bin_array);
+  initialize_primobject_4_slot(scheduler_ptypehash, scheduler_creadwritelock, key_count, bin_num_power, bin_array);
   
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler_ptypehash.contains__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_ptypehash__contains, this, key, cfunk);
@@ -511,7 +511,7 @@ void f2__primobject__scheduler_ptypehash__defragment__fix_pointers() {
   
   // scheduler_ptypehash
   
-  initialize_primobject_4_slot__defragment__fix_pointers(scheduler_ptypehash, write_scheduler_cmutex, key_count, bin_num_power, bin_array);
+  initialize_primobject_4_slot__defragment__fix_pointers(scheduler_ptypehash, scheduler_creadwritelock, key_count, bin_num_power, bin_array);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler_ptypehash.contains__symbol);
   f2__primcfunk__init__defragment__fix_pointers(scheduler_ptypehash__contains);

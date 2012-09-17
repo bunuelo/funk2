@@ -53,7 +53,7 @@ u64                                            funk2_processor_readwritelock__eq
 #define funk2_processor_readwritelock__readlock(      this) funk2_processor_readwritelock__raw_readlock(      this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__user_writelock(this) funk2_processor_readwritelock__raw_user_writelock(this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__user_readlock( this) funk2_processor_readwritelock__raw_user_readlock( this, __FILE__, __LINE__)
-#define funk2_processor_readwritelock__unwritelock(   this) funk2_processor_readwritelock__raw_unwritelock(   this, __FILE__, __LINE__)
+#define funk2_processor_readwritelock__unlock(        this) funk2_processor_readwritelock__raw_unlock(        this, __FILE__, __LINE__)
 
 
 #endif // F2__PROCESSOR_READWRITELOCK__H

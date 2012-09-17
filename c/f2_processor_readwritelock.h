@@ -28,13 +28,13 @@
 
 typedef struct funk2_processor_readwritelock_s {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
-  boolean_t       is_initialized;
-  boolean_t       is_locked;
-  char*           lock_source_file;
-  int             lock_line_num;
-  pthread_t       lock_tid;
+  boolean_t        is_initialized;
+  boolean_t        is_locked;
+  char*            lock_source_file;
+  int              lock_line_num;
+  pthread_t        lock_tid;
 #endif
-  pthread_readwritelock_t pthread_readwritelock;
+  pthread_rwlock_t pthread_rwlock;
 } funk2_processor_readwritelock_t;
 
 typedef enum funk2_processor_readwritelock_trylock_result_e {

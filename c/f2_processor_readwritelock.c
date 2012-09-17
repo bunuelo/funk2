@@ -35,7 +35,7 @@ void funk2_processor_readwritelock__init(funk2_processor_readwritelock_t* this) 
   this->lock_source_file = NULL;
   this->lock_line_num    = 0;
 #endif
-  pthread_readwritelock_init(&(this->pthread_readwritelock), NULL);
+  pthread_rwlock_init(&(this->pthread_rwlock), NULL);
 }
 
 void funk2_processor_readwritelock__destroy(funk2_processor_readwritelock_t* this) {
@@ -48,7 +48,7 @@ void funk2_processor_readwritelock__destroy(funk2_processor_readwritelock_t* thi
   this->lock_source_file = "destroyed";
   this->lock_line_num    = 0;
 #endif
-  pthread_readwritelock_destroy(&(this->pthread_readwritelock));
+  pthread_rwlock_destroy(&(this->pthread_rwlock));
 }
 
 boolean_t funk2_processor_readwritelock__is_locked(funk2_processor_readwritelock_t* this) {
@@ -58,8 +58,8 @@ boolean_t funk2_processor_readwritelock__is_locked(funk2_processor_readwritelock
     funk2_processor_readwritelock__error();
   }
 #endif
-  if (pthread_readwritelock_trylock(&(this->pthread_readwritelock)) == 0) {
-    pthread_readwritelock_unlock(&(this->pthread_readwritelock));
+  if (pthread_rwlock_trylock(&(this->pthread_rwlock)) == 0) {
+    pthread_rwlock_unlock(&(this->pthread_rwlock));
     return boolean__false;
   }
   return boolean__true;
@@ -72,7 +72,7 @@ funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__ra
     funk2_processor_readwritelock__error();
   }
 #endif
-  if (pthread_readwritelock_trylock(&(this->pthread_readwritelock)) == 0) {
+  if (pthread_rwlock_trylock(&(this->pthread_rwlock)) == 0) {
 #if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
     this->is_locked        = boolean__true;
     this->lock_source_file = (char*)lock_source_file;
@@ -137,7 +137,7 @@ void funk2_processor_readwritelock__raw_unlock(funk2_processor_readwritelock_t* 
   }
   this->is_locked = boolean__false;
 #endif
-  pthread_readwritelock_unlock(&(this->pthread_readwritelock));
+  pthread_rwlock_unlock(&(this->pthread_rwlock));
 }
 
 u64 funk2_processor_readwritelock__eq_hash_value(funk2_processor_readwritelock_t* this) {

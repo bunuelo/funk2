@@ -88,6 +88,16 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2cmutex__unlock                            ,
   funk2_packet_type__pcs_request__f2cmutex__trylock                           , //int              (f2ptr cause, f2ptr this);
   funk2_packet_type__pcs_respond__f2cmutex__trylock                           ,
+  funk2_packet_type__pcs_request__f2creadwritelock__new                               , //f2ptr            (f2ptr cause);
+  funk2_packet_type__pcs_respond__f2creadwritelock__new                               ,
+  funk2_packet_type__pcs_request__f2creadwritelock__is_locked                         , //boolean_t        (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2creadwritelock__is_locked                         ,
+  funk2_packet_type__pcs_request__f2creadwritelock__lock                              , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2creadwritelock__lock                              ,
+  funk2_packet_type__pcs_request__f2creadwritelock__unlock                            , //void             (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2creadwritelock__unlock                            ,
+  funk2_packet_type__pcs_request__f2creadwritelock__trylock                           , //int              (f2ptr cause, f2ptr this);
+  funk2_packet_type__pcs_respond__f2creadwritelock__trylock                           ,
   funk2_packet_type__pcs_request__f2char__new                                , //f2ptr            (f2ptr cause, char ch);
   funk2_packet_type__pcs_respond__f2char__new                                ,
   funk2_packet_type__pcs_request__f2char__ch                                 , //char             (f2ptr cause, f2ptr this);
@@ -1265,6 +1275,198 @@ void recv_packet__respond__f2cmutex__trylock(funk2_node_t* funk2_node, pcs_respo
 
 int funk2_node__f2cmutex__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
 int f2cmutex__trylock(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2creadwritelock__new                               = 0x17, //f2ptr            (f2ptr cause);
+
+// request f2creadwritelock__new
+
+struct pcs_packet_payload_request__f2creadwritelock__new_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2creadwritelock__new_s pcs_packet_payload_request__f2creadwritelock__new_t;
+
+struct pcs_request__f2creadwritelock__new_s {
+  funk2_packet_header_t                      header;
+  pcs_packet_payload_request__f2creadwritelock__new_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2creadwritelock__new_s pcs_request__f2creadwritelock__new_t;
+
+// respond f2creadwritelock__new
+
+struct pcs_packet_payload_respond__f2creadwritelock__new_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              new;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2creadwritelock__new_s pcs_packet_payload_respond__f2creadwritelock__new_t;
+
+struct pcs_respond__f2creadwritelock__new_s {
+  funk2_packet_header_t                      header;
+  pcs_packet_payload_respond__f2creadwritelock__new_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2creadwritelock__new_s pcs_respond__f2creadwritelock__new_t;
+
+void send_packet__request__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__request__f2creadwritelock__new(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__new_t* packet);
+void send_packet__respond__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new);
+void recv_packet__respond__f2creadwritelock__new(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__new_t* packet);
+
+f2ptr funk2_node__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+f2ptr f2creadwritelock__new(f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2creadwritelock__is_locked                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+
+// request f2creadwritelock__is_locked
+
+struct pcs_packet_payload_request__f2creadwritelock__is_locked_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2creadwritelock__is_locked_s pcs_packet_payload_request__f2creadwritelock__is_locked_t;
+
+struct pcs_request__f2creadwritelock__is_locked_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_request__f2creadwritelock__is_locked_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2creadwritelock__is_locked_s pcs_request__f2creadwritelock__is_locked_t;
+
+// respond f2creadwritelock__is_locked
+
+struct pcs_packet_payload_respond__f2creadwritelock__is_locked_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  boolean_t                                          is_locked;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2creadwritelock__is_locked_s pcs_packet_payload_respond__f2creadwritelock__is_locked_t;
+
+struct pcs_respond__f2creadwritelock__is_locked_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_respond__f2creadwritelock__is_locked_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2creadwritelock__is_locked_s pcs_respond__f2creadwritelock__is_locked_t;
+
+void send_packet__request__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2creadwritelock__is_locked(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__is_locked_t* packet);
+void send_packet__respond__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked);
+void recv_packet__respond__f2creadwritelock__is_locked(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__is_locked_t* packet);
+
+boolean_t funk2_node__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+boolean_t f2creadwritelock__is_locked(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2creadwritelock__lock                              = 0x18, //void             (f2ptr cause, f2ptr this);
+
+// request f2creadwritelock__lock
+
+struct pcs_packet_payload_request__f2creadwritelock__lock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2creadwritelock__lock_s pcs_packet_payload_request__f2creadwritelock__lock_t;
+
+struct pcs_request__f2creadwritelock__lock_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_request__f2creadwritelock__lock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2creadwritelock__lock_s pcs_request__f2creadwritelock__lock_t;
+
+// respond f2creadwritelock__lock
+
+struct pcs_packet_payload_respond__f2creadwritelock__lock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2creadwritelock__lock_s pcs_packet_payload_respond__f2creadwritelock__lock_t;
+
+struct pcs_respond__f2creadwritelock__lock_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_respond__f2creadwritelock__lock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2creadwritelock__lock_s pcs_respond__f2creadwritelock__lock_t;
+
+void send_packet__request__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2creadwritelock__lock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__lock_t* packet);
+void send_packet__respond__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2creadwritelock__lock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__lock_t* packet);
+
+void funk2_node__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2creadwritelock__lock(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2creadwritelock__unlock                            = 0x19, //void             (f2ptr cause, f2ptr this);
+
+// request f2creadwritelock__unlock
+
+struct pcs_packet_payload_request__f2creadwritelock__unlock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2creadwritelock__unlock_s pcs_packet_payload_request__f2creadwritelock__unlock_t;
+
+struct pcs_request__f2creadwritelock__unlock_s {
+  funk2_packet_header_t                         header;
+  pcs_packet_payload_request__f2creadwritelock__unlock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2creadwritelock__unlock_s pcs_request__f2creadwritelock__unlock_t;
+
+// respond f2creadwritelock__unlock
+
+struct pcs_packet_payload_respond__f2creadwritelock__unlock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2creadwritelock__unlock_s pcs_packet_payload_respond__f2creadwritelock__unlock_t;
+
+struct pcs_respond__f2creadwritelock__unlock_s {
+  funk2_packet_header_t                         header;
+  pcs_packet_payload_respond__f2creadwritelock__unlock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2creadwritelock__unlock_s pcs_respond__f2creadwritelock__unlock_t;
+
+void send_packet__request__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2creadwritelock__unlock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__unlock_t* packet);
+void send_packet__respond__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2creadwritelock__unlock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__unlock_t* packet);
+
+void funk2_node__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void f2creadwritelock__unlock(f2ptr this, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2creadwritelock__trylock                           = 0x1A, //int              (f2ptr cause, f2ptr this);
+
+// request f2creadwritelock__trylock
+
+struct pcs_packet_payload_request__f2creadwritelock__trylock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2creadwritelock__trylock_s pcs_packet_payload_request__f2creadwritelock__trylock_t;
+
+struct pcs_request__f2creadwritelock__trylock_s {
+  funk2_packet_header_t                          header;
+  pcs_packet_payload_request__f2creadwritelock__trylock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2creadwritelock__trylock_s pcs_request__f2creadwritelock__trylock_t;
+
+// respond f2creadwritelock__trylock
+
+struct pcs_packet_payload_respond__f2creadwritelock__trylock_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  int                                                trylock;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2creadwritelock__trylock_s pcs_packet_payload_respond__f2creadwritelock__trylock_t;
+
+struct pcs_respond__f2creadwritelock__trylock_s {
+  funk2_packet_header_t                          header;
+  pcs_packet_payload_respond__f2creadwritelock__trylock_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2creadwritelock__trylock_s pcs_respond__f2creadwritelock__trylock_t;
+
+void send_packet__request__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+void recv_packet__request__f2creadwritelock__trylock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__trylock_t* packet);
+void send_packet__respond__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock);
+void recv_packet__respond__f2creadwritelock__trylock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__trylock_t* packet);
+
+int funk2_node__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this);
+int f2creadwritelock__trylock(f2ptr this, f2ptr cause);
 
 
 //  funk2_packet_type__pcs_request__f2char__new                                = 0x1B, //f2ptr            (f2ptr cause, u64 ch);

@@ -687,6 +687,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   case ptype_pointer:          return;
   case ptype_scheduler_cmutex: return;
   case ptype_cmutex:           return;
+  case ptype_creadwritelock:   return;
   case ptype_char:             return;
   case ptype_string:           return;
   case ptype_symbol:           return;

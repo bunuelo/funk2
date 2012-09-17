@@ -209,33 +209,64 @@ f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause);
 
 // cmutex
 
-boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cmutex__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__cmutex__type(f2ptr cause, f2ptr x);
-f2ptr f2__cmutex__new(f2ptr cause);
-boolean_t raw__cmutex__is_locked(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__is_locked(f2ptr cause, f2ptr this);
-void raw__cmutex__lock(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this);
-void raw__cmutex__unlock(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__unlock(f2ptr cause, f2ptr this);
-boolean_t raw__cmutex__trylock(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__trylock(f2ptr cause, f2ptr this);
-boolean_t raw__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that);
-u64 raw__cmutex__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__eq_hash_value(f2ptr cause, f2ptr this);
-boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
-u64 raw__cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-f2ptr f2__cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-u64 raw__cmutex__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__cmutex__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr raw__cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+boolean_t raw__cmutex__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__cmutex__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__cmutex__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__cmutex__new                         (f2ptr cause);
+boolean_t raw__cmutex__is_locked                   (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__is_locked                   (f2ptr cause, f2ptr this);
+void      raw__cmutex__lock                        (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__lock                        (f2ptr cause, f2ptr this);
+void      raw__cmutex__unlock                      (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__unlock                      (f2ptr cause, f2ptr this);
+boolean_t raw__cmutex__trylock                     (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__trylock                     (f2ptr cause, f2ptr this);
+boolean_t raw__cmutex__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cmutex__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__cmutex__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__cmutex__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cmutex__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+u64       raw__cmutex__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__cmutex__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__cmutex__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__cmutex__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__cmutex__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
 f2ptr f2cmutex__primobject_type__new(f2ptr cause);
+
+
+// creadwritelock
+
+boolean_t raw__creadwritelock__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__creadwritelock__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__creadwritelock__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__creadwritelock__new                         (f2ptr cause);
+boolean_t raw__creadwritelock__is_locked                   (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__is_locked                   (f2ptr cause, f2ptr this);
+void      raw__creadwritelock__lock                        (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__lock                        (f2ptr cause, f2ptr this);
+void      raw__creadwritelock__unlock                      (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__unlock                      (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__trylock                     (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__trylock                     (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__creadwritelock__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+u64       raw__creadwritelock__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__creadwritelock__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__creadwritelock__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__creadwritelock__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+
+f2ptr f2creadwritelock__primobject_type__new(f2ptr cause);
 
 
 // char
@@ -725,6 +756,35 @@ typedef struct funk2_object_type__cmutex__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__cmutex__slot_t;
 
+// creadwritelock
+
+typedef struct funk2_object_type__creadwritelock__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr is_locked__symbol;
+  f2ptr is_locked__funk;
+  f2ptr unlock__symbol;
+  f2ptr unlock__funk;
+  f2ptr trylock__symbol;
+  f2ptr trylock__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__creadwritelock__slot_t;
+
 // char
 
 typedef struct funk2_object_type__char__slot_s {
@@ -1008,6 +1068,7 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__pointer__slot_t          ptype_pointer;
   funk2_object_type__scheduler_cmutex__slot_t ptype_scheduler_cmutex;
   funk2_object_type__cmutex__slot_t           ptype_cmutex;
+  funk2_object_type__creadwritelock__slot_t   ptype_creadwritelock;
   funk2_object_type__char__slot_t             ptype_char;
   funk2_object_type__string__slot_t           ptype_string;
   funk2_object_type__symbol__slot_t           ptype_symbol;

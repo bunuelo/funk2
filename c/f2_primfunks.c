@@ -1198,6 +1198,8 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_cmutex:
     return boolean__false;
+  case ptype_creadwritelock:
+    return boolean__false;
   case ptype_larva:
     return (f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause));
   }
@@ -1779,6 +1781,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_pointer:          return raw__pointer__eq_hash_value(         cause, exp);
   case ptype_scheduler_cmutex: return raw__scheduler_cmutex__eq_hash_value(cause, exp);
   case ptype_cmutex:           return raw__cmutex__eq_hash_value(          cause, exp);
+  case ptype_creadwritelock:           return raw__creadwritelock__eq_hash_value(          cause, exp);
   case ptype_char:             return raw__char__eq_hash_value(            cause, exp);
   case ptype_string:           return raw__string__eq_hash_value(          cause, exp);
   case ptype_symbol:           return raw__symbol__eq_hash_value(          cause, exp);
@@ -1836,6 +1839,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_pointer:          return raw__pointer__equals(        cause, x, y);
   case ptype_scheduler_cmutex: return raw__scheduler_cmutex__equals(cause, x, y);
   case ptype_cmutex:           return raw__cmutex__equals(          cause, x, y);
+  case ptype_creadwritelock:           return raw__creadwritelock__equals(          cause, x, y);
   case ptype_char:             return raw__char__equals(           cause, x, y);
   case ptype_string:           return raw__string__equals(         cause, x, y);
   case ptype_symbol:           return raw__symbol__equals(         cause, x, y);

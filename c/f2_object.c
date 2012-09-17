@@ -51,7 +51,9 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
     return new__symbol(cause, "scheduler_cmutex");
   case ptype_cmutex:
     object_type_status("cmutex");
-    return new__symbol(cause, "cmutex");
+  case ptype_creadwritelock:
+    object_type_status("creadwritelock");
+    return new__symbol(cause, "creadwritelock");
   case ptype_char:
     object_type_status("char");
     return new__symbol(cause, "char");
@@ -241,6 +243,25 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     if (! result) {
       return new__error(f2list10__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "cmutex_type_does_not_have_funktion"),
+				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
+				     new__symbol(cause, "this"),      this,
+				     new__symbol(cause, "slot_type"), slot_type,
+				     new__symbol(cause, "slot_name"), slot_name));
+    }
+    return result;
+  }
+  case ptype_creadwritelock: {
+    f2ptr result = f2__creadwritelock__slot__type_funk(cause, this, slot_type, slot_name);
+    if (! result) {
+      f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, new__symbol(cause, "creadwritelock"));
+      result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
+      if (! result) {
+	result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
+      }
+    }
+    if (! result) {
+      return new__error(f2list10__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "creadwritelock_type_does_not_have_funktion"),
 				     new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				     new__symbol(cause, "this"),      this,
 				     new__symbol(cause, "slot_type"), slot_type,

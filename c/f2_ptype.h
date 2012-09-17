@@ -22,7 +22,7 @@
 #ifndef F2__PTYPE__H
 #define F2__PTYPE__H
 
-#define ptype__min_bits 4
+#define ptype__min_bits 5
 
 extern u8 __ptype__str[][128];
 
@@ -35,13 +35,14 @@ typedef enum ptype_e {
   ptype_pointer          = 6,
   ptype_scheduler_cmutex = 7,
   ptype_cmutex           = 8,
-  ptype_char             = 9,
-  ptype_string           = 10,
-  ptype_symbol           = 11,
-  ptype_chunk            = 12,
-  ptype_simple_array     = 13,
-  ptype_traced_array     = 14,
-  ptype_larva            = 15,
+  ptype_creadwritelock   = 9,
+  ptype_char             = 10,
+  ptype_string           = 11,
+  ptype_symbol           = 12,
+  ptype_chunk            = 13,
+  ptype_simple_array     = 14,
+  ptype_traced_array     = 15,
+  ptype_larva            = 16,
 } ptype_t;
 
 #endif // F2__PTYPE__H

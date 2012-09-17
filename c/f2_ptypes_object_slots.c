@@ -1976,6 +1976,242 @@ f2ptr f2cmutex__primobject_type__new(f2ptr cause) {
 }
 
 
+// creadwritelock
+
+boolean_t raw__creadwritelock__is_type(f2ptr cause, f2ptr x) {
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
+  return ((x != nil) &&
+	  (f2ptype__raw(x, cause) == ptype_creadwritelock));
+}
+f2ptr f2__creadwritelock__is_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return f2bool__new(raw__creadwritelock__is_type(cause, this));
+}
+def_pcfunk1(creadwritelock__is_type, this,
+	    "",
+	    return f2__creadwritelock__is_type(this_cause, this));
+
+f2ptr f2__creadwritelock__type(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return new__symbol(cause, "creadwritelock");
+}
+def_pcfunk1(creadwritelock__type, this,
+	    "",
+	    return f2__creadwritelock__type(this_cause, this));
+
+f2ptr f2__creadwritelock__new(f2ptr cause) {return f2creadwritelock__new(cause);}
+def_pcfunk0(creadwritelock__new,
+	    "",
+	    return f2__creadwritelock__new(this_cause));
+
+boolean_t raw__creadwritelock__is_locked(f2ptr cause, f2ptr this) {
+  return f2creadwritelock__is_locked(this, cause);
+}
+
+f2ptr f2__creadwritelock__is_locked(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return f2bool__new(raw__creadwritelock__is_locked(cause, this));
+}
+def_pcfunk1(creadwritelock__is_locked, this,
+	    "",
+	    return f2__creadwritelock__is_locked(this_cause, this));
+
+void raw__creadwritelock__lock(f2ptr cause, f2ptr this) {
+  f2creadwritelock__lock(this, cause);
+}
+
+f2ptr f2__creadwritelock__lock(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  raw__creadwritelock__lock(cause, this);
+  return nil;
+}
+
+void raw__creadwritelock__unlock(f2ptr cause, f2ptr this) {
+  f2creadwritelock__unlock(this, cause);
+}
+
+f2ptr f2__creadwritelock__unlock(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  raw__creadwritelock__unlock(cause, this);
+  return nil;
+}
+def_pcfunk1(creadwritelock__unlock, this,
+	    "",
+	    return f2__creadwritelock__unlock(this_cause, this));
+
+boolean_t raw__creadwritelock__trylock(f2ptr cause, f2ptr this) {
+  return (f2creadwritelock__trylock(this, cause) != 0) ? boolean__true : boolean__false;
+}
+
+f2ptr f2__creadwritelock__trylock(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return f2bool__new(raw__creadwritelock__trylock(cause, this));
+}
+def_pcfunk1(creadwritelock__trylock, this,
+	    "",
+	    return f2__creadwritelock__trylock(this_cause, this));
+
+boolean_t raw__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return (this == that);
+}
+
+f2ptr f2__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(creadwritelock, this);
+  return f2bool__new(raw__creadwritelock__eq(cause, this, that));
+}
+def_pcfunk2(creadwritelock__eq, this, that,
+	    "",
+	    return f2__creadwritelock__eq(this_cause, this, that));
+
+u64 raw__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this) {
+  return ((u64)this);
+}
+
+f2ptr f2__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return f2integer__new(cause, raw__creadwritelock__eq_hash_value(cause, this));
+}
+def_pcfunk1(creadwritelock__eq_hash_value, this,
+	    "",
+	    return f2__creadwritelock__eq_hash_value(this_cause, this));
+
+boolean_t raw__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__creadwritelock__eq(cause, this, that);
+}
+
+f2ptr f2__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(creadwritelock, this);
+  return f2bool__new(raw__creadwritelock__equals(cause, this, that));
+}
+def_pcfunk2(creadwritelock__equals, this, that,
+	    "",
+	    return f2__creadwritelock__equals(this_cause, this, that));
+
+
+u64 raw__creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  funk2_processor_mutex_t* m = __pure__f2creadwritelock__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
+}
+
+f2ptr f2__creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  assert_argument_type(creadwritelock, this);
+  return f2integer__new(cause, raw__creadwritelock__equals_hash_value__loop_free(cause, this, node_ptypehash));
+}
+def_pcfunk2(creadwritelock__equals_hash_value__loop_free, this, node_ptypehash,
+	    "",
+	    return f2__creadwritelock__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
+
+
+u64 raw__creadwritelock__equals_hash_value(f2ptr cause, f2ptr this) {
+  funk2_processor_mutex_t* m = __pure__f2creadwritelock__m(this);
+  return funk2_processor_mutex__equals_hash_value(m);
+}
+
+f2ptr f2__creadwritelock__equals_hash_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(creadwritelock, this);
+  return f2integer__new(cause, raw__creadwritelock__equals_hash_value(cause, this));
+}
+def_pcfunk1(creadwritelock__equals_hash_value, this,
+	    "",
+	    return f2__creadwritelock__equals_hash_value(this_cause, this));
+
+
+f2ptr raw__creadwritelock__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  {
+    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
+    u64   size__i = f2integer__i(size, cause);
+    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
+  }
+  funk2_character_t creadwritelock_string[128];
+  u64               creadwritelock_string__length;
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__creadwritelock__foreground);
+    creadwritelock_string__length = funk2_character_string__snprintf(creadwritelock_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, creadwritelock_string__length, creadwritelock_string);
+  }
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
+    creadwritelock_string__length = funk2_character_string__snprintf(creadwritelock_string, 128, "creadwritelock ");
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, creadwritelock_string__length, creadwritelock_string);
+  }
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
+    creadwritelock_string__length = funk2_character_string__snprintf(creadwritelock_string, 128, "is_locked ");
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, creadwritelock_string__length, creadwritelock_string);
+  }
+  f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2bool__new(f2creadwritelock__is_locked(this, cause)), terminal_print_frame);
+  if (raw__larva__is_type(cause, result)) {
+    return result;
+  }
+  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
+    return nil;
+  }
+  {
+    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__creadwritelock__foreground);
+    creadwritelock_string__length = funk2_character_string__snprintf(creadwritelock_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, creadwritelock_string__length, creadwritelock_string);
+  }
+  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
+  return nil;
+}
+
+f2ptr f2__creadwritelock__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(creadwritelock,                this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__creadwritelock__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(creadwritelock__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__creadwritelock__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2__creadwritelock__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
+  if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__funk;
+    }
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__funk;
+    }
+  }
+  return nil;
+}
+
+f2ptr f2creadwritelock__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
+  {char* slot_name = "is_type";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_type__funk);}
+  {char* slot_name = "type";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.type__funk);}
+  {char* slot_name = "new";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__funk);}
+  {char* slot_name = "trylock";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__funk);}
+  {char* slot_name = "unlock";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__funk);}
+  {char* slot_name = "is_locked";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_locked__funk);}
+  {char* slot_name = "eq";                           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__funk);}
+  {char* slot_name = "eq_hash_value";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__funk);}
+  {char* slot_name = "equals";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_creadwritelock.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // char
 
 boolean_t raw__char__is_type(f2ptr cause, f2ptr x) {
@@ -4645,6 +4881,56 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cmutex__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__funk);
   
+  // creadwritelock
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__unlock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__trylock);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_locked__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__is_locked);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_locked__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(creadwritelock__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_creadwritelock.terminal_print_with_frame__funk);
+  
   // char
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_char.is_type__symbol);
@@ -5308,6 +5594,33 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  // creadwritelock
+  
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_type__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__is_type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_type__funk = never_gc(cfunk);}
+  {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.type__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.type__funk = never_gc(cfunk);}
+  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.new__funk = never_gc(cfunk);}
+  {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__unlock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.unlock__funk = never_gc(cfunk);}
+  {char* str = "trylock"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__trylock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.trylock__funk = never_gc(cfunk);}
+  {char* str = "is_locked"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_locked__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__is_locked, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.is_locked__funk = never_gc(cfunk);}
+  {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(creadwritelock__eq, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq__funk = never_gc(cfunk);}
+  {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(creadwritelock__eq_hash_value, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.eq_hash_value__funk = never_gc(cfunk);}
+  {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(creadwritelock__equals, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(creadwritelock__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(creadwritelock__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_creadwritelock.terminal_print_with_frame__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(creadwritelock__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_creadwritelock.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // char
   

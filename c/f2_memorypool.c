@@ -439,6 +439,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     case ptype_pointer:          break;
     case ptype_scheduler_cmutex: break;
     case ptype_cmutex:           break;
+    case ptype_creadwritelock:   break;
     case ptype_char:             break;
     case ptype_string:           break;
     case ptype_symbol:           break;

@@ -329,6 +329,16 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2cmutex__unlock:                            recv_packet__respond__f2cmutex__unlock(funk2_node, (pcs_respond__f2cmutex__unlock_t*)packet);                                                       break;
   case funk2_packet_type__pcs_request__f2cmutex__trylock:                           recv_packet__request__f2cmutex__trylock(funk2_node, (pcs_request__f2cmutex__trylock_t*)packet);                                                     break;
   case funk2_packet_type__pcs_respond__f2cmutex__trylock:                           recv_packet__respond__f2cmutex__trylock(funk2_node, (pcs_respond__f2cmutex__trylock_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_request__f2creadwritelock__new:                               recv_packet__request__f2creadwritelock__new(funk2_node, (pcs_request__f2creadwritelock__new_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_respond__f2creadwritelock__new:                               recv_packet__respond__f2creadwritelock__new(funk2_node, (pcs_respond__f2creadwritelock__new_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_request__f2creadwritelock__is_locked:                         recv_packet__request__f2creadwritelock__is_locked(funk2_node, (pcs_request__f2creadwritelock__is_locked_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_respond__f2creadwritelock__is_locked:                         recv_packet__respond__f2creadwritelock__is_locked(funk2_node, (pcs_respond__f2creadwritelock__is_locked_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_request__f2creadwritelock__lock:                              recv_packet__request__f2creadwritelock__lock(funk2_node, (pcs_request__f2creadwritelock__lock_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_respond__f2creadwritelock__lock:                              recv_packet__respond__f2creadwritelock__lock(funk2_node, (pcs_respond__f2creadwritelock__lock_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_request__f2creadwritelock__unlock:                            recv_packet__request__f2creadwritelock__unlock(funk2_node, (pcs_request__f2creadwritelock__unlock_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_respond__f2creadwritelock__unlock:                            recv_packet__respond__f2creadwritelock__unlock(funk2_node, (pcs_respond__f2creadwritelock__unlock_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_request__f2creadwritelock__trylock:                           recv_packet__request__f2creadwritelock__trylock(funk2_node, (pcs_request__f2creadwritelock__trylock_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_respond__f2creadwritelock__trylock:                           recv_packet__respond__f2creadwritelock__trylock(funk2_node, (pcs_respond__f2creadwritelock__trylock_t*)packet);                                                     break;
   case funk2_packet_type__pcs_request__f2char__new:                                 recv_packet__request__f2char__new(funk2_node, (pcs_request__f2char__new_t*)packet);                                                                 break;
   case funk2_packet_type__pcs_respond__f2char__new:                                 recv_packet__respond__f2char__new(funk2_node, (pcs_respond__f2char__new_t*)packet);                                                                 break;
   case funk2_packet_type__pcs_request__f2char__ch:                                  recv_packet__request__f2char__ch(funk2_node, (pcs_request__f2char__ch_t*)packet);                                                                   break;
@@ -1949,6 +1959,300 @@ int f2cmutex__trylock(f2ptr this, f2ptr cause) {
     f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2cmutex__trylock(funk2_node, fiber, cause, this);
+  }
+}
+
+
+
+// creadwritelock
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__request__f2creadwritelock__new: executing.");
+  pcs_request__f2creadwritelock__new_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2creadwritelock__new;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2creadwritelock__new(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__new_t* packet) {
+  packet_status("recv_packet__request__f2creadwritelock__new: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr new = pfunk2__f2creadwritelock__new(cause);
+  send_packet__respond__f2creadwritelock__new(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, new);
+}
+
+void send_packet__respond__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new) {
+  packet_status("send_packet__respond__f2creadwritelock__new: executing.");
+  pcs_respond__f2creadwritelock__new_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2creadwritelock__new;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.new                                       = new;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2creadwritelock__new(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__new_t* packet) {
+  packet_status("recv_packet__respond__f2creadwritelock__new: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2creadwritelock__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  send_packet__request__f2creadwritelock__new(funk2_node, this_fiber, cause);
+  pcs_respond__f2creadwritelock__new_t* packet = (pcs_respond__f2creadwritelock__new_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2ptr new = rf2_to_lf2(packet->payload.new);
+  f2__free(to_ptr(packet));
+  return new;
+}
+
+f2ptr f2creadwritelock__new(f2ptr cause) {
+  return pfunk2__f2creadwritelock__new(cause);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2creadwritelock__is_locked: executing.");
+  pcs_request__f2creadwritelock__is_locked_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2creadwritelock__is_locked;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2creadwritelock__is_locked(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__is_locked_t* packet) {
+  packet_status("recv_packet__request__f2creadwritelock__is_locked: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  boolean_t is_locked = pfunk2__f2creadwritelock__is_locked(this, cause);
+  send_packet__respond__f2creadwritelock__is_locked(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, is_locked);
+}
+
+void send_packet__respond__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t is_locked) {
+  packet_status("send_packet__respond__f2creadwritelock__is_locked: executing.");
+  pcs_respond__f2creadwritelock__is_locked_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2creadwritelock__is_locked;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.is_locked                                   = is_locked;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2creadwritelock__is_locked(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__is_locked_t* packet) {
+  packet_status("recv_packet__respond__f2creadwritelock__is_locked: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+boolean_t funk2_node__f2creadwritelock__is_locked(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2creadwritelock__is_locked(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2creadwritelock__is_locked_t* packet = (pcs_respond__f2creadwritelock__is_locked_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  boolean_t is_locked = packet->payload.is_locked;
+  f2__free(to_ptr(packet));
+  return is_locked;
+}
+
+boolean_t f2creadwritelock__is_locked(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2creadwritelock__is_locked(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2creadwritelock__is_locked(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2creadwritelock__lock: executing.");
+  pcs_request__f2creadwritelock__lock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2creadwritelock__lock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2creadwritelock__lock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__lock_t* packet) {
+  packet_status("recv_packet__request__f2creadwritelock__lock: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2creadwritelock__lock(this, cause);
+  send_packet__respond__f2creadwritelock__lock(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2creadwritelock__lock: executing.");
+  pcs_respond__f2creadwritelock__lock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2creadwritelock__lock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2creadwritelock__lock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__lock_t* packet) {
+  packet_status("recv_packet__respond__f2creadwritelock__lock: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2creadwritelock__lock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2creadwritelock__lock(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2creadwritelock__lock_t* packet = (pcs_respond__f2creadwritelock__lock_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2creadwritelock__lock(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2creadwritelock__lock(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2creadwritelock__lock(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2creadwritelock__unlock: executing.");
+  pcs_request__f2creadwritelock__unlock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2creadwritelock__unlock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2creadwritelock__unlock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__unlock_t* packet) {
+  packet_status("recv_packet__request__f2creadwritelock__unlock: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2creadwritelock__unlock(this, cause);
+  send_packet__respond__f2creadwritelock__unlock(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2creadwritelock__unlock: executing.");
+  pcs_respond__f2creadwritelock__unlock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2creadwritelock__unlock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2creadwritelock__unlock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__unlock_t* packet) {
+  packet_status("recv_packet__respond__f2creadwritelock__unlock: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2creadwritelock__unlock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2creadwritelock__unlock(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2creadwritelock__unlock_t* packet = (pcs_respond__f2creadwritelock__unlock_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2creadwritelock__unlock(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2creadwritelock__unlock(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2creadwritelock__unlock(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2creadwritelock__trylock: executing.");
+  pcs_request__f2creadwritelock__trylock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2creadwritelock__trylock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2creadwritelock__trylock(funk2_node_t* funk2_node, pcs_request__f2creadwritelock__trylock_t* packet) {
+  packet_status("recv_packet__request__f2creadwritelock__trylock: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  int trylock = pfunk2__f2creadwritelock__trylock(this, cause);
+  send_packet__respond__f2creadwritelock__trylock(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, trylock);
+}
+
+void send_packet__respond__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, int trylock) {
+  packet_status("send_packet__respond__f2creadwritelock__trylock: executing.");
+  pcs_respond__f2creadwritelock__trylock_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2creadwritelock__trylock;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.trylock                                   = trylock;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2creadwritelock__trylock(funk2_node_t* funk2_node, pcs_respond__f2creadwritelock__trylock_t* packet) {
+  packet_status("recv_packet__respond__f2creadwritelock__trylock: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+int funk2_node__f2creadwritelock__trylock(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2creadwritelock__trylock(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2creadwritelock__trylock_t* packet = (pcs_respond__f2creadwritelock__trylock_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  int trylock = packet->payload.trylock;
+  f2__free(to_ptr(packet));
+  return trylock;
+}
+
+int f2creadwritelock__trylock(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2creadwritelock__trylock(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2creadwritelock__trylock(funk2_node, fiber, cause, this);
   }
 }
 

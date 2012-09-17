@@ -649,6 +649,110 @@ int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
 
 
 
+// creadwritelock
+
+f2ptr ptype_creadwritelock__new(int pool_index, f2ptr cause) {
+  f2ptr creadwritelock_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_creadwritelock_block_t));
+  ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)from_ptr(raw__f2ptr_to_ptr(creadwritelock_f2ptr));
+  debug__assert(creadwritelock_block, nil, "block is nil.");
+  if (cause) {raw__exp__increment_reference_count(cause);}
+  creadwritelock_block->ptype.block.ptype    = ptype_creadwritelock;
+  creadwritelock_block->ptype.cause          = cause;
+  {
+    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
+    creadwritelock_block->ptype.creation_fiber = creation_fiber;
+  }
+  creadwritelock_block->locked_state         = boolean__false;
+  funk2_processor_mutex__init(creadwritelock_block->m);
+  return creadwritelock_f2ptr;
+}
+
+f2ptr pfunk2__f2creadwritelock__new(f2ptr cause) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr retval = __pure__f2creadwritelock__new(pool_index, cause);
+  return retval;
+}
+
+funk2_processor_mutex_t* ptype_creadwritelock__m(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  funk2_processor_mutex_t* m = __pure__f2creadwritelock__m(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
+  return m;
+}
+
+boolean_t pfunk2__f2creadwritelock__is_locked(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  //int pool_index = this_processor_thread__pool_index();
+  boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_creadwritelock__m(this, cause));
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  return is_locked;
+}
+
+void pfunk2__f2creadwritelock__lock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
+  while (1) {
+    trylock_result = funk2_processor_mutex__trylock(ptype_creadwritelock__m(this, cause));
+    if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+      f2__this__fiber__yield(cause);
+    } else {
+      break;
+    }
+  }
+  __pure__f2creadwritelock__locked_state__set(this, boolean__true);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  raw__container__reflectively_know_of_writing_to(  cause, this, nil, sizeof(boolean_t));
+}
+
+void pfunk2__f2creadwritelock__unlock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  // note that this assumes the creadwritelock is locked.
+  __pure__f2creadwritelock__locked_state__set(this, boolean__false);
+  funk2_processor_mutex__unlock(ptype_creadwritelock__m(this, cause));
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+}
+
+int pfunk2__f2creadwritelock__trylock(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_creadwritelock) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_creadwritelock__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  int return_value = funk2_processor_mutex__trylock(ptype_creadwritelock__m(this, cause));
+  if (return_value == 0) {
+    __pure__f2creadwritelock__locked_state__set(this, boolean__true);
+    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+  }
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  return return_value;
+}
+
+
+
+
+
+
 // char
 
 f2ptr ptype_char__new(int pool_index, f2ptr cause, funk2_character_t ch) {

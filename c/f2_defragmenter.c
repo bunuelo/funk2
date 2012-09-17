@@ -56,6 +56,10 @@ void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* th
 	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
 	funk2_processor_mutex__destroy(cmutex_block->m);
       } break;
+      case ptype_creadwritelock: {
+	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
+	funk2_processor_mutex__destroy(creadwritelock_block->m);
+      } break;
       default:
 	break;
       }
@@ -84,6 +88,13 @@ void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t*
 	funk2_processor_mutex__init(cmutex_block->m);
 	if (cmutex_block->locked_state) {
 	  funk2_processor_mutex__lock(cmutex_block->m);
+	}
+      } break;
+      case ptype_creadwritelock: {
+	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
+	funk2_processor_mutex__init(creadwritelock_block->m);
+	if (creadwritelock_block->locked_state) {
+	  funk2_processor_mutex__lock(creadwritelock_block->m);
 	}
       } break;
       default:
@@ -187,6 +198,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_pointer:          return;
   case ptype_scheduler_cmutex: return;
   case ptype_cmutex:           return;
+  case ptype_creadwritelock:   return;
   case ptype_char:             return;
   case ptype_string:           return;
   case ptype_symbol:           return;

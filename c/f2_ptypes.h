@@ -256,6 +256,37 @@ boolean_t raw__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__cmutex__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
+// creadwritelock
+
+f2ptr            pfunk2__f2creadwritelock__new(f2ptr cause);
+boolean_t        pfunk2__f2creadwritelock__is_locked(f2ptr this, f2ptr cause);
+void             pfunk2__f2creadwritelock__lock(f2ptr this, f2ptr cause);
+void             pfunk2__f2creadwritelock__unlock(f2ptr this, f2ptr cause);
+int              pfunk2__f2creadwritelock__trylock(f2ptr this, f2ptr cause);
+
+f2ptr      f2__creadwritelock__new(f2ptr cause);
+boolean_t raw__creadwritelock__is_locked(f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__is_locked(f2ptr cause, f2ptr this);
+void      raw__creadwritelock__lock(f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__lock(f2ptr cause, f2ptr this);
+void      raw__creadwritelock__unlock(f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__unlock(f2ptr cause, f2ptr this);
+boolean_t raw__creadwritelock__trylock(f2ptr cause, f2ptr this);
+f2ptr      f2__creadwritelock__trylock(f2ptr cause, f2ptr this);
+
+boolean_t raw__creadwritelock__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__creadwritelock__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that);
+
+u64   raw__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__creadwritelock__eq_hash_value(f2ptr cause, f2ptr this);
+
+boolean_t raw__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+
 // char
 
 f2ptr             pfunk2__f2char__new(f2ptr cause, funk2_character_t ch);

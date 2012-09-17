@@ -679,7 +679,7 @@ funk2_processor_readwritelock_t* ptype_creadwritelock__rwlock(f2ptr this, f2ptr 
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_readwritelock_t* rwlock = __pure__f2creadwritelock__rwlock(this);
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(rwlock));
-  return m;
+  return rwlock;
 }
 
 boolean_t pfunk2__f2creadwritelock__is_writelocked(f2ptr this, f2ptr cause) {
@@ -691,7 +691,7 @@ boolean_t pfunk2__f2creadwritelock__is_writelocked(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   boolean_t is_writelocked = funk2_processor_readwritelock__is_writelocked(ptype_creadwritelock__rwlock(this, cause));
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
-  return is_locked;
+  return is_writelocked;
 }
 
 boolean_t pfunk2__f2creadwritelock__is_readlocked(f2ptr this, f2ptr cause) {
@@ -703,7 +703,7 @@ boolean_t pfunk2__f2creadwritelock__is_readlocked(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   boolean_t is_readlocked = funk2_processor_readwritelock__is_readlocked(ptype_creadwritelock__rwlock(this, cause));
   raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
-  return is_locked;
+  return is_readlocked;
 }
 
 void pfunk2__f2creadwritelock__writelock(f2ptr this, f2ptr cause) {

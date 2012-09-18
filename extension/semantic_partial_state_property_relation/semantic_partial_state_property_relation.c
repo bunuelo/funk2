@@ -148,224 +148,224 @@ f2ptr f2__semantic_partial_state_property_relation__type(f2ptr cause, f2ptr this
 export_cefunk1(semantic_partial_state_property_relation__type, thing, 0, "Returns the specific type of object that this semantic_partial_state_property_relation is.");
 
 
-f2ptr raw__semantic_reflective_object__source_type(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__source_type(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_type"));
 }
 
-f2ptr f2__semantic_reflective_object__source_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_type(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__source_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_type(cause, this);
 }
-export_cefunk1(semantic_reflective_object__source_type, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__source_type, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__source_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_type"), that);
 }
 
-f2ptr f2__semantic_reflective_object__source_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_type__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__source_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_type__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__source_type__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__source_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_key_type(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__source_key_type(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_key_type"));
 }
 
-f2ptr f2__semantic_reflective_object__source_key_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_key_type(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__source_key_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_key_type(cause, this);
 }
-export_cefunk1(semantic_reflective_object__source_key_type, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__source_key_type, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__source_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_key_type"), that);
 }
 
-f2ptr f2__semantic_reflective_object__source_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_key_type__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__source_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_key_type__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__source_key_type__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__source_key_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_key(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__source_key(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_key"));
 }
 
-f2ptr f2__semantic_reflective_object__source_key(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_key(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__source_key(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_key(cause, this);
 }
-export_cefunk1(semantic_reflective_object__source_key, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__source_key, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_key__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__source_key__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_key"), that);
 }
 
-f2ptr f2__semantic_reflective_object__source_key__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_key__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__source_key__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_key__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__source_key__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__source_key__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_value(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__source_value(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_value"));
 }
 
-f2ptr f2__semantic_reflective_object__source_value(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_value(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__source_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_value(cause, this);
 }
-export_cefunk1(semantic_reflective_object__source_value, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__source_value, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__source_value__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__source_value__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "source_value"), that);
 }
 
-f2ptr f2__semantic_reflective_object__source_value__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__source_value__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__source_value__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__source_value__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__source_value__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__source_value__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__key_type(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__key_type(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key_type"));
 }
 
-f2ptr f2__semantic_reflective_object__key_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__key_type(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__key_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__key_type(cause, this);
 }
-export_cefunk1(semantic_reflective_object__key_type, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__key_type, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key_type"), that);
 }
 
-f2ptr f2__semantic_reflective_object__key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__key_type__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__key_type__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__key_type__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__key_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__key(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__key(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key"));
 }
 
-f2ptr f2__semantic_reflective_object__key(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__key(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__key(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__key(cause, this);
 }
-export_cefunk1(semantic_reflective_object__key, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__key, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__key__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__key__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key"), that);
 }
 
-f2ptr f2__semantic_reflective_object__key__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__key__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__key__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__key__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__key__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__key__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_type(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__target_type(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_type"));
 }
 
-f2ptr f2__semantic_reflective_object__target_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_type(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__target_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_type(cause, this);
 }
-export_cefunk1(semantic_reflective_object__target_type, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__target_type, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__target_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_type"), that);
 }
 
-f2ptr f2__semantic_reflective_object__target_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_type__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__target_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_type__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__target_type__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__target_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_key_type(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__target_key_type(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key_type"));
 }
 
-f2ptr f2__semantic_reflective_object__target_key_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_key_type(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__target_key_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_key_type(cause, this);
 }
-export_cefunk1(semantic_reflective_object__target_key_type, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__target_key_type, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__target_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key_type"), that);
 }
 
-f2ptr f2__semantic_reflective_object__target_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_key_type__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__target_key_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_key_type__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__target_key_type__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__target_key_type__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_key(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__target_key(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key"));
 }
 
-f2ptr f2__semantic_reflective_object__target_key(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_key(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__target_key(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_key(cause, this);
 }
-export_cefunk1(semantic_reflective_object__target_key, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__target_key, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_key__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__target_key__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key"), that);
 }
 
-f2ptr f2__semantic_reflective_object__target_key__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_key__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__target_key__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_key__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__target_key__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__target_key__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_value(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_partial_state_property_relation__target_value(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_value"));
 }
 
-f2ptr f2__semantic_reflective_object__target_value(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_value(cause, this);
+f2ptr f2__semantic_partial_state_property_relation__target_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_value(cause, this);
 }
-export_cefunk1(semantic_reflective_object__target_value, this, 0, "");
+export_cefunk1(semantic_partial_state_property_relation__target_value, this, 0, "");
 
 
-f2ptr raw__semantic_reflective_object__target_value__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr raw__semantic_partial_state_property_relation__target_value__set(f2ptr cause, f2ptr this, f2ptr that) {
   return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_value"), that);
 }
 
-f2ptr f2__semantic_reflective_object__target_value__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_reflective_object, this);
-  return raw__semantic_reflective_object__target_value__set(cause, this, that);
+f2ptr f2__semantic_partial_state_property_relation__target_value__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_partial_state_property_relation, this);
+  return raw__semantic_partial_state_property_relation__target_value__set(cause, this, that);
 }
-export_cefunk2(semantic_reflective_object__target_value__set, this, that, 0, "");
+export_cefunk2(semantic_partial_state_property_relation__target_value__set, this, that, 0, "");
 
 
 f2ptr f2__semantic_partial_state_property_relation__primobject_type__new(f2ptr cause) {

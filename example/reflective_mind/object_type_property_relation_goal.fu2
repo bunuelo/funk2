@@ -19,13 +19,13 @@
 
 
 
-[defunk object_type_event-phenomenal_name [object-phenomenal_name]
+`[defunk object_type_event-phenomenal_name [object-phenomenal_name]
   [get [format nil object-phenomenal_name '_object_type_event'] as-symbol]]
 
-[defunk semantic_object_property_type_event-phenomenal_name [source key_type key target]
+`[defunk semantic_object_property_type_event-phenomenal_name [source key_type key target]
   [get [format nil source '_' key_type '_' key '_' target '_property_type_event'] as-symbol]]
 
-[defunk semantic_object_relation_type_event-phenomenal_name [source_type_event key_type key target_type_event]
+`[defunk semantic_object_relation_type_event-phenomenal_name [source_type_event key_type key target_type_event]
   [get [format nil source_type_event '_' key_type '_' key '_' target_type_event '_relation_type_event'] as-symbol]]
 
 

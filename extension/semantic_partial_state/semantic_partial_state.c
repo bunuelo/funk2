@@ -21,6 +21,77 @@
 
 #include "semantic_partial_state.h"
 
+//[defunk object_type_event-phenomenal_name [object-phenomenal_name]
+//  [get [format nil object-phenomenal_name '_object_type_event'] as-symbol]]
+
+f2ptr raw__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name) {
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
+							      f2__exp__as__string(cause, object__phenomenal_name),
+							      new__string(cause, "_object_type_event")));
+}
+
+f2ptr f2__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name) {
+  return raw__object_type_event__phenomenal_name(cause, object__phenomenal_name);
+}
+export_cefunk1(object_type_event__phenomenal_name, object__phenomenal_name, 0, "");
+
+
+//[defunk semantic_object_property_type_event-phenomenal_name [source key_type key target]
+//  [get [format nil source '_' key_type '_' key '_' target '_property_type_event'] as-symbol]]
+
+f2ptr raw__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
+  f2ptr underscore__string = new__string(cause, "_");
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
+							      f2__exp__as__string(cause, source),
+							      underscore__string,
+							      f2__exp__as__string(cause, key_type),
+							      underscore__string,
+							      f2__exp__as__string(cause, key),
+							      underscore__string,
+							      f2__exp__as__string(cause, target),
+							      new__string(cause, "_property_type_event")));
+}
+
+f2ptr f2__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
+  return raw__semantic_object_property_type_event__phenomenal_name(cause, source, key_type, key, target);
+}
+export_cefunk4(semantic_object_property_type_event__phenomenal_name, source, key_type, key, target, 0, "");
+
+
+//[defunk semantic_object_relation_type_event-phenomenal_name [source_type_event key_type key target_type_event]
+//  [get [format nil source_type_event '_' key_type '_' key '_' target_type_event '_relation_type_event'] as-symbol]]
+
+f2ptr raw__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event) {
+  f2ptr underscore__string = new__string(cause, "_");
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
+							      f2__exp__as__string(cause, source_type_event),
+							      underscore__string,
+							      f2__exp__as__string(cause, key_type),
+							      underscore__string,
+							      f2__exp__as__string(cause, key),
+							      underscore__string,
+							      f2__exp__as__string(cause, target_type_event),
+							      new__string(cause, "_relation_type_event")));
+}
+
+f2ptr f2__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event) {
+  return raw__semantic_object_relation_type_event__phenomenal_name(cause, source_type_event, key_type, key, target_type_event);
+}
+export_cefunk4(semantic_object_relation_type_event__phenomenal_name, source_type_event, key_type, key, target_type_event, 0, "");
+
+
+//[semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
+//																		`property
+//																		source_property
+//																		source_property_value]]
+//											key_type
+//											key
+//											[object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
+//																						`property
+//																						target_property
+//																						target_property_value]]]]]
+
+
 
 // semantic_partial_state
 

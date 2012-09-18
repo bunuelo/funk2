@@ -23,3 +23,9 @@
 
 [semantic_partial_state-core_extension-define_types]
 
+
+
+[defcorefunk object_type_event-phenomenal_name                   semantic_partial_state object_type_event__phenomenal_name]
+[defcorefunk semantic_object_property_type_event-phenomenal_name semantic_partial_state semantic_object_property_type_event__phenomenal_name]
+[defcorefunk semantic_object_relation_type_event-phenomenal_name semantic_partial_state semantic_object_relation_type_event__phenomenal_name]
+

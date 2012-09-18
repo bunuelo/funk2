@@ -194,7 +194,8 @@
    :sources ['deliberative_imagination_agency.fu2']]
 
 [defpackage object_type_property_relation_goal
-  :packages [reflective_mind_core]
+  :packages [reflective_mind_core
+	     semantic_partial_state]
    :sources ['object_type_property_relation_goal.fu2']]
 
 [defpackage physical_type_property_relation_goal

@@ -533,7 +533,8 @@ extension_semantic_object_libf2e_semantic_object_la_SOURCES                     
 extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                                       = extension/semantic_packable_object/semantic_packable_object.c
 extension_semantic_partial_state_libf2e_semantic_partial_state_la_SOURCES                                                           = extension/semantic_partial_state/semantic_partial_state.c
 extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_SOURCES                                         = extension/semantic_partial_state_property/semantic_partial_state_property.c
-extension_semantic_partial_state_property_relation_type_event_libf2e_semantic_partial_state_property_relation_type_event_la_SOURCES = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_SOURCES                       = extension/semantic_plan_object_type_event/semantic_partial_state_property_relation.c
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                               = extension/semantic_plan_object_type_event/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                                         = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES                       = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
 extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                                     = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c

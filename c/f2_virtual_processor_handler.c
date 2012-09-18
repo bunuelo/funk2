@@ -293,7 +293,6 @@ def_pcfunk1(global_virtual_processor_handler__set_hardware_affinities_enabled, h
 
 
 
-
 // **
 
 void f2__virtual_processor_handler__defragment__fix_pointers() {

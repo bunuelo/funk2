@@ -423,6 +423,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }
+	    funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
 	    funk2_virtual_processor__unpause_next_spinning_thread(this);
 	    funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
 	  }
@@ -436,6 +437,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   }
   funk2_virtual_processor__remove_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
   funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(this);
+  funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
   funk2_virtual_processor__unpause_next_spinning_thread(this);
   funk2_operating_system__push_current_fiber(&(__funk2.operating_system), this->index, yielding_fiber);
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;

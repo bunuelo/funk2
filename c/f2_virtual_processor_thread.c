@@ -129,6 +129,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	    }
 	  }
 	} else {
+	  funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(virtual_processor);
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);
 	  // ****

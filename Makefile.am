@@ -219,6 +219,8 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_object/libf2e_semantic_object.la \
                       extension/semantic_packable_object/libf2e_semantic_packable_object.la \
                       extension/semantic_partial_state/libf2e_semantic_partial_state.la \
+                      extension/semantic_partial_state_property/libf2e_semantic_partial_state_property.la \
+                      extension/semantic_partial_state_property_relation/libf2e_semantic_partial_state_property_relation.la \
                       extension/semantic_plan_object/libf2e_semantic_plan_object.la \
                       extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.la \
                       extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.la \
@@ -304,7 +306,8 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_object/.libs/libf2e_*.*                                                           $(compile__lib__dir)
 	cp -fa extension/semantic_packable_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_partial_state/.libs/libf2e_*.*                                         $(compile__lib__dir)
-	cp -fa extension/semantic_reflective_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_partial_state_property/.libs/libf2e_*.*                                                 $(compile__lib__dir)
+	cp -fa extension/semantic_partial_state_property_relation/.libs/libf2e_*.*                                                 $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object/.libs/libf2e_*.*                                                 $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object_type_event/.libs/libf2e_*.*                           $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object_type_relation_event/.libs/libf2e_*.*         $(compile__lib__dir)
@@ -316,6 +319,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_goal/.libs/libf2e_*.*                                                               $(compile__lib__dir)
 	cp -fa extension/semantic_goal_event/.libs/libf2e_*.*                                                   $(compile__lib__dir)
 	cp -fa extension/semantic_goal_action_causal_hypothesis/.libs/libf2e_*.*             $(compile__lib__dir)
+	cp -fa extension/semantic_reflective_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_reflective_object_type_event/.libs/libf2e_*.*                   $(compile__lib__dir)
 	cp -fa extension/semantic_reflective_object_type_property_event/.libs/libf2e_*.* $(compile__lib__dir)
 	cp -fa extension/semantic_reflective_object_type_relation_event/.libs/libf2e_*.* $(compile__lib__dir)
@@ -478,89 +482,90 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                                     = extension/blocks_world/blocks_world.c
-extension_cairo_libf2e_cairo_la_SOURCES                                                                                   = extension/cairo/cairo.c
-extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                                   = extension/concept_version_space/concept_version_space.c
-extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                                         = extension/conceptnet/conceptnet.c
-extension_event_stream_libf2e_event_stream_la_SOURCES                                                                     = extension/event_stream/event_stream.c
-extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                                       = extension/equals_hash/equals_hash.c
-extension_fibermon_libf2e_fibermon_la_SOURCES                                                                             = extension/fibermon/fibermon.c
-extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                                 = extension/forgetful_event_stream/forgetful_event_stream.c
-extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                               = extension/forward_planner/forward_planner.c
-extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                                         = extension/frame_ball/frame_ball.c
-extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                                           = extension/graph_isomorphism/graph_isomorphism.c
-extension_gtk_extension_libf2e_gtk_extension_la_SOURCES                                                                   = extension/gtk_extension/gtk_extension.c
-extension_image_libf2e_image_la_SOURCES                                                                                   = extension/image/image.c
-extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                                 = extension/image_sequence/image_sequence.c
-extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                                   = extension/interval_tree/interval_tree.c
-extension_lick_libf2e_lick_la_SOURCES                                                                                     = extension/lick/lick.c
-extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                     = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
-extension_movie_libf2e_movie_la_SOURCES                                                                                   = extension/movie/movie.c
-extension_keyboard_libf2e_keyboard_la_SOURCES                                                                             = extension/keyboard/keyboard.c
-extension_propogator_libf2e_propogator_la_SOURCES                                                                         = extension/propogator/propogator.c
-extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                               = extension/semantic_action/semantic_action.c
-extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                                 = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
-extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                                   = extension/semantic_action_event/semantic_action_event.c
-extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                                 = extension/semantic_agent/semantic_agent.c
-extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                                   = extension/semantic_causal_event/semantic_causal_event.c
-extension_semantic_dependency_libf2e_semantic_dependency_la_SOURCES                                                       = extension/semantic_dependency/semantic_dependency.c
-extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                               = extension/semantic_event_sequence/semantic_event_sequence.c
-extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                                 = extension/semantic_causal_object/semantic_causal_object.c
-extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                           = extension/semantic_category/semantic_category.c
-extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES                                               = extension/semantic_causal_concept/semantic_causal_concept.c
-extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                       = extension/semantic_containment_object/semantic_containment_object.c
-extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_SOURCES                         = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
-extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                                 = extension/semantic_directed_action_event/semantic_directed_action_event.c
-extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                                 = extension/semantic_event/semantic_event.c
-extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_SOURCES                                           = extension/semantic_event_transframe/semantic_event_transframe.c
-extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES                                                       = extension/semantic_event_tree/semantic_event_tree.c
-extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_SOURCES                                     = extension/semantic_expectation_failure/semantic_expectation_failure.c
-extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                                 = extension/semantic_frame/semantic_frame.c
-extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_SOURCES                                   = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
-extension_semantic_goal_libf2e_semantic_goal_la_SOURCES                                                                   = extension/semantic_goal/semantic_goal.c
-extension_semantic_goal_event_libf2e_semantic_goal_event_la_SOURCES                                                       = extension/semantic_goal_event/semantic_goal_event.c
-extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_SOURCES                 = extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
-extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_SOURCES                             = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
-extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_SOURCES                       = extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                                               = extension/semantic_knowledge_base/semantic_knowledge_base.c
-extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                                               = extension/semantic_ordered_object/semantic_ordered_object.c
-extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_SOURCES                                         = extension/semantic_object_type_event/semantic_object_type_event.c
-extension_semantic_object_libf2e_semantic_object_la_SOURCES                                                               = extension/semantic_object/semantic_object.c
-extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                             = extension/semantic_packable_object/semantic_packable_object.c
-extension_semantic_partial_state_libf2e_semantic_partial_state_la_SOURCES                                                 = extension/semantic_partial_state/semantic_partial_state.c
-extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_SOURCES                                         = extension/semantic_reflective_object/semantic_reflective_object.c
-extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_SOURCES                   = extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.c
-extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_SOURCES = extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.c
-extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_SOURCES = extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.c
-extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                     = extension/semantic_plan_object/semantic_plan_object.c
-extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                               = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
-extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES             = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
-extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                           = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
-extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_SOURCES                               = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
-extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_SOURCES                               = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
-extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_SOURCES                         = extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
-extension_semantic_planner_libf2e_semantic_planner_la_SOURCES                                                             = extension/semantic_planner/semantic_planner.c
-extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                               = extension/semantic_proprioception/semantic_proprioception.c
-extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                                 = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
-extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES                       = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
-extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_SOURCES                             = extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
-extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                                                 = extension/semantic_realm/semantic_realm.c
-extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                                           = extension/semantic_relationship_key/semantic_relationship_key.c
-extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                                           = extension/semantic_resource/semantic_resource.c
-extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                                 = extension/semantic_resource_action_event/semantic_resource_action_event.c
-extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES                           = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
-extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_SOURCES                 = extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.c
-extension_semantic_self_libf2e_semantic_self_la_SOURCES                                                                   = extension/semantic_self/semantic_self.c
-extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                                         = extension/semantic_situation/semantic_situation.c
-extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                                       = extension/semantic_situation_category/semantic_situation_category.c
-extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES                                   = extension/semantic_situation_transition/semantic_situation_transition.c
-extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES                                             = extension/semantic_somatosensation/semantic_somatosensation.c
-extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES                                   = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
-extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                                             = extension/semantic_temporal_object/semantic_temporal_object.c
-extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                                   = extension/semantic_time/semantic_time.c
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                                 = extension/semantic_visual_object/semantic_visual_object.c
-extension_timeline_libf2e_timeline_la_SOURCES                                                                             = extension/timeline/timeline.c
-extension_transframe_libf2e_transframe_la_SOURCES                                                                         = extension/transframe/transframe.c
+extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                                               = extension/blocks_world/blocks_world.c
+extension_cairo_libf2e_cairo_la_SOURCES                                                                                             = extension/cairo/cairo.c
+extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                                             = extension/concept_version_space/concept_version_space.c
+extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                                                   = extension/conceptnet/conceptnet.c
+extension_event_stream_libf2e_event_stream_la_SOURCES                                                                               = extension/event_stream/event_stream.c
+extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                                                 = extension/equals_hash/equals_hash.c
+extension_fibermon_libf2e_fibermon_la_SOURCES                                                                                       = extension/fibermon/fibermon.c
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                                           = extension/forgetful_event_stream/forgetful_event_stream.c
+extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                                         = extension/forward_planner/forward_planner.c
+extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                                                   = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                                                     = extension/graph_isomorphism/graph_isomorphism.c
+extension_gtk_extension_libf2e_gtk_extension_la_SOURCES                                                                             = extension/gtk_extension/gtk_extension.c
+extension_image_libf2e_image_la_SOURCES                                                                                             = extension/image/image.c
+extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                                           = extension/image_sequence/image_sequence.c
+extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                                             = extension/interval_tree/interval_tree.c
+extension_lick_libf2e_lick_la_SOURCES                                                                                               = extension/lick/lick.c
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                               = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+extension_movie_libf2e_movie_la_SOURCES                                                                                             = extension/movie/movie.c
+extension_keyboard_libf2e_keyboard_la_SOURCES                                                                                       = extension/keyboard/keyboard.c
+extension_propogator_libf2e_propogator_la_SOURCES                                                                                   = extension/propogator/propogator.c
+extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                                         = extension/semantic_action/semantic_action.c
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                                           = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
+extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                                             = extension/semantic_action_event/semantic_action_event.c
+extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                                           = extension/semantic_agent/semantic_agent.c
+extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                                             = extension/semantic_causal_event/semantic_causal_event.c
+extension_semantic_dependency_libf2e_semantic_dependency_la_SOURCES                                                                 = extension/semantic_dependency/semantic_dependency.c
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                                         = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                                           = extension/semantic_causal_object/semantic_causal_object.c
+extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                                     = extension/semantic_category/semantic_category.c
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES                                                         = extension/semantic_causal_concept/semantic_causal_concept.c
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                                 = extension/semantic_containment_object/semantic_containment_object.c
+extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_SOURCES                                   = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
+extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                                           = extension/semantic_directed_action_event/semantic_directed_action_event.c
+extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                                           = extension/semantic_event/semantic_event.c
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_SOURCES                                                     = extension/semantic_event_transframe/semantic_event_transframe.c
+extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES                                                                 = extension/semantic_event_tree/semantic_event_tree.c
+extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_SOURCES                                               = extension/semantic_expectation_failure/semantic_expectation_failure.c
+extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                                           = extension/semantic_frame/semantic_frame.c
+extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_SOURCES                                             = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
+extension_semantic_goal_libf2e_semantic_goal_la_SOURCES                                                                             = extension/semantic_goal/semantic_goal.c
+extension_semantic_goal_event_libf2e_semantic_goal_event_la_SOURCES                                                                 = extension/semantic_goal_event/semantic_goal_event.c
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_SOURCES                           = extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_SOURCES                                       = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
+extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_SOURCES                                 = extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                                                         = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                                                         = extension/semantic_ordered_object/semantic_ordered_object.c
+extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_SOURCES                                                   = extension/semantic_object_type_event/semantic_object_type_event.c
+extension_semantic_object_libf2e_semantic_object_la_SOURCES                                                                         = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                                       = extension/semantic_packable_object/semantic_packable_object.c
+extension_semantic_partial_state_libf2e_semantic_partial_state_la_SOURCES                                                           = extension/semantic_partial_state/semantic_partial_state.c
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_SOURCES                                         = extension/semantic_partial_state_property/semantic_partial_state_property.c
+extension_semantic_partial_state_property_relation_type_event_libf2e_semantic_partial_state_property_relation_type_event_la_SOURCES = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                                         = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES                       = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
+extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                                     = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
+extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_SOURCES                                         = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
+extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_SOURCES                                         = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_SOURCES                                   = extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
+extension_semantic_planner_libf2e_semantic_planner_la_SOURCES                                                                       = extension/semantic_planner/semantic_planner.c
+extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                                         = extension/semantic_proprioception/semantic_proprioception.c
+extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                                           = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES                                 = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
+extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_SOURCES                                       = extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
+extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                                                           = extension/semantic_realm/semantic_realm.c
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_SOURCES                                                   = extension/semantic_reflective_object/semantic_reflective_object.c
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_SOURCES                             = extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.c
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_SOURCES           = extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.c
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_SOURCES           = extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.c
+extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                                                     = extension/semantic_relationship_key/semantic_relationship_key.c
+extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                                                     = extension/semantic_resource/semantic_resource.c
+extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                                           = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES                                     = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
+extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_SOURCES                           = extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.c
+extension_semantic_self_libf2e_semantic_self_la_SOURCES                                                                             = extension/semantic_self/semantic_self.c
+extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                                                   = extension/semantic_situation/semantic_situation.c
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                                                 = extension/semantic_situation_category/semantic_situation_category.c
+extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES                                             = extension/semantic_situation_transition/semantic_situation_transition.c
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES                                                       = extension/semantic_somatosensation/semantic_somatosensation.c
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES                                             = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                                                       = extension/semantic_temporal_object/semantic_temporal_object.c
+extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                                             = extension/semantic_time/semantic_time.c
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                                           = extension/semantic_visual_object/semantic_visual_object.c
+extension_timeline_libf2e_timeline_la_SOURCES                                                                                       = extension/timeline/timeline.c
+extension_transframe_libf2e_transframe_la_SOURCES                                                                                   = extension/transframe/transframe.c
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -737,17 +742,11 @@ extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS  = 
 extension_semantic_partial_state_libf2e_semantic_partial_state_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_partial_state_libf2e_semantic_partial_state_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
-
-extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -787,6 +786,18 @@ extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_positi
 
 extension_semantic_realm_libf2e_semantic_realm_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_realm_libf2e_semantic_realm_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -936,11 +947,8 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_ordered_object/"                                                                                                    >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_packable_object/"                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state/"                                                                                                     >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object/"                                                                                                 >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_event/"                                                                                      >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_property_event/"                                                                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_relation_event/"                                                                             >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_planner/"                                                                                                           >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state_property/"                                                                                            >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state_property_relation/"                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object/"                                                                                                       >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_event/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"                                                                                   >> install-sh
@@ -948,11 +956,16 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_parallel/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_sequence/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_operator_suppression/"                                                                                         >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_planner/"                                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioception/"                                                                                                    >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_object/"                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"                                                                                        >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_proprioceptual_position/"                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_realm/"                                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object/"                                                                                                 >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_event/"                                                                                      >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_property_event/"                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_reflective_object_type_relation_event/"                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_relationship_key/"                                                                                                  >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_event/"                                                                                             >> install-sh
@@ -1076,11 +1089,8 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_ordered_object/*.f*                        $(chroot__install__extension__dir)semantic_ordered_object/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_packable_object/*.f*                       $(chroot__install__extension__dir)semantic_packable_object/"                       >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_partial_state/*.f*                         $(chroot__install__extension__dir)semantic_partial_state/"                         >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_reflective_object/*.f*                     $(chroot__install__extension__dir)semantic_reflective_object/"                     >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_event/*.f*          $(chroot__install__extension__dir)semantic_reflective_object_type_event/"          >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_property_event/*.f* $(chroot__install__extension__dir)semantic_reflective_object_type_property_event/" >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_relation_event/*.f* $(chroot__install__extension__dir)semantic_reflective_object_type_relation_event/" >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_planner/*.f*                               $(chroot__install__extension__dir)semantic_planner/"                               >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_partial_state_property/*.f*                $(chroot__install__extension__dir)semantic_partial_state_property/"                >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_partial_state_property_relation/*.f*       $(chroot__install__extension__dir)semantic_partial_state_property_relation/"       >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object/*.f*                           $(chroot__install__extension__dir)semantic_plan_object/"                           >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_event/*.f*                $(chroot__install__extension__dir)semantic_plan_object_type_event/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_relation_event/*.f*       $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"       >> install-sh
@@ -1088,11 +1098,16 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_plan_operator_parallel/*.f*                $(chroot__install__extension__dir)semantic_plan_operator_parallel/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_operator_sequence/*.f*                $(chroot__install__extension__dir)semantic_plan_operator_sequence/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_operator_suppression/*.f*             $(chroot__install__extension__dir)semantic_plan_operator_suppression/"             >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_planner/*.f*                               $(chroot__install__extension__dir)semantic_planner/"                               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioception/*.f*                        $(chroot__install__extension__dir)semantic_proprioception/"                        >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_object/*.f*                 $(chroot__install__extension__dir)semantic_proprioceptual_object/"                 >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_orientation/*.f*            $(chroot__install__extension__dir)semantic_proprioceptual_orientation/"            >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_proprioceptual_position/*.f*               $(chroot__install__extension__dir)semantic_proprioceptual_position/"               >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_realm/*.f*                                 $(chroot__install__extension__dir)semantic_realm/"                                 >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_reflective_object/*.f*                     $(chroot__install__extension__dir)semantic_reflective_object/"                     >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_event/*.f*          $(chroot__install__extension__dir)semantic_reflective_object_type_event/"          >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_property_event/*.f* $(chroot__install__extension__dir)semantic_reflective_object_type_property_event/" >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_reflective_object_type_relation_event/*.f* $(chroot__install__extension__dir)semantic_reflective_object_type_relation_event/" >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_relationship_key/*.f*                      $(chroot__install__extension__dir)semantic_relationship_key/"                      >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_resource/*.f*                              $(chroot__install__extension__dir)semantic_resource/"                              >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_resource_action_event/*.f*                 $(chroot__install__extension__dir)semantic_resource_action_event/"                 >> install-sh

@@ -25,9 +25,9 @@
 //  [get [format nil object-phenomenal_name '_object_type_event'] as-symbol]]
 
 f2ptr raw__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name) {
-  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
-							      f2__exp__as__string(cause, object__phenomenal_name),
-							      new__string(cause, "_object_type_event")));
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause,
+										  f2__exp__as__string(cause, object__phenomenal_name),
+										  new__string(cause, "_object_type_event"))));
 }
 
 f2ptr f2__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name) {
@@ -41,15 +41,15 @@ export_cefunk1(object_type_event__phenomenal_name, object__phenomenal_name, 0, "
 
 f2ptr raw__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
   f2ptr underscore__string = new__string(cause, "_");
-  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
-							      f2__exp__as__string(cause, source),
-							      underscore__string,
-							      f2__exp__as__string(cause, key_type),
-							      underscore__string,
-							      f2__exp__as__string(cause, key),
-							      underscore__string,
-							      f2__exp__as__string(cause, target),
-							      new__string(cause, "_property_type_event")));
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list8__new(cause,
+										  f2__exp__as__string(cause, source),
+										  underscore__string,
+										  f2__exp__as__string(cause, key_type),
+										  underscore__string,
+										  f2__exp__as__string(cause, key),
+										  underscore__string,
+										  f2__exp__as__string(cause, target),
+										  new__string(cause, "_property_type_event"))));
 }
 
 f2ptr f2__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target) {
@@ -63,15 +63,15 @@ export_cefunk4(semantic_object_property_type_event__phenomenal_name, source, key
 
 f2ptr raw__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event) {
   f2ptr underscore__string = new__string(cause, "_");
-  return f2__string__as__symbol(cause, f2__stringlist__concat(cause,
-							      f2__exp__as__string(cause, source_type_event),
-							      underscore__string,
-							      f2__exp__as__string(cause, key_type),
-							      underscore__string,
-							      f2__exp__as__string(cause, key),
-							      underscore__string,
-							      f2__exp__as__string(cause, target_type_event),
-							      new__string(cause, "_relation_type_event")));
+  return f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list8__new(cause,
+										  f2__exp__as__string(cause, source_type_event),
+										  underscore__string,
+										  f2__exp__as__string(cause, key_type),
+										  underscore__string,
+										  f2__exp__as__string(cause, key),
+										  underscore__string,
+										  f2__exp__as__string(cause, target_type_event),
+										  new__string(cause, "_relation_type_event"))));
 }
 
 f2ptr f2__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event) {

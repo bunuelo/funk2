@@ -206,6 +206,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                       extension/semantic_counterfactual_transframe/libf2e_semantic_counterfactual_transframe.la \
                       extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
+                      extension/semantic_environment/libf2e_semantic_environment.la \
                       extension/semantic_event/libf2e_semantic_event.la \
                       extension/semantic_event_transframe/libf2e_semantic_event_transframe.la \
                       extension/semantic_event_tree/libf2e_semantic_event_tree.la \
@@ -293,6 +294,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_containment_object/.libs/libf2e_*.*                                   $(compile__lib__dir)
 	cp -fa extension/semantic_counterfactual_transframe/.libs/libf2e_*.*                             $(compile__lib__dir)
 	cp -fa extension/semantic_directed_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
+	cp -fa extension/semantic_environment/.libs/libf2e_*.*                                                             $(compile__lib__dir)
 	cp -fa extension/semantic_event/.libs/libf2e_*.*                                                             $(compile__lib__dir)
 	cp -fa extension/semantic_event_transframe/.libs/libf2e_*.*                                       $(compile__lib__dir)
 	cp -fa extension/semantic_event_tree/.libs/libf2e_*.*                                                   $(compile__lib__dir)
@@ -515,6 +517,7 @@ extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES     
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                                 = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_SOURCES                                   = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                                           = extension/semantic_directed_action_event/semantic_directed_action_event.c
+extension_semantic_environment_libf2e_semantic_environment_la_SOURCES                                                               = extension/semantic_environment/semantic_environment.c
 extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                                           = extension/semantic_event/semantic_event.c
 extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_SOURCES                                                     = extension/semantic_event_transframe/semantic_event_transframe.c
 extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES                                                                 = extension/semantic_event_tree/semantic_event_tree.c
@@ -691,6 +694,9 @@ extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_tran
 
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_environment_libf2e_semantic_environment_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_environment_libf2e_semantic_environment_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_event_libf2e_semantic_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_event_libf2e_semantic_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -929,6 +935,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_containment_object/"                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_counterfactual_transframe/"                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_directed_action_event/"                                                                                             >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_environment/"                                                                                                       >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event/"                                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_event_knowledge_base/"                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_dependency/"                                                                                                        >> install-sh
@@ -1071,6 +1078,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_containment_object/*.f*                    $(chroot__install__extension__dir)semantic_containment_object/"                    >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_counterfactual_transframe/*.f*             $(chroot__install__extension__dir)semantic_counterfactual_transframe/"             >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_directed_action_event/*.f*                 $(chroot__install__extension__dir)semantic_directed_action_event/"                 >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_environment/*.f*                           $(chroot__install__extension__dir)semantic_environment/"                           >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_event/*.f*                                 $(chroot__install__extension__dir)semantic_event/"                                 >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_event_knowledge_base/*.f*                  $(chroot__install__extension__dir)semantic_event_knowledge_base/"                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_dependency/*.f*                            $(chroot__install__extension__dir)semantic_dependency/"                            >> install-sh

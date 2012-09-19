@@ -179,6 +179,7 @@
 						     'extension/semantic_containment_object/'
 						     'extension/semantic_counterfactual_transframe/'
 						     'extension/semantic_directed_action_event/'
+						     'extension/semantic_environment/'
 						     'extension/semantic_event/'
 						     'extension/semantic_event_knowledge_base/'
 						     'extension/semantic_event_transframe/'

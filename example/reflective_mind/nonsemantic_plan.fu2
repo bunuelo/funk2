@@ -75,15 +75,21 @@
 												[append `[wait for]
 													`[,time_to_wait]]]]]
 					      [[eq `wait-to-call                   command] [flatten_constree arguments]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 5 arguments-length]]
+					      [[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
 												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type           [elt arguments 0]]
-												    [source_property       [elt arguments 1]]
-												    [source_property_value [elt arguments 2]]
-												    [property              [elt arguments 3]]
-												    [property_value        [elt arguments 4]]]
+											      [let [[source_type     [elt arguments 0]]
+												    [source_key_type [elt arguments 1]]
+												    [source_key      [elt arguments 2]]
+												    [source_value    [elt arguments 3]]
+												    [key_type        [elt arguments 4]]
+												    [key             [elt arguments 5]]
+												    [value           [elt arguments 6]]]
 												[append `[wait until]
-													[object_type_property_property_goal-english_conslist source_type source_property source_property_value property property_value]]]]]
+													[object_type_property_property_goal-english_conslist source_type
+																			     source_key
+																			     source_value
+																			     key
+																			     value]]]]]
 					      [[eq `wait-for-physical-relationship command] [if [not [eq 8 arguments-length]]
 												`[error punctuation-colon ,[flatten_constree expression]]
 											      [let [[source_type           [elt arguments 0]]
@@ -134,8 +140,21 @@
 [deftypefunk nonsemantic_plan get as-graphviz_label []
   [string-concat '<' [get unique_name as-string] '>']]
 
-[deftypefunk nonsemantic_plan execute wait_for_physical_property [source_type source_property source_property_value property property_value]
-  [have [get this mind] wait_for_physical_property source_type source_property source_property_value property property_value]]
+[deftypefunk nonsemantic_plan execute wait_for_physical_property [source_type
+								  source_key_type
+								  source_key
+								  source_value
+								  key_type
+								  key
+								  value]
+  [have [get this mind] wait_for_physical_property
+	source_type
+	source_key_type
+	source_key
+	source_value
+	key_type
+	key
+	value]]
 
 [deftypefunk nonsemantic_plan execute wait_for_physical_relationship [source_type
 								      source_property
@@ -229,18 +248,27 @@
 													       [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 														     [have action wait_to_call]
 														     ]]]]]]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 5 arguments-length]]
+					      [[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `wait-for-physical-property
 												       expression expression]
-											      [let [[source_type           [elt arguments 0]]
-												    [source_property       [elt arguments 1]]
-												    [source_property_value [elt arguments 2]]
-												    [property              [elt arguments 3]]
-												    [property_value        [elt arguments 4]]]
+											      [let [[source_type     [elt arguments 0]]
+												    [source_key_type [elt arguments 1]]
+												    [source_key      [elt arguments 2]]
+												    [source_value    [elt arguments 3]]
+												    [key_type        [elt arguments 4]]
+												    [key             [elt arguments 5]]
+												    [value           [elt arguments 6]]]
 												[eval `[funk [this]
 													     [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
-													     [have this wait_for_physical_property [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,property] [quote ,property_value]]
+													     [have this wait_for_physical_property
+														   [quote ,source_type]
+														   [quote ,source_key_type]
+														   [quote ,source_key]
+														   [quote ,source_value]
+														   [quote ,key_type]
+														   [quote ,key]
+														   [quote ,value]]
 													     ]]]]]
 					      [[eq `wait-for-physical-relationship command] [if [not [eq 8 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -358,18 +386,31 @@
 													       [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														     [have action imagine_waiting_to_call]
 														     ]]]]]]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 5 arguments-length]]
+					      [[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for-physical-property
 												       expression expression]
-											      [let [[source_type           [elt arguments 0]]
-												    [source_property       [elt arguments 1]]
-												    [source_property_value [elt arguments 2]]
-												    [property              [elt arguments 3]]
-												    [property_value        [elt arguments 4]]]
+											      [let [[source_type     [elt arguments 0]]
+												    [source_key_type [elt arguments 1]]
+												    [source_key      [elt arguments 2]]
+												    [source_value    [elt arguments 3]]
+												    [key_type        [elt arguments 4]]
+												    [key             [elt arguments 5]]
+												    [value           [elt arguments 6]]]
 												[eval `[funk [this]
-													     [terminal_format standard-terminal '\nplan imagining waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
-													     `[have this imagine_waiting_for_physical_property [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,property] [quote ,property_value]]
+													     [terminal_format standard-terminal '\nplan imagining waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type
+																															source_key
+																															source_value
+																															key
+																															value] '."']
+													     `[have this imagine_waiting_for_physical_property
+														    [quote ,source_type]
+														    [quote ,source_key_type]
+														    [quote ,source_key]
+														    [quote ,source_value]
+														    [quote ,key_type]
+														    [quote ,key]
+														    [quote ,value]]
 													     ]]]]]
 					      [[eq `wait-for-physical-relationship command] [if [not [eq 8 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
@@ -477,15 +518,17 @@
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
 					      [[eq `wait-to-call                   command] [let [[action_name [elt command_arguments 0]]]
 											      [semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call]]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 5 command_arguments-length]]
+					      [[eq `wait-for-physical-property     command] [if [not [eq 7 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `wait-for-physical-property
 												       expression expression]
-											      [let [[source_type           [elt command_arguments 0]]
-												    [source_property       [elt command_arguments 1]]
-												    [source_property_value [elt command_arguments 2]]
-												    [property              [elt command_arguments 3]]
-												    [property_value        [elt command_arguments 4]]]
+											      [let [[source_type     [elt command_arguments 0]]
+												    [source_key_type [elt command_arguments 1]]
+												    [source_key      [elt command_arguments 2]]
+												    [source_value    [elt command_arguments 3]]
+												    [key_type        [elt command_arguments 4]]
+												    [key             [elt command_arguments 5]]
+												    [value           [elt command_arguments 6]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-physical-property]]]]
 					      [[eq `wait-for-physical-relationship command] [if [not [eq 8 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments

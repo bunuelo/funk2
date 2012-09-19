@@ -102,7 +102,7 @@ f2ptr raw__semantic_partial_state_property__type_create(f2ptr cause, f2ptr this,
 										 key_type,
 										 key,
 										 target_type);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), phenomenal_name);
+    assert_value(f2__semantic_object__phenomenal_name__set(cause, this, phenomenal_name));
   }
   return this;
 }

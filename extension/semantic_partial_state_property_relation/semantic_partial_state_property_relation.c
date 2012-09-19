@@ -21,6 +21,78 @@
 
 #include "semantic_partial_state_property_relation.h"
 
+//  [let [[looking_for_event-phenomenal_name [semantic_object_relation_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
+//																							`property
+//																							source_property
+//																							source_property_value]]
+//												key_type
+//												key
+//												[object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name target_type
+//																							`property
+//																							target_property
+//																							target_property_value]]]]]
+
+f2ptr raw__semantic_partial_state_property_relation__phenomenal_name(f2ptr cause,
+								     f2ptr source_type,
+								     f2ptr source_key_type,
+								     f2ptr source_key,
+								     f2ptr source_value,
+								     f2ptr key_type,
+								     f2ptr key,
+								     f2ptr target_type,
+								     f2ptr target_key_type,
+								     f2ptr target_key,
+								     f2ptr target_value) {
+  return raw__semantic_object_relation_type_event__phenomenal_name(cause,
+								   raw__object_type_event__phenomenal_name(cause, f2__semantic_object_property_type_event__phenomenal_name(cause,
+																					   source_type,
+																					   source_key_type,
+																					   source_key,
+																					   source_value)),
+								   key_type,
+								   key,
+								   raw__object_type_event__phenomenal_name(cause, f2__semantic_object_property_type_event__phenomenal_name(cause,
+																					   target_type,
+																					   target_key_type,
+																					   target_key,
+																					   target_value)));
+}
+
+f2ptr f2__semantic_partial_state_property_relation__phenomenal_name(f2ptr cause,
+								    f2ptr source_type,
+								    f2ptr source_key_type,
+								    f2ptr source_key,
+								    f2ptr source_value,
+								    f2ptr key_type,
+								    f2ptr key,
+								    f2ptr target_type,
+								    f2ptr target_key_type,
+								    f2ptr target_key,
+								    f2ptr target_value) {
+  return raw__semantic_partial_state_property_relation__phenomenal_name(cause,
+									source_type,
+									source_key_type,
+									source_key,
+									source_value,
+									key_type,
+									key,
+									target_type,
+									target_key_type,
+									target_key,
+									target_value);
+}
+export_cefunk10(semantic_partial_state_property_relation__phenomenal_name,
+		source_type,
+		source_key_type,
+		source_key,
+		source_value,
+		key_type,
+		key,
+		target_type,
+		target_key_type,
+		target_key,
+		target_value, 0, "");
+
 
 // semantic_partial_state_property_relation
 
@@ -49,6 +121,20 @@ f2ptr raw__semantic_partial_state_property_relation__type_create(f2ptr cause, f2
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key_type"), target_key_type);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_key"),      target_key);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_value"),    target_value);
+  {
+    f2ptr phenomenal_name = f2__semantic_partial_state_property_relation__phenomenal_name(cause,
+											  source_type,
+											  source_key_type,
+											  source_key,
+											  source_value,
+											  key_type,
+											  key,
+											  target_type,
+											  target_key_type,
+											  target_key,
+											  target_value);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), phenomenal_name);
+  }
   return this;
 }
 

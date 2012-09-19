@@ -23,3 +23,6 @@
 
 [semantic_partial_state_property_relation-core_extension-define_types]
 
+
+[defcorefunk semantic_partial_state_property_relation-phenomenal_name semantic_partial_state_property_relation semantic_partial_state_property_relation__phenomenal_name]
+

@@ -151,7 +151,9 @@
 	     deliberative_plan_agency
 	     deliberative_execution_agency
 	     deliberative_imagination_agency
-	     deliberative_physical_object_type_goal_agency]
+	     deliberative_physical_object_type_goal_agency
+	     semantic_partial_state_property
+	     semantic_partial_state_property_relation]
    :sources ['deliberative_layer.fu2']]
 
 [defpackage deliberative_resource

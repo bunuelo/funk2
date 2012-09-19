@@ -22,6 +22,56 @@
 #include "semantic_partial_state_property.h"
 
 
+//[semantic_object_property_type_event-phenomenal_name [object_type_event-phenomenal_name [semantic_object_property_type_event-phenomenal_name source_type
+//											                                                       `property source_property source_property_value]]
+//						       `property property property_value]]]
+
+f2ptr raw__semantic_partial_state_property__phenomenal_name(f2ptr cause, 
+							    f2ptr source_type,
+							    f2ptr source_key_type,
+							    f2ptr source_key,
+							    f2ptr source_value,
+							    f2ptr key_type,
+							    f2ptr key,
+							    f2ptr target_type) {
+  return raw__semantic_object_property_type_event__phenomenal_name(cause,
+								   raw__object_type_event__phenomenal_name(cause, raw__semantic_object_property_type_event__phenomenal_name(cause,
+																					    source_type,
+																					    source_key_type,
+																					    source_key,
+																					    source_value)),
+								   key_type,
+								   key,
+								   target_type);
+}
+
+f2ptr f2__semantic_partial_state_property__phenomenal_name(f2ptr cause, 
+							   f2ptr source_type,
+							   f2ptr source_key_type,
+							   f2ptr source_key,
+							   f2ptr source_value,
+							   f2ptr key_type,
+							   f2ptr key,
+							   f2ptr target_type) {
+  return raw__semantic_partial_state_property__phenomenal_name(cause, 
+							       source_type,
+							       source_key_type,
+							       source_key,
+							       source_value,
+							       key_type,
+							       key,
+							       target_type);
+}
+export_cefunk7(semantic_object_property_type_event__phenomenal_name,
+	       source_type,
+	       source_key_type,
+	       source_key,
+	       source_value,
+	       key_type,
+	       key,
+	       target_type, 0, "");
+
+
 // semantic_partial_state_property
 
 f2ptr raw__semantic_partial_state_property__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm,
@@ -43,6 +93,17 @@ f2ptr raw__semantic_partial_state_property__type_create(f2ptr cause, f2ptr this,
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key_type"),        key_type);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "key"),             key);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "target_type"),     target_type);
+  {
+    f2ptr phenomenal_name = f2__semantic_partial_state_property__phenomenal_name(cause, 
+										 source_type,
+										 source_key_type,
+										 source_key,
+										 source_value,
+										 key_type,
+										 key,
+										 target_type);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), phenomenal_name);
+  }
   return this;
 }
 

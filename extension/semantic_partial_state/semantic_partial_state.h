@@ -24,6 +24,19 @@
 
 #include "../semantic_object/semantic_object.h"
 
+
+// helper functions for computing phenomenal names of different semantic partial states
+
+f2ptr raw__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name);
+f2ptr  f2__object_type_event__phenomenal_name(f2ptr cause, f2ptr object__phenomenal_name);
+
+f2ptr raw__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target);
+f2ptr  f2__semantic_object_property_type_event__phenomenal_name(f2ptr cause, f2ptr source, f2ptr key_type, f2ptr key, f2ptr target);
+
+f2ptr raw__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event);
+f2ptr  f2__semantic_object_relation_type_event__phenomenal_name(f2ptr cause, f2ptr source_type_event, f2ptr key_type, f2ptr key, f2ptr target_type_event);
+
+
 // semantic_partial_state
 
 f2ptr     raw__semantic_partial_state__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm);

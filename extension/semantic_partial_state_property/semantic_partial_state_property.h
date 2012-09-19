@@ -25,6 +25,25 @@
 #include "../semantic_partial_state/semantic_partial_state.h"
 
 
+// helper functions for computing phenomenal names of semantic_partial_state_properties
+
+f2ptr raw__semantic_partial_state_property__phenomenal_name(f2ptr cause, 
+							    f2ptr source_type,
+							    f2ptr source_key_type,
+							    f2ptr source_key,
+							    f2ptr source_value,
+							    f2ptr key_type,
+							    f2ptr key,
+							    f2ptr target_type);
+f2ptr f2__semantic_partial_state_property__phenomenal_name(f2ptr cause, 
+							   f2ptr source_type,
+							   f2ptr source_key_type,
+							   f2ptr source_key,
+							   f2ptr source_value,
+							   f2ptr key_type,
+							   f2ptr key,
+							   f2ptr target_type);
+
 // **
 
 f2ptr f2__semantic_partial_state_property__core_extension__ping      (f2ptr cause);

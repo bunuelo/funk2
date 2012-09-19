@@ -173,8 +173,23 @@
 	target_property
 	target_property_value]]
 
-[deftypefunk nonsemantic_plan execute imagine_assuring_physical_relationship [source_type source_property source_property_value key target_type target_property target_property_value]
-  [have [get this mind] imagine_assuring_physical_relationship source_type source_property source_property_value key target_type target_property target_property_value]]
+[deftypefunk nonsemantic_plan execute imagine_assuring_physical_relationship [source_type
+									      source_property
+									      source_property_value
+									      key_type
+									      key
+									      target_type
+									      target_property
+									      target_property_value]
+  [have [get this mind] imagine_assuring_physical_relationship
+	source_type
+	source_property
+	source_property_value
+	key_type
+	key
+	target_type
+	target_property
+	target_property_value]]
 
 [defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]

@@ -89,7 +89,7 @@ f2ptr raw__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
 
 f2ptr f2__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_object, this);
-  return raw__semantic_object__phenomenal_name(cause, this);
+  return assert_value(raw__semantic_object__phenomenal_name(cause, this));
 }
 export_cefunk1(semantic_object__phenomenal_name, this, 0, "");
 

@@ -387,7 +387,7 @@ f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2
     f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
     if ((value_set == nil) || (! raw__set__remove(cause, value_set, value))) {
       return new__error(f2list12__new(cause,
-				      new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
+				      new__symbol(cause, "bug_name"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame"),
 				      new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
 				      new__symbol(cause, "this"),          this,
 				      new__symbol(cause, "key_type"),      key_type,
@@ -400,7 +400,7 @@ f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2
     f2ptr reverse_value_set = raw__frame__lookup_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, nil);
     if ((reverse_value_set == nil) || (! raw__set__remove(cause, reverse_value_set, this))) {
       return new__error(f2list12__new(cause,
-				      new__symbol(cause, "bug_type"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame_reverse_frame"),
+				      new__symbol(cause, "bug_name"),      new__symbol(cause, "value_does_not_exist_in_semantic_frame_reverse_frame"),
 				      new__symbol(cause, "funktion_name"), new__symbol(cause, "semantic_frame-remove"),
 				      new__symbol(cause, "this"),          this,
 				      new__symbol(cause, "key_type"),      key_type,
@@ -475,7 +475,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
   if (value_set != nil) {
     if (! raw__set__is_type(cause, value_set)) {
       return new__error(f2list10__new(cause,
-				      new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "semantic_frame_slot_contains_non_set"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 				      new__symbol(cause, "this"),     this,
 				      new__symbol(cause, "key_type"), key_type,
@@ -484,7 +484,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
     set__iteration(cause, value_set, value,
 		   if (found_current_value) {
 		     return new__error(f2list10__new(cause,
-						     new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
+						     new__symbol(cause, "bug_name"), new__symbol(cause, "semantic_frame_has_more_than_one_value_in_slot"),
 						     new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 						     new__symbol(cause, "this"),     this,
 						     new__symbol(cause, "key_type"), key_type,
@@ -496,7 +496,7 @@ f2ptr raw__semantic_frame__lookup_type_var_value__thread_unsafe(f2ptr cause, f2p
   }
   if (! found_current_value) {
     return new__error(f2list10__new(cause,
-				    new__symbol(cause, "bug_type"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
+				    new__symbol(cause, "bug_name"), new__symbol(cause, "semantic_frame_does_not_have_slot_value"),
 				    new__symbol(cause, "funkname"), new__symbol(cause, "semantic_frame-lookup_type_var_value"),
 				    new__symbol(cause, "this"),     this,
 				    new__symbol(cause, "key_type"), key_type,
@@ -920,7 +920,7 @@ f2ptr f2__object__semantic__lookup_set(f2ptr cause, f2ptr this, f2ptr slot, f2pt
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
 	return f2larva__new(cause, 1421, f2__bug__new(cause, f2integer__new(cause, 1421), f2__frame__new(cause, f2list10__new(cause,
-															      new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+															      new__symbol(cause, "bug_name"), new__symbol(cause, "argument_list_is_not_a_conslist"),
 															      new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup_set"),
 															      new__symbol(cause, "this"),     this,
 															      new__symbol(cause, "slot"),     slot,
@@ -936,7 +936,7 @@ f2ptr f2__object__semantic__lookup_set(f2ptr cause, f2ptr this, f2ptr slot, f2pt
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-lookup_set_funk"),
+															  new__symbol(cause, "bug_name"), new__symbol(cause, "object_does_not_have_semantic-lookup_set_funk"),
 															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-lookup_set"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
@@ -967,7 +967,7 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
 	return f2larva__new(cause, 143222, f2__bug__new(cause, f2integer__new(cause, 143222), f2__frame__new(cause, f2list10__new(cause,
-																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "bug_name"), new__symbol(cause, "argument_list_is_not_a_conslist"),
 																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
 																  new__symbol(cause, "this"),     this,
 																  new__symbol(cause, "slot"),     slot,
@@ -983,7 +983,7 @@ f2ptr f2__object__semantic__add(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args)
   }
   if (! raw__funkable__is_type(cause, funk)) {
     return f2larva__new(cause, 2345, f2__bug__new(cause, f2integer__new(cause, 2345), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-add_funk"),
+															  new__symbol(cause, "bug_name"), new__symbol(cause, "object_does_not_have_semantic-add_funk"),
 															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-add"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,
@@ -1014,7 +1014,7 @@ f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr ar
     while (iter != nil) {
       if (! raw__cons__is_type(cause, iter)) {
 	return f2larva__new(cause, 234234, f2__bug__new(cause, f2integer__new(cause, 234234), f2__frame__new(cause, f2list10__new(cause,
-																  new__symbol(cause, "bug_type"), new__symbol(cause, "argument_list_is_not_a_conslist"),
+																  new__symbol(cause, "bug_name"), new__symbol(cause, "argument_list_is_not_a_conslist"),
 																  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
 																  new__symbol(cause, "this"),     this,
 																  new__symbol(cause, "slot"),     slot,
@@ -1030,7 +1030,7 @@ f2ptr f2__object__semantic__remove(f2ptr cause, f2ptr this, f2ptr slot, f2ptr ar
       return funk;
     }
     return f2larva__new(cause, 2346, f2__bug__new(cause, f2integer__new(cause, 2346), f2__frame__new(cause, f2list10__new(cause,
-															  new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_semantic-remove_funk"),
+															  new__symbol(cause, "bug_name"), new__symbol(cause, "object_does_not_have_semantic-remove_funk"),
 															  new__symbol(cause, "funkname"), new__symbol(cause, "object-semantic-remove"),
 															  new__symbol(cause, "this"),     this,
 															  new__symbol(cause, "slot"),     slot,

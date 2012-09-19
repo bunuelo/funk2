@@ -167,6 +167,7 @@
 
 [deftypefunk deliberative_layer execute wait_for_physical_property [source_type source_property source_property_value property property_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property
+						     [get [get this mind] semantic_realm]
 						     source_type
 						     `property
 						     source_property
@@ -198,6 +199,7 @@
 									target_property
 									target_property_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
+						     [get [get this mind] semantic_realm]
 						     source_type
 						     `property
 						     source_property
@@ -232,6 +234,7 @@
 								      target_property
 								      target_property_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
+						     [get [get this mind] semantic_realm]
 						     source_type
 						     `property
 						     source_property
@@ -274,6 +277,7 @@
 										target_property
 										target_property_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
+						     [get [get this mind] semantic_realm]
 						     source_type
 						     `property
 						     source_property

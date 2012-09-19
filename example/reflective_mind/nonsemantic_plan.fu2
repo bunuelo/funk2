@@ -356,37 +356,69 @@
 													     [terminal_format standard-terminal '\nplan imagining waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
 													     `[have this imagine_waiting_for_physical_property [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,property] [quote ,property_value]]
 													     ]]]]]
-					      [[eq `wait-for-physical-relationship command] [if [not [eq 7 arguments-length]]
+					      [[eq `wait-for-physical-relationship command] [if [not [eq 8 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for-physical-relationship
 												       expression expression]
 											      [let [[source_type           [elt arguments 0]]
 												    [source_property       [elt arguments 1]]
 												    [source_property_value [elt arguments 2]]
-												    [key                   [elt arguments 3]]
-												    [target_type           [elt arguments 4]]
-												    [target_property       [elt arguments 5]]
-												    [target_property_value [elt arguments 6]]]
+												    [key_type              [elt arguments 3]]
+												    [key                   [elt arguments 4]]
+												    [target_type           [elt arguments 5]]
+												    [target_property       [elt arguments 6]]
+												    [target_property_value [elt arguments 7]]]
 												[eval `[funk [this]
 													     [terminal_format standard-terminal '\nplan imagining waiting for relationship to exist: "'
-															      ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
-													     `[have this imagine_waiting_for_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
+															      ,[object_type_property_relation_goal-declarative_english_string source_type
+																							      source_property
+																							      source_property_value
+																							      key_type
+																							      key
+																							      target_type
+																							      target_property
+																							      target_property_value] '."']
+													     `[have this imagine_waiting_for_physical_relationship
+														    [quote ,source_type]
+														    [quote ,source_property]
+														    [quote ,source_property_value]
+														    [quote ,key_type]
+														    [quote ,key]
+														    [quote ,target_type]
+														    [quote ,target_property]
+														    [quote ,target_property_value]]
 													     ]]]]]
-					      [[eq `assure-physical-relationship   command] [if [not [eq 7 arguments-length]]
+					      [[eq `assure-physical-relationship   command] [if [not [eq 8 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `assure-physical-relationship
 												       expression expression]
 											      [let [[source_type           [elt arguments 0]]
 												    [source_property       [elt arguments 1]]
 												    [source_property_value [elt arguments 2]]
-												    [key                   [elt arguments 3]]
-												    [target_type           [elt arguments 4]]
-												    [target_property       [elt arguments 5]]
-												    [target_property_value [elt arguments 6]]]
+												    [key_type              [elt arguments 3]]
+												    [key                   [elt arguments 4]]
+												    [target_type           [elt arguments 5]]
+												    [target_property       [elt arguments 6]]
+												    [target_property_value [elt arguments 7]]]
 												[eval `[funk [this]
 													     [terminal_format standard-terminal '\nplan imagining assuring relationship exists: "'
-															      ,[object_type_property_relation_goal-declarative_english_string source_type source_property source_property_value `preposition key target_type target_property target_property_value] '."']
-													     [have this imagine_assuring_physical_relationship [quote ,source_type] [quote ,source_property] [quote ,source_property_value] [quote ,key] [quote ,target_type] [quote ,target_property] [quote ,target_property_value]]
+															      ,[object_type_property_relation_goal-declarative_english_string source_type
+																							      source_property
+																							      source_property_value
+																							      key_type
+																							      key
+																							      target_type
+																							      target_property
+																							      target_property_value] '."']
+													     [have this imagine_assuring_physical_relationship
+														   [quote ,source_type]
+														   [quote ,source_property]
+														   [quote ,source_property_value]
+														   [quote ,key_type]
+														   [quote ,key]
+														   [quote ,target_type]
+														   [quote ,target_property]
+														   [quote ,target_property_value]]
 													     ]]]]]
 					      [t                                            [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]

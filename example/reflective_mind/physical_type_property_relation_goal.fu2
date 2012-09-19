@@ -24,24 +24,28 @@
 [deframe physical_type_property_relation_goal [object_type_property_relation_goal] []
   [new [initial-mind
 	initial-source_type
-	initial-source_property
-	initial-source_property_value
+	initial-source_key_type
+	initial-source_key
+	initial-source_value
 	initial-key_type
 	initial-key
 	initial-target_type
-	initial-target_property
-	initial-target_property_value]
+	initial-target_key_type
+	initial-target_key
+	initial-target_value]
        [let [[knowledge_base_name `physical_goal_knowledge]]
 	 [construct object_type_property_relation_goal
 		    initial-mind
 		    knowledge_base_name
 		    initial-source_type
-		    initial-source_property
-		    initial-source_property_value
+		    initial-source_key_type
+		    initial-source_key
+		    initial-source_value
 		    initial-key_type
 		    initial-key
 		    initial-target_type
-		    initial-target_property
-		    initial-target_property_value]
+		    initial-target_key_type
+		    initial-target_key
+		    initial-target_value]
 	 ]]]
 

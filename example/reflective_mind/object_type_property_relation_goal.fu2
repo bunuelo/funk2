@@ -37,13 +37,15 @@
 						     knowledge_base_name
 						     
 						     this-source_type
-						     this-source_property
-						     this-source_property_value
+						     this-source_key_type
+						     this-source_key
+						     this-source_value
 						     this-key_type
 						     this-key
 						     this-target_type
-						     this-target_property
-						     this-target_property_value
+						     this-target_key_type
+						     this-target_key
+						     this-target_value
 						     
 						     this-source_phenomenal_name
 						     this-target_phenomenal_name
@@ -57,23 +59,27 @@
   [new [initial-mind
 	initial-knowledge_base_name
 	initial-source_type
-	initial-source_property
-	initial-source_property_value
+	initial-source_key_type
+	initial-source_key
+	initial-source_value
 	initial-key_type
 	initial-key
 	initial-target_type
-	initial-target_property
-	initial-target_property_value]
+	initial-target_key_type
+	initial-target_key
+	initial-target_value]
        [= mind                                   initial-mind]
        [= knowledge_base_name                    initial-knowledge_base_name]
        [= this-source_type                       initial-source_type]
-       [= this-source_property                   initial-source_property]
-       [= this-source_property_value             initial-source_property_value]
+       [= this-source_key_type                   initial-source_key_type]
+       [= this-source_key                        initial-source_key]
+       [= this-source_value                      initial-source_value]
        [= this-key_type                          initial-key_type]
        [= this-key                               initial-key]
        [= this-target_type                       initial-target_type]
-       [= this-target_property                   initial-target_property]
-       [= this-target_property_value             initial-target_property_value]
+       [= this-target_key_type                   initial-target_key_type]
+       [= this-target_key                        initial-target_key]
+       [= this-target_value                      initial-target_value]
        [= this-source_phenomenal_name            [get this __source_phenomenal_name]]
        [= this-target_phenomenal_name            [get this __target_phenomenal_name]]
        [= this-source_type_event_phenomenal_name [get this __source_type_event_phenomenal_name]]
@@ -113,10 +119,10 @@
 
 [deftypefunk object_type_property_relation_goal get as-english_conslist []
   [append `[I want]
-	  [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+	  [object_type_property_relation_goal-english_conslist this-source_type this-source_key this-source_value]
 	  `[to be]
 	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+	  [object_type_property_relation_goal-english_conslist this-target_type this-target_key this-target_value]]]
 
 [deftypefunk object_type_property_relation_goal get as-string []
   [conslist-as-english_string [get this as-english_conslist]]]
@@ -131,43 +137,68 @@
   [conslist-as-english_string [object_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value key_type key target_type target_property target_property_value]]]
 
 [deftypefunk object_type_property_relation_goal get as-declarative_english_conslist []
-  [object_type_property_relation_goal-declarative_english_conslist this-source_type this-source_property this-source_property_value this-key_type this-key this-target_type this-target_property this-target_property_value]]
+  [object_type_property_relation_goal-declarative_english_conslist this-source_type
+								   this-source_key
+								   this-source_value
+								   this-key_type
+								   this-key
+								   this-target_type
+								   this-target_key
+								   this-target_value]]
 
 [deftypefunk object_type_property_relation_goal get as-declarative_string []
   [conslist-as-english_string [get this as-declarative_english_conslist]]]
 
 [deftypefunk object_type_property_relation_goal get as-negative_declarative_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+  [append [object_type_property_relation_goal-english_conslist this-source_type
+							       this-source_key
+							       this-source_value]
 	  `[is not]
 	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+	  [object_type_property_relation_goal-english_conslist this-target_type
+							       this-target_key
+							       this-target_value]]]
 
 [deftypefunk object_type_property_relation_goal get as-negative_declarative_string []
   [conslist-as-english_string [get this as-negative_declarative_english_conslist]]]
 
 [deftypefunk object_type_property_relation_goal get as-now_true_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+  [append [object_type_property_relation_goal-english_conslist this-source_type
+							       this-source_key
+							       this-source_value]
 	  `[is now]
 	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+	  [object_type_property_relation_goal-english_conslist this-target_type
+							       this-target_key
+							       this-target_value]]]
 
 [deftypefunk object_type_property_relation_goal get as-now_true_string []
   [conslist-as-english_string [get this as-now_true_english_conslist]]]
 
 [deftypefunk object_type_property_relation_goal get as-no_longer_true_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type this-source_property this-source_property_value]
+  [append [object_type_property_relation_goal-english_conslist this-source_type
+							       this-source_key
+							       this-source_value]
 	  `[is no longer]
 	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type this-target_property this-target_property_value]]]
+	  [object_type_property_relation_goal-english_conslist this-target_type
+							       this-target_key
+							       this-target_value]]]
 
 [deftypefunk object_type_property_relation_goal get as-no_longer_true_string []
   [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
 
 [deftypefunk object_type_property_relation_goal get __source_phenomenal_name []
-  [semantic_object_property_type_event-phenomenal_name this-source_type `property this-source_property this-source_property_value]]
+  [semantic_object_property_type_event-phenomenal_name this-source_type
+						       this-source_key_type
+						       this-source_key
+						       this-source_value]]
 
 [deftypefunk object_type_property_relation_goal get __target_phenomenal_name []
-  [semantic_object_property_type_event-phenomenal_name this-target_type `property this-target_property this-target_property_value]]
+  [semantic_object_property_type_event-phenomenal_name this-target_type
+						       this-target_key_type
+						       this-target_key
+						       this-target_value]]
 
 [deftypefunk object_type_property_relation_goal get __source_type_event_phenomenal_name []
   [object_type_event-phenomenal_name [get this __source_phenomenal_name]]]
@@ -176,10 +207,10 @@
   [object_type_event-phenomenal_name [get this __target_phenomenal_name]]]
 
 [deftypefunk object_type_property_relation_goal get matches_type_event [event_time
-									  semantic_object_type_event_source
-									  key_type
-									  key
-									  semantic_object_type_event_target]
+									semantic_object_type_event_source
+									key_type
+									key
+									semantic_object_type_event_target]
   [let [[matches t]]
     [if [not [eq this-source_type `?]]
 	[let [[semantic_object_type_event_source-phenomenal_name [get semantic_object_type_event_source phenomenal_name]]]

@@ -83,22 +83,26 @@
   [have [get this layer `deliberative] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 [deftypefunk reflective_mind execute create_physical_type_property_relationship_goal [source_type
-										      source_type_property
-										      source_type_property_value
+										      source_key_type
+										      source_key
+										      source_value
 										      key_type
 										      key
 										      target_type
-										      target_type_property
-										      target_type_property_value]
+										      target_key_type
+										      target_key
+										      target_value]
   [have [get this layer `deliberative] create_physical_type_property_relationship_goal
 	source_type
-	source_type_property
-	source_type_property_value
+	source_key_type
+	source_key
+	source_value
 	key_type
 	key
 	target_type
-	target_type_property
-	target_type_property_value]]
+	target_key_type
+	target_key
+	target_value]]
 
 [deftypefunk reflective_mind execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `deliberative] create_physical_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
@@ -240,22 +244,26 @@
   [have [get this layer `reflective] create_deliberative1_type_relationship_goal source_deliberative1_object_type key_type key target_deliberative1_object_type]]
 
 [deftypefunk reflective_mind execute create_deliberative1_type_property_relationship_goal [source_type
-											   source_type_property
-											   source_type_property_value
+											   source_key_type
+											   source_key
+											   source_value
 											   key_type
 											   key
 											   target_type
-											   target_type_property
-											   target_type_property_value]
+											   target_key_type
+											   target_key
+											   target_value]
   [have [get this layer `reflective] create_deliberative1_type_property_relationship_goal
 	source_type
-	source_type_property
-	source_type_property_value
+	source_key_type
+	source_key
+	source_value
 	key_type
 	key
 	target_type
-	target_type_property
-	target_type_property_value]]
+	target_key_type
+	target_key
+	target_value]]
 
 [deftypefunk reflective_mind get deliberative1_semantic_action [phenomenal_name]
   [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]

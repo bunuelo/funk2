@@ -45,24 +45,28 @@
   ]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute create_deliberative1_type_property_relationship_goal [source_type
-														   source_type_property
-														   source_type_property_value
+														   source_key_type
+														   source_key
+														   source_value
 														   key_type
 														   key
 														   target_type
-														   target_type_property
-														   target_type_property_value]
+														   target_key_type
+														   target_key
+														   target_value]
   [let [[resource [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge]]]
     [let [[goal [new deliberative1_type_property_relation_goal
 		     [get this mind]
 		     source_type
-		     source_type_property
-		     source_type_property_value
+		     source_key_type
+		     source_key
+		     source_value
 		     key_type
 		     key
 		     target_type
-		     target_type_property
-		     target_type_property_value]]]
+		     target_key_type
+		     target_key
+		     target_value]]]
       [have resource add_goal goal]
       [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		       'agency, ' name ', adding deliberative1 goal "' [get goal as-declarative_string] '."']

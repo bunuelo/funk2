@@ -51,22 +51,26 @@
   [have [get this agency `physical_object_type_goal] create_physical_type_relationship_goal source_physical_object_type key_type key target_physical_object_type]]
 
 [deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_type
-											 source_type_property
-											 source_type_property_value
+											 source_key_type
+											 source_key
+											 source_value
 											 key_type
 											 key
 											 target_type
-											 target_type_property
-											 target_type_property_value]
+											 target_key_type
+											 target_key
+											 target_value]
   [have [get this agency `physical_object_type_goal] create_physical_type_property_relationship_goal
 	source_type
-	source_type_property
-	source_type_property_value
+	source_key_type
+	source_key
+	source_value
 	key_type
 	key
 	target_type
-	target_type_property
-	target_type_property_value]]
+	target_key_type
+	target_key
+	target_value]]
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']

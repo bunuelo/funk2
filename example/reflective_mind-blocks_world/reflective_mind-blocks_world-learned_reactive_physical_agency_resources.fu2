@@ -90,7 +90,7 @@
 			[dotimes [i 10]
 			  [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 			
-			[have [get this mind] wait_for_physical_property `gripper `is-me `t `movement_command `stop]
+			[have-apply [get this mind] wait_for_physical_property `[gripper property is-me t property movement_command stop]]
 			
 			]]]]
 

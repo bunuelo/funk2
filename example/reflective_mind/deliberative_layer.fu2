@@ -197,25 +197,27 @@
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
 [deftypefunk deliberative_layer execute wait_for_physical_relationship [source_type
-									source_property
-									source_property_value
+									source_key_type
+									source_key
+									source_value
 									key_type
 									key
 									target_type
-									target_property
-									target_property_value]
+									target_key_type
+									target_key
+									target_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
 						     [get [get this mind] semantic_realm]
 						     source_type
-						     `property
-						     source_property
-						     source_property_value
+						     source_key_type
+						     source_key
+						     source_value
 						     key_type
 						     key
 						     target_type
-						     `property
-						     target_property
-						     target_property_value]
+						     target_key_type
+						     target_key
+						     target_value]
 						phenomenal_name]]]
     [terminal_format standard-terminal '\nwaiting for relationship: looking for event, ' looking_for_event-phenomenal_name '.']
     [let [[done nil]]
@@ -232,25 +234,27 @@
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
 [deftypefunk deliberative_layer execute assure_physical_relationship [source_type
-								      source_property
-								      source_property_value
+								      source_key_type
+								      source_key
+								      source_value
 								      key_type
 								      key
 								      target_type
-								      target_property
-								      target_property_value]
+								      target_key_type
+								      target_key
+								      target_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
 						     [get [get this mind] semantic_realm]
 						     source_type
-						     `property
-						     source_property
-						     source_property_value
+						     source_key_type
+						     source_key
+						     source_value
 						     key_type
 						     key
 						     target_type
-						     `property
-						     target_property
-						     target_property_value]
+						     target_key_type
+						     target_key
+						     target_value]
 						phenomenal_name]]]
     [terminal_format standard-terminal '\nassuring relationship exists: ' looking_for_event-phenomenal_name '.']
     [let [[found nil]]
@@ -265,35 +269,39 @@
 	  [prog [terminal_format standard-terminal '\nassure_physical_relationship: did not find relationship.']
 		[error bug_name    `assure_physical_relationship-failed
 		       description `[assure_physical_relationship ,source_type
-								  ,source_property
-								  ,source_property_value
+								  ,source_key_type
+								  ,source_key
+								  ,source_value
 								  ,key_type
 								  ,key
 								  ,target_type
-								  ,target_property
-								  ,target_property_value]]]
+								  ,target_key_type
+								  ,target_key
+								  ,target_value]]]
 	nil]]]]
 
 [deftypefunk deliberative_layer execute imagine_assuring_physical_relationship [source_type
-										source_property
-										source_property_value
+										source_key_type
+										source_key
+										source_value
 										key_type
 										key
 										target_type
-										target_property
-										target_property_value]
+										target_key_type
+										target_key
+										target_value]
   [let [[looking_for_event-phenomenal_name [get [new semantic_partial_state_property_relation
 						     [get [get this mind] semantic_realm]
 						     source_type
-						     `property
-						     source_property
-						     source_property_value
+						     source_key_type
+						     source_key
+						     source_value
 						     key_type
 						     key
 						     target_type
-						     `property
-						     target_property
-						     target_property_value]
+						     target_key_type
+						     target_key
+						     target_value]
 						phenomenal_name]]]
     [terminal_format standard-terminal '\nimagining assuring relationship exists: ' looking_for_event-phenomenal_name '.']
     [let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
@@ -309,6 +317,14 @@
 	[if [not found]
 	    [prog [terminal_format standard-terminal '\nimagine_assuring_physical_relationship: did not find relationship.']
 		  [error bug_name    `imagine_assuring_physical_relationship-failed
-			 description `[imagine_assuring_physical_relationship ,source_type ,source_property ,source_property_value ,key ,target_type ,target_property ,target_property_value]]]
+			 description `[imagine_assuring_physical_relationship ,source_type
+									      ,source_key_type
+									      ,source_key
+									      ,source_value
+									      ,key
+									      ,target_type
+									      ,target_key_type
+									      ,target_key
+									      ,target_value]]]
 	  nil]]]]]
 

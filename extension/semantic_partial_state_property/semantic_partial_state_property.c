@@ -62,7 +62,7 @@ f2ptr f2__semantic_partial_state_property__phenomenal_name(f2ptr cause,
 							       key,
 							       target_type);
 }
-export_cefunk7(semantic_object_property_type_event__phenomenal_name,
+export_cefunk7(semantic_partial_state_property__phenomenal_name,
 	       source_type,
 	       source_key_type,
 	       source_key,

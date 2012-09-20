@@ -372,9 +372,9 @@ void funk2__destroy(funk2_t* this) {
   
   {
     status("funk2__main: telling all user threads to exit.");
-    this->user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__need_wait__set(&(this->user_thread_controller), boolean__true);
     funk2_user_thread_controller__exit(&(this->user_thread_controller));
-    this->user_thread_controller.please_wait = boolean__false;
+    funk2_user_thread_controller__need_wait__set(&(this->user_thread_controller), boolean__false);
   }
   
   funk2_virtual_processor_handler__destroy(&(this->virtual_processor_handler));

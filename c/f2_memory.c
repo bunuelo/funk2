@@ -43,7 +43,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
     }
   }
   if (should_enlarge_memory_now) {
-    __funk2.user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
     for (index = 0; index < memory_pool_num; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {
@@ -56,7 +56,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 	this->pool[index].should_enlarge_memory_now                         = boolean__false;
       }
     }
-    __funk2.user_thread_controller.please_wait = boolean__false;
+    funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__false);
   }
 }
 
@@ -217,7 +217,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
   do {
     this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = byte_num;
     this->pool[pool_index].should_enlarge_memory_now                         = boolean__true;
-    __funk2.user_thread_controller.please_wait                               = boolean__true;
+    funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
     if (pthread_self() == this->memory_handling_thread) {
       if (! this->bootstrapping_mode) {
 	funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
@@ -229,7 +229,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
       }
       this->pool[pool_index].should_enlarge_memory_now__need_at_least_byte_num = 0;
       this->pool[pool_index].should_enlarge_memory_now                         = boolean__false;
-      __funk2.user_thread_controller.please_wait                               = boolean__false;
+      funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__false);
     } else {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }

@@ -451,7 +451,7 @@
 			 [global_scheduler-active_fibers]]]
 	     nil]
        
-       [let [scheduler_hbox-label [gtk-label-new 'Scheduler stats.']]
+       [let [[scheduler_hbox-label [gtk-label-new 'Scheduler stats.']]]
 	 [have scheduler_hbox pack_start scheduler_hbox-label nil nil 0]]
        
        [have vbox pack_start menu_bar        nil nil 0]

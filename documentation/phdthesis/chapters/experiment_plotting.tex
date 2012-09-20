@@ -211,7 +211,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw[color=experimentdataonecolor] plot[mark=*, mark options={fill=white,draw=experimentdataonecolor,scale=\experimentmarkscalefour}]
+    \draw[color=experimentdataonecolor, mark repeat=\dataappendixmarkrepeat] plot[mark=*, mark options={fill=white,draw=experimentdataonecolor,scale=\experimentmarkscalefour}]
       file {#3};
   \end{scope}
 }
@@ -221,7 +221,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw[color=experimentdatatwocolor] plot[mark=square*, mark options={fill=white,draw=experimentdatatwocolor,scale=\experimentmarkscaletwo}]
+    \draw[color=experimentdatatwocolor, mark repeat=\dataappendixmarkrepeat] plot[mark=square*, mark options={fill=white,draw=experimentdatatwocolor,scale=\experimentmarkscaletwo}]
       file {#3};
   \end{scope}
 }
@@ -231,7 +231,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw[color=experimentdatathreecolor] plot[mark=triangle*, mark options={fill=white,draw=experimentdatathreecolor,scale=\experimentmarkscalethree}]
+    \draw[color=experimentdatathreecolor, mark repeat=\dataappendixmarkrepeat] plot[mark=triangle*, mark options={fill=white,draw=experimentdatathreecolor,scale=\experimentmarkscalethree}]
       file {#3};
   \end{scope}
 }
@@ -241,7 +241,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw[color=experimentdatafourcolor] plot[mark=square*, mark options={fill=experimentdatafourcolor,draw=experimentdatafourcolor,scale=\experimentmarkscaleone}]
+    \draw[color=experimentdatafourcolor, mark repeat=\dataappendixmarkrepeat] plot[mark=square*, mark options={fill=experimentdatafourcolor,draw=experimentdatafourcolor,scale=\experimentmarkscaleone}]
       file {#3};
   \end{scope}
 }
@@ -251,7 +251,7 @@
   \begin{scope}
     \clip (0,0) rectangle (#1 / 100 * 100,#2 / 100 * 103);
     
-    \draw[color=experimentdatafivecolor] plot[mark=triangle*, mark options={fill=experimentdatafivecolor,draw=experimentdatafivecolor,scale=\experimentmarkscalefive}]
+    \draw[color=experimentdatafivecolor, mark repeat=\dataappendixmarkrepeat] plot[mark=triangle*, mark options={fill=experimentdatafivecolor,draw=experimentdatafivecolor,scale=\experimentmarkscalefive}]
       file {#3};
   \end{scope}
 }
@@ -566,4 +566,5 @@
 \newcommand{\dataappendixexperimentoneprettyname}{Bootup and Perceive}
 \newcommand{\dataappendixexperimenttwoprettyname}{Deliberative Learning without Reflection}
 \newcommand{\dataappendixexperimentthreeprettyname}{Deliberative and Reflective Learning}
+\newcommand{\dataappendixmarkrepeat}{8}
 

@@ -40,12 +40,12 @@ f2ptr f2__cause_group_interaction__new(f2ptr cause) {
   f2ptr bytes_written_count_scheduler_cmutex = f2scheduler_cmutex__new(cause);
   f2ptr bytes_written_count_chunk            = raw__chunk__new(cause, sizeof(u64));
   return f2cause_group_interaction__new(cause,
-			    read_events_count_chunk,
-			    bytes_read_count_scheduler_cmutex,
-			    bytes_read_count_chunk,
-			    write_events_count_chunk,
-			    bytes_written_count_scheduler_cmutex,
-			    bytes_written_count_chunk);
+					read_events_count_chunk,
+					bytes_read_count_scheduler_cmutex,
+					bytes_read_count_chunk,
+					write_events_count_chunk,
+					bytes_written_count_scheduler_cmutex,
+					bytes_written_count_chunk);
 }
 def_pcfunk0(cause_group_interaction__new,
 	    "",

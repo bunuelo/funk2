@@ -38,17 +38,20 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   this->done_count     = 0;
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
+  pthread_mutex_lock(&(this->done_count_mutex));
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
+  pthread_mutex_unlock(&(this->done_count_mutex));
   this->start         = boolean__false;
   this->everyone_done = boolean__true;
 }
@@ -88,27 +91,29 @@ void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread
 
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count > 0) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
     this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -157,14 +162,15 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -209,14 +215,15 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -264,14 +271,15 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -319,14 +327,15 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -377,14 +386,15 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;
@@ -451,14 +461,15 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   this->everyone_done  = boolean__false;
   this->start          = boolean__true;
   {
-    u64 wait_tries = 0;
+    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
-      wait_tries ++;
-      if (wait_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
-	raw__fast_spin_sleep_yield();
-      }
+      pthread_cond_wait(&(this->done_count_cond));
+      //wait_tries ++;
+      //if (wait_tries > 1000) {
+      //	raw__spin_sleep_yield();
+      //} else {
+      //	raw__fast_spin_sleep_yield();
+      //}
     }
   }
   this->start         = boolean__false;

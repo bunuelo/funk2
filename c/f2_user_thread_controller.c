@@ -46,8 +46,9 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
   
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -113,8 +114,9 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
   
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -179,8 +181,9 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
   
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -241,8 +244,9 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
 
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -306,8 +310,9 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
 
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -371,8 +376,9 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
 
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -444,8 +450,9 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
 
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -531,8 +538,9 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   pthread_mutex_unlock(&(this->everyone_done_mutex));
   pthread_cond_broadcast(&(this->everyone_done_cond));
 
+  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
-  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
+  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
   pthread_mutex_lock(&(this->done_count_mutex));
   {
@@ -713,14 +721,22 @@ void funk2_user_thread_controller__defragment__fix_pointers(funk2_user_thread_co
   funk2_user_thread_controller__defragment__fix_pointers__signal_execute(&(this->defragment__fix_pointers));
 }
 
-void funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
+void funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
+  pthread_mutex_lock(&(this->something_to_do_while_waiting_politely_mutex));
+}
+
+void funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
+  pthread_mutex_unlock(&(this->something_to_do_while_waiting_politely_mutex));
   pthread_cond_broadcast(&(this->something_to_do_while_waiting_politely_cond));
 }
 
 void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {
-  this->need_wait = need_wait;
-  if (! (this->need_wait)) {
-    funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(this);
+  if (! need_wait) {
+    funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(this);
+    this->need_wait = boolean__false;
+    funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(this);
+  } else {
+    this->need_wait = boolean__true;
   }
 }
 

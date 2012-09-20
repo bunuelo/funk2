@@ -224,7 +224,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 	  should_collect_garbage = boolean__true;
 	}
       }
-      if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > 100000000ull) {
+      if (should_collect_garbage && (raw__nanoseconds_since_1970() - this->last_garbage_collect_nanoseconds_since_1970) > (1000000000ull / 40)) {
 	doing_garbage_collect_now = boolean__true;
       }
     }

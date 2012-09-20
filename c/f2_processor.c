@@ -416,7 +416,7 @@ typedef enum scheduler_fast_loop_exit_reason_e {
   exit_reason__found_larva
 } scheduler_fast_loop_exit_reason_t;
 
-#define execute_next_bytecodes__helper__fast_loop__max_bytecode_count (1*1024)
+#define execute_next_bytecodes__helper__fast_loop__max_bytecode_count (128)
 
 scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2ptr cause, f2ptr fiber) {
   //status("bytecode fast loop beginning.");

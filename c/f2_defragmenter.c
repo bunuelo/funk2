@@ -153,7 +153,8 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
   
   funk2_memorypool__shrink_last_free_block(memorypool, F2__INITIAL_MEMORY);
   
-  status("funk2_defragmenter__memory_pool__move_memory: defragment moving memory.  pool_index=" u64__fstr " done.", pool_index);
+  printf("\ndone moving memory.  pool_index=" u64__fstr " done.", pool_index);
+  status(  "done moving memory.  pool_index=" u64__fstr " done.", pool_index);
 }
 
 
@@ -260,7 +261,8 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
     }
   }
   
-  status("funk2_defragmenter__memory_pool__fix_pointers: defragment fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
+  printf("\nfixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
+  status(  "fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
 }
 
 

@@ -146,7 +146,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
   f2ptr return_value = nil;
   status("raw__memorypool__assert_valid(pool_index=" s64__fstr ") beginning.", pool_index);
   {
-    __funk2.user_thread_controller.please_wait = boolean__true;
+    funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
     funk2_user_thread_controller__signal_user_waiting_politely(&(__funk2.user_thread_controller));
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
   }
@@ -242,7 +242,7 @@ f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
  raw__memorypool__assert_valid__return_label:
   {
     funk2_user_thread_controller__signal_user_done_waiting_politely(&(__funk2.user_thread_controller));
-    __funk2.user_thread_controller.please_wait = boolean__false;
+    funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__false);
   }
   if (return_value == nil) {
     status("raw__memorypool__assert_valid(pool_index=" s64__fstr ") memorypool is valid.", pool_index);

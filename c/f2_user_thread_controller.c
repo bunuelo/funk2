@@ -714,9 +714,7 @@ void funk2_user_thread_controller__defragment__fix_pointers(funk2_user_thread_co
 }
 
 void funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
-  pthread_mutex_lock(&(this->something_to_do_while_waiting_politely_mutex));
   pthread_cond_broadcast(&(this->something_to_do_while_waiting_politely_cond));
-  pthread_mutex_unlock(&(this->something_to_do_while_waiting_politely_mutex));
 }
 
 void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {

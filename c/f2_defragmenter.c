@@ -153,8 +153,8 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
   
   funk2_memorypool__shrink_last_free_block(memorypool, F2__INITIAL_MEMORY);
   
-  printf("\ndone moving memory.  pool_index=" u64__fstr " done.", pool_index);
-  status(  "done moving memory.  pool_index=" u64__fstr " done.", pool_index);
+  printf("\nfunk2_memory__save_image_to_file: done moving memory in pool " u64__fstr ".", pool_index);
+  status(  "funk2_memory__save_image_to_file: done moving memory in pool " u64__fstr ".", pool_index);
 }
 
 
@@ -261,8 +261,8 @@ void funk2_defragmenter__memory_pool__fix_pointers(funk2_defragmenter_t* this, u
     }
   }
   
-  printf("\nfixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
-  status(  "fixing memory pointers.  pool_index=" u64__fstr " done.", pool_index);
+  printf("\nfunk2_memory__save_image_to_file: done fixing memory pointers in pool " u64__fstr ".", pool_index);
+  status(  "funk2_memory__save_image_to_file: done fixing memory pointers in pool " u64__fstr ".", pool_index);
 }
 
 

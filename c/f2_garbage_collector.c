@@ -243,7 +243,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       {
 	int index;
 	for (index = 0; index < memory_pool_num; index ++) {
-	  status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+	  garbage_collector_status("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
 	}
       }
       funk2_garbage_collector__collect_garbage(this);

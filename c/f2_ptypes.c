@@ -2223,7 +2223,7 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, i
 
 
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
-  status("funk2_garbage_collector: touch_all_symbols.");
+  garbage_collector_status("funk2_garbage_collector: touch_all_symbols.");
   funk2_symbol_hash_node_t** array_iter = this->array;
   funk2_symbol_hash_node_t*  node_iter;
   int i;

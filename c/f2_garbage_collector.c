@@ -233,7 +233,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     }
     if (doing_garbage_collect_now) {
       garbage_collector_status("funk2_garbage_collector__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
-      __funk2.user_thread_controller.please_wait = boolean__true;
+      funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
       funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
       garbage_collector_status("");
       garbage_collector_status("**********************************");
@@ -261,7 +261,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       }
       this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
       this->user_signal_garbage_collect_now = boolean__false;
-      __funk2.user_thread_controller.please_wait = boolean__false;
+      funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__false);
     }
     funk2_processor_mutex__unlock(&(this->do_collection_mutex));
   }

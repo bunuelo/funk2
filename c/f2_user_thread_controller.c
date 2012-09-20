@@ -574,6 +574,9 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   pthread_cond_init(&(this->waiting_count_cond), NULL);
   this->waiting_count = 0;
   
+  pthread_mutex_init(&(this->something_to_do_while_waiting_politely_mutex), NULL);
+  pthread_cond_init(&(this->something_to_do_while_waiting_politely_cond), NULL);
+
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
@@ -587,6 +590,9 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
   pthread_mutex_destroy(&(this->waiting_count_mutex));
   pthread_cond_destroy(&(this->waiting_count_cond));
+  
+  pthread_mutex_destroy(&(this->something_to_do_while_waiting_politely_mutex));
+  pthread_cond_destroy(&(this->something_to_do_while_waiting_politely_cond));
   
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__blacken_grey_nodes__destroy(&(this->blacken_grey_nodes));
@@ -622,25 +628,38 @@ void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_
 
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__signal_user_waiting_politely(this);
-  {
-    u64 wait_tries = 0;
-    while (this->please_wait || pthread_mutex_trylock(&(this->waiting_count_mutex))) {
-      if                   (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(&(this->touch_all_protected_alloc_arrays));}
-      else if                            (this->blacken_grey_nodes.start) {funk2_user_thread_controller__blacken_grey_nodes__user_process(              &(this->blacken_grey_nodes));}
-      else if                         (this->grey_from_other_nodes.start) {funk2_user_thread_controller__grey_from_other_nodes__user_process(           &(this->grey_from_other_nodes));}
-      else if                               (this->free_white_exps.start) {funk2_user_thread_controller__free_white_exps__user_process(                 &(this->free_white_exps));}
-      else if                           (this->remove_freed_fibers.start) {funk2_user_thread_controller__remove_freed_fibers__user_process(             &(this->remove_freed_fibers));}
-      else if                                          (this->exit.start) {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
-      else if                       (this->defragment__move_memory.start) {funk2_user_thread_controller__defragment__move_memory__user_process(         &(this->defragment__move_memory));}
-      else if                      (this->defragment__fix_pointers.start) {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
-      {
-	wait_tries ++;
-	if (wait_tries > 1000) {
-	  raw__spin_sleep_yield();
-	} else {
-	  raw__fast_spin_sleep_yield();
+  
+  while (pthread_mutex_trylock(&(this->waiting_count_mutex)) != 0) {
+    {
+      u64 wait_tries = 0;
+      while (this->please_wait                                  &&
+	     (! (this->touch_all_protected_alloc_arrays.start ||
+		 this->blacken_grey_nodes.start               ||
+		 this->grey_from_other_nodes.start            ||
+		 this->free_white_exps.start                  ||
+		 this->remove_freed_fibers.start              ||
+		 this->exit.start                             ||
+		 this->defragment__move_memory.start          ||
+		 this->defragment__fix_pointers.start))) {
+	{
+	  wait_tries ++;
+	  if (wait_tries > 1000) {
+	    raw__spin_sleep_yield();
+	  } else {
+	    raw__fast_spin_sleep_yield();
+	  }
 	}
       }
+      
+      if      (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(&(this->touch_all_protected_alloc_arrays));}
+      else if (this->blacken_grey_nodes.start)               {funk2_user_thread_controller__blacken_grey_nodes__user_process(              &(this->blacken_grey_nodes));}
+      else if (this->grey_from_other_nodes.start)            {funk2_user_thread_controller__grey_from_other_nodes__user_process(           &(this->grey_from_other_nodes));}
+      else if (this->free_white_exps.start)                  {funk2_user_thread_controller__free_white_exps__user_process(                 &(this->free_white_exps));}
+      else if (this->remove_freed_fibers.start)              {funk2_user_thread_controller__remove_freed_fibers__user_process(             &(this->remove_freed_fibers));}
+      else if (this->exit.start)                             {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
+      else if (this->defragment__move_memory.start)          {funk2_user_thread_controller__defragment__move_memory__user_process(         &(this->defragment__move_memory));}
+      else if (this->defragment__fix_pointers.start)         {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
+      
     }
   }
   this->waiting_count --;
@@ -686,4 +705,7 @@ void funk2_user_thread_controller__defragment__fix_pointers(funk2_user_thread_co
   funk2_user_thread_controller__defragment__fix_pointers__signal_execute(&(this->defragment__fix_pointers));
 }
 
+void funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
+  pthread_cond_broadcast(&(this->something_to_do_while_waiting_politely_cond));
+}
 

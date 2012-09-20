@@ -22,7 +22,9 @@
 #include "funk2.h"
 
 void funk2_scheduler_thread_controller__init(funk2_scheduler_thread_controller_t* this) {
-  this->please_wait   = boolean__false;
+  pthread_mutex_init(&(this->need_wait_mutex), NULL);
+  pthread_cond_init(&(this->need_wait_cond), NULL);
+  this->need_wait = boolean__false;
   
   pthread_mutex_init(&(this->waiting_count_mutex), NULL);
   pthread_cond_init(&(this->waiting_count_cond), NULL);
@@ -32,10 +34,12 @@ void funk2_scheduler_thread_controller__init(funk2_scheduler_thread_controller_t
 void funk2_scheduler_thread_controller__destroy(funk2_scheduler_thread_controller_t* this) {
   pthread_mutex_destroy(&(this->waiting_count_mutex));
   pthread_cond_destroy(&(this->waiting_count_cond));
+  pthread_mutex_destroy(&(this->need_wait_mutex));
+  pthread_cond_destroy(&(this->need_wait_cond));
 }
 
 void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2_scheduler_thread_controller_t* this) {
-  this->please_wait = boolean__true;
+  funk2_scheduler_thread_controller__need_wait__set(this, boolean__true);
   pthread_mutex_lock(&(this->waiting_count_mutex));
   {
     s64 waiting_count = this->waiting_count;
@@ -56,7 +60,7 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
 
 void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_scheduler_thread_controller_t* this) {
   status("management thread waiting for " u64__fstr " virtual_processors to continue.", ((u64)memory_pool_num));
-  this->please_wait = boolean__false;
+  funk2_scheduler_thread_controller__need_wait__set(this, boolean__false);
   
   pthread_mutex_lock(&(this->waiting_count_mutex));
   {
@@ -87,17 +91,11 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));
   
-  {
-    u64 wait_tries = 0;
-    while (this->please_wait) {
-      if (wait_tries < 1000) {
-	wait_tries ++;
-	raw__fast_spin_sleep_yield();
-      } else {
-	raw__spin_sleep_yield();
-      }
-    }
+  pthread_mutex_lock(&(this->need_wait_mutex));
+  while (this->need_wait) {
+    pthread_cond_wait(&(this->need_wait_cond), &(this->need_wait_mutex));
   }
+  pthread_mutex_unlock(&(this->need_wait_mutex));
   
   status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());
   
@@ -111,8 +109,15 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
 }
 
 void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler_thread_controller_t* this) {
-  if (this->please_wait) {
+  if (this->need_wait) {
     funk2_scheduler_thread_controller__user_wait_politely(this);
   }
+}
+
+void funk2_scheduler_thread_controller__need_wait__set(funk2_scheduler_thread_controller_t* this, boolean_t need_wait) {
+  pthread_mutex_lock(&(this->need_wait_mutex));
+  this->need_wait = need_wait;
+  pthread_mutex_unlock(&(this->need_wait_mutex));
+  pthread_cond_broadcast(&(this->need_wait_cond));
 }
 

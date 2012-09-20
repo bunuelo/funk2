@@ -23,7 +23,9 @@
 #define F2__SCHEDULER_THREAD_CONTROLLER__H
 
 typedef struct funk2_scheduler_thread_controller_s {
-  boolean_t       please_wait;
+  pthread_mutex_t need_wait_mutex;
+  pthread_cond_t  need_wait_cond;
+  boolean_t       need_wait;
   pthread_mutex_t waiting_count_mutex;
   pthread_cond_t  waiting_count_cond;
   s64             waiting_count;
@@ -35,6 +37,7 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
 void funk2_scheduler_thread_controller__let_scheduler_threads_continue    (funk2_scheduler_thread_controller_t* this);
 void funk2_scheduler_thread_controller__user_wait_politely                (funk2_scheduler_thread_controller_t* this);
 void funk2_scheduler_thread_controller__check_user_wait_politely          (funk2_scheduler_thread_controller_t* this);
+void funk2_scheduler_thread_controller__need_wait__set                    (funk2_scheduler_thread_controller_t* this, boolean_t need_wait);
 
 #endif // F2__SCHEDULER_THREAD_CONTROLLER__H
 

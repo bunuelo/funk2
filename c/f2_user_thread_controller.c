@@ -34,8 +34,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(funk2_
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
   pthread_mutex_destroy(&(this->done_count_mutex));
   pthread_cond_destroy(&(this->done_count_cond));
-  pthread_mutex_destroy(&(this->everyone_done_mutex), NULL);
-  pthread_cond_destroy(&(this->everyone_done_cond), NULL);
+  pthread_mutex_destroy(&(this->everyone_done_mutex));
+  pthread_cond_destroy(&(this->everyone_done_cond));
 }
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
@@ -86,8 +86,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__init(funk2_user_thread_co
 void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
   pthread_mutex_destroy(&(this->done_count_mutex));
   pthread_cond_destroy(&(this->done_count_cond));
-  pthread_mutex_destroy(&(this->everyone_done_mutex), NULL);
-  pthread_cond_destroy(&(this->everyone_done_cond), NULL);
+  pthread_mutex_destroy(&(this->everyone_done_mutex));
+  pthread_cond_destroy(&(this->everyone_done_cond));
 }
 
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {

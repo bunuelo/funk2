@@ -256,7 +256,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 	int index;
 	for (index = 0; index < memory_pool_num; index ++) {
 	  this->gc_pool[index].should_run_gc = boolean__false;
-	  status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
+	  garbage_collector_status("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
 	}
       }
       this->last_garbage_collect_nanoseconds_since_1970 = raw__nanoseconds_since_1970();

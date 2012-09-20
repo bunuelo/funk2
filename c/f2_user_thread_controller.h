@@ -170,7 +170,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 // funk2_user_thread_controller
 
 typedef struct funk2_user_thread_controller_s {
-  boolean_t                                                        please_wait;
+  boolean_t                                                        need_wait;
   pthread_mutex_t                                                  something_to_do_while_waiting_politely_mutex;
   pthread_cond_t                                                   something_to_do_while_waiting_politely_cond;
   pthread_mutex_t                                                  waiting_count_mutex;
@@ -205,6 +205,7 @@ void  funk2_user_thread_controller__need_start_count__increment                 
 void  funk2_user_thread_controller__need_start_count__decrement                  (funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__need_start_count__wait_until_nonzero         (funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this);
+void  funk2_user_thread_controller__need_wait__set                               (funk2_user_thread_controller_t* this, boolean_t need_wait);
 
 #endif // F2__USER_THREAD_CONTROLLER__H
 

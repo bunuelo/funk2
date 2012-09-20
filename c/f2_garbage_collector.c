@@ -108,7 +108,7 @@ void funk2_garbage_collector__touch_f2ptr(funk2_garbage_collector_t* this, f2ptr
 }
 
 void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
-  status("funk2_garbage_collector: touch_all_roots.");
+  garbage_collector_status("funk2_garbage_collector: touch_all_roots.");
   // this is where we touch everything we want to keep!
   {
     // parallelized
@@ -132,22 +132,22 @@ boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector
 }
 
 void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* this) {
-  status("funk2_garbage_collector: spread_all_blackness.");
+  garbage_collector_status("funk2_garbage_collector: spread_all_blackness.");
   u64 cycle_count    = 0;
   while (funk2_garbage_collector__still_have_grey_nodes(this)) {
-    status("funk2_garbage_collector: blackening all grey nodes.  cycle_count=" u64__fstr, cycle_count);
+    garbage_collector_status("funk2_garbage_collector: blackening all grey nodes.  cycle_count=" u64__fstr, cycle_count);
     // parallelized
     funk2_user_thread_controller__blacken_grey_nodes(&(__funk2.user_thread_controller));
-    status("funk2_garbage_collector: greying from other nodes.  cycle_count=" u64__fstr, cycle_count);
+    garbage_collector_status("funk2_garbage_collector: greying from other nodes.  cycle_count=" u64__fstr, cycle_count);
     // parallelized
     funk2_user_thread_controller__grey_from_other_nodes(&(__funk2.user_thread_controller));
     cycle_count ++;
   }
-  status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
+  garbage_collector_status("funk2_garbage_collector: done with spread_all_blackness.  cycle_count=" u64__fstr, cycle_count);
 }
 
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
-  status("funk2_garbage_collector: collect_garbage.");
+  garbage_collector_status("funk2_garbage_collector: collect_garbage.");
   int pool_index;
   for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
     funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));
@@ -201,7 +201,7 @@ void funk2_garbage_collector__signal_exit_protected_region(funk2_garbage_collect
 }
 
 void funk2_garbage_collector__touch_never_delete_list(funk2_garbage_collector_t* this) {
-  status("funk2_garbage_collector: touch_never_delete_list length=" u64__fstr ".", this->never_delete_list.used_num);
+  garbage_collector_status("funk2_garbage_collector: touch_never_delete_list length=" u64__fstr ".", this->never_delete_list.used_num);
   u64 i;
   for (i = 0; i < this->never_delete_list.used_num; i++) {
     funk2_garbage_collector__touch_f2ptr(this, this->never_delete_list.data[i]);
@@ -232,14 +232,14 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       doing_garbage_collect_now = boolean__true;
     }
     if (doing_garbage_collect_now) {
-      status("funk2_garbage_collector__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
+      garbage_collector_status("funk2_garbage_collector__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
       __funk2.user_thread_controller.please_wait = boolean__true;
       funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
-      status("");
-      status("**********************************");
-      status("**** DOING GARBAGE COLLECTION ****");
-      status("**********************************");
-      status("");
+      garbage_collector_status("");
+      garbage_collector_status("**********************************");
+      garbage_collector_status("**** DOING GARBAGE COLLECTION ****");
+      garbage_collector_status("**********************************");
+      garbage_collector_status("");
       {
 	int index;
 	for (index = 0; index < memory_pool_num; index ++) {
@@ -247,11 +247,11 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 	}
       }
       funk2_garbage_collector__collect_garbage(this);
-      status("");
-      status("**************************************");
-      status("**** DONE WITH GARBAGE COLLECTION ****");
-      status("**************************************");
-      status("");
+      garbage_collector_status("");
+      garbage_collector_status("**************************************");
+      garbage_collector_status("**** DONE WITH GARBAGE COLLECTION ****");
+      garbage_collector_status("**************************************");
+      garbage_collector_status("");
       {
 	int index;
 	for (index = 0; index < memory_pool_num; index ++) {

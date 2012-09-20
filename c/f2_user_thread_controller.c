@@ -40,15 +40,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -92,15 +85,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count > 0) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -108,15 +94,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -167,15 +146,8 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -222,15 +194,8 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -280,15 +245,8 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -338,15 +296,8 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -399,15 +350,8 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));
@@ -476,15 +420,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   this->start          = boolean__true;
   pthread_mutex_lock(&(this->done_count_mutex));
   {
-    //u64 wait_tries = 0;
     while (this->done_count < memory_pool_num) {
       pthread_cond_wait(&(this->done_count_cond), &(this->done_count_mutex));
-      //wait_tries ++;
-      //if (wait_tries > 1000) {
-      //	raw__spin_sleep_yield();
-      //} else {
-      //	raw__fast_spin_sleep_yield();
-      //}
     }
   }
   pthread_mutex_unlock(&(this->done_count_mutex));

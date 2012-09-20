@@ -569,6 +569,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 
 void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   this->please_wait   = boolean__false;
+  
   pthread_mutex_init(&(this->waiting_count_mutex), NULL);
   pthread_cond_init(&(this->waiting_count_cond), NULL);
   this->waiting_count = 0;

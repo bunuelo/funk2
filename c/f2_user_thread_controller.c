@@ -59,6 +59,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_proces
   pthread_mutex_lock(&(this->done_count_mutex));
   this->done_count ++;
   pthread_mutex_unlock(&(this->done_count_mutex));
+  pthread_cond_broadcast(&(this->done_count_cond));
   {
     u64 wait_tries = 0;
     while (! (this->everyone_done)) {
@@ -120,6 +121,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
   pthread_mutex_lock(&(this->done_count_mutex));
   this->done_count ++;
   pthread_mutex_unlock(&(this->done_count_mutex));
+  pthread_cond_broadcast(&(this->done_count_cond));
   {
     u64 wait_tries = 0;
     while (! (this->everyone_done)) {
@@ -134,6 +136,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
   pthread_mutex_lock(&(this->done_count_mutex));
   this->done_count --;
   pthread_mutex_unlock(&(this->done_count_mutex));
+  pthread_cond_broadcast(&(this->done_count_cond));
 }
 
 // funk2_user_thread_controller__grey_from_other_nodes
@@ -174,6 +177,7 @@ void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_use
   pthread_mutex_lock(&(this->done_count_mutex));
   this->done_count ++;
   pthread_mutex_unlock(&(this->done_count_mutex));
+  pthread_cond_broadcast(&(this->done_count_cond));
   {
     u64 wait_tries = 0;
     while (! (this->everyone_done)) {
@@ -226,6 +230,7 @@ void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thre
     pthread_mutex_lock(&(this->done_count_mutex));
     this->done_count ++;
     pthread_mutex_unlock(&(this->done_count_mutex));
+    pthread_cond_broadcast(&(this->done_count_cond));
     {
       u64 wait_tries = 0;
       while (! (this->everyone_done)) {
@@ -280,6 +285,7 @@ void funk2_user_thread_controller__remove_freed_fibers__user_process(funk2_user_
     pthread_mutex_lock(&(this->done_count_mutex));
     this->done_count ++;
     pthread_mutex_unlock(&(this->done_count_mutex));
+    pthread_cond_broadcast(&(this->done_count_cond));
     {
       u64 wait_tries = 0;
       while (! (this->everyone_done)) {
@@ -332,6 +338,7 @@ void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controll
   pthread_mutex_lock(&(this->done_count_mutex));
   this->done_count ++;
   pthread_mutex_unlock(&(this->done_count_mutex));
+  pthread_cond_broadcast(&(this->done_count_cond));
   funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__my_virtual_processor_thread(&(__funk2.virtual_processor_handler));
   virtual_processor_thread->exit   = boolean__true;
   virtual_processor_thread->exited = boolean__true;
@@ -401,6 +408,7 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
       pthread_mutex_lock(&(this->done_count_mutex));
       this->done_count ++;
       pthread_mutex_unlock(&(this->done_count_mutex));
+      pthread_cond_broadcast(&(this->done_count_cond));
     }
     pthread_mutex_unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
@@ -474,6 +482,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
       pthread_mutex_lock(&(this->done_count_mutex));
       this->done_count ++;
       pthread_mutex_unlock(&(this->done_count_mutex));
+      pthread_cond_broadcast(&(this->done_count_cond));
     }
     pthread_mutex_unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {

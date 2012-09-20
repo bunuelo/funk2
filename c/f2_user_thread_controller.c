@@ -655,7 +655,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 		   this->exit.start                             ||
 		   this->defragment__move_memory.start          ||
 		   this->defragment__fix_pointers.start))) {
-	  pthread_cond_wait(&(this->something_to_do_while_waiting_politely_cond));
+	  pthread_cond_wait(&(this->something_to_do_while_waiting_politely_cond), &(this->something_to_do_while_waiting_politely_mutex));
 	}
       }
       pthread_mutex_unlock(&(this->something_to_do_while_waiting_politely_mutex));

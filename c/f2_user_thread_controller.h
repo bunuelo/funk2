@@ -171,8 +171,9 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 
 typedef struct funk2_user_thread_controller_s {
   boolean_t                                                        please_wait;
-  s64                                                              waiting_count;
   pthread_mutex_t                                                  waiting_count_mutex;
+  pthread_cond_t                                                   waiting_count_cond;
+  s64                                                              waiting_count;
   funk2_user_thread_controller__touch_all_protected_alloc_arrays_t touch_all_protected_alloc_arrays;
   funk2_user_thread_controller__blacken_grey_nodes_t               blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t            grey_from_other_nodes;

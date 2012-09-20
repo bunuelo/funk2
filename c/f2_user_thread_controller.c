@@ -650,7 +650,7 @@ void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__signal_user_waiting_politely(this);
   
-  while (this->need_wait || (pthread_mutex_trylock(&(this->waiting_count_mutex)) != 0)) {
+  while (this->need_wait) {
     {
       pthread_mutex_lock(&(this->something_to_do_while_waiting_politely_mutex));
       {
@@ -678,6 +678,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
       else if (this->defragment__fix_pointers.start)         {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
     }
   }
+  pthread_mutex_lock(&(this->waiting_count_mutex));
   this->waiting_count --;
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));

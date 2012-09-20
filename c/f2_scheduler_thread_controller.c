@@ -87,8 +87,16 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));
   
-  while (this->please_wait) {
-    raw__fast_spin_sleep_yield();
+  {
+    u64 wait_tries = 0;
+    while (this->please_wait) {
+      if (wait_tries < 1000) {
+	wait_tries ++;
+	raw__fast_spin_sleep_yield();
+      } else {
+	raw__spin_sleep_yield();
+      }
+    }
   }
   
   status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());

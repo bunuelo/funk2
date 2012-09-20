@@ -242,12 +242,23 @@ boolean_t funk2_protected_alloc_array_fiber_hash__in_protected_region(funk2_prot
 
 
 void funk2_protected_alloc_array_fiber_hash__touch_all(funk2_protected_alloc_array_fiber_hash_t* this, funk2_garbage_collector_pool_t* garbage_collector_pool) {
+#if defined(DEBUG_GARBAGE_COLLECTOR_STATUS)
   funk2_hash__iteration(&(this->used_fiber_hash), key, value,
-			f2ptr                          fiber                 = key;
 			funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(value);
-			garbage_collector_status("funk2_protected_alloc_array_fiber_hash: touch_all.  pool_index=" u64__fstr " fiber=" f2ptr__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr, this_processor_thread__pool_index(), fiber, protected_alloc_array->used_num, protected_alloc_array->reentrance_count);
+			f2ptr                          fiber                 = key;
+			garbage_collector_status("funk2_protected_alloc_array_fiber_hash: touch_all.  pool_index=" u64__fstr " fiber=" f2ptr__fstr " used_num=" u64__fstr " reentrance_count=" s64__fstr,
+						 this_processor_thread__pool_index(),
+						 fiber,
+						 protected_alloc_array->used_num,
+						 protected_alloc_array->reentrance_count);
 			funk2_protected_alloc_array__touch_all(protected_alloc_array, garbage_collector_pool);
 			);
+#else
+  funk2_hash__value__iteration(&(this->used_fiber_hash), value,
+			       funk2_protected_alloc_array_t* protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(value);
+			       funk2_protected_alloc_array__touch_all(protected_alloc_array, garbage_collector_pool);
+			       );
+#endif
 }
 
 void funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(funk2_protected_alloc_array_fiber_hash_t* this) {

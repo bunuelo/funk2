@@ -31,6 +31,8 @@ typedef struct funk2_user_thread_controller__touch_all_protected_alloc_arrays_s 
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__touch_all_protected_alloc_arrays_t;
 
@@ -47,6 +49,8 @@ typedef struct funk2_user_thread_controller__blacken_grey_nodes_s {
   pthread_cond_t  done_count_cond;
   s64             done_count;
   atomic_t        not_exited_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__blacken_grey_nodes_t;
 
@@ -62,6 +66,8 @@ typedef struct funk2_user_thread_controller__grey_from_other_nodes_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__grey_from_other_nodes_t;
 
@@ -77,6 +83,8 @@ typedef struct funk2_user_thread_controller__free_white_exps_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__free_white_exps_t;
 
@@ -92,6 +100,8 @@ typedef struct funk2_user_thread_controller__remove_freed_fibers_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__remove_freed_fibers_t;
 
@@ -107,6 +117,8 @@ typedef struct funk2_user_thread_controller__exit_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
 } funk2_user_thread_controller__exit_t;
 
@@ -122,6 +134,8 @@ typedef struct funk2_user_thread_controller__defragment__move_memory_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
   boolean_t       user_process_done[memory_pool_num];
   pthread_mutex_t user_process_already_waiting_mutex[memory_pool_num];
@@ -139,6 +153,8 @@ typedef struct funk2_user_thread_controller__defragment__fix_pointers_s {
   pthread_mutex_t done_count_mutex;
   pthread_cond_t  done_count_cond;
   s64             done_count;
+  pthread_mutex_t everyone_done_mutex;
+  pthread_cond_t  everyone_done_cond;
   boolean_t       everyone_done;
   boolean_t       user_process_done[memory_pool_num];
   pthread_mutex_t user_process_already_waiting_mutex[memory_pool_num];

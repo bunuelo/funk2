@@ -30,6 +30,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(funk2_
 }
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
@@ -79,6 +81,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__init(funk2_user_thread_co
 }
 
 void funk2_user_thread_controller__blacken_grey_nodes__destroy(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
@@ -141,6 +145,8 @@ void funk2_user_thread_controller__grey_from_other_nodes__init(funk2_user_thread
 }
 
 void funk2_user_thread_controller__grey_from_other_nodes__destroy(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
@@ -190,6 +196,8 @@ void funk2_user_thread_controller__free_white_exps__init(funk2_user_thread_contr
 }
 
 void funk2_user_thread_controller__free_white_exps__destroy(funk2_user_thread_controller__free_white_exps_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_thread_controller__free_white_exps_t* this) {
@@ -242,6 +250,8 @@ void funk2_user_thread_controller__remove_freed_fibers__init(funk2_user_thread_c
 }
 
 void funk2_user_thread_controller__remove_freed_fibers__destroy(funk2_user_thread_controller__remove_freed_fibers_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_user_thread_controller__remove_freed_fibers_t* this) {
@@ -294,6 +304,8 @@ void funk2_user_thread_controller__exit__init(funk2_user_thread_controller__exit
 }
 
 void funk2_user_thread_controller__exit__destroy(funk2_user_thread_controller__exit_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
 }
 
 void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_controller__exit_t* this) {
@@ -415,6 +427,9 @@ void funk2_user_thread_controller__defragment__fix_pointers__init(funk2_user_thr
 }
 
 void funk2_user_thread_controller__defragment__fix_pointers__destroy(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
+  pthread_mutex_destroy(&(this->done_count_mutex));
+  pthread_cond_destroy(&(this->done_count_cond));
+  
   {
     s64 index;
     for (index = 0; index < memory_pool_num; index ++) {

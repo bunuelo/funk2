@@ -68,7 +68,7 @@ void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_sch
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   
   pthread_mutex_lock(&(this->waiting_count_mutex));
-  while (waiting_count > 0) {
+  while (this->waiting_count > 0) {
     pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
   }
   pthread_mutex_unlock(&(this->waiting_count_mutex));

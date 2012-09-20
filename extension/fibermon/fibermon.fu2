@@ -374,6 +374,7 @@
 			   [fibermon_menu_item       [gtk-menu_item-new 'Fibermon']]
 			   [fibermon_menu            [gtk-menu-new]]
 			   [fibermon_exit_menu_item  [gtk-menu_item-new 'Exit']]
+			   [scheduler_hbox           [gtk-hbox-new 0]]
 			   [hbox                     [gtk-hbox-new 0]]
 			   [hbox-quit_cause_button   [gtk-button-new_with_label 'Quit Cause']]
 			   [hbox-quit_cause_label    [gtk-label-new 'cause filter:']]
@@ -450,7 +451,11 @@
 			 [global_scheduler-active_fibers]]]
 	     nil]
        
+       [let [scheduler_hbox-label [gtk-label-new 'Scheduler stats.']]
+	 [have scheduler_hbox pack_start scheduler_hbox-label nil nil 0]]
+       
        [have vbox pack_start menu_bar        nil nil 0]
+       [have vbox pack_start scheduler_hbox  nil nil 0]
        [have vbox pack_start hbox            nil nil 0]
        [have vbox pack_start scrolled_window t t 0]
        [have win add vbox]

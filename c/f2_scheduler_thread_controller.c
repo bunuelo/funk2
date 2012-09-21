@@ -50,24 +50,8 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   status("management thread asking " u64__fstr " virtual_processors to wait politely.", ((u64)memory_pool_num));
   
-  {
-    s64 wait_tries = 0;
-    while (this->waiting_count < memory_pool_num) {
-      if (pthread_mutex_trylock(&(this->waiting_count_mutex)) == 0) {
-	while (this->waiting_count < memory_pool_num) {
-	  pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
-	}
-	pthread_mutex_unlock(&(this->waiting_count_mutex));
-      } else {
-	if (wait_tries < 1000) {
-	  wait_tries ++;
-	  raw__fast_spin_sleep_yield();
-	} else {
-	  raw__spin_sleep_yield();
-	}
-      }
-    }
-  }
+  pthread_cond_wait_while(this->waiting_count < memory_pool_num, &(this->waiting_count_cond), &(this->waiting_count_mutex));
+  
   status("there are " u64__fstr " virtual_processors waiting politely.", ((u64)memory_pool_num));
 }
 
@@ -84,24 +68,7 @@ void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_sch
   }
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   
-  {
-    s64 wait_tries = 0;
-    while (this->waiting_count > 0) {
-      if (pthread_mutex_trylock(&(this->waiting_count_mutex)) == 0) {
-	while (this->waiting_count > 0) {
-	  pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
-	}
-	pthread_mutex_unlock(&(this->waiting_count_mutex));
-      } else {
-	if (wait_tries < 1000) {
-	  wait_tries ++;
-	  raw__fast_spin_sleep_yield();
-	} else {
-	  raw__spin_sleep_yield();
-	}
-      }
-    }
-  }
+  pthread_cond_wait_while(this->waiting_count > 0, &(this->waiting_count_cond), &(this->waiting_count_mutex));
   
   status("all " u64__fstr " virtual_processors have continued.", ((u64)memory_pool_num));
 }
@@ -117,24 +84,8 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));
   
-  {
-    s64 wait_tries = 0;
-    while (this->need_wait) {
-      if (pthread_mutex_trylock(&(this->need_wait_mutex)) == 0) {
-	while (this->need_wait) {
-	  pthread_cond_wait(&(this->need_wait_cond), &(this->need_wait_mutex));
-	}
-	pthread_mutex_unlock(&(this->need_wait_mutex));
-      } else {
-	if (wait_tries < 1000) {
-	  wait_tries ++;
-	  raw__fast_spin_sleep_yield();
-	} else {
-	  raw__spin_sleep_yield();
-	}
-      }
-    }
-  }
+  pthread_cond_wait_while(this->need_wait, &(this->need_wait_cond), &(this->need_wait_mutex));
+  
   status("virtual processor " u64__fstr " continuing.", this_processor_thread__pool_index());
   
   pthread_mutex_lock(&(this->waiting_count_mutex));

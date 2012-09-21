@@ -82,7 +82,7 @@ export_cefunk1(semantic_thought__type, thing, 0, "Returns the specific type of o
 
 
 f2ptr raw__semantic_thought__fiber(f2ptr cause, f2ptr this) {
-  return raw__frame__lookup_type_var_value(cause, this, new__symbol(cause, "fiber"), nil);
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"), nil);
 }
 
 f2ptr f2__semantic_thought__fiber(f2ptr cause, f2ptr this) {

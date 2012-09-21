@@ -650,10 +650,10 @@ void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
   funk2_user_thread_controller__signal_user_waiting_politely(this);
   
-  while (this->need_wait) {
-    {
-      pthread_mutex_lock(&(this->something_to_do_while_waiting_politely_mutex));
-      {
+  {
+    s64 wait_tries = 0;
+    while (this->need_wait) {
+      if (pthread_mutex_trylock(&(this->something_to_do_while_waiting_politely_mutex)) == 0) {
 	while (this->need_wait                                  &&
 	       (! (this->touch_all_protected_alloc_arrays.start ||
 		   this->blacken_grey_nodes.start               ||
@@ -665,8 +665,15 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 		   this->defragment__fix_pointers.start))) {
 	  pthread_cond_wait(&(this->something_to_do_while_waiting_politely_cond), &(this->something_to_do_while_waiting_politely_mutex));
 	}
+	pthread_mutex_unlock(&(this->something_to_do_while_waiting_politely_mutex));
+      } else {
+	if (wait_tries < 1000) {
+	  wait_tries ++;
+	  raw__fast_spin_sleep_yield();
+	} else {
+	  raw__spin_sleep_yield();
+	}
       }
-      pthread_mutex_unlock(&(this->something_to_do_while_waiting_politely_mutex));
       
       if      (this->touch_all_protected_alloc_arrays.start) {funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(&(this->touch_all_protected_alloc_arrays));}
       else if (this->blacken_grey_nodes.start)               {funk2_user_thread_controller__blacken_grey_nodes__user_process(              &(this->blacken_grey_nodes));}
@@ -678,6 +685,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
       else if (this->defragment__fix_pointers.start)         {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
     }
   }
+  
   pthread_mutex_lock(&(this->waiting_count_mutex));
   this->waiting_count --;
   pthread_mutex_unlock(&(this->waiting_count_mutex));

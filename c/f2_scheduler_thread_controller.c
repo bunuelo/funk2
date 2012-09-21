@@ -50,11 +50,24 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   status("management thread asking " u64__fstr " virtual_processors to wait politely.", ((u64)memory_pool_num));
   
-  pthread_mutex_lock(&(this->waiting_count_mutex));
-  while (this->waiting_count < memory_pool_num) {
-    pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+  {
+    s64 wait_tries = 0;
+    while (this->waiting_count < memory_pool_num) {
+      if (pthread_mutex_trylock(&(this->waiting_count_mutex)) == 0) {
+	while (this->waiting_count < memory_pool_num) {
+	  pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+	}
+	pthread_mutex_unlock(&(this->waiting_count_mutex));
+      } else {
+	if (wait_tries < 1000) {
+	  wait_tries ++;
+	  raw__fast_spin_sleep_yield();
+	} else {
+	  raw__spin_sleep_yield();
+	}
+      }
+    }
   }
-  pthread_mutex_unlock(&(this->waiting_count_mutex));
   status("there are " u64__fstr " virtual_processors waiting politely.", ((u64)memory_pool_num));
 }
 
@@ -71,11 +84,24 @@ void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_sch
   }
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   
-  pthread_mutex_lock(&(this->waiting_count_mutex));
-  while (this->waiting_count > 0) {
-    pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+  {
+    s64 wait_tries = 0;
+    while (this->waiting_count > 0) {
+      if (pthread_mutex_trylock(&(this->waiting_count_mutex)) == 0) {
+	while (this->waiting_count > 0) {
+	  pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+	}
+	pthread_mutex_unlock(&(this->waiting_count_mutex));
+      } else {
+	if (wait_tries < 1000) {
+	  wait_tries ++;
+	  raw__fast_spin_sleep_yield();
+	} else {
+	  raw__spin_sleep_yield();
+	}
+      }
+    }
   }
-  pthread_mutex_unlock(&(this->waiting_count_mutex));
   
   status("all " u64__fstr " virtual_processors have continued.", ((u64)memory_pool_num));
 }

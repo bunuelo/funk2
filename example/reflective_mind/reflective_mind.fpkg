@@ -179,6 +179,7 @@
   :packages [reflective_mind_core
 	     deliberative_resource
 	     semantic_planner
+	     semantic_cons
 	     semantic_plan_object
 	     nonsemantic_plan]
    :sources ['deliberative_plan_agency.fu2']]

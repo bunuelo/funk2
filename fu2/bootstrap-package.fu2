@@ -176,6 +176,7 @@
 						     'extension/semantic_agent/'
 						     'extension/semantic_category/'
 						     'extension/semantic_causal_concept/'
+						     'extension/semantic_cons/'
 						     'extension/semantic_containment_object/'
 						     'extension/semantic_counterfactual_transframe/'
 						     'extension/semantic_directed_action_event/'

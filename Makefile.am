@@ -203,6 +203,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_causal_object/libf2e_semantic_causal_object.la \
                       extension/semantic_category/libf2e_semantic_category.la \
                       extension/semantic_causal_concept/libf2e_semantic_causal_concept.la \
+                      extension/semantic_cons/libf2e_semantic_cons.la \
                       extension/semantic_containment_object/libf2e_semantic_containment_object.la \
                       extension/semantic_counterfactual_transframe/libf2e_semantic_counterfactual_transframe.la \
                       extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la \
@@ -291,6 +292,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_causal_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
 	cp -fa extension/semantic_category/.libs/libf2e_*.*                                                       $(compile__lib__dir)
 	cp -fa extension/semantic_causal_concept/.libs/libf2e_*.*                                           $(compile__lib__dir)
+	cp -fa extension/semantic_cons/.libs/libf2e_*.*                                   $(compile__lib__dir)
 	cp -fa extension/semantic_containment_object/.libs/libf2e_*.*                                   $(compile__lib__dir)
 	cp -fa extension/semantic_counterfactual_transframe/.libs/libf2e_*.*                             $(compile__lib__dir)
 	cp -fa extension/semantic_directed_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
@@ -514,6 +516,7 @@ extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES     
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                                           = extension/semantic_causal_object/semantic_causal_object.c
 extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                                     = extension/semantic_category/semantic_category.c
 extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES                                                         = extension/semantic_causal_concept/semantic_causal_concept.c
+extension_semantic_cons_libf2e_semantic_cons_la_SOURCES                                                                             = extension/semantic_cons/semantic_cons.c
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                                 = extension/semantic_containment_object/semantic_containment_object.c
 extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_SOURCES                                   = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                                           = extension/semantic_directed_action_event/semantic_directed_action_event.c
@@ -685,6 +688,9 @@ extension_semantic_category_libf2e_semantic_category_la_CFLAGS  = $(lib_libfunk2
 
 extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_semantic_cons_libf2e_semantic_cons_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_cons_libf2e_semantic_cons_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -932,6 +938,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_event/"                                                                                                      >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_object/"                                                                                                     >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_causal_concept/"                                                                                                    >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_cons/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_containment_object/"                                                                                                >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_counterfactual_transframe/"                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_directed_action_event/"                                                                                             >> install-sh
@@ -1075,6 +1082,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_causal_event/*.f*                          $(chroot__install__extension__dir)semantic_causal_event/"                          >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_object/*.f*                         $(chroot__install__extension__dir)semantic_causal_object/"                         >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_causal_concept/*.f*                        $(chroot__install__extension__dir)semantic_causal_concept/"                        >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_cons/*.f*                                  $(chroot__install__extension__dir)semantic_cons/"                                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_containment_object/*.f*                    $(chroot__install__extension__dir)semantic_containment_object/"                    >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_counterfactual_transframe/*.f*             $(chroot__install__extension__dir)semantic_counterfactual_transframe/"             >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_directed_action_event/*.f*                 $(chroot__install__extension__dir)semantic_directed_action_event/"                 >> install-sh

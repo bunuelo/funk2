@@ -256,6 +256,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_somatosensation/libf2e_semantic_somatosensation.la \
                       extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.la \
                       extension/semantic_temporal_object/libf2e_semantic_temporal_object.la \
+                      extension/semantic_thought/libf2e_semantic_thought.la \
                       extension/semantic_time/libf2e_semantic_time.la \
                       extension/semantic_visual_object/libf2e_semantic_visual_object.la \
                       extension/timeline/libf2e_timeline.la \
@@ -345,6 +346,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_somatosensation/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_somatosensory_object/.libs/libf2e_*.*                               $(compile__lib__dir)
 	cp -fa extension/semantic_temporal_object/.libs/libf2e_*.*                                         $(compile__lib__dir)
+	cp -fa extension/semantic_thought/.libs/libf2e_*.*                                                               $(compile__lib__dir)
 	cp -fa extension/semantic_time/.libs/libf2e_*.*                                                               $(compile__lib__dir)
 	cp -fa extension/semantic_visual_object/.libs/libf2e_*.*                                             $(compile__lib__dir)
 	cp -fa extension/timeline/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
@@ -569,6 +571,7 @@ extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_
 extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES                                                       = extension/semantic_somatosensation/semantic_somatosensation.c
 extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES                                             = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                                                       = extension/semantic_temporal_object/semantic_temporal_object.c
+extension_semantic_thought_libf2e_semantic_thought_la_SOURCES                                                                       = extension/semantic_thought/semantic_thought.c
 extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                                             = extension/semantic_time/semantic_time.c
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                                           = extension/semantic_visual_object/semantic_visual_object.c
 extension_timeline_libf2e_timeline_la_SOURCES                                                                                       = extension/timeline/timeline.c
@@ -848,6 +851,9 @@ extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_semantic_thought_libf2e_semantic_thought_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_thought_libf2e_semantic_thought_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_semantic_time_libf2e_semantic_time_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_time_libf2e_semantic_time_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -993,6 +999,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensation/"                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_somatosensory_object/"                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_temporal_object/"                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_thought/"                                                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_time/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_visual_object/"                                                                                                     >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)timeline/"                                                                                                                   >> install-sh
@@ -1137,6 +1144,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_somatosensation/*.f*                       $(chroot__install__extension__dir)semantic_somatosensation/"                       >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_somatosensory_object/*.f*                  $(chroot__install__extension__dir)semantic_somatosensory_object/"                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_temporal_object/*.f*                       $(chroot__install__extension__dir)semantic_temporal_object/"                       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_thought/*.f*                               $(chroot__install__extension__dir)semantic_thought/"                                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_time/*.f*                                  $(chroot__install__extension__dir)semantic_time/"                                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_visual_object/*.f*                         $(chroot__install__extension__dir)semantic_visual_object/"                         >> install-sh
 	echo "install -m644 $(source__extension__dir)timeline/*.f*                                       $(chroot__install__extension__dir)timeline/"                                       >> install-sh

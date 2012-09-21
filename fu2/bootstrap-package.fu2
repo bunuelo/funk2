@@ -233,6 +233,7 @@
 						     'extension/semantic_somatosensation/'
 						     'extension/semantic_somatosensory_object/'
 						     'extension/semantic_temporal_object/'
+						     'extension/semantic_thought/'
 						     'extension/semantic_time/'
 						     'extension/semantic_visual_object/'
 						     'extension/timeline/'

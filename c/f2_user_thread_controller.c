@@ -626,11 +626,24 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
-  pthread_mutex_lock(&(this->waiting_count_mutex));
-  while (this->waiting_count < memory_pool_num) {
-    pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+  {
+    s64 wait_tries = 0;
+    while (this->waiting_count < memory_pool_num) {
+      if (pthread_mutex_trylock(&(this->waiting_count_mutex)) == 0) {
+	while (this->waiting_count < memory_pool_num) {
+	  pthread_cond_wait(&(this->waiting_count_cond), &(this->waiting_count_mutex));
+	}
+	pthread_mutex_unlock(&(this->waiting_count_mutex));
+      } else {
+	if (wait_tries < 1000) {
+	  wait_tries ++;
+	  raw__fast_spin_sleep_yield();
+	} else {
+	  raw__spin_sleep_yield();
+	}
+      }
+    }
   }
-  pthread_mutex_unlock(&(this->waiting_count_mutex));
 }
 
 void funk2_user_thread_controller__signal_user_waiting_politely(funk2_user_thread_controller_t* this) {

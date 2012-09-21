@@ -162,12 +162,10 @@ f2ptr funk2_defragmenter__memory_pool__lookup_new_f2ptr(funk2_defragmenter_t* th
   if (exp == nil) {
     return nil;
   }
-  s64 pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
-    funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);
-    if (funk2_hash__contains(new_old_memory_position_hash, (u64)exp)) {
-      return (f2ptr)funk2_hash__lookup(new_old_memory_position_hash, (u64)exp);
-    }
+  s64           pool_index                   = __f2ptr__pool_index(exp);
+  funk2_hash_t* new_old_memory_position_hash = &(this->new_old_memory_position_hash[pool_index]);
+  if (funk2_hash__contains(new_old_memory_position_hash, (u64)exp)) {
+    return (f2ptr)funk2_hash__lookup(new_old_memory_position_hash, (u64)exp);
   }
   status("funk2_defragmenter__memory_pool__lookup_new_f2ptr fatal error: could not find f2ptr in hash.  exp=" f2ptr__fstr, exp);
   error(nil, "funk2_defragmenter__memory_pool__lookup_new_f2ptr fatal error: could not find f2ptr in hash.");

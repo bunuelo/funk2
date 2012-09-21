@@ -29,7 +29,7 @@ f2ptr raw__semantic_thought__type_create(f2ptr cause, f2ptr this, f2ptr semantic
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_thought"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "fiber"),       nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "fiber"), nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "stack"),       nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "environment"), nil);
   return this;
@@ -45,7 +45,7 @@ f2ptr f2__semantic_thought__new(f2ptr cause, f2ptr semantic_realm) {
   assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_thought__new(cause, semantic_realm);
 }
-export_cefunk1(semantic_thought__new, semantic_realm, 0, "Returns a new semantic_thought object with the given car and cdr properties.");
+export_cefunk1(semantic_thought__new, semantic_realm, 0, "Returns a new semantic_thought object.");
 
 
 boolean_t raw__semantic_thought__is_type(f2ptr cause, f2ptr thing) {
@@ -82,7 +82,7 @@ export_cefunk1(semantic_thought__type, thing, 0, "Returns the specific type of o
 
 
 f2ptr raw__semantic_thought__fiber(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "fiber"));
+  return raw__frame__lookup_var_value(cause, this, new__symbol(cause, "fiber"), nil);
 }
 
 f2ptr f2__semantic_thought__fiber(f2ptr cause, f2ptr this) {
@@ -93,7 +93,7 @@ export_cefunk1(semantic_thought__fiber, this, 0, "");
 
 
 f2ptr raw__semantic_thought__fiber__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "fiber"), that);
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "fiber"), that);
 }
 
 f2ptr f2__semantic_thought__fiber__set(f2ptr cause, f2ptr this, f2ptr that) {

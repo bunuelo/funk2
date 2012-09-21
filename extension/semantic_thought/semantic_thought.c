@@ -45,7 +45,7 @@ f2ptr f2__semantic_thought__new(f2ptr cause, f2ptr semantic_realm) {
   assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_thought__new(cause, semantic_realm);
 }
-export_cefunk3(semantic_thought__new, semantic_realm, 0, "Returns a new semantic_thought object with the given car and cdr properties.");
+export_cefunk1(semantic_thought__new, semantic_realm, 0, "Returns a new semantic_thought object with the given car and cdr properties.");
 
 
 boolean_t raw__semantic_thought__is_type(f2ptr cause, f2ptr thing) {

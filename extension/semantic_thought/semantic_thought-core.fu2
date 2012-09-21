@@ -31,7 +31,6 @@
 		 [error funkname `semantic_planner-new_semantic_thought
 			bug_name `semantic_knowledge_bases-is-nil]]
 	     
-	     [cause-define cause-name [get [get semantic_plan nonsemantic_plan] unique_name]]
 	     [let* [[thought_fiber-start_trigger [new fiber_trigger]]
 		    [thought_fiber               [fiber [funk []
 							      [wait-for-trigger thought_fiber-start_trigger]

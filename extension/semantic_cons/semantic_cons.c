@@ -24,29 +24,27 @@
 
 // semantic_cons
 
-f2ptr raw__semantic_cons__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm) {
+f2ptr raw__semantic_cons__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr car, f2ptr cdr) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_cons"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), nil);
-  }
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), car);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"), cdr);
   return this;
 }
 
-f2ptr raw__semantic_cons__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr raw__semantic_cons__new(f2ptr cause, f2ptr semantic_realm, f2ptr car, f2ptr cdr) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_cons__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_cons__type_create(cause, this, semantic_realm, car, cdr));
   return this;
 }
 
-f2ptr f2__semantic_cons__new(f2ptr cause, f2ptr semantic_realm) {
+f2ptr f2__semantic_cons__new(f2ptr cause, f2ptr semantic_realm, f2ptr car, f2ptr cdr) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_cons__new(cause, semantic_realm);
+  return raw__semantic_cons__new(cause, semantic_realm, car, cdr);
 }
-export_cefunk1(semantic_cons__new, semantic_realm, 0, "Returns a new semantic_cons object.");
+export_cefunk3(semantic_cons__new, semantic_realm, car, cdr, 0, "Returns a new semantic_cons object with the given car and cdr properties.");
 
 
 boolean_t raw__semantic_cons__is_type(f2ptr cause, f2ptr thing) {

@@ -582,14 +582,19 @@
 							      [cause-define cause-name [get this unique_name]]
 							      [have this imagine_eval]]
 							[]]]
-		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
-	       [have [get thought_fiber cause_reg] define `semantic_thought semantic_thought]
-	       [set semantic_thought fiber thought_fiber]
+		    [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
+						   [set this fiber thought_fiber]]]]
+	       
+	       [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
+		 [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
+		 [set semantic_thought environment semantic_environment]]
 	       
 	       [mapc [funk [semantic_knowledge_base]
 			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
 		     semantic_knowledge_bases]
 	       [semantic-add semantic_planner thought semantic_thought]
+	       
+	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 	       
 	       [have thought_fiber-start_trigger trigger]
 	       [let [[result [fiber-sheltered_join thought_fiber]]]

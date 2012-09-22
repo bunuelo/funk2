@@ -19,7 +19,8 @@
 
 [defpackage semantic_plan_object
   :documentation        'Basic physical knowledge for dealing with derivation and other semantic plan relationships.'
-   :packages            [semantic_object]
+   :packages            [semantic_object
+			 semantic_environment]
     :sources            ['semantic_plan_object-core.fu2']
      :dynamic_libraries ['libf2e_semantic_plan_object.so']]
 

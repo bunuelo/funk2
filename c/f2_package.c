@@ -187,10 +187,10 @@ def_pcfunk7(package__new, pathname, name, package_dependencies, source_dependenc
 
 f2ptr raw__package__add_package_dependency(f2ptr cause, f2ptr this, f2ptr package_dependency) {
   f2ptr package_dependency__package = assert_value(f2__global_package_handler__lookup_package(cause, package_dependency));
-  f2ptr package_dependencies_cmutex = raw__package__package_dependencies_cmutex(cause, this);
+  f2ptr package_dependencies_cmutex = f2__package__package_dependencies_cmutex(cause, this);
   raw__cmutex__lock(cause, package_dependencies_cmutex);
-  f2ptr package_dependencies = raw__package__package_dependencies(cause, this);
-  raw__package__package_dependencies__set(cause, this, f2cons__new(cause, package_dependency, package_dependencies));
+  f2ptr package_dependencies = f2__package__package_dependencies(cause, this);
+  f2__package__package_dependencies__set(cause, this, f2cons__new(cause, package_dependency, package_dependencies));
   raw__cmutex__unlock(cause, package_dependencies_cmutex);
   return nil;
 }
@@ -206,10 +206,10 @@ def_pcfunk2(package__add_package_dependency, this, package_dependency,
 
 
 f2ptr raw__package__add_source_dependency(f2ptr cause, f2ptr this, f2ptr source_dependency) {
-  f2ptr source_dependencies_cmutex = raw__package__source_dependencies_cmutex(cause, this);
+  f2ptr source_dependencies_cmutex = f2__package__source_dependencies_cmutex(cause, this);
   raw__cmutex__lock(cause, source_dependencies_cmutex);
-  f2ptr source_dependencies = raw__package__source_dependencies(cause, this);
-  raw__package__source_dependencies__set(cause, this, f2cons__new(cause, source_dependency, source_dependencies));
+  f2ptr source_dependencies = f2__package__source_dependencies(cause, this);
+  f2__package__source_dependencies__set(cause, this, f2cons__new(cause, source_dependency, source_dependencies));
   raw__cmutex__unlock(cause, source_dependencies_cmutex);
   return nil;
 }
@@ -225,10 +225,10 @@ def_pcfunk2(package__add_source_dependency, this, source_dependency,
 
 
 f2ptr raw__package__add_binary_dependency(f2ptr cause, f2ptr this, f2ptr binary_dependency) {
-  f2ptr binary_dependencies_cmutex = raw__package__binary_dependencies_cmutex(cause, this);
+  f2ptr binary_dependencies_cmutex = f2__package__binary_dependencies_cmutex(cause, this);
   raw__cmutex__lock(cause, binary_dependencies_cmutex);
-  f2ptr binary_dependencies = raw__package__binary_dependencies(cause, this);
-  raw__package__binary_dependencies__set(cause, this, f2cons__new(cause, binary_dependency, binary_dependencies));
+  f2ptr binary_dependencies = f2__package__binary_dependencies(cause, this);
+  f2__package__binary_dependencies__set(cause, this, f2cons__new(cause, binary_dependency, binary_dependencies));
   raw__cmutex__unlock(cause, binary_dependencies_cmutex);
   return nil;
 }
@@ -244,10 +244,10 @@ def_pcfunk2(package__add_binary_dependency, this, binary_dependency,
 
 
 f2ptr raw__package__add_dynamic_library_dependency(f2ptr cause, f2ptr this, f2ptr dynamic_library_dependency) {
-  f2ptr dynamic_library_dependencies_cmutex = raw__package__dynamic_library_dependencies_cmutex(cause, this);
+  f2ptr dynamic_library_dependencies_cmutex = f2__package__dynamic_library_dependencies_cmutex(cause, this);
   raw__cmutex__lock(cause, dynamic_library_dependencies_cmutex);
-  f2ptr dynamic_library_dependencies = raw__package__dynamic_library_dependencies(cause, this);
-  raw__package__dynamic_library_dependencies__set(cause, this, f2cons__new(cause, dynamic_library_dependency, dynamic_library_dependencies));
+  f2ptr dynamic_library_dependencies = f2__package__dynamic_library_dependencies(cause, this);
+  f2__package__dynamic_library_dependencies__set(cause, this, f2cons__new(cause, dynamic_library_dependency, dynamic_library_dependencies));
   raw__cmutex__unlock(cause, dynamic_library_dependencies_cmutex);
   return nil;
 }

@@ -186,7 +186,9 @@ def_pcfunk7(package__new, pathname, name, package_dependencies, source_dependenc
 
 
 f2ptr raw__package__add_package_dependency(f2ptr cause, f2ptr this, f2ptr package_dependency) {
-  f2ptr package_dependency__package = assert_value(f2__global_package_handler__lookup_package(cause, package_dependency));
+  // make sure package of this name exists
+  assert_value(f2__global_package_handler__lookup_package(cause, package_dependency));
+  
   f2ptr package_dependencies_cmutex = f2__package__package_dependencies_cmutex(cause, this);
   raw__cmutex__lock(cause, package_dependencies_cmutex);
   f2ptr package_dependencies = f2__package__package_dependencies(cause, this);

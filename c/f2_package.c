@@ -330,7 +330,7 @@ f2ptr raw__package__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list22__new(cause,
+    frame = f2__frame__new(cause, f2list24__new(cause,
 						new__symbol(cause, "print_object_type"),            new__symbol(cause, "package"),
 						new__symbol(cause, "pathname"),                     f2__package__pathname(                    cause, this),
 						new__symbol(cause, "name"),                         f2__package__name(                        cause, this),

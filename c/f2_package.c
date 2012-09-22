@@ -137,40 +137,129 @@ def_pcfunk1(source__eval, this,
 
 // package
 
-def_primobject_11_slot(package,
+def_primobject_15_slot(package,
 		       pathname,
 		       name,
+   		       package_dependencies_cmutex,
 		       package_dependencies,
+   		       source_dependencies_cmutex,
 		       source_dependencies,
 		       load_cmutex,
 		       load_fiber,
 		       object_types_defined_set,
 		       loaded_all_dependencies_time,
 		       documentation,
+   		       binary_dependencies_cmutex,
 		       binary_dependencies,
+		       dynamic_library_dependencies_cmutex,
 		       dynamic_library_dependencies);
 
 f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies, f2ptr dynamic_library_dependencies) {
-  f2ptr load_cmutex                  = f2__cmutex__new(cause);
-  f2ptr load_fiber                   = nil;
-  f2ptr object_types_defined_set     = f2__set__new(cause);
-  f2ptr loaded_all_dependencies_time = nil;
+  f2ptr load_cmutex                         = f2__cmutex__new(cause);
+  f2ptr load_fiber                          = nil;
+  f2ptr object_types_defined_set            = f2__set__new(cause);
+  f2ptr loaded_all_dependencies_time        = nil;
+  f2ptr package_dependencies_cmutex         = f2cmutex__new(cause);
+  f2ptr source_dependencies_cmutex          = f2cmutex__new(cause);
+  f2ptr binary_dependencies_cmutex          = f2cmutex__new(cause);
+  f2ptr dynamic_library_dependencies_cmutex = f2cmutex__new(cause);
   return f2package__new(cause,
 			pathname,
 			name,
+			package_dependencies_cmutex,
 			package_dependencies,
+			source_dependencies_cmutex,
 			source_dependencies,
 			load_cmutex,
 			load_fiber,
 			object_types_defined_set,
 			loaded_all_dependencies_time,
 			documentation,
+			binary_dependencies_cmutex,
 			binary_dependencies,
+			dynamic_library_dependencies_cmutex,
 			dynamic_library_dependencies);
 }
 def_pcfunk7(package__new, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies, dynamic_library_dependencies,
 	    "",
 	    return f2__package__new(this_cause, pathname, name, package_dependencies, source_dependencies, documentation, binary_dependencies, dynamic_library_dependencies));
+
+
+f2ptr raw__package__add_package_dependency(f2ptr cause, f2ptr this, f2ptr package_dependency) {
+  f2ptr package_dependency__package = assert_value(f2__global_package_handler__lookup_package(cause, package_dependency));
+  f2ptr package_dependencies_cmutex = raw__package__package_dependencies_cmutex(cause, this);
+  raw__cmutex__lock(cause, package_dependencies_cmutex);
+  f2ptr package_dependencies = raw__package__package_dependencies(cause, this);
+  raw__package__package_dependencies__set(cause, this, f2cons__new(cause, package_dependency, package_dependencies));
+  raw__cmutex__unlock(cause, package_dependencies_cmutex);
+  return nil;
+}
+
+f2ptr f2__package__add_package_dependency(f2ptr cause, f2ptr this, f2ptr package_dependency) {
+  assert_argument_type(package, this);
+  return raw__package__add_package_dependency(cause, this, package_dependency);
+}
+def_pcfunk2(package__add_package_dependency, this, package_dependency,
+	    "",
+	    return f2__package__add_package_dependency(this_cause, this, package_dependency));
+
+
+
+f2ptr raw__package__add_source_dependency(f2ptr cause, f2ptr this, f2ptr source_dependency) {
+  f2ptr source_dependencies_cmutex = raw__package__source_dependencies_cmutex(cause, this);
+  raw__cmutex__lock(cause, source_dependencies_cmutex);
+  f2ptr source_dependencies = raw__package__source_dependencies(cause, this);
+  raw__package__source_dependencies__set(cause, this, f2cons__new(cause, source_dependency, source_dependencies));
+  raw__cmutex__unlock(cause, source_dependencies_cmutex);
+  return nil;
+}
+
+f2ptr f2__package__add_source_dependency(f2ptr cause, f2ptr this, f2ptr source_dependency) {
+  assert_argument_type(package, this);
+  return raw__package__add_source_dependency(cause, this, source_dependency);
+}
+def_pcfunk2(package__add_source_dependency, this, source_dependency,
+	    "",
+	    return f2__package__add_source_dependency(this_cause, this, source_dependency));
+
+
+
+f2ptr raw__package__add_binary_dependency(f2ptr cause, f2ptr this, f2ptr binary_dependency) {
+  f2ptr binary_dependencies_cmutex = raw__package__binary_dependencies_cmutex(cause, this);
+  raw__cmutex__lock(cause, binary_dependencies_cmutex);
+  f2ptr binary_dependencies = raw__package__binary_dependencies(cause, this);
+  raw__package__binary_dependencies__set(cause, this, f2cons__new(cause, binary_dependency, binary_dependencies));
+  raw__cmutex__unlock(cause, binary_dependencies_cmutex);
+  return nil;
+}
+
+f2ptr f2__package__add_binary_dependency(f2ptr cause, f2ptr this, f2ptr binary_dependency) {
+  assert_argument_type(package, this);
+  return raw__package__add_binary_dependency(cause, this, binary_dependency);
+}
+def_pcfunk2(package__add_binary_dependency, this, binary_dependency,
+	    "",
+	    return f2__package__add_binary_dependency(this_cause, this, binary_dependency));
+
+
+
+f2ptr raw__package__add_dynamic_library_dependency(f2ptr cause, f2ptr this, f2ptr dynamic_library_dependency) {
+  f2ptr dynamic_library_dependencies_cmutex = raw__package__dynamic_library_dependencies_cmutex(cause, this);
+  raw__cmutex__lock(cause, dynamic_library_dependencies_cmutex);
+  f2ptr dynamic_library_dependencies = raw__package__dynamic_library_dependencies(cause, this);
+  raw__package__dynamic_library_dependencies__set(cause, this, f2cons__new(cause, dynamic_library_dependency, dynamic_library_dependencies));
+  raw__cmutex__unlock(cause, dynamic_library_dependencies_cmutex);
+  return nil;
+}
+
+f2ptr f2__package__add_dynamic_library_dependency(f2ptr cause, f2ptr this, f2ptr dynamic_library_dependency) {
+  assert_argument_type(package, this);
+  return raw__package__add_dynamic_library_dependency(cause, this, dynamic_library_dependency);
+}
+def_pcfunk2(package__add_dynamic_library_dependency, this, dynamic_library_dependency,
+	    "",
+	    return f2__package__add_dynamic_library_dependency(this_cause, this, dynamic_library_dependency));
+
 
 
 f2ptr raw__package__add_to_dependency_graph(f2ptr cause, f2ptr this, f2ptr graph) {
@@ -250,7 +339,8 @@ f2ptr raw__package__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr ter
 						new__symbol(cause, "object_types_defined_set"),     f2__package__object_types_defined_set(    cause, this),
 						new__symbol(cause, "loaded_all_dependencies_time"), f2__package__loaded_all_dependencies_time(cause, this),
 						new__symbol(cause, "documentation"),                f2__package__documentation(               cause, this),
-						new__symbol(cause, "binary_dependencies"),          f2__package__binary_dependencies(         cause, this)));
+						new__symbol(cause, "binary_dependencies"),          f2__package__binary_dependencies(         cause, this),
+						new__symbol(cause, "dynamic_library_dependencies"), f2__package__dynamic_library_dependencies(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -270,8 +360,12 @@ def_pcfunk2(package__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2package__primobject_type__new(cause);
-  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "dependency_graph"),          __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk);
-  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"), __funk2.globalenv.object_type.primobject.primobject_type_package.terminal_print_with_frame__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_package_dependency"),         __funk2.globalenv.object_type.primobject.primobject_type_package.add_package_dependency__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_source_dependency"),          __funk2.globalenv.object_type.primobject.primobject_type_package.add_source_dependency__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_binary_dependency"),          __funk2.globalenv.object_type.primobject.primobject_type_package.add_binary_dependency__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_dynamic_library_dependency"), __funk2.globalenv.object_type.primobject.primobject_type_package.add_dynamic_library_dependency__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "dependency_graph"),               __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk);
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),      __funk2.globalenv.object_type.primobject.primobject_type_package.terminal_print_with_frame__funk);
   return this;
 }
 
@@ -764,18 +858,38 @@ void f2__package__defragment__fix_pointers() {
   
   // package
   
-  initialize_primobject_11_slot__defragment__fix_pointers(package,
+  initialize_primobject_15_slot__defragment__fix_pointers(package,
 							  pathname,
 							  name,
+							  package_dependencies_cmutex,
 							  package_dependencies,
+							  source_dependencies_cmutex,
 							  source_dependencies,
 							  load_cmutex,
 							  load_fiber,
 							  object_types_defined_set,
 							  loaded_all_dependencies_time,
 							  documentation,
+							  binary_dependencies_cmutex,
 							  binary_dependencies,
+							  dynamic_library_dependencies_cmutex,
 							  dynamic_library_dependencies);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_package_dependency__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__add_package_dependency);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_package_dependency__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_source_dependency__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__add_source_dependency);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_source_dependency__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_binary_dependency__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__add_binary_dependency);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_binary_dependency__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_dynamic_library_dependency__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(package__add_dynamic_library_dependency);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.add_dynamic_library_dependency__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__symbol);
   f2__primcfunk__init__defragment__fix_pointers(package__dependency_graph);
@@ -826,19 +940,31 @@ void f2__package__reinitialize_globalvars() {
   
   // package
   
-  initialize_primobject_11_slot(package,
+  initialize_primobject_15_slot(package,
 				pathname,
 				name,
+				package_dependencies_cmutex,
 				package_dependencies,
+				source_dependencies_cmutex,
 				source_dependencies,
 				load_cmutex,
 				load_fiber,
 				object_types_defined_set,
 				loaded_all_dependencies_time,
 				documentation,
+				binary_dependencies_cmutex,
 				binary_dependencies,
+				dynamic_library_dependencies_cmutex,
 				dynamic_library_dependencies);
   
+  __funk2.globalenv.object_type.primobject.primobject_type_package.add_package_dependency__symbol = new__symbol(cause, "add_package_dependency");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__add_package_dependency, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.add_package_dependency__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_package.add_source_dependency__symbol = new__symbol(cause, "add_source_dependency");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__add_source_dependency, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.add_source_dependency__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_package.add_binary_dependency__symbol = new__symbol(cause, "add_binary_dependency");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__add_binary_dependency, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.add_binary_dependency__funk = never_gc(cfunk);}
+  __funk2.globalenv.object_type.primobject.primobject_type_package.add_dynamic_library_dependency__symbol = new__symbol(cause, "add_dynamic_library_dependency");
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__add_dynamic_library_dependency, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.add_dynamic_library_dependency__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__symbol = new__symbol(cause, "dependency_graph");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(package__dependency_graph, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_package.dependency_graph__funk = never_gc(cfunk);}
   __funk2.globalenv.object_type.primobject.primobject_type_package.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");

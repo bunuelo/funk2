@@ -43,18 +43,30 @@ declare_object_type_1_slot(source,
 // package
 
 typedef struct funk2_object_type__package__slot_s funk2_object_type__package__slot_t;
-declare_object_type_11_slot(package,
+declare_object_type_15_slot(package,
 			    pathname,
 			    name,
+			    package_dependencies_cmutex,
 			    package_dependencies,
+			    source_dependencies_cmutex,
 			    source_dependencies,
 			    load_cmutex,
 			    load_fiber,
 			    object_types_defined_set,
 			    loaded_all_dependencies_time,
 			    documentation,
+			    binary_dependencies_cmutex,
 			    binary_dependencies,
+			    dynamic_library_dependencies_cmutex,
 			    dynamic_library_dependencies,
+			    f2ptr add_package_dependency__symbol;
+			    f2ptr add_package_dependency__funk;
+			    f2ptr add_source_dependency__symbol;
+			    f2ptr add_source_dependency__funk;
+			    f2ptr add_binary_dependency__symbol;
+			    f2ptr add_binary_dependency__funk;
+			    f2ptr add_dynamic_library_dependency__symbol;
+			    f2ptr add_dynamic_library_dependency__funk;
 			    f2ptr dependency_graph__symbol;
 			    f2ptr dependency_graph__funk;
 			    f2ptr terminal_print_with_frame__symbol;
@@ -89,17 +101,21 @@ f2ptr f2source__primobject_type__new_aux(f2ptr cause);
 
 // package
 
-declare_primobject_11_slot(package,
+declare_primobject_15_slot(package,
 			   pathname,
 			   name,
+			   package_dependencies_cmutex,
 			   package_dependencies,
+			   source_dependencies_cmutex,
 			   source_dependencies,
 			   load_cmutex,
 			   load_fiber,
 			   object_types_defined_set,
 			   loaded_all_dependencies_time,
 			   documentation,
+			   binary_dependencies_cmutex,
 			   binary_dependencies,
+			   dynamic_library_dependencies_cmutex,
 			   dynamic_library_dependencies);
 
 f2ptr  f2__package__new                    (f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies, f2ptr dynamic_library_dependencies);

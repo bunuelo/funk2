@@ -394,14 +394,19 @@
 							      [cause-define cause-name [get this unique_name]]
 							      [have this eval]]
 							[]]]
-		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
-	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
-	       [set semantic_thought fiber thought_fiber]
+		    [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
+						   [set this fiber thought_fiber]]]]
+	       
+	       [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
+		 [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
+		 [set semantic_thought environment semantic_environment]]
 	       
 	       [mapc [funk [semantic_knowledge_base]
 			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
 		     semantic_knowledge_bases]
 	       [semantic-add semantic_planner thought semantic_thought]
+	       
+	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 	       
 	       [have thought_fiber-start_trigger trigger]
 	       [let [[result [fiber-sheltered_join thought_fiber]]]
@@ -563,6 +568,40 @@
 
 [deftypefunk nonsemantic_plan execute imagine_eval []
   [funkall [get this compiled_imagine_funk] this]]
+
+[deftypefunk nonsemantic_plan execute imagine_eval_in_semantic_planner [semantic_planner]
+  [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
+		  [semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
+	     [if [null semantic_knowledge_bases]
+		 [error funkname `semantic_planner-new_semantic_thought
+			bug_name `semantic_knowledge_bases-is-nil]]
+	     
+	     [let* [[thought_fiber-start_trigger [new fiber_trigger]]
+		    [thought_fiber               [fiber [funk []
+							      [wait-for-trigger thought_fiber-start_trigger]
+							      [cause-define cause-name [get this unique_name]]
+							      [have this imagine_eval]]
+							[]]]
+		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
+	       [have [get thought_fiber cause_reg] define `semantic_thought semantic_thought]
+	       [set semantic_thought fiber thought_fiber]
+	       
+	       [mapc [funk [semantic_knowledge_base]
+			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
+		     semantic_knowledge_bases]
+	       [semantic-add semantic_planner thought semantic_thought]
+	       
+	       [have thought_fiber-start_trigger trigger]
+	       [let [[result [fiber-sheltered_join thought_fiber]]]
+		 
+		 [semantic-remove semantic_planner thought semantic_thought]
+		 [mapc [funk [semantic_knowledge_base]
+			     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
+		       semantic_knowledge_bases]
+		 
+		 result]]]]]
+
+
 
 
 [defunk semantic_plan_operator_activation-new_with_resource_dependency [semantic_realm resource_activation_dependency]

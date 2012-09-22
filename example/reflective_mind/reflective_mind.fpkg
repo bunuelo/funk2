@@ -180,6 +180,7 @@
 	     deliberative_resource
 	     semantic_planner
 	     semantic_cons
+	     semantic_thought
 	     semantic_plan_object
 	     nonsemantic_plan]
    :sources ['deliberative_plan_agency.fu2']]

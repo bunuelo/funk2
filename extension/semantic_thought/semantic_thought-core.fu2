@@ -24,34 +24,3 @@
 [semantic_thought-core_extension-define_types]
 
 
-[defunk semantic_planner-new_semantic_thought [semantic_planner funk args]
-  [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
-		  [semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
-	     [if [null semantic_knowledge_bases]
-		 [error funkname `semantic_planner-new_semantic_thought
-			bug_name `semantic_knowledge_bases-is-nil]]
-	     
-	     [let* [[thought_fiber-start_trigger [new fiber_trigger]]
-		    [thought_fiber               [fiber [funk []
-							      [wait-for-trigger thought_fiber-start_trigger]
-							      [apply funk args]]
-							[]]]
-		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
-	       [have [get fiber cause_reg] define `this-fiber-semantic_thought semantic_thought]
-	       [set semantic_thought fiber thought_fiber]
-	       
-	       [mapc [funk [semantic_knowledge_base]
-			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
-		     semantic_knowledge_bases]
-	       [semantic-add semantic_planner thought semantic_thought]
-	       
-	       [have thought_fiber-start_trigger trigger]
-	       [let [[result [fiber-sheltered_join thought_fiber]]]
-		 
-		 [semantic-remove semantic_planner thought semantic_thought]
-		 [mapc [funk [semantic_knowledge_base]
-			     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
-		       semantic_knowledge_bases]
-		 
-		 result]]]]]
-

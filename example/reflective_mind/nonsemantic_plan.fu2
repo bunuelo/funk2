@@ -233,6 +233,8 @@
 	target_key
 	target_value]]
 
+
+
 [defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
@@ -378,6 +380,39 @@
 
 [deftypefunk nonsemantic_plan execute eval []
   [funkall [get this compiled_funk] this]]
+
+[deftypefunk nonsemantic_plan execute eval_in_semantic_planner [semantic_planner]
+  [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
+		  [semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
+	     [if [null semantic_knowledge_bases]
+		 [error funkname `semantic_planner-new_semantic_thought
+			bug_name `semantic_knowledge_bases-is-nil]]
+	     
+	     [let* [[thought_fiber-start_trigger [new fiber_trigger]]
+		    [thought_fiber               [fiber [funk []
+							      [wait-for-trigger thought_fiber-start_trigger]
+							      [cause-define cause-name [get this unique_name]]
+							      [have this eval]]
+							[]]]
+		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
+	       [have [get fiber cause_reg] define `cause-semantic_thought semantic_thought]
+	       [set semantic_thought fiber thought_fiber]
+	       
+	       [mapc [funk [semantic_knowledge_base]
+			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
+		     semantic_knowledge_bases]
+	       [semantic-add semantic_planner thought semantic_thought]
+	       
+	       [have thought_fiber-start_trigger trigger]
+	       [let [[result [fiber-sheltered_join thought_fiber]]]
+		 
+		 [semantic-remove semantic_planner thought semantic_thought]
+		 [mapc [funk [semantic_knowledge_base]
+			     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
+		       semantic_knowledge_bases]
+		 
+		 result]]]]]
+
 
 
 [defunk nonsemantic_plan-expression-compile_imagine [expression]

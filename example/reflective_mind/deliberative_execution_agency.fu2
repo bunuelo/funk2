@@ -37,11 +37,7 @@
 			[terminal_format standard-terminal '\ndeliberative_layer: executing plan.']
 			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
 			  [set semantic_planner execute_plan semantic_plan]
-			  [let [[result [semantic_planner-new_semantic_thought semantic_planner
-									       [funk []
-										     [cause-define cause-name [get [get semantic_plan nonsemantic_plan] unique_name]]
-										     [have [get semantic_plan nonsemantic_plan] eval]]
-									       []]]]
+			  [let [[result [have [get [get semantic_plan nonsemantic_plan] eval_in_semantic_planner semantic_planner]]]]
 			    [if [is-type `bug result]
 				[let [[bug result]]
 				  [terminal_format standard-terminal '\ndeliberative_layer: executing plan has a bug.']

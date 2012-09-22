@@ -395,7 +395,7 @@
 							      [have this eval]]
 							[]]]
 		    [semantic_thought            [new semantic_thought [get semantic_planner semantic_realm]]]]
-	       [have [get fiber cause_reg] define `cause-semantic_thought semantic_thought]
+	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 	       [set semantic_thought fiber thought_fiber]
 	       
 	       [mapc [funk [semantic_knowledge_base]

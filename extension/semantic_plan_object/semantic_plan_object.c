@@ -257,49 +257,62 @@ export_cefunk2(semantic_plan_object__bug_name__remove, this, that, 0, "Removes t
 
 
 
-f2ptr raw__semantic_plan_object__default_frame__variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
+f2ptr raw__semantic_plan_object__default_variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
   return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "variable"), variable_name);
 }
 
-f2ptr f2__semantic_plan_object__default_frame__variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
+f2ptr f2__semantic_plan_object__default_variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__default_frame__variable__lookup_set(cause, this, variable_name);
+  return raw__semantic_plan_object__default_variable__lookup_set(cause, this, variable_name);
 }
-export_cefunk2(semantic_plan_object__default_frame__variable__lookup_set, this, variable_name, 0, "Returns the set of variable bindings for this semantic_plan_object's default frame variable, returns nil if no such set exists.");
+export_cefunk2(semantic_plan_object__default_variable__lookup_set, this, variable_name, 0, "Returns the set of variable bindings for this semantic_plan_object's default frame variable, returns nil if no such set exists.");
 
 
-f2ptr raw__semantic_plan_object__default_frame__variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
+f2ptr raw__semantic_plan_object__default_variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
   return raw__semantic_frame__add(cause, this, new__symbol(cause, "variable"), variable_name, that);
 }
 
-f2ptr f2__semantic_plan_object__default_frame__variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
+f2ptr f2__semantic_plan_object__default_variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__default_frame__variable__add(cause, this, variable_name, that);
+  return raw__semantic_plan_object__default_variable__add(cause, this, variable_name, that);
 }
-export_cefunk3(semantic_plan_object__default_frame__variable__add, this, variable_name, that, 0, "Adds the given value to this semantic_plan_object's default frame variable bindings.");
+export_cefunk3(semantic_plan_object__default_variable__add, this, variable_name, that, 0, "Adds the given value to this semantic_plan_object's default frame variable bindings.");
 
 
-f2ptr raw__semantic_plan_object__default_frame__variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
+f2ptr raw__semantic_plan_object__default_variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
   return raw__semantic_frame__remove(cause, this, new__symbol(cause, "variable"), variable_name, that);
 }
 
-f2ptr f2__semantic_plan_object__default_frame__variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
+f2ptr f2__semantic_plan_object__default_variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__default_frame__variable__remove(cause, this, variable_name, that);
+  return raw__semantic_plan_object__default_variable__remove(cause, this, variable_name, that);
 }
-export_cefunk3(semantic_plan_object__default_frame__variable__remove, this, variable_name, that, 0, "Removes the given value from this semantic_plan_object's default frame variable bindings.");
+export_cefunk3(semantic_plan_object__default_variable__remove, this, variable_name, that, 0, "Removes the given value from this semantic_plan_object's default frame variable bindings.");
 
 
 
-f2ptr raw__semantic_plan_object__add_default_frame_to_environment(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "variable"), variable_name, that);
+f2ptr raw__semantic_plan_object__add_default_frame_to_environment(f2ptr cause, f2ptr this, f2ptr environment) {
+  f2ptr default_variable__symbol = new__symbol(cause, "default_variable");
+  semantic_frame__iteration(cause, this, key_type_name, key_name, slot_value,
+			    if (raw__eq(cause, key_type_name, default_variable__symbol)) {
+			      f2ptr variable_name     = key_name;
+			      f2ptr variable_value    = slot_value;
+			      f2ptr current_value_set = raw__semantic_environment__variable__lookup_set(cause, environment, variable_name);
+			      if ((current_value_set == nil) ||
+				  (f2integer__i(f2__set__key_count(current_value_set, cause), cause) == 0)) {
+				assert_value(raw__semantic_environment__variable__add(cause, environment, variable_name, variable_value));
+			      }
+			    }
+			    );
+  return nil;
 }
 
-f2ptr f2__semantic_plan_object__add_default_frame_to_environment(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
+f2ptr f2__semantic_plan_object__add_default_frame_to_environment(f2ptr cause, f2ptr this, f2ptr environment) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__add_default_frame_to_environment(cause, this, variable_name, that);
+  assert_argument_type(semantic_environment, environment);
+  return raw__semantic_plan_object__add_default_frame_to_environment(cause, this, environment);
 }
-export_cefunk3(semantic_plan_object__add_default_frame_to_environment, this, variable_name, that, 0, "Removes the given value from this semantic_plan_object's default frame variable bindings.");
+export_cefunk2(semantic_plan_object__add_default_frame_to_environment, this, environment, 0, "Removes the given value from this semantic_plan_object's default frame variable bindings.");
 
 
 
@@ -323,9 +336,9 @@ f2ptr f2__semantic_plan_object__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "bug_name"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__bug_name__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "bug_name"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__bug_name__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "bug_name"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__bug_name__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "default_frame-variable"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_frame__variable__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "default_frame-variable"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_frame__variable__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "default_frame-variable"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_frame__variable__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "default_variable"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_variable__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "default_variable"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_variable__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "default_variable"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__default_variable__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "add_default_frame_to_environment"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__add_default_frame_to_environment")));}
   return this;
 }

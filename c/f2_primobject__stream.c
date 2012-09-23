@@ -23,7 +23,7 @@
 
 // stream_context
 
-def_primobject_3_slot(stream_context, line_number, column_number);
+def_primobject_3_slot(stream_context, byte, line_number, column_number);
 
 f2ptr f2__stream_context__new(f2ptr cause, f2ptr byte, f2ptr line_number, f2ptr column_number) {
   return f2stream_context__new(cause, byte, line_number, column_number);

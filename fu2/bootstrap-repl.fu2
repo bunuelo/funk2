@@ -175,7 +175,8 @@
 								       nil]]
 
 
-[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-optimize]
+'note that the optimizing compiler has bugs, so the original compiler is being used here.'
+[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
 
 [globalize-funk funk-new_with_name [metro-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 					      `[`[funk-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]

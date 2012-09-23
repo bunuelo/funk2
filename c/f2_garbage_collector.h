@@ -32,7 +32,7 @@ typedef struct funk2_garbage_collector_s funk2_garbage_collector_t;
 #include "f2_garbage_collector_pool.h"
 #include "f2_never_delete_list.h"
 
-//#define DEBUG_GARBAGE_COLLECTOR_STATUS 1
+#define DEBUG_GARBAGE_COLLECTOR_STATUS 1
 
 #if defined(DEBUG_GARBAGE_COLLECTOR_STATUS)
 #  define garbage_collector_status(msg, rest...) status(msg, ## rest)

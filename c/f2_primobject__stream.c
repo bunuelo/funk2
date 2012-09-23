@@ -381,19 +381,6 @@ f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
   if (byte && f2stream__rewindable(this, cause)) {
     assert_value(f2__stream__push_rewind_stack(cause, this, byte));
   }
-  if (raw__integer__is_type(cause, byte)) {
-    if ((byte != nil) &&
-	f2integer__i(byte, cause) == f2char__ch(__funk2.reader.char__newline, cause)) {
-      f2ptr line_number    = f2__stream__line_number(cause, this);
-      u64   line_number__i = f2integer__i(line_number, cause);
-      f2__stream__line_number__set(cause, this, f2integer__new(cause, line_number__i + 1));
-      f2__stream__column_number__set(cause, this, f2integer__new(cause, 1));
-    } else {
-      f2ptr column_number    = f2__stream__column_number(cause, this);
-      u64   column_number__i = f2integer__i(column_number, cause);
-      f2__stream__column_number__set(cause, this, f2integer__new(cause, column_number__i + 1));
-    }
-  }
   return byte;
 }
 def_pcfunk1(stream__try_read_byte, stream,

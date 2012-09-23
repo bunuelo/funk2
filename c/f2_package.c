@@ -29,7 +29,7 @@ def_primobject_7_slot(source_expression,
 f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr filename, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {
   return f2source_expression__new(cause, body, filename, first_line, last_line, first_column, last_column, subexpressions);
 }
-def_pcfunk6(source_expression__new, body, filename, first_line, last_line, first_column, last_column, subexpressions,
+def_pcfunk7(source_expression__new, body, filename, first_line, last_line, first_column, last_column, subexpressions,
 	    "",
 	    return f2__source_expression__new(this_cause, body, filename, first_line, last_line, first_column, last_column, subexpressions));
 

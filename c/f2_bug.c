@@ -76,7 +76,6 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
       } else {
 	printf("??");
       }
-      printf("\n");
     }
     frame__var__iteration(cause, bug_frame, slot_name, slot_value,
 			  boolean_t value_printable = boolean__true;

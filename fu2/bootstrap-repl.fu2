@@ -175,7 +175,7 @@
 								       nil]]
 
 
-[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
+[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-optimize]
 
 [globalize-funk funk-new_with_name [metro-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 					      `[`[funk-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]

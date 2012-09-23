@@ -343,6 +343,20 @@ f2ptr f2__string_stream__try_ungetbless_read_byte(f2ptr cause, f2ptr this) {
   return __funk2.reader.end_of_file_exception;
 }
 
+f2ptr f2__stream__push_rewind_stack(f2ptr cause, f2ptr this, f2ptr byte) {
+  f2ptr line_number    = f2__stream__line_number(  cause, this);
+  f2ptr column_number  = f2__stream__column_number(cause, this);
+  f2ptr stream_context = f2stream_context__new(cause, byte, line_number, column_number);
+  f2stream__rewind_stack__set(this, cause, raw__cons__new(cause, stream_context, f2stream__rewind_stack(this, cause)));
+  f2ptr rewind_length = f2stream__rewind_length(this, cause);
+  if (! raw__integer__is_type(cause, rewind_length)) {
+    return f2larva__new(cause, 1135, nil);
+  }
+  s64 rewind_length__i = f2integer__i(rewind_length, cause);
+  f2stream__rewind_length__set(this, cause, f2integer__new(cause, rewind_length__i + 1));
+  return nil;
+}
+
 f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
   assert_argument_type(stream, this);
   f2ptr byte         = nil;
@@ -361,13 +375,7 @@ f2ptr f2__stream__try_read_byte(f2ptr cause, f2ptr this) {
     }
   }
   if (byte && f2stream__rewindable(this, cause)) {
-    f2stream__rewind_stack__set(this, cause, raw__cons__new(cause, byte, f2stream__rewind_stack(this, cause)));
-    f2ptr rewind_length = f2stream__rewind_length(this, cause);
-    if (! raw__integer__is_type(cause, rewind_length)) {
-      return f2larva__new(cause, 1135, nil);
-    }
-    s64 rewind_length__i = f2integer__i(rewind_length, cause);
-    f2stream__rewind_length__set(this, cause, f2integer__new(cause, rewind_length__i + 1));
+    assert_value(f2__stream__push_rewind_stack(cause, this, byte));
   }
   if (raw__integer__is_type(cause, byte)) {
     if ((byte != nil) &&
@@ -407,8 +415,7 @@ def_pcfunk1(stream__getb, stream,
 	    "",
 	    return f2__stream__getb(this_cause, stream));
 
-f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
-  assert_argument_type(stream, this);
+f2ptr raw__stream__pop_rewind_stack(f2ptr cause, f2ptr this) {
   f2ptr rewind_stack = f2stream__rewind_stack(this, cause);
   if (! rewind_stack) {
     return f2larva__new(cause, 234, nil);
@@ -416,42 +423,31 @@ f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
   if (! raw__cons__is_type(cause, rewind_stack)) {
     return f2larva__new(cause, 2, nil);
   }
-  f2ptr byte = f2cons__car(rewind_stack, cause);
+  f2ptr stream_context = f2cons__car(rewind_stack, cause);
+  f2ptr byte           = f2stream_context__byte(stream_context, cause);
   f2stream__rewind_stack__set(this, cause, f2cons__cdr(rewind_stack, cause));
   f2stream__ungetb_stack__set(this, cause, raw__cons__new(cause, byte, f2stream__ungetb_stack(this, cause)));
-  f2ptr rewind_length = f2stream__rewind_length(this, cause);
-  if (! raw__integer__is_type(cause, rewind_length)) {
-    return f2larva__new(cause, 3, nil);
-  }
-  s64 rewind_length__i = f2integer__i(rewind_length, cause);
-  f2ptr new_rewind_length = f2integer__new(cause, rewind_length__i - 1);
-  f2stream__rewind_length__set(this, cause, new_rewind_length);
-  if (raw__integer__is_type(cause, byte) && f2integer__i(byte, cause) == f2char__ch(__funk2.reader.char__newline, cause)) {
-    f2ptr line_num    = f2__stream__line_number(cause, this);
-    u64   line_num__i = f2integer__i(line_num, cause);
-    f2__stream__line_number__set(cause, this, f2integer__new(cause, line_num__i - 1));
-    {
-      f2ptr rewind_stack = f2stream__rewind_stack(this, cause);
-      int column_num = 1;
-      {
-	f2ptr iter = rewind_stack;
-	while (iter) {
-	  f2ptr rewind_byte = f2__cons__car(cause, iter);
-	  if (raw__integer__is_type(cause, rewind_byte) && f2integer__i(rewind_byte, cause) == f2char__ch(__funk2.reader.char__newline, cause)) {
-	    break;
-	  }
-	  column_num ++;
-	  iter = f2__cons__cdr(cause, iter);
-	}
-      }
-      f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num));
+  {
+    f2ptr rewind_length = f2stream__rewind_length(this, cause);
+    if (! raw__integer__is_type(cause, rewind_length)) {
+      return f2larva__new(cause, 3, nil);
     }
-  } else {
-    f2ptr column_num    = f2__stream__column_number(cause, this);
-    u64   column_num__i = f2integer__i(column_num, cause);
-    f2__stream__column_number__set(cause, this, f2integer__new(cause, column_num__i - 1));
+    s64 rewind_length__i = f2integer__i(rewind_length, cause);
+    f2ptr new_rewind_length = f2integer__new(cause, rewind_length__i - 1);
+    f2stream__rewind_length__set(this, cause, new_rewind_length);
+  }
+  {
+    f2ptr line_number   = f2__stream_context__line_number(  cause, stream_context);
+    f2ptr column_number = f2__stream_context__column_number(cause, stream_context);
+    f2__stream__line_number__set(  cause, this, line_number);
+    f2__stream__column_number__set(cause, this, column_number);
   }
   return byte;
+}
+
+f2ptr f2__stream__rewind(f2ptr cause, f2ptr this) {
+  assert_argument_type(stream, this);
+  return assert_value(raw__stream__pop_rewind_stack(cause, this));
 }
 def_pcfunk1(stream__rewind, stream,
 	    "",

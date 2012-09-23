@@ -22,6 +22,12 @@
 #ifndef F2__PRIMOBJECT__STREAM__TYPES__H
 #define F2__PRIMOBJECT__STREAM__TYPES__H
 
+// stream_context
+
+typedef struct funk2_object_type__stream_context__slot_s funk2_object_type__stream_context__slot_t;
+declare_object_type_3_slot(stream_context, byte, line_number, column_number,
+			    );
+
 // stream
 
 typedef struct funk2_object_type__stream__slot_s funk2_object_type__stream__slot_t;
@@ -44,6 +50,11 @@ declare_object_type_12_slot(stream, cmutex, stream_type, ungetb_stack, rewind_st
 #define F2__PRIMOBJECT__STREAM__H
 
 #include "f2_primobjects.h"
+
+// stream_context
+
+declare_primobject_3_slot(stream_context, byte, line_number, column_number);
+
 
 // stream
 

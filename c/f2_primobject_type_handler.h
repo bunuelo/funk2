@@ -112,6 +112,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__size_2d__slot_t                          primobject_type_size_2d;
   funk2_object_type__event__slot_t                            primobject_type_event;
   funk2_object_type__bytecode_event__slot_t                   primobject_type_bytecode_event;
+  funk2_object_type__stream_context__slot_t                   primobject_type_stream_context;
   funk2_object_type__stream__slot_t                           primobject_type_stream;
   funk2_object_type__ptypehash__slot_t                        primobject_type_ptypehash;
   funk2_object_type__scheduler_ptypehash__slot_t              primobject_type_scheduler_ptypehash;

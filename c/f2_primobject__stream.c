@@ -21,6 +21,20 @@
 
 #include "funk2.h"
 
+// stream_context
+
+def_primobject_3_slot(stream_context, line_number, column_number);
+
+f2ptr f2__stream_context__new(f2ptr cause, f2ptr byte, f2ptr line_number, f2ptr column_number) {
+  return f2stream_context__new(cause, byte, line_number, column_number);
+}
+def_pcfunk3(stream_context__new, byte, line_number, column_number,
+	    "",
+	    return f2__stream_context__new(this_cause, byte, line_number, column_number));
+
+
+
+
 // stream
 
 def_primobject_12_slot(stream, cmutex, stream_type, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, character_byte_index, line_number, column_number);
@@ -236,6 +250,7 @@ f2ptr f2__stream__ungetb(f2ptr cause, f2ptr this, f2ptr byte) {
     f2__terminal_print(cause, rewind_byte);
     error(nil, "ungetb rewind byte mismatch.");
   }
+  // TODO
   return nil;
 }
 def_pcfunk2(stream__ungetb, this, character,
@@ -621,6 +636,11 @@ void f2__primobject__stream__defragment__fix_pointers() {
   
   // -- initialize --
   
+  // stream_context
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(stream_context, byte, line_number, column_number);
+  
+
   // stream
   
   initialize_primobject_12_slot__defragment__fix_pointers(stream, cmutex, stream_type, ungetb_stack, rewind_stack, rewindable, rewind_length, file_handle, string, index, character_byte_index, line_number, column_number);
@@ -668,6 +688,11 @@ void f2__primobject__stream__defragment__fix_pointers() {
 
 void f2__primobject__stream__reinitialize_globalvars() {
   f2ptr cause = initial_cause(); //f2_primobjects_c__cause__new(initial_cause(), nil, nil);
+  
+  // stream_context
+  
+  initialize_primobject_3_slot(stream_context, byte, line_number, column_number);
+  
   
   // stream
   

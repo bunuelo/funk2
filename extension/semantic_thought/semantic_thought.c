@@ -142,7 +142,7 @@ f2ptr raw__semantic_thought__environment__set(f2ptr cause, f2ptr this, f2ptr tha
 
 f2ptr f2__semantic_thought__environment__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_thought,            this);
-  assert_argument_type_or_nil(semantic_envionrment, that);
+  assert_argument_type_or_nil(semantic_environment, that);
   return raw__semantic_thought__environment__set(cause, this, that);
 }
 export_cefunk2(semantic_thought__environment__set, this, that, 0, "");

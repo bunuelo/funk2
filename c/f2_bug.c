@@ -53,7 +53,12 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
       f2ptr last_column  = f2source_expression__last_column( source_expression, cause);
       printf("bug in ");
       if (raw__string__is_type(cause, filename)) {
-	assert_value(f2__ansi__stream__write(cause, __funk2.globalenv.stdout_stream, filename));
+	u64 filename__utf8_length = raw__string__utf8_length(cause, filename);
+	u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(sizeof(u8) * (filename__utf8_length + 1)));
+	raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
+	filename__utf8_str[filename__utf8_length] = 0;
+	printf("%s", filename__utf8_str);
+	f2__free(to_ptr(filename__utf8_str));
       } else {
 	printf("<unknown-filename>");
       }

@@ -160,7 +160,7 @@ f2ptr raw__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this
 
 f2ptr f2__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
   assert_argument_type(semantic_environment, this);
-  return raw__semantic_environment__lookup_a_variable_value(cause, this, f2ptr variable_name);
+  return raw__semantic_environment__lookup_a_variable_value(cause, this, variable_name);
 }
 export_cefunk2(semantic_environment__lookup_a_variable_value, this, variable_name, 0, "");
 

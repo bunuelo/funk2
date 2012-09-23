@@ -49,8 +49,8 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
       f2ptr filename     = f2source_expression__filename(    source_expression, cause);
       f2ptr first_line   = f2source_expression__first_line(  source_expression, cause);
       f2ptr last_line    = f2source_expression__last_line(   source_expression, cause);
-      f2ptr first_column = f2source_expression__first_column(source_expression, cause);
-      f2ptr last_column  = f2source_expression__last_column( source_expression, cause);
+      //f2ptr first_column = f2source_expression__first_column(source_expression, cause);
+      //f2ptr last_column  = f2source_expression__last_column( source_expression, cause);
       printf("bug in ");
       if (raw__string__is_type(cause, filename)) {
 	u64 filename__utf8_length = raw__string__utf8_length(cause, filename);

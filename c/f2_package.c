@@ -23,21 +23,24 @@
 
 // source_expression
 
-def_primobject_6_slot(source_expression,
-		      body, first_line, last_line, first_column, last_column, subexpressions);
+def_primobject_7_slot(source_expression,
+		      body, filename, first_line, last_line, first_column, last_column, subexpressions);
 
-f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {return f2source_expression__new(cause, body, first_line, last_line, first_column, last_column, subexpressions);}
-def_pcfunk6(source_expression__new, body, first_line, last_line, first_column, last_column, subexpressions,
+f2ptr f2__source_expression__new(f2ptr cause, f2ptr body, f2ptr filename, f2ptr first_line, f2ptr last_line, f2ptr first_column, f2ptr last_column, f2ptr subexpressions) {
+  return f2source_expression__new(cause, body, filename, first_line, last_line, first_column, last_column, subexpressions);
+}
+def_pcfunk6(source_expression__new, body, filename, first_line, last_line, first_column, last_column, subexpressions,
 	    "",
-	    return f2__source_expression__new(this_cause, body, first_line, last_line, first_column, last_column, subexpressions));
+	    return f2__source_expression__new(this_cause, body, filename, first_line, last_line, first_column, last_column, subexpressions));
 
 f2ptr raw__source_expression__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list14__new(cause,
+    frame = f2__frame__new(cause, f2list16__new(cause,
 						new__symbol(cause, "print_object_type"), new__symbol(cause, "source_expression"),
 						new__symbol(cause, "body"),           f2__source_expression__body(          cause, this),
+						new__symbol(cause, "filename"),       f2__source_expression__filename(      cause, this),
 						new__symbol(cause, "first_line"),     f2__source_expression__first_line(    cause, this),
 						new__symbol(cause, "last_line"),      f2__source_expression__last_line(     cause, this),
 						new__symbol(cause, "first_column"),   f2__source_expression__first_column(  cause, this),
@@ -842,8 +845,8 @@ void f2__package__defragment__fix_pointers() {
   
   // source_expression
   
-  initialize_primobject_6_slot__defragment__fix_pointers(source_expression,
-							 body, first_line, last_line, first_column, last_column, subexpressions);
+  initialize_primobject_7_slot__defragment__fix_pointers(source_expression,
+							 body, filename, first_line, last_line, first_column, last_column, subexpressions);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(source_expression__terminal_print_with_frame);
@@ -925,8 +928,8 @@ void f2__package__reinitialize_globalvars() {
   
   // source_expression
   
-  initialize_primobject_6_slot(source_expression,
-			       body, first_line, last_line, first_column, last_column, subexpressions);
+  initialize_primobject_7_slot(source_expression,
+			       body, filename, first_line, last_line, first_column, last_column, subexpressions);
   
   __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__symbol = new__symbol(cause, "terminal_print_with_frame");
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(source_expression__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_source_expression.terminal_print_with_frame__funk = never_gc(cfunk);}

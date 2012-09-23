@@ -27,8 +27,8 @@
 // source_expression
 
 typedef struct funk2_object_type__source_expression__slot_s funk2_object_type__source_expression__slot_t;
-declare_object_type_6_slot(source_expression,
-			   body, first_line, last_line, first_column, last_column, subexpressions,
+declare_object_type_7_slot(source_expression,
+			   body, filename, first_line, last_line, first_column, last_column, subexpressions,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -83,8 +83,8 @@ declare_object_type_15_slot(package,
 
 // source_expression
 
-declare_primobject_6_slot(source_expression,
-			  body, first_line, last_line, first_column, last_column, subexpressions
+declare_primobject_7_slot(source_expression,
+			  body, filename, first_line, last_line, first_column, last_column, subexpressions
 			  );
 
 f2ptr f2source_expression__primobject_type__new_aux(f2ptr cause);

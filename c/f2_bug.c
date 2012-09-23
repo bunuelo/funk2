@@ -44,6 +44,35 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
   f2ptr print_frame = f2__frame__new(cause, nil);
   f2ptr bug_frame   = f2__bug__frame(cause, this);
   if (bug_frame && raw__frame__is_type(cause, bug_frame)) {
+    f2ptr source_expression = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "source_expression"), nil);
+    if (raw__source_expression__is_type(cause, source_expression)) {
+      f2ptr filename     = f2source_expression__filename(    source_expression, cause);
+      f2ptr first_line   = f2source_expression__first_line(  source_expression, cause);
+      f2ptr last_line    = f2source_expression__last_line(   source_expression, cause);
+      f2ptr first_column = f2source_expression__first_column(source_expression, cause);
+      f2ptr last_column  = f2source_expression__last_column( source_expression, cause);
+      printf("bug in ");
+      if (raw__string__is_type(cause, filename)) {
+	assert_value(f2__ansi__stream__write(cause, __funk2.globalenv.stdout_stream, filename));
+      } else {
+	printf("<unknown-filename>");
+      }
+      printf(": lines ");
+      if (raw__integer__is_type(cause, first_line)) {
+	u64 first_line__i = f2integer__i(first_line, cause);
+	printf(u64__fstr, first_line__i);
+      } else {
+	printf("??");
+      }
+      printf("--");
+      if (raw__integer__is_type(cause, last_line)) {
+	u64 last_line__i = f2integer__i(last_line, cause);
+	printf(u64__fstr, last_line__i);
+      } else {
+	printf("??");
+      }
+      printf("\n");
+    }
     frame__var__iteration(cause, bug_frame, slot_name, slot_value,
 			  boolean_t value_printable = boolean__true;
 			  if (raw__array__is_type(cause, slot_value)) {
@@ -56,7 +85,6 @@ f2ptr raw__bug__pretty_print(f2ptr cause, f2ptr this) {
 			  }
 			  );
   }
-  printf("\nbug: ");
   f2__print(cause, f2__bug__new(cause, f2__bug__bug_type(cause, this), print_frame));
   
   f2ptr fiber = f2__frame__lookup_var_value(cause, bug_frame, new__symbol(cause, "fiber"), nil);

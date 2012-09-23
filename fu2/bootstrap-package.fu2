@@ -24,11 +24,12 @@
       [if [and [is-type `exception read_result] [eq [get read_result tag] `reader:end_of_file-exception]]
 	  nil
 	[let [[body           read_result]
+	      [filename       [cause-lookup source-filename]]
 	      [last_line      [get this line_number]]
 	      [last_column    [get this column_number]]
 	      [subexpressions nil]]
 	  [stream-skip_whitespace this]
-	  [new source_expression body first_line last_line first_column last_column subexpressions]]]]]]
+	  [new source_expression body filename first_line last_line first_column last_column subexpressions]]]]]]
 
 [defunk source-read [this]
   [let [[code [get this code]]]

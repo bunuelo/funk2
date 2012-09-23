@@ -27,25 +27,27 @@
 
 // semantic_environment
 
-f2ptr     raw__semantic_environment__type_create         (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_environment__new                 (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_environment__new                 (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_environment__is_type             (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_environment__is_type             (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_environment__type                (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_environment__type                (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_environment__parent__lookup_set  (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_environment__parent__lookup_set  (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_environment__parent__add         (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_environment__parent__add         (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_environment__parent__remove      (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_environment__parent__remove      (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_environment__variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name);
-f2ptr      f2__semantic_environment__variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name);
-f2ptr     raw__semantic_environment__variable__add       (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
-f2ptr      f2__semantic_environment__variable__add       (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
-f2ptr     raw__semantic_environment__variable__remove    (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
-f2ptr      f2__semantic_environment__variable__remove    (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
+f2ptr     raw__semantic_environment__type_create            (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_environment__new                    (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_environment__new                    (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_environment__is_type                (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_environment__is_type                (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_environment__type                   (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_environment__type                   (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_environment__parent__lookup_set     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_environment__parent__lookup_set     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_environment__parent__add            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_environment__parent__add            (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_environment__parent__remove         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_environment__parent__remove         (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_environment__variable__lookup_set   (f2ptr cause, f2ptr this, f2ptr variable_name);
+f2ptr      f2__semantic_environment__variable__lookup_set   (f2ptr cause, f2ptr this, f2ptr variable_name);
+f2ptr     raw__semantic_environment__variable__add          (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
+f2ptr      f2__semantic_environment__variable__add          (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
+f2ptr     raw__semantic_environment__variable__remove       (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
+f2ptr      f2__semantic_environment__variable__remove       (f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that);
+f2ptr     raw__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name);
+f2ptr      f2__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name);
 
 f2ptr f2__semantic_environment__primobject_type__new(f2ptr cause);
 

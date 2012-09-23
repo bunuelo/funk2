@@ -583,7 +583,8 @@
 							      [have this imagine_eval]]
 							[]]]
 		    [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
-						   [set this fiber thought_fiber]]]]
+						   [set this fiber thought_fiber]
+						   this]]]
 	       
 	       [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
 		 [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]

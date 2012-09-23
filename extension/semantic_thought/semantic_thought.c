@@ -148,21 +148,21 @@ f2ptr f2__semantic_thought__environment__set(f2ptr cause, f2ptr this, f2ptr that
 export_cefunk2(semantic_thought__environment__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this) {
+f2ptr raw__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
   f2ptr environment = raw__semantic_thought__environment(cause, this);
   if (environment == nil) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "semantic_thought-lookup_a_variable_value-no_environment_defined"),
 				   new__symbol(cause, "semantic_thought"), this));
   }
-  return assert_value(f2__semantic_environment__lookup_a_variable_value(cause, this));
+  return assert_value(f2__semantic_environment__lookup_a_variable_value(cause, this, variable_name));
 }
 
-f2ptr f2__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
   assert_argument_type(semantic_thought, this);
-  return raw__semantic_thought__lookup_a_variable_value(cause, this);
+  return raw__semantic_thought__lookup_a_variable_value(cause, this, variable_name);
 }
-export_cefunk1(semantic_thought__lookup_a_variable_value, this, 0, "");
+export_cefunk2(semantic_thought__lookup_a_variable_value, this, variable_name, 0, "");
 
 
 f2ptr f2__semantic_thought__primobject_type__new(f2ptr cause) {

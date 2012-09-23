@@ -146,18 +146,38 @@ f2ptr f2__semantic_environment__variable__remove(f2ptr cause, f2ptr this, f2ptr 
 export_cefunk3(semantic_environment__variable__remove, this, variable_name, that, 0, "Removes the given value from this semantic_environment's default frame variable bindings.");
 
 
+f2ptr raw__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {
+  f2ptr variable_value_set = raw__semantic_environment__variable__lookup_set(cause, this, variable_name);
+  if (variable_value_set == nil) {
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "funk_name"),            new__symbol(cause, "semantic_environment-lookup_a_variable_value"),
+				   new__symbol(cause, "bug_name"),             new__symbol(cause, "variable_value_set-is-nil"),
+				   new__symbol(cause, "semantic_environment"), this,
+				   new__symbol(cause, "variable_name"),        variable_name));
+  }
+  return assert_value(f2__set__an_arbitrary_element(cause, variable_value_set));
+}
+
+f2ptr f2__semantic_environment__lookup_a_variable_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_environment, this);
+  return raw__semantic_environment__lookup_a_variable_value(cause, this);
+}
+export_cefunk1(semantic_environment__lookup_a_variable_value, this, 0, "");
+
+
 
 f2ptr f2__semantic_environment__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "parent"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "parent"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "parent"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "variable"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "variable"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "variable"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "parent"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "parent"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "parent"),                  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__parent__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "variable"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "variable"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "variable"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__variable__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "lookup_a_variable_value"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_environment"), new__symbol(cause, "semantic_environment__lookup_a_variable_value")));}
   return this;
 }
 

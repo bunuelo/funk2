@@ -273,7 +273,11 @@
 		 result]]]]]
 
 [defunk nonsemantic_plan-expression-compile [expression]
-  [cond [[is-type `cons expression] [let [[command   [car expression]]
+  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+					[eval `[funk []
+						     [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,expression] '.']
+						     [have semantic_thought lookup_a_variable_value [quote ,expression]]]]]]
+	[[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
 					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
@@ -284,6 +288,15 @@
 												[eval `[funk [this]
 													     [let [[eval-expression [quote ,eval-expression]]]
 													       [eval eval-expression]]]]]]]
+					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `print
+												       expression expression]
+											      [let [[print-expression [elt arguments 0]]]
+												[eval `[funk [this]
+													     [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile print-expression] this]]]
+													       [terminal_format standard-terminal '\nplan printing expression: ' eval-print-expression]
+													       eval-print-expression]]]]]]
 					      [[eq `prog                           command] [eval `[funk [this]
 													 [terminal_format standard-terminal '\nplan evaluating serial process.']
 													 @[mapcar [funk [argument]
@@ -427,7 +440,11 @@
 
 
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
-  [cond [[is-type `cons expression] [let [[command   [car expression]]
+  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+					[eval `[funk []
+						     [terminal_format standard-terminal '\nplan imagining looking up variable value, ' [quote ,expression] '.']
+						     [have semantic_thought lookup_a_variable_value [quote ,expression]]]]]]
+	[[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
 					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
@@ -439,6 +456,15 @@
 													     [let [[eval-expression [quote ,eval-expression]]]
 													       [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' eval_expression '.']
 													       ]]]]]]
+					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `print
+												       expression expression]
+											      [let [[print-expression [elt arguments 0]]]
+												[eval `[funk [this]
+													     [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile_imagine print-expression] this]]]
+													       [terminal_format standard-terminal '\nplan imagine printing expression: ' eval-print-expression]
+													       eval-print-expression]]]]]]
 					      [[eq `prog                           command] [eval `[funk [this]
 													 [terminal_format standard-terminal '\nplan imagining serial process.']
 													 @[mapcar [funk [argument]
@@ -592,7 +618,9 @@
     semantic_plan_operator_activation]]
 
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
-  [cond [[is-type `cons expression] [let [[command           [car expression]]
+  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+					`[? ,expression]]]
+	[[is-type `cons expression] [let [[command           [car expression]]
 					  [command_arguments [cdr expression]]]
 				      [let [[command_arguments-length [length command_arguments]]]
 					[cond [[eq `eval                           command] [if [not [eq 1 command_arguments-length]]
@@ -601,6 +629,12 @@
 												       expression expression]
 											      [let [[eval-expression [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `eval]]]]
+					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `print
+												       expression expression]
+											      [let [[print-expression [elt arguments 0]]]
+												[nonsemantic_plan-expression-compile_imagine print-expression]]]]
 					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
 					      [[eq `wait-for-time                  command] [if [not [eq 1 command_arguments-length]]

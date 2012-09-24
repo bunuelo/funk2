@@ -72,7 +72,7 @@ declare_object_type_10_slot(cause_group,
 			    bytes_freed_count_scheduler_cmutex,
 			    bytes_freed_count_chunk,
 			    cause_group_interaction_scheduler_ptypehash,
-			    frame,
+			    counter_scheduler_ptypehash,
 			    f2ptr bytecode_count__symbol;
 			    f2ptr bytecode_count__funk;
 			    f2ptr bytecode_count__set__symbol;
@@ -210,7 +210,7 @@ declare_primobject_10_slot(cause_group,
 			   bytes_freed_count_scheduler_cmutex,
 			   bytes_freed_count_chunk,
 			   cause_group_interaction_scheduler_ptypehash,
-			   frame);
+			   counter_scheduler_ptypehash);
 
 f2ptr  f2__cause_group__new                           (f2ptr cause);
 u64   raw__cause_group__bytecode_count                (f2ptr cause, f2ptr this);

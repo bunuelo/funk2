@@ -297,7 +297,7 @@ f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytes_freed_count_scheduler_cmutex          = f2scheduler_cmutex__new(cause);
   f2ptr bytes_freed_count_chunk                     = raw__chunk__new(cause, sizeof(u64));
   f2ptr cause_group_interaction_scheduler_ptypehash = f2__scheduler_ptypehash__new(cause);
-  f2ptr frame                                       = f2__frame__new(cause);
+  f2ptr frame                                       = f2__frame__new(cause, nil);
   return f2cause_group__new(cause,
 			    bytecode_count_scheduler_cmutex,
 			    bytecode_count_chunk,

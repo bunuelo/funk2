@@ -1,0 +1,38 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[defmetro dotimes [var-max_index :rest body]
+  [let [[var       [car  var-max_index]]
+	[max_index [cadr var-max_index]]]
+    [if [is-type `integer max_index]
+	[if [null body]
+	    nil
+	  `[let [[,var 0]]
+	     [while [integer-less_than ,var ,max_index]
+	       [prog @body]
+	       [mutate ,var [integer-add ,var 1]]]]]
+      [if [null body]
+	  `[prog ,max_index
+		 nil]
+	`[let [[,var      0]
+	       [max_index ,max_index]]
+	   [while [integer-less_than ,var max_index]
+	     [prog @body]
+	     [mutate ,var [integer-add ,var 1]]]]]]]]
+

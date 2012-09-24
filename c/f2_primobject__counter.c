@@ -46,9 +46,9 @@ def_pcfunk0(counter__new,
 f2ptr raw__counter__value(f2ptr cause, f2ptr this) {
   f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  raw__scheduler_cmutex__lock(cause, scheduler_cmutex);
+  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
   s64 value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
-  raw__scheduler_cmutex__unlock(cause, scheduler_cmutex);
+  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
   return f2integer__new(cause, value__i);
 }
 
@@ -64,9 +64,9 @@ def_pcfunk1(counter__value, this,
 void raw__counter__value__set(f2ptr cause, f2ptr this, s64 value__i) {
   f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  raw__scheduler_cmutex__lock(cause, scheduler_cmutex);
+  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, value__i);
-  raw__scheduler_cmutex__unlock(cause, scheduler_cmutex);
+  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
 }
 
 f2ptr f2__counter__value__set(f2ptr cause, f2ptr this, f2ptr value) {

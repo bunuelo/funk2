@@ -386,8 +386,12 @@ f2ptr raw__fiber__change_cause_reg(f2ptr cause, f2ptr this, f2ptr cause_reg) {
     boolean_t fiber__cause_reg_cmutex__failed_lock      = f2cmutex__trylock(fiber__cause_reg_cmutex,      cause);
     boolean_t old_cause_reg__fibers_cmutex__failed_lock = boolean__false;
     boolean_t cause_reg__fibers_cmutex__failed_lock     = boolean__false;
-    if (! old_cause_reg__fibers_cmutex__failed_lock) {
+    if (! fiber__cause_reg_cmutex__failed_lock) {
       old_cause_reg = f2fiber__cause_reg(this, cause);
+      if (raw__eq(cause, cause_reg, old_cause_reg)) {
+	f2cmutex__unlock(fiber__cause_reg_cmutex, cause);
+	return nil;
+      }
       if (old_cause_reg != nil) {
 	old_cause_reg__fibers_cmutex              = f2cause__fibers_cmutex(old_cause_reg, cause);
 	old_cause_reg__fibers_cmutex__failed_lock = f2cmutex__trylock(old_cause_reg__fibers_cmutex, cause);

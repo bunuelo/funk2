@@ -248,7 +248,7 @@ f2ptr      f2__fiber__is_complete(f2ptr cause, f2ptr this);
 
 void  raw__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, u64   relative_bytecode_count);
 f2ptr  f2__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);
-f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr cause_reg);
+f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr old_cause_reg, f2ptr cause_reg);
 f2ptr raw__fiber__change_cause_reg               (f2ptr cause, f2ptr this, f2ptr cause_reg);
 f2ptr  f2__fiber__change_cause_reg               (f2ptr cause, f2ptr this, f2ptr cause_reg);
 f2ptr  f2__fiber__do_sleep_until_time            (f2ptr cause, f2ptr this, f2ptr until_time);

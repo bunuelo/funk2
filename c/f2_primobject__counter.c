@@ -73,7 +73,8 @@ f2ptr f2__counter__value__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(counter, this);
   assert_argument_type(integer, value);
   s64 value__i = f2integer__i(value, cause);
-  return raw__counter__value__set(cause, this, value__i);
+  raw__counter__value__set(cause, this, value__i);
+  return nil;
 }
 def_pcfunk2(counter__value__set, this, value,
 	    "Sets the value of the thread safe counter.",

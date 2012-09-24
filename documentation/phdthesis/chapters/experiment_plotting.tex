@@ -340,6 +340,11 @@
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
+\newcommand{\experimentyaxisbytecoderate}{
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Time Complexity Derivative};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
+}
+
 \newcommand{\experimentyaxisbytes}{
   \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes/s};
 }
@@ -402,6 +407,60 @@
       \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
       \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
       \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+    \end{tikzpicture}
+  }
+  \endgroup%
+}
+
+\newcommand{\causegroupplotsexecutionrate}[9]{
+  \begingroup%
+  \def\causegroupplotsexecutionrateplotmaxtime{#1}%
+  \def\causegroupplotsexecutionrateexperimentonemaxtime{#2}%
+  \def\causegroupplotsexecutionrateexperimenttwomaxtime{#3}%
+  \def\causegroupplotsexecutionrateexperimentthreemaxtime{#4}%
+  \def\causegroupplotsexecutionrateexperimentonename{#5}%
+  \def\causegroupplotsexecutionrateexperimenttwoname{#6}%
+  \def\causegroupplotsexecutionrateexperimentthreename{#7}%
+  \def\causegroupplotsexecutionratecausegroupfilenameroot{#8}%
+  \def\causegroupplotsexecutionratelegendlabel{#9}%
+}
+\newcommand{\causegroupplotsexecutionratecontinued}[1]{
+  \def\causegroupplotsexecutionrateplotheight{#1}%
+  \experimentfindmax[data/\causegroupplotsexecutionrateexperimentonename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsexecutionrateexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsexecutionrateexperimenttwoname/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsexecutionrateexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsexecutionrateexperimentthreename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsexecutionrateexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimentonemaxvalue pt > \causegroupplotsexecutionrateexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimentonemaxvalue pt > \causegroupplotsexecutionrateexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentonemaxvalue%
+    }{
+      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentthreemaxvalue%
+    }
+  }{
+    \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimenttwomaxvalue pt > \causegroupplotsexecutionrateexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsexecutionrateexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=\causegroupplotsexecutionrateplotheight/\causegroupplotsexecutionrateexperimentmaxvalue, x=8cm/\causegroupplotsexecutionrateplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}
+      
+      %labels
+      \experimentxaxislabel
+      \experimentyaxisbytecoderate
+      
+      \experimentlegendthree[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
+      \experimentlegendtwo[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
+      \experimentlegendone[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
+
+      \experimentdatathree[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimentthreename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
+      \experimentdatatwo[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimenttwoname/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
+      \experimentdataone[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimentonename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
     \end{tikzpicture}
   }
   \endgroup%
@@ -503,7 +562,7 @@
                                   {\experimentcausegroupplotsexperimenttwoname}
                                   {\experimentcausegroupplotsexperimentthreename}
                                   {\experimentcausegroupplotscausegroupfilenameroot}
-                                  {Execution in {\experimentcausegroupplotscausegroupprettyname}}
+                                  {Time Complexity Rate of the {\experimentcausegroupplotscausegroupprettyname}}
                                   \causegroupplotsexecutioncontinued{\experimentcausegroupplotsplotheight}
       }\\
       {\raggedleft
@@ -515,7 +574,7 @@
                               {\experimentcausegroupplotsexperimenttwoname}
                               {\experimentcausegroupplotsexperimentthreename}
                               {\experimentcausegroupplotscausegroupfilenameroot}
-                              {Memory Used in {\experimentcausegroupplotscausegroupprettyname}}
+                              {Space Complexity of the {\experimentcausegroupplotscausegroupprettyname}}
                               \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
       }\\
     \end{tabular}
@@ -556,7 +615,7 @@
 
 
 
-\newcommand{\dataappendixmaxtime}{60}
+\newcommand{\dataappendixmaxtime}{32}
 \newcommand{\dataappendixexperimentonemaxtime}{20}
 \newcommand{\dataappendixexperimenttwomaxtime}{60}
 \newcommand{\dataappendixexperimentthreemaxtime}{22.75}

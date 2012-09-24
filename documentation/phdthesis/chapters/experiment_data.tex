@@ -3,6 +3,58 @@
 \label{chapter:experiment_data}
 %************************************************
 
+\newcommand{\experimentdatablocksworldexample}{
+  \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    0 seconds\\
+    \emph{Initialization}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-1}
+  \end{minipage}%
+    \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    15 seconds\\
+    \emph{Deliberative Failure}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-8}
+  \end{minipage}%
+  \noindent\begin{minipage}{\textwidth/3}
+    \centering%
+    25 seconds\\
+    \emph{Reflective Success}\\
+    \includegraphics[width=3.5cm]{gfx/blocks_world_example-12}
+  \end{minipage}%
+}
+
+
+{\newpage
+  \noindent\begin{minipage}{\textwidth}
+    \section{Time Complexity in Three Experiments}
+
+    {\mbox{\autoref{figure:time_complexity_in_three_experiments}}}
+    shows the time complexity for each layer in three experiments.
+
+    \begin{tabular}{r}
+      {\raggedleft
+         \causegroupplotsexecution{\dataappendixmaxtime}
+                                  {\dataappendixexperimentonemaxtime}
+                                  {\dataappendixexperimenttwomaxtime}
+                                  {\dataappendixexperimentthreemaxtime}
+                                  {\dataappendixexperimentonename}
+                                  {\dataappendixexperimenttwoname}
+                                  {\dataappendixexperimentthreename}
+                                  {mind_plot-Gripper-1-reflective}
+                                  {Time Complexity of the Reflective Layer}
+                                  \causegroupplotsexecutioncontinued{3cm}
+      }\\
+    \end{tabular}
+    \experimentdatablocksworldexample
+    \captionof{figure}[Time complexity for each layer in three
+      experiments.]{Time complexity for each layer in three
+      experiments.}
+    \label{figure:time_complexity_in_three_experiments}
+  \end{minipage}
+}
+
+
 \section{Time and Space Complexities in Three Experiments}
 
 This appendix chapter includes empirical data gathered using the
@@ -69,27 +121,6 @@ in this appendix, comparing the three experiments.
   these two plots show: (top) the bytecode execution rate for the
   entire {\experimentdatacausegroupprettyname}, as well as (bottom)
   the memory footprint of the same causal scope.}
-
-\newcommand{\experimentdatablocksworldexample}{
-  \noindent\begin{minipage}{\textwidth/3}
-    \centering%
-    0 seconds\\
-    \emph{Initialization}\\
-    \includegraphics[width=3.5cm]{gfx/blocks_world_example-1}
-  \end{minipage}%
-    \noindent\begin{minipage}{\textwidth/3}
-    \centering%
-    15 seconds\\
-    \emph{Deliberative Failure}\\
-    \includegraphics[width=3.5cm]{gfx/blocks_world_example-8}
-  \end{minipage}%
-  \noindent\begin{minipage}{\textwidth/3}
-    \centering%
-    25 seconds\\
-    \emph{Reflective Success}\\
-    \includegraphics[width=3.5cm]{gfx/blocks_world_example-12}
-  \end{minipage}%
-}
 
 % AI
 {\newpage

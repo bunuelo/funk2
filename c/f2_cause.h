@@ -62,47 +62,48 @@ declare_object_type_6_slot(cause_group_interaction,
 // cause_group
 
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
-declare_object_type_9_slot(cause_group,
-			   bytecode_count_scheduler_cmutex,
+declare_object_type_10_slot(cause_group,
+			    bytecode_count_scheduler_cmutex,
 			   bytecode_count_chunk,
-			   execution_nanoseconds_scheduler_cmutex,
-			   execution_nanoseconds_chunk,
-			   bytes_allocated_count_scheduler_cmutex,
-			   bytes_allocated_count_chunk,
-			   bytes_freed_count_scheduler_cmutex,
-			   bytes_freed_count_chunk,
-			   cause_group_interaction_scheduler_ptypehash,
-			   f2ptr bytecode_count__symbol;
-			   f2ptr bytecode_count__funk;
-			   f2ptr bytecode_count__set__symbol;
-			   f2ptr bytecode_count__set__funk;
-			   f2ptr increase_bytecode_count__symbol;
-			   f2ptr increase_bytecode_count__funk;
-			   f2ptr execution_nanoseconds__symbol;
-			   f2ptr execution_nanoseconds__funk;
-			   f2ptr execution_nanoseconds__set__symbol;
-			   f2ptr execution_nanoseconds__set__funk;
-			   f2ptr increase_execution_nanoseconds__symbol;
-			   f2ptr increase_execution_nanoseconds__funk;
-			   f2ptr execution_time__symbol;
-			   f2ptr execution_time__funk;
-			   f2ptr bytes_allocated_count__symbol;
-			   f2ptr bytes_allocated_count__funk;
-			   f2ptr bytes_allocated_count__set__symbol;
-			   f2ptr bytes_allocated_count__set__funk;
-			   f2ptr increase_bytes_allocated_count__symbol;
-			   f2ptr increase_bytes_allocated_count__funk;
-			   f2ptr bytes_freed_count__symbol;
-			   f2ptr bytes_freed_count__funk;
-			   f2ptr bytes_freed_count__set__symbol;
-			   f2ptr bytes_freed_count__set__funk;
-			   f2ptr increase_bytes_freed_count__symbol;
-			   f2ptr increase_bytes_freed_count__funk;
-			   f2ptr add_cause_group_interaction__symbol;
-			   f2ptr add_cause_group_interaction__funk;
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
+			    execution_nanoseconds_scheduler_cmutex,
+			    execution_nanoseconds_chunk,
+			    bytes_allocated_count_scheduler_cmutex,
+			    bytes_allocated_count_chunk,
+			    bytes_freed_count_scheduler_cmutex,
+			    bytes_freed_count_chunk,
+			    cause_group_interaction_scheduler_ptypehash,
+			    frame,
+			    f2ptr bytecode_count__symbol;
+			    f2ptr bytecode_count__funk;
+			    f2ptr bytecode_count__set__symbol;
+			    f2ptr bytecode_count__set__funk;
+			    f2ptr increase_bytecode_count__symbol;
+			    f2ptr increase_bytecode_count__funk;
+			    f2ptr execution_nanoseconds__symbol;
+			    f2ptr execution_nanoseconds__funk;
+			    f2ptr execution_nanoseconds__set__symbol;
+			    f2ptr execution_nanoseconds__set__funk;
+			    f2ptr increase_execution_nanoseconds__symbol;
+			    f2ptr increase_execution_nanoseconds__funk;
+			    f2ptr execution_time__symbol;
+			    f2ptr execution_time__funk;
+			    f2ptr bytes_allocated_count__symbol;
+			    f2ptr bytes_allocated_count__funk;
+			    f2ptr bytes_allocated_count__set__symbol;
+			    f2ptr bytes_allocated_count__set__funk;
+			    f2ptr increase_bytes_allocated_count__symbol;
+			    f2ptr increase_bytes_allocated_count__funk;
+			    f2ptr bytes_freed_count__symbol;
+			    f2ptr bytes_freed_count__funk;
+			    f2ptr bytes_freed_count__set__symbol;
+			    f2ptr bytes_freed_count__set__funk;
+			    f2ptr increase_bytes_freed_count__symbol;
+			    f2ptr increase_bytes_freed_count__funk;
+			    f2ptr add_cause_group_interaction__symbol;
+			    f2ptr add_cause_group_interaction__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 
 // cause
@@ -195,16 +196,17 @@ f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause);
 
 // cause_group
 
-declare_primobject_9_slot(cause_group,
-			  bytecode_count_scheduler_cmutex,
-			  bytecode_count_chunk,
-			  execution_nanoseconds_scheduler_cmutex,
-			  execution_nanoseconds_chunk,
-			  bytes_allocated_count_scheduler_cmutex,
-			  bytes_allocated_count_chunk,
-			  bytes_freed_count_scheduler_cmutex,
-			  bytes_freed_count_chunk,
-			  cause_group_interaction_scheduler_ptypehash);
+declare_primobject_10_slot(cause_group,
+			   bytecode_count_scheduler_cmutex,
+			   bytecode_count_chunk,
+			   execution_nanoseconds_scheduler_cmutex,
+			   execution_nanoseconds_chunk,
+			   bytes_allocated_count_scheduler_cmutex,
+			   bytes_allocated_count_chunk,
+			   bytes_freed_count_scheduler_cmutex,
+			   bytes_freed_count_chunk,
+			   cause_group_interaction_scheduler_ptypehash,
+			   frame);
 
 f2ptr  f2__cause_group__new                           (f2ptr cause);
 u64   raw__cause_group__bytecode_count                (f2ptr cause, f2ptr this);

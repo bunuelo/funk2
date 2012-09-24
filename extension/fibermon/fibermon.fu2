@@ -213,6 +213,18 @@
 				[print [get fiber cause_reg]]
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
+		    [have view_creation_cause_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber creation cause:\n']
+				[print [get fiber cause]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    [have view_creation_fiber_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon printing fiber creation fiber:\n']
+				[print [get fiber creation_fiber]]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
 		    [have view_stack_trace_menu_item signal_connect 'activate'
 			  [funk []
 				[terminal_format standard-terminal '\n\nfibermon printing fiber stack trace blocks:\n']

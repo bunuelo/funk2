@@ -368,8 +368,8 @@ def_pcfunk2(fiber__increase_bytecode_count, this, relative_bytecode_count,
 
 f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr cause_reg) {
   f2ptr old_cause_reg = f2fiber__cause_reg(this, cause);
-  if (old_cause_reg != nil) {assert_value(raw__cause__remove_fiber__thread_unsafe(cause, old_cause_reg, fiber));}
-  if (cause_reg     != nil) {assert_value(raw__cause__add_fiber__thread_unsafe(   cause, cause_reg,     fiber));}
+  if (old_cause_reg != nil) {assert_value(raw__cause__remove_fiber__thread_unsafe(cause, old_cause_reg, this));}
+  if (cause_reg     != nil) {assert_value(raw__cause__add_fiber__thread_unsafe(   cause, cause_reg,     this));}
   return nil;
 }
 

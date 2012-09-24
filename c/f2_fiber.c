@@ -374,7 +374,7 @@ f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr
 }
 
 f2ptr raw__fiber__change_cause_reg(f2ptr cause, f2ptr this, f2ptr cause_reg) {
-  f2ptr     fiber__cause_reg_cmutex      = f2fiber__cause_reg_cmutex(fiber,         cause);
+  f2ptr     fiber__cause_reg_cmutex      = f2fiber__cause_reg_cmutex(this, cause);
   f2ptr     old_cause_reg__fibers_cmutex = nil;
   f2ptr     old_cause_reg                = nil;
   f2ptr     cause_reg__fibers_cmutex     = nil;

@@ -46,6 +46,7 @@ enum funk2_gtk_callback_args_type_e {
 };
 
 struct funk2_gtk_callback_s {
+  f2ptr                          cause;
   f2ptr                          funk;
   f2ptr                          args;
   funk2_gtk_callback_args_type_t args_type;

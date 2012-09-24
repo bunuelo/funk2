@@ -25,15 +25,13 @@
 // counter
 
 typedef struct funk2_object_type__counter__slot_s funk2_object_type__counter__slot_t;
-declare_object_type_4_slot(counter,
-			   mutate_cmutex,
-			   zero_value,
-			   column_row_ptypehash,
-			   row_column_ptypehash,
-			   f2ptr elt__symbol;
-			   f2ptr elt__funk;
-			   f2ptr elt__set__symbol;
-			   f2ptr elt__set__funk;
+declare_object_type_2_slot(counter,
+			   scheduler_cmutex,
+			   value_chunk,
+			   f2ptr value__symbol;
+			   f2ptr value__funk;
+			   f2ptr value__set__symbol;
+			   f2ptr value__set__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -46,14 +44,16 @@ declare_object_type_4_slot(counter,
 
 #include "f2_primfunks.h"
 
-declare_primobject_4_slot(counter,
-			  mutate_cmutex,
-			  zero_value,
-			  column_row_ptypehash,
-			  row_column_ptypehash);
+declare_primobject_2_slot(counter,
+			  scheduler_cmutex,
+			  value_chunk);
 
-f2ptr raw__counter__new(f2ptr cause);
-f2ptr  f2__counter__new(f2ptr cause);
+f2ptr raw__counter__new       (f2ptr cause);
+f2ptr  f2__counter__new       (f2ptr cause);
+f2ptr raw__counter__value     (f2ptr cause, f2ptr this);
+f2ptr  f2__counter__value     (f2ptr cause, f2ptr this);
+void  raw__counter__value__set(f2ptr cause, f2ptr this, s64 value__i);
+f2ptr  f2__counter__value__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2counter__primobject_type__new_aux(f2ptr cause);
 

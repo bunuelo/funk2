@@ -108,7 +108,7 @@ void raw__counter__decrement(f2ptr cause, f2ptr this, s64 relative_value__i) {
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
   f2scheduler_cmutex__lock(scheduler_cmutex, cause);
   s64 old_value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
-  s64 new_value__i = old_value__i + relative_value__i;
+  s64 new_value__i = old_value__i - relative_value__i;
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, new_value__i);
   f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
 }

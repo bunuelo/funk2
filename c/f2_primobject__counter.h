@@ -32,6 +32,10 @@ declare_object_type_2_slot(counter,
 			   f2ptr value__funk;
 			   f2ptr value__set__symbol;
 			   f2ptr value__set__funk;
+			   f2ptr increment__symbol;
+			   f2ptr increment__funk;
+			   f2ptr decrement__symbol;
+			   f2ptr decrement__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -54,6 +58,10 @@ f2ptr raw__counter__value     (f2ptr cause, f2ptr this);
 f2ptr  f2__counter__value     (f2ptr cause, f2ptr this);
 void  raw__counter__value__set(f2ptr cause, f2ptr this, s64 value__i);
 f2ptr  f2__counter__value__set(f2ptr cause, f2ptr this, f2ptr value);
+void  raw__counter__increment (f2ptr cause, f2ptr this, s64 relative_value__i);
+f2ptr  f2__counter__increment (f2ptr cause, f2ptr this, f2ptr relative_value);
+void  raw__counter__decrement (f2ptr cause, f2ptr this, s64 relative_value__i);
+f2ptr  f2__counter__decrement (f2ptr cause, f2ptr this, f2ptr relative_value);
 
 f2ptr f2counter__primobject_type__new_aux(f2ptr cause);
 

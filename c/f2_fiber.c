@@ -366,8 +366,7 @@ def_pcfunk2(fiber__increase_bytecode_count, this, relative_bytecode_count,
 	    return f2__fiber__increase_bytecode_count(this_cause, this, relative_bytecode_count));
 
 
-f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr cause_reg) {
-  f2ptr old_cause_reg = f2fiber__cause_reg(this, cause);
+f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr old_cause_reg, f2ptr cause_reg) {
   if (old_cause_reg != nil) {assert_value(raw__cause__remove_fiber__thread_unsafe(cause, old_cause_reg, this));}
   if (cause_reg     != nil) {assert_value(raw__cause__add_fiber__thread_unsafe(   cause, cause_reg,     this));}
   return nil;
@@ -411,7 +410,7 @@ f2ptr raw__fiber__change_cause_reg(f2ptr cause, f2ptr this, f2ptr cause_reg) {
       f2__this__fiber__yield(cause);
     }
   }
-  f2ptr result = raw__cause__give_fiber_to_cause__thread_unsafe(cause, old_cause_reg, this, cause_reg);
+  f2ptr result = raw__fiber__change_cause_reg__thread_unsafe(cause, this, old_cause_reg, cause_reg);
   f2cmutex__unlock(fiber__cause_reg_cmutex, cause);
   if (old_cause_reg != nil) {f2cmutex__unlock(old_cause_reg__fibers_cmutex, cause);}
   if (cause_reg     != nil) {f2cmutex__unlock(cause_reg__fibers_cmutex,     cause);}

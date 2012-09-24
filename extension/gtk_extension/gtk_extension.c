@@ -3127,7 +3127,7 @@ f2ptr f2__gtk__expose_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr fun
   assert_argument_type(gtk_widget, widget);
   assert_argument_type(funkable,   funk);
   assert_argument_type(conslist,   args);
-  return raw__gtk__expose_event__signal_connect(cause, widget, cause, funk, args);
+  return raw__gtk__expose_event__signal_connect(cause, widget, funk, args);
 }
 export_cefunk3(gtk__expose_event__signal_connect, widget, funk, args, 0,
 	       "Connects an expose_event signal handler to a GtkWidget.");
@@ -3160,7 +3160,7 @@ f2ptr f2__gtk__key_press_event__signal_connect(f2ptr cause, f2ptr widget, f2ptr 
   assert_argument_type(gtk_widget, widget);
   assert_argument_type(funkable,   funk);
   assert_argument_type(conslist,   args);
-  return raw__gtk__key_press_event__signal_connect(cause, widget, cause, funk, args);
+  return raw__gtk__key_press_event__signal_connect(cause, widget, funk, args);
 }
 export_cefunk3(gtk__key_press_event__signal_connect, widget, funk, args, 0,
 	       "Connects an key_press_event signal handler to a GtkWidget.");
@@ -4133,10 +4133,10 @@ f2ptr f2__gtk__pop_callback_event(f2ptr pop_cause) {
     f2__free(to_ptr(callback_event));
     return f2__gtk_callback__new(cause, funk, args);
   } else {
-    return f2__gtk_not_supported_larva__new(cause);
+    return f2__gtk_not_supported_larva__new(pop_cause);
   }
 #else
-  return f2__gtk_not_supported_larva__new(cause);
+  return f2__gtk_not_supported_larva__new(pop_cause);
 #endif
 }
 export_cefunk0(gtk__pop_callback_event, 0,

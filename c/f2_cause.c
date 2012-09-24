@@ -559,7 +559,7 @@ void raw__cause_group__assure_counter_exists(f2ptr cause, f2ptr this, f2ptr coun
 }
 
 f2ptr f2__cause_group__assure_counter_exists(f2ptr cause, f2ptr this, f2ptr counter_name) {
-  assure_argument_type(cause_group, this);
+  assert_argument_type(cause_group, this);
   raw__cause_group__assure_counter_exists(cause, this, counter_name);
   return nil;
 }

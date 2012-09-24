@@ -95,6 +95,7 @@
 #include "f2_primobject__boolean.h"
 #include "f2_primobject__char_pointer.h"
 #include "f2_primobject__circular_buffer.h"
+#include "f2_primobject__counter.h"
 #include "f2_primobject__dynamic_library.h"
 #include "f2_primobject__environment.h"
 #include "f2_primobject__fiber_trigger.h"

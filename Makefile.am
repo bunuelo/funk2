@@ -420,6 +420,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primobject__boolean.c \
   c/f2_primobject__char_pointer.c \
   c/f2_primobject__circular_buffer.c \
+  c/f2_primobject__counter.c \
   c/f2_primobject__doublelinklist.c \
   c/f2_primobject__dynamic_library.c \
   c/f2_primobject__environment.c \

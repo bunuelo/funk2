@@ -55,6 +55,7 @@
 #include "f2_core_extension.h"
 #include "f2_primobject__file_handle.h"
 #include "f2_primobject__matrix.h"
+#include "f2_primobject__counter.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;
@@ -153,6 +154,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__optimize_context__slot_t                 primobject_type_optimize_context;
   funk2_object_type__file_handle__slot_t                      primobject_type_file_handle;
   funk2_object_type__matrix__slot_t                           primobject_type_matrix;
+  funk2_object_type__counter__slot_t                          primobject_type_counter;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__clause__slot_t                           primobject_type_clause;

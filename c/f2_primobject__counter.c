@@ -28,7 +28,7 @@ def_primobject_2_slot(counter,
 		      value_chunk);
 
 f2ptr raw__counter__new(f2ptr cause) {
-  f2ptr scheduler_cmutex = f2__cmutex__new(cause);
+  f2ptr scheduler_cmutex = f2__scheduler_cmutex__new(cause);
   f2ptr value_chunk      = raw__chunk__new(cause, sizeof(s64));
   return f2counter__new(cause,
 			scheduler_cmutex,

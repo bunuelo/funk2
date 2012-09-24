@@ -411,7 +411,7 @@ f2ptr raw__fiber__change_cause_reg(f2ptr cause, f2ptr this, f2ptr cause_reg) {
       f2__this__fiber__yield(cause);
     }
   }
-  f2ptr result = raw__cause__give_fiber_to_cause__thread_unsafe(cause, old_cause_reg, fiber, cause_reg);
+  f2ptr result = raw__cause__give_fiber_to_cause__thread_unsafe(cause, old_cause_reg, this, cause_reg);
   f2cmutex__unlock(fiber__cause_reg_cmutex, cause);
   if (old_cause_reg != nil) {f2cmutex__unlock(old_cause_reg__fibers_cmutex, cause);}
   if (cause_reg     != nil) {f2cmutex__unlock(cause_reg__fibers_cmutex,     cause);}

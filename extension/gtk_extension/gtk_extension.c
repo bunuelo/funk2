@@ -697,7 +697,7 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   }
 }
 
-void funk2_gtk__add_callback_event(funk2_gtk_t* this, f2ptr cause, funk2_gtk_callback_t* callback, void* args) {
+void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args) {
   funk2_gtk_callback_event_cons_t* cons  = (funk2_gtk_callback_event_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_cons_t)));
   funk2_gtk_callback_event_t*      event = (funk2_gtk_callback_event_t*)     from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_t)));
   event->callback = callback;

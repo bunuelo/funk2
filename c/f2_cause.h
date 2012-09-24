@@ -103,6 +103,8 @@ declare_object_type_10_slot(cause_group,
 			    f2ptr add_cause_group_interaction__funk;
 			    f2ptr assure_counter_exists__symbol;
 			    f2ptr assure_counter_exists__funk;
+			    f2ptr counter__symbol;
+			    f2ptr counter__funk;
 			    f2ptr increment_counter_if_exists__symbol;
 			    f2ptr increment_counter_if_exists__funk;
 			    f2ptr terminal_print_with_frame__symbol;
@@ -243,6 +245,8 @@ void  raw__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, 
 f2ptr  f2__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction);
 void  raw__cause_group__assure_counter_exists         (f2ptr cause, f2ptr this, f2ptr counter_name);
 f2ptr  f2__cause_group__assure_counter_exists         (f2ptr cause, f2ptr this, f2ptr counter_name);
+f2ptr raw__cause_group__counter                       (f2ptr cause, f2ptr this, f2ptr counter_name);
+f2ptr  f2__cause_group__counter                       (f2ptr cause, f2ptr this, f2ptr counter_name);
 void  raw__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i);
 f2ptr  f2__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value);
 

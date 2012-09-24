@@ -568,6 +568,26 @@ def_pcfunk2(cause_group__assure_counter_exists, this, counter_name,
 	    return f2__cause_group__assure_counter_exists(this_cause, this, counter_name));
 
 
+f2ptr raw__cause_group__counter(f2ptr cause, f2ptr this, f2ptr counter_name) {
+  f2ptr counter_scheduler_ptypehash = f2cause_group__counter_scheduler_ptypehash(this, cause);
+  if (! raw__scheduler_ptypehash__contains(cause, counter_scheduler_ptypehash, counter_name)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),     new__symbol(cause, "cause_group-does-not-contain-counter"),
+				   new__symbol(cause, "cause_group"),  this,
+				   new__symbol(cause, "counter_name"), counter_name));
+  }
+  return raw__scheduler_ptypehash__lookup(cause, counter_scheduler_ptypehash, counter_name));
+}
+
+f2ptr f2__cause_group__counter(f2ptr cause, f2ptr this, f2ptr counter_name) {
+  assert_argument_type(cause_group, this);
+  return raw__cause_group__counter(cause, this, counter_name);
+}
+def_pcfunk2(cause_group__counter, this, counter_name,
+	    "",
+	    return f2__cause_group__counter(this_cause, this, counter_name));
+
+
 void raw__cause_group__increment_counter_if_exists(f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i) {
   f2ptr counter_scheduler_ptypehash = f2cause_group__counter_scheduler_ptypehash(this, cause);
   if (raw__scheduler_ptypehash__contains(cause, counter_scheduler_ptypehash, counter_name)) {
@@ -608,7 +628,7 @@ f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
 						new__symbol(cause, "bytes_allocated_count"),                       f2__cause_group__bytes_allocated_count(                      cause, this),
 						new__symbol(cause, "bytes_freed_count"),                           f2__cause_group__bytes_freed_count(                          cause, this),
 						new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"), f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this),
-						new__symbol(cause, "counter_scheduler_ptypehash"),                 f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this)));
+						new__symbol(cause, "counter_scheduler_ptypehash"),                 f2__cause_group__counter_scheduler_ptypehash(                cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -641,6 +661,7 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "increase_bytes_freed_count";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk);}
   {char* slot_name = "add_cause_group_interaction";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);}
   {char* slot_name = "assure_counter_exists";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);}
+  {char* slot_name = "counter";                        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__funk);}
   {char* slot_name = "increment_counter_if_exists";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);}
   {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
@@ -1280,6 +1301,10 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__assure_counter_exists);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__counter);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__increment_counter_if_exists);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);
@@ -1469,6 +1494,9 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "assure_counter_exists"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__assure_counter_exists, this, counter_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "counter"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__counter, this, counter_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__funk = never_gc(cfunk);}
   
   {char* symbol_str = "increment_counter_if_exists"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__increment_counter_if_exists, this, counter_name, relative_value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk = never_gc(cfunk);}

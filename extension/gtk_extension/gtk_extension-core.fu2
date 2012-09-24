@@ -410,7 +410,7 @@
 						 [let [[funk [get callback_event funk]]
 						       [args [get callback_event args]]]
 						   [fiber [funk []
-								[cause-define cause-name `gtk-event_handling_fiber-child]
+								[have [this-fiber] change_cause_reg [get callback_event cause]]
 								[apply funk args]]
 							  nil]]]]]]
 				     nil]]]

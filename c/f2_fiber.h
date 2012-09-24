@@ -84,6 +84,8 @@ declare_object_type_32_slot(fiber,
 			    f2ptr increment_bytes_freed_count__funk;
 			    f2ptr increase_bytecode_count__symbol;   // execute
 			    f2ptr increase_bytecode_count__funk;
+			    f2ptr change_cause_reg__symbol;   // execute
+			    f2ptr change_cause_reg__funk;
 			    f2ptr do_sleep_until_time__symbol;   // execute
 			    f2ptr do_sleep_until_time__funk;
 			    f2ptr sleep_for_nanoseconds__symbol; // execute
@@ -244,12 +246,15 @@ f2ptr  f2__fiber__start_cycle_processor_bytes_allocated_count__set(f2ptr cause, 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);
 f2ptr      f2__fiber__is_complete(f2ptr cause, f2ptr this);
 
-void  raw__fiber__increase_bytecode_count       (f2ptr cause, f2ptr this, u64   relative_bytecode_count);
-f2ptr  f2__fiber__increase_bytecode_count       (f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);
-f2ptr  f2__fiber__do_sleep_until_time           (f2ptr cause, f2ptr this, f2ptr until_time);
-f2ptr  f2__fiber__sleep_for_nanoseconds         (f2ptr cause, f2ptr this, f2ptr nanoseconds);
-void  raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this);
-void  raw__fiber__handle_exit_virtual_processor (f2ptr cause, f2ptr this);
+void  raw__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, u64   relative_bytecode_count);
+f2ptr  f2__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);
+f2ptr raw__fiber__change_cause_reg__thread_unsafe(f2ptr cause, f2ptr this, f2ptr cause_reg);
+f2ptr raw__fiber__change_cause_reg               (f2ptr cause, f2ptr this, f2ptr cause_reg);
+f2ptr  f2__fiber__change_cause_reg               (f2ptr cause, f2ptr this, f2ptr cause_reg);
+f2ptr  f2__fiber__do_sleep_until_time            (f2ptr cause, f2ptr this, f2ptr until_time);
+f2ptr  f2__fiber__sleep_for_nanoseconds          (f2ptr cause, f2ptr this, f2ptr nanoseconds);
+void  raw__fiber__handle_enter_virtual_processor (f2ptr cause, f2ptr this);
+void  raw__fiber__handle_exit_virtual_processor  (f2ptr cause, f2ptr this);
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause);
 

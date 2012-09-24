@@ -108,7 +108,7 @@
 				 command_menu_item
 				 command_menu
 				 command_pause_menu_item
-				 command_continue_menu_item
+				 command_unpause_menu_item
 				 command_keep_undead_menu_item
 				 command_dont_keep_undead_menu_item
 				 command_quit_menu_item
@@ -118,7 +118,9 @@
 				 view_fiber_menu_item
 				 view_fiber_value_menu_item
 				 view_bug_menu_item
-				 view_cause_menu_item
+				 view_fiber_cause_register_menu_item
+				 view_creation_cause_menu_item
+				 view_creation_fiber_menu_item
 				 view_stack_trace_menu_item
 				 view_stack_trace_first_block_menu_item
 				 
@@ -127,7 +129,9 @@
 				 environment_define_fiber_menu_item
 				 environment_define_fiber_value_menu_item
 				 environment_define_bug_menu_item
-				 environment_define_cause_menu_item
+				 environment_define_fiber_cause_register_menu_item
+				 environment_define_creation_cause_menu_item
+				 environment_define_creation_fiber_menu_item
 				 environment_define_stack_trace_menu_item
 				 environment_define_stack_trace_first_block_menu_item
 				 
@@ -156,9 +160,9 @@
 				[terminal_format standard-terminal '\n\nfibermon commanding fiber to pause.\n']
 				[set fiber paused t]]
 			  nil]
-		    [have command_continue_menu_item signal_connect 'activate'
+		    [have command_unpause_menu_item signal_connect 'activate'
 			  [funk []
-				[terminal_format standard-terminal '\n\nfibermon commanding fiber to continue.\n']
+				[terminal_format standard-terminal '\n\nfibermon commanding fiber to unpause.\n']
 				[set fiber paused nil]]
 			  nil]
 		    [have command_keep_undead_menu_item signal_connect 'activate'
@@ -203,7 +207,7 @@
 						  [print_bug fiber-value]]
 					  [terminal_format standard-terminal '\n\n']]]]]
 			  nil]
-		    [have view_cause_menu_item signal_connect 'activate'
+		    [have view_fiber_cause_register_menu_item signal_connect 'activate'
 			  [funk []
 				[terminal_format standard-terminal '\n\nfibermon printing fiber cause register:\n']
 				[print [get fiber cause_reg]]
@@ -245,10 +249,24 @@
 					  [terminal_format standard-terminal '\n\n']]]]]
 			  nil]
 		    
-		    [have environment_define_cause_menu_item signal_connect 'activate'
+		    [have environment_define_fiber_cause_register_menu_item signal_connect 'activate'
 			  [funk []
-				[terminal_format standard-terminal '\n\nenvironment define cause.\n']
-				[new fibermon_define_object_dialog [get fiber cause_reg] `cause]
+				[terminal_format standard-terminal '\n\nfibermon: defining fiber cause register as variable in global environment.\n']
+				[new fibermon_define_object_dialog [get fiber cause_reg] `fiber-cause_register]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_creation_cause_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon: defining fiber creation cause as variable in global environment.\n']
+				[new fibermon_define_object_dialog [get fiber cause] `creation_cause]
+				[terminal_format standard-terminal '\n\n']]
+			  nil]
+		    
+		    [have environment_define_creation_fiber_menu_item signal_connect 'activate'
+			  [funk []
+				[terminal_format standard-terminal '\n\nfibermon: defining fiber creation fiber as variable in global environment.\n']
+				[new fibermon_define_object_dialog [get fiber creation_fiber] `creation_fiber]
 				[terminal_format standard-terminal '\n\n']]
 			  nil]
 		    

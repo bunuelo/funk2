@@ -70,8 +70,8 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_menu"), this__command_menu);
   f2ptr this__command_pause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Pause"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_pause_menu_item"), this__command_pause_menu_item);
-  f2ptr this__command_continue_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Continue"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_continue_menu_item"), this__command_continue_menu_item);
+  f2ptr this__command_unpause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Unpause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_unpause_menu_item"), this__command_unpause_menu_item);
   f2ptr this__command_keep_undead_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Keep Undead"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_keep_undead_menu_item"), this__command_keep_undead_menu_item);
   f2ptr this__command_dont_keep_undead_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Don't Keep Undead"));
@@ -89,8 +89,12 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_fiber_value_menu_item"), this__view_fiber_value_menu_item);
   f2ptr this__view_bug_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Bug"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_bug_menu_item"), this__view_bug_menu_item);
-  f2ptr this__view_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Cause"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_cause_menu_item"), this__view_cause_menu_item);
+  f2ptr this__view_fiber_cause_register_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_fiber_cause_register_menu_item"), this__view_fiber_cause_register_menu_item);
+  f2ptr this__view_creation_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_creation_cause_menu_item"), this__view_creation_cause_menu_item);
+  f2ptr this__view_creation_fiber_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "view_creation_fiber_menu_item"), this__view_creation_fiber_menu_item);
   f2ptr this__view_stack_trace_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Stack Trace"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "view_stack_trace_menu_item"), this__view_stack_trace_menu_item);
   f2ptr this__view_stack_trace_first_block_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "First Block of Stack Trace"));
@@ -106,8 +110,12 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_fiber_value_menu_item"), this__environment_define_fiber_value_menu_item);
   f2ptr this__environment_define_bug_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Bug"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_bug_menu_item"), this__environment_define_bug_menu_item);
-  f2ptr this__environment_define_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Cause"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_cause_menu_item"), this__environment_define_cause_menu_item);
+  f2ptr this__environment_define_fiber_cause_register_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_fiber_cause_register_menu_item"), this__environment_define_fiber_cause_register_menu_item);
+  f2ptr this__environment_define_creation_cause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_creation_cause_menu_item"), this__environment_define_creation_cause_menu_item);
+  f2ptr this__environment_define_creation_fiber_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Cause"));
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_creation_fiber_menu_item"), this__environment_define_creation_fiber_menu_item);
   f2ptr this__environment_define_stack_trace_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define Stack Trace"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "environment_define_stack_trace_menu_item"), this__environment_define_stack_trace_menu_item);
   f2ptr this__environment_define_stack_trace_first_block_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Define First Block of Stack Trace"));
@@ -123,7 +131,7 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"), this__table_labels);
   
   raw__gtk__menu__append(cause, this__command_menu, this__command_pause_menu_item);
-  raw__gtk__menu__append(cause, this__command_menu, this__command_continue_menu_item);
+  raw__gtk__menu__append(cause, this__command_menu, this__command_unpause_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_keep_undead_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_dont_keep_undead_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_quit_menu_item);
@@ -134,7 +142,9 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__menu__append(cause, this__view_menu, this__view_fiber_value_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_bug_menu_item);
   raw__gtk__widget__set_sensitive(cause, this__view_bug_menu_item, f2bool__new(boolean__false));
-  raw__gtk__menu__append(cause, this__view_menu, this__view_cause_menu_item);
+  raw__gtk__menu__append(cause, this__view_menu, this__view_fiber_cause_register_menu_item);
+  raw__gtk__menu__append(cause, this__view_menu, this__view_creation_cause_menu_item);
+  raw__gtk__menu__append(cause, this__view_menu, this__view_creation_fiber_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_stack_trace_menu_item);
   raw__gtk__menu__append(cause, this__view_menu, this__view_stack_trace_first_block_menu_item);
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__view_menu_item);
@@ -142,9 +152,10 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_value_menu_item);
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_bug_menu_item);
-  raw__gtk__widget__set_sensitive(cause, this__environment_define_bug_menu_item, f2bool__new(boolean__false));
-  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_cause_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_bug_menu_item);  raw__gtk__widget__set_sensitive(cause, this__environment_define_bug_menu_item, f2bool__new(boolean__false));
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_fiber_cause_register_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_creation_cause_menu_item);
+  raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_creation_fiber_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_menu_item);
   raw__gtk__menu__append(cause, this__environment_menu, this__environment_define_stack_trace_first_block_menu_item);
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__environment_menu_item);

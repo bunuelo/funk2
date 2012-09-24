@@ -101,6 +101,10 @@ declare_object_type_10_slot(cause_group,
 			    f2ptr increase_bytes_freed_count__funk;
 			    f2ptr add_cause_group_interaction__symbol;
 			    f2ptr add_cause_group_interaction__funk;
+			    f2ptr assure_counter_exists__symbol;
+			    f2ptr assure_counter_exists__funk;
+			    f2ptr increment_counter_if_exists__symbol;
+			    f2ptr increment_counter_if_exists__funk;
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -237,6 +241,10 @@ void  raw__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, 
 f2ptr  f2__cause_group__increase_bytes_freed_count    (f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count);
 void  raw__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction);
 f2ptr  f2__cause_group__add_cause_group_interaction   (f2ptr cause, f2ptr this, f2ptr cause_group, f2ptr cause_group_interaction);
+void  raw__cause_group__assure_counter_exists         (f2ptr cause, f2ptr this, f2ptr counter_name);
+f2ptr  f2__cause_group__assure_counter_exists         (f2ptr cause, f2ptr this, f2ptr counter_name);
+void  raw__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i);
+f2ptr  f2__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value);
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 

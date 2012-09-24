@@ -285,7 +285,7 @@ def_primobject_10_slot(cause_group,
 		       bytes_freed_count_scheduler_cmutex,
 		       bytes_freed_count_chunk,
 		       cause_group_interaction_scheduler_ptypehash,
-		       frame);
+		       counter_scheduler_ptypehash);
 
 f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytecode_count_scheduler_cmutex             = f2scheduler_cmutex__new(cause);
@@ -297,7 +297,7 @@ f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytes_freed_count_scheduler_cmutex          = f2scheduler_cmutex__new(cause);
   f2ptr bytes_freed_count_chunk                     = raw__chunk__new(cause, sizeof(u64));
   f2ptr cause_group_interaction_scheduler_ptypehash = f2__scheduler_ptypehash__new(cause);
-  f2ptr frame                                       = f2__frame__new(cause, nil);
+  f2ptr counter_scheduler_ptypehash                 = f2__scheduler_ptypehash__new(cause);
   return f2cause_group__new(cause,
 			    bytecode_count_scheduler_cmutex,
 			    bytecode_count_chunk,
@@ -308,7 +308,7 @@ f2ptr f2__cause_group__new(f2ptr cause) {
 			    bytes_freed_count_scheduler_cmutex,
 			    bytes_freed_count_chunk,
 			    cause_group_interaction_scheduler_ptypehash,
-			    frame);
+			    counter_scheduler_ptypehash);
 }
 def_pcfunk0(cause_group__new,
 	    "",
@@ -550,6 +550,44 @@ def_pcfunk3(cause_group__add_cause_group_interaction, this, cause_group, cause_g
 	    return f2__cause_group__add_cause_group_interaction(this_cause, this, cause_group, cause_group_interaction));
 
 
+void raw__cause_group__assure_counter_exists(f2ptr cause, f2ptr this, f2ptr counter_name) {
+  f2ptr counter_scheduler_ptypehash = f2cause_group__counter_scheduler_ptypehash(this, cause);
+  if (! raw__scheduler_ptypehash__contains(cause, counter_scheduler_ptypehash, counter_name)) {
+    f2ptr counter = raw__counter__new(cause);
+    raw__scheduler_ptypehash__add(cause, counter_scheduler_ptypehash, counter_name, counter);
+  }
+}
+
+f2ptr f2__cause_group__assure_counter_exists(f2ptr cause, f2ptr this, f2ptr counter_name) {
+  assure_argument_type(cause_group, this);
+  raw__cause_group__assure_counter_exists(cause, this, counter_name);
+  return nil;
+}
+def_pcfunk2(cause_group__assure_counter_exists, this, counter_name,
+	    "",
+	    return f2__cause_group__assure_counter_exists(this_cause, this, counter_name));
+
+
+void raw__cause_group__increment_counter_if_exists(f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i) {
+  f2ptr counter_scheduler_ptypehash = f2cause_group__counter_scheduler_ptypehash(this, cause);
+  if (raw__scheduler_ptypehash__contains(cause, counter_scheduler_ptypehash, counter_name)) {
+    f2ptr counter = raw__scheduler_ptypehash__lookup(cause, counter_scheduler_ptypehash, counter_name);
+    raw__counter__increment(cause, counter, relative_value__i);
+  }
+}
+
+f2ptr f2__cause_group__increment_counter_if_exists(f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value) {
+  assert_argument_type(cause_group, this);
+  assert_argument_type(integer,     relative_value);
+  s64 relative_value__i = f2integer__i(relative_value, cause);
+  raw__cause_group__increment_counter_if_exists(cause, this, counter_name, relative_value__i);
+  return nil;
+}
+def_pcfunk3(cause_group__increment_counter_if_exists, this, counter_name, relative_value,
+	    "",
+	    return f2__cause_group__increment_counter_if_exists(this_cause, this, counter_name, relative_value));
+
+
 // cause_group
 
 f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -564,13 +602,13 @@ f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
 																new__symbol(cause, "bytes_allocated_count"),
 																new__symbol(cause, "bytes_freed_count"),
 																new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"),
-																new__symbol(cause, "frame")),
+																new__symbol(cause, "counter_scheduler_ptypehash")),
 						new__symbol(cause, "bytecode_count"),                              f2__cause_group__bytecode_count(                             cause, this),
 						new__symbol(cause, "execution_time"),                              f2__cause_group__execution_time(                             cause, this),
 						new__symbol(cause, "bytes_allocated_count"),                       f2__cause_group__bytes_allocated_count(                      cause, this),
 						new__symbol(cause, "bytes_freed_count"),                           f2__cause_group__bytes_freed_count(                          cause, this),
 						new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"), f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this),
-						new__symbol(cause, "frame"),                                       f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this)));
+						new__symbol(cause, "counter_scheduler_ptypehash"),                 f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -588,21 +626,23 @@ def_pcfunk2(cause_group__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause_group__primobject_type__new(cause);
-  {char* slot_name = "bytecode_count";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__funk);}
-  {char* slot_name = "bytecode_count";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__set__funk);}
-  {char* slot_name = "increase_bytecode_count";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk);}
-  {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__funk);}
-  {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__set__funk);}
-  {char* slot_name = "increase_execution_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__funk);}
-  {char* slot_name = "execution_time";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__funk);}
-  {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__funk);}
-  {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__set__funk);}
-  {char* slot_name = "increase_bytes_allocated_count"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_allocated_count__funk);}
-  {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__funk);}
-  {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__set__funk);}
-  {char* slot_name = "increase_bytes_freed_count";     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk);}
-  {char* slot_name = "add_cause_group_interaction";    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);}
-  {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
+  {char* slot_name = "bytecode_count";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__funk);}
+  {char* slot_name = "bytecode_count";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__set__funk);}
+  {char* slot_name = "increase_bytecode_count";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytecode_count__funk);}
+  {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__funk);}
+  {char* slot_name = "execution_nanoseconds";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_nanoseconds__set__funk);}
+  {char* slot_name = "increase_execution_nanoseconds"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_execution_nanoseconds__funk);}
+  {char* slot_name = "execution_time";                 f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.execution_time__funk);}
+  {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__funk);}
+  {char* slot_name = "bytes_allocated_count";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_allocated_count__set__funk);}
+  {char* slot_name = "increase_bytes_allocated_count"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_allocated_count__funk);}
+  {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__funk);}
+  {char* slot_name = "bytes_freed_count";              f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytes_freed_count__set__funk);}
+  {char* slot_name = "increase_bytes_freed_count";     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increase_bytes_freed_count__funk);}
+  {char* slot_name = "add_cause_group_interaction";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);}
+  {char* slot_name = "assure_counter_exists";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);}
+  {char* slot_name = "increment_counter_if_exists";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);}
+  {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1178,7 +1218,7 @@ void f2__cause__defragment__fix_pointers() {
 							  bytes_freed_count_scheduler_cmutex,
 							  bytes_freed_count_chunk,
 							  cause_group_interaction_scheduler_ptypehash,
-							  frame);
+							  counter_scheduler_ptypehash);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__bytecode_count);
@@ -1235,6 +1275,14 @@ void f2__cause__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__add_cause_group_interaction);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__assure_counter_exists);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__increment_counter_if_exists);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__terminal_print_with_frame);
@@ -1375,7 +1423,7 @@ void f2__cause__reinitialize_globalvars() {
 				bytes_freed_count_scheduler_cmutex,
 				bytes_freed_count_chunk,
 				cause_group_interaction_scheduler_ptypehash,
-				frame);
+				counter_scheduler_ptypehash);
   
   {char* symbol_str = "bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__bytecode_count, this, relative_bytecode_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__funk = never_gc(cfunk);}
@@ -1418,6 +1466,12 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "add_cause_group_interaction"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__add_cause_group_interaction, this, cause_group, cause_group_interaction, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "assure_counter_exists"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__assure_counter_exists, this, counter_name, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "increment_counter_if_exists"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__increment_counter_if_exists, this, counter_name, relative_value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

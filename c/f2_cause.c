@@ -576,7 +576,7 @@ f2ptr raw__cause_group__counter(f2ptr cause, f2ptr this, f2ptr counter_name) {
 				   new__symbol(cause, "cause_group"),  this,
 				   new__symbol(cause, "counter_name"), counter_name));
   }
-  return raw__scheduler_ptypehash__lookup(cause, counter_scheduler_ptypehash, counter_name));
+  return raw__scheduler_ptypehash__lookup(cause, counter_scheduler_ptypehash, counter_name);
 }
 
 f2ptr f2__cause_group__counter(f2ptr cause, f2ptr this, f2ptr counter_name) {

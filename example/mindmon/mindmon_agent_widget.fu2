@@ -18,6 +18,8 @@
  rights to redistribute these changes.'
 
 
+'mindmon_define_object_dialog'
+
 [deframe mindmon_define_object_dialog [frame] [[object        nil]
 					       [object_type   nil]
 					       [window        [gtk-window-new]]
@@ -71,6 +73,8 @@
 
 
 
+'mindmon_agent_widget_resource_menu'
+
 [deframe mindmon_agent_widget_resource_menu [frame] [mindmon_agent_widget_agency_menu
 					      resource
 					      
@@ -121,6 +125,8 @@
   [set debugging_mode_check_menu_item active debug]
   [set resource debug debug]]
 
+
+'mindmon_agent_widget_agency_menu'
 
 [deframe mindmon_agent_widget_agency_menu [frame] [mindmon_agent_widget_layer_menu
 					    agency
@@ -173,17 +179,19 @@
 
 
 
+'mindmon_agent_widget_layer_menu'
+
 [deframe mindmon_agent_widget_layer_menu [frame] [mindmon_agent_widget_mind_menu
-					   layer
-					   
-					   layer_menu_item
-					   layer_menu
-					   
-					   enable_debugging_all_menu_item
-					   disable_debugging_all_menu_item
-					   
-					   mindmon_agency_menus
-					   ]
+						  layer
+						  
+						  layer_menu_item
+						  layer_menu
+						  
+						  enable_debugging_all_menu_item
+						  disable_debugging_all_menu_item
+						  
+						  mindmon_agency_menus
+						  ]
   [new [initial-mindmon_agent_widget_mind_menu initial-layer]
        [= mindmon_agent_widget_mind_menu initial-mindmon_agent_widget_mind_menu]
        [= layer                   initial-layer]
@@ -222,21 +230,14 @@
 	mindmon_agency_menus]]
 
 
+
+'mindmon_agent_widget_mind_menu'
+
 [deframe mindmon_agent_widget_mind_menu [frame] [mindmon_agent_widget
 						 
 						 mind_menu_item
 						 mind_menu
 						 
-						 save_all_plots_menu_item
-						 save_bytecode_count_plots_menu_item
-						 save_simulation_bytecode_rate_plots_menu_item
-						 save_simulation_bytecode_count_plots_menu_item
-						 save_execution_nanoseconds_plots_menu_item
-						 save_bytes_allocated_count_plots_menu_item
-						 save_bytes_footprint_plots_menu_item
-						 save_simulation_bytes_footprint_plots_menu_item
-						 save_simulation_semantic_frame_count_plots_menu_item
-						 save_simulation_semantic_frame_value_count_plots_menu_item
 						 enable_debugging_all_menu_item
 						 disable_debugging_all_menu_item
 						 
@@ -248,86 +249,6 @@
        [= mind_menu_item [gtk-menu_item-new 'Mind']]
        [= mind_menu      [gtk-menu-new]]
        [set mind_menu_item submenu mind_menu]
-       
-       [= save_all_plots_menu_item [gtk-menu_item-new 'Save All Plots']]
-       [have mind_menu append save_all_plots_menu_item]
-       [have save_all_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_all_plots [get mind creation_time] '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_bytecode_count_plots_menu_item [gtk-menu_item-new 'Save Bytecode Count Plots']]
-       [have mind_menu append save_bytecode_count_plots_menu_item]
-       [have save_bytecode_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_bytecode_count_plots [get mind creation_time] '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_bytecode_rate_plots_menu_item [gtk-menu_item-new 'Save Simulation Bytecode Rate Plots']]
-       [have mind_menu append save_simulation_bytecode_rate_plots_menu_item]
-       [have save_simulation_bytecode_rate_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_bytecode_rate_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_bytecode_count_plots_menu_item [gtk-menu_item-new 'Save Simulation Bytecode Count Plots']]
-       [have mind_menu append save_simulation_bytecode_count_plots_menu_item]
-       [have save_simulation_bytecode_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_bytecode_count_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_execution_nanoseconds_plots_menu_item [gtk-menu_item-new 'Save Execution Nanoseconds Plots']]
-       [have mind_menu append save_execution_nanoseconds_plots_menu_item]
-       [have save_execution_nanoseconds_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_execution_nanoseconds_plots [get mind creation_time] '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_bytes_allocated_count_plots_menu_item [gtk-menu_item-new 'Save Bytes Allocated Count Plots']]
-       [have mind_menu append save_bytes_allocated_count_plots_menu_item]
-       [have save_bytes_allocated_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_bytes_allocated_count_plots [get mind creation_time] '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Save Bytes Footprint Plots']]
-       [have mind_menu append save_bytes_footprint_plots_menu_item]
-       [have save_bytes_footprint_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_bytes_footprint_plots [get mind creation_time] '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Save Simulation Bytes Footprint Plots']]
-       [have mind_menu append save_simulation_bytes_footprint_plots_menu_item]
-       [have save_simulation_bytes_footprint_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_bytes_footprint_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_semantic_frame_count_plots_menu_item [gtk-menu_item-new 'Save Simulation Semantic Frame Count Plots']]
-       [have mind_menu append save_simulation_semantic_frame_count_plots_menu_item]
-       [have save_simulation_semantic_frame_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_semantic_frame_count_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_semantic_frame_value_count_plots_menu_item [gtk-menu_item-new 'Save Simulation Semantic Frame Value Count Plots']]
-       [have mind_menu append save_simulation_semantic_frame_value_count_plots_menu_item]
-       [have save_simulation_semantic_frame_value_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_semantic_frame_value_count_plots '/tmp/mind_plot']]]
-	     nil]
        
        [= enable_debugging_all_menu_item [gtk-menu_item-new 'Enable Debugging All']]
        [have mind_menu append enable_debugging_all_menu_item]
@@ -367,6 +288,124 @@
 
 
 
+'mindmon_agent_widget_save_data_menu'
+
+[deframe mindmon_agent_widget_save_data_menu [frame] [mindmon_agent_widget
+						 
+						 save_data_menu_item
+						 save_data_menu
+						 
+						 save_all_plots_menu_item
+						 save_bytecode_count_plots_menu_item
+						 save_simulation_bytecode_rate_plots_menu_item
+						 save_simulation_bytecode_count_plots_menu_item
+						 save_execution_nanoseconds_plots_menu_item
+						 save_bytes_allocated_count_plots_menu_item
+						 save_bytes_footprint_plots_menu_item
+						 save_simulation_bytes_footprint_plots_menu_item
+						 save_simulation_semantic_frame_count_plots_menu_item
+						 save_simulation_semantic_frame_value_count_plots_menu_item]
+  [new [initial-mindmon_agent_widget]
+       [= mindmon_agent_widget initial-mindmon_agent_widget]
+       
+       [= save_data_menu_item [gtk-menu_item-new 'Save Data']]
+       [= save_data_menu      [gtk-menu-new]]
+       [set save_data_menu_item submenu save_data_menu]
+       
+       [= save_all_plots_menu_item [gtk-menu_item-new 'All']]
+       [have save_data_menu append save_all_plots_menu_item]
+       [have save_all_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_all_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_bytecode_count_plots_menu_item [gtk-menu_item-new 'Bytecode Count']]
+       [have save_data_menu append save_bytecode_count_plots_menu_item]
+       [have save_bytecode_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_bytecode_count_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytecode_rate_plots_menu_item [gtk-menu_item-new 'Simulation Bytecode Rate']]
+       [have save_data_menu append save_simulation_bytecode_rate_plots_menu_item]
+       [have save_simulation_bytecode_rate_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytecode_rate_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytecode_count_plots_menu_item [gtk-menu_item-new 'Simulation Bytecode Count']]
+       [have save_data_menu append save_simulation_bytecode_count_plots_menu_item]
+       [have save_simulation_bytecode_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytecode_count_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_execution_nanoseconds_plots_menu_item [gtk-menu_item-new 'Execution Nanoseconds']]
+       [have save_data_menu append save_execution_nanoseconds_plots_menu_item]
+       [have save_execution_nanoseconds_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_execution_nanoseconds_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_bytes_allocated_count_plots_menu_item [gtk-menu_item-new 'Bytes Allocated Count']]
+       [have save_data_menu append save_bytes_allocated_count_plots_menu_item]
+       [have save_bytes_allocated_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_bytes_allocated_count_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Bytes Footprint']]
+       [have save_data_menu append save_bytes_footprint_plots_menu_item]
+       [have save_bytes_footprint_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_bytes_footprint_plots [get mind creation_time] '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Simulation Bytes Footprint']]
+       [have save_data_menu append save_simulation_bytes_footprint_plots_menu_item]
+       [have save_simulation_bytes_footprint_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytes_footprint_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_semantic_frame_count_plots_menu_item [gtk-menu_item-new 'Simulation Semantic Frame Count']]
+       [have save_data_menu append save_simulation_semantic_frame_count_plots_menu_item]
+       [have save_simulation_semantic_frame_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_semantic_frame_count_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_semantic_frame_value_count_plots_menu_item [gtk-menu_item-new 'Simulation Semantic Frame Value Count']]
+       [have save_data_menu append save_simulation_semantic_frame_value_count_plots_menu_item]
+       [have save_simulation_semantic_frame_value_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_semantic_frame_value_count_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       nil]]
+
+[deftypefunk mindmon_agent_widget_save_data_menu get widget []
+  save_data_menu_item]
+				
+[deftypefunk mindmon_agent_widget_save_data_menu set debug_all [debug]
+  [mapc [funk [mindmon_layer_menu]
+	      [set mindmon_layer_menu debug_all debug]]
+	mindmon_layer_menus]]
+
+
+
+'mindmon_save_agent_dialog'
+
 [deframe mindmon_save_agent_dialog [frame] [mindmon_agent_widget
 					    mindmon
 					    save_dialog]
@@ -392,6 +431,8 @@
        [have save_dialog show_all]]]
 
 
+'mindmon_agent_widget'
+
 [deframe mindmon_agent_widget [frame] [mindmon_agent
 				       
 				       mindmon_project
@@ -415,6 +456,7 @@
 				       view_proprioceptual_frame_menu_item
 				       view_visualization_menu_item
 				       mindmon_agent_widget_mind_menu
+				       mindmon_agent_widget_save_data_menu
 				       
 				       entry
 				       
@@ -517,6 +559,9 @@
        
        [= mindmon_agent_widget_mind_menu [new mindmon_agent_widget_mind_menu this]]
        [have menu_bar append mindmon_agent_widget_mind_menu]
+       
+       [= mindmon_agent_widget_save_data_menu [new mindmon_agent_widget_save_data_menu this]]
+       [have menu_bar append mindmon_agent_widget_save_data_menu]
        
        
        [= entry [gtk-entry-new]]

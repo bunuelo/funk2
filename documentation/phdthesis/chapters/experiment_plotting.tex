@@ -335,13 +335,13 @@
 }
 
 \newcommand{\experimentyaxisbytecodes}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Time Complexity};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Bytecode Count};
   \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytecodes)};
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
 \newcommand{\experimentyaxisbytecoderate}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Time Complexity Derivative};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Bytecode Rate};
   \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
@@ -356,111 +356,111 @@
 }
 
 
-% bytecode rate, memory allocation, garbage collection, memory usage triple plots
+%  x time
 
-\newcommand{\causegroupplotsexecution}[9]{
+\newcommand{\causegroupplotsbytecodecount}[9]{
   \begingroup%
-  \def\causegroupplotsexecutionplotmaxtime{#1}%
-  \def\causegroupplotsexecutionexperimentonemaxtime{#2}%
-  \def\causegroupplotsexecutionexperimenttwomaxtime{#3}%
-  \def\causegroupplotsexecutionexperimentthreemaxtime{#4}%
-  \def\causegroupplotsexecutionexperimentonename{#5}%
-  \def\causegroupplotsexecutionexperimenttwoname{#6}%
-  \def\causegroupplotsexecutionexperimentthreename{#7}%
-  \def\causegroupplotsexecutioncausegroupfilenameroot{#8}%
-  \def\causegroupplotsexecutionlegendlabel{#9}%
+  \def\causegroupplotsbytecodecountplotmaxtime{#1}%
+  \def\causegroupplotsbytecodecountexperimentonemaxtime{#2}%
+  \def\causegroupplotsbytecodecountexperimenttwomaxtime{#3}%
+  \def\causegroupplotsbytecodecountexperimentthreemaxtime{#4}%
+  \def\causegroupplotsbytecodecountexperimentonename{#5}%
+  \def\causegroupplotsbytecodecountexperimenttwoname{#6}%
+  \def\causegroupplotsbytecodecountexperimentthreename{#7}%
+  \def\causegroupplotsbytecodecountcausegroupfilenameroot{#8}%
+  \def\causegroupplotsbytecodecountlegendlabel{#9}%
 }
-\newcommand{\causegroupplotsexecutioncontinued}[1]{
-  \def\causegroupplotsexecutionplotheight{#1}%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionexperimentthreemaxvalue\experimentmaxvalue%
-  \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimenttwomaxvalue pt}}{
-    \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimentonemaxvalue pt > \causegroupplotsexecutionexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentonemaxvalue%
+\newcommand{\causegroupplotsbytecodecountcontinued}[1]{
+  \def\causegroupplotsbytecodecountplotheight{#1}%
+  \experimentfindmax[data/\causegroupplotsbytecodecountexperimentonename/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecodecountexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsbytecodecountexperimenttwoname/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecodecountexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsbytecodecountexperimentthreename/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecodecountexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsbytecodecountexperimentonemaxvalue pt > \causegroupplotsbytecodecountexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsbytecodecountexperimentonemaxvalue pt > \causegroupplotsbytecodecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsbytecodecountexperimentmaxvalue\causegroupplotsbytecodecountexperimentonemaxvalue%
     }{
-      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentthreemaxvalue%
+      \let\causegroupplotsbytecodecountexperimentmaxvalue\causegroupplotsbytecodecountexperimentthreemaxvalue%
     }
   }{
-    \ifthenelse{\lengthtest{\causegroupplotsexecutionexperimenttwomaxvalue pt > \causegroupplotsexecutionexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimenttwomaxvalue%
+    \ifthenelse{\lengthtest{\causegroupplotsbytecodecountexperimenttwomaxvalue pt > \causegroupplotsbytecodecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsbytecodecountexperimentmaxvalue\causegroupplotsbytecodecountexperimenttwomaxvalue%
     }{
-      \let\causegroupplotsexecutionexperimentmaxvalue\causegroupplotsexecutionexperimentthreemaxvalue%
+      \let\causegroupplotsbytecodecountexperimentmaxvalue\causegroupplotsbytecodecountexperimentthreemaxvalue%
     }
   }
-  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsexecutionexperimentmaxvalue pt}}{
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsbytecodecountexperimentmaxvalue pt}}{
   }{
-    \begin{tikzpicture}[y=\causegroupplotsexecutionplotheight/\causegroupplotsexecutionexperimentmaxvalue, x=8cm/\causegroupplotsexecutionplotmaxtime,font=\sffamily]
-      \experimentaxes[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}
+    \begin{tikzpicture}[y=\causegroupplotsbytecodecountplotheight/\causegroupplotsbytecodecountexperimentmaxvalue, x=8cm/\causegroupplotsbytecodecountplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsbytecodecountplotmaxtime]{\causegroupplotsbytecodecountexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxisbytecodes
       
-      \experimentlegendthree[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
-      \experimentlegendtwo[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
-      \experimentlegendone[\causegroupplotsexecutionplotmaxtime * 1 / 10]{\causegroupplotsexecutionexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
+      \experimentlegendthree[\causegroupplotsbytecodecountplotmaxtime * 1 / 10]{\causegroupplotsbytecodecountexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
+      \experimentlegendtwo[\causegroupplotsbytecodecountplotmaxtime * 1 / 10]{\causegroupplotsbytecodecountexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
+      \experimentlegendone[\causegroupplotsbytecodecountplotmaxtime * 1 / 10]{\causegroupplotsbytecodecountexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
 
-      \experimentdatathree[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentthreename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
-      \experimentdatatwo[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimenttwoname/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
-      \experimentdataone[\causegroupplotsexecutionplotmaxtime]{\causegroupplotsexecutionexperimentmaxvalue}{data/\causegroupplotsexecutionexperimentonename/\causegroupplotsexecutioncausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdatathree[\causegroupplotsbytecodecountplotmaxtime]{\causegroupplotsbytecodecountexperimentmaxvalue}{data/\causegroupplotsbytecodecountexperimentthreename/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdatatwo[\causegroupplotsbytecodecountplotmaxtime]{\causegroupplotsbytecodecountexperimentmaxvalue}{data/\causegroupplotsbytecodecountexperimenttwoname/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data};
+      \experimentdataone[\causegroupplotsbytecodecountplotmaxtime]{\causegroupplotsbytecodecountexperimentmaxvalue}{data/\causegroupplotsbytecodecountexperimentonename/\causegroupplotsbytecodecountcausegroupfilenameroot-simulation_bytecode_count.data};
     \end{tikzpicture}
   }
   \endgroup%
 }
 
-\newcommand{\causegroupplotsexecutionrate}[9]{
+\newcommand{\causegroupplotsbytecoderate}[9]{
   \begingroup%
-  \def\causegroupplotsexecutionrateplotmaxtime{#1}%
-  \def\causegroupplotsexecutionrateexperimentonemaxtime{#2}%
-  \def\causegroupplotsexecutionrateexperimenttwomaxtime{#3}%
-  \def\causegroupplotsexecutionrateexperimentthreemaxtime{#4}%
-  \def\causegroupplotsexecutionrateexperimentonename{#5}%
-  \def\causegroupplotsexecutionrateexperimenttwoname{#6}%
-  \def\causegroupplotsexecutionrateexperimentthreename{#7}%
-  \def\causegroupplotsexecutionratecausegroupfilenameroot{#8}%
-  \def\causegroupplotsexecutionratelegendlabel{#9}%
+  \def\causegroupplotsbytecoderateplotmaxtime{#1}%
+  \def\causegroupplotsbytecoderateexperimentonemaxtime{#2}%
+  \def\causegroupplotsbytecoderateexperimenttwomaxtime{#3}%
+  \def\causegroupplotsbytecoderateexperimentthreemaxtime{#4}%
+  \def\causegroupplotsbytecoderateexperimentonename{#5}%
+  \def\causegroupplotsbytecoderateexperimenttwoname{#6}%
+  \def\causegroupplotsbytecoderateexperimentthreename{#7}%
+  \def\causegroupplotsbytecoderatecausegroupfilenameroot{#8}%
+  \def\causegroupplotsbytecoderatelegendlabel{#9}%
 }
-\newcommand{\causegroupplotsexecutionratecontinued}[1]{
-  \def\causegroupplotsexecutionrateplotheight{#1}%
-  \experimentfindmax[data/\causegroupplotsexecutionrateexperimentonename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionrateexperimentonemaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionrateexperimenttwoname/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionrateexperimenttwomaxvalue\experimentmaxvalue%
-  \experimentfindmax[data/\causegroupplotsexecutionrateexperimentthreename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_count.data]
-  \let\causegroupplotsexecutionrateexperimentthreemaxvalue\experimentmaxvalue%
-  \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimentonemaxvalue pt > \causegroupplotsexecutionrateexperimenttwomaxvalue pt}}{
-    \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimentonemaxvalue pt > \causegroupplotsexecutionrateexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentonemaxvalue%
+\newcommand{\causegroupplotsbytecoderatecontinued}[1]{
+  \def\causegroupplotsbytecoderateplotheight{#1}%
+  \experimentfindmax[data/\causegroupplotsbytecoderateexperimentonename/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecoderateexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsbytecoderateexperimenttwoname/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecoderateexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotsbytecoderateexperimentthreename/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_count.data]
+  \let\causegroupplotsbytecoderateexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotsbytecoderateexperimentonemaxvalue pt > \causegroupplotsbytecoderateexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotsbytecoderateexperimentonemaxvalue pt > \causegroupplotsbytecoderateexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsbytecoderateexperimentmaxvalue\causegroupplotsbytecoderateexperimentonemaxvalue%
     }{
-      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentthreemaxvalue%
+      \let\causegroupplotsbytecoderateexperimentmaxvalue\causegroupplotsbytecoderateexperimentthreemaxvalue%
     }
   }{
-    \ifthenelse{\lengthtest{\causegroupplotsexecutionrateexperimenttwomaxvalue pt > \causegroupplotsexecutionrateexperimentthreemaxvalue pt}}{
-      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimenttwomaxvalue%
+    \ifthenelse{\lengthtest{\causegroupplotsbytecoderateexperimenttwomaxvalue pt > \causegroupplotsbytecoderateexperimentthreemaxvalue pt}}{
+      \let\causegroupplotsbytecoderateexperimentmaxvalue\causegroupplotsbytecoderateexperimenttwomaxvalue%
     }{
-      \let\causegroupplotsexecutionrateexperimentmaxvalue\causegroupplotsexecutionrateexperimentthreemaxvalue%
+      \let\causegroupplotsbytecoderateexperimentmaxvalue\causegroupplotsbytecoderateexperimentthreemaxvalue%
     }
   }
-  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsexecutionrateexperimentmaxvalue pt}}{
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotsbytecoderateexperimentmaxvalue pt}}{
   }{
-    \begin{tikzpicture}[y=\causegroupplotsexecutionrateplotheight/\causegroupplotsexecutionrateexperimentmaxvalue, x=8cm/\causegroupplotsexecutionrateplotmaxtime,font=\sffamily]
-      \experimentaxes[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}
+    \begin{tikzpicture}[y=\causegroupplotsbytecoderateplotheight/\causegroupplotsbytecoderateexperimentmaxvalue, x=8cm/\causegroupplotsbytecoderateplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotsbytecoderateplotmaxtime]{\causegroupplotsbytecoderateexperimentmaxvalue}
       
       %labels
       \experimentxaxislabel
       \experimentyaxisbytecoderate
       
-      \experimentlegendthree[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
-      \experimentlegendtwo[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
-      \experimentlegendone[\causegroupplotsexecutionrateplotmaxtime * 1 / 10]{\causegroupplotsexecutionrateexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
+      \experimentlegendthree[\causegroupplotsbytecoderateplotmaxtime * 1 / 10]{\causegroupplotsbytecoderateexperimentmaxvalue * 12.5 / 10}{Deliberative and Reflective Learning};
+      \experimentlegendtwo[\causegroupplotsbytecoderateplotmaxtime * 1 / 10]{\causegroupplotsbytecoderateexperimentmaxvalue * 11.5 / 10}{Only Deliberative Learning};
+      \experimentlegendone[\causegroupplotsbytecoderateplotmaxtime * 1 / 10]{\causegroupplotsbytecoderateexperimentmaxvalue * 10.5 / 10}{Boot-up and Perceive without Goals};
 
-      \experimentdatathree[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimentthreename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
-      \experimentdatatwo[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimenttwoname/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
-      \experimentdataone[\causegroupplotsexecutionrateplotmaxtime]{\causegroupplotsexecutionrateexperimentmaxvalue}{data/\causegroupplotsexecutionrateexperimentonename/\causegroupplotsexecutionratecausegroupfilenameroot-simulation_bytecode_rate.data};
+      \experimentdatathree[\causegroupplotsbytecoderateplotmaxtime]{\causegroupplotsbytecoderateexperimentmaxvalue}{data/\causegroupplotsbytecoderateexperimentthreename/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_rate.data};
+      \experimentdatatwo[\causegroupplotsbytecoderateplotmaxtime]{\causegroupplotsbytecoderateexperimentmaxvalue}{data/\causegroupplotsbytecoderateexperimenttwoname/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_rate.data};
+      \experimentdataone[\causegroupplotsbytecoderateplotmaxtime]{\causegroupplotsbytecoderateexperimentmaxvalue}{data/\causegroupplotsbytecoderateexperimentonename/\causegroupplotsbytecoderatecausegroupfilenameroot-simulation_bytecode_rate.data};
     \end{tikzpicture}
   }
   \endgroup%
@@ -562,7 +562,7 @@
                                   {\experimentcausegroupplotsexperimenttwoname}
                                   {\experimentcausegroupplotsexperimentthreename}
                                   {\experimentcausegroupplotscausegroupfilenameroot}
-                                  {Time Complexity Rate of the {\experimentcausegroupplotscausegroupprettyname}}
+                                  {Bytecode Rate of the {\experimentcausegroupplotscausegroupprettyname}}
                                   \causegroupplotsexecutioncontinued{\experimentcausegroupplotsplotheight}
       }\\
       {\raggedleft

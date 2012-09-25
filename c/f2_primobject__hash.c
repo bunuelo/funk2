@@ -67,8 +67,8 @@ void f2__hash__increase_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this
   f2ptr temp_hash         = raw__hash__new(cause, new_bin_num_power, hash_value_funk, equals_funk);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("f2__hash__increase_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, (1ll << new_bin_num_power);
-	   u64 bin_index;
+    status("f2__hash__increase_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr, bin_num, (1ll << new_bin_num_power));
+    u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);
       while(keyvalue_pair_iter) {

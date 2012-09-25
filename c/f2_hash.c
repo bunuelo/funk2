@@ -64,7 +64,7 @@ void funk2_hash__increase_size(funk2_hash_t* this) {
       funk2_hash_bin_node_t* bin_node = old_bin_array[bin_index];
       while (bin_node != NULL) {
 	funk2_hash_bin_node_t* bin_node__next = bin_node->next;
-	funk2_hash__add(this, bin_node->key, bin_node->value);
+	funk2_hash__add(this, bin_node->keyvalue_pair.key, bin_node->keyvalue_pair.value);
 	f2__free(to_ptr(bin_node));
 	bin_node = bin_node__next;
       }

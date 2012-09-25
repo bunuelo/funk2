@@ -1135,7 +1135,8 @@ f2ptr f2__cause__increment_counters_if_exist(f2ptr cause, f2ptr this, f2ptr coun
   assert_argument_type(cause,   this);
   assert_argument_type(integer, relative_value);
   s64 relative_value__i = f2integer__i(relative_value, cause);
-  return raw__cause__increment_counters_if_exist(cause, this, counter_name, relative_value__i);
+  raw__cause__increment_counters_if_exist(cause, this, counter_name, relative_value__i);
+  return nil;
 }
 def_pcfunk3(cause__increment_counters_if_exist, this, counter_name, relative_value,
 	    "Increments all cause_group counters of the given name if they exist.",

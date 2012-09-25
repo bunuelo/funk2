@@ -1319,10 +1319,6 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__add_cause_group_interaction);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counters_if_exist_interaction__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cause_group__increment_counters_if_exist_interaction);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counters_if_exist_interaction__funk);
-  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__assure_counter_exists);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);

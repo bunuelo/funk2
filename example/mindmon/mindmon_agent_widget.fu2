@@ -291,20 +291,20 @@
 'mindmon_agent_widget_save_data_menu'
 
 [deframe mindmon_agent_widget_save_data_menu [frame] [mindmon_agent_widget
-						 
-						 save_data_menu_item
-						 save_data_menu
-						 
-						 save_all_plots_menu_item
-						 save_bytecode_count_plots_menu_item
-						 save_simulation_bytecode_rate_plots_menu_item
-						 save_simulation_bytecode_count_plots_menu_item
-						 save_execution_nanoseconds_plots_menu_item
-						 save_bytes_allocated_count_plots_menu_item
-						 save_bytes_footprint_plots_menu_item
-						 save_simulation_bytes_footprint_plots_menu_item
-						 save_simulation_semantic_frame_count_plots_menu_item
-						 save_simulation_semantic_frame_value_count_plots_menu_item]
+						      
+						      save_data_menu_item
+						      save_data_menu
+						      
+						      save_all_plots_menu_item
+						      save_bytecode_count_plots_menu_item
+						      save_simulation_bytecode_rate_plots_menu_item
+						      save_simulation_bytecode_count_plots_menu_item
+						      save_execution_nanoseconds_plots_menu_item
+						      save_bytes_allocated_count_plots_menu_item
+						      save_bytes_footprint_plots_menu_item
+						      save_simulation_bytes_footprint_plots_menu_item
+						      save_simulation_semantic_frame_count_plots_menu_item
+						      save_simulation_semantic_frame_value_count_plots_menu_item]
   [new [initial-mindmon_agent_widget]
        [= mindmon_agent_widget initial-mindmon_agent_widget]
        

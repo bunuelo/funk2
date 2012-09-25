@@ -35,15 +35,15 @@
     \begin{tabular}{r}
       {\raggedleft
          \causegroupplotsbytecodecount{\dataappendixmaxtime}
-                                  {\dataappendixexperimentonemaxtime}
-                                  {\dataappendixexperimenttwomaxtime}
-                                  {\dataappendixexperimentthreemaxtime}
-                                  {\dataappendixexperimentonename}
-                                  {\dataappendixexperimenttwoname}
-                                  {\dataappendixexperimentthreename}
-                                  {mind_plot-Gripper-1-reflective}
-                                  {Time Complexity of the Reflective Layer}
-                                  \causegroupplotsbytecodecountcontinued{3cm}
+                                      {\dataappendixexperimentonemaxtime}
+                                      {\dataappendixexperimenttwomaxtime}
+                                      {\dataappendixexperimentthreemaxtime}
+                                      {\dataappendixexperimentonename}
+                                      {\dataappendixexperimenttwoname}
+                                      {\dataappendixexperimentthreename}
+                                      {mind_plot-Gripper-1-reflective}
+                                      {Time Complexity of the Reflective Layer}
+                                      \causegroupplotsbytecodecountcontinued{3cm}
       }\\
     \end{tabular}
     \experimentdatablocksworldexample
@@ -65,12 +65,10 @@ any level of abstraction in the entire system using the Funk causal
 reflective tracing features.  \autoref{table:experiment_data} shows a
 list of figures showing data from three experiments.  In the first
 experiment, the AI boots up and then perceives the world over time.
-This experiment is a control that shows that the AI memory usage and
-execution is stable if it does not have any goals and the physical
-world is not changing.  \emph{Stable} in this case is defined as
-constantly bytecode counts increasing at a constant rate with a
-constant size memory footprint over time.  In the second experiment,
-the reflective learning is disabled.  In the third experiment, the AI
+This experiment is a control that shows that the AI memory usage is
+constant and execution rate is constant if it does not have any goals
+and the physical world is not changing.  In the second experiment, the
+reflective learning is disabled.  In the third experiment, the AI
 reflectively traces and builds models of the deliberative planning
 process.  Comparing the execution of the experiment with no reflective
 learning with that of reflective learning shows a rough estimate of

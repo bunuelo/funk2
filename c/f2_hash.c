@@ -53,6 +53,26 @@ void funk2_hash__remove_all(funk2_hash_t* this) {
   }
 }
 
+void funk2_hash__increase_size(funk2_hash_t* this) {
+  u64                     old_bin_num_power = this->bin_num_power;
+  funk2_hash_bin_node_t** old_bin_array     = this->bin_array;
+  u64                     old_bin_num       = 1ll << old_bin_num_power;
+  funk2_hash__init(this, ((old_bin_num_power * 3) >> 1) + 1);
+  {
+    u64 bin_index;
+    for (bin_index = 0; bin_index < old_bin_num; bin_index ++) {
+      funk2_hash_bin_node_t* bin_node = old_bin_array[bin_index];
+      while (bin_node != NULL) {
+	funk2_hash_bin_node_t* bin_node__next = bin_node->next;
+	funk2_hash__add(this, bin_node->key, bin_node->value);
+	f2__free(to_ptr(bin_node));
+	bin_node = bin_node__next;
+      }
+    }
+  }
+  f2__free(to_ptr(old_bin_array));
+}
+
 void funk2_hash__add(funk2_hash_t* this, u64 key, u64 value) {
   u64                         key__hash_value    = key;
   u64                         hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
@@ -80,16 +100,9 @@ void funk2_hash__add(funk2_hash_t* this, u64 key, u64 value) {
     this->bin_array[index] = new_bin_node;
     { // increase key count only if didn't already have this key.
       this->key_count ++;
-      //
-      // -- If we wanted to write the double_size function, this is where it would be called.
-      //
       if ((this->key_count << 1) >= (1ll << this->bin_num_power)) {
-	status("funk2_hash__add note: should increase size of hash.");
-	//  funk2_hash__double_size(this);
+	funk2_hash__increase_size(this);
       }
-      //
-      // --
-      //
     }
   } else {
     keyvalue_pair->value = value;

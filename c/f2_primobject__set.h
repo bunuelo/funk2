@@ -92,9 +92,9 @@ f2ptr      f2__set__intersection        (f2ptr cause, f2ptr rest);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 
-#define raw__set__add(cause, this, key)                   raw__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
-#define  f2__set__add(cause, this, key)                    f2__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
-#define raw__set__double_size__thread_unsafe(cause, this) raw__set__double_size__thread_unsafe__debug(cause, this, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define raw__set__add(cause, this, key)                     raw__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define  f2__set__add(cause, this, key)                      f2__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define raw__set__increase_size__thread_unsafe(cause, this) raw__set__increase_size__thread_unsafe__debug(cause, this, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
 
 #define set__iteration(cause, this, element, code) {			\
     f2ptr set__iteration__cause = (cause);				\

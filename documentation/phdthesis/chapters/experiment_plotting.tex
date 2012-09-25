@@ -336,13 +336,13 @@
 
 \newcommand{\experimentyaxisbytecodes}{
   \node[rotate=90, above=1.4cm] at (y axis mid) {Bytecode Count};
-  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytecodes)};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {($\times~10^6$)};
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
 }
 
 \newcommand{\experimentyaxisbytecoderate}{
   \node[rotate=90, above=1.4cm] at (y axis mid) {Bytecode Rate};
-  \node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytecodes/s};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {($\times~10^6/\text{s}$});
 }
 
 \newcommand{\experimentyaxisbytes}{
@@ -350,13 +350,25 @@
 }
 
 \newcommand{\experimentyaxismemory}{
-  \node[rotate=90, above=1.4cm] at (y axis mid) {Space Complexity};
-  \node[rotate=90, above=0.8cm] at (y axis mid) {(Millions of Bytes)};
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Memory Footprint};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {($\text{Bytes}~\times~10^6$)};
+  %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
+}
+
+\newcommand{\experimentyaxissemanticframecount}{
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Semantic Frame Count};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {($\times~10^3$)};
+  %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
+}
+
+\newcommand{\experimentyaxissemanticframevaluecount}{
+  \node[rotate=90, above=1.4cm] at (y axis mid) {Slot Value Count};
+  \node[rotate=90, above=0.8cm] at (y axis mid) {($\times~10^3$)};
   %\node[rotate=90, above=0.8cm] at (y axis mid) {Millions of Bytes};
 }
 
 
-%  x time
+% simulation_bytecode_count x time
 
 \newcommand{\causegroupplotsbytecodecount}[9]{
   \begingroup%
@@ -412,6 +424,8 @@
   \endgroup%
 }
 
+% simulation_bytecode_rate x time
+
 \newcommand{\causegroupplotsbytecoderate}[9]{
   \begingroup%
   \def\causegroupplotsbytecoderateplotmaxtime{#1}%
@@ -466,6 +480,8 @@
   \endgroup%
 }
 
+% simulation_bytes_footprint x time
+
 \newcommand{\causegroupplotsmemory}[9]{
   \begingroup%
   \def\causegroupplotsmemoryplotmaxtime{#1}%
@@ -516,23 +532,107 @@
   \endgroup%
 }
 
-\newcommand{\causegroupplots}[4]{
-  \begin{tabular}{r}
-    {\raggedleft
-      #1
-    }\\
-    {\raggedleft
-      #2
-    }\\
-    {\raggedleft
-      #3
-    }\\
-    {\raggedleft
-      #4
-    }\\
-  \end{tabular}
+% simulation_semantic_frame_count x time
+
+\newcommand{\causegroupplotssemanticframecount}[9]{
+  \begingroup%
+  \def\causegroupplotssemanticframecountplotmaxtime{#1}%
+  \def\causegroupplotssemanticframecountexperimentonemaxtime{#2}%
+  \def\causegroupplotssemanticframecountexperimenttwomaxtime{#3}%
+  \def\causegroupplotssemanticframecountexperimentthreemaxtime{#4}%
+  \def\causegroupplotssemanticframecountexperimentonename{#5}%
+  \def\causegroupplotssemanticframecountexperimenttwoname{#6}%
+  \def\causegroupplotssemanticframecountexperimentthreename{#7}%
+  \def\causegroupplotssemanticframecountcausegroupfilenameroot{#8}%
+  \def\causegroupplotssemanticframecountlegendlabel{#9}%
+}
+\newcommand{\causegroupplotssemanticframecountcontinued}[1]{
+  \def\causegroupplotssemanticframecountplotheight{#1}%
+  \experimentfindmax[data/\causegroupplotssemanticframecountexperimentonename/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframecountexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotssemanticframecountexperimenttwoname/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframecountexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotssemanticframecountexperimentthreename/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframecountexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotssemanticframecountexperimentonemaxvalue pt > \causegroupplotssemanticframecountexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotssemanticframecountexperimentonemaxvalue pt > \causegroupplotssemanticframecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotssemanticframecountexperimentmaxvalue\causegroupplotssemanticframecountexperimentonemaxvalue%
+    }{
+      \let\causegroupplotssemanticframecountexperimentmaxvalue\causegroupplotssemanticframecountexperimentthreemaxvalue%
+    }
+  }{
+    \ifthenelse{\lengthtest{\causegroupplotssemanticframecountexperimenttwomaxvalue pt > \causegroupplotssemanticframecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotssemanticframecountexperimentmaxvalue\causegroupplotssemanticframecountexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotssemanticframecountexperimentmaxvalue\causegroupplotssemanticframecountexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotssemanticframecountexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=\causegroupplotssemanticframecountplotheight/\causegroupplotssemanticframecountexperimentmaxvalue, x=8cm/\causegroupplotssemanticframecountplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotssemanticframecountplotmaxtime]{\causegroupplotssemanticframecountexperimentmaxvalue}
+      
+      %labels
+      \experimentxaxislabel
+      \experimentyaxissemanticframecount
+      
+      \experimentdatathree[\causegroupplotssemanticframecountplotmaxtime]{\causegroupplotssemanticframecountexperimentmaxvalue}{data/\causegroupplotssemanticframecountexperimentthreename/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_semantic_frame_count.data};
+      \experimentdatatwo[\causegroupplotssemanticframecountplotmaxtime]{\causegroupplotssemanticframecountexperimentmaxvalue}{data/\causegroupplotssemanticframecountexperimenttwoname/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_semantic_frame_count.data};
+      \experimentdataone[\causegroupplotssemanticframecountplotmaxtime]{\causegroupplotssemanticframecountexperimentmaxvalue}{data/\causegroupplotssemanticframecountexperimentonename/\causegroupplotssemanticframecountcausegroupfilenameroot-simulation_semantic_frame_count.data};
+    \end{tikzpicture}
+  }
+  \endgroup%
 }
 
+\newcommand{\causegroupplotssemanticframevaluecount}[9]{
+  \begingroup%
+  \def\causegroupplotssemanticframevaluecountplotmaxtime{#1}%
+  \def\causegroupplotssemanticframevaluecountexperimentonemaxtime{#2}%
+  \def\causegroupplotssemanticframevaluecountexperimenttwomaxtime{#3}%
+  \def\causegroupplotssemanticframevaluecountexperimentthreemaxtime{#4}%
+  \def\causegroupplotssemanticframevaluecountexperimentonename{#5}%
+  \def\causegroupplotssemanticframevaluecountexperimenttwoname{#6}%
+  \def\causegroupplotssemanticframevaluecountexperimentthreename{#7}%
+  \def\causegroupplotssemanticframevaluecountcausegroupfilenameroot{#8}%
+  \def\causegroupplotssemanticframevaluecountlegendlabel{#9}%
+}
+\newcommand{\causegroupplotssemanticframevaluecountcontinued}[1]{
+  \def\causegroupplotssemanticframevaluecountplotheight{#1}%
+  \experimentfindmax[data/\causegroupplotssemanticframevaluecountexperimentonename/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframevaluecountexperimentonemaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotssemanticframevaluecountexperimenttwoname/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframevaluecountexperimenttwomaxvalue\experimentmaxvalue%
+  \experimentfindmax[data/\causegroupplotssemanticframevaluecountexperimentthreename/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_bytes_footprint.data]
+  \let\causegroupplotssemanticframevaluecountexperimentthreemaxvalue\experimentmaxvalue%
+  \ifthenelse{\lengthtest{\causegroupplotssemanticframevaluecountexperimentonemaxvalue pt > \causegroupplotssemanticframevaluecountexperimenttwomaxvalue pt}}{
+    \ifthenelse{\lengthtest{\causegroupplotssemanticframevaluecountexperimentonemaxvalue pt > \causegroupplotssemanticframevaluecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotssemanticframevaluecountexperimentmaxvalue\causegroupplotssemanticframevaluecountexperimentonemaxvalue%
+    }{
+      \let\causegroupplotssemanticframevaluecountexperimentmaxvalue\causegroupplotssemanticframevaluecountexperimentthreemaxvalue%
+    }
+  }{
+    \ifthenelse{\lengthtest{\causegroupplotssemanticframevaluecountexperimenttwomaxvalue pt > \causegroupplotssemanticframevaluecountexperimentthreemaxvalue pt}}{
+      \let\causegroupplotssemanticframevaluecountexperimentmaxvalue\causegroupplotssemanticframevaluecountexperimenttwomaxvalue%
+    }{
+      \let\causegroupplotssemanticframevaluecountexperimentmaxvalue\causegroupplotssemanticframevaluecountexperimentthreemaxvalue%
+    }
+  }
+  \ifthenelse{\lengthtest{0.01 pt > \causegroupplotssemanticframevaluecountexperimentmaxvalue pt}}{
+  }{
+    \begin{tikzpicture}[y=\causegroupplotssemanticframevaluecountplotheight/\causegroupplotssemanticframevaluecountexperimentmaxvalue, x=8cm/\causegroupplotssemanticframevaluecountplotmaxtime,font=\sffamily]
+      \experimentaxes[\causegroupplotssemanticframevaluecountplotmaxtime]{\causegroupplotssemanticframevaluecountexperimentmaxvalue}
+      
+      %labels
+      \experimentxaxislabel
+      \experimentyaxissemanticframevaluecount
+      
+      \experimentdatathree[\causegroupplotssemanticframevaluecountplotmaxtime]{\causegroupplotssemanticframevaluecountexperimentmaxvalue}{data/\causegroupplotssemanticframevaluecountexperimentthreename/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_semantic_frame_value_count.data};
+      \experimentdatatwo[\causegroupplotssemanticframevaluecountplotmaxtime]{\causegroupplotssemanticframevaluecountexperimentmaxvalue}{data/\causegroupplotssemanticframevaluecountexperimenttwoname/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_semantic_frame_value_count.data};
+      \experimentdataone[\causegroupplotssemanticframevaluecountplotmaxtime]{\causegroupplotssemanticframevaluecountexperimentmaxvalue}{data/\causegroupplotssemanticframevaluecountexperimentonename/\causegroupplotssemanticframevaluecountcausegroupfilenameroot-simulation_semantic_frame_value_count.data};
+    \end{tikzpicture}
+  }
+  \endgroup%
+}
 
 \newcommand\experimentcausegroupplots[9]{%
   \begingroup%
@@ -554,16 +654,16 @@
   \def\experimentcausegroupplotsplotheight{#5}%
     \begin{tabular}{r}
       {\raggedleft
-         \causegroupplotsexecution{\experimentcausegroupplotsplotmaxtime}
-                                  {\experimentcausegroupplotsexperimentonemaxtime}
-                                  {\experimentcausegroupplotsexperimenttwomaxtime}
-                                  {\experimentcausegroupplotsexperimentthreemaxtime}
-                                  {\experimentcausegroupplotsexperimentonename}
-                                  {\experimentcausegroupplotsexperimenttwoname}
-                                  {\experimentcausegroupplotsexperimentthreename}
-                                  {\experimentcausegroupplotscausegroupfilenameroot}
-                                  {Bytecode Rate of the {\experimentcausegroupplotscausegroupprettyname}}
-                                  \causegroupplotsexecutioncontinued{\experimentcausegroupplotsplotheight}
+         \causegroupplotsbytecodecount{\experimentcausegroupplotsplotmaxtime}
+                                      {\experimentcausegroupplotsexperimentonemaxtime}
+                                      {\experimentcausegroupplotsexperimenttwomaxtime}
+                                      {\experimentcausegroupplotsexperimentthreemaxtime}
+                                      {\experimentcausegroupplotsexperimentonename}
+                                      {\experimentcausegroupplotsexperimenttwoname}
+                                      {\experimentcausegroupplotsexperimentthreename}
+                                      {\experimentcausegroupplotscausegroupfilenameroot}
+                                      {}
+                                      \causegroupplotsbytecodecountcontinued{\experimentcausegroupplotsplotheight}
       }\\
       {\raggedleft
         \causegroupplotsmemory{\experimentcausegroupplotsplotmaxtime}
@@ -574,8 +674,56 @@
                               {\experimentcausegroupplotsexperimenttwoname}
                               {\experimentcausegroupplotsexperimentthreename}
                               {\experimentcausegroupplotscausegroupfilenameroot}
-                              {Space Complexity of the {\experimentcausegroupplotscausegroupprettyname}}
+                              {}
                               \causegroupplotsmemorycontinued{\experimentcausegroupplotsplotheight}
+      }\\
+    \end{tabular}
+  \endgroup%
+}
+
+
+\newcommand\experimentcausegroupplotstwo[9]{%
+  \begingroup%
+  \def\experimentcausegroupplotstwoplotmaxtime{#1}%
+  \def\experimentcausegroupplotstwoexperimentonemaxtime{#2}%
+  \def\experimentcausegroupplotstwoexperimenttwomaxtime{#3}%
+  \def\experimentcausegroupplotstwoexperimentthreemaxtime{#4}%
+  \def\experimentcausegroupplotstwoexperimentonename{#5}%
+  \def\experimentcausegroupplotstwoexperimenttwoname{#6}%
+  \def\experimentcausegroupplotstwoexperimentthreename{#7}%
+  \def\experimentcausegroupplotstwoexperimentoneprettyname{#8}%
+  \def\experimentcausegroupplotstwoexperimenttwoprettyname{#9}%
+}
+\newcommand\experimentcausegroupplotstwocontinued[5]{%
+  \def\experimentcausegroupplotstwoexperimentthreeprettyname{#1}%
+  \def\experimentcausegroupplotstwocausegroupfilenameroot{#2}%
+  \def\experimentcausegroupplotstwocausegroupprettyname{#3}%
+  \def\experimentcausegroupplotstwoexperimentdescription{#4}%
+  \def\experimentcausegroupplotstwoplotheight{#5}%
+    \begin{tabular}{r}
+      {\raggedleft
+         \causegroupplotssemanticframecount{\experimentcausegroupplotstwoplotmaxtime}
+                                           {\experimentcausegroupplotstwoexperimentonemaxtime}
+                                           {\experimentcausegroupplotstwoexperimenttwomaxtime}
+                                           {\experimentcausegroupplotstwoexperimentthreemaxtime}
+                                           {\experimentcausegroupplotstwoexperimentonename}
+                                           {\experimentcausegroupplotstwoexperimenttwoname}
+                                           {\experimentcausegroupplotstwoexperimentthreename}
+                                           {\experimentcausegroupplotstwocausegroupfilenameroot}
+                                           {}
+                                           \causegroupplotssemanticframecountcontinued{\experimentcausegroupplotstwoplotheight}
+      }\\
+      {\raggedleft
+        \causegroupplotssemanticframevaluecount{\experimentcausegroupplotstwoplotmaxtime}
+                                               {\experimentcausegroupplotstwoexperimentonemaxtime}
+                                               {\experimentcausegroupplotstwoexperimenttwomaxtime}
+                                               {\experimentcausegroupplotstwoexperimentthreemaxtime}
+                                               {\experimentcausegroupplotstwoexperimentonename}
+                                               {\experimentcausegroupplotstwoexperimenttwoname}
+                                               {\experimentcausegroupplotstwoexperimentthreename}
+                                               {\experimentcausegroupplotstwocausegroupfilenameroot}
+                                               {}
+                                               \causegroupplotssemanticframevaluecountcontinued{\experimentcausegroupplotstwoplotheight}
       }\\
     \end{tabular}
   \endgroup%

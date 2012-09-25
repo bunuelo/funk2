@@ -84,6 +84,16 @@ u64 u64__sqrt(u64 this) {
   return root;
 }
 
+u64 u64__log2(u64 this) {
+  u64 index = 63;
+  u64 mask  = 1ll << 63;
+  while (mask && (! (this & mask))) {
+    mask >>= 1;
+    index --;
+  }
+  return index;
+}
+
 // logic
 
 boolean_t raw__not(f2ptr x) {return !x;}

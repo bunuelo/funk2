@@ -67,10 +67,11 @@ void raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(f2ptr cause, 
   f2ptr bin_num_power            = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i         = f2integer__i(bin_num_power, cause);
   f2ptr bin_array                = f2scheduler_ptypehash__bin_array(this, cause);
-  f2ptr temp_scheduler_ptypehash = raw__scheduler_ptypehash__new(cause, ((bin_num_power__i * 3) >> 1) + 1);
+  u64   new_bin_num_power__i     = ((bin_num_power__i * 3) >> 1) + 1;
+  f2ptr temp_scheduler_ptypehash = raw__scheduler_ptypehash__new(cause, new_bin_num_power__i);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("raw__scheduler_ptypehash__increase_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
+    status("raw__scheduler_ptypehash__increase_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, (1ll << new_bin_num_power__i), source_filename, source_line_number, source_funktion_name);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);

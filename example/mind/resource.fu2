@@ -39,7 +39,7 @@
 			   [initialized       nil]
 			   [vital             nil]
 			   [debug             nil]
-			   [cause_group       [new cause_group]]
+			   [cause_group       [mind_runtime_metric-new_cause_group]]
 			   [continue_trigger  [new fiber_trigger]]
 			   [activated_trigger [new fiber_trigger]]
 			   [finished_trigger  [new fiber_trigger]]
@@ -145,6 +145,12 @@
 
 [deftypefunk resource execute save_simulation_bytes_footprint_plots [filename_root]
   [have runtime_metric_monitor save_simulation_bytes_footprint_plot [format nil filename_root '-' name]]]
+
+[deftypefunk resource execute save_simulation_semantic_frame_count_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_semantic_frame_count_plot [format nil filename_root '-' name]]]
+
+[deftypefunk resource execute save_simulation_semantic_frame_value_count_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_semantic_frame_value_count_plot [format nil filename_root '-' name]]]
 
 
 [deftypefunk resource execute add_cause_group [cause_group]

@@ -25,19 +25,25 @@
 					    bytecode_count
 					    execution_nanoseconds
 					    bytes_allocated_count
-					    bytes_freed_count]
+					    bytes_freed_count
+					    semantic_frame_count
+					    semantic_frame_value_count]
   [new [initial-real_time
 	initial-simulation_relative_time
 	initial-bytecode_count
 	initial-execution_nanoseconds
 	initial-bytes_allocated_count
-	initial-bytes_freed_count]
-       [= real_time                initial-real_time]
-       [= simulation_relative_time initial-simulation_relative_time]
-       [= bytecode_count           initial-bytecode_count]
-       [= execution_nanoseconds    initial-execution_nanoseconds]
-       [= bytes_allocated_count    initial-bytes_allocated_count]
-       [= bytes_freed_count        initial-bytes_freed_count]
+	initial-bytes_freed_count
+	initial-semantic_frame_count
+	initial-semantic_frame_value_count]
+       [= real_time                  initial-real_time]
+       [= simulation_relative_time   initial-simulation_relative_time]
+       [= bytecode_count             initial-bytecode_count]
+       [= execution_nanoseconds      initial-execution_nanoseconds]
+       [= bytes_allocated_count      initial-bytes_allocated_count]
+       [= bytes_freed_count          initial-bytes_freed_count]
+       [= semantic_frame_count       initial-semantic_frame_count]
+       [= semantic_frame_value_count initial-semantic_frame_value_count]
        nil]]
 
 [deftypefunk mind_runtime_metric_point get bytes_footprint []
@@ -54,7 +60,21 @@
 	 [get cause_group bytecode_count]
 	 [get cause_group execution_nanoseconds]
 	 [get cause_group bytes_allocated_count]
-	 [get cause_group bytes_freed_count]]]]
+	 [get cause_group bytes_freed_count]
+	 [get [get cause_group counter `semantic_knowledge_base-semantic_frame]       value]
+	 [get [get cause_group counter `semantic_knowledge_base-semantic_frame_value] value]
+	 ]]]
+
+
+[defunk mind_runtime_metric-assure_counters_exist_in_cause_group [cause_group]
+  [have cause_group assure_counter_exists `semantic_knowledge_base-semantic_frame]
+  [have cause_group assure_counter_exists `semantic_knowledge_base-semantic_frame_value]
+  ]
+
+[defunk mind_runtime_metric-new_cause_group []
+  [let [[this [new cause_group]]]
+    [mind_runtime_metric-assure_counters_exist_in_cause_group this]
+    this]]
 
 
 'mind_runtime_metric_monitor_ticker'
@@ -348,15 +368,83 @@
     [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving simulation_bytes_footprint plot "' filename '"']]]
 
 
+[deftypefunk mind_runtime_metric_monitor get simulation_semantic_frame_count_plot_text []
+  [let [[line_strings         nil]
+	[minimum_metric_value nil]]
+    [let [[metric_iter metric_sequence]]
+      [while metric_iter
+	[let* [[metric       [car metric_iter]]
+	       [metric_value [get metric semantic_frame_count]]]
+	  [if [or [null minimum_metric_value]
+		  [< metric_value minimum_metric_value]]
+	      [= minimum_metric_value metric_value]]]
+	[= metric_iter [cdr metric_iter]]]]
+    [let [[metric_iter metric_sequence]]
+      [while metric_iter
+	[let* [[metric       [car metric_iter]]
+	       [metric_value [get metric semantic_frame_count]]]
+	  [let [[metric_simulation_relative_time [get metric simulation_relative_time]]
+		[value_offset                    [- metric_value minimum_metric_value]]]
+	    [let [[output_x [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
+			       1000000000]]
+		  [output_y [/ [get value_offset as-double]
+			       1000.0]]]
+	      [let [[line_string [format nil output_x ' ' output_y '\n']]]
+		[= line_strings [cons line_string line_strings]]]]]]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_simulation_semantic_frame_count_plot [filename_root]
+  [assert-type string filename_root]
+  [let [[filename [format nil filename_root '-simulation_semantic_frame_count.data']]]
+    [have [get this simulation_semantic_frame_count_plot_text] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving simulation_semantic_frame_count plot "' filename '"']]]
+
+
+[deftypefunk mind_runtime_metric_monitor get simulation_semantic_frame_value_count_plot_text []
+  [let [[line_strings         nil]
+	[minimum_metric_value nil]]
+    [let [[metric_iter metric_sequence]]
+      [while metric_iter
+	[let* [[metric       [car metric_iter]]
+	       [metric_value [get metric semantic_frame_value_count]]]
+	  [if [or [null minimum_metric_value]
+		  [< metric_value minimum_metric_value]]
+	      [= minimum_metric_value metric_value]]]
+	[= metric_iter [cdr metric_iter]]]]
+    [let [[metric_iter metric_sequence]]
+      [while metric_iter
+	[let* [[metric       [car metric_iter]]
+	       [metric_value [get metric semantic_frame_value_count]]]
+	  [let [[metric_simulation_relative_time [get metric simulation_relative_time]]
+		[value_offset                    [- metric_value minimum_metric_value]]]
+	    [let [[output_x [/ [get [get metric_simulation_relative_time total_nanoseconds] as-double]
+			       1000000000]]
+		  [output_y [/ [get value_offset as-double]
+			       1000.0]]]
+	      [let [[line_string [format nil output_x ' ' output_y '\n']]]
+		[= line_strings [cons line_string line_strings]]]]]]
+	[= metric_iter [cdr metric_iter]]]]
+    [stringlist-concat line_strings]]]
+
+[deftypefunk mind_runtime_metric_monitor execute save_simulation_semantic_frame_value_count_plot [filename_root]
+  [assert-type string filename_root]
+  [let [[filename [format nil filename_root '-simulation_semantic_frame_value_count.data']]]
+    [have [get this simulation_semantic_frame_value_count_plot_text] save filename]
+    [terminal_format standard-terminal '\nmind_runtime_metric_monitor done saving simulation_semantic_frame_value_count plot "' filename '"']]]
+
+
 [deftypefunk mind_runtime_metric_monitor execute save_all_plots [time_offset filename_root]
-  [parog [have this save_bytecode_count_plot             time_offset filename_root]
-	 [have this save_simulation_bytecode_rate_plot               filename_root]
-	 [have this save_simulation_bytecode_count_plot              filename_root]
-	 [have this save_execution_nanoseconds_plot      time_offset filename_root]
-	 [have this save_bytes_allocated_count_plot      time_offset filename_root]
-	 [have this save_bytes_freed_count_plot          time_offset filename_root]
-	 [have this save_bytes_footprint_plot            time_offset filename_root]
-	 [have this save_simulation_bytes_footprint_plot             filename_root]]]
+  [parog [have this save_bytecode_count_plot                        time_offset filename_root]
+	 [have this save_simulation_bytecode_rate_plot                          filename_root]
+	 [have this save_simulation_bytecode_count_plot                         filename_root]
+	 [have this save_execution_nanoseconds_plot                 time_offset filename_root]
+	 [have this save_bytes_allocated_count_plot                 time_offset filename_root]
+	 [have this save_bytes_freed_count_plot                     time_offset filename_root]
+	 [have this save_bytes_footprint_plot                       time_offset filename_root]
+	 [have this save_simulation_bytes_footprint_plot                        filename_root]
+	 [have this save_simulation_semantic_frame_count_plot                   filename_root]
+	 [have this save_simulation_semantic_frame_value_count_plot             filename_root]]]
 
 
 

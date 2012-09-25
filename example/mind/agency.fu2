@@ -24,7 +24,7 @@
 			 layer
 			 resource_frame
 			 trace_story
-			 [cause_group              [new cause_group]]
+			 [cause_group              [mind_runtime_metric-new_cause_group]]
 			 [other_cause_groups_mutex [new mutex]]
 			 [other_cause_groups       nil]
 			 runtime_metric_monitor]
@@ -112,6 +112,18 @@
   [have runtime_metric_monitor save_simulation_bytes_footprint_plot [format nil filename_root '-' name]]
   [parc [funk [resource]
 	      [have resource save_simulation_bytes_footprint_plots [format nil filename_root '-' name]]]
+	[get this resources]]]
+
+[deftypefunk agency execute save_simulation_semantic_frame_count_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_semantic_frame_count_plot [format nil filename_root '-' name]]
+  [parc [funk [resource]
+	      [have resource save_simulation_semantic_frame_count_plots [format nil filename_root '-' name]]]
+	[get this resources]]]
+
+[deftypefunk agency execute save_simulation_semantic_frame_value_count_plots [filename_root]
+  [have runtime_metric_monitor save_simulation_semantic_frame_value_count_plot [format nil filename_root '-' name]]
+  [parc [funk [resource]
+	      [have resource save_simulation_semantic_frame_value_count_plots [format nil filename_root '-' name]]]
 	[get this resources]]]
 
 [deftypefunk agency get resource [name]

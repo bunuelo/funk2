@@ -1122,6 +1122,26 @@ def_pcfunk2(cause__add_cause_group, this, cause_group,
 	    return f2__cause__add_cause_group(this_cause, this, cause_group));
 
 
+f2ptr raw__cause__increment_counters_if_exist(f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i) {
+  f2ptr cause_group_iter = f2cause__cause_groups(this, cause);
+  while (cause_group_iter != nil) {
+    f2ptr cause_group = f2cons__car(cause_group_iter, cause);
+    raw__cause_group__increment_counter_if_exists(cause, cause_group, counter_name, 1);
+    cause_group_iter = f2cons__cdr(cause_group_iter, cause);
+  }
+}
+
+f2ptr f2__cause__increment_counters_if_exist(f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value) {
+  assert_argument_type(cause,   this);
+  assert_argument_type(integer, relative_value);
+  s64 relative_value__i = f2integer__i(relative_value, cause);
+  return raw__cause__increment_counters_if_exist(cause, this, counter_name, relative_value__i);
+}
+def_pcfunk3(cause__increment_counters_if_exist, this, counter_name, relative_value,
+	    "Increments all cause_group counters of the given name if they exist.",
+	    return f2__cause__increment_counters_if_exist(this_cause, this, counter_name, relative_value));
+
+
 // cause
 
 f2ptr raw__cause__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1151,16 +1171,17 @@ def_pcfunk2(cause__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2cause__primobject_type__new(cause);
-  {char* slot_name = "type_var_defined";          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__funk);}
-  {char* slot_name = "var_defined";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__funk);}
-  {char* slot_name = "type_var_value";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__funk);}
-  {char* slot_name = "var_value";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__funk);}
-  {char* slot_name = "define";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
-  {char* slot_name = "define-funk";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
-  {char* slot_name = "lookup";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk);}
-  {char* slot_name = "lookup-funk";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);}
-  {char* slot_name = "add_cause_group";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);}
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk);}
+  {char* slot_name = "type_var_defined";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_defined__funk);}
+  {char* slot_name = "var_defined";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_defined__funk);}
+  {char* slot_name = "type_var_value";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.type_var_value__set__funk);}
+  {char* slot_name = "var_value";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.var_value__set__funk);}
+  {char* slot_name = "define";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk);}
+  {char* slot_name = "define-funk";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.define__funk__funk);}
+  {char* slot_name = "lookup";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk);}
+  {char* slot_name = "lookup-funk";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk);}
+  {char* slot_name = "add_cause_group";             f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);}
+  {char* slot_name = "increment_counters_if_exist"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.increment_counters_if_exist__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1297,6 +1318,10 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__add_cause_group_interaction);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.add_cause_group_interaction__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counters_if_exist_interaction__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__increment_counters_if_exist_interaction);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counters_if_exist_interaction__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__assure_counter_exists);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);
@@ -1370,6 +1395,10 @@ void f2__cause__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause__add_cause_group);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.increment_counters_if_exist__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause__increment_counters_if_exist);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.increment_counters_if_exist__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause__terminal_print_with_frame);
@@ -1544,6 +1573,8 @@ void f2__cause__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__lookup__funk, this, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.lookup__funk__funk = never_gc(cfunk);}
   {char* symbol_str = "add_cause_group"; __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__add_cause_group, this, cause_group, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.add_cause_group__funk = never_gc(cfunk);}
+  {char* symbol_str = "increment_counters_if_exist"; __funk2.globalenv.object_type.primobject.primobject_type_cause.increment_counters_if_exist__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause__increment_counters_if_exist, this, counter_name, relative_value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.increment_counters_if_exist__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause.terminal_print_with_frame__funk = never_gc(cfunk);}
   

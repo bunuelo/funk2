@@ -152,6 +152,8 @@ declare_object_type_17_slot(cause,
 			    f2ptr lookup__funk__funk;
 			    f2ptr add_cause_group__symbol;
 			    f2ptr add_cause_group__funk;
+			    f2ptr increment_counters_if_exist__symbol;
+			    f2ptr increment_counters_if_exist__funk;
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -310,6 +312,8 @@ f2ptr     raw__cause__lookup                            (f2ptr cause, f2ptr this
 f2ptr      f2__cause__lookup                            (f2ptr cause, f2ptr this, f2ptr var);
 void      raw__cause__add_cause_group                   (f2ptr cause, f2ptr this, f2ptr cause_group);
 f2ptr      f2__cause__add_cause_group                   (f2ptr cause, f2ptr this, f2ptr cause_group);
+void      raw__cause__increment_counters_if_exist       (f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i);
+f2ptr      f2__cause__increment_counters_if_exist       (f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value);
 f2ptr      f2__cause__give_fiber_to_cause               (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr other_cause);
 
 f2ptr f2cause__primobject_type__new_aux(f2ptr cause);

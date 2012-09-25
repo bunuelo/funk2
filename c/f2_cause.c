@@ -1122,7 +1122,7 @@ def_pcfunk2(cause__add_cause_group, this, cause_group,
 	    return f2__cause__add_cause_group(this_cause, this, cause_group));
 
 
-f2ptr raw__cause__increment_counters_if_exist(f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i) {
+void raw__cause__increment_counters_if_exist(f2ptr cause, f2ptr this, f2ptr counter_name, s64 relative_value__i) {
   f2ptr cause_group_iter = f2cause__cause_groups(this, cause);
   while (cause_group_iter != nil) {
     f2ptr cause_group = f2cons__car(cause_group_iter, cause);

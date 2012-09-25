@@ -83,9 +83,10 @@ void funk2_hash__add(funk2_hash_t* this, u64 key, u64 value) {
       //
       // -- If we wanted to write the double_size function, this is where it would be called.
       //
-      //if ((key_count__i << 1) >= (1ll << bin_num_power__i)) {
-      //  funk2_hash__double_size(this);
-      //}
+      if ((this->key_count << 1) >= (1ll << this->bin_num_power)) {
+	status("funk2_hash__add note: should increase size of hash.");
+	//  funk2_hash__double_size(this);
+      }
       //
       // --
       //

@@ -63,14 +63,14 @@ def_pcfunk0(scheduler_ptypehash__new,
 	    "",
 	    return f2__scheduler_ptypehash__new(this_cause));
 
-void raw__scheduler_ptypehash__double_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
-  f2ptr bin_num_power    = f2scheduler_ptypehash__bin_num_power(this, cause);
-  u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
-  f2ptr bin_array        = f2scheduler_ptypehash__bin_array(this, cause);
-  f2ptr temp_scheduler_ptypehash   = raw__scheduler_ptypehash__new(cause, bin_num_power__i + 1);
+void raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
+  f2ptr bin_num_power            = f2scheduler_ptypehash__bin_num_power(this, cause);
+  u64   bin_num_power__i         = f2integer__i(bin_num_power, cause);
+  f2ptr bin_array                = f2scheduler_ptypehash__bin_array(this, cause);
+  f2ptr temp_scheduler_ptypehash = raw__scheduler_ptypehash__new(cause, ((bin_num_power__i * 3) >> 1) + 1);
   {
     u64 bin_num = 1ull << bin_num_power__i;
-    status("raw__scheduler_ptypehash__double_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
+    status("raw__scheduler_ptypehash__increase_size__thread_unsafe: increasing bin_num from " u64__fstr " to " u64__fstr " [\'%s\':%d %s]", bin_num, bin_num << 1, source_filename, source_line_number, source_funktion_name);
     u64 bin_index;
     for (bin_index = 0; bin_index < bin_num; bin_index ++) {
       f2ptr keyvalue_pair_iter = raw__array__elt(cause, bin_array, bin_index);
@@ -116,7 +116,7 @@ f2ptr raw__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f
       key_count__i ++;
       f2scheduler_ptypehash__key_count__set(this, cause, f2integer__new(cause, key_count__i));
       if ((key_count__i << 1) >= (1ll << bin_num_power__i)) {
-	raw__scheduler_ptypehash__double_size__thread_unsafe__debug(cause, this, source_filename, source_line_number, source_funktion_name);
+	raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(cause, this, source_filename, source_line_number, source_funktion_name);
       }
     }
   } else {

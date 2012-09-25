@@ -59,10 +59,10 @@ u64 funk2_set__element_count(funk2_set_t* this) {
   return this->element_count;
 }
 
-void funk2_set__double_size(funk2_set_t* this) {
+void funk2_set__increase_size(funk2_set_t* this) {
   u64                old_bin_power = this->bin_power;
   funk2_set_node_t** old_bin       = this->bin;
-  this->bin_power ++;
+  this->bin_power = ((this->bin_power * 3) >> 1) + 1;
   this->bin = (funk2_set_node_t**)from_ptr(f2__malloc(sizeof(funk2_set_node_t*) << (this->bin_power)));
   memset(this->bin, 0, sizeof(funk2_set_node_t*) << (this->bin_power));
   u64 old_bin_num = 1ull << old_bin_power;
@@ -86,7 +86,7 @@ void funk2_set__add_node(funk2_set_t* this, funk2_set_node_t* node) {
   this->bin[i] = node;
   this->element_count ++;
   if (this->element_count >= (1ull << this->bin_power)) {
-    funk2_set__double_size(this);
+    funk2_set__increase_size(this);
   }
 }
 

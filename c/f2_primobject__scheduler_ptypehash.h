@@ -97,9 +97,9 @@ f2ptr f2__scheduler_ptypehash__values(f2ptr cause, f2ptr this);
 f2ptr f2scheduler_ptypehash__primobject_type__new(f2ptr cause);
 f2ptr f2scheduler_ptypehash__primobject_type__new_aux(f2ptr cause);
 
-#define raw__scheduler_ptypehash__add(cause, this, key, value)            raw__scheduler_ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
-#define  f2__scheduler_ptypehash__add(cause, this, key, value)             f2__scheduler_ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
-#define raw__scheduler_ptypehash__double_size__thread_unsafe(cause, this) raw__scheduler_ptypehash__double_size__thread_unsafe__debug(cause, this, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define raw__scheduler_ptypehash__add(cause, this, key, value)              raw__scheduler_ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define  f2__scheduler_ptypehash__add(cause, this, key, value)               f2__scheduler_ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+#define raw__scheduler_ptypehash__increase_size__thread_unsafe(cause, this) raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(cause, this, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
 
 #define scheduler_ptypehash__keyvalue_pair__iteration(cause, this, keyvalue_pair, code) { \
   f2ptr iteration__cause = (cause); \

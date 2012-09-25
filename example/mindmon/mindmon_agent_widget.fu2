@@ -297,11 +297,11 @@
 						      
 						      save_all_plots_menu_item
 						      save_bytecode_count_plots_menu_item
-						      save_simulation_bytecode_rate_plots_menu_item
-						      save_simulation_bytecode_count_plots_menu_item
 						      save_execution_nanoseconds_plots_menu_item
 						      save_bytes_allocated_count_plots_menu_item
 						      save_bytes_footprint_plots_menu_item
+						      save_simulation_bytecode_count_plots_menu_item
+						      save_simulation_bytecode_rate_plots_menu_item
 						      save_simulation_bytes_footprint_plots_menu_item
 						      save_simulation_semantic_frame_count_plots_menu_item
 						      save_simulation_semantic_frame_value_count_plots_menu_item]
@@ -320,7 +320,7 @@
 		     [have mind save_all_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_bytecode_count_plots_menu_item [gtk-menu_item-new 'Bytecode Count']]
+       [= save_bytecode_count_plots_menu_item [gtk-menu_item-new 'Bytecode Count x Time']]
        [have save_data_menu append save_bytecode_count_plots_menu_item]
        [have save_bytecode_count_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -328,23 +328,7 @@
 		     [have mind save_bytecode_count_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_simulation_bytecode_rate_plots_menu_item [gtk-menu_item-new 'Simulation Bytecode Rate']]
-       [have save_data_menu append save_simulation_bytecode_rate_plots_menu_item]
-       [have save_simulation_bytecode_rate_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_bytecode_rate_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_simulation_bytecode_count_plots_menu_item [gtk-menu_item-new 'Simulation Bytecode Count']]
-       [have save_data_menu append save_simulation_bytecode_count_plots_menu_item]
-       [have save_simulation_bytecode_count_plots_menu_item signal_connect 'activate'
-	     [funk []
-		   [let [[mind [get mindmon_agent_widget mind]]]
-		     [have mind save_simulation_bytecode_count_plots '/tmp/mind_plot']]]
-	     nil]
-       
-       [= save_execution_nanoseconds_plots_menu_item [gtk-menu_item-new 'Execution Nanoseconds']]
+       [= save_execution_nanoseconds_plots_menu_item [gtk-menu_item-new 'Execution Nanoseconds x Time']]
        [have save_data_menu append save_execution_nanoseconds_plots_menu_item]
        [have save_execution_nanoseconds_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -352,7 +336,7 @@
 		     [have mind save_execution_nanoseconds_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_bytes_allocated_count_plots_menu_item [gtk-menu_item-new 'Bytes Allocated Count']]
+       [= save_bytes_allocated_count_plots_menu_item [gtk-menu_item-new 'Bytes Allocated Count x Time']]
        [have save_data_menu append save_bytes_allocated_count_plots_menu_item]
        [have save_bytes_allocated_count_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -360,7 +344,7 @@
 		     [have mind save_bytes_allocated_count_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Bytes Footprint']]
+       [= save_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Bytes Footprint x Time']]
        [have save_data_menu append save_bytes_footprint_plots_menu_item]
        [have save_bytes_footprint_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -368,7 +352,23 @@
 		     [have mind save_bytes_footprint_plots [get mind creation_time] '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_simulation_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Simulation Bytes Footprint']]
+       [= save_simulation_bytecode_count_plots_menu_item [gtk-menu_item-new 'Bytecode Count x Simulation Time']]
+       [have save_data_menu append save_simulation_bytecode_count_plots_menu_item]
+       [have save_simulation_bytecode_count_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytecode_count_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytecode_rate_plots_menu_item [gtk-menu_item-new 'Bytecode Rate x Simulation Time']]
+       [have save_data_menu append save_simulation_bytecode_rate_plots_menu_item]
+       [have save_simulation_bytecode_rate_plots_menu_item signal_connect 'activate'
+	     [funk []
+		   [let [[mind [get mindmon_agent_widget mind]]]
+		     [have mind save_simulation_bytecode_rate_plots '/tmp/mind_plot']]]
+	     nil]
+       
+       [= save_simulation_bytes_footprint_plots_menu_item [gtk-menu_item-new 'Bytes Footprint x Simulation Time']]
        [have save_data_menu append save_simulation_bytes_footprint_plots_menu_item]
        [have save_simulation_bytes_footprint_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -376,7 +376,7 @@
 		     [have mind save_simulation_bytes_footprint_plots '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_simulation_semantic_frame_count_plots_menu_item [gtk-menu_item-new 'Simulation Semantic Frame Count']]
+       [= save_simulation_semantic_frame_count_plots_menu_item [gtk-menu_item-new 'Semantic Frame Count x Simulation Time']]
        [have save_data_menu append save_simulation_semantic_frame_count_plots_menu_item]
        [have save_simulation_semantic_frame_count_plots_menu_item signal_connect 'activate'
 	     [funk []
@@ -384,7 +384,7 @@
 		     [have mind save_simulation_semantic_frame_count_plots '/tmp/mind_plot']]]
 	     nil]
        
-       [= save_simulation_semantic_frame_value_count_plots_menu_item [gtk-menu_item-new 'Simulation Semantic Frame Value Count']]
+       [= save_simulation_semantic_frame_value_count_plots_menu_item [gtk-menu_item-new 'Semantic Frame Value Count x Simulation Time']]
        [have save_data_menu append save_simulation_semantic_frame_value_count_plots_menu_item]
        [have save_simulation_semantic_frame_value_count_plots_menu_item signal_connect 'activate'
 	     [funk []

@@ -644,10 +644,10 @@ void raw__processor__clean(f2ptr cause, f2ptr this) {
   while (iter != nil) {
     f2ptr active_fiber = f2cons__car(iter, cause);
     {
+      f2fiber__keep_undead__set(active_fiber, cause, nil);
       f2ptr exit_status = f2fiber__exit_status(active_fiber, cause);
       if (raw__fiber__is_complete(cause, active_fiber) ||
 	  (raw__eq(cause, exit_status, new__symbol(cause, "bug")))) {
-	f2fiber__keep_undead__set(this, cause, nil);
 	raw__fiber__quit(cause, this);
       }
     }

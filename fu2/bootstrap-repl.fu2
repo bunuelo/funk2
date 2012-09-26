@@ -1128,6 +1128,8 @@
   [let [[uid          [management_thread-add_save_memory_image_command filename]]
 	[done         nil]
 	[result_place [new place nil]]]
+    [have [this-fiber] quit]
+    [yield]
     [while [not [management_thread-check_command_uid_finished uid result_place]]
       [sleep 1]]
     [get result_place thing]]]

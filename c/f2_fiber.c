@@ -733,6 +733,7 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
 }
 
 void raw__fiber__reinitialize(f2ptr cause, f2ptr this) {
+  f2fiber__keep_undead__set(this, cause, nil);
   f2ptr execute_cmutex = f2fiber__execute_cmutex(this, cause);
   if (raw__cmutex__is_locked(cause, execute_cmutex)) {
     raw__cmutex__unlock(cause, execute_cmutex);

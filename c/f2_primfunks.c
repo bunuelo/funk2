@@ -61,13 +61,9 @@ boolean_t s64__add_overflows(s64 this, s64 that) {
 // u64
 
 u64 u64__sqrt(u64 this) {
-  register u64 root;
-  register u64 remainder;
-  register u64 place;
-  
-  root = 0;
-  remainder = this;
-  place = 0x4000000000000000ull;
+  register u64 root      = 0;
+  register u64 remainder = this;
+  register u64 place     = 0x4000000000000000ull;
   
   while (place > remainder) {
     place = place >> 2;
@@ -84,7 +80,12 @@ u64 u64__sqrt(u64 this) {
   return root;
 }
 
-u64 u64__log2(u64 this) {
+/*
+  1 << (((64__bit_num(this) * 3) / 2) + 1)
+  (2 ^ (log2(this) * (3 / 2))  + 2
+ */
+
+u64 u64__bit_num(u64 this) {
   register u64 remainder = this;
   register u64 bit_num   = 1;
   if (remainder & 0xffffffff00000000) {

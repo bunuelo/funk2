@@ -1445,8 +1445,8 @@ boolean_t s64__add_overflows(s64 this, s64 that);
 
 // u64
 
-u64 u64__sqrt(u64 this);
-u64 u64__log2(u64 this);
+u64 u64__sqrt   (u64 this);
+u64 u64__bit_num(u64 this);
 
 // system
 

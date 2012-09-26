@@ -644,18 +644,7 @@ void raw__processor__clean(f2ptr cause, f2ptr this) {
     f2ptr iter = active_fibers;
     while (iter != nil) {
       f2ptr active_fiber = f2cons__car(iter, cause);
-      {
-	f2fiber__keep_undead__set(active_fiber, cause, nil);
-	f2ptr exit_status = f2fiber__exit_status(active_fiber, cause);
-	f2ptr paused      = f2fiber__paused(     active_fiber, cause);
-	f2ptr value       = f2fiber__value(      active_fiber, cause);
-	if (raw__fiber__is_complete(cause, active_fiber) ||
-	    raw__eq(cause, exit_status, new__symbol(cause, "bug")) ||
-	    ((paused != nil) && raw__bug__is_type(cause, value))) {
-	  raw__fiber__quit(cause, active_fiber);
-	  status("raw__processor__clean: quitting fiber.");
-	}
-      }
+      raw__fiber__clean(cause, active_fiber);
       iter = f2cons__cdr(iter, cause);
     }
   }

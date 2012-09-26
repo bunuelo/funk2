@@ -740,6 +740,19 @@ void raw__fiber__reinitialize(f2ptr cause, f2ptr this) {
   }
 }
 
+void raw__fiber__clean(f2ptr cause, f2ptr this) {
+  f2ptr exit_status = f2fiber__exit_status(this, cause);
+  f2ptr paused      = f2fiber__paused(     this, cause);
+  f2ptr value       = f2fiber__value(      this, cause);
+  if (raw__fiber__is_complete(cause, this) ||
+      raw__eq(cause, exit_status, new__symbol(cause, "bug")) ||
+      ((paused != nil) && raw__bug__is_type(cause, value))) {
+    raw__fiber__quit(cause, this);
+    status("raw__fiber__clean: quitting fiber.");
+  }
+  f2fiber__keep_undead__set(this, cause, nil);
+}
+
 
 f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);

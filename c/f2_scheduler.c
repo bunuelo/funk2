@@ -177,6 +177,26 @@ def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber,
 	    return f2__scheduler__add_fiber_to_least_used_processor(this_cause, this, fiber));
 
 
+void raw__scheduler__clean(f2ptr cause, f2ptr this) {
+  f2ptr processors = f2scheduler__processors(this, cause);
+  
+  s64 i;
+  for (i = 0; i < scheduler_processor_num; i ++) {
+    f2ptr processor = raw__array__elt(cause, processors, i);
+    raw__processor__clean(cause, processor);
+  }
+}
+
+f2ptr f2__scheduler__clean(f2ptr cause, f2ptr this) {
+  assert_argument_type(scheduler, this);
+  return raw__scheduler__clean(cause, this);
+}
+def_pcfunk1(scheduler__clean, this,
+	    "",
+	    return f2__scheduler__clean(this_cause, this));
+
+
+
 void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
   f2ptr processors = f2scheduler__processors(this, cause);
   
@@ -187,16 +207,6 @@ void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
   }
 }
 
-
-void raw__scheduler__clean(f2ptr cause, f2ptr this) {
-  f2ptr processors = f2scheduler__processors(this, cause);
-  
-  s64 i;
-  for (i = 0; i < scheduler_processor_num; i ++) {
-    f2ptr processor = raw__array__elt(cause, processors, i);
-    raw__processor__clean(cause, processor);
-  }
-}
 
 // scheduler
 
@@ -227,6 +237,7 @@ f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "active_fibers";                     f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk);}
   {char* slot_name = "processor_with_fewest_fibers";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk);}
   {char* slot_name = "add_fiber_to_least_used_processor"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk);}
+  {char* slot_name = "clean";                             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.clean__funk);}
   {char* slot_name = "terminal_print_with_frame";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk);}
   return this;
 }
@@ -468,6 +479,10 @@ void f2__scheduler__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(scheduler__add_fiber_to_least_used_processor);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.clean__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(scheduler__clean);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.clean__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(scheduler__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk);
@@ -511,6 +526,8 @@ void f2__scheduler__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__processor_with_fewest_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.processor_with_fewest_fibers__funk = never_gc(cfunk);}
   {char* symbol_str = "add_fiber_to_least_used_processor"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__add_fiber_to_least_used_processor, this, fiber, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.add_fiber_to_least_used_processor__funk = never_gc(cfunk);}
+  {char* symbol_str = "clean"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.clean__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__clean, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.clean__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.terminal_print_with_frame__funk = never_gc(cfunk);}
   

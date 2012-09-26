@@ -55,6 +55,8 @@ declare_object_type_1_slot(scheduler,
 			   f2ptr processor_with_fewest_fibers__funk;
 			   f2ptr add_fiber_to_least_used_processor__symbol;
 			   f2ptr add_fiber_to_least_used_processor__funk;
+			   f2ptr clean__symbol;
+			   f2ptr clean__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

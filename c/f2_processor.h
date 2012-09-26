@@ -102,8 +102,10 @@ f2ptr      f2__processor__terminal_print_with_frame                    (f2ptr ca
 f2ptr f2processor__primobject_type__new_aux(f2ptr cause);
 
 
-u64   raw__processor__active_fibers__length             (f2ptr cause, f2ptr processor);
-f2ptr    f2processor__execute_next_bytecodes            (f2ptr processor, f2ptr cause);
+u64   raw__processor__active_fibers__length (f2ptr cause, f2ptr processor);
+f2ptr    f2processor__execute_next_bytecodes(f2ptr processor, f2ptr cause);
+void  raw__processor__reinitialize          (f2ptr cause, f2ptr this);
+void  raw__processor__clean                 (f2ptr cause, f2ptr this);
 
 
 // **

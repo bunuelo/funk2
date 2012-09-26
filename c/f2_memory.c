@@ -470,6 +470,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
+  status("funk2_memory__save_image_to_file: cleaning scheduler.");
+  raw__scheduler__clean(cause, __funk2.operating_system.scheduler);
+  
   printf("\nfunk2_memory__save_image_to_file: defragmenting memory."); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: defragmenting memory.");
   funk2_defragmenter__defragment(&(__funk2.defragmenter));

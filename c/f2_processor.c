@@ -627,7 +627,30 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   return did_something;
 }
 
+void raw__processor__reinitialize(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
+  f2ptr iter = active_fibers;
+  while (iter != nil) {
+    f2ptr active_fiber = f2cons__car(iter, cause);
+    raw__fiber__reinitialize(cause, active_fiber);
+    iter = f2cons__cdr(iter, cause);
+  }
+}
 
+
+void raw__processor__clean(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
+  f2ptr iter = active_fibers;
+  while (iter != nil) {
+    f2ptr active_fiber = f2cons__car(iter, cause);
+    if (raw__fiber__is_complete(cause, active_fiber)) {
+      f2fiber__keep_undead__set(this, cause, nil);
+      raw__fiber__quit(cause, this);
+    }
+    raw__fiber__clean(cause, active_fiber);
+    iter = f2cons__cdr(iter, cause);
+  }
+}
 
 // **
 

@@ -177,6 +177,27 @@ def_pcfunk2(scheduler__add_fiber_to_least_used_processor, this, fiber,
 	    return f2__scheduler__add_fiber_to_least_used_processor(this_cause, this, fiber));
 
 
+void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
+  f2ptr processors = f2scheduler__processors(this, cause);
+  
+  s64 i;
+  for (i = 0; i < scheduler_processor_num; i ++) {
+    f2ptr processor = raw__array__elt(cause, processors, i);
+    raw__processor__reinitialize(cause, processor);
+  }
+}
+
+
+void raw__scheduler__clean(f2ptr cause, f2ptr this) {
+  f2ptr processors = f2scheduler__processors(this, cause);
+  
+  s64 i;
+  for (i = 0; i < scheduler_processor_num; i ++) {
+    f2ptr processor = raw__array__elt(cause, processors, i);
+    raw__processor__clean(cause, processor);
+  }
+}
+
 // scheduler
 
 f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -507,6 +528,8 @@ void f2__scheduler__reinitialize_globalvars() {
   f2__primcfunk__init__0(this__fiber);
   
   __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);
+  
+  raw__scheduler__reinitialize(cause, __funk2.operating_system.scheduler);
 }
 
 void f2__scheduler__initialize() {

@@ -255,6 +255,7 @@ f2ptr  f2__fiber__do_sleep_until_time            (f2ptr cause, f2ptr this, f2ptr
 f2ptr  f2__fiber__sleep_for_nanoseconds          (f2ptr cause, f2ptr this, f2ptr nanoseconds);
 void  raw__fiber__handle_enter_virtual_processor (f2ptr cause, f2ptr this);
 void  raw__fiber__handle_exit_virtual_processor  (f2ptr cause, f2ptr this);
+void  raw__fiber__reinitialize                   (f2ptr cause, f2ptr this);
 
 f2ptr f2fiber__primobject_type__new_aux(f2ptr cause);
 

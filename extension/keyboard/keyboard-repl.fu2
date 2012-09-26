@@ -481,16 +481,17 @@
 						  [if done
 						      [= iter nil]
 						    [if [is-type `bug result]
-							[prog [have result pretty_print]
-							      [= iter nil]]
+							[if [eq [have [get bug frame] lookup `bug_name] `save_memory_image]
+							    [prog [= done t]
+								  [= iter nil]]
+							  [prog [have result pretty_print]
+								[= iter nil]]]
 						      [prog [ansi-stream-foreground [get standard-terminal stream] terminal_repl-prompt_color]
 							    [terminal_format standard-terminal '\nout-> ']
 							    [terminal_write standard-terminal result]]]]]]]]
 		       [if iter
 			   [= iter [cdr iter]]]]]]
 		 ]]]]]
-
-
 
 [defunk repl []
   [keyboard-repl]]

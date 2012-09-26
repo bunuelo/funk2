@@ -85,13 +85,33 @@ u64 u64__sqrt(u64 this) {
 }
 
 u64 u64__log2(u64 this) {
-  u64 index = 63;
-  u64 mask  = 1ll << 63;
-  while (mask && (! (this & mask))) {
-    mask >>= 1;
-    index --;
+  register u64 remainder = this;
+  register u64 bit_num   = 1;
+  if (remainder & 0xffffffff00000000) {
+    bit_num += 32;
+    remainder >>= 32;
   }
-  return index;
+  if (remainder & 0xffff0000) {
+    bit_num += 16;
+    remainder >>= 16;
+  }
+  if (remainder & 0xff00) {
+    bit_num += 8;
+    remainder >>= 8;
+  }
+  if (remainder & 0xf0) {
+    bit_num += 4;
+    remainder >>= 4;
+  }
+  if (remainder & 0xC) {
+    bit_num += 2;
+    remainder >>= 2;
+  }
+  if (remainder & 0x2) {
+    bit_num ++;
+    remainder >>= 1;
+  }
+  return bit_num;
 }
 
 // logic

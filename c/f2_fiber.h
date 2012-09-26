@@ -245,6 +245,8 @@ f2ptr  f2__fiber__start_cycle_processor_bytes_allocated_count__set(f2ptr cause, 
 
 boolean_t raw__fiber__is_complete(f2ptr cause, f2ptr this);
 f2ptr      f2__fiber__is_complete(f2ptr cause, f2ptr this);
+void      raw__fiber__quit       (f2ptr cause, f2ptr this);
+f2ptr      f2__fiber__quit       (f2ptr cause, f2ptr this);
 
 void  raw__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, u64   relative_bytecode_count);
 f2ptr  f2__fiber__increase_bytecode_count        (f2ptr cause, f2ptr this, f2ptr relative_bytecode_count);

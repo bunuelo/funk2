@@ -20,6 +20,7 @@
 [globalize user-boot-commands nil]
 
 [defunk post_userfile_init_boot []
+  [have scheduler:global_scheduler clean]
   [if user-boot-commands
       [mapc [funk [user-boot-command]
 		  [eval user-boot-command]]
@@ -49,5 +50,4 @@
 				     [cons user_command nil]]]]
 
 
-[boot-add_user_command `[setenv 'UBUNTU_MENUPROXY' '0' 0]]
 

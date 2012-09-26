@@ -484,7 +484,7 @@
 				 [if iter
 				     [= iter [cdr iter]]]]]]
 			   [have current_keyboard_editor_mutex lock]
-			   [if [not [eq current_keyboard_editor this]]
+			   [if [not [eq current_keyboard_editor keyboard_editor]]
 			       [= done t]]
 			   [have current_keyboard_editor_mutex unlock]]]]
 	       [prog [have current_keyboard_editor_mutex unlock]

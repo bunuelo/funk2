@@ -1124,6 +1124,7 @@
   [exit 0]]
 
 [defunk save_memory_image [filename]
+  [have scheduler:global_scheduler clean]
   [let [[uid          [management_thread-add_save_memory_image_command filename]]
 	[done         nil]
 	[result_place [new place nil]]]

@@ -471,7 +471,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   }
   
   status("funk2_memory__save_image_to_file: cleaning scheduler.");
-  raw__scheduler__clean(cause, __funk2.operating_system.scheduler);
+  raw__scheduler__clean(nil, __funk2.operating_system.scheduler);
   
   printf("\nfunk2_memory__save_image_to_file: defragmenting memory."); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: defragmenting memory.");

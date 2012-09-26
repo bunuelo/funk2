@@ -189,7 +189,8 @@ void raw__scheduler__clean(f2ptr cause, f2ptr this) {
 
 f2ptr f2__scheduler__clean(f2ptr cause, f2ptr this) {
   assert_argument_type(scheduler, this);
-  return raw__scheduler__clean(cause, this);
+  raw__scheduler__clean(cause, this);
+  return nil;
 }
 def_pcfunk1(scheduler__clean, this,
 	    "",

@@ -1314,8 +1314,8 @@ void f2__fiber__defragment__fix_pointers() {
   
   initialize_primobject_32_slot__defragment__fix_pointers(fiber,
 							  program_counter,
-							  stack,
-							  free_stack,
+							  stack_array,
+							  stack_array_index_chunk,
 							  iter,
 							  env,
 							  args,
@@ -1487,8 +1487,8 @@ void f2__fiber__reinitialize_globalvars() {
   
   initialize_primobject_32_slot(fiber,
 				program_counter,
-				stack,
-				free_stack,
+				stack_array,
+				stack_array_index_chunk,
 				iter,
 				env,
 				args,

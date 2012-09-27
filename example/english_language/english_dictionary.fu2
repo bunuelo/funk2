@@ -28,6 +28,10 @@
        
        [dictionary-add_word this determiner_word a          [indefinite singular]]
        [dictionary-add_word this determiner_word the        [definite singular plural mass]]
+       [dictionary-add_word this determiner_word this       [definite singular mass]]
+       [dictionary-add_word this determiner_word that       [definite singular mass]]
+       [dictionary-add_word this determiner_word these      [definite plural mass]]
+       [dictionary-add_word this determiner_word those      [definite plural mass]]
        [dictionary-add_word this determiner_word some       [definite plural mass]]
        [dictionary-add_word this determiner_word all        [plural quantifier]]
        [dictionary-add_word this determiner_word any        [singular plural quantifier indefinite]]

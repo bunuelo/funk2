@@ -80,9 +80,9 @@
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
 			      `[prog [wait-to-call move right]
-				     [wait-for block property shape cube
-					       preposition below
-					       gripper property is-me t]
+				     [wait-for [relationship block property shape cube
+							     preposition below
+							     gripper property is-me t]]
 				     [wait-to-call stop]]]
 			]]]]
 

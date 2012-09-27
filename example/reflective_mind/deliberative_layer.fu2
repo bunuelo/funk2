@@ -76,8 +76,8 @@
 [deftypefunk deliberative_layer get physical_actions []
   [get physical_action_english_symbol_ptypehash values]]
 
-[deftypefunk deliberative_layer execute lookup_physical_action [english_conslist]
-  [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
+[deftypefunk deliberative_layer execute lookup_physical_action [expression]
+  [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
 
 [deftypefunk deliberative_layer execute add_physical_semantic_object_recursive [semantic_object]
   [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame semantic_object]

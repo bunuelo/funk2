@@ -702,7 +702,9 @@ f2ptr raw__fiber__pop_stack(f2ptr cause, f2ptr this) {
   }
   stack_index --;
   raw__fiber__stack_array_index__set(cause, this, stack_index);
-  return raw__array__elt(cause, stack_array, stack_index);
+  f2ptr element = raw__array__elt(cause, stack_array, stack_index);
+  raw__fiber__stack_array_elt__set(cause, this, stack_index, nil);
+  return element;
 }
 
 f2ptr raw__fiber__peek_stack(f2ptr cause, f2ptr this) {

@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[globalize debug_parse nil]
+[globalize debug_parse t]
 
 [defmetro parse_format [:rest exps]
   `[if debug_parse
@@ -237,7 +237,13 @@
 				[= parses [cons [frame parse_tree    verb_word_parse_tree
 						       rest_sequence verb_word_rest_sequence
 						       verb_group    [get verb_word_parse_tree containing_type `verb_group]]
-						parses]]]]
+						parses]]
+				[let [[preposition_group_initial_parse_tree [get verb_word_parse_tree new_copy]]
+				      [preposition_group                    [new preposition_group]]]
+				  [have preposition_group_initial_parse_tree add_child_to_type `verb_group preposition_group]
+				  [let [[preposition_group_parses [have this parse_sequence_as_preposition_group verb_word_rest_sequence preposition_group_initial_parse_tree]]]
+				    [= parses [append preposition_group_parses parses]]]]
+				]]
 			verb_word_parses]]
 		[let [[auxiliary_be_verbs_parses [have this parse_sequence_as_verb_group-auxiliary_be_verbs sequence verb_group_parse_tree]]]
 		  [mapc [funk [auxiliary_be_verbs_parse]

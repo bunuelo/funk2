@@ -393,3 +393,15 @@
 			 description `[imagine_asserting ,semantic_partial_state]]]
 	  nil]]]]]
 
+
+[deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
+  [let [[plan [new nonsemantic_plan 
+		   [get this mental_layer]
+		   nil
+		   expression]]]
+    [let [[semantic_planner     [get [get [get this mind] agency `deliberative `plan] semantic_planner]]
+	  [semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type `physical]
+      [have plan execute_as_thought_in_semantic_planner semantic_planner]]]]
+
+

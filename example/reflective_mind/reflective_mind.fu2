@@ -270,6 +270,11 @@
   [get [get this layer `reflective] reflective_semantic_plans]]
 
 
+[deftypefunk reflective_mind execute evaluate_deliberative_plan_expression [expression]
+  [have [get [get this layer `deliberative] evaluate_plan_expression expression]]]
+
+[deftypefunk reflective_mind execute evaluate_reflective_plan_expression [expression]
+  [have [get [get this layer `reflective] evaluate_plan_expression expression]]]
 
 
 'pre-knowledge perception functions'

@@ -43,155 +43,155 @@
   [get mental_layer mind]]
 
 [deftypefunk nonsemantic_plan get expression-as_english_conslist [expression]
-  [cond [[is-type `cons expression] [let [[command   [car expression]]
-					  [arguments [cdr expression]]]
-				      [let [[arguments-length [length arguments]]]
-					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[eval-expression [elt arguments 0]]]
-												`[check preconditions]]]]
-					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[print-expression [elt arguments 0]]]
-												`[]]]]
-					      [[eq `prog                           command] [apply &append
-												   [append `[[do the following in serial punctuation-colon]]
-													   [let [[step_number 1]]
-													     [mapcar [funk [argument]
-															   [let [[argument-result [append `[,[get step_number as-symbol] punctuation-period]
-																			  [get this expression-as_english_conslist argument]
-																			  [if [not [eq step_number arguments-length]]
-																			      `[punctuation-comma]]]]]
-															     [++ step_number]
-															     argument-result]]
-														     arguments]]]]]
-					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[time_to_wait [elt arguments 0]]]
-												[append `[wait for]
-													`[,time_to_wait]]]]]
-					      [[eq `wait-to-call                   command] [flatten_constree arguments]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [value           [elt arguments 6]]]
-												[append `[wait until]
-													[object_type_property_property_goal-english_conslist source_type
-																			     source_key
-																			     source_value
-																			     key
-																			     value]]]]]
-					      [[eq `wait-for-physical-relationship command] [if [not [eq 10 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [target_type     [elt arguments 6]]
-												    [target_key_type [elt arguments 7]]
-												    [target_key      [elt arguments 8]]
-												    [target_value    [elt arguments 9]]]
-												[append `[wait until]
-													[object_type_property_relation_goal-declarative_english_conslist source_type
-																					 source_key
-																					 source_value
-																					 `preposition
-																					 key
-																					 target_type
-																					 target_key
-																					 target_value]]]]]
-					      [[eq `assure-physical-relationship   command] [if [not [eq 10 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [target_type     [elt arguments 6]]
-												    [target_key_type [elt arguments 7]]
-												    [target_key      [elt arguments 8]]
-												    [target_value    [elt arguments 9]]]
-												[append `[assure relationship exists punctuation-colon]
-													[object_type_property_relation_goal-declarative_english_conslist source_type
-																					 source_key
-																					 source_value
-																					 key_type
-																					 key
-																					 target_type
-																					 target_key
-																					 target_value]]]]]
-					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
-												[append `[wait for punctuation-colon]
-													partial_state]]]]
-					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
-												[append `[assert punctuation-colon]
-													partial_state]]]]
-					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[quote-expression [elt arguments 0]]]
-												`[]]]]
-					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[variable-symbol [elt arguments 0]]]
-												`[,variable-symbol]]]]
-					      [[eq `property                       command] [if [not [eq 7 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
-												    [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
-												    [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
-												    [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
-												    [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
-												    [key             [get this expression-as_english_conslist [elt arguments 5]]]
-												    [value           [get this expression-as_english_conslist [elt arguments 6]]]]
-												[append `[the partial state punctuation-colon]
-													[get [new semantic_partial_state_property [get [get this mind] semantic_realm]
-														  source_type
-														  source_key_type
-														  source_key
-														  source_value
-														  key_type
-														  key
-														  value]
-													     as-declarative_english_conslist]]]]]
-					      [[eq `relationship                   command] [if [not [eq 10 arguments-length]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
-												    [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
-												    [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
-												    [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
-												    [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
-												    [key             [get this expression-as_english_conslist [elt arguments 5]]]
-												    [target_type     [get this expression-as_english_conslist [elt arguments 6]]]
-												    [target_key_type [get this expression-as_english_conslist [elt arguments 7]]]
-												    [target_key      [get this expression-as_english_conslist [elt arguments 8]]]
-												    [target_value    [get this expression-as_english_conslist [elt arguments 9]]]]
-												[append `[the partial state punctuation-colon]
-													[get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
-														  source_type
-														  source_key_type
-														  source_key
-														  source_value
-														  key_type
-														  key
-														  target_type
-														  target_key_type
-														  target_key
-														  target_value]
-													     as-declarative_english_conslist]]]]]
-					      [t                                            `[error ,[flatten_constree expression]]]]]]]
-	[[is-type `symbol expression] `[the ,expression]]
+  [cond [[is-type `symbol expression] expression]
+	[[is-type `cons   expression] [let [[command   [car expression]]
+					    [arguments [cdr expression]]]
+					[let [[arguments-length [length arguments]]]
+					  [cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[eval-expression [elt arguments 0]]]
+												  `[check preconditions]]]]
+						[[eq `print                          command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[print-expression [elt arguments 0]]]
+												  `[]]]]
+						[[eq `prog                           command] [apply &append
+												     [append `[[do the following in serial punctuation-colon]]
+													     [let [[step_number 1]]
+													       [mapcar [funk [argument]
+															     [let [[argument-result [append `[,[get step_number as-symbol] punctuation-period]
+																			    [get this expression-as_english_conslist argument]
+																			    [if [not [eq step_number arguments-length]]
+																				`[punctuation-comma]]]]]
+															       [++ step_number]
+															       argument-result]]
+														       arguments]]]]]
+						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[time_to_wait [elt arguments 0]]]
+												  [append `[wait for]
+													  `[,time_to_wait]]]]]
+						[[eq `wait-to-call                   command] [flatten_constree arguments]]
+						[[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [value           [elt arguments 6]]]
+												  [append `[wait until]
+													  [object_type_property_property_goal-english_conslist source_type
+																			       source_key
+																			       source_value
+																			       key
+																			       value]]]]]
+						[[eq `wait-for-physical-relationship command] [if [not [eq 10 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [target_type     [elt arguments 6]]
+												      [target_key_type [elt arguments 7]]
+												      [target_key      [elt arguments 8]]
+												      [target_value    [elt arguments 9]]]
+												  [append `[wait until]
+													  [object_type_property_relation_goal-declarative_english_conslist source_type
+																					   source_key
+																					   source_value
+																					   `preposition
+																					   key
+																					   target_type
+																					   target_key
+																					   target_value]]]]]
+						[[eq `assure-physical-relationship   command] [if [not [eq 10 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [target_type     [elt arguments 6]]
+												      [target_key_type [elt arguments 7]]
+												      [target_key      [elt arguments 8]]
+												      [target_value    [elt arguments 9]]]
+												  [append `[assure relationship exists punctuation-colon]
+													  [object_type_property_relation_goal-declarative_english_conslist source_type
+																					   source_key
+																					   source_value
+																					   key_type
+																					   key
+																					   target_type
+																					   target_key
+																					   target_value]]]]]
+						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
+												  [append `[wait for punctuation-colon]
+													  partial_state]]]]
+						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
+												  [append `[assert punctuation-colon]
+													  partial_state]]]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[quote-expression [elt arguments 0]]]
+												  `[]]]]
+						[[eq `?                              command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[variable-symbol [elt arguments 0]]]
+												  `[? ,variable-symbol]]]]
+						[[eq `property                       command] [if [not [eq 7 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
+												      [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
+												      [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
+												      [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
+												      [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
+												      [key             [get this expression-as_english_conslist [elt arguments 5]]]
+												      [value           [get this expression-as_english_conslist [elt arguments 6]]]]
+												  [append `[the partial state punctuation-colon]
+													  [get [new semantic_partial_state_property [get [get this mind] semantic_realm]
+														    source_type
+														    source_key_type
+														    source_key
+														    source_value
+														    key_type
+														    key
+														    value]
+													       as-declarative_english_conslist]]]]]
+						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
+												      [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
+												      [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
+												      [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
+												      [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
+												      [key             [get this expression-as_english_conslist [elt arguments 5]]]
+												      [target_type     [get this expression-as_english_conslist [elt arguments 6]]]
+												      [target_key_type [get this expression-as_english_conslist [elt arguments 7]]]
+												      [target_key      [get this expression-as_english_conslist [elt arguments 8]]]
+												      [target_value    [get this expression-as_english_conslist [elt arguments 9]]]]
+												  [append `[the partial state punctuation-colon]
+													  [get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
+														    source_type
+														    source_key_type
+														    source_key
+														    source_value
+														    key_type
+														    key
+														    target_type
+														    target_key_type
+														    target_key
+														    target_value]
+													       as-declarative_english_conslist]]]]]
+						[t                                            `[error ,[flatten_constree expression]]]]]]]
 	[t                            `[error punctuation-colon ,[flatten_constree expression]]]]]
 
 [deftypefunk nonsemantic_plan get as-english_conslist []

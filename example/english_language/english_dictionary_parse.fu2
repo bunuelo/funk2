@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[globalize debug_parse nil]
+[globalize debug_parse t]
 
 [defmetro parse_format [:rest exps]
   `[if debug_parse
@@ -863,6 +863,7 @@
 	  [let [[noun_group_initial_parse_tree [get parse_tree new_copy]]
 		[noun_group                    [new noun_group]]]
 	    [have noun_group_initial_parse_tree add_child_to_type `clause noun_group]
+	    [parse_format '\n        parse_sequence_as_clause-verb_objects-after_first_particle_try -> parse_sequence_as_noun_group']
 	    [let [[direct_object_parses [have this parse_sequence_as_noun_group sequence noun_group_initial_parse_tree]]]
 	      [mapc [funk [direct_object_parse]
 			  [let [[direct_object_parse_tree    [have direct_object_parse lookup `parse_tree]]
@@ -942,6 +943,7 @@
 				 rest_sequence sequence
 				 clause        [get parse_tree containing_type `clause]]
 			  parses]]]]
+    
     parses]]
 
 [deftypefunk english_dictionary execute parse_sequence_as_clause-with_noun_group_first [sequence parse_tree]
@@ -1084,7 +1086,6 @@
 			  [= parse_trees [cons parse_tree parse_trees]]]]]
 	      parses]]]
     parse_trees]]
-
 
 
 'test funks'

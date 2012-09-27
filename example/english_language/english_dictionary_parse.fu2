@@ -18,7 +18,7 @@
  rights to redistribute these changes.'
 
 
-[globalize debug_parse t]
+[globalize debug_parse nil]
 
 [defmetro parse_format [:rest exps]
   `[if debug_parse

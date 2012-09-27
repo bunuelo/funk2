@@ -56,26 +56,27 @@
 [deftypefunk blocks_world_reflective_mind execute create_builtin_goals []
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in goals.']
   
-  'create blocks_world agent specific learning goals in parallel'
-  [have-apply this create_physical_type_property_relationship_goal `[block property color green   preposition below gripper property is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block property color blue    preposition below gripper property is-me t]]
-  [have-apply this create_physical_type_property_relationship_goal `[block property shape pyramid preposition on    block   property shape cube]]
-  [have-apply this create_physical_type_property_relationship_goal `[block property shape cube    preposition on    block   property shape pyramid]]
+  `[prog 'create blocks_world agent specific learning goals in parallel'
+	 [have-apply this create_physical_type_property_relationship_goal `[block property color green   preposition below gripper property is-me t]]
+	 [have-apply this create_physical_type_property_relationship_goal `[block property color blue    preposition below gripper property is-me t]]
+	 [have-apply this create_physical_type_property_relationship_goal `[block property shape pyramid preposition on    block   property shape cube]]
+	 [have-apply this create_physical_type_property_relationship_goal `[block property shape cube    preposition on    block   property shape pyramid]]
+	 
+	 [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object property plan_object_type       physical      relationship failure  semantic_expectation_failure property reflective_object_type semantic_expectation_failure]]
+	 [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_planner     property planner_type           deliberative1 relation     bug_plan semantic_plan_object         property bug_name               assure_physical_relationship-failed]]
+	 
+	 [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object
+										 property
+										 bug_name
+										 assure_physical_relationship-failed
+										 relationship
+										 failure
+										 semantic_expectation_failure
+										 property
+										 reflective_object_type
+										 semantic_expectation_failure]]
+	 ]
   
-  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object property plan_object_type       physical      relationship failure  semantic_expectation_failure property reflective_object_type semantic_expectation_failure]]
-  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_planner     property planner_type           deliberative1 relation     bug_plan semantic_plan_object         property bug_name               assure_physical_relationship-failed]]
-  
-  [have-apply this create_deliberative1_type_property_relationship_goal `[semantic_plan_object
-									  property
-									  bug_name
-									  assure_physical_relationship-failed
-									  relationship
-									  failure
-									  semantic_expectation_failure
-									  property
-									  reflective_object_type
-									  semantic_expectation_failure]]
-
   nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_builtin_actions []

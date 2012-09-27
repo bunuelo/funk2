@@ -165,11 +165,14 @@
     [error bug_type `attempted_to_get_mind_from_resource_that_is_not_part_of_an_agency
 	   this     this]]]
 
-[deftypefunk resource get layer []
+[deftypefunk resource get mental_layer []
   [if agency
-      [get agency layer]
+      [get agency mental_layer]
     [error bug_type `attempted_to_get_layer_from_resource_that_is_not_part_of_an_agency
 	   this     this]]]
+
+[deftypefunk resource get layer []
+  [get this mental_layer]]
 
 [deftypefunk resource get body []
   [if agency

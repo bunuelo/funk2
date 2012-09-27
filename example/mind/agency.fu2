@@ -133,6 +133,9 @@
 	       resource_name name]
       resource]]]
 
+[deftypefunk agency get mental_layer []
+  layer]
+
 [deftypefunk agency get mind []
   [if layer
       [get layer mind]

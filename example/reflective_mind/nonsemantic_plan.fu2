@@ -21,7 +21,7 @@
 
 'nonsemantic_plan'
 
-[deframe nonsemantic_plan [frame] [mind
+[deframe nonsemantic_plan [frame] [mental_layer
 				   unique_name
 				   variables
 				   expression
@@ -30,25 +30,17 @@
 				   [internal-compiled_imagine_funk nil]
 				   [internal-english_conslist      `uninitialized]
 				   [internal-english_string        nil]]
-  [new [initial-mind
+  [new [initial-mental_layer
 	initial-variables
 	initial-expression]
-       [= mind        initial-mind]
-       [= unique_name [get mind new-name `plan]]
-       [= variables   initial-variables]
-       [= expression  initial-expression]
+       [= mental_layer initial-mental_layer]
+       [= unique_name  [get mind new-name `plan]]
+       [= variables    initial-variables]
+       [= expression   initial-expression]
        ]]
 
-[defunk flatten_constree [expression]
-  [let [[result nil]]
-    [labels [[visit_leaves [exp]
-			   [if [is-type `cons exp]
-			       [mapc [funk [subexp]
-					   [visit_leaves subexp]]
-				     exp]
-			     [= result [cons exp result]]]]]
-	    [visit_leaves expression]]
-    [reverse result]]]
+[deftypefunk nonsemantic_plan get mind []
+  [get mental_layer mind]]
 
 [defunk nonsemantic_plan-expression-as_english_conslist [expression]
   [cond [[is-type `cons expression] [let [[command   [car expression]]
@@ -273,6 +265,35 @@
 	target_key_type
 	target_key
 	target_value]]
+
+[deftypefunk nonsemantic_plan execute imagine_assuring_physical_relationship [source_type
+									      source_key_type
+									      source_key
+									      source_value
+									      key_type
+									      key
+									      target_type
+									      target_key_type
+									      target_key
+									      target_value]
+  [have [get this mind] imagine_assuring_physical_relationship
+	source_type
+	source_key_type
+	source_key
+	source_value
+	key_type
+	key
+	target_type
+	target_key_type
+	target_key
+	target_value]]
+
+
+[deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
+  [have [get this mental_layer] wait_for semantic_partial_state]]
+
+[deftypefunk nonsemantic_plan execute assert [semantic_partial_state]
+  [have [get this mental_layer] assert semantic_partial_state]]
 
 [deftypefunk nonsemantic_plan execute imagine_assuring_physical_relationship [source_type
 									      source_key_type

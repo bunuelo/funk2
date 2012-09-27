@@ -35,3 +35,24 @@
       [= iter [cdr iter]]]]
   result]
 
+[deftypefunk cons execute flatten_constree [expression]
+  [let [[result nil]]
+    [labels [[visit_leaves [exp]
+			   [if [is-type `cons exp]
+			       [mapc [funk [subexp]
+					   [visit_leaves subexp]]
+				     exp]
+			     [= result [cons exp result]]]]]
+	    [visit_leaves expression]]
+    [reverse result]]]
+
+[defunk flatten_constree [expression]
+  [have expression flatten_constree]]
+
+
+[deftypefunk cons execute flatten [expression]
+  [have this flatten_constree]]
+
+[defunk flatten [expression]
+  [have expression flatten]]
+

@@ -37,6 +37,9 @@
        [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        this]]
 
+[deftypefunk mental_layer get mental_layer []
+  this]
+
 [deftypefunk mental_layer get body []
   [if mind
       [get mind body]

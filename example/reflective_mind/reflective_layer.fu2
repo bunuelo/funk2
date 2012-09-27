@@ -111,7 +111,7 @@
 
 [deftypefunk reflective_layer execute create_reflective_semantic_plan [arguments expression]
   [let [[plan [new nonsemantic_plan 
-		   [get this mind]
+		   [get this mental_layer]
 		   arguments
 		   expression]]]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
@@ -154,4 +154,57 @@
 	target_key_type
 	target_key
 	target_value]]
+
+
+[deftypefunk reflective_layer execute wait_for [semantic_partial_state]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [terminal_format standard-terminal '\nwaiting for relationship: looking for event, ' looking_for_event-phenomenal_name '.']
+    [let [[done nil]]
+      [while [not done]
+	[let [[current_events [get [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+	  [mapc [funk [current_event]
+		      `[terminal_format standard-terminal '\nwaiting for relationship: current_event, ' [get current_event phenomenal_name] '.']
+		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			  [prog [terminal_format standard-terminal '\nwait_for_deliberative1_relationship: done waiting!']
+				[= done t]]]]
+		current_events]]
+	[if [not done]
+	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
+	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
+
+[deftypefunk reflective_layer execute assert [semantic_partial_state]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [terminal_format standard-terminal '\nassuring relationship exists: ' looking_for_event-phenomenal_name '.']
+    [let [[found nil]]
+      [let [[current_events [get [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] events_containing_time [new semantic_time [time]]]]]
+	[mapc [funk [current_event]
+		    `[terminal_format standard-terminal '\nassuring relationship: current_event, ' [get current_event phenomenal_name] '.']
+		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			[prog [terminal_format standard-terminal '\nassure_deliberative1_relationship: found relationship!']
+			      [= found t]]]]
+	      current_events]]
+      [if [not found]
+	  [prog [terminal_format standard-terminal '\nassure_deliberative1_relationship: did not find relationship.']
+		[error bug_name    `assure_deliberative1_relationship-failed
+		       description `[assert ,semantic_partial_state]]]
+	nil]]]]
+
+[deftypefunk reflective_layer execute imagine_asserting [semantic_partial_state]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [terminal_format standard-terminal '\nimagining assuring relationship exists: ' looking_for_event-phenomenal_name '.']
+    [let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
+      [let [[found        nil]
+	    [imagine_time [get semantic_planner imagine_time]]]
+	[let [[current_events [get [get [get this mind] semantic_knowledge_base `deliberative1_type_counterfactual_knowledge] events_containing_time imagine_time]]]
+	  [mapc [funk [current_event]
+		      `[terminal_format standard-terminal '\nimagine assuring relationship: current_event, ' [get current_event phenomenal_name] '.']
+		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			  [prog [terminal_format standard-terminal '\nimagine_assuring_deliberative1_relationship: found relationship!']
+				[= found t]]]]
+		current_events]]
+	[if [not found]
+	    [prog [terminal_format standard-terminal '\nimagine_assuring_deliberative1_relationship: did not find relationship.']
+		  [error bug_name    `imagine_assuring_deliberative1_relationship-failed
+			 description `[imagine_asserting ,semantic_partial_state]]]
+	  nil]]]]]
 

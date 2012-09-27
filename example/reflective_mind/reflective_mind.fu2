@@ -210,15 +210,6 @@
 	target_key
 	target_value]]
 
-[deftypefunk reflective_mind execute wait_to_call_physical_action [arguments]
-  [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action arguments]]]
-    [if [null action]
-	[terminal_format standard-terminal '\nreflective_mind lookup action error: "' [conslist-as-english_string arguments] '" action not defined.']
-      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-			     'resource, ' [get cause-resource name] ', waiting to call: "' [get action as-string] '."']
-	    [have action wait_to_call]
-	    ]]]]
-
 `[deftypefunk reflective_mind execute add_resource_change_property_hypothesis [layer_name agency_name resource_name
 											  change_type
 											  source_type source_property source_property_value property property_value]

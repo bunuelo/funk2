@@ -27,7 +27,7 @@
 [defcorefunk semantic_partial_state_property-phenomenal_name semantic_partial_state_property semantic_partial_state_property__phenomenal_name]
 
 
-[deftypefunk semantic_partial_state_property get as-declarative_english_string []
+[deftypefunk semantic_partial_state_property get as-declarative_english_conslist []
   [let [[source_type  [get this source_type]]
 	[source_key   [get this source_key]]
 	[source_value [get this source_value]]
@@ -40,4 +40,17 @@
       [if [eq target_type t]
 	  `[a ,source_value ,source_key ,source_type is ,key]
 	`[a ,source_value ,source_key ,target_type ,key ,source_type]]]]]
+
+[deftypefunk semantic_partial_state_property get as-declarative_english_string []
+  [conslist-as-english_string [get this as-declarative_english_conslist]]]
+
+
+[deftypefunk semantic_partial_state_property get as-english_conslist []
+  [get this as-declarative_english_conslist]]
+
+[deftypefunk semantic_partial_state_property get as-english_string []
+  [conslist-as-english_string [get this as-english_conslist]]]
+
+[deftypefunk semantic_partial_state_property get as-string []
+  [get this as-english_string]]
 

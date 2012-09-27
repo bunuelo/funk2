@@ -44,3 +44,16 @@
 		`[a ,target_type that ,target_key]
 	      `[a ,target_value ,target_key ,target_type]]]]]
 
+[deftypefunk semantic_partial_state_property_relation get as-declarative_english_string []
+  [conslist-as-english_string [get this as-declarative_english_conslist]]]
+
+
+[deftypefunk semantic_partial_state_property_relation get as-english_conslist []
+  [get this as-declarative_english_conslist]]
+
+[deftypefunk semantic_partial_state_property_relation get as-english_string []
+  [conslist-as-english_string [get this as-english_conslist]]]
+
+[deftypefunk semantic_partial_state_property_relation get as-string []
+  [get this as-english_string]]
+

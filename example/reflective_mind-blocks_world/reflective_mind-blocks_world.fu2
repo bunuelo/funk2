@@ -132,7 +132,7 @@
 	`[]
 	`[prog [wait-to-call [attempt to grab block until gripper stops moving]]
 	       [wait-to-call [move right until over cube]]
-	       [wait-to-call [drop_block_and_wait_for_block_to_fall]]
+	       [wait-to-call [drop block and wait for block to fall]]
 	       [assert [relationship block property shape pyramid
 				     preposition on
 				     block property shape cube]]

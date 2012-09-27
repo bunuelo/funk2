@@ -228,9 +228,11 @@
 										@body]]]]
 
 [defmetro prog [:rest body]
-  `[funk-apply [funk-new_with_name prog []
-				   @body]
-	       nil]]
+  [if body
+      `[funk-apply [funk-new_with_name prog []
+				       @body]
+		   nil]
+    nil]]
 
 [defmetro apply [proc args]
    `[funk-apply ,proc ,args]]

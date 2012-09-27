@@ -32,8 +32,8 @@ f2ptr __fiber__value_reg__symbol;
 
 def_primobject_32_slot(fiber,
 		       program_counter,
-		       stack,
-		       free_stack,
+		       stack_array,
+		       stack_array_index_chunk,
 		       iter,
 		       env,
 		       args,
@@ -66,8 +66,8 @@ def_primobject_32_slot(fiber,
 
 f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
   f2ptr program_counter                                   = nil;
-  f2ptr stack                                             = nil;
-  f2ptr free_stack                                        = nil;
+  f2ptr stack_array                                       = nil;
+  f2ptr stack_array_index_chunk                           = nil;
   f2ptr iter                                              = nil;
   f2ptr env                                               = parent_env;
   f2ptr args                                              = nil;
@@ -97,8 +97,8 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr complete_trigger                                  = f2__fiber_trigger__new(cause);
   f2ptr new_fiber = f2fiber__new(cause,
 				 program_counter,
-				 stack,
-				 free_stack,
+				 stack_array,
+				 stack_array_index_chunk,
 				 iter,
 				 env,
 				 args,
@@ -622,7 +622,8 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
 
 
 f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this) {
-  return f2__fiber_stack_trace__new(cause, f2__fiber__stack(cause, this));
+  f2ptr stack = raw__fiber__stack(cause, this);
+  return f2__fiber_stack_trace__new(cause, stack);
 }
 
 f2ptr f2__fiber__stack_trace(f2ptr cause, f2ptr this) {
@@ -634,8 +635,109 @@ def_pcfunk1(fiber__stack_trace, this,
 	    return f2__fiber__stack_trace(this_cause, this));
 
 
+u64 raw__fiber__stack_array_index(f2ptr cause, f2ptr this) {
+  f2ptr stack_array_index_chunk = f2fiber__stack_array_index_chunk(this, cause);
+  return raw__chunk__bit64__elt(cause, stack_array_index_chunk, 0);
+}
+
+void raw__fiber__stack_array_index__set(f2ptr cause, f2ptr this, u64 stack_array_index) {
+  f2ptr stack_array_index_chunk = f2fiber__stack_array_index_chunk(this, cause);
+  return raw__chunk__bit64__elt__set(cause, stack_array_index_chunk, 0, stack_array_index);
+}
+
+f2ptr raw__fiber__stack_array_elt(f2ptr cause, f2ptr this, u64 index) {
+  f2ptr stack_array = f2fiber__stack_array(this, cause);
+  if (stack_array == nil) {
+    error(nil, "raw__fiber__stack_array_elt error: stack_array is nil.");
+  }
+  return raw__array__elt(cause, stack_array, index);
+}
+
+void raw__fiber__stack_array_elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr element) {
+  f2ptr stack_array = f2fiber__stack_array(this, cause);
+  if (stack_array == nil) {
+    error(nil, "raw__fiber__stack_array_elt error: stack_array is nil.");
+  }
+  raw__array__elt__set(cause, stack_array, index, element);
+}
+
+#define fiber__default_stack_start_size 16
+
+void raw__fiber__push_stack(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr stack_array = f2fiber__stack_array(this, cause);
+  s64   stack_index = raw__fiber__stack_array_index(cause, this);
+  if (stack_array == nil) {
+    stack_array = raw__array__new(cause, fiber__default_stack_start_size);
+    f2fiber__stack_array__set(this, cause, stack_array);
+  } else {
+    u64 stack_array__length = raw__array__length(cause, stack_array);
+    if (stack_index >= stack_array__length) {
+      u64   stack_array__length__bit_num     = u64__bit_num(stack_array__length);
+      u64   new_stack_array__length__bit_num = (((stack_array__length__bit_num * 3) >> 1) + 1);
+      u64   new_stack_array__length          = 1ll << new_stack_array__length__bit_num;
+      f2ptr new_stack_array                  = raw__array__new(cause, new_stack_array__length);
+      {
+	u64 index;
+	for (index = 0; index < stack_array__length; index ++) {
+	  raw__array__elt__set(cause, new_stack_array, index, raw__array__elt(cause, stack_array, index));
+	}
+      }
+      stack_array = new_stack_array;
+      f2fiber__stack_array__set(this, cause, stack_array);
+    }
+  }
+  raw__fiber__stack_array_elt__set(cause, this, stack_index, element);
+  stack_index ++;
+  raw__fiber__stack_array_index__set(cause, this, stack_index);
+}
+
+f2ptr raw__fiber__pop_stack(f2ptr cause, f2ptr this) {
+  f2ptr stack_array = f2fiber__stack_array(this, cause);
+  if (stack_array == nil) {
+    error(nil, "raw__fiber__pop_stack error: stack_array is nil.");
+  }
+  s64 stack_index = raw__fiber__stack_array_index(cause, this);
+  if (stack_index == 0) {
+    error(nil, "raw__fiber__pop_stack error: stack_index is zero.");
+  }
+  stack_index --;
+  raw__fiber__stack_array_index__set(cause, this, stack_index);
+  return raw__array__elt(cause, stack_array, stack_index);
+}
+
+f2ptr raw__fiber__peek_stack(f2ptr cause, f2ptr this) {
+  f2ptr stack_array = f2fiber__stack_array(this, cause);
+  if (stack_array == nil) {
+    error(nil, "raw__fiber__peek_stack error: stack_array is nil.");
+  }
+  s64 stack_index = raw__fiber__stack_array_index(cause, this);
+  if (stack_index == 0) {
+    error(nil, "raw__fiber__peek_stack error: stack_index is zero.");
+  }
+  return raw__array__elt(cause, stack_array, stack_index - 1);
+}
+
+f2ptr raw__fiber__stack(f2ptr cause, f2ptr this) {
+  s64   index = raw__fiber__stack_array_index(cause, this) - 1;
+  f2ptr stack = nil;
+  f2ptr iter  = nil;
+  while (index >= 0) {
+    f2ptr stack_elt = raw__fiber__stack_array_elt(cause, this, index);
+    f2ptr new_cons  = f2cons__new(cause, stack_elt, nil);
+    if (stack == nil) {
+      stack  = new_cons;
+    } else {
+      f2cons__cdr__set(iter, cause, new_cons);
+    }
+    iter = new_cons;
+    index --;
+  }
+  return stack;
+}
+
+
 f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this) {
-  f2ptr fiber_stack_trace = raw__fiber__stack_trace(cause, this);
+  f2ptr fiber_stack_trace = raw__fiber__stack_trace(cause, raw__fiber__stack(cause, this));
   if (raw__larva__is_type(cause, fiber_stack_trace)) {
     return fiber_stack_trace;
   }

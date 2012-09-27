@@ -28,8 +28,8 @@ typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t
 
 declare_object_type_32_slot(fiber,
 			    program_counter,
-			    stack,
-			    free_stack,
+			    stack_array,
+			    stack_array_index_chunk,
 			    iter,
 			    env,
 			    args,
@@ -183,8 +183,8 @@ extern f2ptr __fiber__value_reg__symbol;
 
 declare_primobject_32_slot(fiber,
 			   program_counter,
-			   stack,
-			   free_stack,
+			   stack_array,
+			   stack_array_index_chunk,
 			   iter,
 			   env,
 			   args,
@@ -276,10 +276,19 @@ void f2__print_environment_stack(f2ptr cause, f2ptr rte, f2ptr env);
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode);
 boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber);
 
-f2ptr raw__fiber__stack_trace(f2ptr cause, f2ptr this);
-f2ptr  f2__fiber__stack_trace(f2ptr cause, f2ptr this);
-f2ptr raw__fiber__print_stack_trace(f2ptr cause, f2ptr this);
-f2ptr  f2__fiber__print_stack_trace(f2ptr cause, f2ptr this);
+f2ptr raw__fiber__stack_trace           (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__stack_trace           (f2ptr cause, f2ptr this);
+f2ptr raw__fiber__print_stack_trace     (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber__print_stack_trace     (f2ptr cause, f2ptr this);
+u64   raw__fiber__stack_array_index     (f2ptr cause, f2ptr this);
+void  raw__fiber__stack_array_index__set(f2ptr cause, f2ptr this, u64 stack_array_index);
+f2ptr raw__fiber__stack_array_elt       (f2ptr cause, f2ptr this, u64 index);
+void  raw__fiber__stack_array_elt__set  (f2ptr cause, f2ptr this, u64 index, f2ptr element);
+void  raw__fiber__push_stack            (f2ptr cause, f2ptr this, f2ptr element);
+f2ptr raw__fiber__pop_stack             (f2ptr cause, f2ptr this);
+f2ptr raw__fiber__peek_stack            (f2ptr cause, f2ptr this);
+f2ptr raw__fiber__stack                 (f2ptr cause, f2ptr this);
+
 
 // fiber_stack_trace
 

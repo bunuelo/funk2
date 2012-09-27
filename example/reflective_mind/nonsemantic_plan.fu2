@@ -34,7 +34,7 @@
 	initial-variables
 	initial-expression]
        [= mental_layer initial-mental_layer]
-       [= unique_name  [get mind new-name `plan]]
+       [= unique_name  [get [get this mind] new-name `plan]]
        [= variables    initial-variables]
        [= expression   initial-expression]
        ]]

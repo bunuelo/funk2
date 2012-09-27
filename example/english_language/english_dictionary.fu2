@@ -256,7 +256,7 @@
        [dictionary-add_word this pronoun_word yourself      [singular]]
        [dictionary-add_word this pronoun_word yourselves    [plural]]
        
-       [dictionary-add_word this verb_word is               [be third_person_singular present]]
+       [dictionary-add_word this verb_word is               [be third_person_singular transitive present]]
        [dictionary-add_word this verb_word are              [be plural present]]
        [dictionary-add_word this verb_word am               [be first_person_singular present]]
        [dictionary-add_word this verb_word was              [be third_person_singular first_person_singular past]]

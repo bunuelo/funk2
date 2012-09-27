@@ -58,6 +58,10 @@
 												`[error punctuation-colon ,[flatten_constree expression]]
 											      [let [[eval-expression [elt arguments 0]]]
 												`[check preconditions]]]]
+					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[print-expression [elt arguments 0]]]
+												`[]]]]
 					      [[eq `prog                           command] [apply &append
 												   [append `[[do the following in serial punctuation-colon]]
 													   [let [[step_number 1]]
@@ -132,8 +136,67 @@
 																					 target_type
 																					 target_key
 																					 target_value]]]]]
+					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[partial_state [nonsemantic_plan-expression-as_english_conslist [elt arguments 0]]]]
+												[append `[wait for punctuation-colon]
+													partial_state]]]]
+					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[partial_state [nonsemantic_plan-expression-as_english_conslist [elt arguments 0]]]]
+												[append `[assert punctuation-colon]
+													partial_state]]]]
+					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[quote-expression [elt arguments 0]]]
+												`[]]]]
+					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[variable-symbol [elt arguments 0]]]
+												`[,variable-symbol]]]]
+					      [[eq `property                       command] [if [not [eq 7 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[source_type     [nonsemantic_plan-expression-as_english_conslist [elt arguments 0]]]
+												    [source_key_type [nonsemantic_plan-expression-as_english_conslist [elt arguments 1]]]
+												    [source_key      [nonsemantic_plan-expression-as_english_conslist [elt arguments 2]]]
+												    [source_value    [nonsemantic_plan-expression-as_english_conslist [elt arguments 3]]]
+												    [key_type        [nonsemantic_plan-expression-as_english_conslist [elt arguments 4]]]
+												    [key             [nonsemantic_plan-expression-as_english_conslist [elt arguments 5]]]
+												    [value           [nonsemantic_plan-expression-as_english_conslist [elt arguments 6]]]]
+												[append `[the partial state punctuation-colon]
+													[get [new semantic_partial_state_property [get [get this mind] semantic_realm]
+														  source_type
+														  source_key
+														  source_value
+														  key
+														  value]
+													     as-declarative_english_conslist]]]]]
+					      [[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												`[error punctuation-colon ,[flatten_constree expression]]
+											      [let [[source_type     [nonsemantic_plan-expression-as_english_conslist [elt arguments 0]]]
+												    [source_key_type [nonsemantic_plan-expression-as_english_conslist [elt arguments 1]]]
+												    [source_key      [nonsemantic_plan-expression-as_english_conslist [elt arguments 2]]]
+												    [source_value    [nonsemantic_plan-expression-as_english_conslist [elt arguments 3]]]
+												    [key_type        [nonsemantic_plan-expression-as_english_conslist [elt arguments 4]]]
+												    [key             [nonsemantic_plan-expression-as_english_conslist [elt arguments 5]]]
+												    [target_type     [nonsemantic_plan-expression-as_english_conslist [elt arguments 6]]]
+												    [target_key_type [nonsemantic_plan-expression-as_english_conslist [elt arguments 7]]]
+												    [target_key      [nonsemantic_plan-expression-as_english_conslist [elt arguments 8]]]
+												    [target_value    [nonsemantic_plan-expression-as_english_conslist [elt arguments 9]]]]
+												[append `[the partial state punctuation-colon]
+													[get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
+														  source_type
+														  source_key
+														  source_value
+														  key_type
+														  key
+														  target_type
+														  target_key
+														  target_value]
+													     as-declarative_english_conslist]]]]]
 					      [t                                            `[error ,[flatten_constree expression]]]]]]]
-	[t                          `[error punctuation-colon ,[flatten_constree expression]]]]]
+	[[is-type `symbol expression] `[the ,expression]]
+	[t                            `[error punctuation-colon ,[flatten_constree expression]]]]]
 
 [deftypefunk nonsemantic_plan get as-english_conslist []
   [if [eq `uninitialized internal-english_conslist]
@@ -272,153 +335,239 @@
 		 
 		 result]]]]]
 
+[defunk nonsemantic_plan-expression-compile-eval [expression]
+  `[funkall ,[nonsemantic_plan-expression-compile expression] this]]
+
 [defunk nonsemantic_plan-expression-compile [expression]
-  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-					[eval `[funk []
-						     [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,expression] '.']
-						     [have semantic_thought lookup_a_variable_value [quote ,expression]]]]]]
-	[[is-type `cons expression] [let [[command   [car expression]]
-					  [arguments [cdr expression]]]
-				      [let [[arguments-length [length arguments]]]
-					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `eval
-												       expression expression]
-											      [let [[eval-expression [elt arguments 0]]]
+  [cond [[is-type `symbol expression] [eval `[funk []
+						   [quote ,expression]]]]
+	[[is-type `cons   expression] [let [[command   [car expression]]
+					    [arguments [cdr expression]]]
+					[let [[arguments-length [length arguments]]]
+					  [cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `eval
+													 expression expression]
+												[let [[eval-expression `[quote ,[elt arguments 0]]]]
+												  [eval `[funk [this]
+													       [eval ,eval-expression]]]]]]
+						[[eq `print                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `print
+													 expression expression]
+												[let [[print-expression [elt arguments 0]]]
+												  [eval `[funk [this]
+													       [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile print-expression] this]]]
+														 [terminal_format standard-terminal '\nplan printing expression: ' eval-print-expression]
+														 eval-print-expression]]]]]]
+						[[eq `prog                           command] [eval `[funk [this]
+													   [terminal_format standard-terminal '\nplan evaluating serial process.']
+													   @[mapcar [funk [argument]
+															  `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+														    arguments]]]]
+						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `wait-for-time
+													 expression expression]
+												[let [[time_to_wait [elt arguments 0]]]
+												  [eval `[funk [this]
+													       [let [[time_to_wait ,time_to_wait]]
+														 [dotimes [i time_to_wait]
+														   `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
+														   [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
+														 ]]]]]]
+						[[eq `wait-to-call                   command] [let [[action_name [elt arguments 0]]]
 												[eval `[funk [this]
-													     [let [[eval-expression [quote ,eval-expression]]]
-													       [eval eval-expression]]]]]]]
-					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `print
-												       expression expression]
-											      [let [[print-expression [elt arguments 0]]]
-												[eval `[funk [this]
-													     [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile print-expression] this]]]
-													       [terminal_format standard-terminal '\nplan printing expression: ' eval-print-expression]
-													       eval-print-expression]]]]]]
-					      [[eq `prog                           command] [eval `[funk [this]
-													 [terminal_format standard-terminal '\nplan evaluating serial process.']
-													 @[mapcar [funk [argument]
-															`[funkall ,[nonsemantic_plan-expression-compile argument] this]]
-														  arguments]]]]
-					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `wait-for-time
-												       expression expression]
-											      [let [[time_to_wait [elt arguments 0]]]
-												[eval `[funk [this]
-													     [let [[time_to_wait ,time_to_wait]]
-													       [dotimes [i time_to_wait]
-														 `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
-														 [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
-													       ]]]]]]
-					      [[eq `wait-to-call                   command] [let [[action_name [elt arguments 0]]]
-											      [eval `[funk [this]
-													   [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action [quote ,arguments]]]]
-													     [if [null action]
-														 [= action [have [get [get this mind] layer `deliberative] lookup_plan_action [quote ,arguments]]]]
-													     [if [null action]
-														 [terminal_format standard-terminal '\nplan error: "' [conslist-as-english_string [quote ,arguments]] '" action not defined.']
-													       [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
-														     [have action wait_to_call]
-														     ]]]]]]]
-					      [[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `wait-for-physical-property
-												       expression expression]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [value           [elt arguments 6]]]
-												[eval `[funk [this]
-													     [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
-													     [have this wait_for_physical_property
-														   [quote ,source_type]
-														   [quote ,source_key_type]
-														   [quote ,source_key]
-														   [quote ,source_value]
-														   [quote ,key_type]
-														   [quote ,key]
-														   [quote ,value]]
-													     ]]]]]
-					      [[eq `wait-for-physical-relationship command] [if [not [eq 10 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `wait-for-physical-relationship
-												       expression expression]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [target_type     [elt arguments 6]]
-												    [target_key_type [elt arguments 7]]
-												    [target_key      [elt arguments 8]]
-												    [target_value    [elt arguments 9]]]
-												[eval `[funk [this]
-													     [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
-															      ,[object_type_property_relation_goal-declarative_english_string source_type
-																							      source_key
-																							      source_value
-																							      key_type
-																							      key
-																							      target_type
-																							      target_key
-																							      target_value] '."']
-													     [have this wait_for_physical_relationship
-														   [quote ,source_type]
-														   [quote ,source_key_type]
-														   [quote ,source_key]
-														   [quote ,source_value]
-														   [quote ,key_type]
-														   [quote ,key]
-														   [quote ,target_type]
-														   [quote ,target_key_type]
-														   [quote ,target_key]
-														   [quote ,target_value]]
-													     ]]]]]
-					      [[eq `assure-physical-relationship   command] [if [not [eq 10 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `assure-physical-relationship
-												       expression expression]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [target_type     [elt arguments 6]]
-												    [target_key_type [elt arguments 7]]
-												    [target_key      [elt arguments 8]]
-												    [target_value    [elt arguments 9]]]
-												[eval `[funk [this]
-													     [terminal_format standard-terminal '\nplan assuring relationship exists: "'
-															      ,[object_type_property_relation_goal-declarative_english_string source_type
-																							      source_key
-																							      source_value
-																							      key_type
-																							      key
-																							      target_type
-																							      target_key
-																							      target_value] '."']
-													     [have this assure_physical_relationship
-														   [quote ,source_type]
-														   [quote ,source_key_type]
-														   [quote ,source_key]
-														   [quote ,source_value]
-														   [quote ,key_type]
-														   [quote ,key]
-														   [quote ,target_type]
-														   [quote ,target_key_type]
-														   [quote ,target_key]
-														   [quote ,target_value]]
-													     ]]]]]
-					      [t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
-	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
+													     [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action [quote ,arguments]]]]
+													       [if [null action]
+														   [= action [have [get [get this mind] layer `deliberative] lookup_plan_action [quote ,arguments]]]]
+													       [if [null action]
+														   [terminal_format standard-terminal '\nplan error: "' [conslist-as-english_string [quote ,arguments]] '" action not defined.']
+														 [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
+														       [have action wait_to_call]
+														       ]]]]]]]
+						[[eq `wait-for-physical-property     command] [if [not [eq 7 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `wait-for-physical-property
+													 expression expression]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [value           [elt arguments 6]]]
+												  [eval `[funk [this]
+													       [terminal_format standard-terminal '\nplan waiting for property to exist: "' ,[object_type_property_property_goal-english_string source_type source_property source_property_value property property_value] '."']
+													       [have this wait_for_physical_property
+														     [quote ,source_type]
+														     [quote ,source_key_type]
+														     [quote ,source_key]
+														     [quote ,source_value]
+														     [quote ,key_type]
+														     [quote ,key]
+														     [quote ,value]]
+													       ]]]]]
+						[[eq `wait-for-physical-relationship command] [if [not [eq 10 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `wait-for-physical-relationship
+													 expression expression]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [target_type     [elt arguments 6]]
+												      [target_key_type [elt arguments 7]]
+												      [target_key      [elt arguments 8]]
+												      [target_value    [elt arguments 9]]]
+												  [eval `[funk [this]
+													       [terminal_format standard-terminal '\nplan waiting for relationship to exist: "'
+																,[object_type_property_relation_goal-declarative_english_string source_type
+																								source_key
+																								source_value
+																								key_type
+																								key
+																								target_type
+																								target_key
+																								target_value] '."']
+													       [have this wait_for_physical_relationship
+														     [quote ,source_type]
+														     [quote ,source_key_type]
+														     [quote ,source_key]
+														     [quote ,source_value]
+														     [quote ,key_type]
+														     [quote ,key]
+														     [quote ,target_type]
+														     [quote ,target_key_type]
+														     [quote ,target_key]
+														     [quote ,target_value]]
+													       ]]]]]
+						[[eq `assure-physical-relationship   command] [if [not [eq 10 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `assure-physical-relationship
+													 expression expression]
+												[let [[source_type     [elt arguments 0]]
+												      [source_key_type [elt arguments 1]]
+												      [source_key      [elt arguments 2]]
+												      [source_value    [elt arguments 3]]
+												      [key_type        [elt arguments 4]]
+												      [key             [elt arguments 5]]
+												      [target_type     [elt arguments 6]]
+												      [target_key_type [elt arguments 7]]
+												      [target_key      [elt arguments 8]]
+												      [target_value    [elt arguments 9]]]
+												  [eval `[funk [this]
+													       [terminal_format standard-terminal '\nplan assuring relationship exists: "'
+																,[object_type_property_relation_goal-declarative_english_string source_type
+																								source_key
+																								source_value
+																								key_type
+																								key
+																								target_type
+																								target_key
+																								target_value] '."']
+													       [have this assure_physical_relationship
+														     [quote ,source_type]
+														     [quote ,source_key_type]
+														     [quote ,source_key]
+														     [quote ,source_value]
+														     [quote ,key_type]
+														     [quote ,key]
+														     [quote ,target_type]
+														     [quote ,target_key_type]
+														     [quote ,target_key]
+														     [quote ,target_value]]
+													       ]]]]]
+						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `wait-for
+													 expression expression]
+												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let [[partial_state ,partial_state]]
+														 [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_english_string] '."']
+														 [have this wait_for partial_state]]
+													       ]]]]]
+						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `assert
+													 expression expression]
+												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let [[partial_state ,partial_state]]
+														 [terminal_format standard-terminal '\nplan assuring partial state exists: "' [get partial_state as-declarative_english_string] '."']
+														 [have this assert partial_state]]
+													       ]]]]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `quote
+													 expression expression]
+												[let [[quote-expression [elt arguments 0]]]
+												  [eval `[funk [this]
+													       [quote ,quote-expression]
+													       ]]]]]
+						[[eq `?                              command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `?
+													 expression expression]
+												[let [[variable-symbol `[quote ,[elt arguments 0]]]]
+												  [eval `[funk [this]
+													       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+														 [terminal_format standard-terminal '\nplan looking up variable value, ' ,variable-symbol '.']
+														 [have semantic_thought lookup_a_variable_value ,variable-symbol]
+														 ]]]]]]
+						[[eq `property                       command] [if [not [eq 7 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `property
+													 expression expression]
+												[let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												      [source_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												      [source_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]
+												      [source_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]
+												      [key_type        `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]
+												      [key             `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]
+												      [value           `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]]
+												  [eval `[funk [this]
+													       [new semantic_partial_state_property [get [get this mind] semantic_realm]
+														    ,source_type
+														    ,source_key_type
+														    ,source_key
+														    ,source_value
+														    ,key_type
+														    ,key
+														    ,value]
+													       ]]]]]
+						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `relationship
+													 expression expression]
+												[let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												      [source_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												      [source_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]
+												      [source_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]
+												      [key_type        `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]
+												      [key             `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]
+												      [target_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]
+												      [target_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 7]] this]]
+												      [target_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 8]] this]]
+												      [target_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 9]] this]]]
+												  [eval `[funk [this]
+													       [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
+														    ,source_type
+														    ,source_key_type
+														    ,source_key
+														    ,source_value
+														    ,key_type
+														    ,key
+														    ,target_type
+														    ,target_key_type
+														    ,target_key
+														    ,target_value]
+													       ]]]]]
+						[t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
+	[t                            [error bug_name `nonsemantic_plan_compile_error]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [nonsemantic_plan-expression-compile expression]]
@@ -440,12 +589,10 @@
 
 
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
-  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-					[eval `[funk []
-						     [terminal_format standard-terminal '\nplan imagining looking up variable value, ' [quote ,expression] '.']
-						     [have semantic_thought lookup_a_variable_value [quote ,expression]]]]]]
-	[[is-type `cons expression] [let [[command   [car expression]]
-					  [arguments [cdr expression]]]
+  [cond [[is-type `symbol expression] [eval `[funk []
+						   [quote ,expression]]]]
+	[[is-type `cons   expression] [let [[command   [car expression]]
+					    [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
 					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
@@ -587,6 +734,96 @@
 														   [quote ,target_key]
 														   [quote ,target_value]]
 													     ]]]]]
+					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `wait-for
+												       expression expression]
+											      [let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[eval `[funk [this]
+													     [let [[partial_state ,partial_state]]
+													       [terminal_format standard-terminal '\nplan imagining waiting for: "'
+																[get partial_state as-declarative_english_string] '."']
+													       [have this wait_for partial_state]
+													       ]
+													     ]]]]]
+					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `assert
+												       expression expression]
+											      [let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[eval `[funk [this]
+													     [let [[partial_state ,partial_state]]
+													       [terminal_format standard-terminal '\nplan imagining asserting: "'
+																[get partial_state as-declarative_english_string] '."']
+													       [have this assert partial_state]
+													       ]
+													     ]]]]]
+					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `quote
+												       expression expression]
+											      [let [[quote-expression [elt arguments 0]]]
+												[eval `[funk [this]
+													     [quote ,quote-expression]
+													     ]]]]]
+					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `?
+												       expression expression]
+											      [let [[variable-symbol `[quote ,[elt arguments 0]]]]
+												[eval `[funk [this]
+													     [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+													       [terminal_format standard-terminal '\nplan imagining looking up variable value, ' ,variable-symbol '.']
+													       [have semantic_thought lookup_a_variable_value ,variable-symbol]
+													       ]]]]]]
+					      [[eq `property                       command] [if [not [eq 7 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `property
+												       expression expression]
+											      [let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
+												    [source_key_type `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]
+												    [source_key      `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]
+												    [source_value    `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 3]] this]]
+												    [key_type        `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 4]] this]]
+												    [key             `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 5]] this]]
+												    [value           `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 6]] this]]]
+												[eval `[funk [this]
+													     [new semantic_partial_state_property [get [get this mind] semantic_realm]
+														  ,source_type
+														  ,source_key_type
+														  ,source_key
+														  ,source_value
+														  ,key_type
+														  ,key
+														  ,value]
+													     ]]]]]
+					      [[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `relationship
+												       expression expression]
+											      [let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
+												    [source_key_type `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]
+												    [source_key      `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]
+												    [source_value    `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 3]] this]]
+												    [key_type        `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 4]] this]]
+												    [key             `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 5]] this]]
+												    [target_type     `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 6]] this]]
+												    [target_key_type `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 7]] this]]
+												    [target_key      `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 8]] this]]
+												    [target_value    `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 9]] this]]]
+												[eval `[funk [this]
+													     [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
+														  ,source_type
+														  ,source_key_type
+														  ,source_key
+														  ,source_value
+														  ,key_type
+														  ,key
+														  ,target_type
+														  ,target_key_type
+														  ,target_key
+														  ,target_value]
+													     ]]]]]
 					      [t                                            [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]
 
@@ -619,7 +856,7 @@
 
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
   [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-					`[? ,expression]]]
+					,expression]]
 	[[is-type `cons expression] [let [[command           [car expression]]
 					  [command_arguments [cdr expression]]]
 				      [let [[command_arguments-length [length command_arguments]]]
@@ -687,6 +924,57 @@
 												    [target_key      [elt command_arguments 8]]
 												    [target_value    [elt command_arguments 9]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assure-physical-relationship]]]]
+					      [[eq `wait-for                       command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `assert
+												       expression expression]
+											      [let [[partial_state [elt command_arguments 0]]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
+					      [[eq `assert                         command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `assert
+												       expression expression]
+											      [let [[partial_state [elt command_arguments 0]]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
+					      [[eq `quote                          command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `quote
+												       expression expression]
+											      [let [[quote-expression [elt command_arguments 0]]]
+												nil]]]
+					      [[eq `?                              command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `?
+												       expression expression]
+											      [let [[variable-symbol [elt command_arguments 0]]]
+												`[? ,variable-symbol]]]]
+					      [[eq `property                       command] [if [not [eq 7 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `wait-for-physical-property
+												       expression expression]
+											      [let [[source_type     [elt command_arguments 0]]
+												    [source_key_type [elt command_arguments 1]]
+												    [source_key      [elt command_arguments 2]]
+												    [source_value    [elt command_arguments 3]]
+												    [key_type        [elt command_arguments 4]]
+												    [key             [elt command_arguments 5]]
+												    [value           [elt command_arguments 6]]]
+												nil]]]
+					      [[eq `relationship                   command] [if [not [eq 10 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `relationship
+												       expression expression]
+											      [let [[source_type     [elt command_arguments 0]]
+												    [source_key_type [elt command_arguments 1]]
+												    [source_key      [elt command_arguments 2]]
+												    [source_value    [elt command_arguments 3]]
+												    [key_type        [elt command_arguments 4]]
+												    [key             [elt command_arguments 5]]
+												    [target_type     [elt command_arguments 6]]
+												    [target_key_type [elt command_arguments 7]]
+												    [target_key      [elt command_arguments 8]]
+												    [target_value    [elt command_arguments 9]]]
+												nil]]]
 					      [t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
 

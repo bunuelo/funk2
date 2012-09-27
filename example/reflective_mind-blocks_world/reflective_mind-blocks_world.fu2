@@ -103,67 +103,30 @@
   
   'add "being told" knowledge to resources'
   
-  [have [get this mind] add_resource_change_relationship_hypothesis
-	`learned_reactive `physical `drop_block_and_wait_for_block_to_fall
-	`addition
-	`block `shape `cube `preposition `on `block `shape `pyramid]
+  [have-apply [get this mind] add_resource_change_relationship_hypothesis
+	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
+                addition
+		block shape cube preposition on block shape pyramid]]
   
-  [have [get this mind] add_resource_change_relationship_hypothesis
-	`learned_reactive `physical `drop_block_and_wait_for_block_to_fall
-	`addition
-	`block `shape `pyramid `preposition `on `block `shape `cube]
+  [have-apply [get this mind] add_resource_change_relationship_hypothesis
+	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
+		addition
+		block shape pyramid preposition on block shape cube]]
   
   
   'create blocks_world agent specific plans'
   
-  `[have this create_physical_semantic_plan
-	 `[]
-	 `[prog [wait-to-call move_left]
-		[wait-for-time 1]
-		[wait-for-physical-relationship block property shape cube preposition below gripper property is-me t]
-		[wait-to-call grab]
-		[wait-for-time 10]
-		[wait-for-physical-property gripper property is-me t property movement_command stop]
-		[wait-to-call move_right]
-		[wait-for-time 1]
-		[wait-for-physical-relationship block property shape pyramid preposition below gripper property is-me t]
-		[wait-to-call drop]
-		[wait-for-time 8]
-		[assure-physical-relationship block property shape cube preposition on block property shape pyramid]
-		]]
   [have this create_physical_semantic_plan
 	`[]
 	`[prog [wait-to-call move_left_until_over_cube]
 	       [wait-to-call attempt_to_grab_block_until_gripper_stops_moving]
 	       [wait-to-call move_right_until_over_pyramid]
 	       [wait-to-call drop_block_and_wait_for_block_to_fall]
-	       [assure-physical-relationship block property shape cube preposition on block property shape pyramid]
+	       [assert [relationship block property shape cube
+				     preposition on
+				     block property shape pyramid]]
 	       ]]
   
-  `[have this create_physical_semantic_plan
-	 `[]
-	 `[prog [wait-to-call move_right]
-		[wait-for-physical-relationship block property shape pyramid preposition below gripper property is-me t]
-		[wait-to-call grab]
-		[wait-for-physical-property gripper property is-me t property movement_command stop]
-		[wait-to-call move_left]
-		[wait-for-physical-relationship block property shape cube preposition below gripper property is-me t]
-		[wait-to-call drop]
-		[wait-for-time 8]
-		[assure-physical-relationship block property shape pyramid preposition on block property shape cube]
-		]]
-  `[have this create_physical_semantic_plan
-	 `[]
-	 `[prog [wait-to-call grab]
-		[wait-for-time 10]
-		[wait-for-physical-property gripper property is-me t property movement_command stop]
-		[wait-to-call move_right]
-		[wait-for-time 1]
-		[wait-for-physical-relationship block property shape cube preposition below gripper property is-me t]
-		[wait-to-call drop]
-		[wait-for-time 8]
-		[assure-physical-relationship block property shape pyramid preposition on block property shape cube]
-		]]
   [have this create_physical_semantic_plan
 	`[]
 	`[prog [wait-to-call attempt_to_grab_block_until_gripper_stops_moving]

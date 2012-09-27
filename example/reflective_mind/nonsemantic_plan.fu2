@@ -249,7 +249,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-to-call
 													 expression expression]
-												[let [[action_name `[quote, [elt arguments 0]]]]
+												[let [[action_name `[quote ,[elt arguments 0]]]]
 												  [eval `[funk [this]
 													       [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action ,action_name]]]
 														 [if [null action]
@@ -409,7 +409,7 @@
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-to-call
 												       expression expression]
-											      [let [[action_name `[quote, [elt arguments 0]]]]
+											      [let [[action_name `[quote ,[elt arguments 0]]]]
 												[eval `[funk [this]
 													     [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action ,action_name]]]
 													       [if [null action]
@@ -569,7 +569,7 @@
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `wait-to-call
 												       expression expression]
-											      [let [[action_name `[quote, [elt command_arguments 0]]]]
+											      [let [[action_name `[quote ,[elt command_arguments 0]]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call]]]]
 					      [[eq `wait-for                       command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments

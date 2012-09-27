@@ -150,8 +150,8 @@
 [deftypefunk deliberative_layer get plan_actions []
   [get plan_action_english_symbol_ptypehash values]]
 
-[deftypefunk deliberative_layer execute lookup_plan_action [english_conslist]
-  [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
+[deftypefunk deliberative_layer execute lookup_plan_action [expression]
+  [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
 
 [deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 

@@ -199,6 +199,7 @@
 		[= string [string-concat string [cond [[eq `punctuation-period exp] '.']
 						      [[eq `punctuation-comma  exp] ',']
 						      [[eq `punctuation-colon  exp] ':']
+						      [[is-type `string exp]        exp]
 						      [t                            [get exp as-string]]]]]]
 	  this]
     [have [have string replace_all

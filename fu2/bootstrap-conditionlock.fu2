@@ -60,7 +60,7 @@
 		   [have conditionlock unlock]]
 		 [terminal_format standard-terminal '\nfiber 2 done.']]
 	   nil]
-    [terminal_format standard-terminal '\nfiber 1 sleeping for.']
+    [terminal_format standard-terminal '\nfiber 1 sleeping for 10 seconds.']
     [sleep 10]
     [terminal_format standard-terminal '\nfiber 1 signaling.']
     [have conditionlock lock]

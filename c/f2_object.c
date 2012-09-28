@@ -128,7 +128,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "nil_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -154,7 +154,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "integer_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -174,7 +174,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "double_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -194,7 +194,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "float_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -214,7 +214,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "pointer_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -234,7 +234,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "scheduler_cmutex_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -254,7 +254,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "cmutex_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -274,7 +274,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "scheduler_creadwritelock_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -294,7 +294,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "creadwritelock_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -314,7 +314,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "char_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -334,7 +334,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "string_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -354,7 +354,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "symbol_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -374,7 +374,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "chunk_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -396,7 +396,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 					new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_determine_primobject_type"),
 					new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 					new__symbol(cause, "this"),      this,
-					new__symbol(cause, "this-type"), f2__type(cause, this),
+					new__symbol(cause, "this-type"), f2__object__type(cause, this),
 					new__symbol(cause, "slot_type"), slot_type,
 					new__symbol(cause, "slot_name"), slot_name));
       }
@@ -409,7 +409,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 					new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
 					new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 					new__symbol(cause, "this"),      this,
-					new__symbol(cause, "this-type"), f2__type(cause, this),
+					new__symbol(cause, "this-type"), f2__object__type(cause, this),
 					new__symbol(cause, "slot_type"), slot_type,
 					new__symbol(cause, "slot_name"), slot_name));
       }
@@ -426,7 +426,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 					  new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
 					  new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 					  new__symbol(cause, "this"),      this,
-					  new__symbol(cause, "this-type"), f2__type(cause, this),
+					  new__symbol(cause, "this-type"), f2__object__type(cause, this),
 					  new__symbol(cause, "slot_type"), slot_type,
 					  new__symbol(cause, "slot_name"), slot_name));
 	}
@@ -445,7 +445,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 					  new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
 					  new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 					  new__symbol(cause, "this"),      this,
-					  new__symbol(cause, "this-type"), f2__type(cause, this),
+					  new__symbol(cause, "this-type"), f2__object__type(cause, this),
 					  new__symbol(cause, "slot_type"), slot_type,
 					  new__symbol(cause, "slot_name"), slot_name));
 	}
@@ -455,7 +455,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "we_should_not_get_here"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }
@@ -474,7 +474,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "larva_type_does_not_have_funktion"),
 				      new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
 				      new__symbol(cause, "this"),      this,
-				      new__symbol(cause, "this-type"), f2__type(cause, this),
+				      new__symbol(cause, "this-type"), f2__object__type(cause, this),
 				      new__symbol(cause, "slot_type"), slot_type,
 				      new__symbol(cause, "slot_name"), slot_name));
     }

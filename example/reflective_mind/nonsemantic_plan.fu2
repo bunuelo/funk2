@@ -532,8 +532,8 @@
 													 [parog @[mapcar [funk [argument]
 															       `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
 															 arguments]]
-													 nil]]
-					       [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+													 nil]]]
+					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for-time
 												       expression expression]

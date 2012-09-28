@@ -47,6 +47,7 @@
   [load 'fu2/bootstrap-garbage_collector.fu2']
   [load 'fu2/bootstrap-compound_object.fu2']
   [load 'fu2/bootstrap-cause.fu2']
+  [load 'fu2/bootstrap-conditionlock.fu2']
   [load 'fu2/bootstrap-zlib.fu2']
   [load 'fu2/bootstrap-largeinteger.fu2']
   [load 'fu2/bootstrap-dotimes.fu2']

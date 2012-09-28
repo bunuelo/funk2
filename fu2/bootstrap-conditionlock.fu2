@@ -1,0 +1,74 @@
+'Copyright (c) 2007-2008 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+[deframe conditionlock [frame] [[mutex          [new mutex]]
+				[signal_mutex   [new traced_cmutex]]
+				[signal_trigger [new fiber_trigger]]]]
+
+[deftypefunk conditionlock execute trylock []
+  [have mutex trylock]]
+
+[deftypefunk conditionlock execute lock []
+  [have mutex lock]]
+
+[deftypefunk conditionlock execute unlock []
+  [have mutex unlock]]
+
+[deftypefunk conditionlock get is_locked []
+  [get mutex is_locked]]
+
+[deftypefunk conditionlock execute wait []
+  [have signal_mutex lock]
+  [have mutex unlock]
+  [have signal_trigger remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex [this-fiber] [get signal_mutex traced_cmutex]]
+  [have mutex lock]]
+
+[deftypefunk conditionlock execute signal []
+  [have signal_mutex lock]
+  [have signal_trigger trigger]
+  [have signal_mutex unlock]]
+
+
+[defunk conditionlock-test []
+  [let [[conditionlock [new conditionlock]]
+	[done          nil]]
+    [terminal_format standard-terminal '\nfiber 1 starting.']
+    [fiber [funk []
+		 [terminal_format standard-terminal '\nfiber 2 starting.']
+		 [while [not done]
+		   [have conditionlock lock]
+		   [while [not done]
+		     [terminal_format standard-terminal '\nfiber 2 waiting.']
+		     [have conditionlock wait]]
+		   [have conditionlock unlock]]
+		 [terminal_format standard-terminal '\nfiber 2 done.']]
+	   nil]
+    [terminal_format standard-terminal '\nfiber 1 sleeping for.']
+    [sleep 10]
+    [terminal_format standard-terminal '\nfiber 1 signaling.']
+    [have conditionlock lock]
+    [= done nil]
+    [have conditionlock signal]
+    [have conditionlock unlock]
+    [have conditionlock lock]
+    [= done t]
+    [have conditionlock signal]
+    [have conditionlock unlock]
+    [terminal_format standard-terminal '\nfiber 1 done.']]]
+

@@ -84,10 +84,6 @@
 						[have active-conditionlock unlock]]
 					      [have this think_to_self 'Resource Done.']]
 					nil]]
-       [have initialized-conditionlock lock]
-       [while [not initialized]
-	 [
-       [have initialized-conditionlock unlock]
        this]]
 
 [deftypefunk resource set agency [new-agency]

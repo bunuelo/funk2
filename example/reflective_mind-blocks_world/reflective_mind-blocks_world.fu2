@@ -149,7 +149,7 @@
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
-	       `[assert that a pyramid on a table]
+	       `[assert that a pyramid is on a table]
 	       `[]
 	       `[prog [assert [relationship block property shape pyramid
 					    preposition on

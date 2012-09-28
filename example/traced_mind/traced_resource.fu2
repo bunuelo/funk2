@@ -75,6 +75,7 @@
 				     [change_feature_phenomenal_name_ptypehash               [new ptypehash]]
 				     [precondition_hypothesis_space_change_feature_ptypehash [new ptypehash]]]
   [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
+       [set initial-active_funk name [get [format nil [type this] '-active_funk'] as-symbol]]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
 	 [construct resource initial-name wrapped_active_funk]
 	 

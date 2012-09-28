@@ -115,6 +115,7 @@
 		   name_expression
 		   arguments
 		   expression]]]
+    [have plan syntax_check]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
       [set semantic_plan_object plan_object_type `reflective]
       [have this add_semantic_plan semantic_plan_object]]]]

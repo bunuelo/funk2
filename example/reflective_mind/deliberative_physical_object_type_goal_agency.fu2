@@ -294,10 +294,10 @@
 											  
 											  [cond [[translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property event-semantic_frame-copy event-key_type event-key event-value-copy]
 												 [let [[event-semantic_reflective_object_type_event [get this semantic_reflective_object_type_event_with_property_type
-																		       [get event-semantic_frame-copy reflective_object_type]
-																		       event-key_type
-																		       event-key
-																		       event-value-copy]]]
+																			 [get event-semantic_frame-copy reflective_object_type]
+																			 event-key_type
+																			 event-key
+																			 event-value-copy]]]
 												   
 												   [mapc [funk [event-semantic_reflective_object_type_event]
 													       [have this add_type_property event-time event-semantic_reflective_object_type_event event-key_type event-key event-value-copy]]

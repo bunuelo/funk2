@@ -18,26 +18,40 @@
  rights to redistribute these changes.'
 
 
+[defunk name_expression-as-string [this]
+  [cond [[is-type `string this] this]
+	[[is-type `cons   this] [conslist-as-english_string [have this flatten]]]
+	[t                      [get this as-string]]]]
+
+[defunk name_expression-as-symbol [this]
+  [get [name_expression-as-string this] as-symbol]]
 
 'nonsemantic_plan'
 
 [deframe nonsemantic_plan [frame] [mental_layer
-				   unique_name
+				   name_expression
 				   variables
 				   expression
+				   [internal-unique_name           nil]
 				   [internal-semantic_plan_object  nil]
 				   [internal-compiled_funk         nil]
 				   [internal-compiled_imagine_funk nil]
 				   [internal-english_conslist      `uninitialized]
 				   [internal-english_string        nil]]
   [new [initial-mental_layer
+	initial-name_expression
 	initial-variables
 	initial-expression]
-       [= mental_layer initial-mental_layer]
-       [= unique_name  [get [get this mind] new-name `plan]]
-       [= variables    initial-variables]
-       [= expression   initial-expression]
+       [= mental_layer    initial-mental_layer]
+       [= name_expression initial-name_expression]
+       [= variables       initial-variables]
+       [= expression      initial-expression]
        ]]
+
+[deftypefunk nonsemantic_plan get unique_name []
+  [if [null internal-unique_name]
+      [= internal-unique_name [name_expression-as-symbol name_expression]]]
+  internal-unique_name]
 
 [deftypefunk nonsemantic_plan get mind []
   [get mental_layer mind]]
@@ -64,6 +78,16 @@
 																			    [if [not [eq step_number arguments-length]]
 																				`[punctuation-comma]]]]]
 															       [++ step_number]
+															       argument-result]]
+														       arguments]]]]]
+						[[eq `parog                          command] [apply &append
+												     [append `[[do the following in parallel punctuation-colon]]
+													     [let [[step_number 1]]
+													       [mapcar [funk [argument]
+															     [let [[argument-result [append `[* punctuation-period]
+																			    [get this expression-as_english_conslist argument]
+																			    [if [not [eq step_number arguments-length]]
+																				`[punctuation-comma]]]]]
 															       argument-result]]
 														       arguments]]]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
@@ -102,16 +126,15 @@
 												      [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
 												      [key             [get this expression-as_english_conslist [elt arguments 5]]]
 												      [value           [get this expression-as_english_conslist [elt arguments 6]]]]
-												  [append `[the partial state punctuation-colon]
-													  [get [new semantic_partial_state_property [get [get this mind] semantic_realm]
-														    source_type
-														    source_key_type
-														    source_key
-														    source_value
-														    key_type
-														    key
-														    value]
-													       as-declarative_english_conslist]]]]]
+												  [get [new semantic_partial_state_property [get [get this mind] semantic_realm]
+													    source_type
+													    source_key_type
+													    source_key
+													    source_value
+													    key_type
+													    key
+													    value]
+												       as-declarative_english_conslist]]]]
 						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
@@ -124,19 +147,18 @@
 												      [target_key_type [get this expression-as_english_conslist [elt arguments 7]]]
 												      [target_key      [get this expression-as_english_conslist [elt arguments 8]]]
 												      [target_value    [get this expression-as_english_conslist [elt arguments 9]]]]
-												  [append `[the partial state punctuation-colon]
-													  [get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
-														    source_type
-														    source_key_type
-														    source_key
-														    source_value
-														    key_type
-														    key
-														    target_type
-														    target_key_type
-														    target_key
-														    target_value]
-													       as-declarative_english_conslist]]]]]
+												  [get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
+													    source_type
+													    source_key_type
+													    source_key
+													    source_value
+													    key_type
+													    key
+													    target_type
+													    target_key_type
+													    target_key
+													    target_value]
+												       as-declarative_english_conslist]]]]
 						[t                                            `[error ,[flatten_constree expression]]]]]]]
 	[t                            `[error punctuation-colon ,[flatten_constree expression]]]]]
 
@@ -154,7 +176,7 @@
   [get this as-english_string]]
 
 [deftypefunk nonsemantic_plan get as-graphviz_label []
-  [string-concat '<' [get unique_name as-string] '>']]
+  [string-concat '<' [get [get this unique_name] as-string] '>']]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
@@ -234,6 +256,11 @@
 													   @[mapcar [funk [argument]
 															  `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
 														    arguments]]]]
+						[[eq `parog                          command] [eval `[funk [this]
+													   [terminal_format standard-terminal '\nplan evaluating parallel process.']
+													   [parog @[mapcar [funk [argument]
+																 `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+															   arguments]]]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-for-time
@@ -396,6 +423,11 @@
 													 @[mapcar [funk [argument]
 															`[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
 														  arguments]]]]
+					      [[eq `parog                          command] [eval `[funk [this]
+													 [terminal_format standard-terminal '\nplan imagining parallel process.']
+													 [parog @[mapcar [funk [argument]
+															       `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
+															 arguments]]]]]
 					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for-time
@@ -558,6 +590,8 @@
 											      [let [[print-expression [elt arguments 0]]]
 												[nonsemantic_plan-expression-compile_imagine print-expression]]]]
 					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
+											      semantic_plan_operator_activation]]
+					      [[eq `parog                          command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
 					      [[eq `wait-for-time                  command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments

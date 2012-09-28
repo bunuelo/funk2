@@ -91,6 +91,9 @@
 [deftypefunk reflective_focus_on_plan_resource get as-english_conslist []
   `[focus on a plan]]
 
+[deftypefunk reflective_focus_on_plan_resource get as-english_conslist_with_arguments [arguments]
+  [have `[focus on the plan to @arguments] flatten]]
+
 
 
 'reflective_execute_plan_in_focus_resource'

@@ -53,6 +53,9 @@
 [deftypefunk cons execute flatten []
   [have this flatten_constree]]
 
+[deftypefunk cons get flattened []
+  [have this flatten]]
+
 [defunk flatten [expression]
   [have expression flatten]]
 

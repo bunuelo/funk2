@@ -179,6 +179,7 @@
 	 
 	 [have this create_reflective_semantic_plan
 	       `[search for plan that will not fail and execute]
+	       `[]
 	       `[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1
 							relation goal_plan
 							semantic_plan_object property reflective_object_type semantic_plan_object]]]

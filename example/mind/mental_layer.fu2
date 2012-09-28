@@ -22,20 +22,32 @@
 
 [deframe mental_layer [frame] [index
 			       name
-			       mind
+			       [mind-conditionlock [new conditionlock]]
+			       [mind               nil]
 			       agency_frame
 			       [cause_group              [mind_runtime_metric-new_cause_group]]
 			       [other_cause_groups_mutex [new mutex]]
 			       [other_cause_groups       nil]
 			       runtime_metric_monitor]
-  [new [new-index new-name]
+  [new [initial-index initial-name]
        [terminal_format standard-terminal '\ncreating ' new-name ' mental_layer.']
-       [= index                  new-index]
-       [= name                   new-name]
-       [= mind                   nil] 'We set this when we add the layer to a mind.'
+       [= index                  initial-index]
+       [= name                   initial-name]
        [= agency_frame           [frame]]
        [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        this]]
+
+[deftypefunk mental_layer set mind [new-mind]
+  [have mind-conditionlock lock]
+  [= mind new-mind]
+  [have mind-conditionlock signal]
+  [have mind-conditionlock unlock]]
+
+[deftypefunk mental_layer execute stop_me_while_mind_null []
+  [have mind-conditionlock lock]
+  [while [null mind]
+    [have mind-conditionlock wait]]
+  [have mind-conditionlock unlock]]  
 
 [deftypefunk mental_layer get mental_layer []
   this]

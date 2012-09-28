@@ -21,9 +21,9 @@
 'agency'
 
 [deframe agency [frame] [name
-			 layer
+			 [layer-conditionlock [new conditionlock]]
+			 [layer               nil]
 			 resource_frame
-			 trace_story
 			 [cause_group              [mind_runtime_metric-new_cause_group]]
 			 [other_cause_groups_mutex [new mutex]]
 			 [other_cause_groups       nil]
@@ -33,9 +33,20 @@
        [= name                   new-name]
        [= layer                  nil] 'We set this when we add the resource to a layer.'
        [= resource_frame         [frame]]
-       [= trace_story            [new story]]
        [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        this]]
+
+[deftypefunk agency set layer [new-layer]
+  [have layer-conditionlock lock]
+  [= layer new-layer]
+  [have layer-conditionlock signal]
+  [have layer-conditionlock unlock]]
+
+[deftypefunk agency execute stop_me_while_layer_null []
+  [have layer-conditionlock lock]
+  [while [null layer]
+    [have layer-conditionlock wait]]
+  [have layer-conditionlock unlock]]  
 
 [deftypefunk agency execute add_resource [resource]
   [if [get resource agency]

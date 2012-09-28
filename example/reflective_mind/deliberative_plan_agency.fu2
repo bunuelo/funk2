@@ -74,8 +74,8 @@
 	    [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame internal-semantic_planner]]]
   internal-semantic_planner]
 
-[deftypefunk deliberative_plan_agency get physical_semantic_plan [phenomenal_name]
-  [get layer physical_semantic_plan phenomenal_name]]
+[deftypefunk deliberative_plan_agency get semantic_plan [phenomenal_name]
+  [get layer semantic_plan phenomenal_name]]
 
 
 'deliberative_focus_on_plan_resource'
@@ -84,7 +84,7 @@
   [new []
        [construct deliberative_resource `focus_on_plan
 		  [funk [semantic_plan_phenomenal_name]
-			[let [[semantic_plan [get agency physical_semantic_plan semantic_plan_phenomenal_name]]]
+			[let [[semantic_plan [get agency semantic_plan semantic_plan_phenomenal_name]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
 

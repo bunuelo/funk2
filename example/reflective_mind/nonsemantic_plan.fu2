@@ -64,7 +64,7 @@
 					  [cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[eval-expression [elt arguments 0]]]
-												  `[check preconditions]]]]
+												  `[eval]]]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[print-expression [elt arguments 0]]]
@@ -178,6 +178,109 @@
 [deftypefunk nonsemantic_plan get as-graphviz_label []
   [string-concat '<' [get [get this unique_name] as-string] '>']]
 
+
+
+[deftypefunk nonsemantic_plan execute expression-syntax_check [expression]
+  [cond [[is-type `symbol expression] `[quote ,expression]]
+	[[is-type `cons   expression] [let [[command   [car expression]]
+					    [arguments [cdr expression]]]
+					[let [[arguments-length [length arguments]]]
+					  [cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `eval
+													 expression expression]
+												[let [[eval-expression `[quote ,[elt arguments 0]]]]
+												  `cannot_determine_syntax]]]
+						[[eq `print                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `print
+													 expression expression]
+												[let [[print-expression [elt arguments 0]]]
+												  print-expression]]]
+						[[eq `prog                           command] [let [[last_argument nil]]
+												[mapc [funk [argument]
+													    [= last_argument [have this expression-syntax_check argument]]]
+												      arguments]
+												last_argument]]
+						[[eq `parog                          command] [prog [mapc [funk [argument]
+														[have this expression-syntax_check argument]]
+													  arguments]
+												    nil]]
+						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `wait-for-time
+													 expression expression]
+												[let [[time_to_wait [elt arguments 0]]]
+												  [if [not [is-type `integer time_to_wait]]
+												      [terminal_format standard-terminal '\nplan syntax warning: time_to_wait is not an integer (' time_to_wait ').']]
+												  nil]]]
+						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `wait-to-call
+													 expression expression]
+												[let [[action_name [elt arguments 0]]]
+												  [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action action_name]]]
+												    [if [null action]
+													[= action [have [get [get this mind] layer `deliberative] lookup_plan_action action_name]]]
+												    [if [null action]
+													[terminal_format standard-terminal '\nplan syntax warning: "' [conslist-as-english_string [have [cons action_name nil] flatten]] '" action not defined.']]
+												    nil]]]]
+						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `wait-for
+													 expression expression]
+												`cannot_determine_syntax]]
+						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `assert
+													 expression expression]
+												`cannot_determine_syntax]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `quote
+													 expression expression]
+												[let [[quote-expression [elt arguments 0]]]
+												  `[quote, quote-expression]]]]
+						[[eq `?                              command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `?
+													 expression expression]
+												[let [[variable-symbol `[quote ,[elt arguments 0]]]]
+												  `cannot_determine_syntax]]]
+						[[eq `property                       command] [if [not [eq 7 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `property
+													 expression expression]
+												[let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												      [source_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												      [source_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]
+												      [source_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]
+												      [key_type        `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]
+												      [key             `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]
+												      [value           `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]]
+												  `cannot_determine_syntax]]]
+						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `relationship
+													 expression expression]
+												[let [[source_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												      [source_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												      [source_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]
+												      [source_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]
+												      [key_type        `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]
+												      [key             `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]
+												      [target_type     `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]
+												      [target_key_type `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 7]] this]]
+												      [target_key      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 8]] this]]
+												      [target_value    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 9]] this]]]
+												  `cannot_determine_syntax]]]
+						[t                                            [error bug_name `nonsemantic_plan_syntax_error]]]]]]
+	[t                            [error bug_name `nonsemantic_plan_syntax_error]]]]
+
+[deftypefunk nonsemantic_plan execute syntax_check []
+  [have this expression-syntax_check expression]]
+
+
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
 
@@ -260,7 +363,8 @@
 													   [terminal_format standard-terminal '\nplan evaluating parallel process.']
 													   [parog @[mapcar [funk [argument]
 																 `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
-															   arguments]]]]]
+															   arguments]]
+													   nil]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-for-time
@@ -427,8 +531,9 @@
 													 [terminal_format standard-terminal '\nplan imagining parallel process.']
 													 [parog @[mapcar [funk [argument]
 															       `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
-															 arguments]]]]]
-					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+															 arguments]]
+													 nil]]
+					       [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for-time
 												       expression expression]

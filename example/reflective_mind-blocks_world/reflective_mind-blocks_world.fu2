@@ -118,7 +118,7 @@
   'create blocks_world agent specific plans'
   
   [parog [have this create_deliberative_semantic_plan
-	       `[stack cube on pyramid]
+	       `[stack a cube on a pyramid]
 	       `[]
 	       `[prog [wait-to-call [move left until over cube]]
 		      [wait-to-call [attempt to grab block until gripper stops moving]]
@@ -130,7 +130,7 @@
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
-	       `[stack pyramid on cube]
+	       `[stack a pyramid on a cube]
 	       `[]
 	       `[prog [wait-to-call [attempt to grab block until gripper stops moving]]
 		      [wait-to-call [move right until over cube]]
@@ -141,7 +141,7 @@
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
-	       `[assert pyramid on cube]
+	       `[assert that a pyramid is on a cube]
 	       `[]
 	       `[prog [assert [relationship block property shape pyramid
 					    preposition on
@@ -149,7 +149,7 @@
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
-	       `[assert pyramid on table]
+	       `[assert that a pyramid on a table]
 	       `[]
 	       `[prog [assert [relationship block property shape pyramid
 					    preposition on
@@ -159,7 +159,7 @@
 	 'reflective plans'
 	 
 	 [have this create_reflective_semantic_plan
-	       `[choose plan and execute]
+	       `[choose a plan and execute it]
 	       `[]
 	       `[prog [wait-to-call [forget all imagined events]]
 		      [wait-to-call [set imagine time to be now]]
@@ -171,14 +171,14 @@
 		      ]]
 	 
 	 [have this create_reflective_semantic_plan
-	       `[remember plan for goal and execute]
+	       `[remember a plan for a current goal and execute it]
 	       `[]
 	       `[prog [wait-to-call [remember plan for goal]]
 		      [wait-to-call [execute plan in focus]]
 		      ]]
 	 
 	 [have this create_reflective_semantic_plan
-	       `[search for plan that will not fail and execute]
+	       `[search for a plan that imaginatively succeeds and execute it]
 	       `[]
 	       `[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1
 							relation goal_plan

@@ -177,7 +177,7 @@
 		      [wait-to-call [execute plan in focus]]
 		      ]]
 	 
-	 [have this create_reflective_semantic_plan
+	 `[have this create_reflective_semantic_plan
 	       `[search for a plan that imaginatively succeeds and execute it]
 	       `[]
 	       `[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1

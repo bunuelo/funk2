@@ -42,12 +42,7 @@
 
 [deftypefunk deliberative_action get as-english_conslist []
   [if [eq `uninitialized internal-english_conslist]
-      [= internal-english_conslist [let [[resource-english_conslist [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist]]]
-				     [if resource_arguments
-					 [append resource-english_conslist
-						 `[punctuation-comma]
-						 resource_arguments]
-				       resource-english_conslist]]]]
+      [= internal-english_conslist [get [get [get this mind] resource layer_name agency_name resource_name] as-english_conslist_with_arguments resource_arguments]]]
   internal-english_conslist]
 
 [deftypefunk deliberative_action get as-english_string []

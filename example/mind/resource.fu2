@@ -320,11 +320,20 @@
 [deftypefunk resource get as-english_conslist []
   `[,name]]
 
+[deftypefunk resource get as-english_conslist_with_arguments [arguments]
+  `[,name]]
+
 [deftypefunk resource get as-english_string []
   [conslist-as-english_string [get this as-english_conslist]]]
 
+[deftypefunk resource get as-english_string_with_arguments [arguments]
+  [conslist-as-english_string [get this as-english_conslist_with_arguments arguments]]]
+
 [deftypefunk resource get as-string []
   [get this as-english_string]]
+
+[deftypefunk resource get as-string_with_arguments [arguments]
+  [get this as-english_string_with_arguments arguments]]
 
 'defined in traced_resource'
 [deftypefunk resource execute know_of_completed_action_sequence [action_sequence]

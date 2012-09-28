@@ -91,6 +91,9 @@
 [deftypefunk deliberative_focus_on_plan_resource get as-english_conslist []
   `[focus on a plan]]
 
+[deftypefunk deliberative_focus_on_plan_resource get as-english_conslist_with_arguments [arguments]
+  [get `[focus on the plan to @arguments] flatten]]
+
 
 
 'deliberative_execute_plan_in_focus_resource'

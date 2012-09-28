@@ -112,7 +112,7 @@
 				`[prog [wait-to-call [forget all imagined events]]
 				       [wait-to-call [set imagine time to be now]]
 				       [wait-to-call [imagine current situation]]
-				       [wait-to-call 'focus on a plan, plan 6']
+				       [wait-to-call [focus on the plan to remember a plan for a current goal and execute it]]
 				       [wait-to-call [imagine executing plan in focus]]
 				       [wait-to-call [execute plan in focus]]]]
 			  

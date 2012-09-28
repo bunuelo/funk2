@@ -222,8 +222,8 @@
 
 
 [deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
-  [let [[plan [new nonsemantic_plan 
-		   [get this mental_layer]
+  [let [[plan [new nonsemantic_plan [get this mental_layer]
+		   `[evaluate plan expression]
 		   nil
 		   expression]]]
     [have plan syntax_check]

@@ -45,7 +45,7 @@
 			   [finished_trigger  [new fiber_trigger]]
 			   runtime_metric_monitor]
   [new [initial-name initial-active_funk]
-       [terminal_format standard-terminal '\ncreating ' [type this] ' (' [get initial-name as-string] ').']
+       [terminal_format standard-terminal '\ncreating ' [type this] ' (' [get this as-string] ').']
        [= resource_initializing_mutex [new mutex]] [have resource_initializing_mutex lock]
        [= fiber_starting_mutex        [new mutex]] [have fiber_starting_mutex        lock]
        [= runtime_metric_monitor      [new mind_runtime_metric_monitor cause_group]]

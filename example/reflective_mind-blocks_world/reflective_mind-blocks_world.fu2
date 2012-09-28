@@ -84,18 +84,18 @@
   
   'create blocks_world agent specific actions'
   
-  [have-apply this create_physical_action `[builtin_reactive physical move_left]]
-  [have-apply this create_physical_action `[builtin_reactive physical move_right]]
-  [have-apply this create_physical_action `[builtin_reactive physical grab]]
-  [have-apply this create_physical_action `[builtin_reactive physical drop]]
-  [have-apply this create_physical_action `[builtin_reactive physical stop]] 
-
-  [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_pyramid]]
-  [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_pyramid]]
-  [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_cube]]
-  [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_cube]]
-  [have-apply this create_physical_action `[learned_reactive physical attempt_to_grab_block_until_gripper_stops_moving]]
-  [have-apply this create_physical_action `[learned_reactive physical drop_block_and_wait_for_block_to_fall]]
+  [parog [have-apply this create_physical_action `[builtin_reactive physical move_left]]
+	 [have-apply this create_physical_action `[builtin_reactive physical move_right]]
+	 [have-apply this create_physical_action `[builtin_reactive physical grab]]
+	 [have-apply this create_physical_action `[builtin_reactive physical drop]]
+	 [have-apply this create_physical_action `[builtin_reactive physical stop]]
+	 
+	 [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_pyramid]]
+	 [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_pyramid]]
+	 [have-apply this create_physical_action `[learned_reactive physical move_left_until_over_cube]]
+	 [have-apply this create_physical_action `[learned_reactive physical move_right_until_over_cube]]
+	 [have-apply this create_physical_action `[learned_reactive physical attempt_to_grab_block_until_gripper_stops_moving]]
+	 [have-apply this create_physical_action `[learned_reactive physical drop_block_and_wait_for_block_to_fall]]]
   
   nil]
 
@@ -117,74 +117,75 @@
   
   'create blocks_world agent specific plans'
   
-  [have this create_physical_semantic_plan
-	`[]
-	`[prog [wait-to-call [move left until over cube]]
-	       [wait-to-call [attempt to grab block until gripper stops moving]]
-	       [wait-to-call [move right until over pyramid]]
-	       [wait-to-call [drop block and wait for block to fall]]
-	       [assert [relationship block property shape cube
-				     preposition on
-				     block property shape pyramid]]
-	       ]]
-  
-  [have this create_physical_semantic_plan
-	`[]
-	`[prog [wait-to-call [attempt to grab block until gripper stops moving]]
-	       [wait-to-call [move right until over cube]]
-	       [wait-to-call [drop block and wait for block to fall]]
-	       [assert [relationship block property shape pyramid
-				     preposition on
-				     block property shape cube]]
-	       ]]
-  
-  [have this create_physical_semantic_plan
-	`[]
-	`[prog [assert [relationship block property shape pyramid
-				     preposition on
-				     block property shape cube]]
-	       ]]
-  
-  [have this create_physical_semantic_plan
-	`[]
-	`[prog [assert [relationship block property shape pyramid
-				     preposition on
-				     table property color white]]
-	       ]]
-  
-  'reflective plans'
-  
-  [have this create_reflective_semantic_plan
-	`[]
-	`[prog [wait-to-call [forget all imagined events]]
-	       [wait-to-call [set imagine time to be now]]
-	       [wait-to-call [imagine current situation]]
-	       [wait-to-call 'focus on a plan, plan 1']
-	       [wait-to-call [imagine executing plan in focus]]
-	       [wait-to-call [forget all imagined events]]
-	       [wait-to-call [execute plan in focus]]
-	       ]]
-  
-  [have this create_reflective_semantic_plan
-	`[]
-	`[prog [wait-to-call [remember plan for goal]]
-	       [wait-to-call [execute_plan_in_focus]]
-	       ]]
-  
-  [have this create_reflective_semantic_plan
-	`[]
-	`[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1
-						 relation goal_plan
-						 semantic_plan_object property reflective_object_type semantic_plan_object]]]
-		 [wait-to-call [forget all imagined events]]
-		 [wait-to-call [set imagine time to be now]]
-		 [wait-to-call [imagine current situation]]
-		 [wait-to-call 'focus on a plan, plan 1']
-		 [wait-to-call [imagine executing plan in focus]]
-		 [wait-to-call [forget all imagined events]]]
-	       [wait-to-call [remember plan for goal]]
-	       [wait-to-call [execute plan in focus]]
-	       ]]
+  [parog [have this create_physical_semantic_plan
+	       `[]
+	       `[prog [wait-to-call [move left until over cube]]
+		      [wait-to-call [attempt to grab block until gripper stops moving]]
+		      [wait-to-call [move right until over pyramid]]
+		      [wait-to-call [drop block and wait for block to fall]]
+		      [assert [relationship block property shape cube
+					    preposition on
+					    block property shape pyramid]]
+		      ]]
+	 
+	 [have this create_physical_semantic_plan
+	       `[]
+	       `[prog [wait-to-call [attempt to grab block until gripper stops moving]]
+		      [wait-to-call [move right until over cube]]
+		      [wait-to-call [drop block and wait for block to fall]]
+		      [assert [relationship block property shape pyramid
+					    preposition on
+					    block property shape cube]]
+		      ]]
+	 
+	 [have this create_physical_semantic_plan
+	       `[]
+	       `[prog [assert [relationship block property shape pyramid
+					    preposition on
+					    block property shape cube]]
+		      ]]
+	 
+	 [have this create_physical_semantic_plan
+	       `[]
+	       `[prog [assert [relationship block property shape pyramid
+					    preposition on
+					    table property color white]]
+		      ]]
+	 
+	 'reflective plans'
+	 
+	 [have this create_reflective_semantic_plan
+	       `[]
+	       `[prog [wait-to-call [forget all imagined events]]
+		      [wait-to-call [set imagine time to be now]]
+		      [wait-to-call [imagine current situation]]
+		      [wait-to-call 'focus on a plan, plan 1']
+		      [wait-to-call [imagine executing plan in focus]]
+		      [wait-to-call [forget all imagined events]]
+		      [wait-to-call [execute plan in focus]]
+		      ]]
+	 
+	 [have this create_reflective_semantic_plan
+	       `[]
+	       `[prog [wait-to-call [remember plan for goal]]
+		      [wait-to-call [execute_plan_in_focus]]
+		      ]]
+	 
+	 [have this create_reflective_semantic_plan
+	       `[]
+	       `[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1
+							relation goal_plan
+							semantic_plan_object property reflective_object_type semantic_plan_object]]]
+			[wait-to-call [forget all imagined events]]
+			[wait-to-call [set imagine time to be now]]
+			[wait-to-call [imagine current situation]]
+			[wait-to-call 'focus on a plan, plan 1']]
+		      [wait-to-call [imagine executing plan in focus]]
+		      [wait-to-call [forget all imagined events]]
+		      [wait-to-call [remember plan for goal]]
+		      [wait-to-call [execute plan in focus]]]
+	       ]
+	 ]
   
   nil]
 

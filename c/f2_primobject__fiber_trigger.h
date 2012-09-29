@@ -34,8 +34,8 @@ declare_object_type_2_slot(fiber_trigger, cmutex, waiting_fiber_set,
 			   f2ptr add_waiting_fiber_and_remove_from_scheduler__funk;
 			   f2ptr trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__symbol;
 			   f2ptr trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure__funk;
-			   f2ptr remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex__symbol;
-			   f2ptr remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex__funk;
+			   f2ptr remove_from_scheduler_add_waiting_fiber_unlock_traced_cmutex_and_trigger_other__symbol;
+			   f2ptr remove_from_scheduler_add_waiting_fiber_unlock_traced_cmutex_and_trigger_other__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -51,18 +51,18 @@ declare_object_type_2_slot(fiber_trigger, cmutex, waiting_fiber_set,
 
 declare_primobject_2_slot(fiber_trigger, cmutex, waiting_fiber_set);
 
-f2ptr raw__fiber_trigger__new                                                                         (f2ptr cause);
-f2ptr  f2__fiber_trigger__new                                                                         (f2ptr cause);
-void  raw__fiber_trigger__add_waiting_fiber                                                           (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr  f2__fiber_trigger__add_waiting_fiber                                                           (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr raw__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler                                 (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr  f2__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler                                 (f2ptr cause, f2ptr this, f2ptr fiber);
-f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber);
-f2ptr  f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure(f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber);
-f2ptr raw__fiber_trigger__remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex            (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr traced_cmutex);
-f2ptr  f2__fiber_trigger__remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex            (f2ptr cause, f2ptr this, f2ptr fiber, f2ptr traced_cmutex);
-f2ptr raw__fiber_trigger__trigger                                                                     (f2ptr cause, f2ptr this);
-f2ptr  f2__fiber_trigger__trigger                                                                     (f2ptr cause, f2ptr this);
+f2ptr raw__fiber_trigger__new                                                                           (f2ptr cause);
+f2ptr  f2__fiber_trigger__new                                                                           (f2ptr cause);
+void  raw__fiber_trigger__add_waiting_fiber                                                             (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr  f2__fiber_trigger__add_waiting_fiber                                                             (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler                                   (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr  f2__fiber_trigger__add_waiting_fiber_and_remove_from_scheduler                                   (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr raw__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure  (f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber);
+f2ptr  f2__fiber_trigger__trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure  (f2ptr cause, f2ptr this, f2ptr traced_cmutex, f2ptr fiber);
+f2ptr raw__fiber_trigger__remove_from_scheduler_add_waiting_fiber_unlock_traced_cmutex_and_trigger_other(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr traced_cmutex, f2ptr other);
+f2ptr  f2__fiber_trigger__remove_from_scheduler_add_waiting_fiber_unlock_traced_cmutex_and_trigger_other(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr traced_cmutex, f2ptr other);
+f2ptr raw__fiber_trigger__trigger                                                                       (f2ptr cause, f2ptr this);
+f2ptr  f2__fiber_trigger__trigger                                                                       (f2ptr cause, f2ptr this);
 
 f2ptr f2fiber_trigger__primobject_type__new_aux(f2ptr cause);
 

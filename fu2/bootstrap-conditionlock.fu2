@@ -17,25 +17,28 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe conditionlock [frame] [[mutex          [new mutex]]
+[deframe conditionlock [frame] [[unlocked_trigger [new fiber_trigger]]
+				[traced_cmutex  [new traced_cmutex]]
 				[signal_trigger [new fiber_trigger]]]]
 
 [deftypefunk conditionlock execute trylock []
-  [have mutex trylock]]
+  [have traced_cmutex trylock]]
 
 [deftypefunk conditionlock execute lock []
-  [have mutex lock]]
+  [while [have unlocked_trigger trylock_traced_cmutex_add_waiting_fiber_and_remove_from_scheduler_on_failure traced_cmutex [this-fiber]]
+    [yield]]]
 
 [deftypefunk conditionlock execute unlock []
-  [have mutex unlock]]
+  [have traced_cmutex unlock]
+  [have unlocked_trigger trigger]]
 
 [deftypefunk conditionlock get is_locked []
-  [get mutex is_locked]]
+  [get traced_cmutex is_locked]]
 
 [deftypefunk conditionlock execute wait []
-  [have signal_trigger remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex [this-fiber] [get mutex traced_cmutex]]
+  [have signal_trigger remove_from_scheduler_add_waiting_fiber_unlock_traced_cmutex_and_trigger_other [this-fiber] traced_cmutex unlocked_trigger]
   [yield]
-  [have mutex lock]]
+  [have this lock]]
 
 [deftypefunk conditionlock execute signal []
   [have signal_trigger trigger]]
@@ -48,20 +51,24 @@
     [fiber [funk []
 		 [terminal_format standard-terminal '\nfiber 2 starting.']
 		 [while [not done]
+		   
 		   [have conditionlock lock]
 		   [while [not done]
 		     [terminal_format standard-terminal '\nfiber 2 waiting.']
 		     [have conditionlock wait]]
 		   [have conditionlock unlock]]
+		 
 		 [terminal_format standard-terminal '\nfiber 2 done.']]
 	   nil]
     [terminal_format standard-terminal '\nfiber 1 sleeping for 10 seconds.']
     [sleep 10]
     [terminal_format standard-terminal '\nfiber 1 signaling.']
+    
     [have conditionlock lock]
     [= done nil]
     [have conditionlock signal]
     [have conditionlock unlock]
+    
     [have conditionlock lock]
     [= done t]
     [have conditionlock signal]

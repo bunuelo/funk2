@@ -403,7 +403,7 @@
 													 expression expression]
 												[let [[action_name `[quote ,[elt arguments 0]]]]
 												  [eval `[funk [this]
-													       [let [[action [have this lookup_action_below action_name]]]
+													       [let [[action [have this lookup_action_below ,action_name]]]
 														 [if [null action]
 														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
@@ -416,7 +416,7 @@
 													 expression expression]
 												[let [[action_name `[quote ,[elt arguments 0]]]]
 												  [eval `[funk [this]
-													       [let [[action [have this lookup_action action_name]]]
+													       [let [[action [have this lookup_action ,action_name]]]
 														 [if [null action]
 														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
@@ -587,7 +587,7 @@
 												       expression expression]
 											      [let [[action_name `[quote ,[elt arguments 0]]]]
 												[eval `[funk [this]
-													     [let [[action [have this lookup_action_below action_name]]]
+													     [let [[action [have this lookup_action_below ,action_name]]]
 													       [if [null action]
 														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
@@ -600,7 +600,7 @@
 												       expression expression]
 											      [let [[action_name `[quote ,[elt arguments 0]]]]
 												[eval `[funk [this]
-													     [let [[action [have this lookup_action action_name]]]
+													     [let [[action [have this lookup_action ,action_name]]]
 													       [if [null action]
 														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]

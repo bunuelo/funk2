@@ -56,8 +56,8 @@
 [deftypefunk reflective_layer get reflective_actions []
   [get reflective_action_english_symbol_ptypehash values]]
 
-[deftypefunk reflective_layer execute lookup_reflective_action [english_conslist]
-  [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol english_conslist]]]
+[deftypefunk reflective_layer execute lookup_reflective_action [expression]
+  [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
 
 [deftypefunk reflective_layer execute add_reflective_semantic_object_recursive [semantic_object]
   [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `deliberative2_knowledge] add_semantic_frame semantic_object]

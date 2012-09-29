@@ -223,6 +223,8 @@
 												    [if [null action]
 													[= action [have [get [get this mind] layer `deliberative] lookup_plan_action action_name]]]
 												    [if [null action]
+													[= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
+												    [if [null action]
 													[terminal_format standard-terminal '\nplan syntax warning: "' [conslist-as-english_string [have [cons action_name nil] flatten]] '" action not defined.']]
 												    nil]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
@@ -396,6 +398,8 @@
 														 [if [null action]
 														     [= action [have [get [get this mind] layer `deliberative] lookup_plan_action ,action_name]]]
 														 [if [null action]
+														     [= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
+														 [if [null action]
 														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
@@ -562,6 +566,8 @@
 													     [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action ,action_name]]]
 													       [if [null action]
 														   [= action [have [get [get this mind] layer `deliberative] lookup_plan_action ,action_name]]]
+													       [if [null action]
+														   [= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
 													       [if [null action]
 														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]

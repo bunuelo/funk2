@@ -185,19 +185,18 @@
   nil]
 
 [deftypefunk resource execute activate [:rest args]
-  [let [[successful_activation nil]]
-    [have active-conditionlock lock]
-    [if [not active]
-	[prog [=   active                t]
-	      [=   active_cause_resource [cause-lookup cause-resource]]
-	      [=   active_cause_event    [cause-lookup cause-resource_action_event]]
-	      [=   active_args           args]
-	      [have active-conditionlock signal]
-	      [have active-conditionlock unlock]]
-      [prog [have active-conditionlock unlock]
-	    [error bug_object_type     `resource
-		   bug_object_typefunk `activate
-		   error_type      `resource-is-already-activated]]]]]
+  [have active-conditionlock lock]
+  [if [not active]
+      [prog [=   active                t]
+	    [=   active_cause_resource [cause-lookup cause-resource]]
+	    [=   active_cause_event    [cause-lookup cause-resource_action_event]]
+	    [=   active_args           args]
+	    [have active-conditionlock signal]
+	    [have active-conditionlock unlock]]
+    [prog [have active-conditionlock unlock]
+	  [error bug_object_type     `resource
+		 bug_object_typefunk `activate
+		 error_type      `resource-is-already-activated]]]]
 
 [deftypefunk resource set active [new-active]
   [have active-conditionlock lock]
@@ -208,11 +207,10 @@
   [have active-conditionlock lock]
   [while active
     [have active-conditionlock wait]]
-  [=   active                t]
-  [=   active_cause_resource [cause-lookup cause-resource]]
-  [=   active_cause_event    [cause-lookup cause-resource_action_event]]
-  [=   active_args           args]
-  [=   successful_activation t]
+  [= active                t]
+  [= active_cause_resource [cause-lookup cause-resource]]
+  [= active_cause_event    [cause-lookup cause-resource_action_event]]
+  [= active_args           args]
   [have active-conditionlock signal]
   [have active-conditionlock unlock]
   ]

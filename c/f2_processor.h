@@ -39,6 +39,8 @@ declare_object_type_9_slot(processor,
 			   desc,
 			   bytecode_count,
 			   
+			   f2ptr active_fibers_count__symbol;
+			   f2ptr active_fibers_count__funk;
 			   f2ptr add_active_fiber__symbol;
 			   f2ptr add_active_fiber__funk;
 			   f2ptr remove_active_fiber__symbol;
@@ -78,6 +80,10 @@ declare_primobject_9_slot(processor,
 			  bytecode_count);
 
 f2ptr      f2__processor__new                                          (f2ptr cause, f2ptr scheduler, f2ptr pool_index, f2ptr desc);
+u64       raw__processor__active_fibers_count__thread_unsafe           (f2ptr cause, f2ptr this);
+u64       raw__processor__active_fibers_count                          (f2ptr cause, f2ptr this);
+f2ptr      f2__processor__active_fibers_count                          (f2ptr cause, f2ptr this);
+void      raw__processor__active_fibers_count__set__thread_unsafe      (f2ptr cause, f2ptr this, u64 active_fibers_count__i);
 boolean_t raw__processor__add_active_fiber__thread_unsafe              (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr      f2__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);

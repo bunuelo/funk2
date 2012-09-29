@@ -162,15 +162,6 @@ def_pcfunk1(scheduler__processor_with_fewest_fibers, this,
 	    return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
 
 
-f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler, this);
-  return raw__scheduler__processor_with_fewest_fibers(cause, this);
-}
-def_pcfunk1(scheduler__processor_with_fewest_fibers, this,
-	    "",
-	    return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
-
-
 f2ptr raw__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor = raw__scheduler__processor_with_fewest_fibers(cause, this);
   return raw__processor__add_active_fiber(cause, processor, fiber);

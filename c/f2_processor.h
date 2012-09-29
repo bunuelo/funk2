@@ -28,10 +28,11 @@ typedef struct funk2_object_type__processor__slot_s funk2_object_type__processor
 
 // processor
 
-declare_object_type_8_slot(processor,
+declare_object_type_9_slot(processor,
 			   scheduler,
 			   processor_thread,
 			   active_fibers_scheduler_cmutex,
+			   active_fibers_count_chunk,
 			   active_fibers,
 			   active_fibers_iter,
 			   pool_index,
@@ -65,10 +66,11 @@ declare_object_type_8_slot(processor,
 
 // processor
 
-declare_primobject_8_slot(processor,
+declare_primobject_9_slot(processor,
 			  scheduler,
 			  processor_thread,
 			  active_fibers_scheduler_cmutex,
+			  active_fibers_count_chunk,
 			  active_fibers,
 			  active_fibers_iter,
 			  pool_index,

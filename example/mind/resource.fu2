@@ -30,6 +30,8 @@
 			   active_cause_event
 			   active_funk
 			   active_args
+			   [finished-conditionlock [new conditionlock]]
+			   [finished               nil]
 			   result
 			   done
 			   [initialized-conditionlock [new conditionlock]]
@@ -87,7 +89,12 @@
 						  [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
 						[= active nil]
 						[have active-conditionlock signal]
-						[have active-conditionlock unlock]]
+						[have active-conditionlock unlock]
+						
+						[have finished-conditionlock lock]
+						[= finished t]
+						[have finished-conditionlock signal]
+						[have finished-conditionlock unlock]]
 					      [terminal_format standard-terminal '\n' [type this] ' done.']]
 					nil]]
        this]]
@@ -185,6 +192,12 @@
       [apply &terminal_format [cons standard-terminal `['\nThe ' ,[get this name] ' resource in the ' ,[get [get this agency] name] ' agency in the ' ,[get [get this layer] name] ' layer in ' ,[get [get this mind] name] '\'s mind thinks: ' @expressions]]]]
   nil]
 
+[deftypefunk resource set active [new-active]
+  [have active-conditionlock lock]
+  [= active new-active]
+  [have active-conditionlock signal]
+  [have active-conditionlock unlock]]
+
 [deftypefunk resource execute activate [:rest args]
   [have active-conditionlock lock]
   [if [not active]
@@ -199,12 +212,6 @@
 		 bug_object_typefunk `activate
 		 error_type      `resource-is-already-activated]]]]
 
-[deftypefunk resource set active [new-active]
-  [have active-conditionlock lock]
-  [= active new-active]
-  [have active-conditionlock signal]
-  [have active-conditionlock unlock]]
-
 [deftypefunk resource execute wait_to_activate [:rest args]
   [have active-conditionlock lock]
   [while active
@@ -218,15 +225,13 @@
   ]
 
 [deftypefunk resource execute finish []
-  [have active-conditionlock lock]
-  [while active
-    [have active-conditionlock wait]]
-  [= active_args           nil]
-  [= active_cause_resource nil]
-  [= active_cause_event    nil]
+  [have finished-conditionlock lock]
+  [while [not finished]
+    [have finished-conditionlock wait]]
   [let [[return_result result]]
-    [= result nil]
-    [have active-conditionlock unlock]
+    [= finished nil]
+    [have finished-conditionlock signal]
+    [have finished-conditionlock unlock]
     return_result]]
 
 [deftypefunk resource execute destroy []

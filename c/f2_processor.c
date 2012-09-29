@@ -23,10 +23,11 @@
 
 // processor
 
-def_primobject_8_slot(processor,
+def_primobject_9_slot(processor,
 		      scheduler,
 		      processor_thread,
 		      active_fibers_scheduler_cmutex,
+		      active_fibers_count_chunk,
 		      active_fibers,
 		      active_fibers_iter,
 		      pool_index,
@@ -36,6 +37,7 @@ def_primobject_8_slot(processor,
 f2ptr f2__processor__new(f2ptr cause, f2ptr scheduler, f2ptr pool_index, f2ptr desc) {
   f2ptr processor_thread               = nil;
   f2ptr active_fibers_scheduler_cmutex = f2scheduler_cmutex__new(cause);
+  f2ptr active_fibers_count_chunk      = raw__chunk__new(cause, sizeof(u64));
   f2ptr active_fibers                  = nil;
   f2ptr active_fibers_iter             = nil;
   f2ptr bytecode_count                 = f2integer__new(cause, 0);
@@ -43,6 +45,7 @@ f2ptr f2__processor__new(f2ptr cause, f2ptr scheduler, f2ptr pool_index, f2ptr d
 			  scheduler,
 			  processor_thread,
 			  active_fibers_scheduler_cmutex,
+			  active_fibers_count_chunk,
 			  active_fibers,
 			  active_fibers_iter,
 			  pool_index,
@@ -178,7 +181,6 @@ f2ptr f2__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
 def_pcfunk2(processor__remove_active_fiber, this, fiber,
 	    "",
 	    return f2__processor__remove_active_fiber(this_cause, this, fiber));
-
 
 
 f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
@@ -658,10 +660,11 @@ void f2__processor__defragment__fix_pointers() {
   
   // processor
   
-  initialize_primobject_8_slot__defragment__fix_pointers(processor,
+  initialize_primobject_9_slot__defragment__fix_pointers(processor,
 							 scheduler,
 							 processor_thread,
 							 active_fibers_scheduler_cmutex,
+							 active_fibers_count_chunk,
 							 active_fibers,
 							 active_fibers_iter,
 							 pool_index,
@@ -707,10 +710,11 @@ void f2__processor__reinitialize_globalvars() {
   
   // processor
   
-  initialize_primobject_8_slot(processor,
+  initialize_primobject_9_slot(processor,
 			       scheduler,
 			       processor_thread,
 			       active_fibers_scheduler_cmutex,
+			       active_fibers_count_chunk,
 			       active_fibers,
 			       active_fibers_iter,
 			       pool_index,

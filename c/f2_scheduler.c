@@ -162,39 +162,6 @@ def_pcfunk1(scheduler__processor_with_fewest_fibers, this,
 	    return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
 
 
-/*
-void raw__scheduler__attempt_to_move_fiber_from_most_used_to_least_used_processor(f2ptr cause, f2ptr this) {
-  f2ptr processors         = f2scheduler__processors(this, cause);
-  u64   processors__length = raw__array__length(cause, processors);
-  u64   min_length         = 0xffffffffffffffffull;
-  f2ptr min_processor      = nil;
-  u64   max_length         = 0;
-  f2ptr max_processor      = nil;
-  u64 i;
-  for (i = 0; i < processors__length; i ++) {
-    f2ptr processor = raw__array__elt(cause, processors, i);
-    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
-    u64 fibers__length = raw__simple_length(cause, active_fibers);
-    if (fibers__length < min_length) {
-      min_length = fibers__length;
-      min_processor = processor;
-    }
-    if (fibers__length > max_length) {
-      max_length = fibers__length;
-      max_processor = processor;
-    }
-  }
-  if ((max_length - min_length) > 1) {
-    f2ptr max_processor_
-    f2ptr remove_success = raw__processor__remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-    if (remove_success != nil) {
-      raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber);
-    }
-  }
-  return min_processor;
-}
-*/
-
 f2ptr f2__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
   assert_argument_type(scheduler, this);
   return raw__scheduler__processor_with_fewest_fibers(cause, this);

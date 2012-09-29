@@ -30,7 +30,7 @@
 			       [other_cause_groups       nil]
 			       runtime_metric_monitor]
   [new [initial-index initial-name]
-       [terminal_format standard-terminal '\ncreating ' new-name ' mental_layer.']
+       [terminal_format standard-terminal '\ncreating ' initial-name ' mental_layer.']
        [= index                  initial-index]
        [= name                   initial-name]
        [= agency_frame           [frame]]

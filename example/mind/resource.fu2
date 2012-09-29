@@ -83,8 +83,7 @@
 						[while [not active]
 						  [have active-conditionlock wait]]
 						[if active_funk
-						    [prog [have activated_trigger trigger]
-							  [= result [apply active_funk active_args]]]
+						    [= result [apply active_funk active_args]]
 						  [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
 						[= active nil]
 						[have active-conditionlock unlock]]

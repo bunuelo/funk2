@@ -17,6 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
 [defpackage character
   :sources ['character.fu2']]
 
@@ -28,6 +29,11 @@
   :packages [story]
    :sources ['story-graph.fu2']]
 
+[defpackage self_model
+  :sources ['self_model.fu2']]
+
+
+
 [defpackage mind_runtime_metric
   :packages [math]
    :sources ['mind_runtime_metric.fu2']]
@@ -35,12 +41,8 @@
 [defpackage resource
   :packages [math
 	     semantic_knowledge_base
-	     story
 	     mind_runtime_metric]
    :sources ['resource.fu2']]
-
-[defpackage self_model
-  :sources ['self_model.fu2']]
 
 [defpackage agency
   :packages [resource]
@@ -61,7 +63,6 @@
 [defpackage mind
   :packages [agent_body
 	     mental_layer
-	     self_model
 	     semantic_knowledge_base
 	     meta_semantic_knowledge_base
 	     semantic_event_knowledge_base

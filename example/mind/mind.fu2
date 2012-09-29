@@ -379,17 +379,6 @@
 			[have resource activate]]]]
 	[get this resources]]]
 
-[deftypefunk mind get self_model []
-  [let [[self_model [new self_model]]]
-    [mapc [funk [layer]
-		[mapc [funk [agency]
-			    [mapc [funk [resource]
-					[have self_model add_activity [get layer name] [get agency name] [get resource name] [get resource active]]]
-				  [get agency resources]]]
-		      [get layer agencies]]]
-	  [get this layers]]
-    self_model]]
-
 [deftypefunk mind execute destroy []
   [mapc [funk [resource]
 	      [have resource destroy]]

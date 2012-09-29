@@ -86,6 +86,7 @@
 						    [= result [apply active_funk active_args]]
 						  [format stdout '\nresource warning: active_funk is nil (name = ' name ').\n']]
 						[= active nil]
+						[have active-conditionlock signal]
 						[have active-conditionlock unlock]]
 					      [terminal_format standard-terminal '\n' [type this] ' done.']]
 					nil]]
@@ -201,6 +202,7 @@
 [deftypefunk resource set active [new-active]
   [have active-conditionlock lock]
   [= active new-active]
+  [have active-conditionlock signal]
   [have active-conditionlock unlock]]
 
 [deftypefunk resource execute wait_to_activate [:rest args]

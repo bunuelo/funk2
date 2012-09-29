@@ -21,7 +21,8 @@
 'mind'
 
 [deframe mind [frame] [creation_time
-		       body
+		       [body-conditionlock [new conditionlock]]
+		       [body               nil]
 		       layer_frame
 		       resources_waiting_for_mental_trigger_event_frame
 		       knowledge_event_stream_iterator_frame
@@ -56,6 +57,18 @@
 [deftypefunk mind get mind []
   this]
 
+[deftypefunk mind set body [new-body]
+  [have body-conditionlock lock]
+  [= body new-body]
+  [have body-conditionlock signal]
+  [have body-conditionlock unlock]]
+
+[deftypefunk mind execute stop_me_while_body_null []
+  [have body-conditionlock lock]
+  [while [null body]
+    [have body-conditionlock wait]]
+  [have body-conditionlock unlock]]
+
 [deftypefunk mind get name_type_index [name_type]
   [let [[result [have index_name_type_ptypehash lookup name_type]]]
     [if [null result]
@@ -75,9 +88,9 @@
 
 
 [deftypefunk mind get name []
-  [if [not [null body]]
-      [get body name]
-    nil]]
+  [if [null body]
+      [error bug_name `mind_needs_body_to_have_name]]
+  [get body name]]
 
 [deftypefunk mind get layers []
   [get [get this layer_frame] values]]

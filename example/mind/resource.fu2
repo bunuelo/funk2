@@ -68,6 +68,7 @@
 						[cause-define layer-name [get layer name]]
 						[have layer stop_me_while_mind_null]
 						[let [[mind [get mental_layer mind]]]
+						  [have mind stop_me_while_body_null]
 						  [cause-define mind-name [get mind name]]
 						  [cause-define cause-name `[,mind-name ,layer-name ,agency-name ,resource-name resource]]]]
 					      [set this initialized t]

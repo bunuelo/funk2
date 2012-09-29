@@ -18,7 +18,6 @@
  rights to redistribute these changes.'
 
 [deframe conditionlock [frame] [[mutex          [new mutex]]
-				[signal_mutex   [new mutex]]
 				[signal_trigger [new fiber_trigger]]]]
 
 [deftypefunk conditionlock execute trylock []
@@ -34,16 +33,12 @@
   [get mutex is_locked]]
 
 [deftypefunk conditionlock execute wait []
-  [have signal_mutex lock]
-  [have mutex unlock]
-  [have signal_trigger remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex [this-fiber] [get signal_mutex traced_cmutex]]
+  [have signal_trigger remove_from_scheduler_add_waiting_fiber_and_unlock_traced_cmutex [this-fiber] [get mutex traced_cmutex]]
   [yield]
   [have mutex lock]]
 
 [deftypefunk conditionlock execute signal []
-  [have signal_mutex lock]
-  [have signal_trigger trigger]
-  [have signal_mutex unlock]]
+  [have signal_trigger trigger]]
 
 
 [defunk conditionlock-test []

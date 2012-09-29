@@ -324,7 +324,7 @@
 	       
 	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 	       
-	       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to start)']
+	       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
 	       [have execute_now-conditionlock lock]
 	       [= execute_now t]
 	       [have execute_now-conditionlock signal]

@@ -299,9 +299,13 @@
 		 [error funkname `semantic_planner-new_semantic_thought
 			bug_name `semantic_knowledge_bases-is-nil]]
 	     
-	     [let* [[thought_fiber-start_trigger [new fiber_trigger]]
+	     [let* [[execute_now-conditionlock   [new conditionlock]]
+		    [execute_now                 nil]
 		    [thought_fiber               [fiber [funk []
-							      [wait-for-trigger thought_fiber-start_trigger]
+							      [have execute_now-conditionlock lock]
+							      [while [not execute_now]
+								[have execute_now-conditionlock wait]]
+							      [have execute_now-conditionlock unlock]
 							      [cause-define cause-name [get this unique_name]]
 							      [apply funk args]]
 							[]]]
@@ -320,8 +324,11 @@
 	       
 	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 	       
-	       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (triggering thought_fiber to start)']
-	       [have thought_fiber-start_trigger trigger]
+	       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to start)']
+	       [have execute_now-conditionlock lock]
+	       [= execute_now t]
+	       [have execute_now-conditionlock signal]
+	       [have execute_now-conditionlock unlock]
 	       [let [[result [fiber-sheltered_join thought_fiber]]]
 		 [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
 		 

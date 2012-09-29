@@ -57,6 +57,17 @@ def_pcfunk3(processor__new, scheduler, pool_index, desc,
 	    return f2__processor__new(this_cause, scheduler, pool_index, desc));
 
 
+u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_count_chunk = f2processor__active_fibers_count_chunk(this, cause);
+  return raw__chunk__bit64__elt(cause, active_fibers_count_chunk, 0);
+}
+
+void raw__processor__active_fibers_count__set__thread_unsafe(f2ptr cause, f2ptr this, u64 active_fibers_count__i) {
+  f2ptr active_fibers_count_chunk = f2processor__active_fibers_count_chunk(this, cause);
+  return raw__chunk__bit64__elt__set(cause, active_fibers_count_chunk, 0, active_fibers_count__i);
+}
+
+
 boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (processor_assignment_index != nil) {

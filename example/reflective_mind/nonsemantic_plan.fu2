@@ -95,6 +95,10 @@
 												[let [[time_to_wait [elt arguments 0]]]
 												  [append `[wait for]
 													  `[,time_to_wait]]]]]
+						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[action_name [elt arguments 0]]]
+												  [flatten_constree `[,action_name]]]]]
 						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [elt arguments 0]]]
@@ -214,16 +218,21 @@
 												  [if [not [is-type `integer time_to_wait]]
 												      [terminal_format standard-terminal '\nplan syntax warning: time_to_wait is not an integer (' time_to_wait ').']]
 												  nil]]]
+						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `wait-to-call-below
+													 expression expression]
+												[let [[action_name [elt arguments 0]]]
+												  [let [[action [have this lookup_action_below action_name]]]
+												    [if [null action]
+													[terminal_format standard-terminal '\nplan syntax warning: "' [conslist-as-english_string [have [cons action_name nil] flatten]] '" action not defined.']]
+												    nil]]]]
 						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `wait-to-call
 													 expression expression]
 												[let [[action_name [elt arguments 0]]]
-												  [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action action_name]]]
-												    [if [null action]
-													[= action [have [get [get this mind] layer `deliberative] lookup_plan_action action_name]]]
-												    [if [null action]
-													[= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
+												  [let [[action [have this lookup_action action_name]]]
 												    [if [null action]
 													[terminal_format standard-terminal '\nplan syntax warning: "' [conslist-as-english_string [have [cons action_name nil] flatten]] '" action not defined.']]
 												    nil]]]]
@@ -388,17 +397,26 @@
 														   `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
 														   [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 														 ]]]]]]
+						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `wait-to-call-below
+													 expression expression]
+												[let [[action_name `[quote ,[elt arguments 0]]]]
+												  [eval `[funk [this]
+													       [let [[action [have this lookup_action_below action_name]]]
+														 [if [null action]
+														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
+															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
+															 [have action wait_to_call]
+															 ]]]]]]]]
 						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-to-call
 													 expression expression]
 												[let [[action_name `[quote ,[elt arguments 0]]]]
 												  [eval `[funk [this]
-													       [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action ,action_name]]]
-														 [if [null action]
-														     [= action [have [get [get this mind] layer `deliberative] lookup_plan_action ,action_name]]]
-														 [if [null action]
-														     [= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
+													       [let [[action [have this lookup_action action_name]]]
 														 [if [null action]
 														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
@@ -512,6 +530,12 @@
 	[]]]
 
 
+[deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
+  [have mental_layer lookup_action_below action_name_expression]]
+
+[deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
+  [have mental_layer lookup_action action_name_expression]]
+
 
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
@@ -557,17 +581,26 @@
 													     [let [[time_to_wait ,time_to_wait]]
 													       'no imaginative effects'
 													       ]]]]]]
+					      [[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `wait-to-call-below
+												       expression expression]
+											      [let [[action_name `[quote ,[elt arguments 0]]]]
+												[eval `[funk [this]
+													     [let [[action [have this lookup_action_below action_name]]]
+													       [if [null action]
+														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
+															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+														       [have action imagine_waiting_to_call]
+														       ]]]]]]]]
 					      [[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-to-call
 												       expression expression]
 											      [let [[action_name `[quote ,[elt arguments 0]]]]
 												[eval `[funk [this]
-													     [let [[action [have [get [get this mind] layer `deliberative] lookup_physical_action ,action_name]]]
-													       [if [null action]
-														   [= action [have [get [get this mind] layer `deliberative] lookup_plan_action ,action_name]]]
-													       [if [null action]
-														   [= action [have [get [get this mind] layer `reflective] lookup_reflective_action ,action_name]]]
+													     [let [[action [have this lookup_action action_name]]]
 													       [if [null action]
 														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
 															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
@@ -722,6 +755,12 @@
 												       expression expression]
 											      [let [[time_to_wait [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
+					      [[eq `wait-to-call-below             command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `wait-to-call-below
+												       expression expression]
+											      [let [[action_name `[quote ,[elt command_arguments 0]]]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call-below]]]]
 					      [[eq `wait-to-call                   command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `wait-to-call

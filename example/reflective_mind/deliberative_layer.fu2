@@ -165,6 +165,12 @@
     [have this add_plan_action action]]]
 
 
+[deftypefunk deliberative_layer execute lookup_action [expression]
+  [have this lookup_plan_action expression]]
+
+[deftypefunk deliberative_layer execute lookup_action_below [expression]
+  [have this lookup_physical_action expression]]
+
 
 
 

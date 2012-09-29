@@ -120,10 +120,10 @@
   [parog [have this create_deliberative_semantic_plan
 	       `[stack a cube on a pyramid]
 	       `[]
-	       `[prog [wait-to-call [move left until over cube]]
-		      [wait-to-call [attempt to grab block until gripper stops moving]]
-		      [wait-to-call [move right until over pyramid]]
-		      [wait-to-call [drop block and wait for block to fall]]
+	       `[prog [wait-to-call-below [move left until over cube]]
+		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
+		      [wait-to-call-below [move right until over pyramid]]
+		      [wait-to-call-below [drop block and wait for block to fall]]
 		      [assert [relationship block property shape cube
 					    preposition on
 					    block property shape pyramid]]
@@ -132,9 +132,9 @@
 	 [have this create_deliberative_semantic_plan
 	       `[stack a pyramid on a cube]
 	       `[]
-	       `[prog [wait-to-call [attempt to grab block until gripper stops moving]]
-		      [wait-to-call [move right until over cube]]
-		      [wait-to-call [drop block and wait for block to fall]]
+	       `[prog [wait-to-call-below [attempt to grab block until gripper stops moving]]
+		      [wait-to-call-below [move right until over cube]]
+		      [wait-to-call-below [drop block and wait for block to fall]]
 		      [assert [relationship block property shape pyramid
 					    preposition on
 					    block property shape cube]]
@@ -162,20 +162,20 @@
   [parog [have this create_reflective_semantic_plan
 	       `[choose a plan and execute it]
 	       `[]
-	       `[prog [wait-to-call [forget all imagined events]]
-		      [wait-to-call [set imagine time to be now]]
-		      [wait-to-call [imagine current situation]]
-		      [wait-to-call [focus on the plan to stack a cube on a pyramid]]
-		      [wait-to-call [imagine executing plan in focus]]
-		      [wait-to-call [forget all imagined events]]
-		      [wait-to-call [execute plan in focus]]
+	       `[prog [wait-to-call-below [forget all imagined events]]
+		      [wait-to-call-below [set imagine time to be now]]
+		      [wait-to-call-below [imagine current situation]]
+		      [wait-to-call-below [focus on the plan to stack a cube on a pyramid]]
+		      [wait-to-call-below [imagine executing plan in focus]]
+		      [wait-to-call-below [forget all imagined events]]
+		      [wait-to-call-below [execute plan in focus]]
 		      ]]
 	 
 	 [have this create_reflective_semantic_plan
 	       `[remember a plan for a current goal and execute it]
 	       `[]
-	       `[prog [wait-to-call [remember plan for goal]]
-		      [wait-to-call [execute plan in focus]]
+	       `[prog [wait-to-call-below [remember plan for goal]]
+		      [wait-to-call-below [execute plan in focus]]
 		      ]]
 	 
 	 `[have this create_reflective_semantic_plan
@@ -184,14 +184,14 @@
 	       `[prog [while [not [exists [relationship semantic_planner property planner_type deliberative1
 							relation goal_plan
 							semantic_plan_object property reflective_object_type semantic_plan_object]]]
-			[wait-to-call [forget all imagined events]]
-			[wait-to-call [set imagine time to be now]]
-			[wait-to-call [imagine current situation]]
-			[wait-to-call 'focus on a plan, plan 1']]
-		      [wait-to-call [imagine executing plan in focus]]
-		      [wait-to-call [forget all imagined events]]
-		      [wait-to-call [remember plan for goal]]
-		      [wait-to-call [execute plan in focus]]]
+			[wait-to-call-below [forget all imagined events]]
+			[wait-to-call-below [set imagine time to be now]]
+			[wait-to-call-below [imagine current situation]]
+			[wait-to-call-below 'focus on a plan, plan 1']]
+		      [wait-to-call-below [imagine executing plan in focus]]
+		      [wait-to-call-below [forget all imagined events]]
+		      [wait-to-call-below [remember plan for goal]]
+		      [wait-to-call-below [execute plan in focus]]]
 	       ]
 	 ]
   

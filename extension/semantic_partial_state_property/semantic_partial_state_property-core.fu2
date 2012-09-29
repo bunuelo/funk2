@@ -26,6 +26,13 @@
 
 [defcorefunk semantic_partial_state_property-phenomenal_name semantic_partial_state_property semantic_partial_state_property__phenomenal_name]
 
+`[property gripper is-me t
+	   movement_command
+	   stop]
+
+`[property gripper movement_command stop
+	   is-me
+	   t]
 
 [deftypefunk semantic_partial_state_property get as-declarative_english_conslist []
   [let [[source_type  [get this source_type]]
@@ -35,11 +42,11 @@
 	[target_type  [get this target_type]]]
     [if [eq source_value t]
 	[if [eq target_type t]
-	    `[a ,source_type is ,source_key and ,key]
-	  `[a ,source_value ,key ,source_type is ,target_type]]
+	    `[a ,source_type that ,source_key and ,key]
+	  `[a ,source_type that ,source_key and has ,target_type ,key]]
       [if [eq target_type t]
-	  `[a ,source_value ,source_key ,source_type is ,key]
-	`[a ,source_value ,source_key ,target_type ,key ,source_type]]]]]
+	  `[a ,source_type that has ,source_value ,source_key and ,key]
+	`[a ,source_type that has ,source_value ,source_key and ,target_type ,key]]]]]
 
 [deftypefunk semantic_partial_state_property get as-declarative_english_string []
   [conslist-as-english_string [get this as-declarative_english_conslist]]]

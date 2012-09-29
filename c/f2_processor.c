@@ -373,7 +373,7 @@ f2ptr raw__processor__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
 						new__symbol(cause, "print_object_type"),              new__symbol(cause, "processor"),
 						new__symbol(cause, "processor_thread"),               f2__processor__processor_thread(              cause, this),
 						new__symbol(cause, "active_fibers_scheduler_cmutex"), f2__processor__active_fibers_scheduler_cmutex(cause, this),
-						new__symbol(cause, "active_fiber_count"),             f2__processor__active_fiber_count(            cause, this),
+						new__symbol(cause, "active_fibers_count"),            f2__processor__active_fibers_count(           cause, this),
 						new__symbol(cause, "active_fibers"),                  f2__processor__active_fibers(                 cause, this),
 						new__symbol(cause, "pool_index"),                     f2__processor__pool_index(                    cause, this),
 						new__symbol(cause, "desc"),                           f2__processor__desc(                          cause, this),

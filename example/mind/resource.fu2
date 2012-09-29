@@ -94,6 +94,7 @@
 [deftypefunk resource set agency [new-agency]
   [have agency-conditionlock lock]
   [= agency new-agency]
+  [have agency-conditionlock signal]
   [have agency-conditionlock unlock]]
 
 [deftypefunk resource execute stop_me_while_agency_null []
@@ -105,6 +106,7 @@
 [deftypefunk resource set initialized [new-initialized]
   [have initialized-conditionlock lock]
   [= initialized new-initialized]
+  [have initialized-conditionlock signal]
   [have initialized-conditionlock unlock]]
 
 [deftypefunk resource execute stop_me_until_initialized []

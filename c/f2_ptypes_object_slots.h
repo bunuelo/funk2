@@ -517,6 +517,7 @@ f2ptr f2traced_array__primobject_type__new(f2ptr cause);
 
 // mutable_array_pointer
 
+f2ptr     raw__mutable_array_pointer__new                         (f2ptr cause, f2ptr array, u64 index);
 f2ptr      f2__mutable_array_pointer__new                         (f2ptr cause, f2ptr array, f2ptr index);
 boolean_t raw__mutable_array_pointer__is_type                     (f2ptr cause, f2ptr x);
 f2ptr      f2__mutable_array_pointer__is_type                     (f2ptr cause, f2ptr x);

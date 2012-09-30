@@ -702,7 +702,7 @@
 														 [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 														       [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
 														   [terminal_format standard-terminal '\nimagining executing plan: "' [get ,semantic_plan_object-phenomenal_name as-string] '."']
-														   [have nonsemantic_plan imagine_executing_as_thought_in_semantic_planner semantic_planner]
+														   [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner]
 														   ]]]]]]]]
 					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments

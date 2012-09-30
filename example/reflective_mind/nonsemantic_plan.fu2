@@ -68,7 +68,7 @@
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[print-expression [elt arguments 0]]]
-												  `[]]]]
+												  [get this expression-as_english_conslist print-expression]]]]
 						[[eq `prog                           command] [apply &append
 												     [append `[[do the following in serial punctuation-colon]]
 													     [let [[step_number 1]]
@@ -103,6 +103,10 @@
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [elt arguments 0]]]
 												  [flatten_constree `[,action_name]]]]]
+						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[exists-expression [elt arguments 0]]]
+												  [get this expression-as_english_conslist exists-expression]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
@@ -110,9 +114,9 @@
 													  partial_state]]]]
 						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
+												[let [[assert-expression [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[assert that]
-													  partial_state]]]]
+													  assert-expression]]]]
 						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[quote-expression [elt arguments 0]]]
@@ -236,6 +240,12 @@
 												    [if [null action]
 													[terminal_format standard-terminal '\nplan syntax warning: "' [conslist-as-english_string [have [cons action_name nil] flatten]] '" action not defined.']]
 												    nil]]]]
+						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `exists
+													 expression expression]
+												[let [[exists-expression [elt arguments 0]]]
+												  [have this expression-syntax_check exists-expression]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `wait-for
@@ -245,7 +255,8 @@
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `assert
 													 expression expression]
-												`cannot_determine_syntax]]
+												[let [[assert-expression [elt arguments 0]]]
+												  [have this expression-syntax_check assert-expression]]]]
 						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `quote
@@ -291,6 +302,9 @@
 [deftypefunk nonsemantic_plan execute syntax_check []
   [have this expression-syntax_check expression]]
 
+
+[deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
+  [have [get this mental_layer] check_exists semantic_partial_state]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
@@ -350,8 +364,8 @@
 		 
 		 result]]]]]
 
-[defunk nonsemantic_plan-expression-compile-eval [expression]
-  `[funkall ,[nonsemantic_plan-expression-compile expression] this]]
+
+
 
 [defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
@@ -423,6 +437,15 @@
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
+						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `exists
+													 expression expression]
+												[let [[exists-expression [elt arguments 0]]]
+												  [eval `[funk [this]
+													       [let [[eval-exists-expression [funkall ,[nonsemantic_plan-expression-compile exists-expression] this]]]
+														 [have this check_exists eval-exists-expression]
+														 ]]]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-for
@@ -437,12 +460,12 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `assert
 													 expression expression]
-												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[assert-expression `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
-													       [let [[partial_state ,partial_state]]
-														 [terminal_format standard-terminal '\nplan assuring partial state exists: "' [get partial_state as-declarative_english_string] '."']
-														 [have this assert partial_state]]
-													       ]]]]]
+													       [let [[assert-expression ,assert-expression]]
+														 [if [not assert-expression]
+														     [error bug_name    `assertion-failed
+															    description [conslist `assert ,assert-expression]]]]]]]]]
 						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `quote
@@ -607,6 +630,15 @@
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
+					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `exists
+												       expression expression]
+											      [let [[exists-expression [elt arguments 0]]]
+												[eval `[funk [this]
+													     [let [[eval-exists-expression [funkall ,[nonsemantic_plan-expression-compile_imagine exists-expression] this]]]
+													       [have this imagine_check_exists eval-exists-expression]
+													       ]]]]]]
 					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `wait-for
@@ -623,14 +655,12 @@
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `assert
 												       expression expression]
-											      [let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+											      [let [[assert-expression `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
 												[eval `[funk [this]
-													     [let [[partial_state ,partial_state]]
-													       [terminal_format standard-terminal '\nplan imagining asserting: "'
-																[get partial_state as-declarative_english_string] '."']
-													       [have this assert partial_state]
-													       ]
-													     ]]]]]
+													     [let [[assert-expression ,assert-expression]]
+													       [if [not assert-expression]
+														   [error bug_name    `assertion-failed
+															  description [conslist `imagine_asserting ,assert-expression]]]]]]]]]
 					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `quote
@@ -744,7 +774,7 @@
 												       funkname   `print
 												       expression expression]
 											      [let [[print-expression [elt arguments 0]]]
-												[nonsemantic_plan-expression-compile_imagine print-expression]]]]
+												[nonsemantic_plan-expression-semantic_compile print-expression]]]]
 					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
 					      [[eq `parog                          command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
@@ -767,17 +797,23 @@
 												       expression expression]
 											      [let [[action_name `[quote ,[elt command_arguments 0]]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call]]]]
+					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `exists
+												       expression expression]
+											      [let [[exists-expression [elt arguments 0]]]
+												[nonsemantic_plan-expression-semantic_compile exists-expression]]]]
 					      [[eq `wait-for                       command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
-												       funkname   `assert
+												       funkname   `wait-for
 												       expression expression]
 											      [let [[partial_state [elt command_arguments 0]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for]]]]
 					      [[eq `assert                         command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `assert
 												       expression expression]
-											      [let [[partial_state [elt command_arguments 0]]]
+											      [let [[assert-expression [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
 					      [[eq `quote                          command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments

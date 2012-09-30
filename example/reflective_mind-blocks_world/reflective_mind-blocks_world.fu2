@@ -124,9 +124,9 @@
 		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
 		      [wait-to-call-below [move right until over pyramid]]
 		      [wait-to-call-below [drop block and wait for block to fall]]
-		      [assert [relationship block property shape cube
-					    preposition on
-					    block property shape pyramid]]
+		      [assert [exists [relationship block property shape cube
+						    preposition on
+						    block property shape pyramid]]]
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
@@ -135,25 +135,25 @@
 	       `[prog [wait-to-call-below [attempt to grab block until gripper stops moving]]
 		      [wait-to-call-below [move right until over cube]]
 		      [wait-to-call-below [drop block and wait for block to fall]]
-		      [assert [relationship block property shape pyramid
-					    preposition on
-					    block property shape cube]]
+		      [assert [exists [relationship block property shape pyramid
+						    preposition on
+						    block property shape cube]]]
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
 	       `[assert that a pyramid is on a cube]
 	       `[]
-	       `[prog [assert [relationship block property shape pyramid
-					    preposition on
-					    block property shape cube]]
+	       `[prog [assert [exists [relationship block property shape pyramid
+						    preposition on
+						    block property shape cube]]]
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
 	       `[assert that a pyramid is on a table]
 	       `[]
-	       `[prog [assert [relationship block property shape pyramid
-					    preposition on
-					    table property color white]]
+	       `[prog [assert [exists [relationship block property shape pyramid
+						    preposition on
+						    table property color white]]]
 		      ]]
 	 ]
   

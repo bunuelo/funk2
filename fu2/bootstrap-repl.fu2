@@ -193,6 +193,7 @@
 					      nil
 					      nil
 					      nil
+					      nil
 					      nil]]
 
 [globalize-funk metro-new_with_name_and_environment [metro-new [bytecode copy env value nil] `metro-new_with_name_and_environment `[name environment args :rest body]

@@ -55,7 +55,7 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
   f2__fiber__print(cause, fiber, filename); status("load note: opening file for reading.");
 #endif // DEBUG_LOAD
   
-  f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, raw__cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
+  f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, nil, raw__cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
   f2ptr load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
   f2ptr load_fiber    = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
@@ -71,7 +71,7 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
 	printf("\nload exception..: "); f2__write(cause, fiber, read_exp); fflush(stdout);
 	printf("\ncurrent filename: "); f2__write(cause, fiber, filename); fflush(stdout);
       } else {
-	load_funk     = f2funk__new(cause, nil, nil, nil, raw__cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil, nil);
+	load_funk     = f2funk__new(cause, nil, nil, nil, nil, raw__cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil, nil);
 	load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
 	if (raw__larva__is_type(cause, load_funk_bcs)) {
 	  f2__stream__close(cause, stream);

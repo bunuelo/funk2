@@ -612,13 +612,15 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
     debug__assert(pc_reg != nil, nil, "(pc_reg != nil) assertion failure.");
     
     f2ptr bytecode;
-    if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+#ifdef USE_BYTECODE_ARRAY
+    {
       f2ptr array = raw__mutable_array_pointer__array(cause, pc_reg);
       u64   index = raw__mutable_array_pointer__index(cause, pc_reg);
       bytecode = raw__array__elt(cause, array, index);
-    } else {
-      bytecode = f2cons__car(pc_reg, cause);
     }
+#else
+    bytecode = f2cons__car(pc_reg, cause);
+#endif
     debug__assert(raw__bytecode__is_type(cause, bytecode), fiber, "f2__fiber__execute_next_bytecode error: assertion failed (raw__bytecode__is_type(bytecode)).");
     
     bytecode_is_yield = f2__fiber__execute_bytecode(cause, fiber, bytecode);

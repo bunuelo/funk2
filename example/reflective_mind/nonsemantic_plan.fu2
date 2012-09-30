@@ -112,6 +112,20 @@
 												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[wait for]
 													  partial_state]]]]
+						[[eq `if                             command] [if [not [or [== arguments-length 2]
+													   [== arguments-length 3]]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[if-condition    [get this expression-as_english_conslist [elt arguments 0]]]
+												      [if-true_branch  [get this expression-as_english_conslist [elt arguments 1]]]
+												      [if-false_branch [if [== arguments-length 3]
+															   [get this expression-as_english_conslist [elt arguments 2]]]]]
+												  [append `[if]
+													  if-condition
+													  `[punctuation-comma]
+													  if-true_branch
+													  [if if-false_branch
+													      [append `[otherwise]
+														      if-false_branch]]]]]]
 						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[assert-expression [get this expression-as_english_conslist [elt arguments 0]]]]
@@ -251,6 +265,16 @@
 													 funkname   `wait-for
 													 expression expression]
 												`cannot_determine_syntax]]
+						[[eq `if                             command] [if [not [or [== arguments-length 2]
+													   [== arguments-length 3]]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `if
+													 expression expression]
+												[let [[if-condition    [have this expression-syntax_check [elt arguments 0]]]
+												      [if-true_branch  [have this expression-syntax_check [elt arguments 1]]]
+												      [if-false_branch [if [== arguments-length 3]
+															   [have this expression-syntax_check [elt arguments 2]]]]]
+												  `cannot_determine_syntax]]]
 						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `assert
@@ -456,6 +480,19 @@
 														 [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_english_string] '."']
 														 [have this wait_for partial_state]]
 													       ]]]]]
+						[[eq `if                             command] [if [not [or [== arguments-length 2]
+													   [== arguments-length 3]]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `if
+													 expression expression]
+												[let [[if-condition    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												      [if-true_branch  `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												      [if-false_branch [if [== arguments-length 3]
+															   `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]]]
+												  [eval `[funk [this]
+													       [if ,if-condition
+														   ,if-true_branch
+														 ,if-false_branch]]]]]]
 						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `assert
@@ -465,7 +502,7 @@
 													       [let [[assert-expression ,assert-expression]]
 														 [if [not assert-expression]
 														     [error bug_name    `assertion-failed
-															    description [conslist `assert ,assert-expression]]]]]]]]]
+															    description [conslist `assert [quote ,assert-expression]]]]]]]]]]
 						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `quote
@@ -651,6 +688,19 @@
 													       [have this wait_for partial_state]
 													       ]
 													     ]]]]]
+					      [[eq `if                             command] [if [not [or [== arguments-length 2]
+													 [== arguments-length 3]]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `if
+												       expression expression]
+											      [let [[if-condition    `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
+												    [if-true_branch  `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]
+												    [if-false_branch [if [== arguments-length 3]
+															 `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]]]
+												[eval `[funk [this]
+													     [if ,if-condition
+														 ,if-true_branch
+													       ,if-false_branch]]]]]]
 					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `assert
@@ -660,7 +710,7 @@
 													     [let [[assert-expression ,assert-expression]]
 													       [if [not assert-expression]
 														   [error bug_name    `assertion-failed
-															  description [conslist `imagine_asserting ,assert-expression]]]]]]]]]
+															  description [conslist `imagine_asserting [quote ,assert-expression]]]]]]]]]]
 					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `quote
@@ -809,6 +859,12 @@
 												       expression expression]
 											      [let [[partial_state [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for]]]]
+					      [[eq `if                             command] [if [not [or [== arguments-length 2]
+													 [== arguments-length 3]]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												       funkname   `if
+												       expression expression]
+											      nil]]
 					      [[eq `assert                         command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `assert

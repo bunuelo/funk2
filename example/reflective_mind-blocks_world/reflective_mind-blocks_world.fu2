@@ -118,12 +118,58 @@
   'create blocks_world agent specific plans'
   
   [parog [have this create_deliberative_semantic_plan
+	       `[pick up a cube]
+	       `[]
+	       `[prog [if [exists [relationship block property shape cube
+						preposition left-of
+						gripper property is-me t]]
+			  [wait-to-call-below [move left until over cube]]]
+		      [if [exists [relationship gripper property is-me t
+						preposition left-of
+						block property shape cube]]
+			  [wait-to-call-below [move right until over cube]]]
+		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
+		      [assert [exists [relationship gripper property is-me t
+						    preposition is-holding
+						    block property shape cube]]]
+		      ]]
+	 
+	 [have this create_deliberative_semantic_plan
+	       `[pick up a pyramid]
+	       `[]
+	       `[prog [if [exists [relationship block property shape pyramid
+						preposition left-of
+						gripper property is-me t]]
+			  [wait-to-call-below [move left until over pyramid]]]
+		      [if [exists [relationship gripper property is-me t
+						preposition left-of
+						block property shape pyramid]]
+			  [wait-to-call-below [move right until over pyramid]]]
+		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
+		      [assert [exists [relationship gripper property is-me t
+						    preposition is-holding
+						    block property shape pyramid]]]
+		      ]]
+	 
+	 [have this create_deliberative_semantic_plan
+	       `[drop the block I am holding on a pyramid]
+	       `[]
+	       `[prog [if [exists [relationship block property shape pyramid
+						preposition left-of
+						gripper property is-me t]]
+			  [wait-to-call-below [move left until over pyramid]]]
+		      [if [exists [relationship gripper property is-me t
+						preposition left-of
+						block property shape pyramid]]
+			  [wait-to-call-below [move right until over pyramid]]]
+		      [wait-to-call-below [drop block and wait for block to fall]]
+		      ]]
+	 
+	 [have this create_deliberative_semantic_plan
 	       `[stack a cube on a pyramid]
 	       `[]
-	       `[prog [wait-to-call-below [move left until over cube]]
-		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
-		      [wait-to-call-below [move right until over pyramid]]
-		      [wait-to-call-below [drop block and wait for block to fall]]
+	       `[prog [wait-to-call [pick up a cube]]
+		      [wait-to-call [drop the block I am holding on a pyramid]]
 		      [assert [exists [relationship block property shape cube
 						    preposition on
 						    block property shape pyramid]]]
@@ -132,9 +178,8 @@
 	 [have this create_deliberative_semantic_plan
 	       `[stack a pyramid on a cube]
 	       `[]
-	       `[prog [wait-to-call-below [attempt to grab block until gripper stops moving]]
-		      [wait-to-call-below [move right until over cube]]
-		      [wait-to-call-below [drop block and wait for block to fall]]
+	       `[prog [wait-to-call [pick up a pyramid]]
+		      [wait-to-call [drop the block I am holding on a cube]]
 		      [assert [exists [relationship block property shape pyramid
 						    preposition on
 						    block property shape cube]]]

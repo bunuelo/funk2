@@ -613,7 +613,7 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
     
     f2ptr bytecode;
 #ifdef USE_BYTECODE_ARRAY
-    if (! raw__mutable_array_pointer(cause, pc_reg)) {
+    if (! raw__mutable_array_pointer__is_type(cause, pc_reg)) {
       error(nil, "program_counter is not mutable_array_pointer.");
     }
     {

@@ -110,10 +110,13 @@
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get this agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
 
+[deftypefunk deliberative_layer execute lookup_semantic_plan [phenomenal_name]
+  [have semantic_plan_phenomenal_name_frame lookup phenomenal_name]]
+
 [deftypefunk deliberative_layer get semantic_plan [phenomenal_name]
-  [let [[semantic_plan [have semantic_plan_phenomenal_name_frame lookup phenomenal_name]]]
+  [let [[semantic_plan [have this lookup_semantic_plan phenomenal_name]]]
     [if [null semantic_plan]
-	[error bug_type             deliberative_layer-semantic_plan-not_found
+	[error bug_type             `deliberative_layer-semantic_plan-not_found
 	       plan_phenomenal_name phenomenal_name]]
     semantic_plan]]
 

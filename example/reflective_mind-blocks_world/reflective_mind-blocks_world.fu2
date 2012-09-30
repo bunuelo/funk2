@@ -124,9 +124,9 @@
 						preposition left-of
 						gripper property is-me t]]
 			  [wait-to-call-below [move left until over cube]]]
-		      [if [exists [relationship gripper property is-me t
-						preposition left-of
-						block property shape cube]]
+		      [if [exists [relationship block property shape cube
+						preposition right-of
+						gripper property is-me t]]
 			  [wait-to-call-below [move right until over cube]]]
 		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
 		      [assert [exists [relationship gripper property is-me t
@@ -141,9 +141,9 @@
 						preposition left-of
 						gripper property is-me t]]
 			  [wait-to-call-below [move left until over pyramid]]]
-		      [if [exists [relationship gripper property is-me t
-						preposition left-of
-						block property shape pyramid]]
+		      [if [exists [relationship block property shape pyramid
+						preposition right-of
+						gripper property is-me t]]
 			  [wait-to-call-below [move right until over pyramid]]]
 		      [wait-to-call-below [attempt to grab block until gripper stops moving]]
 		      [assert [exists [relationship gripper property is-me t
@@ -158,9 +158,9 @@
 						preposition left-of
 						gripper property is-me t]]
 			  [wait-to-call-below [move left until over pyramid]]]
-		      [if [exists [relationship gripper property is-me t
-						preposition left-of
-						block property shape pyramid]]
+		      [if [exists [relationship block property shape pyramid
+						preposition right-of
+						gripper property is-me t]]
 			  [wait-to-call-below [move right until over pyramid]]]
 		      [wait-to-call-below [drop block and wait for block to fall]]
 		      ]]

@@ -468,6 +468,12 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       funk2_memblock_t* bug_block = (funk2_memblock_t*)from_ptr(bug_ptr);
       funk2_memblock__decrement_reference_count(bug_block, bug, &(__funk2.garbage_collector));
     } break;
+    case ptype_mutable_array_pointer: {
+      f2ptr             array       = ((ptype_mutable_array_pointer_block_t*)ptype_block)->array;
+      ptr               array_ptr   = __f2ptr_to_ptr(array);
+      funk2_memblock_t* array_block = (funk2_memblock_t*)from_ptr(array_ptr);
+      funk2_memblock__decrement_reference_count(array_block, array, &(__funk2.garbage_collector));
+    } break;
     default:
       {
 	char str[1024];

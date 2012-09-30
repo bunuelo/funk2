@@ -4693,6 +4693,228 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 }
 
 
+// mutable_array_pointer
+
+f2ptr f2__mutable_array_pointer__new(f2ptr cause, f2ptr array, f2ptr index) {
+  assert_argument_type_or_nil(array,   array);
+  assert_argument_type(       integer, index);
+  return f2mutable_array_pointer__new(cause, array, f2integer__i(index, cause));
+}
+
+def_pcfunk2(mutable_array_pointer__new, array, index,
+	    "",
+	    return f2__mutable_array_pointer__new(this_cause, array, index));
+
+boolean_t raw__mutable_array_pointer__is_type(f2ptr cause, f2ptr x) {
+  //check_wait_politely();
+  //#ifdef F2__PTYPE__TYPE_CHECK
+  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
+  //#endif // F2__PTYPE__TYPE_CHECK
+  return (x && f2ptype__raw(x, cause) == ptype_mutable_array_pointer);
+}
+f2ptr f2__mutable_array_pointer__is_type(f2ptr cause, f2ptr x) {
+  return f2bool__new(raw__mutable_array_pointer__is_type(cause, x));
+}
+def_pcfunk1(mutable_array_pointer__is_type, x,
+	    "",
+	    return f2__mutable_array_pointer__is_type(this_cause, x));
+
+f2ptr f2__mutable_array_pointer__type(f2ptr cause, f2ptr x) {
+  return new__symbol(cause, "mutable_array_pointer");
+}
+def_pcfunk1(mutable_array_pointer__type, x,
+	    "",
+	    return f2__mutable_array_pointer__type(this_cause, x));
+
+
+f2ptr raw__mutable_array_pointer__array(f2ptr cause, f2ptr this) {
+  return f2mutable_array_pointer__array(this, cause);
+}
+
+f2ptr f2__mutable_array_pointer__array(f2ptr cause, f2ptr this) {
+  assert_argument_type(mutable_array_pointer, this);
+  return raw__mutable_array_pointer__array(cause, this);
+}
+def_pcfunk1(mutable_array_pointer__array, this,
+	    "",
+	    return f2__mutable_array_pointer__array(this_cause, this));
+
+
+void raw__mutable_array_pointer__array__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2mutable_array_pointer__array__set(this, cause, value);
+}
+
+f2ptr f2__mutable_array_pointer__array__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(mutable_array_pointer, this);
+  assert_argument_type(array,                 value);
+  raw__mutable_array_pointer__array__set(cause, this, value);
+  return nil;
+}
+def_pcfunk2(mutable_array_pointer__array__set, this, value,
+	    "",
+	    return f2__mutable_array_pointer__array__set(this_cause, this, value));
+
+
+u64 raw__mutable_array_pointer__index(f2ptr cause, f2ptr this) {
+  return f2mutable_array_pointer__index(this, cause);
+}
+
+f2ptr f2__mutable_array_pointer__index(f2ptr cause, f2ptr this) {
+  assert_argument_type(mutable_array_pointer, this);
+  return f2integer__new(cause, raw__mutable_array_pointer__index(cause, this));
+}
+def_pcfunk1(mutable_array_pointer__index, this,
+	    "",
+	    return f2__mutable_array_pointer__index(this_cause, this));
+
+
+void raw__mutable_array_pointer__index__set(f2ptr cause, f2ptr this, u64 value) {
+  f2mutable_array_pointer__index__set(this, cause, value);
+}
+
+f2ptr f2__mutable_array_pointer__index__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(mutable_array_pointer, this);
+  assert_argument_type(integer,               value);
+  u64 value__i = f2integer__i(value, cause);
+  raw__mutable_array_pointer__index__set(cause, this, value__i);
+  return nil;
+}
+def_pcfunk2(mutable_array_pointer__index__set, this, value,
+	    "",
+	    return f2__mutable_array_pointer__index__set(this_cause, this, value));
+
+
+boolean_t raw__mutable_array_pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  return (this == that);
+}
+
+f2ptr f2__mutable_array_pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(mutable_array_pointer, this);
+  return f2bool__new(raw__mutable_array_pointer__eq(cause, this, that));
+}
+def_pcfunk2(mutable_array_pointer__eq, this, that,
+	    "",
+	    return f2__mutable_array_pointer__eq(this_cause, this, that));
+
+
+u64 raw__mutable_array_pointer__eq_hash_value(f2ptr cause, f2ptr this) {
+  return (u64)this;
+}
+
+f2ptr f2__mutable_array_pointer__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__mutable_array_pointer__eq_hash_value(cause, this));
+}
+def_pcfunk1(mutable_array_pointer__eq_hash_value, this,
+	    "",
+	    return f2__mutable_array_pointer__eq_hash_value(this_cause, this));
+
+
+boolean_t raw__mutable_array_pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__mutable_array_pointer__eq(cause, this, that);
+}
+
+f2ptr f2__mutable_array_pointer__equals(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(mutable_array_pointer, this);
+  return f2bool__new(raw__mutable_array_pointer__equals(cause, this, that));
+}
+def_pcfunk2(mutable_array_pointer__equals, this, that,
+	    "",
+	    return f2__mutable_array_pointer__equals(this_cause, this, that));
+
+
+u64 raw__mutable_array_pointer__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  return raw__mutable_array_pointer__eq_hash_value(cause, this);
+}
+
+f2ptr f2__mutable_array_pointer__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
+  assert_argument_type(mutable_array_pointer, this);
+  assert_argument_type(ptypehash,             node_ptypehash);
+  return f2integer__new(cause, raw__mutable_array_pointer__equals_hash_value__loop_free(cause, this, node_ptypehash));
+}
+def_pcfunk2(mutable_array_pointer__equals_hash_value__loop_free, this, node_ptypehash,
+	    "",
+	    return f2__mutable_array_pointer__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
+
+
+u64 raw__mutable_array_pointer__equals_hash_value(f2ptr cause, f2ptr this) {
+  return raw__mutable_array_pointer__eq_hash_value(cause, this);
+}
+
+f2ptr f2__mutable_array_pointer__equals_hash_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(mutable_array_pointer, this);
+  return f2integer__new(cause, raw__mutable_array_pointer__equals_hash_value(cause, this));
+}
+def_pcfunk1(mutable_array_pointer__equals_hash_value, this,
+	    "",
+	    return f2__mutable_array_pointer__equals_hash_value(this_cause, this));
+
+
+f2ptr raw__mutable_array_pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "mutable_array_pointer"),
+					       new__symbol(cause, "array"),             f2__mutable_array_pointer__array(cause, this),
+					       new__symbol(cause, "index"),             f2__mutable_array_pointer__index(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__mutable_array_pointer__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(mutable_array_pointer, this);
+  assert_argument_type(terminal_print_frame,  terminal_print_frame);
+  return raw__mutable_array_pointer__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(mutable_array_pointer__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__mutable_array_pointer__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2__mutable_array_pointer__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
+  if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__funk;
+    } else if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__funk;
+    }
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
+  } else if (f2__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
+    if (f2__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__funk;
+    }
+  }
+  return nil;
+}
+
+f2ptr f2mutable_array_pointer__primobject_type__new(f2ptr cause) {
+  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__funk);}
+  {char* slot_name = "array";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__funk);}
+  {char* slot_name = "array";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__set__funk);}
+  {char* slot_name = "index";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__funk);}
+  {char* slot_name = "index";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__set__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // gensym
 
 f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string) {
@@ -5717,6 +5939,60 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(larva__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__funk);
   
+  // mutable_array_pointer
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.is_type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__is_type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.is_type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__type);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__new);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__array);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__array__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__index);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__index__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__eq);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__eq_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__equals);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__equals_hash_value__loop_free);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__equals_hash_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(mutable_array_pointer__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.terminal_print_with_frame__funk);
+  
   // gensym
   f2__primcfunk__init__defragment__fix_pointers(gensym);
   
@@ -6251,6 +6527,35 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(larva__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_larva.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(larva__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_larva.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  // mutable_array_pointer
+  
+  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.is_type__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__is_type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.is_type__funk = never_gc(cfunk);}
+  {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.type__funk = never_gc(cfunk);}
+  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.new__funk = never_gc(cfunk);}
+  {char* str = "array"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__array, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__funk = never_gc(cfunk);}
+  {char* str = "array-set"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__set__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__array__set, this, value, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.array__set__funk = never_gc(cfunk);}
+  {char* str = "index"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__index, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__funk = never_gc(cfunk);}
+  {char* str = "index-set"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__set__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__index__set, this, value, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.index__set__funk = never_gc(cfunk);}
+  {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__eq, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq__funk = never_gc(cfunk);}
+  {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__eq_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.eq_hash_value__funk = never_gc(cfunk);}
+  {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__equals, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(mutable_array_pointer__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.equals_hash_value__funk = never_gc(cfunk);}
+  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.terminal_print_with_frame__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(mutable_array_pointer__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_mutable_array_pointer.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   
   // gensym

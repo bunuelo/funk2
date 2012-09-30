@@ -78,6 +78,9 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_larva:
       // should check bug is reasonably valid.
       return boolean__false;
+    case ptype_mutable_array_pointer:
+      // should check array is reasonably valid.
+      return boolean__false;
     default:
       {
 	char str[1024];
@@ -113,6 +116,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_simple_array:
     case ptype_traced_array:
     case ptype_larva:
+    case ptype_mutable_array_pointer:
       break;
     default: {
       status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->block.ptype), (long)ptype_block);

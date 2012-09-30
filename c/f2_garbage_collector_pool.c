@@ -715,6 +715,12 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, bug);
     }
   } return;
+  case ptype_mutable_array_pointer: {
+    f2ptr array = ((ptype_mutable_array_pointer_block_t*)block)->array;
+    if (array) {
+      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, array);
+    }
+  } return;
   default:
     {
       char str[1024];

@@ -234,6 +234,12 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
       ((ptype_larva_block_t*)ptype_block)->bug = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, bug);
     }
   } return;
+  case ptype_mutable_array_pointer: {
+    f2ptr array = ((ptype_mutable_array_pointer_block_t*)ptype_block)->array;
+    if (array) {
+      ((ptype_mutable_array_pointer_block_t*)ptype_block)->array = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, array);
+    }
+  } return;
   default:
     {
       char str[1024];

@@ -479,65 +479,96 @@ f2ptr f2simple_array__primobject_type__new(f2ptr cause);
 
 // traced_array
 
-boolean_t raw__traced_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__traced_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__traced_array__type(f2ptr cause, f2ptr x);
-f2ptr f2__traced_array__new(f2ptr cause, f2ptr length);
-u64   raw__traced_array__length(f2ptr cause, f2ptr this);
-f2ptr  f2__traced_array__length(f2ptr cause, f2ptr this);
-f2ptr raw__traced_array__elt(f2ptr cause, f2ptr this, u64   index);
-f2ptr  f2__traced_array__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr f2__traced_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__traced_array__elt__tracing_on(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__traced_array__elt__tracing_on__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__traced_array__elt__trace(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__traced_array__elt__trace__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__traced_array__elt__imagination_frame(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__traced_array__elt__imagination_frame__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__traced_array__elt__mutate_funks(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__traced_array__elt__mutate_funks__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr f2__traced_array__elt__read_funks(f2ptr cause, f2ptr x, f2ptr y);
-f2ptr f2__traced_array__elt__read_funks__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-boolean_t raw__traced_array__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__traced_array__eq(f2ptr cause, f2ptr this, f2ptr that);
-u64   raw__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__traced_array__eq_hash_value(f2ptr cause, f2ptr this);
-boolean_t raw__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__traced_array__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr raw__traced_array__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__traced_array__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr raw__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
-f2ptr f2__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-f2ptr f2__traced_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__traced_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+boolean_t raw__traced_array__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__traced_array__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__traced_array__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__traced_array__new                         (f2ptr cause, f2ptr length);
+u64       raw__traced_array__length                      (f2ptr cause, f2ptr this);
+f2ptr      f2__traced_array__length                      (f2ptr cause, f2ptr this);
+f2ptr     raw__traced_array__elt                         (f2ptr cause, f2ptr this, u64   index);
+f2ptr      f2__traced_array__elt                         (f2ptr cause, f2ptr this, f2ptr index);
+f2ptr      f2__traced_array__elt__set                    (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__traced_array__elt__tracing_on             (f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__traced_array__elt__tracing_on__set        (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__traced_array__elt__trace                  (f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__traced_array__elt__trace__set             (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__traced_array__elt__imagination_frame      (f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__traced_array__elt__imagination_frame__set (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__traced_array__elt__mutate_funks           (f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__traced_array__elt__mutate_funks__set      (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+f2ptr      f2__traced_array__elt__read_funks             (f2ptr cause, f2ptr x, f2ptr y);
+f2ptr      f2__traced_array__elt__read_funks__set        (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+boolean_t raw__traced_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__traced_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__traced_array__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__traced_array__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__traced_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__traced_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__traced_array__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__traced_array__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr      f2__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__traced_array__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__traced_array__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
 f2ptr f2traced_array__primobject_type__new(f2ptr cause);
 
 
 
+// mutable_array_pointer
+
+f2ptr      f2__mutable_array_pointer__new                         (f2ptr cause, f2ptr array, f2ptr index);
+boolean_t raw__mutable_array_pointer__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__mutable_array_pointer__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__mutable_array_pointer__type                        (f2ptr cause, f2ptr x);
+f2ptr     raw__mutable_array_pointer__array                       (f2ptr cause, f2ptr this);
+f2ptr      f2__mutable_array_pointer__array                       (f2ptr cause, f2ptr this);
+void      raw__mutable_array_pointer__array__set                  (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr      f2__mutable_array_pointer__array__set                  (f2ptr cause, f2ptr this, f2ptr value);
+u64       raw__mutable_array_pointer__index                       (f2ptr cause, f2ptr this);
+f2ptr      f2__mutable_array_pointer__index                       (f2ptr cause, f2ptr this);
+void      raw__mutable_array_pointer__index__set                  (f2ptr cause, f2ptr this, u64 value);
+f2ptr      f2__mutable_array_pointer__index__set                  (f2ptr cause, f2ptr this, f2ptr value);
+boolean_t raw__mutable_array_pointer__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__mutable_array_pointer__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__mutable_array_pointer__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__mutable_array_pointer__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__mutable_array_pointer__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__mutable_array_pointer__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__mutable_array_pointer__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__mutable_array_pointer__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+u64       raw__mutable_array_pointer__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__mutable_array_pointer__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__mutable_array_pointer__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__mutable_array_pointer__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__mutable_array_pointer__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+
+f2ptr f2mutable_array_pointer__primobject_type__new(f2ptr cause);
+
+
 // larva
 
-boolean_t raw__larva__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__larva__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__larva__type(f2ptr cause, f2ptr x);
-u32 raw__larva__larva_type(f2ptr cause, f2ptr this);
-f2ptr f2__larva__larva_type(f2ptr cause, f2ptr this);
-f2ptr raw__larva__bug(f2ptr cause, f2ptr this);
-f2ptr f2__larva__bug(f2ptr cause, f2ptr this);
-f2ptr f2__larva__new(f2ptr cause, f2ptr larva_type, f2ptr bug);
-boolean_t raw__larva__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__larva__eq(f2ptr cause, f2ptr this, f2ptr that);
-u64 raw__larva__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__larva__eq_hash_value(f2ptr cause, f2ptr this);
-boolean_t raw__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
-u64 raw__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-f2ptr f2__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-u64 raw__larva__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__larva__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr raw__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__larva__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__larva__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+boolean_t raw__larva__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__larva__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__larva__type                        (f2ptr cause, f2ptr x);
+u32       raw__larva__larva_type                  (f2ptr cause, f2ptr this);
+f2ptr      f2__larva__larva_type                  (f2ptr cause, f2ptr this);
+f2ptr     raw__larva__bug                         (f2ptr cause, f2ptr this);
+f2ptr      f2__larva__bug                         (f2ptr cause, f2ptr this);
+f2ptr      f2__larva__new                         (f2ptr cause, f2ptr larva_type, f2ptr bug);
+boolean_t raw__larva__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__larva__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__larva__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__larva__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__larva__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__larva__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+f2ptr      f2__larva__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
+u64       raw__larva__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__larva__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr     raw__larva__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__larva__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__larva__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
 f2ptr f2larva__primobject_type__new(f2ptr cause);
 

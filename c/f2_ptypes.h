@@ -571,12 +571,40 @@ boolean_t raw__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__larva__equals(f2ptr cause, f2ptr this, f2ptr that);
 
 
+// mutable_array_pointer
+
+f2ptr pfunk2__f2mutable_array_pointer__new(f2ptr cause, u64 index, f2ptr array);
+u64   pfunk2__f2mutable_array_pointer__index(f2ptr this, f2ptr cause);
+f2ptr pfunk2__f2mutable_array_pointer__array(f2ptr this, f2ptr cause);
+
+u64   raw__mutable_array_pointer__index(f2ptr cause, f2ptr this);
+f2ptr  f2__mutable_array_pointer__index(f2ptr cause, f2ptr this);
+
+f2ptr raw__mutable_array_pointer__array(f2ptr cause, f2ptr this);
+f2ptr  f2__mutable_array_pointer__array(f2ptr cause, f2ptr this);
+
+boolean_t raw__mutable_array_pointer__is_type(f2ptr cause, f2ptr exp);
+f2ptr      f2__mutable_array_pointer__is_type(f2ptr cause, f2ptr exp);
+
+boolean_t raw__mutable_array_pointer__eq(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__mutable_array_pointer__eq(f2ptr cause, f2ptr this, f2ptr that);
+
+u64   raw__mutable_array_pointer__eq_hash_value(f2ptr cause, f2ptr this);
+f2ptr  f2__mutable_array_pointer__eq_hash_value(f2ptr cause, f2ptr this);
+
+boolean_t raw__mutable_array_pointer__equals(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__mutable_array_pointer__equals(f2ptr cause, f2ptr this, f2ptr that);
+
+
+// gensym
+
 f2ptr raw__gensym(f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string);
 f2ptr  f2__gensym(f2ptr cause, f2ptr initial_string);
 
 f2ptr raw__gensym__new_from_utf8(f2ptr cause, char* initial_utf8_string);
 
 #define gensym(cause, str) raw__gensym__new_from_utf8(cause, str)
+
 
 // **
 

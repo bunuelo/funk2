@@ -299,7 +299,17 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_request__f2larva__larva_type:
   case funk2_packet_type__pcs_respond__f2larva__larva_type:
   case funk2_packet_type__pcs_request__f2larva__bug:
-  case funk2_packet_type__pcs_respond__f2larva__bug: {
+  case funk2_packet_type__pcs_respond__f2larva__bug:
+  case funk2_packet_type__pcs_request__f2mutable_array_pointer__new:
+  case funk2_packet_type__pcs_respond__f2mutable_array_pointer__new:
+  case funk2_packet_type__pcs_request__f2mutable_array_pointer__array:
+  case funk2_packet_type__pcs_respond__f2mutable_array_pointer__array:
+  case funk2_packet_type__pcs_request__f2mutable_array_pointer__array:
+  case funk2_packet_type__pcs_respond__f2mutable_array_pointer__array__set:
+  case funk2_packet_type__pcs_request__f2mutable_array_pointer__index:
+  case funk2_packet_type__pcs_respond__f2mutable_array_pointer__index:
+  case funk2_packet_type__pcs_request__f2mutable_array_pointer__index__set:
+  case funk2_packet_type__pcs_respond__f2mutable_array_pointer__index__set: {
     //int k;
     //for (k = 0; k < peek_byte_num; k ++) {
     //status("packet detail byte[%d]=0x%X", k, packet_data[k]);

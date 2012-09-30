@@ -275,8 +275,8 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 
 struct ptype_traced_array_block_s {
   ptype_block_t ptype;
-  u8            immutable;
-  u64           length;
+  u8            immutable : 1;
+  u64           length : (f2ptr__bit_num - 2);
   funk2_dptr_t  dptr_data[0];
 } __attribute__((__packed__));
 typedef struct ptype_traced_array_block_s ptype_traced_array_block_t;
@@ -317,6 +317,24 @@ ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 lar
 #define __pure__f2larva__new(pool_index, cause, larva_type, bug) ptype_larva__new(pool_index, cause, larva_type, bug)
 #define __pure__f2larva__larva_type(this)                        (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->larva_type)
 #define __pure__f2larva__bug(this)                               (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bug)
+
+
+// mutable_array_pointer
+
+struct ptype_mutable_array_pointer_block_s {
+  ptype_block_t ptype;
+  f2ptr         array : f2ptr__bit_num;
+  u64           index;
+} __attribute__((__packed__));
+typedef struct ptype_mutable_array_pointer_block_s ptype_mutable_array_pointer_block_t;
+
+ptype_mutable_array_pointer_block_t* ptype_mutable_array_pointer_block__new(int pool_index, f2ptr cause, u64 index, f2ptr array);
+
+#define __pure__f2mutable_array_pointer__new(pool_index, cause, array, index) ptype_mutable_array_pointer__new(pool_index, cause, array, index)
+#define __pure__f2mutable_array_pointer__array(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array)
+#define __pure__f2mutable_array_pointer__array__set(this, array)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array = (array))
+#define __pure__f2mutable_array_pointer__index(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index)
+#define __pure__f2mutable_array_pointer__index__set(this, index)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index = (index))
 
 #endif // F2__PTYPES__MEMORY__H
 

@@ -2082,6 +2082,92 @@ f2ptr pfunk2__f2larva__bug(f2ptr this, f2ptr cause) {
 
 
 
+// mutable_array_pointer
+
+f2ptr ptype_mutable_array_pointer__new(int pool_index, f2ptr cause, f2ptr array, u64 index) {
+  f2ptr mutable_array_pointer_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_mutable_array_pointer_block_t));
+  ptype_mutable_array_pointer_block_t* mutable_array_pointer_block = (ptype_mutable_array_pointer_block_t*)from_ptr(raw__f2ptr_to_ptr(mutable_array_pointer_f2ptr));
+  debug__assert(mutable_array_pointer_block, nil, "block is nil.");
+  if (cause) {raw__exp__increment_reference_count(cause);}
+  if (array) {raw__exp__increment_reference_count(array);}
+  mutable_array_pointer_block->ptype.block.ptype    = ptype_mutable_array_pointer;
+  mutable_array_pointer_block->ptype.cause          = cause;
+  {
+    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
+    mutable_array_pointer_block->ptype.creation_fiber = creation_fiber;
+  }
+  mutable_array_pointer_block->array = array;
+  mutable_array_pointer_block->index = index;
+  return mutable_array_pointer_f2ptr;
+}
+
+f2ptr pfunk2__f2mutable_array_pointer__new(f2ptr cause, f2ptr array, u64 index) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr retval = __pure__f2mutable_array_pointer__new(pool_index, cause, array, index);
+  return retval;
+}
+
+f2ptr pfunk2__f2mutable_array_pointer__array(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_mutable_array_pointer) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_mutable_array_pointer__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  f2ptr array = __pure__f2mutable_array_pointer__array(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, array, sizeof(array));
+  return array;
+}
+
+void pfunk2__f2mutable_array_pointer__array__set(f2ptr this, f2ptr cause, f2ptr value) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_mutable_array_pointer) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_mutable_array_pointer__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  
+  {
+    f2ptr old_value = __pure__f2mutable_array_pointer__array(this);
+    funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+    __pure__f2mutable_array_pointer__array__set(this, value);
+  }  
+  
+  raw__container__reflectively_know_of_writing_to(cause, this, array, sizeof(array));
+}
+
+u64 pfunk2__f2mutable_array_pointer__index(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_mutable_array_pointer) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_mutable_array_pointer__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  u64 index = __pure__f2mutable_array_pointer__index(this);
+  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(index));
+  return index;
+}
+
+void pfunk2__f2mutable_array_pointer__index__set(f2ptr this, f2ptr cause, u64 index) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_mutable_array_pointer) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_mutable_array_pointer__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  __pure__f2mutable_array_pointer__index__set(this, index);
+  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(index));
+}
+
+
+
+
 // symbol_hash
 
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {

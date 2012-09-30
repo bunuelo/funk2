@@ -138,22 +138,24 @@ void funk2_primobject_type_handler__add_nil_primobject(funk2_primobject_type_han
 }
 
 void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {
-  {char* type_name = "ptype";            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),            f2ptype__primobject_type__new(cause));}
-  {char* type_name = "integer";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2integer__primobject_type__new(cause));}
-  {char* type_name = "double";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2double__primobject_type__new(cause));}
-  {char* type_name = "float";            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),            f2float__primobject_type__new(cause));}
-  {char* type_name = "pointer";          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),          f2pointer__primobject_type__new(cause));}
-  {char* type_name = "scheduler_cmutex"; funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name), f2scheduler_cmutex__primobject_type__new(cause));}
-  {char* type_name = "cmutex";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2cmutex__primobject_type__new(cause));}
-  {char* type_name = "creadwritelock";   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),   f2creadwritelock__primobject_type__new(cause));}
-  {char* type_name = "char";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2char__primobject_type__new(cause));}
-  {char* type_name = "string";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2string__primobject_type__new_aux(cause));}
-  {char* type_name = "symbol";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2symbol__primobject_type__new(cause));}
-  {char* type_name = "chunk";            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),            f2chunk__primobject_type__new_aux(cause));}
-  {char* type_name = "simple_array";     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),     f2simple_array__primobject_type__new(cause));}
-  {char* type_name = "traced_array";     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),     f2traced_array__primobject_type__new(cause));}
-  {char* type_name = "larva";            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),            f2larva__primobject_type__new(cause));}
-  {char* type_name = "array";            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),            f2array__primobject_type__new(cause));} // interface defined in f2_array.c
+  {char* type_name = "ptype";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2ptype__primobject_type__new(cause));}
+  {char* type_name = "integer";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2integer__primobject_type__new(cause));}
+  {char* type_name = "double";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2double__primobject_type__new(cause));}
+  {char* type_name = "float";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2float__primobject_type__new(cause));}
+  {char* type_name = "pointer";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2pointer__primobject_type__new(cause));}
+  {char* type_name = "scheduler_cmutex";         funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),         f2scheduler_cmutex__primobject_type__new(cause));}
+  {char* type_name = "cmutex";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2cmutex__primobject_type__new(cause));}
+  {char* type_name = "scheduler_creadwritelock"; funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name), f2scheduler_creadwritelock__primobject_type__new(cause));}
+  {char* type_name = "creadwritelock";           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),           f2creadwritelock__primobject_type__new(cause));}
+  {char* type_name = "char";                     funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                     f2char__primobject_type__new(cause));}
+  {char* type_name = "string";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2string__primobject_type__new_aux(cause));}
+  {char* type_name = "symbol";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2symbol__primobject_type__new(cause));}
+  {char* type_name = "chunk";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2chunk__primobject_type__new_aux(cause));}
+  {char* type_name = "simple_array";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2simple_array__primobject_type__new(cause));}
+  {char* type_name = "traced_array";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2traced_array__primobject_type__new(cause));}
+  {char* type_name = "larva";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2larva__primobject_type__new(cause));}
+  {char* type_name = "mutable_array_pointer";    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),    f2mutable_array_pointer__primobject_type__new(cause));}
+  {char* type_name = "array";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2array__primobject_type__new(cause));} // interface defined in f2_array.c
 }
 
 void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_type_handler_t* this, f2ptr cause) {

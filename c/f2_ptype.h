@@ -43,7 +43,8 @@ typedef enum ptype_e {
   ptype_chunk                    = 14,
   ptype_simple_array             = 15,
   ptype_traced_array             = 16,
-  ptype_larva                    = 17,
+  ptype_mutable_array_pointer    = 17,
+  ptype_larva                    = 18,
 } ptype_t;
 
 #endif // F2__PTYPE__H

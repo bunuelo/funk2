@@ -346,6 +346,11 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
       return f2string__new(cause, temp_str__length, temp_str);
     }
   }
+  case ptype_mutable_array_pointer: {
+    funk2_character_t temp_str[1024];
+    u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<mutable_array_pointer>");
+    return f2string__new(cause, temp_str__length, temp_str);
+  } break;
   case ptype_larva: {
     funk2_character_t temp_str[1024];
     u32 larva_type = f2larva__larva_type(exp, cause);

@@ -40,6 +40,7 @@ boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   case ptype_string:
   case ptype_symbol:
   case ptype_larva:
+  case ptype_mutable_array_pointer:
     return boolean__true;
   case ptype_chunk:
   case ptype_simple_array:

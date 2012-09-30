@@ -1233,6 +1233,8 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   case ptype_creadwritelock:
     return boolean__false;
+  case ptype_mutable_array_pointer:
+    return (x == y);
   case ptype_larva:
     return (f2larva__larva_type(x, cause) == f2larva__larva_type(y, cause));
   }
@@ -1836,7 +1838,8 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
     }
     return hash_value__i;
   }
-  case ptype_larva:        return raw__larva__eq_hash_value(       cause, exp);
+  case ptype_larva:                 return raw__larva__eq_hash_value(                cause, exp);
+  case ptype_mutable_array_pointer: return raw__mutable_array_pointer__eq_hash_value(cause, exp);
   case ptype_free_memory:
   case ptype_newly_allocated: 
   default:
@@ -1867,21 +1870,22 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
     return boolean__false;
   }
   switch(x_ptype) {
-  case ptype_integer:                  return raw__integer__equals(        cause, x, y);
-  case ptype_double:                   return raw__double__equals(         cause, x, y);
-  case ptype_float:                    return raw__float__equals(          cause, x, y);
-  case ptype_pointer:                  return raw__pointer__equals(        cause, x, y);
-  case ptype_scheduler_cmutex:         return raw__scheduler_cmutex__equals(cause, x, y);
-  case ptype_cmutex:                   return raw__cmutex__equals(          cause, x, y);
-  case ptype_scheduler_creadwritelock: return raw__scheduler_creadwritelock__equals(          cause, x, y);
+  case ptype_integer:                  return raw__integer__equals(                 cause, x, y);
+  case ptype_double:                   return raw__double__equals(                  cause, x, y);
+  case ptype_float:                    return raw__float__equals(                   cause, x, y);
+  case ptype_pointer:                  return raw__pointer__equals(                 cause, x, y);
+  case ptype_scheduler_cmutex:         return raw__scheduler_cmutex__equals(        cause, x, y);
+  case ptype_cmutex:                   return raw__cmutex__equals(                  cause, x, y);
+  case ptype_scheduler_creadwritelock: return raw__scheduler_creadwritelock__equals(cause, x, y);
   case ptype_creadwritelock:           return raw__creadwritelock__equals(          cause, x, y);
-  case ptype_char:                     return raw__char__equals(           cause, x, y);
-  case ptype_string:                   return raw__string__equals(         cause, x, y);
-  case ptype_symbol:                   return raw__symbol__equals(         cause, x, y);
-  case ptype_chunk:                    return raw__chunk__equals(          cause, x, y);
+  case ptype_char:                     return raw__char__equals(                    cause, x, y);
+  case ptype_string:                   return raw__string__equals(                  cause, x, y);
+  case ptype_symbol:                   return raw__symbol__equals(                  cause, x, y);
+  case ptype_chunk:                    return raw__chunk__equals(                   cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array:             return f2__object__equals(          cause, x, y);
-  case ptype_larva:                    return raw__larva__equals(          cause, x, y);
+  case ptype_traced_array:             return f2__object__equals(                   cause, x, y);
+  case ptype_larva:                    return raw__larva__equals(                   cause, x, y);
+  case ptype_mutable_array_pointer:    return raw__mutable_array_pointer__equals(   cause, x, y);
   default:                             return boolean__false;
   }
 }

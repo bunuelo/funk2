@@ -166,6 +166,20 @@
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan
+	       `[drop the block I am holding on a cube]
+	       `[]
+	       `[prog [if [exists [relationship block property shape cube
+						preposition left-of
+						gripper property is-me t]]
+			  [wait-to-call-below [move left until over cube]]]
+		      [if [exists [relationship block property shape cube
+						preposition right-of
+						gripper property is-me t]]
+			  [wait-to-call-below [move right until over cube]]]
+		      [wait-to-call-below [drop block and wait for block to fall]]
+		      ]]
+	 
+	 [have this create_deliberative_semantic_plan
 	       `[stack a cube on a pyramid]
 	       `[]
 	       `[prog [plan-call [pick up a cube]]

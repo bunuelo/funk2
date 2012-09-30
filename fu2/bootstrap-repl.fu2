@@ -124,20 +124,24 @@
 													 body
 													 nil
 													 nil
+													 nil
 													 nil]]
-									 [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-									 [define is_funktional [primfunk:array__elt compiled_funk 10]]
+									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
+									 [define bytecode_array [primfunk:array__elt compiled_funk  5]]
+									 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
 									 [if optimize_funk_space
 									     `[funk-new ,environment [quote ,name] [quote ,args]
 											nil
 											nil
 											[quote ,compiled_bcs]
+											[quote ,bytecode_array]
 											,is_funktional
 											nil]
 									   `[funk-new ,environment [quote ,name] [quote ,args]
 										      [quote ,demetroed]
 										      [quote ,body]
 										      [quote ,compiled_bcs]
+										      [quote ,bytecode_array]
 										      ,is_funktional
 										      nil]]]
 								       nil
@@ -152,21 +156,25 @@
 													 body
 													 nil
 													 nil
+													 nil
 													 nil]]
 									 [funk-optimize compiled_funk 10]
-									 [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-									 [define is_funktional [primfunk:array__elt compiled_funk 10]]
+									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
+									 [define bytecode_array [primfunk:array__elt compiled_funk  5]]
+									 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
 									 [if optimize_funk_space
 									     `[funk-new ,environment [quote ,name] [quote ,args]
 											nil
 											nil
 											[quote ,compiled_bcs]
+											[quote ,bytecode_array]
 											,is_funktional
 											nil]
 									   `[funk-new ,environment [quote ,name] [quote ,args]
 										      [quote ,demetroed]
 										      [quote ,body]
 										      [quote ,compiled_bcs]
+										      [quote ,bytecode_array]
 										      ,is_funktional
 										      nil]]]
 								       nil
@@ -192,13 +200,16 @@
 												 body
 												 nil
 												 nil
+												 nil
 												 nil]]
-								 [define compiled_bcs  [primfunk:array__elt compiled_funk  4]]
-								 [define is_funktional [primfunk:array__elt compiled_funk 10]]
+								 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
+								 [define bytecode_array [primfunk:array__elt compiled_funk  5]]
+								 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
 								 `[metro-new ,environment [quote ,name] [quote ,args]
 									     [quote ,demetroed]
 									     [quote ,body]
 									     [quote ,compiled_bcs]
+									     [quote ,bytecode_array]
 									     ,is_funktional
 									     nil]]
 							       nil

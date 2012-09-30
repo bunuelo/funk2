@@ -1940,9 +1940,10 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause);
 
 // funk
 
-declare_primobject_10_slot(funk,
+declare_primobject_11_slot(funk,
 			   name,
 			   body_bytecodes,
+			   bytecode_array,
 			   args,
 			   demetropolized_body,
 			   body,
@@ -1967,6 +1968,10 @@ f2ptr raw__metro__body_bytecodes           (f2ptr cause, f2ptr this);
 f2ptr  f2__metro__body_bytecodes           (f2ptr cause, f2ptr this);
 f2ptr raw__metro__body_bytecodes__set      (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr  f2__metro__body_bytecodes__set      (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metro__bytecode_array           (f2ptr cause, f2ptr this);
+f2ptr  f2__metro__bytecode_array           (f2ptr cause, f2ptr this);
+f2ptr raw__metro__bytecode_array__set      (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metro__bytecode_array__set      (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr raw__metro__args                     (f2ptr cause, f2ptr this);
 f2ptr  f2__metro__args                     (f2ptr cause, f2ptr this);
 f2ptr raw__metro__args__set                (f2ptr cause, f2ptr this, f2ptr value);
@@ -2408,9 +2413,10 @@ declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional,
 
 // funk
 
-declare_object_type_10_slot(funk,
+declare_object_type_11_slot(funk,
 			    name,
 			    body_bytecodes,
+			    bytecode_array,
 			    args,
 			    demetropolized_body,
 			    body,
@@ -2419,13 +2425,13 @@ declare_object_type_10_slot(funk,
 			    is_funktional,
 			    has_no_side_effects,
 			    documentation,
-			   f2ptr new_copy__symbol;
-			   f2ptr new_copy__funk;
-			   f2ptr optimize__symbol;
-			   f2ptr optimize__funk;
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
+			    f2ptr new_copy__symbol;
+			    f2ptr new_copy__funk;
+			    f2ptr optimize__symbol;
+			    f2ptr optimize__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 // metro
 

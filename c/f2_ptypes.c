@@ -2135,7 +2135,7 @@ void pfunk2__f2mutable_array_pointer__array__set(f2ptr this, f2ptr cause, f2ptr 
     f2ptr old_value = __pure__f2mutable_array_pointer__array(this);
     funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
     __pure__f2mutable_array_pointer__array__set(this, value);
-  }  
+  }
   
   raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
 }

@@ -701,9 +701,10 @@ f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause) {
 
 // funk
 
-def_primobject_10_slot(funk,
+def_primobject_11_slot(funk,
 		       name,
 		       body_bytecodes,
+		       bytecode_array,
 		       args,
 		       demetropolized_body,
 		       body,
@@ -713,7 +714,7 @@ def_primobject_10_slot(funk,
 		       has_no_side_effects,
 		       documentation);
 
-f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
+f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr bytecode_array, f2ptr is_funktional, f2ptr documentation) {
   if (is_funktional != nil) {
     if (raw__symbol__is_type(cause, name)) {
       u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
@@ -727,7 +728,7 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
     }
   }
   f2ptr has_no_side_effects = nil;
-  f2ptr funk   = f2funk__new(cause, name, bytecodes, args, demetropolized_body, body, environment, nil, is_funktional, has_no_side_effects, documentation);
+  f2ptr funk   = f2funk__new(cause, name, bytecodes, bytecode_array, args, demetropolized_body, body, environment, nil, is_funktional, has_no_side_effects, documentation);
   f2ptr result = f2__compile__funk(cause, fiber, funk);
   if (raw__larva__is_type(cause, result)) {
     return result;
@@ -735,14 +736,15 @@ f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2p
   //f2funk__machine_code__set(funk, this_cause, f2chunk__new_compiled_from_funk(this_cause, funk));
   return funk;
 }
-def_pcfunk8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation,
+def_pcfunk9(funk__new, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation,
 	    "",
-	    return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+	    return f2__funk__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation));
 
 
 f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
   f2ptr name                = f2funk__name(               this, cause);
   f2ptr body_bytecodes      = f2funk__body_bytecodes(     this, cause);
+  f2ptr bytecode_array      = f2funk__bytecode_array(     this, cause);
   f2ptr args                = f2funk__args(               this, cause);
   f2ptr demetropolized_body = f2funk__demetropolized_body(this, cause);
   f2ptr body                = f2funk__body(               this, cause);
@@ -754,6 +756,7 @@ f2ptr raw__funk__new_copy(f2ptr cause, f2ptr this) {
   f2ptr new_funk = f2funk__new(cause,
 			       name,
 			       body_bytecodes,
+			       bytecode_array,
 			       args,
 			       demetropolized_body,
 			       body,
@@ -815,8 +818,8 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_1_slot(metro, funk);
 
-f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr funk = f2__funk__new(cause, fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
+f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr bytecode_array, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr funk = f2__funk__new(cause, fiber, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation);
   if (raw__larva__is_type(cause, funk)) {
     printf("\nmetro funk error!!"); fflush(stdout);
     f2__terminal_print(cause, funk);
@@ -825,9 +828,9 @@ f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2
   f2ptr metro = f2metro__new(cause, funk);
   return metro;
 }
-def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation,
+def_pcfunk9(metro__new, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation,
 	    "",
-	    return f2__metro__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+	    return f2__metro__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation));
 
 
 f2ptr raw__metro__name(f2ptr cause, f2ptr this) {
@@ -1455,9 +1458,10 @@ void f2__primobjects__defragment__fix_pointers() {
   
   // funk
   
-  initialize_primobject_10_slot__defragment__fix_pointers(funk,
+  initialize_primobject_11_slot__defragment__fix_pointers(funk,
 							  name,
 							  body_bytecodes,
+							  bytecode_array,
 							  args,
 							  demetropolized_body,
 							  body,
@@ -1702,9 +1706,10 @@ void f2__primobjects__reinitialize_globalvars() {
   
   // funk
   
-  initialize_primobject_10_slot(funk,
+  initialize_primobject_11_slot(funk,
 				name,
 				body_bytecodes,
+				bytecode_array,
 				args,
 				demetropolized_body,
 				body,
@@ -1714,7 +1719,7 @@ void f2__primobjects__reinitialize_globalvars() {
 				has_no_side_effects,
 				documentation);
   
-  f2__primcfunk__init__8(funk__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
+  f2__primcfunk__init__9(funk__new, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation);
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk = never_gc(cfunk);}
@@ -1728,7 +1733,7 @@ void f2__primobjects__reinitialize_globalvars() {
   
   initialize_primobject_1_slot(metro, funk);
   
-  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
+  f2__primcfunk__init__9(metro__new, environment, name, args, demetropolized_body, body, bytecodes, bytecode_array, is_funktional, documentation);
   
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk = never_gc(cfunk);}

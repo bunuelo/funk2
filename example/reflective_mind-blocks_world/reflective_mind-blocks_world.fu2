@@ -168,8 +168,8 @@
 	 [have this create_deliberative_semantic_plan
 	       `[stack a cube on a pyramid]
 	       `[]
-	       `[prog [wait-to-call [pick up a cube]]
-		      [wait-to-call [drop the block I am holding on a pyramid]]
+	       `[prog [call-plan [pick up a cube]]
+		      [call-plan [drop the block I am holding on a pyramid]]
 		      [assert [exists [relationship block property shape cube
 						    preposition on
 						    block property shape pyramid]]]
@@ -178,8 +178,8 @@
 	 [have this create_deliberative_semantic_plan
 	       `[stack a pyramid on a cube]
 	       `[]
-	       `[prog [wait-to-call [pick up a pyramid]]
-		      [wait-to-call [drop the block I am holding on a cube]]
+	       `[prog [call-plan [pick up a pyramid]]
+		      [call-plan [drop the block I am holding on a cube]]
 		      [assert [exists [relationship block property shape pyramid
 						    preposition on
 						    block property shape cube]]]

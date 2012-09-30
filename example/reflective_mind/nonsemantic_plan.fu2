@@ -26,6 +26,9 @@
 [defunk name_expression-as-symbol [this]
   [get [name_expression-as-string this] as-symbol]]
 
+[defunk nonsemantic_plan-unique_name_from_name_expression [name_expression]
+  [name_expression-as-symbol name_expression]]
+
 'nonsemantic_plan'
 
 [deframe nonsemantic_plan [frame] [mental_layer
@@ -50,7 +53,7 @@
 
 [deftypefunk nonsemantic_plan get unique_name []
   [if [null internal-unique_name]
-      [= internal-unique_name [name_expression-as-symbol name_expression]]]
+      [= internal-unique_name [nonsemantic_plan-unique_name_from_name_expression name_expression]]]
   internal-unique_name]
 
 [deftypefunk nonsemantic_plan get mind []
@@ -103,6 +106,10 @@
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [elt arguments 0]]]
 												  [flatten_constree `[,action_name]]]]]
+						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let* [[semantic_plan_object-phenomenal_name `[quote, [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+												  `[call plan to ,semantic_plan_object-phenomenal_name]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[exists-expression [elt arguments 0]]]
@@ -461,6 +468,21 @@
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
+						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `plan-call
+													 expression expression]
+												[let* [[semantic_plan_object-phenomenal_name `[quote, [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+												  [eval `[funk [this]
+													       [let [[semantic_plan_object [have [get this mental_layer] lookup_semantic_plan ,semantic_plan_object-phenomenal_name]]]
+														 [if [null semantic_plan_object]
+														     [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
+															    action_description [conslist-as-english_string [have [cons ,semantic_plan_object-phenomenal_name nil] flatten]]]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+															 [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
+														     [terminal_format standard-terminal '\nexecuting plan: "' [get ,semantic_plan_object-phenomenal_name as-string] '."']
+														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner]
+														     ]]]]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `exists
@@ -667,8 +689,23 @@
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
+					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan-call
+												       expression expression]
+											      [let* [[semantic_plan_object-phenomenal_name `[quote, [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+												[eval `[funk [this]
+													     [let [[semantic_plan_object [have [get this mental_layer] lookup_semantic_plan ,semantic_plan_object-phenomenal_name]]]
+													       [if [null semantic_plan_object]
+														   [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
+															  action_description [conslist-as-english_string [have [cons ,semantic_plan_object-phenomenal_name nil] flatten]]]
+														 [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+														       [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
+														   [terminal_format standard-terminal '\nimagining executing plan: "' [get ,semantic_plan_object-phenomenal_name as-string] '."']
+														   [have nonsemantic_plan imagine_executing_as_thought_in_semantic_planner semantic_planner]
+														   ]]]]]]]]
 					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `exists
 												       expression expression]
 											      [let [[exists-expression [elt arguments 0]]]
@@ -847,6 +884,12 @@
 												       expression expression]
 											      [let [[action_name `[quote ,[elt command_arguments 0]]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call]]]]
+					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan-call
+												       expression expression]
+											      [let* [[semantic_plan_object-phenomenal_name `[quote, [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+												nil]]]
 					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `exists

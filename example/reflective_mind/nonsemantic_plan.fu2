@@ -265,7 +265,7 @@
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `plan-call
 													 expression expression]
-												[let* [[semantic_plan_object-phenomenal_name `[quote ,[nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]
+												[let* [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]
 												       [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]]
 												  [if [null semantic_plan_object]
 												      [terminal_format standard-terminal '\nplan syntax warning: "' [get semantic_plan_object-phenomenal_name as-string] '" plan not defined.']]
@@ -345,6 +345,9 @@
 
 [deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
   [have [get this mental_layer] check_exists semantic_partial_state]]
+
+[deftypefunk nonsemantic_plan execute imagine_check_exists [semantic_partial_state]
+  [have [get this mental_layer] imagine_check_exists semantic_partial_state]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]

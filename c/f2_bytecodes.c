@@ -316,7 +316,18 @@ void unrecognized_bytecode_register__error(f2ptr fiber, f2ptr cause, char* bytec
 void f2__fiber__increment_pc(f2ptr fiber, f2ptr cause) {
   f2ptr pc_reg = f2fiber__program_counter(fiber, cause);
   release__assert(pc_reg, fiber, "f2__fiber__increment_pc error: pc_reg is nil.");
-  f2fiber__program_counter__set(fiber, cause, f2cons__cdr(pc_reg, cause));
+  if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+    f2ptr array         = raw__mutable_array_pointer__array(cause, pc_reg);
+    u64   array__length = raw__array__length(cause, array);
+    u64   index         = raw__mutable_array_pointer__index(cause, pc_reg);
+    if (index < array__length - 1) {
+      raw__mutable_array_pointer__index__set(cause, pc_reg, index + 1);
+    } else {
+      f2fiber__program_counter__set(fiber, cause, nil);
+    }
+  } else {
+    f2fiber__program_counter__set(fiber, cause, f2cons__cdr(pc_reg, cause));
+  }
 }
 
 
@@ -365,9 +376,10 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
   }
   if (raw__funk__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
-    f2ptr funk_env     = f2funk__env(funktion, cause);
-    f2ptr body_bcs     = f2funk__body_bytecodes(funktion, cause);
-    f2ptr machine_code = f2funk__machine_code(funktion, cause);
+    f2ptr funk_env       = f2funk__env(funktion, cause);
+    f2ptr body_bcs       = f2funk__body_bytecodes(funktion, cause);
+    f2ptr bytecode_array = f2funk__bytecode_array(funktion, cause);
+    f2ptr machine_code   = f2funk__machine_code(funktion, cause);
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2funk__name(funktion, cause);
@@ -391,7 +403,11 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       return 1;
     }
     f2fiber__env__set(            fiber, cause, funk_env);
+#ifdef USE_BYTECODE_ARRAY
+    f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
+#else
     f2fiber__program_counter__set(fiber, cause, body_bcs);
+#endif
     if (machine_code) {
       return f2chunk__bytecode_jump(machine_code, cause, fiber);
     } else {
@@ -478,13 +494,18 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
 #endif // DEBUG_BYTECODES
     f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));
-    f2ptr body_bcs = raw__metro__body_bytecodes(cause, funktion);
+    f2ptr body_bcs       = raw__metro__body_bytecodes(cause, funktion);
     if (raw__larva__is_type(cause, body_bcs)) {
       f2fiber__value__set(fiber, cause, body_bcs);
       return 1;
     }
-    f2ptr machine_code = raw__metro__machine_code(cause, funktion);
+    f2ptr bytecode_array = raw__metro__bytecode_array(cause, funktion);
+    f2ptr machine_code   = raw__metro__machine_code(cause, funktion);
+#ifdef USE_BYTECODE_ARRAY
+    f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
+#else
     f2fiber__program_counter__set(fiber, cause, body_bcs);
+#endif
     if (machine_code) {
       //fflush(stdout); f2__print_prompt("jumping to metro machine code: ", funktion); fflush(stdout);
       return f2chunk__bytecode_jump(machine_code, cause, fiber);
@@ -819,9 +840,9 @@ int f2__fiber__bytecode__swap__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
+  f2ptr temp = f2fiber__return_reg(fiber, cause);
   f2fiber__return_reg__set(fiber, cause, f2fiber__iter(  fiber, cause));
-  f2fiber__iter__set(  fiber, cause, temp);
+  f2fiber__iter__set(fiber, cause, temp);
   return 0;
 }
 
@@ -831,8 +852,8 @@ int f2__fiber__bytecode__swap__return_reg__program_counter_reg(f2ptr fiber, f2pt
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__return_reg(         fiber, cause);
-  f2fiber__return_reg__set(         fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2ptr temp = f2fiber__return_reg(fiber, cause);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
 }
@@ -884,8 +905,8 @@ int f2__fiber__bytecode__swap__value_reg__program_counter_reg(f2ptr fiber, f2ptr
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__value(          fiber, cause);
-  f2fiber__value__set(          fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2ptr temp = f2fiber__value(fiber, cause);
+  f2fiber__value__set(fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
 }
@@ -896,7 +917,7 @@ int f2__fiber__bytecode__swap__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                        f2fiber__value(fiber, cause);
+  f2ptr temp = f2fiber__value(fiber, cause);
   f2fiber__value__set(fiber, cause, f2fiber__env(  fiber, cause));
   f2fiber__env__set(  fiber, cause, temp);
   return 0;
@@ -920,7 +941,7 @@ int f2__fiber__bytecode__swap__iter_reg__program_counter_reg(f2ptr fiber, f2ptr 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__iter(           fiber, cause);
+  f2ptr temp =                                f2fiber__iter(           fiber, cause);
   f2fiber__iter__set(           fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
@@ -956,7 +977,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__env_reg(f2ptr fiber, f2ptr b
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__program_counter(fiber, cause);
+  f2ptr temp =                                f2fiber__program_counter(fiber, cause);
   f2fiber__program_counter__set(fiber, cause, f2fiber__env(            fiber, cause));
   f2fiber__env__set(            fiber, cause, temp);
   return 1;
@@ -968,7 +989,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__args_reg(f2ptr fiber, f2ptr 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                  f2fiber__program_counter(fiber, cause);
+  f2ptr temp =                                f2fiber__program_counter(fiber, cause);
   f2fiber__program_counter__set(fiber, cause, f2fiber__args(           fiber, cause));
   f2fiber__args__set(           fiber, cause, temp);
   return 1;

@@ -901,6 +901,40 @@ def_pcfunk2(metro__body_bytecodes__set, this, value,
 	    return f2__metro__body_bytecodes__set(this_cause, this, value));
 
 
+f2ptr raw__metro__bytecode_array(f2ptr cause, f2ptr this) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__bytecode_array(funk, cause);
+}
+ 
+f2ptr f2__metro__bytecode_array(f2ptr cause, f2ptr this) {
+  assert_argument_type(metro, this);
+  return raw__metro__bytecode_array(cause, this);
+}
+def_pcfunk1(metro__bytecode_array, this,
+	    "",
+	    return f2__metro__bytecode_array(this_cause, this));
+
+
+f2ptr raw__metro__bytecode_array__set(f2ptr cause, f2ptr this, f2ptr value) {
+  if (! raw__metro__is_type(cause, this)) {
+    error(nil, "raw__metro assertion failed: wrong type.");
+  }
+  f2ptr funk = f2metro__funk(this, cause);
+  return f2funk__bytecode_array__set(funk, cause, value);
+}
+ 
+f2ptr f2__metro__bytecode_array__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metro, this);
+  return raw__metro__bytecode_array__set(cause, this, value);
+}
+def_pcfunk2(metro__bytecode_array__set, this, value,
+	    "",
+	    return f2__metro__bytecode_array__set(this_cause, this, value));
+
+
 f2ptr raw__metro__args(f2ptr cause, f2ptr this) {
   if (! raw__metro__is_type(cause, this)) {
     error(nil, "raw__metro assertion failed: wrong type.");
@@ -1208,6 +1242,8 @@ f2ptr f2metro__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "name";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.name__set__funk);}
   {char* slot_name = "body_bytecodes";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk);}
   {char* slot_name = "body_bytecodes";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk);}
+  {char* slot_name = "bytecode_array";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__funk);}
+  {char* slot_name = "bytecode_array";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__set__funk);}
   {char* slot_name = "args";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk);}
   {char* slot_name = "args";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__funk);}
   {char* slot_name = "demetropolized_body";       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metro.demetropolized_body__funk);}
@@ -1508,6 +1544,14 @@ void f2__primobjects__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(metro__body_bytecodes__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(metro__bytecode_array);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(metro__bytecode_array__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__set__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__symbol);
   f2__primcfunk__init__defragment__fix_pointers(metro__args);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk);
@@ -1743,6 +1787,10 @@ void f2__primobjects__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body_bytecodes, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__funk = never_gc(cfunk);}
   {char* symbol_str = "body_bytecodes-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__body_bytecodes__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.body_bytecodes__set__funk = never_gc(cfunk);}
+  {char* symbol_str = "bytecode_array"; __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__bytecode_array, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__funk = never_gc(cfunk);}
+  {char* symbol_str = "bytecode_array-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__bytecode_array__set, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.bytecode_array__set__funk = never_gc(cfunk);}
   {char* symbol_str = "args"; __funk2.globalenv.object_type.primobject.primobject_type_metro.args__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__args, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.args__funk = never_gc(cfunk);}
   {char* symbol_str = "args-set"; __funk2.globalenv.object_type.primobject.primobject_type_metro.args__set__symbol = new__symbol(cause, symbol_str);}

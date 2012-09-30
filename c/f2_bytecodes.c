@@ -381,6 +381,11 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     f2ptr bytecode_array = f2funk__bytecode_array(funktion, cause);
 #else
     f2ptr body_bcs       = f2funk__body_bytecodes(funktion, cause);
+    if (raw__larva__is_type(cause, body_bcs)) {
+      bytecode_status("body_bcs is larva!");
+      f2fiber__value__set(fiber, cause, body_bcs);
+      return 1;
+    }
 #endif
 
 #ifdef USE_MACHINE_CODE
@@ -404,12 +409,9 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
-    if (raw__larva__is_type(cause, body_bcs)) {
-      bytecode_status("body_bcs is larva!");
-      f2fiber__value__set(fiber, cause, body_bcs);
-      return 1;
-    }
+
     f2fiber__env__set(            fiber, cause, funk_env);
+
 #ifdef USE_BYTECODE_ARRAY
     f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
 #else
@@ -425,7 +427,9 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 #else
     return 1;
 #endif
+
   } else if (raw__cfunk__is_type(cause, funktion)) {
+
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2cfunk__name(funktion, cause);

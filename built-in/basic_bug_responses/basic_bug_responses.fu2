@@ -202,9 +202,10 @@
 						      [[is-type `string exp]        exp]
 						      [t                            [get exp as-string]]]]]]
 	  this]
-    [have [have string replace_all
-		'-' ' '] replace_all
-		'_' ' ']]]
+    [have [have [have string replace_all
+		      '-' ' '] replace_all
+		      '_' ' '] replace_all
+		      '|' '']]]
 
 [defunk conslist-as-english_symbol [this]
   [get [conslist-as-english_string this] as-symbol]]

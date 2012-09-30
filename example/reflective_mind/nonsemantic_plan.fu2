@@ -108,7 +108,7 @@
 												  [flatten_constree `[,action_name]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let* [[semantic_plan_object-phenomenal_name `[quote ,[nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+												[let* [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]
 												  `[call plan to ,semantic_plan_object-phenomenal_name]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
@@ -900,7 +900,7 @@
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
 												       expression expression]
-											      [let* [[semantic_plan_object-phenomenal_name `[quote ,[nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]]
+											      [let* [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression [elt arguments 0]]]]
 												nil]]]
 					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments

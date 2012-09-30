@@ -21,6 +21,8 @@
 
 #include "funk2.h"
 
+#define USE_BYTECODE_ARRAY
+
 void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__funk__symbol                                = -1;
   this->bytecode__funk__execution_count                       = 0;

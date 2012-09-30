@@ -51,6 +51,7 @@ ansi_color_t print__ansi__chunk__foreground                    = ansi_color__whi
 ansi_color_t print__ansi__simple_array__foreground             = ansi_color__white;
 ansi_color_t print__ansi__traced_array__foreground             = ansi_color__white;
 ansi_color_t print__ansi__larva__foreground                    = ansi_color__dark_red;
+ansi_color_t print__ansi__mutable_array_pointer__foreground    = ansi_color__white;
 ansi_color_t print__ansi__end_recursion__foreground            = ansi_color__white;
 ansi_color_t print__ansi__error__foreground                    = ansi_color__dark_red;
 ansi_color_t print__ansi__cons__foreground                     = ansi_color__white;

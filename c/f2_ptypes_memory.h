@@ -332,9 +332,9 @@ ptype_mutable_array_pointer_block_t* ptype_mutable_array_pointer_block__new(int 
 
 #define __pure__f2mutable_array_pointer__new(pool_index, cause, array, index) ptype_mutable_array_pointer__new(pool_index, cause, array, index)
 #define __pure__f2mutable_array_pointer__array(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array)
-#define __pure__f2mutable_array_pointer__array__set(this, array)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array = (array))
+#define __pure__f2mutable_array_pointer__array__set(this, value)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array = (value))
 #define __pure__f2mutable_array_pointer__index(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index)
-#define __pure__f2mutable_array_pointer__index__set(this, index)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index = (index))
+#define __pure__f2mutable_array_pointer__index__set(this, value)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index = (value))
 
 #endif // F2__PTYPES__MEMORY__H
 

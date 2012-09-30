@@ -2137,7 +2137,7 @@ void pfunk2__f2mutable_array_pointer__array__set(f2ptr this, f2ptr cause, f2ptr 
     __pure__f2mutable_array_pointer__array__set(this, value);
   }  
   
-  raw__container__reflectively_know_of_writing_to(cause, this, array, sizeof(array));
+  raw__container__reflectively_know_of_writing_to(cause, this, array, sizeof(value));
 }
 
 u64 pfunk2__f2mutable_array_pointer__index(f2ptr this, f2ptr cause) {

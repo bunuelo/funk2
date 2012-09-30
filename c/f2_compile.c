@@ -203,7 +203,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
     f2ptr iter = this;
     while (iter != nil) {
       bytecodes__length ++;
-      iter = raw__cons__cdr(cause, iter);
+      iter = f2cons__cdr(iter, cause);
     }
   }
   f2ptr array = raw__array__new(cause, bytecodes__length);
@@ -211,10 +211,10 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
     u64   index = 0;
     f2ptr iter  = this;
     while (iter != nil) {
-      f2ptr bytecode = raw__cons__car(cause, iter);
+      f2ptr bytecode = f2cons__car(iter, cause);
       raw__array__elt__set(cause, array, index, bytecode);
       index ++;
-      iter = raw__cons__cdr(cause, iter);
+      iter = f2cons__cdr(iter, cause);
     }
   }
   return array;

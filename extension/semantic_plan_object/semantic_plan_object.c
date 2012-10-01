@@ -258,7 +258,7 @@ export_cefunk2(semantic_plan_object__bug_name__remove, this, that, 0, "Removes t
 
 
 f2ptr raw__semantic_plan_object__default_variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "variable"), variable_name);
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "default_variable"), variable_name);
 }
 
 f2ptr f2__semantic_plan_object__default_variable__lookup_set(f2ptr cause, f2ptr this, f2ptr variable_name) {
@@ -269,7 +269,7 @@ export_cefunk2(semantic_plan_object__default_variable__lookup_set, this, variabl
 
 
 f2ptr raw__semantic_plan_object__default_variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "variable"), variable_name, that);
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "default_variable"), variable_name, that);
 }
 
 f2ptr f2__semantic_plan_object__default_variable__add(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
@@ -280,7 +280,7 @@ export_cefunk3(semantic_plan_object__default_variable__add, this, variable_name,
 
 
 f2ptr raw__semantic_plan_object__default_variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "variable"), variable_name, that);
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "default_variable"), variable_name, that);
 }
 
 f2ptr f2__semantic_plan_object__default_variable__remove(f2ptr cause, f2ptr this, f2ptr variable_name, f2ptr that) {

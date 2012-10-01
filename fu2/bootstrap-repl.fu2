@@ -509,11 +509,15 @@
 		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
 	  exps]]]
 
+[primfunk:exp__format stdout '\ndebug 1.0\n']
+
 [defunk terminal_format [terminal_print_frame :rest exps]
   [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
+
+[primfunk:exp__format stdout '\ndebug 1.1\n']
 
 `[defunk join-test [:rest fibers]
   [define-funk fibers-wait-loop

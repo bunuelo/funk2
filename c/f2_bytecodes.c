@@ -585,7 +585,14 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
 //
 int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
   bytecode_status("bytecode funk beginning.");
-  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
+  f2ptr pc_reg = f2fiber__program_counter(fiber, cause);
+  f2ptr new_return_reg;
+  if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+    new_return_reg = raw__mutable_array_pointer__new(cause, raw__mutable_array_pointer__array(cause, pc_reg), raw__mutable_array_pointer__index(cause, pc_reg));
+  } else {
+    new_return_reg = pc_reg;
+  }
+  f2fiber__return_reg__set(fiber, cause, new_return_reg); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
   return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
 

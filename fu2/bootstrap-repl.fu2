@@ -151,7 +151,6 @@
 								       nil
 								       nil
 								       nil
-								       nil
 								       nil]]
 
 [primfunk:exp__format stdout '\ndebug 2\n']
@@ -187,7 +186,6 @@
 								       nil
 								       nil
 								       nil
-								       nil
 								       nil]]
 
 
@@ -198,7 +196,6 @@
 
 [globalize-funk funk-new_with_name [metro-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 					      `[`[funk-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
-					      nil
 					      nil
 					      nil
 					      nil
@@ -223,7 +220,6 @@
 									     [quote ,bytecode_array]
 									     ,is_funktional
 									     nil]]
-							       nil
 							       nil
 							       nil
 							       nil

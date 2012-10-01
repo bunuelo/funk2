@@ -260,7 +260,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
       iter = f2cons__cdr(iter, cause);
     }
   }
-  funk2_hash__destroy(&cons_index_hash, 10);
+  funk2_hash__destroy(&cons_index_hash);
   return array;
 }
 

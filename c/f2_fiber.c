@@ -613,20 +613,20 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
     
     f2ptr bytecode;
 #ifdef USE_BYTECODE_ARRAY
-    if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
-      f2ptr array = raw__mutable_array_pointer__array(cause, pc_reg);
-      u64   index = raw__mutable_array_pointer__index(cause, pc_reg);
-      if (! raw__array__is_type(cause, array)) {
-	error(nil, "not array");
-      }
-      bytecode = raw__array__elt(cause, array, index);
-      if (! raw__bytecode__is_type(cause, bytecode)) {
-	printf("index: " u64__fstr, index); fflush(stdout);
-	error(nil, "not bytecode");
-      }
-    } else {
-      bytecode = f2cons__car(pc_reg, cause);
+    //if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+    f2ptr array = raw__mutable_array_pointer__array(cause, pc_reg);
+    u64   index = raw__mutable_array_pointer__index(cause, pc_reg);
+    if (! raw__array__is_type(cause, array)) {
+      error(nil, "not array");
     }
+    bytecode = raw__array__elt(cause, array, index);
+    if (! raw__bytecode__is_type(cause, bytecode)) {
+      printf("index: " u64__fstr, index); fflush(stdout);
+      error(nil, "not bytecode");
+    }
+    //} else {
+    //bytecode = f2cons__car(pc_reg, cause);
+    //}
 #else
     bytecode = f2cons__car(pc_reg, cause);
 #endif

@@ -22,9 +22,6 @@
 #ifndef F2__BYTECODES__H
 #define F2__BYTECODES__H
 
-#define USE_BYTECODE_ARRAY
-
-
 #include "f2_ptypes.h"
 #include "f2_compile.h"
 #include "f2_primobject__frame.h"

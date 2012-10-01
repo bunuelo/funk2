@@ -232,7 +232,6 @@
 					       nil
 					       nil
 					       nil
-					       nil
 					       nil]]
 
 'defmetro is later redefined.  search for "defmetro defmetro" below.'

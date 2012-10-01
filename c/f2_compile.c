@@ -251,18 +251,27 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
 	  if (new_pc != nil) {
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    if (jump_index == ((u64)-1)) {
+	      error(nil, "jump outside of array.");
+	    }
 	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
 	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
 	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
 	  if (new_pc != nil) {
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    if (jump_index == ((u64)-1)) {
+	      error(nil, "jump outside of array.");
+	    }
 	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
 	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
 	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
 	  if (new_pc != nil) {
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    if (jump_index == ((u64)-1)) {
+	      error(nil, "jump outside of array.");
+	    }
 	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
 	  }
 	}

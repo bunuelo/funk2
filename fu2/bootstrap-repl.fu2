@@ -513,7 +513,6 @@
 
 [defunk test [terminal_print_frame]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [have [get terminal_print_frame cmutex] unlock]
     result]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]

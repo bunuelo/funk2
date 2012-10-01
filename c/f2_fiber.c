@@ -614,9 +614,14 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
     f2ptr bytecode;
 #ifdef USE_BYTECODE_ARRAY
     //if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+    if (! raw__mutable_array_pointer__is_type(cause, pc_reg)) {
+      f2__print(nil, pc_reg);
+      error(nil, "not mutable_array_pointer");
+    }
     f2ptr array = raw__mutable_array_pointer__array(cause, pc_reg);
     u64   index = raw__mutable_array_pointer__index(cause, pc_reg);
     if (! raw__array__is_type(cause, array)) {
+      f2__print(nil, array);
       error(nil, "not array");
     }
     bytecode = raw__array__elt(cause, array, index);

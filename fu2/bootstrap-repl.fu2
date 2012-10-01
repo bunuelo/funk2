@@ -107,6 +107,8 @@
 [primfunk:load 'fu2/primfunks-virtual_processor_handler.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
+[primfunk:exp__format stdout '\ndebug 0\n']
+
 [memory-assert_valid]
 
 [globalize -first_cause- [this-cause]]
@@ -116,6 +118,8 @@
 [define -current_env_name- `global-environment]
 
 [globalize optimize_funk_space t]
+
+[primfunk:exp__format stdout '\ndebug 1\n']
 
 [globalize-funk funk-new_with_name_and_environment-original [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 								       `[[define demetroed     [exps-demetropolize_full body]]

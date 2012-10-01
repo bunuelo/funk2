@@ -51,6 +51,7 @@ extern ansi_color_t print__ansi__chunk__foreground;
 extern ansi_color_t print__ansi__simple_array__foreground;
 extern ansi_color_t print__ansi__traced_array__foreground;
 extern ansi_color_t print__ansi__larva__foreground;
+extern ansi_color_t print__ansi__mutable_array_pointer__foreground;
 extern ansi_color_t print__ansi__end_recursion__foreground;
 extern ansi_color_t print__ansi__error__foreground;
 extern ansi_color_t print__ansi__cons__foreground;

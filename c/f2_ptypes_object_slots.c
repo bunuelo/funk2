@@ -4695,14 +4695,10 @@ f2ptr f2larva__primobject_type__new(f2ptr cause) {
 
 // mutable_array_pointer
 
-f2ptr raw__mutable_array_pointer__new(f2ptr cause, f2ptr array, u64 index) {
-  return f2mutable_array_pointer__new(cause, array, index);
-}
-
 f2ptr f2__mutable_array_pointer__new(f2ptr cause, f2ptr array, f2ptr index) {
   assert_argument_type_or_nil(array,   array);
   assert_argument_type(       integer, index);
-  return raw__mutable_array_pointer__new(cause, array, f2integer__i(index, cause));
+  return f2mutable_array_pointer__new(cause, array, f2integer__i(index, cause));
 }
 
 def_pcfunk2(mutable_array_pointer__new, array, index,

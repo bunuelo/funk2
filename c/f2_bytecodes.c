@@ -315,23 +315,8 @@ void unrecognized_bytecode_register__error(f2ptr fiber, f2ptr cause, char* bytec
 
 void f2__fiber__increment_pc(f2ptr fiber, f2ptr cause) {
   f2ptr pc_reg = f2fiber__program_counter(fiber, cause);
-  debug__assert(pc_reg, fiber, "f2__fiber__increment_pc error: pc_reg is nil.");
-#ifdef USE_BYTECODE_ARRAY
-  if (! raw__mutable_array_pointer__is_type(cause, pc_reg)) {
-    f2__print(nil, pc_reg);
-    error(nil, "not mutable_array_pointer");
-  }
-  f2ptr array         = raw__mutable_array_pointer__array(cause, pc_reg);
-  u64   array__length = raw__array__length(cause, array);
-  u64   index         = raw__mutable_array_pointer__index(cause, pc_reg);
-  if (index < array__length - 1) {
-    raw__mutable_array_pointer__index__set(cause, pc_reg, index + 1);
-  } else {
-    f2fiber__program_counter__set(fiber, cause, nil);
-  }
-#else
+  release__assert(pc_reg, fiber, "f2__fiber__increment_pc error: pc_reg is nil.");
   f2fiber__program_counter__set(fiber, cause, f2cons__cdr(pc_reg, cause));
-#endif
 }
 
 
@@ -380,26 +365,9 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
   }
   if (raw__funk__is_type(cause, funktion)) {
     //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
-    f2ptr funk_env       = f2funk__env(funktion, cause);
-#ifdef USE_BYTECODE_ARRAY
-    f2ptr bytecode_array = f2funk__bytecode_array(funktion, cause);
-    if (! raw__array__is_type(cause, bytecode_array)) {
-      f2__print(nil, bytecode_array);
-      error(nil, "bytecode_array not array.");
-    }
-#else
-    f2ptr body_bcs       = f2funk__body_bytecodes(funktion, cause);
-    if (raw__larva__is_type(cause, body_bcs)) {
-      bytecode_status("body_bcs is larva!");
-      f2fiber__value__set(fiber, cause, body_bcs);
-      return 1;
-    }
-#endif
-
-#ifdef USE_MACHINE_CODE
-    f2ptr machine_code   = f2funk__machine_code(funktion, cause);
-#endif
-
+    f2ptr funk_env     = f2funk__env(funktion, cause);
+    f2ptr body_bcs     = f2funk__body_bytecodes(funktion, cause);
+    f2ptr machine_code = f2funk__machine_code(funktion, cause);
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2funk__name(funktion, cause);
@@ -417,27 +385,19 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       f2__free(to_ptr(str));
     }
 #endif // DEBUG_BYTECODES
-
+    if (raw__larva__is_type(cause, body_bcs)) {
+      bytecode_status("body_bcs is larva!");
+      f2fiber__value__set(fiber, cause, body_bcs);
+      return 1;
+    }
     f2fiber__env__set(            fiber, cause, funk_env);
-
-#ifdef USE_BYTECODE_ARRAY
-    f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
-#else
     f2fiber__program_counter__set(fiber, cause, body_bcs);
-#endif
-
-#ifdef USE_MACHINE_CODE
     if (machine_code) {
       return f2chunk__bytecode_jump(machine_code, cause, fiber);
     } else {
       return 1;
     }
-#else
-    return 1;
-#endif
-
   } else if (raw__cfunk__is_type(cause, funktion)) {
-
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2cfunk__name(funktion, cause);
@@ -458,7 +418,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     f2ptr return_reg = f2fiber__return_reg(fiber, cause);
     {
       f2ptr args = f2fiber__args(fiber, cause);
-      debug__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
+      release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
       {
 	f2ptr value = f2__cfunk__apply(cause, funktion, fiber, args);
 	f2fiber__value__set(fiber, cause, value);
@@ -518,36 +478,19 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
 #endif // DEBUG_BYTECODES
     f2fiber__env__set(fiber, cause, raw__metro__env(cause, funktion));
-#ifdef USE_BYTECODE_ARRAY
-    f2ptr bytecode_array = raw__metro__bytecode_array(cause, funktion);
-#else
-    f2ptr body_bcs       = raw__metro__body_bytecodes(cause, funktion);
+    f2ptr body_bcs = raw__metro__body_bytecodes(cause, funktion);
     if (raw__larva__is_type(cause, body_bcs)) {
       f2fiber__value__set(fiber, cause, body_bcs);
       return 1;
     }
-#endif
-
-#ifdef USE_MACHINE_CODE
-    f2ptr machine_code   = raw__metro__machine_code(cause, funktion);
-#endif
-
-#ifdef USE_BYTECODE_ARRAY
-    f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
-#else
+    f2ptr machine_code = raw__metro__machine_code(cause, funktion);
     f2fiber__program_counter__set(fiber, cause, body_bcs);
-#endif
-
-#ifdef USE_MACHINE_CODE
     if (machine_code) {
       //fflush(stdout); f2__print_prompt("jumping to metro machine code: ", funktion); fflush(stdout);
       return f2chunk__bytecode_jump(machine_code, cause, fiber);
     } else {
       return 1;
     }
-#else
-    return 1;
-#endif
   }
   { // debugging code
     if (raw__chunk__is_type(cause, funktion)) {
@@ -585,14 +528,7 @@ int f2__fiber__bytecode__jump_funk(f2ptr fiber, f2ptr bytecode) {
 //
 int f2__fiber__bytecode_helper__funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
   bytecode_status("bytecode funk beginning.");
-  f2ptr pc_reg = f2fiber__program_counter(fiber, cause);
-  f2ptr new_return_reg;
-  if (raw__mutable_array_pointer__is_type(cause, pc_reg)) {
-    new_return_reg = raw__mutable_array_pointer__new(cause, raw__mutable_array_pointer__array(cause, pc_reg), raw__mutable_array_pointer__index(cause, pc_reg));
-  } else {
-    new_return_reg = pc_reg;
-  }
-  f2fiber__return_reg__set(fiber, cause, new_return_reg); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
+  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause)); // f2__fiber__bytecode__copy(fiber, __fiber__program_counter_reg__symbol, __fiber__return_reg__symbol);
   return f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(fiber, cause, bytecode);
 }
 
@@ -883,9 +819,9 @@ int f2__fiber__bytecode__swap__return_reg__iter_reg(f2ptr fiber, f2ptr bytecode)
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp = f2fiber__return_reg(fiber, cause);
+  f2ptr temp =                         f2fiber__return_reg(fiber, cause);
   f2fiber__return_reg__set(fiber, cause, f2fiber__iter(  fiber, cause));
-  f2fiber__iter__set(fiber, cause, temp);
+  f2fiber__iter__set(  fiber, cause, temp);
   return 0;
 }
 
@@ -895,8 +831,8 @@ int f2__fiber__bytecode__swap__return_reg__program_counter_reg(f2ptr fiber, f2pt
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp = f2fiber__return_reg(fiber, cause);
-  f2fiber__return_reg__set(fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2ptr temp =                                  f2fiber__return_reg(         fiber, cause);
+  f2fiber__return_reg__set(         fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
 }
@@ -948,8 +884,8 @@ int f2__fiber__bytecode__swap__value_reg__program_counter_reg(f2ptr fiber, f2ptr
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp = f2fiber__value(fiber, cause);
-  f2fiber__value__set(fiber, cause, f2fiber__program_counter(fiber, cause));
+  f2ptr temp =                                  f2fiber__value(          fiber, cause);
+  f2fiber__value__set(          fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
 }
@@ -960,7 +896,7 @@ int f2__fiber__bytecode__swap__value_reg__env_reg(f2ptr fiber, f2ptr bytecode) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp = f2fiber__value(fiber, cause);
+  f2ptr temp =                        f2fiber__value(fiber, cause);
   f2fiber__value__set(fiber, cause, f2fiber__env(  fiber, cause));
   f2fiber__env__set(  fiber, cause, temp);
   return 0;
@@ -984,7 +920,7 @@ int f2__fiber__bytecode__swap__iter_reg__program_counter_reg(f2ptr fiber, f2ptr 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                f2fiber__iter(           fiber, cause);
+  f2ptr temp =                                  f2fiber__iter(           fiber, cause);
   f2fiber__iter__set(           fiber, cause, f2fiber__program_counter(fiber, cause));
   f2fiber__program_counter__set(fiber, cause, temp);
   return 1;
@@ -1020,7 +956,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__env_reg(f2ptr fiber, f2ptr b
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                f2fiber__program_counter(fiber, cause);
+  f2ptr temp =                                  f2fiber__program_counter(fiber, cause);
   f2fiber__program_counter__set(fiber, cause, f2fiber__env(            fiber, cause));
   f2fiber__env__set(            fiber, cause, temp);
   return 1;
@@ -1032,7 +968,7 @@ int f2__fiber__bytecode__swap__program_counter_reg__args_reg(f2ptr fiber, f2ptr 
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr temp =                                f2fiber__program_counter(fiber, cause);
+  f2ptr temp =                                  f2fiber__program_counter(fiber, cause);
   f2fiber__program_counter__set(fiber, cause, f2fiber__args(           fiber, cause));
   f2fiber__args__set(           fiber, cause, temp);
   return 1;
@@ -1251,8 +1187,8 @@ int f2__fiber__bytecode__pop__return_reg(f2ptr fiber, f2ptr bytecode) {
 
 int f2__fiber__bytecode__pop__env_reg__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   raw__fiber__stack__pop_env(cause, fiber);
-  debug__assert(f2fiber__env(fiber, cause), fiber, "env popped to nil.");
-  debug__assert(raw__environment__is_type(cause, f2fiber__env(fiber, cause)), fiber, "assertion failed: popped to non-environment");
+  release__assert(f2fiber__env(fiber, cause), fiber, "env popped to nil.");
+  release__assert(raw__environment__is_type(cause, f2fiber__env(fiber, cause)), fiber, "assertion failed: popped to non-environment");
   //f2__print(nil, f2fiber__env(fiber));
   //fflush(stdout);
   return 0;
@@ -2118,8 +2054,8 @@ int f2__fiber__bytecode__newenv__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f
 					f2__frame__new(cause, nil),
 					parent_env,
 					new__symbol(cause, "push-env"));
-  debug__assert(new_env, fiber, "new_env is nil");
-  debug__assert(raw__environment__is_type(cause, new_env), fiber, "new_env is not environment");
+  release__assert(new_env, fiber, "new_env is nil");
+  release__assert(raw__environment__is_type(cause, new_env), fiber, "new_env is not environment");
   f2fiber__env__set(fiber, cause, new_env);
   return 0;
 }

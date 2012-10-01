@@ -23,7 +23,7 @@
 
 int f2__simple_repl(f2ptr cause, f2ptr fiber) {
   printf("\nfunk2 warning: garbage collection is disabled in this simple_repl.");
-  f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, nil, raw__cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
+  f2ptr repl_funk     = f2funk__new(cause, nil, nil, nil, raw__cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
   f2ptr repl_funk_bcs = f2__compile__funk(cause, fiber, repl_funk);
   f2ptr repl_fiber   = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), repl_funk, nil);
   while (1) {
@@ -35,7 +35,7 @@ int f2__simple_repl(f2ptr cause, f2ptr fiber) {
       printf("\nrepl exception: "); f2__write(cause, fiber, read_exp); fflush(stdout);
       break;
     } else {
-      repl_funk     = f2funk__new(cause, nil, nil, nil, nil, raw__cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil, nil);
+      repl_funk     = f2funk__new(cause, nil, nil, nil, raw__cons__new(cause, read_exp, nil), read_exp, global_environment(), nil, nil, nil, nil);
       repl_funk_bcs = f2__compile__funk(cause, fiber, repl_funk);
       if(raw__larva__is_type(cause, repl_funk_bcs)) {
 	f2fiber__value__set(fiber, cause, repl_funk_bcs);

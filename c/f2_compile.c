@@ -197,79 +197,6 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
 }
 
 
-f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
-  if (! raw__cons__is_type(cause, this)) {
-    f2__print(nil, this);
-    error(nil, "this is not cons");
-  }
-  funk2_hash_t cons_index_hash;
-  funk2_hash__init(&cons_index_hash, 10);
-  u64 bytecodes__length;
-  {
-    u64   index = 0;
-    f2ptr iter  = this;
-    while (iter != nil) {
-      funk2_hash__add(&cons_index_hash, (u64)iter, index);
-      index ++;
-      iter = f2cons__cdr(iter, cause);
-    }
-    bytecodes__length = index;
-  }
-  f2ptr array = raw__array__new(cause, bytecodes__length);
-  {
-    u64   index = 0;
-    f2ptr iter  = this;
-    while (iter != nil) {
-      f2ptr bytecode = f2cons__car(iter, cause);
-      {
-	f2ptr command = f2bytecode__command(bytecode, cause);
-	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
-	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
-	      f2ptr jump_array = raw__bytecodes__as__array(cause, new_pc);
-	      u64   jump_index = 0;
-	      bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, jump_array, jump_index), nil, nil);
-	    } else {
-	      u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	      bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
-	    }
-	  }
-	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
-	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
-	      f2ptr jump_array = raw__bytecodes__as__array(cause, new_pc);
-	      u64   jump_index = 0;
-	      bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, jump_array, jump_index), nil, nil);
-	    } else {
-	      u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	      bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
-	    }
-	  }
-	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
-	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
-	      f2ptr jump_array = raw__bytecodes__as__array(cause, new_pc);
-	      u64   jump_index = 0;
-	      bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, jump_array, jump_index), nil, nil);
-	    } else {
-	      u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	      bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
-	    }
-	  }
-	}
-	raw__array__elt__set(cause, array, index, bytecode);
-      }
-      index ++;
-      iter = f2cons__cdr(iter, cause);
-    }
-  }
-  funk2_hash__destroy(&cons_index_hash);
-  return array;
-}
-
 f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   release__assert(__funk2.compile.f2__compile__funk__symbol != -1, nil, "__funk2.compile.f2__compile__funk__symbol not yet defined.");
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__funk__symbol, raw__cons__new(simple_cause, funk, nil));
@@ -345,11 +272,6 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk) {
   
   //f2funk__is_funktional__set(funk, cause, f2bool__new(funk__is_locally_funktional));
   f2funk__body_bytecodes__set(funk, cause, full_bcs);
-  
-  {
-    f2ptr bytecode_array = raw__bytecodes__as__array(cause, full_bcs);
-    f2funk__bytecode_array__set(funk, cause, bytecode_array);
-  }
   
   return bcs_valid(funk_bcs);
 }

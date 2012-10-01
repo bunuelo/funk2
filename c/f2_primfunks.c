@@ -774,11 +774,8 @@ void debug__f2fiber__funk__unfunkable_error() {
 void f2fiber__funk(f2ptr fiber, f2ptr cause, f2ptr cfunkable, f2ptr args) {
   f2fiber__args__set(           fiber, cause, args);
   f2fiber__value__set(          fiber, cause, cfunkable);
-  {
-    f2ptr body_bcs       = f2__compile__funk_bc(cause);
-    f2ptr bytecode_array = raw__bytecodes__as__array(cause, body_bcs);
-    f2fiber__program_counter__set(fiber, cause, raw__mutable_array_pointer__new(cause, bytecode_array, 0));
-  }
+  f2fiber__program_counter__set(fiber, cause, f2__compile__funk_bc(cause));
+  
   if (raw__funkable__is_type(cause, cfunkable)) {
     f2ptr env = raw__funkable__env(cause, cfunkable);
     if (env) {

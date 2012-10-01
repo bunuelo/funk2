@@ -202,38 +202,10 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
   funk2_hash__init(&cons_index_hash, 10);
   u64 bytecodes__length;
   {
-    f2ptr iter  = this;
-    while (iter != nil) {
-      f2ptr bytecode = f2cons__car(iter, cause);
-      {
-	f2ptr command = f2bytecode__command(bytecode, cause);
-	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
-	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
-	  }
-	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
-	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
-	  }
-	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
-	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  if (new_pc != nil) {
-	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
-	  }
-	}
-      }
-      iter = f2cons__cdr(iter, cause);
-    }
-  }
-  {
     u64   index = 0;
     f2ptr iter  = this;
     while (iter != nil) {
-      if (funk2_hash__contains(&cons_index_hash, (u64)iter)) {
-	funk2_hash__add(&cons_index_hash, (u64)iter, index);
-      }
+      funk2_hash__add(&cons_index_hash, (u64)iter, index);
       index ++;
       iter = f2cons__cdr(iter, cause);
     }

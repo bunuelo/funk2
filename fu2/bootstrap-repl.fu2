@@ -107,8 +107,6 @@
 [primfunk:load 'fu2/primfunks-virtual_processor_handler.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
-[primfunk:exp__format stdout '\ndebug 0\n']
-
 [memory-assert_valid]
 
 [globalize -first_cause- [this-cause]]
@@ -118,8 +116,6 @@
 [define -current_env_name- `global-environment]
 
 [globalize optimize_funk_space t]
-
-[primfunk:exp__format stdout '\ndebug 1\n']
 
 [globalize-funk funk-new_with_name_and_environment-original [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 								       `[[define demetroed     [exps-demetropolize_full body]]
@@ -148,8 +144,6 @@
 								       nil
 								       nil
 								       nil]]
-
-[primfunk:exp__format stdout '\ndebug 2\n']
 
 [globalize-funk funk-new_with_name_and_environment-optimize [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 								       `[[define demetroed     [exps-demetropolize_full body]]
@@ -184,8 +178,6 @@
 'note that the optimizing compiler has bugs, so the original compiler is being used here.'
 [globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
 
-[primfunk:exp__format stdout '\ndebug 3\n']
-
 [globalize-funk funk-new_with_name [metro-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 					      `[`[funk-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
 					      nil
@@ -214,16 +206,12 @@
 							       nil
 							       nil]]
 
-[primfunk:exp__format stdout '\ndebug 4\n']
-
 [globalize-funk metro-new_with_name [metro-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
 					       `[`[metro-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
 					       nil
 					       nil
 					       nil
 					       nil]]
-
-[primfunk:exp__format stdout '\ndebug 5\n']
 
 'defmetro is later redefined.  search for "defmetro defmetro" below.'
 
@@ -494,19 +482,11 @@
 		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
 	  exps]]]
 
-[primfunk:exp__format stdout '\ndebug 1.0\n']
-
-[mapc [funk [x] [primfunk:exp__format stdout x] [primfunk:exp__format stdout '\n']] `[1 2 3]]
-
-[primfunk:exp__format stdout '\ndebug 1.1\n']
-
 [defunk terminal_format [terminal_print_frame :rest exps]
   [while [have [get terminal_print_frame cmutex] trylock]]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
     [have [get terminal_print_frame cmutex] unlock]
     result]]
-
-[primfunk:exp__format stdout '\ndebug 1.2\n']
 
 `[defunk join-test [:rest fibers]
   [define-funk fibers-wait-loop

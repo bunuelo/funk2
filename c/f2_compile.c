@@ -224,6 +224,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
 	  if (new_pc != nil) {
 	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
 	      f2__print(nil, bytecode);
+	      f2__print(nil, this);
 	      error(nil, "jump outside of array.");
 	    }
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
@@ -234,6 +235,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
 	  if (new_pc != nil) {
 	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
 	      f2__print(nil, bytecode);
+	      f2__print(nil, this);
 	      error(nil, "jump outside of array.");
 	    }
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
@@ -244,6 +246,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
 	  if (new_pc != nil) {
 	    if (! funk2_hash__contains(&cons_index_hash, new_pc)) {
 	      f2__print(nil, bytecode);
+	      f2__print(nil, this);
 	      error(nil, "jump outside of array.");
 	    }
 	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);

@@ -148,7 +148,7 @@
 						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[quote-expression [elt arguments 0]]]
-												  quote-expression]]]
+												  [cons quote-expression]]]]
 						[[or [eq `list                       command]
 						     [eq `backquote-list             command]] [apply &append [mapcar [funk [argument]
 															    [get this expression-as_english_conslist argument]]

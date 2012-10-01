@@ -225,7 +225,7 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
     u64   index = 0;
     f2ptr iter  = this;
     while (iter != nil) {
-      if (funk2_hash__lookup(&cons_index_hash, (u64)iter) == ((u64)-1)) {
+      if (funk2_hash__contains(&cons_index_hash, (u64)iter)) {
 	funk2_hash__add(&cons_index_hash, (u64)iter, index);
       }
       index ++;

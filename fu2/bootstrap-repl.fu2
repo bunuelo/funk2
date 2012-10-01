@@ -128,10 +128,9 @@
 													 body
 													 nil
 													 nil
-													 nil
 													 nil]]
 									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
-									 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
+									 [define is_funktional  [primfunk:array__elt compiled_funk 10]]
 									 [if optimize_funk_space
 									     `[funk-new ,environment [quote ,name] [quote ,args]
 											nil
@@ -159,11 +158,10 @@
 													 body
 													 nil
 													 nil
-													 nil
 													 nil]]
 									 [funk-optimize compiled_funk 10]
 									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
-									 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
+									 [define is_funktional  [primfunk:array__elt compiled_funk 10]]
 									 [if optimize_funk_space
 									     `[funk-new ,environment [quote ,name] [quote ,args]
 											nil
@@ -202,10 +200,9 @@
 												 body
 												 nil
 												 nil
-												 nil
 												 nil]]
 								 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
-								 [define is_funktional  [primfunk:array__elt compiled_funk 11]]
+								 [define is_funktional  [primfunk:array__elt compiled_funk 10]]
 								 `[metro-new ,environment [quote ,name] [quote ,args]
 									     [quote ,demetroed]
 									     [quote ,body]

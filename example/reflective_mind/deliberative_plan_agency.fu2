@@ -271,12 +271,12 @@
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			[have [get this mental_layer] evaluate_plan_expression
-			      `[prog [wait-to-call [forget all imagined events]]
-				     [wait-to-call [set imagine time to be now]]
-				     [wait-to-call [imagine current situation]]
-				     [wait-to-call [focus on the plan to stack a pyramid on a cube]]
-				     [wait-to-call [imagine executing plan in focus]]
-				     [wait-to-call [forget all imagined events]]]]
+			      `[prog [wait-to-call `[forget all imagined events]]
+				     [wait-to-call `[set imagine time to be now]]
+				     [wait-to-call `[imagine current situation]]
+				     [wait-to-call `[focus on the plan to stack a pyramid on a cube]]
+				     [wait-to-call `[imagine executing plan in focus]]
+				     [wait-to-call `[forget all imagined events]]]]
 			
 			]]]]
 

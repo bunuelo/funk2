@@ -512,8 +512,8 @@
 [primfunk:exp__format stdout '\ndebug 1.0\n']
 
 [defunk test []
-  [while hello
-    [dosomething]]]
+  [while condition]
+  [something else]]
 
 [defunk terminal_format [terminal_print_frame :rest exps]
   [while [have [get terminal_print_frame cmutex] trylock]]

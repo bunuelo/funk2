@@ -511,7 +511,7 @@
 
 [primfunk:exp__format stdout '\ndebug 1.0\n']
 
-[mapc [funk [x] [primfunk:exp__format stdout x]] `[1 2 3]]
+[mapc [funk [x] [primfunk:exp__format stdout x] [primfunk:exp__format stdout '\n']] `[1 2 3]]
 
 [primfunk:exp__format stdout '\ndebug 1.1\n']
 

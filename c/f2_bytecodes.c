@@ -379,6 +379,10 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     f2ptr funk_env       = f2funk__env(funktion, cause);
 #ifdef USE_BYTECODE_ARRAY
     f2ptr bytecode_array = f2funk__bytecode_array(funktion, cause);
+    if (! raw__array__is_type(cause, bytecode_array)) {
+      f2__print(nil, bytecode_array);
+      error(nil, "bytecode_array not array.");
+    }
 #else
     f2ptr body_bcs       = f2funk__body_bytecodes(funktion, cause);
     if (raw__larva__is_type(cause, body_bcs)) {

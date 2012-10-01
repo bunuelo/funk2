@@ -209,13 +209,19 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
 	f2ptr command = f2bytecode__command(bytecode, cause);
 	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  if (new_pc != nil) {
+	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  if (new_pc != nil) {
+	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
 	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
-	  funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  if (new_pc != nil) {
+	    funk2_hash__add(&cons_index_hash, new_pc, ((u64)-1));
+	  }
 	}
       }
       iter = f2cons__cdr(iter, cause);
@@ -242,17 +248,23 @@ f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
       {
 	f2ptr command = f2bytecode__command(bytecode, cause);
 	if (raw__eq(cause, command, __funk2.bytecode.bytecode__jump__symbol)) {
-	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
-	  u64   jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	  bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  f2ptr new_pc = f2__bytecode__arg0(cause, bytecode);
+	  if (new_pc != nil) {
+	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__if_jump__symbol)) {
 	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
-	  u64   jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	  bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  if (new_pc != nil) {
+	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  }
 	} else if (raw__eq(cause, command, __funk2.bytecode.bytecode__else_jump__symbol)) {
 	  f2ptr new_pc     = f2__bytecode__arg0(cause, bytecode);
-	  u64   jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
-	  bytecode         = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  if (new_pc != nil) {
+	    u64 jump_index = funk2_hash__lookup(&cons_index_hash, new_pc);
+	    bytecode       = f2bytecode__new(cause, command, raw__mutable_array_pointer__new(cause, array, jump_index), nil, nil);
+	  }
 	}
 	raw__array__elt__set(cause, array, index, bytecode);
       }

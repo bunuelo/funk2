@@ -155,7 +155,7 @@ f2ptr raw__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this, f2
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "semantic_thought-lookup_a_variable_value-no_environment_defined"),
 				   new__symbol(cause, "semantic_thought"), this));
   }
-  return assert_value(f2__semantic_environment__lookup_a_variable_value(cause, this, variable_name));
+  return assert_value(f2__semantic_environment__lookup_a_variable_value(cause, environment, variable_name));
 }
 
 f2ptr f2__semantic_thought__lookup_a_variable_value(f2ptr cause, f2ptr this, f2ptr variable_name) {

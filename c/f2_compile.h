@@ -85,6 +85,8 @@ struct funk2_compile_s {
 
 
 
+f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this);
+
 f2ptr f2__compile__funk_bc            (f2ptr cause);
 f2ptr f2__compile__jump_funk          (f2ptr cause);
 f2ptr f2__compile__array              (f2ptr cause, f2ptr length);

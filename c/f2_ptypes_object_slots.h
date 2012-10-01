@@ -1156,6 +1156,37 @@ typedef struct funk2_object_type__larva__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__larva__slot_t;
 
+// mutable_array_pointer
+
+typedef struct funk2_object_type__mutable_array_pointer__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr array__symbol;
+  f2ptr array__funk;
+  f2ptr array__set__symbol;
+  f2ptr array__set__funk;
+  f2ptr index__symbol;
+  f2ptr index__funk;
+  f2ptr index__set__symbol;
+  f2ptr index__set__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__mutable_array_pointer__slot_t;
+
 
 
 typedef struct funk2_ptype_object_types_s {
@@ -1188,6 +1219,7 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__simple_array__slot_t             ptype_simple_array;
   funk2_object_type__traced_array__slot_t             ptype_traced_array;
   funk2_object_type__larva__slot_t                    ptype_larva;
+  funk2_object_type__mutable_array_pointer__slot_t    ptype_mutable_array_pointer;
 } funk2_ptype_object_types_t;
 
 #endif // F2__PTYPES_OBJECT_SLOTS__TYPES__H

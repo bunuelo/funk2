@@ -621,6 +621,7 @@ boolean_t f2__fiber__execute_next_bytecode(f2ptr cause, f2ptr fiber) {
       }
       bytecode = raw__array__elt(cause, array, index);
       if (! raw__bytecode__is_type(cause, bytecode)) {
+	printf("index: " u64__fstr, index); fflush(stdout);
 	error(nil, "not bytecode");
       }
     } else {

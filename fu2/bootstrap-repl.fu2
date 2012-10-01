@@ -154,6 +154,8 @@
 								       nil
 								       nil]]
 
+[primfunk:exp__format stdout '\ndebug 2\n']
+
 [globalize-funk funk-new_with_name_and_environment-optimize [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 								       `[[define demetroed     [exps-demetropolize_full body]]
 									 [define compiled_funk [funk-new [bytecode copy env value nil] name args
@@ -192,6 +194,8 @@
 'note that the optimizing compiler has bugs, so the original compiler is being used here.'
 [globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
 
+[primfunk:exp__format stdout '\ndebug 3\n']
+
 [globalize-funk funk-new_with_name [metro-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 					      `[`[funk-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
 					      nil
@@ -224,6 +228,8 @@
 							       nil
 							       nil
 							       nil]]
+
+[primfunk:exp__format stdout '\ndebug 4\n']
 
 [globalize-funk metro-new_with_name [metro-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
 					       `[`[metro-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]

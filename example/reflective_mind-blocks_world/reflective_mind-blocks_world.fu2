@@ -117,19 +117,22 @@
   
   'create blocks_world agent specific plans'
   
-  [parog [have this create_deliberative_semantic_plan `[pick up a cube] `[]
-	       `[prog [if [exists [relationship block property shape cube
+  [parog [have this create_deliberative_semantic_plan `[pick up a [? shape]] `[[shape cube]]
+	       `[prog [if [exists [relationship block property shape [? shape]
 						preposition left-of
 						gripper property is-me t]]
-			  [wait-to-call-below `[move left until over cube]]]
-		      [if [exists [relationship block property shape cube
+			  [wait-to-call-below `[move left until over ,[? shape]]]]
+		      
+		      [if [exists [relationship block property shape [? shape]
 						preposition right-of
 						gripper property is-me t]]
-			  [wait-to-call-below `[move right until over cube]]]
+			  [wait-to-call-below `[move right until over ,[? shape]]]]
+		      
 		      [wait-to-call-below `[attempt to grab block until gripper stops moving]]
+		      
 		      [assert [exists [relationship gripper property is-me t
 						    preposition is-holding
-						    block property shape cube]]]
+						    block property shape [? shape]]]]
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan `[pick up a pyramid] `[]

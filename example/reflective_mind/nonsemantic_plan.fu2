@@ -145,6 +145,14 @@
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[eval-expression [elt arguments 0]]]
 												  `[eval]]]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[quote-expression [elt arguments 0]]]
+												  quote-expression]]]
+						[[or [eq `list                       command]
+						     [eq `backquote-list             command]] [apply &append [mapcar [funk [argument]
+															    [get this expression-as_english_conslist argument]]
+														      arguments]]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[print-expression [elt arguments 0]]]
@@ -218,10 +226,6 @@
 												[let [[assert-expression [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[assert that]
 													  assert-expression]]]]
-						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[quote-expression [elt arguments 0]]]
-												  quote-expression]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[variable-symbol [elt arguments 0]]]
@@ -300,6 +304,16 @@
 													 expression expression]
 												[let [[eval-expression `[quote ,[elt arguments 0]]]]
 												  `cannot_determine_syntax]]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `quote
+													 expression expression]
+												[let [[quote-expression [elt arguments 0]]]
+												  `[quote ,quote-expression]]]]
+						[[or [eq `list                       command]
+						     [eq `backquote-list             command]] [mapc [funk [argument]
+													   [have this expression-syntax_check argument]]
+												     arguments]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `print
@@ -368,12 +382,6 @@
 													 expression expression]
 												[let [[assert-expression [elt arguments 0]]]
 												  [have this expression-syntax_check assert-expression]]]]
-						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
-													 funkname   `quote
-													 expression expression]
-												[let [[quote-expression [elt arguments 0]]]
-												  `[quote ,quote-expression]]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `?
@@ -494,6 +502,19 @@
 												[let [[eval-expression `[quote ,[elt arguments 0]]]]
 												  [eval `[funk [this]
 													       [eval ,eval-expression]]]]]]
+						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `quote
+													 expression expression]
+												[let [[quote-expression [elt arguments 0]]]
+												  [eval `[funk [this]
+													       [quote ,quote-expression]
+													       ]]]]]
+						[[or [eq `list                       command]
+						     [eq `backquote-list             command]] [eval `[funk [this]
+													    [conslist @[mapcar [funk [argument]
+																     `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+															       arguments]]]]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `print
@@ -609,14 +630,6 @@
 														 [if [not assert-expression]
 														     [error bug_name    `assertion-failed
 															    description [conslist `assert [quote ,assert-expression]]]]]]]]]]
-						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
-													 funkname   `quote
-													 expression expression]
-												[let [[quote-expression [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [quote ,quote-expression]
-													       ]]]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `?
@@ -719,6 +732,19 @@
 													     [let [[eval-expression [quote ,eval-expression]]]
 													       [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' eval_expression '.']
 													       ]]]]]]
+					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `quote
+												       expression expression]
+											      [let [[quote-expression [elt arguments 0]]]
+												[eval `[funk [this]
+													     [quote ,quote-expression]
+													     ]]]]]
+					      [[or [eq `list                       command]
+						   [eq `backquote-list             command]] [eval `[funk [this]
+													  [conslist @[mapcar [funk [argument]
+																   `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
+															     arguments]]]]]
 					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `print
@@ -834,14 +860,6 @@
 													       [if [not assert-expression]
 														   [error bug_name    `assertion-failed
 															  description [conslist `imagine_asserting [quote ,assert-expression]]]]]]]]]]
-					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `quote
-												       expression expression]
-											      [let [[quote-expression [elt arguments 0]]]
-												[eval `[funk [this]
-													     [quote ,quote-expression]
-													     ]]]]]
 					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `?
@@ -942,6 +960,16 @@
 												       expression expression]
 											      [let [[eval-expression [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `eval]]]]
+					      [[eq `quote                          command] [if [not [eq 1 command_arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+												       funkname   `quote
+												       expression expression]
+											      [let [[quote-expression [elt command_arguments 0]]]
+												nil]]]
+					      [[or [eq `list                       command]
+						   [eq `backquote-list             command]] [mapcar [funk [argument]
+													   [nonsemantic_plan-expression-semantic_compile argument semantic_realm]]
+												     arguments]]
 					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `print
@@ -1000,12 +1028,6 @@
 												       expression expression]
 											      [let [[assert-expression [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
-					      [[eq `quote                          command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
-												       funkname   `quote
-												       expression expression]
-											      [let [[quote-expression [elt command_arguments 0]]]
-												nil]]]
 					      [[eq `?                              command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
 												       funkname   `?

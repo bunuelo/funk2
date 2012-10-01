@@ -198,6 +198,10 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
 
 
 f2ptr raw__bytecodes__as__array(f2ptr cause, f2ptr this) {
+  if (! raw__cons__is_type(cause, this)) {
+    f2__print(nil, this);
+    error(nil, "this is not cons");
+  }
   funk2_hash_t cons_index_hash;
   funk2_hash__init(&cons_index_hash, 10);
   u64 bytecodes__length;

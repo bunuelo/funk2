@@ -511,9 +511,9 @@
 
 [primfunk:exp__format stdout '\ndebug 1.0\n']
 
-[defunk test [terminal_print_frame]
-  [let [[result nil]]
-    result]]
+[mapcar [funk [x] [primfunk:exp__format stdout x]] `[1 2 3]]
+
+[primfunk:exp__format stdout '\ndebug 1.1\n']
 
 [defunk terminal_format [terminal_print_frame :rest exps]
   [while [have [get terminal_print_frame cmutex] trylock]]
@@ -521,7 +521,7 @@
     [have [get terminal_print_frame cmutex] unlock]
     result]]
 
-[primfunk:exp__format stdout '\ndebug 1.1\n']
+[primfunk:exp__format stdout '\ndebug 1.2\n']
 
 `[defunk join-test [:rest fibers]
   [define-funk fibers-wait-loop

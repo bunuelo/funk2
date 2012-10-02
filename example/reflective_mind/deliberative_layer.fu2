@@ -264,12 +264,15 @@
 			 description `[imagine_asserting ,semantic_partial_state]]]
 	  nil]]]]]
 
-
 [deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
-  [let [[plan [new nonsemantic_plan [get this mental_layer]
-		   `[evaluate plan expression]
-		   nil
-		   expression]]]
+  [let* [[name_expression      `[evaluate plan expression]]
+	 [name_patterns        nil]
+	 [argument_definitions nil]
+	 [plan                 [new nonsemantic_plan [get this mental_layer]
+				    name_expression
+				    name_patterns
+				    argument_definitions
+				    expression]]]
     [have plan syntax_check]
     [let [[semantic_planner     [get [get [get this mind] agency `deliberative `plan] semantic_planner]]
 	  [semantic_plan_object [get plan semantic_plan_object]]]

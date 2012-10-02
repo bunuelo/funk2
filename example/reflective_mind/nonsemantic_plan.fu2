@@ -1001,16 +1001,16 @@
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
   [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 					,expression]]
-	[[is-type `cons expression] [let [[command           [car expression]]
+	[[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
-					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
+					[cond [[eq `eval                           command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `eval
 												       expression expression]
 											      [let [[eval-expression [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `eval]]]]
-					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
+					      [[eq `quote                          command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `quote
 												       expression expression]
@@ -1020,47 +1020,47 @@
 						   [eq `backquote-list             command]] [mapcar [funk [argument]
 													   [nonsemantic_plan-expression-semantic_compile argument semantic_realm]]
 												     arguments]]
-					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+					      [[eq `print                          command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `print
 												       expression expression]
 											      [let [[print-expression [elt arguments 0]]]
-												[nonsemantic_plan-expression-semantic_compile print-expression]]]]
+												[nonsemantic_plan-expression-semantic_compile print-expression semantic_realm]]]]
 					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
 					      [[eq `parog                          command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
-					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+					      [[eq `wait-for-time                  command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `wait-for-time
 												       expression expression]
 											      [let [[time_to_wait [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
-					      [[eq `call-below             command] [if [not [eq 1 arguments-length]]
+					      [[eq `call-below                     command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `call-below
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call-below]]]]
-					      [[eq `call                   command] [if [not [eq 1 arguments-length]]
+					      [[eq `call                           command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `call
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
-					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+					      [[eq `plan-call                      command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
 												       expression expression]
 											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												nil]]]
-					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
+					      [[eq `exists                         command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `exists
 												       expression expression]
 											      [let [[exists-expression [elt arguments 0]]]
-												[nonsemantic_plan-expression-semantic_compile exists-expression]]]]
-					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												[nonsemantic_plan-expression-semantic_compile exists-expression semantic_realm]]]]
+					      [[eq `wait-for                       command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `wait-for
 												       expression expression]
@@ -1072,19 +1072,19 @@
 												       funkname   `if
 												       expression expression]
 											      nil]]
-					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
+					      [[eq `assert                         command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `assert
 												       expression expression]
 											      [let [[assert-expression [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
-					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
+					      [[eq `?                              command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `?
 												       expression expression]
 											      [let [[variable-symbol [elt arguments 0]]]
 												`[? ,variable-symbol]]]]
-					      [[eq `property                       command] [if [not [eq 7 arguments-length]]
+					      [[eq `property                       command] [if [not [== 7 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `property
 												       expression expression]
@@ -1096,7 +1096,7 @@
 												    [key             [elt arguments 5]]
 												    [value           [elt arguments 6]]]
 												nil]]]
-					      [[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+					      [[eq `relationship                   command] [if [not [== 10 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `relationship
 												       expression expression]

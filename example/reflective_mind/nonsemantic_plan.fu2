@@ -1020,7 +1020,7 @@
 						   [eq `backquote-list             command]] [mapcar [funk [argument]
 													   [nonsemantic_plan-expression-semantic_compile argument semantic_realm]]
 												     arguments]]
-					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
+					      [[eq `print                          command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `print
 												       expression expression]
@@ -1048,13 +1048,13 @@
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt command_arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
-					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
+					      [[eq `plan-call                      command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
 												       expression expression]
 											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												nil]]]
-					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
+					      [[eq `exists                         command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `exists
 												       expression expression]
@@ -1066,8 +1066,8 @@
 												       expression expression]
 											      [let [[partial_state [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for]]]]
-					      [[eq `if                             command] [if [not [or [== arguments-length 2]
-													 [== arguments-length 3]]]
+					      [[eq `if                             command] [if [not [or [== command_arguments-length 2]
+													 [== command_arguments-length 3]]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `if
 												       expression expression]

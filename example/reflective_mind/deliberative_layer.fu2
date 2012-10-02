@@ -133,7 +133,8 @@
 	  [if best_match
 	      [prog [= found_semantic_plan_variable_pair [cons semantic_plan best_match]]
 		    [= semantic_plan_iter                nil]]]]]
-      [= semantic_plan_iter [cdr semantic_plan_iter]]]
+      [if semantic_plan_iter
+	  [= semantic_plan_iter [cdr semantic_plan_iter]]]]
     found_semantic_plan_variable_pair]]
 
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]

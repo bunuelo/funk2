@@ -118,8 +118,8 @@
   'create blocks_world agent specific plans'
   
   [parog [have this create_deliberative_semantic_plan `[a pyramid is on a cube]
-	       `[[a [? top_shape] is on a [? bottom_shape]]] [[top_shape    pyramid]
-							      [bottom_shape cube]]
+	       `[[a [? top_shape] is on a [? bottom_shape]]] `[[top_shape    pyramid]
+							       [bottom_shape cube]]
 	       `[exists [relationship block property shape [? top_shape]
 				      preposition on
 				      block property shape [? bottom_shape]]]]

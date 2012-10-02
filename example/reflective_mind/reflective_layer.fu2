@@ -110,6 +110,19 @@
 [deftypefunk reflective_layer get semantic_plans []
   [get semantic_plan_phenomenal_name_frame values]]
 
+[deftypefunk reflective_layer execute lookup_matching_semantic_plan_variable_pair [name_expression]
+  [let [[found_semantic_plan_variable_pair nil]
+	[semantic_plan_iter                [get this semantic_plans]]]
+    [while semantic_plan_iter
+      [let* [[semantic_plan    [car semantic_plan_iter]]
+	     [nonsemantic_plan [get semantic_plan nonsemantic_plan]]]
+	[let [[best_match [get nonsemantic_plan best_name_pattern_match name_expression]]]
+	  [if best_match
+	      [prog [= found_semantic_plan_variable_pair [cons semantic_plan best_match]]
+		    [= semantic_plan_iter                nil]]]]]
+      [= semantic_plan_iter [cdr semantic_plan_iter]]]
+    found_semantic_plan_variable_pair]]
+
 [deftypefunk reflective_layer execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]

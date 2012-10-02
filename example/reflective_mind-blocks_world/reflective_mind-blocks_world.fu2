@@ -136,7 +136,7 @@
 						    block property shape [? shape]]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[pick up a pyramid]
+	 `[have this create_deliberative_semantic_plan `[pick up a pyramid]
 	       `[] `[]
 	       `[prog [if [exists [relationship block property shape pyramid
 						preposition left-of

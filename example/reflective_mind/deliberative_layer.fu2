@@ -136,9 +136,6 @@
       [= semantic_plan_iter [cdr semantic_plan_iter]]]
     found_semantic_plan_variable_pair]]
 
-[deftypefunk deliberative_layer get semantic_plans []
-  [get semantic_plan_phenomenal_name_frame values]]
-
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]

@@ -119,11 +119,12 @@
 		     resource_arguments]]]
     [have this add_reflective_action action]]]
 
-[deftypefunk reflective_layer execute create_semantic_plan [name_expression arguments expression]
+[deftypefunk reflective_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
   [let [[plan [new nonsemantic_plan 
 		   [get this mental_layer]
 		   name_expression
-		   arguments
+		   name_patterns
+		   variable_definitions
 		   expression]]]
     [have plan syntax_check]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]

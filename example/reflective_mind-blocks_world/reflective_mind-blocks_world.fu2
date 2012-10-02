@@ -117,8 +117,8 @@
   
   'create blocks_world agent specific plans'
   
-  [parog [have this create_deliberative_semantic_plan `[[pick up a cube]
-							[pick up a [? shape]]] `[[shape cube]]
+  [parog [have this create_deliberative_semantic_plan `[pick up a cube]
+	       `[[pick up a [? shape]]] `[[shape cube]]
 	       `[prog [if [exists [relationship block property shape [? shape]
 						preposition left-of
 						gripper property is-me t]]
@@ -136,7 +136,8 @@
 						    block property shape [? shape]]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[pick up a pyramid]] `[]
+	 [have this create_deliberative_semantic_plan `[pick up a pyramid]
+	       `[] `[]
 	       `[prog [if [exists [relationship block property shape pyramid
 						preposition left-of
 						gripper property is-me t]]
@@ -151,7 +152,8 @@
 						    block property shape pyramid]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[drop the block I am holding on a pyramid]] `[]
+	 [have this create_deliberative_semantic_plan `[drop the block I am holding on a pyramid]
+	       `[] `[]
 	       `[prog [if [exists [relationship block property shape pyramid
 						preposition left-of
 						gripper property is-me t]]
@@ -163,7 +165,8 @@
 		      [call-below `[drop block and wait for block to fall]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[drop the block I am holding on a cube]] `[]
+	 [have this create_deliberative_semantic_plan `[drop the block I am holding on a cube]
+	       `[] `[]
 	       `[prog [if [exists [relationship block property shape cube
 						preposition left-of
 						gripper property is-me t]]
@@ -175,7 +178,8 @@
 		      [call-below `[drop block and wait for block to fall]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[stack a cube on a pyramid]] `[]
+	 [have this create_deliberative_semantic_plan `[stack a cube on a pyramid]
+	       `[] `[]
 	       `[prog [plan-call `[pick up a cube]]
 		      [plan-call `[drop the block I am holding on a pyramid]]
 		      [assert [exists [relationship block property shape cube
@@ -183,7 +187,8 @@
 						    block property shape pyramid]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[stack a pyramid on a cube]] `[]
+	 [have this create_deliberative_semantic_plan `[stack a pyramid on a cube]
+	       `[] `[]
 	       `[prog [plan-call `[pick up a pyramid]]
 		      [plan-call `[drop the block I am holding on a cube]]
 		      [assert [exists [relationship block property shape pyramid
@@ -191,13 +196,15 @@
 						    block property shape cube]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[assert that a pyramid is on a cube]] `[]
+	 [have this create_deliberative_semantic_plan `[assert that a pyramid is on a cube]
+	       `[] `[]
 	       `[prog [assert [exists [relationship block property shape pyramid
 						    preposition on
 						    block property shape cube]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[[assert that a pyramid is on a table]] `[]
+	 [have this create_deliberative_semantic_plan `[assert that a pyramid is on a table]
+	       `[] `[]
 	       `[prog [assert [exists [relationship block property shape pyramid
 						    preposition on
 						    table property color white]]]
@@ -206,7 +213,8 @@
   
   'reflective plans'
   
-  [parog [have this create_reflective_semantic_plan `[[choose a plan and execute it]] `[]
+  [parog [have this create_reflective_semantic_plan `[choose a plan and execute it]
+	       `[] `[]
 	       `[prog [call-below `[forget all imagined events]]
 		      [call-below `[set imagine time to be now]]
 		      [call-below `[imagine current situation]]
@@ -216,7 +224,8 @@
 		      [call-below `[execute plan in focus]]
 		      ]]
 	 
-	 [have this create_reflective_semantic_plan `[[remember a plan for a current goal and execute it]] `[]
+	 [have this create_reflective_semantic_plan `[remember a plan for a current goal and execute it]
+	       `[] `[]
 	       `[prog [call-below `[remember plan for goal]]
 		      [call-below `[execute plan in focus]]
 		      ]]

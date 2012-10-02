@@ -140,7 +140,15 @@
   [get mental_layer mind]]
 
 [deftypefunk nonsemantic_plan get name_pattern_matches [expression]
-  
+  [let [[name_pattern_matches nil]]
+    [mapc [funk [name_pattern]
+		[let [[matches [pattern-match name_pattern expression]]]
+		  [mapc [funk [match]
+			      [= name_pattern_matches [cons [cons name_pattern match]
+							    name_pattern_matches]]]
+			matches]]]
+	  name_patterns]
+    name_pattern_matches]]
 
 [deftypefunk nonsemantic_plan get expression-as_english_conslist [expression]
   [cond [[is-type `symbol expression] expression]

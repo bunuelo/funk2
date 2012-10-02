@@ -151,7 +151,7 @@
 	 
 	 [have this create_deliberative_semantic_plan `[stack a cube on a pyramid]
 	       `[[stack a [? top_shape] on a [? bottom_shape]]] `[[top_shape    cube]
-								  [buttom_shape pyramid]]
+								  [bottom_shape pyramid]]
 	       `[prog [plan-call `[pick up a ,[? top_shape]]]
 		      [plan-call `[drop the block I am holding on a ,[? bottom_shape]]]
 		      [assert [exists [relationship block property shape [? top_shape]

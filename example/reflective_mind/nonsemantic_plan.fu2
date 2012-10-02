@@ -615,6 +615,7 @@
 														       [if semantic_plan_variable_pair
 															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
 															    action_description [conslist-as-english_string [have [cons semantic_plan_object-phenomenal_name nil] flatten]]]
@@ -843,12 +844,14 @@
 												[eval `[funk [this]
 													     [let* [[plan_name                            ,plan_name]
 														    [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-														    [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]]
+														    [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														    [variable_frame                       [new frame]]]
 													       [if [null semantic_plan_object]
 														   [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
 														     [if semantic_plan_variable_pair
 															 [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 															       [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+													       [terminal_format standard-terminal '\nimagining executing plan with variable frame: ' variable_frame]
 													       [if [null semantic_plan_object]
 														   [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
 															  action_description [conslist-as-english_string [have [cons semantic_plan_object-phenomenal_name nil] flatten]]]

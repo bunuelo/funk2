@@ -225,7 +225,7 @@
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let* [[plan_name [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[call plan to]
-													  plan_name]]]]
+													  [have plan_name flatten]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[exists-expression [elt arguments 0]]]
@@ -466,7 +466,7 @@
   [have [get this mental_layer] imagine_assuring semantic_partial_state]]
 
 
-[deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner funk args]
+[deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
   [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
   [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
 		  [semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
@@ -490,6 +490,9 @@
 	       
 	       [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
 		 [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
+		 [mapc [funk [variable_name]
+			     [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
+		       [get variable_frame keys]]
 		 [set semantic_thought environment semantic_environment]]
 	       
 	       [mapc [funk [semantic_knowledge_base]
@@ -622,7 +625,7 @@
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 															 [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
 														     [terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
-														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner]
+														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 														     ]]]]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -736,11 +739,10 @@
   internal-compiled_funk]
 
 [deftypefunk nonsemantic_plan execute eval []
-  
   [funkall [get this compiled_funk] this]]
 
-[deftypefunk nonsemantic_plan execute execute_as_thought_in_semantic_planner [semantic_planner]
-  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner
+[deftypefunk nonsemantic_plan execute execute_as_thought_in_semantic_planner [semantic_planner variable_frame]
+  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 	[funk []
 	      [have this eval]]
 	[]]]
@@ -858,7 +860,7 @@
 														 [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 														       [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
 														   [terminal_format standard-terminal '\nimagining executing plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
-														   [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner]
+														   [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
 														   ]]]]]]]]
 					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
@@ -976,8 +978,8 @@
 [deftypefunk nonsemantic_plan execute imagine_eval []
   [funkall [get this compiled_imagine_funk] this]]
 
-[deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner]
-  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner
+[deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
+  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 	[funk []
 	      [have this imagine_eval]]
 	[]]]

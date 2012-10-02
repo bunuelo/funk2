@@ -25,11 +25,11 @@
        [construct learned_reactive_resource `move_left_until_over_pyramid
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[move left]]
+			      `[prog [call-below `[move left]]
 				     [wait-for [relationship block property shape pyramid
 							     preposition below
 							     gripper property is-me t]]
-				     [wait-to-call-below `[stop]]]]
+				     [call-below `[stop]]]]
 			]]]]
 
 [deftypefunk reflective_mind-blocks_world-move_left_until_over_pyramid_resource get as-english_conslist []
@@ -43,11 +43,11 @@
        [construct learned_reactive_resource `move_left_until_over_cube
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[move left]]
+			      `[prog [call-below `[move left]]
 				     [wait-for [relationship block property shape cube
 							     preposition below
 							     gripper property is-me t]]
-				     [wait-to-call-below `[stop]]]]
+				     [call-below `[stop]]]]
 			]]]]
 
 [deftypefunk reflective_mind-blocks_world-move_left_until_over_cube_resource get as-english_conslist []
@@ -61,11 +61,11 @@
        [construct learned_reactive_resource `move_right_until_over_pyramid
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[move right]]
+			      `[prog [call-below `[move right]]
 				     [wait-for [relationship block property shape pyramid
 							     preposition below
 							     gripper property is-me t]]
-				     [wait-to-call-below `[stop]]]]
+				     [call-below `[stop]]]]
 			]]]]
 
 [deftypefunk reflective_mind-blocks_world-move_right_until_over_pyramid_resource get as-english_conslist []
@@ -79,11 +79,11 @@
        [construct learned_reactive_resource `move_right_until_over_cube
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[move right]]
+			      `[prog [call-below `[move right]]
 				     [wait-for [relationship block property shape cube
 							     preposition below
 							     gripper property is-me t]]
-				     [wait-to-call-below `[stop]]]]
+				     [call-below `[stop]]]]
 			]]]]
 
 [deftypefunk reflective_mind-blocks_world-move_right_until_over_cube_resource get as-english_conslist []
@@ -97,7 +97,7 @@
        [construct learned_reactive_resource `attempt_to_grab_block_until_gripper_stops_moving
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[grab]]
+			      `[prog [call-below `[grab]]
 				     [wait-for-time 10]
 				     [wait-for [property gripper property is-me t
 							 property movement_command
@@ -115,7 +115,7 @@
        [construct learned_reactive_resource `drop_block_and_wait_for_block_to_fall
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
-			      `[prog [wait-to-call-below `[drop]]
+			      `[prog [call-below `[drop]]
 				     [wait-for-time 8]]]
 			]]]]
 

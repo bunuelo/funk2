@@ -117,35 +117,62 @@
   
   'create blocks_world agent specific plans'
   
-  [parog [have this create_deliberative_semantic_plan `[pick up a cube]
+  [parog [have this create_deliberative_semantic_plan `[a pyramid is on a cube]
+	       `[[a [? top_shape] is on a [? bottom_shape]]] [[top_shape    pyramid]
+							      [bottom_shape cube]]
+	       `[exists [relationship block property shape [? top_shape]
+				      preposition on
+				      block property shape [? bottom_shape]]]]
+	 
+	 [have this create_deliberative_semantic_plan `[I am holding a cube]
+	       `[[I am holding a [? shape]]] `[[shape cube]]
+	       `[exists [relationship gripper property is-me t
+				      preposition is-holding
+				      block property shape [? shape]]]]
+	 
+	 [have this create_deliberative_semantic_plan `[a pyramid is on a table]
+	       `[[a [? shape] is on a table]] `[[shape pyramid]]
+	       `[exists [relationship block property shape [? shape]
+				      preposition on
+				      table property color white]]]
+	 
+	 [have this create_deliberative_semantic_plan `[a cube is to my left]
+	       `[[a [? shape] is to my left]] `[[shape cube]]
+	       `[exists [relationship block property shape [? shape]
+				      preposition left-of
+				      gripper property is-me t]]]
+	 
+	 [have this create_deliberative_semantic_plan `[a cube is to my right]
+	       `[[a [? shape] is to my left]] `[[shape cube]]
+	       `[exists [relationship block property shape [? shape]
+				      preposition right-of
+				      gripper property is-me t]]]
+	 
+	 [have this create_deliberative_semantic_plan `[assert that a pyramid is on a cube]
+	       `[[assert that [? partial_state]]] `[[partial_state `[a pyramid is on a cube]]]
+	       `[assert [plan-call [? partial_state]]]]
+	 
+	 [have this create_deliberative_semantic_plan `[pick up a cube]
 	       `[[pick up a [? shape]]] `[[shape cube]]
-	       `[prog [if [exists [relationship block property shape [? shape]
-						preposition left-of
-						gripper property is-me t]]
+	       `[prog [if [plan-call `[a ,[? shape] is to my left]]
 			  [call-below `[move left until over ,[? shape]]]]
 		      
-		      [if [exists [relationship block property shape [? shape]
-						preposition right-of
-						gripper property is-me t]]
+		      [if [plan-call `[a ,[? shape] is to my right]]
 			  [call-below `[move right until over ,[? shape]]]]
 		      
 		      [call-below `[attempt to grab block until gripper stops moving]]
 		      
-		      [assert [exists [relationship gripper property is-me t
-						    preposition is-holding
-						    block property shape [? shape]]]]
+		      [plan-call `[assert that I am holding a ,[? shape]]]
 		      ]]
 	 
 	 [have this create_deliberative_semantic_plan `[drop the block I am holding on a pyramid]
 	       `[[drop the block I am holding on a [? shape]]] `[[shape pyramid]]
-	       `[prog [if [exists [relationship block property shape [? shape]
-						preposition left-of
-						gripper property is-me t]]
+	       `[prog [if [plan-call `[a ,[? shape] is to my left]]
 			  [call-below `[move left until over ,[? shape]]]]
-		      [if [exists [relationship block property shape [? shape]
-						preposition right-of
-						gripper property is-me t]]
+		      
+		      [if [plan-call `[a ,[? shape] is to my right]]
 			  [call-below `[move right until over ,[? shape]]]]
+		      
 		      [call-below `[drop block and wait for block to fall]]
 		      ]]
 	 
@@ -154,25 +181,9 @@
 								  [bottom_shape pyramid]]
 	       `[prog [plan-call `[pick up a ,[? top_shape]]]
 		      [plan-call `[drop the block I am holding on a ,[? bottom_shape]]]
-		      [assert [exists [relationship block property shape [? top_shape]
-						    preposition on
-						    block property shape [? bottom_shape]]]]
+		      [plan-call `[assert that a ,[? top_shape] is on a ,[? bottom_shape]]]
 		      ]]
 	 
-	 [have this create_deliberative_semantic_plan `[assert that a pyramid is on a cube]
-	       `[[assert that a [? top_shape] is on a [? bottom_shape]]] `[[top_shape    pyramid]
-									   [bottom_shape cube]]
-	       `[prog [assert [exists [relationship block property shape [? top_shape]
-						    preposition on
-						    block property shape [? bottom_shape]]]]
-		      ]]
-	 
-	 [have this create_deliberative_semantic_plan `[assert that a pyramid is on a white table]
-	       `[] `[]
-	       `[prog [assert [exists [relationship block property shape pyramid
-						    preposition on
-						    table property color white]]]
-		      ]]
 	 ]
   
   'reflective plans'

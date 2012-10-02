@@ -1002,25 +1002,25 @@
   [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 					,expression]]
 	[[is-type `cons expression] [let [[command           [car expression]]
-					  [command_arguments [cdr expression]]]
-				      [let [[command_arguments-length [length command_arguments]]]
-					[cond [[eq `eval                           command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					  [arguments [cdr expression]]]
+				      [let [[arguments-length [length arguments]]]
+					[cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `eval
 												       expression expression]
-											      [let [[eval-expression [elt command_arguments 0]]]
+											      [let [[eval-expression [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `eval]]]]
-					      [[eq `quote                          command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `quote                          command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `quote
 												       expression expression]
-											      [let [[quote-expression [elt command_arguments 0]]]
+											      [let [[quote-expression [elt arguments 0]]]
 												nil]]]
 					      [[or [eq `list                       command]
 						   [eq `backquote-list             command]] [mapcar [funk [argument]
 													   [nonsemantic_plan-expression-semantic_compile argument semantic_realm]]
 												     arguments]]
-					      [[eq `print                          command] [if [not [eq 1 command_arguments-length]]
+					      [[eq `print                          command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `print
 												       expression expression]
@@ -1030,86 +1030,86 @@
 											      semantic_plan_operator_activation]]
 					      [[eq `parog                          command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
 											      semantic_plan_operator_activation]]
-					      [[eq `wait-for-time                  command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `wait-for-time
 												       expression expression]
-											      [let [[time_to_wait [elt command_arguments 0]]]
+											      [let [[time_to_wait [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
-					      [[eq `call-below             command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `call-below             command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `call-below
 												       expression expression]
-											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt command_arguments 0] semantic_realm]]]
+											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call-below]]]]
-					      [[eq `call                   command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `call                   command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `call
 												       expression expression]
-											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt command_arguments 0] semantic_realm]]]
+											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
-					      [[eq `plan-call                      command] [if [not [eq 1 command_arguments-length]]
+					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
 												       expression expression]
 											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												nil]]]
-					      [[eq `exists                         command] [if [not [eq 1 command_arguments-length]]
+					      [[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `exists
 												       expression expression]
 											      [let [[exists-expression [elt arguments 0]]]
 												[nonsemantic_plan-expression-semantic_compile exists-expression]]]]
-					      [[eq `wait-for                       command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `wait-for
 												       expression expression]
-											      [let [[partial_state [elt command_arguments 0]]]
+											      [let [[partial_state [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for]]]]
-					      [[eq `if                             command] [if [not [or [== command_arguments-length 2]
-													 [== command_arguments-length 3]]]
+					      [[eq `if                             command] [if [not [or [== arguments-length 2]
+													 [== arguments-length 3]]]
 												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `if
 												       expression expression]
 											      nil]]
-					      [[eq `assert                         command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `assert                         command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `assert
 												       expression expression]
-											      [let [[assert-expression [elt command_arguments 0]]]
+											      [let [[assert-expression [elt arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
-					      [[eq `?                              command] [if [not [eq 1 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `?                              command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `?
 												       expression expression]
-											      [let [[variable-symbol [elt command_arguments 0]]]
+											      [let [[variable-symbol [elt arguments 0]]]
 												`[? ,variable-symbol]]]]
-					      [[eq `property                       command] [if [not [eq 7 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `property                       command] [if [not [eq 7 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `property
 												       expression expression]
-											      [let [[source_type     [elt command_arguments 0]]
-												    [source_key_type [elt command_arguments 1]]
-												    [source_key      [elt command_arguments 2]]
-												    [source_value    [elt command_arguments 3]]
-												    [key_type        [elt command_arguments 4]]
-												    [key             [elt command_arguments 5]]
-												    [value           [elt command_arguments 6]]]
+											      [let [[source_type     [elt arguments 0]]
+												    [source_key_type [elt arguments 1]]
+												    [source_key      [elt arguments 2]]
+												    [source_value    [elt arguments 3]]
+												    [key_type        [elt arguments 4]]
+												    [key             [elt arguments 5]]
+												    [value           [elt arguments 6]]]
 												nil]]]
-					      [[eq `relationship                   command] [if [not [eq 10 command_arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
+					      [[eq `relationship                   command] [if [not [eq 10 arguments-length]]
+												[error bug_name   `plan_compile_error-wrong_number_of_arguments
 												       funkname   `relationship
 												       expression expression]
-											      [let [[source_type     [elt command_arguments 0]]
-												    [source_key_type [elt command_arguments 1]]
-												    [source_key      [elt command_arguments 2]]
-												    [source_value    [elt command_arguments 3]]
-												    [key_type        [elt command_arguments 4]]
-												    [key             [elt command_arguments 5]]
-												    [target_type     [elt command_arguments 6]]
-												    [target_key_type [elt command_arguments 7]]
-												    [target_key      [elt command_arguments 8]]
-												    [target_value    [elt command_arguments 9]]]
+											      [let [[source_type     [elt arguments 0]]
+												    [source_key_type [elt arguments 1]]
+												    [source_key      [elt arguments 2]]
+												    [source_value    [elt arguments 3]]
+												    [key_type        [elt arguments 4]]
+												    [key             [elt arguments 5]]
+												    [target_type     [elt arguments 6]]
+												    [target_key_type [elt arguments 7]]
+												    [target_key      [elt arguments 8]]
+												    [target_value    [elt arguments 9]]]
 												nil]]]
 					      [t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]

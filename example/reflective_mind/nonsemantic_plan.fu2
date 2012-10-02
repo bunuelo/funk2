@@ -109,7 +109,7 @@
 'nonsemantic_plan'
 
 [deframe nonsemantic_plan [frame] [mental_layer
-				   name_expression
+				   name_expressions
 				   variables
 				   expression
 				   [internal-unique_name           nil]
@@ -119,18 +119,21 @@
 				   [internal-english_conslist      `uninitialized]
 				   [internal-english_string        nil]]
   [new [initial-mental_layer
-	initial-name_expression
+	initial-name_expressions
 	initial-variables
 	initial-expression]
-       [= mental_layer    initial-mental_layer]
-       [= name_expression initial-name_expression]
-       [= variables       initial-variables]
-       [= expression      initial-expression]
+       [= mental_layer     initial-mental_layer]
+       [= name_expressions initial-name_expressions]
+       [= variables        initial-variables]
+       [= expression       initial-expression]
        ]]
+
+[deftypefunk nonsemantic_plan get name_expression []
+  [car name_expressions]]
 
 [deftypefunk nonsemantic_plan get unique_name []
   [if [null internal-unique_name]
-      [= internal-unique_name [nonsemantic_plan-unique_name_from_name_expression name_expression]]]
+      [= internal-unique_name [nonsemantic_plan-unique_name_from_name_expression [get this name_expression]]]]
   internal-unique_name]
 
 [deftypefunk nonsemantic_plan get mind []
@@ -183,12 +186,12 @@
 												[let [[time_to_wait [elt arguments 0]]]
 												  [append `[wait for]
 													  `[,time_to_wait]]]]]
-						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[call action in layer below to]
 													  action_name]]]]
-						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                   command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [get this expression-as_english_conslist [elt arguments 0]]]]
 												  [append `[call action to]
@@ -337,15 +340,15 @@
 												  [if [not [is-type `integer time_to_wait]]
 												      [terminal_format standard-terminal '\nplan syntax warning: time_to_wait is not an integer (' time_to_wait ').']]
 												  nil]]]
-						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
-													 funkname   `wait-to-call-below
+													 funkname   `call-below
 													 expression expression]
 												[let [[action_name [elt arguments 0]]]
 												  [have this expression-syntax_check action_name]]]]
-						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                   command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
-													 funkname   `wait-to-call
+													 funkname   `call
 													 expression expression]
 												[let [[action_name [elt arguments 0]]]
 												  [have this expression-syntax_check action_name]]]]
@@ -546,9 +549,9 @@
 														   `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
 														   [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 														 ]]]]]]
-						[[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
-													 funkname   `wait-to-call-below
+													 funkname   `call-below
 													 expression expression]
 												[let [[action_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
@@ -559,9 +562,9 @@
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
-						[[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                   command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
-													 funkname   `wait-to-call
+													 funkname   `call
 													 expression expression]
 												[let [[action_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
@@ -774,9 +777,9 @@
 													     [let [[time_to_wait ,time_to_wait]]
 													       'no imaginative effects'
 													       ]]]]]]
-					      [[eq `wait-to-call-below             command] [if [not [eq 1 arguments-length]]
+					      [[eq `call-below             command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `wait-to-call-below
+												       funkname   `call-below
 												       expression expression]
 											      [let [[action_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
 												[eval `[funk [this]
@@ -787,9 +790,9 @@
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
-					      [[eq `wait-to-call                   command] [if [not [eq 1 arguments-length]]
+					      [[eq `call                   command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `wait-to-call
+												       funkname   `call
 												       expression expression]
 											      [let [[action_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
 												[eval `[funk [this]
@@ -986,18 +989,18 @@
 												       expression expression]
 											      [let [[time_to_wait [elt command_arguments 0]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
-					      [[eq `wait-to-call-below             command] [if [not [eq 1 command_arguments-length]]
+					      [[eq `call-below             command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
-												       funkname   `wait-to-call-below
+												       funkname   `call-below
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt command_arguments 0] semantic_realm]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call-below]]]]
-					      [[eq `wait-to-call                   command] [if [not [eq 1 command_arguments-length]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call-below]]]]
+					      [[eq `call                   command] [if [not [eq 1 command_arguments-length]]
 												[error bug_name   `plan_compile_error-wrong_number_of_command_arguments
-												       funkname   `wait-to-call
+												       funkname   `call
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt command_arguments 0] semantic_realm]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-to-call]]]]
+												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
 					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
@@ -1071,7 +1074,7 @@
     [mapc [funk [variable_definition]
 		[cond [[is-type `symbol variable_definition] [semantic-add semantic_plan_object default_variable variable_definition nil]]
 		      [[is-type `cons   variable_definition] [if [== [length variable_definition] 2]
-								 [let [[variable   [first variable_definition]]
+								 [let [[variable   [first  variable_definition]]
 								       [definition [second variable_definition]]]
 								   [semantic-add semantic_plan_object default_variable variable definition]]
 							       [error bug_name   `invalid_plan_variable_definition

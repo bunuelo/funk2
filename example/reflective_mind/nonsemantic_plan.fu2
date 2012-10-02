@@ -788,7 +788,7 @@
 																  [car argument_iter]
 																`[prog @argument_iter]]]]
 												    [eval `[funk [this]
-														 [have [get this mental_layer] create_semantic_plan name_expression name_patterns variable_definitions plan_body_expression]
+														 [have [get this mental_layer] create_semantic_plan [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]
 														 ]]]]]]
 						[t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
 	[t                            [error bug_name `nonsemantic_plan_compile_error]]]]

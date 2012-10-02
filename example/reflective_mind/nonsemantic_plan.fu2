@@ -995,7 +995,7 @@
   [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]
 	[semantic_counterfactual_transframe [new semantic_counterfactual_transframe semantic_realm]]]
     [set semantic_counterfactual_transframe resource_activation_dependency resource_activation_dependency]
-    [set semantic_plan_operator counterfactual_transframe semantic_counterfactual_transframe]
+    [set semantic_plan_operator_activation counterfactual_transframe semantic_counterfactual_transframe]
     semantic_plan_operator_activation]]
 
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]

@@ -371,6 +371,8 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2string__length:                            recv_packet__respond__f2string__length(funk2_node, (pcs_respond__f2string__length_t*)packet);                                                       break;
   case funk2_packet_type__pcs_request__f2string__elt:                               recv_packet__request__f2string__elt(funk2_node, (pcs_request__f2string__elt_t*)packet);                                                             break;
   case funk2_packet_type__pcs_respond__f2string__elt:                               recv_packet__respond__f2string__elt(funk2_node, (pcs_respond__f2string__elt_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_request__f2string__elt__set:                          recv_packet__request__f2string__elt__set(funk2_node, (pcs_request__f2string__elt__set_t*)packet);                                                   break;
+  case funk2_packet_type__pcs_respond__f2string__elt__set:                          recv_packet__respond__f2string__elt__set(funk2_node, (pcs_respond__f2string__elt__set_t*)packet);                                                   break;
   case funk2_packet_type__pcs_request__f2string__str_copy:                          recv_packet__request__f2string__str_copy(funk2_node, (pcs_request__f2string__str_copy_t*)packet);                                                   break;
   case funk2_packet_type__pcs_respond__f2string__str_copy:                          recv_packet__respond__f2string__str_copy(funk2_node, (pcs_respond__f2string__str_copy_t*)packet);                                                   break;
   case funk2_packet_type__pcs_request__f2string__eq_hash_value:                     recv_packet__request__f2string__eq_hash_value(funk2_node, (pcs_request__f2string__eq_hash_value_t*)packet);                                         break;
@@ -3236,6 +3238,66 @@ funk2_character_t f2string__elt(f2ptr this, int index, f2ptr cause) {
     f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2string__elt(funk2_node, fiber, cause, this, index);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, funk2_character_t value) {
+  packet_status("send_packet__request__f2string__elt__set: executing.");
+  pcs_request__f2string__elt__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2string__elt__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber               = this_fiber;
+  packet.payload.this                                      = this;
+  packet.payload.index                                     = index;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2string__elt__set(funk2_node_t* funk2_node, pcs_request__f2string__elt__set_t* packet) {
+  packet_status("recv_packet__request__f2string__elt__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2string__elt__set(this, packet->payload.index, cause, packet->payload.value);
+  send_packet__respond__f2string__elt__set(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2string__elt__set: executing.");
+  pcs_respond__f2string__elt__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2string__elt__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber               = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2string__elt__set(funk2_node_t* funk2_node, pcs_respond__f2string__elt__set_t* packet) {
+  packet_status("recv_packet__respond__f2string__elt__set: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, funk2_character_t value) {
+  send_packet__request__f2string__elt__set(funk2_node, this_fiber, cause, this, index, value);
+  pcs_respond__f2string__elt__set_t* packet = (pcs_respond__f2string__elt__set_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2string__elt__set(f2ptr this, u64 index, f2ptr cause, funk2_character_t value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2string__elt__set(this, index, cause, value);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2string__elt__set(funk2_node, fiber, cause, this, index, value);
   }
 }
 

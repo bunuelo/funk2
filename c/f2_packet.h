@@ -130,6 +130,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2string__length                           ,
   funk2_packet_type__pcs_request__f2string__elt                              , //u8               (f2ptr cause, f2ptr this, int index);
   funk2_packet_type__pcs_respond__f2string__elt                              ,
+  funk2_packet_type__pcs_request__f2string__elt__set                         , //u8               (f2ptr cause, f2ptr this, int index);
+  funk2_packet_type__pcs_respond__f2string__elt__set                         ,
   funk2_packet_type__pcs_request__f2string__str_copy                         , //void             (f2ptr cause, f2ptr this, u8* str);
   funk2_packet_type__pcs_respond__f2string__str_copy                         ,
   funk2_packet_type__pcs_request__f2string__eq_hash_value                    , //int              (f2ptr cause, f2ptr this);
@@ -2119,6 +2121,46 @@ void recv_packet__respond__f2string__elt(funk2_node_t* funk2_node, pcs_respond__
 
 funk2_character_t funk2_node__f2string__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, int index);
 funk2_character_t f2string__elt(f2ptr this, int index, f2ptr cause);
+
+
+//  funk2_packet_type__pcs_request__f2string__elt__set                   = 0x33, //void             (f2ptr this, u64 index, f2ptr cause, u64 value);
+
+// request f2string__elt__set
+
+struct pcs_packet_payload_request__f2string__elt__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+  funk2_character_t                                  value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2string__elt__set_s pcs_packet_payload_request__f2string__elt__set_t;
+
+struct pcs_request__f2string__elt__set_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_request__f2string__elt__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2string__elt__set_s pcs_request__f2string__elt__set_t;
+
+// respond f2string__elt__set
+
+struct pcs_packet_payload_respond__f2string__elt__set_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2string__elt__set_s pcs_packet_payload_respond__f2string__elt__set_t;
+
+struct pcs_respond__f2string__elt__set_s {
+  funk2_packet_header_t                            header;
+  pcs_packet_payload_respond__f2string__elt__set_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2string__elt__set_s pcs_respond__f2string__elt__set_t;
+
+void send_packet__request__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, funk2_character_t value);
+void recv_packet__request__f2string__elt__set(funk2_node_t* funk2_node, pcs_request__f2string__elt__set_t* packet);
+void send_packet__respond__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void recv_packet__respond__f2string__elt__set(funk2_node_t* funk2_node, pcs_respond__f2string__elt__set_t* packet);
+
+void funk2_node__f2string__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, funk2_character_t value);
+void f2string__elt__set(f2ptr this, u64 index, f2ptr cause, funk2_character_t value);
 
 
 //  funk2_packet_type__pcs_request__f2string__str_copy                         = 0x21, //void             (f2ptr this, f2ptr cause, u8* str);

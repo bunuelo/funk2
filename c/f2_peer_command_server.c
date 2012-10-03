@@ -192,6 +192,8 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2string__length:
   case funk2_packet_type__pcs_request__f2string__elt:
   case funk2_packet_type__pcs_respond__f2string__elt:
+  case funk2_packet_type__pcs_request__f2string__elt__set:
+  case funk2_packet_type__pcs_respond__f2string__elt__set:
   case funk2_packet_type__pcs_request__f2string__str_copy:
   case funk2_packet_type__pcs_respond__f2string__str_copy:
   case funk2_packet_type__pcs_request__f2string__eq_hash_value:

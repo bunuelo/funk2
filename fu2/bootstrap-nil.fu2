@@ -17,6 +17,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deftypefunk nil get     length      []                0]
 [deftypefunk nil get     as-array    []                [conslist-as-array this]]
 [deftypefunk nil get     as-conslist []                this]
 [deftypefunk nil execute as-array    []                [conslist-as-array this]]

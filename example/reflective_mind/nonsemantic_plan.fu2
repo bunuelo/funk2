@@ -538,6 +538,7 @@
 		 [set semantic_thought environment semantic_environment]]
 	       
 	       [mapc [funk [semantic_knowledge_base]
+			   [have semantic_knowledge_base add_semantic_frame semantic_environment]
 			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
 		     semantic_knowledge_bases]
 	       [semantic-add semantic_planner thought semantic_thought]
@@ -554,6 +555,7 @@
 		 
 		 [semantic-remove semantic_planner thought semantic_thought]
 		 [mapc [funk [semantic_knowledge_base]
+			     [have semantic_knowledge_base remove_semantic_frame semantic_environment]
 			     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
 		       semantic_knowledge_bases]
 		 

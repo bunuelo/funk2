@@ -25,12 +25,10 @@
 
 
 [deftypefunk semantic_thought execute evaluate_string [string]
-  [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: "' string '"']
   [if [not [get string contains '[']]
       string
     [let* [[conslist_pattern [string_pattern-as_conslist_pattern string]]
 	   [result_length    0]]
-      [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: conslist_pattern=' conslist_pattern]
       [let [[expanded_conslist [mapcar [funk [expression]
 					     [if [is-type `char expression]
 						 [prog [++ result_length]
@@ -38,11 +36,9 @@
 					       [let [[variable_command [first expression]]]
 						 [cond [[eq variable_command `?] [let [[variable_value_string [let [[variable_name [second expression]]]
 														[let [[variable_value [have this lookup_a_variable_value variable_name]]]
-														  [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: variable_name=' variable_name ' variable_value=' variable_value]
 														  [cond [[is-type `string variable_value] variable_value]
 															[t                                [get variable_value as-string]]]]]]]
 										   [= result_length [+ result_length [get variable_value_string length]]]
-										   [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: variable_value_string="' variable_value_string '"']
 										   variable_value_string]]
 						       [t                        [error bug_name         `semantic_thought-evaluate_string-invalid_variable_command
 											variable_command variable_command
@@ -52,7 +48,6 @@
 	[let [[result [new string result_length #\ ]]
 	      [index  0]]
 	  [mapc [funk [expression]
-		      [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: expression=' expression]
 		      [if [is-type `char expression]
 			  [prog [set result elt index expression]
 				[++ index]]
@@ -61,7 +56,6 @@
 			    [set result elt index [get expression elt i]]
 			    [++ index]]]]]
 		expanded_conslist]
-	  [terminal_format standard-terminal '\nsemantic_thought-evaluate_string: result="' result '"']
 	  result]]]]]
 
 

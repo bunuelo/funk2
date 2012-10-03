@@ -2760,7 +2760,7 @@ f2ptr f2__string__new(f2ptr cause, f2ptr length, f2ptr fill_char) {
 }
 def_pcfunk2(string__new, length, fill_char,
 	    "",
-	    return f2__string__new_copy(this_cause, length, fill_char));
+	    return f2__string__new(this_cause, length, fill_char));
 
 
 f2ptr raw__string__new_copy(f2ptr cause, f2ptr str) {

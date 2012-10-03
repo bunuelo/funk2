@@ -2811,8 +2811,8 @@ void raw__string__elt__set(f2ptr cause, f2ptr this, s64 index, funk2_character_t
 }
 
 f2ptr f2__string__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  assert_argument_type(string,    this);
-  assert_argument_type(character, this);
+  assert_argument_type(string, this);
+  assert_argument_type(char,   this);
   u64 raw_index = f2integer__i(index, cause);
   raw__string__elt__set(cause, this, raw_index, value);
   return nil;

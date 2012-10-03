@@ -92,7 +92,7 @@
   'focus on a plan']
 
 [deftypefunk reflective_focus_on_plan_resource get as-natural_language_string_with_arguments [arguments]
-  [stringlist-intersperse [cons 'focus on the plan to '
+  [stringlist-intersperse [cons 'focus on the plan to'
 				[mapcar [funk [argument]
 					      [get argument as-string]]
 					arguments]]

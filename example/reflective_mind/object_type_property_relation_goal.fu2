@@ -97,96 +97,89 @@
 [deftypefunk object_type_property_relation_goal get knowledge_base []
   [get [get this mind] semantic_knowledge_base knowledge_base_name]]
 
-[defunk object_type_property_relation_goal-english_conslist [object_type object_property object_property_value]
+[defunk object_type_property_relation_goal-natural_language_string [object_type object_property object_property_value]
   [if [eq object_property_value t]
-      `[a ,object_type that ,object_property]
-    `[a ,object_property_value ,object_property ,object_type]]]
+      [stringlist-concat `['a ' ,[get object_type as-string] ' that ' ,[get object_property as-string]]]
+    [stringlist-concat `['a ' ,[get object_property_value as-string] ' ' ,[get object_property as-string] ' ' ,[get object_type as-string]]]]]
 
-[defunk object_type_property_relation_goal-english_string [object_type object_property object_property_value]
-  [conslist-as-english_string [object_type_property_relation_goal-english_conslist object_type object_property object_property_value]]]
-
-[defunk object_type_property_property_goal-english_conslist [source_type source_property source_property_value property property_value]
+[defunk object_type_property_property_goal-natural_language_string [source_type source_property source_property_value property property_value]
   [if [eq source_property_value t]
       [if [eq property_value t]
-	  `[a ,source_type that ,source_property and ,property]
-	`[a ,property_value ,property ,source_type that ,source_property]]
+	  [stringlist-concat `['a ' ,[get source_type as-string] ' that ' ,[get source_property as-string] ' and ' ,[get property as-string]]]
+	[stringlist-concat `['a ' ,[get property_value as-string] ' ' ,[get property as-string] ' ' ,[get source_type as-string] ' that ' ,[get source_property as-string]]]]
     [if [eq property_value t]
-	`[a ,source_property_value ,source_property ,source_type that ,property]
-      `[a ,source_property_value ,source_property ,property_value ,property ,source_type]]]]
+	[stringlist-concat `['a ' ,[get source_property_value as-string] ' ' ,[get source_property as-string] ' ' ,[get source_type as-string] ' that ' ,[get property as-string]]]
+      [stringlist-concat `['a ' ,[get source_property_value as-string] ' ' ,[get source_property as-string] ' ' ,[get property_value as-string] ' ' ,[get property as-string] ' ' ,[get source_type as-string]]]]]]
 
-[defunk object_type_property_property_goal-english_string [source_type source_property source_property_value property property_value]
-  [conslist-as-english_string [object_type_property_property_goal-english_conslist source_type source_property source_property_value property property_value]]]
-
-[deftypefunk object_type_property_relation_goal get as-english_conslist []
-  [append `[I want]
-	  [object_type_property_relation_goal-english_conslist this-source_type this-source_key this-source_value]
-	  `[to be]
-	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type this-target_key this-target_value]]]
+[deftypefunk object_type_property_relation_goal get as-natural_language_string []
+  [stringlist-concat `['I want '
+		       ,[object_type_property_relation_goal-natural_language_string this-source_type this-source_key this-source_value]
+		       ' to be '
+		       ,[get this-key as-string]
+		       ' '
+		       ,[object_type_property_relation_goal-natural_language_string this-target_type this-target_key this-target_value]]]]
 
 [deftypefunk object_type_property_relation_goal get as-string []
-  [conslist-as-english_string [get this as-english_conslist]]]
+  [get this as-natural_language_string]]
 
-[defunk object_type_property_relation_goal-declarative_english_conslist [source_type source_property source_property_value key_type key target_type target_property target_property_value]
-  [append [object_type_property_relation_goal-english_conslist source_type source_property source_property_value]
-	  `[is]
-	  `[,key]
-	  [object_type_property_relation_goal-english_conslist target_type target_property target_property_value]]]
+[defunk object_type_property_relation_goal-declarative_natural_language_string [source_type source_property source_property_value key_type key target_type target_property target_property_value]
+  [stringlist-concat `[,[object_type_property_relation_goal-natural_language_string source_type source_property source_property_value]
+		       ' is '
+		       ,[get key as-string]
+		       ' '
+		       ,[object_type_property_relation_goal-natural_language_string target_type target_property target_property_value]]]]
 
-[defunk object_type_property_relation_goal-declarative_english_string [source_type source_property source_property_value key_type key target_type target_property target_property_value]
-  [conslist-as-english_string [object_type_property_relation_goal-declarative_english_conslist source_type source_property source_property_value key_type key target_type target_property target_property_value]]]
-
-[deftypefunk object_type_property_relation_goal get as-declarative_english_conslist []
-  [object_type_property_relation_goal-declarative_english_conslist this-source_type
-								   this-source_key
-								   this-source_value
-								   this-key_type
-								   this-key
-								   this-target_type
-								   this-target_key
-								   this-target_value]]
+[deftypefunk object_type_property_relation_goal get as-declarative_natural_language_string []
+  [object_type_property_relation_goal-declarative_natural_language_string this-source_type
+									  this-source_key
+									  this-source_value
+									  this-key_type
+									  this-key
+									  this-target_type
+									  this-target_key
+									  this-target_value]]
 
 [deftypefunk object_type_property_relation_goal get as-declarative_string []
-  [conslist-as-english_string [get this as-declarative_english_conslist]]]
+  [get this as-declarative_natural_language_string]]
 
-[deftypefunk object_type_property_relation_goal get as-negative_declarative_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type
-							       this-source_key
-							       this-source_value]
-	  `[is not]
-	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type
-							       this-target_key
-							       this-target_value]]]
+[deftypefunk object_type_property_relation_goal get as-negative_declarative_natural_language_string []
+  [stringlist-concat `[,[object_type_property_relation_goal-natural_language_string this-source_type
+										    this-source_key
+										    this-source_value]
+		       ' is not '
+		       ,[get this-key as-string]
+		       ,[object_type_property_relation_goal-natural_language_string this-target_type
+										    this-target_key
+										    this-target_value]]]]
 
 [deftypefunk object_type_property_relation_goal get as-negative_declarative_string []
-  [conslist-as-english_string [get this as-negative_declarative_english_conslist]]]
+  [get this as-negative_declarative_natural_language_string]]
 
-[deftypefunk object_type_property_relation_goal get as-now_true_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type
-							       this-source_key
-							       this-source_value]
-	  `[is now]
-	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type
-							       this-target_key
-							       this-target_value]]]
+[deftypefunk object_type_property_relation_goal get as-now_true_natural_language_string []
+  [stringlist-concat `[,[object_type_property_relation_goal-natural_language_string this-source_type
+										    this-source_key
+										    this-source_value]
+		       ' is now '
+		       ,[get this-key as-string]
+		       ,[object_type_property_relation_goal-natural_language_string this-target_type
+										    this-target_key
+										    this-target_value]]]]
 
 [deftypefunk object_type_property_relation_goal get as-now_true_string []
-  [conslist-as-english_string [get this as-now_true_english_conslist]]]
+  [get this as-now_true_natural_language_conslist]]
 
-[deftypefunk object_type_property_relation_goal get as-no_longer_true_english_conslist []
-  [append [object_type_property_relation_goal-english_conslist this-source_type
-							       this-source_key
-							       this-source_value]
-	  `[is no longer]
-	  `[,this-key]
-	  [object_type_property_relation_goal-english_conslist this-target_type
-							       this-target_key
-							       this-target_value]]]
+[deftypefunk object_type_property_relation_goal get as-no_longer_true_natural_language_string []
+  [stringlist-concat `[,[object_type_property_relation_goal-natural_language_string this-source_type
+										    this-source_key
+										    this-source_value]
+		       ' is no longer '
+		       ,[get this-key as-string]
+		       ,[object_type_property_relation_goal-natural_language_string this-target_type
+										    this-target_key
+										    this-target_value]]]]
 
 [deftypefunk object_type_property_relation_goal get as-no_longer_true_string []
-  [conslist-as-english_string [get this as-no_longer_true_english_conslist]]]
+  [get this as-no_longer_true_natural_language_string]]
 
 [deftypefunk object_type_property_relation_goal get __source_phenomenal_name []
   [semantic_object_property_type_event-phenomenal_name this-source_type

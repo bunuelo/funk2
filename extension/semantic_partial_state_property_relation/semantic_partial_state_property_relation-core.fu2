@@ -27,7 +27,7 @@
 [defcorefunk semantic_partial_state_property_relation-phenomenal_name semantic_partial_state_property_relation semantic_partial_state_property_relation__phenomenal_name]
 
 
-[deftypefunk semantic_partial_state_property_relation get as-declarative_english_conslist []
+[deftypefunk semantic_partial_state_property_relation get as-declarative_natural_language_string []
   [let [[source_type  [get this source_type]]
 	[source_key   [get this source_key]]
 	[source_value [get this source_value]]
@@ -35,25 +35,19 @@
 	[target_type  [get this target_type]]
 	[target_key   [get this target_key]]
 	[target_value [get this target_value]]]
-    [append [if [eq source_value t]
-		`[a ,source_type that ,source_key]
-	      `[a ,source_value ,source_key ,source_type]]
-	    `[is]
-	    `[,key]
-	    [if [eq target_value t]
-		`[a ,target_type that ,target_key]
-	      `[a ,target_value ,target_key ,target_type]]]]]
+    [stringlist-concat `[,[if [eq source_value t]
+			      [stringlist-concat `['a ' ,[get source_type as-string] ' that ' ,[get source_key as-string]]]
+			    [stringlist-concat `['a ' ,[get source_value as-string] ' ' ,[get source_key as-string] ' ' ,[get source_type as-string]]]]
+			 ' is '
+			 ,[get key as-string]
+			 ' '
+			 ,[if [eq target_value t]
+			      [stringlist-concat `['a ' ,[get target_type as-string] ' that ' ,[get target_key as-string]]]
+			    [stringlist-concat `['a ' ,[get target_value as-string] ' ' ,[get target_key as-string] ' ' ,[get target_type as-string]]]]]]]]
 
-[deftypefunk semantic_partial_state_property_relation get as-declarative_english_string []
-  [conslist-as-english_string [get this as-declarative_english_conslist]]]
-
-
-[deftypefunk semantic_partial_state_property_relation get as-english_conslist []
-  [get this as-declarative_english_conslist]]
-
-[deftypefunk semantic_partial_state_property_relation get as-english_string []
-  [conslist-as-english_string [get this as-english_conslist]]]
+[deftypefunk semantic_partial_state_property_relation get as-natural_language_string []
+  [get this as-declarative_natural_language_string]]
 
 [deftypefunk semantic_partial_state_property_relation get as-string []
-  [get this as-english_string]]
+  [get this as-natural_language_string]]
 

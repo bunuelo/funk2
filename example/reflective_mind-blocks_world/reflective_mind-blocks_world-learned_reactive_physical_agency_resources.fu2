@@ -32,8 +32,8 @@
 				     [call-below `[stop]]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_left_until_over_pyramid_resource get as-english_conslist []
-  `[move left until over pyramid]]
+[deftypefunk reflective_mind-blocks_world-move_left_until_over_pyramid_resource get as-natural_language_string []
+  'move left until over pyramid']
 
 
 'reflective_mind-blocks_world-move_left_until_over_cube'
@@ -50,8 +50,8 @@
 				     [call-below `[stop]]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_left_until_over_cube_resource get as-english_conslist []
-  `[move left until over cube]]
+[deftypefunk reflective_mind-blocks_world-move_left_until_over_cube_resource get as-natural_language_string []
+  'move left until over cube']
 
 
 'reflective_mind-blocks_world-move_right_until_over_pyramid'
@@ -68,8 +68,8 @@
 				     [call-below `[stop]]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_right_until_over_pyramid_resource get as-english_conslist []
-  `[move right until over pyramid]]
+[deftypefunk reflective_mind-blocks_world-move_right_until_over_pyramid_resource get as-natural_language_string []
+  'move right until over pyramid']
 
 
 'reflective_mind-blocks_world-move_right_until_over_cube'
@@ -86,8 +86,8 @@
 				     [call-below `[stop]]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_right_until_over_cube_resource get as-english_conslist []
-  `[move right until over cube]]
+[deftypefunk reflective_mind-blocks_world-move_right_until_over_cube_resource get as-natural_language_string []
+  'move right until over cube']
 
 
 'reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving'
@@ -104,8 +104,8 @@
 							 stop]]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving_resource get as-english_conslist []
-  `[attempt to grab block until gripper stops moving]]
+[deftypefunk reflective_mind-blocks_world-attempt_to_grab_block_until_gripper_stops_moving_resource get as-natural_language_string []
+  'attempt to grab block until gripper stops moving']
 
 
 'reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall'
@@ -119,7 +119,7 @@
 				     [wait-for-time 8]]]
 			]]]]
 
-[deftypefunk reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall_resource get as-english_conslist []
-  `[drop block and wait for block to fall]]
+[deftypefunk reflective_mind-blocks_world-drop_block_and_wait_for_block_to_fall_resource get as-natural_language_string []
+  'drop block and wait for block to fall']
 
 

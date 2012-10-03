@@ -26,8 +26,8 @@
 		  [funk []
 			[have [get this body] move_left]]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_left_resource get as-english_conslist []
-  `[move left]]
+[deftypefunk reflective_mind-blocks_world-move_left_resource get as-natural_language_string []
+  'move left']
 
 
 'reflective_mind-blocks_world-move_right_resource'
@@ -38,8 +38,8 @@
 		  [funk []
 			[have [get this body] move_right]]]]]
 
-[deftypefunk reflective_mind-blocks_world-move_right_resource get as-english_conslist []
-  `[move right]]
+[deftypefunk reflective_mind-blocks_world-move_right_resource get as-natural_language_string []
+  'move right']
 
 
 'reflective_mind-blocks_world-grab_resource'
@@ -49,8 +49,8 @@
 		     [funk []
 			   [have [get this body] grab]]]]]
 
-[deftypefunk reflective_mind-blocks_world-grab_resource get as-english_conslist []
-  `[grab]]
+[deftypefunk reflective_mind-blocks_world-grab_resource get as-natural_language_string []
+  'grab']
 
 
 'reflective_mind-blocks_world-drop_resource'
@@ -60,8 +60,8 @@
 		     [funk []
 			   [have [get this body] drop]]]]]
 
-[deftypefunk reflective_mind-blocks_world-drop_resource get as-english_conslist []
-  `[drop]]
+[deftypefunk reflective_mind-blocks_world-drop_resource get as-natural_language_string []
+  'drop']
 
 
 'reflective_mind-blocks_world-stop_resource'
@@ -72,8 +72,8 @@
 		  [funk []
 			[have [get this body] stop]]]]]
 
-[deftypefunk reflective_mind-blocks_world-stop_resource get as-english_conslist []
-  `[stop]]
+[deftypefunk reflective_mind-blocks_world-stop_resource get as-natural_language_string []
+  'stop']
 
 
 

@@ -20,10 +20,10 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [mental_layer] [[physical_action_english_symbol_ptypehash [new ptypehash]]
-					    [semantic_plan_phenomenal_name_frame      [new frame]]
-					    [plan_action_english_symbol_ptypehash     [new ptypehash]]
-					    [plan_semantic_plan_phenomenal_name_frame [new frame]]]
+[deframe deliberative_layer [mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
+					    [semantic_plan_phenomenal_name_frame               [new frame]]
+					    [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
+					    [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -71,13 +71,13 @@
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
-  [have physical_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+  [have physical_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
 
 [deftypefunk deliberative_layer get physical_actions []
-  [get physical_action_english_symbol_ptypehash values]]
+  [get physical_action_natural_language_symbol_ptypehash values]]
 
-[deftypefunk deliberative_layer execute lookup_physical_action [expression]
-  [have physical_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
+[deftypefunk deliberative_layer execute lookup_physical_action [natural_language_string]
+  [have physical_action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol natural_language_string]]]
 
 [deftypefunk deliberative_layer execute add_physical_semantic_object_recursive [semantic_object]
   [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame semantic_object]
@@ -165,13 +165,13 @@
 
 [deftypefunk deliberative_layer execute add_plan_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding plan action, "' [get action as-string] '."']
-  [have plan_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+  [have plan_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
 
 [deftypefunk deliberative_layer get plan_actions []
-  [get plan_action_english_symbol_ptypehash values]]
+  [get plan_action_natural_language_symbol_ptypehash values]]
 
-[deftypefunk deliberative_layer execute lookup_plan_action [expression]
-  [have plan_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
+[deftypefunk deliberative_layer execute lookup_plan_action [natural_language_string]
+  [have plan_action_natural_language_symbol_ptypehash lookup [conslist-as-natural_language_symbol natural_language_string]]]
 
 [deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 

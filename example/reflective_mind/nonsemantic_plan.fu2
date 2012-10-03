@@ -20,7 +20,6 @@
 
 [defunk name_expression-as-string [this]
   [cond [[is-type `string this] this]
-	[[is-type `cons   this] [conslist-as-english_string [have this flatten]]]
 	[t                      [get this as-string]]]]
 
 [defunk name_expression-as-symbol [this]
@@ -113,12 +112,11 @@
 				   name_patterns
 				   variables
 				   expression
-				   [internal-unique_name           nil]
-				   [internal-semantic_plan_object  nil]
-				   [internal-compiled_funk         nil]
-				   [internal-compiled_imagine_funk nil]
-				   [internal-english_conslist      `uninitialized]
-				   [internal-english_string        nil]]
+				   [internal-unique_name             nil]
+				   [internal-semantic_plan_object    nil]
+				   [internal-compiled_funk           nil]
+				   [internal-compiled_imagine_funk   nil]
+				   [internal-natural_language_string nil]]
   [new [initial-mental_layer
 	initial-name_expression
 	initial-name_patterns
@@ -164,7 +162,7 @@
 	  name_pattern_match_pairs]
     best_name_pattern_match]]
 
-[deftypefunk nonsemantic_plan get expression-as_english_conslist [expression]
+[deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
   [cond [[is-type `symbol expression] expression]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
@@ -178,32 +176,34 @@
 												[let [[quote-expression [elt arguments 0]]]
 												  [cons quote-expression nil]]]]
 						[[or [eq `list                       command]
-						     [eq `backquote-list             command]] [apply &append [mapcar [funk [argument]
-															    [get this expression-as_english_conslist argument]]
-														      arguments]]]
+						     [eq `backquote-list             command]] [stringlist-intersperse [mapcar [funk [argument]
+																     [get this expression-as_natural_language_string argument]]
+															       arguments]
+														       ' ']]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[print-expression [elt arguments 0]]]
-												  [get this expression-as_english_conslist print-expression]]]]
-						[[eq `prog                           command] [apply &append
-												     [append `[[do the following in serial punctuation-colon]]
-													     [let [[step_number 1]]
-													       [mapcar [funk [argument]
-															     [let [[argument-result [append `[,[get step_number as-symbol] punctuation-period]
-																			    [get this expression-as_english_conslist argument]
-																			    [if [not [eq step_number arguments-length]]
-																				`[punctuation-comma]]]]]
-															       [++ step_number]
-															       argument-result]]
-														       arguments]]]]]
+												  [get this expression-as_natural_language_string print-expression]]]]
+						[[eq `prog                           command] [stringlist-concat [cons 'do the following in serial: '
+														       [let [[step_number 1]]
+															 [mapcar [funk [argument]
+																       [let [[argument-result [stringlist-concat `[,[get step_number as-string] '. '
+																						   ,[get this expression-as_natural_language_string argument]
+																						   ,[if [not [== step_number arguments-length]]
+																							', '
+																						      '']]]]]
+																	 [++ step_number]
+																	 argument-result]]
+																 arguments]]]]]
 						[[eq `parog                          command] [apply &append
 												     [append `[[do the following in parallel punctuation-colon]]
 													     [let [[step_number 1]]
 													       [mapcar [funk [argument]
-															     [let [[argument-result [append `[* punctuation-period]
-																			    [get this expression-as_english_conslist argument]
-																			    [if [not [eq step_number arguments-length]]
-																				`[punctuation-comma]]]]]
+															     [let [[argument-result [stringlist-concat `['*. '
+																					 ,[get this expression-as_natural_language_string argument]
+																					 ,[if [not [eq step_number arguments-length]]
+																					      ', '
+																					    '']]]]]
 															       argument-result]]
 														       arguments]]]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
@@ -213,60 +213,56 @@
 													  `[,time_to_wait]]]]]
 						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[action_name [get this expression-as_english_conslist [elt arguments 0]]]]
-												  [append `[call action in layer below to]
-													  [have action_name flatten]]]]]
+												[let [[action_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['call action in layer below to ' ,action_name]]]]]
 						[[eq `call                   command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[action_name [get this expression-as_english_conslist [elt arguments 0]]]]
-												  [append `[call action to]
-													  [have action_name flatten]]]]]
+												[let [[action_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['call action to ' ,action_name]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let* [[plan_name [get this expression-as_english_conslist [elt arguments 0]]]]
-												  [append `[call plan to]
-													  [have plan_name flatten]]]]]
+												[let* [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['call plan to ' ,plan_name]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[exists-expression [elt arguments 0]]]
-												  [get this expression-as_english_conslist exists-expression]]]]
+												  [get this expression-as_natural_language_string exists-expression]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[partial_state [get this expression-as_english_conslist [elt arguments 0]]]]
-												  [append `[wait for]
-													  partial_state]]]]
+												[let [[partial_state [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['wait for ' ,partial_state]]]]]
 						[[eq `if                             command] [if [not [or [== arguments-length 2]
 													   [== arguments-length 3]]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[if-condition    [get this expression-as_english_conslist [elt arguments 0]]]
-												      [if-true_branch  [get this expression-as_english_conslist [elt arguments 1]]]
+												[let [[if-condition    [get this expression-as_natural_language_string [elt arguments 0]]]
+												      [if-true_branch  [get this expression-as_natural_language_string [elt arguments 1]]]
 												      [if-false_branch [if [== arguments-length 3]
-															   [get this expression-as_english_conslist [elt arguments 2]]]]]
-												  [append `[if]
-													  if-condition
-													  `[punctuation-comma]
-													  if-true_branch
-													  [if if-false_branch
-													      [append `[otherwise]
-														      if-false_branch]]]]]]
+															   [get this expression-as_natural_language_string [elt arguments 2]]]]]
+												  [stringlist-concat `['if '
+														       ,if-condition
+														       ', '
+														       ,if-true_branch
+														       [if if-false_branch
+															   [stringlist-concat `['otherwise '
+																		,if-false_branch]]
+															 '']]]]]]
 						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[assert-expression [get this expression-as_english_conslist [elt arguments 0]]]]
-												  [append `[assert that]
-													  assert-expression]]]]
+												[let [[assert-expression [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['assert that ' ,assert-expression]]]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[variable-symbol [elt arguments 0]]]
 												  `[? ,variable-symbol]]]]
 						[[eq `property                       command] [if [not [eq 7 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
-												      [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
-												      [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
-												      [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
-												      [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
-												      [key             [get this expression-as_english_conslist [elt arguments 5]]]
-												      [value           [get this expression-as_english_conslist [elt arguments 6]]]]
+												[let [[source_type     [get this expression-as_natural_language_string [elt arguments 0]]]
+												      [source_key_type [get this expression-as_natural_language_string [elt arguments 1]]]
+												      [source_key      [get this expression-as_natural_language_string [elt arguments 2]]]
+												      [source_value    [get this expression-as_natural_language_string [elt arguments 3]]]
+												      [key_type        [get this expression-as_natural_language_string [elt arguments 4]]]
+												      [key             [get this expression-as_natural_language_string [elt arguments 5]]]
+												      [value           [get this expression-as_natural_language_string [elt arguments 6]]]]
 												  [get [new semantic_partial_state_property [get [get this mind] semantic_realm]
 													    source_type
 													    source_key_type
@@ -275,19 +271,19 @@
 													    key_type
 													    key
 													    value]
-												       as-declarative_english_conslist]]]]
+												       as-declarative_natural_language_string]]]]
 						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[source_type     [get this expression-as_english_conslist [elt arguments 0]]]
-												      [source_key_type [get this expression-as_english_conslist [elt arguments 1]]]
-												      [source_key      [get this expression-as_english_conslist [elt arguments 2]]]
-												      [source_value    [get this expression-as_english_conslist [elt arguments 3]]]
-												      [key_type        [get this expression-as_english_conslist [elt arguments 4]]]
-												      [key             [get this expression-as_english_conslist [elt arguments 5]]]
-												      [target_type     [get this expression-as_english_conslist [elt arguments 6]]]
-												      [target_key_type [get this expression-as_english_conslist [elt arguments 7]]]
-												      [target_key      [get this expression-as_english_conslist [elt arguments 8]]]
-												      [target_value    [get this expression-as_english_conslist [elt arguments 9]]]]
+												[let [[source_type     [get this expression-as_natural_language_string [elt arguments 0]]]
+												      [source_key_type [get this expression-as_natural_language_string [elt arguments 1]]]
+												      [source_key      [get this expression-as_natural_language_string [elt arguments 2]]]
+												      [source_value    [get this expression-as_natural_language_string [elt arguments 3]]]
+												      [key_type        [get this expression-as_natural_language_string [elt arguments 4]]]
+												      [key             [get this expression-as_natural_language_string [elt arguments 5]]]
+												      [target_type     [get this expression-as_natural_language_string [elt arguments 6]]]
+												      [target_key_type [get this expression-as_natural_language_string [elt arguments 7]]]
+												      [target_key      [get this expression-as_natural_language_string [elt arguments 8]]]
+												      [target_value    [get this expression-as_natural_language_string [elt arguments 9]]]]
 												  [get [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
 													    source_type
 													    source_key_type
@@ -299,7 +295,7 @@
 													    target_key_type
 													    target_key
 													    target_value]
-												       as-declarative_english_conslist]]]]
+												       as-declarative_natural_language_string]]]]
 						[[eq `defplan                        command] [if [not [>= arguments-length 1]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[name_expression      [elt arguments 0]]
@@ -324,18 +320,13 @@
 						[t                                            `[error ,[flatten_constree expression]]]]]]]
 	[t                            `[error punctuation-colon ,[flatten_constree expression]]]]]
 
-[deftypefunk nonsemantic_plan get as-english_conslist []
-  [if [eq `uninitialized internal-english_conslist]
-      [= internal-english_conslist [get this expression-as_english_conslist expression]]]
-  internal-english_conslist]
-
-[deftypefunk nonsemantic_plan get as-english_string []
-  [if [null internal-english_string]
-      [= internal-english_string [conslist-as-english_string [get this as-english_conslist]]]]
-  internal-english_string]
+[deftypefunk nonsemantic_plan get as-natural_language_string []
+  [if [eq `uninitialized internal-natural_language_string]
+      [= internal-natural_language_string [get this expression-as_natural_language_string expression]]]
+  internal-natural_language_string]
 
 [deftypefunk nonsemantic_plan get as-string []
-  [get this as-english_string]]
+  [get this as-natural_language_string]]
 
 [deftypefunk nonsemantic_plan get as-graphviz_label []
   [string-concat '<' [get [get this unique_name] as-string] '>']]
@@ -631,8 +622,8 @@
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action_below ,action_name]]]
 														 [if [null action]
-														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
-															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+														     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+															    action_name ,action_name]
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
@@ -644,8 +635,8 @@
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action ,action_name]]]
 														 [if [null action]
-														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
-															    action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+														     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+															    action_name ,action_name]
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
@@ -666,8 +657,8 @@
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 														 [terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
-														     [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
-															    action_description [conslist-as-english_string [have [cons semantic_plan_object-phenomenal_name nil] flatten]]]
+														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 															 [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
 														     [terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
@@ -689,7 +680,7 @@
 												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let [[partial_state ,partial_state]]
-														 [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_english_string] '."']
+														 [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_natural_language_string] '."']
 														 [have this wait_for partial_state]]
 													       ]]]]]
 						[[eq `if                             command] [if [not [or [== arguments-length 2]
@@ -889,8 +880,8 @@
 												[eval `[funk [this]
 													     [let [[action [have this lookup_action_below ,action_name]]]
 													       [if [null action]
-														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
-															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+														   [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+															  action_name ,action_name]
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
@@ -903,7 +894,7 @@
 													     [let [[action [have this lookup_action ,action_name]]]
 													       [if [null action]
 														   [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
-															  action_description [conslist-as-english_string [have [cons ,action_name nil] flatten]]]
+															  action_description ,action_name]
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
@@ -924,8 +915,8 @@
 															       [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 													       [terminal_format standard-terminal '\nimagining executing plan with variable frame: ' variable_frame]
 													       [if [null semantic_plan_object]
-														   [error bug_name           `nonsemantic_plan-plan_call-no_such_plan
-															  action_description [conslist-as-english_string [have [cons semantic_plan_object-phenomenal_name nil] flatten]]]
+														   [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
+															  action_name semantic_plan_object-phenomenal_name]
 														 [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 														       [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
 														   [terminal_format standard-terminal '\nimagining executing plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
@@ -948,7 +939,7 @@
 												[eval `[funk [this]
 													     [let [[partial_state ,partial_state]]
 													       [terminal_format standard-terminal '\nplan imagining waiting for: "'
-																[get partial_state as-declarative_english_string] '."']
+																[get partial_state as-declarative_natural_language_string] '."']
 													       [have this wait_for partial_state]
 													       ]
 													     ]]]]]

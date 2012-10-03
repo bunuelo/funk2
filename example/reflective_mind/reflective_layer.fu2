@@ -20,8 +20,8 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [mental_layer] [[reflective_action_english_symbol_ptypehash [new ptypehash]]
-					  [semantic_plan_phenomenal_name_frame        [new frame]]]
+[deframe reflective_layer [mental_layer] [[reflective_action_natural_language_symbol_ptypehash [new ptypehash]]
+					  [semantic_plan_phenomenal_name_frame                 [new frame]]]
   [new []
        [construct mental_layer 3 `reflective]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
@@ -51,13 +51,13 @@
 
 [deftypefunk reflective_layer execute add_reflective_action [action]
   [terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
-  [have reflective_action_english_symbol_ptypehash add [get action as-english_symbol] action]]
+  [have reflective_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
 
 [deftypefunk reflective_layer get reflective_actions []
-  [get reflective_action_english_symbol_ptypehash values]]
+  [get reflective_action_natural_language_symbol_ptypehash values]]
 
 [deftypefunk reflective_layer execute lookup_reflective_action [expression]
-  [have reflective_action_english_symbol_ptypehash lookup [conslist-as-english_symbol [have `[,expression] flatten]]]]
+  [have reflective_action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol expression]]]
 
 [deftypefunk reflective_layer execute add_reflective_semantic_object_recursive [semantic_object]
   [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base `deliberative2_knowledge] add_semantic_frame semantic_object]

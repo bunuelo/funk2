@@ -88,11 +88,15 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
 
-[deftypefunk reflective_focus_on_plan_resource get as-english_conslist []
-  `[focus on a plan]]
+[deftypefunk reflective_focus_on_plan_resource get as-natural_language_string []
+  'focus on a plan']
 
-[deftypefunk reflective_focus_on_plan_resource get as-english_conslist_with_arguments [arguments]
-  [have `[focus on the plan to @arguments] flatten]]
+[deftypefunk reflective_focus_on_plan_resource get as-natural_language_string_with_arguments [arguments]
+  [stringlist-intersperse [cons 'focus on the plan to '
+				[mapcar [funk [argument]
+					      [get argument as-string]]
+					arguments]]
+			  ' ']]
 
 
 
@@ -113,8 +117,8 @@
 				  ]]
 			  ]]]]]
 
-[deftypefunk reflective_execute_plan_in_focus_resource get as-english_conslist []
-  `[execute plan in focus]]
+[deftypefunk reflective_execute_plan_in_focus_resource get as-natural_language_string []
+  'execute plan in focus']
 
 
 
@@ -136,8 +140,8 @@
 			  
 			  ]]]]]
 
-[deftypefunk reflective_imagine_executing_plan_in_focus_resource get as-english_conslist []
-  `[imagine executing plan in focus]]
+[deftypefunk reflective_imagine_executing_plan_in_focus_resource get as-natural_language_string []
+  'imagine executing plan in focus']
 
 
 
@@ -151,8 +155,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get execute_plan phenomenal_name] ', "' [get [get execute_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan execute_plan]]]]]]
 
-[deftypefunk reflective_focus_on_execute_plan_resource get as-english_conslist []
-  `[focus on currently executing plan]]
+[deftypefunk reflective_focus_on_execute_plan_resource get as-natural_language_string []
+  'focus on currently executing plan']
 
 
 
@@ -166,8 +170,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_a_plan focus_plan]]]]]]
 
-[deftypefunk reflective_register_a_plan_from_focus_resource get as-english_conslist []
-  `[register plan currently in focus]]
+[deftypefunk reflective_register_a_plan_from_focus_resource get as-natural_language_string []
+  'register plan currently in focus']
 
 
 
@@ -181,8 +185,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_b_plan focus_plan]]]]]]
 
-[deftypefunk reflective_register_b_plan_from_focus_resource get as-english_conslist []
-  `[register another plan currently in focus]]
+[deftypefunk reflective_register_b_plan_from_focus_resource get as-natural_language_string []
+  'register another plan currently in focus']
 
 
 
@@ -196,8 +200,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_a_plan]]]]]]
 
-[deftypefunk reflective_focus_on_register_a_plan_resource get as-english_conslist []
-  `[focus on plan I am registering]]
+[deftypefunk reflective_focus_on_register_a_plan_resource get as-natural_language_string []
+  'focus on plan I am registering']
 
 
 
@@ -211,8 +215,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_b_plan]]]]]]
 
-[deftypefunk reflective_focus_on_register_b_plan_resource get as-english_conslist []
-  `[focus on other plan I am registering]]
+[deftypefunk reflective_focus_on_register_b_plan_resource get as-natural_language_string []
+  'focus on other plan I am registering']
 
 
 
@@ -226,8 +230,8 @@
 			
 			]]]]
 
-[deftypefunk reflective_focus_plan_add_after_resource get as-english_conslist []
-  `[add a plan after the end of plan currently in focus]]
+[deftypefunk reflective_focus_plan_add_after_resource get as-natural_language_string []
+  'add a plan after the end of plan currently in focus']
 
 
 
@@ -241,8 +245,8 @@
 			
 			]]]]
 
-[deftypefunk reflective_focus_plan_add_before_resource get as-english_conslist []
-  `[add a plan before the beginning of plan currently in focus]]
+[deftypefunk reflective_focus_plan_add_before_resource get as-natural_language_string []
+  'add a plan before the beginning of plan currently in focus']
 
 
 
@@ -256,8 +260,8 @@
 			
 			]]]]
 
-[deftypefunk reflective_focus_plan_add_in_parallel_resource get as-english_conslist []
-  `[add a plan in parallel to plan currently in focus]]
+[deftypefunk reflective_focus_plan_add_in_parallel_resource get as-natural_language_string []
+  'add a plan in parallel to plan currently in focus']
 
 
 
@@ -272,7 +276,7 @@
 			[let [[arguments `[|forget all imagined events|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
@@ -280,7 +284,7 @@
 			[let [[arguments `[|set imagine time to be now|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
@@ -288,7 +292,7 @@
 			[let [[arguments `[|imagine current situation|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
@@ -296,7 +300,7 @@
 			[let [[arguments `[|focus on a plan, plan 6|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
@@ -304,7 +308,7 @@
 			[let [[arguments `[|imagine executing plan in focus|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
@@ -312,15 +316,15 @@
 			[let [[arguments `[|execute plan in focus|]]]
 			  [let [[action [have [get [get this mind] layer `reflective] lookup_reflective_action arguments]]]
 			    [if [null action]
-				[terminal_format standard-terminal '\nremember plan error: "' [conslist-as-english_string arguments] '" action not defined.']
+				[terminal_format standard-terminal '\nremember plan error: "' arguments '" action not defined.']
 			      [prog [terminal_format standard-terminal '\nremember plan waiting to call: "' [get action as-string] '."']
 				    [have action wait_to_call]
 				    ]]]]
 
 			]]]]
 
-[deftypefunk reflective_remember_plan_for_goal_resource get as-english_conslist []
-  `[remember plan for goal]]
+[deftypefunk reflective_remember_plan_for_goal_resource get as-natural_language_string []
+  'remember plan for goal']
 
 
 

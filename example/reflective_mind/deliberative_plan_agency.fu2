@@ -88,11 +88,14 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
 
-[deftypefunk deliberative_focus_on_plan_resource get as-english_conslist []
-  `[focus on a plan]]
+[deftypefunk deliberative_focus_on_plan_resource get as-natural_language_string []
+  'focus on a plan']
 
-[deftypefunk deliberative_focus_on_plan_resource get as-english_conslist_with_arguments [arguments]
-  [have `[focus on the plan to @arguments] flatten]]
+[deftypefunk deliberative_focus_on_plan_resource get as-natural_language_string_with_arguments [arguments]
+  [stringlist-intersperse [cons 'focus on the plan to' [mapcar [funk [argument]
+								     [get argument as-string]]
+							       arguments]]
+			  ' ']]
 
 
 
@@ -114,8 +117,8 @@
 			  
 			  ]]]]]
 
-[deftypefunk deliberative_execute_plan_in_focus_resource get as-english_conslist []
-  `[execute plan in focus]]
+[deftypefunk deliberative_execute_plan_in_focus_resource get as-natural_language_string []
+  'execute plan in focus']
 
 
 
@@ -137,8 +140,8 @@
 			  
 			  ]]]]]
 
-[deftypefunk deliberative_imagine_executing_plan_in_focus_resource get as-english_conslist []
-  `[imagine executing plan in focus]]
+[deftypefunk deliberative_imagine_executing_plan_in_focus_resource get as-natural_language_string []
+  'imagine executing plan in focus']
 
 
 
@@ -152,8 +155,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get execute_plan phenomenal_name] ', "' [get [get execute_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan execute_plan]]]]]]
 
-[deftypefunk deliberative_focus_on_execute_plan_resource get as-english_conslist []
-  `[focus on currently executing plan]]
+[deftypefunk deliberative_focus_on_execute_plan_resource get as-natural_language_string []
+  'focus on currently executing plan']
 
 
 
@@ -167,8 +170,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_a_plan focus_plan]]]]]]
 
-[deftypefunk deliberative_register_a_plan_from_focus_resource get as-english_conslist []
-  `[register plan currently in focus]]
+[deftypefunk deliberative_register_a_plan_from_focus_resource get as-natural_language_string []
+  'register plan currently in focus']
 
 
 
@@ -182,8 +185,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_b_plan focus_plan]]]]]]
 
-[deftypefunk deliberative_register_b_plan_from_focus_resource get as-english_conslist []
-  `[register another plan currently in focus]]
+[deftypefunk deliberative_register_b_plan_from_focus_resource get as-natural_language_string []
+  'register another plan currently in focus']
 
 
 
@@ -197,8 +200,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_a_plan]]]]]]
 
-[deftypefunk deliberative_focus_on_register_a_plan_resource get as-english_conslist []
-  `[focus on plan I am registering]]
+[deftypefunk deliberative_focus_on_register_a_plan_resource get as-natural_language_string []
+  'focus on plan I am registering']
 
 
 
@@ -212,8 +215,8 @@
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_b_plan]]]]]]
 
-[deftypefunk deliberative_focus_on_register_b_plan_resource get as-english_conslist []
-  `[focus on other plan I am registering]]
+[deftypefunk deliberative_focus_on_register_b_plan_resource get as-natural_language_string []
+  'focus on other plan I am registering']
 
 
 
@@ -227,8 +230,8 @@
 			
 			]]]]
 
-[deftypefunk deliberative_focus_plan_add_after_resource get as-english_conslist []
-  `[add a plan after the end of plan currently in focus]]
+[deftypefunk deliberative_focus_plan_add_after_resource get as-natural_language_string []
+  'add a plan after the end of plan currently in focus']
 
 
 
@@ -242,8 +245,8 @@
 			
 			]]]]
 
-[deftypefunk deliberative_focus_plan_add_before_resource get as-english_conslist []
-  `[add a plan before the beginning of plan currently in focus]]
+[deftypefunk deliberative_focus_plan_add_before_resource get as-natural_language_string []
+  'add a plan before the beginning of plan currently in focus']
 
 
 
@@ -257,8 +260,8 @@
 			
 			]]]]
 
-[deftypefunk deliberative_focus_plan_add_in_parallel_resource get as-english_conslist []
-  `[add a plan in parallel to plan currently in focus]]
+[deftypefunk deliberative_focus_plan_add_in_parallel_resource get as-natural_language_string []
+  'add a plan in parallel to plan currently in focus']
 
 
 
@@ -280,7 +283,7 @@
 			
 			]]]]
 
-[deftypefunk deliberative_remember_plan_for_goal_resource get as-english_conslist []
-  `[remember plan for goal]]
+[deftypefunk deliberative_remember_plan_for_goal_resource get as-natural_language_string []
+  'remember plan for goal']
 
 

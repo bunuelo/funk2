@@ -83,3 +83,118 @@
   ]
 
 
+
+[defunk firstn [n exp]
+  [if [< n 0]
+      [error bug_name first_n-n_must_be_nonnegative
+	     n        n
+	     exp      exp]
+    [if [== n 0]
+	nil
+      [let* [[exp_iter [cdr exp]]
+	     [new_exp  [cons [car exp] nil]]
+	     [iter     new_exp]]
+	[dotimes [i [- n 1]]
+	  [set iter cdr [cons [car exp_iter] nil]]
+	  [= iter       [cdr iter]]
+	  [= exp_iter   [cdr exp_iter]]]
+	new_exp]]]]
+
+[defunk restn [n exp]
+  [if [< n 0]
+      [error bug_name first_n-n_must_be_nonnegative
+	     n        n
+	     exp      exp]
+    [if [== n 0]
+	exp
+      [dotimes [i n]
+	[= exp [cdr exp]]]
+      exp]]]
+
+[defunk pattern-match_with_frame [pattern expression frame]
+  `[terminal_format standard-terminal
+		    '\n'
+		    '\npattern    = ' pattern
+		    '\nexpression = ' expression]
+  [if [and [null pattern]
+	   [null expression]]
+      [cons frame nil]
+    [if [or [null pattern]
+	    [null expression]]
+	nil
+      [let [[pattern-car [car pattern]]]
+	[if [eq pattern-car [car expression]]
+	    [pattern-match_with_frame [cdr pattern] [cdr expression] frame]
+	  [if [is-type `cons pattern-car]
+	      [let [[command [car pattern-car]]]
+		[cond [[eq command `?] [let [[variable_name  [elt pattern-car 1]]
+					     [variable_value nil]]
+					 [let [[expression_length [length expression]]
+					       [done              nil]
+					       [parses            nil]]
+					   [dotimes [index expression_length]
+					     [let [[subframe     [get frame new_copy]]
+						   [match_length [+ index 1]]]
+					       [have subframe add variable_name [firstn match_length expression]]
+					       [let [[subparses [pattern-match_with_frame [cdr pattern] [restn match_length expression] subframe]]]
+						 [= parses [append parses
+								   subparses]]]]]
+					   parses]]]
+		      [t               [error bug_name `pattern-invalid_command]]]]
+	    nil]]]]]]
+
+
+[defunk pattern-match [pattern expression]
+  [pattern-match_with_frame pattern expression [new frame]]]
+
+[defunk pattern-test [expression]
+  [let [[patterns `[[a  [? object] has [? property]]
+		    [an [? object] has [? property]]]]
+	[parses   nil]]
+    [mapc [funk [pattern]
+		[let [[pattern_parses [pattern-match pattern expression]]]
+		  [= parses [append parses
+				    pattern_parses]]]]
+	  patterns]
+    parses]]
+
+
+
+[defunk string_pattern-as_conslist_pattern [string_pattern]
+  [let [[string_pattern-length [get string_pattern length]]
+	[index                 0]
+	[begin_variable_char   [get '[' elt 0]]
+	[conslist_pattern      nil]
+	[conslist_pattern_iter nil]]
+    [while [< index string_pattern-length]
+      [let [[next_char [get string_pattern elt index]]]
+	[cond [[eq next_char begin_variable_char] [let [[stream [string_stream-new string_pattern index]]]
+						    [let [[variable_expression [stream-try_read stream]]]
+						      [let [[variable_command [first variable_expression]]]
+							[cond [[eq variable_command `?] [let [[variable_name [second variable_expression]]]
+											  [let [[new_cons [cons `[? ,variable_name] nil]]]
+											    [if [null conslist_pattern]
+												[prog [= conslist_pattern      new_cons]
+												      [= conslist_pattern_iter new_cons]]
+											      [prog [set conslist_pattern_iter cdr new_cons]
+												    [= conslist_pattern_iter new_cons]]]]
+											  [= index [get stream index]]]]
+							      [t                        [error bug_name            string_pattern-parse-invalid_variable_command
+											       string_pattern      string_pattern
+											       variable_expression variable_expression]]]]]]]
+	      [t                                  [let [[new_cons [cons next_char nil]]]
+						    [if [null conslist_pattern]
+							[prog [= conslist_pattern      new_cons]
+							      [= conslist_pattern_iter new_cons]]
+						      [prog [set conslist_pattern_iter cdr new_cons]
+							    [= conslist_pattern_iter new_cons]]]
+						    [++ index]]]]]]
+    conslist_pattern]]
+
+
+
+[defunk string_pattern-match [string_pattern string]
+  [pattern-match [string_pattern-as_conslist_pattern string_pattern] [string_pattern-as_conslist_pattern string]]]
+
+
+    

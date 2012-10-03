@@ -107,6 +107,12 @@
 [primfunk:load 'fu2/primfunks-virtual_processor_handler.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 
+[exp-format stdout '\ndebug 0\n']
+
+[exp-format stdout #\H]
+
+[exp-format stdout '\ndebug 1\n']
+
 [memory-assert_valid]
 
 [globalize -first_cause- [this-cause]]

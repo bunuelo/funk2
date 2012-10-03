@@ -341,6 +341,10 @@ f2ptr f2char__primobject_type__new(f2ptr cause);
 
 // string
 
+f2ptr             raw__string__new                         (f2ptr cause, s64 length, funk2_character_t fill_char);
+f2ptr              f2__string__new                         (f2ptr cause, f2ptr length, f2ptr fill_char);
+f2ptr             raw__string__new_copy                    (f2ptr cause, f2ptr str);
+f2ptr              f2__string__new_copy                    (f2ptr cause, f2ptr this);
 boolean_t         raw__string__is_type                     (f2ptr cause, f2ptr x);
 f2ptr              f2__string__is_type                     (f2ptr cause, f2ptr x);
 f2ptr              f2__string__type                        (f2ptr cause, f2ptr x);
@@ -928,12 +932,14 @@ typedef struct funk2_object_type__char__slot_s {
 // string
 
 typedef struct funk2_object_type__string__slot_s {
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr new_copy__symbol;
+  f2ptr new_copy__funk;
   f2ptr is_type__symbol;
   f2ptr is_type__funk;
   f2ptr type__symbol;
   f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
   f2ptr length__symbol;
   f2ptr length__funk;
   f2ptr elt__symbol;

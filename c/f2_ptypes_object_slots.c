@@ -2729,19 +2729,57 @@ f2ptr f2char__primobject_type__new(f2ptr cause) {
 
 // string
 
-f2ptr f2__string__new(f2ptr cause, f2ptr str) {
-  assert_argument_type(string, str);
+f2ptr raw__string__new(f2ptr cause, s64 length, funk2_character_t fill_char) {
+  if (length < 0) {
+    error(nil, "raw__string__new error: initial string length is less than zero.");
+  }
+  funk2_character_t* str__data = (funk2_character_t*)from_ptr(f2__malloc(length * sizeof(funk2_character_t)));
+  {
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      str__data[index] = fill_char;
+    }
+  }
+  f2ptr new = f2string__new(cause, str__length, str__data);
+  f2__free(to_ptr(str__data));
+  return new;
+}
+
+f2ptr f2__string__new(f2ptr cause, f2ptr length, f2ptr fill_char) {
+  assert_argument_type(integer, length);
+  assert_argument_type(char,    fill_char);
+  s64 length__i = f2integer__i(length, cause);
+  if (length__i < 0) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),  new__symbol(cause, "string_length_cannot_be_negative"),
+				   new__symbol(cause, "length"),    length,
+				   new__symbol(cause, "fill_char"), fill_char));
+  }
+  funk2_character_t fill_char__ch = f2char__ch(fill_char, cause);
+  return raw__string__new(cause, length__i, fill_char__ch);
+}
+def_pcfunk2(string__new, length, fill_char,
+	    "",
+	    return f2__string__new_copy(this_cause, length, fill_char));
+
+
+f2ptr raw__string__new_copy(f2ptr cause, f2ptr str) {
   int str__length = f2string__length(str, cause);
   if (str__length < 0) {
-    error(nil, "f2__string__new error: initial string length is less than zero.");
+    error(nil, "f2__string__new_copy error: initial string length is less than zero.");
   }
   funk2_character_t* str__data = (funk2_character_t*)alloca(str__length * sizeof(funk2_character_t));
   f2string__str_copy(str, cause, str__data);
   return f2string__new(cause, str__length, str__data);
 }
-def_pcfunk1(string__new, str,
+
+f2ptr f2__string__new_copy(f2ptr cause, f2ptr this) {
+  assert_argument_type(string, this);
+  return raw__string__new_copy(cause, this);
+}
+def_pcfunk1(string__new_copy, this,
 	    "",
-	    return f2__string__new(this_cause, str));
+	    return f2__string__new_copy(this_cause, this));
 
 boolean_t raw__string__is_type(f2ptr cause, f2ptr x) {
   //check_wait_politely();
@@ -3204,6 +3242,7 @@ f2ptr f2string__primobject_type__new(f2ptr cause) {
   {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.is_type__funk);}
   {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.type__funk);}
   {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.new__funk);}
+  {char* slot_name = "new_copy";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.new_copy__funk);}
   {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.length__funk);}
   {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.elt__funk);}
   {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.elt__set__funk);}
@@ -5627,6 +5666,10 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(string__new);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.new__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.new_copy__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(string__new_copy);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.new_copy__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.length__symbol);
   f2__primcfunk__init__defragment__fix_pointers(string__length);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.length__funk);
@@ -6384,6 +6427,8 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_string.new__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.new__funk = never_gc(cfunk);}
+  {char* str = "new_copy"; __funk2.globalenv.object_type.ptype.ptype_string.new_copy__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__new_copy, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.new_copy__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_string.length__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(string__length, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.length__funk = never_gc(cfunk);}
   {char* str = "elt"; __funk2.globalenv.object_type.ptype.ptype_string.elt__symbol = new__symbol(cause, str);}

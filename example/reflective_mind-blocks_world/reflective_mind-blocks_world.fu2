@@ -118,7 +118,7 @@
   'create blocks_world agent specific plans'
   
   [have this evaluate_deliberative_plan_expression
-	`[parog [defplan [a pyramid is on a cube]
+	`[prog [defplan [a pyramid is on a cube]
 		  :matches [[a [? top_shape] is on a [? bottom_shape]]]
 		   :frame [[top_shape    pyramid]
 			   [bottom_shape cube]]
@@ -195,7 +195,7 @@
   'reflective plans'
   
   [have this evaluate_reflective_plan_expression
-	[parog [defplan [choose a plan and execute it]
+	[prog [defplan [choose a plan and execute it]
 		 [call-below `[forget all imagined events]]
 		 [call-below `[set imagine time to be now]]
 		 [call-below `[imagine current situation]]

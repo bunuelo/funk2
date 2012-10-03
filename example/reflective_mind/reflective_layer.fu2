@@ -83,11 +83,11 @@
 	]]
 
 
-[deftypefunk reflective_layer execute lookup_action [expression]
-  [have this lookup_reflective_action expression]]
+[deftypefunk reflective_layer execute lookup_action [natural_language_string]
+  [have this lookup_reflective_action natural_language_string]]
 
-[deftypefunk reflective_layer execute lookup_action_below [expression]
-  [have [get [get this mind] layer `deliberative] lookup_action expression]]
+[deftypefunk reflective_layer execute lookup_action_below [natural_language_string]
+  [have [get [get this mind] layer `deliberative] lookup_action natural_language_string]]
 
 [deftypefunk reflective_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\nreflective_layer: adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']

@@ -70,7 +70,7 @@
 [deftypefunk nonsemantic_plan get name_pattern_match_pairs [expression]
   [let [[name_pattern_matches nil]]
     [mapc [funk [name_pattern]
-		[let [[matches [pattern-match name_pattern expression]]]
+		[let [[matches [string_pattern-match name_pattern expression]]]
 		  [mapc [funk [match]
 			      [= name_pattern_matches [cons [cons name_pattern match]
 							    name_pattern_matches]]]

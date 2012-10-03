@@ -506,60 +506,63 @@
 
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
   [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
-  [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
-		  [semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
-	     [if [null semantic_knowledge_bases]
-		 [error funkname `semantic_planner-new_semantic_thought
-			bug_name `semantic_knowledge_bases-is-nil]]
-	     
-	     [let* [[execute_now-conditionlock   [new conditionlock]]
-		    [execute_now                 nil]
-		    [thought_fiber               [fiber [funk []
-							      [have execute_now-conditionlock lock]
-							      [while [not execute_now]
-								[have execute_now-conditionlock wait]]
-							      [have execute_now-conditionlock unlock]
-							      [cause-define cause-name [get this unique_name]]
-							      [apply funk args]]
-							[]]]
-		    [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
-						   [set this fiber thought_fiber]
-						   this]]]
-	       
-	       [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
-		 [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
-		 [mapc [funk [variable_name]
-			     [let [[default_variable_value_set [semantic-lookup_set semantic_environment variable variable_name]]]
-			       [mapc [funk [default_variable_value]
-					   [semantic-remove semantic_environment variable variable_name default_variable_value]]
-				     [get default_variable_value_set elements]]]
-			     [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
-		       [get variable_frame keys]]
-		 [set semantic_thought environment semantic_environment]]
-	       
-	       [mapc [funk [semantic_knowledge_base]
-			   [have semantic_knowledge_base add_semantic_frame semantic_environment]
-			   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
-		     semantic_knowledge_bases]
-	       [semantic-add semantic_planner thought semantic_thought]
-	       
-	       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
-	       
-	       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
-	       [have execute_now-conditionlock lock]
-	       [= execute_now t]
-	       [have execute_now-conditionlock signal]
-	       [have execute_now-conditionlock unlock]
-	       [let [[result [fiber-sheltered_join thought_fiber]]]
-		 [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
-		 
-		 [semantic-remove semantic_planner thought semantic_thought]
-		 [mapc [funk [semantic_knowledge_base]
-			     [have semantic_knowledge_base remove_semantic_frame semantic_environment]
-			     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
-		       semantic_knowledge_bases]
-		 
-		 result]]]]]
+  [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
+				[semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
+			   [if [null semantic_knowledge_bases]
+			       [error funkname `semantic_planner-new_semantic_thought
+				      bug_name `semantic_knowledge_bases-is-nil]]
+			   
+			   [let* [[execute_now-conditionlock   [new conditionlock]]
+				  [execute_now                 nil]
+				  [thought_fiber               [fiber [funk []
+									    [have execute_now-conditionlock lock]
+									    [while [not execute_now]
+									      [have execute_now-conditionlock wait]]
+									    [have execute_now-conditionlock unlock]
+									    [cause-define cause-name [get this unique_name]]
+									    [apply funk args]]
+								      []]]
+				  [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
+								 [set this fiber thought_fiber]
+								 this]]]
+			     
+			     [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
+			       [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
+			       [mapc [funk [variable_name]
+					   [let [[default_variable_value_set [semantic-lookup_set semantic_environment variable variable_name]]]
+					     [mapc [funk [default_variable_value]
+							 [semantic-remove semantic_environment variable variable_name default_variable_value]]
+						   [get default_variable_value_set elements]]]
+					   [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
+				     [get variable_frame keys]]
+			       [set semantic_thought environment semantic_environment]]
+			     
+			     [mapc [funk [semantic_knowledge_base]
+					 [have semantic_knowledge_base add_semantic_frame semantic_environment]
+					 [have semantic_knowledge_base add_semantic_frame semantic_thought]]
+				   semantic_knowledge_bases]
+			     [semantic-add semantic_planner thought semantic_thought]
+			     
+			     [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
+			     
+			     [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
+			     [have execute_now-conditionlock lock]
+			     [= execute_now t]
+			     [have execute_now-conditionlock signal]
+			     [have execute_now-conditionlock unlock]
+			     [let [[result [fiber-sheltered_join thought_fiber]]]
+			       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
+			       
+			       [semantic-remove semantic_planner thought semantic_thought]
+			       [mapc [funk [semantic_knowledge_base]
+					   [have semantic_knowledge_base remove_semantic_frame semantic_environment]
+					   [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
+				     semantic_knowledge_bases]
+			       
+			       result]]]]]]
+    [if [is-type `bug result]
+	[terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' result]]
+    result]]
 
 
 
@@ -814,6 +817,7 @@
 	[funk []
 	      [have this eval]]
 	[]]]
+
 
 
 [deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]

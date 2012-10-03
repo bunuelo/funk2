@@ -35,7 +35,6 @@
 
 
 
-
 'nonsemantic_plan'
 
 [deframe nonsemantic_plan [frame] [mental_layer
@@ -499,9 +498,11 @@
 
 
 [defunk nonsemantic_plan-expression-compile [expression]
-  [cond [[is-type `symbol expression] [eval `[funk []
+  [cond [[is-type `symbol expression] [eval `[funk [this]
 						   [quote ,expression]]]]
-	[[is-type `string expression] expression]
+	[[is-type `string expression] [eval `[funk [this]
+						   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+						     [have semantic_thought evaluate_string ,expression]]]]]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 					[let [[arguments-length [length arguments]]]
@@ -761,7 +762,9 @@
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
 						   [quote ,expression]]]]
-	[[is-type `string expression] expression]
+	[[is-type `string expression] [eval `[funk [this]
+						   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+						     [have semantic_thought evaluate_string ,expression]]]]]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]

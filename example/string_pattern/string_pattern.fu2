@@ -97,8 +97,8 @@
 [defunk string_pattern-as_conslist_pattern [string_pattern]
   [let [[string_pattern-length [get string_pattern length]]
 	[index                 0]
-	[begin_variable_char   [get '[' elt 0]]
-	[conslist_pattern      nil]
+	[begin_variable_char   #\[]
+        [conslist_pattern      nil]
 	[conslist_pattern_iter nil]]
     [while [< index string_pattern-length]
       [let [[next_char [get string_pattern elt index]]]
@@ -145,4 +145,6 @@
     matches]]
 
 
-		    
+[defunk string_pattern-test []
+  [string_pattern-match 'The [? object] has [? property].' 'The dog has fleas.']]
+

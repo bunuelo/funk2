@@ -359,7 +359,6 @@ boolean_t         raw__string__eq                          (f2ptr cause, f2ptr t
 f2ptr              f2__string__eq                          (f2ptr cause, f2ptr this, f2ptr that);
 u64               raw__string__eq_hash_value               (f2ptr cause, f2ptr this);
 f2ptr              f2__string__eq_hash_value               (f2ptr cause, f2ptr this);
-f2ptr              f2__string__new                         (f2ptr cause, f2ptr str);
 u64               raw__string__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
 f2ptr              f2__string__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
 u64               raw__string__equals_hash_value           (f2ptr cause, f2ptr this);

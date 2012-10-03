@@ -1025,7 +1025,7 @@
 
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
   [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-					,expression]]
+					expression]]
 	[[is-type `string expression] expression]
 	[[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]

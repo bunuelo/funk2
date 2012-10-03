@@ -164,6 +164,7 @@
 
 [deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
   [cond [[is-type `symbol expression] expression]
+	[[is-type `string expression] expression]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 					[let [[arguments-length [length arguments]]]
@@ -335,6 +336,7 @@
 
 [deftypefunk nonsemantic_plan execute expression-syntax_check [expression]
   [cond [[is-type `symbol expression] `[quote ,expression]]
+	[[is-type `string expression] expression]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 					[let [[arguments-length [length arguments]]]
@@ -476,8 +478,11 @@
 													[= plan_body_expression [car argument_iter]]
 												      [= plan_body_expression `[prog @argument_iter]]]]
 												  nil]]]
-						[t                                            [error bug_name `nonsemantic_plan_syntax_error]]]]]]
-	[t                            [error bug_name `nonsemantic_plan_syntax_error]]]]
+						[t                                            [error bug_name   `nonsemantic_plan_syntax_error-invalid_command
+												     command    command
+												     expression expression]]]]]]
+	[t                            [error bug_name   `nonsemantic_plan_syntax_error-bad_type
+					     expression expression]]]]
 
 [deftypefunk nonsemantic_plan execute syntax_check []
   [have this expression-syntax_check expression]]
@@ -560,6 +565,7 @@
 [defunk nonsemantic_plan-expression-compile [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
 						   [quote ,expression]]]]
+	[[is-type `string expression] expression]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 					[let [[arguments-length [length arguments]]]
@@ -818,6 +824,7 @@
 [defunk nonsemantic_plan-expression-compile_imagine [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
 						   [quote ,expression]]]]
+	[[is-type `string expression] expression]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]
@@ -1079,6 +1086,7 @@
 [defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
   [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 					,expression]]
+	[[is-type `string expression] expression]
 	[[is-type `cons expression] [let [[command   [car expression]]
 					  [arguments [cdr expression]]]
 				      [let [[arguments-length [length arguments]]]

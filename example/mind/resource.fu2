@@ -269,7 +269,7 @@
   [string-as-natural_language_string [get name as-string]]]
 
 [deftypefunk resource get as-natural_language_string_with_arguments [arguments]
-  [string-as-natural_language_string [get name as-string]]]
+  [get this as-natural_language_string]]
 
 [deftypefunk resource get as-string []
   [get this as-natural_language_string]]

@@ -156,18 +156,6 @@ int       pfunk2__f2creadwritelock__tryreadlock   (f2ptr this, f2ptr cause);
 f2ptr             pfunk2__f2char__new(f2ptr cause, funk2_character_t ch);
 funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause);
 
-boolean_t         raw__char__is_type      (f2ptr cause, f2ptr exp);
-f2ptr              f2__char__is_type      (f2ptr cause, f2ptr exp);
-funk2_character_t raw__char__ch           (f2ptr cause, f2ptr this);
-f2ptr              f2__char__ch           (f2ptr cause, f2ptr this);
-boolean_t         raw__char__eq           (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr              f2__char__eq           (f2ptr cause, f2ptr this, f2ptr that);
-u64               raw__char__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr              f2__char__eq_hash_value(f2ptr cause, f2ptr this);
-boolean_t         raw__char__equals       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr              f2__char__equals       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr             raw__char__string       (f2ptr cause, f2ptr this);
-f2ptr              f2__char__string       (f2ptr cause, f2ptr this);
 
 // string
 

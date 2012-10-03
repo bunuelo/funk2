@@ -162,6 +162,7 @@ funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause);
 f2ptr             pfunk2__f2string__new          (f2ptr cause, u64 length, funk2_character_t* init);
 u64               pfunk2__f2string__length       (f2ptr this, f2ptr cause);
 funk2_character_t pfunk2__f2string__elt          (f2ptr this, int index, f2ptr cause);
+void              pfunk2__f2string__elt__set     (f2ptr this, int index, f2ptr cause, funk2_character_t ch);
 void              pfunk2__f2string__str_copy     (f2ptr this, f2ptr cause, funk2_character_t* str);
 u64               pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause);
 

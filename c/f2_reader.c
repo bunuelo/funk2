@@ -585,8 +585,6 @@ f2ptr f2__stream__try_read_unescaped_char(f2ptr cause, f2ptr stream) {
   
   // read char
   if (raw__eq(cause, read_ch, __funk2.reader.char__escape_char)) {
-    printf("\ntrying to read second unescaped char\n");
-    
     f2ptr second_read_ch = f2__stream__try_getc(cause, stream);
     if (raw__exception__is_type(cause, second_read_ch)) {
       return second_read_ch;
@@ -608,7 +606,6 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
   // read escaped expression
   if (raw__eq(cause, first_char, __funk2.reader.char__escape)) {
     
-    printf("\ntrying to read escaped char\n");
     {
       f2ptr try_read_result = f2__stream__try_read_unescaped_char(cause, stream);
       if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
@@ -616,7 +613,6 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
-    printf("\ntrying to read escaped hex pointer\n");
     {
       f2ptr try_read_result = f2__stream__try_read_unescaped_hex_pointer(cause, stream);
       if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
@@ -624,7 +620,6 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
-    printf("\ntrying to read escaped hex char\n");
     {
       f2ptr try_read_result = f2__stream__try_read_unescaped_hex_char(cause, stream);
       if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {
@@ -632,7 +627,6 @@ f2ptr f2__stream__try_read_escaped(f2ptr cause, f2ptr stream) {
       }
     }
     
-    printf("\ntrying to read escaped larva\n");
     {
       f2ptr try_read_result = f2__stream__try_read_unescaped_larva(cause, stream);
       if ((! raw__exception__is_type(cause, try_read_result)) || (! raw__eq(cause, f2exception__tag(try_read_result, cause), __funk2.reader.could_not_read_type_exception__symbol))) {

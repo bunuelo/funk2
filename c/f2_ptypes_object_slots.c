@@ -2740,7 +2740,7 @@ f2ptr raw__string__new(f2ptr cause, s64 length, funk2_character_t fill_char) {
       str__data[index] = fill_char;
     }
   }
-  f2ptr new = f2string__new(cause, str__length, str__data);
+  f2ptr new = f2string__new(cause, length, str__data);
   f2__free(to_ptr(str__data));
   return new;
 }

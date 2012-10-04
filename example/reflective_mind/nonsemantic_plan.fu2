@@ -60,7 +60,14 @@
        [= expression      initial-expression]
        ]]
 
-[parog [deftypefunk nonsemantic_plan get __default_variable_frame []
+
+[defmetro compile_parog [:rest exps]
+  `[parog @[mapcar [funk [exp]
+			 `[eval [quote ,exp]]]
+		   exps]]]
+
+[compile_parog
+       [deftypefunk nonsemantic_plan get __default_variable_frame []
 	 [let [[default_variable_frame [new frame]]]
 	   [mapc [funk [variable_definition]
 		       [let [[variable_name  [first variable_definition]]

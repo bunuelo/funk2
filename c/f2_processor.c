@@ -244,7 +244,7 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
   f2ptr found_and_removed_active_fiber;
   if (! both_locked) {
     if (! execute_cmutex__failed_to_lock) {
-      f2_cmutex__unlock(execute_cmutex, cause);
+      f2cmutex__unlock(execute_cmutex, cause);
     }
     if (! active_fibers_scheduler_cmutex__failed_to_lock) {
       f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
@@ -255,7 +255,7 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
     found_and_removed_active_fiber = f2bool__new(boolean__false);
   } else {
     found_and_removed_active_fiber = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
-    f2_cmutex__unlock(execute_cmutex, cause);
+    f2cmutex__unlock(execute_cmutex, cause);
     f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex,        cause);
     f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
   }

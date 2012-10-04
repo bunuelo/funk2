@@ -109,12 +109,12 @@
 			  [semantic-add semantic_plan failure semantic_expectation_failure]
 			  
 			  [have [get this mental_layer] evaluate_plan_expression
-				`[prog [call `[forget all imagined events]]
-				       [call `[set imagine time to be now]]
-				       [call `[imagine current situation]]
-				       [call `[focus on the plan to remember a plan for a current goal and execute it]]
-				       [call `[imagine executing plan in focus]]
-				       [call `[execute plan in focus]]]]
+				`[prog [call 'forget all imagined events']
+				       [call 'set imagine time to be now']
+				       [call 'imagine current situation']
+				       [call 'focus on the plan to remember a plan for a current goal and execute it']
+				       [call 'imagine executing plan in focus']
+				       [call 'execute plan in focus']]]
 			  
 			  ]]]
        nil]]

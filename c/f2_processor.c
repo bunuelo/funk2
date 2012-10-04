@@ -227,9 +227,14 @@ def_pcfunk2(processor__remove_active_fiber, this, fiber,
 f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr     active_fibers_scheduler_cmutex                        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
   f2ptr     processor_assignment_scheduler_cmutex                 = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
+  f2ptr     execute_cmutex                                        = f2fiber__execute_cmutex(fiber, cause);
   boolean_t both_locked                                           = boolean__true;
+  boolean_t execute_cmutex__failed_to_lock                        = f2cmutex__trylock(execute_cmutex, cause);
   boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
   boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
+  if (execute_cmutex__failed_to_lock) {
+    both_locked = boolean__false;
+  }
   if (active_fibers_scheduler_cmutex__failed_to_lock) {
     both_locked = boolean__false;
   }
@@ -238,6 +243,9 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
   }
   f2ptr found_and_removed_active_fiber;
   if (! both_locked) {
+    if (! execute_cmutex__failed_to_lock) {
+      f2_cmutex__unlock(execute_cmutex, cause);
+    }
     if (! active_fibers_scheduler_cmutex__failed_to_lock) {
       f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
     }
@@ -247,6 +255,7 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
     found_and_removed_active_fiber = f2bool__new(boolean__false);
   } else {
     found_and_removed_active_fiber = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+    f2_cmutex__unlock(execute_cmutex, cause);
     f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex,        cause);
     f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
   }

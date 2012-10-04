@@ -225,9 +225,9 @@ def_pcfunk2(processor__remove_active_fiber, this, fiber,
 
 
 f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
-  f2ptr active_fibers_scheduler_cmutex        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
-  f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
-  boolean_t both_locked = boolean__false;
+  f2ptr     active_fibers_scheduler_cmutex                        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
+  f2ptr     processor_assignment_scheduler_cmutex                 = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
+  boolean_t both_locked                                           = boolean__true;
   boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
   boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
   if (active_fibers_scheduler_cmutex__failed_to_lock) {

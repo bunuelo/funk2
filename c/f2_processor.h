@@ -90,6 +90,8 @@ f2ptr      f2__processor__add_active_fiber                             (f2ptr ca
 f2ptr     raw__processor__remove_active_fiber__thread_unsafe           (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__remove_active_fiber                          (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr      f2__processor__remove_active_fiber                          (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__try_remove_active_fiber                      (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__try_remove_any_active_fiber                  (f2ptr cause, f2ptr this);
 u64       raw__processor__active_fibers__length                        (f2ptr cause, f2ptr this);
 f2ptr      f2__processor__active_fibers__length                        (f2ptr cause, f2ptr this);
 boolean_t raw__processor__active_fibers__contains__thread_unsafe       (f2ptr cause, f2ptr this, f2ptr fiber);

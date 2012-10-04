@@ -224,6 +224,55 @@ def_pcfunk2(processor__remove_active_fiber, this, fiber,
 	    return f2__processor__remove_active_fiber(this_cause, this, fiber));
 
 
+f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr active_fibers_scheduler_cmutex        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
+  f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
+  boolean_t both_locked = boolean__false;
+  boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
+  boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
+  if (active_fibers_scheduler_cmutex__failed_to_lock) {
+    both_locked = boolean__false;
+  }
+  if (processor_assignment_scheduler_cmutex__failed_to_lock) {
+    both_locked = boolean__false;
+  }
+  f2ptr found_and_removed_active_fiber;
+  if (! both_locked) {
+    if (! active_fibers_scheduler_cmutex__failed_to_lock) {
+      f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+    }
+    if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
+      f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+    }
+    found_and_removed_active_fiber = f2bool__new(boolean__false);
+  } else {
+    found_and_removed_active_fiber = raw__processor__remove_active_fiber__thread_unsafe(cause, this, fiber);
+    f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex,        cause);
+    f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+  }
+  return found_and_removed_active_fiber;
+}
+
+f2ptr raw__processor__try_remove_any_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
+  f2ptr removed_fiber = nil;
+  {
+    f2ptr iter = active_fibers;
+    while (iter != nil) {
+      f2ptr active_fiber = f2cons__car(iter, cause);
+      f2ptr found_and_removed_active_fiber = raw__processor__try_remove_active_fiber(cause, this, active_fiber);
+      if (found_and_removed_active_fiber != nil) {
+	removed_fiber = active_fiber;
+	iter          = nil;
+      } else {
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+  }
+  return removed_fiber;
+}
+
+
 f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_iter = f2processor__active_fibers_iter(this, cause);
   if (active_fibers_iter == nil) {
@@ -611,6 +660,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		    f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
+		    
+		    raw__scheduler__balance_processor_load(cause, __funk2.operating_system.scheduler);
 		    resume_gc();
 		  }
 		}

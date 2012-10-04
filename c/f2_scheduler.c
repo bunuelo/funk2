@@ -136,15 +136,14 @@ def_pcfunk1(scheduler__active_fibers, this,
 
 
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
-  f2ptr processors = f2scheduler__processors(this, cause);
-  u64 processors__length = raw__array__length(cause, processors);
-  u64   min_length    = 0xffffffffffffffffull;
-  f2ptr min_processor = nil;
+  f2ptr processors         = f2scheduler__processors(this, cause);
+  u64   processors__length = memory_pool_num;
+  u64   min_length         = 0xffffffffffffffffull;
+  f2ptr min_processor      = nil;
   u64 i;
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
-    f2ptr active_fibers = f2processor__active_fibers(processor, cause);
-    u64 fibers__length = raw__simple_length(cause, active_fibers);
+    u64 fibers__length = raw__processor__active_fibers_count(cause, processor);
     if (fibers__length < min_length) {
       min_length = fibers__length;
       min_processor = processor;
@@ -196,7 +195,36 @@ def_pcfunk1(scheduler__clean, this,
 	    "",
 	    return f2__scheduler__clean(this_cause, this));
 
-
+void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this) {
+  f2ptr processors         = f2scheduler__processors(this, cause);
+  u64   processors__length = memory_pool_num;
+  u64   min_fiber_count    = 0xffffffffffffffffull;
+  f2ptr min_processor      = nil;
+  u64   max_fiber_count    = 0x0000000000000000ull;
+  f2ptr max_processor      = nil;
+  u64 i;
+  for (i = 0; i < processors__length; i ++) {
+    f2ptr processor = raw__array__elt(cause, processors, i);
+    u64 fiber_count = raw__processor__active_fibers_count(cause, processor);
+    if (fiber_count < min_fiber_count) {
+      min_fiber_count = fiber_count;
+      min_processor   = processor;
+    }
+    if (fiber_count > max_fiber_count) {
+      max_fiber_count = fiber_count;
+      max_processor   = processor;
+    }
+  }
+  if (max_fiber_count - min_fiber_count >= 2) {
+    f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
+    if (removed_fiber != nil) {
+      f2ptr success = raw__processor__add_active_fiber(cause, min_processor, removed_fiber);
+      if (success == nil) {
+	status("scheduler-balance_processor_load warning: fiber removed from max processor and could not be added to min processor because it is already executing.");
+      }
+    }
+  }
+}
 
 void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
   f2ptr processors = f2scheduler__processors(this, cause);

@@ -81,7 +81,7 @@ f2ptr funk2_operating_system__pop_current_fiber( funk2_operating_system_t* this,
 declare_primobject_1_slot(scheduler,
 			  processors);
 
-void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this);
+void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor);
 void raw__scheduler__clean(f2ptr cause, f2ptr this);
 
 f2ptr f2scheduler__primobject_type__new_aux(f2ptr cause);

@@ -58,7 +58,6 @@
        [= name_patterns   initial-name_patterns]
        [= variables       initial-variables]
        [= expression      initial-expression]
-       [have this generate_default_variable_frame]
        ]]
 
 [deftypefunk nonsemantic_plan get __default_variable_frame []

@@ -85,6 +85,7 @@ u64       raw__processor__active_fibers_count                          (f2ptr ca
 f2ptr      f2__processor__active_fibers_count                          (f2ptr cause, f2ptr this);
 void      raw__processor__active_fibers_count__set__thread_unsafe      (f2ptr cause, f2ptr this, u64 active_fibers_count__i);
 boolean_t raw__processor__add_active_fiber__thread_unsafe              (f2ptr cause, f2ptr this, f2ptr fiber);
+f2ptr     raw__processor__scheduler_add_active_fiber                   (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr      f2__processor__add_active_fiber                             (f2ptr cause, f2ptr this, f2ptr fiber);
 f2ptr     raw__processor__remove_active_fiber__thread_unsafe           (f2ptr cause, f2ptr this, f2ptr fiber);

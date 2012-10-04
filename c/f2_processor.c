@@ -102,6 +102,40 @@ boolean_t raw__processor__add_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
   return boolean__true;
 }
 
+f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
+  if (! raw__processor__is_type(cause, this)) {
+    error(nil, "attempted to add fiber to object that is not a processor.");
+  }
+  f2ptr active_fibers_scheduler_cmutex        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
+  f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
+  boolean_t both_locked                       = boolean__false;
+  while (! both_locked) {
+    both_locked                                                     = boolean__true;
+    boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
+    boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
+    if (active_fibers_scheduler_cmutex__failed_to_lock) {
+      both_locked = boolean__false;
+    }
+    if (processor_assignment_scheduler_cmutex__failed_to_lock) {
+      both_locked = boolean__false;
+    }
+    if (! both_locked) {
+      if (! active_fibers_scheduler_cmutex__failed_to_lock) {
+	f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+      }
+      if (! processor_assignment_scheduler_cmutex__failed_to_lock) {
+	f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+      }
+      //f2__this__fiber__yield(cause);
+      raw__fast_spin_sleep_yield();
+    }
+  }
+  boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
+  f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex,        cause);
+  f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+  return f2bool__new(success);
+}
+
 f2ptr raw__processor__add_active_fiber(f2ptr cause, f2ptr this, f2ptr fiber) {
   if (! raw__processor__is_type(cause, this)) {
     error(nil, "attempted to add fiber to object that is not a processor.");
@@ -228,21 +262,21 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
   f2ptr     active_fibers_scheduler_cmutex                        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
   f2ptr     processor_assignment_scheduler_cmutex                 = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
   f2ptr     execute_cmutex                                        = f2fiber__execute_cmutex(fiber, cause);
-  boolean_t both_locked                                           = boolean__true;
+  boolean_t all_locked                                            = boolean__true;
   boolean_t execute_cmutex__failed_to_lock                        = f2cmutex__trylock(execute_cmutex, cause);
   boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
   boolean_t processor_assignment_scheduler_cmutex__failed_to_lock = f2scheduler_cmutex__trylock(processor_assignment_scheduler_cmutex, cause);
   if (execute_cmutex__failed_to_lock) {
-    both_locked = boolean__false;
+    all_locked = boolean__false;
   }
   if (active_fibers_scheduler_cmutex__failed_to_lock) {
-    both_locked = boolean__false;
+    all_locked = boolean__false;
   }
   if (processor_assignment_scheduler_cmutex__failed_to_lock) {
-    both_locked = boolean__false;
+    all_locked = boolean__false;
   }
   f2ptr found_and_removed_active_fiber;
-  if (! both_locked) {
+  if (! all_locked) {
     if (! execute_cmutex__failed_to_lock) {
       f2cmutex__unlock(execute_cmutex, cause);
     }

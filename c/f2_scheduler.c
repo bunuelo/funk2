@@ -220,7 +220,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
       f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
       if (removed_fiber != nil) {
 	status("scheduler-balance_processor_load: successfully removed active fiber.");
-	f2ptr success = raw__processor__add_active_fiber(cause, min_processor, removed_fiber);
+	f2ptr success = raw__processor__scheduler_add_active_fiber(cause, min_processor, removed_fiber);
 	if (success == nil) {
 	  status("scheduler-balance_processor_load warning: fiber removed from max processor and could not be added to min processor because it is already executing.");
 	}

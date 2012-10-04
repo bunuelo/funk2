@@ -606,7 +606,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   
   pause_gc();
   funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(nil, &(__funk2.memory.pool[this_processor_thread__pool_index()]));
-  raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
   resume_gc();
   
   raw__processor__reset_current_active_fiber(processor_cause, processor);
@@ -713,6 +712,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
 		    
+		    raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
 		    resume_gc();
 		  }
 		}

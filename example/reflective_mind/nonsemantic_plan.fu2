@@ -94,16 +94,17 @@
 		      [if used_all_nondefault_variables
 			  [= new_name_expressions [cons new_name_expression new_name_expressions]]]]]]]
 	  name_patterns]
-    [if [null new_name_expression]
+    [if [null new_name_expressions]
 	[error bug_name `nonsemantic_plan-new_copy_given_variable_frame-could_not_generate_new_name
 	       this     this
 	       variable_frame variable_frame]
-      [new nonsemantic_plan
-	   mental_layer
-	   [car [reverse new_name_expressions]]
-	   name_patterns
-	   variables
-	   expression]]]]
+      [let [[new_name_expression [car [reverse new_name_expressions]]]]
+	[new nonsemantic_plan
+	     mental_layer
+	     new_name_expression
+	     name_patterns
+	     variables
+	     expression]]]]]
 
 [deftypefunk nonsemantic_plan get unique_name []
   [if [null internal-unique_name]

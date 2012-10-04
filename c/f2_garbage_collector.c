@@ -232,8 +232,6 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       doing_garbage_collect_now = boolean__true;
     }
     if (doing_garbage_collect_now) {
-      raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, nil);
-      
       garbage_collector_status("funk2_garbage_collector__handle asking all user processor threads to wait_politely so that we can begin collecting garbage.");
       funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
       funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));

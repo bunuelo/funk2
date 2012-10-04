@@ -600,12 +600,21 @@ scheduler_fast_loop_exit_reason_t execute_next_bytecodes__helper__fast_loop(f2pt
   return exit_reason;
 }
 
+u64 last_balance_scheduler_nanoseconds_since_1970 = 0;
+
 f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause) {
   //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something = nil;
   
   pause_gc();
   funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(nil, &(__funk2.memory.pool[this_processor_thread__pool_index()]));
+  {
+    u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+    if ((nanoseconds_since_1970 - last_balance_scheduler_nanoseconds_since_1970) > 1000000000) {
+      raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
+      last_balance_scheduler_nanoseconds_since_1970 = nanoseconds_since_1970;
+    }
+  }
   resume_gc();
   
   raw__processor__reset_current_active_fiber(processor_cause, processor);

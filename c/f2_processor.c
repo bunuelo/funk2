@@ -712,7 +712,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
 		    
-		    raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
 		    resume_gc();
 		  }
 		}

@@ -195,7 +195,7 @@ def_pcfunk1(scheduler__clean, this,
 	    "",
 	    return f2__scheduler__clean(this_cause, this));
 
-void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this) {
+void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
   f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = memory_pool_num;
   u64   min_fiber_count    = 0xffffffffffffffffull;
@@ -215,16 +215,18 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this) {
       max_processor   = processor;
     }
   }
-  if (max_fiber_count - min_fiber_count >= 2) {
-    f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
-    if (removed_fiber != nil) {
-      status("scheduler-balance_processor_load: successfully removed active fiber.");
-      f2ptr success = raw__processor__add_active_fiber(cause, min_processor, removed_fiber);
-      if (success == nil) {
-	status("scheduler-balance_processor_load warning: fiber removed from max processor and could not be added to min processor because it is already executing.");
+  if (max_processor == this_processor) {
+    if (max_fiber_count - min_fiber_count >= 2) {
+      f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
+      if (removed_fiber != nil) {
+	status("scheduler-balance_processor_load: successfully removed active fiber.");
+	f2ptr success = raw__processor__add_active_fiber(cause, min_processor, removed_fiber);
+	if (success == nil) {
+	  status("scheduler-balance_processor_load warning: fiber removed from max processor and could not be added to min processor because it is already executing.");
+	}
+      } else {
+	//status("scheduler-balance_processor_load: failed to remove active fiber.");
       }
-    } else {
-      //status("scheduler-balance_processor_load: failed to remove active fiber.");
     }
   }
 }

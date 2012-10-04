@@ -254,26 +254,20 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
 }
 
 f2ptr raw__processor__try_remove_any_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
   f2ptr removed_fiber = nil;
-  s64   tries_count   = 0;
-  while ((removed_fiber == nil) &&
-	 (tries_count < 1000)) {
-    f2ptr active_fibers = f2processor__active_fibers(this, cause);
-    {
-      f2ptr iter = active_fibers;
-      while (iter != nil) {
-	f2ptr active_fiber = f2cons__car(iter, cause);
-	f2ptr found_and_removed_active_fiber = raw__processor__try_remove_active_fiber(cause, this, active_fiber);
-	if (found_and_removed_active_fiber != nil) {
-	  removed_fiber = active_fiber;
-	  iter          = nil;
-	} else {
-	  iter = f2cons__cdr(iter, cause);
-	}
+  {
+    f2ptr iter = active_fibers;
+    while (iter != nil) {
+      f2ptr active_fiber = f2cons__car(iter, cause);
+      f2ptr found_and_removed_active_fiber = raw__processor__try_remove_active_fiber(cause, this, active_fiber);
+      if (found_and_removed_active_fiber != nil) {
+	removed_fiber = active_fiber;
+	iter          = nil;
+      } else {
+	iter = f2cons__cdr(iter, cause);
       }
     }
-    tries_count ++;
-    f2__this__fiber__yield(cause);
   }
   return removed_fiber;
 }
@@ -559,11 +553,12 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   //pool__pause_gc(this_processor_thread__pool_index());
   f2ptr did_something = nil;
   
-  raw__processor__reset_current_active_fiber(processor_cause, processor);
-  
   pause_gc();
   funk2_memorypool__user_flush_creation_fiber_bytes_freed_counts(nil, &(__funk2.memory.pool[this_processor_thread__pool_index()]));
+  raw__scheduler__balance_processor_load(cause, __funk2.operating_system.scheduler);
   resume_gc();
+  
+  raw__processor__reset_current_active_fiber(processor_cause, processor);
   
   int fiber_num = 0;
   {
@@ -667,7 +662,6 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		    
 		    f2cmutex__unlock(exit_cmutex, cause);
 		    
-		    raw__scheduler__balance_processor_load(cause, __funk2.operating_system.scheduler);
 		    resume_gc();
 		  }
 		}

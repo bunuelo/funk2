@@ -862,7 +862,7 @@ f2ptr raw__apply_metro(f2ptr simple_cause, f2ptr fiber, f2ptr metro, f2ptr args)
 #endif // DEBUG_COMPILE
   
   //printf ("\nFiber 0x%X creating child compile fiber.", (uint)fiber); fflush(stdout);
-  f2ptr new_fiber = assert_value(f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), metro, args));
+  f2ptr new_fiber = assert_value(f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), metro, args));
   
   //f2fiber__keep_undead__set(new_fiber, cause, __true__symbol);
   //printf ("\nCompile fiber created: 0x%X", (uint)new_fiber); fflush(stdout);
@@ -895,7 +895,7 @@ f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk, f2ptr args) {
 #endif // DEBUG_COMPILE
   
   //printf ("\nFiber 0x%X creating child compile fiber.", (uint)fiber); fflush(stdout);
-  f2ptr new_fiber = assert_value(f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), funk, args));
+  f2ptr new_fiber = assert_value(f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funk, args));
   
   //f2fiber__keep_undead__set(new_fiber, cause, __true__symbol);
   //printf ("\nCompile fiber created: 0x%X", (uint)new_fiber); fflush(stdout);

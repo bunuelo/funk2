@@ -224,7 +224,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this) {
 	status("scheduler-balance_processor_load warning: fiber removed from max processor and could not be added to min processor because it is already executing.");
       }
     } else {
-      status("scheduler-balance_processor_load: failed to remove active fiber.");
+      //status("scheduler-balance_processor_load: failed to remove active fiber.");
     }
   }
 }

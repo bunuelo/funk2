@@ -100,10 +100,10 @@
 	       variable_frame variable_frame]
       [new nonsemantic_plan
 	   mental_layer
-	   [car new_name_expressions]
+	   [car [reverse new_name_expressions]]
 	   name_patterns
 	   variables
-	   expression]]]
+	   expression]]]]
 
 [deftypefunk nonsemantic_plan get unique_name []
   [if [null internal-unique_name]

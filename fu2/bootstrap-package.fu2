@@ -322,27 +322,27 @@
   `[not [null [package ,name]]]]
 
 [defunk pathnames-all_fpkg_filenames [this]
-  [let [[fpkg_filenames nil]]
-    [mapc [funk [pathname]
-		[let [[iter -global_source_path-]]
-		  [while iter
-		    [let* [[source_path   [car iter]]
-			   [full_pathname [pathname-concat source_path pathname]]]
-		      [format stdout '\nscanning ' full_pathname ' for package definitions.']
-		      [= fpkg_filenames [append fpkg_filenames [let [[result [shelter [pathname-scan_for_filenames_by_extension full_pathname 'fpkg']]]]
-								 [if [is-type `bug result]
-								     nil
-								   [prog [= iter nil]
-									 result]]]]]]
-		    [if iter
-			[= iter [cdr iter]]]]]]
-	  this]
-    fpkg_filenames]]
+  [apply &append [parcar [funk [pathname]
+			       [let [[fpkg_filenames nil]
+				     [iter           -global_source_path-]]
+				 [while iter
+				   [let* [[source_path   [car iter]]
+					  [full_pathname [pathname-concat source_path pathname]]]
+				     [format stdout '\nscanning ' full_pathname ' for package definitions.']
+				     [= fpkg_filenames [append fpkg_filenames [let [[result [shelter [pathname-scan_for_filenames_by_extension full_pathname 'fpkg']]]]
+										[if [is-type `bug result]
+										    nil
+										  [prog [= iter nil]
+											result]]]]]]
+				   [if iter
+				       [= iter [cdr iter]]]]
+				 fpkg_filenames]]
+			 this]]]
 
 
 [defunk reload_all_package_definitions []
-  [mapc [funk [filename]
-	      [memory-debug_assert_valid]
+  [parc [funk [filename]
+	      `[memory-debug_assert_valid]
 	      [package_filename-load filename]]
 	[pathnames-all_fpkg_filenames [get [global_package_handler] package_search_paths]]]
   [memory-debug_assert_valid]]

@@ -196,8 +196,10 @@ def_pcfunk1(scheduler__clean, this,
 	    return f2__scheduler__clean(this_cause, this));
 
 void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
-  f2ptr processors         = f2scheduler__processors(this, cause);
-  u64   processors__length = memory_pool_num;
+  f2ptr processors                  = f2scheduler__processors(this, cause);
+  u64   processors__length          = memory_pool_num;
+  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
+  printf("\nprocessors__length__bit_num=" u64__fstr "\n", processors__length__bit_num);
   u64   min_fiber_count    = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
   u64   max_fiber_count    = 0x0000000000000000ull;

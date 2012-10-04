@@ -203,10 +203,15 @@
 		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']
 		    ]
 		
-		[defplan 'print plan to stack a pyramid on a cube'
-		  :matches ['print plan to [? plan]']
+		[defplan 'plan to stack a pyramid on a cube'
+		  :matches ['plan to [? plan]']
 		   :frame [[plan 'stack a pyramid on a cube']]
-		    [print [plan [? plan]]]]
+		    [plan [? plan]]]
+		
+		[defplan 'print plan to stack a pyramid on a cube'
+		  :matches ['print [? object]']
+		   :frame [[object 'plan to stack a pyramid on a cube']]
+		    [print [? object]]]
 		
 		]]
   

@@ -66,7 +66,6 @@
 			 `[eval [quote ,exp]]]
 		   exps]]]
 
-[compile_parog
        [deftypefunk nonsemantic_plan get __default_variable_frame []
 	 [let [[default_variable_frame [new frame]]]
 	   [mapc [funk [variable_definition]
@@ -1302,4 +1301,3 @@
 	     [= internal-semantic_plan_object [get this __semantic_plan_object]]]
 	 internal-semantic_plan_object]
        
-       ]

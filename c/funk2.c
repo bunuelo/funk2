@@ -440,7 +440,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
       raw__spin_sleep_yield();
     }
   }
-  status("funk2__main: exited main loop.");
+  status("funk2__main: exited main loop (exit_now=%s).", this->exit_now ? "true" : "false");
   
   f2__destroy();
   

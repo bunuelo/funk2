@@ -95,10 +95,12 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     u64 lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
       lock_tries ++;
-      if (lock_tries > 1000) {
-	raw__spin_sleep_yield();
-      } else {
+      if (lock_tries < 1000) {
+	// spin fast
+      } else if (lock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
+      } else {
+	raw__spin_sleep_yield();
       }
     }
   }

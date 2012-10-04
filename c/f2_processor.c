@@ -109,6 +109,7 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
   f2ptr active_fibers_scheduler_cmutex        = f2processor__active_fibers_scheduler_cmutex(   this,  cause);
   f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
   boolean_t both_locked                       = boolean__false;
+  s64 lock_tries = 0;
   while (! both_locked) {
     both_locked                                                     = boolean__true;
     boolean_t active_fibers_scheduler_cmutex__failed_to_lock        = f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex,        cause);
@@ -127,7 +128,14 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
 	f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
       }
       //f2__this__fiber__yield(cause);
-      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+      if (lock_tries < 1000) {
+	// spin fast
+      } else if (lock_tries < 2000) {
+	raw__fast_spin_sleep_yield();
+      } else {
+	raw__spin_sleep_yield();
+      }
     }
   }
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);

@@ -215,7 +215,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
       max_processor   = processor;
     }
   }
-  if (max_processor == this_processor) {
+  //if (max_processor == this_processor) {
     if (max_fiber_count - min_fiber_count >= 2) {
       f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
       if (removed_fiber != nil) {
@@ -228,7 +228,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
 	//status("scheduler-balance_processor_load: failed to remove active fiber.");
       }
     }
-  }
+    //}
 }
 
 void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {

@@ -277,7 +277,7 @@
 			      `[prog [call 'forget all imagined events']
 				     [call 'set imagine time to be now']
 				     [call 'imagine current situation']
-				     [call 'focus on the plan to stack a pyramid on a cube']
+				     [plan-call 'focus on plan to stack a pyramid on a cube']
 				     [call 'imagine executing plan in focus']
 				     [call 'forget all imagined events']]]
 			

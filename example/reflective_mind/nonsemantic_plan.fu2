@@ -42,6 +42,7 @@
 				   name_patterns
 				   variables
 				   expression
+				   [internal-default_variable_frame  nil]
 				   [internal-unique_name             nil]
 				   [internal-semantic_plan_object    nil]
 				   [internal-compiled_funk           nil]
@@ -57,7 +58,53 @@
        [= name_patterns   initial-name_patterns]
        [= variables       initial-variables]
        [= expression      initial-expression]
+       [have this generate_default_variable_frame]
        ]]
+
+[deftypefunk nonsemantic_plan get __default_variable_frame []
+  [let [[default_variable_frame [new frame]]]
+    [mapc [funk [variable_definition]
+		[let [[variable_name  [first variable_definition]]
+		      [variable_value [second variable_definition]]]
+		  [have default_variable_frame add variable_name variable_value]]]
+	  variables]
+    default_variable_frame]]
+
+[deftypefunk nonsemantic_plan get default_variable_frame []
+  [if [null internal-default_variable_frame]
+      [= internal-default_variable_frame [get this __default_variable_frame]]]
+  internal-default_variable_frame]
+
+[deftypefunk nonsemantic_plan get new_copy_given_variable_frame [variable_frame]
+  [let [[new_name_expressions nil]]
+    [mapc [funk [name_pattern]
+		[let [[used_variable_frame [new frame]]]
+		  [let [[new_name_expression [get name_pattern pattern_evaluation
+						  [funk [variable_name]
+							[have used_variable_frame add variable_name t]
+							[cond [[get variable_frame contains variable_name]                    [have variable_frame lookup variable_name]]
+							      [[get [get this default_variable_frame] contains variable_name] [have [get this default_variable_frame] lookup variable_name]]
+							      [t                                                              [error bug_name     new_copy_given_variable_frame-could_not_find_variable_match_in_default_frame
+																     this         this
+																     name_pattern name_pattern]]]]]]]
+		    [let [[used_all_nondefault_variables t]]
+		      [mapc [funk [nondefault_variable_name]
+				  [if [not [have used_variable_frame lookup nondefault_variable_name]]
+				      [= used_all_nondefault_variables nil]]]
+			    [get variable_frame keys]]
+		      [if used_all_nondefault_variables
+			  [= new_name_expressions [cons new_name_expression new_name_expressions]]]]]]]
+	  name_patterns]
+    [if [null new_name_expression]
+	[error bug_name `nonsemantic_plan-new_copy_given_variable_frame-could_not_generate_new_name
+	       this     this
+	       variable_frame variable_frame]
+      [new nonsemantic_plan
+	   mental_layer
+	   [car new_name_expressions]
+	   name_patterns
+	   variables
+	   expression]]]
 
 [deftypefunk nonsemantic_plan get unique_name []
   [if [null internal-unique_name]
@@ -142,17 +189,21 @@
 												[let [[time_to_wait [elt arguments 0]]]
 												  [append `[wait for]
 													  `[,time_to_wait]]]]]
-						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below                     command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [get this expression-as_natural_language_string [elt arguments 0]]]]
 												  [stringlist-concat `['call action in layer below to ' ,action_name]]]]]
-						[[eq `call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                           command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[action_name [get this expression-as_natural_language_string [elt arguments 0]]]]
 												  [stringlist-concat `['call action to ' ,action_name]]]]]
+						[[eq `plan                           command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['plan to ' ,plan_name]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let* [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
 												  [stringlist-concat `['call plan to ' ,plan_name]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
@@ -267,7 +318,12 @@
 
 [deftypefunk nonsemantic_plan execute expression-syntax_check [expression]
   [cond [[is-type `symbol expression] `[quote ,expression]]
-	[[is-type `string expression] expression]
+	[[is-type `string expression] [let [[parse_result [shelter [string_pattern-as_conslist_pattern expression]]]]
+					[if [is-type `bug parse_result]
+					    [error bug_name                 `plan_syntax_error-could_not_parse_string_pattern
+						   expression               expression
+						   string_pattern_parse_bug parse_result]
+					  expression]]]
 	[[is-type `cons   expression] [let [[command   [car expression]]
 					    [arguments [cdr expression]]]
 					[let [[arguments-length [length arguments]]]
@@ -310,18 +366,24 @@
 												  [if [not [is-type `integer time_to_wait]]
 												      [terminal_format standard-terminal '\nplan syntax warning: time_to_wait is not an integer (' time_to_wait ').']]
 												  nil]]]
-						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below                     command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `call-below
 													 expression expression]
 												[let [[action_name [elt arguments 0]]]
 												  [have this expression-syntax_check action_name]]]]
-						[[eq `call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                           command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `call
 													 expression expression]
 												[let [[action_name [elt arguments 0]]]
 												  [have this expression-syntax_check action_name]]]]
+						[[eq `plan                           command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `plan
+													 expression expression]
+												[let [[plan_name [elt arguments 0]]]
+												  [have this expression-syntax_check plan_name]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -559,7 +621,7 @@
 														   `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
 														   [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 														 ]]]]]]
-						[[eq `call-below             command] [if [not [eq 1 arguments-length]]
+						[[eq `call-below                     command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `call-below
 													 expression expression]
@@ -572,7 +634,7 @@
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
-						[[eq `call                   command] [if [not [eq 1 arguments-length]]
+						[[eq `call                           command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `call
 													 expression expression]
@@ -585,6 +647,27 @@
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call]
 															 ]]]]]]]]
+						[[eq `plan                           command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `plan
+													 expression expression]
+												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let* [[plan_name                            ,plan_name]
+														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														      [variable_frame                       [new frame]]]
+														 [if [null semantic_plan_object]
+														     [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														       [if semantic_plan_variable_pair
+															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+														 [if [null semantic_plan_object]
+														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+														     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -822,7 +905,7 @@
 													     [let [[time_to_wait ,time_to_wait]]
 													       'no imaginative effects'
 													       ]]]]]]
-					      [[eq `call-below             command] [if [not [eq 1 arguments-length]]
+					      [[eq `call-below                     command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `call-below
 												       expression expression]
@@ -835,7 +918,7 @@
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
-					      [[eq `call                   command] [if [not [eq 1 arguments-length]]
+					      [[eq `call                           command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `call
 												       expression expression]
@@ -848,6 +931,27 @@
 														 [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 														       [have action imagine_waiting_to_call]
 														       ]]]]]]]]
+					      [[eq `plan                           command] [if [not [eq 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan
+												       expression expression]
+											      [let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[eval `[funk [this]
+													     [let* [[plan_name                            ,plan_name]
+														    [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														    [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														    [variable_frame                       [new frame]]]
+													       [if [null semantic_plan_object]
+														   [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														     [if semantic_plan_variable_pair
+															 [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+															       [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+													       [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
+													       [if [null semantic_plan_object]
+														   [error bug_name    `nonsemantic_plan-plan-no_such_plan
+															  action_name semantic_plan_object-phenomenal_name]
+														 [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+														   [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]]]]]]]
 					      [[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call
@@ -1078,6 +1182,12 @@
 												       expression expression]
 											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
+					      [[eq `plan                           command] [if [not [== 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan
+												       expression expression]
+											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
+												nil]]]
 					      [[eq `plan-call                      command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan-call

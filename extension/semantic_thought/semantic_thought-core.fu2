@@ -24,10 +24,10 @@
 [semantic_thought-core_extension-define_types]
 
 
-[deftypefunk semantic_thought execute evaluate_string [string]
-  [if [not [get string contains '[']]
-      string
-    [let* [[conslist_pattern [string_pattern-as_conslist_pattern string]]
+[deftypefunk string get pattern_evaluation [variable_lookup_funk]
+  [if [not [get this contains '[']]
+      this
+    [let* [[conslist_pattern [string_pattern-as_conslist_pattern this]]
 	   [result_length    0]]
       [let [[expanded_conslist [mapcar [funk [expression]
 					     [if [is-type `char expression]
@@ -35,7 +35,7 @@
 						       expression]
 					       [let [[variable_command [first expression]]]
 						 [cond [[eq variable_command `?] [let [[variable_value_string [let [[variable_name [second expression]]]
-														[let [[variable_value [have this lookup_a_variable_value variable_name]]]
+														[let [[variable_value [funkall variable_lookup_funk variable_name]]]
 														  [cond [[is-type `string variable_value] variable_value]
 															[t                                [get variable_value as-string]]]]]]]
 										   [= result_length [+ result_length [get variable_value_string length]]]
@@ -43,7 +43,7 @@
 						       [t                        [error bug_name         `semantic_thought-evaluate_string-invalid_variable_command
 											variable_command variable_command
 											expression       expression
-											string           string]]]]]]
+											this             this]]]]]]
 				       conslist_pattern]]]
 	[let [[result [new string result_length #\ ]]
 	      [index  0]]
@@ -59,6 +59,12 @@
 	  result]]]]]
 
 
-	
+[deftypefunk semantic_thought execute evaluate_string [string]
+  [get string pattern_evaluation
+       [funk [variable_name]
+	     [have this lookup_a_variable_value variable_name]]]]
+
+
+
 										 
       

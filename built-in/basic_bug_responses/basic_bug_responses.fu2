@@ -187,12 +187,10 @@
 
 
 [defunk string-as-natural_language_string [this]
-  [let [[string     '']
-	[first_time t]]
-    [have [have [have string replace_all
-		      '-' ' '] replace_all
-		      '_' ' '] replace_all
-		      '|' '']]]
+  [have [have [have this replace_all
+		    '-' ' '] replace_all
+		    '_' ' '] replace_all
+		    '|' '']]
 
 [defunk string-as-natural_language_symbol [this]
   [get [string-as-natural_language_string this] as-symbol]]

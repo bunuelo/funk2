@@ -1129,5 +1129,5 @@
 		 'funkϩ: saving half-baked memory_image to img/bootstrap-repl.img.' '\n']
 
 [management_thread-add_save_memory_image_command 'img/bootstrap-repl.img']
-[management_thread-add_exit_command 0]
+`[management_thread-add_exit_command 0]
 

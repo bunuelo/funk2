@@ -118,7 +118,7 @@
   'create blocks_world agent specific plans'
   
   [have this evaluate_deliberative_plan_expression
-	`[parog [defplan 'a pyramid is on a cube'
+	`[parog [defcondition 'a pyramid is on a cube'
 		  :matches ['a [? top_shape] is on a [? bottom_shape]']
 		   :frame [[top_shape    pyramid]
 			   [bottom_shape cube]]
@@ -126,28 +126,28 @@
 					  preposition on
 					  block property shape [? bottom_shape]]]]
 		
-		[defplan 'I am holding a cube'
+		[defcondition 'I am holding a cube'
 		  :matches ['I am holding a [? shape]']
 		   :frame [[shape cube]]
 		    [exists [relationship gripper property is-me t
 					  preposition is-holding
 					  block property shape [? shape]]]]
 		
-		[defplan 'a pyramid is on a table'
+		[defcondition 'a pyramid is on a table'
 		  :matches ['a [? shape] is on a table']
 		   :frame [[shape pyramid]]
 		    [exists [relationship block property shape [? shape]
 					  preposition on
 					  table property color white]]]
 		
-		[defplan 'a cube is to my left'
+		[defcondition 'a cube is to my left'
 		  :matches ['a [? shape] is to my left']
 		   :frame [[shape cube]]
 		    [exists [relationship block property shape [? shape]
 					  preposition left-of
 					  gripper property is-me t]]]
 		
-		[defplan 'a cube is to my right'
+		[defcondition 'a cube is to my right'
 		  :matches ['a [? shape] is to my right']
 		   :frame [[shape cube]]
 		    [exists [relationship block property shape [? shape]

@@ -157,8 +157,8 @@
 					   [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', imagining plan.']
 			  [let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
 			    [set semantic_planner execute_plan semantic_plan]
-			    [let [[variable_frame [new frame]]
-				  [result         [have [get semantic_plan nonsemantic_plan] imagine_as_thought_in_semantic_planner semantic_planner variable_frame]]]
+			    [let* [[variable_frame [new frame]]
+				   [result         [have [get semantic_plan nonsemantic_plan] imagine_as_thought_in_semantic_planner semantic_planner variable_frame]]]
 			      [if [is-type `bug result]
 				  [let [[bug result]]
 				    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '

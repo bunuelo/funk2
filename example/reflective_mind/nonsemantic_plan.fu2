@@ -61,11 +61,6 @@
        ]]
 
 
-[defmetro compile_parog [:rest exps]
-  `[parog @[mapcar [funk [exp]
-			 `[eval [quote ,exp]]]
-		   exps]]]
-
        [deftypefunk nonsemantic_plan get __default_variable_frame []
 	 [let [[default_variable_frame [new frame]]]
 	   [mapc [funk [variable_definition]

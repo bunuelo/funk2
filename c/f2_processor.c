@@ -254,20 +254,26 @@ f2ptr raw__processor__try_remove_active_fiber(f2ptr cause, f2ptr this, f2ptr fib
 }
 
 f2ptr raw__processor__try_remove_any_active_fiber(f2ptr cause, f2ptr this) {
-  f2ptr active_fibers = f2processor__active_fibers(this, cause);
   f2ptr removed_fiber = nil;
-  {
-    f2ptr iter = active_fibers;
-    while (iter != nil) {
-      f2ptr active_fiber = f2cons__car(iter, cause);
-      f2ptr found_and_removed_active_fiber = raw__processor__try_remove_active_fiber(cause, this, active_fiber);
-      if (found_and_removed_active_fiber != nil) {
-	removed_fiber = active_fiber;
-	iter          = nil;
-      } else {
-	iter = f2cons__cdr(iter, cause);
+  s64   tries_count   = 0;
+  while ((removed_fiber == nil) &&
+	 (tries_count < 1000)) {
+    f2ptr active_fibers = f2processor__active_fibers(this, cause);
+    {
+      f2ptr iter = active_fibers;
+      while (iter != nil) {
+	f2ptr active_fiber = f2cons__car(iter, cause);
+	f2ptr found_and_removed_active_fiber = raw__processor__try_remove_active_fiber(cause, this, active_fiber);
+	if (found_and_removed_active_fiber != nil) {
+	  removed_fiber = active_fiber;
+	  iter          = nil;
+	} else {
+	  iter = f2cons__cdr(iter, cause);
+	}
       }
     }
+    tries_count ++;
+    f2__this__fiber__yield(cause);
   }
   return removed_fiber;
 }

@@ -156,17 +156,32 @@
 		
 		[defplan 'assert that a pyramid is on a cube'
 		  :matches ['assert that [? partial_state]']
-		   :frame [[partial_state `[a pyramid is on a cube]]]
+		   :frame [[partial_state 'a pyramid is on a cube']]
 		    [assert [plan-call [? partial_state]]]]
+		
+		[defplan 'move left until over cube'
+		  :matches ['move [? direction] until over [? shape]']
+		   :frame [[direction left]
+			   [shape     cube]]
+		    [call-below 'move [? direction] until over [? shape]']]
+		
+		[defplan 'if a cube is to my left, move left until over cube'
+		  :matches ['if [? condition], [? command]']
+		   :frame [[condition 'a cube is to my left']
+			   [command   'move left until over cube']]
+		    [if [plan-call [? condition]]
+			[plan-call [? command]]]]
+		
+		[defplan 'move until over cube'
+		  :matches ['move until over [? shape]']
+		   :frame [[shape cube]]
+		    [plan-call 'if a [? shape] is to my left, move left until over [? shape]']
+		    [plan-call 'if a [? shape] is to my right, move right until over [? shape]']]
 		
 		[defplan 'pick up a cube'
 		  :matches ['pick up a [? shape]']
 		   :frame [[shape cube]]
-		    [if [plan-call 'a [? shape] is to my left']
-			[call-below 'move left until over [? shape]']]
-		    
-		    [if [plan-call 'a [? shape] is to my right']
-			[call-below 'move right until over [? shape]']]
+		    [plan-call 'move until over [? shape]']
 		    
 		    [call-below 'attempt to grab block until gripper stops moving']
 		    
@@ -175,11 +190,7 @@
 		[defplan 'drop the block I am holding on a pyramid'
 		  :matches ['drop the block I am holding on a [? shape]']
 		   :frame [[shape pyramid]]
-		    [if [plan-call 'a [? shape] is to my left']
-			[call-below 'move left until over [? shape]']]
-		    
-		    [if [plan-call 'a [? shape] is to my right']
-			[call-below 'move right until over [? shape]']]
+		    [plan-call 'move until over [? shape]']
 		    
 		    [call-below 'drop block and wait for block to fall']]
 		

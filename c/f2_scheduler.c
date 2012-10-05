@@ -135,7 +135,7 @@ def_pcfunk1(scheduler__active_fibers, this,
 	    return f2__scheduler__active_fibers(this_cause, this));
 
 
-void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr scheduler, u64* processor_load) {
+void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* processor_load) {
   u64   processors__length          = memory_pool_num;
   u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
   f2ptr processors                  = f2scheduler__processors(this, cause);

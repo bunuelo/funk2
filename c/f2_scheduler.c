@@ -230,7 +230,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
 	min_processor_load = processor_load;
 	min_processor      = processor[index];
       }
-      if (processor_load > max_fiber_count) {
+      if (processor_load > max_processor_load) {
 	max_processor_load = processor_load;
 	max_processor      = processor[index];
       }

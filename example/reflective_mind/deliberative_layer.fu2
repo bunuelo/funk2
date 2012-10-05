@@ -174,7 +174,7 @@
   [have plan_action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol natural_language_string]]]
 
 [deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
-  [let [[action [new deliberative_action 
+  [let [[action [new deliberative_action
 		     [get this mind]
 		     layer_name
 		     agency_name

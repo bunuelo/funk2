@@ -688,7 +688,8 @@
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]]]]]]]
+														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -978,7 +979,8 @@
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]]]]]]]
+														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan-call

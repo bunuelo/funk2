@@ -44,7 +44,7 @@
       [let* [[resource                         [get [get this mind] resource layer_name agency_name resource_name]]
 	     [resource-natural_language_string [shelter [get resource as-natural_language_string_with_arguments resource_arguments]]]]
 	[if [is-type `bug resource-natural_language_string]
-	    [prog [terminal_format standard-terminal '\ndeliberative_action warning: problem getting language string for "' [get resource phenomenal_name] '" with given arguments.']
+	    [prog [terminal_format standard-terminal '\ndeliberative_action warning: problem getting language string for "' [get resource name] '" with given arguments.']
 		  [= resource-natural_language_string [get resource as-natural_language_string]]]]
 	[= internal-natural_language_string resource-natural_language_string]]]
   internal-natural_language_string]

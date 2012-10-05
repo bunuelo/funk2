@@ -227,6 +227,7 @@ def_pcfunk1(scheduler__clean, this,
 void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
   u64   processor__load[memory_pool_num];
   raw__scheduler__calculate_processor_load(cause, this, processor__load);
+  f2ptr processors         = f2scheduler__processors(this, cause);
   u64   min_processor_load = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
   u64   max_processor_load = 0x0000000000000000ull;
@@ -237,11 +238,11 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
       u64 processor_load = processor__load[index];
       if (processor_load < min_processor_load) {
 	min_processor_load = processor_load;
-	min_processor      = processor[index];
+	min_processor      = raw__array__elt(cause, processors, index);
       }
       if (processor_load > max_processor_load) {
 	max_processor_load = processor_load;
-	max_processor      = processor[index];
+	max_processor      = raw__array__elt(cause, processors, index);
       }
     }
   }

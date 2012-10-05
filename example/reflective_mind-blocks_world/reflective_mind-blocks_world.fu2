@@ -112,7 +112,6 @@
 	 [have-apply this create_physical_action `[learned_reactive physical attempt_to_grab_block_until_gripper_stops_moving]]
 	 [have-apply this create_physical_action `[learned_reactive physical drop_block_and_wait_for_block_to_fall]]]
   
-  [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in actions.']
   nil]
 
 [deftypefunk blocks_world_reflective_mind execute create_builtin_plans []
@@ -122,13 +121,13 @@
   
   [have-apply [get this mind] add_resource_change_relationship_hypothesis
 	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
-                addition
-		block shape cube preposition on block shape pyramid]]
+				 addition
+				 block shape cube preposition on block shape pyramid]]
   
   [have-apply [get this mind] add_resource_change_relationship_hypothesis
 	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
-		addition
-		block shape pyramid preposition on block shape cube]]
+				 addition
+				 block shape pyramid preposition on block shape cube]]
   
   
   'create blocks_world agent specific plans'
@@ -232,7 +231,7 @@
 		[defplan 'focus on plan to stack a pyramid on a cube'
 		  :matches ['focus on [? object]']
 		   :frame [[object 'plan to stack a pyramid on a cube']]
-		    [call 'focus on an object' [plan [? object]]]
+		    [call 'focus on an object' [plan [? object]]]]
 		
 		]]
   

@@ -222,16 +222,18 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
   f2ptr min_processor      = nil;
   u64   max_processor_load = 0x0000000000000000ull;
   f2ptr max_processor      = nil;
-  u64 i;
-  for (i = 0; i < processors__length; i ++) {
-    u64 processor_load = processor__fiber_load[index];
-    if (processor_load < min_processor_load) {
-      min_processor_load = processor_load;
-      min_processor      = processor[index];
-    }
-    if (fiber_count > max_fiber_count) {
-      max_processor_load = processor_load;
-      max_processor      = processor[index];
+  {
+    s64 index;
+    for (index = 0; index < processors__length; index ++) {
+      u64 processor_load = processor__fiber_load[index];
+      if (processor_load < min_processor_load) {
+	min_processor_load = processor_load;
+	min_processor      = processor[index];
+      }
+      if (fiber_count > max_fiber_count) {
+	max_processor_load = processor_load;
+	max_processor      = processor[index];
+      }
     }
   }
   if (max_processor_load - min_processor_load >= (2 * processors__length__bit_num)) {

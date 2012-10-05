@@ -92,11 +92,15 @@
   'focus on an object']
 
 [deftypefunk reflective_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
-  [stringlist-intersperse [cons 'focus on the plan to'
-				[mapcar [funk [argument]
-					      [get argument as-string]]
-					arguments]]
-			  ' ']]
+  [if [not [== [length arguments] 1]]
+      [error bug_name  `deliberative_focus_on_object_resource-wrong_number_of_arguments
+	     arguments arguments]
+    [let [[focus_object [first arguments]]]
+      [cond [[is-type `semantic_plan_object focus_object] [let [[semantic_plan_object focus_object]]
+							    [stringlist-concat `['focus on the plan to '
+										 ,[get [get semantic_plan_object nonsemantic_plan] name_expression]]]]]
+	    [t                                            [stringlist-concat `['focus on '
+									       ,[get focus_object as-string]]]]]]]]
 
 
 

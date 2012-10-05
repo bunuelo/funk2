@@ -156,7 +156,7 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
       for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
 	s64 bit_subindex;
 	for (bit_subindex = 0; bit_subindex < (1ull << bit_index); bit_subindex ++) {
-	  processor_load[index] += processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex];
+	  processor_load[index] += ((processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex]) * (1ull << (processors__length__bit_num - bit_subindex - 1)));
 	}
       }
     }
@@ -248,7 +248,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
       }
     }
   }
-  if (max_processor_load - min_processor_load >= (2 * processors__length__bit_num)) {
+  if (max_processor_load - min_processor_load >= (2 * ((1ull << processors__length__bit_num) - 1))) {
     f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
     if (removed_fiber != nil) {
       status("scheduler-balance_processor_load: successfully removed active fiber.");

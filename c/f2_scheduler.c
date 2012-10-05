@@ -199,25 +199,42 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
   f2ptr processors                  = f2scheduler__processors(this, cause);
   u64   processors__length          = memory_pool_num;
   u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
-  printf("\nprocessors__length__bit_num=" u64__fstr "\n", processors__length__bit_num);
-  u64   min_fiber_count    = 0xffffffffffffffffull;
+  f2ptr processor[memory_pool_num];
+  u64   processor__fiber_count[memory_pool_num];
+  u64   processor__fiber_load[memory_pool_num];
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      processor[index] = raw__array__elt(cause, processors, index);
+      processor__fiber_count[index] = raw__processor__active_fibers_count(cause, processor[index]);
+    }
+  }
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      s64 bit_index;
+      for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
+	processor__fiber_load[index] += processor__fiber_count[index >> bit_index];
+      }
+    }
+  }
+  u64   min_processor_load = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
-  u64   max_fiber_count    = 0x0000000000000000ull;
+  u64   max_processor_load = 0x0000000000000000ull;
   f2ptr max_processor      = nil;
   u64 i;
   for (i = 0; i < processors__length; i ++) {
-    f2ptr processor = raw__array__elt(cause, processors, i);
-    u64 fiber_count = raw__processor__active_fibers_count(cause, processor);
-    if (fiber_count < min_fiber_count) {
-      min_fiber_count = fiber_count;
-      min_processor   = processor;
+    u64 processor_load = processor__fiber_load[index];
+    if (processor_load < min_processor_load) {
+      min_processor_load = processor_load;
+      min_processor      = processor[index];
     }
     if (fiber_count > max_fiber_count) {
-      max_fiber_count = fiber_count;
-      max_processor   = processor;
+      max_processor_load = processor_load;
+      max_processor      = processor[index];
     }
   }
-  if (max_fiber_count - min_fiber_count >= 2) {
+  if (max_processor_load - min_processor_load >= (2 * processors__length__bit_num)) {
     f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
     if (removed_fiber != nil) {
       status("scheduler-balance_processor_load: successfully removed active fiber.");

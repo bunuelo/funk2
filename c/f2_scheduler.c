@@ -165,7 +165,7 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
 
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
   u64   processor__load[memory_pool_num];
-  raw__calculate_processor_load(cause, this, processor__load);
+  raw__scheduler__calculate_processor_load(cause, this, processor__load);
   f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = memory_pool_num;
   u64   min_length         = 0xffffffffffffffffull;
@@ -226,7 +226,7 @@ def_pcfunk1(scheduler__clean, this,
 
 void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
   u64   processor__load[memory_pool_num];
-  raw__calculate_processor_load(cause, this, processor__load);
+  raw__scheduler__calculate_processor_load(cause, this, processor__load);
   u64   min_processor_load = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
   u64   max_processor_load = 0x0000000000000000ull;

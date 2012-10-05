@@ -229,7 +229,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
   u64   processor__load[memory_pool_num];
   raw__scheduler__calculate_processor_load(cause, this, processor__load);
   u64   processors__length          = memory_pool_num;
-  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
+  //u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
   f2ptr processors                  = f2scheduler__processors(this, cause);
   u64   min_processor_load          = 0xffffffffffffffffull;
   f2ptr min_processor               = nil;

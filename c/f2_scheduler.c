@@ -234,7 +234,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
   {
     s64 index;
     for (index = 0; index < memory_pool_num; index ++) {
-      u64 processor_load = processor__fiber_load[index];
+      u64 processor_load = processor__load[index];
       if (processor_load < min_processor_load) {
 	min_processor_load = processor_load;
 	min_processor      = processor[index];

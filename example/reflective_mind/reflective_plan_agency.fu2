@@ -25,7 +25,7 @@
   [new []
        [construct agency `plan]
        
-       [parog [have this add_resource [new reflective_focus_on_plan_resource]]
+       [parog [have this add_resource [new reflective_focus_on_object_resource]]
 	      [have this add_resource [new reflective_execute_plan_in_focus_resource]]
 	      [have this add_resource [new reflective_imagine_executing_plan_in_focus_resource]]
 	      [have this add_resource [new reflective_focus_on_execute_plan_resource]]
@@ -63,8 +63,8 @@
 	 [have-apply [get this mind] create_reflective_action `[reflective plan remember_plan_for_goal]]]
   nil]
 
-[deftypefunk reflective_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
-  [have-apply [get this mind] create_reflective_action `[reflective plan focus_on_plan ,semantic_plan_phenomenal_name]]
+[deftypefunk reflective_plan_agency execute create_plan_propositionalized_actions [plan_name]
+  [have [get this mind] create_reflective_action `reflective `plan `focus_on_object [get [get this layer] semantic_plan plan_name]]
   ]
 
 [deftypefunk reflective_plan_agency get semantic_planner []
@@ -78,20 +78,20 @@
   [get layer semantic_plan phenomenal_name]]
 
 
-'reflective_focus_on_plan_resource'
+'reflective_focus_on_object_resource'
 
-[deframe reflective_focus_on_plan_resource [reflective_resource] []
+[deframe reflective_focus_on_object_resource [reflective_resource] []
   [new []
-       [construct reflective_resource `focus_on_plan
+       [construct reflective_resource `focus_on_object
 		  [funk [semantic_plan_phenomenal_name]
 			[let [[semantic_plan [get agency semantic_plan semantic_plan_phenomenal_name]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
 
-[deftypefunk reflective_focus_on_plan_resource get as-natural_language_string []
-  'focus on a plan']
+[deftypefunk reflective_focus_on_object_resource get as-natural_language_string []
+  'focus on an object']
 
-[deftypefunk reflective_focus_on_plan_resource get as-natural_language_string_with_arguments [arguments]
+[deftypefunk reflective_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
   [stringlist-intersperse [cons 'focus on the plan to'
 				[mapcar [funk [argument]
 					      [get argument as-string]]

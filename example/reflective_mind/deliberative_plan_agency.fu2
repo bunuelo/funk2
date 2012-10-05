@@ -25,7 +25,7 @@
   [new []
        [construct agency `plan]
        
-       [parog [have this add_resource [new deliberative_focus_on_plan_resource]]
+       [parog [have this add_resource [new deliberative_focus_on_object_resource]]
 	      [have this add_resource [new deliberative_execute_plan_in_focus_resource]]
 	      [have this add_resource [new deliberative_imagine_executing_plan_in_focus_resource]]
 	      [have this add_resource [new deliberative_focus_on_execute_plan_resource]]
@@ -63,9 +63,8 @@
 	 [have-apply [get this mind] create_plan_action `[deliberative plan remember_plan_for_goal]]]
   nil]
 
-[deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [semantic_plan_phenomenal_name]
-  [have-apply [get this mind] create_plan_action `[deliberative plan focus_on_plan ,semantic_plan_phenomenal_name]]
-  ]
+[deftypefunk deliberative_plan_agency execute create_plan_propositionalized_actions [plan_name]
+  [have [get this mind] create_plan_action `deliberative `plan `focus_on_object [get [get this layer] semantic_plan plan_name]]]
 
 [deftypefunk deliberative_plan_agency get semantic_planner []
   [if [null internal-semantic_planner]
@@ -74,30 +73,32 @@
 	    [have [get [get this mind] semantic_knowledge_base `deliberative1_knowledge] add_semantic_frame internal-semantic_planner]]]
   internal-semantic_planner]
 
-[deftypefunk deliberative_plan_agency get semantic_plan [phenomenal_name]
-  [get layer semantic_plan phenomenal_name]]
+[deftypefunk deliberative_plan_agency get semantic_plan [plan_name]
+  [get layer semantic_plan plan_name]]
 
 
-'deliberative_focus_on_plan_resource'
+'deliberative_focus_on_object_resource'
 
-[deframe deliberative_focus_on_plan_resource [deliberative_resource] []
+[deframe deliberative_focus_on_object_resource [deliberative_resource] []
   [new []
-       [construct deliberative_resource `focus_on_plan
-		  [funk [semantic_plan_phenomenal_name]
-			[let [[semantic_plan [get agency semantic_plan semantic_plan_phenomenal_name]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
+       [construct deliberative_resource `focus_on_object
+		  [funk [semantic_plan_object]
+			[terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' [get semantic_plan_object phenomenal_name] ', "' [get [get semantic_plan_object nonsemantic_plan] as-string] '."']
+			[set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]
 
-[deftypefunk deliberative_focus_on_plan_resource get as-natural_language_string []
-  'focus on a plan']
+[deftypefunk deliberative_focus_on_object_resource get as-natural_language_string []
+  'focus on an object']
 
-[deftypefunk deliberative_focus_on_plan_resource get as-natural_language_string_with_arguments [arguments]
-  [stringlist-intersperse [cons 'focus on the plan to' [mapcar [funk [argument]
-								     [get argument as-string]]
-							       arguments]]
-			  ' ']]
-
-
+[deftypefunk deliberative_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
+  [if [not [== [length arguments] 1]]
+      [error bug_name  `deliberative_focus_on_object_resource-wrong_number_of_arguments
+	     arguments arguments]
+    [let [[focus_object [first arguments]]]
+      [cond [[is-type `semantic_plan_object focus_object] [let [[semantic_plan_object focus_object]]
+							    [stringlist-concat `['focus on the plan to '
+										 ,[get [get semantic_plan_object nonsemantic_plan] name_expression]]]]]
+	    [t                                            [stringlist-concat `['focus on '
+									       ,[get focus_object as-string]]]]]]]]
 
 'deliberative_execute_plan_in_focus_resource'
 

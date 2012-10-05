@@ -83,17 +83,16 @@
 [deframe reflective_focus_on_object_resource [reflective_resource] []
   [new []
        [construct reflective_resource `focus_on_object
-		  [funk [semantic_plan_phenomenal_name]
-			[let [[semantic_plan [get agency semantic_plan semantic_plan_phenomenal_name]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' semantic_plan_phenomenal_name ', "' [get [get semantic_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] focus_plan semantic_plan]]]]]]
+		  [funk [semantic_plan_object]
+			[terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' [get semantic_plan_object phenomenal_name] ', "' [get [get semantic_plan_object nonsemantic_plan] as-string] '."']
+			[set [get [get this agency] semantic_planner] focus_plan semantic_plan_object]]]]]
 
 [deftypefunk reflective_focus_on_object_resource get as-natural_language_string []
   'focus on an object']
 
 [deftypefunk reflective_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
   [if [not [== [length arguments] 1]]
-      [error bug_name  `deliberative_focus_on_object_resource-wrong_number_of_arguments
+      [error bug_name  `reflective_focus_on_object_resource-wrong_number_of_arguments
 	     arguments arguments]
     [let [[focus_object [first arguments]]]
       [cond [[is-type `semantic_plan_object focus_object] [let [[semantic_plan_object focus_object]]

@@ -135,7 +135,36 @@ def_pcfunk1(scheduler__active_fibers, this,
 	    return f2__scheduler__active_fibers(this_cause, this));
 
 
+void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr scheduler, u64* processor_load) {
+  u64   processors__length          = memory_pool_num;
+  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
+  f2ptr processors                  = f2scheduler__processors(this, cause);
+  f2ptr processor[memory_pool_num];
+  u64   processor__fiber_count[memory_pool_num];
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      processor[index]              = raw__array__elt(cause, processors, index);
+      processor__fiber_count[index] = raw__processor__active_fibers_count(cause, processor[index]);
+    }
+  }
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      s64 bit_index;
+      for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
+	s64 bit_subindex;
+	for (bit_subindex = 0; bit_subindex < (1ull << bit_index); bit_subindex ++) {
+	  processor__fiber_load[index] += processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex];
+	}
+      }
+    }
+  }
+}
+
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
+  u64   processor__load[memory_pool_num];
+  raw__calculate_processor_load(cause, this, processor__load);
   f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = memory_pool_num;
   u64   min_length         = 0xffffffffffffffffull;
@@ -143,9 +172,8 @@ f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
   u64 i;
   for (i = 0; i < processors__length; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
-    u64 fibers__length = raw__processor__active_fibers_count(cause, processor);
-    if (fibers__length < min_length) {
-      min_length = fibers__length;
+    if (processor__load[i] < min_length) {
+      min_length    = processor__load[i];
       min_processor = processor;
     }
   }
@@ -196,31 +224,8 @@ def_pcfunk1(scheduler__clean, this,
 	    return f2__scheduler__clean(this_cause, this));
 
 void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
-  f2ptr processors                  = f2scheduler__processors(this, cause);
-  u64   processors__length          = memory_pool_num;
-  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
-  f2ptr processor[memory_pool_num];
-  u64   processor__fiber_count[memory_pool_num];
-  u64   processor__fiber_load[memory_pool_num];
-  {
-    s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
-      processor[index] = raw__array__elt(cause, processors, index);
-      processor__fiber_count[index] = raw__processor__active_fibers_count(cause, processor[index]);
-    }
-  }
-  {
-    s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
-      s64 bit_index;
-      for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
-	s64 bit_subindex;
-	for (bit_subindex = 0; bit_subindex < (1ull << bit_index); bit_subindex ++) {
-	  processor__fiber_load[index] += (processor__fiber_count[(index >> bit_index) + bit_subindex] * (1ull << (processors__length__bit_num - bit_index - 1)));
-	}
-      }
-    }
-  }
+  u64   processor__load[memory_pool_num];
+  raw__calculate_processor_load(cause, this, processor__load);
   u64   min_processor_load = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
   u64   max_processor_load = 0x0000000000000000ull;

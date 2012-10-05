@@ -231,7 +231,7 @@
 		[defplan 'focus on plan to stack a pyramid on a cube'
 		  :matches ['focus on [? object]']
 		   :frame [[object 'plan to stack a pyramid on a cube']]
-		    [call 'focus on an object' [plan [? object]]]]
+		    [call 'focus on object' [plan [? object]]]]
 		
 		]]
   

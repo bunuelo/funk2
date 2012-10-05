@@ -87,7 +87,7 @@
 			[set [get [get this agency] semantic_planner] focus_plan semantic_plan_object]]]]]
 
 [deftypefunk deliberative_focus_on_object_resource get as-natural_language_string []
-  'focus on an object']
+  'focus on object']
 
 [deftypefunk deliberative_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
   [if [not [== [length arguments] 1]]

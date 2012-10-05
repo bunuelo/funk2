@@ -144,6 +144,7 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
   {
     s64 index;
     for (index = 0; index < memory_pool_num; index ++) {
+      processor_load[index]         = 0;
       processor[index]              = raw__array__elt(cause, processors, index);
       processor__fiber_count[index] = raw__processor__active_fibers_count(cause, processor[index]);
     }
@@ -155,7 +156,7 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
       for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
 	s64 bit_subindex;
 	for (bit_subindex = 0; bit_subindex < (1ull << bit_index); bit_subindex ++) {
-	  processor__fiber_load[index] += processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex];
+	  processor_load[index] += processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex];
 	}
       }
     }

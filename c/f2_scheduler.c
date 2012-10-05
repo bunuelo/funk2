@@ -248,7 +248,7 @@ void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_
       }
     }
   }
-  if (max_processor_load - min_processor_load >= (2 * ((1ull << processors__length__bit_num) - 1))) {
+  if (max_processor_load - min_processor_load >= (2 * (1ull << (processors__length__bit_num - 1)))) {
     f2ptr removed_fiber = raw__processor__try_remove_any_active_fiber(cause, max_processor);
     if (removed_fiber != nil) {
       status("scheduler-balance_processor_load: successfully removed active fiber.");

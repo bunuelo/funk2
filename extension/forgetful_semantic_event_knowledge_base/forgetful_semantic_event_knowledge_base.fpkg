@@ -18,9 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage forgetful_semantic_event_knowledge_base
-  :packages            [meta_semantic_knowledge_base
-			semantic_event
-			semantic_event_tree]
+  :packages            [semantic_event_knowledge_base]
    :sources            ['forgetful_semantic_event_knowledge_base-core.fu2']
     :dynamic_libraries ['libf2e_forgetful_semantic_event_knowledge_base.so']]
 

@@ -218,37 +218,50 @@
 		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']
 		    ]
 		
-		[defplan 'plan to stack a pyramid on a cube'
-		  :matches ['plan to [? plan]']
-		   :frame [[plan 'stack a pyramid on a cube']]
-		    [plan [? plan]]]
-		
-		[defplan 'print plan to stack a pyramid on a cube'
-		  :matches ['print [? object]']
-		   :frame [[object 'plan to stack a pyramid on a cube']]
-		    [print [? object]]]
-		
-		[defplan 'focus on plan to stack a pyramid on a cube'
-		  :matches ['focus on [? object]']
-		   :frame [[object 'plan to stack a pyramid on a cube']]
-		    [call 'focus on object' [plan-call [? object]]]]
-		
 		]]
   
   'reflective plans'
   
   [have this evaluate_reflective_plan_expression
-	`[parog [defplan 'choose a plan and execute it'
+	`[parog [defplan 'plan below to stack a pyramid on a cube'
+		  :matches ['plan below to [? plan]']
+		   :frame [[plan 'stack a pyramid on a cube']]
+		    [plan-below [? plan]]]
+		
+		[defplan 'print plan below to stack a pyramid on a cube'
+		  :matches ['print [? object]']
+		   :frame [[object 'plan below to stack a pyramid on a cube']]
+		    [print [? object]]]
+		
+		[defplan 'focus below on plan below to stack a pyramid on a cube'
+		  :matches ['focus below on [? object]']
+		   :frame [[object 'plan below to stack a pyramid on a cube']]
+		    [call-below 'focus on object' [plan-call-below [? object]]]]
+		
+		[defplan 'remember a plan for a current goal and execute it'
+		  [call-below 'remember plan for goal']
+		  [call-below 'execute plan in focus']]
+		
+		[defplan 'remember a plan for a current goal and execute it'
+		  [call 'remember a plan for a current goal and execute it']]
+		
+		[defplan 'plan to remember a plan for a current goal and execute it'
+		  :matches ['plan to [? plan]']
+		   :frame [[plan 'remember a plan for a current goal and execute it']]
+		    [plan [? plan]]]
+		
+		[defplan 'focus on plan to remember a plan for a current goal and execute it'
+		  :matches ['focus on [? object]']
+		   :frame [[object 'plan to remember a plan for a current goal and execute it']]
+		    [call 'focus on object' [plan-call [? object]]]]
+		
+		[defplan 'choose a plan and execute it'
 		  [call-below 'forget all imagined events']
 		  [call-below 'set imagine time to be now']
 		  [call-below 'imagine current situation']
 		  [call-below 'focus on the plan to stack a cube on a pyramid']
 		  [call-below 'imagine executing plan in focus']
 		  [call-below 'forget all imagined events']
-		  [call-below 'execute plan in focus']]
-		
-		[defplan 'remember a plan for a current goal and execute it'
-		  [call-below 'remember plan for goal']
 		  [call-below 'execute plan in focus']]
 		
 		]]

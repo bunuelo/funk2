@@ -208,6 +208,14 @@
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
 												  [stringlist-concat `['plan to ' ,plan_name]]]]]
+						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['plan in layer below to ' ,plan_name]]]]]
+						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
+												  `[error punctuation-colon ,[flatten_constree expression]]
+												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
+												  [stringlist-concat `['call plan in layer below to ' ,plan_name]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[plan_name [get this expression-as_natural_language_string [elt arguments 0]]]]
@@ -396,6 +404,18 @@
 						[[eq `plan                           command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
 													 funkname   `plan
+													 expression expression]
+												[let [[plan_name [elt arguments 0]]]
+												  [have this expression-syntax_check plan_name]]]]
+						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `plan-below
+													 expression expression]
+												[let [[plan_name [elt arguments 0]]]
+												  [have this expression-syntax_check plan_name]]]]
+						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_syntax_error-wrong_number_of_arguments
+													 funkname   `plan-call-below
 													 expression expression]
 												[let [[plan_name [elt arguments 0]]]
 												  [have this expression-syntax_check plan_name]]]]
@@ -647,7 +667,7 @@
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action_below ,action_name]]]
 														 [if [null action]
-														     [error bug_name    `nonsemantic_plan-call_balow-no_such_action
+														     [error bug_name    `nonsemantic_plan-call_below-no_such_action
 															    action_name ,action_name]
 														   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 															 [have action wait_to_call @action_arguments]
@@ -690,6 +710,52 @@
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
 														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `plan-below
+													 expression expression]
+												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let* [[plan_name                            ,plan_name]
+														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														      [variable_frame                       [new frame]]]
+														 [if [null semantic_plan_object]
+														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														       [if semantic_plan_variable_pair
+															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+														 [if [null semantic_plan_object]
+														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
+													 funkname   `plan-call-below
+													 expression expression]
+												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let* [[plan_name                            ,plan_name]
+														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														      [variable_frame                       [new frame]]]
+														 [if [null semantic_plan_object]
+														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														       [if semantic_plan_variable_pair
+															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nexecuting plan in layer below with variable frame: ' variable_frame]
+														 [if [null semantic_plan_object]
+														     [error bug_name    `nonsemantic_plan-plan_call_below-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+															 [semantic_planner [get [get [get this mental_layer_below] agency `plan] semantic_planner]]]
+														     [terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
+														     ]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -981,6 +1047,52 @@
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
 														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+													 funkname   `plan-below
+													 expression expression]
+												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let* [[plan_name                            ,plan_name]
+														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														      [variable_frame                       [new frame]]]
+														 [if [null semantic_plan_object]
+														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														       [if semantic_plan_variable_pair
+															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
+														 [if [null semantic_plan_object]
+														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
+												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+													 funkname   `plan-call-below
+													 expression expression]
+												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												  [eval `[funk [this]
+													       [let* [[plan_name                            ,plan_name]
+														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+														      [variable_frame                       [new frame]]]
+														 [if [null semantic_plan_object]
+														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
+														       [if semantic_plan_variable_pair
+															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														 [terminal_format standard-terminal '\nimagining executing plan in layer below with variable frame: ' variable_frame]
+														 [if [null semantic_plan_object]
+														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
+															    action_name semantic_plan_object-phenomenal_name]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+															 [semantic_planner [get [get [get this mental_layer_below] agency `plan] semantic_planner]]]
+														     [terminal_format standard-terminal '\nimagining executing plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+														     [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
+														     ]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -1220,6 +1332,18 @@
 					      [[eq `plan                           command] [if [not [== 1 arguments-length]]
 												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 												       funkname   `plan
+												       expression expression]
+											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
+												nil]]]
+					      [[eq `plan-below                     command] [if [not [== 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan-below
+												       expression expression]
+											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
+												nil]]]
+					      [[eq `plan-call-below                command] [if [not [== 1 arguments-length]]
+												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
+												       funkname   `plan-call-below
 												       expression expression]
 											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
 												nil]]]

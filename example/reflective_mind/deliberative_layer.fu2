@@ -32,6 +32,9 @@
 	      [have this add_agency [new deliberative_plan_agency]]]
        this]]
 
+[deftypefunk deliberative_layer get mental_layer_below []
+  [get [get this mind] layer `learned_reactive]]
+
 [deftypefunk deliberative_layer execute create_knowledge []
   [have [get this agency `plan]                      create_knowledge]
   [have [get this agency `physical_object_type_goal] create_knowledge]]

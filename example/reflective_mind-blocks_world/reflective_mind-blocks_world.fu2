@@ -217,6 +217,9 @@
 		    [plan-call 'drop the block I am holding on a [? bottom_shape]']
 		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']]
 		
+		[defplan 'test stack a pyramid on a cube'
+		  [plan-call 'stack a pyramid on a cube']]
+		
 		]]
   
   'reflective plans'

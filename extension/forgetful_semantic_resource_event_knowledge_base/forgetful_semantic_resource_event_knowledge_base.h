@@ -23,7 +23,7 @@
 #define F2__EXTENSION__SEMANTIC_RESOURCE_EVENT_KNOWLEDGE_BASE__H
 
 #include "../../c/funk2.h"
-#include "../semantic_event_knowledge_base/semantic_event_knowledge_base.h"
+#include "../forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.h"
 #include "../semantic_know_of_relationship_event/semantic_know_of_relationship_event.h"
 #include "../semantic_resource/semantic_resource.h"
 

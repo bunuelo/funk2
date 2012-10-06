@@ -28,10 +28,10 @@
        ]]
 
 [deftypefunk deliberative_physical_object_type_goal_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `type_copy_of_physical_knowledge        [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_knowledge                [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_goal_knowledge                [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `type_copy_of_physical_knowledge        [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_knowledge                [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_goal_knowledge                [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk deliberative_physical_object_type_goal_agency execute connect_knowledge_reflection []

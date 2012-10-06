@@ -19,7 +19,7 @@
 
 [defpackage semantic_resource_event_knowledge_base
   :documentation        'Knowledge base for dealing with resource events.'
-   :packages            [semantic_event_knowledge_base
+   :packages            [forgetful_semantic_event_knowledge_base
 			 semantic_know_of_relationship_event
 			 semantic_resource]
     :sources            ['semantic_resource_event_knowledge_base-core.fu2']

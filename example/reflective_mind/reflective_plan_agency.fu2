@@ -42,7 +42,7 @@
        this]]
 
 [deftypefunk reflective_plan_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `deliberative2_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `deliberative2_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_plan_agency execute connect_knowledge_reflection []

@@ -182,6 +182,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/fibermon/libf2e_fibermon.la \
                       extension/forgetful_event_stream/libf2e_forgetful_event_stream.la \
                       extension/forgetful_semantic_event_knowledge_base/libf2e_forgetful_semantic_event_knowledge_base.la \
+                      extension/forgetful_semantic_resource_event_knowledge_base/libf2e_forgetful_semantic_resource_event_knowledge_base.la \
                       extension/forward_planner/libf2e_forward_planner.la \
                       extension/frame_ball/libf2e_frame_ball.la \
                       extension/graph_isomorphism/libf2e_graph_isomorphism.la \
@@ -249,7 +250,6 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_resource/libf2e_semantic_resource.la \
                       extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la \
                       extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la \
-                      extension/semantic_resource_event_knowledge_base/libf2e_semantic_resource_event_knowledge_base.la \
                       extension/semantic_self/libf2e_semantic_self.la \
                       extension/semantic_situation/libf2e_semantic_situation.la \
                       extension/semantic_situation_category/libf2e_semantic_situation_category.la \
@@ -340,7 +340,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_resource/.libs/libf2e_*.*                                                       $(compile__lib__dir)
 	cp -fa extension/semantic_resource_action_event/.libs/libf2e_*.*                             $(compile__lib__dir)
 	cp -fa extension/semantic_resource_action_sequence/.libs/libf2e_*.*                       $(compile__lib__dir)
-	cp -fa extension/semantic_resource_event_knowledge_base/.libs/libf2e_*.*             $(compile__lib__dir)
+	cp -fa extension/forgetful_semantic_resource_event_knowledge_base/.libs/libf2e_*.*             $(compile__lib__dir)
 	cp -fa extension/semantic_self/.libs/libf2e_*.*                                                               $(compile__lib__dir)
 	cp -fa extension/semantic_situation/.libs/libf2e_*.*                                                     $(compile__lib__dir)
 	cp -fa extension/semantic_situation_category/.libs/libf2e_*.*                                   $(compile__lib__dir)
@@ -567,7 +567,7 @@ extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES 
 extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                                                     = extension/semantic_resource/semantic_resource.c
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                                           = extension/semantic_resource_action_event/semantic_resource_action_event.c
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES                                     = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
-extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_SOURCES                           = extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.c
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_SOURCES       = extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.c
 extension_semantic_self_libf2e_semantic_self_la_SOURCES                                                                             = extension/semantic_self/semantic_self.c
 extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                                                   = extension/semantic_situation/semantic_situation.c
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                                                 = extension/semantic_situation_category/semantic_situation_category.c
@@ -834,8 +834,8 @@ extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_l
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-extension_semantic_resource_event_knowledge_base_libf2e_semantic_resource_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_semantic_self_libf2e_semantic_self_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_self_libf2e_semantic_self_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -999,7 +999,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource/"                                                                                                          >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_event/"                                                                                             >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_action_sequence/"                                                                                          >> install-sh
-	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forgetful_semantic_resource_event_knowledge_base/"                                                                           >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_self/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation/"                                                                                                         >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_situation_category/"                                                                                                >> install-sh
@@ -1145,7 +1145,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_resource/*.f*                              $(chroot__install__extension__dir)semantic_resource/"                              >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_resource_action_event/*.f*                 $(chroot__install__extension__dir)semantic_resource_action_event/"                 >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_resource_action_sequence/*.f*              $(chroot__install__extension__dir)semantic_resource_action_sequence/"              >> install-sh
-	echo "install -m644 $(source__extension__dir)semantic_resource_event_knowledge_base/*.f*         $(chroot__install__extension__dir)semantic_resource_event_knowledge_base/"         >> install-sh
+	echo "install -m644 $(source__extension__dir)forgetful_semantic_resource_event_knowledge_base/*.f* $(chroot__install__extension__dir)forgetful_semantic_resource_event_knowledge_base/" >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_self/*.f*                                  $(chroot__install__extension__dir)semantic_self/"                                  >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_situation/*.f*                             $(chroot__install__extension__dir)semantic_situation/"                             >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_situation_category/*.f*                    $(chroot__install__extension__dir)semantic_situation_category/"                    >> install-sh

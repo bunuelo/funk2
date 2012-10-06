@@ -66,6 +66,7 @@
 	     semantic_knowledge_base
 	     meta_semantic_knowledge_base
 	     semantic_event_knowledge_base
+	     forgetful_semantic_event_knowledge_base
 	     lick]
    :sources ['mind.fu2']]
 

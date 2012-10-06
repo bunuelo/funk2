@@ -28,7 +28,7 @@ f2ptr raw__semantic_resource_event_knowledge_base__type_create(f2ptr cause, f2pt
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_resource_event_knowledge_base"));
   }
-  assert_value(raw__semantic_event_knowledge_base__type_create(cause, this, name, semantic_realm));
+  assert_value(raw__forgetful_semantic_event_knowledge_base__type_create(cause, this, name, semantic_realm));
   return this;
 }
 
@@ -152,7 +152,7 @@ export_cefunk3(semantic_resource_event_knowledge_base__most_recent_targeting_eve
 
 
 f2ptr f2__semantic_resource_event_knowledge_base__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event_knowledge_base")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_event_knowledge_base"), new__symbol(cause, "semantic_resource_event_knowledge_base__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_event_knowledge_base"), new__symbol(cause, "semantic_resource_event_knowledge_base__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_resource_event_knowledge_base"), new__symbol(cause, "semantic_resource_event_knowledge_base__type")));}
@@ -173,7 +173,7 @@ f2ptr f2__semantic_resource_event_knowledge_base__core_extension__ping(f2ptr cau
 export_cefunk0(semantic_resource_event_knowledge_base__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_resource_event_knowledge_base__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_resource_event_knowledge_base, semantic_event_knowledge_base);
+  core_extension__ping(semantic_resource_event_knowledge_base, forgetful_semantic_event_knowledge_base);
   core_extension__ping(semantic_resource_event_knowledge_base, semantic_know_of_relationship_event);
   core_extension__ping(semantic_resource_event_knowledge_base, semantic_resource);
   return nil;

@@ -56,7 +56,7 @@
 			    
 			    'so, create whole new knowledge base.'
 			    [have [get [get [get this mind] semantic_realm] semantic_knowledge_base_frame] remove `physical_type_counterfactual_knowledge]
-			    [have [get this mind] add_semantic_knowledge_base [new semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
+			    [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
 			    
 			    nil]]]]
        nil]]

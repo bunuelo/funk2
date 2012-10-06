@@ -159,6 +159,7 @@
 						     'extension/event_stream/'
 						     'extension/fibermon/'
 						     'extension/forgetful_event_stream/'
+						     'extension/forgetful_semantic_event_knowledge_base/'
 						     'extension/forward_planner/'
 						     'extension/frame_ball/'
 						     'extension/graph_isomorphism/'

@@ -181,6 +181,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/equals_hash/libf2e_equals_hash.la \
                       extension/fibermon/libf2e_fibermon.la \
                       extension/forgetful_event_stream/libf2e_forgetful_event_stream.la \
+                      extension/forgetful_semantic_event_knowledge_base/libf2e_forgetful_semantic_event_knowledge_base.la \
                       extension/forward_planner/libf2e_forward_planner.la \
                       extension/frame_ball/libf2e_frame_ball.la \
                       extension/graph_isomorphism/libf2e_graph_isomorphism.la \
@@ -271,6 +272,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/equals_hash/.libs/libf2e_*.*                                                                   $(compile__lib__dir)
 	cp -fa extension/fibermon/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
 	cp -fa extension/forgetful_event_stream/.libs/libf2e_*.*                                             $(compile__lib__dir)
+	cp -fa extension/forgetful_semantic_event_knowledge_base/.libs/libf2e_*.*                     $(compile__lib__dir)
 	cp -fa extension/forward_planner/.libs/libf2e_*.*                                                           $(compile__lib__dir)
 	cp -fa extension/frame_ball/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 	cp -fa extension/graph_isomorphism/.libs/libf2e_*.*                                                       $(compile__lib__dir)
@@ -497,6 +499,7 @@ extension_event_stream_libf2e_event_stream_la_SOURCES                           
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                                                 = extension/equals_hash/equals_hash.c
 extension_fibermon_libf2e_fibermon_la_SOURCES                                                                                       = extension/fibermon/fibermon.c
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                                           = extension/forgetful_event_stream/forgetful_event_stream.c
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_SOURCES                         = extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                                         = extension/forward_planner/forward_planner.c
 extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                                                   = extension/frame_ball/frame_ball.c
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                                                     = extension/graph_isomorphism/graph_isomorphism.c
@@ -638,6 +641,9 @@ extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS
 
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_forward_planner_libf2e_forward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -925,6 +931,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)event_stream/"                                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)fibermon/"                                                                                                                   >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)forgetful_event_stream/"                                                                                                     >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)forgetful_semantic_event_knowledge_base/"                                                                                    >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)forward_planner/"                                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)frame_ball/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)graph_isomorphism/"                                                                                                          >> install-sh
@@ -1070,6 +1077,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)event_stream/*.f*                                   $(chroot__install__extension__dir)event_stream/"                                   >> install-sh
 	echo "install -m644 $(source__extension__dir)fibermon/*.f*                                       $(chroot__install__extension__dir)fibermon/"                                       >> install-sh
 	echo "install -m644 $(source__extension__dir)forgetful_event_stream/*.f*                         $(chroot__install__extension__dir)forgetful_event_stream/"                         >> install-sh
+	echo "install -m644 $(source__extension__dir)forgetful_semantic_event_knowledge_base/*.f*        $(chroot__install__extension__dir)forgetful_semantic_event_knowledge_base/"        >> install-sh
 	echo "install -m644 $(source__extension__dir)forward_planner/*.f*                                $(chroot__install__extension__dir)forward_planner/"                                >> install-sh
 	echo "install -m644 $(source__extension__dir)frame_ball/*.f*                                     $(chroot__install__extension__dir)frame_ball/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)graph_isomorphism/*.f*                              $(chroot__install__extension__dir)graph_isomorphism/"                              >> install-sh

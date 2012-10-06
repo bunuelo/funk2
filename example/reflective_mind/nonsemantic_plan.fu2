@@ -60,6 +60,8 @@
        [= expression      initial-expression]
        ]]
 
+[deftypefunk nonsemantic_plan get mental_layer_below []
+  [get mental_layer mental_layer_below]]
 
 [deftypefunk nonsemantic_plan get __default_variable_frame []
   [let [[default_variable_frame [new frame]]]

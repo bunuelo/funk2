@@ -17,13 +17,13 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defpackage semantic_resource_event_knowledge_base
+[defpackage forgetful_semantic_resource_event_knowledge_base
   :documentation        'Knowledge base for dealing with resource events.'
    :packages            [forgetful_semantic_event_knowledge_base
 			 semantic_know_of_relationship_event
 			 semantic_resource]
-    :sources            ['semantic_resource_event_knowledge_base-core.fu2']
-     :dynamic_libraries ['libf2e_semantic_resource_event_knowledge_base.so']]
+    :sources            ['forgetful_semantic_resource_event_knowledge_base-core.fu2']
+     :dynamic_libraries ['libf2e_forgetful_semantic_resource_event_knowledge_base.so']]
 
-[defcore semantic_resource_event_knowledge_base 'libf2e_semantic_resource_event_knowledge_base.so']
+[defcore forgetful_semantic_resource_event_knowledge_base 'libf2e_forgetful_semantic_resource_event_knowledge_base.so']
 

@@ -265,7 +265,7 @@
 	     reflective_resource
 	     semantic_resource_action_sequence
 	     semantic_know_of_relationship_event
-	     semantic_resource_event_knowledge_base
+	     forgetful_semantic_resource_event_knowledge_base
 	     semantic_event_transframe]
    :sources ['reflective_event_knowledge_agency.fu2']]
 

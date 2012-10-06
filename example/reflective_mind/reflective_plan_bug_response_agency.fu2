@@ -35,7 +35,7 @@
 
 
 [deftypefunk reflective_plan_bug_response_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new semantic_resource_event_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_resource_event_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]
   ]
 
 [deftypefunk reflective_plan_bug_response_agency execute connect_knowledge_reflection []

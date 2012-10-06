@@ -238,6 +238,10 @@
 		   :frame [[object 'plan below to stack a pyramid on a cube']]
 		    [call-below 'focus on object' [plan-call-below [? object]]]]
 		
+		[defplan 'execute plan in focus below'
+		  :frame [[object 'plan below to stack a pyramid on a cube']]
+		   [call-below 'execute plan in focus']]
+		
 		[defplan 'remember a plan for a current goal and execute it'
 		  [call-below 'remember plan for goal']
 		  [call-below 'execute plan in focus']]

@@ -33,7 +33,7 @@
 	      [have this add_agency [new reflective_execution_agency]]]
        this]]
 
-[deftypefunk deliberative_layer get mental_layer_below []
+[deftypefunk reflective_layer get mental_layer_below []
   [get [get this mind] layer `deliberative]]
 
 [deftypefunk reflective_layer execute create_knowledge []

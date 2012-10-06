@@ -215,8 +215,7 @@
 			   [bottom_shape pyramid]]
 		    [plan-call 'pick up a [? top_shape]']
 		    [plan-call 'drop the block I am holding on a [? bottom_shape]']
-		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']
-		    ]
+		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']]
 		
 		]]
   

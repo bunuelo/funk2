@@ -91,7 +91,7 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__forget_before_time, thin
 
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr cause, f2ptr this, f2ptr forget_before_time) {
-  f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), value));
+  f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
   if (forget_before_time != nil) {
     f2ptr semantic_left_time  = f2__semantic_time__new(cause, new__symbol(cause, "before"));
     f2ptr semantic_right_time = forget_before_time;

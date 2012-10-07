@@ -167,7 +167,7 @@ export_cefunk3(semantic_event_knowledge_base__events_overlapping_range, this, se
 
 f2ptr raw__semantic_event_knowledge_base__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
-  return assert_value(f2__semantic_event_tree__events_overlapping_events(cause, semantic_event_tree, semantic_event));
+  return assert_value(f2__semantic_event_tree__events_overlapping_event(cause, semantic_event_tree, semantic_event));
 }
 
 f2ptr f2__semantic_event_knowledge_base__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {

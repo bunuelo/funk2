@@ -248,6 +248,7 @@ export_cefunk0(forgetful_semantic_event_knowledge_base__core_extension__ping, 0,
 f2ptr f2__forgetful_semantic_event_knowledge_base__core_extension__initialize(f2ptr cause) {
   core_extension__ping(forgetful_semantic_event_knowledge_base, semantic_event_knowledge_base);
   f2__add_type(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), f2__forgetful_semantic_event_knowledge_base_type__new(cause));
+  f2__add_type(cause, new__symbol(cause, "remember_token"),                          f2__remember_token_type__new_aux(cause));
   status("forgetful_semantic_event_knowledge_base initialized.");
   return nil;
 }

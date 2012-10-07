@@ -228,7 +228,7 @@ export_cefunk2(semantic_event_tree__events_containing_time, this, time, 0, "Retu
 
 f2ptr raw__semantic_event_tree__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr left_semantic_time, f2ptr right_semantic_time) {
   f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
-  return assert_value(f2__interval_tree__intervals_overlapping_interval(cause, interval_tree, left_semantic_time, right_semantic_time));
+  return assert_value(f2__interval_tree__intervals_overlapping_range(cause, interval_tree, left_semantic_time, right_semantic_time));
 }
 
 f2ptr f2__semantic_event_tree__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr left_semantic_time, f2ptr right_semantic_time) {

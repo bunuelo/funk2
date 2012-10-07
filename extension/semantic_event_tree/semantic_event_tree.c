@@ -226,6 +226,21 @@ f2ptr f2__semantic_event_tree__events_containing_time(f2ptr cause, f2ptr this, f
 export_cefunk2(semantic_event_tree__events_containing_time, this, time, 0, "Returns a new set of events in this semantic_event_tree that contain the given time.");
 
 
+f2ptr raw__semantic_event_tree__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr left_semantic_time, f2ptr right_semantic_time) {
+  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this, left_semantic_time, right_semantic_time);
+  return assert_value(f2__interval_tree__intervals_overlapping_interval(cause, interval_tree, semantic_event));
+}
+
+f2ptr f2__semantic_event_tree__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr left_semantic_time, f2ptr right_semantic_time) {
+  assert_argument_type(semantic_event_tree, this);
+  assert_argument_type(semantic_time,       left_semantic_time);
+  assert_argument_type(semantic_time,       right_semantic_time);
+  return raw__semantic_event_tree__events_overlapping_range(cause, this, semantic_event, left_semantic_time, right_semantic_time);
+}
+export_cefunk3(semantic_event_tree__events_overlapping_range, this, left_semantic_time, right_semantic_time, 0,
+	       "Returns a new set of events in this semantic_event_tree that overlap the given range specified by left_semantic_time and right_semantic_time.");
+
+
 f2ptr raw__semantic_event_tree__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {
   f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
   return assert_value(f2__interval_tree__intervals_overlapping_interval(cause, interval_tree, semantic_event));
@@ -274,6 +289,7 @@ f2ptr f2__semantic_event_tree_type__new_aux(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events_containing_time")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_overlapping_event"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events_overlapping_event")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_overlapping_range"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events_overlapping_range")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_events"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__most_recent_filtered_events")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__events")));}
   return this;

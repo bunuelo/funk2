@@ -457,7 +457,7 @@ export_cefunk2(interval_tree__intervals_containing_value, this, value, 0,
 	    "Returns a new set that contains the intervals in this interval_tree that contain the given value.");
 
 
-f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
+f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value) {
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter before.", __FUNCTION__, this);
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
@@ -471,16 +471,14 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
     f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
     f2ptr value_equality_funk    = f2__interval_tree__value_equality_funk(   cause, this);
     f2ptr value_comparison_funk  = f2__interval_tree__value_comparison_funk( cause, this);
-    f2ptr element__left_value    = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
-    f2ptr element__right_value   = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));
     {
-      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_left_redblacktree, element__left_value);
+      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_left_redblacktree, range_left_value);
       while (redblacktree_node != nil) {
 	f2ptr redblacktree_node__count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
 	f2ptr redblacktree_node__element             = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
 	f2ptr redblacktree_node__element__left_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,       f2list1__new(cause, redblacktree_node__element)));
-	f2ptr equality                               = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__left_value, element__right_value)));
-	f2ptr comparison                             = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__left_value, element__right_value)));
+	f2ptr equality                               = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__left_value, range_right_value)));
+	f2ptr comparison                             = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__left_value, range_right_value)));
 	if ((equality != nil) || (comparison != nil)) {
 	  ptypehash__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter, count,
 			       s64 count__i = f2integer__i(count, cause);
@@ -498,13 +496,13 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
       }
     }
     {
-      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_right_redblacktree, element__left_value);
+      f2ptr redblacktree_node = f2__redblacktree__minimum_not_less_than__node(cause, all_right_redblacktree, range_left_value);
       while (redblacktree_node != nil) {
 	f2ptr redblacktree_node__count_key_ptypehash  = f2__redblacktree_node__count_key_ptypehash(cause, redblacktree_node);
 	f2ptr redblacktree_node__element              = f2__ptypehash__an_arbitrary_key(cause, redblacktree_node__count_key_ptypehash);
 	f2ptr redblacktree_node__element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk,      f2list1__new(cause, redblacktree_node__element)));
-	f2ptr equality                                = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__right_value, element__right_value)));
-	f2ptr comparison                              = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__right_value, element__right_value)));
+	f2ptr equality                                = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, redblacktree_node__element__right_value, range_right_value)));
+	f2ptr comparison                              = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, redblacktree_node__element__right_value, range_right_value)));
 	if ((equality != nil) || (comparison != nil)) {
 	  ptypehash__iteration(cause, redblacktree_node__count_key_ptypehash, element_iter, count,
 			       s64 count__i = f2integer__i(count, cause);
@@ -522,7 +520,7 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
       }
     }
     f2ptr value_center_funk     = f2__interval_tree__value_center_funk(cause, this);
-    f2ptr element__center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, element__left_value, element__right_value)));
+    f2ptr element__center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, range_left_value, range_right_value)));
     assert_value(raw__interval_tree__add_intervals_containing_value_to_list(cause, this, element__center_value, list));
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
@@ -531,6 +529,30 @@ f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr ca
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return list;
+}
+
+f2ptr raw__interval_tree__intervals_overlapping_range(f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value) {
+  f2ptr mutate_cmutex = f2__interval_tree__mutate_cmutex(cause, this);
+  raw__cmutex__lock(cause, mutate_cmutex);
+  f2ptr result = raw__interval_tree__intervals_overlapping_range__thread_unsafe(cause, this, range_left_value, range_right_value);
+  raw__cmutex__unlock(cause, mutate_cmutex);
+  return result;
+}
+
+f2ptr f2__interval_tree__intervals_overlapping_range(f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value) {
+  assert_argument_type(interval_tree, this);
+  return raw__interval_tree__intervals_overlapping_range(cause, this, range_left_value, range_right_value);
+}
+export_cefunk3(interval_tree__intervals_overlapping_range, this, range_left_value, range_right_value, 0,
+	       "Returns a new list that contains the intervals in this interval_tree that overlap with the given range specified by the range_left_value and range_right_value.");
+
+
+f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe(f2ptr cause, f2ptr this, f2ptr element) {
+  f2ptr left_value_funk      = f2__interval_tree__left_value_funk( cause, this);
+  f2ptr right_value_funk     = f2__interval_tree__right_value_funk(cause, this);
+  f2ptr element__left_value  = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), left_value_funk,  f2list1__new(cause, element)));
+  f2ptr element__right_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), right_value_funk, f2list1__new(cause, element)));
+  return raw__interval_tree__intervals_overlapping_range__thread_unsafe(cause, this, element__left_value, element__right_value);
 }
 
 f2ptr raw__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this, f2ptr element) {
@@ -546,7 +568,7 @@ f2ptr f2__interval_tree__intervals_overlapping_interval(f2ptr cause, f2ptr this,
   return raw__interval_tree__intervals_overlapping_interval(cause, this, element);
 }
 export_cefunk2(interval_tree__intervals_overlapping_interval, this, element, 0,
-	       "Returns a new set that contains the intervals in this interval_tree that overlap with the given interval.");
+	       "Returns a new list that contains the intervals in this interval_tree that overlap with the given interval.");
 
 
 f2ptr raw__interval_tree__most_recent_filtered_intervals__thread_unsafe(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr maximum_value) {
@@ -621,6 +643,7 @@ f2ptr f2__interval_tree_type__new_aux(f2ptr cause) {
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_intervals_containing_value_to_list"), f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__add_intervals_containing_value_to_list")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_containing_value"),             f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_containing_value")));
+  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_overlapping_range"),            f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_overlapping_range")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "intervals_overlapping_interval"),         f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__intervals_overlapping_interval")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_intervals"),         f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__most_recent_filtered_intervals")));
   f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "terminal_print_with_frame"),              f2__core_extension_funk__new(cause, new__symbol(cause, "interval_tree"), new__symbol(cause, "interval_tree__terminal_print_with_frame")));

@@ -150,6 +150,35 @@ export_cefunk2(semantic_event_knowledge_base__events_containing_time, this, sema
 	       "Returns the semantic_events from this semantic_event_knowledge_base that contain the given time.");
 
 
+f2ptr raw__semantic_event_knowledge_base__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr semantic_left_time, f2ptr semantic_right_time) {
+  f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
+  return assert_value(f2__semantic_event_tree__events_overlapping_range(cause, semantic_event_tree, semantic_left_time, semantic_right_time));
+}
+
+f2ptr f2__semantic_event_knowledge_base__events_overlapping_range(f2ptr cause, f2ptr this, f2ptr semantic_left_time, f2ptr semantic_right_time) {
+  assert_argument_type(semantic_event_knowledge_base, this);
+  assert_argument_type(semantic_time,                 semantic_left_time);
+  assert_argument_type(semantic_time,                 semantic_right_time);
+  return raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time);
+}
+export_cefunk3(semantic_event_knowledge_base__events_overlapping_range, this, semantic_left_time, semantic_right_time, 0,
+	       "Returns a new set of events in this semantic_event_knowledge_base that overlap the given range specified by semantic_left_time and semantic_right_time.");
+
+
+f2ptr raw__semantic_event_knowledge_base__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
+  return assert_value(f2__semantic_event_tree__events_overlapping_events(cause, semantic_event_tree, semantic_event));
+}
+
+f2ptr f2__semantic_event_knowledge_base__events_overlapping_event(f2ptr cause, f2ptr this, f2ptr semantic_event) {
+  assert_argument_type(semantic_event_knowledge_base, this);
+  assert_argument_type(semantic_event,      semantic_event);
+  return raw__semantic_event_knowledge_base__events_overlapping_event(cause, this, semantic_event);
+}
+export_cefunk2(semantic_event_knowledge_base__events_overlapping_event, this, semantic_event, 0,
+	       "Returns a new set of events in this semantic_event_knowledge_base that overlap the given event.");
+
+
 f2ptr raw__semantic_event_knowledge_base__most_recent_filtered_events(f2ptr cause, f2ptr this, f2ptr filter_funk, f2ptr user_filter_data, f2ptr semantic_time) {
   f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
   return assert_value(f2__semantic_event_tree__most_recent_filtered_events(cause, semantic_event_tree, filter_funk, user_filter_data, semantic_time));
@@ -243,6 +272,8 @@ f2ptr f2__semantic_event_knowledge_base_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "semantic_event_tree"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__semantic_event_tree")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_containing_time"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_containing_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_overlapping_range"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_overlapping_range")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events_overlapping_event"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events_overlapping_event")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "most_recent_filtered_events"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__most_recent_filtered_events")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "event_transframe"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__event_transframe")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "events"),                      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_knowledge_base"), new__symbol(cause, "semantic_event_knowledge_base__events")));}

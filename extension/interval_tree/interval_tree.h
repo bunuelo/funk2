@@ -52,6 +52,9 @@ f2ptr  f2__interval_tree__add_intervals_containing_value_to_list               (
 f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe            (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr raw__interval_tree__intervals_containing_value                           (f2ptr cause, f2ptr this, f2ptr value);
 f2ptr  f2__interval_tree__intervals_containing_value                           (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe           (f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value);
+f2ptr raw__interval_tree__intervals_overlapping_range                          (f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value);
+f2ptr  f2__interval_tree__intervals_overlapping_range                          (f2ptr cause, f2ptr this, f2ptr range_left_value, f2ptr range_right_value);
 f2ptr raw__interval_tree__intervals_overlapping_interval__thread_unsafe        (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr raw__interval_tree__intervals_overlapping_interval                       (f2ptr cause, f2ptr this, f2ptr element);
 f2ptr  f2__interval_tree__intervals_overlapping_interval                       (f2ptr cause, f2ptr this, f2ptr element);

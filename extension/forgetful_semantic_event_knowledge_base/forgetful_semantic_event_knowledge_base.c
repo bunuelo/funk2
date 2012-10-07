@@ -22,6 +22,71 @@
 #include "forgetful_semantic_event_knowledge_base.h"
 
 
+def_ceframe1(forgetful_semantic_event_knowledge_base, remember_token, semantic_time);
+
+f2ptr raw__remember_token__new(f2ptr cause, f2ptr semantic_time) {
+  return f2remember_token__new(cause, semantic_time);
+}
+
+f2ptr f2__remember_token__new(f2ptr cause, f2ptr semantic_time) {
+  assert_argument_type(semantic_time, semantic_time);
+  return raw__remember_token__new(cause, semantic_time);
+}
+export_cefunk1(remember_token__new, semantic_time, 0, "Returns a new remember_token object.");
+
+
+f2ptr raw__remember_token__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__semantic_time = raw__remember_token__semantic_time(cause, this);
+  f2ptr that__semantic_time = raw__remember_token__semantic_time(cause, that);
+  return raw__semantic_time__is_less_than(cause, this__semantic_time, that__semantic_time);
+}
+
+f2ptr f2__remember_token__is_less_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(remember_token, this);
+  assert_argument_type(remember_token, that);
+  return raw__remember_token__is_less_than(cause, this, that);
+}
+export_cefunk2(remember_token__is_less_than, this, that, 0, "Returns whether this remember_token refers to a semantic_time that is less than that remember_token's semantic_time.");
+
+
+f2ptr raw__remember_token__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__semantic_time = raw__remember_token__semantic_time(cause, this);
+  f2ptr that__semantic_time = raw__remember_token__semantic_time(cause, that);
+  return raw__semantic_time__is_greater_than(cause, this__semantic_time, that__semantic_time);
+}
+
+f2ptr f2__remember_token__is_greater_than(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(remember_token, this);
+  assert_argument_type(remember_token, that);
+  return raw__remember_token__is_greater_than(cause, this, that);
+}
+export_cefunk2(remember_token__is_greater_than, this, that, 0, "Returns whether this remember_token refers to a semantic_time that is greater than that remember_token's semantic_time.");
+
+
+f2ptr raw__remember_token__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr this__semantic_time = raw__remember_token__semantic_time(cause, this);
+  f2ptr that__semantic_time = raw__remember_token__semantic_time(cause, that);
+  return raw__semantic_time__is_numerically_equal_to(cause, this__semantic_time, that__semantic_time);
+}
+
+f2ptr f2__remember_token__is_numerically_equal_to(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(remember_token, this);
+  assert_argument_type(remember_token, that);
+  return raw__remember_token__is_numerically_equal_to(cause, this, that);
+}
+export_cefunk2(remember_token__is_numerically_equal_to, this, that, 0, "Returns whether this remember_token refers to a semantic_time that is greater than that remember_token's semantic_time.");
+
+
+f2ptr f2__remember_token_type__new_aux(f2ptr cause) {
+  f2ptr this = f2__remember_token_type__new(cause);
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_less_than"),            f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "remember_token__is_less_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_greater_than"),         f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "remember_token__is_greater_than")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"), new__symbol(cause, "is_numerically_equal_to"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "remember_token__is_numerically_equal_to")));}
+  return this;
+}
+
+
+
 // forgetful_semantic_event_knowledge_base
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr name, f2ptr semantic_realm) {
@@ -29,7 +94,11 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__type_create(f2ptr cause, f2p
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "forgetful_semantic_event_knowledge_base"));
   }
   assert_value(raw__semantic_event_knowledge_base__type_create(cause, this, name, semantic_realm));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), nil);
+  f2ptr value_funk                  = f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "remember_token__semantic_time"));
+  f2ptr value_comparison_funk       = f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_time"),                           new__symbol(cause, "semantic_time__is_less_than"));
+  f2ptr remember_token_redblacktree = f2__redblacktree__new(cause, value_funk, value_comparison_funk);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"),          nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "remember_token_redblacktree"), remember_token_redblacktree);
   return this;
 }
 
@@ -114,13 +183,53 @@ f2ptr f2__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr
 export_cefunk2(forgetful_semantic_event_knowledge_base__forget_before_time__set, thing, value, 0, "Sets the time before which events will be forgotten in this knowledge base.");
 
 
+f2ptr raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(f2ptr cause, f2ptr this) {
+  return assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "remember_token_redblacktree"), nil));
+}
+
+f2ptr f2__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(f2ptr cause, f2ptr this) {
+  assert_argument_type(forgetful_semantic_event_knowledge_base, this);
+  return raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
+}
+export_cefunk1(forgetful_semantic_event_knowledge_base__remember_token_redblacktree, thing, 0, "Returns the time before which events will be forgotten in this knowledge base.");
+
+
+f2ptr raw__forgetful_semantic_event_knowledge_base__add_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
+  f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
+  assert_value(raw__redblacktree__insert(cause, remember_token_redblacktree, remember_token));
+  return nil;
+}
+
+f2ptr f2__forgetful_semantic_event_knowledge_base__add_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
+  assert_argument_type(forgetful_semantic_event_knowledge_base, this);
+  assert_argument_type(remember_token,                          remember_token);
+  return raw__forgetful_semantic_event_knowledge_base__add_remember_token(cause, this, remember_token);
+}
+export_cefunk2(forgetful_semantic_event_knowledge_base__add_remember_token, remember_token, 0, "Add the given remember_token to this forgetful_semantic_event_knowledge_base.");
+
+
+f2ptr raw__forgetful_semantic_event_knowledge_base__remove_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
+  f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
+  assert_value(raw__redblacktree__remove(cause, remember_token_redblacktree, remember_token));
+  return nil;
+}
+
+f2ptr f2__forgetful_semantic_event_knowledge_base__remove_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
+  assert_argument_type(forgetful_semantic_event_knowledge_base, this);
+  assert_argument_type(remember_token,                          remember_token);
+  return raw__forgetful_semantic_event_knowledge_base__remove_remember_token(cause, this, remember_token);
+}
+export_cefunk2(forgetful_semantic_event_knowledge_base__remove_remember_token, remember_token, 0, "Remove the given remember_token from this forgetful_semantic_event_knowledge_base.");
+
+
 f2ptr f2__forgetful_semantic_event_knowledge_base_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_event_knowledge_base")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),               f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "forget_before_time"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "forget_before_time"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "remember_token_redblacktree"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__remember_token_redblacktree")));}
   return this;
 }
 

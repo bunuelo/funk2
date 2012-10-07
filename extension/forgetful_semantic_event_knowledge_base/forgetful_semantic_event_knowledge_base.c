@@ -99,7 +99,7 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
     list__iteration(cause, forget_events, forget_event,
 		    f2ptr absolute_end_time = raw__semantic_event__absolute_end_time(  cause, forget_event);
 		    if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
-		      assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, remove_event));
+		      assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event));
 		    }
 		    );
   }

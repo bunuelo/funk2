@@ -235,7 +235,7 @@ f2ptr f2__semantic_event_tree__events_overlapping_range(f2ptr cause, f2ptr this,
   assert_argument_type(semantic_event_tree, this);
   assert_argument_type(semantic_time,       left_semantic_time);
   assert_argument_type(semantic_time,       right_semantic_time);
-  return raw__semantic_event_tree__events_overlapping_range(cause, this, semantic_event, left_semantic_time, right_semantic_time);
+  return raw__semantic_event_tree__events_overlapping_range(cause, this, left_semantic_time, right_semantic_time);
 }
 export_cefunk3(semantic_event_tree__events_overlapping_range, this, left_semantic_time, right_semantic_time, 0,
 	       "Returns a new set of events in this semantic_event_tree that overlap the given range specified by left_semantic_time and right_semantic_time.");

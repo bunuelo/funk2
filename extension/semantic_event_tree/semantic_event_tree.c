@@ -85,7 +85,7 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
   }
   boolean_t this__value__is__time = raw__time__is_type(cause, this__value);
   boolean_t that__value__is__time = raw__time__is_type(cause, that__value);
-  if ((! this__value__is__time) && (! this__value__is__time)) {
+  if ((! this__value__is__time) && (! that__value__is__time)) {
     if (raw__eq(cause, new__symbol(cause, "before"), this__value)) {
       if (raw__eq(cause, new__symbol(cause, "before"), that__value)) {
 	return new__error(f2list6__new(cause,
@@ -97,7 +97,7 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
 	return f2__semantic_time__new(cause, f2__time(cause));
       } else {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_computer_center_of_semantic_times"),
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_compute_center_of_semantic_times"),
 				       new__symbol(cause, "this"),     this,
 				       new__symbol(cause, "that"),     that));
       }
@@ -112,13 +112,13 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
 	//return f2__semantic_time__new(cause, new__symbol(cause, "after"));
       } else {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_computer_center_of_semantic_times"),
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_compute_center_of_semantic_times"),
 				       new__symbol(cause, "this"),     this,
 				       new__symbol(cause, "that"),     that));
       }
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_computer_center_of_semantic_times"),
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_compute_center_of_semantic_times"),
 				     new__symbol(cause, "this"),     this,
 				     new__symbol(cause, "that"),     that));
     }
@@ -133,7 +133,7 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
       //return f2__semantic_time__new(cause, new__symbol(cause, "after"));
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_computer_center_of_semantic_times"),
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_compute_center_of_semantic_times"),
 				     new__symbol(cause, "this"),     this,
 				     new__symbol(cause, "that"),     that));
     }
@@ -148,7 +148,7 @@ f2ptr raw__semantic_event_tree__semantic_event__value_center(f2ptr cause, f2ptr 
       //return f2__semantic_time__new(cause, new__symbol(cause, "after"));
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_computer_center_of_semantic_times"),
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "could_not_compute_center_of_semantic_times"),
 				     new__symbol(cause, "this"),     this,
 				     new__symbol(cause, "that"),     that));
     }

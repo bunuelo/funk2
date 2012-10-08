@@ -71,6 +71,8 @@
 'traced_resource'
 
 [deframe traced_resource [resource] [simulate_knowledge_base_names
+				     [remember_simulate_knowledge_base_tokens_mutex          [new mutex]]
+				     [remember_simulate_knowledge_base_tokens_set            [new set]]
 				     [feature_phenomenal_name_ptypehash                      [new ptypehash]]
 				     [change_feature_phenomenal_name_ptypehash               [new ptypehash]]
 				     [precondition_hypothesis_space_change_feature_ptypehash [new ptypehash]]]
@@ -83,7 +85,28 @@
 	 
 	 ]]]
 
+[deftypefunk traced_resource get remember_tokens []
+  [have remember_simulate_knowledge_base_tokens_mutex lock]
+  [let [[result [get remember_simulate_knowledge_base_tokens_set elements]]]
+    [have remember_simulate_knowledge_base_tokens_mutex unlock]
+    result]]
+
+[deftypefunk traced_resource get add_remember_token [remember_token]
+  [have remember_simulate_knowledge_base_tokens_mutex lock]
+  [have remember_simulate_knowledge_base_tokens_set add remember_token]
+  [have remember_simulate_knowledge_base_tokens_mutex unlock]]
+
+[deftypefunk traced_resource get remove_remember_token [remember_token]
+  [have remember_simulate_knowledge_base_tokens_mutex lock]
+  [have remember_simulate_knowledge_base_tokens_set remove remember_token]
+  [have remember_simulate_knowledge_base_tokens_mutex unlock]]
+
 [deftypefunk traced_resource execute begin_wrapped_active_funk []
+  [let [[remember_token [new remember_token [new semantic_time [time]]]]]
+    [have this add_remember_token remember_token]
+    [mapc [funk [simulate_knowledge_base_name]
+		[let [[semantic_knowledge_base [get [get this mind] semantic_knowledge_base simulate_knowledge_base_name]]]
+		  [have semantic_knowledge_base add_remember_token remember_token]]]]]
   [let [[target [get this resource_semantic_frame]]]
     [set target active t]]]
 
@@ -250,6 +273,15 @@
 	[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 			 [get [get this layer] name] ' resource, ' name ', '
 			 'done learning precondition hypotheses for changes.']
+	
+	[mapc [funk [remember_token]
+		    [if [< [get remember_token semantic_time] end_time]
+			[prog [have this remove_remember_token remember_token]
+			      [mapc [funk [simulate_knowledge_base_name]
+					  [let [[semantic_knowledge_base [get [get this mind] semantic_knowledge_base simulate_knowledge_base_name]]]
+					    [have semantic_knowledge_base remove_remember_token remember_token]]]
+				    simulate_knowledge_base_names]]]]
+	      [get this remember_tokens]]
 	]]]]
 
 

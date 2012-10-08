@@ -44,6 +44,10 @@
 	     mind_runtime_metric]
    :sources ['resource.fu2']]
 
+[defpackage vital_resource
+  :packages [resource]
+   :sources ['vital_resource.fu2']]
+
 [defpackage agency
   :packages [resource]
    :sources ['agency.fu2']]

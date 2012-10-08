@@ -197,6 +197,11 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__remember_token_redblackt
 f2ptr raw__forgetful_semantic_event_knowledge_base__add_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
   f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
   assert_value(raw__redblacktree__insert(cause, remember_token_redblacktree, remember_token));
+  f2ptr minimum_remember_token = assert_value(raw__redblacktree__minimum(cause, remember_token_redblacktree));
+  if (minimum_remember_token != nil) {
+    f2ptr minimum_remember_token__semantic_time = raw__remember_token__semantic_time(cause, minimum_remember_token);
+    assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, minimum_remember_token__semantic_time));
+  }
   return nil;
 }
 
@@ -211,6 +216,11 @@ export_cefunk2(forgetful_semantic_event_knowledge_base__add_remember_token, this
 f2ptr raw__forgetful_semantic_event_knowledge_base__remove_remember_token(f2ptr cause, f2ptr this, f2ptr remember_token) {
   f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
   assert_value(raw__redblacktree__remove(cause, remember_token_redblacktree, remember_token));
+  f2ptr minimum_remember_token = assert_value(raw__redblacktree__minimum(cause, remember_token_redblacktree));
+  if (minimum_remember_token != nil) {
+    f2ptr minimum_remember_token__semantic_time = raw__remember_token__semantic_time(cause, minimum_remember_token);
+    assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, minimum_remember_token__semantic_time));
+  }
   return nil;
 }
 
@@ -230,8 +240,8 @@ f2ptr f2__forgetful_semantic_event_knowledge_base_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "remember_token_redblacktree"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__remember_token_redblacktree")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "add_remember_token"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__add_remember_token")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "remove_remember_token"),       f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__remove_remember_token")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_remember_token"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__add_remember_token")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "remove_remember_token"),       f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__remove_remember_token")));}
   return this;
 }
 

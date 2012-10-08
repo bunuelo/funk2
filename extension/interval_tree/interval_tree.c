@@ -521,7 +521,7 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
     }
     f2ptr value_center_funk     = f2__interval_tree__value_center_funk(cause, this);
     f2ptr element__center_value = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_center_funk, f2list2__new(cause, range_left_value, range_right_value)));
-    assert_value(raw__interval_tree__add_intervals_containing_value_to_list(cause, this, element__center_value, list));
+    assert_value(raw__interval_tree__add_intervals_containing_value_to_list__thread_unsafe(cause, this, element__center_value, list));
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);

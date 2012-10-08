@@ -17,14 +17,14 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe activate_resource [builtin_reactive_resource] [[command_mutex         [new mutex]]
-							[command_ready         nil]
-							[command_done          t]
-							[command_layer_name    nil]
-							[command_agency_name   nil]
-							[command_resource_name nil]
-							[command_args          nil]
-							[command_ready_trigger [new fiber_trigger]]]
+[deframe activate_resource [vital_resource] [[command_mutex         [new mutex]]
+					     [command_ready         nil]
+					     [command_done          t]
+					     [command_layer_name    nil]
+					     [command_agency_name   nil]
+					     [command_resource_name nil]
+					     [command_args          nil]
+					     [command_ready_trigger [new fiber_trigger]]]
   [new []
        [construct builtin_reactive_resource [type this]
 		  [funk []
@@ -38,7 +38,6 @@
 				    [= command_ready nil]
 				    [= command_done  t]]]
 			  [have command_mutex unlock]]]]
-       [= vital t]
        nil]]
 
 [deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]

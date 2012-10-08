@@ -38,13 +38,12 @@
 
 'translate_visual_knowledge_to_physical_knowledge_resource'
 
-[deframe translate_visual_knowledge_to_physical_knowledge_resource [learned_reactive_resource] [[semantic_reflective_object_mutex [new mutex]]]
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[semantic_reflective_object_mutex [new mutex]]]
   [new []
        [construct learned_reactive_resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
-       [= vital t]
        nil]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_reflective_object [phenomenal_name reflective_object_type]

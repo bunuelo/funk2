@@ -36,7 +36,6 @@
 			   done
 			   [initialized-conditionlock [new conditionlock]]
 			   [initialized               nil]
-			   [vital                     nil]
 			   [debug                     nil]
 			   [cause_group               [mind_runtime_metric-new_cause_group]]
 			   runtime_metric_monitor]

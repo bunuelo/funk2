@@ -373,7 +373,7 @@
 [deftypefunk mind execute activate_vital_resources []
   [terminal_format standard-terminal '\nmind: activating vital resources.']
   [mapc [funk [resource]
-	      [if [get resource vital]
+	      [if [is-type `vital_resource resource]
 		  [prog `[terminal_format standard-terminal '\n  mind-activate_vital_resources: ' [get resource name] ' is vital.']
 			[have resource stop_me_until_initialized]
 			`[terminal_format standard-terminal '\n  mind-activate_vital_resources: activating ' [get resource name] '!']

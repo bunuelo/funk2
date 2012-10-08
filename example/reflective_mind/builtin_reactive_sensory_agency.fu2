@@ -19,8 +19,8 @@
 
 'continuous_sensing_resource'
 
-[deframe continuous_sensing_resource [builtin_reactive_resource] [perception
-								  [perception_trigger [new fiber_trigger]]]
+[deframe continuous_sensing_resource [vital_resource] [perception
+						       [perception_trigger [new fiber_trigger]]]
   [new []
        [construct builtin_reactive_resource `continuous_sensing
 		  [funk []
@@ -36,19 +36,17 @@
 			      [prog `[have this think_to_self 'finished perception.']
 				    [have perception_trigger trigger]]]
 			    ]]]]
-       [= vital t]
        nil]]
 
 
 'propogate_visual_objects_to_visual_knowledge_resource'
 
-[deframe propogate_visual_objects_to_visual_knowledge_resource [builtin_reactive_resource] [[previous_perception              nil]
-											    [semantic_visual_object_ptypehash [new ptypehash]]]
+[deframe propogate_visual_objects_to_visual_knowledge_resource [vital_resource] [[previous_perception              nil]
+										 [semantic_visual_object_ptypehash [new ptypehash]]]
   [new []
        [construct builtin_reactive_resource `propogate_visual_objects_to_visual_knowledge
 		  [funk []
 			[have this update_visual_knowledge_from_visual_objects]]]
-       [= vital t]
        nil]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute create_knowledge []
@@ -241,13 +239,12 @@
 
 'propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource'
 
-[deframe propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource [builtin_reactive_resource] [[previous_perception     nil]
-												  [semantic_proprioception nil]]
+[deframe propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource [vital_resource] [[previous_perception     nil]
+												 [semantic_proprioception nil]]
   [new []
        [construct builtin_reactive_resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge
 		  [funk []
 			[have this update_proprioceptual_knowledge_from_proprioceptual_objects]]]
-       [= vital t]
        nil]]
 
 [deftypefunk propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource execute create_knowledge []
@@ -314,14 +311,13 @@
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
 
-[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [builtin_reactive_resource] [[previous_perception                           nil]
-													  [semantic_somatosensation                      nil]
-													  [semantic_semantosensory_object_name_ptypehash [new ptypehash]]]
+[deframe propogate_somatosensory_objects_to_somatosensory_knowledge_resource [vital_resource] [[previous_perception                           nil]
+											       [semantic_somatosensation                      nil]
+											       [semantic_semantosensory_object_name_ptypehash [new ptypehash]]]
   [new []
        [construct builtin_reactive_resource `propogate_somatosensory_objects_to_somatosensory_knowledge
 		  [funk []
 			[have this update_somatosensory_knowledge_from_somatosensory_objects]]]
-       [= vital t]
        nil]]
 
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute create_knowledge []

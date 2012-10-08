@@ -87,15 +87,14 @@
 
 'translate_reflective_knowledge_to_reflective_event_knowledge_resource'
 
-[deframe translate_reflective_knowledge_to_reflective_event_knowledge_resource [reflective_resource] [[existence_phenomenal_name_ptypehash         [new ptypehash]]
-												      [existence_reflective_relationship_ptypehash [new ptypehash]]
-												      [action_sequence_resource_ptypehash          [new ptypehash]]]
+[deframe translate_reflective_knowledge_to_reflective_event_knowledge_resource [vital_resource] [[existence_phenomenal_name_ptypehash         [new ptypehash]]
+												 [existence_reflective_relationship_ptypehash [new ptypehash]]
+												 [action_sequence_resource_ptypehash          [new ptypehash]]]
   [new []
        [construct reflective_resource `translate_reflective_knowledge_to_reflective_event_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]
-       [= vital t]
        nil]]
 
 [deftypefunk translate_reflective_knowledge_to_reflective_event_knowledge_resource get phenomenal_name_existence [phenomenal_name]

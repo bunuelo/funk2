@@ -162,13 +162,13 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__forget_before_time, thin
 f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr cause, f2ptr this, f2ptr forget_before_time) {
   f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
   if (forget_before_time == nil) {
-    f2ptr events = raw__semantic_event_knowledge_base__events(f2ptr cause, f2ptr this);
+    f2ptr events = assert_value(raw__semantic_event_knowledge_base__events(cause, this));
     {
       f2ptr iter = events;
       while (iter != nil) {
-	f2ptr semantic_event = f2__cons__car(cause, iter);
+	f2ptr semantic_event = assert_value(f2__cons__car(cause, iter));
 	assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_event));
-	iter = f2__cons__cdr(cause, iter);
+	iter = assert_value(f2__cons__cdr(cause, iter));
       }
     }
   } else {

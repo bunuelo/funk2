@@ -91,12 +91,12 @@
     [have remember_simulate_knowledge_base_tokens_mutex unlock]
     result]]
 
-[deftypefunk traced_resource get add_remember_token [remember_token]
+[deftypefunk traced_resource execute add_remember_token [remember_token]
   [have remember_simulate_knowledge_base_tokens_mutex lock]
   [have remember_simulate_knowledge_base_tokens_set add remember_token]
   [have remember_simulate_knowledge_base_tokens_mutex unlock]]
 
-[deftypefunk traced_resource get remove_remember_token [remember_token]
+[deftypefunk traced_resource execute remove_remember_token [remember_token]
   [have remember_simulate_knowledge_base_tokens_mutex lock]
   [have remember_simulate_knowledge_base_tokens_set remove remember_token]
   [have remember_simulate_knowledge_base_tokens_mutex unlock]]

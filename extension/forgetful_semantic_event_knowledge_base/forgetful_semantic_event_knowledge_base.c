@@ -164,7 +164,7 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
   printf("\ndebug 0\n"); fflush(stdout);
   if (forget_before_time != nil) {
     printf("\ndebug 1\n"); fflush(stdout);
-    f2ptr semantic_left_time  = f2__semantic_time__new(cause, new__symbol(cause, "before"));
+    f2ptr semantic_left_time  = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
     printf("\ndebug 2\n"); fflush(stdout);
     f2ptr semantic_right_time = forget_before_time;
     printf("\ndebug 3\n"); fflush(stdout);

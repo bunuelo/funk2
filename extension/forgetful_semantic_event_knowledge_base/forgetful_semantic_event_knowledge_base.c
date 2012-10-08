@@ -212,11 +212,12 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cau
   return result;
 }
 
-f2ptr f2__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this) {
+f2ptr f2__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
   assert_argument_type(forgetful_semantic_event_knowledge_base, this);
-  return raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(cause, this);
+  assert_argument_type(semantic_frame,                          semantic_frame);
+  return raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(cause, this, semantic_frame);
 }
-export_cefunk1(forgetful_semantic_event_knowledge_base__add_semantic_frame, thing, 0, "Returns the time before which events will be forgotten in this knowledge base.");
+export_cefunk2(forgetful_semantic_event_knowledge_base__add_semantic_frame, this, semantic_frame, 0, "Adds the given semantic_frame to this forgetful_semantic_event_knowledge_base.");
 
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(f2ptr cause, f2ptr this) {

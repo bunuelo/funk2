@@ -198,8 +198,10 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__add_remember_token(f2ptr cau
   f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
   assert_value(raw__redblacktree__insert(cause, remember_token_redblacktree, remember_token));
   f2ptr minimum_remember_token = assert_value(raw__redblacktree__minimum(cause, remember_token_redblacktree));
+  f2__print(cause, minimum_remember_token);
   if (minimum_remember_token != nil) {
     f2ptr minimum_remember_token__semantic_time = raw__remember_token__semantic_time(cause, minimum_remember_token);
+    f2__print(cause, minimum_remember_token__semantic_time);
     assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, minimum_remember_token__semantic_time));
   }
   return nil;

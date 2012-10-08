@@ -161,17 +161,28 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__forget_before_time, thin
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr cause, f2ptr this, f2ptr forget_before_time) {
   f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
+  printf("\ndebug 0\n"); fflush(stdout);
   if (forget_before_time != nil) {
+    printf("\ndebug 1\n"); fflush(stdout);
     f2ptr semantic_left_time  = f2__semantic_time__new(cause, new__symbol(cause, "before"));
+    printf("\ndebug 2\n"); fflush(stdout);
     f2ptr semantic_right_time = forget_before_time;
+    printf("\ndebug 3\n"); fflush(stdout);
     f2ptr forget_events = raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time);
+    printf("\ndebug 4\n"); fflush(stdout);
     list__iteration(cause, forget_events, forget_event,
+		    printf("\ndebug 5\n"); fflush(stdout);
 		    f2ptr absolute_end_time = raw__semantic_event__absolute_end_time(  cause, forget_event);
+		    printf("\ndebug 6\n"); fflush(stdout);
 		    if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
+		      printf("\ndebug 7\n"); fflush(stdout);
 		      assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event));
 		    }
+		    printf("\ndebug 8\n"); fflush(stdout);
 		    );
+    printf("\ndebug 9\n"); fflush(stdout);
   }
+  printf("\ndebug 10\n"); fflush(stdout);
   return result;
 }
 

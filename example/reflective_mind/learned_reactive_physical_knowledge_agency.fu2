@@ -40,7 +40,7 @@
 
 [deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[semantic_reflective_object_mutex [new mutex]]]
   [new []
-       [construct learned_reactive_resource `translate_visual_knowledge_to_physical_knowledge
+       [construct vital_resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

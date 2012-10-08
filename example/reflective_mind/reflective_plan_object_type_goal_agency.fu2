@@ -81,7 +81,7 @@
 												      [goals                                         nil]
 												      [deliberative1_type_knowledge_reflective_timer [new reflective_timer [new semantic_time `before]]]]
   [new []
-       [construct reflective_resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge
+       [construct vital_resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

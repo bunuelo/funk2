@@ -91,7 +91,7 @@
 												 [existence_reflective_relationship_ptypehash [new ptypehash]]
 												 [action_sequence_resource_ptypehash          [new ptypehash]]]
   [new []
-       [construct reflective_resource `translate_reflective_knowledge_to_reflective_event_knowledge
+       [construct vital_resource `translate_reflective_knowledge_to_reflective_event_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

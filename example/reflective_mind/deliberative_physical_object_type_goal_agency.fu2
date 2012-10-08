@@ -79,7 +79,7 @@
 											    [end_of_physical_type_changes_trigger        [new fiber_trigger]]
 											    [physical_type_knowledge_reflective_timer    [new reflective_timer [new semantic_time `before]]]]
   [new []
-       [construct deliberative_resource `translate_physical_knowledge_to_physical_type_knowledge
+       [construct vital_resource `translate_physical_knowledge_to_physical_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
 			]]

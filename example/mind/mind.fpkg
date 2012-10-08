@@ -49,7 +49,8 @@
    :sources ['vital_resource.fu2']]
 
 [defpackage agency
-  :packages [resource]
+  :packages [resource
+	     vital_resource]
    :sources ['agency.fu2']]
 
 [defpackage mental_layer

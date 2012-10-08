@@ -168,7 +168,7 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
     printf("\ndebug 2\n"); fflush(stdout);
     f2ptr semantic_right_time = forget_before_time;
     printf("\ndebug 3\n"); fflush(stdout);
-    f2ptr forget_events = raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time);
+    f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
     printf("\ndebug 4\n"); fflush(stdout);
     list__iteration(cause, forget_events, forget_event,
 		    printf("\ndebug 5\n"); fflush(stdout);

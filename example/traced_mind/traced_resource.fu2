@@ -106,7 +106,8 @@
     [have this add_remember_token remember_token]
     [mapc [funk [simulate_knowledge_base_name]
 		[let [[semantic_knowledge_base [get [get this mind] semantic_knowledge_base simulate_knowledge_base_name]]]
-		  [have semantic_knowledge_base add_remember_token remember_token]]]]]
+		  [have semantic_knowledge_base add_remember_token remember_token]]]
+	  simulate_knowledge_base_names]]
   [let [[target [get this resource_semantic_frame]]]
     [set target active t]]]
 

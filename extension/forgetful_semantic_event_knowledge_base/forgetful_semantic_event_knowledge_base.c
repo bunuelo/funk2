@@ -161,28 +161,27 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__forget_before_time, thin
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr cause, f2ptr this, f2ptr forget_before_time) {
   f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
-  printf("\ndebug 0\n"); fflush(stdout);
-  if (forget_before_time != nil) {
-    printf("\ndebug 1\n"); fflush(stdout);
+  if (forget_before_time == nil) {
+    f2ptr events = raw__semantic_event_knowledge_base__events(f2ptr cause, f2ptr this);
+    {
+      f2ptr iter = events;
+      while (iter != nil) {
+	f2ptr semantic_event = f2__cons__car(cause, iter);
+	assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_event));
+	iter = f2__cons__cdr(cause, iter);
+      }
+    }
+  } else {
     f2ptr semantic_left_time  = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
-    printf("\ndebug 2\n"); fflush(stdout);
     f2ptr semantic_right_time = forget_before_time;
-    printf("\ndebug 3\n"); fflush(stdout);
     f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
-    printf("\ndebug 4\n"); fflush(stdout);
     list__iteration(cause, forget_events, forget_event,
-		    printf("\ndebug 5\n"); fflush(stdout);
 		    f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, forget_event));
-		    printf("\ndebug 6\n"); fflush(stdout);
 		    if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
-		      printf("\ndebug 7\n"); fflush(stdout);
 		      assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event));
 		    }
-		    printf("\ndebug 8\n"); fflush(stdout);
 		    );
-    printf("\ndebug 9\n"); fflush(stdout);
   }
-  printf("\ndebug 10\n"); fflush(stdout);
   return result;
 }
 
@@ -192,6 +191,32 @@ f2ptr f2__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr
   return raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, value);
 }
 export_cefunk2(forgetful_semantic_event_knowledge_base__forget_before_time__set, thing, value, 0, "Sets the time before which events will be forgotten in this knowledge base.");
+
+
+f2ptr raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
+  f2ptr result;
+  if (raw__semantic_event__is_type(cause, semantic_frame)) {
+    f2ptr semantic_event = semantic_frame;
+    {
+      f2ptr forget_before_time = raw__forgetful_semantic_event_knowledge_base__forget_before_time(cause, this);
+      if (forget_before_time != nil) {
+	f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(cause, semantic_event));
+	if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) == nil) {
+	  assert_value(f2__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_event));
+	}
+      }
+    }
+  } else {
+    result = assert_value(raw__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_frame));
+  }
+  return result;
+}
+
+f2ptr f2__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this) {
+  assert_argument_type(forgetful_semantic_event_knowledge_base, this);
+  return raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(cause, this);
+}
+export_cefunk1(forgetful_semantic_event_knowledge_base__add_semantic_frame, thing, 0, "Returns the time before which events will be forgotten in this knowledge base.");
 
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(f2ptr cause, f2ptr this) {
@@ -210,7 +235,9 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__add_remember_token(f2ptr cau
   assert_value(raw__redblacktree__insert(cause, remember_token_redblacktree, remember_token));
   f2ptr minimum_remember_token = assert_value(raw__redblacktree__minimum(cause, remember_token_redblacktree));
   f2__print(cause, minimum_remember_token);
-  if (minimum_remember_token != nil) {
+  if (minimum_remember_token == nil) {
+    assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, nil));
+  } else {
     f2ptr minimum_remember_token__semantic_time = raw__remember_token__semantic_time(cause, minimum_remember_token);
     f2__print(cause, minimum_remember_token__semantic_time);
     assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, minimum_remember_token__semantic_time));
@@ -230,7 +257,9 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__remove_remember_token(f2ptr 
   f2ptr remember_token_redblacktree = raw__forgetful_semantic_event_knowledge_base__remember_token_redblacktree(cause, this);
   assert_value(raw__redblacktree__remove(cause, remember_token_redblacktree, remember_token));
   f2ptr minimum_remember_token = assert_value(raw__redblacktree__minimum(cause, remember_token_redblacktree));
-  if (minimum_remember_token != nil) {
+  if (minimum_remember_token == nil) {
+    assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, nil));
+  } else {
     f2ptr minimum_remember_token__semantic_time = raw__remember_token__semantic_time(cause, minimum_remember_token);
     assert_value(raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(cause, this, minimum_remember_token__semantic_time));
   }
@@ -250,6 +279,7 @@ f2ptr f2__forgetful_semantic_event_knowledge_base_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),                     f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "add_semantic_frame"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__add_semantic_frame")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "forget_before_time"),          f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__forget_before_time__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "remember_token_redblacktree"), f2__core_extension_funk__new(cause, new__symbol(cause, "forgetful_semantic_event_knowledge_base"), new__symbol(cause, "forgetful_semantic_event_knowledge_base__remember_token_redblacktree")));}

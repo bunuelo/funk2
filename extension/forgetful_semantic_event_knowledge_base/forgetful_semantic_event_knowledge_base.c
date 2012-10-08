@@ -194,7 +194,7 @@ export_cefunk2(forgetful_semantic_event_knowledge_base__forget_before_time__set,
 
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cause, f2ptr this, f2ptr semantic_frame) {
-  f2ptr result;
+  f2ptr result = nil;
   if (raw__semantic_event__is_type(cause, semantic_frame)) {
     f2ptr semantic_event = semantic_frame;
     {
@@ -202,7 +202,7 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cau
       if (forget_before_time != nil) {
 	f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(cause, semantic_event));
 	if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) == nil) {
-	  assert_value(f2__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_event));
+	  result = assert_value(f2__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_event));
 	}
       }
     }

@@ -708,7 +708,7 @@
 			  [have mindmon_world step_physical_world]
 			  [= simulation_relative_time [+ simulation_relative_time [new relative_time [get [* step_size 1000000000] as-integer]]]]
 			  [have global_mind_runtime_metric_monitor_ticker tick simulation_relative_time]
-			  [terminal_format standard-terminal '\nmindmon: waiting for all minds to be ready.']
+			  [terminal_format standard-terminal '\nmindmon: waiting for all minds to perceive simulation state at ' [/ [get simulation_relative_time total_nanoseconds] 1000000000] ' seconds.']
 			  [wait-for-trigger all_minds_ready_trigger]
 			  [terminal_format standard-terminal '\nmindmon: all minds ready.']
 			  ]]]]]]]]

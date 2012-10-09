@@ -391,13 +391,13 @@ struct funk2_object_type__core_extension_handler__slot_s {
     def_ceframe__new__common(name, def_ceframe__new__arg14(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13, slot14)); }
 
 
-#define core_extension_primobject_type__add_funk(core_extension_name, object_type, funk_type, funk_name, seaside_funk_name) { \
+#define core_extension__primobject_type__add_funk(core_extension_name, object_type, funk_type, funk_name, seaside_funk_name) { \
     f2__primobject_type__add_slot_type(cause, this,			\
 				       new__symbol(cause, funk_type),	\
 				       new__symbol(cause, funk_name),	\
 				       f2__core_extension_funk__new(cause, \
-								    new__symbol(cause, #core_extension_name), \
-								    new__symbol(cause, #object_type "__" #seaside_funk_name))); \
+								    new__symbol(cause, core_extension_name), \
+								    new__symbol(cause, object_type "__" seaside_funk_name))); \
   }
 
 

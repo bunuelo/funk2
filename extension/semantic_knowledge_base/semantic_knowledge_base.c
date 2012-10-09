@@ -1040,7 +1040,7 @@ export_cefunk3(semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_ob
 				       new__symbol(cause, funk_name),	\
 				       f2__core_extension_funk__new(cause, \
 								    new__symbol(cause, #core_extension_name), \
-								    new__symbol(cause, object_type##__##seaside_funk_name))); \
+								    new__symbol(cause, #object_type "__" #seaside_funk_name))); \
   }
 
 

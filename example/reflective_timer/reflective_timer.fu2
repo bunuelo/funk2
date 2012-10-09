@@ -32,6 +32,7 @@
     result]]
 
 [deftypefunk reflective_timer set current_time [new-current_time]
+  [assert-type semantic_time new-current_time]
   [have current_time-conditionlock lock]
   [if [< new-current_time internal-current_time]
       [prog [have current_time-conditionlock unlock]
@@ -42,15 +43,17 @@
 	    [have current_time-conditionlock signal]]]
   [have current_time-conditionlock unlock]]
 
-[deftypefunk reflective_timer execute wait_until [wait_trigger_time]
+[deftypefunk reflective_timer execute wait_until [wait_time]
+  [assert-type semantic_time wait_time]
   [have current_time-conditionlock lock]
-  [while [< internal-current_time wait_trigger_time]
+  [while [< internal-current_time wait_time]
     [have current_time-conditionlock wait]]
   [have current_time-conditionlock unlock]]
 
-[deftypefunk reflective_timer execute wait_until_after [wait_trigger_time]
+[deftypefunk reflective_timer execute wait_until_after [wait_time]
+  [assert-type semantic_time wait_time]
   [have current_time-conditionlock lock]
-  [while [<= internal-current_time wait_trigger_time]
+  [while [<= internal-current_time wait_time]
     [have current_time-conditionlock wait]]
   [have current_time-conditionlock unlock]]
 

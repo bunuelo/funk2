@@ -59,11 +59,11 @@
 [deftypefunk deliberative_layer execute remove_remember_token [remember_token]
   [have [get this agency `physical_object_type_goal] remove_remember_token remember_token]]
 
-[deftypefunk deliberative_layer execute wait_until_time_represented [time]
-  [have [get this agency `physical_object_type_goal] wait_until_time_represented time]]
+[deftypefunk deliberative_layer execute wait_until_time_represented [semantic_time]
+  [have [get this agency `physical_object_type_goal] wait_until_time_represented semantic_time]]
 
-[deftypefunk deliberative_layer execute wait_until_after_time_represented [time]
-  [have [get this agency `physical_object_type_goal] wait_until_after_time_represented time]]
+[deftypefunk deliberative_layer execute wait_until_after_time_represented [semantic_time]
+  [have [get this agency `physical_object_type_goal] wait_until_after_time_represented semantic_time]]
 
 [deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_type
 											 source_key_type
@@ -216,7 +216,7 @@
     [terminal_format standard-terminal '\ncheck_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']
     [have this add_remember_token remember_token]
     [terminal_format standard-terminal '\ncheck_exists: waiting until current time represented.']
-    [have this wait_until_time_represented [time]]
+    [have this wait_until_time_represented [new semantic_time [time]]]
     [let [[found nil]]
       [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
 	[mapc [funk [current_event]

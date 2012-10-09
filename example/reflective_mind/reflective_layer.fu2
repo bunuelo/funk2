@@ -61,11 +61,11 @@
 [deftypefunk reflective_layer execute remove_remember_token [remember_token]
   [have [get this agency `plan_object_type_goal] remove_remember_token remember_token]]
 
-[deftypefunk reflective_layer execute wait_until_time_represented [time]
-  [have [get this agency `plan_object_type_goal] wait_until_time_represented time]]
+[deftypefunk reflective_layer execute wait_until_time_represented [semantic_time]
+  [have [get this agency `plan_object_type_goal] wait_until_time_represented semantic_time]]
 
-[deftypefunk reflective_layer execute wait_until_after_time_represented [time]
-  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented time]]
+[deftypefunk reflective_layer execute wait_until_after_time_represented [semantic_time]
+  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented semantic_time]]
 
 [deftypefunk reflective_layer execute add_reflective_action [action]
   [terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
@@ -207,7 +207,7 @@
     [terminal_format standard-terminal '\nreflective_layer-check_exists: checking if partial state exists: ' looking_for_event-phenomenal_name '.']
     [have this add_remember_token remember_token]
     [terminal_format standard-terminal '\nreflective_layer-check_exists: waiting until current time is represented.']
-    [have this wait_until_time_represented [time]]
+    [have this wait_until_time_represented [new semantic_time [time]]]
     [let [[found nil]]
       [let [[current_events [get [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] events_containing_time [new semantic_time [time]]]]]
 	[mapc [funk [current_event]

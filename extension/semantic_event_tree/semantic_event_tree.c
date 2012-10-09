@@ -230,12 +230,12 @@ f2ptr raw__semantic_event_tree__contains(f2ptr cause, f2ptr this, f2ptr semantic
   f2ptr semantic_event_set           = f2__semantic_event_tree__semantic_event_set(cause, this);
   f2ptr interval_tree                = f2__semantic_event_tree__interval_tree(     cause, this);
   f2ptr semantic_event_set__contains = assert_value(f2__set__contains(          cause, semantic_event_set, semantic_event));
-  f2ptr interval_tree__contains      = assert_value(f2__interval_tree__contains(cause, internal_tree,      semantic_event));
+  f2ptr interval_tree__contains      = assert_value(f2__interval_tree__contains(cause, interval_tree,      semantic_event));
   if ((semantic_event_set__contains != nil) != (interval_tree__contains != nil)) {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),                     new__symbol(cause, "semantic_event_tree-internal_consistency_failure"),
+				   new__symbol(cause, "bug_name"),                     new__symbol(cause, "semantic_event_tree-interval_consistency_failure"),
 				   new__symbol(cause, "semantic_event_set__contains"), semantic_event_set__contains,
-				   new__symbol(cause, "internal_tree__contains"),      internal_tree__contains));
+				   new__symbol(cause, "interval_tree__contains"),      interval_tree__contains));
   }
   return semantic_event_set__contains;
 }

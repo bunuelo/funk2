@@ -23,13 +23,42 @@
 
 //#define F2__DEBUG__INTERVAL_TREE_NODE 1
 
-def_ceframe9(interval_tree, interval_tree, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+// interval_tree
 
-f2ptr raw__interval_tree__new(f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
+def_ceframe10(interval_tree, interval_tree,
+	      mutate_cmutex,
+	      interval_set,
+	      head,
+	      all_left_redblacktree,
+	      all_right_redblacktree,
+	      left_value_funk,
+	      right_value_funk,
+	      value_equality_funk,
+	      value_comparison_funk,
+	      value_center_funk);
+
+f2ptr raw__interval_tree__new(f2ptr cause,
+			      f2ptr head,
+			      f2ptr left_value_funk,
+			      f2ptr right_value_funk,
+			      f2ptr value_equality_funk,
+			      f2ptr value_comparison_funk,
+			      f2ptr value_center_funk) {
   f2ptr mutate_cmutex          = f2__cmutex__new(cause);
+  f2ptr interval_set           = f2__set__new(cause);
   f2ptr all_left_redblacktree  = f2__redblacktree__new(cause, left_value_funk,  value_comparison_funk);
   f2ptr all_right_redblacktree = f2__redblacktree__new(cause, right_value_funk, value_comparison_funk);
-  return f2interval_tree__new(cause, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+  return f2interval_tree__new(cause,
+			      mutate_cmutex,
+			      interval_set,
+			      head,
+			      all_left_redblacktree,
+			      all_right_redblacktree,
+			      left_value_funk,
+			      right_value_funk,
+			      value_equality_funk,
+			      value_comparison_funk,
+			      value_center_funk);
 }
 
 f2ptr f2__interval_tree__new(f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk) {
@@ -41,9 +70,21 @@ export_cefunk5(interval_tree__new, left_value_funk, right_value_funk, value_equa
 
 
 f2ptr raw__interval_tree__assert_valid__thread_unsafe(f2ptr cause, f2ptr this) {
-  f2ptr head = f2__interval_tree__head(cause, this);
-  if (head != nil) {
-    assert_value(f2__interval_tree_node__assert_valid_recursively(cause, head));
+  {
+    f2ptr interval_set = assert_valid(f2__interval_tree__interval_set(cause, this));
+    set__iteration(cause, interval_set, interval,
+		   if (assert_value(f2__interval_tree__contains(cause, this, interval)) == nil) {
+		     return new__error(f2list6__new(cause,
+						    new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree-assert_valid-does_not_contain_entire_interval_set"),
+						    new__symbol(cause, "this"),     this));
+		   }
+		   );
+  }
+  {
+    f2ptr head = f2__interval_tree__head(cause, this);
+    if (head != nil) {
+      assert_value(f2__interval_tree_node__assert_valid_recursively(cause, head));
+    }
   }
   return nil;
 }
@@ -83,6 +124,10 @@ f2ptr raw__interval_tree__insert__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
 			   new__symbol(cause, "element"),  element));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
+  {
+    f2ptr interval_set = assert_value(f2__interval_tree__interval_set(cause, this));
+    assert_value(f2__set__add(cause, interval_set, element));
+  }
   f2ptr head                   = f2__interval_tree__head(                  cause, this);
   f2ptr left_value_funk        = f2__interval_tree__left_value_funk(       cause, this);
   f2ptr right_value_funk       = f2__interval_tree__right_value_funk(      cause, this);
@@ -163,6 +208,10 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
 			   new__symbol(cause, "element"),  element));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " enter after.", __FUNCTION__, this);
 #endif
+  {
+    f2ptr interval_set = assert_value(f2__interval_tree__interval_set(cause, this));
+    assert_value(f2__set__remove(cause, interval_set, element));
+  }
   f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
   f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
   assert_value(f2__redblacktree__remove(cause, all_left_redblacktree,  element));

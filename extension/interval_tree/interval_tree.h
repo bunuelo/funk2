@@ -24,7 +24,19 @@
 
 #include "../../c/funk2.h"
 
-def_header_ceframe9(interval_tree, mutate_cmutex, head, all_left_redblacktree, all_right_redblacktree, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk);
+// interval_tree
+
+def_header_ceframe10(interval_tree,
+		     mutate_cmutex,
+		     interval_set,
+		     head,
+		     all_left_redblacktree,
+		     all_right_redblacktree,
+		     left_value_funk,
+		     right_value_funk,
+		     value_equality_funk,
+		     value_comparison_funk,
+		     value_center_funk);
 
 f2ptr raw__interval_tree__new                                                  (f2ptr cause, f2ptr head, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);
 f2ptr  f2__interval_tree__new                                                  (f2ptr cause, f2ptr left_value_funk, f2ptr right_value_funk, f2ptr value_equality_funk, f2ptr value_comparison_funk, f2ptr value_center_funk);

@@ -171,16 +171,21 @@ export_cefunk2(semantic_event_tree__semantic_event__value_center, this, that, 0,
 
 // semantic_event_tree
 
-def_ceframe1(semantic_event_tree, semantic_event_tree, interval_tree);
+def_ceframe2(semantic_event_tree, semantic_event_tree,
+	     interval_tree,
+	     semantic_event_set);
 
 f2ptr raw__semantic_event_tree__new(f2ptr cause) {
-  f2ptr interval_tree = f2__interval_tree__new(cause,
-					       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__left_value")),
-					       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__right_value")),
-					       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_equality")),
-					       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_comparison")),
-					       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_center")));
-  return f2semantic_event_tree__new(cause, interval_tree);
+  f2ptr interval_tree      = f2__interval_tree__new(cause,
+						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__left_value")),
+						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__right_value")),
+						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_equality")),
+						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_comparison")),
+						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_center")));
+  f2ptr semantic_event_set = f2__set__new(cause);
+  return f2semantic_event_tree__new(cause,
+				    interval_tree,
+				    semantic_event_set);
 }
 
 f2ptr f2__semantic_event_tree__new(f2ptr cause) {
@@ -190,8 +195,11 @@ export_cefunk0(semantic_event_tree__new, 0, "Returns a new semantic_event_tree o
 
 
 f2ptr raw__semantic_event_tree__insert(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
-  return f2__interval_tree__insert(cause, interval_tree, semantic_event);
+  f2ptr semantic_event_set = f2__semantic_event_tree__semantic_event_set(cause, this);
+  f2ptr interval_tree      = f2__semantic_event_tree__interval_tree(     cause, this);
+  assert_value(f2__set__add(             cause, semantic_event_set, semantic_event));
+  assert_value(f2__interval_tree__insert(cause, interval_tree,      semantic_event));
+  return nil;
 }
 
 f2ptr f2__semantic_event_tree__insert(f2ptr cause, f2ptr this, f2ptr semantic_event) {
@@ -203,8 +211,11 @@ export_cefunk2(semantic_event_tree__insert, this, semantic_event, 0, "Inserts a 
 
 
 f2ptr raw__semantic_event_tree__remove(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
-  return f2__interval_tree__remove(cause, interval_tree, semantic_event);
+  f2ptr semantic_event_set = f2__semantic_event_tree__semantic_event_set(cause, this);
+  f2ptr interval_tree      = f2__semantic_event_tree__interval_tree(     cause, this);
+  assert_value(f2__set__remove(          cause, semantic_event_set, semantic_event));
+  assert_value(f2__interval_tree__remove(cause, interval_tree,      semantic_event));
+  return nil;
 }
 
 f2ptr f2__semantic_event_tree__remove(f2ptr cause, f2ptr this, f2ptr semantic_event) {
@@ -216,8 +227,17 @@ export_cefunk2(semantic_event_tree__remove, this, semantic_event, 0, "Removes a 
 
 
 f2ptr raw__semantic_event_tree__contains(f2ptr cause, f2ptr this, f2ptr semantic_event) {
-  f2ptr interval_tree = f2__semantic_event_tree__interval_tree(cause, this);
-  return f2__interval_tree__contains(cause, interval_tree, semantic_event);
+  f2ptr semantic_event_set           = f2__semantic_event_tree__semantic_event_set(cause, this);
+  f2ptr interval_tree                = f2__semantic_event_tree__interval_tree(     cause, this);
+  f2ptr semantic_event_set__contains = assert_value(f2__set__contains(          cause, semantic_event_set, semantic_event));
+  f2ptr interval_tree__contains      = assert_value(f2__interval_tree__contains(cause, internal_tree,      semantic_event));
+  if ((semantic_event_set__contains != nil) != (interval_tree__contains != nil)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),                     new__symbol(cause, "semantic_event_tree-internal_consistency_failure"),
+				   new__symbol(cause, "semantic_event_set__contains"), semantic_event_set__contains,
+				   new__symbol(cause, "internal_tree__contains"),      internal_tree__contains));
+  }
+  return semantic_event_set__contains;
 }
 
 f2ptr f2__semantic_event_tree__contains(f2ptr cause, f2ptr this, f2ptr semantic_event) {

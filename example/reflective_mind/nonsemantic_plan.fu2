@@ -547,7 +547,7 @@
 
 
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
-  [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
+  `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
   [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
 				[semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
 			   [if [null semantic_knowledge_bases]
@@ -557,10 +557,12 @@
 			   [let* [[execute_now-conditionlock   [new conditionlock]]
 				  [execute_now                 nil]
 				  [thought_fiber               [fiber [funk []
+									    
 									    [have execute_now-conditionlock lock]
 									    [while [not execute_now]
 									      [have execute_now-conditionlock wait]]
 									    [have execute_now-conditionlock unlock]
+									    
 									    [cause-define cause-name [get this unique_name]]
 									    [apply funk args]]
 								      []]]
@@ -587,13 +589,15 @@
 			       
 			       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 			       
-			       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
+			       `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
+			       
 			       [have execute_now-conditionlock lock]
-			       [= execute_now t]
+			       [=    execute_now t]
 			       [have execute_now-conditionlock signal]
 			       [have execute_now-conditionlock unlock]
+			       
 			       [let [[fiber_result [fiber-sheltered_join thought_fiber]]]
-				 [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
+				 `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
 				 
 				 [semantic-remove semantic_planner thought semantic_thought]
 				 [mapc [funk [semantic_knowledge_base]

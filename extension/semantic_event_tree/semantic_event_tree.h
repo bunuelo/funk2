@@ -26,7 +26,9 @@
 #include "../interval_tree/interval_tree.h"
 #include "../semantic_event/semantic_event.h"
 
-def_header_ceframe1(semantic_event_tree, interval_tree);
+def_header_ceframe2(semantic_event_tree,
+		    interval_tree,
+		    semantic_event_set);
 
 f2ptr raw__semantic_event_tree__new                        (f2ptr cause);
 f2ptr  f2__semantic_event_tree__new                        (f2ptr cause);

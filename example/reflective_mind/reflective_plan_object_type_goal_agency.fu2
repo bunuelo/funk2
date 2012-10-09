@@ -251,7 +251,7 @@
 	  [relation     nil]]
       [if [or [null relation_set] [get relation_set is_empty]]
 	  [prog [terminal_format standard-terminal
-				 '\nwarning: got remove ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' compound_key ' ' [get semantic_reflective_object_type_event_target phenomenal_name] ' relation, but no relation found.']
+				 '\nreflective warning: got remove ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' compound_key ' ' [get semantic_reflective_object_type_event_target phenomenal_name] ' relation, but no relation found.']
 		]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [let [[relation-count [get relation count]]]

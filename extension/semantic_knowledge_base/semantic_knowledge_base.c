@@ -1078,6 +1078,7 @@ f2ptr f2__semantic_knowledge_base__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_knowledge_base__core_extension__ping, 0, "");
 
 boolean_t __semantic_knowledge_base__core_extension__is_initialized = boolean__false;
+
 f2ptr f2__semantic_knowledge_base__core_extension__initialize(f2ptr cause) {
   if (! __semantic_knowledge_base__core_extension__is_initialized) {
     __semantic_knowledge_base__core_extension__is_initialized = boolean__true;

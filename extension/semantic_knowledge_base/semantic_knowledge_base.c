@@ -1034,15 +1034,8 @@ f2ptr f2__semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects
 }
 export_cefunk3(semantic_knowledge_base__lick_chunk__unlick_replace_notes_with_objects, this, lick_chunk, object_note_hash, 0, "Unlicks this semantic_knowledge_base with notes.");
 
-#define core_extension_primobject_type__add_funk(core_extension_name, object_type, funk_type, funk_name, seaside_funk_name) { \
-    f2__primobject_type__add_slot_type(cause, this,			\
-				       new__symbol(cause, funk_type),	\
-				       new__symbol(cause, funk_name),	\
-				       f2__core_extension_funk__new(cause, \
-								    new__symbol(cause, #core_extension_name), \
-								    new__symbol(cause, #object_type "__" #seaside_funk_name))); \
-  }
 
+// semantic_knowledge_base
 
 f2ptr f2__semantic_knowledge_base_type__new_aux(f2ptr cause) {
   f2ptr this = f2__semantic_knowledge_base_type__new(cause);

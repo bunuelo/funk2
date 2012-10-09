@@ -18,8 +18,8 @@
  rights to redistribute these changes.'
 
 [deframe conditionlock [frame] [[unlocked_trigger [new fiber_trigger]]
-				[traced_cmutex  [new traced_cmutex]]
-				[signal_trigger [new fiber_trigger]]]]
+				[traced_cmutex    [new traced_cmutex]]
+				[signal_trigger   [new fiber_trigger]]]]
 
 [deftypefunk conditionlock execute trylock []
   [have traced_cmutex trylock]]

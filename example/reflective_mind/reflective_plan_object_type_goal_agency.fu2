@@ -41,8 +41,20 @@
 [deftypefunk reflective_plan_object_type_goal_agency get deliberative1_type_knowledge_reflective_timer []
   [get [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge] deliberative1_type_knowledge_reflective_timer]]
 
-[deftypefunk reflective_plan_object_type_goal_agency execute create_deliberative1_type_relationship_goal [source_plan_object_type key_type key target_plan_object_type]
-  ]
+[deftypefunk reflective_plan_object_type_goal_agency get knowledge_timer []
+  [get this deliberative1_type_knowledge_reflective_timer]]
+
+[deftypefunk reflective_plan_object_type_goal_agency execute add_remember_token [remember_token]
+  [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_remember_token remember_token]]
+
+[deftypefunk reflective_plan_object_type_goal_agency execute remove_remember_token [remember_token]
+  [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_remember_token remember_token]]
+
+[deftypefunk reflective_plan_object_type_goal_agency execute wait_until_time_represented [time]
+  [have [get this knowledge_reflective_timer] wait_until time]]
+
+[deftypefunk reflective_plan_object_type_goal_agency execute wait_until_after_time_represented [time]
+  [have [get this knowledge_reflective_timer] wait_until_after time]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute create_deliberative1_type_property_relationship_goal [source_type
 														   source_key_type

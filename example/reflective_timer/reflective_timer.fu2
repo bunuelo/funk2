@@ -18,67 +18,39 @@
  rights to redistribute these changes.'
 
 
-'reflective_timer_trigger'
-
-[deframe reflective_timer_trigger [frame] [trigger_time trigger]
-  [new [initial-trigger_time initial-trigger]
-       [= trigger_time initial-trigger_time]
-       [= trigger      initial-trigger]]]
-
-
 'reflective_timer'
 
-[deframe reflective_timer [frame] [mutate_mutex current_time sorted_timer_triggers]
+[deframe reflective_timer [frame] [[current_time-conditionlock [new conditionlock]]
+				   internal-current_time]
   [new [initial-current_time]
-       [= mutate_mutex          [new mutex]]
-       [= current_time          initial-current_time]
-       [= sorted_timer_triggers []]]]
+       [= internal-current_time initial-current_time]]]
+
+[deftypefunk reflective_timer get current_time []
+  [have current_time-conditionlock lock]
+  [let [[result internal-current_time]]
+    [have current_time-conditionlock unlock]
+    result]]
 
 [deftypefunk reflective_timer set current_time [new-current_time]
-  [have mutate_mutex lock]
-  [if [< new-current_time current_time]
-      [prog [have mutate_mutex unlock]
+  [have current_time-conditionlock lock]
+  [if [< new-current_time internal-current_time]
+      [prog [have current_time-conditionlock unlock]
 	    [error funk_name `reflective_timer-set-current_time
 		   bug_name  `new-current_time-is-less_than-current_time]]]
-  [if [not [== current_time new-current_time]]
-      [prog [= current_time new-current_time]
-	    [let [[keep_looping t]]
-	      [while keep_looping
-		[= keep_looping nil]
-		[if sorted_timer_triggers
-		    [let [[first_timer_trigger [car sorted_timer_triggers]]]
-		      [if [> current_time [get first_timer_trigger trigger_time]]
-			  [prog [have [get first_timer_trigger trigger] trigger]
-				[= keep_looping t]
-				[= sorted_timer_triggers [cdr sorted_timer_triggers]]]]]]]]]]
-  [have mutate_mutex unlock]]
+  [if [not [== internal-current_time new-current_time]]
+      [prog [= internal-current_time new-current_time]
+	    [have current_time-conditionlock signal]]]
+  [have current_time-conditionlock unlock]]
+
+[deftypefunk reflective_timer execute wait_until [wait_trigger_time]
+  [have current_time-conditionlock lock]
+  [while [< internal-current_time wait_trigger_time]
+    [have current_time-conditionlock wait]]
+  [have current_time-conditionlock unlock]]
 
 [deftypefunk reflective_timer execute wait_until_after [wait_trigger_time]
-  [have mutate_mutex lock]
-  [if [> current_time wait_trigger_time]
-      [have mutate_mutex unlock]
-    [let [[new_timer_trigger [new reflective_timer_trigger wait_trigger_time [new fiber_trigger]]]]
-      [let [[not_done t]
-	    [iter     sorted_timer_triggers]
-	    [prev     nil]]
-	[while not_done
-	  [let [[first_timer_trigger [if iter [car iter]]]]
-	    [if [or [null first_timer_trigger]
-		    [< wait_trigger_time [get first_timer_trigger trigger_time]]]
-		[prog [if prev
-			  [set prev cdr [cons new_timer_trigger iter]]
-			[= sorted_timer_triggers [cons new_timer_trigger iter]]]
-		      [= not_done nil]]
-	      [prog [= prev iter]
-		    [= iter [cdr iter]]]]]]]
-      
-      [let [[fiber [this-fiber]]]
-	[fiber [funk []
-		     [while [global_scheduler-contains_active_fiber fiber]
-		       [millisleep 100]]
-		     [have mutate_mutex unlock]]
-	       []]]
-      
-      [wait-for-trigger [get new_timer_trigger trigger]]]]]
-
+  [have current_time-conditionlock lock]
+  [while [<= internal-current_time wait_trigger_time]
+    [have current_time-conditionlock wait]]
+  [have current_time-conditionlock unlock]]
 

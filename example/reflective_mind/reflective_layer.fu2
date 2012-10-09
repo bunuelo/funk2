@@ -52,6 +52,21 @@
   [have [get this agency `imagination] create_builtin_actions]
   [have [get this agency `plan]        create_builtin_actions]]
 
+[deftypefunk reflective_layer get knowledge_timer []
+  [get [get this agency `plan_object_type_goal] knowledge_timer]]
+
+[deftypefunk reflective_layer execute add_remember_token [remember_token]
+  [have [get this agency `plan_object_type_goal] add_remember_token remember_token]]
+
+[deftypefunk reflective_layer execute remove_remember_token [remember_token]
+  [have [get this agency `plan_object_type_goal] remove_remember_token remember_token]]
+
+[deftypefunk reflective_layer execute wait_until_time_represented [time]
+  [have [get this agency `plan_object_type_goal] wait_until_time_represented time]]
+
+[deftypefunk reflective_layer execute wait_until_after_time_represented [time]
+  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented time]]
+
 [deftypefunk reflective_layer execute add_reflective_action [action]
   [terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
   [have reflective_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
@@ -187,8 +202,12 @@
 
 
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
+	[remember_token                    [new remember_token [new semantic_time [time]]]]]
     [terminal_format standard-terminal '\nreflective_layer-check_exists: checking if partial state exists: ' looking_for_event-phenomenal_name '.']
+    [have this add_remember_token remember_token]
+    [terminal_format standard-terminal '\nreflective_layer-check_exists: waiting until current time is represented.']
+    [have this wait_until_time_represented [time]]
     [let [[found nil]]
       [let [[current_events [get [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] events_containing_time [new semantic_time [time]]]]]
 	[mapc [funk [current_event]
@@ -200,6 +219,7 @@
       [if [not found]
 	  [terminal_format standard-terminal '\nreflective_layer-check_exists: did not find relationship.']
 	[terminal_format standard-terminal '\nreflective_layer-check_exists: found relationship!']]
+      [have this remove_remember_token remember_token]
       found]]]
 
 [deftypefunk reflective_layer execute imagine_check_exists [semantic_partial_state]

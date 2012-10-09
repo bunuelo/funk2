@@ -50,6 +50,21 @@
 [deftypefunk deliberative_layer get physical_type_knowledge_reflective_timer []
   [get [get this agency `physical_object_type_goal] physical_type_knowledge_reflective_timer]]
 
+[deftypefunk deliberative_layer get knowledge_timer []
+  [get [get this agency `plan_object_type_goal] knowledge_timer]]
+
+[deftypefunk deliberative_layer execute add_remember_token [remember_token]
+  [have [get this agency `plan_object_type_goal] add_remember_token remember_token]]
+
+[deftypefunk deliberative_layer execute remove_remember_token [remember_token]
+  [have [get this agency `plan_object_type_goal] remove_remember_token remember_token]]
+
+[deftypefunk deliberative_layer execute wait_until_time_represented [time]
+  [have [get this agency `plan_object_type_goal] wait_until_time_represented time]]
+
+[deftypefunk deliberative_layer execute wait_until_after_time_represented [time]
+  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented time]]
+
 [deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_type
 											 source_key_type
 											 source_key
@@ -196,8 +211,12 @@
 
 
 [deftypefunk deliberative_layer execute check_exists [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
+	[remember_token                    [new remember_token [new semantic_time [time]]]]]
     [terminal_format standard-terminal '\ncheck_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']
+    [have this add_remember_token remember_token]
+    [terminal_format standard-terminal '\ncheck_exists: waiting until current time represented.']
+    [have this wait_until_time_represented [time]]
     [let [[found nil]]
       [let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time [new semantic_time [time]]]]]
 	[mapc [funk [current_event]
@@ -209,6 +228,7 @@
       [if [not found]
 	  [terminal_format standard-terminal '\ncheck_exists: did not find relationship.']
 	[terminal_format standard-terminal '\ncheck_exists: found relationship!']]
+      [have this remove_remember_token remember_token]
       found]]]
 
 [deftypefunk deliberative_layer execute imagine_check_exists [semantic_partial_state]

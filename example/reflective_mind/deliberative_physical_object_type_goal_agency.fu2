@@ -271,8 +271,7 @@
 	     [remember_token [new remember_token [new semantic_time [get event time]]]]]
 	[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_remember_token remember_token]
 	[if old_remember_token
-	    [prog [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_remember_token old_remember_token]
-		  [= old_remember_token remember_token]]]
+	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_remember_token old_remember_token]]
 	[if [not [null event]]
 	    [prog [if debug [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource event: ' event]]
 		  [let [[event_type [get event event_type]]
@@ -408,6 +407,7 @@
 		    'Now that event has been processed, we update the knowledge timer.'
 		    [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 		    ]]]
+	[= old_remember_token remember_token]
 	[have physical_knowledge_iterator increment]]]]]
 
 

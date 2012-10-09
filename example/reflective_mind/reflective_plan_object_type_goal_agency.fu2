@@ -51,10 +51,10 @@
   [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_remember_token remember_token]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute wait_until_time_represented [time]
-  [have [get this knowledge_reflective_timer] wait_until time]]
+  [have [get this knowledge_timer] wait_until time]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute wait_until_after_time_represented [time]
-  [have [get this knowledge_reflective_timer] wait_until_after time]]
+  [have [get this knowledge_timer] wait_until_after time]]
 
 [deftypefunk reflective_plan_object_type_goal_agency execute create_deliberative1_type_property_relationship_goal [source_type
 														   source_key_type

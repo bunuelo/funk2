@@ -51,19 +51,19 @@
   [get [get this agency `physical_object_type_goal] physical_type_knowledge_reflective_timer]]
 
 [deftypefunk deliberative_layer get knowledge_timer []
-  [get [get this agency `plan_object_type_goal] knowledge_timer]]
+  [get [get this agency `physical_object_type_goal] knowledge_timer]]
 
 [deftypefunk deliberative_layer execute add_remember_token [remember_token]
-  [have [get this agency `plan_object_type_goal] add_remember_token remember_token]]
+  [have [get this agency `physical_object_type_goal] add_remember_token remember_token]]
 
 [deftypefunk deliberative_layer execute remove_remember_token [remember_token]
-  [have [get this agency `plan_object_type_goal] remove_remember_token remember_token]]
+  [have [get this agency `physical_object_type_goal] remove_remember_token remember_token]]
 
 [deftypefunk deliberative_layer execute wait_until_time_represented [time]
-  [have [get this agency `plan_object_type_goal] wait_until_time_represented time]]
+  [have [get this agency `physical_object_type_goal] wait_until_time_represented time]]
 
 [deftypefunk deliberative_layer execute wait_until_after_time_represented [time]
-  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented time]]
+  [have [get this agency `physical_object_type_goal] wait_until_after_time_represented time]]
 
 [deftypefunk deliberative_layer execute create_physical_type_property_relationship_goal [source_type
 											 source_key_type

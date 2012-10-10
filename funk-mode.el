@@ -46,9 +46,9 @@
 
 ;; The following piece of code generates the type list below.
 ;;
-;; [mapc [funk [x]
-;;         [if [> 16 [get [get x as-string] length]]
-;;             [format stdout '  "' x '"\n']]]
+;; [mapc [funk [type_name]
+;;         [if [> 16 [get [get type_name as-string] length]]
+;;             [format stdout '  "' type_name '"\n']]]
 ;;       [have [system-type_names] sort [funk [x y] [> [get x as-string] [get y as-string]]]]]
 
 
@@ -119,8 +119,22 @@
 	      "print"
               "range"
 	      "relationship"
-	      "save_memory_image" "second" "set-car" "set-cdr" "simple_length" "sleep" "sleep_for_nanoseconds" "slots"
-              "t" "third" "this-fiber" "thread-complete" "thread-value" "time" "type" "terminal_format"
+	      "save_memory_image"
+	      "second"
+	      "set-car"
+	      "set-cdr"
+	      "simple_length"
+	      "sleep"
+	      "sleep_for_nanoseconds"
+	      "slots"
+              "t"
+	      "third"
+	      "this-fiber"
+	      "thread-complete"
+	      "thread-value"
+	      "time"
+	      "type"
+	      "terminal_format"
 	      "quit")
             'words)
            'font-lock-function-name-face)

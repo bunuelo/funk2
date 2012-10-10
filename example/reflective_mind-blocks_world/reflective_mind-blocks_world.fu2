@@ -197,16 +197,13 @@
 		  :matches ['pick up a [? shape]']
 		   :frame [[shape cube]]
 		    [plan-call 'move until over [? shape]']
-		    
 		    [call-below 'attempt to grab block until gripper stops moving']
-		    
 		    [plan-call 'assert that I am holding a [? shape]']]
 		
 		[defplan 'drop the block I am holding on a pyramid'
 		  :matches ['drop the block I am holding on a [? shape]']
 		   :frame [[shape pyramid]]
 		    [plan-call 'move until over [? shape]']
-		    
 		    [call-below 'drop block and wait for block to fall']]
 		
 		[defplan 'stack a cube on a pyramid'
@@ -225,7 +222,7 @@
   'reflective plans'
   
   [have this evaluate_reflective_plan_expression
-	`[parog [defplan 'a plan to stack a pyramid on a cube'
+	`[parog [defobject 'a plan to stack a pyramid on a cube'
 		  :matches ['a plan to [? plan]']
 		   :frame [[plan 'stack a pyramid on a cube']]
 		    [plan-below [? plan]]]
@@ -233,7 +230,7 @@
 		[defplan 'print a plan to stack a pyramid on a cube'
 		  :matches ['print [? object]']
 		   :frame [[object 'a plan to stack a pyramid on a cube']]
-		    [print [? object]]]
+		    [print [plan-call [? object]]]]
 		
 		[defplan 'focus on a plan to stack a pyramid on a cube'
 		  :matches ['focus on [? object]']

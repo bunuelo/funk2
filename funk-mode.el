@@ -299,6 +299,7 @@
 	      "define"
 	      "define-funk"
 	      "defmetro"
+	      "defobject"
 	      "defpackage"
 	      "defplan"
 	      "deframe"

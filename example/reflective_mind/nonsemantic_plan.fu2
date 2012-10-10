@@ -354,7 +354,7 @@
 													[= plan_body_expression [car argument_iter]]
 												      [= plan_body_expression `[prog @argument_iter]]]]
 												  nil]]]
-						[[eq `defcondition                  command]] [if [not [>= arguments-length 1]]
+						[[eq `defcondition                   command] [if [not [>= arguments-length 1]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[name_expression      [elt arguments 0]]
 												      [name_patterns        nil]

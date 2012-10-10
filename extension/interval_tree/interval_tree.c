@@ -216,12 +216,12 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
     f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
     f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
     catch_value(f2__redblacktree__remove(cause, all_left_redblacktree,  element),
-		f2list4__new(cause,
+		f2list6__new(cause,
 			     new__symbol(cause, "bug_name"),    new__symbol(cause, "inconsistency_failure_in_all_left_redblacktree-possibly_changed_left_value"),
 			     new__symbol(cause, "description"), new__string(cause, "This bug often arises when the start time of an interval has been changed while being part of the redblacktree."),
 			     new__symbol(cause, "this"),        this));
     catch_value(f2__redblacktree__remove(cause, all_right_redblacktree, element),
-		f2list4__new(cause,
+		f2list6__new(cause,
 			     new__symbol(cause, "bug_name"),    new__symbol(cause, "inconsistency_failure_in_all_right_redblacktree-possibly_changed_right_value"),
 			     new__symbol(cause, "description"), new__string(cause, "This bug often arises when the ending time of an interval has been changed while being part of the redblacktree."),
 			     new__symbol(cause, "this"),        this));

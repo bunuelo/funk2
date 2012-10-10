@@ -67,7 +67,7 @@
 	    parents]]
     [if [not type_inherits_from_frame]
 	[= parents [cons `frame parents]]]]
-  [print `[deframe ,type_name ,parents]]
+  [terminal_format standard-terminal '\n' `[deframe ,type_name ,parents]]
   [let [[construct_funk_args nil]
 	[construct_funk_body nil]]
     [mapc [funk [property]
@@ -167,7 +167,7 @@
       [error bug_type         `deftypefunk_invalid_slot_type
 	     valid_slot_types `[get set execute]
 	     slot_type        slot_type]]
-  [print `[deftypefunk ,type_name ,slot_type ,slot_name ,args]]
+  [terminal_format standard-terminal '\n' `[deftypefunk ,type_name ,slot_type ,slot_name ,args]]
   `[prog [if [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]
 	     [terminal_format standard-terminal '\ndeftypefunk-warning: redefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']]
 	 [add_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]
@@ -205,7 +205,7 @@
       [error bug_type         `undeftypefunk_invalid_slot_type
 	     valid_slot_types `[get set execute]
 	     slot_type        slot_type]]
-  [print `[undeftypefunk ,type_name ,slot_type ,slot_name]]
+  [terminal_format standard-terminal '\n' `[undeftypefunk ,type_name ,slot_type ,slot_name]]
   `[if [not [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]
        [terminal_format standard-terminal '\nundeftypefunk-warning: not defined, so not undefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']
      [remove_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]]]

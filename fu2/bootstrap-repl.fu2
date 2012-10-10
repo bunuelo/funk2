@@ -118,13 +118,13 @@
 [globalize optimize_funk_space t]
 
 [globalize-funk funk-new_with_name_and_environment-original [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
-								       `[[define demetroed     [exps-demetropolize_full body]]
-									 [define compiled_funk [funk-new [bytecode copy env value nil] name args
-													 demetroed
-													 body
-													 nil
-													 nil
-													 nil]]
+								       `[[define demetroed      [exps-demetropolize_full body]]
+									 [define compiled_funk  [funk-new [bytecode copy env value nil] name args
+													  demetroed
+													  body
+													  nil
+													  nil
+													  nil]]
 									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
 									 [define is_funktional  [primfunk:array__elt compiled_funk 10]]
 									 [if optimize_funk_space
@@ -146,13 +146,13 @@
 								       nil]]
 
 [globalize-funk funk-new_with_name_and_environment-optimize [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
-								       `[[define demetroed     [exps-demetropolize_full body]]
-									 [define compiled_funk [funk-new [bytecode copy env value nil] name args
-													 demetroed
-													 body
-													 nil
-													 nil
-													 nil]]
+								       `[[define demetroed      [exps-demetropolize_full body]]
+									 [define compiled_funk  [funk-new [bytecode copy env value nil] name args
+													  demetroed
+													  body
+													  nil
+													  nil
+													  nil]]
 									 [funk-optimize compiled_funk 10]
 									 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
 									 [define is_funktional  [primfunk:array__elt compiled_funk 10]]

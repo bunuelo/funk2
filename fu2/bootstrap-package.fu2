@@ -330,7 +330,7 @@
 				 [while iter
 				   [let* [[source_path   [car iter]]
 					  [full_pathname [pathname-concat source_path pathname]]]
-				     [format stdout '\nscanning ' full_pathname ' for package definitions.']
+				     [terminal_format standard-terminal '\nscanning ' full_pathname ' for package definitions.']
 				     [= fpkg_filenames [append fpkg_filenames [let [[result [shelter [pathname-scan_for_filenames_by_extension full_pathname 'fpkg']]]]
 										[if [is-type `bug result]
 										    nil

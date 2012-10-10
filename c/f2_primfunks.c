@@ -718,7 +718,7 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
     f2fiber__keep_undead__set(new_fiber, cause, nil);
     if ((f2__fiber__paused(cause, new_fiber) != nil) &&
 	raw__bug__is_type(cause, value)) {
-      return new__error(f2list6__new(cause,
+      return new__error(f2list8__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "force_funk_apply-error_applying_funkable_to_args"),
 				     new__symbol(cause, "subbug"),   value,
 				     new__symbol(cause, "funkable"), funkable,

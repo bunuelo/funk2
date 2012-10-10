@@ -18,7 +18,6 @@
  rights to redistribute these changes.'
 
 [defmetro defcorefunk [global_name core_extension_name name]
-  `[let [[core_extension_funk [core_extension_funk-new [quote ,core_extension_name] [quote ,name]]]]
-     [print `[defcorefunk ,[quote ,global_name]]]
-     [globalize-funk ,global_name core_extension_funk]]]
+  [terminal_format standard-terminal '\n' `[defcorefunk ,global_name]]
+  `[globalize-funk ,global_name [core_extension_funk-new [quote ,core_extension_name] [quote ,name]]]]
 

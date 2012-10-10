@@ -282,7 +282,7 @@
 						     ]]
 
 [defmetro defpackage [name :rest dependencies]
-  [print `[defpackage ,name]]
+  [terminal_format standard-terminal '\n' `[defpackage ,name]]
   [let [[package_dependencies         nil]
 	[source_dependencies          nil]
 	[documentation                nil]

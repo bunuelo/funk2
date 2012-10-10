@@ -71,7 +71,7 @@ export_cefunk5(interval_tree__new, left_value_funk, right_value_funk, value_equa
 
 f2ptr raw__interval_tree__assert_valid__thread_unsafe(f2ptr cause, f2ptr this) {
   {
-    f2ptr interval_set = assert_valid(f2__interval_tree__interval_set(cause, this));
+    f2ptr interval_set = assert_value(f2__interval_tree__interval_set(cause, this));
     set__iteration(cause, interval_set, interval,
 		   if (assert_value(f2__interval_tree__contains(cause, this, interval)) == nil) {
 		     return new__error(f2list6__new(cause,

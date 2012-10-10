@@ -1051,7 +1051,7 @@
 												      [= plan_body_expression `[prog @argument_iter]]]]
 												  [eval `[funk [this]
 													       [new nonsemantic_condition [get this mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]]
-													       ]]]]]
+													]]]]
 						[[eq `defobject                      command] [if [not [>= arguments-length 1]]
 												  `[error punctuation-colon ,[flatten_constree expression]]
 												[let [[name_expression      [elt arguments 0]]
@@ -1076,7 +1076,7 @@
 													       [new nonsemantic_object [get this mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]
 													       ]]]]]
 						[t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]
-	[t                            [error bug_name `nonsemantic_plan_compile_error]]]]
+	 [t                            [error bug_name `nonsemantic_plan_compile_error]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [nonsemantic_plan-expression-compile expression]]

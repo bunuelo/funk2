@@ -74,7 +74,7 @@ f2ptr raw__interval_tree__assert_valid__thread_unsafe(f2ptr cause, f2ptr this) {
     f2ptr interval_set = assert_value(f2__interval_tree__interval_set(cause, this));
     set__iteration(cause, interval_set, interval,
 		   if (assert_value(f2__interval_tree__contains(cause, this, interval)) == nil) {
-		     return new__error(f2list6__new(cause,
+		     return new__error(f2list4__new(cause,
 						    new__symbol(cause, "bug_name"), new__symbol(cause, "interval_tree-assert_valid-does_not_contain_entire_interval_set"),
 						    new__symbol(cause, "this"),     this));
 		   }

@@ -222,7 +222,7 @@
   'reflective plans'
   
   [have this evaluate_reflective_plan_expression
-	`[parog [defthing 'a plan to stack a pyramid on a cube'
+	`[parog [defobject 'a plan to stack a pyramid on a cube'
 		  :matches ['a plan to [? plan]']
 		   :frame [[plan 'stack a pyramid on a cube']]
 		    [plan-below [? plan]]]

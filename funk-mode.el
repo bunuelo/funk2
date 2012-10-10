@@ -313,7 +313,7 @@
 	      "define"
 	      "define-funk"
 	      "defmetro"
-	      "defthing"
+	      "defobject"
 	      "defpackage"
 	      "defplan"
 	      "deframe"

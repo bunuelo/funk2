@@ -20,6 +20,6 @@
 [set -dlfcn_dynamic_library_handler- search_pathnames `['lib/' '/usr/lib/']]
 
 [defmetro defcore [name filename]
-  `[prog [print [quote ,`[defcore ,name ,filename]]]
+  `[prog [terminal_format standard-terminal [quote ,`[defcore ,name ,filename]]]
 	 [global_core_extension_handler-add_new_core_extension [quote ,name] ,filename]]]
 

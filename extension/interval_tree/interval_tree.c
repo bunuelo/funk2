@@ -212,24 +212,26 @@ f2ptr raw__interval_tree__remove__thread_unsafe(f2ptr cause, f2ptr this, f2ptr e
     f2ptr interval_set = assert_value(f2__interval_tree__interval_set(cause, this));
     assert_value(f2__set__remove(cause, interval_set, element));
   }
-  f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
-  f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
-  assert_value(f2__redblacktree__remove(cause, all_left_redblacktree,  element));
-  assert_value(f2__redblacktree__remove(cause, all_right_redblacktree, element));
-  f2ptr head = f2__interval_tree__head(cause, this);
-  if (head == nil) {
-    return f2larva__new(cause, 23516, nil);
-  }
-  f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
-  f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
-  f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
-  f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
-  // we could check the returned removed_from_node from the simple_remove command, and do the red-black tree deletion cases here.
-  f2ptr remove_node = f2__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
-  assert_value(remove_node);
-  if (remove_node != nil) {
-    if (f2__interval_tree_node__is_empty(cause, remove_node) != nil) {
-      //assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
+  {
+    f2ptr all_left_redblacktree  = f2__interval_tree__all_left_redblacktree( cause, this);
+    f2ptr all_right_redblacktree = f2__interval_tree__all_right_redblacktree(cause, this);
+    assert_value(f2__redblacktree__remove(cause, all_left_redblacktree,  element));
+    assert_value(f2__redblacktree__remove(cause, all_right_redblacktree, element));
+    f2ptr head = f2__interval_tree__head(cause, this);
+    if (head == nil) {
+      return f2larva__new(cause, 23516, nil);
+    }
+    f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
+    f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
+    f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
+    f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
+    // we could check the returned removed_from_node from the simple_remove command, and do the red-black tree deletion cases here.
+    f2ptr remove_node = f2__interval_tree_node__simple_remove(cause, head, element, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk);
+    assert_value(remove_node);
+    if (remove_node != nil) {
+      if (f2__interval_tree_node__is_empty(cause, remove_node) != nil) {
+	//assert_value(raw__interval_tree__remove_node(cause, this, remove_node));
+      }
     }
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
@@ -322,14 +324,19 @@ f2ptr raw__interval_tree__remove_node_with_at_most_one_child(f2ptr cause, f2ptr 
 	f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(cause, this);
 	f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
 	f2ptr value_center_funk     = f2__interval_tree__value_center_funk(cause, this);
-	assert_value(f2__interval_tree_node__delete_case_1(cause, node__child, left_value_funk, right_value_funk, value_equality_funk, value_comparison_funk, value_center_funk));
+	assert_value(f2__interval_tree_node__delete_case_1(cause, node__child,
+							   left_value_funk,
+							   right_value_funk,
+							   value_equality_funk,
+							   value_comparison_funk,
+							   value_center_funk));
       }
     }
   }
 #if (F2__DEBUG__INTERVAL_TREE_NODE == 1)
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
-  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  before.", __FUNCTION__, this);
+  status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   return nil;
 }

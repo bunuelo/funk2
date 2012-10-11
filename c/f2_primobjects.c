@@ -656,11 +656,15 @@ def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documenta
 	    "",
 	    return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
+f2ptr raw__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
+  return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
+}
+
 f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
   assert_argument_type(       metrocfunk, metrocfunk);
   assert_argument_type(       fiber,      fiber);
   assert_argument_type_or_nil(cons,       args);
-  return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
+  return raw__metrocfunk__apply(cause, metrocfunk, fiber, args);
 }
 def_pcfunk3(metrocfunk__apply, x, y, z,
 	    "",

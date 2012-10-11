@@ -114,14 +114,14 @@ export_cefunk1(semantic_realm__key_count, this, 0, "Returns the count of how man
 
 
 f2ptr raw__semantic_realm__lookup_or_create_meta_relationship(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  f2ptr relationship_equals_key         = raw__semantic_relationship_key__new(cause, semantic_frame, key_type, key, value);
-  f2ptr meta_relationship_hash          = raw__semantic_realm__meta_relationship_hash(cause, this);
-  f2ptr previously_created_relationship = f2__equals_hash__lookup(cause, meta_relationship_hash, relationship_equals_key);
-  if (previously_created_relationship != nil) {
-    return previously_created_relationship;
-  }
+  //f2ptr relationship_equals_key         = raw__semantic_relationship_key__new(cause, semantic_frame, key_type, key, value);
+  //f2ptr meta_relationship_hash          = raw__semantic_realm__meta_relationship_hash(cause, this);
+  //f2ptr previously_created_relationship = f2__equals_hash__lookup(cause, meta_relationship_hash, relationship_equals_key);
+  //if (previously_created_relationship != nil) {
+  //  return previously_created_relationship;
+  //}
   f2ptr relationship = f2__relationship_meta_semantic_object__new(cause, this, semantic_frame, key_type, key, value);
-  f2__equals_hash__add(cause, meta_relationship_hash, relationship_equals_key, relationship);
+  //f2__equals_hash__add(cause, meta_relationship_hash, relationship_equals_key, relationship);
   return relationship;
 }
 

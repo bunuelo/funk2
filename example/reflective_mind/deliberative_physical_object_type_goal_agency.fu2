@@ -185,7 +185,10 @@
 								  semantic_reflective_object_type_events]]]]]
     semantic_reflective_object_type_events]]
 
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time
+													 semantic_reflective_object_type_event_source
+													 key_type key
+													 semantic_reflective_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nadd_type_relation ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_reflective_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_reflective_object_type_event_source lookup_set compound_key [get semantic_reflective_object_type_event_target phenomenal_name]]]
@@ -211,7 +214,10 @@
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_relation [event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_relation [event_time
+													    semantic_reflective_object_type_event_source
+													    key_type key
+													    semantic_reflective_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_reflective_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_reflective_object_type_event_source lookup_set compound_key [get semantic_reflective_object_type_event_target phenomenal_name]]]
@@ -231,7 +237,10 @@
 			]]]]]]]]
 
 
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_property [event_time semantic_reflective_object_type_event_source key_type key target_property_name]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_property [event_time
+													 semantic_reflective_object_type_event_source
+													 key_type key
+													 target_property_name]
   [if debug [terminal_format standard-terminal '\nadd_type_property ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' target_property_name]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[property_set [have semantic_reflective_object_type_event_source lookup_set compound_key target_property_name]]
@@ -258,7 +267,10 @@
 	[prog [= property [get property_set an_arbitrary_element]]
 	      [set property count [+ [get property count] 1]]]]]]]
 
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_property [event_time semantic_reflective_object_type_event_source key_type key target_property_name]
+[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_property [event_time
+													    semantic_reflective_object_type_event_source
+													    key_type key
+													    target_property_name]
   [if debug [terminal_format standard-terminal '\nremove_type_property ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' target_property_name]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[property_set [have semantic_reflective_object_type_event_source lookup_set compound_key target_property_name]]

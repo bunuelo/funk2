@@ -503,7 +503,7 @@ def_pcfunk1(primobject__frametype__slotdef__name, this,
 
 f2ptr f2__primobject__frametype__slotdef__value(f2ptr cause, f2ptr this) {
   if (raw__symbol__is_type(cause, this)) {
-    return this;
+    return nil;
   } else if (raw__cons__is_type(cause, this)) {
     f2ptr this__cdr = f2cons__cdr(this, cause);
     assert_argument_type(cons, this__cdr);

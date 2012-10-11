@@ -357,6 +357,52 @@ def_pcfunk3_and_rest(primmetro__metro__new_with_name_and_environment, name, envi
 
 
 
+f2ptr raw__primmetro__metro__new_with_name(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions) {
+  f2ptr environment                          = f2list5__new(cause,
+							    new__symbol(cause, "bytecode"),
+							    new__symbol(cause, "copy"),
+							    new__symbol(cause, "env"),
+							    new__symbol(cause, "value"),
+							    nil);
+  f2ptr fiber                                = f2__this__fiber(cause);
+  f2ptr fiber__environment                   = f2__fiber__env(cause, fiber);
+  f2ptr body_expressions__demetropolize_full = f2__exps_demetropolize_full(cause, fiber, environment, body_expressions);
+  f2ptr compiled_funk                        = f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil);
+  f2ptr compiled_bytecodes                   = f2__funk__body_bytecodes(cause, compiled_funk);
+  f2ptr is_funktional                        = f2__funk__is_funktional(cause, compiled_funk);
+  return f2list9__new(cause,
+		      new__symbol(cause, "metro-new"),
+		      environment,
+		      f2list2__new(cause,
+				   new__symbol(cause, "quote"),
+				   name),
+		      f2list2__new(cause,
+				   new__symbol(cause, "quote"),
+				   variables),
+		      f2list2__new(cause,
+				   new__symbol(cause, "quote"),
+				   body_expressions__demetropolize_full),
+		      f2list2__new(cause,
+				   new__symbol(cause, "quote"),
+				   body_expressions),
+		      f2list2__new(cause,
+				   new__symbol(cause, "quote"),
+				   compiled_bytecodes),
+		      is_funktional,
+		      nil);
+}
+
+f2ptr f2__primmetro__metro__new_with_name(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions) {
+  assert_argument_type(conslist, variables);
+  assert_argument_type(conslist, body_expressions);
+  return raw__primmetro__metro__new_with_name(cause, name, variables, body_expressions);
+}
+def_pcfunk2_and_rest(primmetro__metro__new_with_name, name, variables, body_expressions,
+		     "",
+		     return f2__primmetro__metro__new_with_name(this_cause, name, variables, body_expressions));
+
+
+
 // **
 
 void f2__primmetros__defragment__fix_pointers() {
@@ -370,6 +416,7 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primmetro__funk__new_with_name_and_environment);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__funk__new_with_name);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__metro__new_with_name_and_environment);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__metro__new_with_name);
   
 }
 
@@ -381,6 +428,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__3_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions);
   f2__primcfunk__init__2_and_rest(primmetro__funk__new_with_name, name, variables, body_expressions);
   f2__primcfunk__init__3_and_rest(primmetro__metro__new_with_name_and_environment, name, environment, variables, body_expressions);
+  f2__primcfunk__init__2_and_rest(primmetro__metro__new_with_name, name, variables, body_expressions);
 }
 
 void f2__primmetros__initialize() {

@@ -589,6 +589,29 @@ def_pcfunk1_and_rest(primobject__frametype__with, frame_object, body_expressions
 		     return f2__primobject__frametype__with(this_cause, frame_object, body_expressions));
 
 
+/*
+[defunk add_type_funk [type_name slot_type slot_name funk]
+  [let [[primobject_type [lookup_type type_name]]]
+    [if [null primobject_type]
+	[error bug_type    `object_type_does_not_exist
+	       object_type type_name]
+      [primobject_type-add_slot_type primobject_type slot_type slot_name funk]]]]
+*/
+
+f2ptr f2__primobject__frametype__add_type_funk(f2ptr cause, f2ptr type_name, f2ptr slot_type, f2ptr slot_name, f2ptr funk) {
+  f2ptr primobject_type = f2__lookup_type(cause, type_name);
+  if (primobject_type == nil) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),    new__symbol(cause, "object_type_does_not_exist"),
+				   new__symbol(cause, "object_type"), type_name));
+  } else {
+    return assert_value(f2__primobject_type__add_slot_type(cause, primobject_type, slot_type, slot_name, funk));
+  }
+}
+def_pcfunk4(primobject__frametype__add_type_funk, type_name, slot_type, slot_name, funk,
+	    "",
+	    return f2__primobject__frametype__add_type_funk(this_cause, type_name, slot_type, slot_name, funk));
+
 
 
 
@@ -616,6 +639,7 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__value);
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__type__has_parent);
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__with);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__add_type_funk);
   
 }
 
@@ -637,6 +661,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__1(         primobject__frametype__slotdef__value,   this);
   f2__primcfunk__init__2(         primobject__frametype__type__has_parent, type_name, parent_name);
   f2__primcfunk__init__1_and_rest(primobject__frametype__with,             frame_object, body_expressions);
+  f2__primcfunk__init__4(         primobject__frametype__add_type_funk,    type_name, slot_type, slot_name, funk);
 
 }
 

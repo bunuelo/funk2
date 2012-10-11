@@ -576,7 +576,7 @@ f2ptr f2__primobject__frametype__with(f2ptr cause, f2ptr frame_object, f2ptr bod
 						      new__symbol(cause, "bug_type"),
 						      f2list2__new(cause,
 								   new__symbol(cause, "quote"),
-								   new_symbol(cause, "cannot_execute_with_object_that_does_not_inherit_from_frame")),
+								   new__symbol(cause, "cannot_execute_with_object_that_does_not_inherit_from_frame")),
 						      new__symbol(cause, "object"),
 						      frame_object__gensym)));
 }

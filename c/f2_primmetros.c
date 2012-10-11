@@ -550,7 +550,7 @@ def_pcfunk2(primobject__frametype__type__has_parent, frame_object, body_expressi
 f2ptr f2__primobject__frametype__with(f2ptr cause, f2ptr frame_object, f2ptr body_expressions) {
   f2ptr frame_object__gensym = raw__gensym__new_from_utf8(cause, "with");
   return f2__primmetro__let(cause,
-			    f2list1__new(cause, f2list1__new(cause, frame_object__gensym, frame_object)),
+			    f2list1__new(cause, f2list2__new(cause, frame_object__gensym, frame_object)),
 			    f2list4__new(cause,
 					 new__symbol(cause, "if"),
 					 f2list3__new(cause, new__symbol(cause, "object-inherits_from"), frame_object__gensym, f2list2__new(cause, new__symbol(cause, "quote"), new__symbol(cause, "frame"))),

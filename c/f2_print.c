@@ -1801,6 +1801,7 @@ f2ptr raw__terminal_format__thread_unsafe(f2ptr cause, f2ptr terminal_print_fram
       }
       iter = f2cons__cdr(iter, cause);
     }
+    return nil;
   }
 }
 

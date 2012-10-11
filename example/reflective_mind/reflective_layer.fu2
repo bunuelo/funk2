@@ -295,6 +295,7 @@
 	  nil]]]]]
 
 [deftypefunk reflective_layer execute evaluate_plan_expression [expression]
+  [terminal_format standard-terminal '\nreflective_layer-evaluate_plan_expression: here.'
   [let* [[name_expression      `[evaluate plan expression]]
 	 [name_patterns        `[]]
 	 [argument_definitions `[]]

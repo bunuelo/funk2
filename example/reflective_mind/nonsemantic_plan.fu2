@@ -58,8 +58,9 @@
        [= name_patterns   initial-name_patterns]
        [= variables       initial-variables]
        [= expression      initial-expression]
-       [have mental_layer create_semantic_plan name_expression name_patterns variables expression]
-       ]]
+       [let [[semantic_plan_object [get this semantic_plan_object]]]
+	 `[set semantic_plan_object plan_object_type `physical]
+	 [have [get this mental_layer] add_semantic_plan semantic_plan_object]]]]
 
 [deframe nonsemantic_condition [nonsemantic_plan] []
   [new [initial-mental_layer

@@ -118,6 +118,8 @@
 
 [globalize optimize_funk_space t]
 
+[globalize-funk cons &primfunk:cons__new]
+
 [globalize-funk funk-new_with_name_and_environment-original [metro-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 								       `[[funk-apply &primmetro-funk-new_with_name_and_environment [cons name [cons environment [cons args body]]]]]
 								       nil
@@ -369,7 +371,6 @@
 
 [globalize-funk type &object-type]
 
-[globalize-funk cons &primfunk:cons__new]
 [defmetro car     [x]   `[object-get ,x `car]]
 [defmetro cdr     [x]   `[object-get ,x `cdr]]
 [defmetro car-set [x y] `[object-set ,x `car ,y]]

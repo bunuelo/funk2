@@ -189,11 +189,9 @@
 
 
 [deftypefunk reflective_mind execute evaluate_deliberative_plan_expression [expression]
-  [terminal_format standard-terminal '\nreflective_mind-evaluate_deliberative_plan_expression: here.']
   [have [get this layer `deliberative] evaluate_plan_expression expression]]
 
 [deftypefunk reflective_mind execute evaluate_reflective_plan_expression [expression]
-  [terminal_format standard-terminal '\nreflective_mind-evaluate_reflective_plan_expression: here.']
   [have [get this layer `reflective] evaluate_plan_expression expression]]
 
 

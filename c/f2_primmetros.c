@@ -491,7 +491,7 @@ f2ptr f2__primobject__frametype__slotdef__name(f2ptr cause, f2ptr this) {
   } else if (raw__cons__is_type(cause, this)) {
     return f2cons__car(this, cause);
   } else {
-    return new__error(f2list2__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "invalid_type_for_frame_type_slotdef"),
 				   new__symbol(cause, "this"),     this));
   }

@@ -229,13 +229,13 @@
 										@body]]]]
 
 [defmetro prog [:rest body_expressions]
-  [funk-apply &metro-prog body_expressions]]
+  [funk-apply &primmetro-prog body_expressions]]
 
 [defmetro apply [funkable arguments]
-  [funk-apply &metro-apply [conslist funkable arguments]]]
+  [funk-apply &primmetro-apply [conslist funkable arguments]]]
 
 [defmetro funk [variables :rest body_expressions]
-  [funka-apply &metro-funk [cons variables body_expressions]]]
+  [funka-apply &primmetro-funk [cons variables body_expressions]]]
 
 `[defmetro old-funk [args :rest body]
   `[funk-new_with_name funk ,args
@@ -467,7 +467,7 @@
   [car [cdr [cdr [cdr seq]]]]]
 
 [defmetro let [variable_definitions :rest body_expressions]
-  [apply &metro-let [cons variable_definitions body_expressions]]]
+  [apply &primmetro-let [cons variable_definitions body_expressions]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]

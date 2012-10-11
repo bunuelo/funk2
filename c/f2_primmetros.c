@@ -53,7 +53,7 @@
  *                                                   variable_definitions]]]]
  */
 
-f2ptr raw__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
+f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
   f2ptr variables   = nil;
   f2ptr definitions = nil;
   {
@@ -95,7 +95,7 @@ f2ptr raw__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expres
 				  definitions));
 }
 
-f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
+f2ptr f2__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
   assert_argument_type(conslist, variable_definitions);
   assert_argument_type(conslist, body_expressions);
   {
@@ -121,11 +121,11 @@ f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_express
       iter = f2cons__cdr(iter, cause);
     }
   }
-  return raw__metro__let(cause, variable_definitions, body_expressions);
+  return raw__primmetro__let(cause, variable_definitions, body_expressions);
 }
 def_pcfunk1_and_rest(metro__let, variable_definitions, body_expressions,
 		     "",
-		     return f2__metro__let(this_cause, variable_definitions, body_expressions));
+		     return f2__primmetro__let(this_cause, variable_definitions, body_expressions));
 
 
 /*  
@@ -137,7 +137,7 @@ def_pcfunk1_and_rest(metro__let, variable_definitions, body_expressions,
  *      nil]]
  */
 
-f2ptr raw__metro__prog(f2ptr cause, f2ptr body_expressions) {
+f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
   if (body_expressions == nil) {
     return nil;
   }
@@ -153,29 +153,29 @@ f2ptr raw__metro__prog(f2ptr cause, f2ptr body_expressions) {
 		      nil);
 }
 
-f2ptr f2__metro__prog(f2ptr cause, f2ptr body_expressions) {
+f2ptr f2__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
   assert_argument_type(conslist, body_expressions);
-  return raw__metro__prog(cause, body_expressions);
+  return raw__primmetro__prog(cause, body_expressions);
 }
 def_pcfunk0_and_rest(metro__prog, body_expressions,
 		     "",
-		     return f2__metro__prog(this_cause, body_expressions));
+		     return f2__primmetro__prog(this_cause, body_expressions));
 
 
 
-f2ptr raw__metro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
   return f2list3__new(cause,
 		      new__symbol(cause, "funk-apply"),
 		      funkable,
 		      arguments);
 }
 
-f2ptr f2__metro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
-  return raw__metro__apply(cause, funkable, arguments);
+f2ptr f2__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return raw__primmetro__apply(cause, funkable, arguments);
 }
 def_pcfunk2(metro__apply, funkable, arguments,
 	    "",
-	    return f2__metro__apply(this_cause, funkable, arguments));
+	    return f2__primmetro__apply(this_cause, funkable, arguments));
 
 
 /*
@@ -184,7 +184,7 @@ def_pcfunk2(metro__apply, funkable, arguments,
  *	  	          @body]]
  */
 
-f2ptr raw__metro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
+f2ptr raw__primmetro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
   return f2cons__new(cause,
 		     new__symbol(cause, "funk-new_with_name"),
 		     f2cons__new(cause,
@@ -194,14 +194,14 @@ f2ptr raw__metro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
 					     body_expressions)));
 }
 
-f2ptr f2__metro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
+f2ptr f2__primmetro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
   assert_argument_type(conslist, variables);
   assert_argument_type(conslist, body_expressions);
-  return raw__metro__funk(cause, variables, body_expressions);
+  return raw__primmetro__funk(cause, variables, body_expressions);
 }
 def_pcfunk1_and_rest(metro__funk, variables, body_expressions,
 		     "",
-		     return f2__metro__funk(this_cause, variables, body_expressions));
+		     return f2__primmetro__funk(this_cause, variables, body_expressions));
 
 // **
 
@@ -209,18 +209,18 @@ void f2__primmetros__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
 
-  f2__primcfunk__init__defragment__fix_pointers(metro__let);
-  f2__primcfunk__init__defragment__fix_pointers(metro__prog);
-  f2__primcfunk__init__defragment__fix_pointers(metro__apply);
-  f2__primcfunk__init__defragment__fix_pointers(metro__funk);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__let);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__prog);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__apply);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__funk);
   
 }
 
 void f2__primmetros__reinitialize_globalvars() {
-  f2__primcfunk__init__1_and_rest(metro__let, variable_definitions, body_expressions);
-  f2__primcfunk__init__0_and_rest(metro__prog, body_expressions);
-  f2__primcfunk__init__1_and_rest(metro__apply, funkable, arguments);
-  f2__primcfunk__init__1_and_rest(metro__funk, variables, body_expressions);
+  f2__primcfunk__init__1_and_rest(primmetro__let, variable_definitions, body_expressions);
+  f2__primcfunk__init__0_and_rest(primmetro__prog, body_expressions);
+  f2__primcfunk__init__1_and_rest(primmetro__apply, funkable, arguments);
+  f2__primcfunk__init__1_and_rest(primmetro__funk, variables, body_expressions);
 }
 
 void f2__primmetros__initialize() {

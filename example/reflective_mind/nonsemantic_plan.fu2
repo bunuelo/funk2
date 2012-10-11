@@ -722,8 +722,7 @@
 
 
 
-
-[defunk nonsemantic_plan-expression-compile [expression]
+[defunk nonsemantic_plan-expression-unwrapped_compile [expression]
   [cond [[is-type `symbol expression] [eval `[funk [this]
 						   [quote ,expression]]]]
 	[[is-type `string expression] [eval `[funk [this]
@@ -1083,6 +1082,17 @@
 	[t                            [error bug_name        `nonsemantic_plan_compile_error-invalid_expression_type
 					     expression-type [type expression]
 					     expression      expression]]]]
+
+[defunk nonsemantic_plan-expression-compile [expression]
+  [eval `[funk [this]
+	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile expression] this]]]]
+		 [if [is-type `bug result]
+		     [prog [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+			   [error bug_name   `nonsemantic_plan-expression_encountered_bug
+				  expression [quote ,expression]
+				  subbug     result]]
+		   result]]]]]
+
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [nonsemantic_plan-expression-compile expression]]

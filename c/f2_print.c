@@ -1782,7 +1782,8 @@ def_pcfunk1(exp__printable_value, this,
 f2ptr raw__terminal_print_frame__prepare_for_printing_to_standard_terminal__thread_unsafe(f2ptr cause, f2ptr this) {
   s64 width  = raw__termios__width(cause);
   s64 height = raw__termios__height(cause) - 3;
-  return raw__terminal_print_frame__prepare_for_printing__thread_unsafe(cause, this, f2integer__new(cause, width), f2integer__new(cause, height));
+  raw__terminal_print_frame__prepare_for_printing__thread_unsafe(cause, this, f2integer__new(cause, width), f2integer__new(cause, height));
+  return nil;
 }
 
 f2ptr raw__terminal_format__thread_unsafe(f2ptr cause, f2ptr terminal_print_frame, f2ptr expressions) {

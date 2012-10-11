@@ -123,7 +123,7 @@ f2ptr f2__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_exp
   }
   return raw__primmetro__let(cause, variable_definitions, body_expressions);
 }
-def_pcfunk1_and_rest(metro__let, variable_definitions, body_expressions,
+def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
 		     "",
 		     return f2__primmetro__let(this_cause, variable_definitions, body_expressions));
 
@@ -173,7 +173,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 f2ptr f2__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
   return raw__primmetro__apply(cause, funkable, arguments);
 }
-def_pcfunk2(metro__apply, funkable, arguments,
+def_pcfunk2(primmetro__apply, funkable, arguments,
 	    "",
 	    return f2__primmetro__apply(this_cause, funkable, arguments));
 
@@ -199,7 +199,7 @@ f2ptr f2__primmetro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) 
   assert_argument_type(conslist, body_expressions);
   return raw__primmetro__funk(cause, variables, body_expressions);
 }
-def_pcfunk1_and_rest(metro__funk, variables, body_expressions,
+def_pcfunk1_and_rest(primmetro__funk, variables, body_expressions,
 		     "",
 		     return f2__primmetro__funk(this_cause, variables, body_expressions));
 

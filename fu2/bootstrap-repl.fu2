@@ -228,7 +228,10 @@
 				      `[define-funk ,name [metro-new_with_name ,name ,args
 										@body]]]]
 
-[defmetro prog [:rest body]
+[defmetro prog [:rest body_expressions]
+  [apply &metro-prog body_expressions]]
+
+`[defmetro old-prog [:rest body]
   [if body
       `[funk-apply [funk-new_with_name prog []
 				       @body]
@@ -469,12 +472,6 @@
 
 [defmetro let [variable_definitions :rest body_expressions]
   [apply &metro-let [cons variable_definitions body_expressions]]]
-
-`[defmetro old-let [varpairs :rest body]
-  [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
-  `[apply [funk-new_with_name let ,let-vars
-			      @body]
-	  [immutable_conslist @[mapcar [funk [varpair] [car [cdr varpair]]] varpairs]]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]

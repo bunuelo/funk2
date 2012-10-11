@@ -519,14 +519,66 @@ def_pcfunk1(primobject__frametype__slotdef__value, this,
 	    return f2__primobject__frametype__slotdef__value(this_cause, this));
 
 
-f2ptr f2__primobject__frametype__type__has_parent(f2ptr cause, f2ptr type_name, f2ptr parent_name) {
-  f2ptr     primobject_type = assert_value(f2__lookup_type(cause, type_name));
+f2ptr f2__primobject__frametype__type__has_parent(f2ptr cause, f2ptr frame_object, f2ptr body_expressions) {
+  f2ptr     primobject_type = assert_value(f2__lookup_type(cause, frame_object));
   assert_argument_type(primobject_type, primobject_type);
-  return f2bool__new(raw__primobject_type__has_parent_type(cause, primobject_type, parent_name));
+  return f2bool__new(raw__primobject_type__has_parent_type(cause, primobject_type, body_expressions));
 }
-def_pcfunk2(primobject__frametype__type__has_parent, type_name, parent_name,
+def_pcfunk2(primobject__frametype__type__has_parent, frame_object, body_expressions,
 	    "",
-	    return f2__primobject__frametype__type__has_parent(this_cause, type_name, parent_name));
+	    return f2__primobject__frametype__type__has_parent(this_cause, frame_object, body_expressions));
+
+
+/*
+[defmetro with [frame_object :rest body]
+  [let [[frame_object-gensym [gensym 'with']]]
+    `[let [[,frame_object-gensym ,frame_object]]
+       [if
+        [object-inherits_from ,frame_object-gensym `frame]
+	[let [[frame_object_environment [new
+                                         environment
+                                         ,frame_object-gensym
+                                         [this-env]
+                                         nil]]]
+	  [let [[with_funk [funk-new_with_name_and_environment with frame_object_environment []
+							       @body]]]
+	    [apply with_funk nil]]]
+	[error bug_type `cannot_execute_with_object_that_does_not_inherit_from_frame
+	       object   ,frame_object-gensym]]]]]
+*/
+
+f2ptr f2__primobject__frametype__with(f2ptr cause, f2ptr frame_object, f2ptr body_expressions) {
+  f2ptr frame_object__gensym = raw__gensym__new_from_utf8(cause, "with");
+  return f2__primmetro__let(cause,
+			    f2list1__new(cause, f2list1__new(cause, frame_object__gensym, frame_object)),
+			    f2list4__new(cause,
+					 new__symbol(cause, "if"),
+					 f2list3__new(cause, new__symbol(cause, "object-inherits_from"), frame_object__gensym, f2list2__new(cause, new__symbol(cause, "quote"), new__symbol(cause, "frame"))),
+					 f2__primmetro__let(cause,
+							    f2list1__new(cause, f2list2__new(cause, new__symbol(cause, "frame_object_environment"), f2list5__new(cause,
+																				 new__symbol(cause, "new"),
+																				 new__symbol(cause, "environment"),
+																				 frame_object__gensym
+																				 f2list1__new(cause, new__symbol(cause, "this-env"))
+																				 nil))),
+							    f2list1__new(cause, f2__primmetro__let(cause,
+												   f2list1__new(cause, f2list2__new(cause, new__symbol(cause, "with_funk"), f2__primmetro__metro__new_with_name_and_environment(cause,
+																												new__symbol(cause, "with"),
+																												new__symbol(cause, "frame_object_environment"),
+																												nil,
+																												body_expressions))),
+												   f2list1__new(cause, f2list3__new(cause,
+																    new__symbol(cause, "funk-apply"),
+																    new__symbol(cause, "with_funk"),
+																    nil))))),
+					 f2list5__new(cause,
+						      new__symbol(cause, "error"),
+						      new__symbol(cause, "bug_type"), f2list2__new(cause, new__symbol(cause, "quote"), new_symbol(cause, "cannot_execute_with_object_that_does_not_inherit_from_frame")),
+						      new__symbol(cause, "object"),   frame_object__gensym)));
+}
+def_pcfunk2(primobject__frametype__with, frame_object, body_expressions,
+	    "",
+	    return f2__primobject__frametype__with(this_cause, frame_object, body_expressions));
 
 
 
@@ -555,6 +607,7 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__name);
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__value);
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__type__has_parent);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__with);
   
 }
 
@@ -575,6 +628,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__1(primobject__frametype__slotdef__name,    this);
   f2__primcfunk__init__1(primobject__frametype__slotdef__value,   this);
   f2__primcfunk__init__2(primobject__frametype__type__has_parent, type_name, parent_name);
+  f2__primcfunk__init__2(primobject__frametype__with,             frame_object, body_expressions);
 
 }
 

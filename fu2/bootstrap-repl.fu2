@@ -120,67 +120,6 @@
 
 [globalize-funk cons &primfunk:cons__new]
 
-`[globalize-funk funk-new_with_name_and_environment-original-old [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
-										 `[[funk-apply &primmetro-funk-new_with_name_and_environment [cons name [cons environment [cons args body]]]]]
-										 nil
-										 nil
-										 nil
-										 nil]]]
-
-[globalize-funk funk-new_with_name_and_environment-optimize [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
-										 `[[define demetroed      [exps-demetropolize_full body]]
-										   [define compiled_funk  [funk-new [bytecode copy env value nil] name args
-														    demetroed
-														    body
-														    nil
-														    nil
-														    nil]]
-										   [funk-optimize compiled_funk 10]
-										   [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
-										   [define is_funktional  [primfunk:array__elt compiled_funk 10]]
-										   [if optimize_funk_space
-										       `[funk-new ,environment [quote ,name] [quote ,args]
-												  nil
-												  nil
-												  [quote ,compiled_bcs]
-												  ,is_funktional
-												  nil]
-										     `[funk-new ,environment [quote ,name] [quote ,args]
-												[quote ,demetroed]
-												[quote ,body]
-												[quote ,compiled_bcs]
-												,is_funktional
-												nil]]]
-										 nil
-										 nil
-										 nil
-										 nil]]]
-
-
-'note that the optimizing compiler has bugs, so the original compiler is being used here.'
-`[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
-
-`[globalize-funk funk-new_with_name-old [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
-							`[[funk-apply &primmetro-funk-new_with_name [cons name [cons args body]]]]
-							nil
-							nil
-							nil
-							nil]]]
-
-`[globalize-funk metro-new_with_name_and_environment-old [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name_and_environment `[name environment args :rest body]
-									 `[[funk-apply &primmetro-metro-new_with_name_and_environment [cons name [cons environment [cons args body]]]]]
-									 nil
-									 nil
-									 nil
-									 nil]]]
-
-`[globalize-funk metro-new_with_name-old [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
-							 `[[funk-apply &primmetro-metro-new_with_name [cons name [cons args body]]]]
-							 nil
-							 nil
-							 nil
-							 nil]]]
-
 'defmetro is later redefined.  search for "defmetro defmetro" below.'
 
 [globalize-funk defmetro
@@ -194,15 +133,6 @@
 				      [exp-format stdout '\n'] `[exp-format stdout 'stdout: '] [exp-format stdout `[defmetro-local ,name ,args]]
 				      `[define-funk ,name [metro-new_with_name ,name ,args
 										@body]]]]
-
-`[defmetro prog-old [:rest body_expressions]
-  [funk-apply &primmetro-prog body_expressions]]
-
-`[defmetro apply-old [funkable arguments]
-  [funk-apply &primmetro-apply [conslist funkable arguments]]]
-
-`[defmetro funk-old [variables :rest body_expressions]
-  [funk-apply &primmetro-funk [cons variables body_expressions]]]
 
 [defmetro metro [args :rest body]
   `[metro-new_with_name metro ,args
@@ -428,9 +358,6 @@
 [defunk fourth [seq]
   [car [cdr [cdr [cdr seq]]]]]
 
-`[defmetro let-old [variable_definitions :rest body_expressions]
-   [apply &primmetro-let [cons variable_definitions body_expressions]]]
-
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
       [apply &string-format exps]
@@ -533,17 +460,6 @@
 				seq]]]
     [apply &join parcar-fibers]
     [mapcar [funk [x] [get x value]] parcar-fibers]]]
-
-`[defmetro cond-old [:rest clauses]
-   [funk-apply &primmetro-cond clauses]]
-
-`[defmetro cond-old [:rest clauses]
-  [if [null clauses]
-      nil
-    [let [[clause [car clauses]]]
-      `[if ,[car clause]
-	   [prog @[cdr clause]]
-	 ,[apply &cond [cdr clauses]]]]]]
 
 [defunk elt-1d-seq [seq index]
   [cond [[null seq]                   [error-new `bug_type `conslist-index-too-big]]
@@ -906,39 +822,6 @@
 					  @codes]
 		      nil]]]
 
-[defmetro with-new-cause-old [:rest codes]
-  `[let* [[result     `bug]
-	  [main_fiber [this-fiber]]
-	  [fiber      [fiber [funk-new_with_name with-new-cause []
-						 [set [this-cause] critics nil]
-						 [while [global_scheduler-contains_active_fiber main_fiber]
-						   [millisleep 100]]
-						 [= result [prog @codes]]]
-			     nil]]]
-     [let [[complete_trigger [get fiber complete_trigger]]
-	   [bug_trigger      [get fiber bug_trigger]]]
-       [have complete_trigger add_waiting_fiber main_fiber]
-       [have bug_trigger      add_waiting_fiber main_fiber]
-       [pause]
-       [let [[exit_status [get fiber exit_status]]]
-	 [cond [[eq exit_status `complete]
-		result]
-	       [[eq exit_status `bug]
-		[let [[bug [get fiber value]]]
-		  [if [is-type `bug bug]
-		      [let [[bug_frame [get bug frame]]]
-			[if [is-type `frame bug_frame]
-			    [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
-				    [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
-				[frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
-			[bug bug]]
-		    [error bug_type    `with-new-cause-fiber_paused_without_bug
-			   fiber_value bug
-			   stack_trace [get fiber stack_trace]]]]]
-	       [t
-		[error bug_type    `with-new-cause-unknown-fiber-exit-status
-		       exit_status exit_status]]]]]]]
-
 [defmetro with-new-cause-backup [:rest codes]
   `[let* [[result `bug]
 	  [fiber  [fiber [funk-new_with_name with-new-cause []
@@ -971,66 +854,6 @@
 						    [set [this-cause] critics nil]
 						    @codes]
 				nil]]]
-
-[defmetro shelter-old [:rest codes]
-  `[let* [[result     `bug]
-	  [main_fiber [this-fiber]]
-	  [fiber      [fiber [funk-new_with_name shelter []
-						 [set [this-cause] critics nil]
-						 [while [global_scheduler-contains_active_fiber main_fiber]
-						   [millisleep 100]]
-						 [= result [prog @codes]]]
-			     nil]]]
-     [let [[complete_trigger [get fiber complete_trigger]]
-	   [bug_trigger      [get fiber bug_trigger]]]
-       [have complete_trigger add_waiting_fiber main_fiber]
-       [have bug_trigger      add_waiting_fiber main_fiber]
-       [pause]
-       [let [[exit_status [get fiber exit_status]]]
-	 [cond [[eq exit_status `complete]
-		result]
-	       [[eq exit_status `bug]
-		[let [[bug [get fiber value]]]
-		  [if [is-type `bug bug]
-		      [let [[bug_frame [get bug frame]]]
-			[if [is-type `frame bug_frame]
-			    [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
-				    [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
-				[frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
-			bug]
-		    [error bug_type    `shelter-fiber_paused_without_bug
-			   fiber_value bug
-			   stack_trace [get fiber stack_trace]]]]]
-	       [t
-		[error bug_type    `shelter-unknown-fiber-exit-status
-		       exit_status exit_status]]]]]]]
-
-[defmetro shelter-backup [:rest codes]
-  `[let* [[result `bug]
-	  [fiber  [silent-fiber [funk-new_with_name shelter []
-						    [set [this-cause] critics nil]
-						    [= result [prog @codes]]]
-				nil]]]
-     [while [not [get fiber exit_status]]
-       [millisleep 100]]
-     [let [[exit_status [get fiber exit_status]]]
-       [cond [[eq exit_status `complete]
-	      result]
-	     [[eq exit_status `bug]
-	      [let [[bug [get fiber value]]]
-		[if [is-type `bug bug]
-		    [let [[bug_frame [get bug frame]]]
-		      [if [is-type `frame bug_frame]
-			  [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
-				  [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
-			      [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
-		      bug]
-		  [error bug_type    `shelter-fiber_paused_without_bug
-			 fiber_value bug
-			 stack_trace [get fiber stack_trace]]]]]
-	     [t
-	      [error bug_type    `shelter-unknown-fiber-exit-status
-		     exit_status exit_status]]]]]]
 
 [defmetro defmetro [name args :rest body]
   `[prog [terminal_format standard-terminal '\n' [quote ,`[defmetro ,name ,args]]]

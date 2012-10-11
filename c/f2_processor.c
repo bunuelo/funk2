@@ -729,7 +729,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	      }
 	    }
 	    
-	    funk2_operating_system__scheduler_push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
+	    funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
 	    
 	    //printf("\n  got fiber lock.");
 	    if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
@@ -807,7 +807,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	      }
 	    }
 	  
-	    funk2_operating_system__scheduler_pop_current_fiber(&(__funk2.operating_system), pool_index);
+	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
 	  }
 	} else { // (fiber__paused)
 	}

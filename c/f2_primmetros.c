@@ -266,7 +266,7 @@ f2ptr f2__primmetro__funk__new_with_name_and_environment(f2ptr cause, f2ptr name
   assert_argument_type(conslist,    body_expressions);
   return raw__primmetro__funk__new_with_name_and_environment(cause, name, environment, variables, body_expressions);
 }
-def_pcfunk4_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions
+def_pcfunk3_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions
 		     "",
 		     return f2__primmetro__funk__new_with_name_and_environment(this_cause, name, environment, variables, body_expressions));
 
@@ -291,7 +291,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__0_and_rest(primmetro__prog, body_expressions);
   f2__primcfunk__init__1_and_rest(primmetro__apply, funkable, arguments);
   f2__primcfunk__init__1_and_rest(primmetro__funk, variables, body_expressions);
-  f2__primcfunk__init__1_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions);
+  f2__primcfunk__init__3_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions);
 }
 
 void f2__primmetros__initialize() {

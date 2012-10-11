@@ -97,6 +97,7 @@ f2ptr raw__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expres
 
 f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
   assert_argument_type(conslist, variable_definitions);
+  assert_argument_type(conslist, body_expressions);
   {
     f2ptr iter = variable_definitions;
     while (iter != nil) {
@@ -123,8 +124,42 @@ f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_express
   return raw__metro__let(cause, variable_definitions, body_expressions);
 }
 def_pcfunk1_and_rest(metro__let, variable_definitions, body_expressions,
-		     "returns a new conslist.",
+		     "",
 		     return f2__metro__let(this_cause, variable_definitions, body_expressions));
+
+
+/*  
+ *  [defmetro prog [:rest body]
+ *    [if body
+ *        [conslist `funk-apply
+ *                  [cons `funk-new_with_name [cons `prog [cons nil body]]]
+ *  		    nil]
+ *      nil]]
+ */
+
+f2ptr raw__metro__prog(f2ptr cause, f2ptr body_expressions) {
+  if (body_expressions == nil) {
+    return nil;
+  }
+  return f2list3__new(cause,
+		      new__symbol(cause, "funk-apply"),
+		      f2cons__new(cause,
+				  new__symbol(cause, "funk-new_with_name"),
+				  f2cons__new(cause,
+					      new__symbol(cause, "prog"),
+					      f2cons__new(cause,
+							  nil,
+							  body_expressions))),
+		      nil);
+}
+
+f2ptr f2__metro__prog(f2ptr cause, f2ptr body_expressions) {
+  assert_argument_type(conslist, body_expressions);
+  return raw__metro__prog(cause, body_expressions);
+}
+def_pcfunk0_and_rest(metro__prog, body_expressions,
+		     "",
+		     return f2__metro__prog(this_cause, body_expressions));
 
 
 // **
@@ -134,11 +169,13 @@ void f2__primmetros__defragment__fix_pointers() {
   // -- initialize --
 
   f2__primcfunk__init__defragment__fix_pointers(metro__let);
+  f2__primcfunk__init__defragment__fix_pointers(metro__prog);
   
 }
 
 void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__1_and_rest(metro__let, variable_definitions, body_expressions);
+  f2__primcfunk__init__0_and_rest(metro__prog, body_expressions);
 }
 
 void f2__primmetros__initialize() {

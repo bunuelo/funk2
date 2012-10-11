@@ -119,8 +119,8 @@
   'add "being told" knowledge to resources'
   
   [terminal_format standard-terminal
-		   '\nblocks_world_reflective_mind: Creating built-in hypotheses.  (Don\'t need this if we learn during imagination of plans.)'
-		   
+		   '\nblocks_world_reflective_mind: Creating built-in hypotheses.  (Don\'t need this if we learn during imagination of plans.)']
+  
   [have-apply [get this mind] add_resource_change_relationship_hypothesis
 	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
 				 addition

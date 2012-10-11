@@ -1123,7 +1123,7 @@
   [have mental_layer lookup_action action_name_expression]]
 
 
-[defunk nonsemantic_plan-expression-compile_imagine [expression]
+[defunk nonsemantic_plan-expression-unwrapped_compile_imagine [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
 						   [quote ,expression]]]]
 	[[is-type `string expression] [eval `[funk [this]
@@ -1477,6 +1477,16 @@
 													       ]]]]]
 						[t                                            [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]
+
+[defunk nonsemantic_plan-expression-compile_imagine [expression]
+  [eval `[funk [this]
+	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile_imagine expression] this]]]]
+		 [if [is-type `bug result]
+		     [prog [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+			   [error bug_name   `nonsemantic_plan-expression_encountered_bug
+				  expression [quote ,expression]
+				  subbug     result]]
+		   result]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []
   [nonsemantic_plan-expression-compile_imagine expression]]

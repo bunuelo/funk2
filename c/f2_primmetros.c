@@ -177,6 +177,32 @@ def_pcfunk2(metro__apply, funkable, arguments,
 	    "",
 	    return f2__metro__apply(this_cause, funkable, arguments));
 
+
+/*
+ * [defmetro funk [args :rest body]
+ *   `[funk-new_with_name funk ,args
+ *	  	          @body]]
+ */
+
+f2ptr raw__metro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
+  return f2cons__new(cause,
+		     new__symbol(cause, "funk-new_with_name"),
+		     f2cons__new(cause,
+				 new__symbol(cause, "funk"),
+				 f2cons__new(cause,
+					     variables,
+					     body_expressions)));
+}
+
+f2ptr f2__metro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
+  assert_argument_type(conslist, variables);
+  assert_argument_type(conslist, body_expressions);
+  return raw__metro__funk(cause, variables, body_expressions);
+}
+def_pcfunk1_and_rest(metro__funk, variables, body_expressions,
+		     "",
+		     return f2__metro__funk(this_cause, variables, body_expressions));
+
 // **
 
 void f2__primmetros__defragment__fix_pointers() {
@@ -186,6 +212,7 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(metro__let);
   f2__primcfunk__init__defragment__fix_pointers(metro__prog);
   f2__primcfunk__init__defragment__fix_pointers(metro__apply);
+  f2__primcfunk__init__defragment__fix_pointers(metro__funk);
   
 }
 
@@ -193,6 +220,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__1_and_rest(metro__let, variable_definitions, body_expressions);
   f2__primcfunk__init__0_and_rest(metro__prog, body_expressions);
   f2__primcfunk__init__1_and_rest(metro__apply, funkable, arguments);
+  f2__primcfunk__init__1_and_rest(metro__funk, variables, body_expressions);
 }
 
 void f2__primmetros__initialize() {

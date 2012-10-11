@@ -87,8 +87,7 @@
 	     learned_reactive_physical_agency
 	     learned_reactive_sensory_agency
 	     learned_reactive_language_agency
-	     learned_reactive_physical_knowledge_agency
-	     english_language]
+	     learned_reactive_physical_knowledge_agency]
    :sources ['learned_reactive_layer.fu2']]
 
 [defpackage learned_reactive_resource
@@ -233,9 +232,7 @@
 	     reflective_credit_assignment_agency
 	     reflective_plan_agency
 	     reflective_imagination_agency
-	     reflective_execution_agency
-	     english_language
-	     ]
+	     reflective_execution_agency]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource

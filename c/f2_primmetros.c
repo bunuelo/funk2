@@ -162,6 +162,21 @@ def_pcfunk0_and_rest(metro__prog, body_expressions,
 		     return f2__metro__prog(this_cause, body_expressions));
 
 
+
+f2ptr raw__metro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return f2list3__new(cause,
+		      new__symbol(cause, "funk-apply"),
+		      funkable,
+		      arguments);
+}
+
+f2ptr f2__metro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return raw__metro__apply(cause, funkable, arguments);
+}
+def_pcfunk2(metro__apply, funkable, arguments,
+	    "",
+	    return f2__metro__apply(this_cause, funkable, arguments));
+
 // **
 
 void f2__primmetros__defragment__fix_pointers() {
@@ -170,12 +185,14 @@ void f2__primmetros__defragment__fix_pointers() {
 
   f2__primcfunk__init__defragment__fix_pointers(metro__let);
   f2__primcfunk__init__defragment__fix_pointers(metro__prog);
+  f2__primcfunk__init__defragment__fix_pointers(metro__apply);
   
 }
 
 void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__1_and_rest(metro__let, variable_definitions, body_expressions);
   f2__primcfunk__init__0_and_rest(metro__prog, body_expressions);
+  f2__primcfunk__init__1_and_rest(metro__apply, funkable, arguments);
 }
 
 void f2__primmetros__initialize() {

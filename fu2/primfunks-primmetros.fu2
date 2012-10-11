@@ -20,3 +20,4 @@
 [globalize-funk metro-let   &primfunk:metro__let]
 [globalize-funk metro-prog  &primfunk:metro__prog]
 [globalize-funk metro-apply &primfunk:metro__apply]
+[globalize-funk metro-funk  &primfunk:metro__funk]

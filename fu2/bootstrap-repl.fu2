@@ -234,10 +234,10 @@
 [defmetro apply [funkable arguments]
   [funk-apply &metro-apply [conslist funkable arguments]]]
 
-`[defmetro old-apply [proc args]
-   `[funk-apply ,proc ,args]]
+[defmetro funk [variables :rest body_expressions]
+  [funka-apply &metro-funk [cons variables body_expressions]]]
 
-[defmetro funk [args :rest body]
+`[defmetro old-funk [args :rest body]
   `[funk-new_with_name funk ,args
 		       @body]]
 

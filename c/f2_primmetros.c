@@ -402,6 +402,78 @@ def_pcfunk2_and_rest(primmetro__metro__new_with_name, name, variables, body_expr
 		     return f2__primmetro__metro__new_with_name(this_cause, name, variables, body_expressions));
 
 
+/*
+ *  [defmetro cond [:rest clauses]
+ *    [if [null clauses]
+ *        nil
+ *      [let [[clause [car clauses]]]
+ *        [conslist `if
+ *                  [car clause]
+ *	            [cons `prog [cdr clause]]
+ *	            [apply &cond [cdr clauses]]]]]]
+*/
+
+f2ptr raw__primmetro__cond(f2ptr cause, f2ptr clauses) {
+  if (clauses == nil) {
+    return nil;
+  }
+  f2ptr clause                   = f2cons__car(clauses, cause);
+  f2ptr clause__condition        = f2cons__car(clause, cause);
+  f2ptr clause__body_expressions = f2cons__cdr(clause, cause);
+  return f2list4__new(cause,
+		      new__symbol(cause, "if"),
+		      clause__condition,
+		      raw__primmetro__prog(cause, clause__body_expressions),
+		      raw__primmetro__cond(cause, f2cons__cdr(clauses, cause)));
+}
+
+f2ptr f2__primmetro__cond(f2ptr cause, f2ptr clauses) {
+  assert_argument_type(conslist, clauses);
+  {
+    f2ptr iter = clauses;
+    while (iter != nil) {
+      f2ptr clause = f2cons__car(iter, cause);
+      assert_argument_type(conslist, clause);
+      s64 clause__length = 0;
+      {
+	f2ptr iter = clause;
+	while (iter != nil) {
+	  clause__length ++;
+	  iter = f2cons__cdr(iter, cause);
+	}
+      }
+      if (clause__length == 0) {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"), new__symbol(cause, "cond-found_invalid_clause"),
+				       new__symbol(cause, "clause"),   clause,
+				       new__symbol(cause, "clauses"),  clauses));
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return raw__primmetro__cond(cause, clauses);
+}
+def_pcfunk0_and_rest(primmetro__cond, clauses,
+		     "",
+		     return f2__primmetro__cond(this_cause, clauses));
+
+
+
+f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return f2list3__new(cause,
+		      new__symbol(cause, "funk-apply"),
+		      funkable,
+		      arguments);
+}
+
+f2ptr f2__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return raw__primmetro__apply(cause, funkable, arguments);
+}
+def_pcfunk2(primmetro__apply, funkable, arguments,
+	    "",
+	    return f2__primmetro__apply(this_cause, funkable, arguments));
+
+
 
 // **
 
@@ -417,6 +489,7 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primmetro__funk__new_with_name);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__metro__new_with_name_and_environment);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__metro__new_with_name);
+  f2__primcfunk__init__defragment__fix_pointers(primmetro__cond);
   
 }
 
@@ -429,6 +502,7 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__2_and_rest(primmetro__funk__new_with_name, name, variables, body_expressions);
   f2__primcfunk__init__3_and_rest(primmetro__metro__new_with_name_and_environment, name, environment, variables, body_expressions);
   f2__primcfunk__init__2_and_rest(primmetro__metro__new_with_name, name, variables, body_expressions);
+  f2__primcfunk__init__0_and_rest(primmetro__cond, clauses);
 }
 
 void f2__primmetros__initialize() {

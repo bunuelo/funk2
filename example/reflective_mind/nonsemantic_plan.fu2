@@ -657,7 +657,7 @@
 
 
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
-  [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
+  `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
   [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
 				[semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
 			   [if [null semantic_knowledge_bases]
@@ -699,7 +699,7 @@
 			       
 			       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
 			       
-			       [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
+			       `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
 			       
 			       [have execute_now-conditionlock lock]
 			       [=    execute_now t]
@@ -707,7 +707,7 @@
 			       [have execute_now-conditionlock unlock]
 			       
 			       [let [[fiber_result [fiber-sheltered_join thought_fiber]]]
-				 [terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
+				 `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
 				 
 				 [semantic-remove semantic_planner thought semantic_thought]
 				 [mapc [funk [semantic_knowledge_base]
@@ -830,7 +830,7 @@
 														       [if semantic_plan_variable_pair
 															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 [terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+														 `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
@@ -852,7 +852,7 @@
 														       [if semantic_plan_variable_pair
 															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 [terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+														 `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
@@ -874,13 +874,13 @@
 														       [if semantic_plan_variable_pair
 															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 [terminal_format standard-terminal '\nexecuting plan in layer below with variable frame: ' variable_frame]
+														 `[terminal_format standard-terminal '\nexecuting plan in layer below with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call_below-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 															 [semantic_planner [get [get [get this mental_layer_below] agency `plan] semantic_planner]]]
-														     [terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+														     `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 														     ]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
@@ -898,13 +898,13 @@
 														       [if semantic_plan_variable_pair
 															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
 																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 [terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
+														 `[terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
 														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
 															 [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
-														     [terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+														     `[terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 														     ]]]]]]]]
 						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
@@ -1096,6 +1096,7 @@
   [funkall [get this compiled_funk] this]]
 
 [deftypefunk nonsemantic_plan execute execute_as_thought_in_semantic_planner [semantic_planner variable_frame]
+  [terminal_format standard-terminal '\nnonsemantic_plan: executing "' [get this name_expression] '" with ' variable_frame '.']
   [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 	[funk []
 	      [have this eval]]
@@ -1477,6 +1478,7 @@
   [funkall [get this compiled_imagine_funk] this]]
 
 [deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
+  [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
   [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 	[funk []
 	      [have this imagine_eval]]

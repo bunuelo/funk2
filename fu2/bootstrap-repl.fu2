@@ -235,7 +235,7 @@
   [funk-apply &primmetro-apply [conslist funkable arguments]]]
 
 [defmetro funk [variables :rest body_expressions]
-  [funka-apply &primmetro-funk [cons variables body_expressions]]]
+  [funk-apply &primmetro-funk [cons variables body_expressions]]]
 
 `[defmetro old-funk [args :rest body]
   `[funk-new_with_name funk ,args

@@ -23,7 +23,7 @@
 	[[is-type `cons   this] [first this]]
 	[t                      [error `deframe `[compound-slotdef-name ,this]]]]]
 
-[defunk frametype-slotdef-value [this]
+`[defunk primobject-frametype-slotdef-value-old [this]
   [cond [[is-type `symbol this] nil]
 	[[is-type `cons   this] [second this]]
 	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
@@ -90,7 +90,7 @@
 								       parents]]
 							@[mapcar [funk [slot_name_value_pair]
 								       [let [[slot_name  [primobject-frametype-slotdef-name  slot_name_value_pair]]
-									     [slot_value [frametype-slotdef-value slot_name_value_pair]]]
+									     [slot_value [primobject-frametype-slotdef-value slot_name_value_pair]]]
 									 `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
 								 slot_name_value_pairs]
 							 ]]]

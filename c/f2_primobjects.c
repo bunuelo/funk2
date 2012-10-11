@@ -657,9 +657,9 @@ def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documenta
 	    return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
 
 f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
-  release__assert(raw__metrocfunk__is_type(cause, metrocfunk), nil, "metrocfunk failed type assertion.");
-  release__assert(raw__fiber__is_type(cause, fiber),           nil, "fiber failed type assertion.");
-  release__assert(raw__cons__is_type(cause, args),             nil, "args failed type assertion.");
+  assert_argument_type(       metrocfunk, metrocfunk);
+  assert_argument_type(       fiber,      fiber);
+  assert_argument_type_or_nil(cons,       args);
   return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
 }
 def_pcfunk3(metrocfunk__apply, x, y, z,

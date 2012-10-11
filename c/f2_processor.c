@@ -697,12 +697,12 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   }
   resume_gc();
   
-  raw__processor__reset_current_active_fiber(processor_cause, processor);
+  raw__processor__scheduler_reset_current_active_fiber(processor_cause, processor);
   
   int fiber_num = 0;
   {
     f2ptr fiber;
-    while ((fiber = raw__processor__current_active_fiber(processor_cause, processor)) != nil) {
+    while ((fiber = raw__processor__scheduler_current_active_fiber(processor_cause, processor)) != nil) {
       fiber_num ++;
       boolean_t need_to_launch_larva_handling_critic_fiber = 0;
       if (f2cmutex__trylock(f2fiber__execute_cmutex(fiber, processor_cause), processor_cause) == 0) { // successful lock
@@ -729,7 +729,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	      }
 	    }
 	    
-	    funk2_operating_system__push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
+	    funk2_operating_system__scheduler_push_current_fiber(&(__funk2.operating_system), pool_index, fiber);
 	    
 	    //printf("\n  got fiber lock.");
 	    if (raw__larva__is_type(cause, f2fiber__value(fiber, cause))) {
@@ -807,7 +807,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	      }
 	    }
 	  
-	    funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), pool_index);
+	    funk2_operating_system__scheduler_pop_current_fiber(&(__funk2.operating_system), pool_index);
 	  }
 	} else { // (fiber__paused)
 	}
@@ -855,7 +855,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	}
       }
     
-      raw__processor__increment_current_active_fiber(processor_cause, processor);
+      raw__processor__scheduler_increment_current_active_fiber(processor_cause, processor);
     } // end of fiber while
   }
   

@@ -95,9 +95,16 @@ void      raw__terminal_print_frame__prepare_for_printing__thread_unsafe        
 f2ptr      f2__terminal_print_frame__prepare_for_printing__thread_unsafe                                      (f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height);
 
 
+// exp
+
 f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr  f2__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+
+
+//
 
 f2ptr f2__terminal_print(f2ptr cause, f2ptr exp);
+
 
 // **
 

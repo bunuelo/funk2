@@ -17,7 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defunk frametype-slotdef-name [this]
+
+`[defunk primobject-frametype-slotdef-name-old [this]
   [cond [[is-type `symbol this] this]
 	[[is-type `cons   this] [first this]]
 	[t                      [error `deframe `[compound-slotdef-name ,this]]]]]
@@ -88,7 +89,7 @@
 									     `[create ,parent]]
 								       parents]]
 							@[mapcar [funk [slot_name_value_pair]
-								       [let [[slot_name  [frametype-slotdef-name  slot_name_value_pair]]
+								       [let [[slot_name  [primobject-frametype-slotdef-name  slot_name_value_pair]]
 									     [slot_value [frametype-slotdef-value slot_name_value_pair]]]
 									 `[frame-add_var_value this [quote ,slot_name] ,slot_value]]]
 								 slot_name_value_pairs]
@@ -130,7 +131,7 @@
 												[or [eq exp_frame_type_name [quote ,type_name]]
 												    [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
       [mapc [funk [slot_name_value_pair]
-		  [let [[slot_name [frametype-slotdef-name slot_name_value_pair]]]
+		  [let [[slot_name [primobject-frametype-slotdef-name slot_name_value_pair]]]
 		    [if [primobject_type-lookup_slot_type_funk primobject_type `get slot_name]
 			[error bug_type  `deframe-redefining-slot
 			       type_name type_name

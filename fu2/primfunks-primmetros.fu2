@@ -29,3 +29,7 @@
 [globalize-funk metro-new_with_name                 [cfunk-as-metrocfunk &primfunk:primmetro__metro__new_with_name]]
 [globalize-funk cond                                [cfunk-as-metrocfunk &primfunk:primmetro__cond]]
 
+'bootstrap-primobject metro helpers'
+
+[globalize-funk primobject-frametype-slotdef-name &primfunk:primobject__frametype__slotdef__name]
+

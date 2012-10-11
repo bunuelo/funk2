@@ -483,6 +483,27 @@ def_pcfunk0_and_rest(primmetro__cond, clauses,
 		     return f2__primmetro__cond(this_cause, clauses));
 
 
+// bootstrap-primobject metro helpers
+
+f2ptr f2__primobject__frametype__slotdef__name(f2ptr cause, f2ptr this) {
+  if (raw__symbol__is_type(cause, this)) {
+    return this;
+  } else if (raw__cons__is_type(cause, this)) {
+    return f2cons__car(this, cause);
+  } else {
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "invalid_type_for_frame_type_slotdef"),
+				   new__symbol(cause, "this"),     this));
+  }
+}
+def_pcfunk1(primobject__frametype__slotdef__name, this,
+	    "",
+	    return f2__primobject__frametype__slotdef__name(this_cause, this));
+
+
+
+
+
 
 // **
 
@@ -501,6 +522,10 @@ void f2__primmetros__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(primmetro__metro__new_with_name);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__cond);
   
+  // bootstrap-primobject metro helpers
+  
+  f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__name);
+  
 }
 
 void f2__primmetros__reinitialize_globalvars() {
@@ -514,6 +539,11 @@ void f2__primmetros__reinitialize_globalvars() {
   f2__primcfunk__init__3_and_rest(primmetro__metro__new_with_name_and_environment, name, environment, variables, body_expressions);
   f2__primcfunk__init__2_and_rest(primmetro__metro__new_with_name, name, variables, body_expressions);
   f2__primcfunk__init__0_and_rest(primmetro__cond, clauses);
+  
+  // bootstrap-primobject metro helpers
+  
+  f2__primcfunk__init__1(primobject__frametype__slotdef__name, this);
+
 }
 
 void f2__primmetros__initialize() {

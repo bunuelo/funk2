@@ -1437,13 +1437,10 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   status("tried to compile: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("don't know how to compile."); // should throw exception... (or return larva)
   dont_know_how_to_compile();
-  {
-    f2ptr bug_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "do_not_know_how_to_compile"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funkname"), new__symbol(cause, "compile-cons_exp"));
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "exp"),      exp);
-    return f2larva__new(cause, 125, f2__bug__new(cause, f2integer__new(cause, 125), bug_frame));
-  }
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_type"), new__symbol(cause, "do_not_know_how_to_compile"),
+				 new__symbol(cause, "funkname"), new__symbol(cause, "compile-cons_exp"),
+				 new__symbol(cause, "exp"),      exp));
 }
 
 f2ptr f2__compile__bytecode_exp(f2ptr cause, f2ptr exp, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {

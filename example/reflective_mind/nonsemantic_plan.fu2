@@ -1099,7 +1099,12 @@
 
 [deftypefunk nonsemantic_plan get compiled_funk []
   [if [null internal-compiled_funk]
-      [= internal-compiled_funk [get this __compiled_funk]]]
+      [= internal-compiled_funk [let [[result [shelter [get this __compiled_funk]]]]
+				  [if [is-type `bug result]
+				      [error bug_name nonsemantic_plan-error_compiling_execute_funk
+					     subbug   result
+					     this     this]
+				    result]]]]
   internal-compiled_funk]
 
 [deftypefunk nonsemantic_plan execute eval []
@@ -1493,7 +1498,12 @@
 
 [deftypefunk nonsemantic_plan get compiled_imagine_funk []
   [if [null internal-compiled_imagine_funk]
-      [= internal-compiled_imagine_funk [get this __compiled_imagine_funk]]]
+      [= internal-compiled_imagine_funk [let [[result [shelter [get this __compiled_imagine_funk]]]]
+					  [if [is-type `bug result]
+					      [error bug_name `nonsemantic_plan-error_compiling_imagine_funk
+						     subbug   result
+						     this     this]
+					    result]]]]
   internal-compiled_imagine_funk]
 
 [deftypefunk nonsemantic_plan execute imagine_eval []

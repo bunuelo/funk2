@@ -234,7 +234,7 @@ def_pcfunk1_and_rest(primmetro__funk, variables, body_expressions,
 f2ptr raw__primmetro__funk__new_with_name_and_environment(f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions) {
   f2ptr fiber                                = f2__this__fiber(cause);
   f2ptr fiber__environment                   = f2__fiber__env(cause, fiber);
-  f2otr body_expressions__demetropolize_full = f2__exps__demetropolize_full(cause, fiber, env, body_expressions);
+  f2ptr body_expressions__demetropolize_full = f2__exps__demetropolize_full(cause, fiber, env, body_expressions);
   f2ptr compiled_funk                        = f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil);
   f2ptr compiled_bytecodes                   = f2__funk__body_bytecodes(cause, compiled_funk);
   f2ptr is_funktional                        = f2__funk__is_funktional(cause, compiled_funk);

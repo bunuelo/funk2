@@ -618,11 +618,12 @@ def_pcfunk4(primobject__frametype__add_type_funk, type_name, slot_type, slot_nam
   `[global_core_extension_handler-add_new_core_extension [quote ,name] ,filename]]
 */
 
-f2ptr f2__primobject__frametype__defcore(f2ptr cause, f2ptr name, f2ptr filename) {
-}
-def_pcfunk2(primobject__frametype__defcore, name, filename,
-	    "",
-	    return f2__primobject__frametype__defcore(this_cause, name, filename));
+ //f2ptr f2__primobject__frametype__defcore(f2ptr cause, f2ptr name, f2ptr filename) {
+ //  
+ //}
+ //def_pcfunk2(primobject__frametype__defcore, name, filename,
+ //	    "",
+ //	    return f2__primobject__frametype__defcore(this_cause, name, filename));
 
 /*
 [defmetro defcorefunk [global_name core_extension_name name]

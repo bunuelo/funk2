@@ -33,16 +33,18 @@ f2ptr f2__stringlist__rawcode                      (f2ptr cause, f2ptr this);
 
 f2ptr f2__exp__as__string(f2ptr cause, f2ptr exp);
 
-f2ptr     raw__string__as__symbol( f2ptr cause, f2ptr this);
-f2ptr      f2__string__as__symbol( f2ptr cause, f2ptr this);
-f2ptr      f2__string__save(       f2ptr cause, f2ptr this, f2ptr filename);
-f2ptr      f2__string__load(       f2ptr cause, f2ptr filename);
-f2ptr      f2__string__split(      f2ptr cause, f2ptr this, f2ptr token);
-boolean_t raw__string__contains(   f2ptr cause, f2ptr this, f2ptr substring);
-f2ptr      f2__string__contains(   f2ptr cause, f2ptr this, f2ptr substring);
-f2ptr     raw__string__substring(  f2ptr cause, f2ptr this, s64 start_index, s64 end_index);
-f2ptr      f2__string__substring(  f2ptr cause, f2ptr this, f2ptr start_index, f2ptr end_index);
+f2ptr     raw__string__as__symbol (f2ptr cause, f2ptr this);
+f2ptr      f2__string__as__symbol (f2ptr cause, f2ptr this);
+f2ptr      f2__string__save       (f2ptr cause, f2ptr this, f2ptr filename);
+f2ptr      f2__string__load       (f2ptr cause, f2ptr filename);
+f2ptr      f2__string__split      (f2ptr cause, f2ptr this, f2ptr token);
+boolean_t raw__string__contains   (f2ptr cause, f2ptr this, f2ptr substring);
+f2ptr      f2__string__contains   (f2ptr cause, f2ptr this, f2ptr substring);
+f2ptr     raw__string__substring  (f2ptr cause, f2ptr this, s64 start_index, s64 end_index);
+f2ptr      f2__string__substring  (f2ptr cause, f2ptr this, f2ptr start_index, f2ptr end_index);
 f2ptr      f2__string__replace_all(f2ptr cause, f2ptr this, f2ptr token, f2ptr replacement);
+f2ptr     raw__string__format     (f2ptr cause, f2ptr expressions);
+f2ptr      f2__string__format     (f2ptr cause, f2ptr expressions);
 
 
 f2ptr f2string__primobject_type__new_aux(f2ptr cause);

@@ -18,4 +18,5 @@
  rights to redistribute these changes.'
 
 [globalize-funk exp-printable_value &primfunk:exp__printable_value]
+[globalize-funk terminal_format     &primfunk:terminal_format]
 

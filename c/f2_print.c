@@ -1755,8 +1755,66 @@ def_pcfunk1(exp__printable_value, this,
 	    "Converts an object into a form that can be directly printed to the screen.",
 	    return f2__exp__printable_value(this_cause, this));
 
+/*
+[defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
+  [if [null terminal_print_frame]
+      [apply &string-format exps]
+    [mapc [funk [exp]
+		[terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe terminal_print_frame]
+		[if [is-type `string exp]
+		    [terminal_print_frame-write_string-thread_unsafe terminal_print_frame exp]
+		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
+	  exps]]]
 
+[defunk terminal_format [terminal_print_frame :rest exps]
+  [if terminal_print_frame
+      [while [have [get terminal_print_frame cmutex] trylock]
+	[millisleep 10]]]
+  [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
+    [if terminal_print_frame
+	[have [get terminal_print_frame cmutex] unlock]]
+    result]]
+*/
 
+f2ptr raw__terminal_format__thread_unsafe(f2ptr cause, f2ptr terminal_print_frame, f2ptr expressions) {
+  if (terminal_print_frame == nil) {
+    return f2__string__format(cause, expressions);
+  } else {
+    f2ptr iter = expressions;
+    while (iter != nil) {
+      f2ptr expression = f2cons__car(iter, cause);
+      assert_value(f2__terminal_print_frame__prepare_for_printing_to_standard_terminal__thread_unsafe(cause, terminal_print_frame));
+      if (raw__string__is_type(cause, expression)) {
+	assert_value(f2__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, expression));
+      } else {
+	assert_value(f2__exp__terminal_print_with_frame__thread_unsafe(cause, expression, terminal_print_frame));
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+}
+
+f2ptr raw__terminal_format(f2ptr cause, f2ptr terminal_print_frame, f2ptr expressions) {
+  f2ptr cmutex;
+  if (terminal_print_frame != nil) {
+    cmutex = f2__terminal_print_frame__cmutex(cause, terminal_print_frame);
+    f2cmutex__lock(cmutex, cause);
+  }
+  f2ptr result = raw__terminal_format__thread_unsafe(cause, terminal_print_frame, expressions);
+  if (terminal_print_frame != nil) {
+    f2cmutex__unlock(cmutex, cause);
+  }
+  return result;
+}
+
+f2ptr f2__terminal_format(f2ptr cause, f2ptr terminal_print_frame, f2ptr expressions) {
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  assert_argument_type(conslist,             expressions);
+  return raw__terminal_format(cause, terminal_print_frame, expressions);
+}
+def_pcfunk1_and_rest(terminal_format, terminal_print_frame, expressions,
+		     "Formats the given expressions to the given terminal_print_frame.",
+		     return f2__terminal_format(this_cause, terminal_print_frame, expressions));
 
 
 
@@ -1767,10 +1825,12 @@ void f2__print__defragment__fix_pointers() {
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(exp__printable_value);
+  f2__primcfunk__init__defragment__fix_pointers(terminal_format);
 }
 
 void f2__print__reinitialize_globalvars() {
   f2__primcfunk__init__1(exp__printable_value, this);
+  f2__primcfunk__init__1_and_rest(terminal_format, terminal_print_frame, expressions);
 }
 
 void f2__print__initialize() {

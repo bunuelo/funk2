@@ -30,5 +30,6 @@
 [globalize-funk string-is_less_than    &primfunk:string__is_less_than]
 [globalize-funk string-is_greater_than &primfunk:string__is_greater_than]
 [globalize-funk string-multiply        &primfunk:string__multiply]
+[globalize-funk string-format          &primfunk:string__format]
 
 

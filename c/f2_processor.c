@@ -57,6 +57,16 @@ def_pcfunk3(processor__new, scheduler, pool_index, desc,
 	    return f2__processor__new(this_cause, scheduler, pool_index, desc));
 
 
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+u64 raw__processor__scheduler_active_fibers_count(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+  f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  u64 active_fibers_count__i = raw__processor__active_fibers_count__thread_unsafe(cause, this);
+  f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+  return active_fibers_count__i;
+}
+
+
 u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_count_chunk = f2processor__active_fibers_count_chunk(this, cause);
   return raw__chunk__bit64__elt(cause, active_fibers_count_chunk, 0);
@@ -64,7 +74,9 @@ u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) 
 
 u64 raw__processor__active_fibers_count(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  while (f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex, cause)) {
+    f2__this__fiber__yield(cause);
+  }
   u64 active_fibers_count__i = raw__processor__active_fibers_count__thread_unsafe(cause, this);
   f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
   return active_fibers_count__i;
@@ -331,6 +343,16 @@ f2ptr raw__processor__try_remove_any_active_fiber(f2ptr cause, f2ptr this) {
 }
 
 
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+f2ptr raw__processor__scheduler_current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+  f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  f2ptr current_active_fiber = raw__processor__current_active_fiber__thread_unsafe(cause, this);
+  f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+  return current_active_fiber;
+}
+
+
 f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_iter = f2processor__active_fibers_iter(this, cause);
   if (active_fibers_iter == nil) {
@@ -341,7 +363,9 @@ f2ptr raw__processor__current_active_fiber__thread_unsafe(f2ptr cause, f2ptr thi
 
 f2ptr raw__processor__current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  while (f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex, cause)) {
+    f2__this__fiber__yield(cause);
+  }
   f2ptr current_active_fiber = raw__processor__current_active_fiber__thread_unsafe(cause, this);
   f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
   return current_active_fiber;
@@ -368,9 +392,20 @@ boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr ca
   return current_element_exists;
 }
 
-boolean_t raw__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+boolean_t raw__processor__scheduler_increment_current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
   f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  boolean_t current_element_exists = raw__processor__increment_current_active_fiber__thread_unsafe(cause, this);
+  f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+  return current_element_exists;
+}
+
+boolean_t raw__processor__increment_current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+  while (f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex, cause)) {
+    f2__this__fiber__yield(cause);
+  }
   boolean_t current_element_exists = raw__processor__increment_current_active_fiber__thread_unsafe(cause, this);
   f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
   return current_element_exists;
@@ -393,9 +428,20 @@ boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause,
   return current_element_exists;
 }
 
-boolean_t raw__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+boolean_t raw__processor__scheduler_reset_current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
   f2scheduler_cmutex__lock(active_fibers_scheduler_cmutex, cause);
+  boolean_t current_element_exists = raw__processor__reset_current_active_fiber__thread_unsafe(cause, this);
+  f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
+  return current_element_exists;
+}
+
+boolean_t raw__processor__reset_current_active_fiber(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+  while (f2scheduler_cmutex__trylock(active_fibers_scheduler_cmutex, cause)) {
+    f2__this__fiber__yield(cause);
+  }
   boolean_t current_element_exists = raw__processor__reset_current_active_fiber__thread_unsafe(cause, this);
   f2scheduler_cmutex__unlock(active_fibers_scheduler_cmutex, cause);
   return current_element_exists;
@@ -411,10 +457,23 @@ def_pcfunk1(processor__reset_current_active_fiber, this,
 
 
 
-u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr this) {
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+u64 raw__processor__active_fibers__scheduler_length(f2ptr cause, f2ptr this) {
   f2ptr this__active_fibers_scheduler_cmutex;
   this__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
   f2scheduler_cmutex__lock(this__active_fibers_scheduler_cmutex, cause);
+  f2ptr active_fibers = f2processor__active_fibers(this, cause);
+  u64 fiber_num = raw__simple_length(cause, active_fibers);
+  f2scheduler_cmutex__unlock(this__active_fibers_scheduler_cmutex, cause);
+  return fiber_num;
+}
+
+u64 raw__processor__active_fibers__length(f2ptr cause, f2ptr this) {
+  f2ptr this__active_fibers_scheduler_cmutex;
+  this__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+  while (f2scheduler_cmutex__trylock(this__active_fibers_scheduler_cmutex, cause)) {
+    f2__this__fiber__yield(cause);
+  }
   f2ptr active_fibers = f2processor__active_fibers(this, cause);
   u64 fiber_num = raw__simple_length(cause, active_fibers);
   f2scheduler_cmutex__unlock(this__active_fibers_scheduler_cmutex, cause);
@@ -449,11 +508,25 @@ boolean_t raw__processor__active_fibers__contains__thread_unsafe(f2ptr cause, f2
   return contains_fiber;
 }
 
-boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fiber) {
+// note: this is a scheduler funktion, see scheduler_cmutex__lock
+boolean_t raw__processor__active_fibers__scheduler_contains(f2ptr cause, f2ptr this, f2ptr fiber) {
   boolean_t contains_fiber = boolean__false;
   {
     f2ptr this__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
     f2scheduler_cmutex__lock(this__active_fibers_scheduler_cmutex, cause);
+    contains_fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this, fiber);
+    f2scheduler_cmutex__unlock(this__active_fibers_scheduler_cmutex, cause);
+  }
+  return contains_fiber;
+}
+
+boolean_t raw__processor__active_fibers__contains(f2ptr cause, f2ptr this, f2ptr fiber) {
+  boolean_t contains_fiber = boolean__false;
+  {
+    f2ptr this__active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
+    while (f2scheduler_cmutex__trylock(this__active_fibers_scheduler_cmutex, cause)) {
+      f2__this__fiber__yield(cause);
+    }
     contains_fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this, fiber);
     f2scheduler_cmutex__unlock(this__active_fibers_scheduler_cmutex, cause);
   }

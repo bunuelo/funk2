@@ -363,7 +363,7 @@ circular_buffer__socket_recv_result_t circular_buffer__socket_recv(circular_buff
       recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes + this->end, end_to_loop__byte_num, &bytes_read);
       if ((recv_result == recv_nonblocking_result__disconnected) ||
 	  (recv_result == recv_nonblocking_result__select_failure)) {
-	status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
+	status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
 	return circular_buffer__socket_recv_result__disconnected;
       }
     }
@@ -372,7 +372,7 @@ circular_buffer__socket_recv_result_t circular_buffer__socket_recv(circular_buff
       recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes, next_end, &bytes_read);
       if ((recv_result == recv_nonblocking_result__disconnected) ||
 	  (recv_result == recv_nonblocking_result__select_failure)) {
-	status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
+	status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
 	return circular_buffer__socket_recv_result__disconnected;
       }
       total_byte_num_recv += bytes_read;
@@ -381,7 +381,7 @@ circular_buffer__socket_recv_result_t circular_buffer__socket_recv(circular_buff
     recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes + this->end, byte_num_to_recv, &bytes_read);
     if ((recv_result == recv_nonblocking_result__disconnected) ||
 	(recv_result == recv_nonblocking_result__select_failure)) {
-      status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
+      status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
       return circular_buffer__socket_recv_result__disconnected;
     }
     total_byte_num_recv += bytes_read;

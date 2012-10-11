@@ -22,6 +22,27 @@
 #include "funk2.h"
 
 
+f2ptr raw__cfunk__as__metrocfunk(f2ptr cause, f2ptr this) {
+  return f2metrocfunk__new(cause,
+			   f2__cfunk__name(         cause, this),
+			   f2__cfunk__args(         cause, this),
+			   f2__cfunk__cfunkptr(     cause, this),
+			   f2__cfunk__env(          cause, this),
+			   f2__cfunk__is_funktional(cause, this),
+			   f2__cfunk__documentation(cause, this));
+}
+
+f2ptr f2__cfunk__as__metrocfunk(f2ptr cause, f2ptr this) {
+  assert_argument_type(cfunk, this);
+  return raw__cfunk__as__metrocfunk(cause, this);
+}
+def_pcfunk1(cfunk__as__metrocfunk, this,
+	    "",
+	    return f2__cfunk__as__metrocfunk(this_cause, this));
+
+
+
+
 /*
  *  [defmetro let [varpairs :rest body]
  *    [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
@@ -469,6 +490,7 @@ void f2__primmetros__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
 
+  f2__primcfunk__init__defragment__fix_pointers(cfunk__as__metrocfunk);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__let);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__prog);
   f2__primcfunk__init__defragment__fix_pointers(primmetro__apply);
@@ -482,6 +504,7 @@ void f2__primmetros__defragment__fix_pointers() {
 }
 
 void f2__primmetros__reinitialize_globalvars() {
+  f2__primcfunk__init__1(cfunk__as__metrocfunk, this);
   f2__primcfunk__init__1_and_rest(primmetro__let, variable_definitions, body_expressions);
   f2__primcfunk__init__0_and_rest(primmetro__prog, body_expressions);
   f2__primcfunk__init__1_and_rest(primmetro__apply, funkable, arguments);

@@ -120,7 +120,7 @@
 
 [globalize-funk cons &primfunk:cons__new]
 
-[globalize-funk funk-new_with_name_and_environment-original [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
+`[globalize-funk funk-new_with_name_and_environment-original-old [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name_and_environment `[name environment args :rest body]
 										 `[[funk-apply &primmetro-funk-new_with_name_and_environment [cons name [cons environment [cons args body]]]]]
 										 nil
 										 nil
@@ -158,23 +158,23 @@
 
 
 'note that the optimizing compiler has bugs, so the original compiler is being used here.'
-[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
+`[globalize-funk funk-new_with_name_and_environment &funk-new_with_name_and_environment-original]
 
-[globalize-funk funk-new_with_name [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
+`[globalize-funk funk-new_with_name-old [metro-new [funk-new [bytecode copy env value nil] `funk-new_with_name `[name args :rest body]
 							`[[funk-apply &primmetro-funk-new_with_name [cons name [cons args body]]]]
 							nil
 							nil
 							nil
 							nil]]]
 
-[globalize-funk metro-new_with_name_and_environment [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name_and_environment `[name environment args :rest body]
+`[globalize-funk metro-new_with_name_and_environment-old [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name_and_environment `[name environment args :rest body]
 									 `[[funk-apply &primmetro-metro-new_with_name_and_environment [cons name [cons environment [cons args body]]]]]
 									 nil
 									 nil
 									 nil
 									 nil]]]
 
-[globalize-funk metro-new_with_name [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
+`[globalize-funk metro-new_with_name-old [metro-new [funk-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
 							 `[[funk-apply &primmetro-metro-new_with_name [cons name [cons args body]]]]
 							 nil
 							 nil
@@ -195,13 +195,13 @@
 				      `[define-funk ,name [metro-new_with_name ,name ,args
 										@body]]]]
 
-[defmetro prog [:rest body_expressions]
+`[defmetro prog-old [:rest body_expressions]
   [funk-apply &primmetro-prog body_expressions]]
 
-[defmetro apply [funkable arguments]
+`[defmetro apply-old [funkable arguments]
   [funk-apply &primmetro-apply [conslist funkable arguments]]]
 
-[defmetro funk [variables :rest body_expressions]
+`[defmetro funk-old [variables :rest body_expressions]
   [funk-apply &primmetro-funk [cons variables body_expressions]]]
 
 [defmetro metro [args :rest body]
@@ -428,8 +428,8 @@
 [defunk fourth [seq]
   [car [cdr [cdr [cdr seq]]]]]
 
-[defmetro let [variable_definitions :rest body_expressions]
-  [apply &primmetro-let [cons variable_definitions body_expressions]]]
+`[defmetro let-old [variable_definitions :rest body_expressions]
+   [apply &primmetro-let [cons variable_definitions body_expressions]]]
 
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
@@ -534,8 +534,8 @@
     [apply &join parcar-fibers]
     [mapcar [funk [x] [get x value]] parcar-fibers]]]
 
-[defmetro cond [:rest clauses]
-  [funk-apply &primmetro-cond clauses]]
+`[defmetro cond-old [:rest clauses]
+   [funk-apply &primmetro-cond clauses]]
 
 `[defmetro cond-old [:rest clauses]
   [if [null clauses]

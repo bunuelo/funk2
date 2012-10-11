@@ -467,7 +467,7 @@
 [defunk fourth [seq]
   [car [cdr [cdr [cdr seq]]]]]
 
-[defmetro let [variable_definitions :rest body_expression]
+[defmetro let [variable_definitions :rest body_expressions]
   [apply &metro-let [cons variable_definitions body_expressions]]]
 
 `[defmetro old-let [varpairs :rest body]

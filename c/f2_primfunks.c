@@ -2529,7 +2529,7 @@ void f2__primcfunks__reinitialize_globalvars() {
 }
 
 void f2__primcfunks__initialize() {
-  funk2_module_registration__add_module(&(__funk2.module_registration), "primfunks", "", &f2__primcfunks__reinitialize_globalvars, &f2__primcfunks__defragment__fix_pointers);
+  funk2_module_registration__add_module(&(__funk2.module_registration), "primcfunks", "", &f2__primcfunks__reinitialize_globalvars, &f2__primcfunks__defragment__fix_pointers);
   
   f2__primcfunks__reinitialize_globalvars();
 }

@@ -88,6 +88,7 @@
 [primfunk:load 'fu2/primfunks-primobject_type.fu2']
 [primfunk:load 'fu2/primfunks-primobject_type_handler.fu2']
 [primfunk:load 'fu2/primfunks-primobjects.fu2']
+[primfunk:load 'fu2/primfunks-primmetros.fu2']
 [primfunk:load 'fu2/primfunks-print.fu2']
 [primfunk:load 'fu2/primfunks-ptypes.fu2']
 [primfunk:load 'fu2/primfunks-reader.fu2']
@@ -466,7 +467,10 @@
 [defunk fourth [seq]
   [car [cdr [cdr [cdr seq]]]]]
 
-[defmetro let [varpairs :rest body]
+[defmetro let [variable_definitions :rest body_expression]
+  [apply &metro-let [cons variable_definitions body_expressions]]]
+
+`[defmetro old-let [varpairs :rest body]
   [define let-vars [mapcar [funk [varpair] [car varpair]] varpairs]]
   `[apply [funk-new_with_name let ,let-vars
 			      @body]

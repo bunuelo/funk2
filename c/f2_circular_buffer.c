@@ -118,7 +118,7 @@ select_read_result_t select_read(int fd) {
     switch(errno) {
     case EBADF:
       status("select_read (fd=%d) failure!  An invalid file descriptor was given in one of the sets.  (Perhaps a file descriptor that was already closed, or one on which an error has occurred.)", fd);
-      break;
+      return select_read_result__select_failure;
     case EINTR:
       //status("select_read (fd=%d) failure!  A signal was caught.", fd);
       return select_read_result__signal_caught;
@@ -359,21 +359,29 @@ circular_buffer__socket_recv_result_t circular_buffer__socket_recv(circular_buff
   if (next_end >= this->byte_num) {
     next_end -= this->byte_num;
     u32 end_to_loop__byte_num = this->byte_num - this->end;
-    if (recv_nonblocking(socket_fd, this->bytes + this->end, end_to_loop__byte_num, &bytes_read) == recv_nonblocking_result__disconnected) {
-      status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
-      return circular_buffer__socket_recv_result__disconnected;
+    {
+      recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes + this->end, end_to_loop__byte_num, &bytes_read);
+      if ((recv_result == recv_nonblocking_result__disconnected) ||
+	  (recv_result == recv_nonblocking_result__select_failure)) {
+	status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
+	return circular_buffer__socket_recv_result__disconnected;
+      }
     }
     total_byte_num_recv += bytes_read;
     if (total_byte_num_recv == end_to_loop__byte_num) {
-      if (recv_nonblocking(socket_fd, this->bytes, next_end, &bytes_read) == recv_nonblocking_result__disconnected) {
-	status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
+      recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes, next_end, &bytes_read);
+      if ((recv_result == recv_nonblocking_result__disconnected) ||
+	  (recv_result == recv_nonblocking_result__select_failure)) {
+	status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
 	return circular_buffer__socket_recv_result__disconnected;
       }
       total_byte_num_recv += bytes_read;
     }
   } else {
-    if (recv_nonblocking(socket_fd, this->bytes + this->end, byte_num_to_recv, &bytes_read) == recv_nonblocking_result__disconnected) {
-      status("circular_buffer__socket_recv error: disconnected!  (socket_fd=%d)", socket_fd);
+    recv_nonblocking_result_t recv_result = recv_nonblocking(socket_fd, this->bytes + this->end, byte_num_to_recv, &bytes_read);
+    if ((recv_result == recv_nonblocking_result__disconnected) ||
+	(recv_result == recv_nonblocking_result__select_failure)) {
+      status("circular_buffer__socket_recv error: disconnecting!  (socket_fd=%d)", socket_fd);
       return circular_buffer__socket_recv_result__disconnected;
     }
     total_byte_num_recv += bytes_read;

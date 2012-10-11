@@ -501,6 +501,22 @@ def_pcfunk1(primobject__frametype__slotdef__name, this,
 	    return f2__primobject__frametype__slotdef__name(this_cause, this));
 
 
+f2ptr f2__primobject__frametype__slotdef__value(f2ptr cause, f2ptr this) {
+  if (raw__symbol__is_type(cause, this)) {
+    return this;
+  } else if (raw__cons__is_type(cause, this)) {
+    return f2cons__car(this, cause);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "invalid_type_for_frame_type_slotdef"),
+				   new__symbol(cause, "this"),     this));
+  }
+}
+def_pcfunk1(primobject__frametype__slotdef__value, this,
+	    "",
+	    return f2__primobject__frametype__slotdef__value(this_cause, this));
+
+
 
 
 
@@ -525,6 +541,7 @@ void f2__primmetros__defragment__fix_pointers() {
   // bootstrap-primobject metro helpers
   
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__name);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__value);
   
 }
 
@@ -543,6 +560,7 @@ void f2__primmetros__reinitialize_globalvars() {
   // bootstrap-primobject metro helpers
   
   f2__primcfunk__init__1(primobject__frametype__slotdef__name, this);
+  f2__primcfunk__init__1(primobject__frametype__slotdef__value, this);
 
 }
 

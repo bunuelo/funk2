@@ -31,5 +31,6 @@
 
 'bootstrap-primobject metro helpers'
 
-[globalize-funk primobject-frametype-slotdef-name &primfunk:primobject__frametype__slotdef__name]
+[globalize-funk primobject-frametype-slotdef-name  &primfunk:primobject__frametype__slotdef__name]
+[globalize-funk primobject-frametype-slotdef-value &primfunk:primobject__frametype__slotdef__value]
 

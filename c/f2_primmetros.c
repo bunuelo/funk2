@@ -459,22 +459,6 @@ def_pcfunk0_and_rest(primmetro__cond, clauses,
 
 
 
-f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
-  return f2list3__new(cause,
-		      new__symbol(cause, "funk-apply"),
-		      funkable,
-		      arguments);
-}
-
-f2ptr f2__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
-  return raw__primmetro__apply(cause, funkable, arguments);
-}
-def_pcfunk2(primmetro__apply, funkable, arguments,
-	    "",
-	    return f2__primmetro__apply(this_cause, funkable, arguments));
-
-
-
 // **
 
 void f2__primmetros__defragment__fix_pointers() {

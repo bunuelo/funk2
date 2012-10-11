@@ -93,8 +93,9 @@
 
 [deftypefunk reflective_focus_on_object_resource get as-natural_language_string_with_arguments [arguments]
   [if [not [== [length arguments] 1]]
-      [error bug_name  `reflective_focus_on_object_resource-wrong_number_of_arguments
-	     arguments arguments]
+      [prog `[error bug_name  `reflective_focus_on_object_resource-wrong_number_of_arguments
+		    arguments arguments]
+	    [get this as-natural_language_string]]
     [let [[focus_object [first arguments]]]
       [cond [[is-type `semantic_plan_object focus_object] [let [[semantic_plan_object focus_object]]
 							    [stringlist-concat `['focus on the plan to '

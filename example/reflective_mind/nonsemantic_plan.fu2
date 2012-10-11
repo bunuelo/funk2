@@ -1085,6 +1085,7 @@
 
 [defunk nonsemantic_plan-expression-compile [expression]
   [eval `[funk [this]
+	       [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
 	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile expression] this]]]]
 		 [if [is-type `bug result]
 		     [prog [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]

@@ -120,9 +120,9 @@ f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_express
       iter = f2cons__cdr(iter, cause);
     }
   }
-  return raw__let(cause, variable_definitions, body_expressions);
+  return raw__metro__let(cause, variable_definitions, body_expressions);
 }
-def_pcfunk1_and_rest(let, variable_definitions, body_expressions,
+def_pcfunk1_and_rest(metro__let, variable_definitions, body_expressions,
 		     "returns a new conslist.",
 		     return f2__metro__let(this_cause, variable_definitions, body_expressions));
 

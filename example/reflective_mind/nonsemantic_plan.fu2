@@ -1092,7 +1092,8 @@
 			   [error bug_name   `nonsemantic_plan-expression_encountered_bug
 				  expression [quote ,expression]
 				  subbug     result]]
-		   result]]]]]
+		   [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
+			 result]]]]]]
 
 
 [deftypefunk nonsemantic_plan get __compiled_funk []

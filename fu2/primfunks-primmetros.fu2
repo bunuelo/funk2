@@ -17,8 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk primmetro-let                                &primfunk:primmetro__let]
-[globalize-funk primmetro-prog                               &primfunk:primmetro__prog]
-[globalize-funk primmetro-apply                              &primfunk:primmetro__apply]
-[globalize-funk primmetro-funk                               &primfunk:primmetro__funk]
-[globalize-funk primmetro-funk-new_with_name_and_environment &primfunk:primmetro__funk__new_with_name_and_environment]
+[globalize-funk primmetro-let                                 &primfunk:primmetro__let]
+[globalize-funk primmetro-prog                                &primfunk:primmetro__prog]
+[globalize-funk primmetro-apply                               &primfunk:primmetro__apply]
+[globalize-funk primmetro-funk                                &primfunk:primmetro__funk]
+[globalize-funk primmetro-funk-new_with_name_and_environment  &primfunk:primmetro__funk__new_with_name_and_environment]
+[globalize-funk primmetro-metro-new_with_name_and_environment &primfunk:primmetro__metro__new_with_name_and_environment]

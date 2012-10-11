@@ -856,15 +856,15 @@
 				nil]]]
 
 [defmetro defmetro [name args :rest body]
-  `[prog [terminal_format standard-terminal '\n' [quote ,`[defmetro ,name ,args]]]
-	 [globalize-funk ,name [metro-new_with_name ,name ,args
-						    @body]]]]
+  [terminal_format standard-terminal '\n' [quote ,`[defmetro ,name ,args]]]
+  `[globalize-funk ,name [metro-new_with_name ,name ,args
+					      @body]]]
 
 [defmetro defunk [name args :rest body]
-  `[prog [terminal_format standard-terminal '\n' [quote ,`[defunk ,name ,args]]]
-	 [globalize-funk ,name
-			 [funk-new_with_name ,name ,args
-					     @body]]]]
+  [terminal_format standard-terminal '\n' [quote ,`[defunk ,name ,args]]]
+  `[globalize-funk ,name
+		   [funk-new_with_name ,name ,args
+				       @body]]]
 
 [globalize memory:debug nil]
 

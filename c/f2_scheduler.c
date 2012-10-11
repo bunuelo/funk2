@@ -164,6 +164,35 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
   }
 }
 
+void raw__scheduler__scheduler_calculate_processor_load(f2ptr cause, f2ptr this, u64* processor_load) {
+  u64   processors__length          = memory_pool_num;
+  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
+  f2ptr processors                  = f2scheduler__processors(this, cause);
+  f2ptr processor[memory_pool_num];
+  u64   processor__fiber_count[memory_pool_num];
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      processor_load[index]         = 0;
+      processor[index]              = raw__array__elt(cause, processors, index);
+      processor__fiber_count[index] = raw__processor__scheduler_active_fibers_count(cause, processor[index]);
+    }
+  }
+  {
+    s64 index;
+    for (index = 0; index < memory_pool_num; index ++) {
+      s64 bit_index;
+      for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
+	s64 bit_subindex;
+	for (bit_subindex = 0; bit_subindex < (1ull << bit_index); bit_subindex ++) {
+	  //processor_load[index] += ((processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex]) * (1ull << (processors__length__bit_num - bit_subindex - 1)));
+	  processor_load[index] += processor__fiber_count[((index >> bit_index) << bit_index) + bit_subindex];
+	}
+      }
+    }
+  }
+}
+
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
   u64   processor__load[memory_pool_num];
   raw__scheduler__calculate_processor_load(cause, this, processor__load);
@@ -225,9 +254,10 @@ def_pcfunk1(scheduler__clean, this,
 	    "",
 	    return f2__scheduler__clean(this_cause, this));
 
-void raw__scheduler__balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
+
+void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
   u64   processor__load[memory_pool_num];
-  raw__scheduler__calculate_processor_load(cause, this, processor__load);
+  raw__scheduler__scheduler_calculate_processor_load(cause, this, processor__load);
   //u64   processors__length          = memory_pool_num;
   //u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
   f2ptr processors                  = f2scheduler__processors(this, cause);

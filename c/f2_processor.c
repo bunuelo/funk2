@@ -691,7 +691,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
   {
     u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     if ((nanoseconds_since_1970 - last_balance_scheduler_nanoseconds_since_1970) > 1000000000) {
-      raw__scheduler__balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
+      raw__scheduler__scheduler_balance_processor_load(nil, __funk2.operating_system.scheduler, processor);
       last_balance_scheduler_nanoseconds_since_1970 = nanoseconds_since_1970;
     }
   }

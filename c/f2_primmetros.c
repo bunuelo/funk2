@@ -558,8 +558,8 @@ f2ptr f2__primobject__frametype__with(f2ptr cause, f2ptr frame_object, f2ptr bod
 							    f2list1__new(cause, f2list2__new(cause, new__symbol(cause, "frame_object_environment"), f2list5__new(cause,
 																				 new__symbol(cause, "new"),
 																				 new__symbol(cause, "environment"),
-																				 frame_object__gensym
-																				 f2list1__new(cause, new__symbol(cause, "this-env"))
+																				 frame_object__gensym,
+																				 f2list1__new(cause, new__symbol(cause, "this-env")),
 																				 nil))),
 							    f2list1__new(cause, f2__primmetro__let(cause,
 												   f2list1__new(cause, f2list2__new(cause, new__symbol(cause, "with_funk"), f2__primmetro__metro__new_with_name_and_environment(cause,

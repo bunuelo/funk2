@@ -229,7 +229,7 @@
 										@body]]]]
 
 [defmetro prog [:rest body_expressions]
-  [apply &metro-prog body_expressions]]
+  [funk-apply &metro-prog body_expressions]]
 
 `[defmetro old-prog [:rest body]
   [if body

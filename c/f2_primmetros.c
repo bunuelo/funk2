@@ -157,7 +157,7 @@ f2ptr f2__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
   assert_argument_type(conslist, body_expressions);
   return raw__primmetro__prog(cause, body_expressions);
 }
-def_pcfunk0_and_rest(metro__prog, body_expressions,
+def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 		     "",
 		     return f2__primmetro__prog(this_cause, body_expressions));
 

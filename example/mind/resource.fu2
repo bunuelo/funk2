@@ -91,7 +91,7 @@
 						[have active-conditionlock unlock]
 						
 						[if [is-type `bug result]
-						    [prog [terminal_format standard-terminal '\nresource "' [get this as-english_string] '" encountered bug!']
+						    [prog [terminal_format standard-terminal '\nresource "' [get this as-natural_language_string] '" encountered bug!']
 							  [have bug print_backtrace]]]
 						
 						[have finished-conditionlock lock]

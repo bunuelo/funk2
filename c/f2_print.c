@@ -1756,6 +1756,9 @@ def_pcfunk1(exp__printable_value, this,
 	    return f2__exp__printable_value(this_cause, this));
 
 /*
+[defunk terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe [this]
+  [terminal_print_frame-prepare_for_printing-thread_unsafe this [termios-width] [integer-subtract [termios-height] 3]]]
+
 [defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
       [apply &string-format exps]
@@ -1776,6 +1779,12 @@ def_pcfunk1(exp__printable_value, this,
     result]]
 */
 
+f2ptr raw__terminal_print_frame__prepare_for_printing_to_standard_terminal__thread_unsafe(f2ptr cause, f2ptr this) {
+  s64 width  = raw__termios__width(cause);
+  s64 height = raw__termios__height(cause) - 3;
+  return raw__terminal_print_frame__prepare_for_printing__thread_unsafe(cause, this, f2integer__new(cause, width), f2integer__new(cause, height));
+}
+
 f2ptr raw__terminal_format__thread_unsafe(f2ptr cause, f2ptr terminal_print_frame, f2ptr expressions) {
   if (terminal_print_frame == nil) {
     return f2__string__format(cause, expressions);
@@ -1783,7 +1792,7 @@ f2ptr raw__terminal_format__thread_unsafe(f2ptr cause, f2ptr terminal_print_fram
     f2ptr iter = expressions;
     while (iter != nil) {
       f2ptr expression = f2cons__car(iter, cause);
-      assert_value(f2__terminal_print_frame__prepare_for_printing_to_standard_terminal__thread_unsafe(cause, terminal_print_frame));
+      assert_value(raw__terminal_print_frame__prepare_for_printing_to_standard_terminal__thread_unsafe(cause, terminal_print_frame));
       if (raw__string__is_type(cause, expression)) {
 	assert_value(f2__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, expression));
       } else {

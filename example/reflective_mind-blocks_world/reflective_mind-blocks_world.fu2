@@ -118,8 +118,7 @@
   
   'add "being told" knowledge to resources'
   
-  [terminal_format standard-terminal
-		   '\nblocks_world_reflective_mind: Creating built-in hypotheses.  (Don\'t need this if we learn during imagination of plans.)']
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: Creating built-in hypotheses.  (Don\'t need this if we learn during imagination of plans.)']
   
   [have-apply [get this mind] add_resource_change_relationship_hypothesis
 	      `[learned_reactive physical drop_block_and_wait_for_block_to_fall
@@ -132,16 +131,7 @@
 				 block shape pyramid preposition on block shape cube]]
   
   
-  [terminal_format standard-terminal
-		   '\nblocks_world_reflective_mind: Creating built-in deliberative plans, for controlling the properties of objects'
-		   '\n                              as well as the relationships between blocks, tables, and grippers.'
-		   '\n'
-		   '\n                              When these plans are executed, they call resources in the given physical simulation'
-		   '\n                              as well as the learned reactive layer, which is comprised of compiled deliberative'
-		   '\n                              plans.  When these plans are imagined, they use hypotheses learned from previous'
-		   '\n                              executions or imagined executions of these plans, which creates hypothetical,'
-		   '\n                              counterfactual knowledge of the state of the deliberative planning machine'
-		   '\n                              during the future time of the imagined execution.']
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in deliberative plans.']
   
   'create blocks_world agent specific plans'
   
@@ -232,16 +222,7 @@
 		
 		]]
   
-  [terminal_format standard-terminal
-		   '\nblocks_world_reflective_mind: Creating built-in reflective plans, for controlling the properties of objects'
-		   '\n                              as well as the relationships between the deliberative planner, plans, and failure'
-		   '\n                              objects.'
-		   '\n'
-		   '\n                              When these plans are executed, they call resources in the deliberative planning'
-		   '\n                              machine.  When these plans are imagined, they use hypotheses learned from previous'
-		   '\n                              executions or imagined executions of these plans, which creates hypothetical,'
-		   '\n                              counterfactual knowledge of the state of the deliberative planning machine'
-		   '\n                              during the future time of the imagined execution.']
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in reflective plans.']
   
   'reflective plans'
   

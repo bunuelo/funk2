@@ -266,7 +266,7 @@ f2ptr f2__primmetro__funk__new_with_name_and_environment(f2ptr cause, f2ptr name
   assert_argument_type(conslist,    body_expressions);
   return raw__primmetro__funk__new_with_name_and_environment(cause, name, environment, variables, body_expressions);
 }
-def_pcfunk3_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions
+def_pcfunk3_and_rest(primmetro__funk__new_with_name_and_environment, name, environment, variables, body_expressions,
 		     "",
 		     return f2__primmetro__funk__new_with_name_and_environment(this_cause, name, environment, variables, body_expressions));
 

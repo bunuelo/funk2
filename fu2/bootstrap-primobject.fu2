@@ -28,7 +28,7 @@
 	[[is-type `cons   this] [second this]]
 	[t                      [error `deframe `[compound-slotdef-value ,this]]]]]
 
-[defunk type-has_parent [type_name parent_name]
+`[defunk primobject-frametype-type-has_parent-old [type_name parent_name]
   [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
 [defmetro with [frame_object :rest body]
@@ -129,7 +129,7 @@
 				     [eval `[funk-new_with_name ,[get [stringlist-concat [conslist [exp-as-string type_name] '-is_type']] as-symbol] [exp]
 								 [and exp [frame-is_type exp] [let [[exp_frame_type_name [frame-lookup_var_value exp `type nil]]]
 												[or [eq exp_frame_type_name [quote ,type_name]]
-												    [type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
+												    [primobject-frametype-type-has_parent exp_frame_type_name [quote ,type_name]]]]]]]]
       [mapc [funk [slot_name_value_pair]
 		  [let [[slot_name [primobject-frametype-slotdef-name slot_name_value_pair]]]
 		    [if [primobject_type-lookup_slot_type_funk primobject_type `get slot_name]

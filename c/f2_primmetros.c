@@ -505,7 +505,9 @@ f2ptr f2__primobject__frametype__slotdef__value(f2ptr cause, f2ptr this) {
   if (raw__symbol__is_type(cause, this)) {
     return this;
   } else if (raw__cons__is_type(cause, this)) {
-    return f2cons__car(this, cause);
+    f2ptr this__cdr = f2cons__cdr(this, cause);
+    assert_argument_type(cons, this__cdr);
+    return f2cons__car(this__cdr, cause);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "invalid_type_for_frame_type_slotdef"),
@@ -515,6 +517,16 @@ f2ptr f2__primobject__frametype__slotdef__value(f2ptr cause, f2ptr this) {
 def_pcfunk1(primobject__frametype__slotdef__value, this,
 	    "",
 	    return f2__primobject__frametype__slotdef__value(this_cause, this));
+
+
+f2ptr f2__primobject__frametype__type__has_parent(f2ptr cause, f2ptr type_name, f2ptr parent_name) {
+  f2ptr     primobject_type = assert_value(f2__lookup_type(cause, type_name));
+  assert_argument_type(primobject_type, primobject_type);
+  return f2bool__new(raw__primobject_type__has_parent_type(cause, primobject_type, parent_name));
+}
+def_pcfunk2(primobject__frametype__type__has_parent, type_name, parent_name,
+	    "",
+	    return f2__primobject__frametype__type__has_parent(this_cause, type_name, parent_name));
 
 
 
@@ -542,6 +554,7 @@ void f2__primmetros__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__name);
   f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__slotdef__value);
+  f2__primcfunk__init__defragment__fix_pointers(primobject__frametype__type__has_parent);
   
 }
 
@@ -559,8 +572,9 @@ void f2__primmetros__reinitialize_globalvars() {
   
   // bootstrap-primobject metro helpers
   
-  f2__primcfunk__init__1(primobject__frametype__slotdef__name, this);
-  f2__primcfunk__init__1(primobject__frametype__slotdef__value, this);
+  f2__primcfunk__init__1(primobject__frametype__slotdef__name,    this);
+  f2__primcfunk__init__1(primobject__frametype__slotdef__value,   this);
+  f2__primcfunk__init__2(primobject__frametype__type__has_parent, type_name, parent_name);
 
 }
 

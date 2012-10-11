@@ -583,9 +583,9 @@ f2ptr f2__primobject__frametype__with(f2ptr cause, f2ptr frame_object, f2ptr bod
 								   new__symbol(cause, "object"),
 								   frame_object__gensym))));
 }
-def_pcfunk2(primobject__frametype__with, frame_object, body_expressions,
-	    "",
-	    return f2__primobject__frametype__with(this_cause, frame_object, body_expressions));
+def_pcfunk1_and_rest(primobject__frametype__with, frame_object, body_expressions,
+		     "",
+		     return f2__primobject__frametype__with(this_cause, frame_object, body_expressions));
 
 
 
@@ -632,10 +632,10 @@ void f2__primmetros__reinitialize_globalvars() {
   
   // bootstrap-primobject metro helpers
   
-  f2__primcfunk__init__1(primobject__frametype__slotdef__name,    this);
-  f2__primcfunk__init__1(primobject__frametype__slotdef__value,   this);
-  f2__primcfunk__init__2(primobject__frametype__type__has_parent, type_name, parent_name);
-  f2__primcfunk__init__2(primobject__frametype__with,             frame_object, body_expressions);
+  f2__primcfunk__init__1(         primobject__frametype__slotdef__name,    this);
+  f2__primcfunk__init__1(         primobject__frametype__slotdef__value,   this);
+  f2__primcfunk__init__2(         primobject__frametype__type__has_parent, type_name, parent_name);
+  f2__primcfunk__init__1_and_rest(primobject__frametype__with,             frame_object, body_expressions);
 
 }
 

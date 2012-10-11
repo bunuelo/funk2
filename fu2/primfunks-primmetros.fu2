@@ -34,4 +34,5 @@
 [globalize-funk primobject-frametype-slotdef-name    &primfunk:primobject__frametype__slotdef__name]
 [globalize-funk primobject-frametype-slotdef-value   &primfunk:primobject__frametype__slotdef__value]
 [globalize-funk primobject-frametype-type-has_parent &primfunk:primobject__frametype__type__has_parent]
+[globalize-funk with                                 [cfunk-as-metrocfunk &primfunk:primobject__frametype__with]]
 

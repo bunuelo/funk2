@@ -31,7 +31,7 @@
 `[defunk primobject-frametype-type-has_parent-old [type_name parent_name]
   [primobject_type-has_parent_type [lookup_type type_name] parent_name]]
 
-[defmetro with [frame_object :rest body]
+`[defmetro with-old [frame_object :rest body]
   [let [[frame_object-gensym [gensym 'with']]]
     `[let [[,frame_object-gensym ,frame_object]]
        [if [object-inherits_from ,frame_object-gensym `frame]

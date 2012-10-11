@@ -115,7 +115,7 @@ f2ptr f2__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_express
 				       new__symbol(cause, "bug_name"),             new__symbol(cause, "let-found_invalid_variable_definition"),
 				       new__symbol(cause, "variable_definition"),  variable_definition,
 				       new__symbol(cause, "variable_definitions"), variable_definitions,
-				       new__symbol(cause, "args"),                 args));
+				       new__symbol(cause, "body_expressions"),     body_expressions));
       }
       iter = f2cons__cdr(iter, cause);
     }

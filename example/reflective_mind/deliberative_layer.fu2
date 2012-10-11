@@ -302,8 +302,7 @@
 	  nil]]]]]
 
 [deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
-  [terminal_format standard-terminal '\ndeliberative_layer-evaluate_plan_expression: here.']
-  [let* [[name_expression      `[evaluate plan expression]]
+  [let* [[name_expression      'evaluate unnamed plan expression']]
 	 [name_patterns        nil]
 	 [argument_definitions nil]
 	 [plan                 [new nonsemantic_plan [get this mental_layer]

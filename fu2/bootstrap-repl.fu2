@@ -328,6 +328,9 @@
 [defunk is-type [type_name exp]
   [apply [primobject_type-lookup_slot_type_funk [lookup_type type_name] `execute `is_type] [cons exp nil]]]
 
+[defunk terminal_print_frame-prepare_for_printing_to_standard_terminal-thread_unsafe [this]
+  [terminal_print_frame-prepare_for_printing-thread_unsafe this [termios-width] [integer-subtract [termios-height] 3]]]
+
 [defunk slots [exp]
   [primobject_type-type_funk-keys [lookup_type [type exp]] `get]]
 

@@ -173,7 +173,6 @@
 		   expression]]]
     [have plan syntax_check]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [set semantic_plan_object plan_object_type `physical]
       [have this add_semantic_plan semantic_plan_object]]]]
 
 
@@ -303,6 +302,7 @@
 	  nil]]]]]
 
 [deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
+  [terminal_format standard-terminal '\ndeliberative_layer-evaluate_plan_expression: here.'
   [let* [[name_expression      `[evaluate plan expression]]
 	 [name_patterns        nil]
 	 [argument_definitions nil]

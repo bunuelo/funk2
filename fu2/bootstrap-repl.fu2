@@ -181,13 +181,6 @@
 					       nil
 					       nil]]
 
-`[globalize-funk metro-new_with_name-old [metro-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
-					       `[`[metro-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
-					       nil
-					       nil
-					       nil
-					       nil]]
-
 'defmetro is later redefined.  search for "defmetro defmetro" below.'
 
 [globalize-funk defmetro
@@ -210,10 +203,6 @@
 
 [defmetro funk [variables :rest body_expressions]
   [funk-apply &primmetro-funk [cons variables body_expressions]]]
-
-`[defmetro old-funk [args :rest body]
-  `[funk-new_with_name funk ,args
-		       @body]]
 
 [defmetro metro [args :rest body]
   `[metro-new_with_name metro ,args
@@ -546,6 +535,9 @@
     [mapcar [funk [x] [get x value]] parcar-fibers]]]
 
 [defmetro cond [:rest clauses]
+  [funk-apply &primmetro-cond clauses]]
+
+`[defmetro cond-old [:rest clauses]
   [if [null clauses]
       nil
     [let [[clause [car clauses]]]

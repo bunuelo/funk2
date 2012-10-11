@@ -1952,6 +1952,8 @@ declare_primobject_10_slot(funk,
 			   has_no_side_effects,
 			   documentation);
 
+f2ptr f2__funk__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation);
+
 f2ptr f2funk__primobject_type__new_aux(f2ptr cause);
 
 

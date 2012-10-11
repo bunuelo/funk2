@@ -1097,10 +1097,12 @@
 
 [deftypefunk nonsemantic_plan execute execute_as_thought_in_semantic_planner [semantic_planner variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: executing "' [get this name_expression] '" with ' variable_frame '.']
-  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-	[funk []
-	      [have this eval]]
-	[]]]
+  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+		      [funk []
+			    [have this eval]]
+		      []]]]
+    [terminal_format standard-terminal '\nnonsemantic_plan: done executing "' [get this name_expression] '".']
+    result]]
 
 
 
@@ -1479,10 +1481,12 @@
 
 [deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
-  [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-	[funk []
-	      [have this imagine_eval]]
-	[]]]
+  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+		      [funk []
+			    [have this imagine_eval]]
+		      []]]]
+    [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
+    result]]
 
 
 

@@ -174,27 +174,6 @@
 							       nil
 							       nil]]
 
-`[globalize-funk metro-new_with_name_and_environment-old [metro-new [bytecode copy env value nil] `metro-new_with_name_and_environment `[name environment args :rest body]
-							       `[[define demetroed     [exps-demetropolize_full body]]
-								 [define compiled_funk [funk-new [bytecode copy env value nil] name args
-												 demetroed
-												 body
-												 nil
-												 nil
-												 nil]]
-								 [define compiled_bcs   [primfunk:array__elt compiled_funk  4]]
-								 [define is_funktional  [primfunk:array__elt compiled_funk 10]]
-								 `[metro-new ,environment [quote ,name] [quote ,args]
-									     [quote ,demetroed]
-									     [quote ,body]
-									     [quote ,compiled_bcs]
-									     ,is_funktional
-									     nil]]
-							       nil
-							       nil
-							       nil
-							       nil]]
-
 [globalize-funk metro-new_with_name [metro-new [bytecode copy env value nil] `metro-new_with_name `[name args :rest body]
 					       `[`[metro-new_with_name_and_environment ,name [bytecode copy env value nil] ,args @body]]
 					       nil

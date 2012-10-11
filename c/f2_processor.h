@@ -81,6 +81,7 @@ declare_primobject_9_slot(processor,
 
 f2ptr      f2__processor__new                                          (f2ptr cause, f2ptr scheduler, f2ptr pool_index, f2ptr desc);
 u64       raw__processor__active_fibers_count__thread_unsafe           (f2ptr cause, f2ptr this);
+u64       raw__processor__scheduler_active_fibers_count                (f2ptr cause, f2ptr this);
 u64       raw__processor__active_fibers_count                          (f2ptr cause, f2ptr this);
 f2ptr      f2__processor__active_fibers_count                          (f2ptr cause, f2ptr this);
 void      raw__processor__active_fibers_count__set__thread_unsafe      (f2ptr cause, f2ptr this, u64 active_fibers_count__i);

@@ -17,12 +17,15 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk primmetro-let                                 &primfunk:primmetro__let]
-[globalize-funk primmetro-prog                                &primfunk:primmetro__prog]
-[globalize-funk primmetro-apply                               &primfunk:primmetro__apply]
-[globalize-funk primmetro-funk                                &primfunk:primmetro__funk]
-[globalize-funk primmetro-funk-new_with_name_and_environment  &primfunk:primmetro__funk__new_with_name_and_environment]
-[globalize-funk primmetro-funk-new_with_name                  &primfunk:primmetro__funk__new_with_name]
-[globalize-funk primmetro-metro-new_with_name_and_environment &primfunk:primmetro__metro__new_with_name_and_environment]
-[globalize-funk primmetro-metro-new_with_name                 &primfunk:primmetro__metro__new_with_name]
-[globalize-funk primmetro-cond                                &primfunk:primmetro__cond]
+[globalize-funk cfunk-as-metrocfunk &primfunk:cfunk__as__metrocfunk]
+
+[globalize-funk let                                 [cfunk-as-metrocfunk &primfunk:primmetro__let]]
+[globalize-funk prog                                [cfunk-as-metrocfunk &primfunk:primmetro__prog]]
+[globalize-funk apply                               [cfunk-as-metrocfunk &primfunk:primmetro__apply]]
+[globalize-funk funk                                [cfunk-as-metrocfunk &primfunk:primmetro__funk]]
+[globalize-funk funk-new_with_name_and_environment  [cfunk-as-metrocfunk &primfunk:primmetro__funk__new_with_name_and_environment]]
+[globalize-funk funk-new_with_name                  [cfunk-as-metrocfunk &primfunk:primmetro__funk__new_with_name]]
+[globalize-funk metro-new_with_name_and_environment [cfunk-as-metrocfunk &primfunk:primmetro__metro__new_with_name_and_environment]]
+[globalize-funk metro-new_with_name                 [cfunk-as-metrocfunk &primfunk:primmetro__metro__new_with_name]]
+[globalize-funk cond                                [cfunk-as-metrocfunk &primfunk:primmetro__cond]]
+

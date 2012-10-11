@@ -71,6 +71,9 @@ declare_frame_object_26_slot(terminal_print_frame,
 f2ptr f2terminal_print_frame__primobject_type__new_aux(f2ptr cause);
 
 boolean_t raw__terminal_print_frame__failed_test_constraint_and_should_return                                 (f2ptr cause, f2ptr this);
+void      raw__terminal_print_frame__write_string__thread_unsafe                                              (f2ptr cause, f2ptr this, u64 length, funk2_character_t* string);
+f2ptr      f2__terminal_print_frame__write_string__thread_unsafe                                              (f2ptr cause, f2ptr this, f2ptr string);
+void      raw__terminal_print_frame__write_utf8_string__thread_unsafe                                         (f2ptr cause, f2ptr this, u8* utf8_string);
 void      raw__terminal_print_frame__write_color__thread_unsafe                                               (f2ptr cause, f2ptr this, ansi_color_t color);
 void      raw__terminal_print_frame__write_string__thread_unsafe                                              (f2ptr cause, f2ptr this, u64 length, funk2_character_t* string);
 void      raw__terminal_print_frame__write_utf8_string__thread_unsafe                                         (f2ptr cause, f2ptr this, u8* utf8_string);
@@ -88,6 +91,8 @@ f2ptr      f2__terminal_print_frame__can_print_expression_on_one_line__thread_un
 f2ptr      f2__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr     raw__terminal_print_frame__expression_x_offset__thread_unsafe                                       (f2ptr cause, f2ptr this, f2ptr expression);
 f2ptr      f2__terminal_print_frame__expression_x_offset__thread_unsafe                                       (f2ptr cause, f2ptr this, f2ptr expression);
+void      raw__terminal_print_frame__prepare_for_printing__thread_unsafe                                      (f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height);
+f2ptr      f2__terminal_print_frame__prepare_for_printing__thread_unsafe                                      (f2ptr cause, f2ptr this, f2ptr max_x, f2ptr additional_height);
 
 
 f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);

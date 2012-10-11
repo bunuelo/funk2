@@ -815,19 +815,13 @@ f2ptr f2funk__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_1_slot(metro, funk);
 
-f2ptr f2__metro__new(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr name, f2ptr args, f2ptr demetropolized_body, f2ptr body, f2ptr bytecodes, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr funk = f2__funk__new(cause, fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
-  if (raw__larva__is_type(cause, funk)) {
-    printf("\nmetro funk error!!"); fflush(stdout);
-    f2__terminal_print(cause, funk);
-    return funk;
-  }
+f2ptr f2__metro__new(f2ptr cause, f2ptr funk) {
   f2ptr metro = f2metro__new(cause, funk);
   return metro;
 }
-def_pcfunk8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation,
+def_pcfunk1(metro__new, funk,
 	    "",
-	    return f2__metro__new(this_cause, simple_fiber, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation));
+	    return f2__metro__new(this_cause, funk));
 
 
 f2ptr raw__metro__name(f2ptr cause, f2ptr this) {
@@ -1486,8 +1480,6 @@ void f2__primobjects__defragment__fix_pointers() {
   
   initialize_primobject_1_slot__defragment__fix_pointers(metro, funk);
   
-  //f2__primcfunk__init__defragment__fix_pointers(metro__new);
-  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol);
   f2__primcfunk__init__defragment__fix_pointers(metro__name);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk);
@@ -1728,7 +1720,7 @@ void f2__primobjects__reinitialize_globalvars() {
   
   initialize_primobject_1_slot(metro, funk);
   
-  f2__primcfunk__init__8(metro__new, environment, name, args, demetropolized_body, body, bytecodes, is_funktional, documentation);
+  f2__primcfunk__init__1(metro__new, funk);
   
   {char* symbol_str = "name"; __funk2.globalenv.object_type.primobject.primobject_type_metro.name__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(metro__name, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_metro.name__funk = never_gc(cfunk);}

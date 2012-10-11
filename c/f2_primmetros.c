@@ -81,7 +81,7 @@ f2ptr raw__metro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expres
     }
   }
   return f2list3__new(cause,
-		      new__symbol(cause, "apply"),
+		      new__symbol(cause, "funk-apply"),
 		      f2cons__new(cause,
 				  new__symbol(cause, "funk-new_with_name"),
 				  f2cons__new(cause,

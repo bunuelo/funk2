@@ -836,7 +836,6 @@ def_pcfunk2(string__multiply, this, num,
 	    "Returns a new string that is the given number of times copied and concatenated of the original string.",
 	    return f2__string__multiply(this_cause, this, num));
 
-
 f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2string__primobject_type__new(cause);
   {char* slot_name = "as-symbol";       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.as__symbol__funk);}
@@ -851,6 +850,53 @@ f2ptr f2string__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "multiply";        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk);}
   return this;
 }
+
+
+
+/*
+[defunk string-format [:rest exps]
+  [stringlist-concat [mapcar [funk [exp]
+				   [if [is-type `string exp]
+				       exp
+				     [exp-as-string exp]]]
+			     exps]]]
+*/
+
+f2ptr raw__string__format(f2ptr cause, f2ptr expressions) {
+  f2ptr iter       = expressions;
+  f2ptr stringlist = nil;
+  {
+    f2ptr stringlist_iter;
+    while (iter != nil) {
+      f2ptr expression = f2cons__car(iter, cause);
+      f2ptr new_expression;
+      if (raw__string__is_type(cause, expression)) {
+	new_expression = expression;
+      } else {
+	new_expression = f2__exp__as__string(cause, expression);
+      }
+      f2ptr new_cons = f2cons__new(cause, new_expression, nil);
+      if (stringlist == nil) {
+	stringlist = new_cons;
+      } else {
+	f2cons__cdr__set(stringlist__iter, cause, new_cons);
+      }
+      stringlist__iter = new_cons;
+      iter             = f2cons__cdr(iter, cause);
+    }
+  }
+  return f2__stringlist__concat(cause, stringlist);
+}
+
+f2ptr f2__string__format(f2ptr cause, f2ptr expressions) {
+  assert_argument_type(conslist, expressions);
+  return raw__string__format(cause, expressions);
+}
+def_pcfunk0_and_rest(string__format, expressions,
+		     "Returns the list of expressions formatted as a single string.",
+		     return f2__string__format(this_cause, expressions));
+
+
 
 // **
 
@@ -906,6 +952,10 @@ void f2__string__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol);
   f2__primcfunk__init__defragment__fix_pointers(string__multiply);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_string.multiply__funk);
+
+
+  f2__primcfunk__init__defragment__fix_pointers(string__format);
+  
 }
 
 void f2__string__reinitialize_globalvars() {
@@ -940,6 +990,9 @@ void f2__string__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__uppercase, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.uppercase__funk = never_gc(cfunk);}
   {char* str = "multiply"; __funk2.globalenv.object_type.ptype.ptype_string.multiply__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(string__multiply, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_string.multiply__funk = never_gc(cfunk);}
+  
+  f2__primcfunk__init__0_and_rest(string__format, expressions);
+
 }
 
 void f2__string__initialize() {

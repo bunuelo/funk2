@@ -358,7 +358,7 @@
 [defunk fourth [seq]
   [car [cdr [cdr [cdr seq]]]]]
 
-[defunk terminal_format-thread_unsafe [terminal_print_frame :rest exps]
+`[defunk terminal_format-thread_unsafe-old [terminal_print_frame :rest exps]
   [if [null terminal_print_frame]
       [apply &string-format exps]
     [mapc [funk [exp]
@@ -368,10 +368,13 @@
 		  [exp-terminal_print_with_frame-thread_unsafe exp terminal_print_frame]]]
 	  exps]]]
 
-[defunk terminal_format [terminal_print_frame :rest exps]
-  [while [have [get terminal_print_frame cmutex] trylock]]
+`[defunk terminal_format-old [terminal_print_frame :rest exps]
+  [if terminal_print_frame
+      [while [have [get terminal_print_frame cmutex] trylock]
+	[millisleep 10]]]
   [let [[result [apply &terminal_format-thread_unsafe [cons terminal_print_frame exps]]]]
-    [have [get terminal_print_frame cmutex] unlock]
+    [if terminal_print_frame
+	[have [get terminal_print_frame cmutex] unlock]]
     result]]
 
 `[defunk join-test [:rest fibers]

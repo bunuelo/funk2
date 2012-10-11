@@ -861,10 +861,9 @@
 					      @body]]]
 
 [defmetro defunk [name args :rest body]
-  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]]
-  `[globalize-funk ,name
-		   [funk-new_with_name ,name ,args
-				       @body]]]
+  [terminal_format standard-terminal '\n' `[defunk ,name ,args]]
+  `[globalize-funk ,name [funk-new_with_name ,name ,args
+					     @body]]]
 
 [globalize memory:debug nil]
 

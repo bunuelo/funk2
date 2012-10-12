@@ -177,7 +177,8 @@
 		  [let [[variable_count [length [get match keys]]]]
 		    [if [or [null best_name_pattern_match]
 			    [< variable_count best_variable_count]]
-			[= best_name_pattern_match match]]]]]
+			[prog [= best_name_pattern_match match]
+			      [= best_variable_count     [length [get match keys]]]]]]]]
 	  name_pattern_match_pairs]
     best_name_pattern_match]]
 

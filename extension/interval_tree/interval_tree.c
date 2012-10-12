@@ -643,10 +643,10 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
 	  f2ptr     interval_args                             = f2list1__new(cause, interval);
 	  f2ptr     interval__left                            = assert_value(f2__force_funk_apply(cause, fiber, left_value_funk,  interval_args));
 	  f2ptr     interval__right                           = assert_value(f2__force_funk_apply(cause, fiber, right_value_funk, interval_args));
-	  boolean_t interval_right__less_than__interval_left  = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, interval__left_value)))  != nil);
-	  boolean_t interval_right__less_than__range_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_left_value)))      != nil);
-	  boolean_t range_right__less_than__interval_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__left_value)))  != nil);
-	  boolean_t range_right__less_than__range_left        = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     range_left_value)))      != nil);
+	  boolean_t interval_right__less_than__interval_left  = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right,   interval__left)))   != nil);
+	  boolean_t interval_right__less_than__range_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right,   range_left_value))) != nil);
+	  boolean_t range_right__less_than__interval_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value, interval__left)))   != nil);
+	  boolean_t range_right__less_than__range_left        = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value, range_left_value))) != nil);
 	  
 	  boolean_t interval_right_less_than_interval_left_bug = interval_right__less_than__interval_left;
 	  boolean_t interval_right_less_than_range_left_bug    = interval_right__less_than__range_left;
@@ -660,8 +660,8 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
 	    return new__error(f2list18__new(cause,
 					    new__symbol(cause, "bug_name"),                                   new__symbol(cause, "interval_tree-returning_inconsistent_left_value_of_interval"),
 					    new__symbol(cause, "this"),                                       this,
-					    new__symbol(cause, "interval_left"),                              interval_left,
-					    new__symbol(cause, "interval_right"),                             interval_right,
+					    new__symbol(cause, "interval-left"),                              interval__left,
+					    new__symbol(cause, "interval-right"),                             interval__right,
 					    new__symbol(cause, "interval_right_less_than_interval_left_bug"), f2bool__new(interval_right_less_than_interval_left_bug),
 					    new__symbol(cause, "interval_right_less_than_range_left_bug"),    f2bool__new(interval_right_less_than_range_left_bug),
 					    new__symbol(cause, "range_right_less_than_interval_left_bug"),    f2bool__new(range_right_less_than_interval_left_bug),

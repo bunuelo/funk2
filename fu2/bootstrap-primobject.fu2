@@ -172,7 +172,7 @@
   `[prog [if [object_type-type-funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]]
 	     [terminal_format standard-terminal '\ndeftypefunk-warning: redefining ' [quote ,type_name] ' ' [quote ,slot_type] ' ' [quote ,slot_name] '.']]
 	 [primobject-frametype-add_type_funk [quote ,type_name] [quote ,slot_type] [quote ,slot_name]
-					     [funk-new_with_name ,[string-as-symbol [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_name]]]] [this @args]
+					     [funk-new_with_name ,[string-as-symbol [stringlist-concat [conslist [exp-as-string type_name] '-' [exp-as-string slot_type] '-' [exp-as-string slot_name]]]] [this @args]
 								 ,[let [[this-gensym [gensym 'this']]
 									[arg_pairs  [mapcar [funk [arg]
 												  `[,[gensym 'arg'] ,arg]]

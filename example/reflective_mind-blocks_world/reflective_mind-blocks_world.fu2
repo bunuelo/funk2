@@ -191,11 +191,19 @@
 		    [if [plan-call [? condition]]
 			[plan-call [? command]]]]
 		
+		[defplan 'if a cube is to my left, move left until over cube, otherwise move right until over cube'
+		  :matches ['if [? condition], [? true_branch], otherwise [false_branch]']
+		   :frame [[condition    'a cube is to my left']
+			   [true_branch  'move left until over cube']
+			   [false_brance 'move right until over cube']]
+		    [if [plan-call [? condition]]
+			[plan-call [? true_branch]]
+		      [plan-call [? false_branch]]]]
+		
 		[defplan 'move until over cube'
 		  :matches ['move until over [? shape]']
 		   :frame [[shape cube]]
-		    [plan-call 'if a [? shape] is to my left, move left until over [? shape]']
-		    [plan-call 'if a [? shape] is to my right, move right until over [? shape]']]
+		    [plan-call 'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]
 		
 		[defplan 'pick up a cube'
 		  :matches ['pick up a [? shape]']

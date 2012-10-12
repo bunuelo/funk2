@@ -47,13 +47,7 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
   double this__width__d  = f2double__d(this__width,  cause);
   double this__height__d = f2double__d(this__height, cause);
   
-  if (raw__eq(cause, new__symbol(cause, "cube"), this__shape)) {
-    raw__cairo_context__move_to(    cause, cairo_context, this__x__d,      this__y__d);
-    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d,  0.0);
-    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,             this__height__d);
-    raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
-    raw__cairo_context__close_path( cause, cairo_context);
-  } else if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
+  if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
     raw__cairo_context__move_to(    cause, cairo_context, this__x__d + (this__width__d / 2.0), this__y__d);
     raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 2.0, this__height__d);
     raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
@@ -79,23 +73,28 @@ f2ptr f2__blocks_world_sprite__render_shape_path_to_cairo(f2ptr cause, f2ptr thi
     raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d / 3.0,                (this__height__d * 4.0) / 9.0);
     raw__cairo_context__rel_line_to(cause, cairo_context, -((this__width__d * 4.0) / 6.0),     0.0);
     raw__cairo_context__close_path( cause, cairo_context);
+  } else { // by default draw a rectangle
+    raw__cairo_context__move_to(    cause, cairo_context, this__x__d,      this__y__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, this__width__d,  0.0);
+    raw__cairo_context__rel_line_to(cause, cairo_context, 0.0,             this__height__d);
+    raw__cairo_context__rel_line_to(cause, cairo_context, -this__width__d, 0.0);
+    raw__cairo_context__close_path( cause, cairo_context);
   }
   return nil;
 }
 
 double raw__blocks_world_sprite__render_shape_text_height(f2ptr cause, f2ptr this) {
   f2ptr this__shape = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "shape"), nil));
-  if (raw__eq(cause, new__symbol(cause, "cube"), this__shape)) {
-    return 0.05;
-  } else if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
+  if (raw__eq(cause, new__symbol(cause, "pyramid"), this__shape)) {
     return 0.05;
   } else if (raw__eq(cause, new__symbol(cause, "gripper"), this__shape)) {
     f2ptr this__height = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "height"), nil));
     assert_argument_type(double, this__height);
     double this__height__d  = f2double__d(this__height, cause);
     return ((this__height__d / 3.0) - 0.05);
+  } else {
+    return 0.05;
   }
-  return 0.0;
 }
 
 f2ptr f2__blocks_world_sprite__render_to_cairo(f2ptr cause, f2ptr this, f2ptr cairo_context) {

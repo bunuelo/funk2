@@ -203,8 +203,7 @@
 		[defplan 'move until over cube'
 		  :matches ['move until over [? shape]']
 		   :frame [[shape cube]]
-		    [plan-call :ignore 'if [? condition], [? command]'
-				'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]
+		    [plan-call 'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]
 		
 		[defplan 'pick up a cube'
 		  :matches ['pick up a [? shape]']

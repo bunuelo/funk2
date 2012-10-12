@@ -57,7 +57,7 @@ export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
 s64 fibermon__total_row_count             = 14;
 s64 fibermon__cause__name__row_index      = 0;
-s64 fibermon__bug__name__name__row_index  = 1;
+s64 fibermon__bug__name__row_index        = 1;
 s64 fibermon__bug__cause__name__row_index = 2;
 s64 fibermon__keep_undead__row_index      = 3;
 s64 fibermon__is_zombie__row_index        = 4;

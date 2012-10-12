@@ -657,7 +657,7 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
 	      interval_right_less_than_range_left_bug    ||
 	      range_right_less_than_interval_left_bug    ||
 	      range_right_less_than_range_left_bug) {
-	    return new__error(f2list18__new(cause,
+	    return new__error(f2list20__new(cause,
 					    new__symbol(cause, "bug_name"),                                   new__symbol(cause, "interval_tree-returning_inconsistent_left_value_of_interval"),
 					    new__symbol(cause, "this"),                                       this,
 					    new__symbol(cause, "interval-left"),                              interval__left,
@@ -666,7 +666,8 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
 					    new__symbol(cause, "interval_right_less_than_range_left_bug"),    f2bool__new(interval_right_less_than_range_left_bug),
 					    new__symbol(cause, "range_right_less_than_interval_left_bug"),    f2bool__new(range_right_less_than_interval_left_bug),
 					    new__symbol(cause, "range_right_less_than_range_left_bug"),       f2bool__new(range_right_less_than_range_left_bug),
-					    new__symbol(cause, "value"),                                      value));
+					    new__symbol(cause, "range_left_value"),                           range_left_value,
+					    new__symbol(cause, "range_right_value"),                          range_right_value));
 	  }
 	}
 	iter = f2cons__cdr(iter, cause);

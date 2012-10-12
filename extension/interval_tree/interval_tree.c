@@ -529,8 +529,8 @@ f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause,
 					    new__symbol(cause, "this"),                        this,
 					    new__symbol(cause, "interval-left_value"),         interval__left_value,
 					    new__symbol(cause, "interval-right_value"),        interval__right_value,
-					    new__symbol(cause, "left_consistent_with_value"),  f2bool__new(left_inconsistent_with_value),
-					    new__symbol(cause, "right_consistent_with_value"), f2bool__new(right_inconsistent_with_value),
+					    new__symbol(cause, "left_consistent_with_value"),  f2bool__new(left_consistent_with_value),
+					    new__symbol(cause, "right_consistent_with_value"), f2bool__new(right_consistent_with_value),
 					    new__symbol(cause, "value"),                       value));
 	  }
 	}

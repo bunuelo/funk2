@@ -250,7 +250,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	f2ptr bug__cause = f2ptype__cause(bug, cause);
 	f2ptr bug__cause__name;
 	if (raw__cause__is_type(cause, bug__cause)) {
-	  bug__cause__name = f2__cause__lookup(cause, cause_reg, new__symbol(cause, "cause-name"));
+	  bug__cause__name = f2__cause__lookup(cause, bug__cause, new__symbol(cause, "cause-name"));
 	} else {
 	  bug__cause__name = nil;
 	}

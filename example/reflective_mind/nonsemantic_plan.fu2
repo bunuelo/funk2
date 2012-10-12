@@ -686,7 +686,9 @@
 					   [let [[default_variable_value_set [semantic-lookup_set semantic_environment variable variable_name]]]
 					     [mapc [funk [default_variable_value]
 							 [semantic-remove semantic_environment variable variable_name default_variable_value]]
-						   [get default_variable_value_set elements]]]
+						   [if default_variable_value_set
+						       [get default_variable_value_set elements]
+						     nil]]]
 					   [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
 				     [get variable_frame keys]]
 			       [set semantic_thought environment semantic_environment]

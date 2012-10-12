@@ -1192,7 +1192,7 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   if (f2ptype__raw(x, cause) != f2ptype__raw(y, cause)) {return boolean__false;}
   switch(f2ptype__raw(x, cause)) {
   case ptype_symbol:
-    return f2__symbol__eq(cause, x, y);
+    return raw__symbol__eq(cause, x, y);
   case ptype_integer:
     return (f2integer__i(x, cause) == f2integer__i(y, cause));
   case ptype_pointer:

@@ -75,45 +75,49 @@ def_pcfunk1(cfunk__as__metrocfunk, this,
  */
 
 f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
-  f2ptr variables   = nil;
-  f2ptr definitions = nil;
-  {
-    f2ptr iter             = variable_definitions;
-    f2ptr variables_iter   = nil;
-    f2ptr definitions_iter = nil;
-    while (iter != nil) {
-      f2ptr variable_definition  = f2cons__car(iter, cause);
-      f2ptr variable             = f2cons__car(variable_definition, cause);
-      f2ptr definition           = f2cons__car(f2cons__cdr(variable_definition, cause), cause);
-      f2ptr new_variables_cons   = f2cons__new(cause, variable, nil);
-      f2ptr new_definitions_cons = f2cons__new(cause, definition, nil);
-      if (variables == nil) {
-	variables        = new_variables_cons;
-        variables_iter   = new_variables_cons;
-	definitions      = new_definitions_cons;
-        definitions_iter = new_definitions_cons;
-      } else {
-	f2cons__cdr__set(variables_iter,   cause, new_variables_cons);
-	variables_iter   =                        new_variables_cons;
-	f2cons__cdr__set(definitions_iter, cause, new_definitions_cons);
-	definitions_iter =                        new_definitions_cons;
+  if (variable_definitions == nil) {
+    return raw__primmetro__prog(cause, body_expressions);
+  } else {
+    f2ptr variables   = nil;
+    f2ptr definitions = nil;
+    {
+      f2ptr iter             = variable_definitions;
+      f2ptr variables_iter   = nil;
+      f2ptr definitions_iter = nil;
+      while (iter != nil) {
+	f2ptr variable_definition  = f2cons__car(iter, cause);
+	f2ptr variable             = f2cons__car(variable_definition, cause);
+	f2ptr definition           = f2cons__car(f2cons__cdr(variable_definition, cause), cause);
+	f2ptr new_variables_cons   = f2cons__new(cause, variable, nil);
+	f2ptr new_definitions_cons = f2cons__new(cause, definition, nil);
+	if (variables == nil) {
+	  variables        = new_variables_cons;
+	  variables_iter   = new_variables_cons;
+	  definitions      = new_definitions_cons;
+	  definitions_iter = new_definitions_cons;
+	} else {
+	  f2cons__cdr__set(variables_iter,   cause, new_variables_cons);
+	  variables_iter   =                        new_variables_cons;
+	  f2cons__cdr__set(definitions_iter, cause, new_definitions_cons);
+	  definitions_iter =                        new_definitions_cons;
+	}
+	iter = f2cons__cdr(iter, cause);
       }
-      iter = f2cons__cdr(iter, cause);
     }
+    return f2list3__new(cause,
+			new__symbol(cause, "funk-apply"),
+			f2cons__new(cause,
+				    new__symbol(cause, "funk-new_with_name"),
+				    f2cons__new(cause,
+						new__symbol(cause, "let"),
+						f2cons__new(cause,
+							    variables,
+							    body_expressions))),
+			
+			f2cons__new(cause,
+				    new__symbol(cause, "immutable_conslist"),
+				    definitions));
   }
-  return f2list3__new(cause,
-		      new__symbol(cause, "funk-apply"),
-		      f2cons__new(cause,
-				  new__symbol(cause, "funk-new_with_name"),
-				  f2cons__new(cause,
-					      new__symbol(cause, "let"),
-					      f2cons__new(cause,
-							  variables,
-							  body_expressions))),
-		      
-		      f2cons__new(cause,
-				  new__symbol(cause, "immutable_conslist"),
-				  definitions));
 }
 
 f2ptr f2__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions) {
@@ -161,17 +165,20 @@ def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
 f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
   if (body_expressions == nil) {
     return nil;
+  } else if (f2cons__cdr(body_expressions, cause) == nil) {
+    return f2cons__car(body_expressions, cause);
+  } else {
+    return f2list3__new(cause,
+			new__symbol(cause, "funk-apply"),
+			f2cons__new(cause,
+				    new__symbol(cause, "funk-new_with_name"),
+				    f2cons__new(cause,
+						new__symbol(cause, "prog"),
+						f2cons__new(cause,
+							    nil,
+							    body_expressions))),
+			nil);
   }
-  return f2list3__new(cause,
-		      new__symbol(cause, "funk-apply"),
-		      f2cons__new(cause,
-				  new__symbol(cause, "funk-new_with_name"),
-				  f2cons__new(cause,
-					      new__symbol(cause, "prog"),
-					      f2cons__new(cause,
-							  nil,
-							  body_expressions))),
-		      nil);
 }
 
 f2ptr f2__primmetro__prog(f2ptr cause, f2ptr body_expressions) {

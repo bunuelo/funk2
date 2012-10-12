@@ -890,8 +890,8 @@
 														     [let [[semantic_plan_matches [have [get this mental_layer_below] lookup_semantic_plan_matches plan_name]]]
 														       [if semantic_plan_matches
 															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [prog [= match_semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-																   [= match_variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]]
+															     [prog [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+																   [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]]
 														 [terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
@@ -913,8 +913,8 @@
 														     [let [[semantic_plan_matches [have [get this mental_layer] lookup_semantic_plan_matches plan_name]]]
 														       [if semantic_plan_matches
 															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [prog [= match_semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-																   [= match_variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]]
+															     [prog [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+																   [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]]
 														 [terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan

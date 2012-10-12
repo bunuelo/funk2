@@ -641,20 +641,12 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
 	{
 	  f2ptr     fiber                                     = f2__this__fiber(cause);
 	  f2ptr     interval_args                             = f2list1__new(cause, interval);
-	  f2ptr     interval__left                            = f2__force_funk_apply(cause, fiber, left_value_funk,  interval_args);
-	  f2ptr     interval__right                           = f2__force_funk_apply(cause, fiber, right_value_funk, interval_args);
-	  //boolean_t interval_left__less_than__interval_right  = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  interval__right_value)) != nil);
-	  //boolean_t interval_left__less_than__range_left      = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  range_left_value))      != nil);
-	  //boolean_t interval_left__less_than__range_right     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  range_right_value))     != nil);
-	  boolean_t interval_right__less_than__interval_left  = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, interval__left_value))  != nil);
-	  boolean_t interval_right__less_than__range_left     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_left_value))      != nil);
-	  //boolean_t interval_right__less_than__range_right    = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_right_value))     != nil);
-	  //boolean_t range_left__less_than__interval_left      = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      interval__left_value))  != nil);
-	  //boolean_t range_left__less_than__interval_right     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      interval__right_value)) != nil);
-	  //boolean_t range_left__less_than__range_right        = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      range_right_value))     != nil);
-	  boolean_t range_right__less_than__interval_left     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__left_value))  != nil);
-	  //boolean_t range_right__less_than__interval_right    = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__right_value)) != nil);
-	  boolean_t range_right__less_than__range_left        = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     range_left_value))      != nil);
+	  f2ptr     interval__left                            = assert_value(f2__force_funk_apply(cause, fiber, left_value_funk,  interval_args));
+	  f2ptr     interval__right                           = assert_value(f2__force_funk_apply(cause, fiber, right_value_funk, interval_args));
+	  boolean_t interval_right__less_than__interval_left  = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, interval__left_value)))  != nil);
+	  boolean_t interval_right__less_than__range_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_left_value)))      != nil);
+	  boolean_t range_right__less_than__interval_left     = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__left_value)))  != nil);
+	  boolean_t range_right__less_than__range_left        = (assert_value(f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     range_left_value)))      != nil);
 	  
 	  boolean_t interval_right_less_than_interval_left_bug = interval_right__less_than__interval_left;
 	  boolean_t interval_right_less_than_range_left_bug    = interval_right__less_than__range_left;

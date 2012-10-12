@@ -55,20 +55,21 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
 }
 export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
-s64 fibermon__total_row_count             = 13;
+s64 fibermon__total_row_count             = 14;
 s64 fibermon__cause__name__row_index      = 0;
-s64 fibermon__bug__cause__name__row_index = 1;
-s64 fibermon__keep_undead__row_index      = 2;
-s64 fibermon__is_zombie__row_index        = 3;
-s64 fibermon__is_complete__row_index      = 4;
-s64 fibermon__execute_cmutex__row_index   = 5;
-s64 fibermon__paused__row_index           = 6;
-s64 fibermon__last_executed__row_index    = 7;
-s64 fibermon__sleep_until__row_index      = 8;
-s64 fibermon__execution_time__row_index   = 9;
-s64 fibermon__bytecode_count__row_index   = 10;
-s64 fibermon__bcs__row_index              = 11;
-s64 fibermon__efficiency__row_index       = 12;
+s64 fibermon__bug__name__name__row_index  = 1;
+s64 fibermon__bug__cause__name__row_index = 2;
+s64 fibermon__keep_undead__row_index      = 3;
+s64 fibermon__is_zombie__row_index        = 4;
+s64 fibermon__is_complete__row_index      = 5;
+s64 fibermon__execute_cmutex__row_index   = 6;
+s64 fibermon__paused__row_index           = 7;
+s64 fibermon__last_executed__row_index    = 8;
+s64 fibermon__sleep_until__row_index      = 9;
+s64 fibermon__execution_time__row_index   = 10;
+s64 fibermon__bytecode_count__row_index   = 11;
+s64 fibermon__bcs__row_index              = 12;
+s64 fibermon__efficiency__row_index       = 13;
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__frame = raw__gtk__frame__new(cause, new__string(cause, "fiber"));
@@ -193,8 +194,9 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
     }
   }
   
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index),      0), new__string(cause, "cause-name"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 0), new__string(cause, "bug cause-name"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index),      0), new__string(cause, "cause"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__name__row_index),        0), new__string(cause, "bug name"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 0), new__string(cause, "bug cause"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),      0), new__string(cause, "keep_undead"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_zombie__row_index),        0), new__string(cause, "is_zombie"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_complete__row_index),      0), new__string(cause, "is_complete"));
@@ -231,15 +233,16 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, (this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0));
   
   {
+    s64 short_name_string__max_length = 25;
     {
       f2ptr cause_reg          = f2fiber__cause_reg(this__fiber, cause);
       f2ptr cause__name__value = raw__cause__is_type(cause, cause_reg) ? f2__cause__lookup(cause, cause_reg, new__symbol(cause, "cause-name")) : nil;
       f2ptr name_string        = f2__exp__as__string(cause, cause__name__value);
       f2ptr short_name_string;
-      if (raw__string__length(cause, name_string) < 16) {
+      if (raw__string__length(cause, name_string) <= short_name_string__max_length) {
 	short_name_string = name_string;
       } else {
-	short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, 13)), new__string(cause, "...")));
+	short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, short_name_string__max_length - 3)), new__string(cause, "...")));
       }
       f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index), 1), short_name_string);
     }
@@ -247,6 +250,18 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
       f2ptr value = f2fiber__value(this__fiber, cause);
       if (raw__bug__is_type(cause, value)) {
 	f2ptr bug = value;
+	f2ptr bug__frame = f2__bug__frame(cause, bug);
+	f2ptr bug__name  = f2__frame__lookup_var_value(cause, bug__frame, new__symbol(cause, "bug_name"), nil);
+	{
+	  f2ptr name_string = f2__exp__as__string(cause, bug__name);
+	  f2ptr short_name_string;
+	  if (raw__string__length(cause, name_string) <= short_name_string__max_length) {
+	    short_name_string = name_string;
+	  } else {
+	    short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, short_name_string__max_length - 3)), new__string(cause, "...")));
+	  }
+	  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__name__row_index), 1), short_name_string);
+	}
 	f2ptr bug__cause = f2ptype__cause(bug, cause);
 	f2ptr bug__cause__name;
 	if (raw__cause__is_type(cause, bug__cause)) {
@@ -254,14 +269,16 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	} else {
 	  bug__cause__name = nil;
 	}
-	f2ptr name_string = f2__exp__as__string(cause, bug__cause__name);
-	f2ptr short_name_string;
-	if (raw__string__length(cause, name_string) < 16) {
-	  short_name_string = name_string;
-	} else {
-	  short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, 13)), new__string(cause, "...")));
+	{
+	  f2ptr name_string = f2__exp__as__string(cause, bug__cause__name);
+	  f2ptr short_name_string;
+	  if (raw__string__length(cause, name_string) <= short_name_string__max_length) {
+	    short_name_string = name_string;
+	  } else {
+	    short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, short_name_string__max_length - 3)), new__string(cause, "...")));
+	  }
+	  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), short_name_string);
 	}
-	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), short_name_string);
       } else {
 	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), new__string(cause, "N/A"));
       }

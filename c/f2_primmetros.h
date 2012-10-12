@@ -22,6 +22,32 @@
 #ifndef F2__PRIMMETROS__H
 #define F2__PRIMMETROS__H
 
+f2ptr raw__cfunk__as__metrocfunk(f2ptr cause, f2ptr this);
+f2ptr  f2__cfunk__as__metrocfunk(f2ptr cause, f2ptr this);
+
+f2ptr raw__primmetro__let                                 (f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions);
+f2ptr  f2__primmetro__let                                 (f2ptr cause, f2ptr variable_definitions, f2ptr body_expressions);
+f2ptr raw__primmetro__prog                                (f2ptr cause, f2ptr body_expressions);
+f2ptr  f2__primmetro__prog                                (f2ptr cause, f2ptr body_expressions);
+f2ptr raw__primmetro__apply                               (f2ptr cause, f2ptr funkable, f2ptr arguments);
+f2ptr  f2__primmetro__apply                               (f2ptr cause, f2ptr funkable, f2ptr arguments);
+f2ptr raw__primmetro__funk                                (f2ptr cause, f2ptr variables, f2ptr body_expressions);
+f2ptr  f2__primmetro__funk                                (f2ptr cause, f2ptr variables, f2ptr body_expressions);
+f2ptr raw__primmetro__funk__new_with_name_and_environment (f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions);
+f2ptr  f2__primmetro__funk__new_with_name_and_environment (f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions);
+f2ptr raw__primmetro__funk__new_with_name                 (f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions);
+f2ptr  f2__primmetro__funk__new_with_name                 (f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions);
+f2ptr raw__primmetro__metro__new_with_name_and_environment(f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions);
+f2ptr  f2__primmetro__metro__new_with_name_and_environment(f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions);
+f2ptr raw__primmetro__metro__new_with_name                (f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions);
+f2ptr  f2__primmetro__metro__new_with_name                (f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions);
+f2ptr raw__primmetro__cond                                (f2ptr cause, f2ptr clauses);
+f2ptr  f2__primmetro__cond                                (f2ptr cause, f2ptr clauses);
+f2ptr  f2__primobject__frametype__slotdef__name           (f2ptr cause, f2ptr this);
+f2ptr  f2__primobject__frametype__slotdef__value          (f2ptr cause, f2ptr this);
+f2ptr  f2__primobject__frametype__type__has_parent        (f2ptr cause, f2ptr frame_object, f2ptr body_expressions);
+f2ptr  f2__primobject__frametype__with                    (f2ptr cause, f2ptr frame_object, f2ptr body_expressions);
+f2ptr  f2__primobject__frametype__add_type_funk           (f2ptr cause, f2ptr type_name, f2ptr slot_type, f2ptr slot_name, f2ptr funk);
 
 // **
 

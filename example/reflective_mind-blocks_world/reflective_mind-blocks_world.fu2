@@ -137,7 +137,8 @@
   
   [have this evaluate_deliberative_plan_expression
 	`[parog [defcondition 'a pyramid is on a cube'
-		  :matches ['a [? top_shape] is on a [? bottom_shape]']
+		  :matches ['a [? top_shape] is on a [? bottom_shape]'
+			    'a [? bottom_shape] is below a [? top_shape]']
 		   :frame [[top_shape    pyramid]
 			   [bottom_shape cube]]
 		    [exists [relationship block property shape [? top_shape]

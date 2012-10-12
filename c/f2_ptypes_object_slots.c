@@ -3296,30 +3296,32 @@ f2ptr f2__symbol__new(f2ptr cause, f2ptr str) {
 }
 
 boolean_t raw__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  if (raw__symbol__is_type(cause, this)) {
-    if (this == that) {
+  if (this == that) {
+    return boolean__true;
+  } else if (__f2ptr__computer_id(this) == __f2ptr__computer_id(that)) {
+    return boolean__false;
+  } else if (! raw__symbol__is_type(cause, that)) {
+    return boolean__false;
+  } else {
+    u64 this__length = f2symbol__length(this, cause);
+    u64 that__length = f2symbol__length(that, cause);
+    if (this__length != that__length) {
+      return boolean__false;
+    }
+    funk2_character_t* this__str = (funk2_character_t*)alloca((this__length + 1) * sizeof(funk2_character_t));
+    funk2_character_t* that__str = (funk2_character_t*)alloca((that__length + 1) * sizeof(funk2_character_t));
+    f2symbol__str_copy(this, cause, this__str);
+    f2symbol__str_copy(that, cause, that__str);
+    if (memcmp(this__str, that__str, this__length * sizeof(funk2_character_t)) != 0) {
+      return boolean__false;
+    } else {
       return boolean__true;
     }
-  } else {
-    return boolean__false;
   }
-  if (! raw__symbol__is_type(cause, that)) {return boolean__false;}
-  u64 this__length = f2symbol__length(this, cause);
-  u64 that__length = f2symbol__length(that, cause);
-  if (this__length != that__length) {
-    return boolean__false;
-  }
-  funk2_character_t* this__str = (funk2_character_t*)alloca((this__length + 1) * sizeof(funk2_character_t));
-  funk2_character_t* that__str = (funk2_character_t*)alloca((that__length + 1) * sizeof(funk2_character_t));
-  f2symbol__str_copy(this, cause, this__str);
-  f2symbol__str_copy(that, cause, that__str);
-  if (memcmp(this__str, that__str, this__length * sizeof(funk2_character_t)) != 0) {
-    return boolean__false;
-  }
-  return boolean__true;
 }
 
 f2ptr f2__symbol__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(symbol, this);
   return f2bool__new(raw__symbol__eq(cause, this, that));
 }
 def_pcfunk2(symbol__eq, x, y,

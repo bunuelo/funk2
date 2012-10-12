@@ -167,20 +167,19 @@
 	  name_patterns]
     name_pattern_matches]]
 
-[deftypefunk nonsemantic_plan get best_name_pattern_match [expression]
-  [let [[name_pattern_match_pairs [get this name_pattern_match_pairs expression]]
-	[best_name_pattern_match  nil]
-	[best_variable_count      nil]]
-    [mapc [funk [name_pattern_match_pair]
-		[let [[name_pattern [car name_pattern_match_pair]]
-		      [match        [cdr name_pattern_match_pair]]]
-		  [let [[variable_count [length [get match keys]]]]
-		    [if [or [null best_name_pattern_match]
-			    [< variable_count best_variable_count]]
-			[prog [= best_name_pattern_match match]
-			      [= best_variable_count     [length [get match keys]]]]]]]]
-	  name_pattern_match_pairs]
-    best_name_pattern_match]]
+[deftypefunk nonsemantic_plan get sorted_name_pattern_matches [expression]
+  [let* [[name_pattern_match_pairs [get this name_pattern_match_pairs expression]]]
+    [mapcar [funk [name_pattern_match_pair]
+		  [let [[match [cdr name_pattern_match_pair]]]
+		    match]]
+	    [mapcar [funk [pair]
+			  [car pair]]
+		    [have [mapcar [funk [name_pattern_match_pair]
+					[let [[match [cdr name_pattern_match_pair]]]
+					  [cons name_pattern_match_pair [length [get match keys]]]]]
+				  name_pattern_match_pairs]
+			  sort [funk [x y]
+				     [< [cdr x] [cdr y]]]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
   [cond [[is-type `symbol expression] expression]
@@ -722,6 +721,10 @@
     result]]
 
 
+[deframe decision_point [frame] [possible_values]
+  [new [initial-possible_values]
+       [= possible_values initial-possible_values]]]
+
 
 [defunk nonsemantic_plan-expression-unwrapped_compile [expression]
   [cond [[is-type `symbol expression] [eval `[funk [this]
@@ -826,17 +829,23 @@
 														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
-														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+														     [let* [[name_pattern_match_pairs [have [get this mental_layer] lookup_semantic_plan_name_pattern_match_pairs plan_name]]
+															    [semantic_plans           [mapcar [funk [name_pattern_match_pair]
+																				    [let [[match_semantic_plan_object [car name_pattern_match_pair]]
+																					  [match_variable_frame       [cdr name_pattern_match_pair]]]
+																				      `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+																				      [if [null semantic_plan_object]
+																					  [error bug_name    `nonsemantic_plan-plan-no_such_plan
+																						 action_name semantic_plan_object-phenomenal_name]
+																					[let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+																					  [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+																					    [get new_nonsemantic_plan semantic_plan_object]]]]]]
+																			      name_pattern_match_pairs]]]
+														       [if semantic_plans
+															   [car semantic_plans]
+															 [error bug_name   could_not_find_matching_semantic_plans
+																funkname   `plan
+																expression expression]]]]]]]]]]
 						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-below
@@ -848,17 +857,23 @@
 														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
-														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
+														     [let* [[name_pattern_match_pairs [have [get this mental_layer_below] lookup_semantic_plan_name_pattern_match_pairs plan_name]]
+															    [semantic_plans           [mapcar [funk [name_pattern_match_pair]
+																				    [let [[match_semantic_plan_object [car name_pattern_match_pair]]
+																					  [match_variable_frame       [cdr name_pattern_match_pair]]]
+																				      `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
+																				      [if [null semantic_plan_object]
+																					  [error bug_name    `nonsemantic_plan-plan-no_such_plan
+																						 action_name semantic_plan_object-phenomenal_name]
+																					[let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+																					  [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+																					    [get new_nonsemantic_plan semantic_plan_object]]]]]]
+																			      name_pattern_match_pairs]]]
+														       [if semantic_plans
+															   [car semantic_plans]
+															 [error bug_name   could_not_find_matching_semantic_plans
+																funkname   `plan
+																expression expression]]]]]]]]]]
 						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call-below
@@ -870,19 +885,19 @@
 														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
-														 `[terminal_format standard-terminal '\nexecuting plan in layer below with variable frame: ' variable_frame]
+														     [let [[name_pattern_match_pairs [have [get this mental_layer_below] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if name_pattern_match_pairs
+															   [let [[name_pattern_match_pair [car name_pattern_match_pairs]]]
+															     [= match_semantic_plan_object [car name_pattern_match_pair]]
+															     [= match_variable_frame       [cdr name_pattern_match_pair]]]]]]
+														 `[terminal_format standard-terminal '\nfound plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan_call_below-no_such_plan
+														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
 															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
-															 [semantic_planner [get [get [get this mental_layer_below] agency `plan] semantic_planner]]]
-														     `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
-														     [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
-														     ]]]]]]]]
+														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+														       `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+														       [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]]]]]]]]
 						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call
@@ -894,10 +909,11 @@
 														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														     [let [[semantic_plan_variable_pairs [have [get this mental_layer] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if semantic_plan_variable_pairs
+															   [let [[semantic_plan_variable_pair [car semantic_plan_variable_pairs]]]
+															     [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
+																   [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]]
 														 `[terminal_format standard-terminal '\nexecuting plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
@@ -1234,10 +1250,11 @@
 														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														     [let [[semantic_plan_variable_pairs [have [get this mental_layer] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if semantic_plan_variable_pairs
+															   [let [[semantic_plan_variable_pair [car semantic_plan_variable_pairs]]]
+															     [= semantic_plan_object [car semantic_plan_variable_pair]]
+															     [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 														 [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
@@ -1256,10 +1273,11 @@
 														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														     [let [[semantic_plan_variable_pairs [have [get this mental_layer_below] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if semantic_plan_variable_pairs
+															   [let [[semantic_plan_variable_pair [car semantic_plan_variable_pairs]]]
+															     [= semantic_plan_object [car semantic_plan_variable_pair]]
+															     [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 														 [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
@@ -1278,10 +1296,11 @@
 														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer_below] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														     [let [[semantic_plan_variable_pairs [have [get this mental_layer_below] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if semantic_plan_variable_pairs
+															   [let [[semantic_plan_variable_pair [car semantic_plan_variable_pairs]]]
+															     [= semantic_plan_object [car semantic_plan_variable_pair]]
+															     [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 														 [terminal_format standard-terminal '\nimagining executing plan in layer below with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
@@ -1302,10 +1321,11 @@
 														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_variable_pair [have [get this mental_layer] lookup_matching_semantic_plan_variable_pair plan_name]]]
-														       [if semantic_plan_variable_pair
-															   [prog [= semantic_plan_object [car semantic_plan_variable_pair]]
-																 [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
+														     [let [[semantic_plan_variable_pairs [have [get this mental_layer] lookup_semantic_plan_name_pattern_match_pairs plan_name]]]
+														       [if semantic_plan_variable_pairs
+															   [let [[semantic_plan_variable_pair [car semantic_plan_variable_pairs]]]
+															     [= semantic_plan_object [car semantic_plan_variable_pair]]
+															     [= variable_frame       [cdr semantic_plan_variable_pair]]]]]]
 														 [terminal_format standard-terminal '\nimagining executing plan with variable frame: ' variable_frame]
 														 [if [null semantic_plan_object]
 														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan

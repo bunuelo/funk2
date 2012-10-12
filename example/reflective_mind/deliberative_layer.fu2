@@ -141,19 +141,13 @@
 [deftypefunk deliberative_layer get semantic_plans []
   [get semantic_plan_phenomenal_name_frame values]]
 
-[deftypefunk deliberative_layer execute lookup_matching_semantic_plan_variable_pair [name_expression]
-  [let [[found_semantic_plan_variable_pair nil]
-	[semantic_plan_iter                [get this semantic_plans]]]
-    [while semantic_plan_iter
-      [let* [[semantic_plan    [car semantic_plan_iter]]
-	     [nonsemantic_plan [get semantic_plan nonsemantic_plan]]]
-	[let [[best_match [get nonsemantic_plan best_name_pattern_match name_expression]]]
-	  [if best_match
-	      [prog [= found_semantic_plan_variable_pair [cons semantic_plan best_match]]
-		    [= semantic_plan_iter                nil]]]]]
-      [if semantic_plan_iter
-	  [= semantic_plan_iter [cdr semantic_plan_iter]]]]
-    found_semantic_plan_variable_pair]]
+[deftypefunk deliberative_layer execute lookup_semantic_plan_name_pattern_match_pairs [name_expression]
+  [let [[semantic_plan_match_pairs nil]]
+    [mapc [funk [semantic_plan]
+		[= semantic_plan_match_pairs [append [get nonsemantic_plan name_pattern_match_pairs name_expression]
+						     semantic_plan_match_pairs]]]
+	  [get this semantic_plans]]
+    semantic_plan_match_pairs]]
 
 [deftypefunk deliberative_layer execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 

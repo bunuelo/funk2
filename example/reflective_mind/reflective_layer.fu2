@@ -131,8 +131,9 @@
 [deftypefunk reflective_layer execute lookup_semantic_plan_name_pattern_match_pairs [name_expression]
   [let [[semantic_plan_match_pairs nil]]
     [mapc [funk [semantic_plan]
-		[= semantic_plan_match_pairs [append [get nonsemantic_plan name_pattern_match_pairs name_expression]
-						     semantic_plan_match_pairs]]]
+		[let [[nonsemantic_plan [get semantic_plan nonsemantic_plan]]]
+		  [= semantic_plan_match_pairs [append [get nonsemantic_plan name_pattern_match_pairs name_expression]
+						       semantic_plan_match_pairs]]]]
 	  [get this semantic_plans]]
     semantic_plan_match_pairs]]
 

@@ -151,8 +151,8 @@
 		  [let [[semantic_plan_object-name_pattern_match_pairs [get nonsemantic_plan name_pattern_match_pairs name_expression]]]
 		    [mapc [funk [semantic_plan_object-name_pattern_match_pair]
 				[let [[semantic_plan_match [frame semantic_plan_object semantic_plan_object
-								  name_pattern         [car semantic_plan-name_pattern_match_pair]
-								  variable_frame       [cdr semantic_plan-name_pattern_match_pair]]]]
+								  name_pattern         [car semantic_plan_object-name_pattern_match_pair]
+								  variable_frame       [cdr semantic_plan_object-name_pattern_match_pair]]]]
 				  [= semantic_plan_matches [cons semantic_plan_match semantic_plan_matches]]]]
 			  semantic_plan-name_pattern_match_pairs]]]]
 	  [get this semantic_plan_objects]]

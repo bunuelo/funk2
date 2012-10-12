@@ -48,15 +48,7 @@
 	   [> x           [+ [get sprite x] [get sprite width]]]]]]
 
 `[deftypefunk blocks_world_sprite execute render_shape_path_to_cairo [cairo_context]
-  [cond [[eq `cube shape]
-	 
-	 [have cairo_context move_to     x         y]
-	 [have cairo_context rel_line_to width     0.0]
-	 [have cairo_context rel_line_to 0.0       height]
-	 [have cairo_context rel_line_to [- width] 0.0]
-	 [have cairo_context close_path]]
-	
-	[[eq `pyramid shape]
+  [cond [[eq `pyramid shape]
 	 
 	 [have cairo_context move_to     [+ x [/ width 2]] y]
 	 [have cairo_context rel_line_to [/ width 2]       height]
@@ -88,12 +80,20 @@
 	 
 	 ]
 	
+	[t
+	 
+	 [have cairo_context move_to     x         y]
+	 [have cairo_context rel_line_to width     0.0]
+	 [have cairo_context rel_line_to 0.0       height]
+	 [have cairo_context rel_line_to [- width] 0.0]
+	 [have cairo_context close_path]]
+	
 	]]
 
 `[deftypefunk blocks_world_sprite get render_shape_text_height []
-  [cond [[eq `cube    shape] 0.05]
-	[[eq `pyramid shape] 0.05]
+  [cond [[eq `pyramid shape] 0.05]
 	[[eq `gripper shape] [- [/ height 3.0] 0.05]]
+	[t                   0.05]
 	]]
 
 

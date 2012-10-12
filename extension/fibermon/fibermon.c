@@ -55,6 +55,19 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
 }
 export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
+s64 fibermon__cause__name__row_index      = 0;
+s64 fibermon__bug__cause__name__row_index = 1;
+s64 fibermon__keep_undead__row_index      = 2;
+s64 fibermon__is_zombie__row_index        = 3;
+s64 fibermon__is_complete__row_index      = 4;
+s64 fibermon__execute_cmutex__row_index   = 5;
+s64 fibermon__paused__row_index           = 6;
+s64 fibermon__last_executed__row_index    = 7;
+s64 fibermon__sleep_until__row_index      = 8;
+s64 fibermon__execution_time__row_index   = 9;
+s64 fibermon__bytecode_count__row_index   = 10;
+s64 fibermon__bcs__row_index              = 11;
+s64 fibermon__efficiency__row_index       = 12;
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__frame = raw__gtk__frame__new(cause, new__string(cause, "fiber"));
@@ -180,33 +193,19 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
     }
   }
   
-  s64 cause__name__row_index      = 0;
-  s64 bug__cause__name__row_index = 1;
-  s64 keep_undead__row_index      = 2;
-  s64 is_zombie__row_index        = 3;
-  s64 is_complete__row_index      = 4;
-  s64 execute_cmutex__row_index   = 5;
-  s64 paused__row_index           = 6;
-  s64 last_executed__row_index    = 7;
-  s64 sleep_until__row_index      = 8;
-  s64 execution_time__row_index   = 9;
-  s64 bytecode_count__row_index   = 10;
-  s64 bcs__row_index              = 11;
-  s64 efficiency__row_index       = 12;
-  
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, cause__name__row_index),      0), new__string(cause, "cause-name"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bug__cause__name__row_index), 0), new__string(cause, "bug cause-name"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, keep_undead__row_index),      0), new__string(cause, "keep_undead"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, is_zombie__row_index),        0), new__string(cause, "is_zombie"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, is_complete__row_index),      0), new__string(cause, "is_complete"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, execute_cmutex__row_index),   0), new__string(cause, "execute_cmutex"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, paused__row_index),           0), new__string(cause, "paused"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, last_executed__row_index),    0), new__string(cause, "last executed"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, sleep_until__row_index),      0), new__string(cause, "sleep until"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, execution_time__row_index),   0), new__string(cause, "execution_time"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bytecode_count__row_index),   0), new__string(cause, "bytecode_count"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bcs__row_index),              0), new__string(cause, "Bc/s"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, efficiency__row_index),       0), new__string(cause, "efficiency"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index),      0), new__string(cause, "cause-name"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 0), new__string(cause, "bug cause-name"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),      0), new__string(cause, "keep_undead"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_zombie__row_index),        0), new__string(cause, "is_zombie"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_complete__row_index),      0), new__string(cause, "is_complete"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execute_cmutex__row_index),   0), new__string(cause, "execute_cmutex"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__paused__row_index),           0), new__string(cause, "paused"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__last_executed__row_index),    0), new__string(cause, "last executed"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__sleep_until__row_index),      0), new__string(cause, "sleep until"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execution_time__row_index),   0), new__string(cause, "execution_time"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bytecode_count__row_index),   0), new__string(cause, "bytecode_count"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bcs__row_index),              0), new__string(cause, "Bc/s"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__efficiency__row_index),       0), new__string(cause, "efficiency"));
   
   raw__gtk__box__pack_start(cause, this__hbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
   raw__gtk__box__pack_start(cause, this__hbox, this__table,        nil, nil, f2integer__new(cause, 0));
@@ -242,7 +241,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
       } else {
 	short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, 13)), new__string(cause, "...")));
       }
-      f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, cause__name__row_index), 1), short_name_string);
+      f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index), 1), short_name_string);
     }
     {
       f2ptr value = f2fiber__value(this__fiber, cause);
@@ -262,26 +261,26 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	} else {
 	  short_name_string = f2__stringlist__concat(cause, f2list2__new(cause, f2__string__substring(cause, name_string, f2integer__new(cause, 0), f2integer__new(cause, 13)), new__string(cause, "...")));
 	}
-	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bug__cause__name__row_index), 1), short_name_string);
+	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), short_name_string);
       } else {
-	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bug__cause__name__row_index), 1), new__string(cause, "N/A"));
+	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), new__string(cause, "N/A"));
       }
     }
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, keep_undead__row_index),    1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, is_zombie__row_index),      1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, is_complete__row_index),    1), raw__fiber__is_complete(cause, this__fiber) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, execute_cmutex__row_index), 1), raw__cmutex__is_locked(cause, f2fiber__execute_cmutex(this__fiber, cause)) ? new__string(cause, "Locked") : new__string(cause, "Unlocked"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, paused__row_index),         1), (f2fiber__paused(     this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, last_executed__row_index),  1), f2__exp__as__string(cause, nil));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, sleep_until__row_index),    1), f2__exp__as__string(cause, (f2fiber__sleep_until_time(  this__fiber, cause) != nil) ? f2bool__new(boolean__true) : nil));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, execution_time__row_index), 1), f2__fibermon__nanoseconds__to_time_string(cause, ((this__execution_nanoseconds != nil) ? this__execution_nanoseconds : f2integer__new(cause, 0))));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bytecode_count__row_index), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecode_count != nil) ? this__bytecode_count : f2integer__new(cause, 0))),
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),    1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_zombie__row_index),      1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_complete__row_index),    1), raw__fiber__is_complete(cause, this__fiber) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execute_cmutex__row_index), 1), raw__cmutex__is_locked(cause, f2fiber__execute_cmutex(this__fiber, cause)) ? new__string(cause, "Locked") : new__string(cause, "Unlocked"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__paused__row_index),         1), (f2fiber__paused(     this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__last_executed__row_index),  1), f2__exp__as__string(cause, nil));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__sleep_until__row_index),    1), f2__exp__as__string(cause, (f2fiber__sleep_until_time(  this__fiber, cause) != nil) ? f2bool__new(boolean__true) : nil));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execution_time__row_index), 1), f2__fibermon__nanoseconds__to_time_string(cause, ((this__execution_nanoseconds != nil) ? this__execution_nanoseconds : f2integer__new(cause, 0))));
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bytecode_count__row_index), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecode_count != nil) ? this__bytecode_count : f2integer__new(cause, 0))),
 																						 new__string(cause, "Bc"))));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, bcs__row_index),            1),
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bcs__row_index),            1),
 			     f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
 									new__string(cause, "Bc/s"))));
     
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, efficiency__row_index),     1),
+    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__efficiency__row_index),     1),
 			     f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 									new__string(cause, "%"))));
   }

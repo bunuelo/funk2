@@ -113,7 +113,7 @@
 											      [prog [set conslist_pattern_iter cdr new_cons]
 												    [= conslist_pattern_iter new_cons]]]]
 											  [= index [get stream index]]]]
-							      [t                        [error bug_name            string_pattern-parse-invalid_variable_command
+							      [t                        [error bug_name            `string_pattern-parse-invalid_variable_command
 											       string_pattern      string_pattern
 											       variable_expression variable_expression]]]]]]]
 	      [t                                  [let [[new_cons [cons next_char nil]]]

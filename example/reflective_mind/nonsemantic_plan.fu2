@@ -1106,10 +1106,12 @@
 	       [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
 	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile expression] this]]]]
 		 [if [is-type `bug result]
-		     [prog [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			   [error bug_name   `nonsemantic_plan-expression_encountered_bug
-				  expression [quote ,expression]
-				  subbug     result]]
+		     [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+		       [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+		       [error bug_name         `nonsemantic_plan-expression_encountered_bug
+			      expression       [quote ,expression]
+			      semantic_thought semantic_thought
+			      subbug           result]]
 		   [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
 			 result]]]]]]
 
@@ -1511,10 +1513,12 @@
   [eval `[funk [this]
 	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile_imagine expression] this]]]]
 		 [if [is-type `bug result]
-		     [prog [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			   [error bug_name   `nonsemantic_plan-expression_encountered_bug
-				  expression [quote ,expression]
-				  subbug     result]]
+		     [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+		       [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+		       [error bug_name         `nonsemantic_plan-expression_encountered_bug
+			      expression       [quote ,expression]
+			      semantic_thought semantic_thought
+			      subbug           result]]
 		   result]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []

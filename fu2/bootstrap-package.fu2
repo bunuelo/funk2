@@ -173,6 +173,7 @@
 						     'extension/lick/'
 						     'extension/meta_semantic_knowledge_base/'
 						     'extension/movie/'
+						     'extension/pattern_match/'
 						     'extension/propogator/'
 						     'extension/semantic_action/'
 						     'extension/semantic_action_event/'

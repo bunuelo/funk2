@@ -280,7 +280,8 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), short_name_string);
 	}
       } else {
-	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), new__string(cause, "N/A"));
+	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__name__row_index),        1), new__string(cause, ""));
+	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), new__string(cause, ""));
       }
     }
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),    1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));

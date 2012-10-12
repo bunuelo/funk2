@@ -55,6 +55,7 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
 }
 export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
+s64 fibermon__total_row_count             = 13;
 s64 fibermon__cause__name__row_index      = 0;
 s64 fibermon__bug__cause__name__row_index = 1;
 s64 fibermon__keep_undead__row_index      = 2;
@@ -138,9 +139,9 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "hbox"), this__hbox);
   f2ptr this__progress_bar = raw__gtk__progress_bar__new(cause);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "progress_bar"), this__progress_bar);
-  f2ptr this__table = raw__gtk__table__new(cause, f2integer__new(cause, 12), f2integer__new(cause, 2), nil);
+  f2ptr this__table = raw__gtk__table__new(cause, f2integer__new(cause, fibermon__total_row_count), f2integer__new(cause, 2), nil);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "table"), this__table);
-  f2ptr this__table_labels = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, 12), f2integer__new(cause, 2)));
+  f2ptr this__table_labels = f2__array__new(cause, f2list2__new(cause, f2integer__new(cause, fibermon__total_row_count), f2integer__new(cause, 2)));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "table_labels"), this__table_labels);
   
   raw__gtk__menu__append(cause, this__command_menu, this__command_pause_menu_item);
@@ -176,10 +177,9 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__progress_bar__set_orientation(cause, this__progress_bar, new__symbol(cause, "bottom_to_top"));
   
-  s64 total_row_count = 13;
   {
     u64 row;
-    for (row = 0; row < total_row_count; row ++) {
+    for (row = 0; row < fibermon__total_row_count; row ++) {
       f2ptr row_labels = raw__array__elt(cause, this__table_labels, row);
       {
 	u64 column;

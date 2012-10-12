@@ -502,6 +502,42 @@ f2ptr raw__interval_tree__intervals_containing_value__thread_unsafe(f2ptr cause,
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
   f2ptr list__cons_cells = f2__list__cons_cells(cause, list);
+  {
+    f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
+    f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
+    f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
+    f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
+    {
+      f2ptr iter = list__cons_cells;
+      while (iter != nil) {
+	f2ptr interval = f2cons__car(iter, cause);
+	{
+	  f2ptr     fiber                       = f2__this__fiber(cause);
+	  f2ptr     interval_args               = f2list1__new(cause, interval);
+	  f2ptr     interval__left_value        = f2__force_funk_apply(cause, fiber, left_value_funk,  interval_args);
+	  f2ptr     interval__right_value       = f2__force_funk_apply(cause, fiber, right_value_funk, interval_args);
+	  f2ptr     left_consistent_args        = f2list2__new(cause, interval__left_value, value);
+	  boolean_t left_consistent_with_value  = ((f2__force_funk_apply(cause, fiber, value_comparison_funk, left_consistent_args) != nil) ||
+						   (f2__force_funk_apply(cause, fiber, value_equality_funk,   left_consistent_args) != nil));
+	  f2ptr     right_consistent_args       = f2list2__new(cause, value, interval__right_value);
+	  boolean_t right_consistent_with_value = ((f2__force_funk_apply(cause, fiber, value_comparison_funk, right_consistent_args) != nil) ||
+						   (f2__force_funk_apply(cause, fiber, value_equality_funk,   right_consistent_args) != nil));
+	  if ((! left_consistent_with_value)  ||
+	      (! right_consistent_with_value)) {
+	    return new__error(f2list14__new(cause,
+					    new__symbol(cause, "bug_name"),                    new__symbol(cause, "interval_tree-returning_inconsistent_left_value_of_interval"),
+					    new__symbol(cause, "this"),                        this,
+					    new__symbol(cause, "interval_left_value"),         interval_left_value,
+					    new__symbol(cause, "interval_right_value"),        interval_right_value,
+					    new__symbol(cause, "left_consistent_with_value"),  f2bool__new(left_inconsistent_with_value),
+					    new__symbol(cause, "right_consistent_with_value"), f2bool__new(right_inconsistent_with_value),
+					    new__symbol(cause, "value"),                       value));
+	  }
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+  }
   return list__cons_cells;
 }
 
@@ -592,6 +628,59 @@ f2ptr raw__interval_tree__intervals_overlapping_range__thread_unsafe(f2ptr cause
   assert_value(f2__interval_tree__assert_valid__thread_unsafe(cause, this));
   status("INTERVAL_TREE DEBUG %s " f2ptr__fstr " exit  after.", __FUNCTION__, this);
 #endif
+  f2ptr list__cons_cells = f2__list__cons_cells(cause, list);
+  {
+    f2ptr left_value_funk       = f2__interval_tree__left_value_funk(      cause, this);
+    f2ptr right_value_funk      = f2__interval_tree__right_value_funk(     cause, this);
+    f2ptr value_comparison_funk = f2__interval_tree__value_comparison_funk(cause, this);
+    f2ptr value_equality_funk   = f2__interval_tree__value_equality_funk(  cause, this);
+    {
+      f2ptr iter = list__cons_cells;
+      while (iter != nil) {
+	f2ptr interval = f2cons__car(iter, cause);
+	{
+	  f2ptr     fiber                                     = f2__this__fiber(cause);
+	  f2ptr     interval_args                             = f2list1__new(cause, interval);
+	  f2ptr     interval__left                            = f2__force_funk_apply(cause, fiber, left_value_funk,  interval_args);
+	  f2ptr     interval__right                           = f2__force_funk_apply(cause, fiber, right_value_funk, interval_args);
+	  //boolean_t interval_left__less_than__interval_right  = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  interval__right_value)) != nil);
+	  //boolean_t interval_left__less_than__range_left      = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  range_left_value))      != nil);
+	  //boolean_t interval_left__less_than__range_right     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__left_value,  range_right_value))     != nil);
+	  boolean_t interval_right__less_than__interval_left  = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, interval__left_value))  != nil);
+	  boolean_t interval_right__less_than__range_left     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_left_value))      != nil);
+	  //boolean_t interval_right__less_than__range_right    = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, interval__right_value, range_right_value))     != nil);
+	  //boolean_t range_left__less_than__interval_left      = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      interval__left_value))  != nil);
+	  //boolean_t range_left__less_than__interval_right     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      interval__right_value)) != nil);
+	  //boolean_t range_left__less_than__range_right        = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_left_value,      range_right_value))     != nil);
+	  boolean_t range_right__less_than__interval_left     = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__left_value))  != nil);
+	  //boolean_t range_right__less_than__interval_right    = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     interval__right_value)) != nil);
+	  boolean_t range_right__less_than__range_left        = (f2__force_funk_apply(cause, fiber, value_comparison_funk, f2list2__new(cause, range_right_value,     range_left_value))      != nil);
+	  
+	  boolean_t interval_right_less_than_interval_left_bug = interval_right__less_than__interval_left;
+	  boolean_t interval_right_less_than_range_left_bug    = interval_right__less_than__range_left;
+	  boolean_t range_right_less_than_interval_left_bug    = range_right__less_than__interval_left;
+	  boolean_t range_right_less_than_range_left_bug       = range_right__less_than__range_left;
+	  
+	  if (interval_right_less_than_interval_left_bug ||
+	      interval_right_less_than_range_left_bug    ||
+	      range_right_less_than_interval_left_bug    ||
+	      range_right_less_than_range_left_bug) {
+	    return new__error(f2list18__new(cause,
+					    new__symbol(cause, "bug_name"),                                   new__symbol(cause, "interval_tree-returning_inconsistent_left_value_of_interval"),
+					    new__symbol(cause, "this"),                                       this,
+					    new__symbol(cause, "interval_left_value"),                        interval_left_value,
+					    new__symbol(cause, "interval_right_value"),                       interval_right_value,
+					    new__symbol(cause, "interval_right_less_than_interval_left_bug"), f2bool__new(interval_right_less_than_interval_left_bug),
+					    new__symbol(cause, "interval_right_less_than_range_left_bug"),    f2bool__new(interval_right_less_than_range_left_bug),
+					    new__symbol(cause, "range_right_less_than_interval_left_bug"),    f2bool__new(range_right_less_than_interval_left_bug),
+					    new__symbol(cause, "range_right_less_than_range_left_bug"),       f2bool__new(range_right_less_than_range_left_bug),
+					    new__symbol(cause, "value"),                                      value));
+	  }
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+  }
   return list;
 }
 

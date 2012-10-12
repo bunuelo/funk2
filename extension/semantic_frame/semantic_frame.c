@@ -231,8 +231,8 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
   // this must be checked in all types that are multiply inherited.
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "semantic_realm"))) {
     f2ptr trace_event_stream          = nil;
-    f2ptr trace_add                   = nil;
-    f2ptr trace_remove                = nil;
+    f2ptr trace_add                   = f2bool__new(boolean__true);
+    f2ptr trace_remove                = f2bool__new(boolean__true);
     f2ptr semantic_knowledge_base_set = f2__set__new(cause);
     f2ptr frame                       = f2__frame__new(cause, nil);
     f2ptr reverse_frame               = f2__frame__new(cause, nil);

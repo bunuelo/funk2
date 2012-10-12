@@ -233,7 +233,7 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
   f2__gtk__progress_bar__set_fraction(cause, this__progress_bar, (this__execution_efficiency != nil) ? this__execution_efficiency : f2integer__new(cause, 0));
   
   {
-    s64 short_name_string__max_length = 25;
+    s64 short_name_string__max_length = 32;
     {
       f2ptr cause_reg          = f2fiber__cause_reg(this__fiber, cause);
       f2ptr cause__name__value = raw__cause__is_type(cause, cause_reg) ? f2__cause__lookup(cause, cause_reg, new__symbol(cause, "cause-name")) : nil;

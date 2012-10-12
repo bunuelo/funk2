@@ -141,7 +141,7 @@
 								  name_pattern         [car semantic_plan_object-name_pattern_match_pair]
 								  match                [cdr semantic_plan_object-name_pattern_match_pair]]]]
 				  [= semantic_plan_matches [cons semantic_plan_match semantic_plan_matches]]]]
-			  semantic_plan-name_pattern_match_pairs]]]]
+			  semantic_plan_object-name_pattern_match_pairs]]]]
 	  [get this semantic_plan_objects]]
     semantic_plan_matches]]
 

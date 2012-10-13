@@ -46,7 +46,7 @@ f2ptr raw__fiber_trigger__trigger__thread_unsafe(f2ptr cause, f2ptr this) {
 		 if (raw__fiber__is_type(cause, waiting_fiber)) {
 		   f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, waiting_fiber);
 		   if (processor_assignment_index == nil) {
-		     raw__global_scheduler__scheduler_add_fiber(cause, waiting_fiber);
+		     raw__global_scheduler__add_fiber(cause, waiting_fiber);
 		   }
 		 } else {
 		   return new__error(f2list8__new(cause,

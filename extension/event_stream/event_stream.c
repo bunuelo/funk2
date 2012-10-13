@@ -247,7 +247,7 @@ f2ptr raw__event_stream__first_not_before(f2ptr cause, f2ptr this, f2ptr time) {
   if (! raw__redblacktree__is_empty(cause, event_time_redblacktree)) {
     return f2__redblacktree__minimum_not_less_than(cause, event_time_redblacktree, time);
   } else {
-    return new__error(f2list4__new(cause,
+    return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream-last_not_after_or_at-event_stream_is_empty"),
 				   new__symbol(cause, "this"),     this,
 				   new__symbol(cause, "time"),     time));
@@ -267,7 +267,7 @@ f2ptr raw__event_stream__last_not_after_or_at(f2ptr cause, f2ptr this, f2ptr tim
   if (! raw__redblacktree__is_empty(cause, event_time_redblacktree)) {
     return f2__redblacktree__maximum_not_greater_than_or_equal_to(cause, event_time_redblacktree, time);
   } else {
-    return new__error(f2list4__new(cause,
+    return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream-last_not_after_or_at-event_stream_is_empty"),
 				   new__symbol(cause, "this"),     this,
 				   new__symbol(cause, "time"),     time));

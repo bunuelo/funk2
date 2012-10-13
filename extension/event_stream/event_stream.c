@@ -257,7 +257,11 @@ export_cefunk1(event_stream__last, this, 0, "Returns the last event in the event
 f2ptr raw__event_stream__first_not_before(f2ptr cause, f2ptr this, f2ptr time) {
   f2ptr event_time_redblacktree = raw__event_stream__event_time_redblacktree(cause, this);
   if (! raw__redblacktree__is_empty(cause, event_time_redblacktree)) {
-    return f2__redblacktree__minimum_not_less_than(cause, event_time_redblacktree, time);
+    f2ptr result = f2__redblacktree__minimum_not_less_than(cause, event_time_redblacktree, time);
+    if (raw__larva__is_type(cause, result)) {
+      result = nil;
+    }
+    return result;
   } else {
     return nil;
   }

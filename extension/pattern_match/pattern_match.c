@@ -205,7 +205,7 @@ f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
 		  }
 		  conslist_pattern_iter = new_cons;
 		  f2ptr stream__index = f2__stream__index(cause, stream);
-		  if (raw__integer__is_type(cause, stream_index)) {
+		  if (raw__integer__is_type(cause, stream__index)) {
 		    index = f2integer__i(stream__index, cause);
 		  } else {
 		    return new__error(f2list12__new(cause,

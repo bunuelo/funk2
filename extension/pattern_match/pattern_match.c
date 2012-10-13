@@ -286,6 +286,7 @@ export_cefunk1(string_pattern__as__conslist_pattern, this, 0, "");
 
 f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
   f2ptr conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
+  f2__print(cause, conslist_pattern);
   f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string));
   {
     f2ptr iter = matches;

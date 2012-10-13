@@ -1278,7 +1278,10 @@ def_pcfunk2(redblacktree__minimum_not_less_than__node, this, value,
 f2ptr raw__redblacktree__minimum_not_less_than__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr node = assert_value(raw__redblacktree__minimum_not_less_than__node(cause, this, value));
   if (node == nil) {
-    return nil;
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree-minimum_not_less_than-empty_tree"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "value"),    value));
   }
   f2ptr count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, node);
   f2ptr key                 = f2__ptypehash__an_arbitrary_key(cause, count_key_ptypehash);
@@ -1332,7 +1335,10 @@ def_pcfunk2(redblacktree__maximum_not_greater_than_or_equal_to__node, this, valu
 f2ptr raw__redblacktree__maximum_not_greater_than_or_equal_to__thread_unsafe(f2ptr cause, f2ptr this, f2ptr value) {
   f2ptr node = assert_value(raw__redblacktree__maximum_not_greater_than_or_equal_to__node(cause, this, value));
   if (node == nil) {
-    return nil;
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree-maximum_not_greater_than_or_equal_to-empty_tree"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "value"),    value));
   }
   f2ptr count_key_ptypehash = f2__redblacktree_node__count_key_ptypehash(cause, node);
   f2ptr key                 = f2__ptypehash__an_arbitrary_key(cause, count_key_ptypehash);

@@ -18,12 +18,12 @@
  rights to redistribute these changes.'
 
 
-[defunk pattern-test [expression]
+[defunk conslist_pattern-test [expression]
   [let [[patterns `[[a  [? object] has [? property]]
 		    [an [? object] has [? property]]]]
 	[parses   nil]]
     [mapc [funk [pattern]
-		[let [[pattern_parses [pattern-match pattern expression]]]
+		[let [[pattern_parses [conslist_pattern-match pattern expression]]]
 		  [= parses [append parses
 				    pattern_parses]]]]
 	  patterns]
@@ -65,7 +65,7 @@
 
 
 [defunk string_pattern-match [string_pattern string]
-  [let [[matches [pattern-match [string_pattern-as_conslist_pattern string_pattern] [string_pattern-as_conslist_pattern string]]]]
+  [let [[matches [conslist_pattern-match [string_pattern-as_conslist_pattern string_pattern] [string_pattern-as_conslist_pattern string]]]]
     [mapc [funk [match]
 		[mapc [funk [key]
 			    [let* [[conslist        [have match lookup key]]

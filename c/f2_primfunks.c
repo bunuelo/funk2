@@ -624,7 +624,7 @@ def_pcfunk2(conslist__first_n, this, n,
 
 
 f2ptr raw__firstn(f2ptr cause, f2ptr this, f2ptr n) {
-  return raw__conslist__firstn(cause, this, n);
+  return raw__conslist__first_n(cause, this, n);
 }
 
 f2ptr f2__firstn(f2ptr cause, f2ptr this, f2ptr n) {

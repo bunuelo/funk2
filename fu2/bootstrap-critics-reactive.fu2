@@ -39,8 +39,8 @@
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
 		[let [[global_bug_name [get [string-concat 'background_bug-' [get background_bug_count as-string]] as-symbol]]]
-		  [++ background_bug_count]
-		  [terminal_format standard-terminal '\nunknown_bug: globally defining as ' global_bug_name]
+		  [= background_bug_count [+ background_bug_count 1]]
+		  [terminal_format standard-terminal '\nbug: defining globally as ' global_bug_name]
 		  [eval `[globalize ,global_bug_name [quote ,bug]]]
 		  nil]]]]
       [terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]

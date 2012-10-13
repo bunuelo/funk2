@@ -66,8 +66,9 @@ f2ptr f2__file_stream__is_type(f2ptr cause, f2ptr this);
 boolean_t raw__socket_stream__is_type(f2ptr cause, f2ptr this);
 f2ptr f2__socket_stream__is_type(f2ptr cause, f2ptr this);
 
+f2ptr      f2__string_stream__new    (f2ptr cause, f2ptr string, f2ptr index);
 boolean_t raw__string_stream__is_type(f2ptr cause, f2ptr this);
-f2ptr f2__string_stream__is_type(f2ptr cause, f2ptr this);
+f2ptr      f2__string_stream__is_type(f2ptr cause, f2ptr this);
 
 f2ptr f2__string_stream(f2ptr cause, f2ptr string);
 

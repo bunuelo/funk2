@@ -643,7 +643,7 @@ f2ptr raw__restn(f2ptr cause, f2ptr this, s64 n) {
     register s64 index = n;
     while ((rest != nil) &&
 	   (index > 0)) {
-      rest = f2cons__cdr(iter, cause);
+      rest = f2cons__cdr(rest, cause);
       index --;
     }
   }

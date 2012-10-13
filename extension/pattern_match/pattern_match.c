@@ -177,7 +177,20 @@ export_cefunk2(conslist_pattern__match, pattern, expression, 0, "");
 */
 
 f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
-  return nil;
+  f2ptr conslist_pattern = nil;
+  {
+    u64                this__length = raw__string__length(cause, this);
+    funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (this__length + 1)));
+    raw__string__str_copy(cause, this, this__str);
+    {
+      s64 index;
+      for (index = this__length - 1; index >= 0; index --) {
+	conslist_pattern = f2cons__new(cause, f2char__new(cause, this__str[index]), conslist_pattern);
+      }
+    }
+    f2__free(to_ptr(this__str));
+  }
+  return conslist_pattern;
 }
 
 f2ptr f2__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {

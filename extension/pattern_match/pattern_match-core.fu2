@@ -17,8 +17,10 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[defcorefunk conslist_pattern-match_with_frame pattern_match conslist_pattern__match_with_frame]
-[defcorefunk conslist_pattern-match            pattern_match conslist_pattern__match]
+[defcorefunk conslist_pattern-match_with_frame  pattern_match conslist_pattern__match_with_frame]
+[defcorefunk conslist_pattern-match             pattern_match conslist_pattern__match]
+[defcorefunk string_pattern-as-conslist_pattern pattern_match string_pattern__as__conslist_pattern]
+[defcorefunk string_pattern-match               pattern_match string_pattern__match]
 
 
 '**'
@@ -28,4 +30,29 @@
 [defcorefunk pattern_match-core_extension-initialize   pattern_match pattern_match__core_extension__initialize]
 
 [pattern_match-core_extension-define_types]
+
+
+[deftypefunk string as-conslist_pattern []
+  [string_pattern-as-conslist_pattern this]]
+
+[deftypefunk string match [string_pattern]
+  [string_pattern-match string_pattern this]]
+
+
+'tests'
+
+[defunk conslist_pattern-test [expression]
+  [let [[patterns `[[a  [? object] has [? property]]
+		    [an [? object] has [? property]]]]
+	[parses   nil]]
+    [mapc [funk [pattern]
+		[let [[pattern_parses [conslist_pattern-match pattern expression]]]
+		  [= parses [append parses
+				    pattern_parses]]]]
+	  patterns]
+    parses]]
+
+[defunk string_pattern-test []
+  [string_pattern-match 'The [? object] has [? property].' 'The skinny red dog has ten fleas.']]
+
 

@@ -306,10 +306,11 @@ f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
   printf("\nraw__string_pattern__match\n"); fflush(stdout);
   f2__print(cause, this);
   f2__print(cause, string);
-  f2ptr conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
+  f2ptr conslist_pattern         = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
+  f2ptr string__conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, string));
   printf("\n  conslist_pattern"); fflush(stdout);
   f2__print(cause, conslist_pattern);
-  f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string));
+  f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string__conslist_pattern));
   {
     f2ptr iter = matches;
     while (iter != nil) {

@@ -283,15 +283,14 @@ export_cefunk2(event_stream__last_not_after_or_at, this, time, 0, "Returns the f
 
 
 f2ptr raw__event_stream__new__iterator(f2ptr cause, f2ptr this) {
-  f2ptr first_event = raw__event_stream__first(cause, this);
-  f2ptr first_event__time;
-  if (first_event != nil) {
-    first_event__time = raw__event_stream_event__time(cause, first_event);
+  f2ptr first_event_time;
+  if (raw__event_stream__is_empty(cause, this)) {
+    first_event_time = nil;
   } else {
-    first_event__time = nil;
+    f2ptr first_event = raw__event_stream__first(cause, this);
+    first_event_time  = raw__event_stream_event__time(cause, first_event);
   }
-  f2ptr iterator = f2__event_stream_iterator__new(cause, this, first_event__time);
-  return iterator;
+  return assert_value(f2__event_stream_iterator__new(cause, this, first_event_time));
 }
 
 f2ptr f2__event_stream__new__iterator(f2ptr cause, f2ptr this) {

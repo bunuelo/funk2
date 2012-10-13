@@ -313,7 +313,7 @@ f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
 	      while (character_iter != nil) {
 		f2ptr             character     = f2cons__car(character_iter, cause);
 		funk2_character_t character__ch = f2char__ch(character, cause);
-		string__str[index] = ch__ch;
+		string__str[index] = character__ch;
 		index ++;
 		character_iter = f2cons__cdr(character_iter, cause);
 	      }

@@ -77,7 +77,7 @@ f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr 
       if (raw__eq(cause, command, new__symbol(cause, "?"))) {
 	f2ptr pattern__car__cdr      = f2cons__cdr(pattern__car, cause);
 	if (pattern__car__cdr == nil) {
-	  return new__error(f2list6__new(cause,
+	  return new__error(f2list8__new(cause,
 					 new__symbol(cause, "conslist_pattern-match_with_frame"), new__symbol(cause, "?_command_must_specify_variable_name"),
 					 new__symbol(cause, "pattern"),                           pattern,
 					 new__symbol(cause, "expression"),                        expression,

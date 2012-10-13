@@ -194,6 +194,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la \
                       extension/movie/libf2e_movie.la \
                       extension/keyboard/libf2e_keyboard.la \
+                      extension/pattern_match/libf2e_pattern_match.la \
                       extension/propogator/libf2e_propogator.la \
                       extension/semantic_action/libf2e_semantic_action.la \
                       extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.la \
@@ -284,6 +285,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/meta_semantic_knowledge_base/.libs/libf2e_*.*                                 $(compile__lib__dir)
 	cp -fa extension/movie/.libs/libf2e_*.*                                                                               $(compile__lib__dir)
 	cp -fa extension/keyboard/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
+	cp -fa extension/pattern_match/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 	cp -fa extension/propogator/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 	cp -fa extension/semantic_action/.libs/libf2e_*.*                                                           $(compile__lib__dir)
 	cp -fa extension/semantic_action_knowledge_base/.libs/libf2e_*.*                             $(compile__lib__dir)
@@ -512,6 +514,7 @@ extension_lick_libf2e_lick_la_SOURCES                                           
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                               = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
 extension_movie_libf2e_movie_la_SOURCES                                                                                             = extension/movie/movie.c
 extension_keyboard_libf2e_keyboard_la_SOURCES                                                                                       = extension/keyboard/keyboard.c
+extension_pattern_match_libf2e_pattern_match_la_SOURCES                                                                             = extension/pattern_match/pattern_match.c
 extension_propogator_libf2e_propogator_la_SOURCES                                                                                   = extension/propogator/propogator.c
 extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                                         = extension/semantic_action/semantic_action.c
 extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                                           = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
@@ -657,6 +660,9 @@ extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2
 
 extension_keyboard_libf2e_keyboard_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_keyboard_libf2e_keyboard_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
+extension_pattern_match_libf2e_pattern_match_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_pattern_match_libf2e_pattern_match_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -944,6 +950,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)movie/"                                                                                                                      >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)keyboard/"                                                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)pattern_match/"                                                                                                              >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)propogator/"                                                                                                                 >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action/"                                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_action_knowledge_base/"                                                                                             >> install-sh
@@ -1090,6 +1097,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)meta_semantic_knowledge_base/*.f*                   $(chroot__install__extension__dir)meta_semantic_knowledge_base/"                   >> install-sh
 	echo "install -m644 $(source__extension__dir)movie/*.f*                                          $(chroot__install__extension__dir)movie/"                                          >> install-sh
 	echo "install -m644 $(source__extension__dir)keyboard/*.f*                                       $(chroot__install__extension__dir)keyboard/"                                       >> install-sh
+	echo "install -m644 $(source__extension__dir)pattern_match/*.f*                                  $(chroot__install__extension__dir)pattern_match/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)propogator/*.f*                                     $(chroot__install__extension__dir)propogator/"                                     >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action/*.f*                                $(chroot__install__extension__dir)semantic_action/"                                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_action_knowledge_base/*.f*                 $(chroot__install__extension__dir)semantic_action_knowledge_base/"                 >> install-sh

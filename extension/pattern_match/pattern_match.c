@@ -101,7 +101,8 @@ f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr 
 	      f2ptr subframe     = f2__frame__new_copy(cause, frame);
 	      s64   match_length = index + 1;
 	      raw__frame__add_var_value(cause, subframe, variable_name, raw__firstn(cause, expression, match_length));
-	      f2ptr subparses = raw__conslist_pattern__match_with_frame(cause, pattern__cdr, raw__restn(cause, expression, match_length), subframe);
+	      f2ptr pattern__cdr = f2cons__cdr(pattern, cause);
+	      f2ptr subparses    = raw__conslist_pattern__match_with_frame(cause, pattern__cdr, raw__restn(cause, expression, match_length), subframe);
 	      subparses_seq = raw__cons__new(cause, subparses, subparses_seq);
 	    }
 	  }

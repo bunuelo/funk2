@@ -1568,6 +1568,11 @@ f2ptr      f2__conslist__is_type(f2ptr cause, f2ptr this);
 f2ptr     raw__conslist__as__array(f2ptr cause, f2ptr this);
 f2ptr      f2__conslist__as__array(f2ptr cause, f2ptr this);
 
+f2ptr raw__firstn(f2ptr cause, f2ptr this, s64 n);
+f2ptr f2__firstn(f2ptr cause, f2ptr this, f2ptr n);
+f2ptr raw__restn(f2ptr cause, f2ptr this, s64 n);
+f2ptr f2__restn(f2ptr cause, f2ptr this, f2ptr n);
+
 f2ptr f2__conslistlist__append(f2ptr cause, f2ptr these);
 
 // sequence (array, list, doublelist, etc.)

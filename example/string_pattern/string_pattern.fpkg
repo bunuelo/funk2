@@ -18,6 +18,7 @@
  rights to redistribute these changes.'
 
 [defpackage string_pattern
-  :packages [math]
+  :packages [math
+	     pattern_match]
    :sources ['string_pattern.fu2']]
 

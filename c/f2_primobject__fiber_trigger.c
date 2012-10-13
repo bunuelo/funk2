@@ -43,12 +43,17 @@ f2ptr raw__fiber_trigger__trigger__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr waiting_fiber_set = f2__fiber_trigger__waiting_fiber_set(cause, this);
   f2__fiber_trigger__waiting_fiber_set__set(cause, this, f2__set__new(cause));
   set__iteration(cause, waiting_fiber_set, waiting_fiber,
-		 if (! raw__fiber__is_type(cause, waiting_fiber)) {
-		   return f2larva__new(cause, 11315, nil);
-		 }
-		 f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, waiting_fiber);
-		 if (processor_assignment_index == nil) {
-		   f2__global_scheduler__add_fiber(cause, waiting_fiber);
+		 if (raw__fiber__is_type(cause, waiting_fiber)) {
+		   f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, waiting_fiber);
+		   if (processor_assignment_index == nil) {
+		     raw__global_scheduler__scheduler_add_fiber(cause, waiting_fiber);
+		   }
+		 } else {
+		   return new__error(f2list8__new(cause,
+						  new__symbol(cause, "bug_name"),           new__symbol(cause, "fiber_trigger-trigger-thread_unsafe-waiting_fiber_is_not_fiber"),
+						  new__symbol(cause, "this"),               this,
+						  new__symbol(cause, "waiting_fiber-type"), f2__object__type(cause, waiting_fiber),
+						  new__symbol(cause, "waiting_fiber"),      waiting_fiber));
 		 }
 		 );
   return nil;

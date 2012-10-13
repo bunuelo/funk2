@@ -220,6 +220,11 @@ def_pcfunk1(scheduler__processor_with_fewest_fibers, this,
 	    return f2__scheduler__processor_with_fewest_fibers(this_cause, this));
 
 
+f2ptr raw__scheduler__scheduler_add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
+  f2ptr processor = raw__scheduler__processor_with_fewest_fibers(cause, this);
+  return raw__processor__scheduler_add_active_fiber(cause, processor, fiber);
+}
+
 f2ptr raw__scheduler__add_fiber_to_least_used_processor(f2ptr cause, f2ptr this, f2ptr fiber) {
   f2ptr processor = raw__scheduler__processor_with_fewest_fibers(cause, this);
   return raw__processor__add_active_fiber(cause, processor, fiber);
@@ -371,6 +376,12 @@ def_pcfunk1(global_scheduler__add_fiber_serial, fiber,
 	    return f2__global_scheduler__add_fiber_serial(this_cause, fiber));
 
 
+
+
+f2ptr raw__global_scheduler__scheduler_add_fiber_parallel(f2ptr cause, f2ptr fiber) {
+  return raw__scheduler__scheduler_add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
+}
+
 f2ptr raw__global_scheduler__add_fiber_parallel(f2ptr cause, f2ptr fiber) {
   return raw__scheduler__add_fiber_to_least_used_processor(cause, __funk2.operating_system.scheduler, fiber);
 }
@@ -383,6 +394,11 @@ def_pcfunk1(global_scheduler__add_fiber_parallel, fiber,
 	    "Adds the given fiber to the least used processor.",
 	    return f2__global_scheduler__add_fiber_parallel(this_cause, fiber));
 
+
+
+f2ptr raw__global_scheduler__scheduler_add_fiber(f2ptr cause, f2ptr fiber) {
+  return raw__global_scheduler__scheduler_add_fiber_parallel(cause, fiber);
+}
 
 f2ptr raw__global_scheduler__add_fiber(f2ptr cause, f2ptr fiber) {
   return raw__global_scheduler__add_fiber_parallel(cause, fiber);

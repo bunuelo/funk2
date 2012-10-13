@@ -45,7 +45,7 @@
        [= active_funk            initial-active_funk]
        [= runtime_metric_monitor [new mind_runtime_metric_monitor cause_group]]
        [= fiber                  [fiber [funk []
-					      [cause-enable_reactive_critics [this-cause]]
+					      `[cause-enable_reactive_critics [this-cause]]
 					      [have [this-cause] add_cause_group cause_group]
 					      
 					      'Turn on appropriate causal tracing.'

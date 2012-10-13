@@ -45,8 +45,9 @@
 	      [if bug-fiber
 		  [let [[global_bug_name [get [string-concat 'background_bug-' [get background_bug_count as-string]] as-symbol]]]
 		    [++ background_bug_count]
-		    [terminal_format standard-terminal '\nbackground_reactive_critic-unknown_bug: globally defining as ' global_bug_name]
-		    [eval `[globalize ,global_bug_name ,bug]]]]]]
+		    [terminal_format standard-terminal '\nunknown_bug: globally defining as ' global_bug_name]
+		    [eval `[globalize ,global_bug_name [quote ,bug]]]
+		    nil]]]]
 	[terminal_format standard-terminal '\ncritic-reactive-unknown_bug: fiber does not have a bug.\n']]
       [ansi-stream-reset [get standard-terminal stream]]]]]
 

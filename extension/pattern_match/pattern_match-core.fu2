@@ -32,10 +32,13 @@
 [pattern_match-core_extension-define_types]
 
 
-[deftypefunk string as-conslist_pattern []
+[deftypefunk string get as-conslist_pattern []
   [string_pattern-as-conslist_pattern this]]
 
-[deftypefunk string match [string_pattern]
+[deftypefunk string get matches [string]
+  [string_pattern-match this string]]
+
+[deftypefunk string execute match [string_pattern]
   [string_pattern-match string_pattern this]]
 
 

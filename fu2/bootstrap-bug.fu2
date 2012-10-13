@@ -113,7 +113,8 @@
   [mapc &print [get [get [get this creation_fiber] stack_trace] blocks]]]
 
 [defunk inspect [exp]
-  [cond [[is-type `bug exp] [have bug show_inspect_details]]
+  [cond [[is-type `bug exp] [let [[bug exp]]
+			      [have bug show_inspect_details]]]
 	[t                  [prog [terminal_format standard-terminal '\ninspect: try inspecting bugs.']
 				  nil]]]]
 

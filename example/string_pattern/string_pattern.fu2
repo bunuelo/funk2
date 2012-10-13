@@ -18,42 +18,6 @@
  rights to redistribute these changes.'
 
 
-[defunk pattern-match_with_frame [pattern expression frame]
-  `[terminal_format standard-terminal
-		    '\n'
-		    '\npattern    = ' pattern
-		    '\nexpression = ' expression]
-  [if [and [null pattern]
-	   [null expression]]
-      [cons frame nil]
-    [if [or [null pattern]
-	    [null expression]]
-	nil
-      [let [[pattern-car [car pattern]]]
-	[if [eq pattern-car [car expression]]
-	    [pattern-match_with_frame [cdr pattern] [cdr expression] frame]
-	  [if [is-type `cons pattern-car]
-	      [let [[command [car pattern-car]]]
-		[cond [[eq command `?] [let [[variable_name  [elt pattern-car 1]]
-					     [variable_value nil]]
-					 [let [[expression_length [length expression]]
-					       [done              nil]
-					       [parses            nil]]
-					   [dotimes [index expression_length]
-					     [let [[subframe     [get frame new_copy]]
-						   [match_length [+ index 1]]]
-					       [have subframe add variable_name [firstn match_length expression]]
-					       [let [[subparses [pattern-match_with_frame [cdr pattern] [restn match_length expression] subframe]]]
-						 [= parses [append parses
-								   subparses]]]]]
-					   parses]]]
-		      [t               [error bug_name `pattern-invalid_command]]]]
-	    nil]]]]]]
-
-
-[defunk pattern-match [pattern expression]
-  [pattern-match_with_frame pattern expression [new frame]]]
-
 [defunk pattern-test [expression]
   [let [[patterns `[[a  [? object] has [? property]]
 		    [an [? object] has [? property]]]]

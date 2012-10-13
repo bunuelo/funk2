@@ -285,7 +285,50 @@ export_cefunk1(string_pattern__as__conslist_pattern, this, 0, "");
 */
 
 f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
-  return nil;
+  f2ptr conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
+  f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string));
+  {
+    f2ptr iter = matches;
+    while (iter != nil) {
+      f2ptr match = f2cons__car(iter, cause);
+      f2ptr match_keys = f2__frame__type_var__keys(cause, match, new__symbol(cause, "variable"));
+      {
+	f2ptr key_iter = match_keys;
+	while (key_iter != nil) {
+	  f2ptr key              = f2cons__car(key_iter, cause);
+	  f2ptr conslist         = f2__frame__lookup_var_value(cause, match, key);
+	  s64   conslist__length = 0;
+	  {
+	    f2ptr iter = conslist;
+	    while (iter != nil) {
+	      conslist__length ++;
+	      iter = f2cons__cdr(iter, cause);
+	    }
+	  }
+	  funk2_character_t* string__str = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * conslist__length));
+	  {
+	    s64 index = 0;
+	    {
+	      f2ptr character_iter = conslist;
+	      while (character_iter != nil) {
+		f2ptr             character     = f2cons__car(character_iter, cause);
+		funk2_character_t character__ch = f2cons__ch(character, cause);
+		string__str[index] = ch__ch;
+		index ++;
+		character_iter = f2cons__cdr(character_iter, cause);
+	      }
+	    }
+	  }
+	  f2ptr string = f2string__new(cause, string__str, conslist__length);
+	  raw__frame__add_var_value(cause, match, key, string);
+	  f2__free(to_ptr(new_str));
+	  key_iter = f2cons__cdr(key_iter, cause);
+	}
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return matches;
 }
 
 f2ptr f2__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {

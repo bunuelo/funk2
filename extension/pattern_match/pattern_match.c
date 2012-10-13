@@ -92,9 +92,8 @@ f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr 
 	      iter = f2cons__cdr(iter, cause);
 	    }
 	  }
-	  f2ptr variable_name  = pattern__car__cdr__car;
-	  f2ptr variable_value = nil;
-	  f2ptr subparses_seq  = nil;
+	  f2ptr variable_name = pattern__car__cdr__car;
+	  f2ptr subparses_seq = nil;
 	  {
 	    s64 index;
 	    for (index = 0; index < expression__length; index ++) {
@@ -110,12 +109,12 @@ f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr 
 	  return parses;
 	}
       } else {
-	return new__error(f2list8__new(cause,
-				       new__symbol(cause, "conslist_pattern-match_with_frame"), new__symbol(cause, "invalid_command"),
-				       new__symbol(cause, "command"),                           command,
-				       new__symbol(cause, "pattern"),                           pattern,
-				       new__symbol(cause, "expression"),                        expression,
-				       new__symbol(cause, "frame"),                             frame));
+	return new__error(f2list10__new(cause,
+					new__symbol(cause, "conslist_pattern-match_with_frame"), new__symbol(cause, "invalid_command"),
+					new__symbol(cause, "command"),                           command,
+					new__symbol(cause, "pattern"),                           pattern,
+					new__symbol(cause, "expression"),                        expression,
+					new__symbol(cause, "frame"),                             frame));
       }
     } else {
       return nil;

@@ -1127,7 +1127,7 @@ f2ptr raw__redblacktree__minimum_node(f2ptr cause, f2ptr this) {
 f2ptr raw__redblacktree__minimum__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr minimum_node = raw__redblacktree__minimum_node(cause, this);
   if (minimum_node == nil) {
-    return new__error(f2list1__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree-minimum-empty_tree"),
 				   new__symbol(cause, "this"),     this));
   }
@@ -1171,7 +1171,7 @@ f2ptr raw__redblacktree__maximum_node(f2ptr cause, f2ptr this) {
 f2ptr raw__redblacktree__maximum__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr maximum_node = raw__redblacktree__maximum_node(cause, this);
   if (maximum_node == nil) {
-    return new__error(f2list1__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "redblacktree-maximum-empty_tree"),
 				   new__symbol(cause, "this"),     this));
   }

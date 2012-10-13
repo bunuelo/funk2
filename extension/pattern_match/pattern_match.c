@@ -179,13 +179,78 @@ export_cefunk2(conslist_pattern__match, pattern, expression, 0, "");
 f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
   f2ptr conslist_pattern = nil;
   {
-    u64                this__length = raw__string__length(cause, this);
-    funk2_character_t* this__str    = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (this__length + 1)));
+    f2ptr              conslist_pattern_iter;
+    u64                this__length          = raw__string__length(cause, this);
+    funk2_character_t* this__str             = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (this__length + 1)));
     raw__string__str_copy(cause, this, this__str);
     {
-      s64 index;
-      for (index = this__length - 1; index >= 0; index --) {
-	conslist_pattern = f2cons__new(cause, f2char__new(cause, this__str[index]), conslist_pattern);
+      s64 index = 0;
+      while (index < this__length) {
+	funk2_character_t ch = this__str[index];
+	if (ch == f2char__ch(__funk2.reader.char__left_paren, cause)) {
+	  f2ptr stream              = f2__string_stream__new(cause, this, f2integer__new(cause, index));
+	  f2ptr variable_expression = f2__stream__try_read(cause, stream);
+	  if (raw__cons__is_type(cause, variable_expression)) {
+	    f2ptr variable_command = f2cons__car(variable_expression, cause);
+	    if (raw__eq(cause, variable_command, new__symbol(cause, "?"))) {
+	      f2ptr variable_expression__cdr = f2cons__cdr(variable_expression, cause);
+	      if (raw__cons__is_type(cause, variable_expression__cdr)) {
+		f2ptr variable_name = f2cons__car(variable_expression__cdr, cause);
+		if (raw__symbol__is_type(cause, variable_name)) {
+		  f2ptr new_cons = f2cons__new(cause, f2list2__new(cause, variable_command, variable_name), nil);
+		  if (conslist_pattern == nil) {
+		    conslist_pattern = new_cons;
+		  } else {
+		    f2cons__cdr__set(conslist_pattern_iter, cause, new_cons);
+		  }
+		  conslist_pattern_iter = new_cons;
+		  f2ptr stream__index = f2__stream__index(cause, stream);
+		  if (raw__integer__is_type(cause, stream_index)) {
+		    index = f2integer__i(stream__index, cause);
+		  } else {
+		    return new__error(f2list12__new(cause,
+						    new__symbol(cause, "bug_name"),                new__symbol(cause, "string_pattern-as-conslist_pattern-stream_index_is_not_integer"),
+						    new__symbol(cause, "this"),                    this,
+						    new__symbol(cause, "index"),                   f2integer__new(cause, index),
+						    new__symbol(cause, "stream-index"),            stream__index,
+						    new__symbol(cause, "variable_expression"),     variable_expression,
+						    new__symbol(cause, "variable_name"),           variable_name));
+		  }
+		} else {
+		  return new__error(f2list10__new(cause,
+						  new__symbol(cause, "bug_name"),                new__symbol(cause, "string_pattern-as-conslist_pattern-variable_name_must_be_symbol"),
+						  new__symbol(cause, "this"),                    this,
+						  new__symbol(cause, "index"),                   f2integer__new(cause, index),
+						  new__symbol(cause, "variable_expression"),     variable_expression,
+						  new__symbol(cause, "variable_name"),           variable_name));
+		}
+	      } else {
+		return new__error(f2list10__new(cause,
+						new__symbol(cause, "bug_name"),                new__symbol(cause, "string_pattern-as-conslist_pattern-variable_expression_cdr_is_not_cons"),
+						new__symbol(cause, "this"),                    this,
+						new__symbol(cause, "index"),                   f2integer__new(cause, index),
+						new__symbol(cause, "variable_expression"),     variable_expression,
+						new__symbol(cause, "variable_expression-cdr"), variable_expression__cdr));
+	      }
+	    } else {
+	    }
+	  } else {
+	    return new__error(f2list8__new(cause,
+					   new__symbol(cause, "bug_name"),            new__symbol(cause, "string_pattern-as-conslist_pattern-variable_expression_is_not_cons"),
+					   new__symbol(cause, "this"),                this,
+					   new__symbol(cause, "index"),               f2integer__new(cause, index),
+					   new__symbol(cause, "variable_expression"), variable_expression));
+	  }
+	} else {
+	  f2ptr new_cons = f2cons__new(cause, f2char__new(cause, ch), conslist_pattern);
+	  if (conslist_pattern == nil) {
+	    conslist_pattern = new_cons;
+	  } else {
+	    f2cons__cdr__set(conslist_pattern_iter, cause, new_cons);
+	  }
+	  conslist_pattern_iter = new_cons;
+	  index ++;
+	}
       }
     }
     f2__free(to_ptr(this__str));

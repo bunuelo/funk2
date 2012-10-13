@@ -488,7 +488,7 @@
 								    [= iter nil]]
 							    [let [[global_bug_name [get [string-concat 'bug-' [get repl_bug_count as-string]] as-symbol]]]
 							      [++ repl_bug_count]
-							      [terminal_format '\nrepl: defining bug globally as ' global_bug_name]
+							      [terminal_format standard-terminal '\nrepl: defining bug globally as ' global_bug_name]
 							      [eval `[globalize ,global_bug_name ,bug]]
 							      [= iter nil]]]]
 						      [prog [ansi-stream-foreground [get standard-terminal stream] terminal_repl-prompt_color]

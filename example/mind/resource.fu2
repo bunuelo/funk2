@@ -20,6 +20,8 @@
 
 'resource'
 
+[globalize resource_bug_count 0]
+
 [deframe resource [frame] [name
 			   [agency-conditionlock [new conditionlock]]
 			   [agency               nil]
@@ -91,10 +93,11 @@
 						[have active-conditionlock unlock]
 						
 						[if [is-type `bug result]
-						    [let [[bug result]]
-						      [terminal_format standard-terminal '\nresource "' [get this as-natural_language_string] '" encountered bug!']
-						      [have bug print_backtrace]
-						      [mapc &print [get [get [get bug creation_fiber] stack_trace] blocks]]]]
+						    [let [[bug             result]
+							  [global_bug_name [get [string-concat 'resource_bug-' [get resource_bug_count as-string]] as-symbol]]]
+						      [++ resource_bug_count]
+						      [terminal_format standard-terminal '\nresource ' [get this name] ': globally defining bug as ' global_bug_name '.']
+						      [eval `[globalize ,global_bug_name [quote ,bug]]]]]
 						
 						[have finished-conditionlock lock]
 						[= finished t]

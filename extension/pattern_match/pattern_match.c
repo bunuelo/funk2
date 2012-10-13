@@ -296,7 +296,7 @@ f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
 	f2ptr key_iter = match_keys;
 	while (key_iter != nil) {
 	  f2ptr key              = f2cons__car(key_iter, cause);
-	  f2ptr conslist         = f2__frame__lookup_var_value(cause, match, key);
+	  f2ptr conslist         = f2__frame__lookup_var_value(cause, match, key, nil);
 	  s64   conslist__length = 0;
 	  {
 	    f2ptr iter = conslist;

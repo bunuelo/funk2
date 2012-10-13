@@ -179,7 +179,7 @@ export_cefunk2(conslist_pattern__match, pattern, expression, 0, "");
 f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
   f2ptr conslist_pattern = nil;
   {
-    f2ptr              conslist_pattern_iter;
+    f2ptr              conslist_pattern_iter = nil;
     u64                this__length          = raw__string__length(cause, this);
     funk2_character_t* this__str             = (funk2_character_t*)from_ptr(f2__malloc(sizeof(funk2_character_t) * (this__length + 1)));
     raw__string__str_copy(cause, this, this__str);

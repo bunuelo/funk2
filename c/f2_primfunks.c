@@ -591,9 +591,7 @@ def_pcfunk1(conslist__as__array, this,
 	    "returns a conslist represented as a new array.",
 	    return f2__conslist__as__array(this_cause, this));
 
-f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
-  assert_argument_type(conslist, this);
-  assert_argument_type(integer,  n);
+f2ptr raw__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   s64 raw_n = f2integer__i(n, cause);
   s64 index = 0;
   f2ptr new_seq  = nil;
@@ -614,9 +612,60 @@ f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
   }
   return new_seq;
 }
+
+f2ptr f2__conslist__first_n(f2ptr cause, f2ptr this, f2ptr n) {
+  assert_argument_type(conslist, this);
+  assert_argument_type(integer,  n);
+  return raw__conslist__first_n(cause, this, n);
+}
 def_pcfunk2(conslist__first_n, this, n,
 	    "returns a new representation of the first n elements of the list, this.",
 	    return f2__conslist__first_n(this_cause, this, n));
+
+
+f2ptr raw__firstn(f2ptr cause, f2ptr this, f2ptr n) {
+  return raw__conslist__firstn(cause, this, n);
+}
+
+f2ptr f2__firstn(f2ptr cause, f2ptr this, f2ptr n) {
+  assert_argument_type(conslist, this);
+  assert_argument_type(integer,  n);
+  return raw__firstn(cause, this, n);
+}
+def_pcfunk2(firstn, this, n,
+	    "Returns a new conslist of the first n elements of this conslist.",
+	    return f2__firstn(this_cause, this, n));
+
+
+f2ptr raw__restn(f2ptr cause, f2ptr this, s64 n) {
+  register f2ptr rest = this;
+  {
+    register s64 index = n;
+    while ((rest != nil) &&
+	   (index > 0)) {
+      rest = f2cons__cdr(iter, cause);
+      index --;
+    }
+  }
+  return rest;
+}
+
+f2ptr f2__restn(f2ptr cause, f2ptr this, f2ptr n) {
+  assert_argument_type(conslist, this);
+  assert_argument_type(integer,  n);
+  s64 n__i = f2integer__i(n, cause);
+  if (n__i < 0) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "restn-n_must_be_nonnegative"),
+				   new__symbol(cause, "n"),        n,
+				   new__symbol(cause, "this"),     this));
+  }
+  return raw__restn(cause, this, n__i);
+}
+def_pcfunk2(restn, this, n,
+	    "Returns the rest of this conslist after the first n elements.",
+	    return f2__restn(this_cause, this, n));
+
 
 f2ptr f2__conslistlist__append(f2ptr cause, f2ptr this) {
   f2ptr new_list      = nil;
@@ -2002,6 +2051,8 @@ void f2__primcfunks__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(conslist);
   f2__primcfunk__init__defragment__fix_pointers(conslist__as__array);
   f2__primcfunk__init__defragment__fix_pointers(conslist__first_n);
+  f2__primcfunk__init__defragment__fix_pointers(firstn);
+  f2__primcfunk__init__defragment__fix_pointers(restn);
   f2__primcfunk__init__defragment__fix_pointers(conslistlist__append);
   
   f2__primcfunk__init__defragment__fix_pointers(immutable_conslist);
@@ -2295,6 +2346,8 @@ void f2__primcfunks__reinitialize_globalvars() {
   f2__primcfunk__init__0_and_rest(conslist,             conslist);
   f2__primcfunk__init__1(         conslist__as__array,  this);
   f2__primcfunk__init__2(         conslist__first_n,    this, n);
+  f2__primcfunk__init__2(         firstn,               this, n);
+  f2__primcfunk__init__2(         restn,                this, n);
   f2__primcfunk__init__1(         conslistlist__append, this);
   
   f2__primcfunk__init__0_and_rest(immutable_conslist, seq);

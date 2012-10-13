@@ -34,6 +34,8 @@
 [globalize-funk conslist                                    &primfunk:conslist]
 [globalize-funk conslist-as-array                           &primfunk:conslist__as__array]
 [globalize-funk conslist-first_n                            &primfunk:conslist__first_n]
+[globalize-funk firstn                                      &primfunk:firstn]
+[globalize-funk restn                                       &primfunk:restn]
 [globalize-funk conslistlist-append                         &primfunk:conslistlist__append]
 
 [globalize-funk immutable_conslist                          &primfunk:immutable_conslist]

@@ -58,6 +58,10 @@
 
 
 f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr expression, f2ptr frame) {
+  printf("raw__conslist_pattern__match_with_frame\n\n"); fflush(stdout);
+  f2__print(cause, pattern);
+  f2__print(cause, expression);
+  f2__print(cause, frame);
   if ((pattern    == nil) &&
       (expression == nil)) {
     return raw__cons__new(cause, frame, nil);
@@ -123,6 +127,10 @@ f2ptr raw__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr 
 }
 
 f2ptr f2__conslist_pattern__match_with_frame(f2ptr cause, f2ptr pattern, f2ptr expression, f2ptr frame) {
+  printf("f2__conslist_pattern__match_with_frame\n\n"); fflush(stdout);
+  f2__print(cause, pattern);
+  f2__print(cause, expression);
+  f2__print(cause, frame);
   assert_argument_type(conslist, pattern);
   assert_argument_type(conslist, expression);
   assert_argument_type(frame,    frame);
@@ -132,11 +140,17 @@ export_cefunk3(conslist_pattern__match_with_frame, pattern, expression, frame, 0
 
 
 f2ptr raw__conslist_pattern__match(f2ptr cause, f2ptr pattern, f2ptr expression) {
+  printf("raw__conslist_pattern__match\n\n"); fflush(stdout);
+  f2__print(cause, pattern);
+  f2__print(cause, expression);
   f2ptr frame = assert_value(f2__frame__new(cause, nil));
   return raw__conslist_pattern__match_with_frame(cause, pattern, expression, frame);
 }
 
 f2ptr f2__conslist_pattern__match(f2ptr cause, f2ptr pattern, f2ptr expression) {
+  printf("f2__conslist_pattern__match\n\n"); fflush(stdout);
+  f2__print(cause, pattern);
+  f2__print(cause, expression);
   assert_argument_type(conslist, pattern);
   assert_argument_type(conslist, expression);
   return raw__conslist_pattern__match(cause, pattern, expression);
@@ -293,6 +307,7 @@ f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
   f2__print(cause, this);
   f2__print(cause, string);
   f2ptr conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
+  printf("\n  conslist_pattern"); fflush(stdout);
   f2__print(cause, conslist_pattern);
   f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string));
   {

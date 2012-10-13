@@ -21,7 +21,7 @@
   :documentation        'Basic knowledge for ongoing dynamic thoughts.'
    :packages            [semantic_object
 			 semantic_environment
-			 string_pattern]
+			 pattern_match]
     :sources            ['semantic_thought-core.fu2']
      :dynamic_libraries ['libf2e_semantic_thought.so']]
 

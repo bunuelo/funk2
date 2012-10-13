@@ -177,6 +177,8 @@ export_cefunk2(conslist_pattern__match, pattern, expression, 0, "");
 */
 
 f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
+  printf("\nraw__string_pattern__as__conslist_pattern\n"); fflush(stdout);
+  f2__print(cause, this);
   f2ptr conslist_pattern = nil;
   {
     f2ptr              conslist_pattern_iter = nil;
@@ -259,6 +261,8 @@ f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
+  printf("\nf2__string_pattern__as__conslist_pattern\n"); fflush(stdout);
+  f2__print(cause, this);
   assert_argument_type(string, this);
   return raw__string_pattern__as__conslist_pattern(cause, this);
 }
@@ -285,6 +289,9 @@ export_cefunk1(string_pattern__as__conslist_pattern, this, 0, "");
 */
 
 f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
+  printf("\nraw__string_pattern__match\n"); fflush(stdout);
+  f2__print(cause, this);
+  f2__print(cause, string);
   f2ptr conslist_pattern = assert_value(raw__string_pattern__as__conslist_pattern(cause, this));
   f2__print(cause, conslist_pattern);
   f2ptr matches          = assert_value(raw__conslist_pattern__match(cause, conslist_pattern, string));

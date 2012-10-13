@@ -172,7 +172,7 @@
 	     semantic_plan_operator_suppression
 	     semantic_counterfactual_transframe
 	     semantic_environment
-	     string_pattern]
+	     pattern_match]
    :sources ['nonsemantic_plan.fu2']]
 
 [defpackage deliberative_plan_agency

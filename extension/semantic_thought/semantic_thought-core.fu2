@@ -27,7 +27,7 @@
 [deftypefunk string get pattern_evaluation [variable_lookup_funk]
   [if [not [get this contains '[']]
       this
-    [let* [[conslist_pattern [string_pattern-as_conslist_pattern this]]
+    [let* [[conslist_pattern [string_pattern-as-conslist_pattern this]]
 	   [result_length    0]]
       [let [[expanded_conslist [mapcar [funk [expression]
 					     [if [is-type `char expression]

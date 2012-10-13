@@ -415,7 +415,7 @@
 
 [deftypefunk nonsemantic_plan execute expression-syntax_check [expression]
   [cond [[is-type `symbol expression] `[quote ,expression]]
-	[[is-type `string expression] [let [[parse_result [shelter [string_pattern-as_conslist_pattern expression]]]]
+	[[is-type `string expression] [let [[parse_result [shelter [string_pattern-as-conslist_pattern expression]]]]
 					[if [is-type `bug parse_result]
 					    [error bug_name                 `plan_syntax_error-could_not_parse_string_pattern
 						   expression               expression

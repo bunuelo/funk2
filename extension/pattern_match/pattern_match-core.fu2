@@ -55,7 +55,13 @@
 	  patterns]
     parses]]
 
-[defunk string_pattern-test []
-  [string_pattern-match 'The [? object] has [? property].' 'The skinny red dog has ten fleas.']]
+[defunk string_pattern-test [:rest expressions]
+  [let [[patterns `['the [? object] has [? property]'
+		    'an [? object] has [? property]'
+		    'a [? object] has [? property]']]]
+    [apply &append [mapcar [funk [pattern]
+				 [string_pattern-match pattern expression]]
+			   patterns]]]]
+
 
 

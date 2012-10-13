@@ -416,23 +416,27 @@ def_pcfunk1(global_scheduler__add_fiber, fiber,
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   if (processor_assignment_index == nil) {
-    f2__print(cause, f2__fiber__stack_trace(cause, f2__this__fiber(cause)));
-    return f2larva__new(cause, 1355472, f2__bug__new(cause, f2integer__new(cause, 1355472),
-						     f2__frame__new(cause, f2list6__new(cause,
-											new__symbol(cause, "bug_type"),   new__symbol(cause, "global_scheduler-remove_fiber-fiber_is_not_currently_assigned_to_a_processor"),
-											new__symbol(cause, "this-fiber"), f2__this__fiber(cause),
-											new__symbol(cause, "fiber"),      fiber))));
+    return nil;
+  } else if (raw__integer__is_type(cause, processor_assignment_index)) {
+    s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);
+    if ((processor_assignment_index__i >= 0) &&
+	(processor_assignment_index__i <  memory_pool_num)) {
+      f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
+      return raw__processor__remove_active_fiber(cause, processor, fiber);
+    } else {
+      return new__error(f2list8__new(cause,
+				     new__symbol(cause, "bug_type"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_out_of_range"),
+				     new__symbol(cause, "this-fiber"),             f2__this__fiber(cause),
+				     new__symbol(cause, "fiber"),                  fiber,
+				     new__symbol(cause, "this-fiber-stack_trace"), f2__fiber__stack_trace(cause, f2__this__fiber(cause))));
+    }
+  } else {
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_type"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_not_an_integer"),
+				   new__symbol(cause, "this-fiber"),             f2__this__fiber(cause),
+				   new__symbol(cause, "fiber"),                  fiber,
+				   new__symbol(cause, "this-fiber-stack_trace"), f2__fiber__stack_trace(cause, f2__this__fiber(cause))));
   }
-  if (! raw__integer__is_type(cause, processor_assignment_index)) {
-    return f2larva__new(cause, 11, nil);
-  }
-  s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);
-  if ((processor_assignment_index__i < 0) ||
-      (processor_assignment_index__i >= memory_pool_num)) {
-    return f2larva__new(cause, 22, nil);
-  }
-  f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
-  return raw__processor__remove_active_fiber(cause, processor, fiber);
 }
 
 f2ptr f2__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {

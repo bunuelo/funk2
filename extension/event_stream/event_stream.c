@@ -513,16 +513,22 @@ export_cefunk2(event_stream_iterator__new, event_stream, index_time, 0, "Returns
 
 
 f2ptr raw__event_stream_iterator__current(f2ptr cause, f2ptr this) {
-  f2ptr event_stream       = raw__event_stream_iterator__event_stream(cause, this);
-  f2ptr index_time         = raw__event_stream_iterator__index_time(cause, this);
-  if (! raw__event_stream__is_empty(cause, event_stream)) {
-    if (index_time == nil) {
-      return raw__event_stream__first(cause, event_stream);
-    } else {
-      return  raw__event_stream__first_not_before(cause, event_stream, index_time);
-    }
-  } else {
+  f2ptr event_stream = raw__event_stream_iterator__event_stream(cause, this);
+  f2ptr index_time   = raw__event_stream_iterator__index_time(cause, this);
+  if (raw__event_stream__is_empty(cause, event_stream)) {
     return nil;
+  } else {
+    if (index_time == nil) {
+      return catch_value(raw__event_stream__first(cause, event_stream),
+			 f2list4__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream_iterator-current-error_getting_first_element_from_nonempty_event_stream"),
+				      new__symbol(cause, "this"),     this));
+    } else {
+      return catch_value(raw__event_stream__first_not_before(cause, event_stream, index_time),
+			 f2list4__new(cause,
+				      new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream_iterator-current-error_getting_first_not_before_element_from_nonempty_event_stream"),
+				      new__symbol(cause, "this"),     this));
+    }
   }
 }
 

@@ -211,7 +211,7 @@ f2ptr raw__event_stream__first(f2ptr cause, f2ptr this) {
   if (! raw__redblacktree__is_empty(cause, event_time_redblacktree)) {
     return f2__redblacktree__minimum(cause, event_time_redblacktree);
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream-first-event_stream_is_empty"),
 				   new__symbol(cause, "this"),     this));
   }

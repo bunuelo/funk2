@@ -321,7 +321,7 @@ f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
 	  }
 	  f2ptr string = f2string__new(cause, conslist__length, string__str);
 	  raw__frame__add_var_value(cause, match, key, string);
-	  f2__free(to_ptr(new_str));
+	  f2__free(to_ptr(string__str));
 	  key_iter = f2cons__cdr(key_iter, cause);
 	}
       }

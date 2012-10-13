@@ -108,6 +108,14 @@
 [deftypefunk bug execute define_backtrace []
   [have this crawl_through_backtrace standard-terminal 'bug']]
 
+[deftypefunk bug show_inspect_details []
+  [have this print_backtrace]
+  [mapc &print [get [get [get this creation_fiber] stack_trace] blocks]]]
+
+[defunk inspect [exp]
+  [cond [[is-type `bug exp] [have bug show_inspect_details]]
+	[t                  [prog [terminal_format standard-terminal '\ninspect: try inspecting bugs.']
+				  nil]]]]
 
 [defmetro assert-type [correct_type value]
   `[let [[assert_value ,value]]

@@ -242,7 +242,7 @@ f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "variable_expression"), variable_expression));
 	  }
 	} else {
-	  f2ptr new_cons = f2cons__new(cause, f2char__new(cause, ch), conslist_pattern);
+	  f2ptr new_cons = f2cons__new(cause, f2char__new(cause, ch), nil);
 	  if (conslist_pattern == nil) {
 	    conslist_pattern = new_cons;
 	  } else {

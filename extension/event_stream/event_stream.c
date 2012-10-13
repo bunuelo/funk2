@@ -524,10 +524,10 @@ f2ptr raw__event_stream_iterator__current(f2ptr cause, f2ptr this) {
 				      new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream_iterator-current-error_getting_first_element_from_nonempty_event_stream"),
 				      new__symbol(cause, "this"),     this));
     } else {
-      return catch_value(raw__event_stream__first_not_before(cause, event_stream, index_time),
-			 f2list4__new(cause,
-				      new__symbol(cause, "bug_name"), new__symbol(cause, "event_stream_iterator-current-error_getting_first_not_before_element_from_nonempty_event_stream"),
-				      new__symbol(cause, "this"),     this));
+      f2ptr result = raw__event_stream__first_not_before(cause, event_stream, index_time);
+      if (raw__larva__is_type(cause, result)) {
+	return nil;
+      }
     }
   }
 }

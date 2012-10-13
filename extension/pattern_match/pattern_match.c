@@ -143,6 +143,79 @@ f2ptr f2__conslist_pattern__match(f2ptr cause, f2ptr pattern, f2ptr expression) 
 }
 export_cefunk2(conslist_pattern__match, pattern, expression, 0, "");
 
+/*
+[defunk string_pattern-as_conslist_pattern [string_pattern]
+  [let [[string_pattern-length [get string_pattern length]]
+	[index                 0]
+	[begin_variable_char   #\[]
+        [conslist_pattern      nil]
+	[conslist_pattern_iter nil]]
+    [while [< index string_pattern-length]
+      [let [[next_char [get string_pattern elt index]]]
+	[cond [[eq next_char begin_variable_char] [let [[stream [string_stream-new string_pattern index]]]
+						    [let [[variable_expression [stream-try_read stream]]]
+						      [let [[variable_command [first variable_expression]]]
+							[cond [[eq variable_command `?] [let [[variable_name [second variable_expression]]]
+											  [let [[new_cons [cons `[? ,variable_name] nil]]]
+											    [if [null conslist_pattern]
+												[prog [= conslist_pattern      new_cons]
+												      [= conslist_pattern_iter new_cons]]
+											      [prog [set conslist_pattern_iter cdr new_cons]
+												    [= conslist_pattern_iter new_cons]]]]
+											  [= index [get stream index]]]]
+							      [t                        [error bug_name            `string_pattern-parse-invalid_variable_command
+											       string_pattern      string_pattern
+											       variable_expression variable_expression]]]]]]]
+	      [t                                  [let [[new_cons [cons next_char nil]]]
+						    [if [null conslist_pattern]
+							[prog [= conslist_pattern      new_cons]
+							      [= conslist_pattern_iter new_cons]]
+						      [prog [set conslist_pattern_iter cdr new_cons]
+							    [= conslist_pattern_iter new_cons]]]
+						    [++ index]]]]]]
+    conslist_pattern]]
+*/
+
+f2ptr raw__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
+  return nil;
+}
+
+f2ptr f2__string_pattern__as__conslist_pattern(f2ptr cause, f2ptr this) {
+  assert_argument_type(string, this);
+  return raw__string_pattern__as__conslist_pattern(cause, this);
+}
+export_cefunk1(string_pattern__as__conslist_pattern, this, 0, "");
+
+
+/*
+[defunk string_pattern-match [string_pattern string]
+  [let [[matches [conslist_pattern-match [string_pattern-as_conslist_pattern string_pattern] [string_pattern-as_conslist_pattern string]]]]
+    [mapc [funk [match]
+		[mapc [funk [key]
+			    [let* [[conslist        [have match lookup key]]
+				   [conslist-length [length conslist]]
+				   [string          [new string conslist-length #\ ]]
+				   [index           0]]
+			      [mapc [funk [char]
+					  [set string elt index char]
+					  [++ index]]
+				    [have match lookup key]]
+			      [have match add key string]]]
+		      [get match keys]]]
+	  matches]
+    matches]]
+*/
+
+f2ptr raw__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
+  return nil;
+}
+
+f2ptr f2__string_pattern__match(f2ptr cause, f2ptr this, f2ptr string) {
+  assert_argument_type(string, this);
+  assert_argument_type(string, string);
+  return raw__string_pattern__match(cause, this, string);
+}
+export_cefunk2(string_pattern__match, this, string, 0, "");
 
 
 // **

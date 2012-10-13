@@ -39,7 +39,7 @@
 	  [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 	    [if bug-fiber
 		[let [[global_bug_name [get [string-concat 'background_bug-' [get background_bug_count as-string]] as-symbol]]]
-		  [= background_bug_count [+ background_bug_count 1]]
+		  [= background_bug_count [bytecode:add background_bug_count 1]]
 		  [terminal_format standard-terminal '\nbug: defining globally as ' global_bug_name]
 		  [eval `[globalize ,global_bug_name [quote ,bug]]]
 		  nil]]]]

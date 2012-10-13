@@ -592,7 +592,7 @@ def_pcfunk1(conslist__as__array, this,
 	    return f2__conslist__as__array(this_cause, this));
 
 
-f2ptr raw__firstn(f2ptr cause, f2ptr this, f2ptr n) {
+f2ptr raw__firstn(f2ptr cause, f2ptr this, s64 n) {
   f2ptr iter        = this;
   f2ptr firstn      = nil;
   f2ptr firstn_iter;

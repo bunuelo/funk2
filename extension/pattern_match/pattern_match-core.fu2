@@ -38,6 +38,9 @@
 [deftypefunk string get matches [string]
   [string_pattern-match this string]]
 
+[deftypefunk string execute match [string_pattern]
+  [string_pattern-match string_pattern this]]
+
 
 'tests'
 

@@ -172,15 +172,37 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
       }
     }
   } else {
-    f2ptr semantic_left_time  = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
-    f2ptr semantic_right_time = forget_before_time;
-    f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
-    list__iteration(cause, forget_events, forget_event,
-		    f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, forget_event));
-		    if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
-		      assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event));
-		    }
-		    );
+    f2ptr     semantic_left_time     = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
+    f2ptr     semantic_right_time    = forget_before_time;
+    s64       remove_tries           = 0;
+    boolean_t making_progress        = boolean__true;
+    boolean_t removing_events_failed = boolean__true;
+    while (removing_events_failed && making_process) {
+      making_process         = boolean__false;
+      removing_events_failed = boolean__false;
+      f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
+      list__iteration(cause, forget_events, forget_event,
+		      f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, forget_event));
+		      if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
+			f2ptr remove_result = f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event);
+			if (! raw__larva__is_type(cause, remove_result)) {
+			  making_process         = boolean__true;
+			} else {
+			  removing_events_failed = boolean__true;
+			}
+		      }
+		      );
+      if (removing_events_failed && making_progress) {
+	remove_tries ++;
+	if (remove_tries > 1000) {
+	  return new__error(f2list8__new(cause,
+					 new__symbol(cause, "bug_name"),           new__symbol(cause, "forgetful_semantic_event_knowledge_base-forget_before_time-set-tried_removing_too_many_times"),
+					 new__symbol(cause, "this"),               this,
+					 new__symbol(cause, "forget_before_time"), forget_before_time,
+					 new__symbol(cause, "remove_tries"),       f2integer__new(cause, remove_tries)));
+	}
+      }
+    }
   }
   return result;
 }

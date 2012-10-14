@@ -109,7 +109,7 @@
   [have this crawl_through_backtrace standard-terminal 'bug']]
 
 [deftypefunk bug execute show_inspect_details []
-  [have this print_backtrace]
+  [have this crawl_through_backtrace standard-terminal 'inspect_bug']
   [mapc &print [get [get [get this creation_fiber] stack_trace] blocks]]]
 
 [defunk inspect [exp]

@@ -201,12 +201,15 @@
 [defmetro mind-create_layer [mind layer_index layer_name]
   `[have ,mind add_layer [new mental_layer ,layer_index [quote ,layer_name]]]]
 
-[deftypefunk mind get layer [name]
+[deftypefunk mind get mental_layer [name]
   [let [[layer [have [get this layer_frame] lookup name]]]
     [if [null layer]
-	[error bug_type   `layer_does_not_exist_in_mind
+	[error bug_type   `mental_layer_does_not_exist_in_mind
 	       layer_name name]
       layer]]]
+
+[deftypefunk mind get layer [name]
+  [get this mental_layer name]]
 
 [deftypefunk mind get layer_agency_names [name]
   [get [get this layer name] agency_names]]

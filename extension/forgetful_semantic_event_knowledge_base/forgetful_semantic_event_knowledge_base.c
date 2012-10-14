@@ -180,14 +180,23 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
     while (removing_events_failed && making_progress) {
       making_progress        = boolean__false;
       removing_events_failed = boolean__false;
-      f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
-      list__iteration(cause, forget_events, forget_event,
-		      f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, forget_event));
+      f2ptr possible_forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
+      list__iteration(cause, possible_forget_events, possible_forget_event,
+		      f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, possible_forget_event));
 		      if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
+			f2ptr forget_event  = possible_forget_event;
 			f2ptr remove_result = f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event);
 			if (! raw__larva__is_type(cause, remove_result)) {
+			  // we successfully removed forget_event
 			  making_progress        = boolean__true;
 			} else {
+			  // condition: error removing event
+			  // causes:    two possibilities at this point
+			  //              1. good: maybe someone else removed it between the time we created the possible_remove_events list and now.
+			  //              2. bad:  maybe the event is in the knowledge base, but is failing to be removed for some other reason.
+			  // solution:  two part solution to correctly handle possible causes
+			  //              1. we look for progress on each loop
+			  //              2. only loop a short finite number of times before reporting an error
 			  removing_events_failed = boolean__true;
 			}
 		      }

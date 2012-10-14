@@ -203,16 +203,74 @@
 		    [= chunk_event_count [+ chunk_event_count 1]]]]
 	  [have visual_knowledge_iterator increment]]]]]]
 
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_relation_exists [semantic_partial_state]
-  nil]
-
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_exists [semantic_partial_state]
-  nil]
+  [let [[source_type      [get semantic_partial_state source_type]]
+	[source_key_type  [get semantic_partial_state source_key_type]]
+	[source_key       [get semantic_partial_state source_key]]
+	[source_value     [get semantic_partial_state source_value]]
+	[key_type         [get semantic_partial_state key_type]]
+	[key              [get semantic_partial_state key]]
+	[target_type      [get semantic_partial_state target_type]]
+	[found_does_exist nil]]
+    [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
+	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
+      [while source_type-semantic_reflective_object_set-iter
+	[let* [[source_type-semantic_reflective_object [car source_type-semantic_reflective_object_set-iter]]
+	       [property_one_set                       [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
+	  [if [and property_one_set
+		   [get property_one_set contains source_value]]
+	      [let [[property_two_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
+		[if [and property_two_set
+			 [get property_two_set contains target_type]]
+		    [prog [= found_does_exist                                t]
+			  [= source_type-semantic_reflective_object_set-iter nil]]]]]]
+	[if source_type-semantic_reflective_object_set-iter
+	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
+    found_does_exist]]
+
+[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_relation_exists [semantic_partial_state]
+  [let [[source_type      [get semantic_partial_state source_type]]
+	[source_key_type  [get semantic_partial_state source_key_type]]
+	[source_key       [get semantic_partial_state source_key]]
+	[source_value     [get semantic_partial_state source_value]]
+	[key_type         [get semantic_partial_state key_type]]
+	[key              [get semantic_partial_state key]]
+	[target_type      [get semantic_partial_state target_type]]
+	[target_key_type  [get semantic_partial_state target_key_type]]
+	[target_key       [get semantic_partial_state target_key]]
+	[target_value     [get semantic_partial_state target_value]]
+	[found_does_exist nil]]
+    [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
+	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
+      [while source_type-semantic_reflective_object_set-iter
+	[let* [[source_type-semantic_reflective_object                  [car source_type-semantic_reflective_object_set-iter]]
+	       [source_type-semantic_reflective_object-property_one_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
+	  [if [and source_type-semantic_reflective_object-property_one_set
+		   [get source_type-semantic_reflective_object-property_one_set contains source_value]]
+	      [let [[relation_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
+		[if relation_set
+		    [let [[relation_iter [get relation_set elements]]]
+		      [while relation_iter
+			[let [[target_semantic_reflective_object [car relation_iter]]]
+			  [if [is-type `semantic_reflective_object target_semantic_reflective_object]
+			      [if [eq [get target_semantic_reflective_object reflective_object_type] target_type]
+				  [let [[target_semantic_reflective_object-property_set [have target_semantic_reflective_object lookup_set target_key_type target_key]]]
+				    [if [and target_semantic_reflective_object-property_set
+					     [get target_semantic_reflective_object-property_set contains target_value]]
+					[prog [= found_does_exist                                t]
+					      [= relation_iter                                   nil]
+					      [= source_type-semantic_reflective_object_set-iter nil]]]]]]]
+			[if relation_iter
+			    [= relation_iter [cdr relation_iter]]]]]]]]]
+			
+	[if source_type-semantic_reflective_object_set-iter
+	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
+    found_does_exist]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_exists [semantic_partial_state]
   [let [[semantic_partial_state-type [type semantic_partial_state]]]
-    [cond [[eq semantic_partial_state-type `semantic_partial_state_property_relation] [have this check_semantic_partial_state_property_relation_exists semantic_partial_state]]
-	  [[eq semantic_partial_state-type `semantic_partial_state_property]          [have this check_semantic_partial_state_property_exists          semantic_partial_state]]
+    [cond [[eq semantic_partial_state-type `semantic_partial_state_property]          [have this check_semantic_partial_state_property_exists          semantic_partial_state]]
+	  [[eq semantic_partial_state-type `semantic_partial_state_property_relation] [have this check_semantic_partial_state_property_relation_exists semantic_partial_state]]
 	  [t                                                                          [error bug_name               `translate_visual_knowledge_to_physical_knowledge_resource-execute-check_exists-do_not_know_semantic_partial_state_type
 											     semantic_partial_state semantic_partial_state
 											     this                   this]]]]]

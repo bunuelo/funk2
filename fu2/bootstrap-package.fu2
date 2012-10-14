@@ -381,7 +381,7 @@
 	      [let [[loaded_all_dependencies_time [get package loaded_all_dependencies_time]]]
 		[if [or [null loaded_all_dependencies_time]
 			[bytecode:less_than loaded_all_dependencies_time before_time]]
-		    [prog `[terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
+		    [prog [terminal_format standard-terminal '\nchecking ' name ' for updated dependencies.']
 			  [let [[dependency_was_loaded [packages-load_if_modified_before [get package package_dependencies] before_time checked_package_hash dependencies_are_sticky]]]
 			    [if dependency_was_loaded
 				[= loaded_a_dependency t]]]

@@ -30,7 +30,7 @@
        
        [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	 [fiber [funk []
-		      [let [[physical_knowledge_step 0]]
+		      [let [[physical_knowledge_step -1]]
 			[while t
 			  [= physical_knowledge_step [have this wait_for_physical_knowledge_step [+ physical_knowledge_step 1]]]
 			  [have [get this ready_for_physical_world_step_trigger] trigger]]]]

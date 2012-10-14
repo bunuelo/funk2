@@ -210,7 +210,7 @@
   nil]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_exists [semantic_partial_state]
-  [let [[semantic_partial_state-type [type semantic_partial_state-type]]]
+  [let [[semantic_partial_state-type [type semantic_partial_state]]]
     [cond [[eq semantic_partial_state-type `semantic_partial_state_property_relation] [have this check_semantic_partial_state_property_relation_exists semantic_partial_state]]
 	  [[eq semantic_partial_state-type `semantic_partial_state_property]          [have this check_semantic_partial_state_property_exists          semantic_partial_state]]
 	  [t                                                                          [error bug_name               `translate_visual_knowledge_to_physical_knowledge_resource-execute-check_exists-do_not_know_semantic_partial_state_type

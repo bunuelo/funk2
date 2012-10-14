@@ -35,6 +35,12 @@
   [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]
   ]
 
+[deftypefunk learned_reactive_physical_knowledge_agency execute check_exists [semantic_partial_state]
+  [have [get this resource `translate_visual_knowledge_to_physical_knowledge] check_exists semantic_partial_state]]
+
+[deftypefunk learned_reactive_physical_knowledge_agency execute wait_for_physical_knowledge_step [wait_for_step]
+  [have [get this resource `translate_visual_knowledge_to_physical_knowledge] wait_for_physical_knowledge_step wait_for_step]]
+
 
 'slot_value'
 
@@ -49,7 +55,9 @@
 
 'translate_visual_knowledge_to_physical_knowledge_resource'
 
-[deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[semantic_reflective_object_mutex                    [new mutex]]
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[physical_knowledge_step-conditionlock               [new conditionlock]]
+										     [physical_knowledge_step                             0]
+										     [semantic_reflective_object_mutex                    [new mutex]]
 										     [semantic_reflective_object_set_type_ptypehash_mutex [new mutex]]
 										     [semantic_reflective_object_set_type_ptypehash       [new ptypehash]]]
   [new []
@@ -58,6 +66,21 @@
 			[have this execute_resource_raw_funk]
 			]]
        nil]]
+
+[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute increment_physical_knowledge_step []
+  [have physical_knowledge_step-conditionlock lock]
+  [= physical_knowledge_step [+ physical_knowledge_step 1]]
+  [have physical_knowledge_step-conditionlock signal]
+  [have physical_knowledge_step-conditionlock unlock]]
+
+[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute wait_for_physical_knowledge_step [wait_for_step]
+  [let [[result_step nil]]
+    [have physical_knowledge_step-conditionlock lock]
+    [while [< physical_knowledge_step wait_for_step]
+      [have physical_knowledge_step-conditionlock wait]]
+    [= result_step physical_knowledge_step]
+    [have physical_knowledge_step-conditionlock unlock]
+    result_step]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute add_semantic_reflective_object_type [reflective_object_type semantic_reflective_object]
   [have semantic_reflective_object_set_type_ptypehash_mutex lock]
@@ -174,6 +197,7 @@
 													'end_of_visual_changes found: added end_of_physical_changes event (' chunk_event_count ' visual events integrated into physical_knowledge).']
 										       [= chunk_event_count 0]
 										       [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_changes nil]]
+										       [have this increment_physical_knowledge_step]
 										       nil]]
 			    ]]
 		    [= chunk_event_count [+ chunk_event_count 1]]]]

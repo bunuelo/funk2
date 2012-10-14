@@ -482,7 +482,7 @@
 						    [if [not [eq current_keyboard_editor keyboard_editor]]
 							[= done t]]
 						    [have current_keyboard_editor_mutex unlock]
-						    [cond [[done                                   [= iter nil]]]
+						    [cond [done                                    [= iter nil]]
 							  [[and [is-type `bug result]
 								[eq [have [get result frame]
 									  lookup `bug_name]

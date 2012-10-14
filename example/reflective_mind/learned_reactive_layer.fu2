@@ -68,3 +68,6 @@
   [have [get this agency `physical_knowledge] connect_knowledge_reflection]
   ]
 
+[deftypefunk learned_reactive_layer execute check_exists [semantic_partial_state]
+  [have [get this agency `physical_knowledge] check_exists semantic_partial_state]]
+

@@ -138,7 +138,7 @@
 										  source_type source_property source_property_value key_type key target_type target_property target_property_value]
   [have [get this resource layer_name agency_name resource_name] add_change_relationship_hypothesis change_type source_type source_property source_property_value key_type key target_type target_property target_property_value]]
 
-  
+
 
 
 'deliberative1'
@@ -199,4 +199,8 @@
 
 [deftypefunk reflective_mind get perception []
   [get [get this layer `builtin_reactive] perception]]
+
+
+[deftypefunk reflective_mind execute check_physical_partial_state_exists [semantic_partial_state]
+  [have [get this mental_layer `learned_reactive] check_exists semantic_partial_state]]
 

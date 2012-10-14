@@ -177,8 +177,8 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
     s64       remove_tries           = 0;
     boolean_t making_progress        = boolean__true;
     boolean_t removing_events_failed = boolean__true;
-    while (removing_events_failed && making_process) {
-      making_process         = boolean__false;
+    while (removing_events_failed && making_progress) {
+      making_progress        = boolean__false;
       removing_events_failed = boolean__false;
       f2ptr forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
       list__iteration(cause, forget_events, forget_event,
@@ -186,7 +186,7 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2pt
 		      if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
 			f2ptr remove_result = f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event);
 			if (! raw__larva__is_type(cause, remove_result)) {
-			  making_process         = boolean__true;
+			  making_progress        = boolean__true;
 			} else {
 			  removing_events_failed = boolean__true;
 			}

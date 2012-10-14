@@ -292,7 +292,8 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]
-	[old_remember_token          nil]]
+	[old_remember_token          nil]
+	[chunk_event_count           0]]
     [while t
       [let* [[event          [have physical_knowledge_iterator wait_for_current]]
 	     [remember_token [new remember_token [new semantic_time [get event time]]]]]
@@ -420,13 +421,15 @@
 										 ]]
 			  [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `end_of_physical_changes]]      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-												      'end_of_physical_changes found: added end_of_physical_type_changes to physical_type_knowledge trace events.']
+												      'end_of_physical_changes event (' chunk_event_count ' physical_knowledge events induced to physical_type_knowledge)']
 										     [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_type_changes nil]]
+										     [= chunk_event_count 0]
 										     [have end_of_physical_type_changes_trigger trigger]
 										     nil]]
 			  ]
 		    'Now that event has been processed, we update the knowledge timer.'
 		    [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
+		    [= chunk_event_count [+ chunk_event_count 1]]
 		    ]]]
 	[= old_remember_token remember_token]
 	[have physical_knowledge_iterator increment]]]]]

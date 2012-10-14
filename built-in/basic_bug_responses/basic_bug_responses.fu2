@@ -67,7 +67,7 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [have [get bug frame] lookup key]]]
 								     [if unknown_keys
 									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
@@ -101,7 +101,7 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [have [get bug frame] lookup key]]]
 								     [if unknown_keys
 									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
@@ -135,7 +135,7 @@
 								       [mapc &add_unknown_key
 									     [get [get bug frame] keys]]]
 							       [mapc [funk [key]
-									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
+									   [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [have [get bug frame] lookup key]]]
 								     [if unknown_keys
 									 [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 								       nil]]]]]
@@ -177,7 +177,7 @@
 									 [mapc &add_unknown_key
 									       [get [get bug frame] keys]]]
 								 [mapc [funk [key]
-									     [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [bug-get-object-as-short_string [have [get bug frame] lookup key]]]]
+									     [terminal_format print_terminal '\n    ' [bug-get-object-as-short_string key] ' = ' [have [get bug frame] lookup key]]]
 								       [if unknown_keys
 									   [reverse [have unknown_keys sort [funk [x y] [< [bug-get-object-as-short_string x] [bug-get-object-as-short_string y]]]]]
 									 nil]]]]]

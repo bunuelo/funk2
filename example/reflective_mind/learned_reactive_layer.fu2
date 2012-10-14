@@ -71,3 +71,5 @@
 [deftypefunk learned_reactive_layer execute check_exists [semantic_partial_state]
   [have [get this agency `physical_knowledge] check_exists semantic_partial_state]]
 
+[deftypefunk learned_reactive_layer execute wait_for_physical_knowledge_step [wait_for_step]
+  [have [get this agency `physical_knowledge] wait_for_physical_knowledge_step wait_for_step]]

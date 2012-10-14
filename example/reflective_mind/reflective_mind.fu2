@@ -30,9 +30,10 @@
        
        [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	 [fiber [funk []
-		      [while t
-			[wait-for-trigger end_of_physical_type_changes_trigger]
-			[have [get this ready_for_physical_world_step_trigger] trigger]]]
+		      [let [[physical_knowledge_step 0]]
+			[while t
+			  [= physical_knowledge_step [have this wait_for_physical_knowledge_step [+ physical_knowledge_step 1]]]
+			  [have [get this ready_for_physical_world_step_trigger] trigger]]]]
 		nil]]
        
        ]]
@@ -203,4 +204,7 @@
 
 [deftypefunk reflective_mind execute check_physical_partial_state_exists [semantic_partial_state]
   [have [get this mental_layer `learned_reactive] check_exists semantic_partial_state]]
+
+[deftypefunk reflective_mind execute wait_for_physical_knowledge_step [wait_for_step]
+  [have [get this mental_layer `learned_reactive] wait_for_physical_knowledge_step wait_for_step]]
 

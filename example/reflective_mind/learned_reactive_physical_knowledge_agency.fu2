@@ -229,7 +229,7 @@
     found_does_exist]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_relation_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: check semantic partial state property relation exists']
+  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: check semantic partial state property relation exists "' [get semantic_partial_state as-natural_language_string] '"']
   [let [[source_type      [get semantic_partial_state source_type]]
 	[source_key_type  [get semantic_partial_state source_key_type]]
 	[source_key       [get semantic_partial_state source_key]]
@@ -241,11 +241,15 @@
 	[target_key       [get semantic_partial_state target_key]]
 	[target_value     [get semantic_partial_state target_value]]
 	[found_does_exist nil]]
+    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 1)']
     [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
 	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
+      [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 2)']
       [while source_type-semantic_reflective_object_set-iter
+	[terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 3)']
 	[let* [[source_type-semantic_reflective_object              [car source_type-semantic_reflective_object_set-iter]]
 	       [source_type-semantic_reflective_object-property_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
+	  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 4)']
 	  [terminal_format standard-terminal
 			   '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
 			   '\n  source_type-semantic_reflective_object = ' source_type-semantic_reflective_object]
@@ -270,8 +274,10 @@
 			[if relation_iter
 			    [= relation_iter [cdr relation_iter]]]]]]]]]
 			
+	[terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 9)']
 	[if source_type-semantic_reflective_object_set-iter
 	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
+    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 10)']
     found_does_exist]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_exists [semantic_partial_state]

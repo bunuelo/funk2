@@ -205,6 +205,9 @@
 [deftypefunk reflective_mind execute check_physical_partial_state_exists [semantic_partial_state]
   [have [get this mental_layer `learned_reactive] check_exists semantic_partial_state]]
 
+[deftypefunk reflective_mind execute wait_for_physical_partial_state_to_exist [semantic_partial_state]
+  [have [get this mental_layer `learned_reactive] wait_for_partial_state_to_exist semantic_partial_state]]
+
 [deftypefunk reflective_mind execute wait_for_physical_knowledge_step [wait_for_step]
   [have [get this mental_layer `learned_reactive] wait_for_physical_knowledge_step wait_for_step]]
 

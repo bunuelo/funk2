@@ -119,11 +119,19 @@
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute add_semantic_reflective_object_to_knowledge_base [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
+    [terminal_format standard-terminal
+		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-add_semantic_reflective_object_to_knowledge_base:'
+		     '\n  (phenomenal_name        = ' phenomenal_name')'
+		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have this add_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
     [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_semantic_frame semantic_reflective_object]]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_from_knowledge_base [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
+    [terminal_format standard-terminal
+		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-remove_semantic_reflective_object_from_knowledge_base:'
+		     '\n  (phenomenal_name        = ' phenomenal_name')'
+		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have this remove_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
     [have [get [get this mind] semantic_knowledge_base `physical_knowledge] remove_semantic_frame semantic_reflective_object]]]
 
@@ -241,7 +249,7 @@
 	[target_key       [get semantic_partial_state target_key]]
 	[target_value     [get semantic_partial_state target_value]]
 	[found_does_exist nil]]
-    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 1)']
+    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (source_type = ' source_type ')']
     [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
 	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
       [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 2)']

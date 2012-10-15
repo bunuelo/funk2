@@ -289,3 +289,12 @@
 											     semantic_partial_state semantic_partial_state
 											     this                   this]]]]]
 
+[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute wait_for_partial_state_to_exist [semantic_partial_state]
+  [let [[exists    nil]
+	[last_step [have [get this mind] wait_for_physical_knowledge_step 0]]]
+    [while [not exists]
+      [= exists [have this check_exists semantic_partial_state]]
+      [if [not exists]
+	  [= last_step [have [get this mind] wait_for_physical_knowledge_step [+ last_step 1]]]]]]]
+
+

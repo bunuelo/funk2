@@ -967,6 +967,7 @@
 													       [let [[assert-expression ,assert-expression]]
 														 [if [not assert-expression]
 														     [error bug_name    `assertion-failed
+															    is_plan_bug t
 															    description [conslist `assert [quote ,assert-expression]]]]]]]]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -1125,9 +1126,12 @@
   [if [null internal-compiled_funk]
       [= internal-compiled_funk [let [[result [shelter [get this __compiled_funk]]]]
 				  [if [is-type `bug result]
-				      [error bug_name nonsemantic_plan-error_compiling_execute_funk
-					     subbug   result
-					     this     this]
+				      [let [[bug result]]
+					[if [have [get bug frame] lookup `is_plan_bug]
+					    result
+					  [error bug_name nonsemantic_plan-error_compiling_execute_funk
+						 subbug   bug
+						 this     this]]]
 				    result]]]]
   internal-compiled_funk]
 
@@ -1383,6 +1387,7 @@
 													       [let [[assert-expression ,assert-expression]]
 														 [if [not assert-expression]
 														     [error bug_name    `assertion-failed
+															    is_plan_bug t
 															    description [conslist `imagine_asserting [quote ,assert-expression]]]]]]]]]]
 						[[eq `?                              command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
@@ -1515,12 +1520,15 @@
   [eval `[funk [this]
 	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile_imagine expression] this]]]]
 		 [if [is-type `bug result]
-		     [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-		       [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-		       [error bug_name         `nonsemantic_plan-expression_encountered_bug
-			      expression       [quote ,expression]
-			      semantic_thought semantic_thought
-			      subbug           result]]
+		     [let [[bug result]]
+		       [if [have [get bug frame] lookup `is_plan_bug]
+			   result
+			 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+			   [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+			   [error bug_name         `nonsemantic_plan-expression_encountered_bug
+				  expression       [quote ,expression]
+				  semantic_thought semantic_thought
+				  subbug           bug]]]]
 		   result]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []

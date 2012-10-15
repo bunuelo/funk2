@@ -214,6 +214,7 @@
 	  [have visual_knowledge_iterator increment]]]]]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_exists [semantic_partial_state]
+  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: check semantic partial state property exists "' [get semantic_partial_state as-natural_language_string] '"']
   [let [[source_type      [get semantic_partial_state source_type]]
 	[source_key_type  [get semantic_partial_state source_key_type]]
 	[source_key       [get semantic_partial_state source_key]]
@@ -234,7 +235,10 @@
 	      [let [[property_two_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
 		[if [and property_two_set
 			 [get property_two_set contains target_type]]
-		    [prog [= found_does_exist                                t]
+		    [prog [terminal_format standard-terminal
+					   '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
+					   '\n    found source semantic_reflective_object = ' source_type-semantic_reflective_object]
+			  [= found_does_exist                                t]
 			  [= source_type-semantic_reflective_object_set-iter nil]]]]]]
 	[if source_type-semantic_reflective_object_set-iter
 	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]

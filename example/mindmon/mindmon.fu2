@@ -470,7 +470,9 @@
 	     [funk []
 		   [let [[record_movie [get record_movie_check_button active]]]
 		     [terminal_format standard-terminal '\nMindMon: Recording Movie ' [if record_movie 'Enabled' 'Disabled'] '.']
-		     ]]
+		     [if [null mindmon_world]
+			 [terminal_format standard-terminal '\nMindMon internal warning: mindmon_world is nil.']
+		       [set mindmon_world all_cameras_enabled record_movie]]]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 0]]
@@ -552,11 +554,12 @@
   [set movie_resolution_entry text [get [get [get new_movie_resolution as-double] as-integer] as-string]]]
 
 [deftypefunk mindmon_project execute __boot_mindmon_world []
-  [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]]
+  [let [[cameras_enabled [get [get mindmon preferences] cameras_enabled]]
+	[record_movie    [get [get mindmon preferences] record_movie]]]
     [if [null mindmon_world]
 	[error bug_name mindmon_project_internal_error]]
     
-    [set mindmon_world all_cameras_enabled cameras_enabled]
+    [set mindmon_world all_cameras_enabled record_movie]
     
     [terminal_format standard-terminal '\nMindMon Project: removing agent names from project menu.']
     [have mindmon remove_agent_names_from_project_menu]

@@ -24,7 +24,7 @@
 						    [perception_list_mutex  [new mutex]]
 						    [perception_list        nil]
 						    [gripper_movement_speed 0.5]
-						    [gripper_grab_speed     1.0]
+						    [gripper_grab_speed     4.0]
 						    [is_holding             nil]
 						    [is_holding_relative_x  nil]]
   [new [initial-name

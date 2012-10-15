@@ -292,14 +292,9 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute execute_resource_raw_funk []
   [let [[physical_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `physical_knowledge->physical_type_knowledge]]
-	[old_remember_token          nil]
 	[chunk_event_count           0]]
     [while t
-      [let* [[event          [have physical_knowledge_iterator wait_for_current]]
-	     [remember_token [new remember_token [new semantic_time [get event time]]]]]
-	[have [get this agency] add_remember_token remember_token]
-	[if old_remember_token
-	    [have [get this agency] remove_remember_token old_remember_token]]
+      [let [[event [have physical_knowledge_iterator wait_for_current]]]
 	[if [not [null event]]
 	    [prog [if debug [terminal_format standard-terminal '\ntranslate_physical_knowledge_to_physical_type_knowledge_resource event: ' event]]
 		  [let [[event_type [get event event_type]]
@@ -431,7 +426,6 @@
 		    [set physical_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 		    [= chunk_event_count [+ chunk_event_count 1]]
 		    ]]]
-	[= old_remember_token remember_token]
 	[have physical_knowledge_iterator increment]]]]]
 
 

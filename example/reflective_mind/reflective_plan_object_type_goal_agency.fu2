@@ -264,14 +264,9 @@
 			]]]]]]]]
 
 [deftypefunk translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource execute execute_resource_raw_funk []
-  [let [[deliberative1_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `deliberative1_knowledge->deliberative1_type_knowledge]]
-	[old_remember_token               nil]]
+  [let [[deliberative1_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `deliberative1_knowledge->deliberative1_type_knowledge]]]
     [while t
-      [let* [[event          [have deliberative1_knowledge_iterator wait_for_current]]
-	     [remember_token [new remember_token [new semantic_time [get event time]]]]]
-	[have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_remember_token remember_token]
-	[if old_remember_token
-	    [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_remember_token old_remember_token]]
+      [let [[event [have deliberative1_knowledge_iterator wait_for_current]]]
 	[if [and [not no_reflective_learning]
 		 [not [null event]]]
 	    [prog [if debug `[terminal_format standard-terminal '\n  translate plan->plan_type event: ' event]]
@@ -409,7 +404,6 @@
 		    'Now that event has been processed, we update the knowledge timer.'
 		    [set deliberative1_type_knowledge_reflective_timer current_time [new semantic_time event-time]]
 		    ]]]
-	[= old_remember_token remember_token]
 	[have deliberative1_knowledge_iterator increment]]]]]
 
 

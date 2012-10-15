@@ -38,6 +38,9 @@
 [deftypefunk learned_reactive_physical_knowledge_agency execute check_exists [semantic_partial_state]
   [have [get this resource `translate_visual_knowledge_to_physical_knowledge] check_exists semantic_partial_state]]
 
+[deftypefunk learned_reactive_physical_knowledge_agency execute wait_for_partial_state_to_exist [semantic_partial_state]
+  [have [get this resource `translate_visual_knowledge_to_physical_knowledge] wait_for_partial_state_to_exist semantic_partial_state]]
+
 [deftypefunk learned_reactive_physical_knowledge_agency execute wait_for_physical_knowledge_step [wait_for_step]
   [have [get this resource `translate_visual_knowledge_to_physical_knowledge] wait_for_physical_knowledge_step wait_for_step]]
 

@@ -250,20 +250,13 @@
 	[target_key       [get semantic_partial_state target_key]]
 	[target_value     [get semantic_partial_state target_value]]
 	[found_does_exist nil]]
-    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (source_type = ' source_type ')']
     [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
 	   [source_type-semantic_reflective_object_set-iter [if source_type-semantic_reflective_object_set
 								[get source_type-semantic_reflective_object_set elements]
 							      nil]]]
-      [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 2)']
       [while source_type-semantic_reflective_object_set-iter
-	[terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 3)']
 	[let* [[source_type-semantic_reflective_object              [car source_type-semantic_reflective_object_set-iter]]
 	       [source_type-semantic_reflective_object-property_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
-	  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 4)']
-	  [terminal_format standard-terminal
-			   '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
-			   '\n  source_type-semantic_reflective_object = ' source_type-semantic_reflective_object]
 	  [if [and source_type-semantic_reflective_object-property_set
 		   [get source_type-semantic_reflective_object-property_set contains source_value]]
 	      [let [[relation_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
@@ -271,24 +264,21 @@
 		    [let [[relation_iter [get relation_set elements]]]
 		      [while relation_iter
 			[let [[target_semantic_reflective_object [car relation_iter]]]
-			  [terminal_format standard-terminal
-					   '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
-					   '\n    target_semantic_reflective_object = ' target_semantic_reflective_object]
 			  [if [is-type `semantic_reflective_object target_semantic_reflective_object]
 			      [if [eq [get target_semantic_reflective_object reflective_object_type] target_type]
 				  [let [[target_semantic_reflective_object-property_set [have target_semantic_reflective_object lookup_set target_key_type target_key]]]
 				    [if [and target_semantic_reflective_object-property_set
 					     [get target_semantic_reflective_object-property_set contains target_value]]
-					[prog [= found_does_exist                                t]
+					[prog [terminal_format standard-terminal
+							       '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
+							       '\n    found semantic_reflective_object = ' target_semantic_reflective_object]
+					      [= found_does_exist                                t]
 					      [= relation_iter                                   nil]
 					      [= source_type-semantic_reflective_object_set-iter nil]]]]]]]
 			[if relation_iter
 			    [= relation_iter [cdr relation_iter]]]]]]]]]
-			
-	[terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 9)']
 	[if source_type-semantic_reflective_object_set-iter
 	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
-    [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 10)']
     found_does_exist]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_exists [semantic_partial_state]

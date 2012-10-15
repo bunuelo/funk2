@@ -98,7 +98,7 @@
 		  [funk []
 			[have [get this mind] evaluate_deliberative_plan_expression
 			      `[prog [call-below 'grab']
-				     [wait-for-time 1]
+				     [wait-for-time 2]
 				     [wait-for [property gripper property is-me t
 							 property movement_command
 							 stop]]]]

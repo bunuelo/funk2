@@ -841,6 +841,7 @@
   [let [[uid          [management_thread-add_save_memory_image_command filename]]
 	[done         nil]
 	[result_place [new place nil]]]
+    [cause-define cause-ignore_background_bug t]
     [error bug_name `save_memory_image]
     [while [not [management_thread-check_command_uid_finished uid result_place]]
       [sleep 1]]

@@ -423,7 +423,7 @@
 				[eq event_type `end_of_physical_changes]]      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 												      'end_of_physical_changes found: ' chunk_event_count ' physical_knowledge events induced to physical_type_knowledge']
 										     [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_type_changes nil]]
-										     [= chunk_event_count 0]
+										     [= chunk_event_count -1]
 										     [have end_of_physical_type_changes_trigger trigger]
 										     nil]]
 			  ]

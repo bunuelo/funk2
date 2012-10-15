@@ -121,7 +121,7 @@
   [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
     [terminal_format standard-terminal
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-add_semantic_reflective_object_to_knowledge_base:'
-		     '\n  (phenomenal_name        = ' phenomenal_name')'
+		     '\n  (phenomenal_name        = ' phenomenal_name ')'
 		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have this add_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
     [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_semantic_frame semantic_reflective_object]]]
@@ -130,7 +130,7 @@
   [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
     [terminal_format standard-terminal
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-remove_semantic_reflective_object_from_knowledge_base:'
-		     '\n  (phenomenal_name        = ' phenomenal_name')'
+		     '\n  (phenomenal_name        = ' phenomenal_name ')'
 		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have this remove_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
     [have [get [get this mind] semantic_knowledge_base `physical_knowledge] remove_semantic_frame semantic_reflective_object]]]

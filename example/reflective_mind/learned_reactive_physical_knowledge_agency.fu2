@@ -303,6 +303,8 @@
     [while [not exists]
       [= exists [have this check_exists semantic_partial_state]]
       [if [not exists]
-	  [= last_step [have [get this mind] wait_for_physical_knowledge_step [+ last_step 1]]]]]]]
+	  [= last_step [have [get this mind] wait_for_physical_knowledge_step [+ last_step 1]]]]]]
+  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: done waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
+  nil]
 
 

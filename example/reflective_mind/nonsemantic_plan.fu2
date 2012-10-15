@@ -784,7 +784,7 @@
 												[let [[time_to_wait [elt arguments 0]]]
 												  [eval `[funk [this]
 													       [let [[time_to_wait ,time_to_wait]]
-														 [dotimes [i time_to_wait]
+														 [dotimes [i [+ time_to_wait 1]]
 														   `[terminal_format standard-terminal '\nplan waiting for time step ' i `/ time_to_wait '.']
 														   [wait-for-trigger [get [get [get this mind] body] time_step_trigger]]]
 														 ]]]]]]

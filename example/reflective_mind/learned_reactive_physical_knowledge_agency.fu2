@@ -86,23 +86,22 @@
   [have semantic_reflective_object_set_type_ptypehash_mutex lock]
   [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
     [if [null semantic_reflective_object_set]
-	[= semantic_reflective_object_set [new set]]]
+	[prog [= semantic_reflective_object_set [new set]]
+	      [have semantic_reflective_object_set_type_ptypehash add reflective_object_type semantic_reflective_object_set]]]
     [have semantic_reflective_object_set add semantic_reflective_object]]
   [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_type [reflective_object_type semantic_reflective_object]
   [have semantic_reflective_object_set_type_ptypehash_mutex lock]
   [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
-    [have semantic_reflective_object_set remove semantic_reflective_object]]
+    [have semantic_reflective_object_set remove semantic_reflective_object]
+    [if [get semantic_reflective_object_set is_empty]
+	[have semantic_reflective_object_set_type_ptypehash remove reflective_object_type]]]
   [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
 
-'The set returned by this funk is READ ONLY and is not to be modified outside of the add/remove interface above.'
+'The possible set returned by this funk is READ ONLY and is not to be modified outside of the interface above.'
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute lookup_set_semantic_reflective_object_type [reflective_object_type]
-  [have semantic_reflective_object_set_type_ptypehash_mutex lock]
-  [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
-    [if [null semantic_reflective_object_set]
-	[= semantic_reflective_object_set [new set]]]
-    semantic_reflective_object_set]]
+  [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_reflective_object [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]
@@ -221,7 +220,9 @@
 	[target_type      [get semantic_partial_state target_type]]
 	[found_does_exist nil]]
     [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
-	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
+	   [source_type-semantic_reflective_object_set-iter [if source_type-semantic_reflective_object_set
+								[get source_type-semantic_reflective_object_set elements]
+							      nil]]]
       [while source_type-semantic_reflective_object_set-iter
 	[let* [[source_type-semantic_reflective_object [car source_type-semantic_reflective_object_set-iter]]
 	       [property_one_set                       [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
@@ -251,7 +252,9 @@
 	[found_does_exist nil]]
     [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (source_type = ' source_type ')']
     [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
-	   [source_type-semantic_reflective_object_set-iter [get source_type-semantic_reflective_object_set elements]]]
+	   [source_type-semantic_reflective_object_set-iter [if source_type-semantic_reflective_object_set
+								[get source_type-semantic_reflective_object_set elements]
+							      nil]]]
       [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 2)']
       [while source_type-semantic_reflective_object_set-iter
 	[terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: "' [get semantic_partial_state as-natural_language_string] '"  (debug 3)']

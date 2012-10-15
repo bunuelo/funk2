@@ -160,56 +160,49 @@ export_cefunk1(forgetful_semantic_event_knowledge_base__forget_before_time, thin
 
 
 f2ptr raw__forgetful_semantic_event_knowledge_base__forget_before_time__set(f2ptr cause, f2ptr this, f2ptr forget_before_time) {
-  f2ptr result = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
-  if (forget_before_time == nil) {
-    f2ptr events = assert_value(raw__semantic_event_knowledge_base__events(cause, this));
-    {
-      f2ptr iter = events;
-      while (iter != nil) {
-	f2ptr semantic_event = assert_value(f2__cons__car(cause, iter));
-	assert_value(f2__semantic_knowledge_base__remove_semantic_frame(cause, this, semantic_event));
-	iter = assert_value(f2__cons__cdr(cause, iter));
-      }
-    }
-  } else {
-    f2ptr     semantic_left_time     = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
-    f2ptr     semantic_right_time    = forget_before_time;
-    s64       remove_tries           = 0;
-    boolean_t making_progress        = boolean__true;
-    boolean_t removing_events_failed = boolean__true;
-    while (removing_events_failed && making_progress) {
-      making_progress        = boolean__false;
-      removing_events_failed = boolean__false;
-      f2ptr possible_forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
-      list__iteration(cause, possible_forget_events, possible_forget_event,
-		      f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, possible_forget_event));
-		      if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) != nil) {
-			f2ptr forget_event  = possible_forget_event;
-			f2ptr remove_result = f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event);
-			if (! raw__larva__is_type(cause, remove_result)) {
-			  // we successfully removed forget_event
-			  making_progress        = boolean__true;
-			} else {
-			  // condition: error removing event
-			  // causes:    two possibilities at this point
-			  //              1. good: maybe someone else removed it between the time we created the possible_remove_events list and now.
-			  //              2. bad:  maybe the event is in the knowledge base, but is failing to be removed for some other reason.
-			  // solution:  two part solution to correctly handle possible causes
-			  //              1. we look for progress on each loop
-			  //              2. only loop a short finite number of times before reporting an error
-			  removing_events_failed = boolean__true;
-			}
+  f2ptr result                    = assert_value(raw__frame__add_var_value(cause, this, new__symbol(cause, "forget_before_time"), forget_before_time));
+  f2ptr usable_forget_before_time = forget_before_time;
+  if (usable_forget_before_time == nil) {
+    usable_forget_before_time = f2__semantic_time__new(cause, f2__time(cause));
+  }
+  f2ptr     semantic_left_time     = assert_value(f2__semantic_time__new(cause, new__symbol(cause, "before")));
+  f2ptr     semantic_right_time    = usable_forget_before_time;
+  s64       remove_tries           = 0;
+  boolean_t making_progress        = boolean__true;
+  boolean_t removing_events_failed = boolean__true;
+  while (removing_events_failed && making_progress) {
+    making_progress        = boolean__false;
+    removing_events_failed = boolean__false;
+    f2ptr possible_forget_events = assert_value(raw__semantic_event_knowledge_base__events_overlapping_range(cause, this, semantic_left_time, semantic_right_time));
+    list__iteration(cause, possible_forget_events, possible_forget_event,
+		    f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(  cause, possible_forget_event));
+		    if (assert_value(f2__is_less_than(cause, absolute_end_time, usable_forget_before_time)) != nil) {
+		      f2ptr forget_event  = possible_forget_event;
+		      f2ptr remove_result = f2__semantic_knowledge_base__remove_semantic_frame(cause, this, forget_event);
+		      if (! raw__larva__is_type(cause, remove_result)) {
+			// we successfully removed forget_event
+			making_progress        = boolean__true;
+		      } else {
+			// condition: error removing event
+			// causes:    two possibilities at this point
+			//              1. good: maybe someone else removed it between the time we created the possible_remove_events list and now.
+			//              2. bad:  maybe the event is in the knowledge base, but is failing to be removed for some other reason.
+			// solution:  two part solution to correctly handle possible causes
+			//              1. we look for progress on each loop
+			//              2. only loop a short finite number of times before reporting an error
+			removing_events_failed = boolean__true;
 		      }
-		      );
-      if (removing_events_failed && making_progress) {
-	remove_tries ++;
-	if (remove_tries > 1000) {
-	  return new__error(f2list8__new(cause,
-					 new__symbol(cause, "bug_name"),           new__symbol(cause, "forgetful_semantic_event_knowledge_base-forget_before_time-set-tried_removing_too_many_times"),
-					 new__symbol(cause, "this"),               this,
-					 new__symbol(cause, "forget_before_time"), forget_before_time,
-					 new__symbol(cause, "remove_tries"),       f2integer__new(cause, remove_tries)));
-	}
+		    }
+		    );
+    if (removing_events_failed && making_progress) {
+      remove_tries ++;
+      if (remove_tries > 1000) {
+	return new__error(f2list10__new(cause,
+					new__symbol(cause, "bug_name"),                  new__symbol(cause, "forgetful_semantic_event_knowledge_base-forget_before_time-set-tried_removing_too_many_times"),
+					new__symbol(cause, "this"),                      this,
+					new__symbol(cause, "forget_before_time"),        forget_before_time,
+					new__symbol(cause, "usable_forget_before_time"), usable_forget_before_time,
+					new__symbol(cause, "remove_tries"),              f2integer__new(cause, remove_tries)));
       }
     }
   }
@@ -229,12 +222,14 @@ f2ptr raw__forgetful_semantic_event_knowledge_base__add_semantic_frame(f2ptr cau
   if (raw__semantic_event__is_type(cause, semantic_frame)) {
     f2ptr semantic_event = semantic_frame;
     {
-      f2ptr forget_before_time = raw__forgetful_semantic_event_knowledge_base__forget_before_time(cause, this);
-      if (forget_before_time != nil) {
-	f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(cause, semantic_event));
-	if (assert_value(f2__is_less_than(cause, absolute_end_time, forget_before_time)) == nil) {
-	  result = assert_value(f2__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_event));
-	}
+      f2ptr forget_before_time        = raw__forgetful_semantic_event_knowledge_base__forget_before_time(cause, this);
+      f2ptr usable_forget_before_time = forget_before_time;
+      if (usable_forget_before_time == nil) {
+	usable_forget_before_time = f2__semantic_time__new(cause, f2__time(cause));
+      }
+      f2ptr absolute_end_time = assert_value(f2__semantic_event__absolute_end_time(cause, semantic_event));
+      if (assert_value(f2__is_less_than(cause, absolute_end_time, usable_forget_before_time)) == nil) {
+	result = assert_value(f2__semantic_knowledge_base__add_semantic_frame(cause, this, semantic_event));
       }
     }
   } else {

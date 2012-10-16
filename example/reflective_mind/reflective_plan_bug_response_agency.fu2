@@ -112,7 +112,7 @@
 				`[prog [call 'forget all imagined events']
 				       [call 'set imagine time to be now']
 				       [call 'imagine current situation']
-				       [plan-call 'focus on the plan to remember a plan for a current goal and execute it']
+				       [plan-call 'focus on plan to remember a plan for a current goal and execute it']
 				       [call 'imagine executing plan in focus']
 				       [call 'execute plan in focus']]]
 			  

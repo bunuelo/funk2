@@ -913,6 +913,7 @@
 														      [variable_frame                       [new frame]]]
 														 [if [null semantic_plan_object]
 														     [let [[semantic_plan_matches [have [get this mental_layer] lookup_semantic_plan_matches plan_name]]]
+														       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] 'nonsemantic_plan: semantic_plan_matches = ' semantic_plan_matches]
 														       [if semantic_plan_matches
 															   [let [[semantic_plan_match [car semantic_plan_matches]]]
 															     [prog [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]

@@ -72,7 +72,7 @@
 			[bug-crawl_through_backtrace-remove_bug_type_response [get this bug_type]]
 			[= known_bug_response_funk nil]]]]]]
     [if [null known_bug_response_funk]
-	[let [[bug_variable [get [format nil define_name_prefix [funkall get_bug_index_funk]] as-symbol]]]
+	[let [[bug_variable [get [format nil define_name_prefix '-' [funkall get_bug_index_funk]] as-symbol]]]
 	  [funkall set_bug_index_funk [bytecode:add [funkall get_bug_index_funk] 1]]
 	  [if print_terminal
 	      [terminal_format print_terminal '\n  ']]
@@ -110,7 +110,9 @@
 
 [deftypefunk bug execute show_inspect_details []
   [have this crawl_through_backtrace standard-terminal 'inspect_bug']
-  [mapc &print [get [get [get this creation_fiber] stack_trace] blocks]]]
+  [mapc [funk [stack_trace_block]
+	      [terminal_format standard-terminal '\n' stack_trace_block]]
+	[get [get [get this creation_fiber] stack_trace] blocks]]]
 
 [defunk inspect [exp]
   [cond [[is-type `bug exp] [let [[bug exp]]

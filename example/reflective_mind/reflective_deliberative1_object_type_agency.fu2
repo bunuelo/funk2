@@ -80,7 +80,7 @@
 	      [set semantic_reflective_object phenomenal_name  phenomenal_name]
 	      [set semantic_reflective_object reflective_object_type reflective_object_type]
 	      [have [get [get this mind] semantic_knowledge_base `type_copy_of_deliberative1_knowledge] add_semantic_frame semantic_reflective_object]
-	      [have semantic_reflective_object_phenomenal_name_ptypehash phenomenal_name semantic_reflective_object]
+	      [have semantic_reflective_object_phenomenal_name_ptypehash add phenomenal_name semantic_reflective_object]
 	      ]]
     [have semantic_reflective_object_phenomenal_name_ptypehash_mutex unlock]
     semantic_reflective_object]]

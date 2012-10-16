@@ -19,78 +19,46 @@
 
 
 
-'deliberative_physical_object_type_goal_agency'
+'deliberative_physical_object_type_agency'
 
-[deframe deliberative_physical_object_type_goal_agency [agency] []
+[deframe deliberative_physical_object_type_agency [agency] []
   [new []
-       [construct agency `physical_object_type_goal]
+       [construct agency `physical_object_type]
        [have this add_resource [new translate_physical_knowledge_to_physical_type_knowledge_resource]]
        ]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute create_knowledge []
+[deftypefunk deliberative_physical_object_type_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `type_copy_of_physical_knowledge        [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_knowledge                [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_goal_knowledge                [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute connect_knowledge_reflection []
+[deftypefunk deliberative_physical_object_type_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `physical_knowledge `physical_knowledge->physical_type_knowledge]
   ]
 
-[deftypefunk deliberative_physical_object_type_goal_agency get physical_type_knowledge_reflective_timer []
+[deftypefunk deliberative_physical_object_type_agency get physical_type_knowledge_reflective_timer []
   [get [get this resource `translate_physical_knowledge_to_physical_type_knowledge] physical_type_knowledge_reflective_timer]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency get knowledge_timer []
+[deftypefunk deliberative_physical_object_type_agency get knowledge_timer []
   [get this physical_type_knowledge_reflective_timer]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute add_remember_token [remember_token]
+[deftypefunk deliberative_physical_object_type_agency execute add_remember_token [remember_token]
   [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_remember_token remember_token]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute remove_remember_token [remember_token]
+[deftypefunk deliberative_physical_object_type_agency execute remove_remember_token [remember_token]
   [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_remember_token remember_token]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute wait_until_time_represented [time]
+[deftypefunk deliberative_physical_object_type_agency execute wait_until_time_represented [time]
   [have [get this knowledge_timer] wait_until time]]
 
-[deftypefunk deliberative_physical_object_type_goal_agency execute wait_until_after_time_represented [time]
+[deftypefunk deliberative_physical_object_type_agency execute wait_until_after_time_represented [time]
   [have [get this knowledge_timer] wait_until_after time]]
-
-[deftypefunk deliberative_physical_object_type_goal_agency execute create_physical_type_property_relationship_goal [source_type
-														    source_key_type
-														    source_key
-														    source_value
-														    key_type
-														    key
-														    target_type
-														    target_key_type
-														    target_key
-														    target_value]
-  [let [[resource [get this resource `translate_physical_knowledge_to_physical_type_knowledge]]]
-    [let [[goal [new physical_type_property_relation_goal
-		     [get this mind]
-		     source_type
-		     source_key_type
-		     source_key
-		     source_value
-		     key_type
-		     key
-		     target_type
-		     target_key_type
-		     target_key
-		     target_value]]]
-      [have resource add_goal goal]
-      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-		       'agency, ' name ', adding physical goal "' [get goal as-declarative_string] '."']
-      ]]]
-
-
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 
 [deframe translate_physical_knowledge_to_physical_type_knowledge_resource [vital_resource] [[semantic_reflective_object_type_event_mutex [new mutex]]
 											    [semantic_reflective_object_copy_mutex       [new mutex]]
-											    [goals                                       nil]
 											    [end_of_physical_type_changes_trigger        [new fiber_trigger]]
 											    [physical_type_knowledge_reflective_timer    [new reflective_timer [new semantic_time `before]]]]
   [new []
@@ -99,38 +67,6 @@
 			[have this execute_resource_raw_funk]
 			]]
        nil]]
-
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_goal [goal]
-  `[terminal_format standard-terminal '\ndeliberative_layer: adding physical goal, "' [get goal as-string] '."']
-  [= goals [cons goal goals]]]
-
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_to_goal_states [event_time
-													       semantic_reflective_object_type_event_source
-													       key_type
-													       key
-													       semantic_reflective_object_type_event_target]
-  [mapc [funk [goal]
-	      [have goal add_type_event
-		    event_time
-		    semantic_reflective_object_type_event_source
-		    key_type
-		    key
-		    semantic_reflective_object_type_event_target]]
-	goals]]
-
-[deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute remove_type_from_goal_states [event_time
-														    semantic_reflective_object_type_event_source
-														    key_type
-														    key
-														    semantic_reflective_object_type_event_target]
-  [mapc [funk [goal]
-	      [have goal remove_type_event
-		    event_time
-		    semantic_reflective_object_type_event_source
-		    key_type
-		    key
-		    semantic_reflective_object_type_event_target]]
-	goals]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_reflective_object_copy [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]
@@ -209,8 +145,7 @@
 			     semantic_reflective_object_type_event_target]]
 	    [set relation absolute_start_time [new semantic_time event_time]]
 	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame relation]
-	    [have semantic_reflective_object_type_event_source add compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
-	    [have this add_type_to_goal_states event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]]
+	    [have semantic_reflective_object_type_event_source add compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
@@ -230,8 +165,7 @@
 	      [let [[relation-count [get relation count]]]
 		[if [> relation-count 1]
 		    [set relation count [- relation-count 1]]
-		  [prog [have this remove_type_from_goal_states event_time semantic_reflective_object_type_event_source key_type key semantic_reflective_object_type_event_target]
-			[have semantic_reflective_object_type_event_source remove compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
+		  [prog [have semantic_reflective_object_type_event_source remove compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
 			`[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame relation]
 			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
@@ -262,7 +196,6 @@
 	    [set property absolute_start_time [new semantic_time event_time]]
 	    [have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame property]
 	    [have semantic_reflective_object_type_event_source add compound_key target_property_name property]
-	    `[have this add_type_to_goal_states event_time semantic_reflective_object_type_event_source key_type key target_property_name]
 	    ]
 	[prog [= property [get property_set an_arbitrary_element]]
 	      [set property count [+ [get property count] 1]]]]]]]
@@ -283,8 +216,7 @@
 	      [let [[property-count [get property count]]]
 		[if [> property-count 1]
 		    [set property count [- property-count 1]]
-		  [prog `[have this remove_type_from_goal_states event_time semantic_reflective_object_type_event_source key_type key target_property_name]
-			[have semantic_reflective_object_type_event_source remove compound_key target_property_name property]
+		  [prog [have semantic_reflective_object_type_event_source remove compound_key target_property_name property]
 			`[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] remove_semantic_frame property]
 			[set property absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]

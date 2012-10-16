@@ -150,7 +150,7 @@
 	     deliberative_plan_agency
 	     deliberative_execution_agency
 	     deliberative_imagination_agency
-	     deliberative_physical_object_type_goal_agency
+	     deliberative_physical_object_type_agency
 	     semantic_partial_state_property
 	     semantic_partial_state_property_relation]
    :sources ['deliberative_layer.fu2']]
@@ -208,7 +208,7 @@
 	     object_type_property_relation_goal]
    :sources ['physical_type_property_relation_goal.fu2']]
 
-[defpackage deliberative_physical_object_type_goal_agency
+[defpackage deliberative_physical_object_type_agency
   :packages [reflective_mind_core
 	     deliberative_resource
 	     semantic_reflective_object
@@ -216,7 +216,7 @@
 	     semantic_reflective_object_type_relation_event
 	     semantic_goal_event
 	     physical_type_property_relation_goal]
-   :sources ['deliberative_physical_object_type_goal_agency.fu2']]
+   :sources ['deliberative_physical_object_type_agency.fu2']]
 
 
 'reflective_layer'
@@ -227,7 +227,7 @@
 	     semantic_action_knowledge_base
 	     reflective_resource
 	     reflective_plan_bug_response_agency
-	     reflective_plan_object_type_goal_agency
+	     reflective_deliberative1_object_type_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     reflective_plan_agency
@@ -250,12 +250,12 @@
 	     object_type_property_relation_goal]
    :sources ['deliberative1_type_property_relation_goal.fu2']]
 
-[defpackage reflective_plan_object_type_goal_agency
+[defpackage reflective_deliberative1_object_type_agency
   :packages [reflective_mind_core
 	     reflective_resource
 	     semantic_goal_event
 	     deliberative1_type_property_relation_goal]
-   :sources ['reflective_plan_object_type_goal_agency.fu2']]
+   :sources ['reflective_deliberative1_object_type_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency
   :packages [reflective_mind_core

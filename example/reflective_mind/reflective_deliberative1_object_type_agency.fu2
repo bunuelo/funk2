@@ -223,9 +223,9 @@
 													      [get this semantic_reflective_object_type_event_with_property_type event-value slot_type slot_key slot_value]]]]
 											      ]]
 										       [[is-type `semantic_object event-semantic_frame]
-											[prog [let [[event-semantic_frame-copy              [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] nil]]
+											[prog [let [[event-semantic_frame-copy              [get this semantic_reflective_object [get event-semantic_frame phenomenal_name] [type event-semantic_frame] nil]]
 												    [event-value-copy                       [if [is-type `semantic_object event-value]
-																		[get this semantic_reflective_object_copy [get event-value phenomenal_name] [type event-value] nil]
+																		[get this semantic_reflective_object [get event-value phenomenal_name] [type event-value] nil]
 																	      event-value]]]
 												[if debug [terminal_format standard-terminal
 															   '\nadding deliberative1 type ' [get event-semantic_frame-copy phenomenal_name]
@@ -276,9 +276,9 @@
 										 [cond [[and [eq event-key_type `property] [eq event-key `reflective_object_type]]
 											[prog ]]
 										       [[is-type `semantic_object event-semantic_frame]
-											[prog [let [[event-semantic_frame-copy [get this semantic_reflective_object_copy [get event-semantic_frame phenomenal_name] [type event-semantic_frame] nil]]
+											[prog [let [[event-semantic_frame-copy [get this semantic_reflective_object [get event-semantic_frame phenomenal_name] [type event-semantic_frame] nil]]
 												    [event-value-copy          [if [is-type `semantic_object event-value]
-																   [get this semantic_reflective_object_copy [get event-value phenomenal_name] [type event-value] nil]
+																   [get this semantic_reflective_object [get event-value phenomenal_name] [type event-value] nil]
 																 event-value]]]
 												'should use copy after this point'
 												

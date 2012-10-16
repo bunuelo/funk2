@@ -383,6 +383,68 @@ def_pcfunk0_and_rest(set__intersection, rest,
 		     return f2__set__intersection(this_cause, rest));
 
 
+f2ptr raw__set__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr new_set = f2__set__new(cause);
+  set__iteration(cause, this, element,
+		 if (! raw__set__contains(cause, that, element)) {
+		   raw__set__add(cause, new_set, element);
+		 }
+		 );
+  return new_set;
+}
+
+f2ptr f2__set__minus(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(set, this);
+  assert_argument_type(set, that);
+  return raw__set__minus(cause, this, that);
+}
+def_pcfunk2(set__minus, this, that,
+	    "Returns a new set that represents the subtraction of that set from this set.",
+	    return f2__set__minus(this_cause, this, that));
+
+
+f2ptr raw__set__plus(f2ptr cause, f2ptr this, f2ptr that) {
+  f2ptr new_set = f2__set__new(cause);
+  set__iteration(cause, this, element,
+		 raw__set__add(cause, new_set, element);
+		 );
+  set__iteration(cause, that, element,
+		 if (! raw__set__contains(cause, new_set, element)) {
+		   raw__set__add(cause, new_set, element);
+		 }
+		 );
+  return new_set;
+}
+
+f2ptr f2__set__plus(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(set, this);
+  assert_argument_type(set, that);
+  return raw__set__plus(cause, this, that);
+}
+def_pcfunk2(set__plus, this, that,
+	    "Returns a new set that represents the addition of that set to this set.",
+	    return f2__set__plus(this_cause, this, that));
+
+
+boolean_t raw__set__is_subset_of(f2ptr cause, f2ptr this, f2ptr that) {
+  set__iteration(cause, this, element,
+		 if (! raw__set__contains(cause, that, element)) {
+		   return boolean__false;
+		 }
+		 );
+  return boolean__true;
+}
+
+f2ptr f2__set__is_subset_of(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(set, this);
+  assert_argument_type(set, that);
+  return f2bool__new(raw__set__is_subset_of(cause, this, that));
+}
+def_pcfunk2(set__is_subset_of, this, that,
+	    "Returns whether or not this set is a subset of that set.",
+	    return f2__set__is_subset_of(this_cause, this, that));
+
+
 f2ptr raw__set__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
@@ -417,6 +479,9 @@ f2ptr f2set__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "is_empty";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.is_empty__funk);}
   {char* slot_name = "union";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.union__funk);}
   {char* slot_name = "intersection";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.intersection__funk);}
+  {char* slot_name = "minus";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.minus__funk);}
+  {char* slot_name = "plus";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.plus__funk);}
+  {char* slot_name = "is_subset_of";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.is_subset_of__funk);}
   {char* slot_name = "an_arbitrary_element";      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk);}
   {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_set.terminal_print_with_frame__funk);}
   return this;
@@ -476,6 +541,18 @@ void f2__primobject_set__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(set__intersection);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.intersection__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.minus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(set__minus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.minus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.plus__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(set__plus);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.plus__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.is_subset_of__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(set__is_subset_of);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.is_subset_of__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__symbol);
   f2__primcfunk__init__defragment__fix_pointers(set__an_arbitrary_element);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk);
@@ -513,6 +590,12 @@ void f2__primobject_set__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__union, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.union__funk = never_gc(cfunk);}
   {char* symbol_str = "intersection"; __funk2.globalenv.object_type.primobject.primobject_type_set.intersection__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__intersection, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.intersection__funk = never_gc(cfunk);}
+  {char* symbol_str = "minus"; __funk2.globalenv.object_type.primobject.primobject_type_set.minus__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__minus, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.minus__funk = never_gc(cfunk);}
+  {char* symbol_str = "plus"; __funk2.globalenv.object_type.primobject.primobject_type_set.plus__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__plus, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.plus__funk = never_gc(cfunk);}
+  {char* symbol_str = "is_subset_of"; __funk2.globalenv.object_type.primobject.primobject_type_set.is_subset_of__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__is_subset_of, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.is_subset_of__funk = never_gc(cfunk);}
   {char* symbol_str = "an_arbitrary_element"; __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(set__an_arbitrary_element, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_set.an_arbitrary_element__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_set.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}

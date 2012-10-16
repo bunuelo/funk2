@@ -218,22 +218,6 @@
     concept_version_space_example]]
 
 
-[deftypefunk set get subtraction [that]
-  [let [[new_set [new set]]]
-    [mapc [funk [this-element]
-		[if [not [get that contains this-element]]
-		    [have new_set add this-element]]]
-	  [get this elements]]
-    new_set]]
-
-[deftypefunk set get is_subset_of [that]
-  [let [[is_subset t]]
-    [mapc [funk [element]
-		[if [not [get that contains element]]
-		    [= is_subset nil]]]
-	  [get this elements]]
-    is_subset]]
-
 [deftypefunk traced_resource execute learn_precondition_hypothesis_space [knowledge_base start_time end_time]
   [let [[event_preconditions [get knowledge_base events_containing_time start_time]]
 	[event_transframe    [get knowledge_base event_transframe       start_time end_time]]]
@@ -283,8 +267,8 @@
 			[let [[precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space change_feature_set]]]
 			  [let [[intersection [get  intersection precondition_hypothesis_space-change_feature_set]]]
 			    [if [not [get intersection is_empty]]
-				[let [[new_precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space-change_feature_set subtraction intersection]]]
-				  [= non_intersecting_change_feature_set [get non_intersecting_change_feature_set subtraction intersection]]
+				[let [[new_precondition_hypothesis_space-change_feature_set [- precondition_hypothesis_space-change_feature_set intersection]]]
+				  [= non_intersecting_change_feature_set                    [- non_intersecting_change_feature_set              intersection]]
 				  [set precondition_hypothesis_space change_feature_set new_precondition_hypothesis_space-change_feature_set]
 				  [let [[new_precondition_hypothesis_space [new action_transframe_hypothesis_space intersection [get [get precondition_hypothesis_space concept_version_space] new_copy]]]]
 				    [have precondition_hypothesis_space_set add new_precondition_hypothesis_space]]]]]]]

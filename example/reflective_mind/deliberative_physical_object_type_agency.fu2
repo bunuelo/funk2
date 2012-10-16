@@ -57,7 +57,8 @@
 
 'translate_physical_knowledge_to_physical_type_knowledge_resource'
 
-[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [vital_resource] [[semantic_reflective_object_type_event_mutex                [new mutex]]
+[deframe translate_physical_knowledge_to_physical_type_knowledge_resource [vital_resource] [[semantic_reflective_object_type_event_ptypehash_mutex      [new mutex]]
+											    [semantic_reflective_object_type_event_ptypehash            [new ptypehash]]
 											    [semantic_reflective_object_phenomenal_name_ptypehash_mutex [new mutex]]
 											    [semantic_reflective_object_phenomenal_name_ptypehash       [new ptypehash]]
 											    [end_of_physical_type_changes_trigger                       [new fiber_trigger]]
@@ -85,16 +86,16 @@
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_reflective_object_type_event [phenomenal_name]
   [let [[semantic_reflective_object_type_event nil]]
-    [have semantic_reflective_object_type_event_mutex lock]
-    [= semantic_reflective_object_type_event [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]
+    [have semantic_reflective_object_type_event_ptypehash_mutex lock]
+    [= semantic_reflective_object_type_event [have semantic_reflective_object_type_event_ptypehash lookup phenomenal_name]]
     [if [null semantic_reflective_object_type_event]
 	[prog [= semantic_reflective_object_type_event [new semantic_reflective_object_type_event [get [get this mind] semantic_realm]
-							  [object_type_event-phenomenal_name phenomenal_name]
-							  phenomenal_name]]
+							    [object_type_event-phenomenal_name phenomenal_name]
+							    phenomenal_name]]
 	      `[have [get [get this mind] semantic_knowledge_base `physical_type_knowledge] add_semantic_frame semantic_reflective_object_type_event]
-	      [have [get [get this mind] semantic_realm] add_phenomenon_semantic_frame phenomenal_name semantic_reflective_object_type_event]
+	      [have semantic_reflective_object_type_event_ptypehash add phenomenal_name semantic_reflective_object_type_event]
 	      ]]
-    [have semantic_reflective_object_type_event_mutex unlock]
+    [have semantic_reflective_object_type_event_ptypehash_mutex unlock]
     semantic_reflective_object_type_event]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource get semantic_reflective_object_type_event_with_property_type [phenomenal_name property_key property property_value]

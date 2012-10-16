@@ -52,11 +52,17 @@
 
 'action_transframe_hypothesis_space'
 
-[deframe action_transframe_hypothesis_space [frame] [change_feature
-						     [concept_version_space [new concept_version_space]]]
-  [new [initial-change_feature]
-       [= change_feature initial-change_feature]
+[deframe action_transframe_hypothesis_space [frame] [change_feature_set
+						     concept_version_space]
+  [new [initial-change_feature_set initial-concept_version_space]
+       [= change_feature_set    initial-change_feature_set]
+       [= concept_version_space initial-concept_version_space]
        nil]]
+
+[deftypefunk action_transframe_hypothesis_space get new_copy []
+  [new action_transframe_hypothesis_space
+       [get change_feature_set    new_copy]
+       [get concept_version_space new_copy]]]
 
 [deftypefunk action_transframe_hypothesis_space execute train_on_example [example]
   [have concept_version_space train_on_example example]]
@@ -71,11 +77,11 @@
 'traced_resource'
 
 [deframe traced_resource [resource] [simulate_knowledge_base_names
-				     [remember_simulate_knowledge_base_tokens_mutex          [new mutex]]
-				     [remember_simulate_knowledge_base_tokens_set            [new set]]
-				     [feature_phenomenal_name_ptypehash                      [new ptypehash]]
-				     [change_feature_phenomenal_name_ptypehash               [new ptypehash]]
-				     [precondition_hypothesis_space_change_feature_ptypehash [new ptypehash]]]
+				     [remember_simulate_knowledge_base_tokens_mutex [new mutex]]
+				     [remember_simulate_knowledge_base_tokens_set   [new set]]
+				     [feature_phenomenal_name_ptypehash             [new ptypehash]]
+				     [change_feature_phenomenal_name_ptypehash      [new ptypehash]]
+				     [precondition_hypothesis_space_set             [new set]]]
   [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
        [set initial-active_funk name [get [format nil [type this] '-active_funk'] as-symbol]]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
@@ -189,15 +195,8 @@
 [deftypefunk traced_resource get change_features []
   [get change_feature_phenomenal_name_ptypehash values]]
 
-[deftypefunk traced_resource get precondition_hypothesis_space [change_feature]
-  [let [[precondition_hypothesis_space [have precondition_hypothesis_space_change_feature_ptypehash lookup change_feature]]]
-    [if [null precondition_hypothesis_space]
-	[prog [= precondition_hypothesis_space [new action_transframe_hypothesis_space change_feature]]
-	      [have precondition_hypothesis_space_change_feature_ptypehash add change_feature precondition_hypothesis_space]]]
-    precondition_hypothesis_space]]
-
-[deftypefunk traced_resource get concept_version_space_example_from_precondition_events [precondition_events]
-  [let [[concept_version_space_example [new concept_version_space_example t]]
+[deftypefunk traced_resource get concept_version_space_example_from_precondition_events [precondition_events example_truth]
+  [let [[concept_version_space_example [new concept_version_space_example example_truth]]
 	[positive_feature_set          [new set]]]
     [mapc [funk [precondition_event]
 		[cond [[or [is-type `semantic_reflective_object_type_property_event precondition_event]
@@ -219,6 +218,22 @@
     concept_version_space_example]]
 
 
+[deftypefunk set get subtraction [that]
+  [let [[new_set [new set]]]
+    [mapc [funk [this-element]
+		[if [not [get that contains this-element]]
+		    [have new_set add this-element]]]
+	  [get this elements]]
+    new_set]]
+
+[deftypefunk set get is_subset_of [that]
+  [let [[is_subset t]]
+    [mapc [funk [element]
+		[if [not [get that contains element]]
+		    [= is_subset nil]]]
+	  [get this elements]]
+    is_subset]]
+
 [deftypefunk traced_resource execute learn_precondition_hypothesis_space [knowledge_base start_time end_time]
   [let [[event_preconditions [get knowledge_base events_containing_time start_time]]
 	[event_transframe    [get knowledge_base event_transframe       start_time end_time]]]
@@ -232,59 +247,81 @@
 		       [get [get this layer] name] ' resource, ' name ', '
 		       'precondition count: ' [length event_preconditions] '.  change count: ' [length event_transframe_changes] '.']
       
-      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events event_preconditions]]]
+      [let [[positive_concept_version_space_example [get this concept_version_space_example_from_precondition_events event_preconditions t]]
+	    [negative_concept_version_space_example [get this concept_version_space_example_from_precondition_events event_preconditions nil]]]
 	
 	'too large to print.'
 	`[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 			  [get [get this layer] name] ' resource, ' name ', '
 			  'precondition training example: ' concept_version_space_example '.']
 	
-	[mapc [funk [change]
-		    [let [[change_type  [get change change_type]]
-			  [change_event [get change change_event]]]
-		      `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-					[get [get this layer] name] ' resource, ' name ', '
-					'transframe_change: ' change_type ' - ' change_event '.']
-		      [cond [[or [is-type `semantic_reflective_object_type_relation_event change_event]
-				 [is-type `semantic_reflective_object_type_property_event change_event]] [let [[phenomenal_name [get change_event phenomenal_name]]]
-													   `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-															     [get [get this layer] name] ' resource, ' name ', '
-															     'meta_relationship: ' change_type ' - ' meta_relationship '.']
-													   
-													   [let [[change_feature [get this change_feature change_type phenomenal_name]]]
-													     [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-													       `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																 [get [get this layer] name] ' resource, ' name ', '
-																 'training change feature hypothesis space on precondition example.']
-													       
-													       [have precondition_hypothesis_space train_on_example concept_version_space_example]
-													       
-													       `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																 [get [get this layer] name] ' resource, ' name ', '
-																 'precondition_hypothesis_space: ' `precondition_hypothesis_space '.']
-													       
-													       ]]]]
-			    
-			    [t                                                                           [prog `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																 [get [get this layer] name] ' resource, ' name ', '
-																 'change event: ' change_type ' - ' change_event ' (not learning hypothesis space for change).']
-													       ]]
-			    ]]]
-	      event_transframe_changes]
-	
-	[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-			 [get [get this layer] name] ' resource, ' name ', '
-			 'done learning precondition hypotheses for changes.']
-	
-	[mapc [funk [remember_token]
-		    [if [< [get remember_token semantic_time] end_time]
-			[prog [have this remove_remember_token remember_token]
-			      [mapc [funk [simulate_knowledge_base_name]
-					  [let [[semantic_knowledge_base [get [get this mind] semantic_knowledge_base simulate_knowledge_base_name]]]
-					    [have semantic_knowledge_base remove_remember_token remember_token]]]
-				    simulate_knowledge_base_names]]]]
-	      [get this remember_tokens]]
-	]]]]
+	[let [[change_feature_set [new set]]]
+	  [mapc [funk [change]
+		      [let [[change_type  [get change change_type]]
+			    [change_event [get change change_event]]]
+			`[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+					  [get [get this layer] name] ' resource, ' name ', '
+					  'transframe_change: ' change_type ' - ' change_event '.']
+			[cond [[or [is-type `semantic_reflective_object_type_relation_event change_event]
+				   [is-type `semantic_reflective_object_type_property_event change_event]] [let [[phenomenal_name [get change_event phenomenal_name]]]
+													     `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+															       [get [get this layer] name] ' resource, ' name ', '
+															       'meta_relationship: ' change_type ' - ' meta_relationship '.']
+													     
+													     [let [[change_feature [get this change_feature change_type phenomenal_name]]]
+													       [have change_feature_set add change_feature]]]]
+			      [t                                                                           [prog `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+																   [get [get this layer] name] ' resource, ' name ', '
+																   'change event: ' change_type ' - ' change_event ' (not learning hypothesis space for change).']
+														 ]]
+			      ]]]
+		event_transframe_changes]
+	  
+	  
+	  [let [[non_intersecting_change_feature_set change_feature_set]]
+	    [mapc [funk [precondition_hypothesis_space]
+			[let [[precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space change_feature_set]]]
+			  [let [[intersection [get  intersection precondition_hypothesis_space-change_feature_set]]]
+			    [if [not [get intersection is_empty]]
+				[let [[new_precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space-change_feature_set subtraction intersection]]]
+				  [= non_intersecting_change_feature_set [get non_intersecting_change_feature_set subtraction intersection]]
+				  [set precondition_hypothesis_space change_feature_set new_precondition_hypothesis_space-change_feature_set]
+				  [let [[new_precondition_hypothesis_space [new action_transframe_hypothesis_space intersection [get [get precondition_hypothesis_space concept_version_space] new_copy]]]]
+				    [have precondition_hypothesis_space_set add new_precondition_hypothesis_space]]]]]]]
+		  [get precondition_hypothesis_space_set elements]]
+	    
+	    [if [not [get non_intersecting_change_feature_set is_empty]]
+		[have precondition_hypothesis_space_set add [new action_transframe_hypothesis_space non_intersecting_change_feature_set [new concept_version_space]]]]
+	    
+	    [mapc [funk [precondition_hypothesis_space]
+			`[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+					  [get [get this layer] name] ' resource, ' name ', '
+					  'training change feature hypothesis space on precondition example.']
+			
+			[let [[precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space change_feature_set]]]
+			  [if [get precondition_hypothesis_space-change_feature_set is_subset_of change_feature_set]
+			      [have precondition_hypothesis_space train_on_example positive_concept_version_space_example]
+			    [have precondition_hypothesis_space train_on_example negative_concept_version_space_example]]]
+			
+			`[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+					  [get [get this layer] name] ' resource, ' name ', '
+					  'precondition_hypothesis_space: ' `precondition_hypothesis_space '.']
+			]
+		  [get precondition_hypothesis_space_set elements]]
+	    
+	    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+			     [get [get this layer] name] ' resource, ' name ', '
+			     'done learning precondition hypotheses for changes.']
+	    
+	    [mapc [funk [remember_token]
+			[if [< [get remember_token semantic_time] end_time]
+			    [prog [have this remove_remember_token remember_token]
+				  [mapc [funk [simulate_knowledge_base_name]
+					      [let [[semantic_knowledge_base [get [get this mind] semantic_knowledge_base simulate_knowledge_base_name]]]
+						[have semantic_knowledge_base remove_remember_token remember_token]]]
+					simulate_knowledge_base_names]]]]
+		  [get this remember_tokens]]
+	    ]]]]]]
 
 
 
@@ -370,84 +407,84 @@
 	[let [[imagine_time [get semantic_planner imagine_time]]]
 	  [let [[precondition_time imagine_time]]
 	    [let [[precondition_events [get counterfactual_knowledge_base events_containing_time precondition_time]]]
-	      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events]]]
+	      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events t]]]
 		
-		[mapc [funk [change_feature]
-			    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-			      [let [[change_hypothesis_dependencies [get precondition_hypothesis_space supporting_hypotheses concept_version_space_example]]]
-				
-				[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-						 'resource, ' name ', found ' [length change_hypothesis_dependencies] ' supporting hypotheses for change.']
-				[if change_hypothesis_dependencies
-				    [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
-					  [relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
-					  [relative_duration_time                [get change_feature relative_duration_time]]
-					  [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
-				      [set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
-				      [set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
-				      [if [not no_dependency_tracing]
-					  [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
-					    [set semantic_dependency precondition_time   precondition_time]
-					    [set semantic_dependency resource_activation [get this resource_semantic_frame]]
-					    
-					    [have counterfactual_event add_lost_dependency_callback
-						  [funk []
-							[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-									 'resource, ' name ', counterfactual_event has lost dependency.']
-							[have semantic_dependency know_is_invalidated]
-							]
-						  nil]
-					    [have semantic_dependency add_invalidated_callback
-						  [funk []
-							[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-									 'resource, ' name ', dependency has become invalidated.']
-							
-							'could attempt to find new hypothetical support for this dependency at this point in order to avoid announcing its complete loss of support.'
-							
-							[have semantic_dependency know_is_unsupported]
-							]
-						  nil]
-					    [have semantic_dependency add_unsupported_callback
-						  [funk []
-							[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-									 'resource, ' name ', dependency has become unsupported.']
-							[have counterfactual_event know_has_lost_dependency]
-							[let [[result [shelter [prog [have counterfactual_knowledge_base remove_semantic_frame semantic_dependency]
-										     [have counterfactual_knowledge_base remove_semantic_frame counterfactual_event]]]]]
-							  [if [is-type `bug result]
-							      [let [[bug result]]
-								[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-										 'resource, ' name ', warning: received bug ' bug]
-								]
-							    [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-										   'resource, ' name ', successfully removed unsupported counterfactual event and dependency.']
-								  ]]]]
-						  nil]
-					    [mapc [funk [precondition_event]
-							[semantic-add semantic_dependency precondition_event precondition_event]
-							[have precondition_event add_lost_grounding_callback
-							      [funk []
-								    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-										     'resource, ' name ', counterfactual precondition has lost grounding.']
-								    [have semantic_dependency know_of_precondition_lost_grounding]
-								    ]
-							      nil]]
-						  precondition_events]
-					    [mapc [funk [change_hypothesis_dependency]
-							[semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]
-							[have change_hypothesis_dependency add_removal_callback
-							      [funk []
-								    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-										     'resource, ' name ', counterfactual knowledge change hypothesis dependency removed.']
-								    [have semantic_dependency know_of_change_hypothesis_removal]
-								    ]
-							      nil]]
-						  change_hypothesis_dependencies]
-					    [have counterfactual_knowledge_base add_semantic_frame semantic_dependency]
-					    [semantic-add counterfactual_event dependency semantic_dependency]
-					    ]]]]
-				]]]
-		      [get this change_features]]
+		[mapc [funk [precondition_hypothesis_space]
+			    [let [[change_hypothesis_dependencies [get precondition_hypothesis_space supporting_hypotheses concept_version_space_example]]]
+			      
+			      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+					       'resource, ' name ', found ' [length change_hypothesis_dependencies] ' supporting hypotheses for change.']
+			      [if change_hypothesis_dependencies
+				  [mapc [funk [change_feature]
+					      [let [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
+						    [relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
+						    [relative_duration_time                [get change_feature relative_duration_time]]
+						    [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
+						[set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
+						[set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
+						[if [not no_dependency_tracing]
+						    [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
+						      [set semantic_dependency precondition_time   precondition_time]
+						      [set semantic_dependency resource_activation [get this resource_semantic_frame]]
+						      
+						      [have counterfactual_event add_lost_dependency_callback
+							    [funk []
+								  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+										   'resource, ' name ', counterfactual_event has lost dependency.']
+								  [have semantic_dependency know_is_invalidated]
+								  ]
+							    nil]
+						      [have semantic_dependency add_invalidated_callback
+							    [funk []
+								  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+										   'resource, ' name ', dependency has become invalidated.']
+								  
+								  'could attempt to find new hypothetical support for this dependency at this point in order to avoid announcing its complete loss of support.'
+								  
+								  [have semantic_dependency know_is_unsupported]
+								  ]
+							    nil]
+						      [have semantic_dependency add_unsupported_callback
+							    [funk []
+								  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+										   'resource, ' name ', dependency has become unsupported.']
+								  [have counterfactual_event know_has_lost_dependency]
+								  [let [[result [shelter [prog [have counterfactual_knowledge_base remove_semantic_frame semantic_dependency]
+											       [have counterfactual_knowledge_base remove_semantic_frame counterfactual_event]]]]]
+								    [if [is-type `bug result]
+									[let [[bug result]]
+									  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+											   'resource, ' name ', warning: received bug ' bug]
+									  ]
+								      [prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+											     'resource, ' name ', successfully removed unsupported counterfactual event and dependency.']
+									    ]]]]
+							    nil]
+						      [mapc [funk [precondition_event]
+								  [semantic-add semantic_dependency precondition_event precondition_event]
+								  [have precondition_event add_lost_grounding_callback
+									[funk []
+									      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+											       'resource, ' name ', counterfactual precondition has lost grounding.']
+									      [have semantic_dependency know_of_precondition_lost_grounding]
+									      ]
+									nil]]
+							    precondition_events]
+						      [mapc [funk [change_hypothesis_dependency]
+								  [semantic-add semantic_dependency change_hypothesis change_hypothesis_dependency]
+								  [have change_hypothesis_dependency add_removal_callback
+									[funk []
+									      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+											       'resource, ' name ', counterfactual knowledge change hypothesis dependency removed.']
+									      [have semantic_dependency know_of_change_hypothesis_removal]
+									      ]
+									nil]]
+							    change_hypothesis_dependencies]
+						      [have counterfactual_knowledge_base add_semantic_frame semantic_dependency]
+						      [semantic-add counterfactual_event dependency semantic_dependency]
+						      ]]]]
+					[get [get precondition_hypothesis_space change_feature_set] elements]]]]]
+		      [get precondition_hypothesis_space_set elements]]
 		
 		[set semantic_planner imagine_time [new semantic_time [+ [get imagine_time value] [new relative_time [* 60 1000000000]]]]]
 		
@@ -458,9 +495,11 @@
 
 [deftypefunk traced_resource execute add_change_phenomenal_name_hypothesis [change_type feature_phenomenal_name]
   [let [[change_feature [get this change_feature change_type feature_phenomenal_name]]]
-    [let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
-      
-      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+		     'resource, ' name ', adding change hypothesis space for ' change_type ' of ' feature_phenomenal_name ' (NOT IMPLEMENTED).']
+    `[let [[precondition_hypothesis_space [get this precondition_hypothesis_space change_feature]]]
+       
+       [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 		       'resource, ' name ', adding change hypothesis space for ' change_type ' of ' feature_phenomenal_name '.']
       
       ]]]

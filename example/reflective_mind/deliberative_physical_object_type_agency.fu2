@@ -115,11 +115,11 @@
 	  [funk [slot_type slot_key slot_value]
 		[if [translate_physical_knowledge_to_physical_type_knowledge_resource-edge_is_type_property semantic_reflective_object slot_type slot_key slot_value]
 		    [= semantic_reflective_object_type_events [cons [get this semantic_reflective_object_type_event_with_property_type
-								       [get semantic_reflective_object reflective_object_type]
-								       slot_type
-								       slot_key
-								       slot_value]
-								  semantic_reflective_object_type_events]]]]]
+									 [get semantic_reflective_object reflective_object_type]
+									 slot_type
+									 slot_key
+									 slot_value]
+								    semantic_reflective_object_type_events]]]]]
     semantic_reflective_object_type_events]]
 
 [deftypefunk translate_physical_knowledge_to_physical_type_knowledge_resource execute add_type_relation [event_time

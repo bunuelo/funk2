@@ -60,6 +60,9 @@ f2ptr raw__fiber_trigger__trigger__thread_unsafe(f2ptr cause, f2ptr this) {
 }
 
 f2ptr raw__fiber_trigger__trigger(f2ptr cause, f2ptr this) {
+  if (! raw__fiber_trigger__is_type(cause, this)) {
+    error(nil, "fiber_trigger-trigger error: this is not fiber_trigger.");
+  }
   f2ptr cmutex = f2__fiber_trigger__cmutex(cause, this);
   raw__cmutex__lock(cause, cmutex);
   f2ptr result = raw__fiber_trigger__trigger__thread_unsafe(cause, this);

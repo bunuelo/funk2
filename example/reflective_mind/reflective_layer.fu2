@@ -25,7 +25,7 @@
   [new []
        [construct mental_layer 3 `reflective]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
-	      [have this add_agency [new reflective_plan_object_type_goal_agency]]
+	      [have this add_agency [new reflective_deliberative1_object_type_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]
 	      [have this add_agency [new reflective_plan_agency]]
@@ -37,13 +37,13 @@
   [get [get this mind] layer `deliberative]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [have [get this agency `plan_object_type_goal]      create_knowledge]
+  [have [get this agency `deliberative1_object_type]      create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]
   [have [get this agency `plan]                       create_knowledge]
   nil]
 
 [deftypefunk reflective_layer execute connect_knowledge_reflection []
-  [have [get this agency `plan_object_type_goal]      connect_knowledge_reflection]
+  [have [get this agency `deliberative1_object_type]      connect_knowledge_reflection]
   [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]
   [have [get this agency `plan]                       connect_knowledge_reflection]
   nil]
@@ -53,19 +53,19 @@
   [have [get this agency `plan]        create_builtin_actions]]
 
 [deftypefunk reflective_layer get knowledge_timer []
-  [get [get this agency `plan_object_type_goal] knowledge_timer]]
+  [get [get this agency `deliberative1_object_type] knowledge_timer]]
 
 [deftypefunk reflective_layer execute add_remember_token [remember_token]
-  [have [get this agency `plan_object_type_goal] add_remember_token remember_token]]
+  [have [get this agency `deliberative1_object_type] add_remember_token remember_token]]
 
 [deftypefunk reflective_layer execute remove_remember_token [remember_token]
-  [have [get this agency `plan_object_type_goal] remove_remember_token remember_token]]
+  [have [get this agency `deliberative1_object_type] remove_remember_token remember_token]]
 
 [deftypefunk reflective_layer execute wait_until_time_represented [semantic_time]
-  [have [get this agency `plan_object_type_goal] wait_until_time_represented semantic_time]]
+  [have [get this agency `deliberative1_object_type] wait_until_time_represented semantic_time]]
 
 [deftypefunk reflective_layer execute wait_until_after_time_represented [semantic_time]
-  [have [get this agency `plan_object_type_goal] wait_until_after_time_represented semantic_time]]
+  [have [get this agency `deliberative1_object_type] wait_until_after_time_represented semantic_time]]
 
 [deftypefunk reflective_layer execute add_reflective_action [action]
   [terminal_format standard-terminal '\nreflective_layer: adding reflective action, "' [get action as-string] '."']
@@ -176,33 +176,7 @@
 
 
 [deftypefunk reflective_layer get deliberative1_type_knowledge_reflective_timer []
-  [get [get this agency `plan_object_type_goal] deliberative1_type_knowledge_reflective_timer]]
-
-[deftypefunk reflective_layer execute create_deliberative1_type_relationship_goal [source_deliberative1_object_type key_type key target_deliberative1_object_type]
-  [have [get this agency `plan_object_type_goal] create_deliberative1_type_relationship_goal source_deliberative1_object_type key_type key target_deliberative1_object_type]]
-
-[deftypefunk reflective_layer execute create_deliberative1_type_property_relationship_goal [source_type
-											    source_key_type
-											    source_key
-											    source_value
-											    key_type
-											    key
-											    target_type
-											    target_key_type
-											    target_key
-											    target_value]
-  [have [get this agency `plan_object_type_goal] create_deliberative1_type_property_relationship_goal
-	source_type
-	source_key_type
-	source_key
-	source_value
-	key_type
-	key
-	target_type
-	target_key_type
-	target_key
-	target_value]]
-
+  [get [get this agency `deliberative1_object_type] deliberative1_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
@@ -262,7 +236,7 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type_goal `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
+	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
 	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
 
 [deftypefunk reflective_layer execute assert [semantic_partial_state]

@@ -31,7 +31,8 @@
 		       semantic_knowledge_base_add_event_callback_funks
 		       [index_name_type_mutex                            [new mutex]]
 		       [index_name_type_ptypehash                        [new ptypehash]]
-		       [ready_for_physical_world_step_trigger            [new fiber_trigger]]
+		       [processed_physical_world_step_conditionlock      [new conditionlock]]
+		       [processed_physical_world_step                    -1]
 		       [cause_group                                      [mind_runtime_metric-new_cause_group]]
 		       [other_cause_groups_mutex                         [new mutex]]
 		       [other_cause_groups                               nil]
@@ -56,6 +57,18 @@
 
 [deftypefunk mind get mind []
   this]
+
+[deftypefunk mind set processed_physical_world_step [physical_world_step]
+  [have processed_physical_world_step_conditionlock lock]
+  [= processed_physical_world_step physical_world_step]
+  [have processed_physical_world_step_conditionlock signal]
+  [have processed_physical_world_step_conditionlock unlock]]
+
+[deftypefunk mind execute wait_for_processed_physical_world_step [wait_processed_physical_world_step]
+  [have processed_physical_world_step_conditionlock lock]
+  [while [< processed_physical_world_step wait_processed_physical_world_step]
+    [have processed_physical_world_step_conditionlock wait]]
+  [have processed_physical_world_step_conditionlock unlock]]
 
 [deftypefunk mind set body [new-body]
   [have body-conditionlock lock]

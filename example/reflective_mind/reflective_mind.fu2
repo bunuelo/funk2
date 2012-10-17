@@ -33,7 +33,7 @@
 		      [let [[physical_knowledge_step -1]]
 			[while t
 			  [= physical_knowledge_step [have this wait_for_physical_knowledge_step [+ physical_knowledge_step 1]]]
-			  [have [get this ready_for_physical_world_step_trigger] trigger]]]]
+			  [set this processed_physical_world_step [get [get this body] time_step]]]]]
 		nil]]
        
        ]]

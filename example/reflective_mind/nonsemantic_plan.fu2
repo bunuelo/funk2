@@ -786,7 +786,7 @@
 													       [let [[time_to_wait ,time_to_wait]
 														     [time_step    [get [get this mind] time_step]]]
 														 [dotimes [i [+ time_to_wait 1]]
-														   [terminal_format standard-terminal '\n' [get [get this mental_layer] name] 'plan waiting for time step ' i `/ time_to_wait '.']
+														   [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' layer nonsemantic_plan waiting for time step ' i `/ time_to_wait '.']
 														   [= time_step [have [get this mind] wait_for_time_step [+ time_step 1]]]]
 														 ]]]]]]
 						[[eq `call-below                     command] [if [not [>= arguments-length 1]]

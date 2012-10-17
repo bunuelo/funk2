@@ -106,14 +106,7 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
     }
     return f2list3__new(cause,
 			new__symbol(cause, "funk-apply"),
-			f2cons__new(cause,
-				    new__symbol(cause, "funk-new_with_name"),
-				    f2cons__new(cause,
-						new__symbol(cause, "let"),
-						f2cons__new(cause,
-							    variables,
-							    body_expressions))),
-			
+			raw__primmetro__funk__new_with_name(cause, new__symbol(cause, "let"), variables, body_expressions),
 			f2cons__new(cause,
 				    new__symbol(cause, "immutable_conslist"),
 				    definitions));
@@ -170,13 +163,7 @@ f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
   } else {
     return f2list3__new(cause,
 			new__symbol(cause, "funk-apply"),
-			f2cons__new(cause,
-				    new__symbol(cause, "funk-new_with_name"),
-				    f2cons__new(cause,
-						new__symbol(cause, "prog"),
-						f2cons__new(cause,
-							    nil,
-							    body_expressions))),
+			raw__primmetro__funk__new_with_name(cause, new__symbol(cause, "prog"), nil, body_expressions),
 			nil);
   }
 }
@@ -213,13 +200,7 @@ def_pcfunk2(primmetro__apply, funkable, arguments,
  */
 
 f2ptr raw__primmetro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {
-  return f2cons__new(cause,
-		     new__symbol(cause, "funk-new_with_name"),
-		     f2cons__new(cause,
-				 new__symbol(cause, "funk"),
-				 f2cons__new(cause,
-					     variables,
-					     body_expressions)));
+  return raw__primmetro__funk__new_with_name(cause, new__symbol(cause, "funk"), variables, body_expressions);
 }
 
 f2ptr f2__primmetro__funk(f2ptr cause, f2ptr variables, f2ptr body_expressions) {

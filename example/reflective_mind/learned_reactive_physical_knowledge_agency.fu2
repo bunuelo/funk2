@@ -208,7 +208,10 @@
 										       [= chunk_event_count -1]
 										       [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_physical_changes nil]]
 										       [have this increment_physical_knowledge_step]
-										       [set [get this mind] processed_physical_world_step [get [get [get this mind] body] time_step]]
+										       [let [[physical_world_time_step [get [get [get this mind] body] time_step]]]
+											 [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+													  'processed physical world step ' physical_world_time_step '.']
+											 [set [get this mind] processed_physical_world_step physical_world_time_step]]
 										       nil]]
 			    ]]
 		    [= chunk_event_count [+ chunk_event_count 1]]]]

@@ -43,8 +43,8 @@
 [deftypefunk agent_body get time_step []
   [get physical_world_reference time_step]]
 
-[deftypefunk agent_body get time_step_trigger []
-  [get physical_world_reference time_step_trigger]]
+[deftypefunk agent_body execute wait_for_time_step [wait_time_step]
+  [have physical_world_reference wait_for_time_step wait_time_step]]
 
 
 'update_after_step_simulation can be overloaded by children.'

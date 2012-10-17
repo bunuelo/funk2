@@ -25,11 +25,10 @@
        [construct vital_resource `continuous_sensing
 		  [funk []
 			`[have this think_to_self 'Continuous sensing is starting.']
-			[let* [[body              [get this body]]
-			       [time_step_trigger [get body time_step_trigger]]]
+			[let [[body           [get this body]]
+			      [time_step 0]]
 			  [while t
-			    [wait-for-trigger time_step_trigger]
-			    `[have this think_to_self 'starting perception.']
+			    [= time_step [have body wait_for_time_step [+ time_step 1]]]
 			    [= perception [have body sense_perception]]
 			    [if [null perception]
 				[terminal_format standard-terminal '\ncontinuous_sensing_resource: perception is nil.']

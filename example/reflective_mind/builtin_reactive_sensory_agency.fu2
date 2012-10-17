@@ -62,7 +62,7 @@
 
 [deframe continuous_sensing_resource [vital_resource] [perception
 						       [perception_step_conditionlock [new conditionlock]]
-						       [perception_step               0]]
+						       [perception_step               -1]]
   [new []
        [construct vital_resource `continuous_sensing
 		  [funk []

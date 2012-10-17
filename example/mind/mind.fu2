@@ -68,7 +68,9 @@
   [have processed_physical_world_step_conditionlock lock]
   [while [< processed_physical_world_step wait_processed_physical_world_step]
     [have processed_physical_world_step_conditionlock wait]]
-  [have processed_physical_world_step_conditionlock unlock]]
+  [let [[result processed_physical_world_step]]
+    [have processed_physical_world_step_conditionlock unlock]
+    result]]
 
 [deftypefunk mind set body [new-body]
   [have body-conditionlock lock]

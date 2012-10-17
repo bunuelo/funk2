@@ -20,14 +20,13 @@
 
 'physical_world'
 
-[deframe physical_world [frame] [time_step
+[deframe physical_world [frame] [[time_step_conditionlock [new conditionlock]]
+				 [time_step               0]
 				 previous_time
 				 time
-				 [time_step_trigger [new fiber_trigger]]
 				 format_mutex
 				 agent_body_frame]
   [new []
-       [set this time_step        0]
        [set this format_mutex     [new mutex]]
        [set this agent_body_frame [frame]]
        this]]
@@ -43,10 +42,20 @@
   [have [get this agent_body_frame] add [get agent_body name] agent_body]]
 
 [deftypefunk physical_world execute step_physical_world []
+  [have time_step_conditionlock lock]
   [= time_step     [+ 1 time_step]]
   [= previous_time time]
   [= time          [time]]
-  [have time_step_trigger trigger]]
+  [have time_step_conditionlock signal]
+  [have time_step_conditionlock unlock]]
+
+[deftypefunk physical_world execute wait_for_time_step [wait_time_step]
+  [have time_step_conditionlock lock]
+  [while [< time_step wait_time_step]
+    [have time_step_conditionlock wait]]
+  [let [[result time_step]]
+    [have time_step_conditionlock unlock]
+    result]]
 
 [deftypefunk physical_world execute format [:rest expressions]
   [let [[format_mutex [get this format_mutex]]]

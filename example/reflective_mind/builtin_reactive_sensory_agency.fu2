@@ -42,7 +42,7 @@
   [have [get this resource `propogate_somatosensory_objects_to_somatosensory_knowledge]   connect_knowledge_reflection]
   ]
 
-[deftypefunk builtin_reactive_sensory_agency get wait_for_perception_step [wait_perception_step]
+[deftypefunk builtin_reactive_sensory_agency execute wait_for_perception_step [wait_perception_step]
   [have [get this resource `continuous_sensing] wait_for_perception_step wait_perception_step]]
 
 [deftypefunk builtin_reactive_sensory_agency get perception []

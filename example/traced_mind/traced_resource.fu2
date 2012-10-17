@@ -265,7 +265,7 @@
 	  [let [[non_intersecting_change_feature_set change_feature_set]]
 	    [mapc [funk [precondition_hypothesis_space]
 			[let [[precondition_hypothesis_space-change_feature_set [get precondition_hypothesis_space change_feature_set]]]
-			  [let [[intersection [get  intersection precondition_hypothesis_space-change_feature_set]]]
+			  [let [[intersection [get non_intersecting_change_feature_set intersection precondition_hypothesis_space-change_feature_set]]]
 			    [if [not [get intersection is_empty]]
 				[let [[new_precondition_hypothesis_space-change_feature_set [- precondition_hypothesis_space-change_feature_set intersection]]]
 				  [= non_intersecting_change_feature_set                    [- non_intersecting_change_feature_set              intersection]]

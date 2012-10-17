@@ -28,14 +28,6 @@
        [type-have reflective_mind this connect_knowledge_reflection]
        [type-have reflective_mind this create_builtin_actions]
        
-       [let [[end_of_physical_type_changes_trigger [get [get this resource `deliberative `physical_object_type `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
-	 [fiber [funk []
-		      [let [[physical_knowledge_step -1]]
-			[while t
-			  [= physical_knowledge_step [have this wait_for_physical_knowledge_step [+ physical_knowledge_step 1]]]
-			  [set this processed_physical_world_step [get [get this body] time_step]]]]]
-		nil]]
-       
        ]]
 
 [deftypefunk reflective_mind execute create_resources []

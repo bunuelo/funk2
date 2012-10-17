@@ -682,7 +682,6 @@
 			[= need_update t]
 			[dotimes [i [get movie_resolution as-integer]]
 			  [terminal_format standard-terminal '\n' [get [time] as-string] ': Stepping simulation by ' substep_seconds ' seconds.']
-			  [= last_physical_step [+ [get [get mindmon_world physical_world] time_step] 1]]
 			  [have mindmon_world raw_step_simulation substep_seconds]
 			  [have mindmon_world update_after_step_simulation]
 			  [have this update_movie_display]

@@ -26,7 +26,7 @@
 		  [funk []
 			`[have this think_to_self 'Continuous sensing is starting.']
 			[let [[body           [get this body]]
-			      [time_step 0]]
+			      [time_step -1]]
 			  [while t
 			    [= time_step [have body wait_for_time_step [+ time_step 1]]]
 			    [= perception [have body sense_perception]]

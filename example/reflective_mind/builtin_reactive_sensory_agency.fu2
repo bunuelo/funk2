@@ -17,26 +17,76 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+'builtin_reactive_sensory_agency'
+
+[deframe builtin_reactive_sensory_agency [agency] []
+  [new []
+       [construct agency `sensory]
+       
+       [have this add_resource [new continuous_sensing_resource]]
+       [have this add_resource [new propogate_visual_objects_to_visual_knowledge_resource]]
+       [have this add_resource [new propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource]]
+       [have this add_resource [new propogate_somatosensory_objects_to_somatosensory_knowledge_resource]]
+       
+       this]]
+
+[deftypefunk builtin_reactive_sensory_agency execute create_knowledge []
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 create_knowledge]
+  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] create_knowledge]
+  [have [get this resource `propogate_somatosensory_objects_to_somatosensory_knowledge]   create_knowledge]
+  ]
+
+[deftypefunk builtin_reactive_sensory_agency execute connect_knowledge_reflection []
+  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 connect_knowledge_reflection]
+  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] connect_knowledge_reflection]
+  [have [get this resource `propogate_somatosensory_objects_to_somatosensory_knowledge]   connect_knowledge_reflection]
+  ]
+
+[deftypefunk builtin_reactive_sensory_agency get wait_for_perception_step [wait_perception_step]
+  [have [get this resource `continuous_sensing] wait_for_perception_step wait_perception_step]]
+
+[deftypefunk builtin_reactive_sensory_agency get perception []
+  [get [get this resource `continuous_sensing] perception]]
+
+[deftypefunk builtin_reactive_sensory_agency get visual_objects []
+  [get [get this resource `continuous_sensing] visual_objects]]
+
+[deftypefunk builtin_reactive_sensory_agency get right_hand_object_name []
+  [get [get this resource `continuous_sensing] right_hand_object_name]]
+
+[deftypefunk builtin_reactive_sensory_agency get left_hand_object_name  []
+  [get [get this resource `continuous_sensing] left_hand_object_name]]
+
+
 'continuous_sensing_resource'
 
 [deframe continuous_sensing_resource [vital_resource] [perception
-						       [perception_trigger [new fiber_trigger]]]
+						       [perception_step_conditionlock [new conditionlock]]
+						       [perception_step               0]]
   [new []
        [construct vital_resource `continuous_sensing
 		  [funk []
-			`[have this think_to_self 'Continuous sensing is starting.']
-			[let [[body           [get this body]]
+			[let [[body      [get this body]]
 			      [time_step -1]]
 			  [while t
 			    [= time_step [have body wait_for_time_step [+ time_step 1]]]
 			    [= perception [have body sense_perception]]
 			    [if [null perception]
 				[terminal_format standard-terminal '\ncontinuous_sensing_resource: perception is nil.']
-			      [prog `[have this think_to_self 'finished perception.']
-				    [have perception_trigger trigger]]]
+			      [prog [have perception_step_conditionlock lock]
+				    [= perception_step [+ perception_step 1]]
+				    [have perception_step_conditionlock signal]
+				    [have perception_step_conditionlock unlock]]]
 			    ]]]]
        nil]]
 
+[deftypefunk continuous_sensing_resource execute wait_for_perception_step [wait_perception_step]
+  [have perception_step_conditionlock lock]
+  [while [< perception_step wait_perception_step]
+    [have perception_step_conditionlock wait]]
+  [let [[result perception_step]]
+    [have perception_step_conditionlock unlock]
+    result]]
 
 'propogate_visual_objects_to_visual_knowledge_resource'
 
@@ -66,174 +116,175 @@
     semantic_visual_object]]
 
 [deftypefunk propogate_visual_objects_to_visual_knowledge_resource execute update_visual_knowledge_from_visual_objects []
-  [while t
-    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-    
-    [let* [[perception                                  [get [get this mind] perception]]
-	   [perception-begin_time                       [get perception begin_time]]
-	   [perception-end_time                         [get perception end_time]]
-	   [perception-visual_objects                   [get perception visual_objects]]
-	   [perception-visual_object_ptypehash          [let [[ptypehash [new ptypehash]]]
-							  [mapc [funk [visual_object]
-								      [let [[visual_object-phenomenal_name [get visual_object phenomenal_name]]]
-									[have ptypehash add visual_object-phenomenal_name visual_object]]]
-								perception-visual_objects]
-							  ptypehash]]
-	   [previous_perception-visual_objects          [if previous_perception
-							    [get previous_perception visual_objects]]]
-	   [previous_perception-visual_object_ptypehash [let [[ptypehash [new ptypehash]]]
-							  [mapc [funk [previous_visual_object]
-								      [let [[previous_visual_object-phenomenal_name [get previous_visual_object phenomenal_name]]]
-									[have ptypehash add previous_visual_object-phenomenal_name previous_visual_object]]]
-								previous_perception-visual_objects]
-							  ptypehash]]
-	   [all_visual_objects                          [let [[set [new set]]]
-							  [mapc [funk [element]
-								      [have set add element]]
-								[append perception-visual_objects
-									previous_perception-visual_objects]]
-							  [get set elements]]]]
+  [let [[perception_step -1]]
+    [while t
+      [= perception_step [have [get this agency] wait_for_perception_step [+ perception_step 1]]]
       
-      [mapc [funk [visual_object]
-		  [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
-			[visual_object-physical_object_type [get visual_object physical_object_type]]]
-		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
-		      [if [and [      have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]
-			       [null [have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]]
-			  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] remove_semantic_frame semantic_visual_object]]]]]
-	    all_visual_objects]
-      
-      [mapc [funk [visual_object]
-		  [let* [[visual_object-phenomenal_name [get visual_object phenomenal_name]]
-			 [previous_visual_object        [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]]
-		    
-		    [let* [[semantic_visual_object     [get this semantic_visual_object visual_object-phenomenal_name nil]]
-			   [preposition_frame          [get visual_object preposition_frame]]
-			   [previous_preposition_frame [if previous_visual_object
-							   [get previous_visual_object preposition_frame]]]
-			   [all_preposition_keys       [let [[preposition_key_set [new set]]]
-							 [mapc [funk [preposition_key]
-								     [have preposition_key_set add preposition_key]]
-							       [append [get preposition_frame keys]
-								       [if previous_preposition_frame
-									   [get previous_preposition_frame keys]]]]
-							 [get preposition_key_set elements]]]]
+      [let* [[perception                                  [get [get this mind] perception]]
+	     [perception-begin_time                       [get perception begin_time]]
+	     [perception-end_time                         [get perception end_time]]
+	     [perception-visual_objects                   [get perception visual_objects]]
+	     [perception-visual_object_ptypehash          [let [[ptypehash [new ptypehash]]]
+							    [mapc [funk [visual_object]
+									[let [[visual_object-phenomenal_name [get visual_object phenomenal_name]]]
+									  [have ptypehash add visual_object-phenomenal_name visual_object]]]
+								  perception-visual_objects]
+							    ptypehash]]
+	     [previous_perception-visual_objects          [if previous_perception
+							      [get previous_perception visual_objects]]]
+	     [previous_perception-visual_object_ptypehash [let [[ptypehash [new ptypehash]]]
+							    [mapc [funk [previous_visual_object]
+									[let [[previous_visual_object-phenomenal_name [get previous_visual_object phenomenal_name]]]
+									  [have ptypehash add previous_visual_object-phenomenal_name previous_visual_object]]]
+								  previous_perception-visual_objects]
+							    ptypehash]]
+	     [all_visual_objects                          [let [[set [new set]]]
+							    [mapc [funk [element]
+									[have set add element]]
+								  [append perception-visual_objects
+									  previous_perception-visual_objects]]
+							    [get set elements]]]]
+	
+	[mapc [funk [visual_object]
+		    [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
+			  [visual_object-physical_object_type [get visual_object physical_object_type]]]
+		      [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
+			[if [and [      have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]
+				 [null [have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]]
+			    [have [get [get this mind] semantic_knowledge_base `visual_knowledge] remove_semantic_frame semantic_visual_object]]]]]
+	      all_visual_objects]
+	
+	[mapc [funk [visual_object]
+		    [let* [[visual_object-phenomenal_name [get visual_object phenomenal_name]]
+			   [previous_visual_object        [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]]
 		      
-		      [let [[visual_object-property_frame [get visual_object property_frame]]
-			    [add_property_frame           [new frame]]
-			    [remove_property_frame        [new frame]]]
-			[if visual_object-property_frame
-			    [have visual_object-property_frame map [funk [property_key property_values]
-									 [mapc [funk [property_value]
-										     [if [not [get semantic_visual_object lookup_set_contains `property property_key property_value]]
-											 [have add_property_frame add property_key property_value]]]
-									       property_values]]]]
-			[have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
-										    [if [not [or [eq semantic_key `phenomenal_name]
-												 [eq semantic_key `reflective_object_type]]]
-											[let [[visual_object-property_frame-contains_value nil]]
-											  [if visual_object-property_frame
-											      [let [[property_values [have visual_object-property_frame lookup semantic_key]]]
-												[mapc [funk [property_value]
-													    [if [eq property_value semantic_value]
-														[= visual_object-property_frame-contains_value t]]]
-												      property_values]]]
-											  [if [not visual_object-property_frame-contains_value]
-											      [have remove_property_frame add semantic_key semantic_value]]]]]]
-			[have remove_property_frame map [funk [property_key property_value] [prog [if debug [terminal_format standard-terminal '\nvisual knowledge removing ' property_key ' ' property_value]]
-												  [have semantic_visual_object remove `property property_key property_value]]]]
-			[have add_property_frame    map [funk [property_key property_value] [prog [if debug [terminal_format standard-terminal '\nvisual knowledge adding ' property_key ' ' property_value]]
-												  [have semantic_visual_object add `property property_key property_value]]]]]
-		      
-		      [mapc [funk [preposition]
-				  [let* [[prepositional_object_names             [have preposition_frame lookup preposition]]
-					 [prepositional_object_name_set          [let [[set [new set]]]
-										   [mapc [funk [element]
-											       [have set add element]]
-											 prepositional_object_names]
-										   set]]
-					 [previous_prepositional_object_names    [if previous_preposition_frame
-										     [have previous_preposition_frame lookup preposition]]]
-					 [previous_prepositional_object_name_set [let [[set [new set]]]
-										   [mapc [funk [element]
-											       [have set add element]]
-											 previous_prepositional_object_names]
-										   set]]
-					 [all_prepositional_object_names         [let [[set [new set]]]
-										   [mapc [funk [element]
-											       [have set add element]]
-											 [append prepositional_object_names
-												 previous_prepositional_object_names]]
-										   [get set elements]]]]
-				    [mapc [funk [prepositional_object_name]
-						[let [[prepositional_semantic_visual_object [get this semantic_visual_object prepositional_object_name nil]]]
-						  [if [null prepositional_semantic_visual_object]
-						      [terminal_format standard-terminal '\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
-						    [cond [[and [not [get previous_prepositional_object_name_set contains prepositional_object_name]]
-								[     get          prepositional_object_name_set contains prepositional_object_name]]
-							   [cond [[eq preposition `in]         [have semantic_visual_object add `preposition `in         prepositional_semantic_visual_object]]
-								 [[eq preposition `on]         [have semantic_visual_object add `preposition `on         prepositional_semantic_visual_object]]
-								 [[eq preposition `left-of]    [have semantic_visual_object add `preposition `left-of    prepositional_semantic_visual_object]]
-								 [[eq preposition `right-of]   [have semantic_visual_object add `preposition `right-of   prepositional_semantic_visual_object]]
-								 [[eq preposition `below]      [have semantic_visual_object add `preposition `below      prepositional_semantic_visual_object]]
-								 [[eq preposition `above]      [have semantic_visual_object add `preposition `above      prepositional_semantic_visual_object]]
-								 [[eq preposition `is-holding] [have semantic_visual_object add `preposition `is-holding prepositional_semantic_visual_object]]
-								 [t                            [terminal_format standard-terminal '\n\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of preposition, ' preposition '.']]]]
-							  [[and [     get previous_prepositional_object_name_set contains prepositional_object_name]
-								[not [get          prepositional_object_name_set contains prepositional_object_name]]]
-							   [cond [[eq preposition `in]         [have semantic_visual_object remove `preposition `in         prepositional_semantic_visual_object]]
-								 [[eq preposition `on]         [have semantic_visual_object remove `preposition `on         prepositional_semantic_visual_object]]
-								 [[eq preposition `left-of]    [have semantic_visual_object remove `preposition `left-of    prepositional_semantic_visual_object]]
-								 [[eq preposition `right-of]   [have semantic_visual_object remove `preposition `right-of   prepositional_semantic_visual_object]]
-								 [[eq preposition `below]      [have semantic_visual_object remove `preposition `below      prepositional_semantic_visual_object]]
-								 [[eq preposition `above]      [have semantic_visual_object remove `preposition `above      prepositional_semantic_visual_object]]
-								 [[eq preposition `is-holding] [have semantic_visual_object remove `preposition `is-holding prepositional_semantic_visual_object]]
-								 [t                            [terminal_format standard-terminal '\n\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of preposition, ' preposition '.']]]]]]]]
-					  all_prepositional_object_names]]]
-			    all_preposition_keys]
-		      
-		      [if [is-type `reflective_mind_visual_agent visual_object]
-			  [let [[agent_name [get visual_object phenomenal_name]]]
-			    `[have this think_to_self '\nreflective_mind_visual_agent: ' agent_name]
-			    [let [[semantic_agent [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame `[agent ,agent_name]]]]
-			      [if [null semantic_agent]
-				  [prog [= semantic_agent [new semantic_agent [get [get this mind] semantic_realm]]]
-					[have [get [get this mind] semantic_realm]                                  add_phenomenon_semantic_frame `[agent ,agent_name] semantic_agent]
-					[have [get [get this mind] semantic_knowledge_base `other_agents_knowledge] add_semantic_frame                                 semantic_agent]]]
-			      [let [[actions [get visual_object actions]]]
-				`[have this think_to_self '\nagent ' agent_name ' actions: ' actions]
-				[mapc [funk [action]
-					    [let [[start_time     [get action start_time]]
-						  [action_name    [get action action_name]]
-						  [argument_frame [get action argument_frame]]
-						  [result         [get action result]]]
-					      [let [[agent semantic_visual_object]]
-						[let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm] action_name agent]]]
-						  [set action_semantic_frame phenomenal_name     [gensym 'semantic_action_event']]
-						  [set action_semantic_frame absolute_start_time [new semantic_time [if perception-begin_time perception-begin_time `before]]]
-						  [set action_semantic_frame absolute_end_time   [new semantic_time [if perception-end_time   perception-end_time   `after]]]
-						  [have [get [get this mind] semantic_knowledge_base `visual_action_knowledge] add_semantic_frame action_semantic_frame]
-						  'should add argument frame for each action specifically.'
-						  ]]]]
-				      actions]
-				]]]]]]]
-	    perception-visual_objects]
-      
-      [mapc [funk [visual_object]
-		  [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
-			[visual_object-physical_object_type [get visual_object physical_object_type]]]
-		    [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
-		      [if [and [null [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]
-			       [      have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]
-			  [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame    semantic_visual_object]]]]]
-	    all_visual_objects]
-      
-      [= previous_perception perception]
-      'Once we have finished changing visual_knowledge, we add a special ending trace event.'
-      [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-		       'end_of_visual_changes event added to visual_knowledge trace events.']
-      [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
-      ]]]
+		      [let* [[semantic_visual_object     [get this semantic_visual_object visual_object-phenomenal_name nil]]
+			     [preposition_frame          [get visual_object preposition_frame]]
+			     [previous_preposition_frame [if previous_visual_object
+							     [get previous_visual_object preposition_frame]]]
+			     [all_preposition_keys       [let [[preposition_key_set [new set]]]
+							   [mapc [funk [preposition_key]
+								       [have preposition_key_set add preposition_key]]
+								 [append [get preposition_frame keys]
+									 [if previous_preposition_frame
+									     [get previous_preposition_frame keys]]]]
+							   [get preposition_key_set elements]]]]
+			
+			[let [[visual_object-property_frame [get visual_object property_frame]]
+			      [add_property_frame           [new frame]]
+			      [remove_property_frame        [new frame]]]
+			  [if visual_object-property_frame
+			      [have visual_object-property_frame map [funk [property_key property_values]
+									   [mapc [funk [property_value]
+										       [if [not [get semantic_visual_object lookup_set_contains `property property_key property_value]]
+											   [have add_property_frame add property_key property_value]]]
+										 property_values]]]]
+			  [have semantic_visual_object map_key_values `property [funk [semantic_key semantic_value]
+										      [if [not [or [eq semantic_key `phenomenal_name]
+												   [eq semantic_key `reflective_object_type]]]
+											  [let [[visual_object-property_frame-contains_value nil]]
+											    [if visual_object-property_frame
+												[let [[property_values [have visual_object-property_frame lookup semantic_key]]]
+												  [mapc [funk [property_value]
+													      [if [eq property_value semantic_value]
+														  [= visual_object-property_frame-contains_value t]]]
+													property_values]]]
+											    [if [not visual_object-property_frame-contains_value]
+												[have remove_property_frame add semantic_key semantic_value]]]]]]
+			  [have remove_property_frame map [funk [property_key property_value] [prog [if debug [terminal_format standard-terminal '\nvisual knowledge removing ' property_key ' ' property_value]]
+												    [have semantic_visual_object remove `property property_key property_value]]]]
+			  [have add_property_frame    map [funk [property_key property_value] [prog [if debug [terminal_format standard-terminal '\nvisual knowledge adding ' property_key ' ' property_value]]
+												    [have semantic_visual_object add `property property_key property_value]]]]]
+			
+			[mapc [funk [preposition]
+				    [let* [[prepositional_object_names             [have preposition_frame lookup preposition]]
+					   [prepositional_object_name_set          [let [[set [new set]]]
+										     [mapc [funk [element]
+												 [have set add element]]
+											   prepositional_object_names]
+										     set]]
+					   [previous_prepositional_object_names    [if previous_preposition_frame
+										       [have previous_preposition_frame lookup preposition]]]
+					   [previous_prepositional_object_name_set [let [[set [new set]]]
+										     [mapc [funk [element]
+												 [have set add element]]
+											   previous_prepositional_object_names]
+										     set]]
+					   [all_prepositional_object_names         [let [[set [new set]]]
+										     [mapc [funk [element]
+												 [have set add element]]
+											   [append prepositional_object_names
+												   previous_prepositional_object_names]]
+										     [get set elements]]]]
+				      [mapc [funk [prepositional_object_name]
+						  [let [[prepositional_semantic_visual_object [get this semantic_visual_object prepositional_object_name nil]]]
+						    [if [null prepositional_semantic_visual_object]
+							[terminal_format standard-terminal '\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of prepositional object, ' prepositional_object_name '.']
+						      [cond [[and [not [get previous_prepositional_object_name_set contains prepositional_object_name]]
+								  [     get          prepositional_object_name_set contains prepositional_object_name]]
+							     [cond [[eq preposition `in]         [have semantic_visual_object add `preposition `in         prepositional_semantic_visual_object]]
+								   [[eq preposition `on]         [have semantic_visual_object add `preposition `on         prepositional_semantic_visual_object]]
+								   [[eq preposition `left-of]    [have semantic_visual_object add `preposition `left-of    prepositional_semantic_visual_object]]
+								   [[eq preposition `right-of]   [have semantic_visual_object add `preposition `right-of   prepositional_semantic_visual_object]]
+								   [[eq preposition `below]      [have semantic_visual_object add `preposition `below      prepositional_semantic_visual_object]]
+								   [[eq preposition `above]      [have semantic_visual_object add `preposition `above      prepositional_semantic_visual_object]]
+								   [[eq preposition `is-holding] [have semantic_visual_object add `preposition `is-holding prepositional_semantic_visual_object]]
+								   [t                            [terminal_format standard-terminal '\n\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of preposition, ' preposition '.']]]]
+							    [[and [     get previous_prepositional_object_name_set contains prepositional_object_name]
+								  [not [get          prepositional_object_name_set contains prepositional_object_name]]]
+							     [cond [[eq preposition `in]         [have semantic_visual_object remove `preposition `in         prepositional_semantic_visual_object]]
+								   [[eq preposition `on]         [have semantic_visual_object remove `preposition `on         prepositional_semantic_visual_object]]
+								   [[eq preposition `left-of]    [have semantic_visual_object remove `preposition `left-of    prepositional_semantic_visual_object]]
+								   [[eq preposition `right-of]   [have semantic_visual_object remove `preposition `right-of   prepositional_semantic_visual_object]]
+								   [[eq preposition `below]      [have semantic_visual_object remove `preposition `below      prepositional_semantic_visual_object]]
+								   [[eq preposition `above]      [have semantic_visual_object remove `preposition `above      prepositional_semantic_visual_object]]
+								   [[eq preposition `is-holding] [have semantic_visual_object remove `preposition `is-holding prepositional_semantic_visual_object]]
+								   [t                            [terminal_format standard-terminal '\n\nupdate_visual_knowledge_from_visual_objects warning: don\'t know of preposition, ' preposition '.']]]]]]]]
+					    all_prepositional_object_names]]]
+			      all_preposition_keys]
+			
+			[if [is-type `reflective_mind_visual_agent visual_object]
+			    [let [[agent_name [get visual_object phenomenal_name]]]
+			      `[have this think_to_self '\nreflective_mind_visual_agent: ' agent_name]
+			      [let [[semantic_agent [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame `[agent ,agent_name]]]]
+				[if [null semantic_agent]
+				    [prog [= semantic_agent [new semantic_agent [get [get this mind] semantic_realm]]]
+					  [have [get [get this mind] semantic_realm]                                  add_phenomenon_semantic_frame `[agent ,agent_name] semantic_agent]
+					  [have [get [get this mind] semantic_knowledge_base `other_agents_knowledge] add_semantic_frame                                 semantic_agent]]]
+				[let [[actions [get visual_object actions]]]
+				  `[have this think_to_self '\nagent ' agent_name ' actions: ' actions]
+				  [mapc [funk [action]
+					      [let [[start_time     [get action start_time]]
+						    [action_name    [get action action_name]]
+						    [argument_frame [get action argument_frame]]
+						    [result         [get action result]]]
+						[let [[agent semantic_visual_object]]
+						  [let [[action_semantic_frame [new semantic_action_event [get [get this mind] semantic_realm] action_name agent]]]
+						    [set action_semantic_frame phenomenal_name     [gensym 'semantic_action_event']]
+						    [set action_semantic_frame absolute_start_time [new semantic_time [if perception-begin_time perception-begin_time `before]]]
+						    [set action_semantic_frame absolute_end_time   [new semantic_time [if perception-end_time   perception-end_time   `after]]]
+						    [have [get [get this mind] semantic_knowledge_base `visual_action_knowledge] add_semantic_frame action_semantic_frame]
+						    'should add argument frame for each action specifically.'
+						    ]]]]
+					actions]
+				  ]]]]]]]
+	      perception-visual_objects]
+	
+	[mapc [funk [visual_object]
+		    [let [[visual_object-phenomenal_name      [get visual_object phenomenal_name]]
+			  [visual_object-physical_object_type [get visual_object physical_object_type]]]
+		      [let [[semantic_visual_object [get this semantic_visual_object visual_object-phenomenal_name visual_object-physical_object_type]]]
+			[if [and [null [have previous_perception-visual_object_ptypehash lookup visual_object-phenomenal_name]]
+				 [      have perception-visual_object_ptypehash          lookup visual_object-phenomenal_name]]
+			    [have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_semantic_frame    semantic_visual_object]]]]]
+	      all_visual_objects]
+	
+	[= previous_perception perception]
+	'Once we have finished changing visual_knowledge, we add a special ending trace event.'
+	[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
+			 'end_of_visual_changes event added to visual_knowledge trace events.']
+	[have [get [get this mind] semantic_knowledge_base `visual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_visual_changes nil]]
+	]]]]
 
 
 'propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource'
@@ -266,46 +317,47 @@
     [set semantic_orientation roll    [get orientation roll]]]]
 
 [deftypefunk propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource execute update_proprioceptual_knowledge_from_proprioceptual_objects []
-  [while t
-    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-    [let* [[perception           [get [get this mind] perception]]
-	   [proprioceptual_frame [get perception proprioceptual_frame]]]
-      [if proprioceptual_frame
-	  [let [[body       [have proprioceptual_frame lookup `body]]
-		[neck       [have proprioceptual_frame lookup `neck]]
-		[left_hand  [have proprioceptual_frame lookup `left_hand]]
-		[right_hand [have proprioceptual_frame lookup `right_hand]]]
-	    
-	    [if [null semantic_proprioception]
-		[let [[semantic_body       [get body       as-semantic_frame [get [get this mind] semantic_realm]]]
-		      [semantic_neck       [get neck       as-semantic_frame [get [get this mind] semantic_realm]]]
-		      [semantic_left_hand  [get left_hand  as-semantic_frame [get [get this mind] semantic_realm]]]
-		      [semantic_right_hand [get right_hand as-semantic_frame [get [get this mind] semantic_realm]]]]
+  [let [[perception_step -1]]
+    [while t
+      [= perception_step [have [get this agency] wait_for_perception_step [+ perception_step 1]]]
+      [let* [[perception           [get [get this mind] perception]]
+	     [proprioceptual_frame [get perception proprioceptual_frame]]]
+	[if proprioceptual_frame
+	    [let [[body       [have proprioceptual_frame lookup `body]]
+		  [neck       [have proprioceptual_frame lookup `neck]]
+		  [left_hand  [have proprioceptual_frame lookup `left_hand]]
+		  [right_hand [have proprioceptual_frame lookup `right_hand]]]
+	      
+	      [if [null semantic_proprioception]
+		  [let [[semantic_body       [get body       as-semantic_frame [get [get this mind] semantic_realm]]]
+			[semantic_neck       [get neck       as-semantic_frame [get [get this mind] semantic_realm]]]
+			[semantic_left_hand  [get left_hand  as-semantic_frame [get [get this mind] semantic_realm]]]
+			[semantic_right_hand [get right_hand as-semantic_frame [get [get this mind] semantic_realm]]]]
+		    
+		    [= semantic_proprioception [new semantic_proprioception [get [get this mind] semantic_realm]
+						    semantic_body
+						    semantic_neck
+						    semantic_left_hand
+						    semantic_right_hand]]
+		    
+		    [have semantic_proprioception add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `proprioceptual_knowledge]]
+		    
+		    ]
+		[let [[semantic_body       [get semantic_proprioception body]]
+		      [semantic_neck       [get semantic_proprioception neck]]
+		      [semantic_left_hand  [get semantic_proprioception left_hand]]
+		      [semantic_right_hand [get semantic_proprioception right_hand]]]
 		  
-		  [= semantic_proprioception [new semantic_proprioception [get [get this mind] semantic_realm]
-						  semantic_body
-						  semantic_neck
-						  semantic_left_hand
-						  semantic_right_hand]]
+		  [have this update_semantic_proprioceptual_object semantic_body       body]
+		  [have this update_semantic_proprioceptual_object semantic_neck       neck]
+		  [have this update_semantic_proprioceptual_object semantic_left_hand  left_hand]
+		  [have this update_semantic_proprioceptual_object semantic_right_hand right_hand]
 		  
-		  [have semantic_proprioception add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `proprioceptual_knowledge]]
-		  
-		  ]
-	      [let [[semantic_body       [get semantic_proprioception body]]
-		    [semantic_neck       [get semantic_proprioception neck]]
-		    [semantic_left_hand  [get semantic_proprioception left_hand]]
-		    [semantic_right_hand [get semantic_proprioception right_hand]]]
-		
-		[have this update_semantic_proprioceptual_object semantic_body       body]
-		[have this update_semantic_proprioceptual_object semantic_neck       neck]
-		[have this update_semantic_proprioceptual_object semantic_left_hand  left_hand]
-		[have this update_semantic_proprioceptual_object semantic_right_hand right_hand]
-		
-		]]
-	    [= previous_perception perception]]
-	'Once we have finished changing proprioceptual_knowledge, we add a special ending trace event.'
-	[have [get [get this mind] semantic_knowledge_base `proprioceptual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_proprioceptual_changes nil]]
-	]]]]
+		  ]]
+	      [= previous_perception perception]]
+	  'Once we have finished changing proprioceptual_knowledge, we add a special ending trace event.'
+	  [have [get [get this mind] semantic_knowledge_base `proprioceptual_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_proprioceptual_changes nil]]
+	  ]]]]]
 
 
 'propogate_somatosensory_objects_to_somatosensory_knowledge_resource'
@@ -335,102 +387,66 @@
     somatosensory_object]]
 
 [deftypefunk propogate_somatosensory_objects_to_somatosensory_knowledge_resource execute update_somatosensory_knowledge_from_somatosensory_objects []
-  [while t
-    [wait-for-trigger [get [get [get this mind] resource `builtin_reactive `sensory `continuous_sensing] perception_trigger]]
-    [let* [[perception             [get [get this mind] perception]]
-	   [left_hand_object_name  [get perception left_hand_object_name]]
-	   [right_hand_object_name [get perception right_hand_object_name]]]
-      `[terminal_format standard-terminal '\n' perception]
-      
-      [if [null semantic_somatosensation]
-	  [let [[left_hand_semantic_object  nil]
-		[right_hand_semantic_object nil]]
+  [let [[perception_step -1]]
+    [while t
+      [= perception_step [have [get this agency] wait_for_perception_step [+ perception_step 1]]]
+      [let* [[perception             [get [get this mind] perception]]
+	     [left_hand_object_name  [get perception left_hand_object_name]]
+	     [right_hand_object_name [get perception right_hand_object_name]]]
+	`[terminal_format standard-terminal '\n' perception]
+	
+	[if [null semantic_somatosensation]
+	    [let [[left_hand_semantic_object  nil]
+		  [right_hand_semantic_object nil]]
+	      
+	      [= semantic_somatosensation [new semantic_somatosensation [get [get this mind] semantic_realm]]]
+	      
+	      [if left_hand_object_name
+		  [prog [= left_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+			[set left_hand_semantic_object phenomenal_name left_hand_object_name]
+			[set semantic_somatosensation left_hand left_hand_semantic_object]
+			]]
+	      [if right_hand_object_name
+		  [prog [= right_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
+			[set right_hand_semantic_object phenomenal_name right_hand_object_name]
+			[set semantic_somatosensation right_hand right_hand_semantic_object]
+			]]
+	      
+	      [have semantic_somatosensation add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `somatosensory_knowledge]]
+	      
+	      ]
+	  [let [[previous_left_hand_object_name  [get previous_perception left_hand_object_name]]
+		[previous_right_hand_object_name [get previous_perception right_hand_object_name]]]
 	    
-	    [= semantic_somatosensation [new semantic_somatosensation [get [get this mind] semantic_realm]]]
+	    [if [not [eq left_hand_object_name previous_left_hand_object_name]]
+		[let [[previous_left_hand_semantic_object nil]
+		      [left_hand_semantic_object          nil]]
+		  [if [not [null previous_left_hand_object_name]]
+		      [prog [= previous_left_hand_semantic_object [get this somatosensory_object previous_left_hand_object_name]]
+			    [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] remove_semantic_frame previous_left_hand_semantic_object]]]
+		  [if [not [null left_hand_object_name]]
+		      [prog [= left_hand_semantic_object [get this somatosensory_object left_hand_object_name]]
+			    [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_semantic_frame left_hand_semantic_object]]]
+		  [set semantic_somatosensation left_hand left_hand_semantic_object]
+		  ]]
 	    
-	    [if left_hand_object_name
-		[prog [= left_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
-		      [set left_hand_semantic_object phenomenal_name left_hand_object_name]
-		      [set semantic_somatosensation left_hand left_hand_semantic_object]
-		      ]]
-	    [if right_hand_object_name
-		[prog [= right_hand_semantic_object [new semantic_somatosensory_object [get [get this mind] semantic_realm]]]
-		      [set right_hand_semantic_object phenomenal_name right_hand_object_name]
-		      [set semantic_somatosensation right_hand right_hand_semantic_object]
-		      ]]
+	    [if [not [eq right_hand_object_name previous_right_hand_object_name]]
+		[let [[previous_right_hand_semantic_object nil]
+		      [right_hand_semantic_object          nil]]
+		  [if [not [null previous_right_hand_object_name]]
+		      [prog [= previous_right_hand_semantic_object [get this somatosensory_object previous_right_hand_object_name]]
+			    [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] remove_semantic_frame previous_right_hand_semantic_object]]]
+		  [if [not [null right_hand_object_name]]
+		      [prog [= right_hand_semantic_object [get this somatosensory_object right_hand_object_name]]
+			    [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_semantic_frame right_hand_semantic_object]]]
+		  [set semantic_somatosensation right_hand right_hand_semantic_object]
+		  ]]
 	    
-	    [have semantic_somatosensation add_to_semantic_knowledge_base [get [get this mind] semantic_knowledge_base `somatosensory_knowledge]]
-	    
-	    ]
-	[let [[previous_left_hand_object_name  [get previous_perception left_hand_object_name]]
-	      [previous_right_hand_object_name [get previous_perception right_hand_object_name]]]
-	  
-	  [if [not [eq left_hand_object_name previous_left_hand_object_name]]
-	      [let [[previous_left_hand_semantic_object nil]
-		    [left_hand_semantic_object          nil]]
-		[if [not [null previous_left_hand_object_name]]
-		    [prog [= previous_left_hand_semantic_object [get this somatosensory_object previous_left_hand_object_name]]
-			  [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] remove_semantic_frame previous_left_hand_semantic_object]]]
-		[if [not [null left_hand_object_name]]
-			  [prog [= left_hand_semantic_object [get this somatosensory_object left_hand_object_name]]
-				[have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_semantic_frame left_hand_semantic_object]]]
-		[set semantic_somatosensation left_hand left_hand_semantic_object]
-		]]
-	  
-	  [if [not [eq right_hand_object_name previous_right_hand_object_name]]
-	      [let [[previous_right_hand_semantic_object nil]
-		    [right_hand_semantic_object          nil]]
-		[if [not [null previous_right_hand_object_name]]
-		    [prog [= previous_right_hand_semantic_object [get this somatosensory_object previous_right_hand_object_name]]
-			  [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] remove_semantic_frame previous_right_hand_semantic_object]]]
-		[if [not [null right_hand_object_name]]
-		    [prog [= right_hand_semantic_object [get this somatosensory_object right_hand_object_name]]
-			  [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_semantic_frame right_hand_semantic_object]]]
-		[set semantic_somatosensation right_hand right_hand_semantic_object]
-		]]
-	  
-	  ]]
-      
-      [= previous_perception perception]]
-    'Once we have finished changing somatosensory_knowledge, we add a special ending trace event.'
-    [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_somatosensory_changes nil]]
-    ]]
+	    ]]
+	
+	[= previous_perception perception]]
+      'Once we have finished changing somatosensory_knowledge, we add a special ending trace event.'
+      [have [get [get this mind] semantic_knowledge_base `somatosensory_knowledge] add_trace_event [new semantic_knowledge_base_event [time] `end_of_somatosensory_changes nil]]
+      ]]]
 
-
-'builtin_reactive_sensory_agency'
-
-[deframe builtin_reactive_sensory_agency [agency] []
-  [new []
-       [construct agency `sensory]
-       
-       [have this add_resource [new continuous_sensing_resource]]
-       [have this add_resource [new propogate_visual_objects_to_visual_knowledge_resource]]
-       [have this add_resource [new propogate_proprioceptual_objects_to_proprioceptual_knowledge_resource]]
-       [have this add_resource [new propogate_somatosensory_objects_to_somatosensory_knowledge_resource]]
-       
-       this]]
-
-[deftypefunk builtin_reactive_sensory_agency execute create_knowledge []
-  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 create_knowledge]
-  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] create_knowledge]
-  [have [get this resource `propogate_somatosensory_objects_to_somatosensory_knowledge]   create_knowledge]
-  ]
-
-[deftypefunk builtin_reactive_sensory_agency execute connect_knowledge_reflection []
-  [have [get this resource `propogate_visual_objects_to_visual_knowledge]                 connect_knowledge_reflection]
-  [have [get this resource `propogate_proprioceptual_objects_to_proprioceptual_knowledge] connect_knowledge_reflection]
-  [have [get this resource `propogate_somatosensory_objects_to_somatosensory_knowledge]   connect_knowledge_reflection]
-  ]
-
-[deftypefunk builtin_reactive_sensory_agency get perception []
-  [get [get this resource `continuous_sensing] perception]]
-
-[deftypefunk builtin_reactive_sensory_agency get visual_objects []
-  [get [get this resource `continuous_sensing] visual_objects]]
-
-[deftypefunk builtin_reactive_sensory_agency get right_hand_object_name []
-  [get [get this resource `continuous_sensing] right_hand_object_name]]
-
-[deftypefunk builtin_reactive_sensory_agency get left_hand_object_name  []
-  [get [get this resource `continuous_sensing] left_hand_object_name]]
 

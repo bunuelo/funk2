@@ -226,8 +226,8 @@
 [deftypefunk mind get time_step []
   [get body time_step]]
 
-[deftypefunk mind get time_step_trigger []
-  [get body time_step_trigger]]
+[deftypefunk mind execute wait_for_time_step [wait_time_step]
+  [have body wait_for_time_step wait_time_step]]
 
 [deftypefunk mind execute create_knowledge_event_stream_iterator [knowledge_base_name knowledge_event_stream_iterator_name]
   [let [[knowledge_base [have [get this semantic_realm] lookup_semantic_knowledge_base knowledge_base_name]]]

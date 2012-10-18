@@ -802,7 +802,7 @@
 				      nonsemantic_plan_command-name name
 				      arguments                     arguments
 				      compile_option_frame          compile_option_frame]
-			     [apply compiled_funk `[,nonsemantic_plan ,compile_option_frame @arguments]]]]]]]
+			     [apply compiled_funk `[,nonsemantic_plan ,compile_option_frame ,arguments]]]]]]]
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [error bug_name         `nonsemantic_plan_command-error_compiling_command

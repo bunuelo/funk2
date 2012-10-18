@@ -809,7 +809,8 @@
 		 subbug           bug
 		 this             this
 		 nonsemantic_plan nonsemantic_plan
-		 arguments        arguments]]]]]
+		 arguments        arguments]]
+      result]]]
 
 
 [defmetro defplancommand [name arguments :rest body]

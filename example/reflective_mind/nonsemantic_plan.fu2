@@ -1542,7 +1542,7 @@
       [= internal-compiled_funk [let [[result [shelter [get this __compiled_funk]]]]
 				  [if [is-type `bug result]
 				      [let [[bug result]]
-					[error bug_name nonsemantic_plan-error_compiling_execute_funk
+					[error bug_name `nonsemantic_plan-error_compiling_execute_funk
 					       subbug   bug
 					       this     this]]
 				    result]]]]

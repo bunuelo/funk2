@@ -785,7 +785,7 @@
 		 [= maximum_argument_count nil]]
 	 [prog [= minimum_argument_count [length arguments]]
 	       [= maximum_argument_count minimum_argument_count]]]
-       [= compiled_funk [eval `[funk [this compile_option_frame arguments]
+       [= compiled_funk [eval `[funk [nonsemantic_plan compile_option_frame arguments]
 				     [apply [funk ,`[this compile_option_frame @arguments]
 						  @body]
 					    `[,this ,compile_option_frame @arguments]]]]]

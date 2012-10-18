@@ -811,6 +811,7 @@
 
 		
 [defmetro defplancommand [name arguments :rest body]
+  [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
   [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
 						     name
 						     arguments

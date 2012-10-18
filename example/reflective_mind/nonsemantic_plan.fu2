@@ -47,7 +47,8 @@
 				   [internal-semantic_plan_object    nil]
 				   [internal-compiled_funk           nil]
 				   [internal-compiled_imagine_funk   nil]
-				   [internal-natural_language_string nil]]
+				   [internal-natural_language_string nil]
+				   [internal-constant_variable_frame nil]]
   [new [initial-mental_layer
 	initial-name_expression
 	initial-name_patterns
@@ -180,6 +181,26 @@
 				  name_pattern_match_pairs]
 			  sort [funk [x y]
 				     [< [cdr x] [cdr y]]]]]]]]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
   [cond [[is-type `symbol expression] expression]
@@ -728,7 +749,7 @@
        [= possible_values initial-possible_values]]]
 
 
-[defunk nonsemantic_plan-expression-unwrapped_compile [expression]
+[deftypefunk nonsemantic_plan get expression-unwrapped_compile [expression]
   [cond [[is-type `symbol expression] [eval `[funk [this]
 						   [quote ,expression]]]]
 	[[is-type `string expression] [eval `[funk [this]
@@ -755,7 +776,7 @@
 						[[or [eq `list                       command]
 						     [eq `backquote-list             command]] [eval `[funk [this]
 													    [conslist @[mapcar [funk [argument]
-																     `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+																     `[funkall ,[get this expression-compile argument] this]]
 															       arguments]]]]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -763,18 +784,18 @@
 													 expression expression]
 												[let [[print-expression [elt arguments 0]]]
 												  [eval `[funk [this]
-													       [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile print-expression] this]]]
+													       [let [[eval-print-expression [funkall ,[get this expression-compile print-expression] this]]]
 														 [terminal_format standard-terminal '\nplan printing expression: ' eval-print-expression]
 														 eval-print-expression]]]]]]
 						[[eq `prog                           command] [eval `[funk [this]
 													   [terminal_format standard-terminal '\nplan evaluating serial process.']
 													   @[mapcar [funk [argument]
-															  `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+															  `[funkall ,[get this expression-compile argument] this]]
 														    arguments]]]]
 						[[eq `parog                          command] [eval `[funk [this]
 													   [terminal_format standard-terminal '\nplan evaluating parallel process.']
 													   [parog @[mapcar [funk [argument]
-																 `[funkall ,[nonsemantic_plan-expression-compile argument] this]]
+																 `[funkall ,[get this expression-compile argument] this]]
 															   arguments]]
 													   nil]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
@@ -793,9 +814,9 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `call-below
 													 expression expression]
-												[let [[action_name      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												[let [[action_name      `[funkall ,[get this expression-compile [elt arguments 0]] this]]
 												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[nonsemantic_plan-expression-compile action_argument] this]]
+																      `[funkall ,[get this expression-compile action_argument] this]]
 																[cdr arguments]]]]
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action_below ,action_name]]]
@@ -809,9 +830,9 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `call
 													 expression expression]
-												[let [[action_name      `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
+												[let [[action_name      `[funkall ,[get this expression-compile [elt arguments 0]] this]]
 												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[nonsemantic_plan-expression-compile action_argument] this]]
+																      `[funkall ,[get this expression-compile action_argument] this]]
 																[cdr arguments]]]]
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action ,action_name]]]
@@ -825,7 +846,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan
 													 expression expression]
-												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[plan_name `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -857,7 +878,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-below
 													 expression expression]
-												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[plan_name `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -889,7 +910,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call-below
 													 expression expression]
-												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[plan_name `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -915,7 +936,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `plan-call
 													 expression expression]
-												[let [[plan_name `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[plan_name `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -945,14 +966,14 @@
 													 expression expression]
 												[let [[exists-expression [elt arguments 0]]]
 												  [eval `[funk [this]
-													       [let [[eval-exists-expression [funkall ,[nonsemantic_plan-expression-compile exists-expression] this]]]
+													       [let [[eval-exists-expression [funkall ,[get this expression-compile exists-expression] this]]]
 														 [have this check_exists eval-exists-expression]
 														 ]]]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `wait-for
 													 expression expression]
-												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[partial_state `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let [[partial_state ,partial_state]]
 														 [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_natural_language_string] '."']
@@ -963,10 +984,10 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `if
 													 expression expression]
-												[let [[if-condition    `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]
-												      [if-true_branch  `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]
+												[let [[if-condition    `[funkall ,[get this expression-compile [elt arguments 0]] this]]
+												      [if-true_branch  `[funkall ,[get this expression-compile [elt arguments 1]] this]]
 												      [if-false_branch [if [== arguments-length 3]
-															   `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]]]
+															   `[funkall ,[get this expression-compile [elt arguments 2]] this]]]]
 												  [eval `[funk [this]
 													       [if ,if-condition
 														   ,if-true_branch
@@ -975,7 +996,7 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `assert
 													 expression expression]
-												[let [[assert-expression `[funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
+												[let [[assert-expression `[funkall ,[get this expression-compile [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let [[assert-expression ,assert-expression]]
 														 [if [not assert-expression]
@@ -996,13 +1017,13 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `property
 													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]]
-												      [value           `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]]]
+												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 0]] this]]]
+												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 1]] this]]]
+												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 2]] this]]]
+												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 3]] this]]]
+												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 4]] this]]]
+												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 5]] this]]]
+												      [value           `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 6]] this]]]]
 												  [eval `[funk [this]
 													       [new semantic_partial_state_property [get [get this mind] semantic_realm]
 														    ,source_type
@@ -1017,16 +1038,16 @@
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
 													 funkname   `relationship
 													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 5]] this]]]
-												      [target_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 6]] this]]]
-												      [target_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 7]] this]]]
-												      [target_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 8]] this]]]
-												      [target_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile [elt arguments 9]] this]]]]
+												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 0]] this]]]
+												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 1]] this]]]
+												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 2]] this]]]
+												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 3]] this]]]
+												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 4]] this]]]
+												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 5]] this]]]
+												      [target_type     `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 6]] this]]]
+												      [target_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 7]] this]]]
+												      [target_key      `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 8]] this]]]
+												      [target_value    `[name_expression-as-symbol [funkall ,[get this expression-compile [elt arguments 9]] this]]]]
 												  [eval `[funk [this]
 													       [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
 														    ,source_type
@@ -1117,10 +1138,10 @@
 					     expression-type [type expression]
 					     expression      expression]]]]
 
-[defunk nonsemantic_plan-expression-compile [expression]
+[deftypefunk nonsemantic_plan get expression-compile [expression]
   [eval `[funk [this]
 	       [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
-	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile expression] this]]]]
+	       [let [[result [shelter [funkall ,[get this expression-unwrapped_compile expression] this]]]]
 		 [if [is-type `bug result]
 		     [let [[bug result]]
 		       [if [have [get bug frame] lookup `is_plan_bug]
@@ -1136,7 +1157,7 @@
 
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
-  [nonsemantic_plan-expression-compile expression]]
+  [get this expression-compile expression]]
 
 [deftypefunk nonsemantic_plan get compiled_funk []
   [if [null internal-compiled_funk]
@@ -1170,7 +1191,7 @@
   [have mental_layer lookup_action action_name_expression]]
 
 
-[defunk nonsemantic_plan-expression-unwrapped_compile_imagine [expression]
+[deftypefunk nonsemantic_plan get expression-unwrapped_compile_imagine [expression]
   [cond [[is-type `symbol expression] [eval `[funk []
 						   [quote ,expression]]]]
 	[[is-type `string expression] [eval `[funk [this]
@@ -1199,7 +1220,7 @@
 						[[or [eq `list                       command]
 						     [eq `backquote-list             command]] [eval `[funk [this]
 													    [conslist @[mapcar [funk [argument]
-																     `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
+																     `[funkall ,[get this expression-compile_imagine argument] this]]
 															       arguments]]]]]
 						[[eq `print                          command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
@@ -1207,18 +1228,18 @@
 													 expression expression]
 												[let [[print-expression [elt arguments 0]]]
 												  [eval `[funk [this]
-													       [let [[eval-print-expression [funkall ,[nonsemantic_plan-expression-compile_imagine print-expression] this]]]
+													       [let [[eval-print-expression [funkall ,[get this expression-compile_imagine print-expression] this]]]
 														 [terminal_format standard-terminal '\nplan imagine printing expression: ' eval-print-expression]
 														 eval-print-expression]]]]]]
 						[[eq `prog                           command] [eval `[funk [this]
 													   [terminal_format standard-terminal '\nplan imagining serial process.']
 													   @[mapcar [funk [argument]
-															  `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
+															  `[funkall ,[get this expression-compile_imagine argument] this]]
 														    arguments]]]]
 						[[eq `parog                          command] [eval `[funk [this]
 													   [terminal_format standard-terminal '\nplan imagining parallel process.']
 													   [parog @[mapcar [funk [argument]
-																 `[funkall ,[nonsemantic_plan-expression-compile_imagine argument] this]]
+																 `[funkall ,[get this expression-compile_imagine argument] this]]
 															   arguments]]
 													   nil]]]
 						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
@@ -1234,9 +1255,9 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `call-below
 													 expression expression]
-												[let [[action_name      `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
+												[let [[action_name      `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
 												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[nonsemantic_plan-expression-compile_imagine action_argument] this]]
+																      `[funkall ,[get this expression-compile_imagine action_argument] this]]
 																[cdr arguments]]]]
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action_below ,action_name]]]
@@ -1250,9 +1271,9 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `call
 													 expression expression]
-												[let [[action_name      `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
+												[let [[action_name      `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
 												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[nonsemantic_plan-expression-compile_imagine action_argument] this]]
+																      `[funkall ,[get this expression-compile_imagine action_argument] this]]
 																[cdr arguments]]]]
 												  [eval `[funk [this]
 													       [let [[action [have this lookup_action ,action_name]]]
@@ -1266,7 +1287,7 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan
 													 expression expression]
-												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -1289,7 +1310,7 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan-below
 													 expression expression]
-												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -1312,7 +1333,7 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan-call-below
 													 expression expression]
-												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -1337,7 +1358,7 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `plan-call
 													 expression expression]
-												[let* [[plan_name `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let* [[plan_name                            ,plan_name]
 														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -1364,14 +1385,14 @@
 													 expression expression]
 												[let [[exists-expression [elt arguments 0]]]
 												  [eval `[funk [this]
-													       [let [[eval-exists-expression [funkall ,[nonsemantic_plan-expression-compile_imagine exists-expression] this]]]
+													       [let [[eval-exists-expression [funkall ,[get this expression-compile_imagine exists-expression] this]]]
 														 [have this imagine_check_exists eval-exists-expression]
 														 ]]]]]]
 						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `wait-for
 													 expression expression]
-												[let [[partial_state `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let [[partial_state `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let [[partial_state ,partial_state]]
 														 [terminal_format standard-terminal '\nplan imagining waiting for: "'
@@ -1384,10 +1405,10 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `if
 													 expression expression]
-												[let [[if-condition    `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]
-												      [if-true_branch  `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]
+												[let [[if-condition    `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
+												      [if-true_branch  `[funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]
 												      [if-false_branch [if [== arguments-length 3]
-															   `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]]]
+															   `[funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]]
 												  [eval `[funk [this]
 													       [if ,if-condition
 														   ,if-true_branch
@@ -1396,7 +1417,7 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `assert
 													 expression expression]
-												[let [[assert-expression `[funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
+												[let [[assert-expression `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
 												  [eval `[funk [this]
 													       [let [[assert-expression ,assert-expression]]
 														 [if [not assert-expression]
@@ -1417,13 +1438,13 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `property
 													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 5]] this]]]
-												      [value           `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 6]] this]]]]
+												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
+												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]]
+												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]
+												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 3]] this]]]
+												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 4]] this]]]
+												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 5]] this]]]
+												      [value           `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 6]] this]]]]
 												  [eval `[funk [this]
 													       [new semantic_partial_state_property [get [get this mind] semantic_realm]
 														    ,source_type
@@ -1438,16 +1459,16 @@
 												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
 													 funkname   `relationship
 													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 5]] this]]]
-												      [target_type     `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 6]] this]]]
-												      [target_key_type `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 7]] this]]]
-												      [target_key      `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 8]] this]]]
-												      [target_value    `[name_expression-as-symbol [funkall ,[nonsemantic_plan-expression-compile_imagine [elt arguments 9]] this]]]]
+												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
+												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]]
+												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]
+												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 3]] this]]]
+												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 4]] this]]]
+												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 5]] this]]]
+												      [target_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 6]] this]]]
+												      [target_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 7]] this]]]
+												      [target_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 8]] this]]]
+												      [target_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 9]] this]]]]
 												  [eval `[funk [this]
 													       [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
 														    ,source_type
@@ -1530,9 +1551,9 @@
 						[t                                            [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
 	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]
 
-[defunk nonsemantic_plan-expression-compile_imagine [expression]
+[deftypefunk nonsemantic_plan get expression-compile_imagine [expression]
   [eval `[funk [this]
-	       [let [[result [shelter [funkall ,[nonsemantic_plan-expression-unwrapped_compile_imagine expression] this]]]]
+	       [let [[result [shelter [funkall ,[get this expression-unwrapped_compile_imagine expression] this]]]]
 		 [if [is-type `bug result]
 		     [let [[bug result]]
 		       [if [have [get bug frame] lookup `is_plan_bug]
@@ -1546,7 +1567,7 @@
 		   result]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []
-  [nonsemantic_plan-expression-compile_imagine expression]]
+  [get this expression-compile_imagine expression]]
 
 [deftypefunk nonsemantic_plan get compiled_imagine_funk []
   [if [null internal-compiled_imagine_funk]

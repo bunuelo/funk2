@@ -918,8 +918,14 @@ f2ptr raw__double__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr term
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
+  double            d = f2double__d(this, cause);
   funk2_character_t double_string[128];
-  u64               double_string__length = funk2_character_string__snprintf(double_string, 128, "%g", f2double__d(this, cause));
+  u64               double_string__length;
+  if (d - floor(d) == 0.0) {
+    double_string__length = funk2_character_string__snprintf(double_string, 128, "%.1f", d);
+  } else {
+    double_string__length = funk2_character_string__snprintf(double_string, 128, "%g", d);
+  }
   //u64               double_string__length = funk2_character_string__snprintf(double_string, 128, "%1.16f", f2double__d(this, cause));
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__double__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, double_string__length, double_string);
@@ -1284,8 +1290,14 @@ f2ptr raw__float__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     u64   size__i = f2integer__i(size, cause);
     size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
   }
+  float             f = f2float__f(this, cause);
   funk2_character_t float_string[128];
-  u64               float_string__length = funk2_character_string__snprintf(float_string, 128, "%g", f2float__f(this, cause));
+  u64               float_string__length;
+  if (f - floor(f) == 0.0) {
+    float_string__length = funk2_character_string__snprintf(float_string, 128, "%.1f", f);
+  } else {
+    float_string__length = funk2_character_string__snprintf(float_string, 128, "%g", f);
+  }
   //u64               float_string__length = funk2_character_string__snprintf(float_string, 128, "%1.8f", f2float__f(this, cause));
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__float__foreground);
   raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, float_string__length, float_string);

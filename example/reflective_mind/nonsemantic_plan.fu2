@@ -1042,10 +1042,10 @@
 
 [defplancommand if [condition true_expression :rest false_expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
-  [let [[condition-eval         `[funkall ,[get nonsemantic_plan expression-compile condition] nonsemantic_plan]]
-	[true_expression-eval   `[funkall ,[get nonsemantic_plan expression-compile true_expression] nonsemantic_plan]]
+  [let [[condition-eval         `[funkall ,[get nonsemantic_plan expression-compile condition       compile_option_frame] nonsemantic_plan]]
+	[true_expression-eval   `[funkall ,[get nonsemantic_plan expression-compile true_expression compile_option_frame] nonsemantic_plan]]
 	[false_expressions-eval [mapcar [funk [expression]
-					      `[funkall ,[get nonsemantic_plan expression-compile expression] nonsemantic_plan]]
+					      `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 					false_expressions]]]
     [eval `[funk [nonsemantic_plan]
 		 [if ,condition-eval

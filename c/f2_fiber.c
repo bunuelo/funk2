@@ -792,6 +792,9 @@ void raw__fiber__handle_enter_virtual_processor(f2ptr cause, f2ptr this) {
 }
 
 void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
+  if (! raw__fiber__is_type(cause, this)) {
+    error(nil, "raw__fiber__handle_exit_virtual_processor error: this is not fiber.");
+  }
   {
     u64 end_execution_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
     u64 start_cycle_execution_nanoseconds    = raw__fiber__start_cycle_execution_nanoseconds(cause, this);

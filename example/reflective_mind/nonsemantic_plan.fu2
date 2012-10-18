@@ -786,9 +786,9 @@
 	 [prog [= minimum_argument_count [length arguments]]
 	       [= maximum_argument_count minimum_argument_count]]]
        [= compiled_funk [eval `[funk [nonsemantic_plan compile_option_frame arguments]
-				     [apply [funk ,`[this compile_option_frame @arguments]
+				     [apply [funk ,`[nonsemantic_plan compile_option_frame @arguments]
 						  @body]
-					    `[,this ,compile_option_frame @arguments]]]]]
+					    `[,nonsemantic_plan ,compile_option_frame @arguments]]]]]
        ]]
 
 [deftypefunk nonsemantic_plan_command execute compile [nonsemantic_plan compile_option_frame arguments]
@@ -811,7 +811,7 @@
 		 nonsemantic_plan nonsemantic_plan
 		 arguments        arguments]]]]]
 
-		
+
 [defmetro defplancommand [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
   [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command

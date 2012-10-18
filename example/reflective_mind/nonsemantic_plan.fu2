@@ -814,7 +814,8 @@
   [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
 						     name
 						     arguments
-						     body]]]
+						     body]]
+  nil]
 
 [defplancommand eval [expression]
   [eval `[funk [nonsemantic_plan]

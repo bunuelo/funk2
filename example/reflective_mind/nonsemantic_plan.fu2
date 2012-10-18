@@ -792,24 +792,30 @@
        ]]
 
 [deftypefunk nonsemantic_plan_command execute compile [nonsemantic_plan compile_option_frame arguments]
-  [let [[arguments-length [length arguments]]]
-    [if [or [< arguments-length minimum_argument_count]
-	    [and [not [null maximum_argument_count]]
-		 [> arguments-length maximum_argument_count]]]
-	[error bug_name                      `nonsemantic_plan_compile-wrong_number_of_arguments
-	       minimum_argument_count        minimum_argument_count
-	       maximum_argument_count        maximum_argument_count
-	       nonsemantic_plan_command-name name
-	       arguments                     arguments
-	       compile_option_frame          compile_option_frame]
-      [apply compiled_funk `[,nonsemantic_plan ,compile_option_frame @arguments]]]]]
-	       
+  [let [[result [shelter [let [[arguments-length [length arguments]]]
+			   [if [or [< arguments-length minimum_argument_count]
+				   [and [not [null maximum_argument_count]]
+					[> arguments-length maximum_argument_count]]]
+			       [error bug_name                      `nonsemantic_plan_compile-wrong_number_of_arguments
+				      minimum_argument_count        minimum_argument_count
+				      maximum_argument_count        maximum_argument_count
+				      nonsemantic_plan_command-name name
+				      arguments                     arguments
+				      compile_option_frame          compile_option_frame]
+			     [apply compiled_funk `[,nonsemantic_plan ,compile_option_frame @arguments]]]]]]]
+    [if [is-type `bug result]
+	[error bug_name         `nonsemantic_plan_command-error_compiling_command
+	       this             this
+	       nonsemantic_plan nonsemantic_plan
+	       arguments        arguments]]]]
+
 		
 [defmetro defplancommand [name arguments :rest body]
   [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
 						     name
 						     arguments
-						     body]]]
+						     body]]
+  nil]
 
 [defplancommand eval [expression]
   [eval `[funk [nonsemantic_plan]

@@ -268,7 +268,6 @@
 						     'example/roboverse/'
 						     'example/socket-client/'
 						     'example/socket-server/'
-						     'example/string_pattern/'
 						     'example/traced_mind/'
 						     'example/visualize/'
 						     'test/cairo-test/'

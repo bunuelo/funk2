@@ -804,10 +804,12 @@
 				      compile_option_frame          compile_option_frame]
 			     [apply compiled_funk `[,nonsemantic_plan ,compile_option_frame @arguments]]]]]]]
     [if [is-type `bug result]
-	[error bug_name         `nonsemantic_plan_command-error_compiling_command
-	       this             this
-	       nonsemantic_plan nonsemantic_plan
-	       arguments        arguments]]]]
+	[let [[bug result]]
+	  [error bug_name         `nonsemantic_plan_command-error_compiling_command
+		 subbug           bug
+		 this             this
+		 nonsemantic_plan nonsemantic_plan
+		 arguments        arguments]]]]]
 
 		
 [defmetro defplancommand [name arguments :rest body]

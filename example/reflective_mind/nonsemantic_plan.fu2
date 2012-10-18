@@ -1054,7 +1054,7 @@
 
 [defplancommand assert [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[assert ,expression]]
-  [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression] nonsemantic_plan]]]
+  [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
     [eval `[funk [nonsemantic_plan]
 		 [let [[expression ,expression-eval]]
 		   [if [not expression]

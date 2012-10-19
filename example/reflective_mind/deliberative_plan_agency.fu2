@@ -100,7 +100,7 @@
 							    [stringlist-concat `['focus on the plan to '
 										 ,[get [get semantic_plan_object nonsemantic_plan] name_expression]]]]]
 	    [t                                            [stringlist-concat `['focus on '
-									       ,[get focus_object as-natural_language_string]]]]]]]]
+									       ,[get focus_object as-string]]]]]]]]
 
 'deliberative_execute_plan_in_focus_resource'
 

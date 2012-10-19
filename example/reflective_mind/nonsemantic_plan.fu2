@@ -188,7 +188,7 @@
     [get this expression-compile expression compile_option_frame]]]
 
 [deftypefunk nonsemantic_plan get as-natural_language_string []
-  [if [eq `uninitialized internal-natural_language_string]
+  [if [null internal-natural_language_string]
       [= internal-natural_language_string [get this expression-as_natural_language_string expression]]]
   internal-natural_language_string]
 

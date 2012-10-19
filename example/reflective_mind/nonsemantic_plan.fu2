@@ -494,14 +494,18 @@
 						 [stringlist-concat [cons 'do the following in serial: '
 									  [let [[index 0]]
 									    [mapcar [funk [expression]
-											  [let [[separator [if [== index 0]
+											  [= index [+ index 1]]
+											  [let [[separator [if [== index 1]
 													       ''
-													     [if [== index [- expresions-length 1]]
+													     [if [== index expresions-length]
 														 ', and finally '
 													       ', ']]]]
 											    [string-concat separator
-													   '(' [get [+ index 1] as-string] ') '
-													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+													   '(' [get index as-string] ') '
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]
+													   [if [== index expressions-length]
+													       ''
+													     ' ']]]]
 										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -524,14 +528,18 @@
 						 [stringlist-concat [cons 'do the following at the same time: '
 									  [let [[index 0]]
 									    [mapcar [funk [expression]
-											  [let [[separator [if [== index 0]
+											  [= index [+ index 1]]
+											  [let [[separator [if [== index 1]
 													       ''
-													     [if [== index [- expresions-length 1]]
+													     [if [== index expresions-length]
 														 ', and '
 													       ', ']]]]
 											    [string-concat separator
-													   '(' [get [+ index 1] as-string] ') '
-													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+													   '(' [get index as-string] ') '
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]
+													   [if [== index expressions-length]
+													       ''
+													     ' ']]]]
 										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode

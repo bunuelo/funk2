@@ -626,9 +626,9 @@
   [let [[compile-mode [have compile_option_frame lookup `mode]]]
     [cond [[eq compile-mode `syntax_check]     [prog ]]
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
-							    [eval ,expression]]]]
+							    ,expression]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] 'evaluate funk expression']
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -641,7 +641,7 @@
 							    [quote ,expression]
 							    ]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [get expression as-string]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -657,7 +657,18 @@
 										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									       expressions]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
+						 [stringlist-concat [cons 'a list of '
+									  [let [[index 0]]
+									    [mapcar [funk [expression]
+											  [let [[separator [if [== index 0]
+													       ''
+													     [if [== index [- expresions-length 1]]
+														 ', and '
+													       ', ']]]]
+											    [string-concat separator
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -673,7 +684,18 @@
 										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									       expressions]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
+						 [stringlist-concat [cons 'a list of '
+									  [let [[index 0]]
+									    [mapcar [funk [expression]
+											  [let [[separator [if [== index 0]
+													       ''
+													     [if [== index [- expresions-length 1]]
+														 ', and '
+													       ', ']]]]
+											    [string-concat separator
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -687,7 +709,7 @@
 							      [terminal_format standard-terminal '\nplan printing expression: ' eval-expression]
 							      eval-expression]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'print ' [get nonsemantic_plan expression-compile expression compile_option_frame]]] 
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -704,7 +726,19 @@
 									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 								     expressions]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
+						 [stringlist-concat [cons 'do the following in serial: '
+									  [let [[index 0]]
+									    [mapcar [funk [expression]
+											  [let [[separator [if [== index 0]
+													       ''
+													     [if [== index [- expresions-length 1]]
+														 ', and finally '
+													       ', ']]]]
+											    [string-concat separator
+													   '(' [get [+ index 1] as-string] ') '
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -722,7 +756,19 @@
 									    expressions]]
 							    nil]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
+						 [stringlist-concat [cons 'do the following at the same time: '
+									  [let [[index 0]]
+									    [mapcar [funk [expression]
+											  [let [[separator [if [== index 0]
+													       ''
+													     [if [== index [- expresions-length 1]]
+														 ', and '
+													       ', ']]]]
+											    [string-concat separator
+													   '(' [get [+ index 1] as-string] ') '
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
+										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -741,7 +787,7 @@
 								[= time_step [have [get nonsemantic_plan mind] wait_for_time_step [+ time_step 1]]]]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'wait for ' [get time_to_wait as-string] ' physical world steps']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -766,7 +812,7 @@
 									[have action wait_to_call @action_arguments-eval]
 									]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'activate "' [get nonsemantic_plan expression-compile action_name compile_option_frame] '" resource in layer below']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -791,7 +837,7 @@
 									[have action wait_to_call @action_arguments-eval]
 									]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'activate "' [get nonsemantic_plan expression-compile action_name compile_option_frame] '" resource in this layer']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -829,7 +875,7 @@
 										 funkname   `plan
 										 expression expression]]]]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'a plan in this layer to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -867,7 +913,7 @@
 										 funkname   `plan
 										 expression expression]]]]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'a plan in the layer below to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -899,7 +945,7 @@
 								    `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 								    [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile plan_name compile_option_frame] ' in the layer below']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -933,7 +979,7 @@
 								    [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 								    ]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile plan_name compile_option_frame] ' in this layer']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -947,7 +993,7 @@
 							      [have nonsemantic_plan check_exists eval-exists-expression]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile partial_state compile_option_frame] ' exists']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -963,7 +1009,7 @@
 								[have nonsemantic_plan wait_for partial_state]]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'wait for ' [get nonsemantic_plan expression-compile partial_state compile_option_frame] ' to exist']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -986,7 +1032,22 @@
 								  ,true_expression-eval
 								@false_expressions-eval]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'if ' [get nonsemantic_plan expression-compile condition compile_option_frame]
+							      ', '  [get nonsemantic_plan expression-compile true_expression compile_option_frame]
+							      [if false_expressions
+								  [string-concat ', otherwise '
+										 [stringlist-concat [let [[false_expressions-length [length false_expressions]]
+													  [index                    0]]
+												      [mapcar [funk [false_expression]
+														    [= index [+ index 1]]
+														    [let [[separator [if [== index 1]
+																	 ''
+																       [if [== index false_expressions-length]
+																	   ', and '
+																	 ', ']]]]
+														      [string-concat separator
+																     [get nonsemantic_plan expression-compile false_expression compile_option_frame]]]]
+													      false_expressions]]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1003,7 +1064,7 @@
 									   is_plan_bug t
 									   description [conslist `assert [quote ,expression]]]]]]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'assert that ' [get nonsemantic_plan expression-compile expression compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1020,7 +1081,7 @@
 							      [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [string-concat 'to be determined ' [get variable_name as-string]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1065,7 +1126,21 @@
 								   ,value-eval]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[source_type-eval     [get nonsemantic_plan expression-compile source_type     compile_option_frame]]
+						     [source_key_type-eval [get nonsemantic_plan expression-compile source_key_type compile_option_frame]]
+						     [source_key-eval      [get nonsemantic_plan expression-compile source_key      compile_option_frame]]
+						     [source_value-eval    [get nonsemantic_plan expression-compile source_value    compile_option_frame]]
+						     [key_type-eval        [get nonsemantic_plan expression-compile key_type        compile_option_frame]]
+						     [key-eval             [get nonsemantic_plan expression-compile key             compile_option_frame]]
+						     [value-eval           [get nonsemantic_plan expression-compile value           compile_option_frame]]]
+						 [get [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+							   source_type-eval
+							   source_key_type-eval
+							   source_key-eval
+							   source_value-eval
+							   key_type-eval
+							   key-eval
+							   value-eval] as-natural_language_string]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1125,7 +1200,27 @@
 								   ,target_value-eval]
 							      ]]]]
 	  [[eq compile-mode `imagine]          [prog ]]
-	  [[eq compile-mode `natural_language] [prog ]]
+	  [[eq compile-mode `natural_language] [let [[source_type-eval     [get nonsemantic_plan expression-compile source_type     compile_option_frame]]
+						     [source_key_type-eval [get nonsemantic_plan expression-compile source_key_type compile_option_frame]]
+						     [source_key-eval      [get nonsemantic_plan expression-compile source_key      compile_option_frame]]
+						     [source_value-eval    [get nonsemantic_plan expression-compile source_value    compile_option_frame]]
+						     [key_type-eval        [get nonsemantic_plan expression-compile key_type        compile_option_frame]]
+						     [key-eval             [get nonsemantic_plan expression-compile key             compile_option_frame]]
+						     [target_type-eval     [get nonsemantic_plan expression-compile target_type     compile_option_frame]]
+						     [target_key_type-eval [get nonsemantic_plan expression-compile target_key_type compile_option_frame]]
+						     [target_key-eval      [get nonsemantic_plan expression-compile target_key      compile_option_frame]]
+						     [target_value-eval    [get nonsemantic_plan expression-compile target_value    compile_option_frame]]]
+						 [get [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+							   source_type-eval
+							   source_key_type-eval
+							   source_key-eval
+							   source_value-eval
+							   key_type-eval
+							   key-eval
+							   target_type-eval
+							   target_key_type-eval
+							   target_key-eval
+							   target_value-eval] as-natural_language_string]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1156,7 +1251,9 @@
 							      [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]
 							      ]]]
 	    [[eq compile-mode `imagine]          [prog ]]
-	    [[eq compile-mode `natural_language] [prog ]]
+	    [[eq compile-mode `natural_language] [string-concat 'define a plan to ' [if [is-type `string name_expression]
+											name_expression
+										      [get name_expression as-string]]]]
 	    [[eq compile-mode `semantic]         [prog ]]
 	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 							compile-mode compile-mode]]]]]]

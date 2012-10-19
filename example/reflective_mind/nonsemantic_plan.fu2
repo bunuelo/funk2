@@ -815,14 +815,11 @@
 
 [defmetro defplancommand [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
-  [let [[compile-mode [have compile_option_frame lookup `mode]]]
-    [cond [[eq compile-mode `execute] [prog [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
-											       name
-											       arguments
-											       body]]
-					    nil]]
-	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
-					     compile-mode compile-mode]]]]]
+  [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
+						     name
+						     arguments
+						     body]]
+  nil]
 
 [defplancommand eval [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]

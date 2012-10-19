@@ -1041,21 +1041,28 @@
 					[t                            [error bug_name        `nonsemantic_plan_compile_error-invalid_expression_type
 									     expression-type [type expression]
 									     expression      expression]]]]]
-    [eval `[funk [this]
-		 [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
-		 [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-		   [if [is-type `bug result]
-		       [let [[bug result]]
-			 [if [have [get bug frame] lookup `is_plan_bug]
-			     bug
-			   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-			     [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			     [error bug_name         `nonsemantic_plan-expression_encountered_bug
-				    expression       [quote ,expression]
-				    semantic_thought semantic_thought
-				    subbug           bug]]]]
-		     [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
-			   result]]]]]]]
+    [let [[compile-mode [have compile_option_frame lookup `mode]]]
+      [cond [[eq compile-mode `syntax_check]     unwrapped_compile_result]
+	    [[eq compile-mode `execute]          [eval `[funk [this]
+							      [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
+							      [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
+								[if [is-type `bug result]
+								    [let [[bug result]]
+								      [if [have [get bug frame] lookup `is_plan_bug]
+									  bug
+									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+									  [error bug_name         `nonsemantic_plan-expression_encountered_bug
+										 expression       [quote ,expression]
+										 semantic_thought semantic_thought
+										 subbug           bug]]]]
+								  [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
+									result]]]]]]
+	    [[eq compile-mode `imagine]          unwrapped_compile_result]
+	    [[eq compile-mode `natural_language] unwrapped_compile_result]
+	    [[eq compile-mode `semantic]         unwrapped_compile_result]
+	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+							compile-mode compile-mode]]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[compile_option_frame [frame mode `execute]]]

@@ -332,6 +332,7 @@
 	      "defobject"
 	      "defpackage"
 	      "defplan"
+	      "defplancommand"
 	      "deframe"
 	      "deftypeconstruct"
 	      "deftypefunk"

@@ -427,7 +427,7 @@
 									    [mapcar [funk [expression]
 											  [let [[separator [if [== index 0]
 													       ''
-													     [if [== index [- expresions-length 1]]
+													     [if [== index [- expressions-length 1]]
 														 ', and '
 													       ', ']]]]
 											    [string-concat separator
@@ -454,7 +454,7 @@
 									    [mapcar [funk [expression]
 											  [let [[separator [if [== index 0]
 													       ''
-													     [if [== index [- expresions-length 1]]
+													     [if [== index [- expressions-length 1]]
 														 ', and '
 													       ', ']]]]
 											    [string-concat separator
@@ -497,7 +497,7 @@
 											  [= index [+ index 1]]
 											  [let [[separator [if [== index 1]
 													       ''
-													     [if [== index expresions-length]
+													     [if [== index expressions-length]
 														 ', and finally '
 													       ', ']]]]
 											    [string-concat separator
@@ -531,7 +531,7 @@
 											  [= index [+ index 1]]
 											  [let [[separator [if [== index 1]
 													       ''
-													     [if [== index expresions-length]
+													     [if [== index expressions-length]
 														 ', and '
 													       ', ']]]]
 											    [string-concat separator

@@ -427,21 +427,21 @@ f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
 	return raw__processor__remove_active_fiber(cause, processor, fiber);
       } else {
 	return new__error(f2list8__new(cause,
-				       new__symbol(cause, "bug_type"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_out_of_range"),
+				       new__symbol(cause, "bug_name"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_out_of_range"),
 				       new__symbol(cause, "this-fiber"),             f2__this__fiber(cause),
 				       new__symbol(cause, "fiber"),                  fiber,
 				       new__symbol(cause, "this-fiber-stack_trace"), f2__fiber__stack_trace(cause, f2__this__fiber(cause))));
       }
     } else {
       return new__error(f2list8__new(cause,
-				     new__symbol(cause, "bug_type"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_not_an_integer"),
+				     new__symbol(cause, "bug_name"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_processor_assignment_index_is_not_an_integer"),
 				     new__symbol(cause, "this-fiber"),             f2__this__fiber(cause),
 				     new__symbol(cause, "fiber"),                  fiber,
 				     new__symbol(cause, "this-fiber-stack_trace"), f2__fiber__stack_trace(cause, f2__this__fiber(cause))));
     }
   } else {
     return new__error(f2list8__new(cause,
-				   new__symbol(cause, "bug_type"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_is_not_currently_assigned_to_a_processor"),
+				   new__symbol(cause, "bug_name"),               new__symbol(cause, "global_scheduler-remove_fiber-fiber_is_not_currently_assigned_to_a_processor"),
 				   new__symbol(cause, "this-fiber"),             f2__this__fiber(cause),
 				   new__symbol(cause, "fiber"),                  fiber,
 				   new__symbol(cause, "this-fiber-stack_trace"), f2__fiber__stack_trace(cause, f2__this__fiber(cause))));

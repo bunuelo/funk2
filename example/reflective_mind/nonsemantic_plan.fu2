@@ -829,7 +829,8 @@
   [let [[compile-mode [have compile_option_frame lookup `mode]]]
     [cond [[eq compile-mode `execute] [prog [eval `[funk [nonsemantic_plan]
 							 [eval ,expression]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand quote [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[quote ,expression]]
@@ -837,7 +838,8 @@
     [cond [[eq compile-mode `execute] [prog [eval `[funk [nonsemantic_plan]
 							 [quote ,expression]
 							 ]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand list [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[list @expression]]
@@ -846,7 +848,8 @@
 							 [conslist @[mapcar [funk [expression]
 										  `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									    expressions]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand backquote-list [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[backquote-list @expressions]]
@@ -855,7 +858,8 @@
 							 [conslist @[mapcar [funk [expression]
 										  `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									    expressions]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand print [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[print expression]]
@@ -864,7 +868,8 @@
 							 [let [[eval-expression [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 							   [terminal_format standard-terminal '\nplan printing expression: ' eval-expression]
 							   eval-expression]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand prog [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[prog @expressions]]
@@ -874,7 +879,8 @@
 							 @[mapcar [funk [expression]
 									`[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 								  expressions]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand parog [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[parog @expressions]]
@@ -885,7 +891,8 @@
 									       `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									 expressions]]
 							 nil]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand wait-for-time [time_to_wait]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[wait-for-time ,time_to_wait]]
@@ -897,7 +904,8 @@
 							     [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for time step ' i `/ time_to_wait '.']
 							     [= time_step [have [get nonsemantic_plan mind] wait_for_time_step [+ time_step 1]]]]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand call-below [action_name :rest action_arguments]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call-below ,action_name @action_arguments]]
@@ -914,7 +922,8 @@
 							       [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 								     [have action wait_to_call @action_arguments-eval]
 								     ]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand call [action_name :rest action_arguments]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call ,action_name @action_arguments]]
@@ -931,7 +940,8 @@
 							       [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 								     [have action wait_to_call @action_arguments-eval]
 								     ]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand plan [plan_name]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan ,plan_name]]
@@ -964,7 +974,8 @@
 								       [error bug_name   could_not_find_matching_semantic_plans
 									      funkname   `plan
 									      expression expression]]]]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand plan-below [plan_name]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan-below ,plan_name]]
@@ -997,7 +1008,8 @@
 								       [error bug_name   could_not_find_matching_semantic_plans
 									      funkname   `plan
 									      expression expression]]]]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand plan-call-below [plan_name]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan-call-below ,plan_name]]
@@ -1024,7 +1036,8 @@
 							       [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 								 `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 								 [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand plan-call [plan_name]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan-call ,plan_name]]
@@ -1053,7 +1066,8 @@
 								 `[terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 								 [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 								 ]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand exists [partial_state]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[exists ,partial_state]]
@@ -1062,7 +1076,8 @@
 							 [let [[eval-exists-expression [funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
 							   [have nonsemantic_plan check_exists eval-exists-expression]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand wait-for [partial_state]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[wait-for ,partial_state]]
@@ -1073,7 +1088,8 @@
 							     [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_natural_language_string] '."']
 							     [have nonsemantic_plan wait_for partial_state]]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand if [condition true_expression :rest false_expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
@@ -1087,7 +1103,8 @@
 							   [if ,condition-eval
 							       ,true_expression-eval
 							     @false_expressions-eval]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand assert [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[assert ,expression]]
@@ -1099,7 +1116,8 @@
 								 [error bug_name    `assertion-failed
 									is_plan_bug t
 									description [conslist `assert [quote ,expression]]]]]]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand ? [variable_name]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
@@ -1109,7 +1127,8 @@
 							   [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
 							   [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand property [source_type
 			  source_key_type
@@ -1143,7 +1162,8 @@
 								,key-eval
 								,value-eval]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand relationship [source_type
 			      source_key_type
@@ -1189,7 +1209,8 @@
 								,target_key-eval
 								,target_value-eval]
 							   ]]]]]
-	  ]]]
+	  [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]
 
 [defplancommand defplan [name_expression :rest arguments]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
@@ -1215,7 +1236,8 @@
 							   [terminal_format standard-terminal '\n' [conslist `defplan [quote ,name_expression]]]
 							   [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]
 							   ]]]]
-	    ]]]]
+	    [t                          [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+					     compile-mode compile-mode]]]]]]
 
 
 

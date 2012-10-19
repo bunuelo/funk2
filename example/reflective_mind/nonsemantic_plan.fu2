@@ -502,10 +502,7 @@
 													       ', ']]]]
 											    [string-concat separator
 													   '(' [get index as-string] ') '
-													   [get nonsemantic_plan expression-compile expression compile_option_frame]
-													   [if [== index expressions-length]
-													       ''
-													     ' ']]]]
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -536,10 +533,7 @@
 													       ', ']]]]
 											    [string-concat separator
 													   '(' [get index as-string] ') '
-													   [get nonsemantic_plan expression-compile expression compile_option_frame]
-													   [if [== index expressions-length]
-													       ''
-													     ' ']]]]
+													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 										    expressions]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode

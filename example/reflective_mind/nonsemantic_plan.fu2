@@ -316,7 +316,8 @@
     [cond [[eq compile-mode `syntax_check]     [prog ]]
 	  [[eq compile-mode `execute]          [eval `[funk [this]
 							    [quote ,expression]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [quote ,expression]]]]
 	  [[eq compile-mode `natural_language] [get expression as-string]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -332,7 +333,9 @@
 	  [[eq compile-mode `execute]          [eval `[funk [this]
 							    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 							      [have semantic_thought evaluate_string ,expression]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+							      [have semantic_thought evaluate_string ,expression]]]]]
 	  [[eq compile-mode `natural_language] expression]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode

@@ -195,6 +195,11 @@
 		    [plan-call 'drop the block I am holding on a [? bottom_shape]']
 		    [plan-call 'assert that a [? top_shape] is on a [? bottom_shape]']]
 		
+		[defplan 'stack a cube on a pyramid'
+		  [plan-call 'pick up a cube']
+		  [plan-call 'drop the block I am holding on a pyramid']
+		  [plan-call 'assert that a cube is on a pyramid']]
+		
 		[defplan 'test stack a pyramid on a cube'
 		  [plan-call 'stack a pyramid on a cube']]
 		

@@ -218,7 +218,11 @@
   [have [get this mental_layer] check_exists semantic_partial_state]]
 
 [deftypefunk nonsemantic_plan execute imagine_check_exists [semantic_partial_state]
-  [have [get this mental_layer] imagine_check_exists semantic_partial_state]]
+  [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
+    [if [null found_event]
+	[prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
+	      [get this check_exists]]
+      [not [get found_event is_negative_knowledge]]]]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
@@ -901,7 +905,7 @@
 							      ]]]]
 	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile partial_state compile_option_frame] ' exists']]
 	  [[eq compile-mode `semantic]         [prog ]]
-	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
 [defplancommand wait-for [partial_state]

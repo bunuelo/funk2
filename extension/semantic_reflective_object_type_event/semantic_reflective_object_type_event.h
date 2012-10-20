@@ -27,19 +27,23 @@
 #include "../semantic_dependency/semantic_dependency.h"
 
 
-f2ptr     raw__semantic_reflective_object_type_event__type_create        (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
-f2ptr     raw__semantic_reflective_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
-f2ptr      f2__semantic_reflective_object_type_event__new                (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
-boolean_t raw__semantic_reflective_object_type_event__is_type            (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_reflective_object_type_event__is_type            (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_reflective_object_type_event__type               (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_reflective_object_type_event__type               (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_reflective_object_type_event__example__lookup_set(f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_reflective_object_type_event__example__lookup_set(f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_reflective_object_type_event__example__add       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_reflective_object_type_event__example__add       (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_reflective_object_type_event__example__remove    (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_reflective_object_type_event__example__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object_type_event__type_create               (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
+f2ptr     raw__semantic_reflective_object_type_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
+f2ptr      f2__semantic_reflective_object_type_event__new                       (f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name);
+boolean_t raw__semantic_reflective_object_type_event__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_reflective_object_type_event__is_type                   (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_reflective_object_type_event__type                      (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object_type_event__type                      (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object_type_event__is_negative_knowledge     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object_type_event__is_negative_knowledge     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object_type_event__is_negative_knowledge__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object_type_event__is_negative_knowledge__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object_type_event__example__lookup_set       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object_type_event__example__lookup_set       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object_type_event__example__add              (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object_type_event__example__add              (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object_type_event__example__remove           (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object_type_event__example__remove           (f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 

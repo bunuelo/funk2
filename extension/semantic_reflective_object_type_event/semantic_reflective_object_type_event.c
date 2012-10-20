@@ -26,11 +26,12 @@
 
 f2ptr raw__semantic_reflective_object_type_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr object_phenomenal_name) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"),                             new__symbol(cause, "semantic_reflective_object_type_event"));
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2cmutex__new(cause));
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks"),        nil);
-    raw__frame__add_var_value(cause, this, new__symbol(cause, "has_lost_dependency"),              nil);
+    raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_reflective_object_type_event"));
   }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "is_negative_knowledge"),            nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2cmutex__new(cause));
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "lost_dependency_callbacks"),        nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "has_lost_dependency"),              nil);
   assert_value(raw__semantic_object_type_event__type_create(cause, this, semantic_realm, phenomenal_name, object_phenomenal_name));
   return this;
 }
@@ -82,6 +83,28 @@ f2ptr f2__semantic_reflective_object_type_event__type(f2ptr cause, f2ptr this) {
   return raw__semantic_reflective_object_type_event__type(cause, this);
 }
 export_cefunk1(semantic_reflective_object_type_event__type, thing, 0, "Returns the specific type of object that this semantic_reflective_object_type_event is.");
+
+
+f2ptr raw__semantic_reflective_object_type_event__is_negative_knowledge(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "is_negative_knowledge"), nil);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__is_negative_knowledge(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__is_negative_knowledge(cause, this);
+}
+export_cefunk1(semantic_reflective_object_type_event__is_negative_knowledge, this, 0, "");
+
+
+f2ptr raw__semantic_reflective_object_type_event__is_negative_knowledge__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "is_negative_knowledge"), that);
+}
+
+f2ptr f2__semantic_reflective_object_type_event__is_negative_knowledge__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_reflective_object_type_event, this);
+  return raw__semantic_reflective_object_type_event__is_negative_knowledge__set(cause, this, that);
+}
+export_cefunk2(semantic_reflective_object_type_event__is_negative_knowledge__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex(f2ptr cause, f2ptr this) {
@@ -327,6 +350,8 @@ f2ptr f2__semantic_reflective_object_type_event_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "is_negative_knowledge"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__is_negative_knowledge")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "is_negative_knowledge"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__is_negative_knowledge__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "lost_dependency_callbacks_cmutex"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks_cmutex__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "lost_dependency_callbacks"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_reflective_object_type_event"), new__symbol(cause, "semantic_reflective_object_type_event__lost_dependency_callbacks")));}

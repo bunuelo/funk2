@@ -221,7 +221,7 @@
   [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
     [if [null found_event]
 	[prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
-	      [get this check_exists]]
+	      [have this check_exists]]
       [not [get found_event is_negative_knowledge]]]]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]

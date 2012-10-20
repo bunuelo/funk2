@@ -391,7 +391,10 @@
     [cond [[eq compile-mode `syntax_check]     [prog ]]
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
 							    ,expression]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [let [[expression [quote ,expression]]]
+							      [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
+							      ]]]]
 	  [[eq compile-mode `natural_language] 'evaluate funk expression']
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -404,7 +407,9 @@
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
 							    [quote ,expression]
 							    ]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [quote ,quote-expression]
+							    ]]]
 	  [[eq compile-mode `natural_language] [get expression as-string]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -420,7 +425,10 @@
 							    [conslist @[mapcar [funk [expression]
 										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									       expressions]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [conslist @[mapcar [funk [expression]
+										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+									       expression]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'a list of '
 									  [let [[index 0]]
@@ -447,7 +455,10 @@
 							    [conslist @[mapcar [funk [expression]
 										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									       expressions]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [conslist @[mapcar [funk [expression]
+										     `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+									       expression]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'a list of '
 									  [let [[index 0]]
@@ -472,7 +483,10 @@
 							    [let [[eval-expression [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 							      [terminal_format standard-terminal '\nplan printing expression: ' eval-expression]
 							      eval-expression]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [let [[eval-expression [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+							      [terminal_format standard-terminal '\nimagined plan printing expression: ' eval-expression]
+							      eval-expression]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'print ' [get nonsemantic_plan expression-compile expression compile_option_frame]]] 
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -489,7 +503,11 @@
 							    @[mapcar [funk [expression]
 									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 								     expressions]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [terminal_format standard-terminal '\nplan evaluating serial process.']
+							    @[mapcar [funk [expression]
+									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+								     expressions]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '
 									  [let [[index 0]]
@@ -520,7 +538,12 @@
 										  `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
 									    expressions]]
 							    nil]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [terminal_format standard-terminal '\nplan evaluating parallel process.']
+							    [parog @[mapcar [funk [expression]
+										  `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+									    expressions]]
+							    nil]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following at the same time: '
 									  [let [[index 0]]
@@ -552,7 +575,10 @@
 								[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for time step ' i `/ time_to_wait '.']
 								[= time_step [have [get nonsemantic_plan mind] wait_for_time_step [+ time_step 1]]]]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [this]
+							    [let [[time_to_wait ,time_to_wait]]
+							      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
+							      ]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'wait for ' [get time_to_wait as-string] ' physical world steps']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -577,7 +603,18 @@
 								  [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									[have action wait_to_call @action_arguments-eval]
 									]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] this]]
+						     [action_arguments-eval [mapcar [funk [action_argument]
+											  `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] this]]
+										    [cdr arguments]]]]
+						 [eval `[funk [this]
+							      [let [[action [have nonsemantic_plan lookup_action_below ,action_name-eval]]]
+								[if [null action]
+								    [error bug_name    `nonsemantic_plan-call_below-no_such_action
+									   action_name ,action_name-eval]
+								  [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+									[have action imagine_waiting_to_call @action_arguments-eval]
+									]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'activate "' [get nonsemantic_plan expression-compile action_name compile_option_frame] '" resource in layer below']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -602,7 +639,18 @@
 								  [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									[have action wait_to_call @action_arguments-eval]
 									]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] nonsemantic_plan]]
+						     [action_arguments-eval [mapcar [funk [action_argument]
+											  `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] nonsemantic_plan]]
+										    action_arguments]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let [[action [have nonsemantic_plan lookup_action ,action_name-eval]]]
+								[if [null action]
+								    [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+									   action_name ,action_name-eval]
+								  [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+									[have action imagine_waiting_to_call @action_arguments-eval]
+									]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'activate "' [get nonsemantic_plan expression-compile action_name compile_option_frame] '" resource in this layer']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -640,7 +688,25 @@
 									  [error bug_name   could_not_find_matching_semantic_plans
 										 funkname   `plan
 										 expression expression]]]]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let* [[plan_name                            ,plan_name-eval]
+								     [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+								     [semantic_plan_object                 [have [get nonsemantic_plan mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+								     [variable_frame                       [new frame]]]
+								[if [null semantic_plan_object]
+								    [let [[semantic_plan_matches [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[semantic_plan_match [car semantic_plan_matches]]]
+									    [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+									    [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
+								[terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
+								[if [null semantic_plan_object]
+								    [error bug_name    `nonsemantic_plan-plan-no_such_plan
+									   action_name semantic_plan_object-phenomenal_name]
+								  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+								    [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+								      [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in this layer to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -678,7 +744,25 @@
 									  [error bug_name   could_not_find_matching_semantic_plans
 										 funkname   `plan
 										 expression expression]]]]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let* [[plan_name                            ,plan_name-eval]
+								     [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+								     [semantic_plan_object                 [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+								     [variable_frame                       [new frame]]]
+								[if [null semantic_plan_object]
+								    [let [[semantic_plan_matches [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[semantic_plan_match [car semantic_plan_matches]]]
+									    [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+									    [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
+								[terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
+								[if [null semantic_plan_object]
+								    [error bug_name    `nonsemantic_plan-plan-no_such_plan
+									   action_name semantic_plan_object-phenomenal_name]
+								  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+								    [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
+								      [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in the layer below to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -710,7 +794,27 @@
 								  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 								    `[terminal_format standard-terminal '\nexecuting plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 								    [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let* [[plan_name                            ,plan_name-eval]
+								     [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+								     [semantic_plan_object                 [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+								     [variable_frame                       [new frame]]]
+								[if [null semantic_plan_object]
+								    [let [[semantic_plan_matches [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[semantic_plan_match [car semantic_plan_matches]]]
+									    [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+									    [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
+								[terminal_format standard-terminal '\nimagining executing plan in layer below with variable frame: ' variable_frame]
+								[if [null semantic_plan_object]
+								    [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
+									   action_name semantic_plan_object-phenomenal_name]
+								  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+									[semantic_planner [get [get [get nonsemantic_plan mental_layer_below] agency `plan] semantic_planner]]]
+								    [terminal_format standard-terminal '\nimagining executing plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+								    [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
+								    ]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile plan_name compile_option_frame] ' in the layer below']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -744,7 +848,27 @@
 								    `[terminal_format standard-terminal '\nexecuting plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
 								    [have nonsemantic_plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]
 								    ]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let* [[plan_name                            ,plan_name-eval]
+								     [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+								     [semantic_plan_object                 [have [get nonsemantic_plan mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
+								     [variable_frame                       [new frame]]]
+								[if [null semantic_plan_object]
+								    [let [[semantic_plan_matches [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[semantic_plan_match [car semantic_plan_matches]]]
+									    [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+									    [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
+								[terminal_format standard-terminal '\nimagining executing plan with variable frame: ' variable_frame]
+								[if [null semantic_plan_object]
+								    [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
+									   action_name semantic_plan_object-phenomenal_name]
+								  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
+									[semantic_planner [get [get [get nonsemantic_plan mental_layer] agency `plan] semantic_planner]]]
+								    [terminal_format standard-terminal '\nimagining executing plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
+								    [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
+								    ]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile plan_name compile_option_frame] ' in this layer']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -755,10 +879,13 @@
   [let [[compile-mode [have compile_option_frame lookup `mode]]]
     [cond [[eq compile-mode `syntax_check]     [get nonsemantic_plan expression-compile partial_state compile_option_frame]]
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
-							    [let [[eval-exists-expression [funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
-							      [have nonsemantic_plan check_exists eval-exists-expression]
+							    [let [[partial_state [funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
+							      [have nonsemantic_plan check_exists partial_state]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [let [[partial_state [funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
+							      [have nonsemantic_plan imagine_check_exists partial_state]
+							      ]]]]
 	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile partial_state compile_option_frame] ' exists']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -774,7 +901,12 @@
 								[terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_natural_language_string] '."']
 								[have nonsemantic_plan wait_for partial_state]]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[partial_state-eval `[funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let [[partial_state ,partial_state-eval]]
+								[terminal_format standard-terminal '\nplan imagining waiting for: "' [get partial_state as-declarative_natural_language_string] '."  (not yet implemented)']
+								`[have nonsemantic_plan wait_for partial_state]]
+							      ]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'wait for ' [get nonsemantic_plan expression-compile partial_state compile_option_frame] ' to exist']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -797,7 +929,15 @@
 							      [if ,condition-eval
 								  ,true_expression-eval
 								@false_expressions-eval]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[condition-eval         `[funkall ,[get nonsemantic_plan expression-compile condition       compile_option_frame] nonsemantic_plan]]
+						     [true_expression-eval   `[funkall ,[get nonsemantic_plan expression-compile true_expression compile_option_frame] nonsemantic_plan]]
+						     [false_expressions-eval [mapcar [funk [false_expression]
+											   `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]
+										     false_expressions]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [if ,condition-eval
+								  ,true_expression-eval
+								@false_expressions-eval]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'if ' [get nonsemantic_plan expression-compile condition compile_option_frame]
 							      ', '  [get nonsemantic_plan expression-compile true_expression compile_option_frame]
 							      [if false_expressions
@@ -829,7 +969,13 @@
 								    [error bug_name    `assertion-failed
 									   is_plan_bug t
 									   description [conslist `assert [quote ,expression]]]]]]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [let [[expression ,expression-eval]]
+								[if [not expression]
+								    [error bug_name    `assertion-failed
+									   is_plan_bug t
+									   description [conslist `assert [quote ,expression]]]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'assert that ' [get nonsemantic_plan expression-compile expression compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -846,7 +992,11 @@
 							      [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
 							      [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+							      [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
+							      [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
+							      ]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'to be determined ' [get variable_name as-string]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -891,7 +1041,23 @@
 								   ,key-eval
 								   ,value-eval]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[source_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_type     compile_option_frame] nonsemantic_plan]]]
+						     [source_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key_type compile_option_frame] nonsemantic_plan]]]
+						     [source_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key      compile_option_frame] nonsemantic_plan]]]
+						     [source_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_value    compile_option_frame] nonsemantic_plan]]]
+						     [key_type-eval        `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key_type        compile_option_frame] nonsemantic_plan]]]
+						     [key-eval             `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key             compile_option_frame] nonsemantic_plan]]]
+						     [value-eval           `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile value           compile_option_frame] nonsemantic_plan]]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+								   ,source_type-eval
+								   ,source_key_type-eval
+								   ,source_key-eval
+								   ,source_value-eval
+								   ,key_type-eval
+								   ,key-eval
+								   ,value-eval]
+							      ]]]]
 	  [[eq compile-mode `natural_language] [let [[source_type-eval     [get nonsemantic_plan expression-compile source_type     compile_option_frame]]
 						     [source_key_type-eval [get nonsemantic_plan expression-compile source_key_type compile_option_frame]]
 						     [source_key-eval      [get nonsemantic_plan expression-compile source_key      compile_option_frame]]
@@ -965,7 +1131,29 @@
 								   ,target_key-eval
 								   ,target_value-eval]
 							      ]]]]
-	  [[eq compile-mode `imagine]          [prog ]]
+	  [[eq compile-mode `imagine]          [let [[source_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_type     compile_option_frame] nonsemantic_plan]]]
+						     [source_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key_type compile_option_frame] nonsemantic_plan]]]
+						     [source_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key      compile_option_frame] nonsemantic_plan]]]
+						     [source_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_value    compile_option_frame] nonsemantic_plan]]]
+						     [key_type-eval        `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key_type        compile_option_frame] nonsemantic_plan]]]
+						     [key-eval             `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key             compile_option_frame] nonsemantic_plan]]]
+						     [target_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_type     compile_option_frame] nonsemantic_plan]]]
+						     [target_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_key_type compile_option_frame] nonsemantic_plan]]]
+						     [target_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_key      compile_option_frame] nonsemantic_plan]]]
+						     [target_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_value    compile_option_frame] nonsemantic_plan]]]]
+						 [eval `[funk [nonsemantic_plan]
+							      [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+								   ,source_type-eval
+								   ,source_key_type-eval
+								   ,source_key-eval
+								   ,source_value-eval
+								   ,key_type-eval
+								   ,key-eval
+								   ,target_type-eval
+								   ,target_key_type-eval
+								   ,target_key-eval
+								   ,target_value-eval]
+							      ]]]]
 	  [[eq compile-mode `natural_language] [let [[source_type-eval     [get nonsemantic_plan expression-compile source_type     compile_option_frame]]
 						     [source_key_type-eval [get nonsemantic_plan expression-compile source_key_type compile_option_frame]]
 						     [source_key-eval      [get nonsemantic_plan expression-compile source_key      compile_option_frame]]
@@ -1060,7 +1248,21 @@
 										 subbug           bug]]]]
 								  [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
 									result]]]]]]
-	    [[eq compile-mode `imagine]          unwrapped_compile_result]
+	    [[eq compile-mode `imagine]          [eval `[funk [this]
+							      [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
+							      [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
+								[if [is-type `bug result]
+								    [let [[bug result]]
+								      [if [have [get bug frame] lookup `is_plan_bug]
+									  bug
+									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+									  [error bug_name         `nonsemantic_plan-expression_encountered_bug
+										 expression       [quote ,expression]
+										 semantic_thought semantic_thought
+										 subbug           bug]]]]
+								  [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
+									result]]]]]]
 	    [[eq compile-mode `natural_language] unwrapped_compile_result]
 	    [[eq compile-mode `semantic]         unwrapped_compile_result]
 	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -1102,383 +1304,9 @@
   [have mental_layer lookup_action action_name_expression]]
 
 
-[deftypefunk nonsemantic_plan get expression-unwrapped_compile_imagine [expression]
-  [cond [[is-type `symbol expression] [eval `[funk []
-						   [quote ,expression]]]]
-	[[is-type `string expression] [eval `[funk [this]
-						   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-						     [have semantic_thought evaluate_string ,expression]]]]]
-	[[is-type `cons   expression] [let [[command   [car expression]]
-					    [arguments [cdr expression]]]
-					[let [[arguments-length [length arguments]]]
-					  [cond [[eq `eval                           command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `eval
-													 expression expression]
-												[let [[eval-expression [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [let [[eval-expression [quote ,eval-expression]]]
-														 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' eval_expression '.']
-														 ]]]]]]
-						[[eq `quote                          command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `quote
-													 expression expression]
-												[let [[quote-expression [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [quote ,quote-expression]
-													       ]]]]]
-						[[or [eq `list                       command]
-						     [eq `backquote-list             command]] [eval `[funk [this]
-													    [conslist @[mapcar [funk [argument]
-																     `[funkall ,[get this expression-compile_imagine argument] this]]
-															       arguments]]]]]
-						[[eq `print                          command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_error-wrong_number_of_arguments
-													 funkname   `print
-													 expression expression]
-												[let [[print-expression [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [let [[eval-print-expression [funkall ,[get this expression-compile_imagine print-expression] this]]]
-														 [terminal_format standard-terminal '\nplan imagine printing expression: ' eval-print-expression]
-														 eval-print-expression]]]]]]
-						[[eq `prog                           command] [eval `[funk [this]
-													   [terminal_format standard-terminal '\nplan imagining serial process.']
-													   @[mapcar [funk [argument]
-															  `[funkall ,[get this expression-compile_imagine argument] this]]
-														    arguments]]]]
-						[[eq `parog                          command] [eval `[funk [this]
-													   [terminal_format standard-terminal '\nplan imagining parallel process.']
-													   [parog @[mapcar [funk [argument]
-																 `[funkall ,[get this expression-compile_imagine argument] this]]
-															   arguments]]
-													   nil]]]
-						[[eq `wait-for-time                  command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `wait-for-time
-													 expression expression]
-												[let [[time_to_wait [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [let [[time_to_wait ,time_to_wait]]
-														 'no imaginative effects'
-														 ]]]]]]
-						[[eq `call-below                     command] [if [not [>= arguments-length 1]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `call-below
-													 expression expression]
-												[let [[action_name      `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
-												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[get this expression-compile_imagine action_argument] this]]
-																[cdr arguments]]]]
-												  [eval `[funk [this]
-													       [let [[action [have this lookup_action_below ,action_name]]]
-														 [if [null action]
-														     [error bug_name    `nonsemantic_plan-call_below-no_such_action
-															    action_name ,action_name]
-														   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-															 [have action imagine_waiting_to_call @action_arguments]
-															 ]]]]]]]]
-						[[eq `call                           command] [if [not [>= arguments-length 1]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `call
-													 expression expression]
-												[let [[action_name      `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
-												      [action_arguments [mapcar [funk [action_argument]
-																      `[funkall ,[get this expression-compile_imagine action_argument] this]]
-																[cdr arguments]]]]
-												  [eval `[funk [this]
-													       [let [[action [have this lookup_action ,action_name]]]
-														 [if [null action]
-														     [error bug_name           `nonsemantic_plan-wait_to_call-no_such_action
-															    action_description ,action_name]
-														   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-															 [have action imagine_waiting_to_call @action_arguments]
-															 ]]]]]]]]
-						[[eq `plan                           command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `plan
-													 expression expression]
-												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let* [[plan_name                            ,plan_name]
-														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
-														      [variable_frame                       [new frame]]]
-														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_matches [have [get this mental_layer] lookup_semantic_plan_matches plan_name]]]
-														       [if semantic_plan_matches
-															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-															     [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
-														 [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
-														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
-						[[eq `plan-below                     command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `plan-below
-													 expression expression]
-												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let* [[plan_name                            ,plan_name]
-														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
-														      [variable_frame                       [new frame]]]
-														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_matches [have [get this mental_layer_below] lookup_semantic_plan_matches plan_name]]]
-														       [if semantic_plan_matches
-															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-															     [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
-														 [terminal_format standard-terminal '\nimagination found plan with variable frame! ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
-														     [let [[new_nonsemantic_plan [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]]
-														       [get new_nonsemantic_plan semantic_plan_object]]]]]]]]]]
-						[[eq `plan-call-below                command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `plan-call-below
-													 expression expression]
-												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let* [[plan_name                            ,plan_name]
-														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-														      [semantic_plan_object                 [have [get this mental_layer_below] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
-														      [variable_frame                       [new frame]]]
-														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_matches [have [get this mental_layer_below] lookup_semantic_plan_matches plan_name]]]
-														       [if semantic_plan_matches
-															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-															     [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
-														 [terminal_format standard-terminal '\nimagining executing plan in layer below with variable frame: ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
-															 [semantic_planner [get [get [get this mental_layer_below] agency `plan] semantic_planner]]]
-														     [terminal_format standard-terminal '\nimagining executing plan in layer below: "' [get semantic_plan_object-phenomenal_name as-string] '."']
-														     [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
-														     ]]]]]]]]
-						[[eq `plan-call                      command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `plan-call
-													 expression expression]
-												[let* [[plan_name `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let* [[plan_name                            ,plan_name]
-														      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-														      [semantic_plan_object                 [have [get this mental_layer] lookup_semantic_plan semantic_plan_object-phenomenal_name]]
-														      [variable_frame                       [new frame]]]
-														 [if [null semantic_plan_object]
-														     [let [[semantic_plan_matches [have [get this mental_layer] lookup_semantic_plan_matches plan_name]]]
-														       [if semantic_plan_matches
-															   [let [[semantic_plan_match [car semantic_plan_matches]]]
-															     [= semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-															     [= variable_frame       [have semantic_plan_match lookup `variable_frame]]]]]]
-														 [terminal_format standard-terminal '\nimagining executing plan with variable frame: ' variable_frame]
-														 [if [null semantic_plan_object]
-														     [error bug_name    `nonsemantic_plan-plan_call-no_such_plan
-															    action_name semantic_plan_object-phenomenal_name]
-														   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]
-															 [semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
-														     [terminal_format standard-terminal '\nimagining executing plan: "' [get semantic_plan_object-phenomenal_name as-string] '."']
-														     [have nonsemantic_plan imagine_as_thought_in_semantic_planner semantic_planner variable_frame]
-														     ]]]]]]]]
-						[[eq `exists                         command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `exists
-													 expression expression]
-												[let [[exists-expression [elt arguments 0]]]
-												  [eval `[funk [this]
-													       [let [[eval-exists-expression [funkall ,[get this expression-compile_imagine exists-expression] this]]]
-														 [have this imagine_check_exists eval-exists-expression]
-														 ]]]]]]
-						[[eq `wait-for                       command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `wait-for
-													 expression expression]
-												[let [[partial_state `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let [[partial_state ,partial_state]]
-														 [terminal_format standard-terminal '\nplan imagining waiting for: "'
-																  [get partial_state as-declarative_natural_language_string] '."']
-														 [have this wait_for partial_state]
-														 ]
-													       ]]]]]
-						[[eq `if                             command] [if [not [or [== arguments-length 2]
-													   [== arguments-length 3]]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `if
-													 expression expression]
-												[let [[if-condition    `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]
-												      [if-true_branch  `[funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]
-												      [if-false_branch [if [== arguments-length 3]
-															   `[funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]]
-												  [eval `[funk [this]
-													       [if ,if-condition
-														   ,if-true_branch
-														 ,if-false_branch]]]]]]
-						[[eq `assert                         command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `assert
-													 expression expression]
-												[let [[assert-expression `[funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												  [eval `[funk [this]
-													       [let [[assert-expression ,assert-expression]]
-														 [if [not assert-expression]
-														     [error bug_name    `assertion-failed
-															    is_plan_bug t
-															    description [conslist `imagine_asserting [quote ,assert-expression]]]]]]]]]]
-						[[eq `?                              command] [if [not [eq 1 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `?
-													 expression expression]
-												[let [[variable-symbol `[quote ,[elt arguments 0]]]]
-												  [eval `[funk [this]
-													       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-														 [terminal_format standard-terminal '\nplan imagining looking up variable value, ' ,variable-symbol '.']
-														 [have semantic_thought lookup_a_variable_value ,variable-symbol]
-														 ]]]]]]
-						[[eq `property                       command] [if [not [eq 7 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `property
-													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 5]] this]]]
-												      [value           `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 6]] this]]]]
-												  [eval `[funk [this]
-													       [new semantic_partial_state_property [get [get this mind] semantic_realm]
-														    ,source_type
-														    ,source_key_type
-														    ,source_key
-														    ,source_value
-														    ,key_type
-														    ,key
-														    ,value]
-													       ]]]]]
-						[[eq `relationship                   command] [if [not [eq 10 arguments-length]]
-												  [error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-													 funkname   `relationship
-													 expression expression]
-												[let [[source_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 0]] this]]]
-												      [source_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 1]] this]]]
-												      [source_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 2]] this]]]
-												      [source_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 3]] this]]]
-												      [key_type        `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 4]] this]]]
-												      [key             `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 5]] this]]]
-												      [target_type     `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 6]] this]]]
-												      [target_key_type `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 7]] this]]]
-												      [target_key      `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 8]] this]]]
-												      [target_value    `[name_expression-as-symbol [funkall ,[get this expression-compile_imagine [elt arguments 9]] this]]]]
-												  [eval `[funk [this]
-													       [new semantic_partial_state_property_relation [get [get this mind] semantic_realm]
-														    ,source_type
-														    ,source_key_type
-														    ,source_key
-														    ,source_value
-														    ,key_type
-														    ,key
-														    ,target_type
-														    ,target_key_type
-														    ,target_key
-														    ,target_value]
-													       ]]]]]
-						[[eq `defplan                        command] [if [not [>= arguments-length 1]]
-												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[name_expression      [elt arguments 0]]
-												      [name_patterns        nil]
-												      [variable_definitions nil]
-												      [plan_body_expression nil]]
-												  [let [[argument_iter                   [cdr arguments]]
-													[done_reading_optional_arguments nil]]
-												    [while [not done_reading_optional_arguments]
-												      [let [[optional_argument_key [car argument_iter]]]
-													[cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			  [= name_patterns [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			  [= variable_definitions [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [t                                    [= done_reading_optional_arguments t]]]]]
-												    [if [== [length argument_iter] 1]
-													[= plan_body_expression [car argument_iter]]
-												      [= plan_body_expression `[prog @argument_iter]]]]
-												  [eval `[funk [this]
-													       ]]]]]
-						[[eq `defcondition                   command] [if [not [>= arguments-length 1]]
-												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[name_expression      [elt arguments 0]]
-												      [name_patterns        nil]
-												      [variable_definitions nil]
-												      [plan_body_expression nil]]
-												  [let [[argument_iter                   [cdr arguments]]
-													[done_reading_optional_arguments nil]]
-												    [while [not done_reading_optional_arguments]
-												      [let [[optional_argument_key [car argument_iter]]]
-													[cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			  [= name_patterns [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			  [= variable_definitions [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [t                                    [= done_reading_optional_arguments t]]]]]
-												    [if [== [length argument_iter] 1]
-													[= plan_body_expression [car argument_iter]]
-												      [= plan_body_expression `[prog @argument_iter]]]]
-												  [eval `[funk [this]
-													       ]]]]]
-						[[eq `defobject                      command] [if [not [>= arguments-length 1]]
-												  `[error punctuation-colon ,[flatten_constree expression]]
-												[let [[name_expression      [elt arguments 0]]
-												      [name_patterns        nil]
-												      [variable_definitions nil]
-												      [plan_body_expression nil]]
-												  [let [[argument_iter                   [cdr arguments]]
-													[done_reading_optional_arguments nil]]
-												    [while [not done_reading_optional_arguments]
-												      [let [[optional_argument_key [car argument_iter]]]
-													[cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			  [= name_patterns [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			  [= variable_definitions [car argument_iter]]
-																			  [= argument_iter [cdr argument_iter]]]]
-													      [t                                    [= done_reading_optional_arguments t]]]]]
-												    [if [== [length argument_iter] 1]
-													[= plan_body_expression [car argument_iter]]
-												      [= plan_body_expression `[prog @argument_iter]]]]
-												  [eval `[funk [this]
-													       ]]]]]
-						[t                                            [error bug_name `nonsemantic_plan_compile_imagine_error]]]]]]
-	[t                          [error bug_name `nonsemantic_plan_compile_imagine_error]]]]
-
-[deftypefunk nonsemantic_plan get expression-compile_imagine [expression]
-  [eval `[funk [this]
-	       [let [[result [shelter [funkall ,[get this expression-unwrapped_compile_imagine expression] this]]]]
-		 [if [is-type `bug result]
-		     [let [[bug result]]
-		       [if [have [get bug frame] lookup `is_plan_bug]
-			   result
-			 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-			   [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			   [error bug_name         `nonsemantic_plan-expression_encountered_bug
-				  expression       [quote ,expression]
-				  semantic_thought semantic_thought
-				  subbug           bug]]]]
-		   result]]]]]
-
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []
-  [get this expression-compile_imagine expression]]
+  [let [[compile_option_frame [frame mode `imagine]]]
+    [get this expression-compile expression compile_option_frame]]]
 
 [deftypefunk nonsemantic_plan get compiled_imagine_funk []
   [if [null internal-compiled_imagine_funk]

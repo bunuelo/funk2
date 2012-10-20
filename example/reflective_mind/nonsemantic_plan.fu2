@@ -532,9 +532,23 @@
 								     expressions]]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating serial process.']
-							    @[mapcar [funk [expression]
-									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
-								     expressions]]]]
+							    [let [[index 0]]
+							      @[mapcar [funk [expression]
+									     `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
+										[if [is-type `bug result]
+										    [let [[bug result]]
+										      [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
+											  [let* [[assertion_failed_bug         bug]
+												 [nonsemantic_plan_truth_value [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]]
+											    [terminal_format standard-terminal
+													     '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
+													     '\n  ' nonsemantic_plan_truth_value]
+											    
+											    [bug assertion_failed_bug]]
+											[bug bug]]]
+										  [prog [= index [+ index 1]]
+											result]]]]
+								       expressions]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '
 									  [let [[index 0]]
@@ -992,7 +1006,7 @@
 																     [get nonsemantic_plan expression-compile false_expression compile_option_frame]]]]
 													      false_expressions]]]]]]]
 	  [[eq compile-mode `semantic]         [prog ]]
-	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
 [defplancommand assert [expression]

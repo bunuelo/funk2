@@ -30,7 +30,14 @@
 
 
 
+'semantic_plan_operator_activation'
 
+[defunk semantic_plan_operator_activation-new_with_resource_dependency [semantic_realm resource_activation_dependency]
+  [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]
+	[semantic_counterfactual_transframe [new semantic_counterfactual_transframe semantic_realm]]]
+    [set semantic_counterfactual_transframe resource_activation_dependency resource_activation_dependency]
+    [set semantic_plan_operator_activation counterfactual_transframe semantic_counterfactual_transframe]
+    semantic_plan_operator_activation]]
 
 
 
@@ -290,9 +297,11 @@
     result]]
 
 
-[deframe decision_point [frame] [possible_values]
-  [new [initial-possible_values]
-       [= possible_values initial-possible_values]]]
+[deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
+  [have mental_layer lookup_action_below action_name_expression]]
+
+[deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
+  [have mental_layer lookup_action action_name_expression]]
 
 
 
@@ -396,7 +405,7 @@
 							      [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
 							      ]]]]
 	  [[eq compile-mode `natural_language] 'evaluate funk expression']
-	  [[eq compile-mode `semantic]         [prog ]]
+	  [[eq compile-mode `semantic]         [semantic_plan_operator_activation-new_with_resource_dependency [get [get nonsemantic_plan mind] semantic_realm] `eval]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
@@ -441,7 +450,9 @@
 											    [string-concat separator
 													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 										    expressions]]]]]]
-	  [[eq compile-mode `semantic]         [prog ]]
+	  [[eq compile-mode `semantic]         [mapcar [funk [expression]
+							     [get nonsemantic_plan expression-compile expression compile_option_frame]]
+						       expressions]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
@@ -471,7 +482,9 @@
 											    [string-concat separator
 													   [get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 										    expressions]]]]]]
-	  [[eq compile-mode `semantic]         [prog ]]
+	  [[eq compile-mode `semantic]         [mapcar [funk [expression]
+							     [get nonsemantic_plan expression-compile expression compile_option_frame]]
+						       expressions]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
@@ -488,7 +501,7 @@
 							      [terminal_format standard-terminal '\nimagined plan printing expression: ' eval-expression]
 							      eval-expression]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'print ' [get nonsemantic_plan expression-compile expression compile_option_frame]]] 
-	  [[eq compile-mode `semantic]         [prog ]]
+	  [[eq compile-mode `semantic]         [get nonsemantic_plan expression-compile expression compile_option_frame]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
@@ -1066,7 +1079,7 @@
 						     [key-eval             [get nonsemantic_plan expression-compile key             compile_option_frame]]
 						     [value-eval           [get nonsemantic_plan expression-compile value           compile_option_frame]]]
 						 [get [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-							   source_type-eval
+							   source_type-eval0
 							   source_key_type-eval
 							   source_key-eval
 							   source_value-eval
@@ -1297,13 +1310,6 @@
 
 
 
-[deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
-  [have mental_layer lookup_action_below action_name_expression]]
-
-[deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
-  [have mental_layer lookup_action action_name_expression]]
-
-
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []
   [let [[compile_option_frame [frame mode `imagine]]]
     [get this expression-compile expression compile_option_frame]]]
@@ -1334,211 +1340,10 @@
 
 
 
-[defunk semantic_plan_operator_activation-new_with_resource_dependency [semantic_realm resource_activation_dependency]
-  [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]
-	[semantic_counterfactual_transframe [new semantic_counterfactual_transframe semantic_realm]]]
-    [set semantic_counterfactual_transframe resource_activation_dependency resource_activation_dependency]
-    [set semantic_plan_operator_activation counterfactual_transframe semantic_counterfactual_transframe]
-    semantic_plan_operator_activation]]
-
-[defunk nonsemantic_plan-expression-semantic_compile [expression semantic_realm]
-  [cond [[is-type `symbol expression] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-					expression]]
-	[[is-type `string expression] expression]
-	[[is-type `cons expression] [let [[command   [car expression]]
-					  [arguments [cdr expression]]]
-				      [let [[arguments-length [length arguments]]]
-					[cond [[eq `eval                           command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `eval
-												       expression expression]
-											      [let [[eval-expression [elt arguments 0]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `eval]]]]
-					      [[eq `quote                          command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `quote
-												       expression expression]
-											      [let [[quote-expression [elt arguments 0]]]
-												nil]]]
-					      [[or [eq `list                       command]
-						   [eq `backquote-list             command]] [mapcar [funk [argument]
-													   [nonsemantic_plan-expression-semantic_compile argument semantic_realm]]
-												     arguments]]
-					      [[eq `print                          command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `print
-												       expression expression]
-											      [let [[print-expression [elt arguments 0]]]
-												[nonsemantic_plan-expression-semantic_compile print-expression semantic_realm]]]]
-					      [[eq `prog                           command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
-											      semantic_plan_operator_activation]]
-					      [[eq `parog                          command] [let [[semantic_plan_operator_activation [new semantic_plan_operator_activation semantic_realm]]]
-											      semantic_plan_operator_activation]]
-					      [[eq `wait-for-time                  command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `wait-for-time
-												       expression expression]
-											      [let [[time_to_wait [elt arguments 0]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for-time]]]]
-					      [[eq `call-below                     command] [if [not [>= arguments-length 1]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `call-below
-												       expression expression]
-											      [let [[action_name      [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]
-												    [action_arguments [mapcar [funk [action_argument]
-																    [nonsemantic_plan-expression-semantic_compile action_argument semantic_realm]]
-															      [cdr arguments]]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call-below]]]]
-					      [[eq `call                           command] [if [not [>= arguments-length 1]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `call
-												       expression expression]
-											      [let [[action_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]
-												    [action_arguments [mapcar [funk [action_argument]
-																    [nonsemantic_plan-expression-semantic_compile action_argument semantic_realm]]
-															      [cdr arguments]]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `call]]]]
-					      [[eq `plan                           command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `plan
-												       expression expression]
-											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
-												nil]]]
-					      [[eq `plan-below                     command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `plan-below
-												       expression expression]
-											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
-												nil]]]
-					      [[eq `plan-call-below                command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `plan-call-below
-												       expression expression]
-											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
-												nil]]]
-					      [[eq `plan-call                      command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_imagine_error-wrong_number_of_arguments
-												       funkname   `plan-call
-												       expression expression]
-											      [let [[plan_name [nonsemantic_plan-expression-semantic_compile [elt arguments 0] semantic_realm]]]
-												nil]]]
-					      [[eq `exists                         command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `exists
-												       expression expression]
-											      [let [[exists-expression [elt arguments 0]]]
-												[nonsemantic_plan-expression-semantic_compile exists-expression semantic_realm]]]]
-					      [[eq `wait-for                       command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `wait-for
-												       expression expression]
-											      [let [[partial_state [elt arguments 0]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `wait-for]]]]
-					      [[eq `if                             command] [if [not [or [== arguments-length 2]
-													 [== arguments-length 3]]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `if
-												       expression expression]
-											      nil]]
-					      [[eq `assert                         command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `assert
-												       expression expression]
-											      [let [[assert-expression [elt arguments 0]]]
-												[semantic_plan_operator_activation-new_with_resource_dependency semantic_realm `assert]]]]
-					      [[eq `?                              command] [if [not [== 1 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `?
-												       expression expression]
-											      [let [[variable-symbol [elt arguments 0]]]
-												`[? ,variable-symbol]]]]
-					      [[eq `property                       command] [if [not [== 7 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `property
-												       expression expression]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [value           [elt arguments 6]]]
-												nil]]]
-					      [[eq `relationship                   command] [if [not [== 10 arguments-length]]
-												[error bug_name   `plan_compile_error-wrong_number_of_arguments
-												       funkname   `relationship
-												       expression expression]
-											      [let [[source_type     [elt arguments 0]]
-												    [source_key_type [elt arguments 1]]
-												    [source_key      [elt arguments 2]]
-												    [source_value    [elt arguments 3]]
-												    [key_type        [elt arguments 4]]
-												    [key             [elt arguments 5]]
-												    [target_type     [elt arguments 6]]
-												    [target_key_type [elt arguments 7]]
-												    [target_key      [elt arguments 8]]
-												    [target_value    [elt arguments 9]]]
-												nil]]]
-					      [[eq `defplan                        command] [if [not [>= arguments-length 1]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[name                       [elt arguments 0]]
-												    [matches                    nil]
-												    [frame_variable_definitions nil]]
-												[let [[argument_iter                   [cdr arguments]]
-												      [done_reading_optional_arguments nil]]
-												  [while [not done_reading_optional_arguments]
-												    [let [[optional_argument_key [car argument_iter]]]
-												      [cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			[= matches       [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			[= frame_variable_definitions [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [t                                    [= done_reading_optional_arguments t]]]]
-												    ]]
-												nil]]]
-					      [[eq `defcondition                   command] [if [not [>= arguments-length 1]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[name                       [elt arguments 0]]
-												    [matches                    nil]
-												    [frame_variable_definitions nil]]
-												[let [[argument_iter                   [cdr arguments]]
-												      [done_reading_optional_arguments nil]]
-												  [while [not done_reading_optional_arguments]
-												    [let [[optional_argument_key [car argument_iter]]]
-												      [cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			[= matches       [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			[= frame_variable_definitions [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [t                                    [= done_reading_optional_arguments t]]]]
-												    ]]
-												nil]]]
-					      [[eq `defobject                      command] [if [not [>= arguments-length 1]]
-												`[error punctuation-colon ,[flatten_constree expression]]
-											      [let [[name                       [elt arguments 0]]
-												    [matches                    nil]
-												    [frame_variable_definitions nil]]
-												[let [[argument_iter                   [cdr arguments]]
-												      [done_reading_optional_arguments nil]]
-												  [while [not done_reading_optional_arguments]
-												    [let [[optional_argument_key [car argument_iter]]]
-												      [cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
-																			[= matches       [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
-																			[= frame_variable_definitions [car argument_iter]]
-																			[= argument_iter [cdr argument_iter]]]]
-													    [t                                    [= done_reading_optional_arguments t]]]]
-												    ]]
-												nil]]]
-					      [t                                            [error bug_name `nonsemantic_plan_compile_error]]]]]]
-	[t                          [error bug_name `nonsemantic_plan_compile_error]]]]
-
 [deftypefunk nonsemantic_plan get __semantic_plan_object []
   [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get this unique_name] this]]
-	[start_plan_operator  [nonsemantic_plan-expression-semantic_compile expression [get [get this mind] semantic_realm]]]]
+	[start_plan_operator  [let [[compile_option_frame [frame mode `semantic]]]
+				[get this expression-compile expression compile_option_frame]]]]
     [set semantic_plan_object start_plan_operator start_plan_operator]
     [mapc [funk [variable_definition]
 		[cond [[is-type `symbol variable_definition] [semantic-add semantic_plan_object default_variable variable_definition nil]]

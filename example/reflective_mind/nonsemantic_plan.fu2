@@ -41,6 +41,14 @@
 
 
 
+[deframe nonsemantic_plan_truth_value [frame] [value
+					       [partial_state_existence_dependency_set [new set]]]
+  [new [initial-value]
+       [= value initial-value]]]
+
+[deftypefunk nonsemantic_plan_truth_value execute add_partial_state_existence_dependency [partial_state]
+  [have partial_state_existence_dependency_set add partial_state]]
+
 
 'nonsemantic_plan'
 
@@ -215,24 +223,23 @@
 
 
 [deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
-  [have [get this mental_layer] check_exists semantic_partial_state]]
+  [let* [[truth_value                  [have [get this mental_layer] check_exists semantic_partial_state]]
+	 [nonsemantic_plan_truth_value [new nonsemantic_plan_truth_value truth_value]]]
+    [have nonsemantic_plan_truth_value add_partial_state_existence_dependency semantic_partial_state]
+    nonsemantic_plan_truth_value]]
 
 [deftypefunk nonsemantic_plan execute imagine_check_exists [semantic_partial_state]
-  [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
-    [if [null found_event]
-	[prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
-	      [have this check_exists semantic_partial_state]]
-      [not [get found_event is_negative_knowledge]]]]]
+  [let* [[truth_value [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
+			[if [null found_event]
+			    [prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
+				  [have [get this mental_layer] check_exists semantic_partial_state]]
+			  [not [get found_event is_negative_knowledge]]]]]
+	 [nonsemantic_plan_truth_value [new nonsemantic_plan_truth_value truth_value]]]
+    [have nonsemantic_plan_truth_value add_partial_state_existence_dependency semantic_partial_state]
+    nonsemantic_plan_truth_value]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
-
-[deftypefunk nonsemantic_plan execute assert [semantic_partial_state]
-  [have [get this mental_layer] assert semantic_partial_state]]
-
-[deftypefunk nonsemantic_plan execute imagine_asserting [semantic_partial_state]
-  [have [get this mental_layer] imagine_assuring semantic_partial_state]]
-
 
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
   `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
@@ -946,19 +953,29 @@
 											   `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]
 										     false_expressions]]]
 						 [eval `[funk [nonsemantic_plan]
-							      [if ,condition-eval
-								  ,true_expression-eval
-								@false_expressions-eval]]]]]
+							      [let [[condition ,condition-eval]]
+								[if [not [is-type `nonsemantic_plan_truth_value condition]]
+								    [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_truth_value
+									   condition       condition
+									   quote-condition [quote ,condition]]
+								  [if [get condition value]
+								      ,true_expression-eval
+								    @false_expressions-eval]]]]]]]
 	  [[eq compile-mode `imagine]          [let [[condition-eval         `[funkall ,[get nonsemantic_plan expression-compile condition       compile_option_frame] nonsemantic_plan]]
 						     [true_expression-eval   `[funkall ,[get nonsemantic_plan expression-compile true_expression compile_option_frame] nonsemantic_plan]]
 						     [false_expressions-eval [mapcar [funk [false_expression]
 											   `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]
 										     false_expressions]]]
 						 [eval `[funk [nonsemantic_plan]
-							      [if ,condition-eval
-								  ,true_expression-eval
-								@false_expressions-eval]]]]]
-	  [[eq compile-mode `natural_language] [string-concat 'if ' [get nonsemantic_plan expression-compile condition compile_option_frame]
+							      [let [[condition ,condition-eval]]
+								[if [not [is-type `nonsemantic_plan_truth_value condition]]
+								    [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_truth_value
+									   condition       condition
+									   quote-condition [quote ,condition]]
+								  [if [get condition value]
+								      ,true_expression-eval
+								    @false_expressions-eval]]]]]]]
+	  [[eq compile-mode `natural_language] [string-concat 'if ' [get nonsemantic_plan expression-compile condition       compile_option_frame]
 							      ', '  [get nonsemantic_plan expression-compile true_expression compile_option_frame]
 							      [if false_expressions
 								  [string-concat ', otherwise '
@@ -985,17 +1002,27 @@
 	  [[eq compile-mode `execute]          [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
 							      [let [[expression ,expression-eval]]
-								[if [not expression]
-								    [error bug_name    `assertion-failed
-									   is_plan_bug t
-									   description [conslist `assert [quote ,expression]]]]]]]]]
+								[if [not [is-type `nonsemantic_plan_truth_value expression]]
+								    [error bug_name         `nonsemantic_plan-assert-truth_value_must_be_of_type_nonsemantic_plan_truth_value
+									   expression       expression
+									   quote-expression [quote ,expression]]
+								  [if [not [get expression value]]
+								      [error bug_name                     `assertion-failed
+									     nonsemantic_plan_truth_value expression
+									     is_plan_bug                  t
+									     description                  [conslist `assert [quote ,expression]]]]]]]]]]
 	  [[eq compile-mode `imagine]          [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
 							      [let [[expression ,expression-eval]]
-								[if [not expression]
-								    [error bug_name    `assertion-failed
-									   is_plan_bug t
-									   description [conslist `assert [quote ,expression]]]]]]]]]
+								[if [not [is-type `nonsemantic_plan_truth_value expression]]
+								    [error bug_name         `nonsemantic_plan-assert-truth_value_must_be_of_type_nonsemantic_plan_truth_value
+									   expression       expression
+									   quote-expression [quote ,expression]]
+								  [if [not [get expression value]]
+								      [error bug_name                     `assertion-failed
+									     nonsemantic_plan_truth_value expression
+									     is_plan_bug                  t
+									     description                  [conslist `assert [quote ,expression]]]]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'assert that ' [get nonsemantic_plan expression-compile expression compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode

@@ -532,23 +532,33 @@
 								     expressions]]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating serial process.']
-							    [let [[index 0]]
-							      @[mapcar [funk [expression]
-									     `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
-										[if [is-type `bug result]
-										    [let [[bug result]]
-										      [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
-											  [let* [[assertion_failed_bug         bug]
-												 [nonsemantic_plan_truth_value [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]]
-											    [terminal_format standard-terminal
-													     '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
-													     '\n  ' nonsemantic_plan_truth_value]
-											    
-											    [bug assertion_failed_bug]]
-											[bug bug]]]
-										  [prog [= index [+ index 1]]
-											result]]]]
-								       expressions]]]]]
+							    [let* [[index            0]
+								   [expression_funks [conslist @[mapcar [funk [expression]
+													      [eval `[funk [nonsemantic_plan]
+															   [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
+													expressions]]]]
+							      [let [[expression_funk_iter expression_funks]
+								    [prog_value           nil]]
+								[while expression_funk_iter
+								  [let [[expression_funk [car expression_funk_iter]]]
+								    [let [[result [shelter [funkall expression_funk nonsemantic_plan]]]]
+								      [if [is-type `bug result]
+									  [let [[bug result]]
+									    [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
+										[let* [[assertion_failed_bug         bug]
+										       [nonsemantic_plan_truth_value [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]]
+										  [terminal_format standard-terminal
+												   '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
+												   '\n  ' nonsemantic_plan_truth_value]
+										  
+										  'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
+										  
+										  [bug assertion_failed_bug]]
+									      [bug bug]]]
+									[= prog_value result]]]]
+								  [if expression_funk_iter
+								      [= expression_funk_iter [cdr expression_funk_iter]]]]
+								prog_value]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '
 									  [let [[index 0]]

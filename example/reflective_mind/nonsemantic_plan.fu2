@@ -559,10 +559,28 @@
 											[= partial_state_assertion_failure_set [get partial_state_assertion_failure_set union partial_state_existence_dependency_set]]]
 										      [have [get semantic_thought imagine_frame] add `partial_state_assertion_failure_set partial_state_assertion_failure_set]]
 										    
-										    'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
-										    
-										    
-										    [bug assertion_failed_bug]]]
+										    [let [[scan_backwards_index    1]
+											  [fixed_assertion_failure nil]]
+										      
+										      [while [not fixed_assertion_failure]
+											
+											'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
+											
+											[let [[scan_backwards_expression_funk_iter [restn expression_funks [- index scan_backwards_index]]]]
+											  [while scan_backwards_expression_funk_iter
+											    [let [[scan_backwards_expression_funk [car scan_backwards_expression_funk_iter]]]
+											      [let [[result [funkall scan_backwards_expression_funk nonsemantic_plan]]]
+												[if [is-type `bug result]
+												    [let [[bug result]]
+												      [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
+													  [prog [= scan_backwards_index [+ scan_backwards_index 1]]
+														[if [> scan_backwards_index index]
+														    [bug bug]]
+														[= scan_backwards_expression_funk_iter nil]]]]]]]
+											    [if [eq scan_backwards_expression_funk_iter expression_funk_iter]
+												[= scan_backwards_expression_funk_iter nil]
+											      [if scan_backwards_expression_funk_iter
+												  [= scan_backwards_expression_funk_iter [cdr scan_backwards_expression_funk_iter]]]]]]]]]]
 									      [bug bug]]]
 									[= prog_value result]]]]
 								  [if expression_funk_iter

@@ -23,7 +23,6 @@
 
 [semantic_thought-core_extension-define_types]
 
-
 [deftypefunk string get pattern_evaluation [variable_lookup_funk]
   [if [not [get this contains '[']]
       this

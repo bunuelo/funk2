@@ -1722,7 +1722,7 @@ int f2__fiber__bytecode__type_var__mutate(f2ptr fiber, f2ptr bytecode, f2ptr typ
   
   f2ptr env       = f2fiber__env(fiber, cause);
   f2ptr value     = f2fiber__value(fiber, cause);
-  f2ptr new_value = f2__fiber__type_var_value__set(cause, env, type, var, value);
+  f2ptr new_value = f2__fiber__type_variable_value__set(cause, env, type, var, value);
   f2fiber__value__set(fiber, cause, new_value);
   return 0;
 }

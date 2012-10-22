@@ -35,7 +35,9 @@ def_pcfunk0_and_rest(list__new, elements,
 f2ptr f2__list__car(f2ptr cause, f2ptr this) {
   f2ptr cons_cells = f2list__cons_cells(this, cause);
   if (cons_cells == nil) {
-    return f2larva__new(cause, 44, nil);
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "list-car-list_is_empty"))); 
+    
   }
   return f2cons__car(cons_cells, cause);
 }
@@ -49,7 +51,8 @@ f2ptr raw__list__cdr(f2ptr cause, f2ptr this) {
   s64   length__i  = f2integer__i(length, cause);
   f2ptr cons_cells = f2list__cons_cells(this, cause);
   if (cons_cells == nil || length__i == 0) {
-    return f2larva__new(cause, 44, nil);
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "list-cdr-list_is_empty"))); 
   }
   f2ptr new_cons_cells = f2cons__cdr(cons_cells, cause);
   if (new_cons_cells) {

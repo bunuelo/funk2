@@ -269,6 +269,8 @@
 			 @body]]]
 
 [defunk mapc [proc seq]
+  [if [is-type `list seq]
+      [= seq [get seq cons_cells]]]
   [while seq
     [apply proc [cons [car seq] nil]]
     [mutate seq [cdr seq]]]]

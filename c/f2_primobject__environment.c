@@ -132,7 +132,6 @@ f2ptr f2__environment__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, 
     }
     env = f2environment__parent_env(env, cause);
   }
-  printf("\nset-var not defined: "); f2__write(cause, nil, var); fflush(stdout);
   __funk2.primobject__environment.environment__last_23_larva_symbol = var;
   return new__error(f2list6__new(cause,
 				 new__symbol(cause, "bug_name"),      new__symbol(cause, "type_var_does_not_exist_in_environment"),

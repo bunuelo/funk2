@@ -292,11 +292,12 @@ f2ptr      f2__cause__give_fiber_to_cause               (f2ptr cause, f2ptr this
 f2ptr      f2__cause__new_imaginary                     (f2ptr cause, f2ptr imagination_name);
 f2ptr      f2__cause                                    (f2ptr cause);
 f2ptr      f2__cause__bytecode_tracing_on               (f2ptr cause, f2ptr this);
+f2ptr     raw__cause__lookup_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr      f2__cause__lookup_type_var_value             (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-boolean_t raw__cause__type_var_defined                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
-f2ptr      f2__cause__type_var_defined                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr     raw__cause__type_var_value__set               (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr      f2__cause__type_var_value__set               (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+boolean_t raw__cause__type_var_defined                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr      f2__cause__type_var_defined                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr     raw__cause__var_value__set                    (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 f2ptr      f2__cause__var_value__set                    (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 boolean_t raw__cause__var_defined                       (f2ptr cause, f2ptr this, f2ptr var);

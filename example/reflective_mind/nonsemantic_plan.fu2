@@ -536,11 +536,13 @@
 								   [expression_funks [conslist @[mapcar [funk [expression]
 													      [eval `[funk [nonsemantic_plan]
 															   [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
-													expressions]]]]
+													expressions]]]
+								   [imagine_time_array [new array [length expression_funks]]]]
 							      [let [[expression_funk_iter expression_funks]
 								    [prog_value           nil]]
 								[while expression_funk_iter
 								  [let [[expression_funk [car expression_funk_iter]]]
+								    [set imagine_time_array elt index cause-imagine_time]
 								    [let [[result [shelter [funkall expression_funk nonsemantic_plan]]]]
 								      [if [is-type `bug result]
 									  [let [[bug result]]
@@ -571,6 +573,15 @@
 													   '\n  index=' index ' in prog (scan_backwards_index=' scan_backwards_index ').']
 											  
 											  'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
+
+											  [= cause-imagine_time [get imagine_time_array elt [- index scan_backwards_index]]]
+											  
+											  [let [[possible_remove_events [get cause-imagine_semantic_event_tree events_overlapping_range cause-imagine_time [new semantic_time `after]]]]
+											    [mapc [funk [possible_remove_event]
+													[if [> [get possible_remove_event absolute_begin_time] cause-imagine_time]
+													    [prog [have cause-imagine_semantic_event_tree                 remove possible_remove_event]
+														  [have [get [get this mental_layer] type_knowledge_base] remove possible_remove_event]]]]
+												  possible_remove_events]]
 											  
 											  [let [[scan_backwards_expression_funk_iter [restn expression_funks [- index scan_backwards_index]]]]
 											    [while scan_backwards_expression_funk_iter

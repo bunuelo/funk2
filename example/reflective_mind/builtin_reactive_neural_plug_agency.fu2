@@ -57,7 +57,6 @@
 		[= command_resource_name resource_name]
 		[= command_args          args]
 		[= command_ready         t]
-		[= command_done          nil]
 		[= success               t]
 		[have command_conditionlock signal]]]
       [have command_conditionlock unlock]]]]

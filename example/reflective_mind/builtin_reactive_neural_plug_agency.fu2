@@ -17,47 +17,48 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deframe activate_resource [vital_resource] [[command_mutex         [new mutex]]
-					     [command_ready         nil]
-					     [command_done          t]
-					     [command_layer_name    nil]
-					     [command_agency_name   nil]
-					     [command_resource_name nil]
-					     [command_args          nil]
-					     [command_ready_trigger [new fiber_trigger]]]
-  [new []
-       [construct vital_resource [type this]
-		  [funk []
-			[have this think_to_self 'Neural plug activate_resource ready.']
-			[while t
-			  [wait-for-trigger command_ready_trigger]
-			  [have command_mutex lock]
-			  [if command_ready
-			      [prog [have this think_to_self 'Neural plug is activating the ' command_resource_name ' resource in the ' command_agency_name ' agency in the ' command_layer_name ' layer with args=' command_args]
-				    [have-apply [get this mind] wait_to_activate `[,command_layer_name ,command_agency_name ,command_resource_name @command_args]]
-				    [= command_ready nil]
-				    [= command_done  t]]]
-			  [have command_mutex unlock]]]]
-       nil]]
 
-[deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]
-  [let [[success nil]]
-    [while [not success]
-      [have command_mutex lock]
-      [if command_done
-	  [prog [= command_layer_name    layer_name]
-		[= command_agency_name   agency_name]
-		[= command_resource_name resource_name]
-		[= command_args          args]
-		[= command_ready         t]
-		[= command_done          nil]
-		[= success               t]]]
-      [have command_mutex unlock]]]
-  [have command_ready_trigger trigger]]
+'builtin_reactive_neural_plug_agency'
 
 [deframe builtin_reactive_neural_plug_agency [agency] []
   [new []
        [construct agency `neural_plug]
        [have this add_resource [new activate_resource]]
        this]]
+
+
+'activate_resource'
+
+[deframe activate_resource [vital_resource] [[command_conditionlock [new conditionlock]]
+					     [command_ready         nil]
+					     [command_layer_name    nil]
+					     [command_agency_name   nil]
+					     [command_resource_name nil]
+					     [command_args          nil]]
+  [new []
+       [construct vital_resource [type this]
+		  [funk []
+			[while t
+			  [have command_conditionlock lock]
+			  [while [not command_ready]
+			    [have command_conditionlock wait]]
+			  [have-apply [get this mind] wait_to_activate `[,command_layer_name ,command_agency_name ,command_resource_name @command_args]]
+			  [= command_ready nil]
+			  [have command_conditionlock unlock]]]]
+       nil]]
+
+[deftypefunk activate_resource execute command [layer_name agency_name resource_name :rest args]
+  [let [[success nil]]
+    [while [not success]
+      [have command_conditionlock lock]
+      [if [not command_ready]
+	  [prog [= command_layer_name    layer_name]
+		[= command_agency_name   agency_name]
+		[= command_resource_name resource_name]
+		[= command_args          args]
+		[= command_ready         t]
+		[= command_done          nil]
+		[= success               t]
+		[have command_conditionlock signal]]]
+      [have command_conditionlock unlock]]]]
 

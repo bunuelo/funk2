@@ -955,7 +955,7 @@ f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   assert_argument_type(cause,  this);
   assert_argument_type(symbol, type);
   assert_argument_type(symbol, var);
-  return raw__cause__lookup_type_var_value(cause, this, type, var, value);
+  return raw__cause__type_var_value__set(cause, this, type, var, value);
 }
 def_pcfunk4(cause__type_var_value__set, this, type, var, value,
 	    "",

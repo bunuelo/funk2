@@ -520,7 +520,8 @@ f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type
 
 
 f2ptr raw__fiber__type_variable_value__set(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable, f2ptr value) {
-  f2ptr result = f2__environment__type_var_value__set(cause, env, type, var, value);
+  f2ptr env    = f2fiber__env(fiber, cause);
+  f2ptr result = f2__environment__type_var_value__set(cause, env, type, variable, value);
   if (raw__larva__is_type(cause, result)) {
     result = catch_value(f2__cause__type_var_value__set(cause, cause, type, variable, value),
 			 f2list8__new(cause,

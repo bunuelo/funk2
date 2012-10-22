@@ -568,7 +568,7 @@
 											  
 											  [terminal_format standard-terminal
 													   '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan scanning backwards to try to learn from assertion-failed.'
-													   '\n  (scan_backwards_index=' scan_backwards_index ') at index=' index ' in prog.']
+													   '\n  index=' index ' in prog (scan_backwards_index=' scan_backwards_index ').']
 											  
 											  'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
 											  

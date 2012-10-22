@@ -30,7 +30,6 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "planner_type"),    nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagine_time"),    nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),    nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "imagine_plan"),    nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_plan"),      nil);
@@ -105,28 +104,6 @@ f2ptr f2__semantic_planner__planner_type__set(f2ptr cause, f2ptr this, f2ptr tha
   return raw__semantic_planner__planner_type__set(cause, this, that);
 }
 export_cefunk2(semantic_planner__planner_type__set, this, that, 0, "");
-
-
-f2ptr raw__semantic_planner__imagine_time(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagine_time"));
-}
-
-f2ptr f2__semantic_planner__imagine_time(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__imagine_time(cause, this);
-}
-export_cefunk1(semantic_planner__imagine_time, this, 0, "");
-
-
-f2ptr raw__semantic_planner__imagine_time__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagine_time"), that);
-}
-
-f2ptr f2__semantic_planner__imagine_time__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__imagine_time__set(cause, this, that);
-}
-export_cefunk2(semantic_planner__imagine_time__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_planner__execute_plan(f2ptr cause, f2ptr this) {
@@ -378,8 +355,6 @@ f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "planner_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "planner_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "imagine_time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_time")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "imagine_time"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_time__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "execute_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "execute_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "imagine_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan")));}

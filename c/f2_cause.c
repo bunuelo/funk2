@@ -901,9 +901,9 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
     if (cause_frame) {
       value = f2__frame__lookup_type_var_value(cause, cause_frame, type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
     }
-    if ((! cause_frame) || raw__larva__is_type(cause, value)) {
+    if ((cause_frame == nil) || raw__larva__is_type(cause, value)) {
       cause_iter = f2__ptype__cause(cause, cause_iter);
-      if (cause_iter) {
+      if (cause_iter != nil) {
 	keep_looping = boolean__true;
       } else {
 	value = new__error(f2list8__new(cause,
@@ -918,9 +918,50 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
 }
 
 f2ptr f2__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
-  assert_argument_type(cause, this);
+  assert_argument_type(cause,  this);
+  assert_argument_type(symbol, type);
+  assert_argument_type(symbol, var);
   return raw__cause__lookup_type_var_value(cause, this, type, var);
 }
+
+
+f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  f2ptr     result       = nil;
+  f2ptr     cause_iter   = this;
+  boolean_t keep_looping;
+  do {
+    keep_looping = boolean__false;
+    f2ptr cause_frame = f2cause__frame(cause_iter, cause);
+    if (cause_frame) {
+      result = f2__frame__type_var_value__set(cause, cause_frame, type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
+    }
+    if ((cause_frame == nil) || raw__larva__is_type(cause, result)) {
+      cause_iter = f2__ptype__cause(cause, cause_iter);
+      if (cause_iter != nil) {
+	keep_looping = boolean__true;
+      } else {
+	result = new__error(f2list8__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "type_var_does_not_exist_in_cause"),
+					 new__symbol(cause, "this"),          this,
+					 new__symbol(cause, "variable_type"), type,
+					 new__symbol(cause, "variable_name"), var));
+      }
+    }
+  } while (keep_looping);
+  return result;
+}
+
+f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  assert_argument_type(cause,  this);
+  assert_argument_type(symbol, type);
+  assert_argument_type(symbol, var);
+  return raw__cause__lookup_type_var_value(cause, this, type, var, value);
+}
+def_pcfunk4(cause__type_var_value__set, this, type, var, value,
+	    "",
+	    return f2__cause__type_var_value__set(this_cause, this, type, var, value));
+
+
 
 
 boolean_t raw__cause__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
@@ -955,32 +996,6 @@ f2ptr f2__cause__var_defined(f2ptr cause, f2ptr this, f2ptr var) {
 def_pcfunk2(cause__var_defined, this, var,
 	    "",
 	    return f2__cause__var_defined(this_cause, this, var));
-
-
-f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  f2ptr cause_iter = this;
-  while (cause_iter != nil) {
-    f2ptr cause__frame = f2cause__frame(cause_iter, cause);
-    if (raw__frame__contains_type_var(cause, cause__frame, type, var)) {
-      raw__frame__add_type_var_value(cause, cause__frame, type, var, value);
-      return nil;
-    }
-    cause_iter = f2__ptype__cause(cause, cause_iter);
-  }
-  return f2larva__new(cause, 621, f2__bug__new(cause, f2integer__new(cause, 621), f2__frame__new(cause, f2list8__new(cause,
-														     new__symbol(cause, "bug_type"),      new__symbol(cause, "cannot_set_value_of_undefined_cause_variable"),
-														     new__symbol(cause, "funkname"),      new__symbol(cause, "cause-type_var_value-set"),
-														     new__symbol(cause, "variable_type"), type,
-														     new__symbol(cause, "variable_name"), var))));
-}
-
-f2ptr f2__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
-  assert_argument_type(cause, this);
-  return raw__cause__type_var_value__set(cause, this, type, var, value);
-}
-def_pcfunk4(cause__type_var_value__set, this, type, var, value,
-	    "",
-	    return f2__cause__type_var_value__set(this_cause, this, type, var, value));
 
 
 f2ptr raw__cause__var_value__set(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {

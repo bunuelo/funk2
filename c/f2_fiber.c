@@ -497,17 +497,46 @@ def_pcfunk1(fiber__quit, this,
 	    return f2__fiber__quit(this_cause, this));
 
 
-f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable) {
+f2ptr raw__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable) {
   f2ptr env   = f2fiber__env(fiber, cause);
   f2ptr value = f2__environment__lookup_type_var_value(cause, env, type, variable);
   if (raw__larva__is_type(cause, value)) {
     value = catch_value(f2__cause__lookup_type_var_value(cause, cause, type, variable),
-			f2list8__new(cause, new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
+			f2list8__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
 				     new__symbol(cause, "this"),          fiber,
 				     new__symbol(cause, "variable_type"), type,
 				     new__symbol(cause, "variable_name"), variable));
   }
   return value;
+}
+
+f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable) {
+  assert_argument_type(fiber,  fiber);
+  assert_argument_type(symbol, type);
+  assert_argument_type(symbol, variable);
+  return raw__fiber__lookup_type_variable_value(cause, fiber, type, variable);
+}
+
+
+f2ptr raw__fiber__type_variable_value__set(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable, f2ptr value) {
+  f2ptr result = f2__environment__type_var_value__set(cause, env, type, var, value);
+  if (raw__larva__is_type(cause, result)) {
+    result = catch_value(f2__cause__type_var_value__set(cause, cause, type, variable, value),
+			 f2list8__new(cause,
+				      new__symbol(cause, "bug_name"),      new__symbol(cause, "variable_does_not_exist_for_this_fiber"),
+				      new__symbol(cause, "this"),          fiber,
+				      new__symbol(cause, "variable_type"), type,
+				      new__symbol(cause, "variable_name"), variable));
+  }
+  return result;
+}
+
+f2ptr f2__fiber__type_variable_value__set(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable, f2ptr value) {
+  assert_argument_type(fiber,  fiber);
+  assert_argument_type(symbol, type);
+  assert_argument_type(symbol, variable);
+  return raw__fiber__type_variable_value__set(cause, fiber, type, variable, value);
 }
 
 boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) {

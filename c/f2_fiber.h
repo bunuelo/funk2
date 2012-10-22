@@ -266,7 +266,10 @@ f2ptr f2fiber__primobject_type__new_aux(f2ptr cause);
 
 
 
-f2ptr f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable);
+f2ptr raw__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable);
+f2ptr  f2__fiber__lookup_type_variable_value(f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable);
+f2ptr raw__fiber__type_variable_value__set  (f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable, f2ptr value);
+f2ptr  f2__fiber__type_variable_value__set  (f2ptr cause, f2ptr fiber, f2ptr type, f2ptr variable, f2ptr value);
 
 f2ptr global_critics();
 void global_critics__set(f2ptr critics);

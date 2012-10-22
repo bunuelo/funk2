@@ -622,7 +622,8 @@
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating parallel process.']
 							    [parog @[mapcar [funk [expression]
-										  `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+										  `[with-new-cause [cause-define cause-imagine_time cause-imagine_time]
+												   [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 									    expressions]]
 							    nil]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
@@ -1419,7 +1420,8 @@
 
 [deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
-  [with-new-cause [cause-define cause-imagine_time [new semantic_time [time]]]
+  [with-new-cause [cause-define cause-imagine_time                [new semantic_time [time]]]
+		  [cause-define cause-imagine_semantic_event_tree [new semantic_event_tree]]
 		  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 				      [funk []
 					    [have this imagine_eval]]

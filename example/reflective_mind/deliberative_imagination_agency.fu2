@@ -26,16 +26,12 @@
        [construct agency `imagination]
        
        [have this add_resource [new deliberative_forget_all_imagined_events_resource]]
-       [have this add_resource [new deliberative_set_imagine_time_to_be_now_resource]]
-       [have this add_resource [new deliberative_imagine_current_situation_resource]]
        [have this add_resource [new deliberative_imagine_plan_resource]]
        
        this]]
 
 [deftypefunk deliberative_imagination_agency execute create_builtin_actions []
   [have-apply [get this mind] create_plan_action `[deliberative imagination forget_all_imagined_events]]
-  [have-apply [get this mind] create_plan_action `[deliberative imagination set_imagine_time_to_be_now]]
-  [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_current_situation]]
   [have-apply [get this mind] create_plan_action `[deliberative imagination imagine_plan]]]
 
 
@@ -48,7 +44,6 @@
 			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
 			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 					   [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', forgetting all imagined events.']
-			  [set semantic_planner imagine_time nil]
 			  [let [[physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
 			    
 			    'generates interval tree removal errors'
@@ -63,86 +58,6 @@
 
 [deftypefunk deliberative_forget_all_imagined_events_resource get as-natural_language_string []
   'forget all imagined events']
-
-
-'deliberative_set_imagine_time_to_be_now_resource'
-
-[deframe deliberative_set_imagine_time_to_be_now_resource [deliberative_resource] []
-  [new []
-       [construct deliberative_resource `set_imagine_time_to_be_now
-		  [funk []
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
-			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-					   [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', setting imagine time to be now..']
-			  [let [[imagine_time [new semantic_time [time]]]]
-			    [set semantic_planner imagine_time imagine_time]
-			    nil]]]]
-       nil]]
-
-[deftypefunk deliberative_set_imagine_time_to_be_now_resource get as-natural_language_string []
-  'set imagine time to be now']
-
-
-'deliberative_imagine_current_situation_resource'
-
-[deframe deliberative_imagine_current_situation_resource [deliberative_resource] []
-  [new []
-       [construct deliberative_resource `imagine_current_situation
-		  [funk []
-			[let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
-			  [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-					   [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', imagining current situation.']
-			  [let [[imagine_time [new semantic_time [time]]]]
-			    [set semantic_planner imagine_time imagine_time]
-			    [let [[physical_type_events                   [get [get [get this mind] semantic_knowledge_base `physical_type_knowledge] events_containing_time imagine_time]]
-				  [physical_counterfactual_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]]
-			      [mapc [funk [physical_type_event]
-					  [cond [[is-type `semantic_reflective_object_type_relation_event physical_type_event] [let [[meta_relationship      [get                 physical_type_event meta_relationship]]
-																     [phenomenal_name        [get                 physical_type_event phenomenal_name]]
-																     [target_object_type_set [semantic-lookup_set physical_type_event target_object_type]]
-																     [absolute_start_time    [get                 physical_type_event absolute_start_time]]
-																     [absolute_end_time      [get                 physical_type_event absolute_end_time]]]
-																 [let [[imagine_event [new semantic_reflective_object_type_relation_event
-																			   [get [get this mind] semantic_realm]
-																			   phenomenal_name
-																			   meta_relationship
-																			   [get target_object_type_set an_arbitrary_element]]]]
-																   [set imagine_event absolute_start_time absolute_start_time]
-																   [set imagine_event absolute_end_time   absolute_end_time]
-																   
-																   `[terminal_format standard-terminal '\nimagining relation event: ' [get imagine_event phenomenal_name] '.']
-																   [have physical_counterfactual_knowledge_base add_semantic_frame imagine_event]
-																   
-																   ]]]
-						[[is-type `semantic_reflective_object_type_property_event physical_type_event] [let [[meta_relationship        [get                 physical_type_event meta_relationship]]
-																     [phenomenal_name          [get                 physical_type_event phenomenal_name]]
-																     [target_property_name_set [semantic-lookup_set physical_type_event target_property_name]]
-																     [absolute_start_time      [get                 physical_type_event absolute_start_time]]
-																     [absolute_end_time        [get                 physical_type_event absolute_end_time]]]
-																 [let [[imagine_event [new semantic_reflective_object_type_property_event
-																			   [get [get this mind] semantic_realm]
-																			   phenomenal_name
-																			   meta_relationship
-																			   [get target_property_name_set an_arbitrary_element]]]]
-																   [set imagine_event absolute_start_time absolute_start_time]
-																   [set imagine_event absolute_end_time   absolute_end_time]
-																   
-																   `[terminal_format standard-terminal '\nimagining property event: ' [get imagine_event phenomenal_name] '.']
-																   [have physical_counterfactual_knowledge_base add_semantic_frame imagine_event]
-																   
-																   ]]]
-						
-						[t                                                                                  [prog `[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-																			    [get [get this layer] name] ' resource, ' name ', '
-																			    'change event: ' change_type ' - ' change_event ' (not learning hypothesis space for change).']
-																	  ]]
-						]]
-				    physical_type_events]
-			      nil]]]]]
-       nil]]
-
-[deftypefunk deliberative_imagine_current_situation_resource get as-natural_language_string []
-  'imagine current situation']
 
 
 'deliberative_imagine_plan_resource'

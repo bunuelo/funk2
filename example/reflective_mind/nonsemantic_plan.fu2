@@ -1419,12 +1419,13 @@
 
 [deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
-  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-		      [funk []
-			    [have this imagine_eval]]
-		      []]]]
-    [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
-    result]]
+  [with-new-cause [cause-define cause-imagine_time [new semantic_time [time]]]
+		  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+				      [funk []
+					    [have this imagine_eval]]
+				      []]]]
+		    [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
+		    result]]]
 
 
 

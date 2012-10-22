@@ -406,6 +406,8 @@
 						    [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
 						[set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
 						[set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
+						[have counterfactual_knowledge_base     add_semantic_frame counterfactual_event]
+						[have cause-imagine_semantic_event_tree insert             counterfactual_event]
 						[if [not no_dependency_tracing]
 						    [let [[semantic_dependency [new semantic_dependency [get [get this mind] semantic_realm]]]]
 						      [set semantic_dependency precondition_time   precondition_time]

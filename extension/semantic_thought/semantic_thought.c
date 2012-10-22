@@ -29,9 +29,10 @@ f2ptr raw__semantic_thought__type_create(f2ptr cause, f2ptr this, f2ptr semantic
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_thought"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  raw__frame__add_var_value(cause, this, new__symbol(cause, "fiber"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "stack"),       nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "environment"), nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "fiber"),         nil);
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "imagine_frame"), f2__frame__new(cause, nil));
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "stack"),         nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "environment"),   nil);
   return this;
 }
 
@@ -103,6 +104,28 @@ f2ptr f2__semantic_thought__fiber__set(f2ptr cause, f2ptr this, f2ptr that) {
 export_cefunk2(semantic_thought__fiber__set, this, that, 0, "");
 
 
+f2ptr raw__semantic_thought__imagine_frame(f2ptr cause, f2ptr this) {
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "imagine_frame"), nil);
+}
+
+f2ptr f2__semantic_thought__imagine_frame(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_thought, this);
+  return raw__semantic_thought__imagine_frame(cause, this);
+}
+export_cefunk1(semantic_thought__imagine_frame, this, 0, "");
+
+
+f2ptr raw__semantic_thought__imagine_frame__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__frame__add_var_value(cause, this, new__symbol(cause, "imagine_frame"), that);
+}
+
+f2ptr f2__semantic_thought__imagine_frame__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_thought, this);
+  return raw__semantic_thought__imagine_frame__set(cause, this, that);
+}
+export_cefunk2(semantic_thought__imagine_frame__set, this, that, 0, "");
+
+
 f2ptr raw__semantic_thought__stack(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "stack"));
 }
@@ -172,6 +195,8 @@ f2ptr f2__semantic_thought__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),                    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "fiber"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__fiber")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "fiber"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__fiber__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "imagine_frame"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__imagine_frame")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "imagine_frame"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__imagine_frame__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "stack"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__stack")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "stack"),                   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__stack__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "environment"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_thought"), new__symbol(cause, "semantic_thought__environment")));}

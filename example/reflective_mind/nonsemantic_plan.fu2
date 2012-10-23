@@ -550,6 +550,9 @@
 										[let* [[assertion_failed_bug                   bug]
 										       [nonsemantic_plan_truth_value           [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]
 										       [partial_state_existence_dependency_set [get nonsemantic_plan_truth_value partial_state_existence_dependency_set]]]
+										  [have cause-imagine_potential_effect_partial_state_set_mutex lock]
+										  [= cause-imagine_potential_effect_partial_state_set [get cause-imagine_potential_effect_partial_state_set union partial_state_existence_dependency_set]]
+										  [have cause-imagine_potential_effect_partial_state_set_mutex unlock]
 										  [terminal_format standard-terminal
 												   '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
 												   '\n  ' nonsemantic_plan_truth_value]
@@ -573,7 +576,7 @@
 													   '\n  index=' index ' in prog (scan_backwards_index=' scan_backwards_index ').']
 											  
 											  'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
-
+											  
 											  [= cause-imagine_time [get imagine_time_array elt [- index scan_backwards_index]]]
 											  
 											  [let [[possible_remove_events [get cause-imagine_semantic_event_tree events_overlapping_range cause-imagine_time [new semantic_time `after]]]]
@@ -639,8 +642,10 @@
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating parallel process.']
 							    [parog @[mapcar [funk [expression]
-										  `[with-new-cause [cause-define cause-imagine_time                cause-imagine_time]
-												   [cause-define cause-imagine_semantic_event_tree [new semantic_event_tree]]
+										  `[with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
+												   [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
+												   [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
+												   [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
 												   [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 									    expressions]]
 							    nil]]]
@@ -1438,8 +1443,10 @@
 
 [deftypefunk nonsemantic_plan execute imagine_as_thought_in_semantic_planner [semantic_planner variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
-  [with-new-cause [cause-define cause-imagine_time                [new semantic_time [time]]]
-		  [cause-define cause-imagine_semantic_event_tree [new semantic_event_tree]]
+  [with-new-cause [cause-define cause-imagine_time                                     [new semantic_time [time]]]
+		  [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
+		  [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
+		  [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
 		  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
 				      [funk []
 					    [have this imagine_eval]]

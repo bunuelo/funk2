@@ -191,6 +191,9 @@
 [deftypefunk deliberative_layer get type_knowledge_base []
   [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]
 
+[deftypefunk deliberative_layer get counterfactual_knowledge_base []
+  [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]
+
 
 [deftypefunk deliberative_layer execute wait_and_check_exists_in_type_knowledge [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
@@ -228,7 +231,7 @@
     [let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
       [let [[found_event  nil]
 	    [imagine_time cause-imagine_time]]
-	[let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge] events_containing_time imagine_time]]]
+	[let [[current_events [get [get this counterfactual_knowledge_base] events_containing_time imagine_time]]]
 	  [mapc [funk [current_event]
 		      `[terminal_format standard-terminal '\nimagine_check_exists: current_event: ' [get current_event phenomenal_name] '.']
 		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
@@ -283,7 +286,7 @@
     [let [[semantic_planner [get [get [get this mind] agency `deliberative `plan] semantic_planner]]]
       [let [[found        nil]
 	    [imagine_time cause-imagine_time]]
-	[let [[current_events [get [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge] events_containing_time imagine_time]]]
+	[let [[current_events [get [get this counterfactual_knowledge_base] events_containing_time imagine_time]]]
 	  [mapc [funk [current_event]
 		      `[terminal_format standard-terminal '\nimagine assuring relationship: current_event, ' [get current_event phenomenal_name] '.']
 		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]

@@ -600,7 +600,8 @@
 														      [bug bug]]
 														  [= scan_backwards_expression_funk_iter nil]]]]]]]
 											      [if [eq scan_backwards_expression_funk_iter expression_funk_iter]
-												  [prog [= fixed_assertion_failure             t]
+												  [prog [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: fixed assertion failure!']
+													[= fixed_assertion_failure             t]
 													[= scan_backwards_expression_funk_iter nil]]
 												[if scan_backwards_expression_funk_iter
 												    [= scan_backwards_expression_funk_iter [cdr scan_backwards_expression_funk_iter]]]]]]]]]]]

@@ -1447,12 +1447,15 @@
 		  [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 		  [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
 		  [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
-		  [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-				      [funk []
-					    [have this imagine_eval]]
-				      []]]]
-		    [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
-		    result]]]
+		  [let [[remember_token [new remember_token cause-imagine_time]]]
+		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
+		    [let [[result [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+					[funk []
+					      [have this imagine_eval]]
+					[]]]]
+		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
+		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
+		      result]]]]
 
 
 

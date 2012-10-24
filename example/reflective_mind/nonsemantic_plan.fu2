@@ -1452,7 +1452,7 @@
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
   [with-new-cause [if [null [cause-lookup cause-imagine_time]]
 		      [cause-define cause-imagine_time                                 [new semantic_time [time]]]
-		    [cause-define   cause-imagine_time                                 cause-define]]
+		    [cause-define   cause-imagine_time                                 cause-imagine_time]]
 		  [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 		  [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
 		  [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]

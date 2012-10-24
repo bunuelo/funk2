@@ -27,9 +27,9 @@ f2ptr raw__semantic_event_knowledge_base__know_of_remove__before_callback(f2ptr 
     f2ptr semantic_event = semantic_frame;
     if (raw__eq(cause, new__symbol(cause, "property"), key_type) && (raw__eq(cause, new__symbol(cause, "absolute_start_time"), key) ||
 								     raw__eq(cause, new__symbol(cause, "absolute_end_time"),   key))) {
-      f2ptr semantic_event_tree    = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
-      f2ptr already_contains_event = assert_value(f2__semantic_event_tree__contains(cause, semantic_event_tree, semantic_event));
-      if (already_contains_event != nil) {
+      f2ptr semantic_event_tree = raw__semantic_event_knowledge_base__semantic_event_tree(cause, this);
+      f2ptr contains_event      = assert_value(f2__semantic_event_tree__contains(cause, semantic_event_tree, semantic_event));
+      if (contains_event != nil) {
 	assert_value(f2__semantic_event_tree__remove(cause, semantic_event_tree, semantic_event));
       }
     }

@@ -428,11 +428,16 @@
 					      [let* [[feature_phenomenal_name               [get change_feature feature_phenomenal_name]]
 						     [relative_start_time_from_action_start [get change_feature relative_start_time_from_action_start]]
 						     [relative_duration_time                [get change_feature relative_duration_time]]
-						     [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]]
-						[set counterfactual_event absolute_start_time [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
-						[set counterfactual_event absolute_end_time   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]
+						     [counterfactual_event                  [new semantic_reflective_object_type_event [get [get this mind] semantic_realm] feature_phenomenal_name feature_phenomenal_name]]
+						     [absolute_start_time                   [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start]]]
+						     [absolute_end_time                     [new semantic_time [+ [get precondition_time value] relative_start_time_from_action_start relative_duration_time]]]]
+						[set counterfactual_event absolute_start_time absolute_start_time]
+						[set counterfactual_event absolute_end_time   absolute_end_time]
 						[terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-								 'resource, ' name ', adding counterfactual_event=' counterfactual_event]
+								 'resource, ' name ', adding counterfactual_event.'
+								 '\n  counterfactual_event = ' counterfactual_event
+								 '\n  absolute_start_time  = ' absolute_start_time
+								 '\n  absolute_end_time    = ' absolute_end_time]
 						[have counterfactual_knowledge_base     add_semantic_frame counterfactual_event]
 						[have cause-imagine_semantic_event_tree insert             counterfactual_event]
 						[if [not no_dependency_tracing]

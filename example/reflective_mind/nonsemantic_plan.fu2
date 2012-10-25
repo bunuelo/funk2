@@ -372,7 +372,10 @@
 							    [new multiple_possible_values [conslist @[mapcar [funk [value]
 														   `[funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]
 													     [get [get expression value_set] elements]]]]]]]
-	  [[eq compile-mode `natural_language] [get expression as-string]]
+	  [[eq compile-mode `natural_language] [string-concat '(' [stringlist-intersperse [mapcar [funk [value]
+													[get nonsemantic_plan expression-compile value compile_option_frame]]
+												  [get [get expression value_set] elements]]
+											  ', or '] ')']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]

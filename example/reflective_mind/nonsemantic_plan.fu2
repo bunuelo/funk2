@@ -811,7 +811,8 @@
 										[[>  semantic_plans-length 1] [new multiple_possible_values semantic_plans]]
 										[t                            [error bug_name   could_not_find_matching_semantic_plans
 														     funkname   `plan
-														     expression expression]]]]]]]]]]]]
+														     expression expression]]]]]]
+								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
 							      [let* [[plan_name                            ,plan_name-eval]
@@ -840,7 +841,8 @@
 										[[>  semantic_plans-length 1] [new multiple_possible_values semantic_plans]]
 										[t                            [error bug_name   could_not_find_matching_semantic_plans
 														     funkname   `plan
-														     expression expression]]]]]]]]]]]]
+														     expression expression]]]]]]
+								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in this layer to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -878,7 +880,8 @@
 										[[>  semantic_plans-length 1] [new multiple_possible_values semantic_plans]]
 										[t                            [error bug_name   could_not_find_matching_semantic_plans
 														     funkname   `plan-below
-														     expression expression]]]]]]]]]]]]
+														     expression expression]]]]]]
+								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
 							      [let* [[plan_name                            ,plan_name-eval]
@@ -907,7 +910,8 @@
 										[[>  semantic_plans-length 1] [new multiple_possible_values semantic_plans]]
 										[t                            [error bug_name   could_not_find_matching_semantic_plans
 														     funkname   `plan-below
-														     expression expression]]]]]]]]]]]]
+														     expression expression]]]]]]
+								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in the layer below to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode

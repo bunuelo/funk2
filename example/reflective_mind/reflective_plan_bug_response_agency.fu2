@@ -130,7 +130,6 @@
 					 '\nreflective_layer: unknown bug name response here.'
 					 '\n                  buggy plan = "' [get [get semantic_plan nonsemantic_plan] as-string] '."'
 					 '\n                         bug = "' [get bug as-string] '."']
-			[have bug pretty_print]
 			]]
        nil]]
 

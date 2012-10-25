@@ -316,6 +316,6 @@
 	  [semantic_plan_object [get plan semantic_plan_object]]]
       [set semantic_plan_object plan_object_type `physical]
       [let [[variable_frame [new frame]]]
-	[have plan execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]]]
+	[have plan execute_as_thought variable_frame]]]]]
 
 

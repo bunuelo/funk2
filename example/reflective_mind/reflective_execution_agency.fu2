@@ -38,7 +38,7 @@
 			[let [[semantic_planner [get [get [get this mind] agency `reflective `plan] semantic_planner]]]
 			  [set semantic_planner execute_plan semantic_plan]
 			  [let* [[variable_frame [new frame]]
-				 [result         [have [get semantic_plan nonsemantic_plan] execute_as_thought_in_semantic_planner semantic_planner variable_frame]]]
+				 [result         [have [get semantic_plan nonsemantic_plan] execute_as_thought variable_frame]]]
 			    [terminal_format standard-terminal '\nreflective_layer: executing plan result = ' result]
 			    [if [is-type `bug result]
 				[let [[bug result]]

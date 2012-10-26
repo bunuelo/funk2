@@ -1122,7 +1122,13 @@
 							      [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
 							      [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
 							      ]]]]
-	  [[eq compile-mode `natural_language] [string-concat '[? ' [get variable_name as-string] ']']]
+	  [[eq compile-mode `natural_language] [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+						 [if semantic_thought
+						     [let [[value [have semantic_thought lookup_a_variable_value variable_name]]]
+						       [if [is-type `string value]
+							   value
+							 [get value as-string]]]
+						   [string-concat '[? ' [get variable_name as-string] ']']]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]

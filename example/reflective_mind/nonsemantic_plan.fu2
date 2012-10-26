@@ -1066,7 +1066,8 @@
 																	 ', ']]]]
 														      [string-concat separator
 																     [get nonsemantic_plan expression-compile false_expression compile_option_frame]]]]
-													      false_expressions]]]]]]]
+													      false_expressions]]]]
+								'']]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1121,7 +1122,7 @@
 							      [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
 							      [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
 							      ]]]]
-	  [[eq compile-mode `natural_language] [string-concat 'to be determined ' [get variable_name as-string]]]
+	  [[eq compile-mode `natural_language] [string-concat '[? ' [get variable_name as-string] ']']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]

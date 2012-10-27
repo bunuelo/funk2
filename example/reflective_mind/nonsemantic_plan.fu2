@@ -53,12 +53,38 @@
 
 'multiple_possible_values'
 
-[deframe multiple_possible_values [frame] [[value_set [new set]]]
+[deframe multiple_possible_values [frame] [[mutate_mutex        [new mutex]]
+					   [good_value_set      [new set]]
+					   [bug_value_ptypehash [new set]]]
   [new [values]
        [mapc [funk [value]
-		   [have value_set add value]]
+		   [have good_value_set add value]]
 	     values]]]
 
+[deftypefunk multiple_possible_values get good_values []
+  [get good_value_set elements]]
+
+[deftypefunk multiple_possible_values get good_value []
+  [have mutate_mutex lock]
+  [let [[good_values [get good_value_set elements]]]
+    [if good_values
+	[let [[result [car good_values]]]
+	  [have mutate_mutex unlock]
+	  result]
+      [prog [have mutate_mutex unlock]
+	    [error bug_name `multiple_possible_values-get-good_value-no_good_values_exist
+		   this     this]]]]]
+
+[deftypefunk multiple_possible_values execute add_value_bug [value bug]
+  [have mutate_mutex lock]
+  [if [get good_value_set contains value]
+      [prog [have good_value_set remove value]
+	    [have value_bug_ptypehash add value bug]
+	    [have mutate_mutex unlock]]
+    [prog [have mutate_mutex unlock]
+	  [error bug_name `multiple_possible_values-add_value_bug-value_not_in_value_set
+		 value    value
+		 bug      bug]]]]
 
 
 'nonsemantic_plan'
@@ -363,18 +389,18 @@
   [let [[compile-mode [have compile_option_frame lookup `mode]]]
     [cond [[eq compile-mode `syntax_check]     [mapc [funk [value]
 							   [get nonsemantic_plan expression-compile value compile_option_frame]]
-						     [get [get expression value_set] elements]]]
+						     [get expression good_values]]]
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
 							    [new multiple_possible_values [conslist @[mapcar [funk [value]
 														   `[funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]
-													     [get [get expression value_set] elements]]]]]]]
+													     [get expression good_values]]]]]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [new multiple_possible_values [conslist @[mapcar [funk [value]
 														   `[funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]
-													     [get [get expression value_set] elements]]]]]]]
+													     [get expression good_values]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat '(' [stringlist-intersperse [mapcar [funk [value]
 													[get nonsemantic_plan expression-compile value compile_option_frame]]
-												  [get [get expression value_set] elements]]
+												  [get expression good_values]]
 											  ', or '] ')']]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -948,11 +974,29 @@
 														     [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
 														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
 														[have nonsemantic_plan execute_as_thought [frame]]]]
-								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values plan]
-														     [semantic_plan_object     [car [get [get multiple_possible_values value_set] elements]]]
-														     [nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]]
-														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
-														[have nonsemantic_plan execute_as_thought [frame]]]]
+								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values  plan]
+														     [semantic_plan_objects     [get multiple_possible_values good_values]]
+														     [semantic_plan_object_iter semantic_plan_objects]
+														     [results                   nil]]
+														[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
+														[while semantic_plan_object_iter
+														  [let* [[semantic_plan_object [car semantic_plan_objects]]
+															 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
+														    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+														    [let [[result [shelter [have nonsemantic_plan execute_as_thought [frame]]]]]
+														      [if [is-type `bug result]
+															  [let [[bug result]]
+															    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+																	     '\n  ' bug]
+															    [have multiple_possible_values add_value_bug semantic_plan_object bug]]
+															[= results [cons result results]]]]]
+														  [= semantic_plan_object_iter [cdr semantic_plan_object_iter]]]
+														[let [[results-length [length results]]]
+														  [cond [[== results-length 1] [car results]]
+															[[>  results-length 1] [new multiple_possible_values results]]
+															[t                     [error bug_name `nonsemantic_plan-plan_call-no_possible_results
+																		      this     this
+																		      plan     plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
 														     correct_type `[or `semantic_plan_object multiple_possible_values]
 														     actual_type  [type plan]
@@ -963,11 +1007,29 @@
 														     [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
 														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
 														[have nonsemantic_plan imagine_as_thought [frame]]]]
-								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values plan]
-														     [semantic_plan_object     [car [get [get multiple_possible_values value_set] elements]]]
-														     [nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]]
-														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
-														[have nonsemantic_plan imagine_as_thought [frame]]]]
+								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values  plan]
+														     [semantic_plan_objects     [get multiple_possible_values good_values]]
+														     [semantic_plan_object_iter semantic_plan_objects]
+														     [results                   nil]]
+														[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
+														[while semantic_plan_object_iter
+														  [let* [[semantic_plan_object [car semantic_plan_objects]]
+															 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
+														    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+														    [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]
+														      [if [is-type `bug result]
+															  [let [[bug result]]
+															    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+																	     '\n  ' bug]
+															    [have multiple_possible_values add_value_bug semantic_plan_object bug]]
+															[= results [cons result results]]]]]
+														  [= semantic_plan_object_iter [cdr semantic_plan_object_iter]]]
+														[let [[results-length [length results]]]
+														  [cond [[== results-length 1] [car results]]
+															[[>  results-length 1] [new multiple_possible_values results]]
+															[t                     [error bug_name `nonsemantic_plan-plan_call-no_possible_results
+																		      this     this
+																		      plan     plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
 														     correct_type `[or `semantic_plan_object multiple_possible_values]
 														     actual_type  [type plan]

@@ -32,8 +32,11 @@
 		[let [[global_bug_name [get [string-concat 'bug-' [get bug_count as-string]] as-symbol]]]
 		  [= bug_count [bytecode:add bug_count 1]]
 		  [terminal_format standard-terminal '\nbug: defining ' global_bug_name ' globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
-		  [eval `[globalize ,global_bug_name [quote ,bug]]]
-		  [= launch_repl t]]]
+		  [let [[new_bug [shelter [error bug_name            `post_userfile_init_boot-bug_in_user_command
+						 user_command_string user_command_string
+						 subbug              bug]]]]
+		    [eval `[globalize ,global_bug_name [quote ,new_bug]]]
+		    [= launch_repl t]]]]
 	    [quit]]]
       [prog [if user-boot-commands
 		[mapc [funk [user-boot-command]

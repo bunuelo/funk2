@@ -26,7 +26,7 @@
   [let [[user_command_string [get command_line user_command_string]]
 	[launch_repl         nil]]
     [let [[result [shelter [if user_command_string
-			       [prog [eval [have user_command_string read]]
+			       [prog [eval [have [string-concat '[prog ' user_command_string ']'] read]]
 				     [quit]]
 			     [prog [if user-boot-commands
 				       [mapc [funk [user-boot-command]

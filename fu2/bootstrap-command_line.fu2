@@ -19,7 +19,7 @@
 
 [deframe command_line [frame] []]
 
-[deftypefunk command_line get user_command []
+[deftypefunk command_line get user_command_string []
   [command_line-user_command_string]]
 
 [globalize command_line [new command_line]]

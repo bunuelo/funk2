@@ -79,7 +79,7 @@
   [have mutate_mutex lock]
   [if [get good_value_set contains value]
       [prog [have good_value_set remove value]
-	    [have value_bug_ptypehash add value bug]
+	    [have bug_value_ptypehash add value bug]
 	    [have mutate_mutex unlock]]
     [prog [have mutate_mutex unlock]
 	  [error bug_name `multiple_possible_values-add_value_bug-value_not_in_value_set

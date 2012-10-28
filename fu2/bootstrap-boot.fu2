@@ -19,7 +19,7 @@
 
 [globalize user-boot-commands nil]
 
-[globalize command_line_bug_count 0]
+[globalize bug_count 0]
 
 [defunk post_userfile_init_boot []
   [have scheduler:global_scheduler clean]
@@ -29,9 +29,9 @@
 	[let [[result [shelter [eval [have user_command_string read]]]]]
 	  [if [is-type `bug result]
 	      [let [[bug result]]
-		[let [[global_bug_name [get [string-concat 'command_line_bug-' [get command_line_bug_count as-string]] as-symbol]]]
-		  [= command_line_bug_count [bytecode:add command_line_bug_count 1]]
-		  [terminal_format standard-terminal '\nbug: defining globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
+		[let [[global_bug_name [get [string-concat 'bug-' [get bug_count as-string]] as-symbol]]]
+		  [= bug_count [bytecode:add bug_count 1]]
+		  [terminal_format standard-terminal '\nbug: defining ' global_bug_name ' globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
 		  [eval `[globalize ,global_bug_name [quote ,bug]]]
 		  [= launch_repl t]]]
 	    [quit]]]

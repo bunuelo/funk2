@@ -19,6 +19,8 @@
 
 [globalize user-boot-commands nil]
 
+[globalize command_line_bug_count 0]
+
 [defunk post_userfile_init_boot []
   [have scheduler:global_scheduler clean]
   [let [[user_command_string [get command_line user_command_string]]
@@ -26,7 +28,12 @@
     [if user_command_string
 	[let [[result [shelter [eval [have user_command_string read]]]]]
 	  [if [is-type `bug result]
-	      [= launch_repl t]
+	      [let [[bug result]]
+		[let [[global_bug_name [get [string-concat 'command_line_bug-' [get command_line_bug_count as-string]] as-symbol]]]
+		  [= command_line_bug_count [bytecode:add command_line_bug_count 1]]
+		  [terminal_format standard-terminal '\nbug: defining globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
+		  [eval `[globalize ,global_bug_name [quote ,bug]]]
+		  [= launch_repl t]]]
 	    [quit]]]
       [prog [if user-boot-commands
 		[mapc [funk [user-boot-command]

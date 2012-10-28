@@ -78,13 +78,10 @@
 [deftypefunk multiple_possible_values execute add_value_bug [value bug]
   [have mutate_mutex lock]
   [if [get good_value_set contains value]
-      [prog [have good_value_set remove value]
-	    [have bug_value_ptypehash add value bug]
-	    [have mutate_mutex unlock]]
-    [prog [have mutate_mutex unlock]
-	  [error bug_name `multiple_possible_values-add_value_bug-value_not_in_value_set
-		 value    value
-		 bug      bug]]]]
+      [have good_value_set remove value]]
+  [let [[current_value_bugs [have bug_value_ptypehash lookup value]]]
+    [have bug_value_ptypehash add value [cons bug current_value_bugs]]
+    [have mutate_mutex unlock]]]
 
 
 'nonsemantic_plan'

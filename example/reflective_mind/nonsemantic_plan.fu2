@@ -1000,6 +1000,7 @@
 														  [cond [[== results-length 1] [car results]]
 															[[>  results-length 1] [new multiple_possible_values results]]
 															[t                     [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
+																		      is_plan_bug      t
 																		      nonsemantic_plan nonsemantic_plan
 																		      plan             plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
@@ -1033,6 +1034,7 @@
 														  [cond [[== results-length 1] [car results]]
 															[[>  results-length 1] [new multiple_possible_values results]]
 															[t                     [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
+																		      is_plan_bug      t
 																		      nonsemantic_plan nonsemantic_plan
 																		      plan             plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type

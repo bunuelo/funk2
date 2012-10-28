@@ -100,6 +100,7 @@
 [primfunk:load 'fu2/primfunks-sort.fu2']
 [primfunk:load 'fu2/primfunks-stdlib.fu2']
 [primfunk:load 'fu2/primfunks-string.fu2']
+[primfunk:load 'fu2/primfunks-command_line.fu2']
 [primfunk:load 'fu2/primfunks-surrogate_parent.fu2']
 [primfunk:load 'fu2/primfunks-terminal_print.fu2']
 [primfunk:load 'fu2/primfunks-termios.fu2']

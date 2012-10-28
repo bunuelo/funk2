@@ -199,3 +199,48 @@ void funk2_command_line__print(funk2_command_line_t* this) {
   status("command_line.peer_command_server.port_num   = %d", this->peer_command_server__port_num);
 }
 
+// ^^
+
+
+
+
+f2ptr raw__command_line__user_command_string(f2ptr cause) {
+  char* user_command_string__str = __funk2.command_line.user_command;
+  if (user_command_string__str == NULL) {
+    return nil;
+  } else {
+    return new__string(cause, user_command_string__str);
+  }
+}
+
+f2ptr f2__command_line__user_command_string(f2ptr cause) {
+  return raw__command_line__user_command_string(cause);
+}
+def_pcfunk0(command_line__user_command_string,
+	    "Returns the user command supplied on the command line.",
+	    return f2__command_line__user_command_string(this_cause));
+
+
+// **
+
+void f2__command_line__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(command_line__user_command_string);
+  
+}
+
+void f2__command_line__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  f2__primcfunk__init__0_and_rest(command_line__user_command_string, expressions);
+
+}
+
+void f2__command_line__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "command_line", "", &f2__command_line__reinitialize_globalvars, &f2__command_line__defragment__fix_pointers);
+  
+  f2__command_line__reinitialize_globalvars();
+}
+

@@ -42,6 +42,13 @@ void funk2_command_line__destroy(funk2_command_line_t* this);
 void string__print_quote_protected(char* this);
 void funk2_command_line__print(funk2_command_line_t* this);
 
+
+// **
+
+void f2__command_line__defragment__fix_pointers();
+void f2__command_line__reinitialize_globalvars();
+void f2__command_line__initialize();
+
 #endif // F2__COMMAND_LINE__H
 
 

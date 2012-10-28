@@ -98,6 +98,7 @@ void f2__initialize() {
   f2__primobject__dynamic_library__initialize();
   f2__gmodule__initialize();
   f2__string__initialize();
+  f2__command_line__initialize();
   f2__chunk__initialize();
   f2__print__initialize();
   f2__apropos__initialize();

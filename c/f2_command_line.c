@@ -232,10 +232,7 @@ void f2__command_line__defragment__fix_pointers() {
 }
 
 void f2__command_line__reinitialize_globalvars() {
-  f2ptr cause = initial_cause();
-  
   f2__primcfunk__init__0_and_rest(command_line__user_command_string, expressions);
-
 }
 
 void f2__command_line__initialize() {

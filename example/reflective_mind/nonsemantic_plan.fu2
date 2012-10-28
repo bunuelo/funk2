@@ -863,7 +863,7 @@
 										[t                            [error bug_name    `could_not_find_matching_semantic_plans
 														     is_plan_bug t
 														     funkname    `plan
-														     expression  expression]]]]]]
+														     plan_name   plan_name]]]]]]
 								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
@@ -894,7 +894,7 @@
 										[t                            [error bug_name    `could_not_find_matching_semantic_plans
 														     is_plan_bug t
 														     funkname    `plan
-														     expression  expression]]]]]]
+														     plan_name   plan_name]]]]]]
 								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in this layer to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
@@ -934,7 +934,7 @@
 										[t                            [error bug_name    `could_not_find_matching_semantic_plans
 														     is_plan_bug t
 														     funkname    `plan-below
-														     expression  expression]]]]]]
+														     plan_name   plan_name]]]]]]
 								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `imagine]          [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
 						 [eval `[funk [nonsemantic_plan]
@@ -965,7 +965,7 @@
 										[t                            [error bug_name    `could_not_find_matching_semantic_plans
 														     is_plan_bug t
 														     funkname    `plan-below
-														     expression  expression]]]]]]
+														     plan_name   plan_name]]]]]]
 								  semantic_plan_object]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'a plan in the layer below to ' [get nonsemantic_plan expression-compile plan_name compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]

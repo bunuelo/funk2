@@ -42,6 +42,7 @@
   [load 'fu2/bootstrap-boot.fu2']
   [load 'fu2/bootstrap-critics-reactive.fu2']
   [load 'fu2/bootstrap-string.fu2']
+  [load 'fu2/bootstrap-command_line.fu2']
   [load 'fu2/bootstrap-apropos.fu2']
   [load 'fu2/bootstrap-sort.fu2']
   [load 'fu2/bootstrap-garbage_collector.fu2']

@@ -978,15 +978,15 @@
 														     [semantic_plan_objects     [get multiple_possible_values good_values]]
 														     [semantic_plan_object_iter semantic_plan_objects]
 														     [results                   nil]]
-														[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
+														[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
 														[while semantic_plan_object_iter
 														  [let* [[semantic_plan_object [car semantic_plan_objects]]
 															 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
-														    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
 														    [let [[result [shelter [have nonsemantic_plan execute_as_thought [frame]]]]]
 														      [if [is-type `bug result]
 															  [let [[bug result]]
-															    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+															    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
 																	     '\n  ' bug]
 															    [have multiple_possible_values add_value_bug semantic_plan_object bug]]
 															[= results [cons result results]]]]]
@@ -994,9 +994,9 @@
 														[let [[results-length [length results]]]
 														  [cond [[== results-length 1] [car results]]
 															[[>  results-length 1] [new multiple_possible_values results]]
-															[t                     [error bug_name `nonsemantic_plan-plan_call-no_possible_results
-																		      this     this
-																		      plan     plan]]]]]]
+															[t                     [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
+																		      nonsemantic_plan nonsemantic_plan
+																		      plan             plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
 														     correct_type `[or `semantic_plan_object multiple_possible_values]
 														     actual_type  [type plan]
@@ -1011,15 +1011,15 @@
 														     [semantic_plan_objects     [get multiple_possible_values good_values]]
 														     [semantic_plan_object_iter semantic_plan_objects]
 														     [results                   nil]]
-														[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
+														[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
 														[while semantic_plan_object_iter
 														  [let* [[semantic_plan_object [car semantic_plan_objects]]
 															 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
-														    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
 														    [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]
 														      [if [is-type `bug result]
 															  [let [[bug result]]
-															    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+															    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
 																	     '\n  ' bug]
 															    [have multiple_possible_values add_value_bug semantic_plan_object bug]]
 															[= results [cons result results]]]]]
@@ -1027,9 +1027,9 @@
 														[let [[results-length [length results]]]
 														  [cond [[== results-length 1] [car results]]
 															[[>  results-length 1] [new multiple_possible_values results]]
-															[t                     [error bug_name `nonsemantic_plan-plan_call-no_possible_results
-																		      this     this
-																		      plan     plan]]]]]]
+															[t                     [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
+																		      nonsemantic_plan nonsemantic_plan
+																		      plan             plan]]]]]]
 								    [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
 														     correct_type `[or `semantic_plan_object multiple_possible_values]
 														     actual_type  [type plan]

@@ -21,24 +21,32 @@
 
 [defunk post_userfile_init_boot []
   [have scheduler:global_scheduler clean]
-  [if user-boot-commands
-      [mapc [funk [user-boot-command]
-		  [eval user-boot-command]]
-	    user-boot-commands]]
-  [ansi-stream-foreground [get standard-terminal stream] 15]
-  [terminal_format standard-terminal
-		   '\n*************************'
-		   '\n**                     **'
-		   '\n**  ']
-  [ansi-stream-foreground [get standard-terminal stream] 9]
-  [terminal_format standard-terminal 'Welcome to funkϩ']
-  [ansi-stream-foreground [get standard-terminal stream] 15]
-  [terminal_format standard-terminal '!  **'
-		   '\n**                     **'
-		   '\n*************************'
-		   '\n']
-  [ansi-stream-reset [get standard-terminal stream]]
-  [repl]]
+  [let [[user_command_string [get command_line user_command_string]]
+	[launch_repl         nil]]
+    [if user_command_string
+	[let [[result [shelter [eval [have user_command_string read]]]]]
+	  [if [is-type `bug result]
+	      [= launch_repl t]
+	    [quit]]]
+      [prog [if user-boot-commands
+		[mapc [funk [user-boot-command]
+			    [eval user-boot-command]]
+		      user-boot-commands]]
+	    [ansi-stream-foreground [get standard-terminal stream] 15]
+	    [terminal_format standard-terminal
+			     '\n*************************'
+			     '\n**                     **'
+			     '\n**  ']
+	    [ansi-stream-foreground [get standard-terminal stream] 9]
+	    [terminal_format standard-terminal 'Welcome to funkϩ']
+	    [ansi-stream-foreground [get standard-terminal stream] 15]
+	    [terminal_format standard-terminal '!  **'
+			     '\n**                     **'
+			     '\n*************************'
+			     '\n']]]
+    [if launch_repl
+	[prog [ansi-stream-reset [get standard-terminal stream]]
+	      [repl]]]]]
 
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]

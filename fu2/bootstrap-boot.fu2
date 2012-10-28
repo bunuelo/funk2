@@ -25,38 +25,38 @@
   [have scheduler:global_scheduler clean]
   [let [[user_command_string [get command_line user_command_string]]
 	[launch_repl         nil]]
-    [if user_command_string
-	[let [[result [shelter [eval [have user_command_string read]]]]]
-	  [if [is-type `bug result]
-	      [let [[bug result]]
-		[let [[global_bug_name [get [string-concat 'bug-' [get bug_count as-string]] as-symbol]]]
-		  [= bug_count [bytecode:add bug_count 1]]
-		  [terminal_format standard-terminal '\nbug: defining ' global_bug_name ' globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
-		  [let [[new_bug [shelter [error bug_name            `post_userfile_init_boot-bug_in_user_command
-						 user_command_string user_command_string
-						 subbug              bug]]]]
-		    [eval `[globalize ,global_bug_name [quote ,new_bug]]]
-		    [= launch_repl t]]]]
-	    [quit]]]
-      [prog [if user-boot-commands
-		[mapc [funk [user-boot-command]
-			    [eval user-boot-command]]
-		      user-boot-commands]]
-	    [ansi-stream-foreground [get standard-terminal stream] 15]
-	    [terminal_format standard-terminal
-			     '\n*************************'
-			     '\n**                     **'
-			     '\n**  ']
-	    [ansi-stream-foreground [get standard-terminal stream] 9]
-	    [terminal_format standard-terminal 'Welcome to funkϩ']
-	    [ansi-stream-foreground [get standard-terminal stream] 15]
-	    [terminal_format standard-terminal '!  **'
-			     '\n**                     **'
-			     '\n*************************'
-			     '\n']]]
-    [if launch_repl
-	[prog [ansi-stream-reset [get standard-terminal stream]]
-	      [repl]]]]]
+    [let [[result [shelter [if user_command_string
+			       [prog [eval [have user_command_string read]]
+				     [quit]]
+			     [prog [if user-boot-commands
+				       [mapc [funk [user-boot-command]
+						   [eval user-boot-command]]
+					     user-boot-commands]]
+				   [ansi-stream-foreground [get standard-terminal stream] 15]
+				   [terminal_format standard-terminal
+						    '\n*************************'
+						    '\n**                     **'
+						    '\n**  ']
+				   [ansi-stream-foreground [get standard-terminal stream] 9]
+				   [terminal_format standard-terminal 'Welcome to funkϩ']
+				   [ansi-stream-foreground [get standard-terminal stream] 15]
+				   [terminal_format standard-terminal '!  **'
+						    '\n**                     **'
+						    '\n*************************'
+						    '\n']]]]]]
+      
+      [if [is-type `bug result]
+	  [let [[bug result]]
+	    [let [[global_bug_name [get [string-concat 'bug-' [get bug_count as-string]] as-symbol]]]
+	      [= bug_count [bytecode:add bug_count 1]]
+	      [terminal_format standard-terminal '\nbug: defining ' global_bug_name ' globally.  View with ' `[inspect ,global_bug_name] '.  Starting REPL for debugging.']
+	      [let [[new_bug [shelter [error bug_name            `post_userfile_init_boot-bug_in_user_command
+					     user_command_string user_command_string
+					     subbug              bug]]]]
+		[eval `[globalize ,global_bug_name [quote ,new_bug]]]]]]]
+      
+      [ansi-stream-reset [get standard-terminal stream]]
+      [repl]]]]
 
 [defunk boot []
   [with-new-cause [cause-define standard-terminal [terminal_print_frame-new stdout 0 [termios-width] [termios-height] 128 t nil t 1000000000]]

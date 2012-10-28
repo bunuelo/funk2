@@ -769,6 +769,7 @@
 							      [let [[action [have nonsemantic_plan lookup_action_below ,action_name-eval]]]
 								[if [null action]
 								    [error bug_name    `nonsemantic_plan-call_below-no_such_action
+									   is_plan_bug t
 									   action_name ,action_name-eval]
 								  [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									[have action wait_to_call @action_arguments-eval]
@@ -781,6 +782,7 @@
 							      [let [[action [have nonsemantic_plan lookup_action_below ,action_name-eval]]]
 								[if [null action]
 								    [error bug_name    `nonsemantic_plan-call_below-no_such_action
+									   is_plan_bug t
 									   action_name ,action_name-eval]
 								  [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 									[have action imagine_waiting_to_call @action_arguments-eval]
@@ -805,6 +807,7 @@
 							      [let [[action [have nonsemantic_plan lookup_action ,action_name-eval]]]
 								[if [null action]
 								    [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+									   is_plan_bug t
 									   action_name ,action_name-eval]
 								  [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									[have action wait_to_call @action_arguments-eval]
@@ -817,6 +820,7 @@
 							      [let [[action [have nonsemantic_plan lookup_action ,action_name-eval]]]
 								[if [null action]
 								    [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+									   is_plan_bug t
 									   action_name ,action_name-eval]
 								  [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
 									[have action imagine_waiting_to_call @action_arguments-eval]

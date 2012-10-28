@@ -55,7 +55,7 @@
 
 [deframe multiple_possible_values [frame] [[mutate_mutex        [new mutex]]
 					   [good_value_set      [new set]]
-					   [bug_value_ptypehash [new set]]]
+					   [bug_value_ptypehash [new ptypehash]]]
   [new [values]
        [mapc [funk [value]
 		   [have good_value_set add value]]

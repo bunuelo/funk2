@@ -1055,7 +1055,7 @@
 														     correct_type `[or `semantic_plan_object multiple_possible_values]
 														     actual_type  [type plan]
 														     plan         plan]]]]]]]
-	  [[eq compile-mode `natural_language] [string-concat [get nonsemantic_plan expression-compile plan compile_option_frame] ' in this layer']]
+	  [[eq compile-mode `natural_language] [string-concat 'call ' [get nonsemantic_plan expression-compile plan compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
@@ -1448,7 +1448,7 @@
 								[if [is-type `bug result]
 								    [let [[bug result]]
 								      [if [have [get bug frame] lookup `is_plan_bug]
-									  bug
+									  [bug bug]
 									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
 									  [error bug_name         `nonsemantic_plan-expression_encountered_bug
@@ -1463,7 +1463,7 @@
 								[if [is-type `bug result]
 								    [let [[bug result]]
 								      [if [have [get bug frame] lookup `is_plan_bug]
-									  bug
+									  [bug bug]
 									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
 									  [error bug_name         `nonsemantic_plan-expression_encountered_bug

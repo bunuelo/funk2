@@ -1046,7 +1046,7 @@
 														  [while semantic_plan_object_iter
 														    [= index [+ index 1]]
 														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan #' index '.']
-														    [let* [[semantic_plan_object [car semantic_plan_objects]]
+														    [let* [[semantic_plan_object [car semantic_plan_object_iter]]
 															   [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
 														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
 														      [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]

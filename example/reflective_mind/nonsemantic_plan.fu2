@@ -1020,7 +1020,7 @@
 														      [let [[result [shelter [have nonsemantic_plan execute_as_thought [frame]]]]]
 															[if [is-type `bug result]
 															    [let [[bug result]]
-															      [if [not [have [get bug frame] lookup is_plan_bug]]
+															      [if [not [have [get bug frame] lookup `is_plan_bug]]
 																  [bug bug]
 																[prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
 																		       '\n  ' bug]
@@ -1059,7 +1059,7 @@
 														      [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]
 															[if [is-type `bug result]
 															    [let [[bug result]]
-															      [if [not [have [get bug frame] lookup is_plan_bug]]
+															      [if [not [have [get bug frame] lookup `is_plan_bug]]
 																  [bug bug]
 																[prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
 																		       '\n  ' bug]

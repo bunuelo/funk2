@@ -625,71 +625,73 @@
 								    [let [[result [shelter [funkall expression_funk nonsemantic_plan]]]]
 								      [if [is-type `bug result]
 									  [let [[bug result]]
-									    [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
-										[let* [[assertion_failed_bug                   bug]
-										       [nonsemantic_plan_truth_value           [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]
-										       [partial_state_existence_dependency_set [get nonsemantic_plan_truth_value partial_state_existence_dependency_set]]]
-										  [have cause-imagine_potential_effect_partial_state_set_mutex lock]
-										  [= cause-imagine_potential_effect_partial_state_set [get cause-imagine_potential_effect_partial_state_set union partial_state_existence_dependency_set]]
-										  [have cause-imagine_potential_effect_partial_state_set_mutex unlock]
-										  [terminal_format standard-terminal
-												   '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
-												   '\n  ' nonsemantic_plan_truth_value]
-										  
-										  [if [== index 0]
-										      [bug bug]
-										    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-										      [let [[partial_state_assertion_failure_set [have [get semantic_thought imagine_frame] lookup `partial_state_assertion_failure_set]]]
-											[if [null partial_state_assertion_failure_set]
-											    [= partial_state_assertion_failure_set partial_state_existence_dependency_set]
-											  [= partial_state_assertion_failure_set [get partial_state_assertion_failure_set union partial_state_existence_dependency_set]]]
-											[have [get semantic_thought imagine_frame] add `partial_state_assertion_failure_set partial_state_assertion_failure_set]]
-										      
-										      [let [[scan_backwards_index    1]
-											    [fixed_assertion_failure nil]]
+									    [if [not [have [get bug frame] lookup `is_plan_bug]]
+										[bug bug]
+									      [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
+										  [let* [[assertion_failed_bug                   bug]
+											 [nonsemantic_plan_truth_value           [have [get assertion_failed_bug frame] lookup `nonsemantic_plan_truth_value]]
+											 [partial_state_existence_dependency_set [get nonsemantic_plan_truth_value partial_state_existence_dependency_set]]]
+										    [have cause-imagine_potential_effect_partial_state_set_mutex lock]
+										    [= cause-imagine_potential_effect_partial_state_set [get cause-imagine_potential_effect_partial_state_set union partial_state_existence_dependency_set]]
+										    [have cause-imagine_potential_effect_partial_state_set_mutex unlock]
+										    [terminal_format standard-terminal
+												     '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan assertion-failed at index=' index ' in prog for truth value:'
+												     '\n  ' nonsemantic_plan_truth_value]
+										    
+										    [if [== index 0]
+											[bug bug]
+										      [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+											[let [[partial_state_assertion_failure_set [have [get semantic_thought imagine_frame] lookup `partial_state_assertion_failure_set]]]
+											  [if [null partial_state_assertion_failure_set]
+											      [= partial_state_assertion_failure_set partial_state_existence_dependency_set]
+											    [= partial_state_assertion_failure_set [get partial_state_assertion_failure_set union partial_state_existence_dependency_set]]]
+											  [have [get semantic_thought imagine_frame] add `partial_state_assertion_failure_set partial_state_assertion_failure_set]]
 											
-											[while [not fixed_assertion_failure]
+											[let [[scan_backwards_index    1]
+											      [fixed_assertion_failure nil]]
 											  
-											  [terminal_format standard-terminal
-													   '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan scanning backwards to try to learn from assertion-failed.'
-													   '\n  index=' index ' in prog (scan_backwards_index=' scan_backwards_index ').']
-											  
-											  'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
-											  
-											  [= cause-imagine_time [get imagine_time_array elt [- index scan_backwards_index]]]
-											  
-											  [let [[possible_remove_events [get cause-imagine_semantic_event_tree events_overlapping_range cause-imagine_time [new semantic_time `after]]]]
-											    [if [is-type `list possible_remove_events]
-												[= possible_remove_events [get possible_remove_events cons_cells]]]
-											    [mapc [funk [possible_remove_event]
-													[if [get cause-imagine_semantic_event_tree contains possible_remove_event]
-													    [if [> [get possible_remove_event absolute_start_time] cause-imagine_time]
-														[prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from cause-imagine_semantic_event_tree.']
-														      [have cause-imagine_semantic_event_tree                                       remove                possible_remove_event]
-														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from cause-imagine_semantic_event_tree.  (success!)']
-														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from counterfactual_knowledge_base.']
-														      [have [get [get nonsemantic_plan mental_layer] counterfactual_knowledge_base] remove_semantic_frame possible_remove_event]
-														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from counterfactual_knowledge_base.  (success!)']]]]]
-												  possible_remove_events]]
-											  
-											  [let [[scan_backwards_expression_funk_iter [restn expression_funks [- index scan_backwards_index]]]]
-											    [while scan_backwards_expression_funk_iter
-											      [let [[scan_backwards_expression_funk [car scan_backwards_expression_funk_iter]]]
-												[let [[result [funkall scan_backwards_expression_funk nonsemantic_plan]]]
-												  [if [is-type `bug result]
-												      [let [[bug result]]
-													[if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
-													    [prog [= scan_backwards_index [+ scan_backwards_index 1]]
-														  [if [> scan_backwards_index index]
-														      [bug bug]]
-														  [= scan_backwards_expression_funk_iter nil]]]]]]]
-											      [if [eq scan_backwards_expression_funk_iter expression_funk_iter]
-												  [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: fixed assertion failure!']
-													[= fixed_assertion_failure             t]
-													[= scan_backwards_expression_funk_iter nil]]
-												[if scan_backwards_expression_funk_iter
-												    [= scan_backwards_expression_funk_iter [cdr scan_backwards_expression_funk_iter]]]]]]]]]]]
-									      [bug bug]]]
+											  [while [not fixed_assertion_failure]
+											    
+											    [terminal_format standard-terminal
+													     '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan scanning backwards to try to learn from assertion-failed.'
+													     '\n  index=' index ' in prog (scan_backwards_index=' scan_backwards_index ').']
+											    
+											    'scan backwards undoing resource activations to add partial_state dependencies to concept_version_spaces of one of them if possible.'
+											    
+											    [= cause-imagine_time [get imagine_time_array elt [- index scan_backwards_index]]]
+											    
+											    [let [[possible_remove_events [get cause-imagine_semantic_event_tree events_overlapping_range cause-imagine_time [new semantic_time `after]]]]
+											      [if [is-type `list possible_remove_events]
+												  [= possible_remove_events [get possible_remove_events cons_cells]]]
+											      [mapc [funk [possible_remove_event]
+													  [if [get cause-imagine_semantic_event_tree contains possible_remove_event]
+													      [if [> [get possible_remove_event absolute_start_time] cause-imagine_time]
+														  [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from cause-imagine_semantic_event_tree.']
+															[have cause-imagine_semantic_event_tree                                       remove                possible_remove_event]
+															[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from cause-imagine_semantic_event_tree.  (success!)']
+															[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from counterfactual_knowledge_base.']
+															[have [get [get nonsemantic_plan mental_layer] counterfactual_knowledge_base] remove_semantic_frame possible_remove_event]
+															[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: removing event from counterfactual_knowledge_base.  (success!)']]]]]
+												    possible_remove_events]]
+											    
+											    [let [[scan_backwards_expression_funk_iter [restn expression_funks [- index scan_backwards_index]]]]
+											      [while scan_backwards_expression_funk_iter
+												[let [[scan_backwards_expression_funk [car scan_backwards_expression_funk_iter]]]
+												  [let [[result [funkall scan_backwards_expression_funk nonsemantic_plan]]]
+												    [if [is-type `bug result]
+													[let [[bug result]]
+													  [if [eq [have [get bug frame] lookup `bug_name] `assertion-failed]
+													      [prog [= scan_backwards_index [+ scan_backwards_index 1]]
+														    [if [> scan_backwards_index index]
+															[bug bug]]
+														    [= scan_backwards_expression_funk_iter nil]]]]]]]
+												[if [eq scan_backwards_expression_funk_iter expression_funk_iter]
+												    [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: fixed assertion failure!']
+													  [= fixed_assertion_failure             t]
+													  [= scan_backwards_expression_funk_iter nil]]
+												  [if scan_backwards_expression_funk_iter
+												      [= scan_backwards_expression_funk_iter [cdr scan_backwards_expression_funk_iter]]]]]]]]]]]
+										[bug bug]]]]
 									[= prog_value result]]]]
 								  [if expression_funk_iter
 								      [prog [= index                [+ index 1]]
@@ -1008,18 +1010,23 @@
 														     [semantic_plan_object_iter semantic_plan_objects]
 														     [results                   nil]]
 														[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
-														[while semantic_plan_object_iter
-														  [let* [[semantic_plan_object [car semantic_plan_objects]]
-															 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
-														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
-														    [let [[result [shelter [have nonsemantic_plan execute_as_thought [frame]]]]]
-														      [if [is-type `bug result]
-															  [let [[bug result]]
-															    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
-																	     '\n  ' bug]
-															    [have multiple_possible_values add_value_bug semantic_plan_object bug]]
-															[= results [cons result results]]]]]
-														  [= semantic_plan_object_iter [cdr semantic_plan_object_iter]]]
+														[let [[index 0]]
+														  [while semantic_plan_object_iter
+														    [= index [+ index 1]]
+														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan #' index '/' [length semantic_plan_objects] '.']
+														    [let* [[semantic_plan_object [car semantic_plan_object_iter]]
+															   [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
+														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+														      [let [[result [shelter [have nonsemantic_plan execute_as_thought [frame]]]]]
+															[if [is-type `bug result]
+															    [let [[bug result]]
+															      [if [not [have [get bug frame] lookup is_plan_bug]]
+																  [bug bug]
+																[prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+																		       '\n  ' bug]
+																      [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
+															  [= results [cons result results]]]]]
+														    [= semantic_plan_object_iter [cdr semantic_plan_object_iter]]]]
 														[let [[results-length [length results]]]
 														  [cond [[== results-length 1] [car results]]
 															[[>  results-length 1] [new multiple_possible_values results]]
@@ -1045,16 +1052,18 @@
 														[let [[index 0]]
 														  [while semantic_plan_object_iter
 														    [= index [+ index 1]]
-														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan #' index '.']
+														    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan #' index '/' [length semantic_plan_objects] '.']
 														    [let* [[semantic_plan_object [car semantic_plan_object_iter]]
 															   [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
 														      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
 														      [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]
 															[if [is-type `bug result]
 															    [let [[bug result]]
-															      [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
-																	       '\n  ' bug]
-															      [have multiple_possible_values add_value_bug semantic_plan_object bug]]
+															      [if [not [have [get bug frame] lookup is_plan_bug]]
+																  [bug bug]
+																[prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+																		       '\n  ' bug]
+																      [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
 															  [= results [cons result results]]]]]
 														    [= semantic_plan_object_iter [cdr semantic_plan_object_iter]]]]
 														[let [[results-length [length results]]]

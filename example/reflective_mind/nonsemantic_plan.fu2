@@ -687,7 +687,7 @@
 								prog_value]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '
-									  [let [[index 0]]xists
+									  [let [[index 0]]
 									    [mapcar [funk [expression]
 											  [= index [+ index 1]]
 											  [let [[separator [if [== index 1]

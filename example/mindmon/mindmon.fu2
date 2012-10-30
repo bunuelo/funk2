@@ -647,8 +647,7 @@
     [if [> movie_length 1]
 	[set scale range 0.0 [- movie_length 1]]]
     [let [[image_index [get [get scale value] as-integer]]]
-      [if [< image_index movie_length]
-	  [set movie_gtk_image image [get this movie_image image_index]]]]]]
+      [set movie_gtk_image image [get this movie_image image_index]]]]]
 
 [deftypefunk mindmon_project execute update []
   [= need_update nil]
@@ -722,8 +721,7 @@
       0]]]
 
 [deftypefunk mindmon_project get movie_image [index]
-  [let [[agent_names    [get agent_widget_frame keys]]
-	[image_sequence [new image_sequence nil]]]
+  [let [[agent_names [get agent_widget_frame keys]]]
     [let [[agent_count [if [null agent_names]
 			   0
 			 [length agent_names]]]]

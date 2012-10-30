@@ -754,7 +754,7 @@
 	  [let [[image [new image image_width image_height nil]]]
 	    [have image clear 0 0 0 255]
 	    [let [[overview_image_sequence [get this overview_image_sequence]]]
-	      [let [[overview_image [if overview_image_sequence
+	      [let [[overview_image [if [> [get overview_image_sequence length] index]
 					[get overview_image_sequence elt index]
 				      [get this current_overview_image]]]]
 		[have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]

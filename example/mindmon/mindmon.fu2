@@ -714,6 +714,10 @@
   [if mindmon_world
       [get mindmon_world overview_image_sequence]]]
 
+[deftypefunk mindmon_project get current_overview_image []
+  [if mindmon_world
+      [get mindmon_world current_overview_image]]]
+
 [deftypefunk mindmon_project get movie_length []
   [let [[overview_image_sequence [get this overview_image_sequence]]]
     [if overview_image_sequence

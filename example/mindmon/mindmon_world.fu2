@@ -20,21 +20,21 @@
 [globalize mindmon_world-current_active_frame [frame]]
 
 [deframe mindmon_world [frame] [name
-				[agent_frame                     [frame]]
-				[step_mutex                      [new mutex]]
-				[overview_image_sequence_enabled nil]
-				[overview_image_sequence         [new image_sequence nil]]]
+				[agent_frame                              [frame]]
+				[step_mutex                               [new mutex]]
+				[current_overview_image                   nil]
+				[internal-overview_image_sequence_enabled nil]
+				[overview_image_sequence                  [new image_sequence nil]]]
   [new [initial-name]
        [= name initial-name]
        
        [have mindmon_world-current_active_frame add name this]
        ]]
 
-[deftypefunk mindmon_world execute update_overview_image_sequence []
-  [let [[image [get this screenshot]]]
-    [if [not overview_image_sequence_enabled]
-	[= overview_image_sequence [new image_sequence nil]]]
-    [have overview_image_sequence add_image_to_end image]]]
+[deftypefunk mindmon_world execute update_overview_image []
+  [= current_overview_image [get this screenshot]]
+  [if internal-overview_image_sequence_enabled
+      [have overview_image_sequence add_image_to_end current_overview_image]]]
 
 [deftypefunk mindmon_world get agent_names []
   [get agent_frame keys]]
@@ -46,7 +46,7 @@
   [have agent_frame lookup agent_name]]
 
 [deftypefunk mindmon_world execute update_after_step_simulation []
-  [have this update_overview_image_sequence]
+  [have this update_overview_image]
   [mapc [funk [agent_name]
 	      [let [[mindmon_agent [get this agent agent_name]]]
 		[have mindmon_agent update_after_step_simulation]]]
@@ -66,8 +66,12 @@
 [deftypefunk mindmon_world get simulator_is_stepping []
   [get step_mutex is_locked]]
 
+[deftypefunk mindmon_world set overview_image_sequence_enabled [enabled]
+  [terminal_format standard-terminal '\nmindmon_world (' name '): overview_image_sequence_enabled = ' enabled]
+  [= internal-overview_image_sequence_enabled enabled]]
+
 [deftypefunk mindmon_world set all_cameras_enabled [enabled]
-  [= overview_image_sequence_enabled enabled]
+  [terminal_format standard-terminal '\nmindmon_world (' name '): all_cameras_enabled = ' enabled]
   [mapc [funk [agent_name]
 	      [let [[mindmon_agent [get this agent agent_name]]]
 		[set mindmon_agent all_cameras_enabled enabled]]]

@@ -472,7 +472,7 @@
 		     [terminal_format standard-terminal '\nMindMon: Recording Movie ' [if record_movie 'Enabled' 'Disabled'] '.']
 		     [if [null mindmon_world]
 			 [terminal_format standard-terminal '\nMindMon internal warning: mindmon_world is nil.']
-		       [set mindmon_world all_cameras_enabled record_movie]]]]
+		       [set mindmon_world overview_image_sequence_enabled record_movie]]]]
 	     nil]
        
        [= entry_hbox [gtk-hbox-new 0]]
@@ -559,7 +559,8 @@
     [if [null mindmon_world]
 	[error bug_name mindmon_project_internal_error]]
     
-    [set mindmon_world all_cameras_enabled record_movie]
+    [set mindmon_world all_cameras_enabled             cameras_enabled]
+    [set mindmon_world overview_image_sequence_enabled record_movie]
     
     [terminal_format standard-terminal '\nMindMon Project: removing agent names from project menu.']
     [have mindmon remove_agent_names_from_project_menu]
@@ -632,6 +633,8 @@
   [have agent_hbox pack_start mindmon_agent_widget t t 0]
   [let [[cameras_enabled [get cameras_enabled_check_button active]]]
     [set mindmon_world all_cameras_enabled cameras_enabled]]
+  [let [[record_movie [get record_movie_check_button active]]]
+    [set mindmon_world overview_image_sequence_enabled record_movie]]
   [have [get this cycle_trigger] trigger]]
 
 [deftypefunk mindmon_project execute update_agent_widgets []
@@ -751,7 +754,9 @@
 	  [let [[image [new image image_width image_height nil]]]
 	    [have image clear 0 0 0 255]
 	    [let [[overview_image_sequence [get this overview_image_sequence]]]
-	      [let [[overview_image [get overview_image_sequence elt index]]]
+	      [let [[overview_image [if overview_image_sequence
+					[get overview_image_sequence elt index]
+				      [get this current_overview_image]]]]
 		[have overview_image copy_rectangle_to 0 0 image 1 1 640 480]]]
 	    [let [[agent_index 0]]
 	      [mapc [funk [agent_name]

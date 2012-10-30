@@ -1176,7 +1176,7 @@
 																					is_plan_bug t
 																					expression `[if ,condition ,true_expression @false_expressions]]]
 																     [[== good_results-length 1] [car good_results]]
-																     [t                          [new multiple_possible_values good_values]]]]]]]
+																     [t                          [new multiple_possible_values good_results]]]]]]]
 								      [t                                                 [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_truth_value
 																condition       condition
 																quote-condition [quote ,condition]]]]]]]]]

@@ -107,10 +107,7 @@
        [= name_expression initial-name_expression]
        [= name_patterns   initial-name_patterns]
        [= variables       initial-variables]
-       [= expression      initial-expression]
-       [let [[semantic_plan_object [get this semantic_plan_object]]]
-	 `[set semantic_plan_object plan_object_type `physical]
-	 [have [get this mental_layer] add_semantic_plan semantic_plan_object]]]]
+       [= expression      initial-expression]]]
 
 [deframe nonsemantic_condition [nonsemantic_plan] []
   [new [initial-mental_layer
@@ -1476,8 +1473,9 @@
       [cond [[eq compile-mode `syntax_check]     [prog ]]
 	    [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
 							      [terminal_format standard-terminal '\n' [conslist `defplan [quote ,name_expression]]]
-							      [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]
-							      ]]]
+							      [let* [[nonsemantic_plan [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]]
+								     [semantic_plan_object [get nonsemantic_plan semantic_plan_object]]]
+								[have [get this mental_layer] add_semantic_plan semantic_plan_object]]]]]
 	    [[eq compile-mode `imagine]          [prog ]]
 	    [[eq compile-mode `natural_language] [string-concat 'define a plan to ' [if [is-type `string name_expression]
 											name_expression

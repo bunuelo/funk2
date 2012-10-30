@@ -43,6 +43,14 @@
 	initial-feature_phenomenal_name]
        [assert-type symbol initial-change_type]
        [assert-type symbol initial-feature_phenomenal_name]
+       [if [not [or [eq initial-change_type `add]
+		    [eq initial-change_type `remove]]]
+	   [error bug_name                              `action_transframe_hypothesis_space_change_feature-invalid_change_type
+		  acceptive_change_types                `[add remove]
+		  change_type                           change_type
+		  feature_phenomenal_name               feature_phenomenal_name
+		  relative_start_time_from_action_start relative_start_time_from_action_start
+		  relative_duration_time                relative_duration_time]]
        [= change_type             initial-change_type]
        [= feature_phenomenal_name initial-feature_phenomenal_name]
        [= relative_start_time_from_action_start [new relative_time [* 30 1000000000]]]
@@ -409,10 +417,16 @@
 				    [get precondition_hypothesis_space_set elements]]
 			      [if [not add_change_already_in_hypothesis_space]
 				  [let [[add_change_set [new set]]]
+				    [terminal_format standard-terminal
+						     '\ntraced_resource (' [get this as-natural_language_string] '): adding change hypothesis space for'
+						     '\n                change feature: ' imagine_potential_effect_partial_state-add_change]
 				    [have add_change_set add imagine_potential_effect_partial_state-add_change]
 				    [have precondition_hypothesis_space_set add [new action_transframe_hypothesis_space add_change_set [new concept_version_space]]]]]
 			      [if [not remove_change_already_in_hypothesis_space]
 				  [let [[remove_change_set [new set]]]
+				    [terminal_format standard-terminal
+						     '\ntraced_resource (' [get this as-natural_language_string] '): adding change hypothesis space for'
+						     '\n                change feature: ' imagine_potential_effect_partial_state-remove_change]
 				    [have remove_change_set add imagine_potential_effect_partial_state-remove_change]
 				    [have precondition_hypothesis_space_set add [new action_transframe_hypothesis_space remove_change_set [new concept_version_space]]]]]]]
 		      [get cause-imagine_potential_effect_partial_state_set elements]]

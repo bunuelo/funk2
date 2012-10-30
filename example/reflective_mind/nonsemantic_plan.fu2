@@ -50,12 +50,22 @@
   [have partial_state_existence_dependency_set add partial_state]]
 
 
+'value_dependency'
+
+[deframe value_dependency [frame] [multiple_possible_values
+				   value]
+  [new [initial-multiple_possible_values
+	initial-value]
+       [= multiple_possible_values initial-multiple_possible_values]
+       [= value                    initial-value]]]
+
 
 'multiple_possible_values'
 
-[deframe multiple_possible_values [frame] [[mutate_mutex        [new mutex]]
-					   [good_value_set      [new set]]
-					   [bug_value_ptypehash [new ptypehash]]]
+[deframe multiple_possible_values [frame] [[mutate_mutex                 [new mutex]]
+					   [good_value_set               [new set]]
+					   [bug_value_ptypehash          [new ptypehash]]
+					   [dependencies_value_ptypehash [new ptypehash]]]
   [new [values]
        [mapc [funk [value]
 		   [have good_value_set add value]]
@@ -82,6 +92,14 @@
   [let [[current_value_bugs [have bug_value_ptypehash lookup value]]]
     [have bug_value_ptypehash add value [cons bug current_value_bugs]]
     [have mutate_mutex unlock]]]
+
+[deftypefunk multiple_possible_values execute add_value_dependency [value dependency]
+  [have mutate_mutex lock]
+  [have dependencies_value_ptypehash add value [cons dependency [have dependencies_value_ptypehash lookup value]]]
+  [have mutate_mutex unlock]]
+
+[deftypefunk multiple_possible_values get value_dependencies [value]
+  [have dependencies_value_ptypehash lookup value]]
 
 
 'nonsemantic_plan'

@@ -40,10 +40,10 @@ f2ptr     raw__semantic_event_transframe__change__add       (f2ptr cause, f2ptr 
 f2ptr      f2__semantic_event_transframe__change__add       (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr     raw__semantic_event_transframe__change__remove    (f2ptr cause, f2ptr this, f2ptr that);
 f2ptr      f2__semantic_event_transframe__change__remove    (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__semantic_event_transframe__removal__add      (f2ptr cause, f2ptr this, f2ptr event);
-f2ptr      f2__semantic_event_transframe__removal__add      (f2ptr cause, f2ptr this, f2ptr event);
-f2ptr     raw__semantic_event_transframe__addition__add     (f2ptr cause, f2ptr this, f2ptr event);
-f2ptr      f2__semantic_event_transframe__addition__add     (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr     raw__semantic_event_transframe__remove__add       (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__semantic_event_transframe__remove__add       (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr     raw__semantic_event_transframe__add__add          (f2ptr cause, f2ptr this, f2ptr event);
+f2ptr      f2__semantic_event_transframe__add__add          (f2ptr cause, f2ptr this, f2ptr event);
 
 
 // **

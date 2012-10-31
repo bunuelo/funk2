@@ -241,48 +241,48 @@ f2ptr f2__semantic_event_transframe__change__remove(f2ptr cause, f2ptr this, f2p
 export_cefunk2(semantic_event_transframe__change__remove, this, that, 0, "");
 
 
-f2ptr raw__semantic_event_transframe__removal__add(f2ptr cause, f2ptr this, f2ptr event) {
+f2ptr raw__semantic_event_transframe__remove__add(f2ptr cause, f2ptr this, f2ptr event) {
   f2ptr semantic_realm = f2__semantic_frame__semantic_realm(cause, this);
-  f2ptr change_type    = new__symbol(cause, "removal");
+  f2ptr change_type    = new__symbol(cause, "remove");
   f2ptr change_event   = event;
   f2ptr change         = f2__semantic_event_transframe_change__new(cause, semantic_realm, change_type, change_event);
   return raw__semantic_event_transframe__change__add(cause, this, change);
 }
 
-f2ptr f2__semantic_event_transframe__removal__add(f2ptr cause, f2ptr this, f2ptr event) {
+f2ptr f2__semantic_event_transframe__remove__add(f2ptr cause, f2ptr this, f2ptr event) {
   assert_argument_type(semantic_event_transframe, this);
   assert_argument_type(semantic_event,            event);
-  return raw__semantic_event_transframe__removal__add(cause, this, event);
+  return raw__semantic_event_transframe__remove__add(cause, this, event);
 }
-export_cefunk2(semantic_event_transframe__removal__add, this, that, 0, "");
+export_cefunk2(semantic_event_transframe__remove__add, this, that, 0, "");
 
 
-f2ptr raw__semantic_event_transframe__addition__add(f2ptr cause, f2ptr this, f2ptr event) {
+f2ptr raw__semantic_event_transframe__add__add(f2ptr cause, f2ptr this, f2ptr event) {
   f2ptr semantic_realm = f2__semantic_frame__semantic_realm(cause, this);
-  f2ptr change_type    = new__symbol(cause, "addition");
+  f2ptr change_type    = new__symbol(cause, "add");
   f2ptr change_event   = event;
   f2ptr change         = f2__semantic_event_transframe_change__new(cause, semantic_realm, change_type, change_event);
   return raw__semantic_event_transframe__change__add(cause, this, change);
 }
 
-f2ptr f2__semantic_event_transframe__addition__add(f2ptr cause, f2ptr this, f2ptr event) {
+f2ptr f2__semantic_event_transframe__add__add(f2ptr cause, f2ptr this, f2ptr event) {
   assert_argument_type(semantic_event_transframe, this);
   assert_argument_type(semantic_event,            event);
-  return raw__semantic_event_transframe__addition__add(cause, this, event);
+  return raw__semantic_event_transframe__add__add(cause, this, event);
 }
-export_cefunk2(semantic_event_transframe__addition__add, this, that, 0, "");
+export_cefunk2(semantic_event_transframe__add__add, this, that, 0, "");
 
 
 f2ptr f2__semantic_event_transframe__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "change"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "change"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "change"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "removal"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__removal__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "addition"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__addition__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "change"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "change"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "change"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__change__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "remove"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__remove__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "add"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_transframe"), new__symbol(cause, "semantic_event_transframe__add__add")));}
   return this;
 }
 

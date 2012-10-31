@@ -47,10 +47,8 @@
 		    [eq initial-change_type `remove]]]
 	   [error bug_name                              `action_transframe_hypothesis_space_change_feature-invalid_change_type
 		  acceptive_change_types                `[add remove]
-		  change_type                           change_type
-		  feature_phenomenal_name               feature_phenomenal_name
-		  relative_start_time_from_action_start relative_start_time_from_action_start
-		  relative_duration_time                relative_duration_time]]
+		  change_type                           initial-change_type
+		  feature_phenomenal_name               initial-feature_phenomenal_name]]
        [= change_type             initial-change_type]
        [= feature_phenomenal_name initial-feature_phenomenal_name]
        [= relative_start_time_from_action_start [new relative_time [* 30 1000000000]]]

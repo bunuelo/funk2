@@ -226,7 +226,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
       while (iter != nil) {
 	f2ptr start_event = f2__cons__car(cause, iter);
 	if (! raw__set__contains(cause, end_event_set, start_event)) {
-	  assert_value(raw__semantic_event_transframe__removal__add(cause, semantic_event_transframe, start_event));
+	  assert_value(raw__semantic_event_transframe__remove__add(cause, semantic_event_transframe, start_event));
 	}
 	iter = f2__cons__cdr(cause, iter);
       }
@@ -236,7 +236,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
       while (iter != nil) {
 	f2ptr end_event = f2__cons__car(cause, iter);
 	if (! raw__set__contains(cause, start_event_set, end_event)) {
-	  assert_value(raw__semantic_event_transframe__addition__add(cause, semantic_event_transframe, end_event));
+	  assert_value(raw__semantic_event_transframe__add__add(cause, semantic_event_transframe, end_event));
 	}
 	iter = f2__cons__cdr(cause, iter);
       }

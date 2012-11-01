@@ -968,7 +968,7 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
     if ((cause_frame != nil) &&
 	raw__frame__contains_type_var(cause, cause_frame, type, var)) {
       value_defined = boolean__true;
-      value         = f2__frame__lookup_type_var_value(cause, cause_frame, type, var, nil);
+      value         = raw__frame__lookup_type_var_value(cause, cause_frame, type, var, nil);
     }
     if (! value_defined) {
       f2ptr cause_groups     = f2cause__cause_groups(this, cause);
@@ -1014,11 +1014,28 @@ f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr
   boolean_t keep_looping;
   do {
     keep_looping = boolean__false;
-    f2ptr cause_frame = f2cause__frame(cause_iter, cause);
-    if (cause_frame) {
-      result = f2__frame__type_var_value__set(cause, cause_frame, type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
+    f2ptr     cause_frame   = f2cause__frame(cause_iter, cause);
+    boolean_t value_defined = boolean__false;
+    if ((cause_frame != nil) &&
+	raw__frame__contains_type_var(cause, cause_frame, type, var)) {
+      value_defined = boolean__true;
+      result        = raw__frame__type_var_value__set(cause, cause_frame, type, var, value, nil);
     }
-    if ((cause_frame == nil) || raw__larva__is_type(cause, result)) {
+    if (! value_defined) {
+      f2ptr cause_groups     = f2cause__cause_groups(this, cause);
+      f2ptr cause_group_iter = cause_groups;
+      while (cause_group_iter != nil) {
+	f2ptr cause_group = f2cons__car(cause_group_iter, cause);
+	if (raw__cause_group__type_var_defined(cause, cause_group, type, var)) {
+	  value_defined    = boolean__true;
+	  value            = raw__cause_group__type_var_value__set(cause, cause_group, type, var);
+	  cause_group_iter = nil;
+	} else {
+	  cause_group_iter = f2cons__cdr(cause_group_iter, cause);
+	}
+      }
+    }
+    if (! value_defined) {
       cause_iter = f2__ptype__cause(cause, cause_iter);
       if (cause_iter != nil) {
 	keep_looping = boolean__true;

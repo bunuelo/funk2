@@ -630,6 +630,9 @@ f2ptr f2__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type
   assert_argument_type(symbol,      var);
   return raw__cause_group__lookup_type_var_value(cause, this, type, var);
 }
+def_pcfunk3(cause_group__lookup_type_var_value, this, type, var,
+	    "",
+	    return f2__cause_group__lookup_type_var_value(this_cause, this, type, var));
 
 
 f2ptr raw__cause_group__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {

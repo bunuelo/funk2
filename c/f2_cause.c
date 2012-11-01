@@ -611,6 +611,67 @@ def_pcfunk3(cause_group__increment_counter_if_exists, this, counter_name, relati
 	    return f2__cause_group__increment_counter_if_exists(this_cause, this, counter_name, relative_value));
 
 
+f2ptr raw__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr frame = f2cause_group__frame(this, cause);
+  if (raw__frame__contains_type_var(cause, frame, type, var)) {
+    return raw__frame__lookup_type_var_value(cause, frame, type, var);
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-variable_not_defined"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "type"),     type,
+				   new__symbol(cause, "var"),      var));
+  }
+}
+
+f2ptr f2__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  assert_argument_type(cause_group, this);
+  assert_argument_type(symbol,      type);
+  assert_argument_type(symbol,      var);
+  return raw__cause_group__lookup_type_var_value(cause, this, type, var);
+}
+
+
+f2ptr raw__cause_group__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  f2ptr frame = f2cause_group__frame(this, cause);
+  if (raw__frame__contains_type_var(cause, frame, type, var)) {
+    return raw__frame__type_var_value__set(cause, frame, type, var, value, nil);
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-set-variable_not_defined"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "type"),     type,
+				   new__symbol(cause, "var"),      var));
+  }
+}
+
+f2ptr f2__cause_group__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value) {
+  assert_argument_type(cause_group, this);
+  assert_argument_type(symbol,      type);
+  assert_argument_type(symbol,      var);
+  return raw__cause_group__type_var_value__set(cause, this, type, var, value);
+}
+def_pcfunk4(cause_group__type_var_value__set, this, type, var, value,
+	    "",
+	    return f2__cause_group__type_var_value__set(this_cause, this, type, var, value));
+
+
+
+
+boolean_t raw__cause_group__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  f2ptr frame = f2cause_group__frame(this, cause);
+  return raw__frame__contains_type_var(cause, frame, type, var);
+}
+
+f2ptr f2__cause_group__type_var_defined(f2ptr cause, f2ptr this, f2ptr type, f2ptr var) {
+  assert_argument_type(cause_group, this);
+  return f2bool__new(raw__cause_group__type_var_defined(cause, this, type, var));
+}
+def_pcfunk3(cause_group__type_var_defined, this, type, var,
+	    "",
+	    return f2__cause_group__type_var_defined(this_cause, this, type, var));
+
+
 // cause_group
 
 f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -668,6 +729,9 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause) {
   {char* slot_name = "assure_counter_exists";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.assure_counter_exists__funk);}
   {char* slot_name = "counter";                        f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.counter__funk);}
   {char* slot_name = "increment_counter_if_exists";    f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);}
+  {char* slot_name = "lookup_type_var_value";          f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.lookup_type_var_value__funk);}
+  {char* slot_name = "type_var_value-set";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value__set__funk);}
+  {char* slot_name = "type_var_value_defined";         f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value_defined__funk);}
   {char* slot_name = "terminal_print_with_frame";      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);}
   return this;
 }
@@ -902,11 +966,28 @@ f2ptr raw__cause__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2p
   boolean_t keep_looping;
   do {
     keep_looping = boolean__false;
-    f2ptr cause_frame = f2cause__frame(cause_iter, cause);
-    if (cause_frame) {
-      value = f2__frame__lookup_type_var_value(cause, cause_frame, type, var, __funk2.primobject__frame.type_variable_not_defined__larva);
+    f2ptr     cause_frame   = f2cause__frame(cause_iter, cause);
+    boolean_t value_defined = boolean__false;
+    if ((cause_frame != nil) &&
+	raw__frame__contains_type_var(cause, cause_frame, type, var)) {
+      value_defined = boolean__true;
+      value         = raw__frame__lookup_type_var_value(cause, cause_frame, type, var, nil);
     }
-    if ((cause_frame == nil) || raw__larva__is_type(cause, value)) {
+    if (! value_defined) {
+      f2ptr cause_groups     = f2cause__cause_groups(this, cause);
+      f2ptr cause_group_iter = cause_groups;
+      while (cause_group_iter != nil) {
+	f2ptr cause_group = f2cons__car(cause_group_iter, cause);
+	if (raw__cause_group__type_var_defined(cause, cause_group, type, var)) {
+	  value_defined    = boolean__true;
+	  value            = raw__cause_group__lookup_type_var_value(cause, cause_group, type, var);
+	  cause_group_iter = nil;
+	} else {
+	  cause_group_iter = f2cons__cdr(cause_group_iter, cause);
+	}
+      }
+    }
+    if (! value_defined) {
       cause_iter = f2__ptype__cause(cause, cause_iter);
       if (cause_iter != nil) {
 	keep_looping = boolean__true;
@@ -936,11 +1017,28 @@ f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr
   boolean_t keep_looping;
   do {
     keep_looping = boolean__false;
-    f2ptr cause_frame = f2cause__frame(cause_iter, cause);
-    if (cause_frame) {
-      result = f2__frame__type_var_value__set(cause, cause_frame, type, var, value, __funk2.primobject__frame.type_variable_not_defined__larva);
+    f2ptr     cause_frame   = f2cause__frame(cause_iter, cause);
+    boolean_t value_defined = boolean__false;
+    if ((cause_frame != nil) &&
+	raw__frame__contains_type_var(cause, cause_frame, type, var)) {
+      value_defined = boolean__true;
+      result        = raw__frame__type_var_value__set(cause, cause_frame, type, var, value, nil);
     }
-    if ((cause_frame == nil) || raw__larva__is_type(cause, result)) {
+    if (! value_defined) {
+      f2ptr cause_groups     = f2cause__cause_groups(this, cause);
+      f2ptr cause_group_iter = cause_groups;
+      while (cause_group_iter != nil) {
+	f2ptr cause_group = f2cons__car(cause_group_iter, cause);
+	if (raw__cause_group__type_var_defined(cause, cause_group, type, var)) {
+	  value_defined    = boolean__true;
+	  value            = raw__cause_group__type_var_value__set(cause, cause_group, type, var);
+	  cause_group_iter = nil;
+	} else {
+	  cause_group_iter = f2cons__cdr(cause_group_iter, cause);
+	}
+      }
+    }
+    if (! value_defined) {
       cause_iter = f2__ptype__cause(cause, cause_iter);
       if (cause_iter != nil) {
 	keep_looping = boolean__true;
@@ -1352,6 +1450,18 @@ void f2__cause__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(cause_group__increment_counter_if_exists);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.lookup_type_var_value__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__lookup_type_var_value);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.lookup_type_var_value__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value__set__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__type_var_value__set);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value__set__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value_defined__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(cause_group__type_var_value_defined);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value_defined__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk);
@@ -1548,6 +1658,15 @@ void f2__cause__reinitialize_globalvars() {
   
   {char* symbol_str = "increment_counter_if_exists"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__increment_counter_if_exists, this, counter_name, relative_value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.increment_counter_if_exists__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "lookup_type_var_value"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.lookup_type_var_value__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__lookup_type_var_value, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.lookup_type_var_value__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "type_var_value-set"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value__set__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__type_var_value__set, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value__set__funk = never_gc(cfunk);}
+  
+  {char* symbol_str = "type_var_value_defined"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value_defined__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__type_var_value_defined, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.type_var_value_defined__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

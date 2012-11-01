@@ -99,6 +99,7 @@ f2ptr      f2__frame__add_funkvar_value                      (f2ptr cause, f2ptr
 f2ptr      f2__frame__lookup_type_var_assignment_cons        (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
 f2ptr     raw__frame__lookup_type_var_value                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);
 f2ptr      f2__frame__lookup_type_var_value                  (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr not_defined_value);              // *
+f2ptr     raw__frame__type_var_value__set                    (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value);
 f2ptr      f2__frame__type_var_value__set                    (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value, f2ptr not_defined_value); // *
 boolean_t raw__frame__contains_type_var                      (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr      f2__frame__contains_type_var                      (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);

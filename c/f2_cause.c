@@ -1031,7 +1031,7 @@ f2ptr raw__cause__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type, f2ptr
 	f2ptr cause_group = f2cons__car(cause_group_iter, cause);
 	if (raw__cause_group__type_var_defined(cause, cause_group, type, var)) {
 	  value_defined    = boolean__true;
-	  value            = raw__cause_group__type_var_value__set(cause, cause_group, type, var);
+	  value            = raw__cause_group__type_var_value__set(cause, cause_group, type, var, value);
 	  cause_group_iter = nil;
 	} else {
 	  cause_group_iter = f2cons__cdr(cause_group_iter, cause);

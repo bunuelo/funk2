@@ -616,7 +616,7 @@ f2ptr raw__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr typ
   if (raw__frame__contains_type_var(cause, frame, type, var)) {
     return raw__frame__lookup_type_var_value(cause, frame, type, var, nil);
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list8__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-variable_not_defined"),
 				   new__symbol(cause, "this"),     this,
 				   new__symbol(cause, "type"),     type,
@@ -637,7 +637,7 @@ f2ptr raw__cause_group__type_var_value__set(f2ptr cause, f2ptr this, f2ptr type,
   if (raw__frame__contains_type_var(cause, frame, type, var)) {
     return raw__frame__type_var_value__set(cause, frame, type, var, value, nil);
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list8__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-set-variable_not_defined"),
 				   new__symbol(cause, "this"),     this,
 				   new__symbol(cause, "type"),     type,

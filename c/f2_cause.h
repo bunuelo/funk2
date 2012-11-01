@@ -110,6 +110,8 @@ declare_object_type_11_slot(cause_group,
 			    f2ptr increment_counter_if_exists__funk;
 			    f2ptr lookup_type_var_value__symbol;
 			    f2ptr lookup_type_var_value__funk;
+			    f2ptr add_type_var_value__symbol;
+			    f2ptr add_type_var_value__funk;
 			    f2ptr type_var_value__set__symbol;
 			    f2ptr type_var_value__set__funk;
 			    f2ptr type_var_defined__symbol;

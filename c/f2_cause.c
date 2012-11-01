@@ -275,7 +275,7 @@ f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause) {
 
 // cause_group
 
-def_primobject_10_slot(cause_group,
+def_primobject_11_slot(cause_group,
 		       bytecode_count_scheduler_cmutex,
 		       bytecode_count_chunk,
 		       execution_nanoseconds_scheduler_cmutex,
@@ -285,7 +285,8 @@ def_primobject_10_slot(cause_group,
 		       bytes_freed_count_scheduler_cmutex,
 		       bytes_freed_count_chunk,
 		       cause_group_interaction_scheduler_ptypehash,
-		       counter_scheduler_ptypehash);
+		       counter_scheduler_ptypehash,
+		       frame);
 
 f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytecode_count_scheduler_cmutex             = f2scheduler_cmutex__new(cause);
@@ -298,6 +299,7 @@ f2ptr f2__cause_group__new(f2ptr cause) {
   f2ptr bytes_freed_count_chunk                     = raw__chunk__new(cause, sizeof(u64));
   f2ptr cause_group_interaction_scheduler_ptypehash = f2__scheduler_ptypehash__new(cause);
   f2ptr counter_scheduler_ptypehash                 = f2__scheduler_ptypehash__new(cause);
+  f2ptr frame                                       = f2__frame__new(cause, nil);
   return f2cause_group__new(cause,
 			    bytecode_count_scheduler_cmutex,
 			    bytecode_count_chunk,
@@ -308,7 +310,8 @@ f2ptr f2__cause_group__new(f2ptr cause) {
 			    bytes_freed_count_scheduler_cmutex,
 			    bytes_freed_count_chunk,
 			    cause_group_interaction_scheduler_ptypehash,
-			    counter_scheduler_ptypehash);
+			    counter_scheduler_ptypehash,
+			    frame);
 }
 def_pcfunk0(cause_group__new,
 	    "",
@@ -616,19 +619,21 @@ f2ptr raw__cause_group__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list16__new(cause,
 						new__symbol(cause, "print_object_type"),                           new__symbol(cause, "cause_group"),
-						new__symbol(cause, "print_object_slot_order"),                     f2list6__new(cause,
+						new__symbol(cause, "print_object_slot_order"),                     f2list7__new(cause,
 																new__symbol(cause, "bytecode_count"),
 																new__symbol(cause, "execution_time"),
 																new__symbol(cause, "bytes_allocated_count"),
 																new__symbol(cause, "bytes_freed_count"),
 																new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"),
-																new__symbol(cause, "counter_scheduler_ptypehash")),
+																new__symbol(cause, "counter_scheduler_ptypehash"),
+																new__symbol(cause, "frame")),
 						new__symbol(cause, "bytecode_count"),                              f2__cause_group__bytecode_count(                             cause, this),
 						new__symbol(cause, "execution_time"),                              f2__cause_group__execution_time(                             cause, this),
 						new__symbol(cause, "bytes_allocated_count"),                       f2__cause_group__bytes_allocated_count(                      cause, this),
 						new__symbol(cause, "bytes_freed_count"),                           f2__cause_group__bytes_freed_count(                          cause, this),
 						new__symbol(cause, "cause_group_interaction_scheduler_ptypehash"), f2__cause_group__cause_group_interaction_scheduler_ptypehash(cause, this),
-						new__symbol(cause, "counter_scheduler_ptypehash"),                 f2__cause_group__counter_scheduler_ptypehash(                cause, this)));
+						new__symbol(cause, "counter_scheduler_ptypehash"),                 f2__cause_group__counter_scheduler_ptypehash(                cause, this),
+						new__symbol(cause, "frame"),                                       f2__cause_group__frame(                                      cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -1266,7 +1271,7 @@ void f2__cause__defragment__fix_pointers() {
   
   // cause_group
   
-  initialize_primobject_10_slot__defragment__fix_pointers(cause_group,
+  initialize_primobject_11_slot__defragment__fix_pointers(cause_group,
 							  bytecode_count_scheduler_cmutex,
 							 bytecode_count_chunk,
 							  execution_nanoseconds_scheduler_cmutex,
@@ -1276,7 +1281,8 @@ void f2__cause__defragment__fix_pointers() {
 							  bytes_freed_count_scheduler_cmutex,
 							  bytes_freed_count_chunk,
 							  cause_group_interaction_scheduler_ptypehash,
-							  counter_scheduler_ptypehash);
+							  counter_scheduler_ptypehash,
+							  frame);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cause_group__bytecode_count);
@@ -1479,7 +1485,7 @@ void f2__cause__reinitialize_globalvars() {
   
   // cause_group
   
-  initialize_primobject_10_slot(cause_group,
+  initialize_primobject_11_slot(cause_group,
 				bytecode_count_scheduler_cmutex,
 				bytecode_count_chunk,
 				execution_nanoseconds_scheduler_cmutex,
@@ -1489,7 +1495,8 @@ void f2__cause__reinitialize_globalvars() {
 				bytes_freed_count_scheduler_cmutex,
 				bytes_freed_count_chunk,
 				cause_group_interaction_scheduler_ptypehash,
-				counter_scheduler_ptypehash);
+				counter_scheduler_ptypehash,
+				frame);
   
   {char* symbol_str = "bytecode_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__bytecode_count, this, relative_bytecode_count, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.bytecode_count__funk = never_gc(cfunk);}

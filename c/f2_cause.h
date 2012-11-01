@@ -62,7 +62,7 @@ declare_object_type_6_slot(cause_group_interaction,
 // cause_group
 
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
-declare_object_type_10_slot(cause_group,
+declare_object_type_11_slot(cause_group,
 			    bytecode_count_scheduler_cmutex,
 			   bytecode_count_chunk,
 			    execution_nanoseconds_scheduler_cmutex,
@@ -73,6 +73,7 @@ declare_object_type_10_slot(cause_group,
 			    bytes_freed_count_chunk,
 			    cause_group_interaction_scheduler_ptypehash,
 			    counter_scheduler_ptypehash,
+			    frame,
 			    f2ptr bytecode_count__symbol;
 			    f2ptr bytecode_count__funk;
 			    f2ptr bytecode_count__set__symbol;
@@ -204,7 +205,7 @@ f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause);
 
 // cause_group
 
-declare_primobject_10_slot(cause_group,
+declare_primobject_11_slot(cause_group,
 			   bytecode_count_scheduler_cmutex,
 			   bytecode_count_chunk,
 			   execution_nanoseconds_scheduler_cmutex,
@@ -214,7 +215,8 @@ declare_primobject_10_slot(cause_group,
 			   bytes_freed_count_scheduler_cmutex,
 			   bytes_freed_count_chunk,
 			   cause_group_interaction_scheduler_ptypehash,
-			   counter_scheduler_ptypehash);
+			   counter_scheduler_ptypehash,
+			   frame);
 
 f2ptr  f2__cause_group__new                           (f2ptr cause);
 u64   raw__cause_group__bytecode_count                (f2ptr cause, f2ptr this);

@@ -1181,7 +1181,9 @@
 															   [if [== [get result_multiple_possible_values good_value_count] 0]
 															       [error bug_name    `if-no_possible_good_results
 																      is_plan_bug t
-																      expression `[if ,condition ,true_expression @false_expressions]]
+																      expression [cons `if [cons [quote ,condition]
+																				 [cons [quote ,true_expression]
+																				       [conslist @false_expressions]]]]]
 															     result_multiple_possible_values]]]
 								      [t                                                 [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_truth_value
 																condition       condition

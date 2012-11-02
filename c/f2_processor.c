@@ -776,7 +776,7 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		if (! f2fiber__is_zombie(fiber, cause)) {
 		  f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
 		}
-		if (! f2fiber__keep_undead(fiber, cause)) {
+		if (f2fiber__keep_undead(fiber, cause) == nil) {
 		  f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
 		  if (f2cmutex__trylock(exit_cmutex, cause) == 0) {
 		    pause_gc();

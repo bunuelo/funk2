@@ -287,7 +287,6 @@
 						    [cause]
 						    [apply funk args]]
 				nil]]
-  [set fiber keep_undead nil]
   fiber]
 
 [defunk fiber [funk args]

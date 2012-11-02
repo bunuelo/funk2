@@ -116,6 +116,12 @@ declare_object_type_11_slot(cause_group,
 			    f2ptr type_var_value__set__funk;
 			    f2ptr type_var_defined__symbol;
 			    f2ptr type_var_defined__funk;
+			    f2ptr lookup__symbol;
+			    f2ptr lookup__funk;
+			    f2ptr add__symbol;
+			    f2ptr add__funk;
+			    f2ptr contains__symbol;
+			    f2ptr contains__funk;
 			    f2ptr terminal_print_with_frame__symbol;
 			    f2ptr terminal_print_with_frame__funk;
 			    );
@@ -263,10 +269,18 @@ void      raw__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr th
 f2ptr      f2__cause_group__increment_counter_if_exists   (f2ptr cause, f2ptr this, f2ptr counter_name, f2ptr relative_value);
 f2ptr     raw__cause_group__lookup_type_var_value         (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr      f2__cause_group__lookup_type_var_value         (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr     raw__cause_group__add_type_var_value            (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
+f2ptr      f2__cause_group__add_type_var_value            (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr     raw__cause_group__type_var_value__set           (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr      f2__cause_group__type_var_value__set           (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 boolean_t raw__cause_group__type_var_defined              (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
 f2ptr      f2__cause_group__type_var_defined              (f2ptr cause, f2ptr this, f2ptr type, f2ptr var);
+f2ptr     raw__cause_group__lookup                        (f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__cause_group__lookup                        (f2ptr cause, f2ptr this, f2ptr var);
+f2ptr     raw__cause_group__add                           (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+f2ptr      f2__cause_group__add                           (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
+boolean_t raw__cause_group__contains                      (f2ptr cause, f2ptr this, f2ptr var);
+f2ptr      f2__cause_group__contains                      (f2ptr cause, f2ptr this, f2ptr var);
 
 f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 

@@ -615,13 +615,12 @@ f2ptr raw__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr var
   f2ptr frame = f2cause_group__frame(this, cause);
   if (raw__frame__contains_type_var(cause, frame, var_type, var)) {
     return raw__frame__lookup_type_var_value(cause, frame, type, var, nil);
-  } else {
-    return new__error(f2list8__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-variable_not_defined"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "var_type"), var_type,
-				   new__symbol(cause, "var"),      var));
   }
+  return new__error(f2list8__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-variable_not_defined"),
+				 new__symbol(cause, "this"),     this,
+				 new__symbol(cause, "var_type"), var_type,
+				 new__symbol(cause, "var"),      var));
 }
 
 f2ptr f2__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr var_type, f2ptr var) {
@@ -698,7 +697,7 @@ def_pcfunk3(cause_group__type_var_defined, this, var_type, var,
 
 
 f2ptr raw__cause_group__lookup(f2ptr cause, f2ptr this, f2ptr var) {
-  raw__cause_group__lookup_type_var_value(cause, this, new__symbol(cause, "variable"), var);
+  return raw__cause_group__lookup_type_var_value(cause, this, new__symbol(cause, "variable"), var);
 }
 
 f2ptr f2__cause_group__lookup(f2ptr cause, f2ptr this, f2ptr var) {
@@ -712,7 +711,7 @@ def_pcfunk2(cause_group__lookup, this, var,
 
 
 f2ptr raw__cause_group__add(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {
-  raw__cause_group__add_type_var_value(cause, this, new__symbol(cause, "variable"), var, value);
+  return raw__cause_group__add_type_var_value(cause, this, new__symbol(cause, "variable"), var, value);
 }
 
 f2ptr f2__cause_group__add(f2ptr cause, f2ptr this, f2ptr var, f2ptr value) {

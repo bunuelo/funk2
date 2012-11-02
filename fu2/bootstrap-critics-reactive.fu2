@@ -35,8 +35,7 @@
     [if [is-type `bug value]
 	[let [[bug value]]
 	  [if [not [cause-lookup cause-ignore_background_bug]]
-	      [prog [cause-define cause-bug bug]
-		    [ansi-stream-reset [get standard-terminal stream]]
+	      [prog [ansi-stream-reset [get standard-terminal stream]]
 		    [let [[bug-fiber [have [get bug frame] lookup `fiber]]]
 		      [if bug-fiber
 			  [let [[global_bug_name [get [string-concat 'background_bug-' [get background_bug_count as-string]] as-symbol]]]

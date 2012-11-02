@@ -614,7 +614,7 @@ def_pcfunk3(cause_group__increment_counter_if_exists, this, counter_name, relati
 f2ptr raw__cause_group__lookup_type_var_value(f2ptr cause, f2ptr this, f2ptr var_type, f2ptr var) {
   f2ptr frame = f2cause_group__frame(this, cause);
   if (raw__frame__contains_type_var(cause, frame, var_type, var)) {
-    return raw__frame__lookup_type_var_value(cause, frame, type, var, nil);
+    return raw__frame__lookup_type_var_value(cause, frame, var_type, var, nil);
   }
   return new__error(f2list8__new(cause,
 				 new__symbol(cause, "bug_name"), new__symbol(cause, "cause_group-lookup_type_var_value-variable_not_defined"),

@@ -1157,19 +1157,24 @@
 															    [mapc [funk [one_expression]
 																	[if [get one_expression value]
 																	    [have result_multiple_possible_values add_value_with_dependency nil one_expression multiple_possible_values]
-																	  [let [[assertion_bug [shelter [error bug_name                     `assertion-failed
-																					       nonsemantic_plan_truth_value one_expression
-																					       is_plan_bug                  t
-																					       plan_expression              [quote ,expression]
-																					       description                  [conslist `assert [quote ,expression]]]]]]
-																	    [have expression add_value_bug one_expression assertion_bug]]]]
+																	  [if cause-collect_and_bypass_assertion_failures
+																	      [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] 'nonsemantic_plan: assertion failed.'
+																				     '  collecting assertion failed truth_value: ' expression]
+																		    [have cause-assertion_failure_truth_value_set add expression]]
+																	    [let [[assertion_bug [shelter [error bug_name                     `assertion-failed
+																						 nonsemantic_plan_truth_value one_expression
+																						 is_plan_bug                  t
+																						 plan_expression              [quote ,expression]
+																						 description                  [conslist `assert [quote ,expression]]]]]]
+																	      [have expression add_value_bug one_expression assertion_bug]]]]]
 																  expressions]
 															    [if [== [get result_multiple_possible_values good_value_count] 0]
-																[error bug_name                     `assertion-failed
-																       nonsemantic_plan_truth_value expression
-																       is_plan_bug                  t
-																       plan_expression              [quote ,expression]
-																       description                  [conslist `assert [quote ,expression]]]
+																[if [not cause-collect_and_bypass_assertion_failures]
+																    [error bug_name                     `assertion-failed
+																	   nonsemantic_plan_truth_value expression
+																	   is_plan_bug                  t
+																	   plan_expression              [quote ,expression]
+																	   description                  [conslist `assert [quote ,expression]]]]
 															      result_multiple_possible_values]]]
 								      [t                                                  [error bug_name         `nonsemantic_plan-assert-truth_value_must_be_of_type_nonsemantic_plan_truth_value
 																 expression       expression
@@ -1522,7 +1527,10 @@
 		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
-			    [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]]]
+			    [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
+			    [cause-define cause-collect_and_bypass_assertion_failures            t]
+			    [cause-define cause-assertion_failure_truth_value_set                [new set]]
+			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
 		    [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]

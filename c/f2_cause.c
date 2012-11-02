@@ -1764,7 +1764,7 @@ void f2__cause__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(cause_group__add, this, var, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.add__funk = never_gc(cfunk);}
   
   {char* symbol_str = "contains"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.contains__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__contains, this, type, var, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.contains__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__contains, this, var, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.contains__funk = never_gc(cfunk);}
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cause_group__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cause_group.terminal_print_with_frame__funk = never_gc(cfunk);}

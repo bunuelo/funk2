@@ -287,11 +287,11 @@
 	      [= cursor_x [get [get this current_line] length]]
 	      [print-ansi-move cursor_x -1]]]]]
 
-[deftypefunk keyboard_editor execute press_home []
+[deftypefunk keyboard_editor execute goto_beginning_of_line []
   [print-ansi-move [- cursor_x] 0]
   [= cursor_x 0]]
 
-[deftypefunk keyboard_editor execute press_end []
+[deftypefunk keyboard_editor execute goto_end_of_line []
   [print-ansi-move [- [get [get this line cursor_y] length] cursor_x] 0]
   [= cursor_x [get [get this line cursor_y] length]]]
 
@@ -373,12 +373,24 @@
   [have this print_debug '                                   ']
   [= debug t]]
 
+[deftypefunk keyboard_editor execute press_home []
+  [have this goto_beginning_of_line]]
+
+[deftypefunk keyboard_editor execute press_end []
+  [have this goto_end_of_line]]
+
 [deftypefunk keyboard_editor execute press_ctrl_c []
   [terminal_format standard-terminal '\nrepl: exiting funk2.']
   [quit]]
 
 [deftypefunk keyboard_editor execute press_ctrl_space []
   ]
+
+[deftypefunk keyboard_editor execute press_ctrl_a []
+  [have this goto_beginning_of_line]]
+
+[deftypefunk keyboard_editor execute press_ctrl_e []
+  [have this goto_end_of_line]]
 
 [deftypefunk keyboard_editor execute press_ctrl_k []
   ]
@@ -427,6 +439,8 @@
 			    [[eq key `key:page_up]          [have this press_page_up]]
 			    [[eq key `key:page_down]        [have this press_page_down]]
 			    [[eq key `key:ctrl_space]       [have this press_ctrl_space]]
+			    [[eq key `key:ctrl_a]           [have this press_ctrl_a]]
+			    [[eq key `key:ctrl_e]           [have this press_ctrl_e]]
 			    [[eq key `key:ctrl_k]           [have this press_ctrl_k]]
 			    [[eq key `key:ctrl_w]           [have this press_ctrl_w]]
 			    [[eq key `key:ctrl_y]           [have this press_ctrl_y]]

@@ -726,7 +726,7 @@ def_pcfunk3(cause_group__add, this, var, value,
 
 
 boolean_t raw__cause_group__contains(f2ptr cause, f2ptr this, f2ptr var) {
-  return raw__cause_group__contains_type_var(cause, frame, new__symbol(cause, "variable"), var);
+  return raw__cause_group__type_var_defined(cause, frame, new__symbol(cause, "variable"), var);
 }
 
 f2ptr f2__cause_group__contains(f2ptr cause, f2ptr this, f2ptr var) {

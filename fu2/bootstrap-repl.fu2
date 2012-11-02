@@ -803,6 +803,7 @@
 [defmetro shelter [:rest codes]
   `[fiber-sheltered_join [fiber [funk-new_with_name with-new-cause []
 						    [set [this-cause] critics nil]
+						    [cause-define cause-ignore_background_bug t]
 						    @codes]
 				nil]]]
 

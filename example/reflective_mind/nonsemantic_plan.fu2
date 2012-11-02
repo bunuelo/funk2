@@ -363,6 +363,8 @@
 			       [have execute_now-conditionlock unlock]
 			       
 			       [let [[fiber_result [fiber-sheltered_join thought_fiber]]]
+				 [set thought_fiber keep_undead nil]
+				 
 				 `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
 				 
 				 [semantic-remove semantic_planner thought semantic_thought]

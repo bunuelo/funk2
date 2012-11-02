@@ -765,6 +765,7 @@
 	       `[error bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
 		       join_fiber  this
 		       exit_status exit_status]]]]]
+    [set this keep_undead nil]
     return_value]]
 
 [defmetro with-new-cause [:rest codes]
@@ -772,33 +773,6 @@
 					  [set [this-cause] critics nil]
 					  @codes]
 		      nil]]]
-
-[defmetro with-new-cause-backup [:rest codes]
-  `[let* [[result `bug]
-	  [fiber  [fiber [funk-new_with_name with-new-cause []
-					     [set [this-cause] critics nil]
-					     [= result [prog @codes]]]
-			 nil]]]
-     [while [not [get fiber exit_status]]
-       [millisleep 100]]
-     [let [[exit_status [get fiber exit_status]]]
-       [cond [[eq exit_status `complete]
-	      result]
-	     [[eq exit_status `bug]
-	      [let [[bug [get fiber value]]]
-		[if [is-type `bug bug]
-		    [let [[bug_frame [get bug frame]]]
-		      [if [is-type `frame bug_frame]
-			  [if [or [not  [frame-contains_var bug_frame     `stack_trace]]
-				  [null [frame-lookup_var_value bug_frame `stack_trace nil]]]
-			      [frame-add_var_value bug_frame `stack_trace [get fiber stack_trace]]]]
-		      [bug bug]]
-		  [error bug_type    `with-new-cause-fiber_paused_without_bug
-			 fiber_value bug
-			 stack_trace [get fiber stack_trace]]]]]
-	     [t
-	      [error bug_type    `with-new-cause-unknown-fiber-exit-status
-		     exit_status exit_status]]]]]]
 
 [defmetro shelter [:rest codes]
   `[fiber-sheltered_join [fiber [funk-new_with_name with-new-cause []

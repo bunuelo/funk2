@@ -716,6 +716,7 @@
 
 [defunk fiber-join [this]
   [fiber-wait_for_either_complete_or_encounter_bug this]
+  [set this keep_undead nil]
   [let [[exit_status [fiber-exit_status this]]]
     [cond [[eq exit_status `complete]
 	   [get this value]]
@@ -742,6 +743,7 @@
 	[return_value nil]]
     [while not_done
       [fiber-wait_for_either_complete_or_encounter_bug this]
+      [set this keep_undead nil]
       [let [[exit_status [fiber-exit_status this]]]
 	[cond [[eq exit_status `complete]
 	       [prog [= return_value [get this value]]
@@ -765,7 +767,6 @@
 	       `[error bug_type    `fiber-sheltered_join-unknown-fiber-exit-status
 		       join_fiber  this
 		       exit_status exit_status]]]]]
-    [set this keep_undead nil]
     return_value]]
 
 [defmetro with-new-cause [:rest codes]

@@ -799,7 +799,7 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
 }
 
 f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
-  f2ptr new_fiber = f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
+  assert_value(f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args));
   return nil;
 }
 

@@ -418,7 +418,6 @@
 								  [apply funk args]]
 							    nil]]]]]]]
 				     nil]]]
-    [set event_handling_fiber keep_undead t]
     [= gtk-event_handling_fiber event_handling_fiber]]
   nil]
 

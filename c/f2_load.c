@@ -57,7 +57,6 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
   
   f2ptr load_funk     = f2funk__new(cause, nil, nil, nil, raw__cons__new(cause, nil, nil), nil, global_environment(), nil, nil, nil, nil);
   f2ptr load_funk_bcs = f2__compile__funk(cause, fiber, load_funk);
-  //f2ptr load_fiber    = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), load_funk, nil);
   f2ptr read_exp      = nil;
   
   while (read_exp != __funk2.reader.end_of_file_exception) {
@@ -80,16 +79,8 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
 															   new__symbol(cause, "funkname"),  new__symbol(cause, "primfunk:load"),
 															   new__symbol(cause, "filename"),  filename,
 															   new__symbol(cause, "bug"),       load_funk_bcs))));
-	}
+      	}
 	f2ptr eval_exp = f2__force_funk_apply(cause, f2__this__fiber(cause), load_funk, nil);
-	//f2fiber__program_counter__set(load_fiber, cause, nil);
-	//f2fiber__force_funk(load_fiber, cause, load_funk, nil);
-	
-	
-	//f2__global_scheduler__complete_fiber(cause, load_fiber);
-	
-	//printf("\nload_fiber stack size = %d", raw__simple_length(f2fiber__stack(load_fiber))); fflush(stdout);
-	//f2ptr eval_exp = f2fiber__value(load_fiber, cause);
 	if (raw__larva__is_type(cause, eval_exp)) {
 	  f2__stream__close(cause, stream);
 	  return new__error(f2list8__new(cause,
@@ -104,8 +95,6 @@ f2ptr raw__load(f2ptr cause, f2ptr filename) {
       }
     }
   }  
-  
-  //f2fiber__keep_undead__set(load_fiber, cause, nil);
   
 #ifdef DEBUG_LOAD
   printf("\nload done."); fflush(stdout);

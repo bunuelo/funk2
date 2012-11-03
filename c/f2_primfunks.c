@@ -780,7 +780,6 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
     f2ptr new_fiber = f2__fiber_serial(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
     f2__global_scheduler__complete_fiber(cause, new_fiber);
     f2ptr value = f2fiber__value(new_fiber, cause);
-    f2fiber__keep_undead__set(new_fiber, cause, nil);
     if ((f2__fiber__paused(cause, new_fiber) != nil) &&
 	raw__bug__is_type(cause, value)) {
       return new__error(f2list8__new(cause,
@@ -801,7 +800,6 @@ f2ptr f2__force_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args)
 
 f2ptr f2__parallel_funk_apply(f2ptr cause, f2ptr fiber, f2ptr funkable, f2ptr args) {
   f2ptr new_fiber = f2__fiber_parallel(cause, cause, fiber, f2fiber__env(fiber, cause), funkable, args);
-  f2fiber__keep_undead__set(new_fiber, cause, nil);
   return nil;
 }
 
@@ -865,7 +863,6 @@ def_pcfunk2(simple_paused_fiber, funk, args,
 f2ptr f2__fiber_parallel(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_parallel(cause, new_fiber);
-  f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
 }
 def_pcfunk2(fiber_parallel, funk, args,
@@ -875,7 +872,6 @@ def_pcfunk2(fiber_parallel, funk, args,
 f2ptr f2__fiber_serial(f2ptr cause, f2ptr execution_cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr args) {
   f2ptr new_fiber = f2__simple_paused_fiber(cause, execution_cause, parent_fiber, parent_env, cfunkable, args);
   f2__global_scheduler__add_fiber_serial(cause, new_fiber);
-  f2fiber__keep_undead__set(new_fiber, cause, nil);
   return new_fiber;
 }
 

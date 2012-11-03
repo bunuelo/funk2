@@ -30,7 +30,7 @@ f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-def_primobject_32_slot(fiber,
+def_primobject_30_slot(fiber,
 		       program_counter,
 		       stack_array,
 		       stack_array_index_chunk,
@@ -42,8 +42,6 @@ def_primobject_32_slot(fiber,
 		       trace,
 		       cause_reg_cmutex,
 		       cause_reg,
-		       keep_undead,
-		       is_zombie,
 		       parent_fiber,
 		       parent_env,
 		       execute_cmutex,
@@ -76,8 +74,6 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr trace                                             = nil;
   f2ptr cause_reg_cmutex                                  = f2__cmutex__new(cause);
   f2ptr cause_reg                                         = nil;
-  f2ptr keep_undead                                       = nil; //__funk2.globalenv.true__symbol;
-  f2ptr is_zombie                                         = nil;
   f2ptr execute_cmutex                                    = f2cmutex__new(cause);
   f2ptr paused                                            = nil;
   f2ptr sleep_until_time                                  = nil;
@@ -107,8 +103,6 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 trace,
 				 cause_reg_cmutex,
 				 cause_reg,
-				 keep_undead,
-				 is_zombie,
 				 parent_fiber,
 				 parent_env,
 				 execute_cmutex,
@@ -128,7 +122,6 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 exit_status,
 				 bug_trigger,
 				 complete_trigger);
-  //f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
   if (cause != nil) {
     raw__cause__add_fiber(cause, cause, new_fiber);
@@ -870,7 +863,6 @@ void raw__fiber__handle_exit_virtual_processor(f2ptr cause, f2ptr this) {
 }
 
 void raw__fiber__reinitialize(f2ptr cause, f2ptr this) {
-  f2fiber__keep_undead__set(this, cause, nil);
   f2ptr execute_cmutex = f2fiber__execute_cmutex(this, cause);
   if (raw__cmutex__is_locked(cause, execute_cmutex)) {
     raw__cmutex__unlock(cause, execute_cmutex);
@@ -887,7 +879,6 @@ void raw__fiber__clean(f2ptr cause, f2ptr this) {
     raw__fiber__quit(cause, this);
     status("raw__fiber__clean: quitting fiber.");
   }
-  f2fiber__keep_undead__set(this, cause, nil);
 }
 
 
@@ -895,12 +886,10 @@ f2ptr raw__fiber__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list30__new(cause,
+    frame = f2__frame__new(cause, f2list26__new(cause,
 						new__symbol(cause, "print_object_type"),          new__symbol(cause, "fiber"),
 						new__symbol(cause, "cause_reg_cmutex"),           f2__fiber__cause_reg_cmutex(          cause, this),
 						new__symbol(cause, "cause_reg"),                  f2__fiber__cause_reg(                 cause, this),
-						new__symbol(cause, "keep_undead"),                f2__fiber__keep_undead(               cause, this),
-						new__symbol(cause, "is_zombie"),                  f2__fiber__is_zombie(                 cause, this),
 						new__symbol(cause, "is_complete"),                f2__fiber__is_complete(               cause, this),
 						new__symbol(cause, "execute_cmutex"),             f2__fiber__execute_cmutex(            cause, this),
 						new__symbol(cause, "paused"),                     f2__fiber__paused(                    cause, this),
@@ -1347,7 +1336,7 @@ void f2__fiber__defragment__fix_pointers() {
   
   // fiber
   
-  initialize_primobject_32_slot__defragment__fix_pointers(fiber,
+  initialize_primobject_30_slot__defragment__fix_pointers(fiber,
 							  program_counter,
 							  stack_array,
 							  stack_array_index_chunk,
@@ -1359,8 +1348,6 @@ void f2__fiber__defragment__fix_pointers() {
 							  trace,
 							  cause_reg_cmutex,
 							  cause_reg,
-							  keep_undead,
-							  is_zombie,
 							  parent_fiber,
 							  parent_env,
 							  execute_cmutex,
@@ -1520,7 +1507,7 @@ void f2__fiber__reinitialize_globalvars() {
   
   // fiber
   
-  initialize_primobject_32_slot(fiber,
+  initialize_primobject_30_slot(fiber,
 				program_counter,
 				stack_array,
 				stack_array_index_chunk,
@@ -1532,8 +1519,6 @@ void f2__fiber__reinitialize_globalvars() {
 				trace,
 				cause_reg_cmutex,
 				cause_reg,
-				keep_undead,
-				is_zombie,
 				parent_fiber,
 				parent_env,
 				execute_cmutex,

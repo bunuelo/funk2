@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__fiber__slot_s funk2_object_type__fiber__slot_t;
 
-declare_object_type_32_slot(fiber,
+declare_object_type_30_slot(fiber,
 			    program_counter,
 			    stack_array,
 			    stack_array_index_chunk,
@@ -38,8 +38,6 @@ declare_object_type_32_slot(fiber,
 			    trace,
 			    cause_reg_cmutex,
 			    cause_reg,
-			    keep_undead,
-			    is_zombie,
 			    parent_fiber,
 			    parent_env,
 			    execute_cmutex,
@@ -181,7 +179,7 @@ extern f2ptr __fiber__value_reg__symbol;
 
 // fiber
 
-declare_primobject_32_slot(fiber,
+declare_primobject_30_slot(fiber,
 			   program_counter,
 			   stack_array,
 			   stack_array_index_chunk,
@@ -193,8 +191,6 @@ declare_primobject_32_slot(fiber,
 			   trace,
 			   cause_reg_cmutex,
 			   cause_reg,
-			   keep_undead,
-			   is_zombie,
 			   parent_fiber,
 			   parent_env,
 			   execute_cmutex,

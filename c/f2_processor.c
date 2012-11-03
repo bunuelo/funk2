@@ -773,37 +773,29 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 		
 	      } else {
 		//printf("\n  fiber completed.");
-		if (! f2fiber__is_zombie(fiber, cause)) {
-		  f2fiber__is_zombie__set(fiber, cause, __funk2.globalenv.true__symbol);
-		}
-		if (f2fiber__keep_undead(fiber, cause) == nil) {
-		  f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
-		  if (f2cmutex__trylock(exit_cmutex, cause) == 0) {
-		    pause_gc();
-		    
-		    // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
-		    f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
-		    if (fiber_cause != nil) {
-		      raw__cause__remove_fiber(cause, fiber_cause, fiber);
-		    }
-		    if (f2fiber__is_zombie(fiber, cause)) {
-		      f2fiber__is_zombie__set(fiber, cause, nil);
-		    }
-		    
-		    f2ptr found_and_removed_fiber = raw__processor__remove_active_fiber(cause, processor, fiber);
-		    if ((found_and_removed_fiber == nil) ||
-			raw__larva__is_type(cause, found_and_removed_fiber)) {
-		      printf("\nerror removing active fiber at completion."); fflush(stdout);
-		      status(  "error removing active fiber at completion.");
-		    }
-		    
-		    f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "complete"));
-		    f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
-		    
-		    f2cmutex__unlock(exit_cmutex, cause);
-		    
-		    resume_gc();
+		f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
+		if (f2cmutex__trylock(exit_cmutex, cause) == 0) {
+		  pause_gc();
+		  
+		  // anytime a fiber is removed from processor active fibers, it should be removed from it's cause so that it can be garbage collected.
+		  f2ptr fiber_cause = f2fiber__cause_reg(fiber, cause);
+		  if (fiber_cause != nil) {
+		    raw__cause__remove_fiber(cause, fiber_cause, fiber);
 		  }
+		  
+		  f2ptr found_and_removed_fiber = raw__processor__remove_active_fiber(cause, processor, fiber);
+		  if ((found_and_removed_fiber == nil) ||
+		      raw__larva__is_type(cause, found_and_removed_fiber)) {
+		    printf("\nerror removing active fiber at completion."); fflush(stdout);
+		    status(  "error removing active fiber at completion.");
+		  }
+		  
+		  f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "complete"));
+		  f2__fiber_trigger__trigger(cause, f2fiber__complete_trigger(fiber, cause));
+		  
+		  f2cmutex__unlock(exit_cmutex, cause);
+		  
+		  resume_gc();
 		}
 	      }
 	    }

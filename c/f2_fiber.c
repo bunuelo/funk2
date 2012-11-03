@@ -76,7 +76,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr trace                                             = nil;
   f2ptr cause_reg_cmutex                                  = f2__cmutex__new(cause);
   f2ptr cause_reg                                         = nil;
-  f2ptr keep_undead                                       = __funk2.globalenv.true__symbol;
+  f2ptr keep_undead                                       = nil; //__funk2.globalenv.true__symbol;
   f2ptr is_zombie                                         = nil;
   f2ptr execute_cmutex                                    = f2cmutex__new(cause);
   f2ptr paused                                            = nil;

@@ -55,21 +55,19 @@ f2ptr f2__fibermon__nanoseconds__to_time_string(f2ptr cause, f2ptr this) {
 }
 export_cefunk1(fibermon__nanoseconds__to_time_string, this, 0, "");
 
-s64 fibermon__total_row_count             = 14;
+s64 fibermon__total_row_count             = 12;
 s64 fibermon__cause__name__row_index      = 0;
 s64 fibermon__bug__name__row_index        = 1;
 s64 fibermon__bug__cause__name__row_index = 2;
-s64 fibermon__keep_undead__row_index      = 3;
-s64 fibermon__is_zombie__row_index        = 4;
-s64 fibermon__is_complete__row_index      = 5;
-s64 fibermon__execute_cmutex__row_index   = 6;
-s64 fibermon__paused__row_index           = 7;
-s64 fibermon__last_executed__row_index    = 8;
-s64 fibermon__sleep_until__row_index      = 9;
-s64 fibermon__execution_time__row_index   = 10;
-s64 fibermon__bytecode_count__row_index   = 11;
-s64 fibermon__bcs__row_index              = 12;
-s64 fibermon__efficiency__row_index       = 13;
+s64 fibermon__is_complete__row_index      = 3;
+s64 fibermon__execute_cmutex__row_index   = 4;
+s64 fibermon__paused__row_index           = 5;
+s64 fibermon__last_executed__row_index    = 6;
+s64 fibermon__sleep_until__row_index      = 7;
+s64 fibermon__execution_time__row_index   = 8;
+s64 fibermon__bytecode_count__row_index   = 9;
+s64 fibermon__bcs__row_index              = 10;
+s64 fibermon__efficiency__row_index       = 11;
 
 f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2ptr this__frame = raw__gtk__frame__new(cause, new__string(cause, "fiber"));
@@ -87,10 +85,6 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_pause_menu_item"), this__command_pause_menu_item);
   f2ptr this__command_unpause_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Unpause"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_unpause_menu_item"), this__command_unpause_menu_item);
-  f2ptr this__command_keep_undead_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Keep Undead"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_keep_undead_menu_item"), this__command_keep_undead_menu_item);
-  f2ptr this__command_dont_keep_undead_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Don't Keep Undead"));
-  f2__frame__add_var_value(cause, this, new__symbol(cause, "command_dont_keep_undead_menu_item"), this__command_dont_keep_undead_menu_item);
   f2ptr this__command_quit_menu_item = raw__gtk__menu_item__new(cause, new__string(cause, "Quit"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "command_quit_menu_item"), this__command_quit_menu_item);
   
@@ -147,8 +141,6 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   
   raw__gtk__menu__append(cause, this__command_menu, this__command_pause_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_unpause_menu_item);
-  raw__gtk__menu__append(cause, this__command_menu, this__command_keep_undead_menu_item);
-  raw__gtk__menu__append(cause, this__command_menu, this__command_dont_keep_undead_menu_item);
   raw__gtk__menu__append(cause, this__command_menu, this__command_quit_menu_item);
   raw__gtk__menu_bar__append(cause, this__menu_bar, this__command_menu_item);
   raw__gtk__menu_item__set_submenu(cause, this__command_menu_item, this__command_menu);
@@ -197,8 +189,6 @@ f2ptr f2__fibermon_fiber__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__cause__name__row_index),      0), new__string(cause, "cause"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__name__row_index),        0), new__string(cause, "bug name"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 0), new__string(cause, "bug cause"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),      0), new__string(cause, "keep_undead"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_zombie__row_index),        0), new__string(cause, "is_zombie"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_complete__row_index),      0), new__string(cause, "is_complete"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execute_cmutex__row_index),   0), new__string(cause, "execute_cmutex"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__paused__row_index),           0), new__string(cause, "paused"));
@@ -284,8 +274,6 @@ f2ptr f2__fibermon_fiber__redraw_fast(f2ptr cause, f2ptr this) {
 	f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__bug__cause__name__row_index), 1), new__string(cause, ""));
       }
     }
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__keep_undead__row_index),    1), (f2fiber__keep_undead(this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
-    f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_zombie__row_index),      1), (f2fiber__is_zombie(  this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__is_complete__row_index),    1), raw__fiber__is_complete(cause, this__fiber) ? new__string(cause, "Yes") : new__string(cause, "No"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__execute_cmutex__row_index), 1), raw__cmutex__is_locked(cause, f2fiber__execute_cmutex(this__fiber, cause)) ? new__string(cause, "Locked") : new__string(cause, "Unlocked"));
     f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, fibermon__paused__row_index),         1), (f2fiber__paused(     this__fiber, cause) != nil) ? new__string(cause, "Yes") : new__string(cause, "No"));

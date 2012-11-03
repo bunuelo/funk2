@@ -109,8 +109,6 @@
 				 command_menu
 				 command_pause_menu_item
 				 command_unpause_menu_item
-				 command_keep_undead_menu_item
-				 command_dont_keep_undead_menu_item
 				 command_quit_menu_item
 				 
 				 view_menu_item
@@ -164,16 +162,6 @@
 			  [funk []
 				[terminal_format standard-terminal '\n\nfibermon commanding fiber to unpause.\n']
 				[set fiber paused nil]]
-			  nil]
-		    [have command_keep_undead_menu_item signal_connect 'activate'
-			  [funk []
-				[terminal_format standard-terminal '\n\nfibermon commanding fiber to keep undead.\n']
-				[set fiber keep_undead t]]
-			  nil]
-		    [have command_dont_keep_undead_menu_item signal_connect 'activate'
-			  [funk []
-				[terminal_format standard-terminal '\n\nfibermon commanding fiber to not keep undead.\n']
-				[set fiber keep_undead nil]]
 			  nil]
 		    [have command_quit_menu_item signal_connect 'activate'
 			  [funk []
@@ -410,7 +398,6 @@
 			   [hbox-quit_cause_label    [gtk-label-new 'cause filter:']]
 			   [hbox-quit_cause_entry    [gtk-entry-new]]
 			   [hbox-quit_bugs_button    [gtk-button-new_with_label 'Quit Bugs']]
-			   [hbox-quit_zombies_button [gtk-button-new_with_label 'Quit Zombies']]
 			   [scrolled_window          [gtk-scrolled_window-new]]
 			   [processor_hbox           [gtk-hbox-new 0]]
 			   [processor_array          [new array 8]]
@@ -441,7 +428,6 @@
        [have hbox pack_start hbox-quit_cause_label    nil nil 0]
        [have hbox pack_start hbox-quit_cause_entry    nil nil 0]
        [have hbox pack_start hbox-quit_bugs_button    nil nil 0]
-       [have hbox pack_start hbox-quit_zombies_button nil nil 0]
        
        [have hbox-quit_cause_button signal_connect 'clicked'
 	     [funk []
@@ -466,17 +452,6 @@
 		   [mapc [funk [fiber]
 			       [if [eq `bug [get fiber exit_status]]
 				   [prog [terminal_format standard-terminal '\nfibermon: commanding fiber with bug to quit.']
-					 [have fiber quit]]]]
-			 [global_scheduler-active_fibers]]]
-	     nil]
-       
-       [have hbox-quit_zombies_button signal_connect 'clicked'
-	     [funk []
-		   [terminal_format standard-terminal '\nfibermon: quitting all zombie fibers.\n']
-		   [mapc [funk [fiber]
-			       [if [get fiber is_zombie]
-				   [prog [terminal_format standard-terminal '\nfibermon: commanding zombie fiber to quit.']
-					 [set fiber keep_undead nil]
 					 [have fiber quit]]]]
 			 [global_scheduler-active_fibers]]]
 	     nil]

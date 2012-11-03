@@ -128,7 +128,7 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 exit_status,
 				 bug_trigger,
 				 complete_trigger);
-  f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
+  //f2fiber__keep_undead__set(new_fiber, cause, __funk2.globalenv.true__symbol);
   f2fiber__funk(new_fiber, cause, cfunkable, cfunkable_args);
   if (cause != nil) {
     raw__cause__add_fiber(cause, cause, new_fiber);

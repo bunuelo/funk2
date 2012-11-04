@@ -62,6 +62,8 @@
 
 'deliberative_imagine_plan_resource'
 
+[globalize imagine_bug_count 0]
+
 [deframe deliberative_imagine_plan_resource [deliberative_resource] []
   [new []
        [construct deliberative_resource `imagine_plan
@@ -78,6 +80,10 @@
 				  [let [[bug result]]
 				    [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
 						     [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', imagining plan has a bug: ' bug]
+				    [let [[global_bug_name [get [string-concat 'imagine_bug-' [get imagine_bug_count as-string]] as-symbol]]]
+				      [++ imagine_bug_count]
+				      [terminal_format standard-terminal '\nresource ' [get this name] ': globally defining bug as ' global_bug_name '.']
+				      [eval `[globalize ,global_bug_name [quote ,bug]]]]
 				    [set semantic_planner imagine_plan nil]
 				    ]
 				[prog [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '

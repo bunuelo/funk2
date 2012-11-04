@@ -80,7 +80,7 @@
 					   [dependencies_value_ptypehash [new ptypehash]]]
   [new [values]
        [mapc [funk [value]
-		   [have good_value_set add value]]
+		   [have this add_value value]]
 	     values]]]
 
 [deftypefunk multiple_possible_values get good_value_count []
@@ -109,11 +109,20 @@
     [have mutate_mutex unlock]]]
 
 [deftypefunk multiple_possible_values execute add_value [value]
+  [if [is-type `multiple_possible_values value]
+      [error bug_type `multiple_possible_values-add_value-value_cannot_be_multiple_possible_values
+	     this     this
+	     value    value]]
   [have mutate_mutex lock]
   [have good_value_set add value]
   [have mutate_mutex unlock]]
 
 [deftypefunk multiple_possible_values execute add_value_with_dependency [value dependency]
+  [if [is-type `multiple_possible_values value]
+      [error bug_type `multiple_possible_values-add_value_with_dependency-value_cannot_be_multiple_possible_values
+	     this     this
+	     value    value]]
+  [assert-type value_dependency dependency]
   [have mutate_mutex lock]
   [have good_value_set               add value]
   [have dependencies_value_ptypehash add value [cons dependency [have dependencies_value_ptypehash lookup value]]]
@@ -312,14 +321,15 @@
 										  [nonsemantic_plan_truth_value [new nonsemantic_plan_truth_value simple_truth_value]]]
 									     [have nonsemantic_plan_truth_value add_partial_state_existence_dependency semantic_partial_state]
 									     [have result_multiple_possible_values add_value_with_dependency nonsemantic_plan_truth_value [new value_dependency one_found_event multiple_possible_values]]]]
-								     [get multiple_possible_values good_values]]
-							       result_multiple_possible_values]]
+								     [get multiple_possible_values good_values]]]]
 	    [t                                               [let* [[simple_truth_value           [not [get found_event is_negative_knowledge]]]
 								    [nonsemantic_plan_truth_value [new nonsemantic_plan_truth_value simple_truth_value]]]
 							       [have nonsemantic_plan_truth_value add_partial_state_existence_dependency semantic_partial_state]
 							       [have result_multiple_possible_values add_value nonsemantic_plan_truth_value]]]]]
     [let [[outside_hypothesis_space_positive_truth_value [new nonsemantic_plan_truth_value t]]
 	  [outside_hypothesis_space_negative_truth_value [new nonsemantic_plan_truth_value nil]]]
+      [have outside_hypothesis_space_positive_truth_value add_partial_state_existence_dependency semantic_partial_state]
+      [have outside_hypothesis_space_negative_truth_value add_partial_state_existence_dependency semantic_partial_state]
       [have result_multiple_possible_values add_value outside_hypothesis_space_positive_truth_value]
       [have result_multiple_possible_values add_value outside_hypothesis_space_negative_truth_value]
       result_multiple_possible_values]]]

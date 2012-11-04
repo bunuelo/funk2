@@ -1044,7 +1044,7 @@
 																correct_types `[nonsemantic_plan_truth_value
 																		multiple_possible_values]
 																truth_value   truth_value]]]]]]]
-	  [[eq compile-mode `natural_language] [string-concat 'not ' [get nonsemantic_plan expression-compile partial_state compile_option_frame]]]
+	  [[eq compile-mode `natural_language] [string-concat 'not ' [get nonsemantic_plan expression-compile truth_value compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]

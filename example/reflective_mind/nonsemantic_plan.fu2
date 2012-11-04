@@ -41,6 +41,8 @@
 
 
 
+'nonsemantic_plan_truth_value'
+
 [deframe nonsemantic_plan_truth_value [frame] [value
 					       [partial_state_existence_dependency_set [new set]]]
   [new [initial-value]
@@ -51,6 +53,13 @@
 
 [deftypefunk nonsemantic_plan_truth_value get partial_state_dependencies []
   [get partial_state_existence_dependency_set elements]]
+
+[deftypefunk nonsemantic_plan_truth_value get negative []
+  [let [[new_truth_value [new nonsemantic_plan_truth_value value]]]
+    [mapc [funk [partial_state_existence_dependency]
+		[have new_truth_value add_partial_state_existence_dependency partial_state_existence_dependency]]
+	  [get partial_state_existence_dependency_set elements]]
+    new_truth_value]]
 
 
 'value_dependency'
@@ -1008,6 +1017,36 @@
 	  [[eq compile-mode `natural_language] [string-concat 'call ' [get nonsemantic_plan expression-compile plan compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
+						      compile-mode compile-mode]]]]]
+
+[defplancommand not [truth_value]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[not ,truth_value]]
+  [let [[compile-mode [have compile_option_frame lookup `mode]]]
+    [cond [[eq compile-mode `syntax_check]     [get nonsemantic_plan expression-compile truth_value compile_option_frame]]
+	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
+							    [let [[truth_value [funkall ,[get nonsemantic_plan expression-compile truth_value compile_option_frame] nonsemantic_plan]]]
+							      [if [not [is-type `nonsemantic_plan_truth_value truth_value]]
+								  [error bug_name     `nonsemantic_plan-not-truth_value_of_wrong_type
+									 correct_type `nonsemantic_plan_truth_value
+									 actual_type  [type truth_value]
+									 truth_value  truth_value]
+								[get truth_value negative]]]]]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [let [[truth_value [funkall ,[get nonsemantic_plan expression-compile truth_value compile_option_frame] nonsemantic_plan]]]
+							      [cond [[is-type `nonsemantic_plan_truth_value truth_value] [get truth_value negative]]
+								    [[is-type `multiple_possible_values     truth_value] [let [[multiple_possible_values        truth_value]
+															       [result_multiple_possible_values [new multiple_possible_values nil]]]
+															   [mapc [funk [one_truth_value]
+																       [have result_multiple_possible_values add_value_with_dependency [get one_truth_value negative] [new value_dependency one_truth_value multiple_possible_values]]]
+																 [get multiple_possible_values good_values]]
+															   result_multiple_possible_values]]
+								    [t                                                   [error bug_name      `nonsemantic_plan-not-invalid_type
+																correct_types `[nonsemantic_plan_truth_value
+																		multiple_possible_values]
+																truth_value   truth_value]]]]]]]
+	  [[eq compile-mode `natural_language] [string-concat 'not ' [get nonsemantic_plan expression-compile partial_state compile_option_frame]]]
+	  [[eq compile-mode `semantic]         [prog ]]
+	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
 [defplancommand exists [partial_state]

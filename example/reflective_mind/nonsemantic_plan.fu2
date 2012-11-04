@@ -1130,61 +1130,18 @@
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
-[defplancommand assert [expression]
-  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[assert ,expression]]
+[defplancommand fail []
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[fail]]
   [let [[compile-mode [have compile_option_frame lookup `mode]]]
-    [cond [[eq compile-mode `syntax_check]     [get nonsemantic_plan expression-compile expression compile_option_frame]]
-	  [[eq compile-mode `execute]          [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
-						 [eval `[funk [nonsemantic_plan]
-							      [let [[expression ,expression-eval]]
-								[if [not [is-type `nonsemantic_plan_truth_value expression]]
-								    [error bug_name         `nonsemantic_plan-assert-truth_value_must_be_of_type_nonsemantic_plan_truth_value
-									   expression       expression
-									   quote-expression [quote ,expression]]
-								  [if [not [get expression value]]
-								      [error bug_name                     `assertion-failed
-									     nonsemantic_plan_truth_value expression
-									     is_plan_bug                  t
-									     description                  [conslist `assert [quote ,expression]]]]]]]]]]
-	  [[eq compile-mode `imagine]          [let [[expression-eval `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
-						 [eval `[funk [nonsemantic_plan]
-							      [let [[expression ,expression-eval]]
-								[cond [[is-type `nonsemantic_plan_truth_value expression] [if [not [get expression value]]
-															      [error bug_name                     `assertion-failed
-																     nonsemantic_plan_truth_value expression
-																     is_plan_bug                  t
-																     plan_expression              [quote ,expression]
-																     description                  [conslist `assert [quote ,expression]]]]]
-								      [[is-type `multiple_possible_values     expression] [let* [[multiple_possible_values        expression]
-																 [expressions                     [get multiple_possible_values good_values]]
-																 [result_multiple_possible_values [new multiple_possible_values nil]]]
-															    [mapc [funk [one_expression]
-																	[if [get one_expression value]
-																	    [have result_multiple_possible_values add_value_with_dependency nil one_expression multiple_possible_values]
-																	  [if cause-collect_and_bypass_assertion_failures
-																	      [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] 'nonsemantic_plan: assertion failed.'
-																				     '  collecting assertion failed truth_value: ' expression]
-																		    [have cause-assertion_failure_truth_value_set add expression]]
-																	    [let [[assertion_bug [shelter [error bug_name                     `assertion-failed
-																						 nonsemantic_plan_truth_value one_expression
-																						 is_plan_bug                  t
-																						 plan_expression              [quote ,expression]
-																						 description                  [conslist `assert [quote ,expression]]]]]]
-																	      [have expression add_value_bug one_expression assertion_bug]]]]]
-																  expressions]
-															    [if [== [get result_multiple_possible_values good_value_count] 0]
-																[if [not cause-collect_and_bypass_assertion_failures]
-																    [error bug_name                     `assertion-failed
-																	   nonsemantic_plan_truth_value expression
-																	   is_plan_bug                  t
-																	   plan_expression              [quote ,expression]
-																	   description                  [conslist `assert [quote ,expression]]]]
-															      result_multiple_possible_values]]]
-								      [t                                                  [error bug_name         `nonsemantic_plan-assert-truth_value_must_be_of_type_nonsemantic_plan_truth_value
-																 expression       expression
-																 quote-expression [quote ,expression]]]]]]]]]
-	  [[eq compile-mode `natural_language] [string-concat 'assert that ' [get nonsemantic_plan expression-compile expression compile_option_frame]]]
-	  [[eq compile-mode `semantic]         [prog ]]
+    [cond [[eq compile-mode `syntax_check]     nil]
+	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
+							    [error bug_name                     `failure
+								   is_plan_bug                  t]]]]
+	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
+							    [error bug_name                     `failure
+								   is_plan_bug                  t]]]]
+	  [[eq compile-mode `natural_language] 'fail']
+	  [[eq compile-mode `semantic]         nil]
 	  [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 						      compile-mode compile-mode]]]]]
 
@@ -1530,10 +1487,6 @@
   [with-new-cause [if [null [cause-lookup cause-imagine_time]]
 		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
-			    [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
-			    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
-			    [cause-define cause-collect_and_bypass_assertion_failures            t]
-			    [cause-define cause-assertion_failure_truth_value_set                [new set]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
@@ -1543,28 +1496,6 @@
 						   [funk []
 							 [have this imagine_eval]]
 						   []]]]
-		      
-		      [mapc [funk [assertion_failure_truth_value]
-				  [cond [[is-type `nonsemantic_plan_truth_value assertion_failure_truth_value] [mapc [funk [partial_state]
-															   [mapc [funk [traced_resource]
-																       [have traced_resource add_potential_effect_partial_state partial_state]]
-																 [get cause-traced_resource_activation_set elements]]]
-														     [get assertion_failure_truth_value partial_state_dependencies]]]
-					[[is-type `multiple_possible_values     assertion_failure_truth_value] [let [[multiple_possible_values assertion_failure_truth_value]]
-														 [mapc [funk [one_assertion_failure_truth_value]
-															     [mapc [funk [partial_state]
-																	 [mapc [funk [traced_resource]
-																		     [have traced_resource add_potential_effect_partial_state partial_state]]
-																	       [get cause-traced_resource_activation_set elements]]]
-																   [get one_assertion_failure_truth_value partial_state_dependencies]]]
-														       [get multiple_possible_values good_values]]]]
-					[t                                                                     [error bug_name                      `nonsemantic_plan-imagine_as_thought-invalid_type_for_assertion_failure_truth_value
-														      correct_types                 `[nonsemantic_plan_truth_value
-																		      multiple_possible_values]
-														      actual_type                   [type assertion_failure_truth_value]
-														      assertion_failure_truth_value assertion_failure_truth_value
-														      variable_frame                variable_frame]]]]
-			    [get cause-assertion_failure_truth_value_set elements]]
 		      
 		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]

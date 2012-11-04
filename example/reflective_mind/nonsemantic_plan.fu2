@@ -109,24 +109,27 @@
     [have mutate_mutex unlock]]]
 
 [deftypefunk multiple_possible_values execute add_value [value]
-  [if [is-type `multiple_possible_values value]
-      [error bug_type `multiple_possible_values-add_value-value_cannot_be_multiple_possible_values
-	     this     this
-	     value    value]]
-  [have mutate_mutex lock]
-  [have good_value_set add value]
-  [have mutate_mutex unlock]]
+  [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
+						     [mapc [funk [one_value]
+								 [have this add_value one_value]]
+							   [get multiple_possible_values good_values]]]]
+	[t                                         [prog [have mutate_mutex lock]
+							 [have good_value_set add value]
+							 [have mutate_mutex unlock]]]]]
+
+[deftypefunk multiple_possible_values execute add_value_dependency [value dependency]
+  [assert-type value_dependency dependency]
+  [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
+						     [mapc [funk [one_value]
+								 [have this add_value_dependency one_value dependency]]
+							   [get multiple_possible_values good_values]]]]
+	[t                                         [prog [have mutate_mutex lock]
+							 [have dependencies_value_ptypehash add value [cons dependency [have dependencies_value_ptypehash lookup value]]]
+							 [have mutate_mutex unlock]]]]]
 
 [deftypefunk multiple_possible_values execute add_value_with_dependency [value dependency]
-  [if [is-type `multiple_possible_values value]
-      [error bug_type `multiple_possible_values-add_value_with_dependency-value_cannot_be_multiple_possible_values
-	     this     this
-	     value    value]]
-  [assert-type value_dependency dependency]
-  [have mutate_mutex lock]
-  [have good_value_set               add value]
-  [have dependencies_value_ptypehash add value [cons dependency [have dependencies_value_ptypehash lookup value]]]
-  [have mutate_mutex unlock]]
+  [have this add_value value]
+  [have this add_value_dependency value dependency]]
 
 [deftypefunk multiple_possible_values get value_dependencies [value]
   [have dependencies_value_ptypehash lookup value]]

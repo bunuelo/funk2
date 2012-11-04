@@ -130,7 +130,8 @@
 		[defplan 'assert that a pyramid is on a cube'
 		  :matches ['assert that [? partial_state]']
 		   :frame [[partial_state 'a pyramid is on a cube']]
-		    [assert [plan-call [plan [? partial_state]]]]]
+		    [if [not [plan-call [plan [? partial_state]]]]
+			[fail]]]
 		
 		[defplan 'move left until over cube'
 		  :matches ['move [? direction] until over [? shape]']

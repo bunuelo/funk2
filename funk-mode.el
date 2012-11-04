@@ -72,7 +72,6 @@
      (cons (regexp-opt
             '("append"
 	      "apply"
-	      "assert"
 	      "car"
 	      "car-set"
 	      "cdr"
@@ -94,6 +93,7 @@
 	      "eval"
 	      "exists"
 	      "exit"
+	      "fail"
 	      "fiber"
 	      "filter"
 	      "first"

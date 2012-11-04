@@ -435,12 +435,6 @@
 	    [let [[precondition_events [get counterfactual_knowledge_base events_containing_time precondition_time]]]
 	      [let [[concept_version_space_example [get this concept_version_space_example_from_precondition_events precondition_events t]]]
 		
-		[have cause-imagine_potential_effect_partial_state_set_mutex lock]
-		[mapc [funk [imagine_potential_effect_partial_state]
-			    [have this add_potential_effect_partial_state imagine_potential_effect_partial_state]]
-		      [get cause-imagine_potential_effect_partial_state_set elements]]
-		[have cause-imagine_potential_effect_partial_state_set_mutex unlock]
-		
 		[mapc [funk [precondition_hypothesis_space]
 			    [let [[change_hypothesis_dependencies [get precondition_hypothesis_space supporting_hypotheses concept_version_space_example]]]
 			      

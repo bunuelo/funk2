@@ -49,6 +49,9 @@
 [deftypefunk nonsemantic_plan_truth_value execute add_partial_state_existence_dependency [partial_state]
   [have partial_state_existence_dependency_set add partial_state]]
 
+[deftypefunk nonsemantic_plan_truth_value get partial_state_dependencies []
+  [get partial_state_existence_dependency_set elements]]
+
 
 'value_dependency'
 
@@ -1527,10 +1530,10 @@
   [with-new-cause [if [null [cause-lookup cause-imagine_time]]
 		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
-			    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
 			    [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
 			    [cause-define cause-collect_and_bypass_assertion_failures            t]
 			    [cause-define cause-assertion_failure_truth_value_set                [new set]]
+			    [cause-define cause-traced_resource_activation_set                   [new set]]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
@@ -1539,6 +1542,15 @@
 						   [funk []
 							 [have this imagine_eval]]
 						   []]]]
+		      
+		      [mapc [funk [assertion_failure_truth_value]
+				  [mapc [funk [partial_state]
+					      [mapc [funk [traced_resource]
+							  [have traced_resource add_potential_effect_partial_state partial_state]]
+						    [get cause-traced_resource_activation_set elements]]]
+					[get assertion_failure_truth_value partial_state_dependencies]]]
+			    [get cause-assertion_failure_truth_value_set elements]]
+		      
 		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      result]]]]

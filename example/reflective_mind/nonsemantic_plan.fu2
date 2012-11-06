@@ -48,10 +48,14 @@
 					 [value_dependency_set                   [new set]]]
   [new [initial-value]
        [= value initial-value]
-       [have this add_value_dependency cause-last_decision_value]]]
+       [if [cause-lookup cause-last_decision_value]
+	   [have this add_value_dependency cause-last_decision_value]]]]
 
 [deftypefunk nonsemantic_plan_value execute add_partial_state_existence_dependency [partial_state]
   [have partial_state_existence_dependency_set add partial_state]]
+
+[deftypefunk nonsemantic_plan_value execute add_value_dependency [nonsemantic_plan_value]
+  [have value_dependency_set add nonsemantic_plan_value]]
 
 [deftypefunk nonsemantic_plan_value get partial_state_dependencies []
   [get partial_state_existence_dependency_set elements]]

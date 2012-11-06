@@ -45,6 +45,7 @@
 
 [deframe nonsemantic_plan_value [frame] [value
 					 [partial_state_existence_dependency_set [new set]]
+					 [dependent_value_set                    [new set]]
 					 [value_dependency_set                   [new set]]]
   [new [initial-value]
        [= value initial-value]
@@ -55,7 +56,8 @@
   [have partial_state_existence_dependency_set add partial_state]]
 
 [deftypefunk nonsemantic_plan_value execute add_value_dependency [nonsemantic_plan_value]
-  [have value_dependency_set add nonsemantic_plan_value]]
+  [have [get nonsemantic_plan_value dependent_value_set] add this]
+  [have value_dependency_set                             add nonsemantic_plan_value]]
 
 [deftypefunk nonsemantic_plan_value get partial_state_dependencies []
   [get partial_state_existence_dependency_set elements]]
@@ -67,6 +69,24 @@
 	  [get partial_state_existence_dependency_set elements]]
     [have new_value add_value_dependency this]
     new_value]]
+
+
+[deframe nonsemantic_plan_execution_node [frame] [expression
+						  [subnode_set [new set]]
+						  supernode]
+  [new [initial-expression
+	initial-supernode]
+       [= expression initial-expression]
+       [= supernode  initial-supernode]]]
+
+[deftypefunk nonsemantic_plan_execution_node execute add_subnode [subnode]
+  [assert-type nonsemantic_plan_execution_node subnode]
+  [if [get subnode supernode]
+      [error bug_type `nonsemantic_plan_execution_node-subnode_already_has_supernode
+	     this     this
+	     subnode  subnode]
+    [prog [have subnode_set add subnode]
+	  [set subnode supernode this]]]]
 
 
 'value_dependency'
@@ -155,7 +175,9 @@
 				   [internal-compiled_funk           nil]
 				   [internal-compiled_imagine_funk   nil]
 				   [internal-natural_language_string nil]
-				   [internal-constant_variable_frame nil]]
+				   [internal-constant_variable_frame nil]
+				   [top_execution_node_set           [new set]]
+				   [imagined_top_execution_node_set  [new set]]]
   [new [initial-mental_layer
 	initial-name_expression
 	initial-name_patterns
@@ -1148,11 +1170,16 @@
 																	 ,true_expression-eval]
 														       [with-new-cause [cause-define cause-last_decision_value condition]
 																       @false_expressions-eval]]]
-								      [[is-type `multiple_possible_values condition] [let [[multiple_possible_values        condition]
-															   [result_multiple_possible_values [new multiple_possible_values nil]]]
-														       [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' [length [get multiple_possible_values good_values]] ' conditions.']
+								      [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
+															    [result_multiple_possible_values [new multiple_possible_values nil]]
+															    [conditions                      [get multiple_possible_values good_values]]
+															    [conditions-length               [length conditions]]
+															    [index                           0]]
+														       
+														       [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' conditions-length ' conditions.']
 														       [mapc [funk [one_condition]
-																   [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition: ' one_condition]
+																   [++ index]
+																   [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' one_condition]
 																   [if [get one_condition value]
 																       [let [[true_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
 																						   ,true_expression-eval]]]]
@@ -1464,6 +1491,12 @@
 	       expression expression
 	       command    command]]]]]
 
+[deftypefunk nonsemantic_plan execute add_top_execution_node [nonsemantic_plan_execution_node]
+  [have top_execution_node_set add nonsemantic_plan_execution_node]]
+
+[deftypefunk nonsemantic_plan execute add_imagined_top_execution_node [nonsemantic_plan_execution_node]
+  [have imagined_top_execution_node_set add nonsemantic_plan_execution_node]]
+
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[is-type `symbol expression]                   [get this expression-compile-symbol                   expression compile_option_frame]]
 					[[is-type `string expression]                   [get this expression-compile-string                   expression compile_option_frame]]
@@ -1475,35 +1508,47 @@
     [let [[compile-mode [have compile_option_frame lookup `mode]]]
       [cond [[eq compile-mode `syntax_check]     unwrapped_compile_result]
 	    [[eq compile-mode `execute]          [eval `[funk [this]
-							      [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
-							      [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-								[if [is-type `bug result]
-								    [let [[bug result]]
-								      [if [have [get bug frame] lookup `is_plan_bug]
-									  [bug bug]
-									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-									  [error bug_name         `nonsemantic_plan-expression_encountered_bug
-										 expression       [quote ,expression]
-										 semantic_thought semantic_thought
-										 subbug           bug]]]]
-								  [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
-									result]]]]]]
+							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
+									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
+															  [quote ,expression]
+															  [cause-lookup cause-nonsemantic_plan_execution_node]]]]
+										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
+										    [have nonsemantic_plan add_top_execution_node nonsemantic_plan_execution_node]]
+										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+										[let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
+										  [if [is-type `bug result]
+										      [let [[bug result]]
+											[if [have [get bug frame] lookup `is_plan_bug]
+											    [bug bug]
+											  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+											    [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+											    [error bug_name         `nonsemantic_plan-expression_encountered_bug
+												   expression       [quote ,expression]
+												   semantic_thought semantic_thought
+												   subbug           bug]]]]
+										    [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
+											  result]]]]]]]]
 	    [[eq compile-mode `imagine]          [eval `[funk [this]
-							      [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
-							      [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-								[if [is-type `bug result]
-								    [let [[bug result]]
-								      [if [have [get bug frame] lookup `is_plan_bug]
-									  [bug bug]
-									[let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-									  [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-									  [error bug_name         `nonsemantic_plan-expression_encountered_bug
-										 expression       [quote ,expression]
-										 semantic_thought semantic_thought
-										 subbug           bug]]]]
-								  [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
-									result]]]]]]
+							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
+									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
+															  [quote ,expression]
+															  [cause-lookup cause-nonsemantic_plan_execution_node]]]]
+										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
+										    [have nonsemantic_plan add_imagined_top_execution_node nonsemantic_plan_execution_node]]
+										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+										[let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
+										  [if [is-type `bug result]
+										      [let [[bug result]]
+											[if [have [get bug frame] lookup `is_plan_bug]
+											    [bug bug]
+											  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+											    [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+											    [error bug_name         `nonsemantic_plan-expression_encountered_bug
+												   expression       [quote ,expression]
+												   semantic_thought semantic_thought
+												   subbug           bug]]]]
+										    [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
+											  result]]]]]]]]
 	    [[eq compile-mode `natural_language] unwrapped_compile_result]
 	    [[eq compile-mode `semantic]         unwrapped_compile_result]
 	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode

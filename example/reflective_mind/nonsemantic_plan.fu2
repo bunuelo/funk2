@@ -44,9 +44,11 @@
 'nonsemantic_plan_value'
 
 [deframe nonsemantic_plan_value [frame] [value
-					       [partial_state_existence_dependency_set [new set]]]
+					 [partial_state_existence_dependency_set [new set]]
+					 [value_dependency_set                   [new set]]]
   [new [initial-value]
-       [= value initial-value]]]
+       [= value initial-value]
+       [have this add_value_dependency cause-last_decision_value]]]
 
 [deftypefunk nonsemantic_plan_value execute add_partial_state_existence_dependency [partial_state]
   [have partial_state_existence_dependency_set add partial_state]]
@@ -55,11 +57,12 @@
   [get partial_state_existence_dependency_set elements]]
 
 [deftypefunk nonsemantic_plan_value get negative []
-  [let [[new_truth_value [new nonsemantic_plan_value value]]]
+  [let [[new_value [new nonsemantic_plan_value value]]]
     [mapc [funk [partial_state_existence_dependency]
-		[have new_truth_value add_partial_state_existence_dependency partial_state_existence_dependency]]
+		[have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
 	  [get partial_state_existence_dependency_set elements]]
-    new_truth_value]]
+    [have new_value add_value_dependency this]
+    new_value]]
 
 
 'value_dependency'
@@ -305,7 +308,7 @@
 
 
 [deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
-  [let* [[truth_value                  [have [get this mental_layer] check_exists semantic_partial_state]]
+  [let* [[truth_value            [have [get this mental_layer] check_exists semantic_partial_state]]
 	 [nonsemantic_plan_value [new nonsemantic_plan_value truth_value]]]
     [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
     nonsemantic_plan_value]]
@@ -1053,17 +1056,17 @@
 								[get truth_value negative]]]]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [let [[truth_value [funkall ,[get nonsemantic_plan expression-compile truth_value compile_option_frame] nonsemantic_plan]]]
-							      [cond [[is-type `nonsemantic_plan_value truth_value] [get truth_value negative]]
-								    [[is-type `multiple_possible_values     truth_value] [let [[multiple_possible_values        truth_value]
-															       [result_multiple_possible_values [new multiple_possible_values nil]]]
-															   [mapc [funk [one_truth_value]
-																       [have result_multiple_possible_values add_value_with_dependency [get one_truth_value negative] [new value_dependency one_truth_value multiple_possible_values]]]
-																 [get multiple_possible_values good_values]]
-															   result_multiple_possible_values]]
-								    [t                                                   [error bug_name      `nonsemantic_plan-not-invalid_type
-																correct_types `[nonsemantic_plan_value
-																		multiple_possible_values]
-																truth_value   truth_value]]]]]]]
+							      [cond [[is-type `nonsemantic_plan_value   truth_value] [get truth_value negative]]
+								    [[is-type `multiple_possible_values truth_value] [let [[multiple_possible_values        truth_value]
+															   [result_multiple_possible_values [new multiple_possible_values nil]]]
+														       [mapc [funk [one_truth_value]
+																   [have result_multiple_possible_values add_value_with_dependency [get one_truth_value negative] [new value_dependency one_truth_value multiple_possible_values]]]
+															     [get multiple_possible_values good_values]]
+														       result_multiple_possible_values]]
+								    [t                                               [error bug_name      `nonsemantic_plan-not-invalid_type
+															    correct_types `[nonsemantic_plan_value
+																	    multiple_possible_values]
+															    truth_value   truth_value]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'not ' [get nonsemantic_plan expression-compile truth_value compile_option_frame]]]
 	  [[eq compile-mode `semantic]         [prog ]]
 	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
@@ -1136,57 +1139,47 @@
 										     false_expressions]]]
 						 [eval `[funk [nonsemantic_plan]
 							      [let [[condition ,condition-eval]]
-								[cond [[is-type `nonsemantic_plan_value condition] [if [get condition value]
-															     ,true_expression-eval
-															   @false_expressions-eval]]
-								      [[is-type `multiple_possible_values     condition] [let [[multiple_possible_values        condition]
-															       [result_multiple_possible_values [new multiple_possible_values nil]]]
-															   [let [[possible_conditions [get multiple_possible_values good_values]]
-																 [true_conditions     nil]
-																 [false_conditions    nil]]
-															     [mapc [funk [one_condition]
-																	 [if [get one_condition value]
-																	     [= true_conditions [cons one_condition true_conditions]]
-																	   [= false_conditions [cons one_condition false_conditions]]]]
-																   possible_conditions]
-															     [if true_conditions
-																 [prog [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' [length true_conditions] ' true conditions.']
-																       [let [[true_result [shelter ,true_expression-eval]]]
+								[cond [[is-type `nonsemantic_plan_value   condition] [if [get condition value]
+															 [with-new-cause [cause-define cause-last_decision_value condition]
+																	 ,true_expression-eval]
+														       [with-new-cause [cause-define cause-last_decision_value condition]
+																       @false_expressions-eval]]]
+								      [[is-type `multiple_possible_values condition] [let [[multiple_possible_values        condition]
+															   [result_multiple_possible_values [new multiple_possible_values nil]]]
+														       [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' [length [get multiple_possible_values good_values]] ' conditions.']
+														       [mapc [funk [one_condition]
+																   [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition: ' one_condition]
+																   [if [get one_condition value]
+																       [let [[true_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
+																						   ,true_expression-eval]]]]
 																	 [if [is-type `bug true_result]
 																	     [let [[bug true_result]]
 																	       [terminal_format standard-terminal '\nnonsemantic_plan if true_result bug: ' bug]
 																	       [if [not [have [get bug frame] lookup `is_plan_bug]]
 																		   [bug bug]
-																		 [mapc [funk [true_condition]
-																			     [have multiple_possible_values add_value_bug true_condition bug]]
-																		       true_conditions]]]
-																	   [mapc [funk [true_condition]
-																		       [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency true_condition multiple_possible_values]]]
-																		 true_conditions]]]]]
-															     [if false_conditions
-																 [prog [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' [length true_conditions] ' false conditions.']
-																       [let [[false_result [shelter @false_expressions-eval]]]
-																	 [if [is-type `bug false_result]
-																	     [let [[bug false_result]]
-																	       [terminal_format standard-terminal '\nnonsemantic_plan if false_result bug: ' bug]
-																	       [if [not [have [get bug frame] lookup `is_plan_bug]]
-																		   [bug bug]
-																		 [mapc [funk [false_condition]
-																			     [have multiple_possible_values add_value_bug false_condition bug]]
-																		       false_conditions]]]
-																	   [mapc [funk [false_condition]
-																		       [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency false_condition multiple_possible_values]]]
-																		 false_conditions]]]]]]
-															   [if [== [get result_multiple_possible_values good_value_count] 0]
-															       [error bug_name    `if-no_possible_good_results
-																      is_plan_bug t
-																      expression  [cons `if [cons [quote ,condition]
-																				  [cons [quote ,true_expression]
-																					[conslist @false_expressions]]]]]
-															     result_multiple_possible_values]]]
-								      [t                                                 [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_value
-																condition       condition
-																quote-condition [quote ,condition]]]]]]]]]
+																		 [have multiple_possible_values add_value_bug true_condition bug]]]
+																	   [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency one_condition multiple_possible_values]]]]
+																     [let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
+																						  @false_expressions-eval]]]]
+																       [if [is-type `bug false_result]
+																	   [let [[bug false_result]]
+																	     [terminal_format standard-terminal '\nnonsemantic_plan if false_result bug: ' bug]
+																	     [if [not [have [get bug frame] lookup `is_plan_bug]]
+																		 [bug bug]
+																	       [have multiple_possible_values add_value_bug one_condition bug]]]
+																	 [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency one_condition multiple_possible_values]]]]]]
+															     [get multiple_possible_values good_values]]
+														       
+														       [if [== [get result_multiple_possible_values good_value_count] 0]
+															   [error bug_name    `if-no_possible_good_results
+																  is_plan_bug t
+																  expression  [cons `if [cons [quote ,condition]
+																			      [cons [quote ,true_expression]
+																				    [conslist @false_expressions]]]]]
+															 result_multiple_possible_values]]]
+								      [t                                             [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_value
+															    condition       condition
+															    quote-condition [quote ,condition]]]]]]]]]
 	  [[eq compile-mode `natural_language] [string-concat 'if ' [get nonsemantic_plan expression-compile condition       compile_option_frame]
 							      ', '  [get nonsemantic_plan expression-compile true_expression compile_option_frame]
 							      [if false_expressions
@@ -1566,6 +1559,7 @@
 		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
+			    [cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]

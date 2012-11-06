@@ -1161,7 +1161,7 @@
 																	       [terminal_format standard-terminal '\nnonsemantic_plan if true_result bug: ' bug]
 																	       [if [not [have [get bug frame] lookup `is_plan_bug]]
 																		   [bug bug]
-																		 [have multiple_possible_values add_value_bug true_condition bug]]]
+																		 [have multiple_possible_values add_value_bug one_condition bug]]]
 																	   [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency one_condition multiple_possible_values]]]]
 																     [let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
 																						  @false_expressions-eval]]]]

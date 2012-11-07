@@ -73,7 +73,10 @@
 
 [deframe nonsemantic_plan_execution_node [frame] [expression
 						  [subnode_set [new set]]
-						  supernode]
+						  supernode
+						  first_subnode
+						  previous_node
+						  next_node]
   [new [initial-expression
 	initial-supernode]
        [= expression initial-expression]
@@ -87,6 +90,25 @@
 	     subnode  subnode]
     [prog [have subnode_set add subnode]
 	  [set subnode supernode this]]]]
+
+[deftypefunk nonsemantic_plan_execution_node set previous_node [node]
+  [if previous_node
+      [error bug_name `nonsemantic_plan_execution_node-previous_node_already_defined_for_node
+	     this     this
+	     node     node]]
+  [if [get node next_node]
+      [error bug_name `nonsemantic_plan_execution_node-next_node_already_defined_for_node
+	     this     this
+	     node     node]]
+  [= previous_node node]
+  [set node next_node this]]
+
+[deftypefunk nonsemantic_plan_execution_node set first_subnode [node]
+  [if first_subnode
+      [error bug_name `nonsemantic_plan_execution_node-first_subnode_already_defined_for_node
+	     this     this
+	     node     node]]
+  [= first_subnode node]]
 
 
 'value_dependency'
@@ -188,32 +210,6 @@
        [= name_patterns   initial-name_patterns]
        [= variables       initial-variables]
        [= expression      initial-expression]]]
-
-[deframe nonsemantic_condition [nonsemantic_plan] []
-  [new [initial-mental_layer
-	initial-name_expression
-	initial-name_patterns
-	initial-variables
-	initial-expression]
-       [construct nonsemantic_plan
-		  initial-mental_layer
-		  initial-name_expression
-		  initial-name_patterns
-		  initial-variables
-		  initial-expression]]]
-
-[deframe nonsemantic_object [nonsemantic_plan] []
-  [new [initial-mental_layer
-	initial-name_expression
-	initial-name_patterns
-	initial-variables
-	initial-expression]
-       [construct nonsemantic_plan
-		  initial-mental_layer
-		  initial-name_expression
-		  initial-name_patterns
-		  initial-variables
-		  initial-expression]]]
 
 [deftypefunk nonsemantic_plan get mental_layer_below []
   [get mental_layer mental_layer_below]]
@@ -691,14 +687,32 @@
 						     expressions]]
 	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating serial process.']
-							    @[mapcar [funk [expression]
-									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
-								     expressions]]]]
+							    [let [[current_nonsemantic_plan_execution_node  nil]
+								  [previous_nonsemantic_plan_execution_node nil]]
+							      @[mapcar [funk [expression]
+									     `[with-new-cause [= previous_nonsemantic_plan_node current_nonsemantic_plan_node]
+											      [= current_nonsemantic_plan_node [new nonsemantic_plan_execution_node
+																    [quote ,expression]
+																    [cause-lookup cause-nonsemantic_plan_execution_node]]]
+											      [if previous_nonsemantic_plan_node
+												  [set current_nonsemantic_plan_node previous_node previous_nonsemantic_plan_node]]
+											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_node]
+											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+								       expressions]]]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
 							    [terminal_format standard-terminal '\nplan evaluating serial process.']
-							    @[mapcar [funk [expression]
-									   `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
-								     expressions]]]]
+							    [let [[current_nonsemantic_plan_execution_node  nil]
+								  [previous_nonsemantic_plan_execution_node nil]]
+							      @[mapcar [funk [expression]
+									     `[with-new-cause [cause-define cause-previous_nonsemantic_plan_node current_nonsemantic_plan_node]
+											      [= current_nonsemantic_plan_node [new nonsemantic_plan_execution_node
+																    [quote ,expression]
+																    [cause-lookup cause-nonsemantic_plan_execution_node]]]
+											      [if previous_nonsemantic_plan_node
+												  [set current_nonsemantic_plan_node previous_node previous_nonsemantic_plan_node]]
+											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_node]
+											      `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+								       expressions]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '
 									  [let [[index 0]]
@@ -1514,6 +1528,8 @@
 															  [cause-lookup cause-nonsemantic_plan_execution_node]]]]
 										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 										    [have this add_top_execution_node nonsemantic_plan_execution_node]]
+										[if [cause-lookup cause-previous_nonsemantic_plan_node]
+										    [set nonsemantic_plan_execution_node previous_node cause-previous_nonsemantic_plan_node]]
 										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 										[let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
 										  [if [is-type `bug result]

@@ -711,7 +711,7 @@
 											      [if previous_nonsemantic_plan_execution_node
 												  [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]]
 											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-											      `[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 								       expressions]]]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]
 						 [stringlist-concat [cons 'do the following in serial: '

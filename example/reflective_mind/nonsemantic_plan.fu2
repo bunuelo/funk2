@@ -1681,7 +1681,7 @@
 		      [mapc [funk [imagined_top_execution_node]
 				  [fiber [funk []
 					       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: generating execution node graph.']
-					       [let [[result [shelter [let [[graph [get this as-graph]]]
+					       [let [[result [shelter [let [[graph [get imagined_top_execution_node as-graph]]]
 									[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: visualizing execution node graph.']
 									[have graph gview]]]]]
 						 [if [is-type `bug result]

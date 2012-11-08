@@ -71,6 +71,8 @@
     new_value]]
 
 
+'nonsemantic_plan_execution_node'
+
 [deframe nonsemantic_plan_execution_node [frame] [expression
 						  [subnode_set [new set]]
 						  supernode
@@ -80,7 +82,9 @@
   [new [initial-expression
 	initial-supernode]
        [= expression initial-expression]
-       [= supernode  initial-supernode]]]
+       [= supernode  initial-supernode]
+       [if initial-supernode
+	   [have initial-supernode add_subnode this]]]]
 
 [deftypefunk nonsemantic_plan_execution_node execute add_subnode [subnode]
   [assert-type nonsemantic_plan_execution_node subnode]
@@ -696,8 +700,6 @@
 																	      [cause-lookup cause-nonsemantic_plan_execution_node]]]
 											      [if previous_nonsemantic_plan_execution_node
 												  [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]]
-											      [if [cause-lookup cause-nonsemantic_plan_execution_node]
-												  [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 								       expressions]]]]]
@@ -712,8 +714,6 @@
 																	      [cause-lookup cause-nonsemantic_plan_execution_node]]]
 											      [if previous_nonsemantic_plan_execution_node
 												  [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]]
-											      [if [cause-lookup cause-nonsemantic_plan_execution_node]
-												  [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 								       expressions]]]]]
@@ -1203,8 +1203,6 @@
 																						   [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
 																												       [quote ,expression]
 																												       [cause-lookup cause-nonsemantic_plan_execution_node]]]]
-																						     [if [cause-lookup cause-nonsemantic_plan_execution_node]
-																							 [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 																						     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																						     ,true_expression-eval]]]]]
 																	 [if [is-type `bug true_result]
@@ -1218,8 +1216,6 @@
 																						  [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
 																												       [quote ,expression]
 																												       [cause-lookup cause-nonsemantic_plan_execution_node]]]]
-																						     [if [cause-lookup cause-nonsemantic_plan_execution_node]
-																							 [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 																						     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																						     @false_expressions-eval]]]]]
 																       [if [is-type `bug false_result]

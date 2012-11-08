@@ -359,7 +359,8 @@
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
 
-[globalize plan_bug_count 0]
+[globalize globalize_plan_bugs_enabled nil]
+[globalize plan_bug_count              0]
 
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
   `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
@@ -425,11 +426,12 @@
 				 
 				 fiber_result]]]]]]]
     [if [is-type `bug result]
-	[let [[bug             result]
-	      [global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
-	  [++ plan_bug_count]
-	  [terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
-	  [eval `[globalize ,global_bug_name [quote ,bug]]]
+	[let [[bug result]]
+	  [if globalize_plan_bugs_enabled
+	      [let [[global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
+		[++ plan_bug_count]
+		[terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
+		[eval `[globalize ,global_bug_name [quote ,bug]]]]]
 	  [terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' bug]]]
     result]]
 

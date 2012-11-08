@@ -83,7 +83,7 @@
        [= expression initial-expression]
        [= supernode  [cause-lookup cause-nonsemantic_plan_execution_node]]
        [if supernode
-	   [have [get supernode subnode_set] add subnode]]]]
+	   [have [get supernode subnode_set] add this]]]]
 
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node

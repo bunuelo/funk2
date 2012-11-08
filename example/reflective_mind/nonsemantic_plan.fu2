@@ -359,6 +359,8 @@
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
   [have [get this mental_layer] wait_for semantic_partial_state]]
 
+[globalize plan_bug_count 0]
+
 [deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
   `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
   [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
@@ -423,7 +425,12 @@
 				 
 				 fiber_result]]]]]]]
     [if [is-type `bug result]
-	[terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' result]]
+	[let [[bug             result]
+	      [global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
+	  [++ plan_bug_count]
+	  [terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
+	  [eval `[globalize ,global_bug_name [quote ,bug]]]
+	  [terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' bug]]]
     result]]
 
 
@@ -735,7 +742,8 @@
 											 [let [[bug result]]
 											   [if [have [get bug frame] lookup `is_plan_bug]
 											       bug
-											     [bug bug]]]]]]
+											     [bug bug]]]
+										       result]]]
 									    expressions]]
 							    nil]]]
 	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
@@ -750,7 +758,8 @@
 											 [let [[bug result]]
 											   [if [have [get bug frame] lookup `is_plan_bug]
 											       bug
-											     [bug bug]]]]]]
+											     [bug bug]]]
+										       result]]]
 									    expressions]]
 							    nil]]]
 	  [[eq compile-mode `natural_language] [let [[expressions-length [length expressions]]]

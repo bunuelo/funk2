@@ -1228,7 +1228,7 @@
 																	   [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																	   ,true_expression-eval]]
 														       [with-new-cause [cause-define cause-last_decision_value condition]
-																       [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
+																       [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expressions]]]]
 																	 [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																	 @false_expressions-eval]]]]
 								      [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]

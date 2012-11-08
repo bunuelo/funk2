@@ -1054,7 +1054,7 @@
 																[= index [+ index 1]]
 																[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan '
 																		 index '/' [length semantic_plan_objects] '.']
-																[with-new-cause [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `call-plan-decision [quote ,true_expression]]]]
+																[with-new-cause [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `call-plan-decision [quote ,plan]]]]
 																		  [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																		  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 																		    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: '
@@ -1095,7 +1095,7 @@
 																[= index [+ index 1]]
 																[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan '
 																		 index '/' [length semantic_plan_objects] '.']
-																[with-new-cause [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `call-plan-decision [quote ,true_expression]]]]
+																[with-new-cause [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `call-plan-decision [quote ,plan]]]]
 																		  [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																		  [let [[nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
 																		    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: '
@@ -1224,9 +1224,13 @@
 							      [let [[condition ,condition-eval]]
 								[cond [[is-type `nonsemantic_plan_value   condition] [if [get condition value]
 															 [with-new-cause [cause-define cause-last_decision_value condition]
-																	 ,true_expression-eval]
+																	 [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true [quote ,true_expression]]]]
+																	   [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+																	   ,true_expression-eval]]
 														       [with-new-cause [cause-define cause-last_decision_value condition]
-																       @false_expressions-eval]]]
+																       [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
+																	 [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+																	 @false_expressions-eval]]]]
 								      [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
 															    [result_multiple_possible_values [new multiple_possible_values nil]]
 															    [conditions                      [get multiple_possible_values good_values]]

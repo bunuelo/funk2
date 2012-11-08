@@ -304,6 +304,10 @@
 	  [semantic_plan_object [get plan semantic_plan_object]]]
       [set semantic_plan_object plan_object_type `physical]
       [let [[variable_frame [new frame]]]
-	[have plan execute_as_thought variable_frame]]]]]
+	[let [[result [have plan execute_as_thought variable_frame]]]
+	  [if [is-type `bug result]
+	      [let [[bug result]]
+		[bug bug]]
+	    result]]]]]]
 
 

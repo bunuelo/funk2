@@ -71,25 +71,19 @@
     new_value]]
 
 
+'nonsemantic_plan_execution_node'
+
 [deframe nonsemantic_plan_execution_node [frame] [expression
 						  [subnode_set [new set]]
 						  supernode
 						  first_subnode
 						  previous_node
 						  next_node]
-  [new [initial-expression
-	initial-supernode]
+  [new [initial-expression]
        [= expression initial-expression]
-       [= supernode  initial-supernode]]]
-
-[deftypefunk nonsemantic_plan_execution_node execute add_subnode [subnode]
-  [assert-type nonsemantic_plan_execution_node subnode]
-  [if [get subnode supernode]
-      [error bug_type `nonsemantic_plan_execution_node-subnode_already_has_supernode
-	     this     this
-	     subnode  subnode]
-    [prog [have subnode_set add subnode]
-	  [set subnode supernode this]]]]
+       [= supernode  [cause-lookup cause-nonsemantic_plan_execution_node]]
+       [if supernode
+	   [have [get supernode subnode_set] add subnode]]]]
 
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node
@@ -691,13 +685,9 @@
 								  [previous_nonsemantic_plan_execution_node nil]]
 							      @[mapcar [funk [expression]
 									     `[with-new-cause [= previous_nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-											      [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-																	      [quote ,expression]
-																	      [cause-lookup cause-nonsemantic_plan_execution_node]]]
+											      [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]
 											      [if previous_nonsemantic_plan_execution_node
 												  [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]]
-											      [if [cause-lookup cause-nonsemantic_plan_execution_node]
-												  [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 								       expressions]]]]]
@@ -707,13 +697,9 @@
 								  [previous_nonsemantic_plan_execution_node nil]]
 							      @[mapcar [funk [expression]
 									     `[with-new-cause [cause-define cause-previous_nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-											      [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-																	      [quote ,expression]
-																	      [cause-lookup cause-nonsemantic_plan_execution_node]]]
+											      [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]
 											      [if previous_nonsemantic_plan_execution_node
 												  [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]]
-											      [if [cause-lookup cause-nonsemantic_plan_execution_node]
-												  [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
 											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 											      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 								       expressions]]]]]
@@ -1200,11 +1186,7 @@
 																   [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' one_condition]
 																   [if [get one_condition value]
 																       [let [[true_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
-																						   [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-																												       [quote ,expression]
-																												       [cause-lookup cause-nonsemantic_plan_execution_node]]]]
-																						     [if [cause-lookup cause-nonsemantic_plan_execution_node]
-																							 [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
+																						   [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]]
 																						     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 																						     ,true_expression-eval]]]]]
 																	 [if [is-type `bug true_result]
@@ -1215,13 +1197,9 @@
 																		 [have multiple_possible_values add_value_bug one_condition bug]]]
 																	   [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency one_condition multiple_possible_values]]]]
 																     [let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
-																						  [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-																												       [quote ,expression]
-																												       [cause-lookup cause-nonsemantic_plan_execution_node]]]]
-																						     [if [cause-lookup cause-nonsemantic_plan_execution_node]
-																							 [have cause-nonsemantic_plan_execution_node add_subnode current_nonsemantic_plan_execution_node]]
-																						     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-																						     @false_expressions-eval]]]]]
+																						  [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]]
+																						    [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+																						    @false_expressions-eval]]]]]
 																       [if [is-type `bug false_result]
 																	   [let [[bug false_result]]
 																	     [terminal_format standard-terminal '\nnonsemantic_plan if false_result bug: ' bug]
@@ -1539,9 +1517,7 @@
       [cond [[eq compile-mode `syntax_check]     unwrapped_compile_result]
 	    [[eq compile-mode `execute]          [eval `[funk [this]
 							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
-									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-															  [quote ,expression]
-															  [cause-lookup cause-nonsemantic_plan_execution_node]]]]
+									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]]
 										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 										    [have this add_top_execution_node nonsemantic_plan_execution_node]]
 										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
@@ -1560,9 +1536,7 @@
 											  result]]]]]]]]
 	    [[eq compile-mode `imagine]          [eval `[funk [this]
 							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
-									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node
-															  [quote ,expression]
-															  [cause-lookup cause-nonsemantic_plan_execution_node]]]]
+									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,expression]]]]
 										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 										    [have this add_imagined_top_execution_node nonsemantic_plan_execution_node]]
 										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]

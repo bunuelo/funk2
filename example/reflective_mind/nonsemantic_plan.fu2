@@ -599,7 +599,7 @@
 
 [defmetro defplancommand [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
-  [defplancommand_raw name arguments body]]
+  [defplancommand-raw name arguments body]]
 
 [defmetro defplanfunk [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]

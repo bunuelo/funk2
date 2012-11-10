@@ -599,6 +599,20 @@
 						     body]]
   nil]
 
+[defmetro defplanfunk [name arguments :rest body]
+  [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]
+  [let [[planfunk_body [cons [cons `let [cons [mapcar [funk [argument]
+							    `[,argument ,argument]]
+						      arguments]
+					      nil]]
+			     
+
+  [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
+						     name
+						     arguments
+						     planfunk_body]]
+  nil]
+
 [defplancommand eval [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]
   [let [[compile-mode [have compile_option_frame lookup `mode]]]

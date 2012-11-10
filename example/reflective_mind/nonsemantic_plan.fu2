@@ -590,28 +590,24 @@
 		 arguments        arguments]]
       result]]]
 
-
-[defmetro defplancommand [name arguments :rest body]
-  [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
+[defunk defplancommand-raw [name arguments body]
   [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
 						     name
 						     arguments
 						     body]]
   nil]
 
+[defmetro defplancommand [name arguments :rest body]
+  [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
+  [defplancommand_raw name arguments body]]
+
 [defmetro defplanfunk [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]
-  [let [[planfunk_body [cons [cons `let [cons [mapcar [funk [argument]
-							    `[,argument ,argument]]
-						      arguments]
-					      nil]]
-			     
-
-  [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
-						     name
-						     arguments
-						     planfunk_body]]
-  nil]
+  [let [[planfunk_body `[let ,[mapcar [funk [argument]
+					    `[,argument `[funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
+				      arguments]
+			  @body]]]
+    [defplancommand-raw name arguments planfunk_body]]]
 
 [defplancommand eval [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]

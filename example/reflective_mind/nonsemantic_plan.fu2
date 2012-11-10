@@ -342,15 +342,6 @@
 [deftypefunk nonsemantic_plan get as-graphviz_label []
   [string-concat '<' [get [get this unique_name] as-string] '>']]
 
-[deftypefunk nonsemantic_plan execute expression-syntax_check [expression]
-  [let [[compile_option_frame [frame mode `syntax_check]]]
-    [get this expression-compile expression compile_option_frame]]]
-
-
-[deftypefunk nonsemantic_plan execute syntax_check []
-  [have this expression-syntax_check expression]]
-
-
 [deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
   [let* [[truth_value            [have [get this mental_layer] check_exists semantic_partial_state]]
 	 [nonsemantic_plan_value [new nonsemantic_plan_value truth_value]]]
@@ -475,69 +466,26 @@
 
 
 [deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
-  [let [[compile-mode [have compile_option_frame lookup `mode]]]
-    [cond [[eq compile-mode `syntax_check]     [prog ]]
-	  [[eq compile-mode `execute]          [eval `[funk [this]
-							    [quote ,expression]]]]
-	  [[eq compile-mode `imagine]          [eval `[funk [this]
-							    [quote ,expression]]]]
-	  [[eq compile-mode `natural_language] [get expression as-string]]
-	  [[eq compile-mode `semantic]         [prog ]]
-	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
-						      compile-mode compile-mode]]]]]
+  [eval `[funk [this]
+	       [quote ,expression]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
-  [let [[compile-mode [have compile_option_frame lookup `mode]]]
-    [cond [[eq compile-mode `syntax_check]     [let [[parse_result [shelter [string_pattern-as-conslist_pattern expression]]]]
-						 [if [is-type `bug parse_result]
-						     [error bug_name                 `plan_syntax_error-could_not_parse_string_pattern
-							    expression               expression
-							    string_pattern_parse_bug parse_result]]]]
-	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
-							    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-							      [have semantic_thought evaluate_string ,expression]]]]]
-	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
-							    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-							      [have semantic_thought evaluate_string ,expression]]]]]
-	  [[eq compile-mode `natural_language] expression]
-	  [[eq compile-mode `semantic]         [prog ]]
-	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
-						      compile-mode compile-mode]]]]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+		 [have semantic_thought evaluate_string ,expression]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-multiple_possible_values [expression compile_option_frame]
-  [let [[compile-mode [have compile_option_frame lookup `mode]]]
-    [cond [[eq compile-mode `syntax_check]     [mapc [funk [value]
-							   [get nonsemantic_plan expression-compile value compile_option_frame]]
-						     [get expression good_values]]]
-	  [[eq compile-mode `execute]          [eval `[funk [nonsemantic_plan]
-							    [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-							      [prog @[mapcar [funk [value]
-										   `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]]]
-										      [if [is-type `bug result]
-											  [let [[bug result]]
-											    [if [have [get bug frame] lookup `is_plan_bug]
-												[bug bug]
-											      [have result_multiple_possible_values add_value_with_dependency result [new value_dependency [quote ,value] [quote ,expression]]]]]]]]
-									     [get expression good_values]]]
-							      result_multiple_possible_values]]]]
-	  [[eq compile-mode `imagine]          [eval `[funk [nonsemantic_plan]
-							    [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-							      [prog @[mapcar [funk [value]
-										   `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]]]
-										      [if [is-type `bug result]
-											  [let [[bug result]]
-											    [if [have [get bug frame] lookup `is_plan_bug]
-												[bug bug]
-											      [have result_multiple_possible_values add_value_with_dependency result [new value_dependency [quote ,value] [quote ,expression]]]]]]]]
-									     [get expression good_values]]]
-							      result_multiple_possible_values results]]]]
-	  [[eq compile-mode `natural_language] [string-concat '(' [stringlist-intersperse [mapcar [funk [value]
-													[get nonsemantic_plan expression-compile value compile_option_frame]]
-												  [get expression good_values]]
-											  ', or '] ')']]
-	  [[eq compile-mode `semantic]         [prog ]]
-	  [t                                   [error bug_name     `nonsemantic_plan-compile_error-invalid_compile_mode
-						      compile-mode compile-mode]]]]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+		 [prog @[mapcar [funk [value]
+				      `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]]]
+					 [if [is-type `bug result]
+					     [let [[bug result]]
+					       [if [have [get bug frame] lookup `is_plan_bug]
+						   [bug bug]
+						 [have result_multiple_possible_values add_value_with_dependency result [new value_dependency [quote ,value] [quote ,expression]]]]]]]]
+				[get expression good_values]]]
+		 result_multiple_possible_values results]]]]
 
 [globalize nonsemantic_plan-command_frame [new frame]]
 
@@ -608,6 +556,714 @@
 				      arguments]
 			  @body]]]
     [defplancommand-raw name arguments planfunk_body]]]
+
+[defplancommand eval [expression]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[expression [quote ,expression]]]
+		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
+		 ]]]]
+
+[defplancommand quote [expression]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[quote ,expression]]
+  [eval `[funk [nonsemantic_plan]
+	       [quote ,quote-expression]
+	       ]]]
+
+[defplancommand list [:rest expressions]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[list @expression]]
+  [eval `[funk [nonsemantic_plan]
+	       [conslist @[mapcar [funk [expression]
+					`[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+				  expression]]]]]
+
+[defplancommand backquote-list [:rest expressions]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[backquote-list @expressions]]
+  [eval `[funk [nonsemantic_plan]
+	       [conslist @[mapcar [funk [expression]
+					`[funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]
+				  expression]]]]]
+
+[defplancommand print [expression]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[print expression]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[eval-expression [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+		 [terminal_format standard-terminal '\nimagined plan printing expression: ' eval-expression]
+		 eval-expression]]]]
+
+[defplancommand prog [:rest expressions]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[prog @expressions]]
+  [eval `[funk [nonsemantic_plan]
+	       [terminal_format standard-terminal '\nplan evaluating serial process.']
+	       [let [[current_nonsemantic_plan_execution_node  nil]
+		     [previous_nonsemantic_plan_execution_node nil]]
+		 @[mapcar [funk [expression]
+				`[with-new-cause [= previous_nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+						 [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `prog-sequence [quote ,expression]]]
+						 [if previous_nonsemantic_plan_execution_node
+						     [set current_nonsemantic_plan_execution_node previous_node previous_nonsemantic_plan_execution_node]
+						   [if [cause-lookup cause-nonsemantic_plan_execution_node]
+						       [set cause-nonsemantic_plan_execution_node first_subnode current_nonsemantic_plan_execution_node]]]
+						 [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+						 [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
+			  expressions]]]]]
+
+[defplancommand parog [:rest expressions]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[parog @expressions]]
+  [eval `[funk [nonsemantic_plan]
+	       [terminal_format standard-terminal '\nplan evaluating parallel process.']
+	       [parog @[mapcar [funk [expression]
+				     `[let [[result [with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
+								    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
+								    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
+								    [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
+								    [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
+					[if [is-type `bug result]
+					    [let [[bug result]]
+					      [if [have [get bug frame] lookup `is_plan_bug]
+						  bug
+						[bug bug]]]
+					  result]]]
+			       expressions]]
+	       nil]]]
+
+[defplancommand wait-for-time [time_to_wait]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[wait-for-time ,time_to_wait]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[time_to_wait ,time_to_wait]]
+		 [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
+		 ]]]]
+
+[defplancommand call-below [action_name :rest action_arguments]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call-below ,action_name @action_arguments]]
+  [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] nonsemantic_plan]]
+	[action_arguments-eval [mapcar [funk [action_argument]
+					     `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] nonsemantic_plan]]
+				       [cdr arguments]]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let [[action [have nonsemantic_plan lookup_action_below ,action_name-eval]]]
+		   [if [null action]
+		       [error bug_name    `nonsemantic_plan-call_below-no_such_action
+			      is_plan_bug t
+			      action_name ,action_name-eval]
+		     [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+			   [have action imagine_waiting_to_call @action_arguments-eval]
+			   ]]]]]]]
+
+[defplancommand call [action_name :rest action_arguments]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call ,action_name @action_arguments]]
+  [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] nonsemantic_plan]]
+	[action_arguments-eval [mapcar [funk [action_argument]
+					     `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] nonsemantic_plan]]
+				       action_arguments]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let [[action [have nonsemantic_plan lookup_action ,action_name-eval]]]
+		   [if [null action]
+		       [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+			      is_plan_bug t
+			      action_name ,action_name-eval]
+		     [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+			   [have action imagine_waiting_to_call @action_arguments-eval]
+			   ]]]]]]]
+
+[defplancommand plan [plan_name]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan ,plan_name]]
+  [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let* [[plan_name                            ,plan_name-eval]
+			[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+			[variable_frame                       [new frame]]
+			[semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+		   [if semantic_plan_matches
+		       [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+			 [mapc [funk [semantic_plan_match]
+				     [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]
+				     [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+					   [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+					   [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+				       [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+				       [if [null match-semantic_plan_object]
+					   [error bug_name    `nonsemantic_plan-plan-no_such_plan
+						  action_name semantic_plan_object-phenomenal_name]
+					 [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
+						[new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
+						[new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+					   [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+			       semantic_plan_matches]
+			 result_multiple_possible_values]
+		     [error bug_name    `could_not_find_matching_semantic_plans
+			    is_plan_bug t
+			    funkname    `plan
+			    plan_name   plan_name]]]]]]]
+
+[defplancommand plan-below [plan_name]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan-below ,plan_name]]
+  [let [[plan_name-eval `[funkall ,[get nonsemantic_plan expression-compile plan_name compile_option_frame] nonsemantic_plan]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let* [[plan_name                            ,plan_name-eval]
+			[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+			[variable_frame                       [new frame]]
+			[semantic_plan_matches                [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
+		   [if semantic_plan_matches
+		       [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+			 [mapc [funk [semantic_plan_match]
+				     [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]]
+			       semantic_plan_matches]
+			 [mapc [funk [semantic_plan_match]
+				     [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+					   [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+					   [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+				       [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+				       [if [null semantic_plan_object]
+					   [error bug_name    `nonsemantic_plan-plan-no_such_plan
+						  action_name semantic_plan_object-phenomenal_name]
+					 [let* [[nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]
+						[new_nonsemantic_plan     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]
+						[new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+					   [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+			       semantic_plan_matches]
+			 result_multiple_possible_values]
+		     [error bug_name    `could_not_find_matching_semantic_plans
+			    is_plan_bug t
+			    funkname    `plan-below
+			    plan_name   plan_name]]]]]]]
+
+[defplancommand plan-call [plan]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan-call ,plan]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[plan [funkall ,[get nonsemantic_plan expression-compile plan compile_option_frame] nonsemantic_plan]]]
+		 [cond [[is-type `nonsemantic_plan_value   plan] [let* [[semantic_plan_object [get plan value]]
+									[nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
+								   [terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
+								   [have nonsemantic_plan imagine_as_thought [frame]]]]
+		       [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values        plan]
+									[semantic_plan_objects           [get multiple_possible_values good_values]]
+									[result_multiple_possible_values [new multiple_possible_values nil]]]
+								   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
+								   [let [[index 0]]
+								     [mapc [funk [nonsemantic_plan_value]
+										 [let [[semantic_plan_object [get nonsemantic_plan_value value]]]
+										   [= index [+ index 1]]
+										   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call possible plan '
+												    index '/' [length semantic_plan_objects] '.']
+										   [with-new-cause [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `call-plan-decision [quote ,plan]]]]
+												     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+												     [let [[nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
+												       [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: '
+															'attempting to execute plan: "' [get nonsemantic_plan as-string] '"']
+												       [let [[result [shelter [have nonsemantic_plan imagine_as_thought [frame]]]]]
+													 [if [is-type `bug result]
+													     [let [[bug result]]
+													       [if [not [have [get bug frame] lookup `is_plan_bug]]
+														   [bug bug]
+														 [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: found bug executing plan: '
+																	'\n  ' bug]
+														       [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
+													   [have result_multiple_possible_values add_value_with_dependency result [new value_dependency semantic_plan_object multiple_possible_values]]]]]]]]]
+									   semantic_plan_objects]]
+								   [if [!= [get result_multiple_possible_values good_value_count] 0]
+								       result_multiple_possible_values
+								     [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
+									    is_plan_bug      t
+									    nonsemantic_plan nonsemantic_plan
+									    plan             plan]]]]
+		       [t                                        [error bug_name `nonsemantic_plan-plan_call-invalid_argument_type
+									correct_type `[or `semantic_plan_object multiple_possible_values]
+									actual_type  [type plan]
+									plan         plan]]]]]]]
+
+[defplancommand not [truth_value]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[not ,truth_value]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[truth_value [funkall ,[get nonsemantic_plan expression-compile truth_value compile_option_frame] nonsemantic_plan]]]
+		 [cond [[is-type `nonsemantic_plan_value   truth_value] [get truth_value negative]]
+		       [[is-type `multiple_possible_values truth_value] [let [[multiple_possible_values        truth_value]
+									      [result_multiple_possible_values [new multiple_possible_values nil]]]
+									  [mapc [funk [one_truth_value]
+										      [have result_multiple_possible_values add_value_with_dependency [get one_truth_value negative] [new value_dependency one_truth_value multiple_possible_values]]]
+										[get multiple_possible_values good_values]]
+									  result_multiple_possible_values]]
+		       [t                                               [error bug_name      `nonsemantic_plan-not-invalid_type
+									       correct_types `[nonsemantic_plan_value
+											       multiple_possible_values]
+									       truth_value   truth_value]]]]]]]
+
+[defplancommand exists [partial_state]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[exists ,partial_state]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[partial_state [funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
+		 [have nonsemantic_plan imagine_check_exists partial_state]
+		 ]]]]
+
+[defplancommand wait-for [partial_state]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[wait-for ,partial_state]]
+  [let [[partial_state-eval `[funkall ,[get nonsemantic_plan expression-compile partial_state compile_option_frame] nonsemantic_plan]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let [[partial_state ,partial_state-eval]]
+		   [terminal_format standard-terminal '\nplan imagining waiting for: "' [get partial_state as-declarative_natural_language_string] '."  (not yet implemented)']
+		   `[have nonsemantic_plan wait_for partial_state]]
+		 ]]]]
+
+[defplancommand if [condition true_expression :rest false_expressions]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
+  [let [[condition-eval         `[funkall ,[get nonsemantic_plan expression-compile condition       compile_option_frame] nonsemantic_plan]]
+	[true_expression-eval   `[funkall ,[get nonsemantic_plan expression-compile true_expression compile_option_frame] nonsemantic_plan]]
+	[false_expressions-eval [mapcar [funk [false_expression]
+					      `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]
+					false_expressions]]]
+    [eval `[funk [nonsemantic_plan]
+		 [let [[condition ,condition-eval]]
+		   [cond [[is-type `nonsemantic_plan_value   condition] [if [get condition value]
+									    [with-new-cause [cause-define cause-last_decision_value condition]
+											    [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true [quote ,true_expression]]]]
+											      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+											      ,true_expression-eval]]
+									  [with-new-cause [cause-define cause-last_decision_value condition]
+											  [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expressions]]]]
+											    [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+											    @false_expressions-eval]]]]
+			 [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
+									       [result_multiple_possible_values [new multiple_possible_values nil]]
+									       [conditions                      [get multiple_possible_values good_values]]
+									       [conditions-length               [length conditions]]
+									       [index                           0]]
+									  
+									  [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' conditions-length ' conditions.']
+									  [mapc [funk [one_condition]
+										      [++ index]
+										      [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' one_condition]
+										      [if [get one_condition value]
+											  [let [[true_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
+																      [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true [quote ,true_expression]]]]
+																	[cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+																	,true_expression-eval]]]]]
+											    [if [is-type `bug true_result]
+												[let [[bug true_result]]
+												  [terminal_format standard-terminal '\nnonsemantic_plan if true_result bug: ' bug]
+												  [if [not [have [get bug frame] lookup `is_plan_bug]]
+												      [bug bug]
+												    [have multiple_possible_values add_value_bug one_condition bug]]]
+											      [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency one_condition multiple_possible_values]]]]
+											[let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
+																     [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expressions]]]]
+																       [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
+																       @false_expressions-eval]]]]]
+											  [if [is-type `bug false_result]
+											      [let [[bug false_result]]
+												[terminal_format standard-terminal '\nnonsemantic_plan if false_result bug: ' bug]
+												[if [not [have [get bug frame] lookup `is_plan_bug]]
+												    [bug bug]
+												  [have multiple_possible_values add_value_bug one_condition bug]]]
+											    [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency one_condition multiple_possible_values]]]]]]
+										[get multiple_possible_values good_values]]
+									  
+									  [if [== [get result_multiple_possible_values good_value_count] 0]
+									      [error bug_name    `if-no_possible_good_results
+										     is_plan_bug t
+										     expression  [cons `if [cons [quote ,condition]
+														 [cons [quote ,true_expression]
+														       [conslist @false_expressions]]]]]
+									    result_multiple_possible_values]]]
+			 [t                                             [error bug_name        `nonsemantic_plan-if-truth_value_must_be_of_type_nonsemantic_plan_value
+									       condition       condition
+									       quote-condition [quote ,condition]]]]]]]]]
+
+[defplancommand fail []
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[fail]]
+  [eval `[funk [nonsemantic_plan]
+	       [error bug_name                     `failure
+		      is_plan_bug                  t]]]]
+
+[defplancommand ? [variable_name]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+		 [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
+		 [have semantic_thought lookup_a_variable_value [quote ,variable_name]]
+		 ]]]]
+
+[defplancommand property [source_type
+			  source_key_type
+			  source_key
+			  source_value
+			  key_type
+			  key
+			  value]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[property ,source_type
+											 ,source_key_type
+											 ,source_key
+											 ,source_value
+											 ,key_type
+											 ,key
+											 ,value]]
+  [let [[source_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_type     compile_option_frame] nonsemantic_plan]]]
+	[source_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key_type compile_option_frame] nonsemantic_plan]]]
+	[source_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key      compile_option_frame] nonsemantic_plan]]]
+	[source_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_value    compile_option_frame] nonsemantic_plan]]]
+	[key_type-eval        `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key_type        compile_option_frame] nonsemantic_plan]]]
+	[key-eval             `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key             compile_option_frame] nonsemantic_plan]]]
+	[value-eval           `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile value           compile_option_frame] nonsemantic_plan]]]]
+    [eval `[funk [nonsemantic_plan]
+		 [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+		      ,source_type-eval
+		      ,source_key_type-eval
+		      ,source_key-eval
+		      ,source_value-eval
+		      ,key_type-eval
+		      ,key-eval
+		      ,value-eval]
+		 ]]]]
+
+[defplancommand relationship [source_type
+			      source_key_type
+			      source_key
+			      source_value
+			      key_type
+			      key
+			      target_type
+			      target_key_type
+			      target_key
+			      target_value]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[relationship ,source_type
+											     ,source_key_type
+											     ,source_key
+											     ,source_value
+											     ,key_type
+											     ,key
+											     ,target_type
+											     ,target_key_type
+											     ,target_key
+											     ,target_value]]
+  [let [[source_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_type     compile_option_frame] nonsemantic_plan]]]
+	[source_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key_type compile_option_frame] nonsemantic_plan]]]
+	[source_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_key      compile_option_frame] nonsemantic_plan]]]
+	[source_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile source_value    compile_option_frame] nonsemantic_plan]]]
+	[key_type-eval        `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key_type        compile_option_frame] nonsemantic_plan]]]
+	[key-eval             `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile key             compile_option_frame] nonsemantic_plan]]]
+	[target_type-eval     `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_type     compile_option_frame] nonsemantic_plan]]]
+	[target_key_type-eval `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_key_type compile_option_frame] nonsemantic_plan]]]
+	[target_key-eval      `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_key      compile_option_frame] nonsemantic_plan]]]
+	[target_value-eval    `[name_expression-as-symbol [funkall ,[get nonsemantic_plan expression-compile target_value    compile_option_frame] nonsemantic_plan]]]]
+    [eval `[funk [nonsemantic_plan]
+		 [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+		      ,source_type-eval
+		      ,source_key_type-eval
+		      ,source_key-eval
+		      ,source_value-eval
+		      ,key_type-eval
+		      ,key-eval
+		      ,target_type-eval
+		      ,target_key_type-eval
+		      ,target_key-eval
+		      ,target_value-eval]
+		 ]]]]
+
+[defplancommand defplan [name_expression :rest arguments]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
+  [let [[name_patterns        nil]
+	[variable_definitions nil]
+	[plan_body_expression nil]]
+    [let [[argument_iter                   arguments]
+	  [done_reading_optional_arguments nil]]
+      [while [not done_reading_optional_arguments]
+	[let [[optional_argument_key [car argument_iter]]]
+	  [cond [[eq optional_argument_key `:matches] [prog [= argument_iter [cdr argument_iter]]
+							    [= name_patterns [car argument_iter]]
+							    [= argument_iter [cdr argument_iter]]]]
+		[[eq optional_argument_key `:frame]   [prog [= argument_iter [cdr argument_iter]]
+							    [= variable_definitions [car argument_iter]]
+							    [= argument_iter [cdr argument_iter]]]]
+		[t                                    [= done_reading_optional_arguments t]]]]]
+      [if [== [length argument_iter] 1]
+	  [= plan_body_expression [car argument_iter]]
+	[= plan_body_expression `[prog @argument_iter]]]]
+    [eval `[funk [nonsemantic_plan]
+		 [terminal_format standard-terminal '\n' [conslist `defplan [quote ,name_expression]]]
+		 [let* [[new_nonsemantic_plan [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]]
+			[new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+		   [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]]]]]]
+
+
+
+[deftypefunk nonsemantic_plan get expression-compile-cons [expression compile_option_frame]
+  [let [[command   [car expression]]
+	[arguments [cdr expression]]]
+    [let [[nonsemantic_plan_command [have nonsemantic_plan-command_frame lookup command]]]
+      [if [not [null nonsemantic_plan_command]]
+	  [have nonsemantic_plan_command compile this compile_option_frame arguments]
+	[error bug_name   `nonsemantic_plan_compile_error-invalid_command
+	       expression expression
+	       command    command]]]]]
+
+[deftypefunk nonsemantic_plan execute add_top_execution_node [nonsemantic_plan_execution_node]
+  [have top_execution_node_set add nonsemantic_plan_execution_node]]
+
+[deftypefunk nonsemantic_plan execute add_imagined_top_execution_node [nonsemantic_plan_execution_node]
+  [have imagined_top_execution_node_set add nonsemantic_plan_execution_node]]
+
+[deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
+  [let [[unwrapped_compile_result [cond [[is-type `symbol expression]                   [get this expression-compile-symbol                   expression compile_option_frame]]
+					[[is-type `string expression]                   [get this expression-compile-string                   expression compile_option_frame]]
+					[[is-type `cons   expression]                   [get this expression-compile-cons                     expression compile_option_frame]]
+					[[is-type `multiple_possible_values expression] [get this expression-compile-multiple_possible_values expression compile_option_frame]]
+					[t                                              [error bug_name        `nonsemantic_plan_compile_error-invalid_expression_type
+											       expression-type [type expression]
+											       expression      expression]]]]]
+    [let [[compile-mode [have compile_option_frame lookup `mode]]]
+      [eval `[funk [this]
+		   [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
+				   [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `expression [quote ,expression]]]]
+				     [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
+					 [have this add_imagined_top_execution_node nonsemantic_plan_execution_node]]
+				     [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				     [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
+				       [if [is-type `bug result]
+					   [let [[bug result]]
+					     [if [have [get bug frame] lookup `is_plan_bug]
+						 [bug bug]
+					       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+						 [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
+						 [error bug_name         `nonsemantic_plan-expression_encountered_bug
+							expression       [quote ,expression]
+							semantic_thought semantic_thought
+							subbug           bug]]]]
+					 [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
+					       result]]]]]]]]]]
+
+[deftypefunk nonsemantic_plan get __compiled_funk []
+  [let [[compile_option_frame [frame mode `execute]]]
+    [get this expression-compile expression compile_option_frame]]]
+
+[deftypefunk nonsemantic_plan get compiled_funk []
+  [if [null internal-compiled_funk]
+      [= internal-compiled_funk [let [[result [shelter [get this __compiled_funk]]]]
+				  [if [is-type `bug result]
+				      [let [[bug result]]
+					[error bug_name `nonsemantic_plan-error_compiling_execute_funk
+					       subbug   bug
+					       this     this]]
+				    result]]]]
+  internal-compiled_funk]
+
+[deftypefunk nonsemantic_plan execute eval []
+  [funkall [get this compiled_funk] this]]
+
+[deftypefunk nonsemantic_plan execute execute_as_thought [variable_frame]
+  [terminal_format standard-terminal '\nnonsemantic_plan: executing "' [get this name_expression] '" with ' variable_frame '.']
+  [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]
+	 [result           [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+				 [funk []
+				       [have this eval]]
+				 []]]]
+    [terminal_format standard-terminal '\nnonsemantic_plan: done executing "' [get this name_expression] '".']
+    result]]
+
+
+
+[deftypefunk nonsemantic_plan get __compiled_imagine_funk []
+  [let [[compile_option_frame [frame mode `imagine]]]
+    [get this expression-compile expression compile_option_frame]]]
+
+[deftypefunk nonsemantic_plan get compiled_imagine_funk []
+  [if [null internal-compiled_imagine_funk]
+      [= internal-compiled_imagine_funk [let [[result [shelter [get this __compiled_imagine_funk]]]]
+					  [if [is-type `bug result]
+					      [let [[bug result]]
+						[error bug_name `nonsemantic_plan-error_compiling_imagine_funk
+						       subbug   bug
+						       this     this]]
+					    result]]]]
+  internal-compiled_imagine_funk]
+
+[deftypefunk nonsemantic_plan execute imagine_eval []
+  [funkall [get this compiled_imagine_funk] this]]
+
+[deftypefunk nonsemantic_plan execute imagine_as_thought [variable_frame]
+  [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
+  [with-new-cause [if [null [cause-lookup cause-imagine_time]]
+		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
+			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
+			    [cause-define cause-traced_resource_activation_set                   [new set]]
+			    [cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
+			    ]]
+		  [let [[remember_token [new remember_token cause-imagine_time]]]
+		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
+		    [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]
+			   [result           [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
+						   [funk []
+							 [have this imagine_eval]]
+						   []]]]
+		      [mapc [funk [imagined_top_execution_node]
+				  [fiber [funk []
+					       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: generating execution node graph.']
+					       [let [[result [shelter [let [[graph [get imagined_top_execution_node as-graph]]]
+									[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: visualizing execution node graph.']
+									[have graph gview]]]]]
+						 [if [is-type `bug result]
+						     [let [[bug result]]
+						       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: bug defined as ' `plan_graph_bug '.']
+						       [globalize plan_graph_bug bug]]]]]
+					 nil]]
+			    [get imagined_top_execution_node_set elements]]
+		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
+		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
+		      result]]]]
+
+
+
+
+[deftypefunk nonsemantic_plan get __semantic_plan_object []
+  [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get this unique_name] this]]
+	[start_plan_operator  [let [[compile_option_frame [frame mode `semantic]]]
+				[get this expression-compile expression compile_option_frame]]]]
+    [set semantic_plan_object start_plan_operator start_plan_operator]
+    [mapc [funk [variable_definition]
+		[cond [[is-type `symbol variable_definition] [semantic-add semantic_plan_object default_variable variable_definition nil]]
+		      [[is-type `cons   variable_definition] [if [== [length variable_definition] 2]
+								 [let [[variable   [first  variable_definition]]
+								       [definition [second variable_definition]]]
+								   [semantic-add semantic_plan_object default_variable variable definition]]
+							       [error bug_name   `invalid_plan_variable_definition
+								      expression variable_definition]]]
+		      [t                                     [error bug_name `invalid_plan_variable_definitions
+								    expression expression]]]]
+	  [get this variables]]
+    semantic_plan_object]]
+
+[deftypefunk nonsemantic_plan get semantic_plan_object []
+  [if [null internal-semantic_plan_object]
+      [= internal-semantic_plan_object [get this __semantic_plan_object]]]
+  internal-semantic_plan_object]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+`[
+
 
 [defplancommand eval [expression]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]
@@ -1560,179 +2216,4 @@
 	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
 							compile-mode compile-mode]]]]]]
 
-
-
-[deftypefunk nonsemantic_plan get expression-compile-cons [expression compile_option_frame]
-  [let [[command   [car expression]]
-	[arguments [cdr expression]]]
-    [let [[nonsemantic_plan_command [have nonsemantic_plan-command_frame lookup command]]]
-      [if [not [null nonsemantic_plan_command]]
-	  [have nonsemantic_plan_command compile this compile_option_frame arguments]
-	[error bug_name   `nonsemantic_plan_compile_error-invalid_command
-	       expression expression
-	       command    command]]]]]
-
-[deftypefunk nonsemantic_plan execute add_top_execution_node [nonsemantic_plan_execution_node]
-  [have top_execution_node_set add nonsemantic_plan_execution_node]]
-
-[deftypefunk nonsemantic_plan execute add_imagined_top_execution_node [nonsemantic_plan_execution_node]
-  [have imagined_top_execution_node_set add nonsemantic_plan_execution_node]]
-
-[deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
-  [let [[unwrapped_compile_result [cond [[is-type `symbol expression]                   [get this expression-compile-symbol                   expression compile_option_frame]]
-					[[is-type `string expression]                   [get this expression-compile-string                   expression compile_option_frame]]
-					[[is-type `cons   expression]                   [get this expression-compile-cons                     expression compile_option_frame]]
-					[[is-type `multiple_possible_values expression] [get this expression-compile-multiple_possible_values expression compile_option_frame]]
-					[t                                              [error bug_name        `nonsemantic_plan_compile_error-invalid_expression_type
-											       expression-type [type expression]
-											       expression      expression]]]]]
-    [let [[compile-mode [have compile_option_frame lookup `mode]]]
-      [cond [[eq compile-mode `syntax_check]     unwrapped_compile_result]
-	    [[eq compile-mode `execute]          [eval `[funk [this]
-							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]
-									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `expression [quote ,expression]]]]
-										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
-										    [have this add_top_execution_node nonsemantic_plan_execution_node]]
-										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-										[let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-										  [if [is-type `bug result]
-										      [let [[bug result]]
-											[if [have [get bug frame] lookup `is_plan_bug]
-											    [bug bug]
-											  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-											    [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-											    [error bug_name         `nonsemantic_plan-expression_encountered_bug
-												   expression       [quote ,expression]
-												   semantic_thought semantic_thought
-												   subbug           bug]]]]
-										    [prog [terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
-											  result]]]]]]]]
-	    [[eq compile-mode `imagine]          [eval `[funk [this]
-							      [with-new-cause [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
-									      [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `expression [quote ,expression]]]]
-										[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
-										    [have this add_imagined_top_execution_node nonsemantic_plan_execution_node]]
-										[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-										[let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-										  [if [is-type `bug result]
-										      [let [[bug result]]
-											[if [have [get bug frame] lookup `is_plan_bug]
-											    [bug bug]
-											  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-											    [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-											    [error bug_name         `nonsemantic_plan-expression_encountered_bug
-												   expression       [quote ,expression]
-												   semantic_thought semantic_thought
-												   subbug           bug]]]]
-										    [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
-											  result]]]]]]]]
-	    [[eq compile-mode `natural_language] unwrapped_compile_result]
-	    [[eq compile-mode `semantic]         unwrapped_compile_result]
-	    [t                                   [error bug_name `nonsemantic_plan-compile_error-invalid_compile_mode
-							compile-mode compile-mode]]]]]]
-
-[deftypefunk nonsemantic_plan get __compiled_funk []
-  [let [[compile_option_frame [frame mode `execute]]]
-    [get this expression-compile expression compile_option_frame]]]
-
-[deftypefunk nonsemantic_plan get compiled_funk []
-  [if [null internal-compiled_funk]
-      [= internal-compiled_funk [let [[result [shelter [get this __compiled_funk]]]]
-				  [if [is-type `bug result]
-				      [let [[bug result]]
-					[error bug_name `nonsemantic_plan-error_compiling_execute_funk
-					       subbug   bug
-					       this     this]]
-				    result]]]]
-  internal-compiled_funk]
-
-[deftypefunk nonsemantic_plan execute eval []
-  [funkall [get this compiled_funk] this]]
-
-[deftypefunk nonsemantic_plan execute execute_as_thought [variable_frame]
-  [terminal_format standard-terminal '\nnonsemantic_plan: executing "' [get this name_expression] '" with ' variable_frame '.']
-  [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]
-	 [result           [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-				 [funk []
-				       [have this eval]]
-				 []]]]
-    [terminal_format standard-terminal '\nnonsemantic_plan: done executing "' [get this name_expression] '".']
-    result]]
-
-
-
-[deftypefunk nonsemantic_plan get __compiled_imagine_funk []
-  [let [[compile_option_frame [frame mode `imagine]]]
-    [get this expression-compile expression compile_option_frame]]]
-
-[deftypefunk nonsemantic_plan get compiled_imagine_funk []
-  [if [null internal-compiled_imagine_funk]
-      [= internal-compiled_imagine_funk [let [[result [shelter [get this __compiled_imagine_funk]]]]
-					  [if [is-type `bug result]
-					      [let [[bug result]]
-						[error bug_name `nonsemantic_plan-error_compiling_imagine_funk
-						       subbug   bug
-						       this     this]]
-					    result]]]]
-  internal-compiled_imagine_funk]
-
-[deftypefunk nonsemantic_plan execute imagine_eval []
-  [funkall [get this compiled_imagine_funk] this]]
-
-[deftypefunk nonsemantic_plan execute imagine_as_thought [variable_frame]
-  [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
-  [with-new-cause [if [null [cause-lookup cause-imagine_time]]
-		      [prog [cause-define cause-imagine_time                                     [new semantic_time [time]]]
-			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
-			    [cause-define cause-traced_resource_activation_set                   [new set]]
-			    [cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
-			    ]]
-		  [let [[remember_token [new remember_token cause-imagine_time]]]
-		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
-		    [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]
-			   [result           [have this __execute_funk_as_thought_in_semantic_planner semantic_planner variable_frame
-						   [funk []
-							 [have this imagine_eval]]
-						   []]]]
-		      [mapc [funk [imagined_top_execution_node]
-				  [fiber [funk []
-					       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: generating execution node graph.']
-					       [let [[result [shelter [let [[graph [get imagined_top_execution_node as-graph]]]
-									[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: visualizing execution node graph.']
-									[have graph gview]]]]]
-						 [if [is-type `bug result]
-						     [let [[bug result]]
-						       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: bug defined as ' `plan_graph_bug '.']
-						       [globalize plan_graph_bug bug]]]]]
-					 nil]]
-			    [get imagined_top_execution_node_set elements]]
-		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
-		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
-		      result]]]]
-
-
-
-
-[deftypefunk nonsemantic_plan get __semantic_plan_object []
-  [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get this unique_name] this]]
-	[start_plan_operator  [let [[compile_option_frame [frame mode `semantic]]]
-				[get this expression-compile expression compile_option_frame]]]]
-    [set semantic_plan_object start_plan_operator start_plan_operator]
-    [mapc [funk [variable_definition]
-		[cond [[is-type `symbol variable_definition] [semantic-add semantic_plan_object default_variable variable_definition nil]]
-		      [[is-type `cons   variable_definition] [if [== [length variable_definition] 2]
-								 [let [[variable   [first  variable_definition]]
-								       [definition [second variable_definition]]]
-								   [semantic-add semantic_plan_object default_variable variable definition]]
-							       [error bug_name   `invalid_plan_variable_definition
-								      expression variable_definition]]]
-		      [t                                     [error bug_name `invalid_plan_variable_definitions
-								    expression expression]]]]
-	  [get this variables]]
-    semantic_plan_object]]
-
-[deftypefunk nonsemantic_plan get semantic_plan_object []
-  [if [null internal-semantic_plan_object]
-      [= internal-semantic_plan_object [get this __semantic_plan_object]]]
-  internal-semantic_plan_object]
-
+]

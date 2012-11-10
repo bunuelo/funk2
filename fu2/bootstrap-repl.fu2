@@ -577,7 +577,8 @@
 
 [defunk print [x]
   [let [[terminal_print_frame [get standard-terminal new_copy]]]
-    [terminal_format [get standard-terminal new_copy] '\n' x]]]
+    [terminal_format [get standard-terminal new_copy] '\n' x]
+    x]]
 
 [defunk demetropolize [x]
   [let [[demetro_pair [demetropolize_once x]]]

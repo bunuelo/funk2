@@ -152,7 +152,6 @@
 		   name_patterns
 		   variable_definitions
 		   expression]]]
-    [have plan syntax_check]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
       [have this add_semantic_plan semantic_plan_object]]]]
 
@@ -318,12 +317,28 @@
 				    name_patterns
 				    argument_definitions
 				    expression]]]
-    [have plan syntax_check]
-    [let [[semantic_planner     [get [get [get this mind] agency `deliberative `plan] semantic_planner]]
-	  [semantic_plan_object [get plan semantic_plan_object]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
       [set semantic_plan_object plan_object_type `physical]
       [let [[variable_frame [new frame]]]
 	[let [[result [have plan execute_as_thought variable_frame]]]
+	  [if [is-type `bug result]
+	      [let [[bug result]]
+		[bug bug]]
+	    result]]]]]]
+
+[deftypefunk deliberative_layer execute imagine_plan_expression [expression]
+  [let* [[name_expression      'imagine unnamed plan expression']
+	 [name_patterns        nil]
+	 [argument_definitions nil]
+	 [plan                 [new nonsemantic_plan [get this mental_layer]
+				    name_expression
+				    name_patterns
+				    argument_definitions
+				    expression]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type `physical]
+      [let [[variable_frame [new frame]]]
+	[let [[result [have plan imagine_executing_as_thought variable_frame]]]
 	  [if [is-type `bug result]
 	      [let [[bug result]]
 		[bug bug]]

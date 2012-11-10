@@ -333,6 +333,7 @@
 	      "defpackage"
 	      "defplan"
 	      "defplancommand"
+	      "defplanfunk"
 	      "deframe"
 	      "deftypeconstruct"
 	      "deftypefunk"

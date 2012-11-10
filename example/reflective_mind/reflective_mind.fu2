@@ -134,11 +134,22 @@
   [get [get this layer `reflective] semantic_plans]]
 
 
+'deliberative'
+
 [deftypefunk reflective_mind execute evaluate_deliberative_plan_expression [expression]
   [have [get this layer `deliberative] evaluate_plan_expression expression]]
 
+[deftypefunk reflective_mind execute imagine_deliberative_plan_expression [expression]
+  [have [get this layer `deliberative] imagine_plan_expression expression]]
+
+
+'reflective'
+
 [deftypefunk reflective_mind execute evaluate_reflective_plan_expression [expression]
   [have [get this layer `reflective] evaluate_plan_expression expression]]
+
+[deftypefunk reflective_mind execute imagine_reflective_plan_expression [expression]
+  [have [get this layer `reflective] imagine_plan_expression expression]]
 
 
 'pre-knowledge perception functions'

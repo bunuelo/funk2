@@ -90,7 +90,7 @@
   'create blocks_world agent specific plans'
   
   [have this imagine_deliberative_plan_expression
-	`[parog [defplan 'a pyramid is on a cube'
+	`[prog [defplan 'a pyramid is on a cube'
 		  :matches ['a [? top_shape] is on a [? bottom_shape]'
 			    'a [? bottom_shape] is below a [? top_shape]']
 		   :frame [[top_shape    pyramid]
@@ -196,7 +196,7 @@
   'reflective plans'
   
   [have this imagine_reflective_plan_expression
-	`[parog [defplan 'a plan to stack a pyramid on a cube'
+	`[prog [defplan 'a plan to stack a pyramid on a cube'
 		  :matches ['a plan to [? plan]']
 		   :frame [[plan 'stack a pyramid on a cube']]
 		    [plan-below [? plan]]]

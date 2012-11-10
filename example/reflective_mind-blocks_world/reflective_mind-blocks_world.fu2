@@ -89,6 +89,8 @@
   
   'create blocks_world agent specific plans'
   
+  [cause-define cause-ignore_background_bug nil]
+  
   [have this imagine_deliberative_plan_expression
 	`[prog [defplan 'a pyramid is on a cube'
 		  :matches ['a [? top_shape] is on a [? bottom_shape]'

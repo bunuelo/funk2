@@ -580,9 +580,9 @@
 						       `[,argument `[funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
 						 arguments_without_rest]
 					 [if arguments_contain_rest
-					     `[[,rest_argument `[conslist @[mapcar [funk [argument]
-											 `[funkall ,[get nonsemantic_plan expression-compile argument compile_option_frame] nonsemantic_plan]]
-										   ,rest_argument]]]]
+					     `[[,rest_argument [mapcar [funk [argument]
+									     `[funkall ,[get nonsemantic_plan expression-compile argument compile_option_frame] nonsemantic_plan]]
+								       ,rest_argument]]]
 					   nil]]
 			     @body]]]]
       [terminal_format standard-terminal '\nplanfunk_body: ' planfunk_body]

@@ -47,8 +47,9 @@ typedef struct funk2_object_type__scheduler__slot_s funk2_object_type__scheduler
 
 // scheduler
 
-declare_object_type_1_slot(scheduler,
+declare_object_type_2_slot(scheduler,
 			   processors,
+			   keep_bug_fibers,
 			   f2ptr active_fibers__symbol;
 			   f2ptr active_fibers__funk;
 			   f2ptr processor_with_fewest_fibers__symbol;
@@ -78,8 +79,9 @@ f2ptr funk2_operating_system__pop_current_fiber( funk2_operating_system_t* this,
 
 // scheduler
 
-declare_primobject_1_slot(scheduler,
-			  processors);
+declare_primobject_2_slot(scheduler,
+			  processors,
+			  keep_bug_fibers);
 
 void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor);
 void raw__scheduler__clean(f2ptr cause, f2ptr this);

@@ -605,7 +605,6 @@
 											 ,rest_argument]]]
 							     nil]]
 					       @body]]]]]]
-      [terminal_format standard-terminal '\nplanfunk_body: ' planfunk_body]
       [defplancommand-raw name arguments planfunk_body]]]]
 
 [defplancommand eval [expression]

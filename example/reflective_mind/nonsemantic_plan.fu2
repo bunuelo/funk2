@@ -559,11 +559,34 @@
 
 [defmetro defplanfunk [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]
-  [let [[planfunk_body `[let ,[mapcar [funk [argument]
-					    `[,argument `[funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
-				      arguments]
-			  @body]]]
-    [defplancommand-raw name arguments planfunk_body]]]
+  [let [[arguments_without_rest nil]
+	[arguments_contain_rest nil]
+	[rest_argument          nil]]
+    [let [[arguments_iter arguments]]
+      [while arguments_iter
+	[let [[argument [car arguments_iter]]]
+	  [if [eq argument `:rest]
+	      [= arguments_contain_rest t]
+	    [if arguments_contain_rest
+		[if [cdr arguments_iter]
+		    [error bug_name  defplanfunk-multiple_rest_arguments_defined
+			   name      name
+			   arguments arguments]
+		  [= rest_argument argument]]
+	      [= arguments_without_rest [cons argument arguments_without_rest]]]]]
+	[= arguments_iter [cdr arguments_iter]]]
+      [= arguments_without_rest [reverse arguments_without_rest]]]
+    [let [[planfunk_body `[[let ,[append [mapcar [funk [argument]
+						       `[,argument `[funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
+						 arguments_without_rest]
+					 [if arguments_contain_rest
+					     `[[,rest_argument `[conslist @[mapcar [funk [argument]
+											 `[funkall ,[get nonsemantic_plan expression-compile argument compile_option_frame] nonsemantic_plan]]
+										   ,rest_argument]]]]
+					   nil]]
+			     @body]]]]
+      [terminal_format standard-terminal '\nplanfunk_body: ' planfunk_body]
+      [defplancommand-raw name arguments planfunk_body]]]]
 
 [defplancommand eval [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]
@@ -642,37 +665,27 @@
 		 [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
 		 ]]]]
 
-[defplancommand call-below [action_name :rest action_arguments]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call-below ,action_name @action_arguments]]
-  [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] nonsemantic_plan]]
-	[action_arguments-eval [mapcar [funk [action_argument]
-					     `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] nonsemantic_plan]]
-				       [cdr arguments]]]]
-    [eval `[funk [nonsemantic_plan]
-		 [let [[action [have nonsemantic_plan lookup_action_below ,action_name-eval]]]
-		   [if [null action]
-		       [error bug_name    `nonsemantic_plan-call_below-no_such_action
-			      is_plan_bug t
-			      action_name ,action_name-eval]
-		     [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-			   [have action imagine_waiting_to_call @action_arguments-eval]
-			   ]]]]]]]
+[defplanfunk call-below [action_name :rest action_arguments]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[action [have nonsemantic_plan lookup_action_below ,action_name]]]
+		 [if [null action]
+		     [error bug_name    `nonsemantic_plan-call_below-no_such_action
+			    is_plan_bug t
+			    action_name ,action_name]
+		   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+			 [have action imagine_waiting_to_call @action_arguments]
+			 ]]]]]]
 
-[defplancommand call [action_name :rest action_arguments]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[call ,action_name @action_arguments]]
-  [let [[action_name-eval      `[funkall ,[get nonsemantic_plan expression-compile action_name compile_option_frame] nonsemantic_plan]]
-	[action_arguments-eval [mapcar [funk [action_argument]
-					     `[funkall ,[get nonsemantic_plan expression-compile action_argument compile_option_frame] nonsemantic_plan]]
-				       action_arguments]]]
-    [eval `[funk [nonsemantic_plan]
-		 [let [[action [have nonsemantic_plan lookup_action ,action_name-eval]]]
-		   [if [null action]
-		       [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
-			      is_plan_bug t
-			      action_name ,action_name-eval]
-		     [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
-			   [have action imagine_waiting_to_call @action_arguments-eval]
-			   ]]]]]]]
+[defplanfunk call [action_name :rest action_arguments]
+  [eval `[funk [nonsemantic_plan]
+	       [let [[action [have nonsemantic_plan lookup_action ,action_name]]]
+		 [if [null action]
+		     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+			    is_plan_bug t
+			    action_name ,action_name]
+		   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+			 [have action imagine_waiting_to_call @action_arguments]
+			 ]]]]]]
 
 [defplancommand plan [plan_name]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[plan ,plan_name]]

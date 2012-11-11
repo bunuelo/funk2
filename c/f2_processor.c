@@ -620,7 +620,12 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
       f2fiber__value__set(fiber, cause, bug);
     }
     
-    raw__global_scheduler__remove_fiber(cause, fiber);
+    {
+      f2ptr keep_bug_fibers = raw__scheduler__keep_bug_fibers(cause, __funk2.operating_system.scheduler);
+      if (keep_bug_fibers == nil) {
+	raw__global_scheduler__remove_fiber(cause, fiber);
+      }
+    }
     
     {
       f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);

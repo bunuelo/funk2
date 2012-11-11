@@ -94,8 +94,9 @@ f2ptr funk2_operating_system__pop_current_fiber(funk2_operating_system_t* this, 
 
 // scheduler
 
-def_primobject_1_slot(scheduler,
-		      processors);
+def_primobject_2_slot(scheduler,
+		      processors,
+		      keep_bug_fibers);
 
 f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
   return f2scheduler__new(cause, processors);
@@ -312,9 +313,10 @@ f2ptr raw__scheduler__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr t
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list4__new(cause,
+    frame = f2__frame__new(cause, f2list6__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "scheduler"),
-					       new__symbol(cause, "processors"),        f2__scheduler__processors(cause, this)));
+					       new__symbol(cause, "processors"),        f2__scheduler__processors(     cause, this),
+					       new__symbol(cause, "keep_bug_fibers"),   f2__scheduler__keep_bug_fibers(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -586,8 +588,9 @@ void f2__scheduler__defragment__fix_pointers() {
   
   // scheduler
   
-  initialize_primobject_1_slot__defragment__fix_pointers(scheduler,
-							 processors);
+  initialize_primobject_2_slot__defragment__fix_pointers(scheduler,
+							 processors,
+							 keep_bug_fibers);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol);
   f2__primcfunk__init__defragment__fix_pointers(scheduler__active_fibers);
@@ -639,8 +642,9 @@ void f2__scheduler__reinitialize_globalvars() {
   
   // scheduler
   
-  initialize_primobject_1_slot(scheduler,
-			       processors);
+  initialize_primobject_2_slot(scheduler,
+			       processors,
+			       keep_bug_fibers);
   
   {char* symbol_str = "active_fibers"; __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler__active_fibers, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_scheduler.active_fibers__funk = never_gc(cfunk);}

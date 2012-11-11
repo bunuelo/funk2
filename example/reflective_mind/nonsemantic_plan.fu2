@@ -567,11 +567,11 @@
 
 [defmetro defplancommand [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
-  [defplancommand-raw name arguments `[with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] [quote ,arguments]]]]
-							[if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
-							    [have this add_imagined_top_execution_node nonsemantic_plan_execution_node]]
-							[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-							@body]]]]
+  [defplancommand-raw name arguments `[[with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] [quote ,arguments]]]]
+							 [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
+							     [have this add_imagined_top_execution_node nonsemantic_plan_execution_node]]
+							 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+							 @body]]]]]
 
 [defmetro defplanfunk [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]

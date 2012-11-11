@@ -89,7 +89,7 @@
   
   'create blocks_world agent specific plans'
   
-  [cause-enable_reactive_critics]
+  [cause-enable_reactive_critics [this-cause]]
   [cause-define cause-ignore_background_bug nil]
   
   [have this imagine_deliberative_plan_expression

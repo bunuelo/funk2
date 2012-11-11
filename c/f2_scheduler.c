@@ -99,7 +99,10 @@ def_primobject_2_slot(scheduler,
 		      keep_bug_fibers);
 
 f2ptr f2__scheduler__new(f2ptr cause, f2ptr processors) {
-  return f2scheduler__new(cause, processors);
+  f2ptr keep_bug_fibers = nil;
+  return f2scheduler__new(cause,
+			  processors,
+			  keep_bug_fibers);
 }
 def_pcfunk1(scheduler__new, processors,
 

@@ -565,7 +565,7 @@
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
   [defplancommand-raw name arguments `[[let [[body_funk [prog @body]]]
 					 [eval `[funk [nonsemantic_plan]
-						      [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] [quote ,arguments]]]]
+						      [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,,name] [quote ,,arguments]]]]
 									[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 									[funkall ,body_funk nonsemantic_plan]]]]]]]]]
 
@@ -598,7 +598,7 @@
 					   nil]]
 			     [let [[body_funk [prog @body]]]
 			       [eval `[funk [nonsemantic_plan]
-					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] [quote ,arguments]]]]
+					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,,name] [quote ,,arguments]]]]
 							      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 							      [funkall ,body_funk nonsemantic_plan]]]]]]]]]]
       [defplancommand-raw name arguments planfunk_body]]]]

@@ -597,7 +597,7 @@
 					     `[[,rest_argument [let [[rest_index 0]]
 								 [mapcar [funk [argument]
 									       [++ rest_index]
-									       [funkall ,[get nonsemantic_plan expression-compile argument compile_option_frame] nonsemantic_plan]]
+									       `[funkall ,[get nonsemantic_plan expression-compile argument compile_option_frame] nonsemantic_plan]]
 									 ,rest_argument]]]]
 					   nil]]
 			     [let [[body_funk [prog @body]]]

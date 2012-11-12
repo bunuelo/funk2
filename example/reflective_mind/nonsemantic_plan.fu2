@@ -589,7 +589,7 @@
 	[= arguments_iter [cdr arguments_iter]]]
       [= arguments_without_rest [reverse arguments_without_rest]]]
     [let [[planfunk_body `[[let ,[append [mapcar [funk [argument]
-						       `[,argument `[with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,argument]] [quote ,argument]]]]
+						       `[,argument `[with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,argument]] [quote ,,argument]]]]
 										      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 										      [funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]]]
 						 arguments_without_rest]

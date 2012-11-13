@@ -828,22 +828,24 @@
 
 [defplanfunk call-below [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
-	       [let [[action [have nonsemantic_plan lookup_action_below ,action_name]]]
+	       [let* [[action_name ,action_name]
+		      [action      [have nonsemantic_plan lookup_action_below action_name]]]
 		 [if [null action]
 		     [error bug_name    `nonsemantic_plan-call_below-no_such_action
 			    is_plan_bug t
-			    action_name ,action_name]
+			    action_name action_name]
 		   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 			 [have action imagine_waiting_to_call @action_arguments]
 			 ]]]]]]
 
 [defplanfunk call [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
-	       [let [[action [have nonsemantic_plan lookup_action ,action_name]]]
+	       [let* [[action_name ,action_name]
+		      [action      [have nonsemantic_plan lookup_action action_name]]]
 		 [if [null action]
 		     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
 			    is_plan_bug t
-			    action_name ,action_name]
+			    action_name action_name]
 		   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
 			 [have action imagine_waiting_to_call @action_arguments]
 			 ]]]]]]

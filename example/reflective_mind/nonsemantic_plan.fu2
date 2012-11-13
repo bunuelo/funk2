@@ -141,7 +141,26 @@
 	      [if next_node
 		  [let* [[next_node-graph_node [get next_node as-graph_node graph node_ptypehash]]
 			 [next_node-graph_edge [new graph_edge `next_node this-graph_node next_node-graph_node]]]
-		    [have graph add_edge next_node-graph_edge]]]]]
+		    [have graph add_edge next_node-graph_edge]]]
+	      [mapc [funk [variable]
+			  [let [[value [have variable_frame lookup variable]]]
+			    [cond [[is-type `nonsemantic_plan_value value] [let [[cause_execution_node [get value cause_execution_node]]]
+									     [let* [[cause_execution_node-graph_node [get cause_execution_node as-graph_node graph node_ptypehash]]
+										    [cause_execution_node-graph_edge [new graph_edge `cause_execution_node this-graph_node next_node-graph_node]]]
+									       [have graph add_edge cause_execution_node-graph_edge]]]]
+				  [[is-type `multiple_possible_values]     [let [[multiple_possible_values value]]
+									     [mapc [funk [one_value]
+											 [let [[cause_execution_node [get one_value cause_execution_node]]]
+											   [let* [[cause_execution_node-graph_node [get cause_execution_node as-graph_node graph node_ptypehash]]
+												  [cause_execution_node-graph_edge [new graph_edge `causes cause_execution_node-graph_node this-graph_node]]]
+											     [have graph add_edge cause_execution_node-graph_edge]]]]
+										   [get multiple_possible_values good_values]]]]
+				  [t                                       [error bug_name      `nonsemantic_plan_execution_node-invalid_value_type
+										  correct_types `[nonsemantic_plan_value
+												  multiple_possible_values]
+										  actual_type   [type value]
+										  value         value]]]]]
+		    [get variable_frame keys]]]]
     this-graph_node]]
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph []

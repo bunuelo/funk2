@@ -513,20 +513,20 @@
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 ,expression]]]]]
+				 [new nonsemantic_plan_value ,expression]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `symbol [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [quote ,expression]]]]]]
+				 [new nonsemantic_plan_value [quote ,expression]]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `string [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 				 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-				   [have semantic_thought evaluate_string ,expression]]]]]]]
+				   [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-multiple_possible_values [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
@@ -809,16 +809,22 @@
 [defplanfunk wait-for-time [time_to_wait]
   [eval `[funk [nonsemantic_plan]
 	       [let [[time_to_wait ,time_to_wait]]
-		 [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
-		 ]]]]
+		 [cond [[is-type `integer                time_to_wait] [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']]
+		       [[is-type `nonsemantic_plan_value time_to_wait] [let [[time_to_wait [get nonsemantic_plan_value value]]]
+									 [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']]]
+		       [t                                              [error bug_name      `nonsemantic_plan-wait_for_time-invalid_type
+									      correct_types `[integer
+											      nonsemantic_plan_value]
+									      actual_type   [type time_to_wait]
+									      time_to_wait  time_to_wait]]]]]]]
 
 [defplanfunk list [:rest expressions]
   [eval `[funk [nonsemantic_plan]
-	       [conslist @expressions]]]]
+	       [new nonsemantic_plan_value [conslist @expressions]]]]]
 
 [defplanfunk backquote-list [:rest expressions]
   [eval `[funk [nonsemantic_plan]
-	       [conslist @expressions]]]]
+	       [new nonsemantic_plan_value [conslist @expressions]]]]]
 
 [defplanfunk print [expression]
   [eval `[funk [nonsemantic_plan]
@@ -828,85 +834,175 @@
 
 [defplanfunk call-below [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
-	       [let* [[action_name ,action_name]
-		      [action      [have nonsemantic_plan lookup_action_below action_name]]]
-		 [if [null action]
-		     [error bug_name    `nonsemantic_plan-call_below-no_such_action
-			    is_plan_bug t
-			    action_name action_name]
-		   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-			 [have action imagine_waiting_to_call @action_arguments]
-			 ]]]]]]
+	       [let [[action_name ,action_name]]
+		 [cond [[is-type `string                 action_name] [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
+									[if [null action]
+									    [error bug_name    `nonsemantic_plan-call_below-no_such_action
+										   is_plan_bug t
+										   action_name action_name]
+									  [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+										[have action imagine_waiting_to_call @action_arguments]
+										]]]]
+		       [[is-type `nonsemantic_plan_value action_name] [let [[action_name [get action_name value]]]
+									[let [[action [have nonsemantic_plan lookup_action_below action_name]]]
+									  [if [null action]
+									      [error bug_name    `nonsemantic_plan-call_below-no_such_action
+										     is_plan_bug t
+										     action_name action_name]
+									    [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+										  [have action imagine_waiting_to_call @action_arguments]
+										  ]]]]]
+		       [t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
+									     correct_types `[string
+											     nonsemantic_plan_value]
+									     actual_type   [type action_name]
+									     action_name   action_name]]]]]]]
 
 [defplanfunk call [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
-	       [let* [[action_name ,action_name]
-		      [action      [have nonsemantic_plan lookup_action action_name]]]
-		 [if [null action]
-		     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
-			    is_plan_bug t
-			    action_name action_name]
-		   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
-			 [have action imagine_waiting_to_call @action_arguments]
-			 ]]]]]]
+	       [let [[action_name ,action_name]]
+		 [cond [[is-type `string                 action_name] [let [[action [have nonsemantic_plan lookup_action action_name]]]
+									[if [null action]
+									    [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+										   is_plan_bug t
+										   action_name action_name]
+									  [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+										[have action imagine_waiting_to_call @action_arguments]
+										]]]]
+		       [[is-type `nonsemantic_plan_value action_name] [let [[action_name [get action_name value]]]
+									[let [[action [have nonsemantic_plan lookup_action action_name]]]
+									  [if [null action]
+									      [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+										     is_plan_bug t
+										     action_name action_name]
+									    [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+										  [have action imagine_waiting_to_call @action_arguments]
+										  ]]]]]
+		       [t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
+									     correct_types `[string
+											     nonsemantic_plan_value]
+									     actual_type   [type action_name]
+									     action_name   action_name]]]]]]]
 
 [defplanfunk plan [plan_name]
   [eval `[funk [nonsemantic_plan]
-	       [let* [[plan_name                            ,plan_name]
-		      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-		      [variable_frame                       [new frame]]
-		      [semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
-		 [if semantic_plan_matches
-		     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-		       [mapc [funk [semantic_plan_match]
-				   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]
-				   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-					 [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
-					 [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
-				     [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
-				     [if [null match-semantic_plan_object]
-					 [error bug_name    `nonsemantic_plan-plan-no_such_plan
-						action_name semantic_plan_object-phenomenal_name]
-				       [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
-					      [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
-					      [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
-					 [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
-			     semantic_plan_matches]
-		       result_multiple_possible_values]
-		   [error bug_name    `could_not_find_matching_semantic_plans
-			  is_plan_bug t
-			  funkname    `plan
-			  plan_name   plan_name]]]]]]
+	       [let [[plan_name ,plan_name]]
+		 [cond [[is-type `string                 plan_name] [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+									  [variable_frame                       [new frame]]
+									  [semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+									    [mapc [funk [semantic_plan_match]
+											[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]
+											[let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+											      [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+											      [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+											  [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+											  [if [null match-semantic_plan_object]
+											      [error bug_name    `nonsemantic_plan-plan-no_such_plan
+												     action_name semantic_plan_object-phenomenal_name]
+											    [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
+												   [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
+												   [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+											      [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+										  semantic_plan_matches]
+									    result_multiple_possible_values]
+									[error bug_name    `could_not_find_matching_semantic_plans
+									       is_plan_bug t
+									       funkname    `plan
+									       plan_name   plan_name]]]]
+		       [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]
+								      [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+									    [variable_frame                       [new frame]]
+									    [semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+									[if semantic_plan_matches
+									    [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+									      [mapc [funk [semantic_plan_match]
+											  [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]
+											  [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+												[match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+												[match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+											    [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+											    [if [null match-semantic_plan_object]
+												[error bug_name    `nonsemantic_plan-plan-no_such_plan
+												       action_name semantic_plan_object-phenomenal_name]
+											      [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
+												     [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
+												     [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+												[have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+										    semantic_plan_matches]
+									      result_multiple_possible_values]
+									  [error bug_name    `could_not_find_matching_semantic_plans
+										 is_plan_bug t
+										 funkname    `plan
+										 plan_name   plan_name]]]]]
+		       [t                                           [error bug_name `nonsemantic_plan-plan-invalid_type
+									   correct_types `[string
+											   nonsemantic_plan_value]
+									   actual_type   [type plan_name]
+									   plan_name     plan_name]]]]]]]
 
 [defplanfunk plan-below [plan_name]
   [eval `[funk [nonsemantic_plan]
-	       [let* [[plan_name                            ,plan_name]
-		      [semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-		      [variable_frame                       [new frame]]
-		      [semantic_plan_matches                [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
-		 [if semantic_plan_matches
-		     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-		       [mapc [funk [semantic_plan_match]
-				   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]]
-			     semantic_plan_matches]
-		       [mapc [funk [semantic_plan_match]
-				   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-					 [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
-					 [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
-				     [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
-				     [if [null semantic_plan_object]
-					 [error bug_name    `nonsemantic_plan-plan-no_such_plan
-						action_name semantic_plan_object-phenomenal_name]
-				       [let* [[nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]
-					      [new_nonsemantic_plan     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]
-					      [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
-					 [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
-			     semantic_plan_matches]
-		       result_multiple_possible_values]
-		   [error bug_name    `could_not_find_matching_semantic_plans
-			  is_plan_bug t
-			  funkname    `plan-below
-			  plan_name   plan_name]]]]]]
+	       [let [[plan_name ,plan_name]]
+		 [cond [[is-type `string                 plan_name] [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+									  [variable_frame                       [new frame]]
+									  [semantic_plan_matches                [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
+								      [if semantic_plan_matches
+									  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+									    [mapc [funk [semantic_plan_match]
+											[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]]
+										  semantic_plan_matches]
+									    [mapc [funk [semantic_plan_match]
+											[let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+											      [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+											      [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+											  [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+											  [if [null semantic_plan_object]
+											      [error bug_name    `nonsemantic_plan-plan-no_such_plan
+												     action_name semantic_plan_object-phenomenal_name]
+											    [let* [[nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]
+												   [new_nonsemantic_plan     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]
+												   [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+											      [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+										  semantic_plan_matches]
+									    result_multiple_possible_values]
+									[error bug_name    `could_not_find_matching_semantic_plans
+									       is_plan_bug t
+									       funkname    `plan-below
+									       plan_name   plan_name]]]]
+		       [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]
+								      [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+									    [variable_frame                       [new frame]]
+									    [semantic_plan_matches                [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
+									[if semantic_plan_matches
+									    [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+									      [mapc [funk [semantic_plan_match]
+											  [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]]
+										    semantic_plan_matches]
+									      [mapc [funk [semantic_plan_match]
+											  [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+												[match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+												[match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+											    [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+											    [if [null semantic_plan_object]
+												[error bug_name    `nonsemantic_plan-plan-no_such_plan
+												       action_name semantic_plan_object-phenomenal_name]
+											      [let* [[nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]
+												     [new_nonsemantic_plan     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]
+												     [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+												[have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+										    semantic_plan_matches]
+									      result_multiple_possible_values]
+									  [error bug_name    `could_not_find_matching_semantic_plans
+										 is_plan_bug t
+										 funkname    `plan-below
+										 plan_name   plan_name]]]]]
+		       [t                                           [error bug_name `nonsemantic_plan-plan_below-invalid_argument_type
+									   correct_types `[string
+											   nonsemantic_plan_value]
+									   actual_type   [type plan_name]
+									   plan_name     plan_name]]]]]]]
 
 [defplanfunk plan-call [plan]
   [eval `[funk [nonsemantic_plan]
@@ -946,10 +1042,10 @@
 									    is_plan_bug      t
 									    nonsemantic_plan nonsemantic_plan
 									    plan             plan]]]]
-		       [t                                        [error bug_name     `nonsemantic_plan-plan_call-invalid_argument_type
-									correct_type `[or `semantic_plan_object multiple_possible_values]
-									actual_type  [type plan]
-									plan         plan]]]]]]]
+		       [t                                        [error bug_name      `nonsemantic_plan-plan_call-invalid_argument_type
+									correct_types `[semantic_plan_object multiple_possible_values]
+									actual_type   [type plan]
+									plan          plan]]]]]]]
 
 [defplanfunk not [truth_value]
   [eval `[funk [nonsemantic_plan]
@@ -969,8 +1065,14 @@
 [defplanfunk exists [partial_state]
   [eval `[funk [nonsemantic_plan]
 	       [let [[partial_state ,partial_state]]
-		 [have nonsemantic_plan imagine_check_exists partial_state]
-		 ]]]]
+		 [cond [[is-type `semantic_partial_state partial_state] [have nonsemantic_plan imagine_check_exists partial_state]]
+		       [[is-type `nonsemantic_plan_value partial_state] [let [[partial_state [get partial_state value]]]
+									  [have nonsemantic_plan imagine_check_exists partial_state]]]
+		       [t                                               [error bug_name nonsemantic_plan-exists-invalid_type
+									       correct_types `[semantic_partial_state
+											       nonsemantic_plan_value]
+									       actual_type   [type partial_state]
+									       partial_state partial_state]]]]]]]
 
 [defplanfunk wait-for [partial_state]
   [eval `[funk [nonsemantic_plan]
@@ -981,8 +1083,8 @@
 
 [defplanfunk fail []
   [eval `[funk [nonsemantic_plan]
-	       [error bug_name                     `failure
-		      is_plan_bug                  t]]]]
+	       [error bug_name    `failure
+		      is_plan_bug t]]]]
 
 [defplanfunk property [source_type
 		       source_key_type
@@ -992,15 +1094,14 @@
 		       key
 		       value]
   [eval `[funk [nonsemantic_plan]
-	       [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-		    ,source_type
-		    ,source_key_type
-		    ,source_key
-		    ,source_value
-		    ,key_type
-		    ,key
-		    ,value]
-	       ]]]
+	       [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+						,source_type
+						,source_key_type
+						,source_key
+						,source_value
+						,key_type
+						,key
+						,value]]]]]
 
 [defplanfunk relationship [source_type
 			   source_key_type
@@ -1013,18 +1114,17 @@
 			   target_key
 			   target_value]
   [eval `[funk [nonsemantic_plan]
-	       [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-		    ,source_type
-		    ,source_key_type
-		    ,source_key
-		    ,source_value
-		    ,key_type
-		    ,key
-		    ,target_type
-		    ,target_key_type
-		    ,target_key
-		    ,target_value]
-	       ]]]
+	       [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+						,source_type
+						,source_key_type
+						,source_key
+						,source_value
+						,key_type
+						,key
+						,target_type
+						,target_key_type
+						,target_key
+						,target_value]]]]]
 
 
 

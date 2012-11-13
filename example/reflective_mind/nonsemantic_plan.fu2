@@ -1094,14 +1094,84 @@
 		       key
 		       value]
   [eval `[funk [nonsemantic_plan]
-	       [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-						,source_type
-						,source_key_type
-						,source_key
-						,source_value
-						,key_type
-						,key
-						,value]]]]]
+	       [let [[source_type     [let [[value ,source_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_key_type [let [[value ,source_key_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_key      [let [[value ,source_key]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_value    [let [[value ,source_value]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [key_type        [let [[value ,key_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [key             [let [[value ,key]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [value           [let [[value ,value]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]]
+		 [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+						  source_type
+						  source_key_type
+						  source_key
+						  source_value
+						  key_type
+						  key
+						  value]]]]]]
 
 [defplanfunk relationship [source_type
 			   source_key_type
@@ -1114,17 +1184,117 @@
 			   target_key
 			   target_value]
   [eval `[funk [nonsemantic_plan]
-	       [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-						,source_type
-						,source_key_type
-						,source_key
-						,source_value
-						,key_type
-						,key
-						,target_type
-						,target_key_type
-						,target_key
-						,target_value]]]]]
+	       [let [[source_type     [let [[value ,source_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_key_type [let [[value ,source_key_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_key      [let [[value ,source_key]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [source_value    [let [[value ,source_value]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [key_type        [let [[value ,key_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [key             [let [[value ,key]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [target_type     [let [[value ,target_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [target_key_type [let [[value ,target_key_type]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [target_key      [let [[value ,target_key]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]
+		     [target_value    [let [[value ,target_value]]
+					[cond [[or [is-type `string value]
+						   [is-type `symbol value]]            value]
+					      [[is-type `nonsemantic_plan_value value] [get value value]]
+					      [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
+											      correct_types `[string
+													      symbol
+													      nonsemantic_plan_value]
+											      actual_type   [type value]
+											      value         value]]]]]]
+		 [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+						  source_type
+						  source_key_type
+						  source_key
+						  source_value
+						  key_type
+						  key
+						  target_type
+						  target_key_type
+						  target_key
+						  target_value]]]]]]
 
 
 

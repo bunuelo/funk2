@@ -1104,7 +1104,7 @@
 			    [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
-			    [cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
+			    `[cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]

@@ -46,11 +46,16 @@
 [deframe nonsemantic_plan_value [frame] [value
 					 [partial_state_existence_dependency_set [new set]]
 					 [dependent_value_set                    [new set]]
-					 [value_dependency_set                   [new set]]]
+					 [value_dependency_set                   [new set]]
+					 [cause_execution_node                   nil]]
   [new [initial-value]
        [= value initial-value]
        [if [cause-lookup cause-last_decision_value]
-	   [have this add_value_dependency cause-last_decision_value]]]]
+	   [have this add_value_dependency cause-last_decision_value]]
+       [if [cause-lookup cause-nonsemantic_plan_execution_node]
+	   [= cause_execution_node cause-nonsemantic_plan_execution_node]
+	 [error bug_name `nonsemantic_plan_value-not_created_within_causal_scope_of_execution_node
+		value    value]]]]
 
 [deftypefunk nonsemantic_plan_value execute add_partial_state_existence_dependency [partial_state]
   [have partial_state_existence_dependency_set add partial_state]]
@@ -75,11 +80,12 @@
 
 [deframe nonsemantic_plan_execution_node [frame] [node_type
 						  expression
-						  [subnode_set [new set]]
+						  [subnode_set    [new set]]
 						  supernode
 						  first_subnode
 						  previous_node
-						  next_node]
+						  next_node
+						  [variable_frame [new frame]]]
   [new [initial-node_type initial-expression]
        [= node_type  initial-node_type]
        [= expression initial-expression]
@@ -107,6 +113,15 @@
 	     this     this
 	     node     node]]
   [= first_subnode node]]
+
+[deftypefunk nonsemantic_plan_execution_node execute add_variable_value [variable value]
+  [if [get variable_frame contains variable]
+      [error bug_name  `nonsemantic_plan_execution_node-variable_already_defined
+	     this      this
+	     variable  variable
+	     old_value [have variable_frame lookup variable]
+	     new_value value]
+    [have variable_frame add variable value]]]
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
@@ -595,9 +610,12 @@
 	[= arguments_iter [cdr arguments_iter]]]
       [= arguments_without_rest [reverse arguments_without_rest]]]
     [let [[planfunk_body `[[let ,[append [mapcar [funk [argument]
-						       `[,argument `[with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,argument]] [quote ,,argument]]]]
+						       `[,argument `[with-new-cause [let [[parent_nonsemantic_plan_execution_node cause-nonsemantic_plan_execution_node]
+											  [nonsemantic_plan_execution_node        [new nonsemantic_plan_execution_node [quote ,[quote ,argument]] [quote ,,argument]]]]
 										      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-										      [funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]]]
+										      [let [[result [funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
+											[have parent_nonsemantic_plan_execution_node add_variable_value [quote ,[quote ,argument]] result]
+											result]]]]]
 						 arguments_without_rest]
 					 [if arguments_contain_rest
 					     `[[,rest_argument [let [[rest_index 0]]

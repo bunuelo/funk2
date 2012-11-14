@@ -587,7 +587,7 @@
 						  [get expression good_values]]]
 				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]]]]]]]
 
-[globalize nonsemantic_plan-command_frame [new frame]]
+[globalize nonsemantic_plan-imagine-command_frame [new frame]]
 
 [deframe nonsemantic_plan_command [frame] [name
 					   arguments
@@ -638,14 +638,18 @@
 		 arguments        arguments]]
       result]]]
 
-[defunk defplancommand-raw [name arguments body]
-  [have nonsemantic_plan-command_frame add name [new nonsemantic_plan_command
-						     name
-						     arguments
-						     body]]
+[defunk defplancommand-raw [compile_mode name arguments body]
+  [cond [[eq compile_mode `imagine] [have nonsemantic_plan-imagine-command_frame add name [new nonsemantic_plan_command
+											       name
+											       arguments
+											       body]]]
+	[t                          [error bug_name `defplancommand-imagine_compile_mode
+					   compile_mode compile_mode
+					   name         name
+					   arguments    arguments]]]
   nil]
 
-[defmetro defplancommand [name arguments :rest body]
+[defmetro defplancommand [compile_mode name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplancommand ,name ,arguments]]
   [defplancommand-raw name arguments `[[let [[body_funk [prog @body]]]
 					 [eval `[funk [nonsemantic_plan]
@@ -655,7 +659,7 @@
 									  [have nonsemantic_plan_execution_node add_return_value result]
 									  result]]]]]]]]]
 
-[defmetro defplanfunk [name arguments :rest body]
+[defmetro defplanfunk [compile_mode name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]
   [let [[arguments_without_rest nil]
 	[arguments_contain_rest nil]
@@ -696,22 +700,22 @@
 							      [let [[result [funkall ,body_funk nonsemantic_plan]]]
 								[have nonsemantic_plan_execution_node add_return_value result]
 								result]]]]]]]]]]
-      [defplancommand-raw name arguments planfunk_body]]]]
+      [defplancommand-raw compile_mode name arguments planfunk_body]]]]
 
-[defplancommand eval [expression]
+[defplancommand imagine eval [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[eval ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[expression [quote ,expression]]]
 		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
 		 [new nonsemantic_plan_value nil]]]]]
 
-[defplancommand quote [expression]
+[defplancommand imagine quote [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[quote ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [new nonsemantic_plan_value [quote ,quote-expression]]
 	       ]]]
 
-[defplancommand prog [:rest expressions]
+[defplancommand imagine prog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[prog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [terminal_format standard-terminal '\nplan evaluating serial process.']
@@ -728,7 +732,7 @@
 						 [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
 			  expressions]]]]]
 
-[defplancommand parog [:rest expressions]
+[defplancommand imagine parog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [terminal_format standard-terminal '\nplan evaluating parallel process.']
@@ -747,7 +751,7 @@
 			       expressions]]
 	       [new nonsemantic_plan_value nil]]]]
 
-[defplancommand if [condition true_expression :rest false_expressions]
+[defplancommand imagine if [condition true_expression :rest false_expressions]
   [if [> [length false_expressions] 1]
       [error bug_name          `nonsemantic_plan-if-more_than_one_false_expression_given
 	     condition         condition
@@ -821,7 +825,7 @@
 										   condition       condition
 										   quote-condition [quote ,condition]]]]]]]]]]]
 
-[defplancommand ? [variable_name]
+[defplancommand imagine ? [variable_name]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
@@ -829,7 +833,7 @@
 		 [new nonsemantic_plan_value [have semantic_thought lookup_a_variable_value [quote ,variable_name]]]
 		 ]]]]
 
-[defplancommand defplan [name_expression :rest arguments]
+[defplancommand imagine defplan [name_expression :rest arguments]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
   [let [[name_patterns        nil]
 	[variable_definitions nil]
@@ -855,7 +859,7 @@
 		   [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
 		   [new nonsemantic_plan_value nil]]]]]]
 
-[defplanfunk wait-for-time [time_to_wait]
+[defplanfunk imagine wait-for-time [time_to_wait]
   [eval `[funk [nonsemantic_plan]
 	       [let [[time_to_wait ,time_to_wait]]
 		 [cond [[is-type `integer                time_to_wait] [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
@@ -869,21 +873,21 @@
 									      actual_type   [type time_to_wait]
 									      time_to_wait  time_to_wait]]]]]]]
 
-[defplanfunk list [:rest expressions]
+[defplanfunk imagine list [:rest expressions]
   [eval `[funk [nonsemantic_plan]
 	       [new nonsemantic_plan_value [conslist @expressions]]]]]
 
-[defplanfunk backquote-list [:rest expressions]
+[defplanfunk imagine backquote-list [:rest expressions]
   [eval `[funk [nonsemantic_plan]
 	       [new nonsemantic_plan_value [conslist @expressions]]]]]
 
-[defplanfunk print [expression]
+[defplanfunk imagine print [expression]
   [eval `[funk [nonsemantic_plan]
 	       [let [[eval-expression ,expression]]
 		 [terminal_format standard-terminal '\nimagined plan printing expression: ' eval-expression]
 		 eval-expression]]]]
 
-[defplanfunk call-below [action_name :rest action_arguments]
+[defplanfunk imagine call-below [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
 	       [let [[action_name ,action_name]]
 		 [cond [[is-type `string                 action_name] [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
@@ -909,7 +913,7 @@
 									     actual_type   [type action_name]
 									     action_name   action_name]]]]]]]
 
-[defplanfunk call [action_name :rest action_arguments]
+[defplanfunk imagine call [action_name :rest action_arguments]
   [eval `[funk [nonsemantic_plan]
 	       [let [[action_name ,action_name]]
 		 [cond [[is-type `string                 action_name] [let [[action [have nonsemantic_plan lookup_action action_name]]]
@@ -935,7 +939,7 @@
 									     actual_type   [type action_name]
 									     action_name   action_name]]]]]]]
 
-[defplanfunk plan [plan_name]
+[defplanfunk imagine plan [plan_name]
   [eval `[funk [nonsemantic_plan]
 	       [let [[plan_name ,plan_name]]
 		 [cond [[is-type `string                 plan_name] [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -993,7 +997,7 @@
 									   actual_type   [type plan_name]
 									   plan_name     plan_name]]]]]]]
 
-[defplanfunk plan-below [plan_name]
+[defplanfunk imagine plan-below [plan_name]
   [eval `[funk [nonsemantic_plan]
 	       [let [[plan_name ,plan_name]]
 		 [cond [[is-type `string                 plan_name] [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
@@ -1055,7 +1059,7 @@
 									   actual_type   [type plan_name]
 									   plan_name     plan_name]]]]]]]
 
-[defplanfunk plan-call [plan]
+[defplanfunk imagine plan-call [plan]
   [eval `[funk [nonsemantic_plan]
 	       [let [[plan ,plan]]
 		 [cond [[is-type `nonsemantic_plan_value   plan] [let* [[semantic_plan_object [get plan value]]
@@ -1098,7 +1102,7 @@
 									actual_type   [type plan]
 									plan          plan]]]]]]]
 
-[defplanfunk not [truth_value]
+[defplanfunk imagine not [truth_value]
   [eval `[funk [nonsemantic_plan]
 	       [let [[truth_value ,truth_value]]
 		 [cond [[is-type `nonsemantic_plan_value   truth_value] [get truth_value negative]]
@@ -1113,7 +1117,7 @@
 											       multiple_possible_values]
 									       truth_value   truth_value]]]]]]]
 
-[defplanfunk exists [partial_state]
+[defplanfunk imagine exists [partial_state]
   [eval `[funk [nonsemantic_plan]
 	       [let [[partial_state ,partial_state]]
 		 [cond [[is-type `semantic_partial_state partial_state] [have nonsemantic_plan imagine_check_exists partial_state]]
@@ -1125,25 +1129,25 @@
 									       actual_type   [type partial_state]
 									       partial_state partial_state]]]]]]]
 
-[defplanfunk wait-for [partial_state]
+[defplanfunk imagine wait-for [partial_state]
   [eval `[funk [nonsemantic_plan]
 	       [let [[partial_state ,partial_state]]
 		 [terminal_format standard-terminal '\nplan imagining waiting for: "' [get partial_state as-declarative_natural_language_string] '."  (not yet implemented)']
 		 `[have nonsemantic_plan wait_for partial_state]
 		 [new nonsemantic_plan_value nil]]]]]
 
-[defplanfunk fail []
+[defplanfunk imagine fail []
   [eval `[funk [nonsemantic_plan]
 	       [error bug_name    `failure
 		      is_plan_bug t]]]]
 
-[defplanfunk property [source_type
-		       source_key_type
-		       source_key
-		       source_value
-		       key_type
-		       key
-		       value]
+[defplanfunk imagine property [source_type
+			       source_key_type
+			       source_key
+			       source_value
+			       key_type
+			       key
+			       value]
   [eval `[funk [nonsemantic_plan]
 	       [let [[source_type     [let [[value ,source_type]]
 					[cond [[or [is-type `string value]
@@ -1224,16 +1228,16 @@
 						  key
 						  value]]]]]]
 
-[defplanfunk relationship [source_type
-			   source_key_type
-			   source_key
-			   source_value
-			   key_type
-			   key
-			   target_type
-			   target_key_type
-			   target_key
-			   target_value]
+[defplanfunk imagine relationship [source_type
+				   source_key_type
+				   source_key
+				   source_value
+				   key_type
+				   key
+				   target_type
+				   target_key_type
+				   target_key
+				   target_value]
   [eval `[funk [nonsemantic_plan]
 	       [let [[source_type     [let [[value ,source_type]]
 					[cond [[or [is-type `string value]
@@ -1352,7 +1356,7 @@
 [deftypefunk nonsemantic_plan get expression-compile-cons [expression compile_option_frame]
   [let [[command   [car expression]]
 	[arguments [cdr expression]]]
-    [let [[nonsemantic_plan_command [have nonsemantic_plan-command_frame lookup command]]]
+    [let [[nonsemantic_plan_command [have nonsemantic_plan-imagine-command_frame lookup command]]]
       [if [not [null nonsemantic_plan_command]]
 	  [have nonsemantic_plan_command compile this compile_option_frame arguments]
 	[error bug_name   `nonsemantic_plan_compile_error-invalid_command

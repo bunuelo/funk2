@@ -83,7 +83,7 @@
 	      [have node_ptypehash add this this-graph_node]
 	      
 	      [let* [[cause_execution_node-graph_node [get cause_execution_node as-graph_node graph node_ptypehash]]
-		     [cause_execution_node-graph_edge [new graph_edge `cause this-graph_node cause_execution_node-graph_node]]]
+		     [cause_execution_node-graph_edge [new graph_edge `cause_node this-graph_node cause_execution_node-graph_node]]]
 		[have graph add_edge cause_execution_node-graph_edge]]
 	      
 	      [mapc [funk [value_dependency]
@@ -99,12 +99,13 @@
 
 [deframe nonsemantic_plan_execution_node [frame] [node_type
 						  expression
-						  [subnode_set    [new set]]
+						  [subnode_set      [new set]]
 						  supernode
 						  first_subnode
 						  previous_node
 						  next_node
-						  [variable_frame [new frame]]]
+						  [variable_frame   [new frame]]
+						  [return_value_set [new set]]]
   [new [initial-node_type initial-expression]
        [= node_type  initial-node_type]
        [= expression initial-expression]
@@ -142,6 +143,9 @@
 	     new_value value]
     [have variable_frame add variable value]]]
 
+[deftypefunk nonsemantic_plan_execution_node execute add_return_value [value]
+  [have return_value_set add value]]
+
 [deftypefunk nonsemantic_plan_execution_node get as-graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
     [if [not this-graph_node]
@@ -163,29 +167,37 @@
 		    [have graph add_edge next_node-graph_edge]]]
 	      [mapc [funk [variable]
 			  [let [[value [have variable_frame lookup variable]]]
-			    [cond [[is-type `nonsemantic_plan_value   value] [prog [let* [[variable_value-graph_node [get value as-graph_node graph node_ptypehash]]
-											  [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
-										     [have graph add_edge variable_value-graph_edge]]
-										   [let [[cause_execution_node [get value cause_execution_node]]]
-										     [let* [[cause_execution_node-graph_node [get cause_execution_node as-graph_node graph node_ptypehash]]
-											    [cause_execution_node-graph_edge [new graph_edge `cause_node this-graph_node cause_execution_node-graph_node]]]
-										       [have graph add_edge cause_execution_node-graph_edge]]]]]
+			    [cond [[is-type `nonsemantic_plan_value   value] [let* [[variable_value-graph_node [get value as-graph_node graph node_ptypehash]]
+										    [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
+									       [have graph add_edge variable_value-graph_edge]]]
 				  [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
 									       [mapc [funk [one_value]
 											   [let* [[variable_value-graph_node [get one_value as-graph_node graph node_ptypehash]]
 												  [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
-											     [have graph add_edge variable_value-graph_edge]]
-											   [let [[cause_execution_node [get one_value cause_execution_node]]]
-											     [let* [[cause_execution_node-graph_node [get cause_execution_node as-graph_node graph node_ptypehash]]
-												    [cause_execution_node-graph_edge [new graph_edge `cause_node this-graph_node cause_execution_node-graph_node]]]
-											       [have graph add_edge cause_execution_node-graph_edge]]]]
+											     [have graph add_edge variable_value-graph_edge]]]
 										     [get multiple_possible_values good_values]]]]
-				  [t                                         [error bug_name      `nonsemantic_plan_execution_node-invalid_value_type
+				  [t                                         [error bug_name      `nonsemantic_plan_execution_node-invalid_variable_value_type
 										    correct_types `[nonsemantic_plan_value
 												    multiple_possible_values]
 										    actual_type   [type value]
 										    value         value]]]]]
-		    [get variable_frame keys]]]]
+		    [get variable_frame keys]]
+	      [mapc [funk [return_value]
+			  [cond [[is-type `nonsemantic_plan_value   return_value] [let* [[return_value-graph_node [get value as-graph_node graph node_ptypehash]]
+											 [return_value-graph_edge [new graph_edge `return_value this-graph_node return_value-graph_node]]]
+										    [have graph add_edge return_value-graph_edge]]]
+				[[is-type `multiple_possible_values return_value] [let [[multiple_possible_values return_value]]
+										    [mapc [funk [one_value]
+												[let* [[return_value-graph_node [get one_value as-graph_node graph node_ptypehash]]
+												       [return_value-graph_edge [new graph_edge `return_value this-graph_node return_value-graph_node]]]
+												  [have graph add_edge return_value-graph_edge]]]
+											  [get multiple_possible_values good_values]]]]
+				[t                                                [error bug_name      `nonsemantic_plan_execution_node-invalid_return_value_type
+											 correct_types `[nonsemantic_plan_value
+													 multiple_possible_values]
+											 actual_type   [type return_value]
+											 return_value  return_value]]]]
+		    [get return_value_set elements]]]]
     this-graph_node]]
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph []
@@ -193,6 +205,7 @@
 	[node_ptypehash [new ptypehash]]]
     [get this as-graph_node graph node_ptypehash]
     graph]]
+
 
 'value_dependency'
 
@@ -538,20 +551,26 @@
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [new nonsemantic_plan_value ,expression]]]]]]
+				 [let [[result [new nonsemantic_plan_value ,expression]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `symbol [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [new nonsemantic_plan_value [quote ,expression]]]]]]]
+				 [let [[result [new nonsemantic_plan_value [quote ,expression]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `string [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 				 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-				   [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]]]
+				   [let [[result [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]
+				     [have nonsemantic_plan_execution_node add_return_value result]
+				     result]]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-multiple_possible_values [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
@@ -566,7 +585,7 @@
 								     [bug bug]
 								   [have result_multiple_possible_values add_value_with_dependency result [new value_dependency [quote ,value] [quote ,expression]]]]]]]]
 						  [get expression good_values]]]
-				   result_multiple_possible_values results]]]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]]]]]]]
 
 [globalize nonsemantic_plan-command_frame [new frame]]
 
@@ -632,7 +651,9 @@
 					 [eval `[funk [nonsemantic_plan]
 						      [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,name]] [quote ,[quote ,arguments]]]]]
 									[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-									[funkall ,body_funk nonsemantic_plan]]]]]]]]]
+									[let [[result [funkall ,body_funk nonsemantic_plan]]]
+									  [have nonsemantic_plan_execution_node add_return_value result]
+									  result]]]]]]]]]
 
 [defmetro defplanfunk [name arguments :rest body]
   [terminal_format standard-terminal '\n' `[defplanfunk ,name ,arguments]]
@@ -672,7 +693,9 @@
 			       [eval `[funk [nonsemantic_plan]
 					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,name]] [quote ,[quote ,arguments]]]]]
 							      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-							      [funkall ,body_funk nonsemantic_plan]]]]]]]]]]
+							      [let [[result [funkall ,body_funk nonsemantic_plan]]]
+								[have nonsemantic_plan_execution_node add_return_value result]
+								result]]]]]]]]]]
       [defplancommand-raw name arguments planfunk_body]]]]
 
 [defplancommand eval [expression]

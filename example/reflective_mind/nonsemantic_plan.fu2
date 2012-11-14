@@ -1337,7 +1337,10 @@
 				    semantic_thought semantic_thought
 				    subbug           bug]]]]
 		     [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
-			   result]]]]]]]
+			   [if [not [or [is-type `nonsemantic_plan_value   result]
+					[is-type `multiple_possible_values result]]]
+			       [new nonsemantic_plan_value result]
+			     result]]]]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [terminal_format standard-terminal '\nnonsemantic_plan execution not yet supported.']

@@ -183,7 +183,7 @@
 										    value         value]]]]]
 		    [get variable_frame keys]]
 	      [mapc [funk [return_value]
-			  [cond [[is-type `nonsemantic_plan_value   return_value] [let* [[return_value-graph_node [get value as-graph_node graph node_ptypehash]]
+			  [cond [[is-type `nonsemantic_plan_value   return_value] [let* [[return_value-graph_node [get return_value as-graph_node graph node_ptypehash]]
 											 [return_value-graph_edge [new graph_edge `return_value this-graph_node return_value-graph_node]]]
 										    [have graph add_edge return_value-graph_edge]]]
 				[[is-type `multiple_possible_values return_value] [let [[multiple_possible_values return_value]]

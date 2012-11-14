@@ -1339,7 +1339,12 @@
 		     [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
 			   [if [not [or [is-type `nonsemantic_plan_value   result]
 					[is-type `multiple_possible_values result]]]
-			       [new nonsemantic_plan_value result]
+			       [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
+				      correct_types `[nonsemantic_plan_value
+						      multiple_possible_values]
+				      actual_type   [type result]
+				      result        result
+				      expression    expression]
 			     result]]]]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []

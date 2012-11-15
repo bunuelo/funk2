@@ -677,10 +677,11 @@
 	 [argument_index                  [mapcar [funk [argument]
 							0]
 						  arguments]]]
-    [terminal_format standard-terminal '\napply: argument_max_index=' argument_max_index]
     [let [[done nil]]
       [while [not done]
-	[terminal_format standard-terminal '\napply: argument_index=' argument_index]
+	[terminal_format standard-terminal
+			 '\napply: argument_max_index = ' argument_max_index
+			 '\n       argument_index     = ' argument_index]
 	[let [[single_arguments [let [[index 0]]
 				  [mapcar [funk [argument_list]
 						[let [[result [get argument_list elt [get argument_index elt index]]]]

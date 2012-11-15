@@ -659,7 +659,7 @@
 										       [have nonsemantic_plan_execution_node add_return_value result]
 										       result]]]]]]]]]
 
-[defunk nonsemantic_plan-apply_with_multiple_possible_values [nonsemantic_plan funk :rest arguments]
+[defunk nonsemantic_plan-apply_with_multiple_possible_values [nonsemantic_plan funk arguments]
   [let* [[result_multiple_possible_values [new multiple_possible_values nil]]
 	 [argument_lists                  [mapcar [funk [argument]
 							[cond [[is-type `multiple_possible_values argument] [get argument good_values]]
@@ -737,9 +737,9 @@
 												       [let [[result [funkall ,[get nonsemantic_plan expression-compile argument_code compile_option_frame] nonsemantic_plan]]]
 													 [have parent_nonsemantic_plan_execution_node add_variable_value [quote ,argument_name] result]
 													 result]]]]]
-									    [cons @[mapcar [funk [argument]
-												 `[cons [quote ,argument] ,argument]]
-											   arguments_without_rest]]]
+									    [conslist @[mapcar [funk [argument]
+												     `[cons [quote ,argument] ,argument]]
+											       arguments_without_rest]]]
 								    ,[if arguments_contain_rest
 									 `[let [[index 0]]
 									    [mapcar [funk [argument_code]

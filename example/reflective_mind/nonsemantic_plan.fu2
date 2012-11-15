@@ -766,11 +766,7 @@
 								       nil]]]]
 			       [eval `[funk [nonsemantic_plan]
 					    [let [[arguments-eval [conslist @argument_expanded_codes]]]
-					      [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,name]] [quote ,[quote ,arguments]]]]]
-								[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-								[let [[result [nonsemantic_plan-apply_with_multiple_possible_values nonsemantic_plan [quote ,[quote ,name]] [quote ,[quote ,arguments]] ,,nonsemantic_plan_value_funk arguments-eval]]]
-								  [have nonsemantic_plan_execution_node add_return_value result]
-								  result]]]]]]]]]]
+					      [nonsemantic_plan-apply_with_multiple_possible_values nonsemantic_plan [quote ,[quote ,name]] [quote ,[quote ,arguments]] ,,nonsemantic_plan_value_funk arguments-eval]]]]]]]]
 	[defplancommand-raw compile_mode name arguments planfunk_body]]]]]
 
 [defplancommand imagine eval [expression]

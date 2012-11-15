@@ -17,6 +17,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[deftypefunk cons get     elt         [index]           [elt this index]]
+[deftypefunk cons set     elt         [index value]     [elt-set this index value]]
 [deftypefunk cons get     as-array    []                [conslist-as-array this]]
 [deftypefunk cons get     as-conslist []                this]
 [deftypefunk cons execute as-array    []                [conslist-as-array this]]

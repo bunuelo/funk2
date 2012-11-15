@@ -743,7 +743,8 @@
 								    ,[if arguments_contain_rest
 									 `[let [[index 0]]
 									    [mapcar [funk [argument_code]
-											  [let [[argument_name [get [format nil 'rest-' index] as-symbol]]]
+											  [let [[argument_name [get [format nil [quote ,rest_argument] '-' index] as-symbol]]]
+											    [++ index]
 											    `[with-new-cause [let [[parent_nonsemantic_plan_execution_node cause-nonsemantic_plan_execution_node]
 														   [nonsemantic_plan_execution_node        [new nonsemantic_plan_execution_node [quote ,argument_name] [quote ,argument_code]]]]
 													       [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]

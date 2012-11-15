@@ -738,7 +738,7 @@
 													 [have parent_nonsemantic_plan_execution_node add_variable_value [quote ,argument_name] result]
 													 result]]]]]
 									    [conslist @[mapcar [funk [argument]
-												     `[cons [quote ,argument] argument]]
+												     `[cons [quote ,argument] ,argument]]
 											       arguments_without_rest]]]
 								    ,[if arguments_contain_rest
 									 `[let [[index 0]]

@@ -728,10 +728,10 @@
       [= arguments_without_rest [reverse arguments_without_rest]]]
     [let [[planfunk_body `[[let [[arguments-eval [append [conslist @[mapcar [funk [argument]
 										  `[with-new-cause [let [[parent_nonsemantic_plan_execution_node cause-nonsemantic_plan_execution_node]
-													 [nonsemantic_plan_execution_node        [new nonsemantic_plan_execution_node [quote ,[quote ,argument]] [quote ,,argument]]]]
+													 [nonsemantic_plan_execution_node        [new nonsemantic_plan_execution_node [quote ,argument] ,argument]]]
 												     [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 												     [let [[result [funkall ,[get nonsemantic_plan expression-compile ,argument compile_option_frame] nonsemantic_plan]]]
-												       [have parent_nonsemantic_plan_execution_node add_variable_value [quote ,[quote ,argument]] result]
+												       [have parent_nonsemantic_plan_execution_node add_variable_value [quote ,argument] result]
 												       result]]]]
 									    arguments_without_rest]]
 							 [if arguments_contain_rest

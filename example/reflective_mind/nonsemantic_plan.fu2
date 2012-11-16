@@ -1383,7 +1383,7 @@
 	[if next_node
 	    [prog [= new_cons [cons next_node nil]]
 		  [set subnode_iter cdr new_cons]]]
-	[= subnode_iter next_node]]]
+	[= subnode_iter new_cons]]]
     `[prog @[parcar [funk [subnode]
 			  [get this execution_node_as_code subnode]]
 		    subnodes]]]]

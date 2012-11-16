@@ -688,7 +688,7 @@
 						  [++ index]
 						  result]]
 					  argument_lists]]]]
-	  [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node funk_name argument_expressions]]]
+	  [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `argument_decision nil]]]
 			    [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 			    [let [[result [apply funk [cons nonsemantic_plan single_arguments]]]]
 			      [if [is-type `bug result]

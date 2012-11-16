@@ -789,7 +789,7 @@
 	       [terminal_format standard-terminal '\nplan evaluating serial process.']
 	       [let [[current_nonsemantic_plan_execution_node  nil]
 		     [previous_nonsemantic_plan_execution_node nil]]
-		 @[mapcar [funk [expression]
+		 @[parcar [funk [expression]
 				`[with-new-cause [= previous_nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 						 [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `prog-sequence [quote ,expression]]]
 						 [if previous_nonsemantic_plan_execution_node
@@ -804,7 +804,7 @@
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [terminal_format standard-terminal '\nplan evaluating parallel process.']
-	       [parog @[mapcar [funk [expression]
+	       [parog @[parcar [funk [expression]
 				     `[let [[result [with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
 								    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 								    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]

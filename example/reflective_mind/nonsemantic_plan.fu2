@@ -116,6 +116,9 @@
        [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 	   [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]]]
 
+[deftypefunk nonsemantic_plan_execution_node get subnodes []
+  [get subnode_set elements]]
+
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node
       [error bug_name `nonsemantic_plan_execution_node-previous_node_already_defined_for_node
@@ -1378,14 +1381,27 @@
 	[if next_node
 	    [set subnode_iter cdr [cons next_node nil]]]
 	[= subnode_iter next_node]]]
-    `[prog @[mapcar [funk [subnode]
+    `[prog @[parcar [funk [subnode]
 			  [get this execution_node_as_code subnode]]
 		    subnodes]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-parog [nonsemantic_plan_execution_node]
+  [let* [[subnodes     [get nonsemantic_plan_execution_node subnodes]]
+	 [subnode_iter subnodes]]
+    [while subnode_iter
+      [let [[next_node [get subnode_iter next_node]]]
+	[if next_node
+	    [set subnode_iter cdr [cons next_node nil]]]
+	[= subnode_iter next_node]]]
+    `[parog @[parcar [funk [subnode]
+			   [get this execution_node_as_code subnode]]
+		     subnodes]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
-    [cond [[eq node_type `prog] [get this execution_node_as_code-prog nonsemantic_plan_execution_node]]
-	  [t                    `unknown_execution_node_type]]]]
+    [cond [[eq node_type `prog]  [get this execution_node_as_code-prog  nonsemantic_plan_execution_node]]
+	  [[eq node_type `parog] [get this execution_node_as_code-parog nonsemantic_plan_execution_node]]
+	  [t                     `unknown_execution_node_type]]]]
 
 
 

@@ -1375,13 +1375,15 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code-prog [nonsemantic_plan_execution_node]
   [let* [[first_subnode [get nonsemantic_plan_execution_node first_subnode]]
 	 [subnodes      [cons first_subnode nil]]
-	 [subnode_iter  first_subnode]]
+	 [subnode_iter  subnodes]]
     [while subnode_iter
-      [let [[subnode [car subnode_iter]]]
-	[let [[next_node [get subnode next_node]]]
-	  [if next_node
-	      [set subnode_iter cdr [cons next_node nil]]]
-	  [= subnode_iter next_node]]]]
+      [let* [[subnode   [car subnode_iter]]
+	     [next_node [get subnode next_node]]
+	     [new_cons  nil]]
+	[if next_node
+	    [prog [= new_cons [cons next_node nil]]
+		  [set subnode_iter cdr new_cons]]]
+	[= subnode_iter next_node]]]
     `[prog @[parcar [funk [subnode]
 			  [get this execution_node_as_code subnode]]
 		    subnodes]]]]
@@ -1394,10 +1396,12 @@
 		     subnodes]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
-  [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
-    [cond [[eq node_type `prog]  [get this execution_node_as_code-prog  nonsemantic_plan_execution_node]]
-	  [[eq node_type `parog] [get this execution_node_as_code-parog nonsemantic_plan_execution_node]]
-	  [t                     `unknown_execution_node_type]]]]
+  [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
+		  [cond [[eq node_type `prog]  [get this execution_node_as_code-prog  nonsemantic_plan_execution_node]]
+			[[eq node_type `parog] [get this execution_node_as_code-parog nonsemantic_plan_execution_node]]
+			[t                     `unknown_execution_node_type]]]]]
+    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node: ' result]
+    result]]
 
 
 

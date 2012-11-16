@@ -116,6 +116,9 @@
        [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 	   [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]]]
 
+[deftypefunk nonsemantic_plan_execution_node get subnodes []
+  [get subnode_set elements]]
+
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node
       [error bug_name `nonsemantic_plan_execution_node-previous_node_already_defined_for_node
@@ -789,7 +792,7 @@
 	       [terminal_format standard-terminal '\nplan evaluating serial process.']
 	       [let [[current_nonsemantic_plan_execution_node  nil]
 		     [previous_nonsemantic_plan_execution_node nil]]
-		 @[mapcar [funk [expression]
+		 @[parcar [funk [expression]
 				`[with-new-cause [= previous_nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
 						 [= current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `prog-sequence [quote ,expression]]]
 						 [if previous_nonsemantic_plan_execution_node
@@ -804,7 +807,7 @@
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [terminal_format standard-terminal '\nplan evaluating parallel process.']
-	       [parog @[mapcar [funk [expression]
+	       [parog @[parcar [funk [expression]
 				     `[let [[result [with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
 								    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 								    [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
@@ -1370,7 +1373,7 @@
 
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-prog [nonsemantic_plan_execution_node]
-  [let* [[first_subnode [get nonsemantic_plan_execution_node]]
+  [let* [[first_subnode [get nonsemantic_plan_execution_node first_subnode]]
 	 [subnodes      [cons first_subnode nil]]
 	 [subnode_iter  first_subnode]]
     [while subnode_iter
@@ -1378,14 +1381,27 @@
 	[if next_node
 	    [set subnode_iter cdr [cons next_node nil]]]
 	[= subnode_iter next_node]]]
-    `[prog @[mapcar [funk [subnode]
+    `[prog @[parcar [funk [subnode]
 			  [get this execution_node_as_code subnode]]
 		    subnodes]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-parog [nonsemantic_plan_execution_node]
+  [let* [[subnodes     [get nonsemantic_plan_execution_node subnodes]]
+	 [subnode_iter subnodes]]
+    [while subnode_iter
+      [let [[next_node [get subnode_iter next_node]]]
+	[if next_node
+	    [set subnode_iter cdr [cons next_node nil]]]
+	[= subnode_iter next_node]]]
+    `[parog @[parcar [funk [subnode]
+			   [get this execution_node_as_code subnode]]
+		     subnodes]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
-    [cond [[eq node_type `prog] [get this execution_node_as_code-prog nonsemantic_plan_execution_node]]
-	  [t                    `unknown_execution_node_type]]]]
+    [cond [[eq node_type `prog]  [get this execution_node_as_code-prog  nonsemantic_plan_execution_node]]
+	  [[eq node_type `parog] [get this execution_node_as_code-parog nonsemantic_plan_execution_node]]
+	  [t                     `unknown_execution_node_type]]]]
 
 
 

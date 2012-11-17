@@ -119,6 +119,9 @@
 [deftypefunk nonsemantic_plan_execution_node get subnodes []
   [get subnode_set elements]]
 
+[deftypefunk nonsemantic_plan_execution_node get return_values []
+  [get return_value_set elements]]
+
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node
       [error bug_name `nonsemantic_plan_execution_node-previous_node_already_defined_for_node
@@ -1420,7 +1423,8 @@
 	[argument_decision_nodes nil]]
     [mapc [funk [subnode]
 		[let [[subnode-node_type [get subnode node_type]]]
-		  [if [eq subnode-node_type `argument_decision]
+		  [if [and [eq subnode-node_type `argument_decision]
+			   [not [null [get subnode return_values]]]]
 		      [= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
 	  subnodes]
     [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: choosing first of ' [length argument_decision_nodes] ' argument decision nodes.']

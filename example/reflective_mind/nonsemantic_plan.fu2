@@ -769,7 +769,7 @@
 										    ,rest_argument]]
 								       nil]]]]
 			       [eval `[funk [nonsemantic_plan]
-					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] nil]]]
+					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,name]] [quote ,[quote ,arguments]]]]]
 							      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 							      [let [[arguments-eval [conslist @argument_expanded_codes]]]
 								[nonsemantic_plan-apply_with_multiple_possible_values nonsemantic_plan [quote ,[quote ,name]] [quote ,[quote ,arguments]] ,,nonsemantic_plan_value_funk arguments-eval]]]]]]]]]]

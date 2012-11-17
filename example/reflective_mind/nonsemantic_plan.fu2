@@ -1408,18 +1408,32 @@
 								  [good_values [get multiple_possible_values good_values]]]
 							     [terminal_format standard-terminal 'nonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length good_values] ' good values for action_name.']
 							     [let [[one_value [first good_values]]]
-							       `[call-below ,one_value]]]]
+							       `[call-below ,[get one_value value]]]]]
 	  [t                                               [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-call_below-invalid_type
 								  correct_type                    `multiple_possible_values
 								  actual_type                     [type action_name]
 								  action_name                     action_name
 								  nonsemantic_plan_execution_node nonsemantic_plan_execution_node]]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-plan_call [nonsemantic_plan_execution_node]
+  [let [[subnodes                [get nonsemantic_plan_execution_node subnodes]]
+	[argument_decision_nodes nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `argument_decision]
+		      [= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
+	  subnodes]
+    [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: choosing first of ' [length argument_decision_nodes] ' argument decision nodes.']
+    [let* [[argument_decision_node          [first argument_decision_nodes]]
+	   [argument_decision_node-subnodes [get argument_decision_node subnodes]]]
+      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
 		  [cond [[eq node_type `prog]       [get this execution_node_as_code-prog       nonsemantic_plan_execution_node]]
 			[[eq node_type `parog]      [get this execution_node_as_code-parog      nonsemantic_plan_execution_node]]
 			[[eq node_type `call-below] [get this execution_node_as_code-call_below nonsemantic_plan_execution_node]]
+			[[eq node_type `plan-call]  [get this execution_node_as_code-plan_call  nonsemantic_plan_execution_node]]
 			[t                          [format nil 'unknown_type: ' node_type]]]]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node: ' result]
     result]]

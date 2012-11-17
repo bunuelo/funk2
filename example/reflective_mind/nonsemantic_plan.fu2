@@ -147,6 +147,9 @@
 	     new_value value]
     [have variable_frame add variable value]]]
 
+[deftypefunk nonsemantic_plan_execution_node get variable_value [variable]
+  [have variable_frame lookup variable]]
+
 [deftypefunk nonsemantic_plan_execution_node execute add_return_value [value]
   [have return_value_set add value]]
 
@@ -171,18 +174,14 @@
 		    [have graph add_edge next_node-graph_edge]]]
 	      [mapc [funk [variable]
 			  [let [[value [have variable_frame lookup variable]]]
-			    [cond [[is-type `nonsemantic_plan_value   value] [let* [[variable_value-graph_node [get value as-graph_node graph node_ptypehash]]
-										    [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
-									       [have graph add_edge variable_value-graph_edge]]]
-				  [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
+			    [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
 									       [mapc [funk [one_value]
 											   [let* [[variable_value-graph_node [get one_value as-graph_node graph node_ptypehash]]
 												  [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
 											     [have graph add_edge variable_value-graph_edge]]]
 										     [get multiple_possible_values good_values]]]]
 				  [t                                         [error bug_name      `nonsemantic_plan_execution_node-invalid_variable_value_type
-										    correct_types `[nonsemantic_plan_value
-												    multiple_possible_values]
+										    correct_types `[multiple_possible_values]
 										    actual_type   [type value]
 										    value         value]]]]]
 		    [get variable_frame keys]]
@@ -1375,9 +1374,9 @@
 
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-prog [nonsemantic_plan_execution_node]
-  [let* [[first_subnode               [get nonsemantic_plan_execution_node first_subnode]]
-	 [prog_sequence_subnodes      [cons first_subnode nil]]
-	 [prog_sequence_subnode_iter  prog_sequence_subnodes]]
+  [let* [[first_subnode              [get nonsemantic_plan_execution_node first_subnode]]
+	 [prog_sequence_subnodes     [cons first_subnode nil]]
+	 [prog_sequence_subnode_iter prog_sequence_subnodes]]
     [while prog_sequence_subnode_iter
       [let* [[prog_sequence_subnode   [car prog_sequence_subnode_iter]]
 	     [next_node [get prog_sequence_subnode next_node]]
@@ -1403,11 +1402,25 @@
 			   [get this execution_node_as_code subnode]]
 		     subnodes]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-call_below [nonsemantic_plan_execution_node]
+  [let [[action_name [get nonsemantic_plan_execution_node variable_value `action_name]]]
+    [cond [[is-type `multiple_possible_values action_name] [let* [[multiple_possible_values action_name]
+								  [good_values [get multiple_possible_values good_values]]]
+							     [terminal_format standard-terminal 'nonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length good_values] ' good values for action_name.']
+							     [let [[one_value [first good_values]]]
+							       `[call-below ,one_value]]]]
+	  [t                                               [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-call_below-invalid_type
+								  correct_type                    `multiple_possible_values
+								  actual_type                     [type action_name]
+								  action_name                     action_name
+								  nonsemantic_plan_execution_node nonsemantic_plan_execution_node]]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
-		  [cond [[eq node_type `prog]  [get this execution_node_as_code-prog  nonsemantic_plan_execution_node]]
-			[[eq node_type `parog] [get this execution_node_as_code-parog nonsemantic_plan_execution_node]]
-			[t                     [format nil 'unknown_type: ' node_type]]]]]]
+		  [cond [[eq node_type `prog]       [get this execution_node_as_code-prog       nonsemantic_plan_execution_node]]
+			[[eq node_type `parog]      [get this execution_node_as_code-parog      nonsemantic_plan_execution_node]]
+			[[eq node_type `call-below] [get this execution_node_as_code-call_below nonsemantic_plan_execution_node]]
+			[t                          [format nil 'unknown_type: ' node_type]]]]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node: ' result]
     result]]
 

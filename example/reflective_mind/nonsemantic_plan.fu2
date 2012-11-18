@@ -1459,6 +1459,21 @@
 		   [argument_decision_node-subnodes [get argument_decision_node subnodes]]]
 	      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-exists [nonsemantic_plan_execution_node]
+  [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
+	[partial_state_node nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `partial_state]
+		      [if partial_state_node
+			  [error bug_name           `nonsemantic_plan-get-execution_node_as_code-exists-more_than_one_partial_state_subnode
+				 partial_state_node partial_state_node
+				 subnode            subnode
+				 this               this]
+			[= partial_state_node subnode]]]]]
+	  subnodes]
+    `[exists ,[get this nonsemantic_plan_as_code [first [get partial_state_node subnodes]]]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
   [let [[subnodes          [get nonsemantic_plan_execution_node subnodes]]
 	[if_condition_node nil]

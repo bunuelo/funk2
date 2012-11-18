@@ -1454,6 +1454,12 @@
 			    [[eq subnode-node_type `if-true]      [= if_true_node      subnode]]
 			    [[eq subnode-node_type `if-false]     [= if_false_node     subnode]]]]]]
 	  subnodes]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [cond [[and [null if_condition_node] [eq subnode-node_type `if-condition]] [= if_condition_node subnode]]
+			[[and [null if_true_node]      [eq subnode-node_type `if-true]]      [= if_true_node      subnode]]
+			[[and [null if_false_node]     [eq subnode-node_type `if-false]]     [= if_false_node     subnode]]]]]
+	  subnodes]
     `[if ,[get this execution_node_as_code [first [get if_condition_node subnodes]]]
 	 ,[get this execution_node_as_code [first [get if_true_node      subnodes]]]
        @[if if_false_node

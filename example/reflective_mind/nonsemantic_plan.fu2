@@ -154,7 +154,6 @@
   [have variable_frame lookup variable]]
 
 [deftypefunk nonsemantic_plan_execution_node execute add_return_value [value]
-  [assert-type `multiple_possible_values value]
   [have return_value_set add value]]
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph_node [graph node_ptypehash]

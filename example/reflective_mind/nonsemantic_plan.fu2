@@ -774,7 +774,9 @@
 					    [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,[quote ,name]] [quote ,[quote ,arguments]]]]]
 							      [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 							      [let [[arguments-eval [conslist @argument_expanded_codes]]]
-								[nonsemantic_plan-apply_with_multiple_possible_values nonsemantic_plan [quote ,[quote ,name]] [quote ,[quote ,arguments]] ,,nonsemantic_plan_value_funk arguments-eval]]]]]]]]]]
+								[let [[result [nonsemantic_plan-apply_with_multiple_possible_values nonsemantic_plan [quote ,[quote ,name]] [quote ,[quote ,arguments]] ,,nonsemantic_plan_value_funk arguments-eval]]]
+								  [have nonsemantic_plan_execution_node add_return_value result]
+								  result]]]]]]]]]]
 	[defplancommand-raw compile_mode name arguments planfunk_body]]]]]
 
 [defplancommand imagine eval [expression]
@@ -867,7 +869,7 @@
 									      [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' conditions-length ' conditions.']
 									      [mapc [funk [one_condition]
 											  [++ index]
-											  [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' one_condition]
+											  [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
 											  [if [get one_condition value]
 											      [let [[true_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
 																	  [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true [quote ,true_expression]]]]
@@ -1003,7 +1005,7 @@
 							 [if semantic_plan_matches
 							     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
 							       [mapc [funk [semantic_plan_match]
-									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]
+									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]
 									   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
 										 [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
 										 [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
@@ -1034,7 +1036,7 @@
 							 [if semantic_plan_matches
 							     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
 							       [mapc [funk [semantic_plan_match]
-									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' semantic_plan_match]]
+									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]]
 								     semantic_plan_matches]
 							       [mapc [funk [semantic_plan_match]
 									   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
@@ -1418,8 +1420,8 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code-call_below [nonsemantic_plan_execution_node]
   [let [[action_name [get nonsemantic_plan_execution_node variable_value `action_name]]]
     [cond [[is-type `multiple_possible_values action_name] [let* [[multiple_possible_values action_name]
-								  [good_values [get multiple_possible_values good_values]]]
-							     [terminal_format standard-terminal 'nonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length good_values] ' good values for action_name.']
+								  [good_values              [get multiple_possible_values good_values]]]
+							     [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length good_values] ' good values for action_name.']
 							     [let [[one_value [first good_values]]]
 							       `[call-below ,[get one_value value]]]]]
 	  [t                                               [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-call_below-invalid_type
@@ -1438,15 +1440,14 @@
 		      [= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
 	  subnodes]
     [if [null argument_decision_nodes]
-	[mapc [funk [subnode]
-		    [let [[subnode-node_type [get subnode node_type]]]
-		      [if [eq subnode-node_type `argument_decision]
-			  [= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
-	      subnodes]]
-    [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: choosing first of ' [length argument_decision_nodes] ' argument decision nodes.']
-    [let* [[argument_decision_node          [first argument_decision_nodes]]
-	   [argument_decision_node-subnodes [get argument_decision_node subnodes]]]
-      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
+	[error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes
+	       subnodes                        subnodes
+	       nonsemantic_plan_execution_node nonsemantic_plan_execution_node
+	       this                            this]
+      [prog [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: choosing first of ' [length argument_decision_nodes] ' argument decision nodes.']
+	    [let* [[argument_decision_node          [first argument_decision_nodes]]
+		   [argument_decision_node-subnodes [get argument_decision_node subnodes]]]
+	      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
   [let [[subnodes          [get nonsemantic_plan_execution_node subnodes]]
@@ -1460,17 +1461,22 @@
 			    [[eq subnode-node_type `if-true]      [= if_true_node      subnode]]
 			    [[eq subnode-node_type `if-false]     [= if_false_node     subnode]]]]]]
 	  subnodes]
-    [mapc [funk [subnode]
-		[let [[subnode-node_type [get subnode node_type]]]
-		  [cond [[and [null if_condition_node] [eq subnode-node_type `if-condition]] [= if_condition_node subnode]]
-			[[and [null if_true_node]      [eq subnode-node_type `if-true]]      [= if_true_node      subnode]]
-			[[and [null if_false_node]     [eq subnode-node_type `if-false]]     [= if_false_node     subnode]]]]]
-	  subnodes]
-    `[if ,[get this execution_node_as_code [first [get if_condition_node subnodes]]]
-	 ,[get this execution_node_as_code [first [get if_true_node      subnodes]]]
-       @[if if_false_node
-	    [conslist [get this execution_node_as_code [first [get if_false_node subnodes]]]]
-	  nil]]]]
+    [if [null if_condition_node]
+	[error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_node_is_null
+	       subnodes subnodes
+	       if_condition_node if_condition_node
+	       if_true_node      if_true_node
+	       if_false_node     if_false_node]
+      [if [and [null if_true_node]
+	       [null if_false_node]]
+	  [get this execution_node_as_code [first [get if_condition_node subnodes]]]
+	`[if ,[get this execution_node_as_code [first [get if_condition_node subnodes]]]
+	     ,[if if_true_node
+		  [get this execution_node_as_code [first [get if_true_node subnodes]]]
+		`nop]
+	   @[if if_false_node
+		[conslist [get this execution_node_as_code [first [get if_false_node subnodes]]]]
+	      nil]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]

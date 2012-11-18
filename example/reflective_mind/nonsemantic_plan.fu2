@@ -1514,6 +1514,7 @@
 			[[eq node_type `if]         [get this execution_node_as_code-if         nonsemantic_plan_execution_node]]
 			[[eq node_type `call-below] [get this execution_node_as_code-call_below nonsemantic_plan_execution_node]]
 			[[eq node_type `plan-call]  [get this execution_node_as_code-plan_call  nonsemantic_plan_execution_node]]
+			[[eq node_type `exists]     [get this execution_node_as_code-exists     nonsemantic_plan_execution_node]]
 			[t                          [format nil 'unknown_type: ' node_type]]]]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node: ' result]
     result]]

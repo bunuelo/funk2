@@ -176,6 +176,16 @@ f2ptr f2__semantic_partial_state_property_relation__new(f2ptr cause, f2ptr seman
 							f2ptr target_key,
 							f2ptr target_value) {
   assert_argument_type(semantic_realm, semantic_realm);
+  assert_argument_type(symbol,         source_type);
+  assert_argument_type(symbol,         source_key_type);
+  assert_argument_type(symbol,         source_key);
+  assert_argument_type(symbol,         source_value);
+  assert_argument_type(symbol,         key);
+  assert_argument_type(symbol,         key_type);
+  assert_argument_type(symbol,         target_type);
+  assert_argument_type(symbol,         target_key_type);
+  assert_argument_type(symbol,         target_key);
+  assert_argument_type(symbol,         target_value);
   return raw__semantic_partial_state_property_relation__new(cause, semantic_realm,
 							    source_type,
 							    source_key_type,

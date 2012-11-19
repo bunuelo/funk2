@@ -122,10 +122,10 @@
 								 [have this add_value one_value]]
 							   [get multiple_possible_values values]]]]
 	[[is-type `nonsemantic_plan_value   value] [prog [have mutate_mutex lock]
-							 [have good_value_set add value]
+							 [have value_set add value]
 							 [have mutate_mutex unlock]]]
 	[[is-type `bug                      value] [prog [have mutate_mutex lock]
-							 [have good_value_set add value]
+							 [have value_set add value]
 							 [have mutate_mutex unlock]]]
 	[t                                         [error bug_name    `multiple_possible_values-add_value-invalid_type
 							  valid_types `[multiple_possible_values

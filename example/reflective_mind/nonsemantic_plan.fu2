@@ -30,6 +30,20 @@
 
 
 
+'bug'
+
+[deftypefunk bug get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
+  [let [[this-graph_node [have node_ptypehash lookup this]]]
+    [if [not this-graph_node]
+	[prog [= this-graph_node [new graph_node [format nil 'bug: ' [have [get bug frame] lookup `bug_name]]]]
+	      [have graph add_node this-graph_node]
+	      [have node_ptypehash add this this-graph_node]
+	      
+	      ]]
+    this-graph_node]]
+
+
+
 'semantic_plan_operator_activation'
 
 [defunk semantic_plan_operator_activation-new_with_resource_dependency [semantic_realm resource_activation_dependency]
@@ -209,17 +223,6 @@
 									bug]
 							  actual_type [type value]
 							  value       value]]]]
-
-[deftypefunk bug get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
-  [let [[this-graph_node [have node_ptypehash lookup this]]]
-    [if [not this-graph_node]
-	[prog [= this-graph_node [new graph_node [format nil 'value: ' [type value]]]]
-	      [have graph add_node this-graph_node]
-	      [have node_ptypehash add this this-graph_node]
-	      
-	      ]]
-    this-graph_node]]
-
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]

@@ -93,7 +93,7 @@
   [cause-define cause-ignore_background_bug nil]
   
   [have this imagine_deliberative_plan_expression
-	`[prog [defplan 'a pyramid is on a cube'
+	`[parog [defplan 'a pyramid is on a cube'
 		  :matches ['a [? top_shape] is on a [? bottom_shape]'
 			    'a [? bottom_shape] is below a [? top_shape]']
 		   :frame [[top_shape    pyramid]
@@ -199,7 +199,7 @@
   'reflective plans'
   
   [have this imagine_reflective_plan_expression
-	`[prog [defplan 'a plan to stack a pyramid on a cube'
+	`[parog [defplan 'a plan to stack a pyramid on a cube'
 		  :matches ['a plan to [? plan]']
 		   :frame [[plan 'stack a pyramid on a cube']]
 		    [plan-below [? plan]]]

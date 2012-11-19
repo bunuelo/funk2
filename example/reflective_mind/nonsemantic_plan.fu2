@@ -883,7 +883,7 @@
 											       `[have result_multiple_possible_values add_value [new nonsemantic_plan_value nil]]]]]
 										    [get multiple_possible_values nonbug_values]]
 									      
-									      [if [== [get result_multiple_possible_values good_value_count] 0]
+									      [if [null [get result_multiple_possible_values good_values]]
 										  [error bug_name    `if-no_possible_good_results
 											 is_plan_bug t
 											 expression  [cons `if [cons [quote ,condition]
@@ -2107,7 +2107,7 @@
 																				    [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
 																			[have result_multiple_possible_values add_value_with_dependency result [new value_dependency semantic_plan_object multiple_possible_values]]]]]]]]]
 															semantic_plan_objects]]
-														[if [!= [get result_multiple_possible_values good_value_count] 0]
+														[if [get result_multiple_possible_values good_values]
 														    result_multiple_possible_values
 														  [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
 															 is_plan_bug      t
@@ -2148,7 +2148,7 @@
 																				    [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
 																			[have result_multiple_possible_values add_value_with_dependency result [new value_dependency semantic_plan_object multiple_possible_values]]]]]]]]]
 															semantic_plan_objects]]
-														[if [!= [get result_multiple_possible_values good_value_count] 0]
+														[if [get result_multiple_possible_values good_values]
 														    result_multiple_possible_values
 														  [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
 															 is_plan_bug      t
@@ -2304,7 +2304,7 @@
 																	 [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency one_condition multiple_possible_values]]]]]]
 															     [get multiple_possible_values good_values]]
 														       
-														       [if [== [get result_multiple_possible_values good_value_count] 0]
+														       [if [null [get result_multiple_possible_values good_values]]
 															   [error bug_name    `if-no_possible_good_results
 																  is_plan_bug t
 																  expression  [cons `if [cons [quote ,condition]

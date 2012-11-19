@@ -96,6 +96,42 @@
     this-graph_node]]
 
 
+'multiple_possible_values'
+
+[deframe multiple_possible_values [frame] [[mutate_mutex [new mutex]]
+					   [value_set    [new set]]]
+  [new [values]
+       [mapc [funk [value]
+		   [have this add_value value]]
+	     values]]]
+
+[deftypefunk multiple_possible_values get values []
+  [get value_set elements]]
+
+[deftypefunk multiple_possible_values get nonbug_values []
+  [let [[nonbug_values nil]]
+    [mapc [funk [value]
+		[if [not [is-type `bug value]]
+		    [= nonbug_values [cons value nonbug_values]]]]
+	  [get this values]]
+    nonbug_values]]
+
+[deftypefunk multiple_possible_values execute add_value [value]
+  [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
+						     [mapc [funk [one_value]
+								 [have this add_value one_value]]
+							   [get multiple_possible_values values]]]]
+	[[is-type `nonsemantic_plan_value   value] [prog [have mutate_mutex lock]
+							 [have good_value_set add value]
+							 [have mutate_mutex unlock]]]
+	[[is-type `bug                      value] [prog [have mutate_mutex lock]
+							 [have good_value_set add value]
+							 [have mutate_mutex unlock]]]
+	[t                                         [error bug_name    `multiple_possible_values-add_value-invalid_type
+							  valid_types `[multiple_possible_values
+									nonsemantic_plan_value
+									bug]]]]]
+
 'nonsemantic_plan_execution_node'
 
 [deframe nonsemantic_plan_execution_node [frame] [node_type
@@ -229,79 +265,6 @@
 	[node_ptypehash [new ptypehash]]]
     [get this as-graph_node graph node_ptypehash]
     graph]]
-
-
-'value_dependency'
-
-[deframe value_dependency [frame] [multiple_possible_values
-				   value]
-  [new [initial-multiple_possible_values
-	initial-value]
-       [= multiple_possible_values initial-multiple_possible_values]
-       [= value                    initial-value]]]
-
-
-'multiple_possible_values'
-
-[deframe multiple_possible_values [frame] [[mutate_mutex                 [new mutex]]
-					   [good_value_set               [new set]]
-					   [bug_value_ptypehash          [new ptypehash]]
-					   [dependencies_value_ptypehash [new ptypehash]]]
-  [new [values]
-       [mapc [funk [value]
-		   [have this add_value value]]
-	     values]]]
-
-[deftypefunk multiple_possible_values get good_value_count []
-  [get good_value_set key_count]]
-
-[deftypefunk multiple_possible_values get good_values []
-  [get good_value_set elements]]
-
-[deftypefunk multiple_possible_values get good_value []
-  [have mutate_mutex lock]
-  [let [[good_values [get good_value_set elements]]]
-    [if good_values
-	[let [[result [car good_values]]]
-	  [have mutate_mutex unlock]
-	  result]
-      [prog [have mutate_mutex unlock]
-	    [error bug_name `multiple_possible_values-get-good_value-no_good_values_exist
-		   this     this]]]]]
-
-[deftypefunk multiple_possible_values execute add_value_bug [value bug]
-  [have mutate_mutex lock]
-  [if [get good_value_set contains value]
-      [have good_value_set remove value]]
-  [let [[current_value_bugs [have bug_value_ptypehash lookup value]]]
-    [have bug_value_ptypehash add value [cons bug current_value_bugs]]
-    [have mutate_mutex unlock]]]
-
-[deftypefunk multiple_possible_values execute add_value [value]
-  [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
-						     [mapc [funk [one_value]
-								 [have this add_value one_value]]
-							   [get multiple_possible_values good_values]]]]
-	[t                                         [prog [have mutate_mutex lock]
-							 [have good_value_set add value]
-							 [have mutate_mutex unlock]]]]]
-
-[deftypefunk multiple_possible_values execute add_value_dependency [value dependency]
-  [assert-type value_dependency dependency]
-  [cond [[is-type `multiple_possible_values value] [let [[multiple_possible_values value]]
-						     [mapc [funk [one_value]
-								 [have this add_value_dependency one_value dependency]]
-							   [get multiple_possible_values good_values]]]]
-	[t                                         [prog [have mutate_mutex lock]
-							 [have dependencies_value_ptypehash add value [cons dependency [have dependencies_value_ptypehash lookup value]]]
-							 [have mutate_mutex unlock]]]]]
-
-[deftypefunk multiple_possible_values execute add_value_with_dependency [value dependency]
-  [have this add_value value]
-  [have this add_value_dependency value dependency]]
-
-[deftypefunk multiple_possible_values get value_dependencies [value]
-  [have dependencies_value_ptypehash lookup value]]
 
 
 'nonsemantic_plan'
@@ -467,8 +430,8 @@
 									   [let* [[simple_truth_value           [not [get one_found_event is_negative_knowledge]]]
 										  [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
 									     [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-									     [have result_multiple_possible_values add_value_with_dependency nonsemantic_plan_value [new value_dependency one_found_event multiple_possible_values]]]]
-								     [get multiple_possible_values good_values]]]]
+									     [have result_multiple_possible_values add_value nonsemantic_plan_value]]]
+								     [get multiple_possible_values nonbug_values]]]]
 	    [t                                               [let* [[simple_truth_value           [not [get found_event is_negative_knowledge]]]
 								    [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
 							       [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
@@ -607,9 +570,10 @@
 							       [let [[bug result]]
 								 [if [have [get bug frame] lookup `is_plan_bug]
 								     [bug bug]
-								   [have result_multiple_possible_values add_value_with_dependency result [new value_dependency [quote ,value] [quote ,expression]]]]]]]]
-						  [get expression good_values]]]
-				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]]]]]]]
+								   [have result_multiple_possible_values add_value result]]]]]]
+						  [get expression nonbug_values]]]
+				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]
+				   result_multiple_possible_values]]]]]]
 
 [globalize nonsemantic_plan-imagine-command_frame [new frame]]
 
@@ -686,7 +650,7 @@
 [defunk nonsemantic_plan-apply_with_multiple_possible_values [nonsemantic_plan funk_name argument_expressions funk arguments]
   [let* [[result_multiple_possible_values [new multiple_possible_values nil]]
 	 [argument_lists                  [mapcar [funk [argument]
-							[cond [[is-type `multiple_possible_values argument] [get argument good_values]]
+							[cond [[is-type `multiple_possible_values argument] [get argument nonbug_values]]
 							      [t                                            [error bug_name `apply_with_multiple_possible_values-invalid_type
 														   correct_type `multiple_possible_values
 														   actual_type  [type argument]
@@ -880,7 +844,7 @@
 												  result]]]]]
 			     [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
 										   [result_multiple_possible_values [new multiple_possible_values nil]]
-										   [conditions                      [get multiple_possible_values good_values]]
+										   [conditions                      [get multiple_possible_values nonbug_values]]
 										   [conditions-length               [length conditions]]
 										   [index                           0]]
 									      
@@ -901,7 +865,7 @@
 												      [if [not [have [get bug frame] lookup `is_plan_bug]]
 													  [bug bug]
 													[have multiple_possible_values add_value_bug one_condition bug]]]
-												  [have result_multiple_possible_values add_value_with_dependency true_result [new value_dependency one_condition multiple_possible_values]]]]
+												  [have result_multiple_possible_values add_value true_result]]]
 											    ,[if false_expressions
 												 `[let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
 																	       [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
@@ -915,9 +879,9 @@
 													  [if [not [have [get bug frame] lookup `is_plan_bug]]
 													      [bug bug]
 													    [have multiple_possible_values add_value_bug one_condition bug]]]
-												      [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency one_condition multiple_possible_values]]]]
-											       `[have result_multiple_possible_values add_value_with_dependency [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]] [new value_dependency one_condition multiple_possible_values]]]]]
-										    [get multiple_possible_values good_values]]
+												      [have result_multiple_possible_values add_value false_result]]]
+											       `[have result_multiple_possible_values add_value [new nonsemantic_plan_value nil]]]]]
+										    [get multiple_possible_values nonbug_values]]
 									      
 									      [if [== [get result_multiple_possible_values good_value_count] 0]
 										  [error bug_name    `if-no_possible_good_results
@@ -1440,9 +1404,9 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code-call_below [nonsemantic_plan_execution_node]
   [let [[action_name [get nonsemantic_plan_execution_node variable_value `action_name]]]
     [cond [[is-type `multiple_possible_values action_name] [let* [[multiple_possible_values action_name]
-								  [good_values              [get multiple_possible_values good_values]]]
-							     [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length good_values] ' good values for action_name.']
-							     [let [[one_value [first good_values]]]
+								  [nonbug_values              [get multiple_possible_values nonbug_values]]]
+							     [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-call_below: choosing first of ' [length nonbug_values] ' good values for action_name.']
+							     [let [[one_value [first nonbug_values]]]
 							       `[call-below ,[get one_value value]]]]]
 	  [t                                               [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-call_below-invalid_type
 								  correct_type                    `multiple_possible_values

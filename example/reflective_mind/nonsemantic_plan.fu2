@@ -962,7 +962,9 @@
 		 [let* [[new_nonsemantic_plan [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]]
 			[new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
 		   [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
-		   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]]]
+		   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+		     [terminal_format standard-terminal '\n']
+		     result]]]]]]
 
 [defplanfunk imagine wait-for-time [time_to_wait]
   [eval `[funk [nonsemantic_plan]

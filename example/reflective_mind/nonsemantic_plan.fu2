@@ -1236,6 +1236,8 @@
 [deftypefunk nonsemantic_plan execute add_imagined_top_execution_node [nonsemantic_plan_execution_node]
   [have imagined_top_execution_node_set add nonsemantic_plan_execution_node]]
 
+[globalize imagine_expression_bug_count 0]
+
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[is-type `integer                  expression] [get this expression-compile-integer                  expression compile_option_frame]]
 					[[is-type `symbol                   expression] [get this expression-compile-symbol                   expression compile_option_frame]]
@@ -1254,10 +1256,16 @@
 			     [bug bug]
 			   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 			     [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			     [error bug_name         `nonsemantic_plan-expression_encountered_bug
-				    expression       [quote ,expression]
-				    semantic_thought semantic_thought
-				    subbug           bug]]]]
+			     [let [[bug_name [have [get bug frame] lookup `bug_name]]]
+			       [if [not [eq bug_name `nonsemantic_plan-expression_encountered_bug]]
+				   [let [[global_bug_name [get [string-concat 'imagine_expression_bug-' [get imagine_expression_bug_count as-string]] as-symbol]]]
+				     [++ imagine_expression_bug_count]
+				     [terminal_format standard-terminal '\nglobally defining bug as ' global_bug_name '.']
+				     [eval `[globalize ,global_bug_name [quote ,bug]]]]]
+			       [error bug_name         `nonsemantic_plan-expression_encountered_bug
+				      expression       [quote ,expression]
+				      semantic_thought semantic_thought
+				      subbug           bug]]]]]
 		     [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
 			   [if [not [is-type `multiple_possible_values result]]
 			       [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type

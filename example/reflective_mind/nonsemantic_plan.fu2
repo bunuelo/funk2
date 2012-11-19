@@ -35,7 +35,7 @@
 [deftypefunk bug get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
     [if [not this-graph_node]
-	[prog [= this-graph_node [new graph_node [format nil 'bug: ' [have [get bug frame] lookup `bug_name]]]]
+	[prog [= this-graph_node [new graph_node [format nil 'bug: ' [have [get this frame] lookup `bug_name]]]]
 	      [have graph add_node this-graph_node]
 	      [have node_ptypehash add this this-graph_node]
 	      
@@ -1106,56 +1106,14 @@
 			       key_type
 			       key
 			       value]
-  [let [[source_type     [let [[value source_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_key_type [let [[value source_key_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_key      [let [[value source_key]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_value    [let [[value source_value]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[key_type        [let [[value key_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[key             [let [[value key]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[value           [let [[value value]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]]
-    [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-				     source_type
-				     source_key_type
-				     source_key
-				     source_value
-				     key_type
-				     key
-				     value]]]]
+  [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+				   [name_expression-as-symbol [get source_type     value]]
+				   [name_expression-as-symbol [get source_key_type value]]
+				   [name_expression-as-symbol [get source_key      value]]
+				   [name_expression-as-symbol [get source_value    value]]
+				   [name_expression-as-symbol [get key_type        value]]
+				   [name_expression-as-symbol [get key             value]]
+				   [name_expression-as-symbol [get value           value]]]]]
 
 [defplanfunk imagine relationship [source_type
 				   source_key_type
@@ -1167,77 +1125,17 @@
 				   target_key_type
 				   target_key
 				   target_value]
-  [let [[source_type     [let [[value source_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_key_type [let [[value source_key_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_key      [let [[value source_key]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[source_value    [let [[value source_value]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[key_type        [let [[value key_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[key             [let [[value key]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[target_type     [let [[value target_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[target_key_type [let [[value target_key_type]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[target_key      [let [[value target_key]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]
-	[target_value    [let [[value target_value]]
-			   [cond [[is-type `nonsemantic_plan_value value] [name_expression-as-symbol [get value value]]]
-				 [t                                       [error bug_name `nonsemantic_plan-property-invalid_type
-										 correct_types `[nonsemantic_plan_value]
-										 actual_type   [type value]
-										 value         value]]]]]]
-    [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-				     source_type
-				     source_key_type
-				     source_key
-				     source_value
-				     key_type
-				     key
-				     target_type
-				     target_key_type
-				     target_key
-				     target_value]]]]
+  [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+				   [name_expression-as-symbol [get source_type     value]]
+				   [name_expression-as-symbol [get source_key_type value]]
+				   [name_expression-as-symbol [get source_key      value]]
+				   [name_expression-as-symbol [get source_value    value]]
+				   [name_expression-as-symbol [get key_type        value]]
+				   [name_expression-as-symbol [get key             value]]
+				   [name_expression-as-symbol [get target_type     value]]
+				   [name_expression-as-symbol [get target_key_type value]]
+				   [name_expression-as-symbol [get target_key      value]]
+				   [name_expression-as-symbol [get target_value    value]]]]]
 
 
 

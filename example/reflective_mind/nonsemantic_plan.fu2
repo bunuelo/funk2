@@ -236,7 +236,7 @@
 											   [let* [[variable_value-graph_node [get one_value as-graph_node graph node_ptypehash]]
 												  [variable_value-graph_edge [new graph_edge variable this-graph_node variable_value-graph_node]]]
 											     [have graph add_edge variable_value-graph_edge]]]
-										     [get multiple_possible_values good_values]]]]
+										     [get multiple_possible_values nonbug_values]]]]
 				  [t                                         [error bug_name      `nonsemantic_plan_execution_node-invalid_variable_value_type
 										    correct_types `[multiple_possible_values]
 										    actual_type   [type value]
@@ -251,7 +251,7 @@
 												[let* [[return_value-graph_node [get one_value as-graph_node graph node_ptypehash]]
 												       [return_value-graph_edge [new graph_edge `returned_from return_value-graph_node this-graph_node]]]
 												  [have graph add_edge return_value-graph_edge]]]
-											  [get multiple_possible_values good_values]]]]
+											  [get multiple_possible_values nonbug_values]]]]
 				[t                                                [error bug_name      `nonsemantic_plan_execution_node-invalid_return_value_type
 											 correct_types `[nonsemantic_plan_value
 													 multiple_possible_values]
@@ -883,7 +883,7 @@
 											       `[have result_multiple_possible_values add_value [new nonsemantic_plan_value nil]]]]]
 										    [get multiple_possible_values nonbug_values]]
 									      
-									      [if [null [get result_multiple_possible_values good_values]]
+									      [if [null [get result_multiple_possible_values nonbug_values]]
 										  [error bug_name    `if-no_possible_good_results
 											 is_plan_bug t
 											 expression  [cons `if [cons [quote ,condition]
@@ -2083,7 +2083,7 @@
 														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
 														[have nonsemantic_plan execute_as_thought [frame]]]]
 								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values        plan]
-														     [semantic_plan_objects           [get multiple_possible_values good_values]]
+														     [semantic_plan_objects           [get multiple_possible_values nonbug_values]]
 														     [result_multiple_possible_values [new multiple_possible_values nil]]]
 														[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
 														[let [[index 0]]
@@ -2107,7 +2107,7 @@
 																				    [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
 																			[have result_multiple_possible_values add_value_with_dependency result [new value_dependency semantic_plan_object multiple_possible_values]]]]]]]]]
 															semantic_plan_objects]]
-														[if [get result_multiple_possible_values good_values]
+														[if [get result_multiple_possible_values nonbug_values]
 														    result_multiple_possible_values
 														  [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
 															 is_plan_bug      t
@@ -2124,7 +2124,7 @@
 														[terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
 														[have nonsemantic_plan imagine_as_thought [frame]]]]
 								    [[is-type `multiple_possible_values plan] [let* [[multiple_possible_values        plan]
-														     [semantic_plan_objects           [get multiple_possible_values good_values]]
+														     [semantic_plan_objects           [get multiple_possible_values nonbug_values]]
 														     [result_multiple_possible_values [new multiple_possible_values nil]]]
 														[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan-plan_call: attempting to call ' [length semantic_plan_objects] ' possible plans.']
 														[let [[index 0]]
@@ -2148,7 +2148,7 @@
 																				    [have multiple_possible_values add_value_bug semantic_plan_object bug]]]]
 																			[have result_multiple_possible_values add_value_with_dependency result [new value_dependency semantic_plan_object multiple_possible_values]]]]]]]]]
 															semantic_plan_objects]]
-														[if [get result_multiple_possible_values good_values]
+														[if [get result_multiple_possible_values nonbug_values]
 														    result_multiple_possible_values
 														  [error bug_name         `nonsemantic_plan-plan_call-no_possible_results
 															 is_plan_bug      t
@@ -2182,7 +2182,7 @@
 															   [result_multiple_possible_values [new multiple_possible_values nil]]]
 														       [mapc [funk [one_truth_value]
 																   [have result_multiple_possible_values add_value_with_dependency [get one_truth_value negative] [new value_dependency one_truth_value multiple_possible_values]]]
-															     [get multiple_possible_values good_values]]
+															     [get multiple_possible_values nonbug_values]]
 														       result_multiple_possible_values]]
 								    [t                                               [error bug_name      `nonsemantic_plan-not-invalid_type
 															    correct_types `[nonsemantic_plan_value
@@ -2271,7 +2271,7 @@
 																	 @false_expressions-eval]]]]
 								      [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
 															    [result_multiple_possible_values [new multiple_possible_values nil]]
-															    [conditions                      [get multiple_possible_values good_values]]
+															    [conditions                      [get multiple_possible_values nonbug_values]]
 															    [conditions-length               [length conditions]]
 															    [index                           0]]
 														       
@@ -2302,9 +2302,9 @@
 																		 [bug bug]
 																	       [have multiple_possible_values add_value_bug one_condition bug]]]
 																	 [have result_multiple_possible_values add_value_with_dependency false_result [new value_dependency one_condition multiple_possible_values]]]]]]
-															     [get multiple_possible_values good_values]]
+															     [get multiple_possible_values nonbug_values]]
 														       
-														       [if [null [get result_multiple_possible_values good_values]]
+														       [if [null [get result_multiple_possible_values nonbug_values]]
 															   [error bug_name    `if-no_possible_good_results
 																  is_plan_bug t
 																  expression  [cons `if [cons [quote ,condition]

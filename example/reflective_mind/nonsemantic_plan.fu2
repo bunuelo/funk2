@@ -199,7 +199,7 @@
 
 [deftypefunk nonsemantic_plan_execution_node execute add_return_value [value]
   [cond [[is-type `nonsemantic_plan_value   value] [have return_value_set add value]]
-	[[is-type `bug                      value] [have return_value_set add_value]]
+	[[is-type `bug                      value] [have return_value_set add value]]
 	[[is-type `multiple_possible_values value] [mapc [funk [one_value]
 							       [have this add_return_value one_value]]
 							 [get value values]]]

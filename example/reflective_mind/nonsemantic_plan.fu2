@@ -167,10 +167,12 @@
 	[[is-type `multiple_possible_values value] [mapc [funk [one_value]
 							       [have this add_return_value one_value]]
 							 [get value values]]]
-	[t                                         [error bug_name nonsemantic_plan_execution_node-add_return_value-invalid_type
+	[t                                         [error bug_name    `nonsemantic_plan_execution_node-add_return_value-invalid_type
 							  valid_types `[nonsemantic_plan_value
 									multiple_possible_values
-									bug]]]]]
+									bug]
+							  actual_type [type value]
+							  value       value]]]]
 
 [deftypefunk nonsemantic_plan_execution_node get as-graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]

@@ -562,7 +562,7 @@
 
 [deftypefunk nonsemantic_plan get expression-compile-nil [expression compile_option_frame]
   [eval `[funk [this]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `nil ,expression]]]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node nil ,expression]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
 				   [have nonsemantic_plan_execution_node add_return_value result]
@@ -1303,6 +1303,9 @@
   internal-semantic_plan_object]
 
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-nil [nonsemantic_plan_execution_node]
+  nil]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-prog [nonsemantic_plan_execution_node]
   [let* [[first_subnode              [get nonsemantic_plan_execution_node first_subnode]]
 	 [prog_sequence_subnodes     [cons first_subnode nil]]
@@ -1411,7 +1414,7 @@
 	      `[if ,[get this execution_node_as_code [first [get if_condition_node subnodes]]]
 		   ,[if if_true_node
 			[get this execution_node_as_code [first [get if_true_node subnodes]]]
-		      `nop]
+		      nil]
 		 @[if if_false_node
 		      [conslist [get this execution_node_as_code [first [get if_false_node subnodes]]]]
 		    nil]]]]]]]
@@ -1419,7 +1422,8 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code input: ' nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
-		  [cond [[eq node_type `prog]       [get this execution_node_as_code-prog       nonsemantic_plan_execution_node]]
+		  [cond [[null node_type]           [get this execution_node_as_code-nil        nonsemantic_plan_execution_node]]
+			[[eq node_type `prog]       [get this execution_node_as_code-prog       nonsemantic_plan_execution_node]]
 			[[eq node_type `parog]      [get this execution_node_as_code-parog      nonsemantic_plan_execution_node]]
 			[[eq node_type `if]         [get this execution_node_as_code-if         nonsemantic_plan_execution_node]]
 			[[eq node_type `call-below] [get this execution_node_as_code-call_below nonsemantic_plan_execution_node]]

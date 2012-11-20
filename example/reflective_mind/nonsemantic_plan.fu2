@@ -560,6 +560,14 @@
 
 
 
+[deftypefunk nonsemantic_plan get expression-compile-nil [expression compile_option_frame]
+  [eval `[funk [this]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `nil ,expression]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
+
 [deftypefunk nonsemantic_plan get expression-compile-integer [expression compile_option_frame]
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
@@ -844,9 +852,9 @@
 	     false_expressions false_expressions]
     [let [[false_expression [if false_expressions [car false_expressions]]]]
       [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
-      [let [[condition-eval                              `[funkall ,[get nonsemantic_plan expression-compile condition        compile_option_frame] nonsemantic_plan]]
-	    [true_expression-eval                        `[funkall ,[get nonsemantic_plan expression-compile true_expression  compile_option_frame] nonsemantic_plan]]
-	    [false_expression-eval [if false_expressions `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]]]
+      [let [[condition-eval        `[funkall ,[get nonsemantic_plan expression-compile condition        compile_option_frame] nonsemantic_plan]]
+	    [true_expression-eval  `[funkall ,[get nonsemantic_plan expression-compile true_expression  compile_option_frame] nonsemantic_plan]]
+	    [false_expression-eval `[funkall ,[get nonsemantic_plan expression-compile false_expression compile_option_frame] nonsemantic_plan]]]
 	[eval `[funk [nonsemantic_plan]
 		     [let [[condition [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-condition [quote ,condition]]]]
 							[cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
@@ -863,9 +871,7 @@
 									      [with-new-cause [cause-define cause-last_decision_value condition]
 											      [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
 												[cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-												[let [[result ,[if false_expressions
-														   false_expression-eval
-														 `[new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]
+												[let [[result ,false_expression-eval]]
 												  [have current_nonsemantic_plan_execution_node add_return_value result]
 												  result]]]]]
 			     [[is-type `multiple_possible_values condition] [let* [[multiple_possible_values        condition]
@@ -895,9 +901,7 @@
 											    [let [[false_result [shelter [with-new-cause [cause-define cause-last_decision_value one_condition]
 																	 [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
 																	   [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-																	   [let [[result ,[if false_expressions
-																			      false_expression-eval
-																			    `[new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]
+																	   [let [[result ,false_expression-eval]]
 																	     [have current_nonsemantic_plan_execution_node add_return_value result]
 																	     result]]]]]]
 											      [if [is-type `bug false_result]
@@ -1157,7 +1161,8 @@
 [globalize imagine_expression_bug_count 0]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
-  [let [[unwrapped_compile_result [cond [[is-type `integer                  expression] [get this expression-compile-integer                  expression compile_option_frame]]
+  [let [[unwrapped_compile_result [cond [[null                              expression] [get this expression-compile-nil                      expression compile_option_frame]]
+					[[is-type `integer                  expression] [get this expression-compile-integer                  expression compile_option_frame]]
 					[[is-type `symbol                   expression] [get this expression-compile-symbol                   expression compile_option_frame]]
 					[[is-type `string                   expression] [get this expression-compile-string                   expression compile_option_frame]]
 					[[is-type `cons                     expression] [get this expression-compile-cons                     expression compile_option_frame]]
@@ -1310,7 +1315,7 @@
 	    [prog [= new_cons [cons next_node nil]]
 		  [set prog_sequence_subnode_iter cdr new_cons]]]
 	[= prog_sequence_subnode_iter new_cons]]]
-    `[prog @[parcar [funk [prog_sequence_subnode]
+    `[prog @[mapcar [funk [prog_sequence_subnode]
 			  [let [[subnodes [get prog_sequence_subnode subnodes]]]
 			    [if [!= [length subnodes] 1]
 				[error bug_name                        `nonsemantic_plan-get-execution_node_as_code-prog-must_be_one_subnode
@@ -1323,7 +1328,7 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code-parog [nonsemantic_plan_execution_node]
   [let* [[subnodes     [get nonsemantic_plan_execution_node subnodes]]
 	 [subnode_iter subnodes]]
-    `[parog @[parcar [funk [subnode]
+    `[parog @[mapcar [funk [subnode]
 			   [get this execution_node_as_code subnode]]
 		     subnodes]]]]
 

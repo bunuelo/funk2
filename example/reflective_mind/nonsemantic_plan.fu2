@@ -1375,17 +1375,21 @@
     `[exists ,[get this execution_node_as_code [first [get partial_state_node subnodes]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
+  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 0']
   [let [[subnodes          [get nonsemantic_plan_execution_node subnodes]]
 	[if_condition_node nil]
 	[if_true_node      nil]
 	[if_false_node     nil]]
+    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 1']
     [mapc [funk [subnode]
+		[terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 2']
 		[if [get subnode nonbug_return_values]
 		    [let [[subnode-node_type [get subnode node_type]]]
 		      [cond [[eq subnode-node_type `if-condition] [= if_condition_node subnode]]
 			    [[eq subnode-node_type `if-true]      [= if_true_node      subnode]]
 			    [[eq subnode-node_type `if-false]     [= if_false_node     subnode]]]]]]
 	  subnodes]
+    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 3']
     [if [null if_condition_node]
 	[error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_node_is_null
 	       subnodes subnodes
@@ -1408,6 +1412,7 @@
 		    nil]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
+  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code input: ' nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
 		  [cond [[eq node_type `prog]       [get this execution_node_as_code-prog       nonsemantic_plan_execution_node]]
 			[[eq node_type `parog]      [get this execution_node_as_code-parog      nonsemantic_plan_execution_node]]
@@ -1416,7 +1421,7 @@
 			[[eq node_type `plan-call]  [get this execution_node_as_code-plan_call  nonsemantic_plan_execution_node]]
 			[[eq node_type `exists]     [get this execution_node_as_code-exists     nonsemantic_plan_execution_node]]
 			[t                          [format nil 'unknown_type: ' node_type]]]]]]
-    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node: ' result]
+    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node result: ' result]
     result]]
 
 

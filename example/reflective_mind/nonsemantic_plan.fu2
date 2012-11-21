@@ -712,7 +712,7 @@
 					  argument_lists]]]]
 	  [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `argument_decision single_arguments]]]
 			    [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-			    [let [[result [apply funk [cons nonsemantic_plan single_arguments]]]]
+			    [let [[result [shelter [apply funk [cons nonsemantic_plan single_arguments]]]]]
 			      [have nonsemantic_plan_execution_node add_return_value result]
 			      [if [is-type `bug result]
 				  [let [[bug result]]

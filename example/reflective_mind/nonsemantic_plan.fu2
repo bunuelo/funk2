@@ -189,6 +189,15 @@
 	  [get this return_values]]
     nonbug_return_values]]
 
+[deftypefunk nonsemantic_plan_execution_node get nonbug_and_failure_return_values []
+  [let [[nonbug_and_failure_return_values nil]]
+    [mapc [funk [return_value]
+		[if [or [not [is-type `bug return_value]]
+			[have [get return_value frame] lookup `is_plan_failure]]
+		    [= nonbug_and_failure_return_values [cons return_value nonbug_and_failure_return_values]]]]
+	  [get this return_values]]
+    nonbug_and_failure_return_values]]
+
 [deftypefunk nonsemantic_plan_execution_node set previous_node [node]
   [if previous_node
       [error bug_name `nonsemantic_plan_execution_node-previous_node_already_defined_for_node

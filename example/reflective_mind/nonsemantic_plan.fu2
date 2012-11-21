@@ -1310,6 +1310,11 @@
   [let [[expression [get nonsemantic_plan_execution_node expression]]]
     expression]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-? [nonsemantic_plan_execution_node]
+  [let [[nonbug_return_values [get nonsemantic_plan_execution_node nonbug_return_values]]]
+    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-?: choosing first of ' [length nonbug_return_values] ' nonbug return values.']
+    [get [first nonbug_return_values] value]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-prog [nonsemantic_plan_execution_node]
   [let* [[first_subnode              [get nonsemantic_plan_execution_node first_subnode]]
 	 [prog_sequence_subnodes     [cons first_subnode nil]]
@@ -1491,6 +1496,7 @@
 		  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code input node_type: ' node_type]
 		  [cond [[null node_type]             [get this execution_node_as_code-nil          nonsemantic_plan_execution_node]]
 			[[eq node_type `symbol]       [get this execution_node_as_code-symbol       nonsemantic_plan_execution_node]]
+			[[eq node_type `?]            [get this execution_node_as_code-?            nonsemantic_plan_execution_node]]
 			[[eq node_type `prog]         [get this execution_node_as_code-prog         nonsemantic_plan_execution_node]]
 			[[eq node_type `parog]        [get this execution_node_as_code-parog        nonsemantic_plan_execution_node]]
 			[[eq node_type `if]           [get this execution_node_as_code-if           nonsemantic_plan_execution_node]]

@@ -1424,6 +1424,23 @@
 			[conslist [get this execution_node_as_code [first [get if_false_node subnodes]]]]
 		      nil]]]]]]]]
 
+'correct compile result for "pick up a cube"'
+`[prog [if [exists [relationship block property shape 'cube'
+				 preposition left-of
+				 gripper property is-me t]]
+	   [call-below 'move left until over cube']
+	 [if [exists [relationship block property shape 'cube'
+				   preposition right-of
+				   gripper property is-me t]]
+	     [call-below 'move right until over cube']
+	   []]]
+       [call-below 'attempt to grab block until gripper stops moving']
+       [if [not [exists [relationship gripper property is-me t
+				      preposition is-holding
+				      block property shape 'cube']]]
+	   [fail]
+	 []]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-exists [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
 	[partial_state_node nil]]

@@ -1408,33 +1408,29 @@
 			    [[eq subnode-node_type `if-true]      [= if_true_nodes      [cons subnode if_true_nodes]]]
 			    [[eq subnode-node_type `if-false]     [= if_false_nodes     [cons subnode if_false_nodes]]]]]]]
 	  subnodes]
-    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: choosing first or none of ' [length if_condition_nodes] ' if_condition_nodes.']
-    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: choosing first or none of ' [length if_true_nodes]      ' if_true_nodes.']
-    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: choosing first or none of ' [length if_false_nodes]     ' if_false_nodes.']
-    [let [[if_condition_node [if if_condition_nodes [first if_condition_nodes]]]
-	  [if_true_node      [if if_true_nodes      [first if_true_nodes]]]
-	  [if_false_node     [if if_false_nodes     [first if_false_nodes]]]]
-      [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 3']
-      [if [null if_condition_node]
-	  [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_node_is_null
-		 subnodes subnodes
-		 if_condition_node if_condition_node
-		 if_true_node      if_true_node
-		 if_false_node     if_false_node]
-	[if [and [null if_true_node]
-		 [null if_false_node]]
-	    [prog [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: if_true_node and if_false_node are null.']
-		  [get this execution_node_as_code [first [get if_condition_node subnodes]]]]
-	  [prog [terminal_format standard-terminal
-				 '\nnonsemantic_plan-get-execution_node_as_code-if: if_true_node  = ' if_true_node
-				 '\n                                                if_false_node = ' if_false_node]
-		`[if ,[get this execution_node_as_code [first [get if_condition_node subnodes]]]
-		     ,[if if_true_node
-			  [get this execution_node_as_code [first [get if_true_node subnodes]]]
-			nil]
-		   @[if if_false_node
-			[conslist [get this execution_node_as_code [first [get if_false_node subnodes]]]]
-		      nil]]]]]]]]
+    [terminal_format standard-terminal
+		     '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
+		     '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
+		     '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
+    `[if ,[cond [[null if_condition_nodes]          [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_node_is_null
+							   subnodes subnodes]]
+		[[== [length if_condition_nodes] 1] [let [[if_condition_node [first if_condition_nodes]]]
+						      [get this execution_node_as_code [first [get if_condition_node subnodes]]]]]
+		[t                                  `[multiple_interpretations @[mapcar [funk [if_condition_node]
+											      [get this execution_node_as_code [first [get if_condition_node subnodes]]]]
+											if_condition_nodes]]]]
+	 ,[cond [[null if_true_nodes]               nil]
+		[[== [length if_true_nodes]      1] [let [[if_true_node [first if_true_nodes]]]
+						      [get this execution_node_as_code [first [get if_true_node subnodes]]]]]
+		[t                                  `[multiple_interpretations @[mapcar [funk [if_true_node]
+											      [get this execution_node_as_code [first [get if_true_node subnodes]]]]
+											if_true_nodes]]]]
+       ,[cond [[null if_false_nodes]                nil]
+	      [[== [length if_false_nodes]       1] [let [[if_false_node [first if_false_nodes]]]
+						      [get this execution_node_as_code [first [get if_false_node subnodes]]]]]
+	      [t                                    `[multiple_interpretations @[mapcar [funk [if_false_node]
+											      [get this execution_node_as_code [first [get if_false_node subnodes]]]]
+											if_false_nodes]]]]]]]
 
 'correct compile result for "pick up a cube"'
 `[prog [if [exists [relationship block property shape 'cube'

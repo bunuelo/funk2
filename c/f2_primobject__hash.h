@@ -26,8 +26,10 @@
 
 typedef struct funk2_object_type__hash__slot_s funk2_object_type__hash__slot_t;
 declare_object_type_6_slot(hash, write_cmutex, key_count, bin_num_power, bin_array, hash_value_funk, equals_funk,
-			   f2ptr slot_names__symbol;
-			   f2ptr slot_names__funk;
+			   f2ptr keys__symbol;
+			   f2ptr keys__funk;
+			   f2ptr values__symbol;
+			   f2ptr values__funk;
 			   f2ptr add__symbol;
 			   f2ptr add__funk;
 			   f2ptr remove__symbol;
@@ -65,10 +67,10 @@ boolean_t raw__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__contains            (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__hash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__hash__lookup              (f2ptr cause, f2ptr this, f2ptr key);
-
-f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr cause, f2ptr slot_name, f2ptr aux_data), f2ptr aux_data);
-
-f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this);
+f2ptr     raw__hash__keys                (f2ptr cause, f2ptr this);
+f2ptr      f2__hash__keys                (f2ptr cause, f2ptr this);
+f2ptr     raw__hash__values              (f2ptr cause, f2ptr this);
+f2ptr      f2__hash__values              (f2ptr cause, f2ptr this);
 
 f2ptr raw__hash__as__frame(f2ptr cause, f2ptr this);
 f2ptr  f2__hash__as__frame(f2ptr cause, f2ptr this);

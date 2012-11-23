@@ -277,16 +277,39 @@ f2ptr raw__hash__mapc_slot_names(f2ptr cause, f2ptr this, void(* map_funk)(f2ptr
 }
 
 
-f2ptr f2__hash__slot_names(f2ptr cause, f2ptr this) {
-  debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__slot_names assert failed: f2__hash__valid(this)");
+f2ptr raw__hash__keys(f2ptr cause, f2ptr this) {
+  debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__keys assert failed: f2__hash__valid(this)");
   f2ptr new_list = nil;
   hash__key__iteration(cause, this, key,
                             new_list = raw__cons__new(cause, key, new_list));
   return new_list;
 }
-def_pcfunk1(hash__slot_names, this,
+
+f2ptr f2__hash__keys(f2ptr cause, f2ptr this) {
+  assert_argument_type(hash, this);
+  return raw__hash__keys(cause, this);
+}
+def_pcfunk1(hash__keys, this,
 	    "",
-	    return f2__hash__slot_names(this_cause, this));
+	    return f2__hash__keys(this_cause, this));
+
+
+f2ptr raw__hash__values(f2ptr cause, f2ptr this) {
+  debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__values assert failed: f2__hash__valid(this)");
+  f2ptr new_list = nil;
+  hash__key__iteration(cause, this, key,
+                            new_list = raw__cons__new(cause, key, new_list));
+  return new_list;
+}
+
+f2ptr f2__hash__values(f2ptr cause, f2ptr this) {
+  assert_argument_type(hash, this);
+  return raw__hash__values(cause, this);
+}
+def_pcfunk1(hash__values, this,
+	    "",
+	    return f2__hash__values(this_cause, this));
+
 
 boolean_t raw__hash__equals(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__hash__is_type(cause, that)) {
@@ -356,7 +379,8 @@ def_pcfunk1(hash__as__frame, this,
 
 f2ptr f2hash__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2hash__primobject_type__new(cause);
-  {char* slot_name = "slot_names";        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk);}
+  {char* slot_name = "keys";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.keys__funk);}
+  {char* slot_name = "values";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.values__funk);}
   {char* slot_name = "add";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk);}
   {char* slot_name = "remove";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.remove__funk);}
   {char* slot_name = "lookup";            f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_hash.lookup__funk);}
@@ -381,9 +405,13 @@ void f2__primobject_hash__defragment__fix_pointers() {
   //f2__primcfunk__init__defragment__fix_pointers(hash__new);
   //defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk);
   
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(hash__slot_names);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.keys__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__keys);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.keys__funk);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.values__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(hash__values);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.values__funk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_hash.add__symbol);
   f2__primcfunk__init__defragment__fix_pointers(hash__add);
@@ -422,8 +450,10 @@ void f2__primobject_hash__reinitialize_globalvars() {
   
   {char* symbol_str = "new"; __funk2.globalenv.object_type.primobject.primobject_type_hash.new__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(hash__new, this, hash_value_funk, equals_funk, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_hash.new__funk = never_gc(cfunk);}
-  {char* symbol_str = "slot_names"; __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hash__slot_names, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_hash.slot_names__funk = never_gc(cfunk);}
+  {char* symbol_str = "keys"; __funk2.globalenv.object_type.primobject.primobject_type_hash.keys__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hash__keys, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_hash.keys__funk = never_gc(cfunk);}
+  {char* symbol_str = "values"; __funk2.globalenv.object_type.primobject.primobject_type_hash.values__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(hash__values, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_hash.values__funk = never_gc(cfunk);}
   {char* symbol_str = "add"; __funk2.globalenv.object_type.primobject.primobject_type_hash.add__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(hash__add, this, slot_name, value, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_hash.add__funk = never_gc(cfunk);}
   {char* symbol_str = "remove"; __funk2.globalenv.object_type.primobject.primobject_type_hash.remove__symbol = new__symbol(cause, symbol_str);}

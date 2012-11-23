@@ -1327,6 +1327,13 @@
   internal-semantic_plan_object]
 
 
+[defunk remove_equals_duplicates [sequence]
+  [let [[equals_hash [new equals_hash]]]
+    [mapc [funk [element]
+		[have equals_hash add element t]]
+	  sequence]
+    [get equals_hash keys]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-nil [nonsemantic_plan_execution_node]
   nil]
 

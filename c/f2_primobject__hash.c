@@ -297,8 +297,8 @@ def_pcfunk1(hash__keys, this,
 f2ptr raw__hash__values(f2ptr cause, f2ptr this) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__values assert failed: f2__hash__valid(this)");
   f2ptr new_list = nil;
-  hash__key__iteration(cause, this, key,
-                            new_list = raw__cons__new(cause, key, new_list));
+  hash__value__iteration(cause, this, value,
+			 new_list = raw__cons__new(cause, value, new_list));
   return new_list;
 }
 

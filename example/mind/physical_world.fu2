@@ -25,8 +25,10 @@
 				 previous_time
 				 time
 				 format_mutex
-				 agent_body_frame]
-  [new []
+				 agent_body_frame
+				 all_perception_symbols]
+  [new [initial-all_perception_symbols]
+       [= all_perception_symbols initial-all_perception_symbols]
        [set this format_mutex     [new mutex]]
        [set this agent_body_frame [frame]]
        this]]
@@ -74,4 +76,7 @@
 
 [deftypefunk physical_world get agent_mind [agent_name]
   [get [get this agent_body agent_name] mind]]
+
+[deftypefunk physical_world get all_perception_symbols []
+  all_perception_symbols]
 

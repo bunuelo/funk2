@@ -1126,6 +1126,15 @@
 	 is_plan_bug     t
 	 is_plan_failure t]]
 
+[deftypefunk nonsemantic_plan get layer_knowledge_symbol [value]
+  [let [[result [shelter [get [get this mental_layer] knowledge_symbol value]]]]
+    [if [is-type `bug result]
+	[let [[bug result]]
+	  [error bug_name    `nonsemantic_plan-get-knowledge_symbol
+		 subbug      bug
+		 is_plan_bug t]]
+      result]]]
+
 [defplanfunk imagine property [source_type
 			       source_key_type
 			       source_key
@@ -1134,13 +1143,13 @@
 			       key
 			       value]
   [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-				   [name_expression-as-symbol [get source_type     value]]
-				   [name_expression-as-symbol [get source_key_type value]]
-				   [name_expression-as-symbol [get source_key      value]]
-				   [name_expression-as-symbol [get source_value    value]]
-				   [name_expression-as-symbol [get key_type        value]]
-				   [name_expression-as-symbol [get key             value]]
-				   [name_expression-as-symbol [get value           value]]]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_value    value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key_type        value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key             value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get value           value]]]]]]
 
 [defplanfunk imagine relationship [source_type
 				   source_key_type
@@ -1153,16 +1162,16 @@
 				   target_key
 				   target_value]
   [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-				   [name_expression-as-symbol [get source_type     value]]
-				   [name_expression-as-symbol [get source_key_type value]]
-				   [name_expression-as-symbol [get source_key      value]]
-				   [name_expression-as-symbol [get source_value    value]]
-				   [name_expression-as-symbol [get key_type        value]]
-				   [name_expression-as-symbol [get key             value]]
-				   [name_expression-as-symbol [get target_type     value]]
-				   [name_expression-as-symbol [get target_key_type value]]
-				   [name_expression-as-symbol [get target_key      value]]
-				   [name_expression-as-symbol [get target_value    value]]]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_value    value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key_type        value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key             value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_value    value]]]]]]
 
 
 
@@ -1449,17 +1458,6 @@
 	 ,[cond [[null if_false_interpretations]                nil]
 		[[== [length if_false_interpretations]       1] [first if_false_interpretations]]
 		[t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]
-`[prog [if [exists [relationship block property shape 'cube is to my left, move left until over cube, otherwise if a cu...'
-				 preposition right-of
-				 gripper property is-me t]]
-	   [call-below 'move right until over cube']
-	 []]
-       [call-below 'attempt to grab block until gripper stops moving'] 
-       [if [not [exists [relationship gripper property is-me t
-				      preposition is-holding
-				      block property shape 'cube']]]
-	   [fail]
-	 []]]
 
 
 'correct compile result for "pick up a cube"'

@@ -62,6 +62,22 @@
   [have blocks_world_physics step            step_size]
   [have step_mutex unlock]]
 
+[deftypefunk blocks_world get all_perception_symbols []
+  `[Block-1
+    Block-2
+    Block-3
+    Block-4
+    Gripper-1
+    Gripper-2
+    Table-1
+    left-of          right-of on below is-holding
+    shape            cube pyramid
+    is-a             block gripper table
+    is               me
+    movement_command stop left right grab recoil drop
+    color            brown blue green red white black
+    ]]
+
 [deftypefunk blocks_world execute export_pdf_file [filename]
   [let* [[pdf_surface       [new cairo_pdf_surface filename [get image_width as-double] [get image_height as-double]]]
 	 [pdf_cairo_context [new cairo_context pdf_surface]]]

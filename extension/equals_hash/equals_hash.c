@@ -300,9 +300,8 @@ f2ptr raw__equals_hash__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_ch
   f2ptr chunk         = raw__lick_chunk__chunk(cause, lick_chunk);
   s64   chunk__length = raw__chunk__length(cause, chunk);
   if (chunk__length != (8 * 3)) {
-    return new__error(f2list8__new(cause,
+    return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),         new__symbol(cause, "equals_hash-lick_chunk-unlick_with_nodes-chunk_length_incorrect"),
-				   new__symbol(cause, "this"),             this,
 				   new__symbol(cause, "lick_chunk"),       lick_chunk,
 				   new__symbol(cause, "object_note_hash"), object_note_hash));
   }

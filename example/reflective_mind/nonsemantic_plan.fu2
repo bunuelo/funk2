@@ -1404,8 +1404,7 @@
 	       this                            this]
       [prog [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: interpretting ' [length argument_decision_nodes] ' argument decision nodes.']
 	    [let [[multiple_interpretations [remove_equals_duplicates [mapcar [funk [argument_decision_node]
-										    [let* [[argument_decision_node          [first argument_decision_nodes]]
-											   [argument_decision_node-subnodes [get argument_decision_node subnodes]]]
+										    [let [[argument_decision_node-subnodes [get argument_decision_node subnodes]]]
 										      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]
 									      argument_decision_nodes]]]]
 	      [if [== [length multiple_interpretations] 1]
@@ -1450,6 +1449,18 @@
 	 ,[cond [[null if_false_interpretations]                nil]
 		[[== [length if_false_interpretations]       1] [first if_false_interpretations]]
 		[t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]
+`[prog [if [exists [relationship block property shape 'cube is to my left, move left until over cube, otherwise if a cu...'
+				 preposition right-of
+				 gripper property is-me t]]
+	   [call-below 'move right until over cube']
+	 []]
+       [call-below 'attempt to grab block until gripper stops moving'] 
+       [if [not [exists [relationship gripper property is-me t
+				      preposition is-holding
+				      block property shape 'cube']]]
+	   [fail]
+	 []]]
+
 
 'correct compile result for "pick up a cube"'
 `[prog [if [exists [relationship block property shape 'cube'

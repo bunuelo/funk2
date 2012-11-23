@@ -23,7 +23,10 @@
 [deframe deliberative_layer [mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
 					    [semantic_plan_phenomenal_name_frame               [new frame]]
 					    [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
-					    [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
+					    [plan_semantic_plan_phenomenal_name_frame          [new frame]]
+					    [knowledge_symbol_set_initialized_mutex            [new mutex]]
+					    [knowledge_symbol_set_initialized                  nil]
+					    [knowledge_symbol_set                              [new set]]]
   [new []
        [construct mental_layer 2 `deliberative]
        [parog [have this add_agency [new deliberative_execution_agency]]
@@ -343,5 +346,27 @@
 	      [let [[bug result]]
 		[bug bug]]
 	    result]]]]]]
+
+
+[deftypefunk deliberative_layer get all_knowledge_symbols []
+  [have knowledge_symbol_set_initialized_mutex lock]
+  [if [not knowledge_symbol_set_initialized]
+      [mapc [funk [knowledge_symbol]
+		  [have knowledge_symbol_set add knowledge_symbol]]
+	    [get [get this mind] all_perception_symbols]]]
+  [have knowledge_symbol_set_initialized_mutex unlock]
+  [get knowledge_symbol_set elements]]
+
+[deftypefunk deliberative_layer get knowledge_symbol [value]
+  [let [[symbol [if [is-type `symbol value]
+		    value
+		  [get string as-symbol]]]]
+    [if [get knowledge_symbol_set contains symbol]
+	symbol
+      [error bug_name             `deliberative_layer-get-string_as_knowledge_symbol-no_such_knowledge_symbol
+	     string               string
+	     symbol               symbol
+	     knowledge_symbol_set knowledge_symbol_set]]]]
+
 
 

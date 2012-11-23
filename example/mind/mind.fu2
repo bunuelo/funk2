@@ -101,11 +101,15 @@
     [have index_name_type_mutex unlock]
     [get [string-concat [get name_type as-string] '-' [get index as-string]] as-symbol]]]
 
-
 [deftypefunk mind get name []
   [if [null body]
-      [error bug_name `mind_needs_body_to_have_name]]
-  [get body name]]
+      [error bug_name `mind_needs_body_to_have_name]
+    [get body name]]]
+
+[deftypefunk mind get all_perception_symbols []
+  [if [null body]
+      [error bug_name `mind_needs_body]
+    [get body all_perception_symbols]]]
 
 [deftypefunk mind get layers []
   [get [get this layer_frame] values]]

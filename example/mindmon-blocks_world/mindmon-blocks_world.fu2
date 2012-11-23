@@ -249,7 +249,7 @@
   [new [width height]
        [construct mindmon_world [gensym 'mindmon_blocks_world']]
        [= blocks_world   [new blocks_world [gensym 'blocks_world'] width height]]
-       [= physical_world [new physical_world]]
+       [= physical_world [new physical_world [get blocks_world all_perception_symbols]]]
        ]]
 
 [deftypefunk mindmon_blocks_world get compatible_agent_types []
@@ -302,7 +302,8 @@
 [deftypefunk mindmon_blocks_world get default_step_size []
   0.25]
 
-
+[deftypefunk mindmon_blocks_world get all_perception_symbols []
+  [get blocks_world all_perception_symbols]]
 
 
 

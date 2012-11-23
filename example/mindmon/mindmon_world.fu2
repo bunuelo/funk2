@@ -179,3 +179,9 @@
 	 interface_name        `mindmon_world
 	 problematic_type_name [type this]]]
 
+[deftypefunk mindmon_world get all_perception_symbols []
+  [terminal_format standard-terminal '\nmindmon_world-get-all_perception_symbols not implemented in ' [type this] ' interface.']
+  [error bug_name              `interface_not_implemented
+	 interface_name        `mindmon_world
+	 problematic_type_name [type this]]]
+

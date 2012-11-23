@@ -357,7 +357,9 @@
 			  `[property
 			    relationship
 			    relation
-			    preposition]]]
+			    preposition
+			    is-me
+			    t]]]
 	    [= knowledge_symbol_set_initialized t]]]
   [have knowledge_symbol_set_initialized_mutex unlock]]
 

@@ -40,6 +40,10 @@ f2ptr     raw__equals_hash__remove                   (f2ptr cause, f2ptr this, f
 f2ptr      f2__equals_hash__remove                   (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__equals_hash__lookup                   (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__equals_hash__lookup                   (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr     raw__equals_hash__keys                     (f2ptr cause, f2ptr this);
+f2ptr      f2__equals_hash__keys                     (f2ptr cause, f2ptr this);
+f2ptr     raw__equals_hash__values                   (f2ptr cause, f2ptr this);
+f2ptr      f2__equals_hash__values                   (f2ptr cause, f2ptr this);
 f2ptr     raw__equals_hash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 f2ptr      f2__equals_hash__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
 

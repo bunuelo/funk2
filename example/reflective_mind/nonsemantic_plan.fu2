@@ -1456,8 +1456,8 @@
 	  [if_false_interpretations     [nonsemantic_plan_remove_fails [remove_equals_duplicates [mapcar [funk [if_false_node]
 													       [get this execution_node_as_code [first [get if_false_node subnodes]]]]
 													 if_false_nodes]]]]]
-      [if [and [null if_true_nodes]
-	       [null if_false_nodes]]
+      [if [or [null if_true_nodes]
+	      [null if_false_nodes]]
 	  `[fail]
 	`[if ,[cond [[null if_condition_interpretations]          [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_interpretations_is_null
 									 subnodes subnodes]]

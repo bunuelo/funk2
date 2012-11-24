@@ -57,7 +57,7 @@ void funk2_hash__increase_size(funk2_hash_t* this) {
   u64                     old_bin_num_power = this->bin_num_power;
   funk2_hash_bin_node_t** old_bin_array     = this->bin_array;
   u64                     old_bin_num       = 1ll << old_bin_num_power;
-  funk2_hash__init(this, ((old_bin_num_power * 3) >> 1) + 1);
+  funk2_hash__init(this, ((old_bin_num_power * 9) >> 3) + 1);
   {
     u64 bin_index;
     for (bin_index = 0; bin_index < old_bin_num; bin_index ++) {

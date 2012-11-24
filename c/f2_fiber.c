@@ -696,7 +696,7 @@ void raw__fiber__push_stack(f2ptr cause, f2ptr this, f2ptr element) {
     u64 stack_array__length = raw__array__length(cause, stack_array);
     if (stack_index >= stack_array__length) {
       u64   stack_array__length__bit_num     = u64__bit_num(stack_array__length);
-      u64   new_stack_array__length__bit_num = (((stack_array__length__bit_num * 3) >> 1) + 1);
+      u64   new_stack_array__length__bit_num = (((stack_array__length__bit_num * 9) >> 3) + 1);
       u64   new_stack_array__length          = 1ll << new_stack_array__length__bit_num;
       f2ptr new_stack_array                  = raw__array__new(cause, new_stack_array__length);
       {

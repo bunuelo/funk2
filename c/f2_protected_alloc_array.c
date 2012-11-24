@@ -84,7 +84,7 @@ void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_allo
   if (this->used_num >= this->length) {
     u64 old_length          = this->length;
     u64 old_length__bit_num = u64__bit_num(old_length);
-    u64 new_length__bit_num = ((old_length__bit_num * 3) >> 1) + 1;
+    u64 new_length__bit_num = ((old_length__bit_num * 9) >> 3) + 1;
     this->length = (1ll << new_length__bit_num);
     status("funk2_protected_alloc_array__add_protected_alloc_f2ptr: increasing size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->length);
     this->data = (f2ptr_t*)from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(f2ptr_t) * old_length, sizeof(f2ptr_t) * this->length));

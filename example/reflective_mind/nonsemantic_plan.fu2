@@ -1448,16 +1448,19 @@
 	  [if_false_interpretations     [remove_equals_duplicates [mapcar [funk [if_false_node]
 										[get this execution_node_as_code [first [get if_false_node subnodes]]]]
 									  if_false_nodes]]]]
-      `[if ,[cond [[null if_condition_interpretations]          [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_interpretations_is_null
-								       subnodes subnodes]]
-		  [[== [length if_condition_interpretations] 1] [first if_condition_interpretations]]
-		  [t                                            `[multiple_interpretations @if_condition_interpretations]]]
-	   ,[cond [[null if_true_nodes]                         [fail]]
-		  [[== [length if_true_interpretations]      1] [first if_true_interpretations]]
-		  [t                                            `[multiple_interpretations @if_true_interpretations]]]
-	 ,[cond [[null if_false_interpretations]                [fail]]
-		[[== [length if_false_interpretations]       1] [first if_false_interpretations]]
-		[t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]
+      [if [and [null if_true_nodes]
+	       [null if_false_nodes]]
+	  `[fail]
+	`[if ,[cond [[null if_condition_interpretations]          [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_interpretations_is_null
+									 subnodes subnodes]]
+		    [[== [length if_condition_interpretations] 1] [first if_condition_interpretations]]
+		    [t                                            `[multiple_interpretations @if_condition_interpretations]]]
+	     ,[cond [[null if_true_nodes]                         [fail]]
+		    [[== [length if_true_interpretations]      1] [first if_true_interpretations]]
+		    [t                                            `[multiple_interpretations @if_true_interpretations]]]
+	   ,[cond [[null if_false_interpretations]                [fail]]
+		  [[== [length if_false_interpretations]       1] [first if_false_interpretations]]
+		  [t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]]
 
 'correct compile result for "pick up a cube"'
 `[prog [if [exists [relationship block property shape 'cube'

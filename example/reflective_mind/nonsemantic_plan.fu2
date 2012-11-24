@@ -1456,9 +1456,9 @@
 	   ,[cond [[null if_true_nodes]                         `[fail]]
 		  [[== [length if_true_interpretations]      1] [first if_true_interpretations]]
 		  [t                                            `[multiple_interpretations @if_true_interpretations]]]
-	 ,[cond [[null if_false_interpretations]                `[fail]]
-		[[== [length if_false_interpretations]       1] [first if_false_interpretations]]
-		[t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]
+	 @[cond [[null if_false_interpretations]                [conslist `[fail]]]
+		[[== [length if_false_interpretations]       1] [conslist [first if_false_interpretations]]]
+		[t                                              [conslist `[multiple_interpretations @if_false_interpretations]]]]]]]]
 
 'correct compile result for "pick up a cube"'
 `[prog [if [exists [relationship block property shape 'cube'

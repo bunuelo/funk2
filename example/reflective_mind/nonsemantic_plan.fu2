@@ -1463,10 +1463,10 @@
 									 subnodes subnodes]]
 		    [[== [length if_condition_interpretations] 1] [first if_condition_interpretations]]
 		    [t                                            `[multiple_interpretations @if_condition_interpretations]]]
-	     ,[cond [[null if_true_nodes]                         [fail]]
+	     ,[cond [[null if_true_nodes]                         `[fail]]
 		    [[== [length if_true_interpretations]      1] [first if_true_interpretations]]
 		    [t                                            `[multiple_interpretations @if_true_interpretations]]]
-	   ,[cond [[null if_false_interpretations]                [fail]]
+	   ,[cond [[null if_false_interpretations]                `[fail]]
 		  [[== [length if_false_interpretations]       1] [first if_false_interpretations]]
 		  [t                                              `[multiple_interpretations @if_false_interpretations]]]]]]]]
 

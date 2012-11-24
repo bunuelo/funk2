@@ -71,7 +71,7 @@
     Gripper-2
     Table-1
     left-of          right-of on below is-holding
-    shape            cube pyramid
+    shape            cube pyramid rectangle
     is-a             block gripper table
     is               me
     movement_command stop left right grab recoil drop

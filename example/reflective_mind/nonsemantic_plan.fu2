@@ -1397,7 +1397,7 @@
 								  action_name                     action_name
 								  nonsemantic_plan_execution_node nonsemantic_plan_execution_node]]]]]
 
-[deftypefunk nonsemantic_plan_remove_fails [sequence]
+[defunk nonsemantic_plan_remove_fails [sequence]
   [let [[new_sequence nil]]
     [mapc [funk [element]
 		[if [not [equals element `[fail]]]

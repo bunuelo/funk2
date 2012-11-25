@@ -106,7 +106,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 }
 
-void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, f2ptr cause, const char* lock_source_file, const int lock_line_num) {
+void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   if (! this->is_initialized) {
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
@@ -114,7 +114,9 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, f2ptr c
   }
 #endif
   {
-    u64 lock_tries = 0;
+    int   pool_index = this_processor_thread__pool_index();
+    f2ptr fiber      = raw__global_scheduler__try_get_processor_thread_current_fiber(pool_index);
+    u64   lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
       if (__funk2.user_thread_controller.need_wait &&
 	  (pthread_self() != __funk2.memory.memory_handling_thread)) {
@@ -126,7 +128,12 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, f2ptr c
 	} else {
 	  lock_tries ++;
 	}
-	f2__this__fiber__yield(cause);
+	if (fiber != nil) {
+	  f2ptr cause = nil;
+	  f2__this__fiber__yield(cause);
+	} else {
+	  raw__fast_spin_sleep_yield();
+	}
       }
     }
   }

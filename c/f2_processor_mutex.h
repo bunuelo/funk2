@@ -38,7 +38,7 @@ typedef struct funk2_processor_mutex_s {
 } funk2_processor_mutex_t;
 
 typedef enum funk2_processor_mutex_trylock_result_e {
-  funk2_processor_mutex_trylock_result__success,
+  funk2_processor_mutex_trylock_result__success = 0,
   funk2_processor_mutex_trylock_result__failure
 } funk2_processor_mutex_trylock_result_t;
 

@@ -88,7 +88,7 @@ void raw__ptypehash__increase_size__thread_unsafe__debug(f2ptr cause, f2ptr this
 
 f2ptr raw__ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
-  f2creadwritelock__writelock(f2ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__writelock(cause, f2ptypehash__creadwritelock(this, cause));
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2ptypehash__bin_array(this, cause);
@@ -137,7 +137,7 @@ def_pcfunk3(ptypehash__add, this, slot_name, value,
 boolean_t raw__ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__add assert failed: f2__ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2creadwritelock__writelock(f2ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__writelock(cause, f2ptypehash__creadwritelock(this, cause));
   {
     f2ptr bin_num_power    = f2ptypehash__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -204,7 +204,7 @@ def_pcfunk2(ptypehash__copy_from, this, that,
 f2ptr raw__ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__ptypehash__valid(cause, this), nil, "f2__ptypehash__lookup_keyvalue_pair assert failed: f2__ptypehash__valid(this)");
   //status("ptypehash (" u64__fstr ") attempting to lock write cmutex.", this);
-  f2creadwritelock__readlock(f2ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__readlock(cause, f2ptypehash__creadwritelock(this, cause));
   //status("ptypehash (" u64__fstr ") successfully locked write cmutex.", this);
   f2ptr bin_num_power      = f2ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -268,7 +268,7 @@ def_pcfunk2(ptypehash__contains, this, key,
 
 
 f2ptr raw__ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
-  f2creadwritelock__readlock(f2ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__readlock(cause, f2ptypehash__creadwritelock(this, cause));
   {
     f2ptr bin_array         = f2__ptypehash__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);

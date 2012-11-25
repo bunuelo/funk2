@@ -90,7 +90,7 @@ void raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(f2ptr cause, 
 
 f2ptr raw__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value, char* source_filename, int source_line_number, char* source_funktion_name) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__add assert failed: f2__scheduler_ptypehash__valid(this)");
-  f2creadwritelock__scheduler_writelock(f2scheduler_ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__scheduler_writelock(cause, f2scheduler_ptypehash__creadwritelock(this, cause));
   f2ptr bin_num_power      = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2scheduler_ptypehash__bin_array(this, cause);
@@ -139,7 +139,7 @@ def_pcfunk3(scheduler_ptypehash__add, this, slot_name, value,
 boolean_t raw__scheduler_ptypehash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__add assert failed: f2__scheduler_ptypehash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2creadwritelock__scheduler_writelock(f2scheduler_ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__scheduler_writelock(cause, f2scheduler_ptypehash__creadwritelock(this, cause));
   {
     f2ptr bin_num_power    = f2scheduler_ptypehash__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -206,7 +206,7 @@ def_pcfunk2(scheduler_ptypehash__copy_from, this, that,
 f2ptr raw__scheduler_ptypehash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__scheduler_ptypehash__valid(cause, this), nil, "f2__scheduler_ptypehash__lookup_keyvalue_pair assert failed: f2__scheduler_ptypehash__valid(this)");
   //status("scheduler_ptypehash (" u64__fstr ") attempting to lock write cmutex.", this);
-  f2creadwritelock__scheduler_readlock(f2scheduler_ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__scheduler_readlock(cause, f2scheduler_ptypehash__creadwritelock(this, cause));
   //status("scheduler_ptypehash (" u64__fstr ") successfully locked write cmutex.", this);
   f2ptr bin_num_power      = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -270,7 +270,7 @@ def_pcfunk2(scheduler_ptypehash__contains, this, key,
 
 
 f2ptr raw__scheduler_ptypehash__an_arbitrary_keyvalue_pair(f2ptr cause, f2ptr this) {
-  f2creadwritelock__scheduler_readlock(f2scheduler_ptypehash__creadwritelock(this, cause), cause);
+  raw__creadwritelock__scheduler_readlock(cause, f2scheduler_ptypehash__creadwritelock(this, cause));
   {
     f2ptr bin_array         = f2__scheduler_ptypehash__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);

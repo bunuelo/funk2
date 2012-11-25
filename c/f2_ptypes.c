@@ -566,8 +566,8 @@ f2ptr ptype_cmutex__new(int pool_index, f2ptr cause) {
 
 f2ptr pfunk2__f2cmutex__new(f2ptr cause) {
   check_wait_politely();
-  int pool_index = this_processor_thread__pool_index();
-  f2ptr retval = __pure__f2cmutex__new(pool_index, cause);
+  int   pool_index = this_processor_thread__pool_index();
+  f2ptr retval     = __pure__f2cmutex__new(pool_index, cause);
   return retval;
 }
 
@@ -600,9 +600,15 @@ void pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_processor_mutex_trylock_result_t trylock_result = funk2_processor_mutex_trylock_result__failure;
+  u64 lock_tries = 0;
   while (1) {
     trylock_result = funk2_processor_mutex__trylock(ptype_cmutex__m(this, cause));
     if (trylock_result == funk2_processor_mutex_trylock_result__failure) {
+      if (lock_tries > 1000) {
+	raw__spin_sleep_yield();
+      } else {
+	lock_tries ++;
+      }
       f2__this__fiber__yield(cause);
     } else {
       break;

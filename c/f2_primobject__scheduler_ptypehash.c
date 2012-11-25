@@ -67,7 +67,7 @@ void raw__scheduler_ptypehash__increase_size__thread_unsafe__debug(f2ptr cause, 
   f2ptr bin_num_power            = f2scheduler_ptypehash__bin_num_power(this, cause);
   u64   bin_num_power__i         = f2integer__i(bin_num_power, cause);
   f2ptr bin_array                = f2scheduler_ptypehash__bin_array(this, cause);
-  u64   new_bin_num_power__i     = ((bin_num_power__i * 3) >> 1) + 1;
+  u64   new_bin_num_power__i     = ((bin_num_power__i * 9) >> 3) + 1;
   f2ptr temp_scheduler_ptypehash = raw__scheduler_ptypehash__new(cause, new_bin_num_power__i);
   {
     u64 bin_num = 1ull << bin_num_power__i;

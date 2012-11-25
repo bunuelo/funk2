@@ -63,7 +63,7 @@ void f2__hash__increase_size__thread_unsafe(f2ptr cause, f2ptr fiber, f2ptr this
   f2ptr bin_num_power     = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i  = f2integer__i(bin_num_power, cause);
   f2ptr bin_array         = f2hash__bin_array(this, cause);
-  u64   new_bin_num_power = ((bin_num_power__i * 3) >> 1) + 1;
+  u64   new_bin_num_power = ((bin_num_power__i * 9) >> 3) + 1;
   f2ptr temp_hash         = raw__hash__new(cause, new_bin_num_power, hash_value_funk, equals_funk);
   {
     u64 bin_num = 1ull << bin_num_power__i;

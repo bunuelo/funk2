@@ -110,24 +110,6 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 #define __pure__f2pointer__p(this)                   (((ptype_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->p)
 
 
-// scheduler_cmutex
-
-struct ptype_scheduler_cmutex_block_s {
-  ptype_block_t              ptype;
-  boolean_t                  locked_state; // this state is persistent between boots.
-  funk2_processor_spinlock_t m[1];         // this state is reinitialized at each boot.
-} __attribute__((__packed__));
-typedef struct ptype_scheduler_cmutex_block_s ptype_scheduler_cmutex_block_t;
-
-ptype_scheduler_cmutex_block_t* ptype_scheduler_cmutex_block__new(int pool_index, f2ptr cause);
-funk2_processor_spinlock_t*     ptype_scheduler_cmutex__m(f2ptr this, f2ptr cause);
-
-#define __pure__f2scheduler_cmutex__new(pool_index, cause)         ptype_scheduler_cmutex__new(pool_index, cause)
-#define __pure__f2scheduler_cmutex__locked_state(this)             (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
-#define __pure__f2scheduler_cmutex__locked_state__set(this, value) (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
-#define __pure__f2scheduler_cmutex__m(this)                        (((ptype_scheduler_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
-
-
 // cmutex
 
 struct ptype_cmutex_block_s {
@@ -144,21 +126,6 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 #define __pure__f2cmutex__locked_state(this)             (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
 #define __pure__f2cmutex__locked_state__set(this, value) (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
 #define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
-
-
-// scheduler_creadwritelock
-
-struct ptype_scheduler_creadwritelock_block_s {
-  ptype_block_t                   ptype;
-  funk2_processor_readwritelock_t rwlock[1];
-} __attribute__((__packed__));
-typedef struct ptype_scheduler_creadwritelock_block_s ptype_scheduler_creadwritelock_block_t;
-
-ptype_scheduler_creadwritelock_block_t*    ptype_scheduler_creadwritelock_block__new(int pool_index, f2ptr cause);
-funk2_processor_readwritelock_t* ptype_scheduler_creadwritelock__rwlock   (f2ptr this, f2ptr cause);
-
-#define __pure__f2scheduler_creadwritelock__new(pool_index, cause) ptype_scheduler_creadwritelock__new(pool_index, cause)
-#define __pure__f2scheduler_creadwritelock__rwlock(this)           (((ptype_scheduler_creadwritelock_block_t*)(from_ptr(f2ptr_to_ptr(this))))->rwlock)
 
 
 // creadwritelock

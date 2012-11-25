@@ -48,17 +48,9 @@ void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* th
     if (iter->used) {
       ptype_block_t* block = (ptype_block_t*)iter;
       switch(block->block.ptype) {
-      case ptype_scheduler_cmutex: {
-	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-	funk2_processor_spinlock__destroy(scheduler_cmutex_block->m);
-      } break;
       case ptype_cmutex: {
 	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
 	funk2_processor_mutex__destroy(cmutex_block->m);
-      } break;
-      case ptype_scheduler_creadwritelock: {
-	ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)block;
-	funk2_processor_readwritelock__destroy(scheduler_creadwritelock_block->rwlock);
       } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
@@ -80,24 +72,12 @@ void funk2_defragmenter__memory_pool__initialize_memblocks(funk2_defragmenter_t*
     if (iter->used) {
       ptype_block_t* block = (ptype_block_t*)iter;
       switch(block->block.ptype) {
-      case ptype_scheduler_cmutex: {
-	ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-	funk2_processor_spinlock__init(scheduler_cmutex_block->m);
-	if (scheduler_cmutex_block->locked_state) {
-	  funk2_processor_spinlock__lock(scheduler_cmutex_block->m);
-	}
-      } break;
       case ptype_cmutex: {
 	ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
 	funk2_processor_mutex__init(cmutex_block->m);
 	if (cmutex_block->locked_state) {
 	  funk2_processor_mutex__lock(cmutex_block->m);
 	}
-      } break;
-      case ptype_scheduler_creadwritelock: {
-	ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)block;
-	funk2_processor_readwritelock__init(scheduler_creadwritelock_block->rwlock);
-	// we don't current reinitialize readwritelocks to old states.
       } break;
       case ptype_creadwritelock: {
 	ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;
@@ -202,9 +182,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_double:                   return;
   case ptype_float:                    return;
   case ptype_pointer:                  return;
-  case ptype_scheduler_cmutex:         return;
   case ptype_cmutex:                   return;
-  case ptype_scheduler_creadwritelock: return;
   case ptype_creadwritelock:           return;
   case ptype_char:                     return;
   case ptype_string:                   return;

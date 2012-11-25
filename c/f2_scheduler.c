@@ -419,10 +419,10 @@ def_pcfunk1(global_scheduler__add_fiber, fiber,
 
 
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
-  f2ptr processor_assignment_scheduler_cmutex = f2fiber__processor_assignment_scheduler_cmutex(fiber, cause);
-  f2scheduler_cmutex__lock(processor_assignment_scheduler_cmutex, cause);
+  f2ptr processor_assignment_cmutex = f2fiber__processor_assignment_cmutex(fiber, cause);
+  f2cmutex__scheduler_lock(processor_assignment_cmutex, cause);
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
-  f2scheduler_cmutex__unlock(processor_assignment_scheduler_cmutex, cause);
+  f2cmutex__unlock(processor_assignment_cmutex, cause);
   if (processor_assignment_index != nil) {
     if (raw__integer__is_type(cause, processor_assignment_index)) {
       s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);

@@ -26,7 +26,7 @@
 
 typedef struct funk2_object_type__counter__slot_s funk2_object_type__counter__slot_t;
 declare_object_type_2_slot(counter,
-			   scheduler_cmutex,
+			   cmutex,
 			   value_chunk,
 			   f2ptr value__symbol;
 			   f2ptr value__funk;
@@ -49,7 +49,7 @@ declare_object_type_2_slot(counter,
 #include "f2_primfunks.h"
 
 declare_primobject_2_slot(counter,
-			  scheduler_cmutex,
+			  cmutex,
 			  value_chunk);
 
 f2ptr raw__counter__new       (f2ptr cause);

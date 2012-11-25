@@ -52,9 +52,9 @@ def_primobject_30_slot(fiber,
 		       bytecode_count,
 		       bytes_allocated_count_chunk,
 		       start_cycle_processor_bytes_allocated_count_chunk,
-		       bytes_freed_count_scheduler_cmutex,
+		       bytes_freed_count_cmutex,
 		       bytes_freed_count_chunk,
-		       processor_assignment_scheduler_cmutex,
+		       processor_assignment_cmutex,
 		       processor_assignment_index,
 		       should_quit,
 		       exit_cmutex,
@@ -82,9 +82,9 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   f2ptr bytecode_count                                    = f2integer__new(cause, 0);
   f2ptr bytes_allocated_count_chunk                       = raw__chunk__new(cause, sizeof(u64));
   f2ptr start_cycle_processor_bytes_allocated_count_chunk = raw__chunk__new(cause, sizeof(u64));
-  f2ptr bytes_freed_count_scheduler_cmutex                = f2scheduler_cmutex__new(cause);
+  f2ptr bytes_freed_count_cmutex                = f2cmutex__new(cause);
   f2ptr bytes_freed_count_chunk                           = raw__chunk__new(cause, sizeof(u64));
-  f2ptr processor_assignment_scheduler_cmutex             = f2scheduler_cmutex__new(cause);
+  f2ptr processor_assignment_cmutex             = f2cmutex__new(cause);
   f2ptr processor_assignment_index                        = nil;
   f2ptr should_quit                                       = nil;
   f2ptr exit_cmutex                                       = f2__cmutex__new(cause);
@@ -113,9 +113,9 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
 				 bytecode_count,
 				 bytes_allocated_count_chunk,
 				 start_cycle_processor_bytes_allocated_count_chunk,
-				 bytes_freed_count_scheduler_cmutex,
+				 bytes_freed_count_cmutex,
 				 bytes_freed_count_chunk,
-				 processor_assignment_scheduler_cmutex,
+				 processor_assignment_cmutex,
 				 processor_assignment_index,
 				 should_quit,
 				 exit_cmutex,
@@ -292,10 +292,10 @@ def_pcfunk2(fiber__bytes_freed_count__set, this, bytes_freed_count,
 
 
 void raw__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, u64 relative_bytes_freed_count) {
-  f2ptr bytes_freed_count_scheduler_cmutex = f2fiber__bytes_freed_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytes_freed_count_scheduler_cmutex, cause);
+  f2ptr bytes_freed_count_cmutex = f2fiber__bytes_freed_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytes_freed_count_cmutex, cause);
   raw__fiber__bytes_freed_count__set(cause, this, raw__fiber__bytes_freed_count(cause, this) + relative_bytes_freed_count);
-  f2scheduler_cmutex__unlock(bytes_freed_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytes_freed_count_cmutex, cause);
   {
     f2ptr cause_reg = f2fiber__cause_reg(this , cause);
     if (cause_reg != nil) {
@@ -1358,9 +1358,9 @@ void f2__fiber__defragment__fix_pointers() {
 							  bytecode_count,
 							  bytes_allocated_count_chunk,
 							  start_cycle_processor_bytes_allocated_count_chunk,
-							  bytes_freed_count_scheduler_cmutex,
+							  bytes_freed_count_cmutex,
 							  bytes_freed_count_chunk,
-							  processor_assignment_scheduler_cmutex,
+							  processor_assignment_cmutex,
 							  processor_assignment_index,
 							  should_quit,
 							  exit_cmutex,
@@ -1529,9 +1529,9 @@ void f2__fiber__reinitialize_globalvars() {
 				bytecode_count,
 				bytes_allocated_count_chunk,
 				start_cycle_processor_bytes_allocated_count_chunk,
-				bytes_freed_count_scheduler_cmutex,
+				bytes_freed_count_cmutex,
 				bytes_freed_count_chunk,
-				processor_assignment_scheduler_cmutex,
+				processor_assignment_cmutex,
 				processor_assignment_index,
 				should_quit,
 				exit_cmutex,

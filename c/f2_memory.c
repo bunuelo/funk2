@@ -615,24 +615,12 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
 		f2ptr block_f2ptr = funk2_memory__ptr_to_f2ptr__slow(this, to_ptr(block));
 		funk2_symbol_hash__add_symbol(&(__funk2.ptypes.symbol_hash), block_f2ptr);
 	      } break;
-	      case ptype_scheduler_cmutex: {
-		ptype_scheduler_cmutex_block_t* scheduler_cmutex_block = (ptype_scheduler_cmutex_block_t*)block;
-		funk2_processor_spinlock__init(scheduler_cmutex_block->m);
-		if (scheduler_cmutex_block->locked_state) {
-		  funk2_processor_spinlock__lock(scheduler_cmutex_block->m);
-		}
-	      } break;
 	      case ptype_cmutex: {
 		ptype_cmutex_block_t* cmutex_block = (ptype_cmutex_block_t*)block;
 		funk2_processor_mutex__init(cmutex_block->m);
 		if (cmutex_block->locked_state) {
 		  funk2_processor_mutex__lock(cmutex_block->m);
 		}
-	      } break;
-	      case ptype_scheduler_creadwritelock: {
-		ptype_scheduler_creadwritelock_block_t* scheduler_creadwritelock_block = (ptype_scheduler_creadwritelock_block_t*)block;
-		funk2_processor_readwritelock__init(scheduler_creadwritelock_block->rwlock);
-		// we currently don't reinitialize scheduler_creadwritelocks to old states...
 	      } break;
 	      case ptype_creadwritelock: {
 		ptype_creadwritelock_block_t* creadwritelock_block = (ptype_creadwritelock_block_t*)block;

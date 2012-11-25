@@ -675,12 +675,14 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
 
-
+// called by user thread
 void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
   funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_cons_t)));
   cons->callback = callback;
   
-  funk2_processor_mutex__user_lock(&(this->callbacks__mutex));
+  while (funk2_processor_mutex__trylock(&(this->callbacks__mutex)) != funk2_processor_mutex_trylock_result__success) {
+    f2__this__fiber__yield(nil);
+  }
   cons->next      = this->callbacks;
   this->callbacks = cons->next;
   funk2_processor_mutex__unlock(&(this->callbacks__mutex));
@@ -697,6 +699,7 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   }
 }
 
+// called by gtk processor thread
 void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args) {
   funk2_gtk_callback_event_cons_t* cons  = (funk2_gtk_callback_event_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_cons_t)));
   funk2_gtk_callback_event_t*      event = (funk2_gtk_callback_event_t*)     from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_t)));
@@ -704,7 +707,7 @@ void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* call
   event->args     = args;
   cons->callback_event = event;
   cons->next           = NULL;
-  funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
+  funk2_processor_mutex__lock(&(this->callback_events__mutex));
   if (this->callback_events__last_cons) {
     this->callback_events__last_cons->next = cons;
     this->callback_events__last_cons       = cons;
@@ -715,9 +718,12 @@ void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* call
   funk2_processor_mutex__unlock(&(this->callback_events__mutex));
 }
 
+// called by user thread
 funk2_gtk_callback_event_t* funk2_gtk__pop_callback_event(funk2_gtk_t* this) {
   funk2_gtk_callback_event_t* callback_event = NULL;
-  funk2_processor_mutex__user_lock(&(this->callback_events__mutex));
+  while (funk2_processor_mutex__trylock(&(this->callback_events__mutex)) != funk2_processor_mutex_trylock_result__success) {
+    f2__this__fiber__yield(nil);
+  }
   if (this->callback_events) {
     funk2_gtk_callback_event_cons_t* cons = this->callback_events;
     this->callback_events = this->callback_events->next;

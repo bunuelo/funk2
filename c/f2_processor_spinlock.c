@@ -108,11 +108,14 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
 	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
       }
       {
-	lock_tries ++;
-	if (lock_tries > 1000) {
-	  raw__spin_sleep_yield();
-	} else {
+	if (lock_tries < 1000) {
+	  // spin fast
+	  lock_tries ++;
+	} else if (lock_tries < 2000) {
 	  raw__fast_spin_sleep_yield();
+	  lock_tries ++;
+	} else {
+	  raw__spin_sleep_yield();
 	}
       }
     }

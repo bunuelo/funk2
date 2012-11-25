@@ -57,6 +57,11 @@ def_pcfunk3(processor__new, scheduler, pool_index, desc,
 	    return f2__processor__new(this_cause, scheduler, pool_index, desc));
 
 
+u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) {
+  f2ptr active_fibers_count_chunk = f2processor__active_fibers_count_chunk(this, cause);
+  return raw__chunk__bit64__elt(cause, active_fibers_count_chunk, 0);
+}
+
 // note: this is a scheduler funktion, see scheduler_cmutex__lock
 u64 raw__processor__scheduler_active_fibers_count(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);
@@ -66,11 +71,6 @@ u64 raw__processor__scheduler_active_fibers_count(f2ptr cause, f2ptr this) {
   return active_fibers_count__i;
 }
 
-
-u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) {
-  f2ptr active_fibers_count_chunk = f2processor__active_fibers_count_chunk(this, cause);
-  return raw__chunk__bit64__elt(cause, active_fibers_count_chunk, 0);
-}
 
 u64 raw__processor__active_fibers_count(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_scheduler_cmutex = f2processor__active_fibers_scheduler_cmutex(this, cause);

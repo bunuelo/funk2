@@ -94,11 +94,12 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   {
     u64 lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-      lock_tries ++;
       if (lock_tries < 1000) {
 	// spin fast
+	lock_tries ++;
       } else if (lock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
+	lock_tries ++;
       } else {
 	raw__spin_sleep_yield();
       }
@@ -114,25 +115,21 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
   }
 #endif
   {
-    int   pool_index = this_processor_thread__pool_index();
-    f2ptr fiber      = raw__global_scheduler__try_get_processor_thread_current_fiber(pool_index);
-    u64   lock_tries = 0;
+    u64 lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
       if (__funk2.user_thread_controller.need_wait &&
 	  (pthread_self() != __funk2.memory.memory_handling_thread)) {
 	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
       }
       {
-	if (lock_tries > 1000) {
-	  raw__spin_sleep_yield();
-	} else {
+	if (lock_tries < 1000) {
+	  // spin fast
 	  lock_tries ++;
-	}
-	if (fiber != nil) {
-	  f2ptr cause = nil;
-	  f2__this__fiber__yield(cause);
-	} else {
+	} else if (lock_tries < 2000) {
 	  raw__fast_spin_sleep_yield();
+	  lock_tries ++;
+	} else {
+	  raw__spin_sleep_yield();
 	}
       }
     }

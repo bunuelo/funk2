@@ -72,7 +72,7 @@ def_pcfunk1(list__cdr, this,
 
 
 f2ptr raw__list__add(f2ptr cause, f2ptr this, f2ptr element) {
-  f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2list__write_cmutex(this, cause));
   f2list__cons_cells__set(this, cause, raw__cons__new(cause, element, f2list__cons_cells(this, cause)));
   f2ptr length = f2list__length(this, cause);
   s64 length__i = f2integer__i(length, cause);
@@ -91,7 +91,7 @@ def_pcfunk2(list__add, this, element,
 
 
 f2ptr raw__list__lookup(f2ptr cause, f2ptr this, f2ptr element) {
-  f2cmutex__lock(f2list__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2list__write_cmutex(this, cause));
   f2ptr iter = f2list__cons_cells(this, cause);
   while (iter) {
     f2ptr iter__element = f2cons__car(iter, cause);

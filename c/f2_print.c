@@ -1769,7 +1769,7 @@ f2ptr raw__terminal_format(f2ptr cause, f2ptr terminal_print_frame, f2ptr expres
   f2ptr cmutex;
   if (terminal_print_frame != nil) {
     cmutex = f2__terminal_print_frame__cmutex(cause, terminal_print_frame);
-    f2cmutex__lock(cmutex, cause);
+    raw__cmutex__lock(cause, cmutex);
   }
   f2ptr result = raw__terminal_format__thread_unsafe(cause, terminal_print_frame, expressions);
   if (terminal_print_frame != nil) {

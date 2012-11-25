@@ -95,7 +95,7 @@ f2ptr raw__frame__add_type_var_value(f2ptr cause, f2ptr this, f2ptr type, f2ptr 
   debug__assert(raw__ptypehash__is_type(cause, frame__type_ptypehash), nil, "frame__type_ptypehash is not ptypehash.");
   f2ptr type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
   if (! type__ptypehash) {
-    f2cmutex__lock(f2frame__new_type_cmutex(this, cause), cause);
+    raw__cmutex__lock(cause, f2frame__new_type_cmutex(this, cause));
     type__ptypehash = f2__ptypehash__lookup(cause, frame__type_ptypehash, type);
     if (! type__ptypehash) {
       type__ptypehash = raw__ptypehash__new(cause, 6);

@@ -38,7 +38,7 @@ def_pcfunk0(circular_buffer__new,
 	    return f2__circular_buffer__new(this_cause));
 
 f2ptr f2__circular_buffer__pop(f2ptr cause, f2ptr this) {
-  f2cmutex__lock(f2circular_buffer__access_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2circular_buffer__access_cmutex(this, cause));
   u64 raw_start = f2integer__i(f2circular_buffer__start(this, cause), cause);
   u64 raw_end   = f2integer__i(f2circular_buffer__end(this, cause), cause);
   if (raw_start == raw_end) {
@@ -83,7 +83,7 @@ void raw__circular_buffer__double_size(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__circular_buffer__add(f2ptr cause, f2ptr this, f2ptr value) {
-  f2cmutex__lock(f2circular_buffer__access_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2circular_buffer__access_cmutex(this, cause));
   boolean_t just_resized;
   u64       raw_start;
   u64       raw_end;
@@ -115,7 +115,7 @@ def_pcfunk2(circular_buffer__add, this, value,
 	    return f2__circular_buffer__add(this_cause, this, value));
 
 boolean_t raw__circular_buffer__is_empty(f2ptr cause, f2ptr this) {
-  f2cmutex__lock(f2circular_buffer__access_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2circular_buffer__access_cmutex(this, cause));
   f2ptr start = f2circular_buffer__start(this, cause);
   f2ptr end   = f2circular_buffer__end(this, cause);
   u64 raw_start = f2integer__i(start, cause);

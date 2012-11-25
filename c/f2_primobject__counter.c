@@ -46,7 +46,7 @@ def_pcfunk0(counter__new,
 f2ptr raw__counter__value(f2ptr cause, f2ptr this) {
   f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2cmutex__scheduler_lock(cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, cmutex);
   s64 value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
   f2cmutex__unlock(cmutex, cause);
   return f2integer__new(cause, value__i);
@@ -64,7 +64,7 @@ def_pcfunk1(counter__value, this,
 void raw__counter__value__set(f2ptr cause, f2ptr this, s64 value__i) {
   f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2cmutex__scheduler_lock(cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, cmutex);
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, value__i);
   f2cmutex__unlock(cmutex, cause);
 }
@@ -84,7 +84,7 @@ def_pcfunk2(counter__value__set, this, value,
 void raw__counter__increment(f2ptr cause, f2ptr this, s64 relative_value__i) {
   f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2cmutex__scheduler_lock(cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, cmutex);
   s64 old_value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
   s64 new_value__i = old_value__i + relative_value__i;
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, new_value__i);
@@ -106,7 +106,7 @@ def_pcfunk2(counter__increment, this, value,
 void raw__counter__decrement(f2ptr cause, f2ptr this, s64 relative_value__i) {
   f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2cmutex__scheduler_lock(cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, cmutex);
   s64 old_value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
   s64 new_value__i = old_value__i - relative_value__i;
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, new_value__i);

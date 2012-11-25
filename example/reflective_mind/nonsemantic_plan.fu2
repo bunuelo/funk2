@@ -999,7 +999,7 @@
 								      is_plan_bug t
 								      action_name action_name]
 							     [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-								   [let [[result [have-apply action imagine_waiting_to_call action_arguments]]]
+								   [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 								     [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
 	[t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
 							      correct_types `[nonsemantic_plan_value]
@@ -1014,7 +1014,7 @@
 								      is_plan_bug t
 								      action_name action_name]
 							     [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
-								   [let [[result [have-apply action imagine_waiting_to_call action_arguments]]]
+								   [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 								     [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
 	[t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
 							      correct_types `[nonsemantic_plan_value]
@@ -1476,6 +1476,36 @@
 				      block property shape 'cube']]]
 	   [fail]
 	 []]]
+
+`[prog [prog [if [exists [relationship block property shape 'cube'
+				       preposition left-of
+				       gripper ...]]
+		 [call-below 'move left until over cube']
+	       [if [exists [relationship block property ...]]
+		   [call-below 'move right until over cube']
+		 []]]
+	     [call-below 'attempt to grab block until gripper stops moving'] 
+	     [if [not [exists [relationship gripper property is-me t
+					    preposition is-holding
+					    block property shape 'cube']]]
+		 [fail]
+	       []]] 
+       [prog [if [exists [relationship block property shape 'pyramid'
+				       preposition left-of
+				       gripper property is-me t]]
+		 [call-below 'move left until over pyramid']
+	       [if [exists [relationship block property shape 'pyramid'
+					 preposition right-of
+					 gripper property ...]]
+		   [call-below 'move right until over pyramid'] 
+		 []]]
+	     [call-below 'drop block and wait for block to fall']] 
+       [if [not [exists [relationship block property shape 'cube'
+				      preposition on
+				      block property shape 'pyramid']]]
+	   [fail]
+	 []]]
+
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-exists [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]

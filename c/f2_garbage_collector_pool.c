@@ -36,7 +36,7 @@ void funk2_garbage_collector_mutation_buffer__destroy(funk2_garbage_collector_mu
 }
 
 void funk2_garbage_collector_mutation_buffer__know_of_mutation(funk2_garbage_collector_mutation_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->mutex));
   if (this->count == this->alloc_length) {
     u64      old_alloc_length = this->alloc_length;
     f2ptr_t* old_data         = this->data;
@@ -147,7 +147,7 @@ void funk2_garbage_collector_no_more_references_buffer__destroy(funk2_garbage_co
 }
 
 void funk2_garbage_collector_no_more_references_buffer__know_of_no_more_references(funk2_garbage_collector_no_more_references_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->mutex));
   if (this->count == this->alloc_length) {
     u64      old_alloc_length = this->alloc_length;
     f2ptr_t* old_data         = this->data;
@@ -260,7 +260,7 @@ void funk2_garbage_collector_protected_f2ptr_buffer__destroy(funk2_garbage_colle
 }
 
 void funk2_garbage_collector_protected_f2ptr_buffer__know_of_protected_f2ptr(funk2_garbage_collector_protected_f2ptr_buffer_t* this, f2ptr exp) {
-  funk2_processor_mutex__user_lock(&(this->mutex));
+  funk2_processor_mutex__lock(&(this->mutex));
   if (this->count == this->alloc_length) {
     u64      old_alloc_length = this->alloc_length;
     f2ptr_t* old_data         = this->data;

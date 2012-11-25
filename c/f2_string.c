@@ -866,7 +866,7 @@ f2ptr raw__string__format(f2ptr cause, f2ptr expressions) {
   f2ptr iter       = expressions;
   f2ptr stringlist = nil;
   {
-    f2ptr stringlist__iter;
+    f2ptr stringlist__iter = nil;
     while (iter != nil) {
       f2ptr expression = f2cons__car(iter, cause);
       f2ptr new_expression;

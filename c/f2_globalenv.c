@@ -133,9 +133,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_double__symbol                   = new__symbol(cause, "ptype_double");
   this->ptype_float__symbol                    = new__symbol(cause, "ptype_float");
   this->ptype_pointer__symbol                  = new__symbol(cause, "ptype_pointer");
-  this->ptype_scheduler_cmutex__symbol         = new__symbol(cause, "ptype_scheduler_cmutex");
   this->ptype_cmutex__symbol                   = new__symbol(cause, "ptype_cmutex");
-  this->ptype_scheduler_creadwritelock__symbol = new__symbol(cause, "ptype_scheduler_creadwritelock");
   this->ptype_creadwritelock__symbol           = new__symbol(cause, "ptype_creadwritelock");
   this->ptype_char__symbol                     = new__symbol(cause, "ptype_char");
   this->ptype_string__symbol                   = new__symbol(cause, "ptype_string");
@@ -256,9 +254,7 @@ void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {
   defragment__fix_pointer(this->ptype_double__symbol);
   defragment__fix_pointer(this->ptype_float__symbol);
   defragment__fix_pointer(this->ptype_pointer__symbol);
-  defragment__fix_pointer(this->ptype_scheduler_cmutex__symbol);
   defragment__fix_pointer(this->ptype_cmutex__symbol);
-  defragment__fix_pointer(this->ptype_scheduler_creadwritelock__symbol);
   defragment__fix_pointer(this->ptype_creadwritelock__symbol);
   defragment__fix_pointer(this->ptype_char__symbol);
   defragment__fix_pointer(this->ptype_string__symbol);

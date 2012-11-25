@@ -1589,171 +1589,6 @@ f2ptr f2pointer__primobject_type__new(f2ptr cause) {
 }
 
 
-// scheduler_cmutex
-
-boolean_t raw__scheduler_cmutex__is_type(f2ptr cause, f2ptr x) {
-  //check_wait_politely();
-  //#ifdef F2__PTYPE__TYPE_CHECK
-  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-  //#endif // F2__PTYPE__TYPE_CHECK
-  return (x && f2ptype__raw(x, cause) == ptype_scheduler_cmutex);
-}
-f2ptr f2__scheduler_cmutex__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__scheduler_cmutex__is_type(cause, x));}
-def_pcfunk1(scheduler_cmutex__is_type, x,
-	    "",
-	    return f2__scheduler_cmutex__is_type(this_cause, x));
-
-f2ptr f2__scheduler_cmutex__type(f2ptr cause, f2ptr x) {return new__symbol(cause, "scheduler_cmutex");}
-def_pcfunk1(scheduler_cmutex__type, x,
-	    "",
-	    return f2__scheduler_cmutex__type(this_cause, x));
-
-f2ptr f2__scheduler_cmutex__new(f2ptr cause) {return f2scheduler_cmutex__new(cause);}
-def_pcfunk0(scheduler_cmutex__new,
-	    "",
-	    return f2__scheduler_cmutex__new(this_cause));
-
-
-boolean_t raw__scheduler_cmutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  return (this == that);
-}
-
-f2ptr f2__scheduler_cmutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  return f2bool__new(raw__scheduler_cmutex__eq(cause, this, that));
-}
-def_pcfunk2(scheduler_cmutex__eq, this, that,
-	    "",
-	    return f2__scheduler_cmutex__eq(this_cause, this, that));
-
-
-u64 raw__scheduler_cmutex__eq_hash_value(f2ptr cause, f2ptr this) {
-  return ((u64)this);
-}
-
-f2ptr f2__scheduler_cmutex__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__scheduler_cmutex__eq_hash_value(cause, this));}
-def_pcfunk1(scheduler_cmutex__eq_hash_value, this,
-	    "",
-	    return f2__scheduler_cmutex__eq_hash_value(this_cause, this));
-
-
-boolean_t raw__scheduler_cmutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__scheduler_cmutex__eq(cause, this, that);
-}
-
-f2ptr f2__scheduler_cmutex__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(scheduler_cmutex, this);
-  return f2bool__new(raw__scheduler_cmutex__equals(cause, this, that));
-}
-def_pcfunk2(scheduler_cmutex__equals, this, that,
-	    "",
-	    return f2__scheduler_cmutex__equals(this_cause, this, that));
-
-
-u64 raw__scheduler_cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  funk2_processor_spinlock_t* m = __pure__f2scheduler_cmutex__m(this);
-  return funk2_processor_spinlock__equals_hash_value(m);
-}
-
-f2ptr f2__scheduler_cmutex__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  assert_argument_type(scheduler_cmutex, this);
-  return f2integer__new(cause, raw__scheduler_cmutex__equals_hash_value__loop_free(cause, this, node_ptypehash));
-}
-def_pcfunk2(scheduler_cmutex__equals_hash_value__loop_free, this, node_ptypehash,
-	    "",
-	    return f2__scheduler_cmutex__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
-
-
-u64 raw__scheduler_cmutex__equals_hash_value(f2ptr cause, f2ptr this) {
-  funk2_processor_spinlock_t* m = __pure__f2scheduler_cmutex__m(this);
-  return funk2_processor_spinlock__equals_hash_value(m);
-}
-
-f2ptr f2__scheduler_cmutex__equals_hash_value(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_cmutex, this);
-  return f2integer__new(cause, raw__scheduler_cmutex__equals_hash_value(cause, this));
-}
-def_pcfunk1(scheduler_cmutex__equals_hash_value, this,
-	    "",
-	    return f2__scheduler_cmutex__equals_hash_value(this_cause, this));
-
-
-f2ptr raw__scheduler_cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  {
-    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
-    u64   size__i = f2integer__i(size, cause);
-    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
-  }
-  funk2_character_t scheduler_cmutex_string[128];
-  u64               scheduler_cmutex_string__length;
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_cmutex__foreground);
-    scheduler_cmutex_string__length = funk2_character_string__snprintf(scheduler_cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_cmutex_string__length, scheduler_cmutex_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
-    scheduler_cmutex_string__length = funk2_character_string__snprintf(scheduler_cmutex_string, 128, "scheduler_cmutex");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_cmutex_string__length, scheduler_cmutex_string);
-  }
-  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-    return nil;
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_cmutex__foreground);
-    scheduler_cmutex_string__length = funk2_character_string__snprintf(scheduler_cmutex_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_cmutex_string__length, scheduler_cmutex_string);
-  }
-  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
-  return nil;
-}
-
-f2ptr f2__scheduler_cmutex__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(scheduler_cmutex,      this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
-  return raw__scheduler_cmutex__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(scheduler_cmutex__terminal_print_with_frame, this, terminal_print_frame,
-	    "",
-	    return f2__scheduler_cmutex__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2__scheduler_cmutex__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
-  if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
-    if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__funk;
-    }
-  } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
-  } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
-    if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk;
-    }
-  }
-  return nil;
-}
-
-f2ptr f2scheduler_cmutex__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
-  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__funk);}
-  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk);}
-  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__funk);}
-  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__funk);}
-  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 // cmutex
 
 boolean_t raw__cmutex__is_type(f2ptr cause, f2ptr x) {
@@ -1797,15 +1632,17 @@ def_pcfunk1(cmutex__is_locked, this,
 	    "",
 	    return f2__cmutex__is_locked(this_cause, this));
 
-void raw__cmutex__lock(f2ptr cause, f2ptr this) {
-  f2cmutex__lock(this, cause);
+boolean_t raw__cmutex__trylock(f2ptr cause, f2ptr this) {
+  return (f2cmutex__trylock(this, cause) != 0) ? boolean__true : boolean__false;
 }
 
-f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this) {
+f2ptr f2__cmutex__trylock(f2ptr cause, f2ptr this) {
   assert_argument_type(cmutex, this);
-  raw__cmutex__lock(cause, this);
-  return nil;
+  return f2bool__new(raw__cmutex__trylock(cause, this));
 }
+def_pcfunk1(cmutex__trylock, this,
+	    "",
+	    return f2__cmutex__trylock(this_cause, this));
 
 void raw__cmutex__unlock(f2ptr cause, f2ptr this) {
   f2cmutex__unlock(this, cause);
@@ -1820,17 +1657,58 @@ def_pcfunk1(cmutex__unlock, this,
 	    "",
 	    return f2__cmutex__unlock(this_cause, this));
 
-boolean_t raw__cmutex__trylock(f2ptr cause, f2ptr this) {
-  return (f2cmutex__trylock(this, cause) != 0) ? boolean__true : boolean__false;
+void raw__cmutex__scheduler_lock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__cmutex__trylock(cause, this)) {
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
 }
 
-f2ptr f2__cmutex__trylock(f2ptr cause, f2ptr this) {
-  assert_argument_type(cmutex, this);
-  return f2bool__new(raw__cmutex__trylock(cause, this));
+void raw__cmutex__user_lock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__cmutex__trylock(cause, this)) {
+    funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
 }
-def_pcfunk1(cmutex__trylock, this,
-	    "",
-	    return f2__cmutex__trylock(this_cause, this));
+
+void raw__cmutex__lock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__cmutex__trylock(cause, this)) {
+    f2__this__fiber__yield(cause);
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
+}
+
+f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this) {
+  assert_argument_type(cmutex, this);
+  raw__cmutex__lock(cause, this);
+  return nil;
+}
 
 boolean_t raw__cmutex__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return (this == that);
@@ -1990,279 +1868,6 @@ f2ptr f2cmutex__primobject_type__new(f2ptr cause) {
 }
 
 
-// scheduler_creadwritelock
-
-boolean_t raw__scheduler_creadwritelock__is_type(f2ptr cause, f2ptr x) {
-  //check_wait_politely();
-  //#ifdef F2__PTYPE__TYPE_CHECK
-  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-  //#endif // F2__PTYPE__TYPE_CHECK
-  return ((x != nil) &&
-	  (f2ptype__raw(x, cause) == ptype_scheduler_creadwritelock));
-}
-f2ptr f2__scheduler_creadwritelock__is_type(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__is_type(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__is_type, this,
-	    "",
-	    return f2__scheduler_creadwritelock__is_type(this_cause, this));
-
-f2ptr f2__scheduler_creadwritelock__type(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return new__symbol(cause, "scheduler_creadwritelock");
-}
-def_pcfunk1(scheduler_creadwritelock__type, this,
-	    "",
-	    return f2__scheduler_creadwritelock__type(this_cause, this));
-
-f2ptr f2__scheduler_creadwritelock__new(f2ptr cause) {return f2scheduler_creadwritelock__new(cause);}
-def_pcfunk0(scheduler_creadwritelock__new,
-	    "",
-	    return f2__scheduler_creadwritelock__new(this_cause));
-
-boolean_t raw__scheduler_creadwritelock__is_writelocked(f2ptr cause, f2ptr this) {
-  return f2scheduler_creadwritelock__is_writelocked(this, cause);
-}
-
-f2ptr f2__scheduler_creadwritelock__is_writelocked(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__is_writelocked(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__is_writelocked, this,
-	    "",
-	    return f2__scheduler_creadwritelock__is_writelocked(this_cause, this));
-
-boolean_t raw__scheduler_creadwritelock__is_readlocked(f2ptr cause, f2ptr this) {
-  return f2scheduler_creadwritelock__is_readlocked(this, cause);
-}
-
-f2ptr f2__scheduler_creadwritelock__is_readlocked(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__is_readlocked(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__is_readlocked, this,
-	    "",
-	    return f2__scheduler_creadwritelock__is_readlocked(this_cause, this));
-
-void raw__scheduler_creadwritelock__writelock(f2ptr cause, f2ptr this) {
-  f2scheduler_creadwritelock__writelock(this, cause);
-}
-
-f2ptr f2__scheduler_creadwritelock__writelock(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  raw__scheduler_creadwritelock__writelock(cause, this);
-  return nil;
-}
-
-void raw__scheduler_creadwritelock__readlock(f2ptr cause, f2ptr this) {
-  f2scheduler_creadwritelock__readlock(this, cause);
-}
-
-f2ptr f2__scheduler_creadwritelock__readlock(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  raw__scheduler_creadwritelock__readlock(cause, this);
-  return nil;
-}
-
-void raw__scheduler_creadwritelock__unlock(f2ptr cause, f2ptr this) {
-  f2scheduler_creadwritelock__unlock(this, cause);
-}
-
-f2ptr f2__scheduler_creadwritelock__unlock(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  raw__scheduler_creadwritelock__unlock(cause, this);
-  return nil;
-}
-def_pcfunk1(scheduler_creadwritelock__unlock, this,
-	    "",
-	    return f2__scheduler_creadwritelock__unlock(this_cause, this));
-
-boolean_t raw__scheduler_creadwritelock__trywritelock(f2ptr cause, f2ptr this) {
-  return (f2scheduler_creadwritelock__trywritelock(this, cause) != 0) ? boolean__true : boolean__false;
-}
-
-f2ptr f2__scheduler_creadwritelock__trywritelock(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__trywritelock(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__trywritelock, this,
-	    "",
-	    return f2__scheduler_creadwritelock__trywritelock(this_cause, this));
-
-boolean_t raw__scheduler_creadwritelock__tryreadlock(f2ptr cause, f2ptr this) {
-  return (f2scheduler_creadwritelock__tryreadlock(this, cause) != 0) ? boolean__true : boolean__false;
-}
-
-f2ptr f2__scheduler_creadwritelock__tryreadlock(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__tryreadlock(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__tryreadlock, this,
-	    "",
-	    return f2__scheduler_creadwritelock__tryreadlock(this_cause, this));
-
-boolean_t raw__scheduler_creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  return (this == that);
-}
-
-f2ptr f2__scheduler_creadwritelock__eq(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__eq(cause, this, that));
-}
-def_pcfunk2(scheduler_creadwritelock__eq, this, that,
-	    "",
-	    return f2__scheduler_creadwritelock__eq(this_cause, this, that));
-
-u64 raw__scheduler_creadwritelock__eq_hash_value(f2ptr cause, f2ptr this) {
-  return ((u64)this);
-}
-
-f2ptr f2__scheduler_creadwritelock__eq_hash_value(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2integer__new(cause, raw__scheduler_creadwritelock__eq_hash_value(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__eq_hash_value, this,
-	    "",
-	    return f2__scheduler_creadwritelock__eq_hash_value(this_cause, this));
-
-boolean_t raw__scheduler_creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__scheduler_creadwritelock__eq(cause, this, that);
-}
-
-f2ptr f2__scheduler_creadwritelock__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2bool__new(raw__scheduler_creadwritelock__equals(cause, this, that));
-}
-def_pcfunk2(scheduler_creadwritelock__equals, this, that,
-	    "",
-	    return f2__scheduler_creadwritelock__equals(this_cause, this, that));
-
-
-u64 raw__scheduler_creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  return raw__scheduler_creadwritelock__eq_hash_value(cause, this);
-}
-
-f2ptr f2__scheduler_creadwritelock__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2integer__new(cause, raw__scheduler_creadwritelock__equals_hash_value__loop_free(cause, this, node_ptypehash));
-}
-def_pcfunk2(scheduler_creadwritelock__equals_hash_value__loop_free, this, node_ptypehash,
-	    "",
-	    return f2__scheduler_creadwritelock__equals_hash_value__loop_free(this_cause, this, node_ptypehash));
-
-
-u64 raw__scheduler_creadwritelock__equals_hash_value(f2ptr cause, f2ptr this) {
-  funk2_processor_readwritelock_t* rwlock = __pure__f2scheduler_creadwritelock__rwlock(this);
-  return funk2_processor_readwritelock__equals_hash_value(rwlock);
-}
-
-f2ptr f2__scheduler_creadwritelock__equals_hash_value(f2ptr cause, f2ptr this) {
-  assert_argument_type(scheduler_creadwritelock, this);
-  return f2integer__new(cause, raw__scheduler_creadwritelock__equals_hash_value(cause, this));
-}
-def_pcfunk1(scheduler_creadwritelock__equals_hash_value, this,
-	    "",
-	    return f2__scheduler_creadwritelock__equals_hash_value(this_cause, this));
-
-
-f2ptr raw__scheduler_creadwritelock__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  {
-    f2ptr size    = f2__terminal_print_frame__size(cause, terminal_print_frame);
-    u64   size__i = f2integer__i(size, cause);
-    size__i ++; size = f2integer__new(cause, size__i); f2__terminal_print_frame__size__set(cause, terminal_print_frame, size);
-  }
-  funk2_character_t scheduler_creadwritelock_string[128];
-  u64               scheduler_creadwritelock_string__length;
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_creadwritelock__foreground);
-    scheduler_creadwritelock_string__length = funk2_character_string__snprintf(scheduler_creadwritelock_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__left_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_creadwritelock_string__length, scheduler_creadwritelock_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__type__foreground);
-    scheduler_creadwritelock_string__length = funk2_character_string__snprintf(scheduler_creadwritelock_string, 128, "scheduler_creadwritelock ");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_creadwritelock_string__length, scheduler_creadwritelock_string);
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__symbol__key__foreground);
-    scheduler_creadwritelock_string__length = funk2_character_string__snprintf(scheduler_creadwritelock_string, 128, "is_writelocked ");
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_creadwritelock_string__length, scheduler_creadwritelock_string);
-  }
-  f2ptr result = raw__exp__terminal_print_with_frame__thread_unsafe(cause, f2bool__new(f2scheduler_creadwritelock__is_writelocked(this, cause)), terminal_print_frame);
-  if (raw__larva__is_type(cause, result)) {
-    return result;
-  }
-  if (raw__terminal_print_frame__failed_test_constraint_and_should_return(cause, terminal_print_frame)) {
-    return nil;
-  }
-  {
-    raw__terminal_print_frame__write_color__thread_unsafe(cause, terminal_print_frame, print__ansi__scheduler_creadwritelock__foreground);
-    scheduler_creadwritelock_string__length = funk2_character_string__snprintf(scheduler_creadwritelock_string, 128, "%c", (char)f2char__ch(__funk2.reader.char__right_paren, cause));
-    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, scheduler_creadwritelock_string__length, scheduler_creadwritelock_string);
-  }
-  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
-  return nil;
-}
-
-f2ptr f2__scheduler_creadwritelock__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
-  assert_argument_type(scheduler_creadwritelock,                this);
-  assert_argument_type(terminal_print_frame, terminal_print_frame);
-  return raw__scheduler_creadwritelock__terminal_print_with_frame(cause, this, terminal_print_frame);
-}
-def_pcfunk2(scheduler_creadwritelock__terminal_print_with_frame, this, terminal_print_frame,
-	    "",
-	    return f2__scheduler_creadwritelock__terminal_print_with_frame(this_cause, this, terminal_print_frame));
-
-
-f2ptr f2__scheduler_creadwritelock__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name) {
-  if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.get__symbol)) {
-    if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__funk;
-    }
-  } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.set__symbol)) {
-  } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
-    if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__funk;
-    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__symbol)) {
-      return __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__funk;
-    }
-  }
-  return nil;
-}
-
-f2ptr f2scheduler_creadwritelock__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
-  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.type__funk);}
-  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__funk);}
-  {char* slot_name = "trywritelock";                f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__funk);}
-  {char* slot_name = "tryreadlock";                 f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__funk);}
-  {char* slot_name = "unlock";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__funk);}
-  {char* slot_name = "is_writelocked";              f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_writelocked__funk);}
-  {char* slot_name = "is_readlocked";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_readlocked__funk);}
-  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__funk);}
-  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__funk);}
-  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__funk);}
-  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.terminal_print_with_frame__funk);}
-  return this;
-}
-
-
 // creadwritelock
 
 boolean_t raw__creadwritelock__is_type(f2ptr cause, f2ptr x) {
@@ -2318,8 +1923,51 @@ def_pcfunk1(creadwritelock__is_readlocked, this,
 	    "",
 	    return f2__creadwritelock__is_readlocked(this_cause, this));
 
+void raw__creadwritelock__scheduler_writelock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__trywritelock(cause, this)) {
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
+}
+
+void raw__creadwritelock__user_writelock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__trywritelock(cause, this)) {
+    funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
+}
+
 void raw__creadwritelock__writelock(f2ptr cause, f2ptr this) {
-  f2creadwritelock__writelock(this, cause);
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__trywritelock(cause, this)) {
+    f2__this__fiber__yield(cause);
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
 }
 
 f2ptr f2__creadwritelock__writelock(f2ptr cause, f2ptr this) {
@@ -2328,8 +1976,51 @@ f2ptr f2__creadwritelock__writelock(f2ptr cause, f2ptr this) {
   return nil;
 }
 
+void raw__creadwritelock__scheduler_readlock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__tryreadlock(cause, this)) {
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
+}
+
+void raw__creadwritelock__user_readlock(f2ptr cause, f2ptr this) {
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__tryreadlock(cause, this)) {
+    funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
+}
+
 void raw__creadwritelock__readlock(f2ptr cause, f2ptr this) {
-  f2creadwritelock__readlock(this, cause);
+  u64 lock_tries = 0;
+  while (raw__creadwritelock__tryreadlock(cause, this)) {
+    f2__this__fiber__yield(cause);
+    if (lock_tries < 1000) {
+      // spin fast
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
+      raw__fast_spin_sleep_yield();
+      lock_tries ++;
+    } else {
+      raw__spin_sleep_yield();
+    }
+  }
 }
 
 f2ptr f2__creadwritelock__readlock(f2ptr cause, f2ptr this) {
@@ -5424,44 +5115,6 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(pointer__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_pointer.terminal_print_with_frame__funk);
   
-  // scheduler_cmutex
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__is_type);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__type);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__eq);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__eq_hash_value);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals_hash_value__loop_free);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__equals_hash_value);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_cmutex__terminal_print_with_frame);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__funk);
-  
   // cmutex
   
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.is_type__symbol);
@@ -5511,64 +5164,6 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(cmutex__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__funk);
-  
-  // scheduler_creadwritelock
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_type__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__is_type);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_type__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.type__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__type);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.type__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__new);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__unlock);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__trywritelock);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__tryreadlock);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_writelocked__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__is_writelocked);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_writelocked__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_readlocked__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__is_readlocked);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_readlocked__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__eq);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__eq_hash_value);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__equals);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__equals_hash_value__loop_free);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__equals_hash_value);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(scheduler_creadwritelock__terminal_print_with_frame);
-  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.terminal_print_with_frame__funk);
   
   // creadwritelock
   
@@ -6306,27 +5901,6 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_pointer.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(pointer__terminal_print_with_frame, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_pointer.terminal_print_with_frame__funk = never_gc(cfunk);}
   
-  // scheduler_cmutex
-  
-  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_cmutex__is_type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.is_type__funk = never_gc(cfunk);}
-  {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_cmutex__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.type__funk = never_gc(cfunk);}
-  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_cmutex__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.new__funk = never_gc(cfunk);}
-  {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_cmutex__eq, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq__funk = never_gc(cfunk);}
-  {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_cmutex__eq_hash_value, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.eq_hash_value__funk = never_gc(cfunk);}
-  {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_cmutex__equals, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals__funk = never_gc(cfunk);}
-  {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_cmutex__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__loop_free__funk = never_gc(cfunk);}
-  {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_cmutex__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.equals_hash_value__funk = never_gc(cfunk);}
-  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
-  
   // cmutex
   
   {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_cmutex.is_type__symbol = new__symbol(cause, str);}
@@ -6353,37 +5927,6 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cmutex__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.equals_hash_value__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(cmutex__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_cmutex.terminal_print_with_frame__funk = never_gc(cfunk);}
-  
-  // scheduler_creadwritelock
-  
-  {char* str = "is_type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_type__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__is_type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_type__funk = never_gc(cfunk);}
-  {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.type__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.type__funk = never_gc(cfunk);}
-  {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.new__funk = never_gc(cfunk);}
-  {char* str = "unlock"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__unlock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.unlock__funk = never_gc(cfunk);}
-  {char* str = "trywritelock"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__trywritelock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.trywritelock__funk = never_gc(cfunk);}
-  {char* str = "tryreadlock"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__tryreadlock, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.tryreadlock__funk = never_gc(cfunk);}
-  {char* str = "is_writelocked"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_writelocked__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__is_writelocked, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_writelocked__funk = never_gc(cfunk);}
-  {char* str = "is_readlocked"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_readlocked__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__is_readlocked, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.is_readlocked__funk = never_gc(cfunk);}
-  {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_creadwritelock__eq, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq__funk = never_gc(cfunk);}
-  {char* str = "eq_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_creadwritelock__eq_hash_value, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.eq_hash_value__funk = never_gc(cfunk);}
-  {char* str = "equals"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_creadwritelock__equals, this, that, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals__funk = never_gc(cfunk);}
-  {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_creadwritelock__equals_hash_value__loop_free, this, node_ptypehash, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__loop_free__funk = never_gc(cfunk);}
-  {char* str = "equals_hash_value"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(scheduler_creadwritelock__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.equals_hash_value__funk = never_gc(cfunk);}
-  {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.terminal_print_with_frame__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(scheduler_creadwritelock__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_scheduler_creadwritelock.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // creadwritelock
   

@@ -26,25 +26,25 @@
 
 def_primobject_6_slot(cause_group_interaction,
 		      read_events_count_chunk,
-		      bytes_read_count_scheduler_cmutex,
+		      bytes_read_count_cmutex,
 		      bytes_read_count_chunk,
 		      write_events_count_chunk,
-		      bytes_written_count_scheduler_cmutex,
+		      bytes_written_count_cmutex,
 		      bytes_written_count_chunk);
 
 f2ptr f2__cause_group_interaction__new(f2ptr cause) {
   f2ptr read_events_count_chunk              = raw__chunk__new(cause, sizeof(u64));
-  f2ptr bytes_read_count_scheduler_cmutex    = f2scheduler_cmutex__new(cause);
+  f2ptr bytes_read_count_cmutex    = f2cmutex__new(cause);
   f2ptr bytes_read_count_chunk               = raw__chunk__new(cause, sizeof(u64));
   f2ptr write_events_count_chunk             = raw__chunk__new(cause, sizeof(u64));
-  f2ptr bytes_written_count_scheduler_cmutex = f2scheduler_cmutex__new(cause);
+  f2ptr bytes_written_count_cmutex = f2cmutex__new(cause);
   f2ptr bytes_written_count_chunk            = raw__chunk__new(cause, sizeof(u64));
   return f2cause_group_interaction__new(cause,
 					read_events_count_chunk,
-					bytes_read_count_scheduler_cmutex,
+					bytes_read_count_cmutex,
 					bytes_read_count_chunk,
 					write_events_count_chunk,
-					bytes_written_count_scheduler_cmutex,
+					bytes_written_count_cmutex,
 					bytes_written_count_chunk);
 }
 def_pcfunk0(cause_group_interaction__new,
@@ -115,8 +115,8 @@ def_pcfunk2(cause_group_interaction__bytes_read_count__set, this, bytes_read_cou
 
 
 void raw__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, u64 relative_bytes_read_count) {
-  f2ptr bytes_read_count_scheduler_cmutex = f2cause_group_interaction__bytes_read_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytes_read_count_scheduler_cmutex, cause);
+  f2ptr bytes_read_count_cmutex = f2cause_group_interaction__bytes_read_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytes_read_count_cmutex, cause);
   {
     u64 read_events_count = raw__cause_group_interaction__read_events_count(cause, this);
     raw__cause_group_interaction__read_events_count__set(cause, this, read_events_count + 1);
@@ -125,7 +125,7 @@ void raw__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr 
     u64 bytes_read_count = raw__cause_group_interaction__bytes_read_count(cause, this);
     raw__cause_group_interaction__bytes_read_count__set(cause, this, bytes_read_count + relative_bytes_read_count);
   }
-  f2scheduler_cmutex__unlock(bytes_read_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytes_read_count_cmutex, cause);
 }
 
 f2ptr f2__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_read_count) {
@@ -203,8 +203,8 @@ def_pcfunk2(cause_group_interaction__bytes_written_count__set, this, bytes_writt
 
 
 void raw__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2ptr this, u64 relative_bytes_written_count) {
-  f2ptr bytes_written_count_scheduler_cmutex = f2cause_group_interaction__bytes_written_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytes_written_count_scheduler_cmutex, cause);
+  f2ptr bytes_written_count_cmutex = f2cause_group_interaction__bytes_written_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytes_written_count_cmutex, cause);
   {
     u64 write_events_count = raw__cause_group_interaction__write_events_count(cause, this);
     raw__cause_group_interaction__write_events_count__set(cause, this, write_events_count + 1);
@@ -213,7 +213,7 @@ void raw__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2p
     u64 bytes_written_count = raw__cause_group_interaction__bytes_written_count(cause, this);
     raw__cause_group_interaction__bytes_written_count__set(cause, this, bytes_written_count + relative_bytes_written_count);
   }
-  f2scheduler_cmutex__unlock(bytes_written_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytes_written_count_cmutex, cause);
 }
 
 f2ptr f2__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_written_count) {
@@ -276,38 +276,38 @@ f2ptr f2cause_group_interaction__primobject_type__new_aux(f2ptr cause) {
 // cause_group
 
 def_primobject_11_slot(cause_group,
-		       bytecode_count_scheduler_cmutex,
+		       bytecode_count_cmutex,
 		       bytecode_count_chunk,
-		       execution_nanoseconds_scheduler_cmutex,
+		       execution_nanoseconds_cmutex,
 		       execution_nanoseconds_chunk,
-		       bytes_allocated_count_scheduler_cmutex,
+		       bytes_allocated_count_cmutex,
 		       bytes_allocated_count_chunk,
-		       bytes_freed_count_scheduler_cmutex,
+		       bytes_freed_count_cmutex,
 		       bytes_freed_count_chunk,
 		       cause_group_interaction_scheduler_ptypehash,
 		       counter_scheduler_ptypehash,
 		       frame);
 
 f2ptr f2__cause_group__new(f2ptr cause) {
-  f2ptr bytecode_count_scheduler_cmutex             = f2scheduler_cmutex__new(cause);
+  f2ptr bytecode_count_cmutex             = f2cmutex__new(cause);
   f2ptr bytecode_count_chunk                        = raw__chunk__new(cause, sizeof(u64));
-  f2ptr execution_nanoseconds_scheduler_cmutex      = f2scheduler_cmutex__new(cause);
+  f2ptr execution_nanoseconds_cmutex      = f2cmutex__new(cause);
   f2ptr execution_nanoseconds_chunk                 = raw__chunk__new(cause, sizeof(u64));
-  f2ptr bytes_allocated_count_scheduler_cmutex      = f2scheduler_cmutex__new(cause);
+  f2ptr bytes_allocated_count_cmutex      = f2cmutex__new(cause);
   f2ptr bytes_allocated_count_chunk                 = raw__chunk__new(cause, sizeof(u64));
-  f2ptr bytes_freed_count_scheduler_cmutex          = f2scheduler_cmutex__new(cause);
+  f2ptr bytes_freed_count_cmutex          = f2cmutex__new(cause);
   f2ptr bytes_freed_count_chunk                     = raw__chunk__new(cause, sizeof(u64));
   f2ptr cause_group_interaction_scheduler_ptypehash = f2__scheduler_ptypehash__new(cause);
   f2ptr counter_scheduler_ptypehash                 = f2__scheduler_ptypehash__new(cause);
   f2ptr frame                                       = f2__frame__new(cause, nil);
   return f2cause_group__new(cause,
-			    bytecode_count_scheduler_cmutex,
+			    bytecode_count_cmutex,
 			    bytecode_count_chunk,
-			    execution_nanoseconds_scheduler_cmutex,
+			    execution_nanoseconds_cmutex,
 			    execution_nanoseconds_chunk,
-			    bytes_allocated_count_scheduler_cmutex,
+			    bytes_allocated_count_cmutex,
 			    bytes_allocated_count_chunk,
-			    bytes_freed_count_scheduler_cmutex,
+			    bytes_freed_count_cmutex,
 			    bytes_freed_count_chunk,
 			    cause_group_interaction_scheduler_ptypehash,
 			    counter_scheduler_ptypehash,
@@ -350,11 +350,11 @@ def_pcfunk2(cause_group__bytecode_count__set, this, bytecode_count,
 
 
 void raw__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
-  f2ptr bytecode_count_scheduler_cmutex = f2cause_group__bytecode_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytecode_count_scheduler_cmutex, cause);
+  f2ptr bytecode_count_cmutex = f2cause_group__bytecode_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytecode_count_cmutex, cause);
   u64 bytecode_count = raw__cause_group__bytecode_count(cause, this);
   raw__cause_group__bytecode_count__set(cause, this, bytecode_count + relative_bytecode_count);
-  f2scheduler_cmutex__unlock(bytecode_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytecode_count_cmutex, cause);
 }
 
 f2ptr f2__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, f2ptr relative_bytecode_count) {
@@ -401,11 +401,11 @@ def_pcfunk2(cause_group__execution_nanoseconds__set, this, execution_nanoseconds
 
 
 void raw__cause_group__increase_execution_nanoseconds(f2ptr cause, f2ptr this, u64 relative_execution_nanoseconds) {
-  f2ptr execution_nanoseconds_scheduler_cmutex = f2cause_group__execution_nanoseconds_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(execution_nanoseconds_scheduler_cmutex, cause);
+  f2ptr execution_nanoseconds_cmutex = f2cause_group__execution_nanoseconds_cmutex(this, cause);
+  f2cmutex__scheduler_lock(execution_nanoseconds_cmutex, cause);
   u64 execution_nanoseconds = raw__cause_group__execution_nanoseconds(cause, this);
   raw__cause_group__execution_nanoseconds__set(cause, this, execution_nanoseconds + relative_execution_nanoseconds);
-  f2scheduler_cmutex__unlock(execution_nanoseconds_scheduler_cmutex, cause);
+  f2cmutex__unlock(execution_nanoseconds_cmutex, cause);
 }
 
 f2ptr f2__cause_group__increase_execution_nanoseconds(f2ptr cause, f2ptr this, f2ptr relative_execution_nanoseconds) {
@@ -466,11 +466,11 @@ def_pcfunk2(cause_group__bytes_allocated_count__set, this, bytes_allocated_count
 
 
 void raw__cause_group__increase_bytes_allocated_count(f2ptr cause, f2ptr this, u64 relative_bytes_allocated_count) {
-  f2ptr bytes_allocated_count_scheduler_cmutex = f2cause_group__bytes_allocated_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytes_allocated_count_scheduler_cmutex, cause);
+  f2ptr bytes_allocated_count_cmutex = f2cause_group__bytes_allocated_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytes_allocated_count_cmutex, cause);
   u64 bytes_allocated_count = raw__cause_group__bytes_allocated_count(cause, this);
   raw__cause_group__bytes_allocated_count__set(cause, this, bytes_allocated_count + relative_bytes_allocated_count);
-  f2scheduler_cmutex__unlock(bytes_allocated_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytes_allocated_count_cmutex, cause);
 }
 
 f2ptr f2__cause_group__increase_bytes_allocated_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_allocated_count) {
@@ -517,11 +517,11 @@ def_pcfunk2(cause_group__bytes_freed_count__set, this, bytes_freed_count,
 
 
 void raw__cause_group__increase_bytes_freed_count(f2ptr cause, f2ptr this, u64 relative_bytes_freed_count) {
-  f2ptr bytes_freed_count_scheduler_cmutex = f2cause_group__bytes_freed_count_scheduler_cmutex(this, cause);
-  f2scheduler_cmutex__lock(bytes_freed_count_scheduler_cmutex, cause);
+  f2ptr bytes_freed_count_cmutex = f2cause_group__bytes_freed_count_cmutex(this, cause);
+  f2cmutex__scheduler_lock(bytes_freed_count_cmutex, cause);
   u64 bytes_freed_count = raw__cause_group__bytes_freed_count(cause, this);
   raw__cause_group__bytes_freed_count__set(cause, this, bytes_freed_count + relative_bytes_freed_count);
-  f2scheduler_cmutex__unlock(bytes_freed_count_scheduler_cmutex, cause);
+  f2cmutex__unlock(bytes_freed_count_cmutex, cause);
 }
 
 f2ptr f2__cause_group__increase_bytes_freed_count(f2ptr cause, f2ptr this, f2ptr relative_bytes_freed_count) {
@@ -1377,10 +1377,10 @@ void f2__cause__defragment__fix_pointers() {
   
   initialize_primobject_6_slot__defragment__fix_pointers(cause_group_interaction,
 							 read_events_count_chunk,
-							 bytes_read_count_scheduler_cmutex,
+							 bytes_read_count_cmutex,
 							 bytes_read_count_chunk,
 							 write_events_count_chunk,
-							 bytes_written_count_scheduler_cmutex,
+							 bytes_written_count_cmutex,
 							 bytes_written_count_chunk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__symbol);
@@ -1431,13 +1431,13 @@ void f2__cause__defragment__fix_pointers() {
   // cause_group
   
   initialize_primobject_11_slot__defragment__fix_pointers(cause_group,
-							  bytecode_count_scheduler_cmutex,
+							  bytecode_count_cmutex,
 							 bytecode_count_chunk,
-							  execution_nanoseconds_scheduler_cmutex,
+							  execution_nanoseconds_cmutex,
 							  execution_nanoseconds_chunk,
-							  bytes_allocated_count_scheduler_cmutex,
+							  bytes_allocated_count_cmutex,
 							  bytes_allocated_count_chunk,
-							  bytes_freed_count_scheduler_cmutex,
+							  bytes_freed_count_cmutex,
 							  bytes_freed_count_chunk,
 							  cause_group_interaction_scheduler_ptypehash,
 							  counter_scheduler_ptypehash,
@@ -1630,10 +1630,10 @@ void f2__cause__reinitialize_globalvars() {
   
   initialize_primobject_6_slot(cause_group_interaction,
 			       read_events_count_chunk,
-			       bytes_read_count_scheduler_cmutex,
+			       bytes_read_count_cmutex,
 			       bytes_read_count_chunk,
 			       write_events_count_chunk,
-			       bytes_written_count_scheduler_cmutex,
+			       bytes_written_count_cmutex,
 			       bytes_written_count_chunk);
   
   {char* symbol_str = "read_events_count"; __funk2.globalenv.object_type.primobject.primobject_type_cause_group_interaction.read_events_count__symbol = new__symbol(cause, symbol_str);}
@@ -1673,13 +1673,13 @@ void f2__cause__reinitialize_globalvars() {
   // cause_group
   
   initialize_primobject_11_slot(cause_group,
-				bytecode_count_scheduler_cmutex,
+				bytecode_count_cmutex,
 				bytecode_count_chunk,
-				execution_nanoseconds_scheduler_cmutex,
+				execution_nanoseconds_cmutex,
 				execution_nanoseconds_chunk,
-				bytes_allocated_count_scheduler_cmutex,
+				bytes_allocated_count_cmutex,
 				bytes_allocated_count_chunk,
-				bytes_freed_count_scheduler_cmutex,
+				bytes_freed_count_cmutex,
 				bytes_freed_count_chunk,
 				cause_group_interaction_scheduler_ptypehash,
 				counter_scheduler_ptypehash,

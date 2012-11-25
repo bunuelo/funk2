@@ -24,14 +24,14 @@
 // counter
 
 def_primobject_2_slot(counter,
-		      scheduler_cmutex,
+		      cmutex,
 		      value_chunk);
 
 f2ptr raw__counter__new(f2ptr cause) {
-  f2ptr scheduler_cmutex = f2__scheduler_cmutex__new(cause);
+  f2ptr cmutex = f2__cmutex__new(cause);
   f2ptr value_chunk      = raw__chunk__new(cause, sizeof(s64));
   return f2counter__new(cause,
-			scheduler_cmutex,
+			cmutex,
 			value_chunk);
 }
 
@@ -44,11 +44,11 @@ def_pcfunk0(counter__new,
 
 
 f2ptr raw__counter__value(f2ptr cause, f2ptr this) {
-  f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
+  f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
+  f2cmutex__scheduler_lock(cmutex, cause);
   s64 value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
-  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
+  f2cmutex__unlock(cmutex, cause);
   return f2integer__new(cause, value__i);
 }
 
@@ -62,11 +62,11 @@ def_pcfunk1(counter__value, this,
 
 
 void raw__counter__value__set(f2ptr cause, f2ptr this, s64 value__i) {
-  f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
+  f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
+  f2cmutex__scheduler_lock(cmutex, cause);
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, value__i);
-  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
+  f2cmutex__unlock(cmutex, cause);
 }
 
 f2ptr f2__counter__value__set(f2ptr cause, f2ptr this, f2ptr value) {
@@ -82,13 +82,13 @@ def_pcfunk2(counter__value__set, this, value,
 
 
 void raw__counter__increment(f2ptr cause, f2ptr this, s64 relative_value__i) {
-  f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
+  f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
+  f2cmutex__scheduler_lock(cmutex, cause);
   s64 old_value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
   s64 new_value__i = old_value__i + relative_value__i;
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, new_value__i);
-  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
+  f2cmutex__unlock(cmutex, cause);
 }
 
 f2ptr f2__counter__increment(f2ptr cause, f2ptr this, f2ptr value) {
@@ -104,13 +104,13 @@ def_pcfunk2(counter__increment, this, value,
 
 
 void raw__counter__decrement(f2ptr cause, f2ptr this, s64 relative_value__i) {
-  f2ptr scheduler_cmutex = f2counter__scheduler_cmutex(this, cause);
+  f2ptr cmutex = f2counter__cmutex(this, cause);
   f2ptr value_chunk      = f2counter__value_chunk(this, cause);
-  f2scheduler_cmutex__lock(scheduler_cmutex, cause);
+  f2cmutex__scheduler_lock(cmutex, cause);
   s64 old_value__i = raw__chunk__bit64__elt(cause, value_chunk, 0);
   s64 new_value__i = old_value__i - relative_value__i;
   raw__chunk__bit64__elt__set(cause, value_chunk, 0, new_value__i);
-  f2scheduler_cmutex__unlock(scheduler_cmutex, cause);
+  f2cmutex__unlock(cmutex, cause);
 }
 
 f2ptr f2__counter__decrement(f2ptr cause, f2ptr this, f2ptr value) {
@@ -170,7 +170,7 @@ void f2__primobject__counter__defragment__fix_pointers() {
   // counter
   
   initialize_primobject_2_slot__defragment__fix_pointers(counter,
-							 scheduler_cmutex,
+							 cmutex,
 							 value_chunk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_counter.value__symbol);
@@ -201,7 +201,7 @@ void f2__primobject__counter__reinitialize_globalvars() {
   // counter
   
   initialize_primobject_2_slot(counter,
-			       scheduler_cmutex,
+			       cmutex,
 			       value_chunk);
   
   {char* symbol_str = "value__set"; __funk2.globalenv.object_type.primobject.primobject_type_counter.value__set__symbol = new__symbol(cause, symbol_str);}

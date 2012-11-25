@@ -38,9 +38,7 @@ ansi_color_t print__ansi__integer__foreground                  = ansi_color__lig
 ansi_color_t print__ansi__double__foreground                   = ansi_color__light_blue;
 ansi_color_t print__ansi__float__foreground                    = ansi_color__light_blue;
 ansi_color_t print__ansi__pointer__foreground                  = ansi_color__light_blue;
-ansi_color_t print__ansi__scheduler_cmutex__foreground         = ansi_color__white;
 ansi_color_t print__ansi__cmutex__foreground                   = ansi_color__white;
-ansi_color_t print__ansi__scheduler_creadwritelock__foreground = ansi_color__white;
 ansi_color_t print__ansi__creadwritelock__foreground           = ansi_color__white;
 ansi_color_t print__ansi__char__foreground                     = ansi_color__light_blue;
 ansi_color_t print__ansi__string__foreground                   = ansi_color__light_red;
@@ -338,18 +336,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	sprintf(temp_str, ptr__fstr, f2pointer__p(exp, cause)); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
-      case ptype_scheduler_cmutex: {
-	f2__write__ansi_color(cause, stream, print__ansi__scheduler_cmutex__foreground, use_ansi_colors, use_html);
-	char temp_str[128];
-	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
-	
-	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "scheduler_cmutex"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
-	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-      } break;
       case ptype_cmutex: {
 	int subexp_size[2];
 	
@@ -366,26 +352,6 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	sprintf(temp_str, "is_locked "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
 	f2ptr is_locked = f2bool__new(f2cmutex__is_locked(exp, cause));
 	f2__write_pretty(cause, fiber, stream, is_locked, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
-	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
-      } break;
-      case ptype_scheduler_creadwritelock: {
-	int subexp_size[2];
-	
-	f2__write__ansi_color(cause, stream, print__ansi__scheduler_creadwritelock__foreground, use_ansi_colors, use_html);
-	char temp_str[128];
-	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__begin_char, cause));} width ++;
-	
-	f2__write__ansi_color(cause, stream, print__ansi__symbol__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "scheduler_creadwritelock"); if(stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	
-	if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
-	f2__write__ansi_color(cause, stream, print__ansi__symbol__key__foreground, use_ansi_colors, use_html);
-	sprintf(temp_str, "is_writelocked "); if (stream) {raw__stream__writef(cause, stream, "%s", temp_str);} width += strlen(temp_str);
-	f2ptr is_writelocked = f2bool__new(f2scheduler_creadwritelock__is_writelocked(exp, cause));
-	f2__write_pretty(cause, fiber, stream, is_writelocked, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, 0, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
 	if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(causal_debug__end_char, cause));} width ++;
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);

@@ -109,34 +109,12 @@ f2ptr pfunk2__f2pointer__new(f2ptr cause, ptr p);
 ptr   pfunk2__f2pointer__p(f2ptr this, f2ptr cause);
 
 
-// scheduler_cmutex
-
-f2ptr            pfunk2__f2scheduler_cmutex__new(f2ptr cause);
-boolean_t        pfunk2__f2scheduler_cmutex__is_locked(f2ptr this, f2ptr cause);
-void             pfunk2__f2scheduler_cmutex__lock(f2ptr this, f2ptr cause);
-void             pfunk2__f2scheduler_cmutex__unlock(f2ptr this, f2ptr cause);
-int              pfunk2__f2scheduler_cmutex__trylock(f2ptr this, f2ptr cause);
-
-
 // cmutex
 
 f2ptr     pfunk2__f2cmutex__new(f2ptr cause);
 boolean_t pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause);
-void      pfunk2__f2cmutex__lock(f2ptr this, f2ptr cause);
 void      pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause);
 int       pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause);
-
-
-// scheduler_creadwritelock
-
-f2ptr     pfunk2__f2scheduler_creadwritelock__new           (f2ptr cause);
-boolean_t pfunk2__f2scheduler_creadwritelock__is_writelocked(f2ptr this, f2ptr cause);
-boolean_t pfunk2__f2scheduler_creadwritelock__is_readlocked (f2ptr this, f2ptr cause);
-void      pfunk2__f2scheduler_creadwritelock__writelock     (f2ptr this, f2ptr cause);
-void      pfunk2__f2scheduler_creadwritelock__readlock      (f2ptr this, f2ptr cause);
-void      pfunk2__f2scheduler_creadwritelock__unlock        (f2ptr this, f2ptr cause);
-int       pfunk2__f2scheduler_creadwritelock__trywritelock  (f2ptr this, f2ptr cause);
-int       pfunk2__f2scheduler_creadwritelock__tryreadlock   (f2ptr this, f2ptr cause);
 
 
 // creadwritelock
@@ -144,8 +122,6 @@ int       pfunk2__f2scheduler_creadwritelock__tryreadlock   (f2ptr this, f2ptr c
 f2ptr     pfunk2__f2creadwritelock__new           (f2ptr cause);
 boolean_t pfunk2__f2creadwritelock__is_writelocked(f2ptr this, f2ptr cause);
 boolean_t pfunk2__f2creadwritelock__is_readlocked (f2ptr this, f2ptr cause);
-void      pfunk2__f2creadwritelock__writelock     (f2ptr this, f2ptr cause);
-void      pfunk2__f2creadwritelock__readlock      (f2ptr this, f2ptr cause);
 void      pfunk2__f2creadwritelock__unlock        (f2ptr this, f2ptr cause);
 int       pfunk2__f2creadwritelock__trywritelock  (f2ptr this, f2ptr cause);
 int       pfunk2__f2creadwritelock__tryreadlock   (f2ptr this, f2ptr cause);

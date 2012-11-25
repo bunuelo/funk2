@@ -42,20 +42,20 @@ typedef enum funk2_processor_mutex_trylock_result_e {
   funk2_processor_mutex_trylock_result__failure
 } funk2_processor_mutex_trylock_result_t;
 
-void                                   funk2_processor_mutex__init(funk2_processor_mutex_t* this);
-void                                   funk2_processor_mutex__destroy(funk2_processor_mutex_t* this);
-boolean_t                              funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this);
-funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
-void                                   funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
-void                                   funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
-void                                   funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);
-u64                                    funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this);
+void                                   funk2_processor_mutex__init             (funk2_processor_mutex_t* this);
+void                                   funk2_processor_mutex__destroy          (funk2_processor_mutex_t* this);
+boolean_t                              funk2_processor_mutex__is_locked        (funk2_processor_mutex_t* this);
+funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock      (funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
+void                                   funk2_processor_mutex__raw_lock         (funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
+void                                   funk2_processor_mutex__raw_user_lock    (funk2_processor_mutex_t* this, f2ptr cause, const char* lock_source_file, const int lock_line_num);
+void                                   funk2_processor_mutex__raw_unlock       (funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);
+u64                                    funk2_processor_mutex__eq_hash_value    (funk2_processor_mutex_t* this);
 u64                                    funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this);
 
-#define funk2_processor_mutex__trylock(  this) funk2_processor_mutex__raw_trylock(  this, __FILE__, __LINE__)
-#define funk2_processor_mutex__lock(     this) funk2_processor_mutex__raw_lock(     this, __FILE__, __LINE__)
-#define funk2_processor_mutex__user_lock(this) funk2_processor_mutex__raw_user_lock(this, __FILE__, __LINE__)
-#define funk2_processor_mutex__unlock(   this) funk2_processor_mutex__raw_unlock(   this, __FILE__, __LINE__)
+#define funk2_processor_mutex__trylock(  this)        funk2_processor_mutex__raw_trylock(  this, __FILE__, __LINE__)
+#define funk2_processor_mutex__lock(     this)        funk2_processor_mutex__raw_lock(     this, __FILE__, __LINE__)
+#define funk2_processor_mutex__user_lock(this)        funk2_processor_mutex__raw_user_lock(this, nil, __FILE__, __LINE__)
+#define funk2_processor_mutex__unlock(   this)        funk2_processor_mutex__raw_unlock(   this, __FILE__, __LINE__)
 
 
 #define pthread_cond_wait_while(condition, pthread_cond, pthread_mutex) { \

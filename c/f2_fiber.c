@@ -293,7 +293,7 @@ def_pcfunk2(fiber__bytes_freed_count__set, this, bytes_freed_count,
 
 void raw__fiber__increment_bytes_freed_count(f2ptr cause, f2ptr this, u64 relative_bytes_freed_count) {
   f2ptr bytes_freed_count_cmutex = f2fiber__bytes_freed_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytes_freed_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytes_freed_count_cmutex);
   raw__fiber__bytes_freed_count__set(cause, this, raw__fiber__bytes_freed_count(cause, this) + relative_bytes_freed_count);
   f2cmutex__unlock(bytes_freed_count_cmutex, cause);
   {

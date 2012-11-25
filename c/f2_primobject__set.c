@@ -76,7 +76,7 @@ void raw__set__increase_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char
 
 f2ptr raw__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name) {
   debug__assert(raw__set__valid(cause, this), nil, "raw__set__add assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2set__write_cmutex(this, cause));
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -117,7 +117,7 @@ def_pcfunk2(set__add, this, element,
 boolean_t raw__set__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__remove assert failed: f2__set__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2set__write_cmutex(this, cause));
   {
     f2ptr bin_num_power    = f2set__bin_num_power(this, cause);
     u64   bin_num_power__i = f2integer__i(bin_num_power, cause);
@@ -196,7 +196,7 @@ def_pcfunk1(set__new_copy, this,
 
 
 f2ptr raw__set__an_arbitrary_element(f2ptr cause, f2ptr this) {
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2set__write_cmutex(this, cause));
   {
     f2ptr bin_array         = f2__set__bin_array(cause, this);
     u64   bin_array__length = raw__array__length(cause, bin_array);
@@ -225,7 +225,7 @@ def_pcfunk1(set__an_arbitrary_element, this,
 
 f2ptr raw__set__lookup(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__lookup assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2set__write_cmutex(this, cause));
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);
@@ -257,7 +257,7 @@ def_pcfunk2(set__lookup, this, element,
 
 boolean_t raw__set__contains(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__set__valid(cause, this), nil, "f2__set__contains assert failed: f2__set__valid(this)");
-  f2cmutex__lock(f2set__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2set__write_cmutex(this, cause));
   f2ptr bin_num_power      = f2set__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
   f2ptr bin_array          = f2set__bin_array(this, cause);

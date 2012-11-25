@@ -109,7 +109,7 @@ boolean_t raw__hash__equals_apply(f2ptr cause, f2ptr fiber, f2ptr this, f2ptr ob
 
 f2ptr raw__hash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__add assert failed: f2__hash__valid(this)");
-  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2hash__write_cmutex(this, cause));
   f2ptr fiber              = f2__this__fiber(cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);
@@ -159,7 +159,7 @@ def_pcfunk3(hash__add, this, slot_name, value,
 boolean_t raw__hash__remove(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__add assert failed: f2__hash__valid(this)");
   boolean_t key_was_removed = boolean__false;
-  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2hash__write_cmutex(this, cause));
   {
     f2ptr fiber            = f2__this__fiber(cause);
     f2ptr bin_num_power    = f2hash__bin_num_power(this, cause);
@@ -210,7 +210,7 @@ def_pcfunk2(hash__remove, this, key,
 
 f2ptr f2__hash__lookup_keyvalue_pair(f2ptr cause, f2ptr this, f2ptr key) {
   debug__assert(raw__hash__valid(cause, this), nil, "f2__hash__lookup_keyvalue_pair assert failed: f2__hash__valid(this)");
-  f2cmutex__lock(f2hash__write_cmutex(this, cause), cause);
+  raw__cmutex__lock(cause, f2hash__write_cmutex(this, cause));
   f2ptr fiber              = f2__this__fiber(cause);
   f2ptr bin_num_power      = f2hash__bin_num_power(this, cause);
   u64   bin_num_power__i   = f2integer__i(bin_num_power, cause);

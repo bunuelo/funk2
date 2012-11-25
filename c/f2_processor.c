@@ -65,7 +65,7 @@ u64 raw__processor__active_fibers_count__thread_unsafe(f2ptr cause, f2ptr this) 
 // note: this is a scheduler funktion, see cmutex__scheduler_lock
 u64 raw__processor__scheduler_active_fibers_count(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-  f2cmutex__scheduler_lock(active_fibers_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, active_fibers_cmutex);
   u64 active_fibers_count__i = raw__processor__active_fibers_count__thread_unsafe(cause, this);
   f2cmutex__unlock(active_fibers_cmutex, cause);
   return active_fibers_count__i;
@@ -346,7 +346,7 @@ f2ptr raw__processor__try_remove_any_active_fiber(f2ptr cause, f2ptr this) {
 // note: this is a scheduler funktion, see cmutex__scheduler_lock
 f2ptr raw__processor__scheduler_current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-  f2cmutex__scheduler_lock(active_fibers_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, active_fibers_cmutex);
   f2ptr current_active_fiber = raw__processor__current_active_fiber__thread_unsafe(cause, this);
   f2cmutex__unlock(active_fibers_cmutex, cause);
   return current_active_fiber;
@@ -395,7 +395,7 @@ boolean_t raw__processor__increment_current_active_fiber__thread_unsafe(f2ptr ca
 // note: this is a scheduler funktion, see cmutex__scheduler_lock
 boolean_t raw__processor__scheduler_increment_current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-  f2cmutex__scheduler_lock(active_fibers_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, active_fibers_cmutex);
   boolean_t current_element_exists = raw__processor__increment_current_active_fiber__thread_unsafe(cause, this);
   f2cmutex__unlock(active_fibers_cmutex, cause);
   return current_element_exists;
@@ -431,7 +431,7 @@ boolean_t raw__processor__reset_current_active_fiber__thread_unsafe(f2ptr cause,
 // note: this is a scheduler funktion, see cmutex__scheduler_lock
 boolean_t raw__processor__scheduler_reset_current_active_fiber(f2ptr cause, f2ptr this) {
   f2ptr active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-  f2cmutex__scheduler_lock(active_fibers_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, active_fibers_cmutex);
   boolean_t current_element_exists = raw__processor__reset_current_active_fiber__thread_unsafe(cause, this);
   f2cmutex__unlock(active_fibers_cmutex, cause);
   return current_element_exists;
@@ -461,7 +461,7 @@ def_pcfunk1(processor__reset_current_active_fiber, this,
 u64 raw__processor__active_fibers__scheduler_length(f2ptr cause, f2ptr this) {
   f2ptr this__active_fibers_cmutex;
   this__active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-  f2cmutex__scheduler_lock(this__active_fibers_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, this__active_fibers_cmutex);
   f2ptr active_fibers = f2processor__active_fibers(this, cause);
   u64 fiber_num = raw__simple_length(cause, active_fibers);
   f2cmutex__unlock(this__active_fibers_cmutex, cause);
@@ -513,7 +513,7 @@ boolean_t raw__processor__active_fibers__scheduler_contains(f2ptr cause, f2ptr t
   boolean_t contains_fiber = boolean__false;
   {
     f2ptr this__active_fibers_cmutex = f2processor__active_fibers_cmutex(this, cause);
-    f2cmutex__scheduler_lock(this__active_fibers_cmutex, cause);
+    raw__cmutex__scheduler_lock(cause, this__active_fibers_cmutex);
     contains_fiber = raw__processor__active_fibers__contains__thread_unsafe(cause, this, fiber);
     f2cmutex__unlock(this__active_fibers_cmutex, cause);
   }
@@ -629,7 +629,7 @@ void execute_next_bytecodes__helper__found_larva_in_fiber(f2ptr cause, f2ptr fib
     
     {
       f2ptr exit_cmutex = f2fiber__exit_cmutex(fiber, cause);
-      f2cmutex__lock(exit_cmutex, cause);
+      raw__cmutex__lock(cause, exit_cmutex);
       f2fiber__exit_status__set(fiber, cause, new__symbol(cause, "bug"));
       f2__fiber_trigger__trigger(cause, f2fiber__bug_trigger(fiber, cause));
       f2cmutex__unlock(exit_cmutex, cause);

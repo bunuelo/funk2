@@ -116,7 +116,7 @@ def_pcfunk2(cause_group_interaction__bytes_read_count__set, this, bytes_read_cou
 
 void raw__cause_group_interaction__increase_bytes_read_count(f2ptr cause, f2ptr this, u64 relative_bytes_read_count) {
   f2ptr bytes_read_count_cmutex = f2cause_group_interaction__bytes_read_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytes_read_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytes_read_count_cmutex);
   {
     u64 read_events_count = raw__cause_group_interaction__read_events_count(cause, this);
     raw__cause_group_interaction__read_events_count__set(cause, this, read_events_count + 1);
@@ -204,7 +204,7 @@ def_pcfunk2(cause_group_interaction__bytes_written_count__set, this, bytes_writt
 
 void raw__cause_group_interaction__increase_bytes_written_count(f2ptr cause, f2ptr this, u64 relative_bytes_written_count) {
   f2ptr bytes_written_count_cmutex = f2cause_group_interaction__bytes_written_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytes_written_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytes_written_count_cmutex);
   {
     u64 write_events_count = raw__cause_group_interaction__write_events_count(cause, this);
     raw__cause_group_interaction__write_events_count__set(cause, this, write_events_count + 1);
@@ -351,7 +351,7 @@ def_pcfunk2(cause_group__bytecode_count__set, this, bytecode_count,
 
 void raw__cause_group__increase_bytecode_count(f2ptr cause, f2ptr this, u64 relative_bytecode_count) {
   f2ptr bytecode_count_cmutex = f2cause_group__bytecode_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytecode_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytecode_count_cmutex);
   u64 bytecode_count = raw__cause_group__bytecode_count(cause, this);
   raw__cause_group__bytecode_count__set(cause, this, bytecode_count + relative_bytecode_count);
   f2cmutex__unlock(bytecode_count_cmutex, cause);
@@ -402,7 +402,7 @@ def_pcfunk2(cause_group__execution_nanoseconds__set, this, execution_nanoseconds
 
 void raw__cause_group__increase_execution_nanoseconds(f2ptr cause, f2ptr this, u64 relative_execution_nanoseconds) {
   f2ptr execution_nanoseconds_cmutex = f2cause_group__execution_nanoseconds_cmutex(this, cause);
-  f2cmutex__scheduler_lock(execution_nanoseconds_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, execution_nanoseconds_cmutex);
   u64 execution_nanoseconds = raw__cause_group__execution_nanoseconds(cause, this);
   raw__cause_group__execution_nanoseconds__set(cause, this, execution_nanoseconds + relative_execution_nanoseconds);
   f2cmutex__unlock(execution_nanoseconds_cmutex, cause);
@@ -467,7 +467,7 @@ def_pcfunk2(cause_group__bytes_allocated_count__set, this, bytes_allocated_count
 
 void raw__cause_group__increase_bytes_allocated_count(f2ptr cause, f2ptr this, u64 relative_bytes_allocated_count) {
   f2ptr bytes_allocated_count_cmutex = f2cause_group__bytes_allocated_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytes_allocated_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytes_allocated_count_cmutex);
   u64 bytes_allocated_count = raw__cause_group__bytes_allocated_count(cause, this);
   raw__cause_group__bytes_allocated_count__set(cause, this, bytes_allocated_count + relative_bytes_allocated_count);
   f2cmutex__unlock(bytes_allocated_count_cmutex, cause);
@@ -518,7 +518,7 @@ def_pcfunk2(cause_group__bytes_freed_count__set, this, bytes_freed_count,
 
 void raw__cause_group__increase_bytes_freed_count(f2ptr cause, f2ptr this, u64 relative_bytes_freed_count) {
   f2ptr bytes_freed_count_cmutex = f2cause_group__bytes_freed_count_cmutex(this, cause);
-  f2cmutex__scheduler_lock(bytes_freed_count_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, bytes_freed_count_cmutex);
   u64 bytes_freed_count = raw__cause_group__bytes_freed_count(cause, this);
   raw__cause_group__bytes_freed_count__set(cause, this, bytes_freed_count + relative_bytes_freed_count);
   f2cmutex__unlock(bytes_freed_count_cmutex, cause);

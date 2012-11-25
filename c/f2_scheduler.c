@@ -420,7 +420,7 @@ def_pcfunk1(global_scheduler__add_fiber, fiber,
 
 f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
   f2ptr processor_assignment_cmutex = f2fiber__processor_assignment_cmutex(fiber, cause);
-  f2cmutex__scheduler_lock(processor_assignment_cmutex, cause);
+  raw__cmutex__scheduler_lock(cause, processor_assignment_cmutex);
   f2ptr processor_assignment_index = f2fiber__processor_assignment_index(fiber, cause);
   f2cmutex__unlock(processor_assignment_cmutex, cause);
   if (processor_assignment_index != nil) {

@@ -622,7 +622,32 @@
 				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]
 				   result_multiple_possible_values]]]]]]
 
-[globalize nonsemantic_plan-imagine-command_frame [new frame]]
+'nonsemantic_plan_compile_mode'
+
+[deframe nonsemantic_plan_compile_mode [frame] [name
+						[command_frame [new frame]]]
+  [new [initial-name]
+       [= name initial-name]]]
+
+[deftypefunk nonsemantic_plan_compile_mode execute add_command [name command]
+  [assert-type nonsemantic_plan_command command]
+  [have command_frame add name command]]
+
+[deftypefunk nonsemantic_plan_compile_mode execute lookup_command [name]
+  [have command_frame lookup name]]
+
+
+[globalize nonsemantic_plan-command_mode_frame [new frame]]
+
+[defunk lookup_nonsemantic_plan_compile_mode [compile_mode_name]
+  [let [[compile_mode [have nonsemantic_plan-command_mode_frame lookup name]]]
+    [if [null compile_mode]
+	[prog [= compile_mode [new nonsemantic_plan_compile_mode]]
+	      [have nonsemantic_plan-command_mode_frame add compile_mode_name compile_mode]]]
+    compile_mode]]
+
+
+'nonsemantic_plan_command'
 
 [deframe nonsemantic_plan_command [frame] [name
 					   arguments
@@ -674,14 +699,15 @@
       result]]]
 
 [defunk defplancommand-raw [compile_mode name arguments body]
-  [cond [[eq compile_mode `imagine] [have nonsemantic_plan-imagine-command_frame add name [new nonsemantic_plan_command
-											       name
-											       arguments
-											       body]]]
-	[t                          [error bug_name `defplancommand-imagine_compile_mode
-					   compile_mode compile_mode
-					   name         name
-					   arguments    arguments]]]
+  [cond [[or [eq compile_mode `imagine]
+	     [eq compile_mode `execute]] [have [lookup_nonsemantic_plan_compile_mode compile_mode] add_command name [new nonsemantic_plan_command
+															 name
+															 arguments
+															 body]]]
+	[t                               [error bug_name `defplancommand-imagine_compile_mode
+						compile_mode compile_mode
+						name         name
+						arguments    arguments]]]
   nil]
 
 [defmetro defplancommand [compile_mode name arguments :rest body]
@@ -1169,14 +1195,15 @@
 
 
 [deftypefunk nonsemantic_plan get expression-compile-cons [expression compile_option_frame]
-  [let [[command   [car expression]]
-	[arguments [cdr expression]]]
-    [let [[nonsemantic_plan_command [have nonsemantic_plan-imagine-command_frame lookup command]]]
-      [if [not [null nonsemantic_plan_command]]
-	  [have nonsemantic_plan_command compile this compile_option_frame arguments]
-	[error bug_name   `nonsemantic_plan_compile_error-invalid_command
-	       expression expression
-	       command    command]]]]]
+  [let [[compile_mode [have compile_option_frame lookup `mode]]]
+    [let [[command   [car expression]]
+	  [arguments [cdr expression]]]
+      [let [[nonsemantic_plan_command [have [lookup_nonsemantic_plan_compile_mode compile_mode] lookup_command command]]]
+	[if [not [null nonsemantic_plan_command]]
+	    [have nonsemantic_plan_command compile this compile_option_frame arguments]
+	  [error bug_name   `nonsemantic_plan_compile_error-invalid_command
+		 expression expression
+		 command    command]]]]]]
 
 [deftypefunk nonsemantic_plan execute add_top_execution_node [nonsemantic_plan_execution_node]
   [have top_execution_node_set add nonsemantic_plan_execution_node]]

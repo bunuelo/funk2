@@ -302,326 +302,6 @@
     graph]]
 
 
-'nonsemantic_plan'
-
-[deframe nonsemantic_plan [frame] [mental_layer
-				   name_expression
-				   name_patterns
-				   variables
-				   expression
-				   [internal-default_variable_frame  nil]
-				   [internal-unique_name             nil]
-				   [internal-semantic_plan_object    nil]
-				   [internal-compiled_funk           nil]
-				   [internal-compiled_imagine_funk   nil]
-				   [internal-natural_language_string nil]
-				   [internal-constant_variable_frame nil]
-				   [top_execution_node_set           [new set]]
-				   [imagined_top_execution_node_set  [new set]]]
-  [new [initial-mental_layer
-	initial-name_expression
-	initial-name_patterns
-	initial-variables
-	initial-expression]
-       [= mental_layer    initial-mental_layer]
-       [= name_expression initial-name_expression]
-       [= name_patterns   initial-name_patterns]
-       [= variables       initial-variables]
-       [= expression      initial-expression]]]
-
-[deftypefunk nonsemantic_plan get mental_layer_below []
-  [get mental_layer mental_layer_below]]
-
-[deftypefunk nonsemantic_plan get __default_variable_frame []
-  [let [[default_variable_frame [new frame]]]
-    [mapc [funk [variable_definition]
-		[let [[variable_name  [first variable_definition]]
-		      [variable_value [second variable_definition]]]
-		  [have default_variable_frame add variable_name variable_value]]]
-	  variables]
-    default_variable_frame]]
-
-[deftypefunk nonsemantic_plan get default_variable_frame []
-  [if [null internal-default_variable_frame]
-      [= internal-default_variable_frame [get this __default_variable_frame]]]
-  internal-default_variable_frame]
-
-[deftypefunk nonsemantic_plan get new_copy_given_variable_frame [variable_frame]
-  [let [[new_name_expressions nil]
-	[new_variable_frame   [get variable_frame new_copy]]]
-    [mapc [funk [variable_definition]
-		[let [[variable_name  [first  variable_definition]]
-		      [variable_value [second variable_definition]]]
-		  [if [get variable_frame contains variable_name]
-		      [have new_variable_frame add variable_name [have variable_frame lookup variable_name]]
-		    [have new_variable_frame add variable_name variable_value]]]]
-	  variables]
-    [let [[new_variables [mapcar [funk [variable_name]
-				       `[,variable_name ,[have new_variable_frame lookup variable_name]]]
-				 [get new_variable_frame keys]]]]
-      [mapc [funk [name_pattern]
-		  [let [[used_variable_frame [new frame]]]
-		    [let [[new_name_expression [get name_pattern pattern_evaluation
-						    [funk [variable_name]
-							  [have used_variable_frame add variable_name t]
-							  [if [get new_variable_frame contains variable_name]
-							      [have new_variable_frame lookup variable_name]
-							    [error bug_name     new_copy_given_variable_frame-could_not_find_variable_match_in_default_frame
-								   this         this
-								   name_pattern name_pattern]]]]]]
-		      [let [[used_all_nondefault_variables t]]
-			[mapc [funk [nondefault_variable_name]
-				    [if [not [have used_variable_frame lookup nondefault_variable_name]]
-					[= used_all_nondefault_variables nil]]]
-			      [get variable_frame keys]]
-			[if used_all_nondefault_variables
-			    [= new_name_expressions [cons new_name_expression new_name_expressions]]]]]]]
-	    name_patterns]
-      [if [null new_name_expressions]
-	  [error bug_name `nonsemantic_plan-new_copy_given_variable_frame-could_not_generate_new_name
-		 this     this
-		 variable_frame variable_frame]
-	[let [[new_name_expression [car [reverse new_name_expressions]]]]
-	  [new nonsemantic_plan
-	       mental_layer
-	       new_name_expression
-	       name_patterns
-	       new_variables
-	       expression]]]]]]
-
-[deftypefunk nonsemantic_plan get unique_name []
-  [if [null internal-unique_name]
-      [= internal-unique_name [nonsemantic_plan-unique_name_from_name_expression [get this name_expression]]]]
-  internal-unique_name]
-
-[deftypefunk nonsemantic_plan get mind []
-  [get mental_layer mind]]
-
-[deftypefunk nonsemantic_plan get name_pattern_match_pairs [expression]
-  [let [[name_pattern_matches nil]]
-    [mapc [funk [name_pattern]
-		[let [[matches [string_pattern-match name_pattern expression]]]
-		  [mapc [funk [match]
-			      [= name_pattern_matches [cons [cons name_pattern match]
-							    name_pattern_matches]]]
-			matches]]]
-	  name_patterns]
-    name_pattern_matches]]
-
-[deftypefunk nonsemantic_plan get sorted_name_pattern_matches [expression]
-  [let* [[name_pattern_match_pairs [get this name_pattern_match_pairs expression]]]
-    [mapcar [funk [name_pattern_match_pair]
-		  [let [[match [cdr name_pattern_match_pair]]]
-		    match]]
-	    [mapcar [funk [pair]
-			  [car pair]]
-		    [have [mapcar [funk [name_pattern_match_pair]
-					[let [[match [cdr name_pattern_match_pair]]]
-					  [cons name_pattern_match_pair [length [get match keys]]]]]
-				  name_pattern_match_pairs]
-			  sort [funk [x y]
-				     [< [cdr x] [cdr y]]]]]]]]
-
-
-`[deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
-  [let [[compile_option_frame [frame mode `natural_language]]]
-    [get this expression-compile expression compile_option_frame]]]
-
-[deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
-  '']
-
-`[deftypefunk nonsemantic_plan get as-natural_language_string []
-  [if [null internal-natural_language_string]
-      [= internal-natural_language_string [get this expression-as_natural_language_string expression]]]
-  internal-natural_language_string]
-
-[deftypefunk nonsemantic_plan get as-natural_language_string []
-  [if [null internal-natural_language_string]
-      [= internal-natural_language_string [name_expression-as-string [get this name_expression]]]]
-  internal-natural_language_string]
-
-[deftypefunk nonsemantic_plan get as-string []
-  [get this as-natural_language_string]]
-
-[deftypefunk nonsemantic_plan get as-graphviz_label []
-  [string-concat '<' [get [get this unique_name] as-string] '>']]
-
-[deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
-  [let* [[truth_value            [have [get this mental_layer] check_exists semantic_partial_state]]
-	 [nonsemantic_plan_value [new nonsemantic_plan_value truth_value]]]
-    [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-    nonsemantic_plan_value]]
-
-[deftypefunk nonsemantic_plan execute imagine_check_exists [semantic_partial_state]
-  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
-      [cond [[null found_event]                              [prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
-								   [let* [[simple_truth_value [have [get this mental_layer] check_exists semantic_partial_state]]
-									  [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-								     [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-								     [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
-	    [[is-type `multiple_possible_values found_event] [let [[multiple_possible_values found_event]]
-							       [mapc [funk [one_found_event]
-									   [if [is-type `bug one_found_event]
-									       [have result_multiple_possible_values add_value one_found_event]
-									     [let* [[simple_truth_value           [not [get one_found_event is_negative_knowledge]]]
-										    [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-									       [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-									       [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
-								     [get multiple_possible_values nonbug_and_failure_values]]]]
-	    [t                                               [let* [[simple_truth_value           [not [get found_event is_negative_knowledge]]]
-								    [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-							       [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-							       [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]]
-    [let [[outside_hypothesis_space_positive_truth_value [new nonsemantic_plan_value t]]
-	  [outside_hypothesis_space_negative_truth_value [new nonsemantic_plan_value nil]]]
-      [have outside_hypothesis_space_positive_truth_value add_partial_state_existence_dependency semantic_partial_state]
-      [have outside_hypothesis_space_negative_truth_value add_partial_state_existence_dependency semantic_partial_state]
-      [have result_multiple_possible_values add_value outside_hypothesis_space_positive_truth_value]
-      [have result_multiple_possible_values add_value outside_hypothesis_space_negative_truth_value]
-      result_multiple_possible_values]]]
-
-[deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
-  [have [get this mental_layer] wait_for semantic_partial_state]]
-
-[globalize globalize_plan_bugs_enabled nil]
-[globalize plan_bug_count              0]
-
-[deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
-  `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
-  [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
-				[semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
-			   [if [null semantic_knowledge_bases]
-			       [error funkname `semantic_planner-new_semantic_thought
-				      bug_name `semantic_knowledge_bases-is-nil]]
-			   
-			   [let* [[execute_now-conditionlock   [new conditionlock]]
-				  [execute_now                 nil]
-				  [thought_fiber               [fiber [funk []
-									    
-									    [have execute_now-conditionlock lock]
-									    [while [not execute_now]
-									      [have execute_now-conditionlock wait]]
-									    [have execute_now-conditionlock unlock]
-									    
-									    [cause-define cause-name [get this unique_name]]
-									    [apply funk args]]
-								      []]]
-				  [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
-								 [set this fiber thought_fiber]
-								 this]]]
-			     
-			     [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
-			       [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
-			       [mapc [funk [variable_name]
-					   [let [[default_variable_value_set [semantic-lookup_set semantic_environment variable variable_name]]]
-					     [mapc [funk [default_variable_value]
-							 [semantic-remove semantic_environment variable variable_name default_variable_value]]
-						   [if default_variable_value_set
-						       [get default_variable_value_set elements]
-						     nil]]]
-					   [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
-				     [get variable_frame keys]]
-			       [set semantic_thought environment semantic_environment]
-			       
-			       [mapc [funk [semantic_knowledge_base]
-					   [have semantic_knowledge_base add_semantic_frame semantic_environment]
-					   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
-				     semantic_knowledge_bases]
-			       [semantic-add semantic_planner thought semantic_thought]
-			       
-			       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
-			       
-			       `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
-			       
-			       [have execute_now-conditionlock lock]
-			       [=    execute_now t]
-			       [have execute_now-conditionlock signal]
-			       [have execute_now-conditionlock unlock]
-			       
-			       [let [[fiber_result [fiber-sheltered_join thought_fiber]]]
-				 
-				 `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
-				 
-				 [semantic-remove semantic_planner thought semantic_thought]
-				 [mapc [funk [semantic_knowledge_base]
-					     [have semantic_knowledge_base remove_semantic_frame semantic_environment]
-					     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
-				       semantic_knowledge_bases]
-				 
-				 fiber_result]]]]]]]
-    [if [is-type `bug result]
-	[let [[bug result]]
-	  [if globalize_plan_bugs_enabled
-	      [let [[global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
-		[++ plan_bug_count]
-		[terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
-		[eval `[globalize ,global_bug_name [quote ,bug]]]]]
-	  [terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' bug]]]
-    result]]
-
-
-[deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
-  [have mental_layer lookup_action_below action_name_expression]]
-
-[deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
-  [have mental_layer lookup_action action_name_expression]]
-
-
-
-
-
-[deftypefunk nonsemantic_plan get expression-compile-nil [expression compile_option_frame]
-  [eval `[funk [this]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node nil ,expression]]]
-				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
-				   [have nonsemantic_plan_execution_node add_return_value result]
-				   result]]]]]]
-
-[deftypefunk nonsemantic_plan get expression-compile-integer [expression compile_option_frame]
-  [eval `[funk [this]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
-				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value ,expression]]]]]
-				   [have nonsemantic_plan_execution_node add_return_value result]
-				   result]]]]]]
-
-[deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
-  [eval `[funk [this]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `symbol [quote ,expression]]]]
-				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]]]
-				   [have nonsemantic_plan_execution_node add_return_value result]
-				   result]]]]]]
-
-[deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
-  [eval `[funk [nonsemantic_plan]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `string [quote ,expression]]]]
-				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-				   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]
-				     [have nonsemantic_plan_execution_node add_return_value result]
-				     result]]]]]]]
-
-[deftypefunk nonsemantic_plan get expression-compile-multiple_possible_values [expression compile_option_frame]
-  [eval `[funk [nonsemantic_plan]
-	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `multiple_possible_values [quote ,expression]]]]
-				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-				   [prog @[mapcar [funk [value]
-							[if [is-type `bug value]
-							    `[have result_multiple_possible_values add_value ,value]
-							  `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]]]
-							     [if [is-type `bug result]
-								 [let [[bug result]]
-								   [if [have [get bug frame] lookup `is_plan_bug]
-								       [bug bug]
-								     [have result_multiple_possible_values add_value result]]]]]]]
-						  [get expression nonbug_and_failure_values]]]
-				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]
-				   result_multiple_possible_values]]]]]]
-
 'nonsemantic_plan_compile_mode'
 
 [deframe nonsemantic_plan_compile_mode [frame] [name
@@ -637,12 +317,14 @@
   [have command_frame lookup name]]
 
 
+'nonsemantic_plan-command_mode_frame'
+
 [globalize nonsemantic_plan-command_mode_frame [new frame]]
 
 [defunk lookup_nonsemantic_plan_compile_mode [compile_mode_name]
-  [let [[compile_mode [have nonsemantic_plan-command_mode_frame lookup name]]]
+  [let [[compile_mode [have nonsemantic_plan-command_mode_frame lookup compile_mode_name]]]
     [if [null compile_mode]
-	[prog [= compile_mode [new nonsemantic_plan_compile_mode]]
+	[prog [= compile_mode [new nonsemantic_plan_compile_mode compile_mode_name]]
 	      [have nonsemantic_plan-command_mode_frame add compile_mode_name compile_mode]]]
     compile_mode]]
 
@@ -1193,6 +875,326 @@
 				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_value    value]]]]]]
 
 
+
+'nonsemantic_plan'
+
+[deframe nonsemantic_plan [frame] [mental_layer
+				   name_expression
+				   name_patterns
+				   variables
+				   expression
+				   [internal-default_variable_frame  nil]
+				   [internal-unique_name             nil]
+				   [internal-semantic_plan_object    nil]
+				   [internal-compiled_funk           nil]
+				   [internal-compiled_imagine_funk   nil]
+				   [internal-natural_language_string nil]
+				   [internal-constant_variable_frame nil]
+				   [top_execution_node_set           [new set]]
+				   [imagined_top_execution_node_set  [new set]]]
+  [new [initial-mental_layer
+	initial-name_expression
+	initial-name_patterns
+	initial-variables
+	initial-expression]
+       [= mental_layer    initial-mental_layer]
+       [= name_expression initial-name_expression]
+       [= name_patterns   initial-name_patterns]
+       [= variables       initial-variables]
+       [= expression      initial-expression]]]
+
+[deftypefunk nonsemantic_plan get mental_layer_below []
+  [get mental_layer mental_layer_below]]
+
+[deftypefunk nonsemantic_plan get __default_variable_frame []
+  [let [[default_variable_frame [new frame]]]
+    [mapc [funk [variable_definition]
+		[let [[variable_name  [first variable_definition]]
+		      [variable_value [second variable_definition]]]
+		  [have default_variable_frame add variable_name variable_value]]]
+	  variables]
+    default_variable_frame]]
+
+[deftypefunk nonsemantic_plan get default_variable_frame []
+  [if [null internal-default_variable_frame]
+      [= internal-default_variable_frame [get this __default_variable_frame]]]
+  internal-default_variable_frame]
+
+[deftypefunk nonsemantic_plan get new_copy_given_variable_frame [variable_frame]
+  [let [[new_name_expressions nil]
+	[new_variable_frame   [get variable_frame new_copy]]]
+    [mapc [funk [variable_definition]
+		[let [[variable_name  [first  variable_definition]]
+		      [variable_value [second variable_definition]]]
+		  [if [get variable_frame contains variable_name]
+		      [have new_variable_frame add variable_name [have variable_frame lookup variable_name]]
+		    [have new_variable_frame add variable_name variable_value]]]]
+	  variables]
+    [let [[new_variables [mapcar [funk [variable_name]
+				       `[,variable_name ,[have new_variable_frame lookup variable_name]]]
+				 [get new_variable_frame keys]]]]
+      [mapc [funk [name_pattern]
+		  [let [[used_variable_frame [new frame]]]
+		    [let [[new_name_expression [get name_pattern pattern_evaluation
+						    [funk [variable_name]
+							  [have used_variable_frame add variable_name t]
+							  [if [get new_variable_frame contains variable_name]
+							      [have new_variable_frame lookup variable_name]
+							    [error bug_name     new_copy_given_variable_frame-could_not_find_variable_match_in_default_frame
+								   this         this
+								   name_pattern name_pattern]]]]]]
+		      [let [[used_all_nondefault_variables t]]
+			[mapc [funk [nondefault_variable_name]
+				    [if [not [have used_variable_frame lookup nondefault_variable_name]]
+					[= used_all_nondefault_variables nil]]]
+			      [get variable_frame keys]]
+			[if used_all_nondefault_variables
+			    [= new_name_expressions [cons new_name_expression new_name_expressions]]]]]]]
+	    name_patterns]
+      [if [null new_name_expressions]
+	  [error bug_name `nonsemantic_plan-new_copy_given_variable_frame-could_not_generate_new_name
+		 this     this
+		 variable_frame variable_frame]
+	[let [[new_name_expression [car [reverse new_name_expressions]]]]
+	  [new nonsemantic_plan
+	       mental_layer
+	       new_name_expression
+	       name_patterns
+	       new_variables
+	       expression]]]]]]
+
+[deftypefunk nonsemantic_plan get unique_name []
+  [if [null internal-unique_name]
+      [= internal-unique_name [nonsemantic_plan-unique_name_from_name_expression [get this name_expression]]]]
+  internal-unique_name]
+
+[deftypefunk nonsemantic_plan get mind []
+  [get mental_layer mind]]
+
+[deftypefunk nonsemantic_plan get name_pattern_match_pairs [expression]
+  [let [[name_pattern_matches nil]]
+    [mapc [funk [name_pattern]
+		[let [[matches [string_pattern-match name_pattern expression]]]
+		  [mapc [funk [match]
+			      [= name_pattern_matches [cons [cons name_pattern match]
+							    name_pattern_matches]]]
+			matches]]]
+	  name_patterns]
+    name_pattern_matches]]
+
+[deftypefunk nonsemantic_plan get sorted_name_pattern_matches [expression]
+  [let* [[name_pattern_match_pairs [get this name_pattern_match_pairs expression]]]
+    [mapcar [funk [name_pattern_match_pair]
+		  [let [[match [cdr name_pattern_match_pair]]]
+		    match]]
+	    [mapcar [funk [pair]
+			  [car pair]]
+		    [have [mapcar [funk [name_pattern_match_pair]
+					[let [[match [cdr name_pattern_match_pair]]]
+					  [cons name_pattern_match_pair [length [get match keys]]]]]
+				  name_pattern_match_pairs]
+			  sort [funk [x y]
+				     [< [cdr x] [cdr y]]]]]]]]
+
+
+`[deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
+  [let [[compile_option_frame [frame mode `natural_language]]]
+    [get this expression-compile expression compile_option_frame]]]
+
+[deftypefunk nonsemantic_plan get expression-as_natural_language_string [expression]
+  '']
+
+`[deftypefunk nonsemantic_plan get as-natural_language_string []
+  [if [null internal-natural_language_string]
+      [= internal-natural_language_string [get this expression-as_natural_language_string expression]]]
+  internal-natural_language_string]
+
+[deftypefunk nonsemantic_plan get as-natural_language_string []
+  [if [null internal-natural_language_string]
+      [= internal-natural_language_string [name_expression-as-string [get this name_expression]]]]
+  internal-natural_language_string]
+
+[deftypefunk nonsemantic_plan get as-string []
+  [get this as-natural_language_string]]
+
+[deftypefunk nonsemantic_plan get as-graphviz_label []
+  [string-concat '<' [get [get this unique_name] as-string] '>']]
+
+[deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
+  [let* [[truth_value            [have [get this mental_layer] check_exists semantic_partial_state]]
+	 [nonsemantic_plan_value [new nonsemantic_plan_value truth_value]]]
+    [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+    nonsemantic_plan_value]]
+
+[deftypefunk nonsemantic_plan execute imagine_check_exists [semantic_partial_state]
+  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+    [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
+      [cond [[null found_event]                              [prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
+								   [let* [[simple_truth_value [have [get this mental_layer] check_exists semantic_partial_state]]
+									  [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
+								     [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+								     [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
+	    [[is-type `multiple_possible_values found_event] [let [[multiple_possible_values found_event]]
+							       [mapc [funk [one_found_event]
+									   [if [is-type `bug one_found_event]
+									       [have result_multiple_possible_values add_value one_found_event]
+									     [let* [[simple_truth_value           [not [get one_found_event is_negative_knowledge]]]
+										    [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
+									       [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+									       [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
+								     [get multiple_possible_values nonbug_and_failure_values]]]]
+	    [t                                               [let* [[simple_truth_value           [not [get found_event is_negative_knowledge]]]
+								    [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
+							       [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+							       [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]]
+    [let [[outside_hypothesis_space_positive_truth_value [new nonsemantic_plan_value t]]
+	  [outside_hypothesis_space_negative_truth_value [new nonsemantic_plan_value nil]]]
+      [have outside_hypothesis_space_positive_truth_value add_partial_state_existence_dependency semantic_partial_state]
+      [have outside_hypothesis_space_negative_truth_value add_partial_state_existence_dependency semantic_partial_state]
+      [have result_multiple_possible_values add_value outside_hypothesis_space_positive_truth_value]
+      [have result_multiple_possible_values add_value outside_hypothesis_space_negative_truth_value]
+      result_multiple_possible_values]]]
+
+[deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]
+  [have [get this mental_layer] wait_for semantic_partial_state]]
+
+[globalize globalize_plan_bugs_enabled nil]
+[globalize plan_bug_count              0]
+
+[deftypefunk nonsemantic_plan execute __execute_funk_as_thought_in_semantic_planner [semantic_planner variable_frame funk args]
+  `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.']
+  [let [[result [shelter [let* [[semantic_knowledge_base_set [have semantic_planner lookup `semantic_knowledge_base_set]]
+				[semantic_knowledge_bases    [get semantic_knowledge_base_set elements]]]
+			   [if [null semantic_knowledge_bases]
+			       [error funkname `semantic_planner-new_semantic_thought
+				      bug_name `semantic_knowledge_bases-is-nil]]
+			   
+			   [let* [[execute_now-conditionlock   [new conditionlock]]
+				  [execute_now                 nil]
+				  [thought_fiber               [fiber [funk []
+									    
+									    [have execute_now-conditionlock lock]
+									    [while [not execute_now]
+									      [have execute_now-conditionlock wait]]
+									    [have execute_now-conditionlock unlock]
+									    
+									    [cause-define cause-name [get this unique_name]]
+									    [apply funk args]]
+								      []]]
+				  [semantic_thought            [let [[this [new semantic_thought [get semantic_planner semantic_realm]]]]
+								 [set this fiber thought_fiber]
+								 this]]]
+			     
+			     [let [[semantic_environment [new semantic_environment [get semantic_planner semantic_realm]]]]
+			       [have [get this semantic_plan_object] add_default_frame_to_environment semantic_environment]
+			       [mapc [funk [variable_name]
+					   [let [[default_variable_value_set [semantic-lookup_set semantic_environment variable variable_name]]]
+					     [mapc [funk [default_variable_value]
+							 [semantic-remove semantic_environment variable variable_name default_variable_value]]
+						   [if default_variable_value_set
+						       [get default_variable_value_set elements]
+						     nil]]]
+					   [semantic-add semantic_environment variable variable_name [have variable_frame lookup variable_name]]]
+				     [get variable_frame keys]]
+			       [set semantic_thought environment semantic_environment]
+			       
+			       [mapc [funk [semantic_knowledge_base]
+					   [have semantic_knowledge_base add_semantic_frame semantic_environment]
+					   [have semantic_knowledge_base add_semantic_frame semantic_thought]]
+				     semantic_knowledge_bases]
+			       [semantic-add semantic_planner thought semantic_thought]
+			       
+			       [have [get thought_fiber cause_reg] define `cause-semantic_thought semantic_thought]
+			       
+			       `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (telling thought_fiber to execute now)']
+			       
+			       [have execute_now-conditionlock lock]
+			       [=    execute_now t]
+			       [have execute_now-conditionlock signal]
+			       [have execute_now-conditionlock unlock]
+			       
+			       [let [[fiber_result [fiber-sheltered_join thought_fiber]]]
+				 
+				 `[terminal_format standard-terminal '\nnonsemantic_plan: executing funk as thought in semantic_planner.  (joined thought_fiber)']
+				 
+				 [semantic-remove semantic_planner thought semantic_thought]
+				 [mapc [funk [semantic_knowledge_base]
+					     [have semantic_knowledge_base remove_semantic_frame semantic_environment]
+					     [have semantic_knowledge_base remove_semantic_frame semantic_thought]]
+				       semantic_knowledge_bases]
+				 
+				 fiber_result]]]]]]]
+    [if [is-type `bug result]
+	[let [[bug result]]
+	  [if globalize_plan_bugs_enabled
+	      [let [[global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
+		[++ plan_bug_count]
+		[terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
+		[eval `[globalize ,global_bug_name [quote ,bug]]]]]
+	  [terminal_format standard-terminal '\nnonsemantic_plan: returning bug ' bug]]]
+    result]]
+
+
+[deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
+  [have mental_layer lookup_action_below action_name_expression]]
+
+[deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
+  [have mental_layer lookup_action action_name_expression]]
+
+
+
+
+
+[deftypefunk nonsemantic_plan get expression-compile-nil [expression compile_option_frame]
+  [eval `[funk [this]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node nil ,expression]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
+
+[deftypefunk nonsemantic_plan get expression-compile-integer [expression compile_option_frame]
+  [eval `[funk [this]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value ,expression]]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
+
+[deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
+  [eval `[funk [this]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `symbol [quote ,expression]]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]]]
+				   [have nonsemantic_plan_execution_node add_return_value result]
+				   result]]]]]]
+
+[deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
+  [eval `[funk [nonsemantic_plan]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `string [quote ,expression]]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+				   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]
+				     [have nonsemantic_plan_execution_node add_return_value result]
+				     result]]]]]]]
+
+[deftypefunk nonsemantic_plan get expression-compile-multiple_possible_values [expression compile_option_frame]
+  [eval `[funk [nonsemantic_plan]
+	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `multiple_possible_values [quote ,expression]]]]
+				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+				 [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+				   [prog @[mapcar [funk [value]
+							[if [is-type `bug value]
+							    `[have result_multiple_possible_values add_value ,value]
+							  `[let [[result [shelter [funkall ,[get nonsemantic_plan expression-compile value compile_option_frame] nonsemantic_plan]]]]
+							     [if [is-type `bug result]
+								 [let [[bug result]]
+								   [if [have [get bug frame] lookup `is_plan_bug]
+								       [bug bug]
+								     [have result_multiple_possible_values add_value result]]]]]]]
+						  [get expression nonbug_and_failure_values]]]
+				   [have nonsemantic_plan_execution_node add_return_value result_multiple_possible_values]
+				   result_multiple_possible_values]]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-cons [expression compile_option_frame]
   [let [[compile_mode [have compile_option_frame lookup `mode]]]

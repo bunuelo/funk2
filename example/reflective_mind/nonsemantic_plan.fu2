@@ -756,12 +756,16 @@
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]
     [if [null top_nonsemantic_plan_execution_nodes]
-	[error bug_name `nonsemantic_plan-get-compiled_funk-must_imagine_plan_execution_first
-	       this     this]
-      [let [[top_nonsemantic_plan_execution_node [first top_nonsemantic_plan_execution_nodes]]]
-	[let [[execution_code [get this execution_node_as_code top_nonsemantic_plan_execution_node]]]
-	  [let [[compile_option_frame [frame mode `imagine]]]
-	    [get this expression-compile execution_code compile_option_frame]]]]]]]
+	[prog [get this imagine_eval]
+	      [let [[imagined_top_execution_nodes [get imagined_top_execution_node_set elements]]]
+		[if [null imagined_top_execution_nodes]
+		    [error bug_name `nonsemantic_plan-get-compiled_funk-no_imagined_top_execution_nodes_after_imagine
+			   this     this]
+		  [= top_nonsemantic_plan_execution_nodes imagined_top_execution_nodes]]]]]
+    [let [[top_nonsemantic_plan_execution_node [first top_nonsemantic_plan_execution_nodes]]]
+      [let [[execution_code [get this execution_node_as_code top_nonsemantic_plan_execution_node]]]
+	[let [[compile_option_frame [frame mode `imagine]]]
+	  [get this expression-compile execution_code compile_option_frame]]]]]]
 
 [deftypefunk nonsemantic_plan get compiled_funk []
   [if [null internal-compiled_funk]

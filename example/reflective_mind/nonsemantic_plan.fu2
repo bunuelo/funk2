@@ -756,7 +756,7 @@
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]
     [if [null top_nonsemantic_plan_execution_nodes]
-	[prog [get this imagine_eval]
+	[prog [have this imagine_eval]
 	      [let [[imagined_top_execution_nodes [get imagined_top_execution_node_set elements]]]
 		[if [null imagined_top_execution_nodes]
 		    [error bug_name `nonsemantic_plan-get-compiled_funk-no_imagined_top_execution_nodes_after_imagine

@@ -1519,34 +1519,53 @@
   expression]
 
 [defplanfunk imagine call-below [action_name :rest action_arguments]
-  [cond [[is-type `nonsemantic_plan_value action_name] [let [[action_name [get action_name value]]]
-							 [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
-							   [if [null action]
-							       [error bug_name    `nonsemantic_plan-call_below-no_such_action
-								      is_plan_bug t
-								      action_name action_name]
-							     [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
-								   [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-								     [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
-	[t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
-							      correct_types `[nonsemantic_plan_value]
-							      actual_type   [type action_name]
-							      action_name   action_name]]]]
+  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [let [[action_name [get action_name value]]]
+							       [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
+								 [if [null action]
+								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
+									    is_plan_bug t
+									    action_name action_name]
+								   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
+									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
+							       [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
+								 [if [null action]
+								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
+									    is_plan_bug t
+									    action_name action_name]
+								   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
+									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+	[t                                                   [error bug_name         `nonsemantic_plan-call_below-invalid_execution_mode
+								    execution_mode   cause-nonsemantic_plan_execution_mode
+								    action_name      action_name
+								    action_arguments action_arguments]]]]
 
 [defplanfunk imagine call [action_name :rest action_arguments]
-  [cond [[is-type `nonsemantic_plan_value action_name] [let [[action_name [get action_name value]]]
-							 [let [[action [have nonsemantic_plan lookup_action action_name]]]
-							   [if [null action]
-							       [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
-								      is_plan_bug t
-								      action_name action_name]
-							     [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
-								   [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-								     [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
-	[t                                             [error bug_name `nonsemantic_plan-call_below-invalid_type
-							      correct_types `[nonsemantic_plan_value]
-							      actual_type   [type action_name]
-							      action_name   action_name]]]]
+  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [let [[action_name [get action_name value]]]
+							       [let [[action [have nonsemantic_plan lookup_action action_name]]]
+								 [if [null action]
+								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+									    is_plan_bug t
+									    action_name action_name]
+								   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
+									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
+							       [let [[action [have nonsemantic_plan lookup_action action_name]]]
+								 [if [null action]
+								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+									    is_plan_bug t
+									    action_name action_name]
+								   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
+									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+	[t                                                   [error bug_name         `nonsemantic_plan-call-invalid_execution_mode
+								    execution_mode   cause-nonsemantic_plan_execution_mode
+								    action_name      action_name
+								    action_arguments action_arguments]]]]
+
 
 [defplanfunk imagine plan [plan_name]
   [cond [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]
@@ -1637,9 +1656,15 @@
 								partial_state partial_state]]]]
 
 [defplanfunk imagine wait-for [partial_state]
-  [terminal_format standard-terminal '\nplan imagining waiting for: "' [get partial_state as-declarative_natural_language_string] '."  (not yet implemented)']
-  `[have nonsemantic_plan wait_for partial_state]
-  [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]
+  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\nplan waiting for: "' [get partial_state as-declarative_natural_language_string] '."']
+								   [have nonsemantic_plan wait_for partial_state]
+								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nplan imagining waiting for: "' [get partial_state as-declarative_natural_language_string] '."  (not yet implemented)']
+								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+	[t                                                   [error bug_name         `nonsemantic_plan-wait_for-invalid_execution_mode
+								    execution_mode   cause-nonsemantic_plan_execution_mode
+								    action_name      action_name
+								    action_arguments action_arguments]]]]
 
 [defplanfunk imagine fail []
   [error bug_name        `failure

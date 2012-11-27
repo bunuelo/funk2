@@ -173,7 +173,16 @@
        [if supernode
 	   [have [get supernode subnode_set] add this]]
        [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
-	   [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]]]
+	   [if [null [cause-lookup cause-nonsemantic_plan_execution_mode]]
+	       [error bug_name   `nonsemantic_plan_execution_node-new-nonsemantic_plan_execution_mode-not_defined
+		      node_type  node_type
+		      expression expression]
+	     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [have cause-top_nonsemantic_plan add_executed_top_execution_node this]]
+		   [[eq cause-nonsemantic_plan_execution_mode `imagine] [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]
+		   [t                                                   [error bug_name       `nonsemantic_plan_execution_node-new-invalid_execution_mode
+									       execution_mode cause-nonsemantic_plan_execution_mode
+									       node_type      node_type
+									       expression     expression]]]]]]]
 
 [deftypefunk nonsemantic_plan_execution_node get subnodes []
   [get subnode_set elements]]
@@ -713,7 +722,7 @@
 			    [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
-			    `[cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
+			    [cause-define cause-nonsemantic_plan_execution_mode                  `imagine]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
@@ -784,7 +793,7 @@
 			    [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
-			    `[cause-define cause-last_decision_value                              [new nonsemantic_plan_value `begin-imagine-plan]]
+			    [cause-define cause-nonsemantic_plan_execution_mode                  `execute]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
@@ -931,24 +940,21 @@
 		`[multiple_interpretations @multiple_interpretations]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
-  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 0']
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
 	[if_condition_nodes nil]
 	[if_true_nodes      nil]
 	[if_false_nodes     nil]]
-    [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 1']
     [mapc [funk [subnode]
-		[terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-if: debug 2']
 		[if [get subnode nonbug_and_failure_return_values]
 		    [let [[subnode-node_type [get subnode node_type]]]
 		      [cond [[eq subnode-node_type `if-condition] [= if_condition_nodes [cons subnode if_condition_nodes]]]
 			    [[eq subnode-node_type `if-true]      [= if_true_nodes      [cons subnode if_true_nodes]]]
 			    [[eq subnode-node_type `if-false]     [= if_false_nodes     [cons subnode if_false_nodes]]]]]]]
 	  subnodes]
-    [terminal_format standard-terminal
-		     '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
-		     '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
-		     '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
+    `[terminal_format standard-terminal
+		      '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
+		      '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
+		      '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
     [let [[if_condition_interpretations [remove_equals_duplicates [mapcar [funk [if_condition_node]
 										[get this execution_node_as_code [first [get if_condition_node subnodes]]]]
 									  if_condition_nodes]]]

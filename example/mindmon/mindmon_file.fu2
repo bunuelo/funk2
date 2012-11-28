@@ -49,10 +49,9 @@
   [get object files]]
 
 
-[globalize mindmon_root_directory [new mindmon_directory nil]]
+'mindmon_root_directory'
 
-[have mindmon_root_directory add_file [new mindmon_file 'this is a test'       nil]]
-[have mindmon_root_directory add_file [new mindmon_file 'this is another test' nil]]
+[globalize mindmon_root_directory [new mindmon_directory nil]]
 
 
 'mindmon_file_chooser'
@@ -66,9 +65,7 @@
 				       top_label
 				       table
 				       
-				       button__hbox
-				       cancel_button
-				       ok_button]
+				       selection]
   [new [initial-mindmon
 	initial-directory]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
@@ -100,6 +97,7 @@
 				      [let [[column 1]] [have table attach file_button                                   column [+ column 2] row [+ row 1] 0 0]]
 				      [have file_button signal_connect 'clicked'
 					    [funk []
+						  [= selection file]
 						  [have window destroy]]
 					    nil]]]]
 				
@@ -110,6 +108,10 @@
 				  [let [[column 1]] [have table attach new_project_button column [+ column 1] row [+ row 1] 0 0]]
 				  [let [[column 2]] [have table attach new_project_entry  column [+ column 1] row [+ row 1] 0 0]]
 				  [labels [[select_new_project []
+							       [let* [[new_file_name [get [get new_project_entry text] as-symbol]]
+								      [new_file      [new mindmon_file new_file_name nil]]]
+								 [have directory add_file new_file]
+								 [= selection new_file]]
 							       [have window destroy]]]
 					  [have new_project_button signal_connect 'clicked'
 						[funk []

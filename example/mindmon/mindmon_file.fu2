@@ -72,6 +72,7 @@
 			      [= window [gtk-window-new]]
 			      [set window transient_for parent_window]
 			      [set window destroy_with_parent t]
+			      [set window deletable nil]
 			      [have window connect_hide_on_delete]
 			      [set window title 'Are you sure?']
 			      [= vbox [gtk-vbox-new 0]]

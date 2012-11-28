@@ -245,12 +245,10 @@
 
 [deframe mindmon_save_file_chooser [mindmon_file_chooser] []
   [new [initial-mindmon
-	initial-directory
-	initial-selection_callback]
+	initial-directory]
        [construct mindmon_file_chooser
 		  initial-mindmon
 		  initial-directory
-		  initial-selection_callback
 		  `save]]]
 
 
@@ -258,11 +256,9 @@
 
 [deframe mindmon_open_file_chooser [mindmon_file_chooser] []
   [new [initial-mindmon
-	initial-directory
-	initial-selection_callback]
+	initial-directory]
        [construct mindmon_file_chooser
 		  initial-mindmon
 		  initial-directory
-		  initial-selection_callback
 		  `open]]]
 

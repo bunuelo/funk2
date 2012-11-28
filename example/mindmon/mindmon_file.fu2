@@ -48,6 +48,8 @@
 
 
 
+'mindmon_file_chooser'
+
 [deframe mindmon_file_chooser [frame] [mindmon
 				       directory
 				       

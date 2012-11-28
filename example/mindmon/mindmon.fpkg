@@ -61,6 +61,7 @@
 [defpackage mindmon
   :packages [mindmon_core
 	     mindmon_agent_widget
+	     mindmon_file
 	     mindmon_world]
    :sources ['mindmon.fu2']]
 

@@ -109,11 +109,10 @@
        [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_save_file_chooser
 				    mindmon
-				    mindmon_root_directory
-				    [funk [selection]
-					  [terminal_format standard-terminal '\nmindmon_store_project_dialog made selection: ' [get selection name]]
-					  ]]]
-       ]]
+				    mindmon_root_directory]]
+       [let [[selection [get mindmon_file_chooser selection]]]
+	 [terminal_format standard-terminal '\nmindmon_store_project_dialog made selection: ' [get selection name]]
+	 ]]]
 
 
 'mindmon_restore_project_dialog'
@@ -124,11 +123,10 @@
        [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_open_file_chooser
 				    mindmon
-				    mindmon_root_directory
-				    [funk [selection]
-					  [terminal_format standard-terminal '\nmindmon_restore_project_dialog made selection: ' [get selection name]]
-					  ]]]
-       ]]
+				    mindmon_root_directory]]
+       [let [[selection [get mindmon_file_chooser selection]]]
+	 [terminal_format standard-terminal '\nmindmon_restore_project_dialog made selection: ' [get selection name]]
+	 ]]]
 
 
 'mindmon_open_agent_dialog'

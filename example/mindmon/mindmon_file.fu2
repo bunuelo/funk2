@@ -58,10 +58,13 @@
 
 [deframe mindmon_file_chooser_confirm_dialog [frame] [window
 						      vbox
-						      top_label
+						      label
 						      button_hbox
 						      ok_button
-						      cancel_button]
+						      cancel_button
+						      [done_conditionlock [new conditionlock]]
+						      [done               nil]
+						      [confirmation       nil]]
   [new [parent_window
 	confirm_question]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
@@ -82,15 +85,36 @@
 			      [have button_hbox pack_start cancel_button nil nil 0]
 			      [have button_hbox pack_start ok_button t t 0]
 			      
+			      [have cancel_button signal_connect 'clicked'
+				    [funk []
+					  [have done_conditionlock lock]
+					  [= done t]
+					  [have done_conditionlock signal]
+					  [have done_conditionlock unlock]]
+				    nil]
+			      
+			      [have ok_button signal_connect 'clicked'
+				    [funk []
+					  [= confirmation t]
+					  [have done_conditionlock lock]
+					  [= done t]
+					  [have done_conditionlock signal]
+					  [have done_conditionlock unlock]]
+				    nil]
+			      
 			      [have vbox pack_start button_hbox nil nil 0]
 			      
 			      [have window add vbox]
 			      [have window show_all]
 			      [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
-			      ]]]
+			      
+			      [have done_conditionlock lock]
+			      [while [not done]
+				[have done_conditionlock wait]]
+			      [have done_conditionlock unlock]]]]
 	 [if [is-type `bug result]
 	     [let [[bug result]]
-	       [terminal_format standard-terminal '\nmindmon_file_chooser encountered bug.']
+	       [terminal_format standard-terminal '\nmindmon_file_chooser_confirm_dialog encountered bug.']
 	       [inspect bug]]]]]]
 
 
@@ -148,10 +172,11 @@
 				      [let [[column 1]] [have table attach file_button                                   column [+ column 2] row [+ row 1] 0 0]]
 				      [have file_button signal_connect 'clicked'
 					    [funk []
-						  [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]
-						  [= selection file]
-						  [have window destroy]
-						  [funkall selection_callback selection]]
+						  [let [[confirm_dialog [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]]]
+						    [if [get confirm_dialog confirmation]
+							[prog [= selection file]
+							      [have window destroy]
+							      [funkall selection_callback selection]]]]]
 					    nil]]]]
 				
 				[let [[row files-length]

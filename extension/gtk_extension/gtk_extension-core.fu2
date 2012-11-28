@@ -77,6 +77,7 @@
 [defcorefunk gtk-window-resize                                 gtk_extension gtk__window__resize]
 [defcorefunk gtk-window-set_transient_for                      gtk_extension gtk__window__set_transient_for]
 [defcorefunk gtk-window-set_destroy_with_parent                gtk_extension gtk__window__set_destroy_with_parent]
+[defcorefunk gtk-window-set_deletable                          gtk_extension gtk__window__set_deletable]
 [defcorefunk gtk-vbox-new                                      gtk_extension gtk__vbox__new]
 [defcorefunk gtk-hbox-new                                      gtk_extension gtk__hbox__new]
 [defcorefunk gtk-button-new_with_label                         gtk_extension gtk__button__new_with_label]
@@ -256,6 +257,7 @@
 [deftypefunk gtk_widget execute resize              [width height] [gtk-window-resize                  [get this widget] width height]]
 [deftypefunk gtk_widget set     transient_for       [parent]       [gtk-window-set_transient_for       [get this widget] [get parent widget]]]
 [deftypefunk gtk_widget set     destroy_with_parent [setting]      [gtk-window-set_destroy_with_parent [get this widget] setting]]
+[deftypefunk gtk_widget set     deletable           [setting]      [gtk-window-set_deletable           [get this widget] setting]]
 
 'GtkNotebook'
 [deftypefunk gtk_widget execute append_page  [child tab_label]          [gtk-notebook-append_page      [get this widget] [get child widget] [get tab_label widget]]]

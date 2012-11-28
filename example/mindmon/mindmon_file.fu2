@@ -74,7 +74,7 @@
 			      [set window title 'MindMon - File Chooser']
 			      [= vbox [gtk-vbox-new 0]]
 			      
-			      [= table [gtk-table-new 10 2 t]]
+			      [= table [gtk-table-new 10 2 nil]]
 			      
 			      [dotimes [row 10]
 				[let [[column 0]] [have table attach [gtk-label-new             '-->']           column [+ column 1] row [+ row 1] 0 0]]

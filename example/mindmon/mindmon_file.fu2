@@ -30,7 +30,7 @@
 
 [deframe mindmon_directory_contents [frame] [[frame [new frame]]]]
 
-[deftypefunk mindmon_directory execute add_file [mindmon_file]
+[deftypefunk mindmon_directory_contents execute add_file [mindmon_file]
   [have frame add [get mindmon_file name] mindmon_file]]
 
 

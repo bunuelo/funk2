@@ -67,7 +67,7 @@
 						      [confirmation       nil]]
   [new [parent_window
 	confirm_question]
-       [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
+       [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser_confirm_dialog: creating.']
 			      
 			      [= window [gtk-window-new]]
 			      [set window transient_for parent_window]
@@ -107,7 +107,7 @@
 			      
 			      [have window add vbox]
 			      [have window show_all]
-			      [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
+			      [terminal_format standard-terminal '\nmindmon_file_chooser_confirm_dialog: created.']
 			      
 			      [have done_conditionlock lock]
 			      [while [not done]
@@ -125,7 +125,6 @@
 
 [deframe mindmon_file_chooser [frame] [mindmon
 				       directory
-				       selection_callback
 				       mode
 				       
 				       window
@@ -134,17 +133,17 @@
 				       top_label
 				       table
 				       
-				       selection]
+				       [selection          nil]
+				       [done_conditionlock [new conditionlock]]
+				       [done               nil]]
   [new [initial-mindmon
 	initial-directory
-	initial-selection_callback
 	initial-mode]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
 			      [= mindmon            initial-mindmon]
 			      [= directory          [if initial-directory
 							initial-directory
 						      mindmon_root_directory]]
-			      [= selection_callback initial-selection_callback]
 			      [= mode               initial-mode]
 			      
 			      [= window [gtk-window-new]]
@@ -178,12 +177,20 @@
 									 [let [[confirm_dialog [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]]]
 									   [if [get confirm_dialog confirmation]
 									       [prog [= selection file]
+										     [have done_conditionlock lock]
+										     [= done t]
+										     [have done_conditionlock signal]
+										     [have done_conditionlock unlock]
 										     [have window destroy]
 										     [funkall selection_callback selection]]]]]
 								   nil]]
 					    [[eq mode `open] [have file_button signal_connect 'clicked'
 								   [funk []
 									 [= selection file]
+									 [have done_conditionlock lock]
+									 [= done t]
+									 [have done_conditionlock signal]
+									 [have done_conditionlock unlock]
 									 [have window destroy]
 									 [funkall selection_callback selection]]
 								   nil]]]]]]
@@ -199,6 +206,10 @@
 								      [new_file      [new mindmon_file new_file_name nil]]]
 								 [have directory add_file new_file]
 								 [= selection new_file]]
+							       [have done_conditionlock lock]
+							       [= done t]
+							       [have done_conditionlock signal]
+							       [have done_conditionlock unlock]
 							       [have window destroy]
 							       [funkall selection_callback selection]]]
 					  [have new_project_button signal_connect 'clicked'
@@ -218,6 +229,11 @@
 			      
 			      [have window show_all]
 			      [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
+			      
+			      [have done_conditionlock lock]
+			      [while [not done]
+				[have done_conditionlock wait]]
+			      [have done_conditionlock unlock]
 			      ]]]
 	 [if [is-type `bug result]
 	     [let [[bug result]]

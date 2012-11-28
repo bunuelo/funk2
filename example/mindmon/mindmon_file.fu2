@@ -63,6 +63,7 @@
 				       window
 				       vbox
 				       
+				       top_label
 				       table
 				       
 				       button__hbox
@@ -86,12 +87,22 @@
 			      [let* [[files        [get directory files]]
 				     [files-length [length files]]]
 				
+				[= top_label [gtk-label-new [format nil 'Files in this directory: ' files-length]]]
+				[have vbox pack_start top_label nil nil 0]
+				
 				[= table [gtk-table-new [+ files-length 1] 3 nil]]
 				
 				[dotimes [index files-length]
 				  [let [[row index]]
-				    [let [[column 0]] [have table attach [gtk-label-new             '-->']                                         column [+ column 1] row [+ row 1] 0 0]]
-				    [let [[column 1]] [have table attach [gtk-button-new_with_label [format nil [get [get files elt index] name]]] column [+ column 2] row [+ row 1] 0 0]]]]
+				    [let* [[file        [get [get files elt index]]]
+					   [file_button [gtk-button-new_with_label [format nil file name]]]]
+				      [let [[column 0]] [have table attach [gtk-label-new [format nil [type file]]] column [+ column 1] row [+ row 1] 0 0]]
+				      [let [[column 1]] [have table attach file_button                              column [+ column 2] row [+ row 1] 0 0]]
+				      [have file_button signal_connect 'clicked'
+					    [funk []
+						  [have window destroy]]
+					    nil]]]]
+				
 				[let [[row files-length]
 				      [new_project_button [gtk-button-new_with_label 'New Project']]
 				      [new_project_entry  [gtk-entry-new]]]

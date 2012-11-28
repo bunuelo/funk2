@@ -68,6 +68,8 @@
 			      [= directory initial-directory]
 			      
 			      [= window [gtk-window-new]]
+			      [set window transient_for [get mindmon window]]
+			      [set window destroy_with_parent t]
 			      [have window connect_hide_on_delete]
 			      [set window title 'MindMon - File Chooser']
 			      [= vbox [gtk-vbox-new 0]]
@@ -75,8 +77,8 @@
 			      [= table [gtk-table-new 10 2 t]]
 			      
 			      [dotimes [row 10]
-				[let [[column 0]] [have table attach [gtk-label-new             '-->']           0 [+ column 1] row [+ row 1] 0 0]]
-				[let [[column 1]] [have table attach [gtk-button-new_with_label 'Filename Here'] 0 [+ column 1] row [+ row 1] 0 0]]]
+				[let [[column 0]] [have table attach [gtk-label-new             '-->']           column [+ column 1] row [+ row 1] 0 0]]
+				[let [[column 1]] [have table attach [gtk-button-new_with_label 'Filename Here'] column [+ column 1] row [+ row 1] 0 0]]]
 			      [have vbox pack_start table nil nil 0]
 			      
 			      [= button__hbox [gtk-hbox-new 0]]

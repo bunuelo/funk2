@@ -54,6 +54,10 @@
 	     mindmon_agent_tool_widget]
    :sources ['mindmon_agent_widget.fu2']]
 
+[defpackage mindmon_file
+  :packages [mindmon_core]
+   :sources ['mindmon_file.fu2']]
+
 [defpackage mindmon
   :packages [mindmon_core
 	     mindmon_agent_widget

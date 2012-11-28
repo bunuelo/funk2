@@ -1,0 +1,94 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+'mindmon_file'
+
+[deframe mindmon_file [frame] [name
+			       object]
+  [new [initial-name initial-object]
+       [= name   initial-name]
+       [= object initial-object]]]
+
+
+'mindmon_directory_contents'
+
+[deframe mindmon_directory_contents [frame] [[frame [new frame]]]]
+
+[deftypefunk mindmon_directory execute add_file [mindmon_file]
+  [have frame add [get mindmon_file name] mindmon_file]]
+
+
+'mindmon_directory'
+
+[deframe mindmon_directory [mindmon_file] []
+  [new [initial-name]
+       [construct mindmon_file initial-name [new mindmon_directory_contents]]]]
+
+[deftypefunk mindmon_directory execute add_file [mindmon_file]
+  [have object add_file mindmon_file]]
+
+
+[globalize mindmon_root_directory [new mindmon_directory nil]]
+
+
+
+[deframe mindmon_file_chooser [frame] [mindmon
+				       directory
+				       
+				       window
+				       vbox
+				       menu_bar
+				       file_menu_item
+				       file_menu
+				       file_exit_menu_item
+				       
+				       button__hbox
+				       cancel_button
+				       ok_button]
+  [new [initial-mindmon
+	initial-directory]
+       [= mindmon   initial-mindmon]
+       [= directory initial-directory]
+       
+       [= window [gtk-window-new]]
+       [have window connect_hide_on_delete]
+       [set window title 'MindMon - File Chooser']
+       [= vbox [gtk-vbox-new 0]]
+       
+       [= button__hbox [gtk-hbox-new 0]]
+       [= cancel_button [gtk-button-new_with_label 'Cancel']]
+       [= ok_button     [gtk-button-new_with_label 'OK']]
+       [have button__hbox pack_start cancel_button nil nil 0]
+       [have button__hbox pack_start ok_button t t 0]
+       [have vbox pack_start button__hbox nil nil 0]
+       
+       [have cancel_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       
+       [have ok_button signal_connect 'clicked'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       
+       [have window add vbox]
+       
+       [have window show_all]]]
+

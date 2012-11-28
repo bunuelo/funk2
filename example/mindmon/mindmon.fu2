@@ -94,6 +94,24 @@
        [have open_dialog show_all]]]
 
 
+'mindmon_store_project_dialog'
+
+[deframe mindmon_store_project_dialog [frame] [mindmon
+					       mindmon_file_chooser]
+  [new [initial-mindmon]
+       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]]]
+
+
+'mindmon_restore_project_dialog'
+
+[deframe mindmon_restore_project_dialog [frame] [mindmon
+						 mindmon_file_chooser]
+  [new [initial-mindmon]
+       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]]]
+
+
+'mindmon_open_agent_dialog'
+
 [deframe mindmon_open_agent_dialog [frame] [mindmon
 					    open_dialog
 					    preview_label]
@@ -126,6 +144,8 @@
        
        [have open_dialog show_all]]]
 
+
+'mindmon_preferences'
 
 [deframe mindmon_preferences [frame] [[isis_world_server_hostname `uninitialized]
 				      [project_directory          `uninitialized]
@@ -537,13 +557,6 @@
        [have [get this cycle_trigger] trigger]
        ]]
 
-`[rhett_order
-  [[small burrito
-	  bean and rice guacamole, lettuce, no cheese]
-   [chips and salsa]
-   [himicha drink]]]
-
-
 [deftypefunk mindmon_project set step_size [new_step_size]
   [set step_size_entry text [get [get new_step_size as-double] as-string]]]
 
@@ -602,7 +615,9 @@
        [terminal_format standard-terminal '\n                 Load project complete.']
        [have [get this cycle_trigger] trigger]
        this]]
-  [error bug_name `not_yet_implemented]]
+  [error bug_name `mindmon_project-new_from_file-not_yet_implemented
+	 mindmon  mindmon
+	 filename filename]]
 
 [deftypefunk mindmon_project execute save [filename]
   [terminal_format standard-terminal '\nMindMon Project: Saving ' filename '.']
@@ -817,6 +832,8 @@
 			  file_menu
 			  file_new_blocks_world_project_menu_item
 			  file_new_isis_world_project_menu_item
+			  file_store_project_menu_item
+			  file_restore_project_menu_item
 			  file_open_project_menu_item
 			  file_close_project_menu_item
 			  file_save_project_menu_item
@@ -868,6 +885,8 @@
 			     [=    file_menu                               [gtk-menu-new]]
 			     [=    file_new_blocks_world_project_menu_item [gtk-menu_item-new 'New Blocks World Project']]
 			     [=    file_new_isis_world_project_menu_item   [gtk-menu_item-new 'New Isis World Project']]
+			     [=    file_store_project_menu_item            [gtk-menu_item-new 'Store Project...']]
+			     [=    file_restore_project_menu_item          [gtk-menu_item-new 'Restore Project...']]
 			     [=    file_open_project_menu_item             [gtk-menu_item-new 'Open Project...']]
 			     [=    file_close_project_menu_item            [gtk-menu_item-new 'Close Project']]
 			     [=    file_save_project_menu_item             [gtk-menu_item-new 'Save Project...']]
@@ -878,6 +897,8 @@
 			     [have file_menu      append                   file_new_blocks_world_project_menu_item]
 			     [have file_menu      append                   file_new_isis_world_project_menu_item]
 			     [have file_menu      append                   file_open_project_menu_item]
+			     [have file_menu      append                   file_store_project_menu_item]
+			     [have file_menu      append                   file_restore_project_menu_item]
 			     [have file_menu      append                   file_close_project_menu_item]
 			     [have file_menu      append                   file_save_project_menu_item]
 			     [have file_menu      append                   file_export_movie_menu_item]
@@ -891,6 +912,16 @@
 			     [have file_new_isis_world_project_menu_item signal_connect 'activate'
 				   [funk []
 					 [have this start_new_isis_world_project]]
+				   nil]
+			     
+			     [have file_store_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_store_project_dialog this]]
+				   nil]
+			     
+			     [have file_restore_project_menu_item signal_connect 'activate'
+				   [funk []
+					 [new mindmon_restore_project_dialog this]]
 				   nil]
 			     
 			     [have file_open_project_menu_item signal_connect 'activate'

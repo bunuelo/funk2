@@ -54,6 +54,46 @@
 [globalize mindmon_root_directory [new mindmon_directory nil]]
 
 
+'mindmon_file_chooser_confirm_dialog'
+
+[deframe mindmon_file_chooser_confirm_dialog [frame] [window
+						      vbox
+						      top_label
+						      button_hbox
+						      ok_button
+						      cancel_button]
+  [new [parent_window
+	confirm_question]
+       [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
+			      
+			      [= window [gtk-window-new]]
+			      [set window transient_for parent_window]
+			      [set window destroy_with_parent t]
+			      [have window connect_hide_on_delete]
+			      [set window title 'Are you sure?']
+			      [= vbox [gtk-vbox-new 0]]
+			      
+			      [= label [gtk-label-new [format nil confirm_question]]]
+			      [have vbox pack_start label nil nil 0]
+			      
+			      [= button_hbox   [gtk-hbox-new 0]]
+			      [= cancel_button [gtk-button-new_with_label 'Cancel']]
+			      [= ok_button     [gtk-button-new_with_label 'Ok']]
+			      [have button_hbox pack_start cancel_button nil nil 0]
+			      [have button_hbox pack_start ok_button t t 0]
+			      
+			      [have vbox pack_start button_hbox nil nil 0]
+			      
+			      [have window add vbox]
+			      [have window show_all]
+			      [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
+			      ]]]
+	 [if [is-type `bug result]
+	     [let [[bug result]]
+	       [terminal_format standard-terminal '\nmindmon_file_chooser encountered bug.']
+	       [inspect bug]]]]]]
+
+
 'mindmon_file_chooser'
 
 [deframe mindmon_file_chooser [frame] [mindmon
@@ -108,6 +148,7 @@
 				      [let [[column 1]] [have table attach file_button                                   column [+ column 2] row [+ row 1] 0 0]]
 				      [have file_button signal_connect 'clicked'
 					    [funk []
+						  [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]
 						  [= selection file]
 						  [have window destroy]
 						  [funkall selection_callback selection]]
@@ -150,6 +191,8 @@
 	       [inspect bug]]]]]]
 
 
+'mindmon_save_file_chooser'
+
 [deframe mindmon_save_file_chooser [mindmon_file_chooser] []
   [new [initial-mindmon
 	initial-directory
@@ -159,6 +202,9 @@
 		  initial-directory
 		  initial-selection_callback
 		  `save]]]
+
+
+'mindmon_open_file_chooser'
 
 [deframe mindmon_open_file_chooser [mindmon_file_chooser] []
   [new [initial-mindmon

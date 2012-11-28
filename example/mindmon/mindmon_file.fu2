@@ -172,14 +172,20 @@
 					   [file_button [gtk-button-new_with_label [format nil [get file name]]]]]
 				      [let [[column 0]] [have table attach [gtk-label-new [format nil [type file] ': ']] column [+ column 1] row [+ row 1] 0 0]]
 				      [let [[column 1]] [have table attach file_button                                   column [+ column 2] row [+ row 1] 0 0]]
-				      [have file_button signal_connect 'clicked'
-					    [funk []
-						  [let [[confirm_dialog [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]]]
-						    [if [get confirm_dialog confirmation]
-							[prog [= selection file]
-							      [have window destroy]
-							      [funkall selection_callback selection]]]]]
-					    nil]]]]
+				      [cond [[eq mode `save] [have file_button signal_connect 'clicked'
+								   [funk []
+									 [let [[confirm_dialog [new mindmon_file_chooser_confirm_dialog window [format nil 'Are you sure you want to overwrite "' [get file name] '"?']]]]
+									   [if [get confirm_dialog confirmation]
+									       [prog [= selection file]
+										     [have window destroy]
+										     [funkall selection_callback selection]]]]]
+								   nil]]
+					    [[eq mode `open] [have file_button signal_connect 'clicked'
+								   [funk []
+									 [= selection file]
+									 [have window destroy]
+									 [funkall selection_callback selection]]
+								   nil]]]]]]
 				
 				[let [[row files-length]
 				      [new_project_button [gtk-button-new_with_label 'New Project']]

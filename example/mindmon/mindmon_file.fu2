@@ -90,28 +90,18 @@
 				  [let [[row index]]
 				    [let [[column 0]] [have table attach [gtk-label-new             '-->']                                         column [+ column 1] row [+ row 1] 0 0]]
 				    [let [[column 1]] [have table attach [gtk-button-new_with_label [format nil [get [get files elt index] name]]] column [+ column 2] row [+ row 1] 0 0]]]]
-				[let [[row files-length]]
-				  [let [[column 0]] [have table attach [gtk-label-new             '']            column [+ column 1] row [+ row 1] 0 0]]
-				  [let [[column 1]] [have table attach [gtk-button-new_with_label 'New Project'] column [+ column 1] row [+ row 1] 0 0]]
-				  [let [[column 2]] [have table attach [gtk-entry-new]                           column [+ column 1] row [+ row 1] 0 0]]]
+				[let [[row files-length]
+				      [new_project_button [gtk-button-new_with_label 'New Project']]
+				      [new_project_entry  [gtk-entry-new]]]
+				  [let [[column 0]] [have table attach [gtk-label-new ''] column [+ column 1] row [+ row 1] 0 0]]
+				  [let [[column 1]] [have table attach new_project_button column [+ column 1] row [+ row 1] 0 0]]
+				  [let [[column 2]] [have table attach new_project_entry  column [+ column 1] row [+ row 1] 0 0]]
+				  [have new_project_button signal_connect 'clicked'
+					[funk []
+					      [have window destroy]]
+					nil]]
+				
 				[have vbox pack_start table nil nil 0]]
-			      
-			      [= button__hbox [gtk-hbox-new 0]]
-			      [= cancel_button [gtk-button-new_with_label 'Cancel']]
-			      [= ok_button     [gtk-button-new_with_label 'OK']]
-			      [have button__hbox pack_start cancel_button nil nil 0]
-			      [have button__hbox pack_start ok_button t t 0]
-			      [have vbox pack_start button__hbox nil nil 0]
-			      
-			      [have cancel_button signal_connect 'clicked'
-				    [funk []
-					  [have window destroy]]
-				    nil]
-			      
-			      [have ok_button signal_connect 'clicked'
-				    [funk []
-					  [have window destroy]]
-				    nil]
 			      
 			      [have window add vbox]
 			      

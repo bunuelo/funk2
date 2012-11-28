@@ -71,10 +71,11 @@
 	initial-directory
 	initial-selection_callback]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
-			      [= mindmon   initial-mindmon]
-			      [= directory [if initial-directory
-					       initial-directory
-					     mindmon_root_directory]]
+			      [= mindmon            initial-mindmon]
+			      [= directory          [if initial-directory
+							initial-directory
+						      mindmon_root_directory]]
+			      [= selection_callback initial-selection_callback]
 			      
 			      [= window [gtk-window-new]]
 			      [set window transient_for [get mindmon window]]

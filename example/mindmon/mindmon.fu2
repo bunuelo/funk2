@@ -107,9 +107,9 @@
 					       mindmon_file_chooser]
   [new [initial-mindmon]
        [= mindmon              initial-mindmon]
-       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory
+       [= mindmon_file_chooser [new mindmon_save_file_chooser mindmon mindmon_root_directory
 				    [funk [selection]
-					  [terminal_format standard-terminal 'mindmon_store_project_dialog made selection: ' [get selection name]]
+					  [terminal_format standard-terminal '\nmindmon_store_project_dialog made selection: ' [get selection name]]
 					  ]]]
        ]]
 
@@ -120,9 +120,9 @@
 						 mindmon_file_chooser]
   [new [initial-mindmon]
        [= mindmon              initial-mindmon]
-       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory
+       [= mindmon_file_chooser [new mindmon_load_file_chooser mindmon mindmon_root_directory
 				    [funk [selection]
-					  [terminal_format standard-terminal 'mindmon_store_project_dialog made selection: ' [get selection name]]
+					  [terminal_format standard-terminal '\nmindmon_restore_project_dialog made selection: ' [get selection name]]
 					  ]]]
        ]]
 

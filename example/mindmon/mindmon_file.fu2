@@ -58,6 +58,8 @@
 
 [deframe mindmon_file_chooser [frame] [mindmon
 				       directory
+				       selection_callback
+				       mode
 				       
 				       window
 				       vbox
@@ -65,23 +67,29 @@
 				       top_label
 				       table
 				       
-				       selection
-				       selection_callback]
+				       selection]
   [new [initial-mindmon
 	initial-directory
-	initial-selection_callback]
+	initial-selection_callback
+	initial-mode]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
 			      [= mindmon            initial-mindmon]
 			      [= directory          [if initial-directory
 							initial-directory
 						      mindmon_root_directory]]
 			      [= selection_callback initial-selection_callback]
+			      [= mode               initial-mode]
 			      
 			      [= window [gtk-window-new]]
 			      [set window transient_for [get mindmon window]]
 			      [set window destroy_with_parent t]
 			      [have window connect_hide_on_delete]
-			      [set window title 'MindMon - File Chooser']
+			      [cond [[eq mode `save] [set window title 'MindMon - Save File Chooser']]
+				    [[eq mode `load] [set window title 'MindMon - Load File Chooser']]
+				    [t               [error bug_name  `mindmon_file_chooser-invalid_mode
+							    mindmon   mindmon
+							    directory directory
+							    mode      mode]]]
 			      [= vbox [gtk-vbox-new 0]]
 			      
 			      [let* [[files        [get directory files]]
@@ -140,4 +148,25 @@
 	     [let [[bug result]]
 	       [terminal_format standard-terminal '\nmindmon_file_chooser encountered bug.']
 	       [inspect bug]]]]]]
+
+
+[deframe mindmon_save_file_chooser [mindmon_file_chooser] []
+  [new [initial-mindmon
+	initial-directory
+	initial-selection_callback]
+       [construct mindmon_file_chooser
+		  initial-mindmon
+		  initial-directory
+		  initial-selection_callback
+		  `save]]]
+
+[deframe mindmon_open_file_chooser [mindmon_file_chooser] []
+  [new [initial-mindmon
+	initial-directory
+	initial-selection_callback]
+       [construct mindmon_file_chooser
+		  initial-mindmon
+		  initial-directory
+		  initial-selection_callback
+		  `open]]]
 

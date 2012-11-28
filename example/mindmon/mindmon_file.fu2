@@ -90,6 +90,9 @@
 				  [let [[row index]]
 				    [let [[column 0]] [have table attach [gtk-label-new             '-->']                                         column [+ column 1] row [+ row 1] 0 0]]
 				    [let [[column 1]] [have table attach [gtk-button-new_with_label [format nil [get [get files elt index] name]]] column [+ column 1] row [+ row 1] 0 0]]]]
+				[let [[row files-length]]
+				  [let [[column 0]] [have table attach [gtk-label-new             '']            column [+ column 1] row [+ row 1] 0 0]]
+				  [let [[column 1]] [have table attach [gtk-button-new_with_label 'New Project'] column [+ column 1] row [+ row 1] 0 0]]]
 				[have vbox pack_start table nil nil 0]]
 			      
 			      [= button__hbox [gtk-hbox-new 0]]

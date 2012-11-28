@@ -63,42 +63,46 @@
 				       ok_button]
   [new [initial-mindmon
 	initial-directory]
-       [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
-       [= mindmon   initial-mindmon]
-       [= directory initial-directory]
-       
-       [= window [gtk-window-new]]
-       [have window connect_hide_on_delete]
-       [set window title 'MindMon - File Chooser']
-       [= vbox [gtk-vbox-new 0]]
-       
-       [= table [gtk-table-new 10 2 t]]
-       
-       [dotimes [row 10]
-	 [let [[column 0]] [have table attach [gtk-label-new             '-->']           0 [+ column 1] row [+ row 1] 0 0]]
-	 [let [[column 1]] [have table attach [gtk-button-new_with_label 'Filename Here'] 0 [+ column 1] row [+ row 1] 0 0]]]
-       [have vbox pack_start table_hbox nil nil 0]
-       
-       [= button__hbox [gtk-hbox-new 0]]
-       [= cancel_button [gtk-button-new_with_label 'Cancel']]
-       [= ok_button     [gtk-button-new_with_label 'OK']]
-       [have button__hbox pack_start cancel_button nil nil 0]
-       [have button__hbox pack_start ok_button t t 0]
-       [have vbox pack_start button__hbox nil nil 0]
-       
-       [have cancel_button signal_connect 'clicked'
-	     [funk []
-		   [have window destroy]]
-	     nil]
-       
-       [have ok_button signal_connect 'clicked'
-	     [funk []
-		   [have window destroy]]
-	     nil]
-       
-       [have window add vbox]
-       
-       [have window show_all]
-       [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
-       ]]
+       [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
+			      [= mindmon   initial-mindmon]
+			      [= directory initial-directory]
+			      
+			      [= window [gtk-window-new]]
+			      [have window connect_hide_on_delete]
+			      [set window title 'MindMon - File Chooser']
+			      [= vbox [gtk-vbox-new 0]]
+			      
+			      [= table [gtk-table-new 10 2 t]]
+			      
+			      [dotimes [row 10]
+				[let [[column 0]] [have table attach [gtk-label-new             '-->']           0 [+ column 1] row [+ row 1] 0 0]]
+				[let [[column 1]] [have table attach [gtk-button-new_with_label 'Filename Here'] 0 [+ column 1] row [+ row 1] 0 0]]]
+			      [have vbox pack_start table nil nil 0]
+			      
+			      [= button__hbox [gtk-hbox-new 0]]
+			      [= cancel_button [gtk-button-new_with_label 'Cancel']]
+			      [= ok_button     [gtk-button-new_with_label 'OK']]
+			      [have button__hbox pack_start cancel_button nil nil 0]
+			      [have button__hbox pack_start ok_button t t 0]
+			      [have vbox pack_start button__hbox nil nil 0]
+			      
+			      [have cancel_button signal_connect 'clicked'
+				    [funk []
+					  [have window destroy]]
+				    nil]
+			      
+			      [have ok_button signal_connect 'clicked'
+				    [funk []
+					  [have window destroy]]
+				    nil]
+			      
+			      [have window add vbox]
+			      
+			      [have window show_all]
+			      [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
+			      ]]]
+	 [if [is-type `bug result]
+	     [let [[bug result]]
+	       [terminal_format standard-terminal '\nmindmon_file_chooser encountered bug.']
+	       [inspect bug]]]]]]
 

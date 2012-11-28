@@ -99,6 +99,7 @@
 [deframe mindmon_store_project_dialog [frame] [mindmon
 					       mindmon_file_chooser]
   [new [initial-mindmon]
+       [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]]]
 
 
@@ -107,6 +108,7 @@
 [deframe mindmon_restore_project_dialog [frame] [mindmon
 						 mindmon_file_chooser]
   [new [initial-mindmon]
+       [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]]]
 
 

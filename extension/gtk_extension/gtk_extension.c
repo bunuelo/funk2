@@ -1127,6 +1127,14 @@ void funk2_gtk__window__set_destroy_with_parent(funk2_gtk_t* this, GtkWidget* wi
   }
 }
 
+void funk2_gtk__window__set_deletable(funk2_gtk_t* this, GtkWidget* window, boolean_t setting) {
+  {
+    gdk_threads_enter();
+    gtk_window_set_deletable(GTK_WINDOW(window), setting ? TRUE : FALSE);
+    gdk_threads_leave();
+  }
+}
+
 
 // vbox
 
@@ -2377,19 +2385,6 @@ export_cefunk2(gtk__window__set_transient_for, window, parent, 0,
 	       "\n"
 	       "parent :\n"
 	       "	parent window, or NULL. [allow-none]");
-//def_pcfunk2(gtk__window__set_transient_for, window, parent,
-//  "Dialog windows should be set transient for the main application window they were spawned from. This allows window managers to e.g. keep the dialog on top of the main window, or center the dialog over the main window. gtk_dialog_new_with_buttons() and other convenience functions in GTK+ will sometimes call gtk_window_set_transient_for() on your behalf.\n"
-//	    "\n"
-//	    "Passing NULL for parent unsets the current transient window.\n"
-//	    "\n"
-//	    "On Windows, this function puts the child window on top of the parent, much as the window manager would have done on X.\n"
-//	    "\n"
-//	    "window :\n"
-//	    "	a GtkWindow\n"
-//  "\n"
-//	    "parent :\n"
-//	    "	parent window, or NULL. [allow-none]",
-//	    return f2__gtk__window__set_transient_for(this_cause, window, parent));
 
 
 f2ptr raw__gtk__window__set_destroy_with_parent(f2ptr cause, f2ptr window, f2ptr setting) {
@@ -2422,15 +2417,40 @@ export_cefunk2(gtk__window__set_destroy_with_parent, window, setting, 0,
 	       "\n"
 	       "setting :\n"
 	       "	whether to destroy window with its transient parent");
-//def_pcfunk2(gtk__window__set_destroy_with_parent, window, setting,
-//    "If setting is TRUE, then destroying the transient parent of window will also destroy window itself. This is useful for dialogs that shouldn't persist beyond the lifetime of the main window they're associated with, for example.\n"
-//	    "\n"
-//	    "window :\n"
-//	    "	a GtkWindow\n"
-//	    "\n"
-//	    "setting :\n"
-//	    "	whether to destroy window with its transient parent",
-//	    return f2__gtk__window__set_destroy_with_parent(this_cause, window, setting));
+
+
+f2ptr raw__gtk__window__set_deletable(f2ptr cause, f2ptr window, f2ptr setting) {
+#if defined(F2__GTK__SUPPORTED)
+  if (&(__funk2__gtk->initialized_successfully)) {
+    assert_gtk_object_is_from_this_session(gtk_widget, window);
+    GtkWidget* gtk_window = raw__gtk_widget__as__GtkWidget(cause, window);
+    
+    assert_g_type(GTK_TYPE_WINDOW, gtk_window);
+    
+    funk2_gtk__window__set_deletable(__funk2__gtk, gtk_window, (setting != nil) ? boolean__true : boolean__false);
+    return nil;
+  } else {
+    return f2__gtk_not_supported_larva__new(cause);
+  }
+#else
+  return f2__gtk_not_supported_larva__new(cause);
+#endif
+}
+
+f2ptr f2__gtk__window__set_deletable(f2ptr cause, f2ptr window, f2ptr setting) {
+  assert_argument_type(gtk_widget, window);
+  return raw__gtk__window__set_deletable(cause, window, setting);
+}
+export_cefunk2(gtk__window__set_deletable, window, setting, 0,
+	       "By default, windows have a close button in the window frame. Some window managers allow GTK+ to disable this button. If you set the deletable property to FALSE using this function, GTK+ will do its best to convince the window manager not to show a close button. Depending on the system, this function may not have any effect when called on a window that is already visible, so you should call it before calling gtk_window_show().\n"
+	       "\n"
+	       "On Windows, this function always works, since there's no window manager policy involved.\n"
+	       "\n"
+	       "window :\n"
+	       "	a GtkWindow\n"
+	       "\n"
+	       "setting :\n"
+	       "	TRUE to decorate the window as deletable\n");
 
 
 // vbox

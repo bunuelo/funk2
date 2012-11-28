@@ -58,9 +58,14 @@
   :packages [mindmon_core]
    :sources ['mindmon_file.fu2']]
 
+[defpackage mindmon_preference_editor
+  :packages [mindmon_core]
+   :sources ['mindmon_preference_editor.fu2']]
+
 [defpackage mindmon
   :packages [mindmon_core
 	     mindmon_agent_widget
+	     mindmon_preference_editor
 	     mindmon_file
 	     mindmon_world]
    :sources ['mindmon.fu2']]

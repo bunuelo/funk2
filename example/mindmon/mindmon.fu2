@@ -111,8 +111,9 @@
 				    mindmon
 				    mindmon_root_directory]]
        [let [[selection [get mindmon_file_chooser selection]]]
-	 [terminal_format standard-terminal '\nmindmon_store_project_dialog made selection: ' [get selection name]]
-	 ]]]
+	 [if [not [null selection]]
+	     [prog [terminal_format standard-terminal '\nmindmon_store_project_dialog made selection: ' [get selection name]]
+		   [have mindmon store_project selection]]]]]]
 
 
 'mindmon_restore_project_dialog'
@@ -125,8 +126,9 @@
 				    mindmon
 				    mindmon_root_directory]]
        [let [[selection [get mindmon_file_chooser selection]]]
-	 [terminal_format standard-terminal '\nmindmon_restore_project_dialog made selection: ' [get selection name]]
-	 ]]]
+	 [if [not [null selection]]
+	     [prog [terminal_format standard-terminal '\nmindmon_restore_project_dialog made selection: ' [get selection name]]
+		   [have mindmon restore_project selection]]]]]]
 
 
 'mindmon_open_agent_dialog'
@@ -202,198 +204,6 @@
 	nil
       [prog [have result fix_invalid_with_defaults]
 	    result]]]]
-
-[deframe mindmon_preference_editor [frame] [mindmon
-					    
-					    window
-					    vbox
-					    menu_bar
-					    file_menu_item
-					    file_menu
-					    file_exit_menu_item
-					    
-					    isis_world_server_hostname__hbox
-					    isis_world_server_hostname__title_label
-					    isis_world_server_hostname__data_entry
-					    
-					    cameras_enabled__check_button
-					    record_movie__check_button
-					    
-					    project_directory
-					    project_directory__hbox
-					    project_directory__title_label
-					    project_directory__select_button
-					    project_directory__data_label
-					    
-					    agent_directory
-					    agent_directory__hbox
-					    agent_directory__title_label
-					    agent_directory__select_button
-					    agent_directory__data_label
-					    
-					    movie_export_directory
-					    movie_export_directory__hbox
-					    movie_export_directory__title_label
-					    movie_export_directory__select_button
-					    movie_export_directory__data_label
-					    
-					    movie_resolution__hbox
-					    movie_resolution__title_label
-					    movie_resolution__data_entry
-					    
-					    button__hbox
-					    cancel_button
-					    ok_button]
-  [new [initial-mindmon]
-       [= mindmon initial-mindmon]
-       
-       [= window [gtk-window-new]]
-       [have window connect_hide_on_delete]
-       [set window title 'MindMon - Edit Preferences']
-       [= vbox [gtk-vbox-new 0]]
-       
-       [let [[isis_world_server_hostname [get [get mindmon preferences] isis_world_server_hostname]]]
-	 [= isis_world_server_hostname__hbox [gtk-hbox-new 0]]
-	 [= isis_world_server_hostname__title_label [gtk-label-new 'Isis World Server Hostname: ']]
-	 [= isis_world_server_hostname__data_entry  [gtk-entry-new]]
-	 [set isis_world_server_hostname__data_entry text isis_world_server_hostname]
-	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__title_label   nil nil 0]
-	 [have isis_world_server_hostname__hbox pack_start isis_world_server_hostname__data_entry    nil nil 0]
-	 [have vbox pack_start isis_world_server_hostname__hbox nil nil 0]]
-       
-       [= cameras_enabled__check_button [gtk-check_button-new 'Cameras Enabled by Default in New Projects']]
-       [have vbox pack_start cameras_enabled__check_button nil nil 0]
-       [set cameras_enabled__check_button active [get [get mindmon preferences] cameras_enabled]]
-       
-       [= record_movie__check_button [gtk-check_button-new 'Recording Movies Enabled by Default in New Projects']]
-       [have vbox pack_start record_movie__check_button nil nil 0]
-       [set record_movie__check_button active [get [get mindmon preferences] record_movie]]
-       
-       [= project_directory [get [get mindmon preferences] project_directory]]
-       [= project_directory__hbox [gtk-hbox-new 0]]
-       [= project_directory__title_label   [gtk-label-new             'Project Directory: ']]
-       [= project_directory__select_button [gtk-button-new_with_label '...']]
-       [= project_directory__data_label    [gtk-label-new             project_directory]]
-       [have project_directory__hbox pack_start project_directory__title_label   nil nil 0]
-       [have project_directory__hbox pack_start project_directory__select_button nil nil 0]
-       [have project_directory__hbox pack_start project_directory__data_label    nil nil 0]
-       [have vbox pack_start project_directory__hbox nil nil 0]
-       
-       [have project_directory__select_button signal_connect 'clicked'
-	     [funk []
-		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
-		     [set select_dialog current_folder project_directory]
-		     [have select_dialog response_event-signal_connect
-			   [funk [event_frame]
-				 [let [[response_id [have event_frame lookup `response_id]]]
-				   [if [eq response_id GTK_RESPONSE_ACCEPT]
-				       [prog [= project_directory [get select_dialog filename]]
-					     [set project_directory__data_label text project_directory]
-					     ]]]
-				 [have select_dialog destroy]]
-			   nil]
-		     [have select_dialog show_all]
-		     ]]
-	     nil]
-       
-       [= agent_directory [get [get mindmon preferences] agent_directory]]
-       [= agent_directory__hbox [gtk-hbox-new 0]]
-       [= agent_directory__title_label   [gtk-label-new             'Agent Directory: ']]
-       [= agent_directory__select_button [gtk-button-new_with_label '...']]
-       [= agent_directory__data_label    [gtk-label-new             agent_directory]]
-       [have agent_directory__hbox pack_start agent_directory__title_label   nil nil 0]
-       [have agent_directory__hbox pack_start agent_directory__select_button nil nil 0]
-       [have agent_directory__hbox pack_start agent_directory__data_label    nil nil 0]
-       [have vbox pack_start agent_directory__hbox nil nil 0]
-       
-       [have agent_directory__select_button signal_connect 'clicked'
-	     [funk []
-		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
-		     [set select_dialog current_folder agent_directory]
-		     [have select_dialog response_event-signal_connect
-			   [funk [event_frame]
-				 [let [[response_id [have event_frame lookup `response_id]]]
-				   [if [eq response_id GTK_RESPONSE_ACCEPT]
-				       [prog [= agent_directory [get select_dialog filename]]
-					     [set agent_directory__data_label text agent_directory]
-					     ]]]
-				 [have select_dialog destroy]]
-			   nil]
-		     [have select_dialog show_all]
-		     ]]
-	     nil]
-       
-       [= movie_export_directory [get [get mindmon preferences] movie_export_directory]]
-       [= movie_export_directory__hbox [gtk-hbox-new 0]]
-       [= movie_export_directory__title_label   [gtk-label-new             'Movie Export Directory: ']]
-       [= movie_export_directory__select_button [gtk-button-new_with_label '...']]
-       [= movie_export_directory__data_label    [gtk-label-new             movie_export_directory]]
-       [have movie_export_directory__hbox pack_start movie_export_directory__title_label   nil nil 0]
-       [have movie_export_directory__hbox pack_start movie_export_directory__select_button nil nil 0]
-       [have movie_export_directory__hbox pack_start movie_export_directory__data_label    nil nil 0]
-       [have vbox pack_start movie_export_directory__hbox nil nil 0]
-       
-       [have movie_export_directory__select_button signal_connect 'clicked'
-	     [funk []
-		   [let [[select_dialog [gtk-file_chooser_dialog-new_for_folder_select window]]]
-		     [set select_dialog current_folder movie_export_directory]
-		     [have select_dialog response_event-signal_connect
-			   [funk [event_frame]
-				 [let [[response_id [have event_frame lookup `response_id]]]
-				   [if [eq response_id GTK_RESPONSE_ACCEPT]
-				       [prog [= movie_export_directory [get select_dialog filename]]
-					     [set movie_export_directory__data_label text movie_export_directory]
-					     ]]]
-				 [have select_dialog destroy]]
-			   nil]
-		     [have select_dialog show_all]
-		     ]]
-	     nil]
-       
-       [let [[movie_resolution [get [get mindmon preferences] movie_resolution]]]
-	 [= movie_resolution__hbox [gtk-hbox-new 0]]
-	 [= movie_resolution__title_label [gtk-label-new 'Default Movie Resolution in New Projects: ']]
-	 [= movie_resolution__data_entry  [gtk-entry-new]]
-	 [set movie_resolution__data_entry text [get movie_resolution as-string]]
-	 [have movie_resolution__hbox pack_start movie_resolution__title_label   nil nil 0]
-	 [have movie_resolution__hbox pack_start movie_resolution__data_entry    nil nil 0]
-	 [have vbox pack_start movie_resolution__hbox nil nil 0]]
-       
-       [= button__hbox [gtk-hbox-new 0]]
-       [= cancel_button [gtk-button-new_with_label 'Cancel']]
-       [= ok_button     [gtk-button-new_with_label 'OK']]
-       [have button__hbox pack_start cancel_button nil nil 0]
-       [have button__hbox pack_start ok_button t t 0]
-       [have vbox pack_start button__hbox nil nil 0]
-       
-       [have cancel_button signal_connect 'clicked'
-	     [funk []
-		   [have window destroy]]
-	     nil]
-       
-       [have ok_button signal_connect 'clicked'
-	     [funk []
-		   [let [[preferences [new mindmon_preferences]]]
-		     [set preferences isis_world_server_hostname [get isis_world_server_hostname__data_entry text]]
-		     [set preferences project_directory          project_directory]
-		     [set preferences agent_directory            agent_directory]
-		     [set preferences movie_export_directory     movie_export_directory]
-		     [set preferences cameras_enabled            [get cameras_enabled__check_button active]]
-		     [set preferences record_movie               [get record_movie__check_button active]]
-		     [set preferences movie_resolution           [let [[i [shelter [get [string-read [get movie_resolution__data_entry text]] as-integer]]]]
-								   [if [is-type `bug i]
-								       1
-								     [if [< i 0]
-									 [- i]
-								       i]]]]
-		     [set mindmon preferences preferences]
-		     [have mindmon save_preferences]]
-		   [have window destroy]]
-	     nil]
-       
-       [have window add vbox]
-       
-       [have window show_all]]]
 
 
 [deframe mindmon_project [frame] [mindmon
@@ -1145,6 +955,23 @@
 	      [= mindmon_project new_mindmon_project]
 	      [have this enable_project_commands]]
       [terminal_format standard-terminal '\nMindMon Failed to Open Project: ' filename]]]]
+
+[deftypefunk mindmon execute store_project [mindmon_file]
+  [terminal_format standard-terminal '\nMindMon Store Project: ' [get mindmon_file name]]
+  [set mindmon_file object mindmon_project]]
+
+[deftypefunk mindmon execute restore_project [mindmon_file]
+  [have this close_project]
+  [terminal_format standard-terminal '\nMindMon Restore Project: ' [get mindmon_file name]]
+  [let [[new_mindmon_project [get mindmon_file object]]]
+    [if new_mindmon_project
+	[prog [have project_vbox remove project_vbox__contained_widget]
+	      [have project_vbox pack_start [get new_mindmon_project widget] t t 0]
+	      [have [get new_mindmon_project widget] show_all]
+	      [= project_vbox__contained_widget [get new_mindmon_project widget]]
+	      [= mindmon_project new_mindmon_project]
+	      [have this enable_project_commands]]
+      [terminal_format standard-terminal '\nMindMon Failed to Restore Project: ' [get mindmon_file name]]]]]
 
 [deftypefunk mindmon execute enable_project_commands []
   [set file_close_project_menu_item                     sensitive t]

@@ -33,6 +33,8 @@
 [deftypefunk mindmon_directory_contents execute add_file [mindmon_file]
   [have frame add [get mindmon_file name] mindmon_file]]
 
+[deftypefunk mindmon_directory_contents get files []
+  [get frame values]]
 
 'mindmon_directory'
 
@@ -42,6 +44,9 @@
 
 [deftypefunk mindmon_directory execute add_file [mindmon_file]
   [have object add_file mindmon_file]]
+
+[deftypefunk mindmon_directory get files []
+  [get object files]]
 
 
 [globalize mindmon_root_directory [new mindmon_directory nil]]
@@ -65,7 +70,9 @@
 	initial-directory]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
 			      [= mindmon   initial-mindmon]
-			      [= directory initial-directory]
+			      [= directory [if initial-directory
+					       initial-directory
+					     mindmon_root_directory]]
 			      
 			      [= window [gtk-window-new]]
 			      [set window transient_for [get mindmon window]]
@@ -74,12 +81,16 @@
 			      [set window title 'MindMon - File Chooser']
 			      [= vbox [gtk-vbox-new 0]]
 			      
-			      [= table [gtk-table-new 10 2 nil]]
-			      
-			      [dotimes [row 10]
-				[let [[column 0]] [have table attach [gtk-label-new             '-->']           column [+ column 1] row [+ row 1] 0 0]]
-				[let [[column 1]] [have table attach [gtk-button-new_with_label 'Filename Here'] column [+ column 1] row [+ row 1] 0 0]]]
-			      [have vbox pack_start table nil nil 0]
+			      [let* [[files        [get directory files]]
+				     [files-length [length files]]]
+				
+				[= table [gtk-table-new [+ files-length 1] 2 nil]]
+				
+				[dotimes [index files-length]
+				  [let [[row index]]
+				    [let [[column 0]] [have table attach [gtk-label-new             '-->']                                         column [+ column 1] row [+ row 1] 0 0]]
+				    [let [[column 1]] [have table attach [gtk-button-new_with_label [format nil [get [get files elt index] name]]] column [+ column 1] row [+ row 1] 0 0]]]]
+				[have vbox pack_start table nil nil 0]]
 			      
 			      [= button__hbox [gtk-hbox-new 0]]
 			      [= cancel_button [gtk-button-new_with_label 'Cancel']]

@@ -85,7 +85,7 @@
 			      [set window destroy_with_parent t]
 			      [have window connect_hide_on_delete]
 			      [cond [[eq mode `save] [set window title 'MindMon - Save File Chooser']]
-				    [[eq mode `load] [set window title 'MindMon - Load File Chooser']]
+				    [[eq mode `open] [set window title 'MindMon - Open File Chooser']]
 				    [t               [error bug_name  `mindmon_file_chooser-invalid_mode
 							    mindmon   mindmon
 							    directory directory

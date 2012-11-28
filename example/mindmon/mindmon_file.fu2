@@ -95,7 +95,7 @@
 				[dotimes [index files-length]
 				  [let [[row index]]
 				    [let* [[file        [get files elt index]]
-					   [file_button [gtk-button-new_with_label [format nil file name]]]]
+					   [file_button [gtk-button-new_with_label [format nil [get file name]]]]]
 				      [let [[column 0]] [have table attach [gtk-label-new [format nil [type file]]] column [+ column 1] row [+ row 1] 0 0]]
 				      [let [[column 1]] [have table attach file_button                              column [+ column 2] row [+ row 1] 0 0]]
 				      [have file_button signal_connect 'clicked'

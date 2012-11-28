@@ -53,16 +53,13 @@
 				       
 				       window
 				       vbox
-				       menu_bar
-				       file_menu_item
-				       file_menu
-				       file_exit_menu_item
 				       
 				       button__hbox
 				       cancel_button
 				       ok_button]
   [new [initial-mindmon
 	initial-directory]
+       [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
        [= mindmon   initial-mindmon]
        [= directory initial-directory]
        
@@ -90,5 +87,7 @@
        
        [have window add vbox]
        
-       [have window show_all]]]
+       [have window show_all]
+       [terminal_format standard-terminal '\nmindmon_file_chooser: created.']
+       ]]
 

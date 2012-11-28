@@ -68,6 +68,8 @@
 			      [= directory initial-directory]
 			      
 			      [= window [gtk-window-new]]
+			      [set window transient_for [get mindmon window]]
+			      [set window destroy_with_parent t]
 			      [have window connect_hide_on_delete]
 			      [set window title 'MindMon - File Chooser']
 			      [= vbox [gtk-vbox-new 0]]

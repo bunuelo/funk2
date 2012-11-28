@@ -462,7 +462,7 @@
 								 [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
 								 [have result_multiple_possible_values add_value nonsemantic_plan_value]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
-								       [cond [[null found_event]                              [prog [terminal_format standard-terminal '\nnonsemantic_plan: did not find existence event, so using current actual physical knowledge.']
+								       [cond [[null found_event]                              [prog [terminal_format standard-terminal '\nnonsemantic_plan imagine: did not find existence event, so using current actual physical knowledge.']
 																    [let* [[simple_truth_value     [have [get this mental_layer] check_exists semantic_partial_state]]
 																	   [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
 																      [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
@@ -562,7 +562,8 @@
 				 fiber_result]]]]]]]
     [if [is-type `bug result]
 	[let [[bug result]]
-	  [if globalize_plan_bugs_enabled
+	  [if [or globalize_plan_bugs_enabled
+		  [not [have [get bug frame] lookup `is_plan_bug]]]
 	      [let [[global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
 		[++ plan_bug_count]
 		[terminal_format standard-terminal '\nplan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
@@ -1529,7 +1530,7 @@
 								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\nplan calling: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
@@ -1553,7 +1554,7 @@
 								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]

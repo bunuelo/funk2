@@ -65,9 +65,11 @@
 				       top_label
 				       table
 				       
-				       selection]
+				       selection
+				       selection_callback]
   [new [initial-mindmon
-	initial-directory]
+	initial-directory
+	initial-selection_callback]
        [let [[result [shelter [terminal_format standard-terminal '\nmindmon_file_chooser: creating.']
 			      [= mindmon   initial-mindmon]
 			      [= directory [if initial-directory
@@ -98,7 +100,8 @@
 				      [have file_button signal_connect 'clicked'
 					    [funk []
 						  [= selection file]
-						  [have window destroy]]
+						  [have window destroy]
+						  [funkall selection_callback selection]]
 					    nil]]]]
 				
 				[let [[row files-length]
@@ -112,7 +115,8 @@
 								      [new_file      [new mindmon_file new_file_name nil]]]
 								 [have directory add_file new_file]
 								 [= selection new_file]]
-							       [have window destroy]]]
+							       [have window destroy]
+							       [funkall selection_callback selection]]]
 					  [have new_project_button signal_connect 'clicked'
 						[funk []
 						      [select_new_project]]

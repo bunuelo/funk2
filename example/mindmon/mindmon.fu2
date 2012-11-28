@@ -17,6 +17,9 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+
+'mindmon_export_movie_dialog'
+
 [deframe mindmon_export_movie_dialog [frame] [mindmon
 					      save_dialog]
   [new [initial-mindmon]
@@ -39,6 +42,8 @@
        [have save_dialog show_all]]]
 
 
+'mindmon_save_project_dialog'
+
 [deframe mindmon_save_project_dialog [frame] [mindmon
 					      save_dialog]
   [new [initial-mindmon]
@@ -60,6 +65,8 @@
 	     nil]
        [have save_dialog show_all]]]
 
+
+'mindmon_open_project_dialog'
 
 [deframe mindmon_open_project_dialog [frame] [mindmon
 					      open_dialog
@@ -100,7 +107,10 @@
 					       mindmon_file_chooser]
   [new [initial-mindmon]
        [= mindmon              initial-mindmon]
-       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]
+       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory
+				    [funk [selection]
+					  [terminal_format standard-terminal 'mindmon_store_project_dialog made selection: ' [get selection name]]
+					  ]]]
        ]]
 
 
@@ -110,7 +120,10 @@
 						 mindmon_file_chooser]
   [new [initial-mindmon]
        [= mindmon              initial-mindmon]
-       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]
+       [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory
+				    [funk [selection]
+					  [terminal_format standard-terminal 'mindmon_store_project_dialog made selection: ' [get selection name]]
+					  ]]]
        ]]
 
 

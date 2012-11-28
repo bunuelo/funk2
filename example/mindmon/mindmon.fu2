@@ -99,10 +99,8 @@
 [deframe mindmon_store_project_dialog [frame] [mindmon
 					       mindmon_file_chooser]
   [new [initial-mindmon]
-       [terminal_format standard-terminal '\nmindmon_store_project_dialog: creating.']
        [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]
-       [terminal_format standard-terminal '\nmindmon_store_project_dialog: created.']
        ]]
 
 
@@ -111,10 +109,8 @@
 [deframe mindmon_restore_project_dialog [frame] [mindmon
 						 mindmon_file_chooser]
   [new [initial-mindmon]
-       [terminal_format standard-terminal '\nmindmon_restore_project_dialog: creating.']
        [= mindmon              initial-mindmon]
        [= mindmon_file_chooser [new mindmon_file_chooser mindmon mindmon_root_directory]]
-       [terminal_format standard-terminal '\nmindmon_restore_project_dialog: created.']
        ]]
 
 
@@ -924,13 +920,11 @@
 			     
 			     [have file_store_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nmindmon creating store project dialog.']
 					 [new mindmon_store_project_dialog this]]
 				   nil]
 			     
 			     [have file_restore_project_menu_item signal_connect 'activate'
 				   [funk []
-					 [terminal_format standard-terminal '\nmindmon creating restore project dialog.']
 					 [new mindmon_restore_project_dialog this]]
 				   nil]
 			     

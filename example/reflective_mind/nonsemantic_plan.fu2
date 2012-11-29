@@ -1363,7 +1363,7 @@
 [defplancommand imagine quote [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
   [eval `[funk [nonsemantic_plan]
-	       [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,quote-expression]]]]
+	       [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]
 	       ]]]
 
 [defplancommand imagine prog [:rest expressions]

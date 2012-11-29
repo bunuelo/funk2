@@ -136,11 +136,19 @@
 		    [if [not [plan-call [plan [? partial_state]]]]
 			[fail]]]
 		
-		[defplan 'move left until over cube'
+		[defplan 'move left until over pyramid'
 		  :matches ['move [? direction] until over [? shape]']
 		   :frame [[direction left]
 			   [shape     cube]]
-		    [call-below 'move [? direction] until over [? shape]']]
+		    [prog [call-below 'move [? direction]']
+			  [wait-for [relationship block property shape [? shape]
+						  preposition below
+						  gripper property is-me t]]
+			  [call-below 'stop']]]
+		`[compile [plan 'move left until over pyramid']]
+		`[compile [plan 'move left until over cube']]
+		`[compile [plan 'move right until over pyramid']]
+		`[compile [plan 'move right until over cube']]
 		
 		[defplan 'if a cube is to my left, move left until over cube'
 		  :matches ['if [? condition], [? command]']
@@ -163,12 +171,25 @@
 		   :frame [[shape cube]]
 		    [plan-call [plan 'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]]
 		
+		[defplan 'attempt to grab block until gripper stops moving'
+		  [prog [call-below 'grab']
+			[wait-for-time 2]
+			[wait-for [property gripper property is-me t
+					    property movement_command
+					    stop]]]]
+		`[compile [plan 'attempt to grab block until gripper stops moving']]
+		
 		[defplan 'pick up a cube'
 		  :matches ['pick up a [? shape]']
 		   :frame [[shape cube]]
 		    [plan-call [plan 'move until over [? shape]']]
 		    [call-below 'attempt to grab block until gripper stops moving']
 		    [plan-call [plan 'assert that I am holding a [? shape]']]]
+		
+		[defplan 'drop block and wait for block to fall'
+		  [prog [call-below 'drop']
+			[wait-for-time 20]]]
+		`[compile 'drop block and wait for block to fall']
 		
 		[defplan 'drop the block I am holding on a pyramid'
 		  :matches ['drop the block I am holding on a [? shape]']

@@ -183,7 +183,7 @@
 		  :matches ['pick up a [? shape]']
 		   :frame [[shape cube]]
 		    [plan-call [plan 'move until over [? shape]']]
-		    [call-below 'attempt to grab block until gripper stops moving']
+		    [plan-call [plan 'attempt to grab block until gripper stops moving']]
 		    [plan-call [plan 'assert that I am holding a [? shape]']]]
 		
 		[defplan 'drop block and wait for block to fall'
@@ -195,7 +195,7 @@
 		  :matches ['drop the block I am holding on a [? shape]']
 		   :frame [[shape pyramid]]
 		    [plan-call [plan 'move until over [? shape]']]
-		    [call-below 'drop block and wait for block to fall']]
+		    [plan-call [plan 'drop block and wait for block to fall']]]
 		
 		[defplan 'stack a cube on a pyramid'
 		  :matches ['stack a [? top_shape] on a [? bottom_shape]']

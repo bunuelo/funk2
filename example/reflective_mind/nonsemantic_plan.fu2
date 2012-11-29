@@ -1503,9 +1503,8 @@
 		     result]]]]]]
 
 [defplanfunk imagine wait-for-time [time_to_wait]
-  [let [[time_to_wait [get nonsemantic_plan_value value]]]
-    [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' time_to_wait 'time steps.']
-    [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+  [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' [get time_to_wait value] 'time steps.']
+  [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]
 
 [defplanfunk imagine list [:rest expressions]
   [new multiple_possible_values [conslist [new nonsemantic_plan_value [conslist @expressions]]]]]

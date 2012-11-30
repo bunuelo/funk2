@@ -386,7 +386,7 @@ export_cefunk3(gdk__rgb_color__new, red, green, blue, 0,
 def_ceframe2(gtk_extension, gdk_pixbuf, gtk_session, pointer);
 
 f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {
-  return f2gdk_pixbuf__new(cause, f2__gtk__session_symbol(cause), pointer, f2__frame__new(cause, nil));
+  return f2gdk_pixbuf__new(cause, f2__gtk__session_symbol(cause), pointer);
 }
 export_cefunk1(gdk_pixbuf__new, pointer, 0, "Returns a new gdk_pixbuf object.");
 
@@ -543,7 +543,6 @@ f2ptr f2__gtk_menu_bar_type__new_aux(f2ptr cause) {
 
 // gtk_check_button
 
-//def_frame_object__global__2_slot(gtk_check_button, gtk_session, pointer);
 def_ceframe3(gtk_extension, gtk_check_button, gtk_session, pointer, callback_frame);
 
 f2ptr f2__gtk_check_button__new(f2ptr cause, f2ptr pointer) {
@@ -572,7 +571,6 @@ f2ptr f2__gtk_check_button_type__new_aux(f2ptr cause) {
 
 // gtk_file_chooser_dialog
 
-//def_frame_object__global__2_slot(gtk_file_chooser_dialog, gtk_session, pointer);
 def_ceframe3(gtk_extension, gtk_file_chooser_dialog, gtk_session, pointer, callback_frame);
 
 f2ptr f2__gtk_file_chooser_dialog__new(f2ptr cause, f2ptr pointer) {

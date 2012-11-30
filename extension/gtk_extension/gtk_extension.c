@@ -382,7 +382,6 @@ export_cefunk3(gdk__rgb_color__new, red, green, blue, 0,
 
 // gdk_pixbuf
 
-//def_frame_object__global__2_slot(gdk_pixbuf, gtk_session, pointer);
 def_ceframe2(gtk_extension, gdk_pixbuf, gtk_session, pointer);
 
 f2ptr f2__gdk_pixbuf__new(f2ptr cause, f2ptr pointer) {

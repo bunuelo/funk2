@@ -757,7 +757,7 @@
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]
     [if [null top_nonsemantic_plan_execution_nodes]
-	[prog [have this imagine_eval]
+	[prog [have this imagine_as_thought [new frame]]
 	      [let [[imagined_top_execution_nodes [get imagined_top_execution_node_set elements]]]
 		[if [null imagined_top_execution_nodes]
 		    [error bug_name `nonsemantic_plan-get-compiled_funk-no_imagined_top_execution_nodes_after_imagine
@@ -1156,38 +1156,6 @@
 			[t                             [format nil 'unknown_type: ' node_type]]]]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node result: ' result]
     result]]
-
-`[multiple_interpretations [if [exists [relationship block property shape 'cube'
-						     preposition left-of
-						     gripper property is-me t]]
-			       [prog [call-below 'move left']
-				     [wait-for [relationship block property shape 'cube'
-							     preposition below
-							     gripper property ...]]
-				     [call-below 'stop']] 
-                             [if [exists [relationship block property shape 'cube'
-						       preposition right-of
-						       gripper property is-me ...]]
-				 [prog [call-below 'move right']
-				       [wait-for [relationship block ...]]
-				       [call-below 'stop']]
-			       []]] 
-			   [if [exists [relationship block property shape 'cube'
-						     preposition left-of
-						     gripper property is-me t]] 
-			       [multiple_interpretations [multiple_interpretations [prog [call-below 'move left until ...']
-											 [wait-for ...]
-											 [call-below 'stop']]
-										   [prog [call-below 'move left']
-											 [wait-for ...]
-											 [call-below 'stop']]]
-							 [multiple_interpretations [prog [call-below 'move left']
-											 [wait-for ...]
-											 [call-below 'stop']]
-										   [prog [call-below 'move left until ...']
-											 [wait-for ...]
-											 [call-below 'stop']]]]
-			     []]]
 
 
 'nonsemantic_plan_compile_mode'

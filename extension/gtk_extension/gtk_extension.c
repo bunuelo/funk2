@@ -672,6 +672,14 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
 
+void funk2_gtk_no_delete_list__add(f2ptr cause, f2ptr object) {
+  f2ptr gtk_no_delete_list = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "gtk_no_delete_list"));
+  if (raw__larva__is_type(cause, gtk_no_delete_list)) {
+    gtk_no_delete_list = nil;
+  }
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "gtk_no_delete_list"), raw__cons__new(cause, object, gtk_no_delete_list));
+}
+
 // called by user thread
 void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) {
   funk2_gtk_callback_cons_t* cons = (funk2_gtk_callback_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_cons_t)));
@@ -686,13 +694,16 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   
   // never gc these (they are not referenced in the global environment)
   if (callback->cause) {
-    never_gc(callback->cause);
+    funk2_gtk_no_delete_list__add(nil, callback->cause);
+    //never_gc(callback->cause);
   }
   if (callback->funk) {
-    never_gc(callback->funk);
+    funk2_gtk_no_delete_list__add(nil, callback->funk);
+    //never_gc(callback->funk);
   }
   if (callback->args) {
-    never_gc(callback->args);
+    funk2_gtk_no_delete_list__add(nil, callback->args);
+    //never_gc(callback->args);
   }
 }
 

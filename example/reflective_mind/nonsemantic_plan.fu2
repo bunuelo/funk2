@@ -1714,9 +1714,10 @@
 [defplanfunk imagine plan-call [plan]
   [let* [[semantic_plan_object [get plan value]]
 	 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
-    [terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [have nonsemantic_plan execute_as_thought [frame]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [have nonsemantic_plan imagine_as_thought [frame]]]
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\nexecuting plan: "' [get nonsemantic_plan as-string] '"']
+								     [have nonsemantic_plan execute_as_thought [frame]]]]
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nimagining executing plan: "' [get nonsemantic_plan as-string] '"']
+								     [have nonsemantic_plan imagine_as_thought [frame]]]]
 	  [t                                                   [error bug_name `nonsemantic_plan-plan_call-invalid_execution_mode
 								      execution_mode cause-nonsemantic_plan_execution_mode
 								      plan           plan]]]]]

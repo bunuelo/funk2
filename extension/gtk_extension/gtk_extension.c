@@ -693,18 +693,15 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   this->callbacks = cons->next;
   funk2_processor_mutex__unlock(&(this->callbacks__mutex));
   
-  // never gc these (they are not referenced in the global environment)
+  // never gc these (add a reference in the global environment)
   if (callback->cause) {
     funk2_gtk_no_delete_list__add(nil, callback->cause);
-    //never_gc(callback->cause);
   }
   if (callback->funk) {
     funk2_gtk_no_delete_list__add(nil, callback->funk);
-    //never_gc(callback->funk);
   }
   if (callback->args) {
     funk2_gtk_no_delete_list__add(nil, callback->args);
-    //never_gc(callback->args);
   }
 }
 

@@ -690,7 +690,7 @@
 				      expression       [quote ,expression]
 				      semantic_thought semantic_thought
 				      subbug           bug]]]]]
-		     [prog `[terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
+		     [prog ``[terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
 			   [if [not [is-type `multiple_possible_values result]]
 			       [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
 				      correct_types `[multiple_possible_values]

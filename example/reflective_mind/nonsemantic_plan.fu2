@@ -871,6 +871,10 @@
   [let [[expression [get nonsemantic_plan_execution_node expression]]]
     expression]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-integer [nonsemantic_plan_execution_node]
+  [let [[expression [get nonsemantic_plan_execution_node expression]]]
+    expression]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-? [nonsemantic_plan_execution_node]
   [let [[nonbug_and_failure_return_values [get nonsemantic_plan_execution_node nonbug_and_failure_return_values]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code-?: choosing first of ' [length nonbug_and_failure_return_values] ' nonbug return values.']
@@ -1045,34 +1049,6 @@
 	  subnodes]
     `[wait-for-time ,[get this execution_node_as_code [first [get time_to_wait_node subnodes]]]]]]
 
-
-
-`[multiple_interpretations [if [exists [relationship block property shape 'cube'
-						     preposition left-of
-						     gripper property is-me t]]
-			       [multiple_interpretations [prog [call-below 'move left']
-							       'unknown_type: wait-for'
-							       [call-below 'stop']]
-							 [prog [call-below 'move left until over cube, other...']
-							       'unknown_type: wait-for' 
-							       [call-below 'stop']]]
-			     []]
-			   [if [exists [relationship block property shape 'cube'
-						     preposition left-of
-						     gripper property is-me t]]
-			       [prog [call-below 'move left']
-				     'unknown_type: wait-for'
-				     [call-below 'stop']] 
-			     [if [exists [relationship block property shape 'cube'
-						       preposition right-of
-						       gripper property is-me t]]
-				 [prog [call-below 'move right']
-				       'unknown_type: wait-for'
-				       [call-below 'stop']]
-			       []]]]
-
-
-
 [deftypefunk nonsemantic_plan get execution_node_as_code-property [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
 	[source_type_node     nil]
@@ -1081,7 +1057,7 @@
 	[source_value_node    nil]
 	[key_type_node        nil]
 	[key_node             nil]
-	[value                nil]]
+	[value_node           nil]]
     [mapc [funk [subnode]
 		[let [[subnode-node_type [get subnode node_type]]]
 		  [cond [[eq subnode-node_type `source_type]     [= source_type_node     subnode]]
@@ -1144,6 +1120,7 @@
 		  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code input node_type: ' node_type]
 		  [cond [[null node_type]              [get this execution_node_as_code-nil           nonsemantic_plan_execution_node]]
 			[[eq node_type `symbol]        [get this execution_node_as_code-symbol        nonsemantic_plan_execution_node]]
+			[[eq node_type `integer]       [get this execution_node_as_code-integer       nonsemantic_plan_execution_node]]
 			[[eq node_type `?]             [get this execution_node_as_code-?             nonsemantic_plan_execution_node]]
 			[[eq node_type `prog]          [get this execution_node_as_code-prog          nonsemantic_plan_execution_node]]
 			[[eq node_type `parog]         [get this execution_node_as_code-parog         nonsemantic_plan_execution_node]]

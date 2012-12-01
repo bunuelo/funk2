@@ -1011,6 +1011,64 @@
 	  subnodes]
     `[not ,[get this execution_node_as_code [first [get truth_value_node subnodes]]]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-wait_for [nonsemantic_plan_execution_node]
+  [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
+	[partial_state_node nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `partial_state]
+		      [if partial_state_node
+			  [error bug_name           `nonsemantic_plan-get-execution_node_as_code-wait_for-more_than_one_partial_state_subnode
+				 partial_state_node partial_state_node
+				 subnode            subnode
+				 this               this]
+			[= partial_state_node subnode]]]]]
+	  subnodes]
+    `[wait-for ,[get this execution_node_as_code [first [get partial_state_node subnodes]]]]]]
+
+[deftypefunk nonsemantic_plan get execution_node_as_code-wait_for_time [nonsemantic_plan_execution_node]
+  [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
+	[time_to_wait_node nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `time_to_wait]
+		      [if time_to_wait_node
+			  [error bug_name           `nonsemantic_plan-get-execution_node_as_code-wait_for-more_than_one_time_to_wait_subnode
+				 time_to_wait_node time_to_wait_node
+				 subnode            subnode
+				 this               this]
+			[= time_to_wait_node subnode]]]]]
+	  subnodes]
+    `[wait-for-time ,[get this execution_node_as_code [first [get time_to_wait_node subnodes]]]]]]
+
+
+
+`[multiple_interpretations [if [exists [relationship block property shape 'cube'
+						     preposition left-of
+						     gripper property is-me t]]
+			       [multiple_interpretations [prog [call-below 'move left']
+							       'unknown_type: wait-for'
+							       [call-below 'stop']]
+							 [prog [call-below 'move left until over cube, other...']
+							       'unknown_type: wait-for' 
+							       [call-below 'stop']]]
+			     []]
+			   [if [exists [relationship block property shape 'cube'
+						     preposition left-of
+						     gripper property is-me t]]
+			       [prog [call-below 'move left']
+				     'unknown_type: wait-for'
+				     [call-below 'stop']] 
+			     [if [exists [relationship block property shape 'cube'
+						       preposition right-of
+						       gripper property is-me t]]
+				 [prog [call-below 'move right']
+				       'unknown_type: wait-for'
+				       [call-below 'stop']]
+			       []]]]
+
+
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-property [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
 	[source_type_node     nil]
@@ -1080,20 +1138,22 @@
 [deftypefunk nonsemantic_plan get execution_node_as_code [nonsemantic_plan_execution_node]
   [let [[result [let [[node_type [get nonsemantic_plan_execution_node node_type]]]
 		  [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_code input node_type: ' node_type]
-		  [cond [[null node_type]             [get this execution_node_as_code-nil          nonsemantic_plan_execution_node]]
-			[[eq node_type `symbol]       [get this execution_node_as_code-symbol       nonsemantic_plan_execution_node]]
-			[[eq node_type `?]            [get this execution_node_as_code-?            nonsemantic_plan_execution_node]]
-			[[eq node_type `prog]         [get this execution_node_as_code-prog         nonsemantic_plan_execution_node]]
-			[[eq node_type `parog]        [get this execution_node_as_code-parog        nonsemantic_plan_execution_node]]
-			[[eq node_type `if]           [get this execution_node_as_code-if           nonsemantic_plan_execution_node]]
-			[[eq node_type `call-below]   [get this execution_node_as_code-call_below   nonsemantic_plan_execution_node]]
-			[[eq node_type `plan-call]    [get this execution_node_as_code-plan_call    nonsemantic_plan_execution_node]]
-			[[eq node_type `not]          [get this execution_node_as_code-not          nonsemantic_plan_execution_node]]
-			[[eq node_type `exists]       [get this execution_node_as_code-exists       nonsemantic_plan_execution_node]]
-			[[eq node_type `property]     [get this execution_node_as_code-property     nonsemantic_plan_execution_node]]
-			[[eq node_type `relationship] [get this execution_node_as_code-relationship nonsemantic_plan_execution_node]]
-			[[eq node_type `fail]         [get this execution_node_as_code-fail         nonsemantic_plan_execution_node]]
-			[t                            [format nil 'unknown_type: ' node_type]]]]]]
+		  [cond [[null node_type]              [get this execution_node_as_code-nil           nonsemantic_plan_execution_node]]
+			[[eq node_type `symbol]        [get this execution_node_as_code-symbol        nonsemantic_plan_execution_node]]
+			[[eq node_type `?]             [get this execution_node_as_code-?             nonsemantic_plan_execution_node]]
+			[[eq node_type `prog]          [get this execution_node_as_code-prog          nonsemantic_plan_execution_node]]
+			[[eq node_type `parog]         [get this execution_node_as_code-parog         nonsemantic_plan_execution_node]]
+			[[eq node_type `if]            [get this execution_node_as_code-if            nonsemantic_plan_execution_node]]
+			[[eq node_type `call-below]    [get this execution_node_as_code-call_below    nonsemantic_plan_execution_node]]
+			[[eq node_type `plan-call]     [get this execution_node_as_code-plan_call     nonsemantic_plan_execution_node]]
+			[[eq node_type `not]           [get this execution_node_as_code-not           nonsemantic_plan_execution_node]]
+			[[eq node_type `exists]        [get this execution_node_as_code-exists        nonsemantic_plan_execution_node]]
+			[[eq node_type `wait-for]      [get this execution_node_as_code-wait_for      nonsemantic_plan_execution_node]]
+			[[eq node_type `wait-for-time] [get this execution_node_as_code-wait_for_time nonsemantic_plan_execution_node]]
+			[[eq node_type `property]      [get this execution_node_as_code-property      nonsemantic_plan_execution_node]]
+			[[eq node_type `relationship]  [get this execution_node_as_code-relationship  nonsemantic_plan_execution_node]]
+			[[eq node_type `fail]          [get this execution_node_as_code-fail          nonsemantic_plan_execution_node]]
+			[t                             [format nil 'unknown_type: ' node_type]]]]]]
     [terminal_format standard-terminal '\nnonsemantic_plan-get-execution_node_as_node result: ' result]
     result]]
 
@@ -1503,8 +1563,19 @@
 		     result]]]]]]
 
 [defplanfunk imagine wait-for-time [time_to_wait]
-  [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' [get time_to_wait value] 'time steps.']
-  [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]
+  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for ' [get time_to_wait value] 'time steps.']
+								   [let [[time_step [get [get nonsemantic_plan mind] time_step]]]
+								     [dotimes [i [+ [get time_to_wait value] 1]]
+								       [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for time step ' i `/ [get time_to_wait value] '.']
+								       [= time_step [have [get nonsemantic_plan mind] wait_for_time_step [+ time_step 1]]]]]
+								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' [get time_to_wait value] 'time steps.']
+								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+	[t                                                   [error bug_name         `nonsemantic_plan-wait_for_time-invalid_execution_mode
+								    execution_mode   cause-nonsemantic_plan_execution_mode
+								    nonsemantic_plan nonsemantic_plan
+								    time_to_wait     time_to_wait]]]]
+
 
 [defplanfunk imagine list [:rest expressions]
   [new multiple_possible_values [conslist [new nonsemantic_plan_value [conslist @expressions]]]]]

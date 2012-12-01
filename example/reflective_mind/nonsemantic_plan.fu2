@@ -672,7 +672,7 @@
 											       expression-type [type expression]
 											       expression      expression]]]]]
     [eval `[funk [this]
-		 [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
+		 `[terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
 		 [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
 		   [if [is-type `bug result]
 		       [let [[bug result]]
@@ -690,7 +690,7 @@
 				      expression       [quote ,expression]
 				      semantic_thought semantic_thought
 				      subbug           bug]]]]]
-		     [prog [terminal_format standard-terminal '\nnonsemantic_plan done imagining executing compiled expression: ' [quote ,expression]]
+		     [prog `[terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
 			   [if [not [is-type `multiple_possible_values result]]
 			       [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
 				      correct_types `[multiple_possible_values]
@@ -1316,9 +1316,9 @@
 							arguments]]]
 	  [let [[done nil]]
 	    [while [not done]
-	      [terminal_format standard-terminal
-			       '\napply: argument_max_index = ' argument_max_index
-			       '\n       argument_index     = ' argument_index]
+	      `[terminal_format standard-terminal
+				'\napply: argument_max_index = ' argument_max_index
+				'\n       argument_index     = ' argument_index]
 	      [let* [[single_arguments_bugs nil]
 		     [single_arguments      [let [[index 0]]
 					      [mapcar [funk [argument_list]
@@ -1459,7 +1459,7 @@
 [defplancommand imagine prog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[prog @expressions]]
   [eval `[funk [nonsemantic_plan]
-	       [terminal_format standard-terminal '\nplan imagining evaluating serial process.']
+	       `[terminal_format standard-terminal '\nplan evaluating serial process.']
 	       [let [[current_nonsemantic_plan_execution_node  nil]
 		     [previous_nonsemantic_plan_execution_node nil]]
 		 @[parcar [funk [expression]
@@ -1482,7 +1482,7 @@
 [defplancommand imagine parog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
-	       [terminal_format standard-terminal '\nplan imagining evaluating parallel process.']
+	       `[terminal_format standard-terminal '\nplan evaluating parallel process.']
 	       [let [[step_complete_failure             nil]
 		     [step_complete_failure_expressions nil]]
 		 [parog @[parcar [funk [expression]
@@ -1529,15 +1529,15 @@
 			      [conditions                      [get multiple_possible_values values]]
 			      [conditions-length               [length conditions]]
 			      [index                           0]]
-			 [terminal_format standard-terminal '\nnonsemantic_plan if: considering ' conditions-length ' conditions.']
+			 `[terminal_format standard-terminal '\nnonsemantic_plan if: considering ' conditions-length ' conditions.']
 			 [mapc [funk [one_condition]
 				     [++ index]
-				     [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
+				     `[terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
 				     [if [is-type `bug one_condition]
 					 [prog [have multiple_possible_values        add_value one_condition]
 					       [have result_multiple_possible_values add_value one_condition]]
 				       [if [get one_condition value]
-					   [prog [terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is true.']
+					   [prog `[terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is true.']
 						 [let [[true_result [with-new-cause [cause-define cause-last_decision_value one_condition]
 										    [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true [quote ,true_expression]]]]
 										      [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
@@ -1550,7 +1550,7 @@
 							      true_result true_result]]
 						   [have multiple_possible_values        add_value true_result]
 						   [have result_multiple_possible_values add_value true_result]]]
-					 [prog [terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is false.']
+					 [prog `[terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is false.']
 					       [let [[false_result [with-new-cause [cause-define cause-last_decision_value one_condition]
 										   [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false [quote ,false_expression]]]]
 										     [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
@@ -1768,12 +1768,30 @@
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\nplan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
 								   [have nonsemantic_plan wait_for [get partial_state value]]
 								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
-	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nplan imagining waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."  (not yet implemented)']
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nplan imagining waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
 								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-wait_for-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode
 								    action_name      action_name
 								    action_arguments action_arguments]]]]
+
+`[if [exists [relationship block property shape 'cube'
+			   preposition left-of
+			   gripper property is-me t]]
+     [prog [call-below 'move left']
+	   [wait-for [relationship block property shape 'cube'
+				   preposition below
+				   gripper property is-me t]]
+	   [call-below 'stop']] 
+   [if [exists [relationship block property shape 'cube'
+			     preposition right-of
+			     gripper property is-me t]]
+       [prog [call-below 'move right']
+	     [wait-for [relationship block property shape 'cube'
+				     preposition below
+				     gripper property is-me t]]
+	     [call-below 'stop']]
+     []]]
 
 [defplanfunk imagine fail []
   [error bug_name        `failure

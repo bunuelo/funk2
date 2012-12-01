@@ -672,7 +672,10 @@
 											       expression-type [type expression]
 											       expression      expression]]]]]
     [eval `[funk [this]
-		 [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]
+		 [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]]
+		       [[eq cause-nonsemantic_plan_execution_mode `imagine] [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]]
+		       [t                                                   [error bug_name   `nonsemantic_plan-get-expression_compile-invalid_execution_mode
+										   expression [quote ,expression]]]]
 		 [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
 		   [if [is-type `bug result]
 		       [let [[bug result]]

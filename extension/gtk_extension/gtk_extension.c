@@ -672,11 +672,12 @@ void funk2_gtk__destroy(funk2_gtk_t* this) {
   funk2_processor_mutex__destroy(&(this->main_thread__mutex));
 }
 
+void funk2_gtk_no_delete_list__reset(f2ptr cause) {
+  environment__add_var_value(cause, global_environment(), new__symbol(cause, "gtk_no_delete_list"), nil);
+}
+
 void funk2_gtk_no_delete_list__add(f2ptr cause, f2ptr object) {
   f2ptr gtk_no_delete_list = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "gtk_no_delete_list"));
-  if (raw__larva__is_type(cause, gtk_no_delete_list)) {
-    gtk_no_delete_list = nil;
-  }
   environment__add_var_value(cause, global_environment(), new__symbol(cause, "gtk_no_delete_list"), raw__cons__new(cause, object, gtk_no_delete_list));
 }
 
@@ -6624,6 +6625,7 @@ f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
     printf("\nTried to initialize gtk while gtk is already initialized."); fflush(stdout);
     status(  "Tried to initialize gtk while gtk is already initialized.");
   } else {
+    gtk_no_delete_list__reset(cause);
     __funk2__gtk = (funk2_gtk_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_t)));
     __funk2__gtk->initialized_successfully = boolean__false;
     {

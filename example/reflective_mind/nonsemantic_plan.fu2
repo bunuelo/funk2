@@ -1416,11 +1416,13 @@
 		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
 		 [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]]
 
+[defunk defplancommand-quote-evaluate [expression]
+  [new multiple_possible_values [conslist [new nonsemantic_plan_value expression]]]]
+
 [defplancommand imagine quote [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
   [eval `[funk [nonsemantic_plan]
-	       [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]
-	       ]]]
+	       [defplancommand-quote-evaluate [quote ,expression]]]]]
 
 [defunk defplancommand-prog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]
   [let [[result [funkall expression_compiled_funk nonsemantic_plan]]]
@@ -1552,13 +1554,26 @@
 		     [quote ,false_expression]
 		     ,[get nonsemantic_plan expression-compile false_expression compile_option_frame]]]]]]]
 
+[defunk defplancommand-?-evaluate [nonsemantic_plan variable_name]
+  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+    [terminal_format standard-terminal '\nplan looking up variable value, ' variable_name '.']
+    [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought lookup_a_variable_value variable_name]]]]]]
+
 [defplancommand imagine ? [variable_name]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
   [eval `[funk [nonsemantic_plan]
-	       [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-		 [terminal_format standard-terminal '\nplan looking up variable value, ' [quote ,variable_name] '.']
-		 [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought lookup_a_variable_value [quote ,variable_name]]]]]
-		 ]]]]
+	       [defplancommand-?-evaluate
+		 nonsemantic_plan
+		 [quote ,variable_name]]]]]
+
+[defunk defplancommand-defplan-evaluate [nonsemantic_plan name_expression name_patterns variable_definitions plan_body_expression]
+  [terminal_format standard-terminal '\n' [conslist `defplan name_expression]]
+  [let* [[new_nonsemantic_plan     [new nonsemantic_plan [get nonsemantic_plan mental_layer] name_expression name_patterns variable_definitions plan_body_expression]]
+	 [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+    [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
+    [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+      [terminal_format standard-terminal '\n']
+      result]]]
 
 [defplancommand imagine defplan [name_expression :rest arguments]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
@@ -1580,13 +1595,12 @@
 	  [= plan_body_expression [car argument_iter]]
 	[= plan_body_expression `[prog @argument_iter]]]]
     [eval `[funk [nonsemantic_plan]
-		 [terminal_format standard-terminal '\n' [conslist `defplan [quote ,name_expression]]]
-		 [let* [[new_nonsemantic_plan [new nonsemantic_plan [get nonsemantic_plan mental_layer] [quote ,name_expression] [quote ,name_patterns] [quote ,variable_definitions] [quote ,plan_body_expression]]]
-			[new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
-		   [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
-		   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
-		     [terminal_format standard-terminal '\n']
-		     result]]]]]]
+		 [defplancommand-defplan-evaluate
+		   nonsemantic_plan
+		   [quote ,name_expression]
+		   [quote ,name_patterns]
+		   [quote ,variable_definitions]
+		   [quote ,plan_body_expression]]]]]]
 
 [defplanfunk imagine wait-for-time [time_to_wait]
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for ' [get time_to_wait value] 'time steps.']

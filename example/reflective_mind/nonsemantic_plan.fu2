@@ -1330,7 +1330,7 @@
 		      [= done t]]]]]]]]]
     result_multiple_possible_values]]
 
-[defunk defplanfunk-evaluate_argument [argument_name argument_code expression_compiled_funk]
+[defunk defplanfunk-evaluate_argument [nonsemantic_plan argument_name argument_code expression_compiled_funk]
   [with-new-cause [let [[parent_nonsemantic_plan_execution_node cause-nonsemantic_plan_execution_node]
 			[nonsemantic_plan_execution_node        [new nonsemantic_plan_execution_node argument_name argument_code]]]
 		    [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
@@ -1362,7 +1362,7 @@
 					[let [[planfunk_body `[[let [[argument_expanded_codes [append [parcar [funk [argument_code_pair]
 														    [let [[argument_name [car argument_code_pair]]
 															  [argument_code [cdr argument_code_pair]]]
-														      `[defplanfunk-evaluate_argument [quote ,argument_name] [quote ,argument_code] ,[get nonsemantic_plan expression-compile argument_code compile_option_frame]]]]
+														      `[defplanfunk-evaluate_argument nonsemantic_plan [quote ,argument_name] [quote ,argument_code] ,[get nonsemantic_plan expression-compile argument_code compile_option_frame]]]]
 													      [conslist @[mapcar [funk [argument]
 																       `[cons [quote ,argument] ,argument]]
 																 arguments_without_rest]]]
@@ -1371,7 +1371,7 @@
 													      [parcar [funk [argument_code]
 															    [let [[argument_name [get [format nil [quote ,rest_argument] '-' index] as-symbol]]]
 															      [++ index]
-															      `[defplanfunk-evaluate_argument [quote ,argument_name] [quote ,argument_code] ,[get nonsemantic_plan expression-compile argument_code compile_option_frame]]]]
+															      `[defplanfunk-evaluate_argument nonsemantic_plan [quote ,argument_name] [quote ,argument_code] ,[get nonsemantic_plan expression-compile argument_code compile_option_frame]]]]
 														      ,rest_argument]]
 													 nil]]]]
 								 [eval `[funk [nonsemantic_plan]
@@ -1422,6 +1422,15 @@
 	       [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]
 	       ]]]
 
+[defunk defplancommand-prog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]
+  [let [[result [funkall expression_compiled_funk nonsemantic_plan]]]
+    [if [null [get result nonbug_and_failure_values]]
+	[error bug_name    `nonsemantic_plan-prog-step_complete_failure
+	       is_plan_bug t
+	       expression  expression
+	       result      result]
+      result]]]
+
 [defplancommand imagine prog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[prog @expressions]]
   [eval `[funk [nonsemantic_plan]
@@ -1436,14 +1445,22 @@
 						   [if [cause-lookup cause-nonsemantic_plan_execution_node]
 						       [set cause-nonsemantic_plan_execution_node first_subnode current_nonsemantic_plan_execution_node]]]
 						 [cause-define cause-nonsemantic_plan_execution_node current_nonsemantic_plan_execution_node]
-						 [let [[result [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]
-						   [if [null [get result nonbug_and_failure_values]]
-						       [error bug_name    `nonsemantic_plan-prog-step_complete_failure
-							      is_plan_bug t
-							      expression  [quote ,expression]
-							      result      result]
-						     result]]]]
+						 [defplancommand-prog-evaluate_expression nonsemantic_plan [quote ,expression] ,[get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 			  expressions]]]]]
+
+[defunk defplancommand-parog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]
+  [with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
+		  [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
+		  [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
+		  [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
+		  [funkall expression_compiled_funk nonsemantic_plan]]]
+
+[defunk defplancommand-parog-finish_up [step_complete_failure step_complete_failure_expressions]
+  [if step_complete_failure
+      [error bug_name                     `nonsemantic_plan-parog-step_complete_failure
+	     is_plan_bug                  t
+	     complete_failure_expressions step_complete_failure_expressions]
+    [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
 
 [defplancommand imagine parog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
@@ -1452,21 +1469,13 @@
 	       [let [[step_complete_failure             nil]
 		     [step_complete_failure_expressions nil]]
 		 [parog @[parcar [funk [expression]
-				       `[let [[result [with-new-cause [cause-define cause-imagine_time                                     cause-imagine_time]
-								      [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
-								      [cause-define cause-imagine_potential_effect_partial_state_set_mutex [new mutex]]
-								      [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
-								      [funkall ,[get nonsemantic_plan expression-compile expression compile_option_frame] nonsemantic_plan]]]]
+				       `[let [[result [defplancommand-parog-evaluate_expression nonsemantic_plan [quote ,expression] ,[get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 					  [if [null [get result nonbug_and_failure_values]]
 					      [prog [= step_complete_failure t]
 						    [= step_complete_failure_expressions [cons [quote ,expression] step_complete_failure_expressions]]]]
 					  result]]
 				 expressions]]
-		 [if step_complete_failure
-		     [error bug_name                     `nonsemantic_plan-parog-step_complete_failure
-			    is_plan_bug                  t
-			    complete_failure_expressions step_complete_failure_expressions]
-		   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]]]
+		 [defplancommand-parog-finish_up step_complete_failure step_complete_failure_expressions]]]]]
 
 [defplancommand imagine if [condition true_expression :rest false_expressions]
   [if [> [length false_expressions] 1]

@@ -1416,13 +1416,13 @@
 		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
 		 [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]]
 
-[defunk defplancommand-quote-evaluate [expression]
+[defunk defplancommand-quote-evaluate [nonsemantic_plan expression]
   [new multiple_possible_values [conslist [new nonsemantic_plan_value expression]]]]
 
 [defplancommand imagine quote [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
   [eval `[funk [nonsemantic_plan]
-	       [defplancommand-quote-evaluate [quote ,expression]]]]]
+	       [defplancommand-quote-evaluate nonsemantic_plan [quote ,expression]]]]]
 
 [defunk defplancommand-prog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]
   [let [[result [funkall expression_compiled_funk nonsemantic_plan]]]
@@ -1479,7 +1479,8 @@
 				 expressions]]
 		 [defplancommand-parog-finish_up step_complete_failure step_complete_failure_expressions]]]]]
 
-[defunk defplancommand-if-evaluate [condition_expression
+[defunk defplancommand-if-evaluate [nonsemantic_plan
+				    condition_expression
 				    condition_expression_compiled_funk
 				    true_expression
 				    true_expression_compiled_funk
@@ -1547,6 +1548,7 @@
       [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
       [eval `[funk [nonsemantic_plan]
 		   [defplancommand-if-evaluate
+		     nonsemantic_plan
 		     [quote ,condition]
 		     ,[get nonsemantic_plan expression-compile condition compile_option_frame]
 		     [quote ,true_expression]

@@ -55,7 +55,7 @@
 	  patterns]
     parses]]
 
-[defunk string_pattern-test [:rest expressions]
+[defunk string_pattern-test [expression]
   [let [[patterns `['the [? object] has [? property]'
 		    'an [? object] has [? property]'
 		    'a [? object] has [? property]']]]

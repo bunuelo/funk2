@@ -408,11 +408,25 @@
 
 [deftypefunk nonsemantic_plan get name_pattern_match_pairs [expression]
   [let [[name_pattern_matches nil]]
+    [if [eq [get this unique_name]
+	    [nonsemantic_plan-unique_name_from_name_expression expression]]
+	[= name_pattern_matches [cons [cons [get this name_expression] [new frame]]
+				      name_pattern_matches]]]
     [mapc [funk [name_pattern]
 		[let [[matches [string_pattern-match name_pattern expression]]]
 		  [mapc [funk [match]
-			      [= name_pattern_matches [cons [cons name_pattern match]
-							    name_pattern_matches]]]
+			      [let [[match_duplicates_variables t]]
+				[mapc [funk [variable_value_pair]
+					    [let [[variable [first  variable_value_pair]]
+						  [value    [second variable_value_pair]]]
+					      [if [and [get match contains variable]
+						       [not [equals [have match lookup variable]
+								    value]]]
+						  [= match_duplicates_variables nil]]]]
+				      variables]
+				[if [not match_duplicates_variables]
+				    [= name_pattern_matches [cons [cons name_pattern match]
+								  name_pattern_matches]]]]]
 			matches]]]
 	  name_patterns]
     name_pattern_matches]]
@@ -1626,35 +1640,31 @@
 
 
 [defplanfunk imagine plan [plan_name]
-  [cond [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]
-						       [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-							     [variable_frame                       [new frame]]
-							     [semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
-							 [if semantic_plan_matches
-							     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-							       [mapc [funk [semantic_plan_match]
-									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]
-									   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-										 [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
-										 [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
-									     [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
-									     [if [null match-semantic_plan_object]
-										 [error bug_name    `nonsemantic_plan-plan-no_such_plan
-											action_name semantic_plan_object-phenomenal_name]
-									       [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
-										      [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
-										      [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
-										 [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
-								     semantic_plan_matches]
-							       result_multiple_possible_values]
-							   [error bug_name    `could_not_find_matching_semantic_plans
-								  is_plan_bug t
-								  funkname    `plan
-								  plan_name   plan_name]]]]]
-	[t                                           [error bug_name `nonsemantic_plan-plan-invalid_type
-							    correct_types `[nonsemantic_plan_value]
-							    actual_type   [type plan_name]
-							    plan_name     plan_name]]]]
+  [let [[plan_name [get plan_name value]]]
+    [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+	  [variable_frame                       [new frame]]
+	  [semantic_plan_matches                [have [get nonsemantic_plan mental_layer] lookup_semantic_plan_matches plan_name]]]
+      [if semantic_plan_matches
+	  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+	    [mapc [funk [semantic_plan_match]
+			[terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]
+			[let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+			      [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+			      [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+			  [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
+			  [if [null match-semantic_plan_object]
+			      [error bug_name    `nonsemantic_plan-plan-no_such_plan
+				     action_name semantic_plan_object-phenomenal_name]
+			    [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
+				   [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
+				   [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+			      [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+		  semantic_plan_matches]
+	    result_multiple_possible_values]
+	[error bug_name    `could_not_find_matching_semantic_plans
+	       is_plan_bug t
+	       funkname    `plan
+	       plan_name   plan_name]]]]]
 
 [defplanfunk imagine plan-below [plan_name]
   [cond [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]

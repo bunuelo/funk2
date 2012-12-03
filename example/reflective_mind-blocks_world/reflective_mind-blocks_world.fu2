@@ -169,9 +169,12 @@
 		    [plan-call [plan 'attempt to grab block until gripper stops moving']]
 		    [plan-call [plan 'assert that I am holding a [? shape]']]]
 		
+		[defplan 'test reaching and grabbing'
+		  [plan-call [plan 'attempt to grab block until gripper stops moving']]]
+		
 		[defplan 'drop block and wait for block to fall'
-		  [prog [call-below 'drop']
-			[wait-for-time 20]]]
+		  [call-below 'drop']
+		  [wait-for-time 20]]
 		`[compile 'drop block and wait for block to fall']
 		
 		[defplan 'drop the block I am holding on a pyramid'

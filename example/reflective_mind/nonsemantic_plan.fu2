@@ -682,6 +682,32 @@
 
 [globalize imagine_expression_bug_count 0]
 
+[defunk nonsemantic_plan-get-expression_compile-evaluate [nonsemantic_plan expression unwrapped_compile_result]
+  [let [[result [shelter [funkall unwrapped_compile_result nonsemantic_plan]]]]
+    [if [is-type `bug result]
+	[let [[bug result]]
+	  [if [have [get bug frame] lookup `is_plan_bug]
+	      [bug bug]
+	    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
+	      [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' expression]
+	      [let [[bug_name [have [get bug frame] lookup `bug_name]]]
+		[if [not [eq bug_name `nonsemantic_plan-expression_encountered_bug]]
+		    [let [[global_bug_name [get [string-concat 'imagine_expression_bug-' [get imagine_expression_bug_count as-string]] as-symbol]]]
+		      [++ imagine_expression_bug_count]
+		      [terminal_format standard-terminal '\nglobally defining bug as ' global_bug_name '.']
+		      [eval `[globalize ,global_bug_name [quote ,bug]]]]]
+		[error bug_name         `nonsemantic_plan-expression_encountered_bug
+		       expression       expression
+		       semantic_thought semantic_thought
+		       subbug           bug]]]]]
+      [if [not [is-type `multiple_possible_values result]]
+	  [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
+		 correct_types `[multiple_possible_values]
+		 actual_type   [type result]
+		 result        result
+		 expression    expression]
+	result]]]]
+
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[null                              expression] [get this expression-compile-nil                      expression compile_option_frame]]
 					[[is-type `integer                  expression] [get this expression-compile-integer                  expression compile_option_frame]]
@@ -693,35 +719,7 @@
 											       expression-type [type expression]
 											       expression      expression]]]]]
     [eval `[funk [this]
-		 [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [terminal_format standard-terminal '\nnonsemantic_plan executing compiled expression: ' [quote ,expression]]]
-		       [[eq cause-nonsemantic_plan_execution_mode `imagine] [terminal_format standard-terminal '\nnonsemantic_plan imagining executing compiled expression: ' [quote ,expression]]]
-		       [t                                                   [error bug_name   `nonsemantic_plan-get-expression_compile-invalid_execution_mode
-										   expression [quote ,expression]]]]
-		 [let [[result [shelter [funkall ,unwrapped_compile_result this]]]]
-		   [if [is-type `bug result]
-		       [let [[bug result]]
-			 [if [have [get bug frame] lookup `is_plan_bug]
-			     [bug bug]
-			   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-			     [terminal_format standard-terminal '\nnonsemantic_plan-expression_encountered_bug: ' [quote ,expression]]
-			     [let [[bug_name [have [get bug frame] lookup `bug_name]]]
-			       [if [not [eq bug_name `nonsemantic_plan-expression_encountered_bug]]
-				   [let [[global_bug_name [get [string-concat 'imagine_expression_bug-' [get imagine_expression_bug_count as-string]] as-symbol]]]
-				     [++ imagine_expression_bug_count]
-				     [terminal_format standard-terminal '\nglobally defining bug as ' global_bug_name '.']
-				     [eval `[globalize ,global_bug_name [quote ,bug]]]]]
-			       [error bug_name         `nonsemantic_plan-expression_encountered_bug
-				      expression       [quote ,expression]
-				      semantic_thought semantic_thought
-				      subbug           bug]]]]]
-		     [prog ``[terminal_format standard-terminal '\nnonsemantic_plan done executing compiled expression: ' [quote ,expression]]
-			   [if [not [is-type `multiple_possible_values result]]
-			       [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
-				      correct_types `[multiple_possible_values]
-				      actual_type   [type result]
-				      result        result
-				      expression    [quote ,expression]]
-			     result]]]]]]]]
+		 [nonsemantic_plan-get-expression_compile-evaluate this [quote ,expression] ,unwrapped_compile_result]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_imagine_funk []
   [let [[compile_option_frame [frame mode `imagine]]]
@@ -1443,7 +1441,6 @@
 [defplancommand imagine parog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
-	       [terminal_format standard-terminal '\nplan imagining evaluating parallel process.']
 	       [let [[step_complete_failure             nil]
 		     [step_complete_failure_expressions nil]]
 		 [parog @[parcar [funk [expression]
@@ -1481,8 +1478,11 @@
       [mapc [funk [one_condition]
 		  [++ index]
 		  [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
-		  [if [is-type `bug one_condition]
-		      [prog [have multiple_possible_values        add_value one_condition]
+		  [if [or [is-type `bug one_condition]
+			  [and [is-type `nonsemantic_plan_value one_condition]
+			       [is-type `bug                    [get one_condition value]]]]
+		      [prog [terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is bug.']
+			    [have multiple_possible_values        add_value one_condition]
 			    [have result_multiple_possible_values add_value one_condition]]
 		    [if [get one_condition value]
 			[prog [terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is true.']

@@ -1361,7 +1361,7 @@
       [= arguments_without_rest [reverse arguments_without_rest]]]
     [let [[nonsemantic_plan_value_funk [eval `[funk [nonsemantic_plan @arguments]
 						    @body]]]]
-      [let [[precompiled_evaluate_defunk_name [get [format nil 'defplanfunk-' [quote ,[quote ,name]] '-evaluate'] as-symbol]]]
+      [let [[precompiled_evaluate_defunk_name [get [format nil 'defplanfunk-' name '-evaluate'] as-symbol]]]
 	[eval `[defunk ,precompiled_evaluate_defunk_name [nonsemantic_plan @arguments]
 		 [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node [quote ,name] [quote ,arguments]]]]
 				   [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
@@ -1399,8 +1399,10 @@
 										    ,rest_argument]]
 								       nil]]]]
 			       [eval `[funk [nonsemantic_plan]
-					    [apply [funkvar ,,precompiled_evaluate_defunk_name] [append [cons nonsemantic_plan arguments_without_rest]
-													rest_argument]]]]]]]]
+					    [apply [funkvar ,,precompiled_evaluate_defunk_name] ,[if arguments_contain_rest
+												     `[append [cons nonsemantic_plan arguments_without_rest]
+													      rest_argument]
+												   `[cons nonsemantic_plan arguments_without_rest]]]]]]]]]
 	[defplancommand-raw compile_mode name arguments planfunk_body]]]
 
 [defplancommand imagine eval [expression]

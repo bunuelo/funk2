@@ -326,7 +326,8 @@
 				   [internal-natural_language_string nil]
 				   [internal-constant_variable_frame nil]
 				   [executed_top_execution_node_set  [new set]]
-				   [imagined_top_execution_node_set  [new set]]]
+				   [imagined_top_execution_node_set  [new set]]
+				   [imagined_complete_failure        nil]]
   [new [initial-mental_layer
 	initial-name_expression
 	initial-name_patterns
@@ -755,6 +756,9 @@
 						   [funk []
 							 [have this imagine_eval]]
 						   []]]]
+		      [let [[nonbug_and_failure_values [get result nonbug_and_failure_values]]]
+			[if [null nonbug_and_failure_values]
+			    [= imagined_complete_failure t]]]
 		      [mapc [funk [imagined_top_execution_node]
 				  [fiber [funk []
 					       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: generating execution node graph.']

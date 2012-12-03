@@ -426,7 +426,7 @@
 					    [let [[variable [first  variable_value_pair]]
 						  [value    [second variable_value_pair]]]
 					      [if [and [get match contains variable]
-						       [not [equals [have match lookup variable] value]]]
+						       [not [eq [nonsemantic_plan-unique_name_from_name_expression [have match lookup variable]] [nonsemantic_plan-unique_name_from_name_expression value]]]]
 						  [prog [terminal_format standard-terminal '\nnonsemantic_plan-get-name_pattern_match_pairs: match contains variable and does not match default (' [have match lookup variable] ') != (' value ').']
 							[= match_duplicates_variables nil]]
 						[terminal_format standard-terminal '\nnonsemantic_plan-get-name_pattern_match_pairs: match duplicates variables (' [have match lookup variable] ') == (' value ').']]]]

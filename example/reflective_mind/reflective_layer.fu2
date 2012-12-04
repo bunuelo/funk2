@@ -157,6 +157,31 @@
 	  [get this semantic_plan_objects]]
     semantic_plan_matches]]
 
+[deftypefunk reflective_layer get plan_by_name [plan_name]
+  [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
+	[semantic_plan_matches                [have this lookup_semantic_plan_matches plan_name]]]
+    [if semantic_plan_matches
+	[let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+	  [mapc [funk [semantic_plan_match]
+		      [terminal_format standard-terminal '\n' [get this name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]
+		      [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
+			    [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
+			    [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
+			[terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' match-variable_frame]
+			[if [null match-semantic_plan_object]
+			    [error bug_name    `nonsemantic_plan-plan-no_such_plan
+				   action_name semantic_plan_object-phenomenal_name]
+			  [let* [[match-nonsemantic_plan [get match-semantic_plan_object nonsemantic_plan]]
+				 [new_nonsemantic_plan   [get match-nonsemantic_plan new_copy_given_variable_frame match-variable_frame]]
+				 [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
+			    [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
+		semantic_plan_matches]
+	  result_multiple_possible_values]
+      [error bug_name    `could_not_find_matching_semantic_plans
+	     is_plan_bug t
+	     funkname    `plan
+	     plan_name   plan_name]]]]
+
 [deftypefunk reflective_layer execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
   [let [[action [new deliberative_action 
 		     [get this mind]

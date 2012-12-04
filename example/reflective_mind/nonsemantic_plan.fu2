@@ -1666,7 +1666,7 @@
 
 [defplanfunk imagine plan [plan_name]
   [let [[plan_name [get plan_name value]]]
-    [have [get nonsemantic_plan mental_layer] plan_by_name plan_name]]]
+    [get [get nonsemantic_plan mental_layer] plan_by_name plan_name]]]
 
 [defplanfunk imagine plan-below [plan_name]
   [cond [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]

@@ -70,7 +70,7 @@
     Gripper-1
     Gripper-2
     Table-1
-    left-of          right-of on below is-holding
+    left-of          right-of on below-left below below-right is-holding
     shape            cube pyramid rectangle
     is-a             block gripper table
     is               me

@@ -165,6 +165,7 @@
 			[if [not [get [get semantic_plan nonsemantic_plan] imagined_complete_failure]]
 			    [= good_semantic_plans [cons semantic_plan good_semantic_plans]]]]
 		  semantic_plans]
+	    [have memoized_plans_by_name_ptypehash add semantic_plan_object-phenomenal_name good_semantic_plans]
 	    [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
 	      [mapc [funk [good_semantic_plan]
 			  [have result_multiple_possible_values add_value [new nonsemantic_plan_value good_semantic_plan]]]

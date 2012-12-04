@@ -397,6 +397,7 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
   f2ptr this__blocks_world_physics__grippers = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "grippers"), nil));
   f2ptr this__blocks_world_physics__blocks   = assert_value(f2__frame__lookup_var_value(cause, this__blocks_world_physics, new__symbol(cause, "blocks"),   nil));
   
+  f2ptr gripper__is_holding__name = nil;
   {
     f2ptr iter = this__blocks_world_physics__grippers;
     while (iter != nil) {
@@ -410,7 +411,6 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	}
 	f2ptr gripper__color            = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "color"),      nil));
 	f2ptr gripper__is_holding       = assert_value(f2__frame__lookup_var_value(cause, gripper, new__symbol(cause, "is_holding"), nil));
-	f2ptr gripper__is_holding__name = nil;
 	if (gripper__is_holding != nil) {
 	  gripper__is_holding__name = assert_value(f2__frame__lookup_var_value(cause, gripper__is_holding, new__symbol(cause, "name"), nil));
 	}
@@ -474,9 +474,15 @@ f2ptr f2__blocks_world_gripper__calculate_perceptions(f2ptr cause, f2ptr this) {
 	if (block__x__d < this__x__d) {
 	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "left-of"), this__name));
 	}
-	if ((this__x__d > ((block__x__d - (block__width__d / 8.0)) - 0.125)) &&
-	    (this__x__d < ((block__x__d + (block__width__d / 8.0)) + 0.125))) {
-	  raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below"), this__name));
+	if (! raw__eq(cause, block__name, gripper__is_holding__name)) {
+	  if ((this__x__d > (block__x__d - (block__width__d * 3.0 / 2.0))) &&
+	      (this__x__d < (block__x__d - (block__width__d / 4.0)))) {
+	    raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below-left"),  this__name));
+	  } else if (this__x__d < (block__x__d + (block__width__d / 4.0))) {
+	    raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below"),       this__name));
+	  } else if (this__x__d < (block__x__d + (block__width__d * 3.0 / 2.0))) {
+	    raw__blocks_world_gripper__add_perception(cause, this, f2list3__new(cause, block__name, new__symbol(cause, "below-right"), this__name));
+	  }
 	}
       }
       iter = assert_value(f2__cons__cdr(cause, iter));

@@ -119,14 +119,26 @@
 		    [if [not [plan-call [plan [? partial_state]]]]
 			[fail]]]
 		
+		[defplan 'wait for pyramid to be immediately to my left'
+		  :matches ['wait for [? shape] to be immediately to my left']
+		   :frame [[shape pyramid]]
+		    [wait-for [relationship block property shape [? shape]
+					    preposition below-left
+					    gripper property is-me t]]]
+		
+		[defplan 'wait for pyramid to be immediately to my right'
+		  :matches ['wait for [? shape] to be immediately to my right']
+		   :frame [[shape pyramid]]
+		    [wait-for [relationship block property shape [? shape]
+					    preposition below-right
+					    gripper property is-me t]]]
+		
 		[defplan 'move left until over pyramid'
 		  :matches ['move [? direction] until over [? shape]']
 		   :frame [[direction left]
 			   [shape     pyramid]]
 		    [call-below 'move [? direction]']
-		    [wait-for [relationship block property shape [? shape]
-					    preposition below
-					    gripper property is-me t]]
+		    [plan-call [plan 'wait for [? shape] to be immediately to my [? direction]']]
 		    [call-below 'stop']]
 		`[compile [plan 'move left until over pyramid']]
 		`[compile [plan 'move left until over cube']]

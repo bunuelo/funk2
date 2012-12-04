@@ -122,12 +122,12 @@
 		[defplan 'move left until over pyramid'
 		  :matches ['move [? direction] until over [? shape]']
 		   :frame [[direction left]
-			   [shape     cube]]
-		    [prog [call-below 'move [? direction]']
-			  [wait-for [relationship block property shape [? shape]
-						  preposition below
-						  gripper property is-me t]]
-			  [call-below 'stop']]]
+			   [shape     pyramid]]
+		    [call-below 'move [? direction]']
+		    [wait-for [relationship block property shape [? shape]
+					    preposition below
+					    gripper property is-me t]]
+		    [call-below 'stop']]
 		`[compile [plan 'move left until over pyramid']]
 		`[compile [plan 'move left until over cube']]
 		`[compile [plan 'move right until over pyramid']]

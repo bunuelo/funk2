@@ -24,9 +24,8 @@
 						 [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
 						 [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
-       [construct plan_mental_layer 2 `deliberative `deliberative1_knowledge `[deliberative1_type_knowledge]]
-       [parog [have this add_agency [new deliberative_physical_object_type_agency]]
-	      [have this add_agency [new deliberative_plan_agency]]]]]
+       [construct plan_mental_layer 2 `deliberative `deliberative1_knowledge `deliberative1_type_knowledge `[deliberative1_type_knowledge]]
+       [have this add_agency [new deliberative_physical_object_type_agency]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []
   [get [get this mind] layer `learned_reactive]]

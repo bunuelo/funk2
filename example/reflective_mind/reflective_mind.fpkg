@@ -147,7 +147,8 @@
 [defpackage plan_mental_layer
   :packages [reflective_mind_core
 	     plan_mental_layer_execution_agency
-	     plan_mental_layer_imagination_agency]
+	     plan_mental_layer_imagination_agency
+	     plan_mental_layer_plan_agency]
    :sources ['plan_mental_layer.fu2']]
 
 [defpackage plan_mental_layer_execution_agency
@@ -163,6 +164,16 @@
 	     semantic_dependency]
    :sources ['plan_mental_layer_imagination_agency.fu2']]
 
+[defpackage plan_mental_layer_plan_agency
+  :packages [reflective_mind_core
+	     plan_mental_layer_resource
+	     semantic_planner
+	     semantic_cons
+	     semantic_thought
+	     semantic_plan_object
+	     nonsemantic_plan]
+   :sources ['plan_mental_layer_plan_agency.fu2']]
+
 [defpackage plan_mental_layer_resource
   :packages [reflective_mind_core]
    :sources ['plan_mental_layer_resource.fu2']]
@@ -174,7 +185,6 @@
   :packages [reflective_mind_core
 	     plan_mental_layer
 	     deliberative_resource
-	     deliberative_plan_agency
 	     deliberative_physical_object_type_agency
 	     semantic_partial_state_property
 	     semantic_partial_state_property_relation]
@@ -199,16 +209,6 @@
 	     semantic_environment
 	     pattern_match]
    :sources ['nonsemantic_plan.fu2']]
-
-[defpackage deliberative_plan_agency
-  :packages [reflective_mind_core
-	     deliberative_resource
-	     semantic_planner
-	     semantic_cons
-	     semantic_thought
-	     semantic_plan_object
-	     nonsemantic_plan]
-   :sources ['deliberative_plan_agency.fu2']]
 
 [defpackage object_type_property_relation_goal
   :packages [reflective_mind_core
@@ -242,8 +242,7 @@
 	     reflective_plan_bug_response_agency
 	     reflective_deliberative1_object_type_agency
 	     reflective_event_knowledge_agency
-	     reflective_credit_assignment_agency
-	     reflective_plan_agency]
+	     reflective_credit_assignment_agency]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource
@@ -283,12 +282,4 @@
 	     semantic_category
 	     semantic_situation]
    :sources ['reflective_credit_assignment_agency.fu2']]
-
-[defpackage reflective_plan_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_planner
-	     nonsemantic_plan]
-   :sources ['reflective_plan_agency.fu2']]
-
 

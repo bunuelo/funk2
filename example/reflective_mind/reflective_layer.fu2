@@ -22,12 +22,11 @@
 
 [deframe reflective_layer [plan_mental_layer] [[reflective_action_natural_language_symbol_ptypehash [new ptypehash]]]
   [new []
-       [construct plan_mental_layer 3 `reflective `deliberative2_knowledge nil]
+       [construct plan_mental_layer 3 `reflective `deliberative2_knowledge nil nil]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
 	      [have this add_agency [new reflective_deliberative1_object_type_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
-	      [have this add_agency [new reflective_credit_assignment_agency]]
-	      [have this add_agency [new reflective_plan_agency]]]]]
+	      [have this add_agency [new reflective_credit_assignment_agency]]]]]
 
 [deftypefunk reflective_layer get mental_layer_below []
   [get [get this mind] layer `deliberative]]

@@ -244,8 +244,7 @@
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
 	     reflective_plan_agency
-	     reflective_imagination_agency
-	     reflective_execution_agency]
+	     reflective_imagination_agency]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource

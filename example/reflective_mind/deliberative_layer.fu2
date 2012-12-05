@@ -21,7 +21,6 @@
 'deliberative_layer'
 
 [deframe deliberative_layer [plan_mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
-						 [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
 						 [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
        [construct plan_mental_layer 2 `deliberative `deliberative1_knowledge `deliberative1_type_knowledge `[deliberative1_type_knowledge]]
@@ -93,29 +92,6 @@
 
 
 
-
-[deftypefunk deliberative_layer execute add_plan_action [action]
-  [terminal_format standard-terminal '\ndeliberative_layer: adding plan action, "' [get action as-string] '."']
-  [have plan_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
-
-[deftypefunk deliberative_layer get plan_actions []
-  [get plan_action_natural_language_symbol_ptypehash values]]
-
-[deftypefunk deliberative_layer execute lookup_plan_action [natural_language_string]
-  [have plan_action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol natural_language_string]]]
-
-[deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
-  [let [[action [new deliberative_action
-		     [get this mind]
-		     layer_name
-		     agency_name
-		     resource_name
-		     resource_arguments]]]
-    [have this add_plan_action action]]]
-
-
-[deftypefunk deliberative_layer execute lookup_action [natural_language_string]
-  [have this lookup_plan_action natural_language_string]]
 
 [deftypefunk deliberative_layer execute lookup_action_below [natural_language_string]
   [have this lookup_physical_action natural_language_string]]

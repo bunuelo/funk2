@@ -23,6 +23,7 @@
 [deframe plan_mental_layer [mental_layer] [deliberative_knowledge_base_name
 					   deliberative_type_knowledge_base_name
 					   trace_knowledge_base_names
+					   [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
 					   [semantic_plan_phenomenal_name_frame               [new frame]]
 					   [knowledge_symbol_set_initialized_mutex            [new mutex]]
 					   [knowledge_symbol_set_initialized                  nil]
@@ -40,6 +41,29 @@
        [parog [have this add_agency [new plan_mental_layer_execution_agency   trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_imagination_agency trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_plan_agency        deliberative_knowledge_base_name deliberative_type_knowledge_base_name trace_knowledge_base_names]]]]]
+
+
+[deftypefunk deliberative_layer execute add_plan_action [action]
+  [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': adding plan action, "' [get action as-string] '."']
+  [have plan_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
+
+[deftypefunk deliberative_layer get plan_actions []
+  [get plan_action_natural_language_symbol_ptypehash values]]
+
+[deftypefunk deliberative_layer execute lookup_plan_action [natural_language_string]
+  [have plan_action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol natural_language_string]]]
+
+[deftypefunk deliberative_layer execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
+  [let [[action [new deliberative_action
+		     [get this mind]
+		     layer_name
+		     agency_name
+		     resource_name
+		     resource_arguments]]]
+    [have this add_plan_action action]]]
+
+[deftypefunk deliberative_layer execute lookup_action [natural_language_string]
+  [have this lookup_plan_action natural_language_string]]
 
 
 [deftypefunk plan_mental_layer execute add_semantic_object_recursive [semantic_object]

@@ -28,8 +28,10 @@
 					   [memoized_plans_by_name_ptypehash                  [new ptypehash]]]
   [new [initial-number
 	initial-name
-	initial-deliberative_knowledge_base_name]
+	initial-deliberative_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct mental_layer initial-number initial-name]
+       [have this add_agency [new plan_mental_layer_execution_agency initial-trace_knowledge_base_names]]
        [= deliberative_knowledge_base_name initial-deliberative_knowledge_base_name]]]
 
 

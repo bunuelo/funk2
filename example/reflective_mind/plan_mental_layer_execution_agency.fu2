@@ -1,0 +1,58 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'plan_mental_layer_execution_agency'
+
+[deframe plan_mental_layer_execution_agency [agency] []
+  [new [initial-trace_knowledge_base_names]
+       [construct agency `execution]
+       [have this add_resource [new plan_mental_layer_execute_plan_resource initial-trace_knowledge_base_names]]]]
+
+
+'plan_mental_layer_execute_plan_resource'
+
+[deframe plan_mental_layer_execute_plan_resource [plan_mental_layer_resource] []
+  [new [initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `execute_plan
+		  [funk [semantic_plan]
+			[assert-type semantic_plan_object semantic_plan]
+			[terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': executing plan.']
+			[let [[semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
+			  [set semantic_planner execute_plan semantic_plan]
+			  [let* [[variable_frame [new frame]]
+				 [result         [have [get semantic_plan nonsemantic_plan] execute_as_thought variable_frame]]]
+			    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': executing plan result = ' result]
+			    [if [is-type `bug result]
+				[let [[bug result]]
+				  [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': executing plan has a bug.']
+				  [if [have [get bug frame] lookup `is_plan_bug]
+				      [prog [semantic-add semantic_plan    bug_name     [have [get bug frame] lookup `bug_name]]
+					    [set          semantic_planner execute_plan nil]
+					    [semantic-add semantic_planner bug_plan     semantic_plan]
+					    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': waiting to call reflective initial plan bug response.']
+					    [have [get this mind] wait_to_activate `reflective `plan_bug_response `initial_plan_bug_response semantic_plan bug]
+					    [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': activated reflective bug response.']]
+				    [bug bug]]]
+			      [prog [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': successfully completed executing plan.']
+				    [set semantic_planner execute_plan nil]]]]
+			  nil]]
+		  initial-trace_knowledge_base_names]]]
+
+

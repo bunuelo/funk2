@@ -146,7 +146,8 @@
 
 [defpackage plan_mental_layer
   :packages [reflective_mind_core
-	     plan_mental_layer_execution_agency]
+	     plan_mental_layer_execution_agency
+	     plan_mental_layer_imagination_agency]
    :sources ['plan_mental_layer.fu2']]
 
 [defpackage plan_mental_layer_execution_agency
@@ -154,6 +155,13 @@
 	     plan_mental_layer_resource
 	     nonsemantic_plan]
    :sources ['plan_mental_layer_execution_agency.fu2']]
+
+[defpackage plan_mental_layer_imagination_agency
+  :packages [reflective_mind_core
+	     plan_mental_layer_resource
+	     nonsemantic_plan
+	     semantic_dependency]
+   :sources ['plan_mental_layer_imagination_agency.fu2']]
 
 [defpackage plan_mental_layer_resource
   :packages [reflective_mind_core]
@@ -167,7 +175,6 @@
 	     plan_mental_layer
 	     deliberative_resource
 	     deliberative_plan_agency
-	     deliberative_imagination_agency
 	     deliberative_physical_object_type_agency
 	     semantic_partial_state_property
 	     semantic_partial_state_property_relation]
@@ -203,13 +210,6 @@
 	     nonsemantic_plan]
    :sources ['deliberative_plan_agency.fu2']]
 
-[defpackage deliberative_imagination_agency
-  :packages [reflective_mind_core
-	     deliberative_resource
-	     nonsemantic_plan
-	     semantic_dependency]
-   :sources ['deliberative_imagination_agency.fu2']]
-
 [defpackage object_type_property_relation_goal
   :packages [reflective_mind_core
 	     semantic_partial_state]
@@ -243,8 +243,7 @@
 	     reflective_deliberative1_object_type_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency
-	     reflective_plan_agency
-	     reflective_imagination_agency]
+	     reflective_plan_agency]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource
@@ -291,11 +290,5 @@
 	     semantic_planner
 	     nonsemantic_plan]
    :sources ['reflective_plan_agency.fu2']]
-
-[defpackage reflective_imagination_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     nonsemantic_plan]
-   :sources ['reflective_imagination_agency.fu2']]
 
 

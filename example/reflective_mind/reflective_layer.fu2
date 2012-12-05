@@ -27,9 +27,7 @@
 	      [have this add_agency [new reflective_deliberative1_object_type_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]
-	      [have this add_agency [new reflective_plan_agency]]
-	      [have this add_agency [new reflective_imagination_agency]]]
-       this]]
+	      [have this add_agency [new reflective_plan_agency]]]]]
 
 [deftypefunk reflective_layer get mental_layer_below []
   [get [get this mind] layer `deliberative]]

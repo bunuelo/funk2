@@ -62,7 +62,7 @@
 					      [have action external_wait_to_call]]
 					nil]]
 			   nil]]]
-	     [have [get [get mindmon_agent mind] reflective_actions]
+	     [have [get [get mindmon_agent mind] reflective_plan_actions]
 		   sort [funk [x y]
 			      [> [get x as-string]
 				 [get y as-string]]]]]

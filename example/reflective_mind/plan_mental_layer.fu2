@@ -22,6 +22,7 @@
 
 [deframe plan_mental_layer [mental_layer] [deliberative_knowledge_base_name
 					   deliberative_type_knowledge_base_name
+					   trace_knowledge_base_names
 					   [semantic_plan_phenomenal_name_frame               [new frame]]
 					   [knowledge_symbol_set_initialized_mutex            [new mutex]]
 					   [knowledge_symbol_set_initialized                  nil]
@@ -35,6 +36,7 @@
        [construct mental_layer initial-number initial-name]
        [= deliberative_knowledge_base_name      initial-deliberative_knowledge_base_name]
        [= deliberative_type_knowledge_base_name initial-deliberative_type_knowledge_base_name]
+       [= trace_knowledge_base_names            initial-trace_knowledge_base_names]
        [parog [have this add_agency [new plan_mental_layer_execution_agency   trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_imagination_agency trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_plan_agency        deliberative_knowledge_base_name deliberative_type_knowledge_base_name trace_knowledge_base_names]]]]]

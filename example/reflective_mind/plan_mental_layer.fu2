@@ -44,7 +44,7 @@
 
 
 [deftypefunk deliberative_layer execute add_plan_action [action]
-  [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ': adding plan action, "' [get action as-string] '."']
+  [terminal_format standard-terminal '\n' [get this name] ': adding plan action, "' [get action as-string] '."']
   [have plan_action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
 
 [deftypefunk deliberative_layer get plan_actions []

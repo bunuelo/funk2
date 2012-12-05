@@ -85,13 +85,13 @@
   [get [get this layer `deliberative] semantic_plans]]
 
 
-[deftypefunk reflective_mind execute create_plan_action [layer_name agency_name resource_name :rest resource_arguments]
+[deftypefunk reflective_mind execute create_deliberative_plan_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `deliberative] create_plan_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind get plan_actions []
+[deftypefunk reflective_mind get deliberative_plan_actions []
   [get [get this layer `deliberative] plan_actions]]
 
-[deftypefunk reflective_mind get plan_semantic_plans []
+[deftypefunk reflective_mind get deliberative_plan_semantic_plans []
   [get [get this layer `deliberative] plan_semantic_plans]]
 
 
@@ -121,17 +121,14 @@
   [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]
 
 
-[deftypefunk reflective_mind execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
-  [have-apply [get this layer `reflective] create_reflective_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
+[deftypefunk reflective_mind execute create_reflective_plan_action [layer_name agency_name resource_name :rest resource_arguments]
+  [have-apply [get this layer `reflective] create_plan_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind get reflective_actions []
-  [get [get this layer `reflective] reflective_actions]]
+[deftypefunk reflective_mind get reflective_plan_actions []
+  [get [get this layer `reflective] plan_actions]]
 
-[deftypefunk reflective_mind execute create_reflective_semantic_plan [name_expression name_patterns variable_definitions expression]
-  [have [get this layer `reflective] create_semantic_plan name_expression name_patterns variable_definitions expression]]
-
-[deftypefunk reflective_mind get reflective_semantic_plans []
-  [get [get this layer `reflective] semantic_plans]]
+[deftypefunk reflective_mind get reflective_plan_semantic_plans []
+  [get [get this layer `reflective] plan_semantic_plans]]
 
 
 'deliberative'

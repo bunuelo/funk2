@@ -31,8 +31,8 @@
        this]]
 
 [deftypefunk plan_mental_layer_imagination_agency execute create_builtin_actions []
-  [have-apply [get this mind] create_plan_action `[,[get [get this mental_layer] name] imagination forget_all_imagined_events]]
-  [have-apply [get this mind] create_plan_action `[,[get [get this mental_layer] name] imagination imagine_plan]]]
+  [have-apply [get this mental_layer] create_plan_action `[,[get [get this mental_layer] name] imagination forget_all_imagined_events]]
+  [have-apply [get this mental_layer] create_plan_action `[,[get [get this mental_layer] name] imagination imagine_plan]]]
 
 
 'plan_mental_layer_forget_all_imagined_events_resource'

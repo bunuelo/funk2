@@ -20,8 +20,7 @@
 
 'reflective_layer'
 
-[deframe reflective_layer [plan_mental_layer] [[plan_action_natural_language_symbol_ptypehash       [new ptypehash]]
-					       [plan_action_natural_language_symbol_ptypehash [new ptypehash]]]
+[deframe reflective_layer [plan_mental_layer] [[plan_action_natural_language_symbol_ptypehash [new ptypehash]]]
   [new []
        [construct plan_mental_layer 3 `reflective `deliberative2_knowledge nil nil]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]

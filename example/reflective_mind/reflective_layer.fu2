@@ -24,7 +24,7 @@
   [new []
        [construct plan_mental_layer 3 `reflective `deliberative2_knowledge nil nil]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
-	      [have this add_agency [new reflective_deliberative1_object_type_agency]]
+	      [have this add_agency [new reflective_object_type_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]]]]
 
@@ -32,7 +32,7 @@
   [get [get this mind] layer `deliberative]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [have [get this agency `deliberative1_object_type]      create_knowledge]
+  [have [get this agency `deliberative1_object_type]  create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]
   [have [get this agency `plan]                       create_knowledge]
   nil]

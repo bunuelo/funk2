@@ -37,13 +37,13 @@
   [get [get this mind] layer `deliberative]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [have [get this agency `deliberative1_object_type]  create_knowledge]
+  [have [get this agency `object_type]                create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]
   [have [get this agency `plan]                       create_knowledge]
   nil]
 
 [deftypefunk reflective_layer execute connect_knowledge_reflection []
-  [have [get this agency `deliberative1_object_type]      connect_knowledge_reflection]
+  [have [get this agency `object_type]                connect_knowledge_reflection]
   [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]
   [have [get this agency `plan]                       connect_knowledge_reflection]
   nil]
@@ -53,19 +53,19 @@
   [have [get this agency `plan]        create_builtin_actions]]
 
 [deftypefunk reflective_layer get knowledge_timer []
-  [get [get this agency `deliberative1_object_type] knowledge_timer]]
+  [get [get this agency `object_type] knowledge_timer]]
 
 [deftypefunk reflective_layer execute add_remember_token [remember_token]
-  [have [get this agency `deliberative1_object_type] add_remember_token remember_token]]
+  [have [get this agency `object_type] add_remember_token remember_token]]
 
 [deftypefunk reflective_layer execute remove_remember_token [remember_token]
-  [have [get this agency `deliberative1_object_type] remove_remember_token remember_token]]
+  [have [get this agency `object_type] remove_remember_token remember_token]]
 
 [deftypefunk reflective_layer execute wait_until_time_represented [semantic_time]
-  [have [get this agency `deliberative1_object_type] wait_until_time_represented semantic_time]]
+  [have [get this agency `object_type] wait_until_time_represented semantic_time]]
 
 [deftypefunk reflective_layer execute wait_until_after_time_represented [semantic_time]
-  [have [get this agency `deliberative1_object_type] wait_until_after_time_represented semantic_time]]
+  [have [get this agency `object_type] wait_until_after_time_represented semantic_time]]
 
 [deftypefunk reflective_layer execute lookup_action_below [natural_language_string]
   [have [get [get this mind] layer `deliberative] lookup_action natural_language_string]]
@@ -100,7 +100,7 @@
 
 
 [deftypefunk reflective_layer get deliberative1_type_knowledge_reflective_timer []
-  [get [get this agency `deliberative1_object_type] deliberative1_type_knowledge_reflective_timer]]
+  [get [get this agency `object_type] deliberative1_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]

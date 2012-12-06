@@ -40,10 +40,10 @@
 		       initial-deliberative_type_knowledge_base_name
 		       initial-trace_knowledge_base_names]
        [construct mental_layer initial-number initial-name]
-       [= deliberative_knowledge_base_name                     initial-deliberative_knowledge_base_name]
-       [= deliberative_type_knowledge_base_name                initial-deliberative_type_knowledge_base_name]
-       [= trace_knowledge_base_names                           initial-trace_knowledge_base_names]
-       [= deliberative_type_counterfactual_knowledge_base_name initial-deliberative_type_counterfactual_knowledge_base_name]
+       [= deliberative_knowledge_base_name               initial-deliberative_knowledge_base_name]
+       [= deliberative_type_knowledge_base_name          initial-deliberative_type_knowledge_base_name]
+       [= trace_knowledge_base_names                     initial-trace_knowledge_base_names]
+       [= object_type_counterfactual_knowledge_base_name initial-object_type_counterfactual_knowledge_base_name]
        [parog [have this add_agency [new plan_mental_layer_object_type_agency
 					 object_knowledge_base_name
 					 object_type_knowledge_base_name

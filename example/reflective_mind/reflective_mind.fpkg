@@ -164,7 +164,7 @@
 	     semantic_reflective_object_type_relation_event
 	     semantic_goal_event
 	     object_type_property_relation_goal]
-   :sources ['deliberative_object_type_agency.fu2']]
+   :sources ['plan_mental_layer_object_type_agency.fu2']]
 
 [defpackage plan_mental_layer_plan_agency
   :packages [reflective_mind_core
@@ -200,7 +200,6 @@
   :packages [reflective_mind_core
 	     plan_mental_layer
 	     deliberative_resource
-	     deliberative_object_type_agency
 	     semantic_partial_state_property
 	     semantic_partial_state_property_relation]
    :sources ['deliberative_layer.fu2']]
@@ -235,7 +234,6 @@
 	     semantic_action_knowledge_base
 	     reflective_resource
 	     reflective_plan_bug_response_agency
-	     reflective_object_type_agency
 	     reflective_event_knowledge_agency
 	     reflective_credit_assignment_agency]
    :sources ['reflective_layer.fu2']]

@@ -19,40 +19,40 @@
 
 
 
-'reflective_deliberative1_object_type_agency'
+'reflective_object_type_agency'
 
-[deframe reflective_deliberative1_object_type_agency [agency] []
+[deframe reflective_object_type_agency [agency] []
   [new []
        [construct agency `deliberative1_object_type]
        [have this add_resource [new translate_deliberative1_knowledge_to_deliberative1_type_knowledge_resource]]
        ]]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute create_knowledge []
+[deftypefunk reflective_object_type_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `type_copy_of_deliberative1_knowledge        [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `deliberative1_type_knowledge                [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `deliberative1_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
   ]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute connect_knowledge_reflection []
+[deftypefunk reflective_object_type_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `deliberative1_knowledge `deliberative1_knowledge->deliberative1_type_knowledge]
   ]
 
-[deftypefunk reflective_deliberative1_object_type_agency get deliberative1_type_knowledge_reflective_timer []
+[deftypefunk reflective_object_type_agency get deliberative1_type_knowledge_reflective_timer []
   [get [get this resource `translate_deliberative1_knowledge_to_deliberative1_type_knowledge] deliberative1_type_knowledge_reflective_timer]]
 
-[deftypefunk reflective_deliberative1_object_type_agency get knowledge_timer []
+[deftypefunk reflective_object_type_agency get knowledge_timer []
   [get this deliberative1_type_knowledge_reflective_timer]]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute add_remember_token [remember_token]
+[deftypefunk reflective_object_type_agency execute add_remember_token [remember_token]
   [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] add_remember_token remember_token]]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute remove_remember_token [remember_token]
+[deftypefunk reflective_object_type_agency execute remove_remember_token [remember_token]
   [have [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge] remove_remember_token remember_token]]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute wait_until_time_represented [time]
+[deftypefunk reflective_object_type_agency execute wait_until_time_represented [time]
   [have [get this knowledge_timer] wait_until time]]
 
-[deftypefunk reflective_deliberative1_object_type_agency execute wait_until_after_time_represented [time]
+[deftypefunk reflective_object_type_agency execute wait_until_after_time_represented [time]
   [have [get this knowledge_timer] wait_until_after time]]
 
 

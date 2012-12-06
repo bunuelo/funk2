@@ -22,9 +22,14 @@
 
 [deframe reflective_layer [plan_mental_layer] []
   [new []
-       [construct plan_mental_layer 3 `reflective `deliberative2_knowledge nil nil]
+       [construct plan_mental_layer 3 `reflective
+		  `deliberative1_knowledge
+		  `deliberative1_type_knowledge
+		  `deliberative1_type_counterfactual_knowledge
+		  `deliberative2_knowledge
+		  nil
+		  nil]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
-	      [have this add_agency [new reflective_object_type_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]]]]
 
@@ -161,8 +166,8 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
-	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
+	    [let [[end_of_object_type_changes_trigger [get [get [get this mind] resource `reflective `object_type `translate_object_knowledge_to_object_type_knowledge] end_of_object_type_changes_trigger]]]
+	      [wait-for-trigger end_of_object_type_changes_trigger]]]]]]]
 
 [deftypefunk reflective_layer execute assert [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]

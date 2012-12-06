@@ -23,8 +23,15 @@
 [deframe deliberative_layer [plan_mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
 						 [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
-       [construct plan_mental_layer 2 `deliberative `deliberative1_knowledge `deliberative1_type_knowledge `[deliberative1_type_knowledge]]
-       [have this add_agency [new deliberative_object_type_agency]]]]
+       [construct plan_mental_layer 2 `deliberative
+		  `physical_knowledge
+		  `physical_type_knowledge
+		  `physical_type_counterfactual_knowledge
+		  `deliberative1_knowledge
+		  `deliberative1_type_knowledge
+		  `[deliberative1_type_knowledge]]
+       [have this add_agency [new plan_mental_layer_object_type_agency
+				  ]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []
   [get [get this mind] layer `learned_reactive]]
@@ -175,8 +182,8 @@
 				[= done t]]]]
 		current_events]]
 	[if [not done]
-	    [let [[end_of_physical_type_changes_trigger [get [get [get this mind] resource `deliberative `physical_object_type `translate_physical_knowledge_to_physical_type_knowledge] end_of_physical_type_changes_trigger]]]
-	      [wait-for-trigger end_of_physical_type_changes_trigger]]]]]]]
+	    [let [[end_of_object_type_changes_trigger [get [get [get this mind] resource `deliberative `object_type `translate_object_knowledge_to_object_type_knowledge] end_of_object_type_changes_trigger]]]
+	      [wait-for-trigger end_of_object_type_changes_trigger]]]]]]]
 
 [deftypefunk deliberative_layer execute wait_for [semantic_partial_state]
   [have [get this mind] wait_for_physical_partial_state_to_exist semantic_partial_state]]

@@ -146,10 +146,35 @@
 
 [defpackage plan_mental_layer
   :packages [reflective_mind_core
+	     plan_mental_layer_object_type_agency
+	     plan_mental_layer_plan_agency
 	     plan_mental_layer_execution_agency
-	     plan_mental_layer_imagination_agency
-	     plan_mental_layer_plan_agency]
+	     plan_mental_layer_imagination_agency]
    :sources ['plan_mental_layer.fu2']]
+
+[defpackage object_type_property_relation_goal
+  :packages [reflective_mind_core
+	     semantic_partial_state]
+   :sources ['object_type_property_relation_goal.fu2']]
+
+[defpackage plan_mental_layer_object_type_agency
+  :packages [reflective_mind_core
+	     semantic_reflective_object
+	     semantic_reflective_object_type_event
+	     semantic_reflective_object_type_relation_event
+	     semantic_goal_event
+	     object_type_property_relation_goal]
+   :sources ['deliberative_object_type_agency.fu2']]
+
+[defpackage plan_mental_layer_plan_agency
+  :packages [reflective_mind_core
+	     plan_mental_layer_resource
+	     semantic_planner
+	     semantic_cons
+	     semantic_thought
+	     semantic_plan_object
+	     nonsemantic_plan]
+   :sources ['plan_mental_layer_plan_agency.fu2']]
 
 [defpackage plan_mental_layer_execution_agency
   :packages [reflective_mind_core
@@ -163,16 +188,6 @@
 	     nonsemantic_plan
 	     semantic_dependency]
    :sources ['plan_mental_layer_imagination_agency.fu2']]
-
-[defpackage plan_mental_layer_plan_agency
-  :packages [reflective_mind_core
-	     plan_mental_layer_resource
-	     semantic_planner
-	     semantic_cons
-	     semantic_thought
-	     semantic_plan_object
-	     nonsemantic_plan]
-   :sources ['plan_mental_layer_plan_agency.fu2']]
 
 [defpackage plan_mental_layer_resource
   :packages [reflective_mind_core]
@@ -210,26 +225,6 @@
 	     pattern_match]
    :sources ['nonsemantic_plan.fu2']]
 
-[defpackage object_type_property_relation_goal
-  :packages [reflective_mind_core
-	     semantic_partial_state]
-   :sources ['object_type_property_relation_goal.fu2']]
-
-[defpackage physical_type_property_relation_goal
-  :packages [reflective_mind_core
-	     object_type_property_relation_goal]
-   :sources ['physical_type_property_relation_goal.fu2']]
-
-[defpackage deliberative_object_type_agency
-  :packages [reflective_mind_core
-	     deliberative_resource
-	     semantic_reflective_object
-	     semantic_reflective_object_type_event
-	     semantic_reflective_object_type_relation_event
-	     semantic_goal_event
-	     physical_type_property_relation_goal]
-   :sources ['deliberative_object_type_agency.fu2']]
-
 
 'reflective_layer'
 
@@ -254,18 +249,6 @@
 	     reflective_resource
 	     semantic_expectation_failure]
    :sources ['reflective_plan_bug_response_agency.fu2']]
-
-[defpackage deliberative1_type_property_relation_goal
-  :packages [reflective_mind_core
-	     object_type_property_relation_goal]
-   :sources ['deliberative1_type_property_relation_goal.fu2']]
-
-[defpackage reflective_object_type_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_goal_event
-	     deliberative1_type_property_relation_goal]
-   :sources ['reflective_object_type_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency
   :packages [reflective_mind_core

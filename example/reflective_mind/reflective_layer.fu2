@@ -99,9 +99,6 @@
   [get [get this agency `reflective_event_knowledge] deliberative1_semantic_action phenomenal_name]]
 
 
-[deftypefunk reflective_layer get deliberative1_type_knowledge_reflective_timer []
-  [get [get this agency `object_type] deliberative1_type_knowledge_reflective_timer]]
-
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
 	[remember_token                    [new remember_token [new semantic_time [time]]]]]

@@ -29,9 +29,7 @@
 		  `physical_type_counterfactual_knowledge
 		  `deliberative1_knowledge
 		  `deliberative1_type_knowledge
-		  `[deliberative1_type_knowledge]]
-       [have this add_agency [new plan_mental_layer_object_type_agency
-				  ]]]]
+		  `[deliberative1_type_knowledge]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []
   [get [get this mind] layer `learned_reactive]]

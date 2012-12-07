@@ -35,7 +35,10 @@
        ]]
 
 [deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base_name []
-  [get [format nil 'type_copy_of_' object_knowledge_base_name] as-symbol]]
+  [if [null object_knowledge_base_name]
+      [error bug_name `plan_mental_layer_object_type_agency-no_type_copy_knowledge_base_defined_without_object_knowledge_base
+	     this     this]
+    [get [format nil 'type_copy_of_' object_knowledge_base_name] as-symbol]]]
 
 [deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base []
   [get [get this mind] semantic_knowledge_base [get [get this agency] type_copy_of_object_knowledge_base_name]]]

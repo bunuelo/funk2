@@ -35,18 +35,21 @@
        ]]
 
 [deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base_name []
-  [if [null object_knowledge_base_name]
-      [error bug_name `plan_mental_layer_object_type_agency-no_type_copy_knowledge_base_defined_without_object_knowledge_base
-	     this     this]
-    [get [format nil 'type_copy_of_' object_knowledge_base_name] as-symbol]]]
-
-[deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base []
-  [get [get this mind] semantic_knowledge_base [get this type_copy_of_object_knowledge_base_name]]]
+  [get [format nil 'type_copy_of_' object_knowledge_base_name] as-symbol]]
 
 [deftypefunk plan_mental_layer_object_type_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base [get this type_copy_of_object_knowledge_base_name] [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base object_type_knowledge_base_name                    [get [get this mind] semantic_realm]]]
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base object_type_counterfactual_knowledge_base_name     [get [get this mind] semantic_realm]]]]
+
+[deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base []
+  [get [get this mind] semantic_knowledge_base [get this type_copy_of_object_knowledge_base_name]]]
+
+[deftypefunk plan_mental_layer_object_type_agency get object_type_knowledge_base []
+  [get [get this mind] semantic_knowledge_base object_type_knowledge_base_name]]
+
+[deftypefunk plan_mental_layer_object_type_agency get object_type_counterfactual_knowledge_base []
+  [get [get this mind] semantic_knowledge_base object_type_counterfactual_knowledge_base_name]]
 
 [deftypefunk plan_mental_layer_object_type_agency get object_knowledge_iterator_name []
   [get [format nil object_knowledge_base_name '->' object_type_knowledge_base_name] as-symbol]]
@@ -162,7 +165,7 @@
 			     relation-meta_relationship
 			     semantic_reflective_object_type_event_target]]
 	    [set relation absolute_start_time [new semantic_time event_time]]
-	    [have [get [get this mind] semantic_knowledge_base object_type_knowledge_base_name] add_semantic_frame relation]
+	    [have [get [get this agency] object_type_knowledge_base] add_semantic_frame relation]
 	    [have semantic_reflective_object_type_event_source add compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]]
 	[prog [= relation [get relation_set an_arbitrary_element]]
 	      [set relation count [+ [get relation count] 1]]]]]]]
@@ -184,7 +187,6 @@
 		[if [> relation-count 1]
 		    [set relation count [- relation-count 1]]
 		  [prog [have semantic_reflective_object_type_event_source remove compound_key [get semantic_reflective_object_type_event_target phenomenal_name] relation]
-			`[have [get [get this mind] semantic_knowledge_base object_type_knowledge_base_name] remove_semantic_frame relation]
 			[set relation absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
 
@@ -212,7 +214,7 @@
 			     property-meta_relationship
 			     target_property_name]]
 	    [set property absolute_start_time [new semantic_time event_time]]
-	    [have [get [get this mind] semantic_knowledge_base object_type_knowledge_base_name] add_semantic_frame property]
+	    [have [get [get this agency] object_type_knowledge_base] add_semantic_frame property]
 	    [have semantic_reflective_object_type_event_source add compound_key target_property_name property]
 	    ]
 	[prog [= property [get property_set an_arbitrary_element]]
@@ -235,7 +237,6 @@
 		[if [> property-count 1]
 		    [set property count [- property-count 1]]
 		  [prog [have semantic_reflective_object_type_event_source remove compound_key target_property_name property]
-			`[have [get [get this mind] semantic_knowledge_base object_type_knowledge_base_name] remove_semantic_frame property]
 			[set property absolute_end_time [new semantic_time event_time]]
 			]]]]]]]]
 
@@ -367,7 +368,7 @@
 			  [[and [is-type `semantic_knowledge_base_event event]
 				[eq event_type `end_of_object_changes]]        [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] ' ' [get [time] date_and_time_string] ': '
 												      'end_of_object_changes found (' [get event-time as-string] '): ' chunk_event_count ' object_knowledge events induced to object_type_knowledge']
-										     [have [get [get this mind] semantic_knowledge_base [get [get this agency] object_type_knowledge_base_name]] add_trace_event [new semantic_knowledge_base_event [time] `end_of_object_type_changes nil]]
+										     [have [get [get this agency] object_type_knowledge_base_name] add_trace_event [new semantic_knowledge_base_event [time] `end_of_object_type_changes nil]]
 										     [= chunk_event_count -1]
 										     [have end_of_object_type_changes_trigger trigger]
 										     nil]]

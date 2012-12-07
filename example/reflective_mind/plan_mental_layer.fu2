@@ -59,6 +59,8 @@
 
 
 
+[deftypefunk plan_mental_layer get object_type_knowledge_reflective_timer []
+  [get [get this agency `object_type] object_type_knowledge_reflective_timer]]
 
 [deftypefunk plan_mental_layer execute add_plan_action [action]
   [terminal_format standard-terminal '\n' [get this name] ': adding plan action, "' [get action as-string] '."']

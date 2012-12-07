@@ -115,7 +115,7 @@
 'deliberative1'
 
 [deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []
-  [get [get this layer `reflective] deliberative1_type_knowledge_reflective_timer]]
+  [get [get this layer `reflective] object_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_mind get deliberative1_semantic_action [phenomenal_name]
   [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]

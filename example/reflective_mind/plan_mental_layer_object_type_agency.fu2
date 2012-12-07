@@ -41,7 +41,7 @@
     [get [format nil 'type_copy_of_' object_knowledge_base_name] as-symbol]]]
 
 [deftypefunk plan_mental_layer_object_type_agency get type_copy_of_object_knowledge_base []
-  [get [get this mind] semantic_knowledge_base [get [get this agency] type_copy_of_object_knowledge_base_name]]]
+  [get [get this mind] semantic_knowledge_base [get this type_copy_of_object_knowledge_base_name]]]
 
 [deftypefunk plan_mental_layer_object_type_agency execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base [get this type_copy_of_object_knowledge_base_name] [get [get this mind] semantic_realm]]]

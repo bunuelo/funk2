@@ -20,18 +20,18 @@
 
 'plan_mental_layer'
 
-[deframe plan_mental_layer [mental_layer] [object_knowledge_base_name
-					   object_type_knowledge_base_name
-					   object_type_counterfactual_knowledge_base_name
-					   deliberative_knowledge_base_name
-					   deliberative_type_knowledge_base_name
-					   trace_knowledge_base_names
-					   [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
-					   [semantic_plan_phenomenal_name_frame               [new frame]]
-					   [knowledge_symbol_set_initialized_mutex            [new mutex]]
-					   [knowledge_symbol_set_initialized                  nil]
-					   [knowledge_symbol_set                              [new set]]
-					   [memoized_plans_by_name_ptypehash                  [new ptypehash]]]
+[deframe plan_mental_layer [mental_layer controllable_object] [object_knowledge_base_name
+							       object_type_knowledge_base_name
+							       object_type_counterfactual_knowledge_base_name
+							       deliberative_knowledge_base_name
+							       deliberative_type_knowledge_base_name
+							       trace_knowledge_base_names
+							       [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
+							       [semantic_plan_phenomenal_name_frame               [new frame]]
+							       [knowledge_symbol_set_initialized_mutex            [new mutex]]
+							       [knowledge_symbol_set_initialized                  nil]
+							       [knowledge_symbol_set                              [new set]]
+							       [memoized_plans_by_name_ptypehash                  [new ptypehash]]]
   [new [initial-number initial-name
 		       initial-object_knowledge_base_name
 		       initial-object_type_knowledge_base_name
@@ -40,6 +40,8 @@
 		       initial-deliberative_type_knowledge_base_name
 		       initial-trace_knowledge_base_names]
        [construct mental_layer initial-number initial-name]
+       [construct controllable_object
+		  deliberative_knowledge_base_name]
        [= object_knowledge_base_name                     initial-object_knowledge_base_name]
        [= object_type_knowledge_base_name                initial-object_type_knowledge_base_name]
        [= object_type_counterfactual_knowledge_base_name initial-object_type_counterfactual_knowledge_base_name]
@@ -60,7 +62,7 @@
 
 
 [deftypefunk plan_mental_layer execute create_knowledge []
-  [have [get this agency `plan]        create_knowledge]
+  [type-have controllable_object this create_knowledge]
   [have [get this agency `object_type] create_knowledge]]
 
 [deftypefunk plan_mental_layer execute connect_knowledge_reflection []

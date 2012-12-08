@@ -22,13 +22,13 @@
 
 [deframe learned_reactive_layer [mental_layer controllable_object] [[semantic_visual_object_name_hash [new ptypehash]]]
   [new []
-       [construct controllable_object]
+       [construct controllable_object
+		  `physical_knowledge]
        [construct mental_layer 1 `learned_reactive]
        [parog [have this add_agency [new learned_reactive_sensory_agency]]
 	      [have this add_agency [new learned_reactive_physical_agency]]
 	      [have this add_agency [new learned_reactive_language_agency]]
-	      [have this add_agency [new learned_reactive_physical_knowledge_agency]]]
-       this]]
+	      [have this add_agency [new learned_reactive_physical_knowledge_agency]]]]]
 
 [deftypefunk learned_reactive_layer get semantic_visual_object [visual_object_name]
   [let [[semantic_visual_object [have semantic_visual_object_name_hash lookup visual_object_name]]]
@@ -40,28 +40,8 @@
 	  [= semantic_visual_object new_semantic_visual_object]]]
     semantic_visual_object]]
 
-[deftypefunk learned_reactive_layer execute reflectively_know_of_addition_of_semantic_frame_value [semantic_frame key_type key value]
-  [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
-    [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame relationship]
-    [print [conslist key_type key]]
-    [cond [[and [eq key_type `property] [cond [[eq key `visual_object_name] [let [[visual_object_name value]]
-									      [let [[semantic_visual_object [get this semantic_visual_object visual_object_name]]]
-										[have semantic_visual_object replace_all `category `most_recent_example relationship]
-										[have semantic_visual_object add         `category `example             relationship]]]]
-					      ]]]
-	  [[and [eq key_type `language] [cond [[eq key `symbols] [let [[symbols value]]
-								   ]]]]]
-	  [[and [eq key_type `language] [cond [[eq key `command] nil]]]]
-	  ]
-    ]]
-
-
-[deftypefunk learned_reactive_layer execute reflectively_know_of_removal_of_semantic_frame_value [semantic_frame key_type key value]
-  [let [[relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship semantic_frame key_type key value]]]
-    [have relationship add `instant_event `removed_at_time [time]]
-    [have [get [get this mind] learned_reactive_knowledge] add_semantic_frame added_relationship]]]
-
 [deftypefunk learned_reactive_layer execute create_knowledge []
+  [have-type controllable_object this create_knowledge]
   [have [get this agency `physical_knowledge] create_knowledge]
   ]
 

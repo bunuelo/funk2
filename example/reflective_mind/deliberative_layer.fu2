@@ -20,8 +20,8 @@
 
 'deliberative_layer'
 
-[deframe deliberative_layer [plan_mental_layer controllable_object] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
-								     [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
+[deframe deliberative_layer [plan_mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
+						 [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
        [let [[input_knowledge_base_name                     `physical_knowledge]
 	     [input_type_knowledge_base_name                `physical_type_knowledge]
@@ -35,8 +35,7 @@
 		    input_type_counterfactual_knowledge_base_name
 		    deliberative_knowledge_base_name
 		    deliberative_type_knowledge_base_name
-		    trace_knowledge_base_names]
-	 [construct controllable_object]]]]
+		    trace_knowledge_base_names]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []
   [get [get this mind] layer `learned_reactive]]

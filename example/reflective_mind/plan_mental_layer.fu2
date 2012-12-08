@@ -59,8 +59,47 @@
 
 
 
+[deftypefunk plan_mental_layer execute create_knowledge []
+  [have [get this agency `plan]        create_knowledge]
+  [have [get this agency `object_type] create_knowledge]]
+
+[deftypefunk plan_mental_layer execute connect_knowledge_reflection []
+  [have [get this agency `plan]        connect_knowledge_reflection]
+  [have [get this agency `object_type] connect_knowledge_reflection]]
+
+[deftypefunk plan_mental_layer execute create_builtin_actions []
+  [have [get this agency `imagination] create_builtin_actions]
+  [have [get this agency `plan]        create_builtin_actions]]
+
 [deftypefunk plan_mental_layer get object_type_knowledge_reflective_timer []
   [get [get this agency `object_type] object_type_knowledge_reflective_timer]]
+
+[deftypefunk plan_mental_layer get knowledge_timer []
+  [get [get this agency `object_type] knowledge_timer]]
+
+[deftypefunk plan_mental_layer execute add_remember_token [remember_token]
+  [have [get this agency `object_type] add_remember_token remember_token]]
+
+[deftypefunk plan_mental_layer execute remove_remember_token [remember_token]
+  [have [get this agency `object_type] remove_remember_token remember_token]]
+
+[deftypefunk plan_mental_layer execute wait_until_time_represented [semantic_time]
+  [have [get this agency `object_type] wait_until_time_represented semantic_time]]
+
+[deftypefunk plan_mental_layer execute wait_until_after_time_represented [semantic_time]
+  [have [get this agency `object_type] wait_until_after_time_represented semantic_time]]
+
+[deftypefunk plan_mental_layer get type_knowledge_base []
+  [get [get this agency `object_type] object_type_knowledge_base]]
+
+[deftypefunk plan_mental_layer get counterfactual_knowledge_base []
+  [get [get this agency `object_type] object_type_counterfactual_knowledge_base]]
+
+[deftypefunk plan_mental_layer get semantic_planner []
+  [get [get this agency `plan] semantic_planner]]
+
+
+
 
 [deftypefunk plan_mental_layer execute add_plan_action [action]
   [terminal_format standard-terminal '\n' [get this name] ': adding plan action, "' [get action as-string] '."']
@@ -115,6 +154,16 @@
     [have this add_semantic_object_recursive start_plan_operator]]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get [get this mental_layer] agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
+
+[deftypefunk deliberative_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
+  [let [[plan [new nonsemantic_plan 
+		   [get this mental_layer]
+		   name_expression
+		   name_patterns
+		   variable_definitions
+		   expression]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [have this add_semantic_plan semantic_plan_object]]]]
 
 [deftypefunk plan_mental_layer execute lookup_semantic_plan [phenomenal_name]
   [have semantic_plan_phenomenal_name_frame lookup phenomenal_name]]
@@ -181,4 +230,65 @@
 	       is_plan_bug t
 	       funkname    `plan
 	       plan_name   plan_name]]]]]
+
+[deftypefunk plan_mental_layer execute imagine_check_exists [semantic_partial_state]
+  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']
+    [let [[found_events nil]
+	  [imagine_time cause-imagine_time]]
+      [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: imagine_time = ' imagine_time]
+      [let [[current_events [get [get this counterfactual_knowledge_base] events_containing_time imagine_time]]]
+	[mapc [funk [current_event]
+		    `[terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: current_event: ' [get current_event phenomenal_name] '.']
+		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
+			[prog [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: found relationship!']
+			      [= found_events [cons current_event found_events]]]]]
+	      current_events]]
+      [let [[found_events-length [length found_events]]]
+	[cond [[== found_events-length 0] [prog [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: did not find relationship.']
+						nil]]
+	      [[== found_events-length 1] [prog [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: found exactly one matching relationship:'
+								 '\n  ' [car found_events]]
+						[car found_events]]]
+	      [t                          [prog [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: found multiple matching relationships...']
+						[mapc [funk [found_event]
+							    [terminal_format standard-terminal '\n' [type this] ' relationship: ' found_event]]
+						      found_events]
+						[new multiple_possible_values found_events]]]]]]]]
+
+[deftypefunk plan_mental_layer execute evaluate_plan_expression [expression]
+  [let* [[name_expression      [format nil 'evaluate unnamed ' [get this name] ' plan expression']]
+	 [name_patterns        nil]
+	 [argument_definitions nil]
+	 [plan                 [new nonsemantic_plan this
+				    name_expression
+				    name_patterns
+				    argument_definitions
+				    expression]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type [get this name]]
+      [let [[variable_frame [new frame]]]
+	[let [[result [have plan execute_as_thought variable_frame]]]
+	  [if [is-type `bug result]
+	      [let [[bug result]]
+		[bug bug]]
+	    result]]]]]]
+
+[deftypefunk plan_mental_layer execute imagine_plan_expression [expression]
+  [let* [[name_expression      'imagine unnamed plan expression']
+	 [name_patterns        nil]
+	 [argument_definitions nil]
+	 [plan                 [new nonsemantic_plan this
+				    name_expression
+				    name_patterns
+				    argument_definitions
+				    expression]]]
+    [let [[semantic_plan_object [get plan semantic_plan_object]]]
+      [set semantic_plan_object plan_object_type [get this name]]
+      [let [[variable_frame [new frame]]]
+	[let [[result [have plan imagine_as_thought variable_frame]]]
+	  [if [is-type `bug result]
+	      [let [[bug result]]
+		[bug bug]]
+	    result]]]]]]
 

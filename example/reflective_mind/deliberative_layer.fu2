@@ -23,46 +23,23 @@
 [deframe deliberative_layer [plan_mental_layer] [[physical_action_natural_language_symbol_ptypehash [new ptypehash]]
 						 [plan_semantic_plan_phenomenal_name_frame          [new frame]]]
   [new []
-       [construct plan_mental_layer 2 `deliberative
-		  `physical_knowledge
-		  `physical_type_knowledge
-		  `physical_type_counterfactual_knowledge
-		  `deliberative1_knowledge
-		  `deliberative1_type_knowledge
-		  `[deliberative1_type_knowledge]]]]
+       [let [[input_knowledge_base_name                     `physical_knowledge]
+	     [input_type_knowledge_base_name                `physical_type_knowledge]
+	     [input_type_counterfactual_knowledge_base_name `physical_type_counterfactual_knowledge]
+	     [deliberative_knowledge_base_name              `deliberative1_knowledge]
+	     [deliberative_type_knowledge_base_name         `deliberative1_type_knowledge]
+	     [trace_knowledge_base_names                    `[deliberative1_type_knowledge]]]
+	 [construct plan_mental_layer 2 `deliberative
+		    input_knowledge_base_name
+		    input_type_knowledge_base_name
+		    input_type_counterfactual_knowledge_base_name
+		    deliberative_knowledge_base_name
+		    deliberative_type_knowledge_base_name
+		    trace_knowledge_base_names]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []
   [get [get this mind] layer `learned_reactive]]
 
-[deftypefunk deliberative_layer execute create_knowledge []
-  [have [get this agency `plan]        create_knowledge]
-  [have [get this agency `object_type] create_knowledge]]
-
-[deftypefunk deliberative_layer execute connect_knowledge_reflection []
-  [have [get this agency `plan]        connect_knowledge_reflection]
-  [have [get this agency `object_type] connect_knowledge_reflection]]
-
-[deftypefunk deliberative_layer execute create_builtin_actions []
-  [have [get this agency `imagination] create_builtin_actions]
-  [have [get this agency `plan]        create_builtin_actions]]
-
-[deftypefunk deliberative_layer get physical_type_knowledge_reflective_timer []
-  [get [get this agency `object_type] physical_type_knowledge_reflective_timer]]
-
-[deftypefunk deliberative_layer get knowledge_timer []
-  [get [get this agency `object_type] knowledge_timer]]
-
-[deftypefunk deliberative_layer execute add_remember_token [remember_token]
-  [have [get this agency `object_type] add_remember_token remember_token]]
-
-[deftypefunk deliberative_layer execute remove_remember_token [remember_token]
-  [have [get this agency `object_type] remove_remember_token remember_token]]
-
-[deftypefunk deliberative_layer execute wait_until_time_represented [semantic_time]
-  [have [get this agency `object_type] wait_until_time_represented semantic_time]]
-
-[deftypefunk deliberative_layer execute wait_until_after_time_represented [semantic_time]
-  [have [get this agency `object_type] wait_until_after_time_represented semantic_time]]
 
 [deftypefunk deliberative_layer execute add_physical_action [action]
   [terminal_format standard-terminal '\ndeliberative_layer: adding physical action, "' [get action as-string] '."']
@@ -83,183 +60,14 @@
 		     resource_arguments]]]
     [have this add_physical_action action]]]
 
-[deftypefunk deliberative_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
-  [let [[plan [new nonsemantic_plan 
-		   [get this mental_layer]
-		   name_expression
-		   name_patterns
-		   variable_definitions
-		   expression]]]
-    [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [have this add_semantic_plan semantic_plan_object]]]]
-
-
-
-
-
-
 [deftypefunk deliberative_layer execute lookup_action_below [natural_language_string]
   [have this lookup_physical_action natural_language_string]]
 
-
-[deftypefunk deliberative_layer get type_knowledge_base []
-  [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]
-
-[deftypefunk deliberative_layer get counterfactual_knowledge_base []
-  [get [get this mind] semantic_knowledge_base `physical_type_counterfactual_knowledge]]
-
-[deftypefunk deliberative_layer get semantic_planner []
-  [get [get this agency `plan] semantic_planner]]
-
-
-[deftypefunk deliberative_layer execute wait_and_check_exists_in_type_knowledge [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]
-	[remember_token                    [new remember_token [new semantic_time [time]]]]]
-    [terminal_format standard-terminal '\ndeliberative_layer-check_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']
-    [terminal_format standard-terminal '\ndeliberative_layer-check_exists: adding remember token.']
-    [have this add_remember_token remember_token]
-    [terminal_format standard-terminal '\ndeliberative_layer-check_exists: done adding remember token.']
-    [let [[current_time [time]]]
-      [terminal_format standard-terminal '\ndeliberative_layer-check_exists: waiting until ' [get current_time as-string] ' represented.']
-      [have this wait_until_time_represented [new semantic_time current_time]]]
-    [let [[found nil]]
-      [let [[current_events [get [get this type_knowledge_base] events_containing_time [new semantic_time [time]]]]]
-	[mapc [funk [current_event]
-		    `[terminal_format standard-terminal '\ndeliberative_layer-check_exists: current_event, ' [get current_event phenomenal_name] '.']
-		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			[prog [terminal_format standard-terminal '\ndeliberative_layer-check_exists: found relationship!']
-			      [= found t]]]]
-	      current_events]]
-      [if [not found]
-	  [terminal_format standard-terminal '\ndeliberative_layer-check_exists: did not find relationship.']
-	[terminal_format standard-terminal '\ndeliberative_layer-check_exists: found relationship!']]
-      [terminal_format standard-terminal '\ndeliberative_layer-check_exists: removing remember token.']
-      [have this remove_remember_token remember_token]
-      [terminal_format standard-terminal '\ndeliberative_layer-check_exists: done removing remember token.']
-      found]]]
-
 [deftypefunk deliberative_layer execute check_exists [semantic_partial_state]
-  [have [get this mind] check_physical_partial_state_exists semantic_partial_state]]
-
-
-[deftypefunk deliberative_layer execute imagine_check_exists [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']
-    [let [[found_events nil]
-	  [imagine_time cause-imagine_time]]
-      [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: imagine_time = ' imagine_time]
-      [let [[current_events [get [get this counterfactual_knowledge_base] events_containing_time imagine_time]]]
-	[mapc [funk [current_event]
-		    `[terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: current_event: ' [get current_event phenomenal_name] '.']
-		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			[prog [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: found relationship!']
-			      [= found_events [cons current_event found_events]]]]]
-	      current_events]]
-      [let [[found_events-length [length found_events]]]
-	[cond [[== found_events-length 0] [prog [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: did not find relationship.']
-						nil]]
-	      [[== found_events-length 1] [prog [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: found exactly one matching relationship:'
-								 '\n  ' [car found_events]]
-						[car found_events]]]
-	      [t                          [prog [terminal_format standard-terminal '\n' [get this name] '-imagine_check_exists: found multiple matching relationships...']
-						[mapc [funk [found_event]
-							    [terminal_format standard-terminal '\n' [get this name] ' relationship: ' found_event]]
-						      found_events]
-						[new multiple_possible_values found_events]]]]]]]]
-
-[deftypefunk deliberative_layer execute wait_until_exists_in_type_knowledge [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [terminal_format standard-terminal '\nwaiting for relationship: looking for event, ' looking_for_event-phenomenal_name '.']
-    [let [[done nil]]
-      [while [not done]
-	[let [[current_events [get [get this type_knowledge_base] events_containing_time [new semantic_time [time]]]]]
-	  [mapc [funk [current_event]
-		      `[terminal_format standard-terminal '\nwaiting for relationship: current_event, ' [get current_event phenomenal_name] '.']
-		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			  [prog [terminal_format standard-terminal '\nwait_for_physical_relationship: done waiting!']
-				[= done t]]]]
-		current_events]]
-	[if [not done]
-	    [let [[end_of_object_type_changes_trigger [get [get [get this mind] resource `deliberative `object_type `translate_object_knowledge_to_object_type_knowledge] end_of_object_type_changes_trigger]]]
-	      [wait-for-trigger end_of_object_type_changes_trigger]]]]]]]
+  [have [get [get this mind] mental_layer `learned_reactive] check_exists semantic_partial_state]]
 
 [deftypefunk deliberative_layer execute wait_for [semantic_partial_state]
-  [have [get this mind] wait_for_physical_partial_state_to_exist semantic_partial_state]]
-  
-
-[deftypefunk deliberative_layer execute assert [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [terminal_format standard-terminal '\nassuring relationship exists: ' looking_for_event-phenomenal_name '.']
-    [let [[found nil]]
-      [let [[current_events [get [get this type_knowledge_base] events_containing_time [new semantic_time [time]]]]]
-	[mapc [funk [current_event]
-		    `[terminal_format standard-terminal '\nassuring relationship: current_event, ' [get current_event phenomenal_name] '.']
-		    [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			[prog [terminal_format standard-terminal '\nassure_physical_relationship: found relationship!']
-			      [= found t]]]]
-	      current_events]]
-      [if [not found]
-	  [prog [terminal_format standard-terminal '\nassure_physical_relationship: did not find relationship.']
-		[error bug_name    `assure_physical_relationship-failed
-		       description `[assert ,semantic_partial_state]]]
-	nil]]]]
-
-[deftypefunk deliberative_layer execute imagine_asserting [semantic_partial_state]
-  [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [terminal_format standard-terminal '\nimagining assuring relationship exists: ' looking_for_event-phenomenal_name '.']
-    [let [[semantic_planner [get this semantic_planner]]]
-      [let [[found        nil]
-	    [imagine_time cause-imagine_time]]
-	[let [[current_events [get [get this counterfactual_knowledge_base] events_containing_time imagine_time]]]
-	  [mapc [funk [current_event]
-		      `[terminal_format standard-terminal '\nimagine assuring relationship: current_event, ' [get current_event phenomenal_name] '.']
-		      [if [eq looking_for_event-phenomenal_name [get current_event phenomenal_name]]
-			  [prog [terminal_format standard-terminal '\nimagine_assuring_physical_relationship: found relationship!']
-				[= found t]]]]
-		current_events]]
-	[if [not found]
-	    [prog [terminal_format standard-terminal '\nimagine_assuring_physical_relationship: did not find relationship.']
-		  [error bug_name    `imagine_assuring_physical_relationship-failed
-			 description `[imagine_asserting ,semantic_partial_state]]]
-	  nil]]]]]
-
-
-[deftypefunk deliberative_layer execute evaluate_plan_expression [expression]
-  [let* [[name_expression      'evaluate unnamed plan expression']
-	 [name_patterns        nil]
-	 [argument_definitions nil]
-	 [plan                 [new nonsemantic_plan [get this mental_layer]
-				    name_expression
-				    name_patterns
-				    argument_definitions
-				    expression]]]
-    [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [set semantic_plan_object plan_object_type `physical]
-      [let [[variable_frame [new frame]]]
-	[let [[result [have plan execute_as_thought variable_frame]]]
-	  [if [is-type `bug result]
-	      [let [[bug result]]
-		[bug bug]]
-	    result]]]]]]
-
-[deftypefunk deliberative_layer execute imagine_plan_expression [expression]
-  [let* [[name_expression      'imagine unnamed plan expression']
-	 [name_patterns        nil]
-	 [argument_definitions nil]
-	 [plan                 [new nonsemantic_plan [get this mental_layer]
-				    name_expression
-				    name_patterns
-				    argument_definitions
-				    expression]]]
-    [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [set semantic_plan_object plan_object_type `physical]
-      [let [[variable_frame [new frame]]]
-	[let [[result [have plan imagine_as_thought variable_frame]]]
-	  [if [is-type `bug result]
-	      [let [[bug result]]
-		[bug bug]]
-	    result]]]]]]
-
+  [have [get [get this mind] mental_layer `learned_reactive] wait_for_partial_state_to_exist semantic_partial_state]]
 
 [deftypefunk deliberative_layer execute assure_knowledge_symbols_initialized []
   [have knowledge_symbol_set_initialized_mutex lock]

@@ -78,11 +78,23 @@
    :sources ['builtin_reactive_physical_agency.fu2']]
 
 
+'controllable_object'
+
+[defpackage controllable_object
+  :packages [reflective_mind_core
+	     semantic_object_type_event
+	     semantic_reflective_object
+	     semantic_reflective_object_type_event
+	     semantic_reflective_object_type_property_event
+	     semantic_reflective_object_type_relation_event]
+   :sources ['controllable_object.fu2']]
+
 
 'learned_reactive_layer'
 
 [defpackage learned_reactive_layer
   :packages [reflective_mind_core
+	     controllable_object
 	     learned_reactive_resource
 	     learned_reactive_physical_agency
 	     learned_reactive_sensory_agency
@@ -146,6 +158,7 @@
 
 [defpackage plan_mental_layer
   :packages [reflective_mind_core
+	     controllable_object
 	     plan_mental_layer_object_type_agency
 	     plan_mental_layer_plan_agency
 	     plan_mental_layer_execution_agency

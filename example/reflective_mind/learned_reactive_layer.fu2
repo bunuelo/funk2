@@ -20,8 +20,9 @@
 
 'learned_reactive_layer'
 
-[deframe learned_reactive_layer [mental_layer] [[semantic_visual_object_name_hash [new ptypehash]]]
+[deframe learned_reactive_layer [mental_layer controllable_object] [[semantic_visual_object_name_hash [new ptypehash]]]
   [new []
+       [construct controllable_object]
        [construct mental_layer 1 `learned_reactive]
        [parog [have this add_agency [new learned_reactive_sensory_agency]]
 	      [have this add_agency [new learned_reactive_physical_agency]]

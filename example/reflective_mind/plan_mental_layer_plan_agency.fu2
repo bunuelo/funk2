@@ -48,10 +48,6 @@
        
        this]]
 
-[deftypefunk plan_mental_layer_plan_agency execute create_knowledge []
-  [if [not [null deliberative_knowledge_base_name]]
-      [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base deliberative_knowledge_base_name [get [get this mind] semantic_realm]]]]]
-
 [deftypefunk plan_mental_layer_plan_agency execute connect_knowledge_reflection []
   [if [and [not [null deliberative_knowledge_base_name]]
 	   [not [null deliberative_type_knowledge_base_name]]]

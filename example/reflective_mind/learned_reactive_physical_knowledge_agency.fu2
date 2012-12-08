@@ -26,11 +26,6 @@
        [have this add_resource [new translate_visual_knowledge_to_physical_knowledge_resource]]
        ]]
 
-
-[deftypefunk learned_reactive_physical_knowledge_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_knowledge [get [get this mind] semantic_realm]]]
-  ]
-
 [deftypefunk learned_reactive_physical_knowledge_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]
   ]

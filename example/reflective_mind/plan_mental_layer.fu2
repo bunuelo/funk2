@@ -155,7 +155,7 @@
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get [get this mental_layer] agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
 
-[deftypefunk deliberative_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
+[deftypefunk plan_mental_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
   [let [[plan [new nonsemantic_plan 
 		   [get this mental_layer]
 		   name_expression

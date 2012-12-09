@@ -23,8 +23,7 @@
 [deframe plan_mental_layer [mental_layer controllable_object] [object_knowledge_base_name
 							       object_type_knowledge_base_name
 							       object_type_counterfactual_knowledge_base_name
-							       deliberative_knowledge_base_name
-							       deliberative_type_knowledge_base_name
+							       reflective_type_knowledge_base_name
 							       trace_knowledge_base_names
 							       [plan_action_natural_language_symbol_ptypehash     [new ptypehash]]
 							       [semantic_plan_phenomenal_name_frame               [new frame]]
@@ -36,25 +35,23 @@
 		       initial-object_knowledge_base_name
 		       initial-object_type_knowledge_base_name
 		       initial-object_type_counterfactual_knowledge_base_name
-		       initial-deliberative_knowledge_base_name
-		       initial-deliberative_type_knowledge_base_name
+		       initial-reflective_knowledge_base_name
+		       initial-reflective_type_knowledge_base_name
 		       initial-trace_knowledge_base_names]
+       [construct mental_layer initial-number initial-name]
+       [construct controllable_object initial-reflective_knowledge_base_name]
        [= object_knowledge_base_name                     initial-object_knowledge_base_name]
        [= object_type_knowledge_base_name                initial-object_type_knowledge_base_name]
        [= object_type_counterfactual_knowledge_base_name initial-object_type_counterfactual_knowledge_base_name]
-       [= deliberative_knowledge_base_name               initial-deliberative_knowledge_base_name]
-       [= deliberative_type_knowledge_base_name          initial-deliberative_type_knowledge_base_name]
+       [= reflective_type_knowledge_base_name            initial-reflective_type_knowledge_base_name]
        [= trace_knowledge_base_names                     initial-trace_knowledge_base_names]
-       [construct mental_layer initial-number initial-name]
-       [construct controllable_object
-		  deliberative_knowledge_base_name]
        [parog [have this add_agency [new plan_mental_layer_object_type_agency
 					 object_knowledge_base_name
 					 object_type_knowledge_base_name
 					 object_type_counterfactual_knowledge_base_name]]
 	      [have this add_agency [new plan_mental_layer_plan_agency
-					 deliberative_knowledge_base_name
-					 deliberative_type_knowledge_base_name
+					 reflective_knowledge_base_name
+					 reflective_type_knowledge_base_name
 					 trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_execution_agency   trace_knowledge_base_names]]
 	      [have this add_agency [new plan_mental_layer_imagination_agency trace_knowledge_base_names]]]]]
@@ -127,31 +124,31 @@
 
 
 [deftypefunk plan_mental_layer execute add_semantic_object_recursive [semantic_object]
-  [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+  [cond [[is-type `semantic_plan_operator_sequence    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     [let [[past_operator   [get semantic_object past_operator]]
 										   [future_operator [get semantic_object future_operator]]]
 									       [have this add_semantic_object_recursive past_operator]
 									       [have this add_semantic_object_recursive future_operator]]]]
-	[[is-type `semantic_plan_operator_parallel    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+	[[is-type `semantic_plan_operator_parallel    semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     [let [[plan_operator_set [semantic-lookup_set semantic_object plan_operator]]]
 									       [mapc [funk [plan_operator]
 											   [have this add_semantic_object_recursive plan_operator]]
 										     [get plan_operator_set elements]]]]]
-	[[is-type `semantic_plan_operator_activation  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+	[[is-type `semantic_plan_operator_activation  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     [let [[counterfactual_transframe [get semantic_object counterfactual_transframe]]]
 									       [have this add_semantic_object_recursive counterfactual_transframe]]]]
-	[[is-type `semantic_plan_operator_suppression semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+	[[is-type `semantic_plan_operator_suppression semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     ]]
-	[[is-type `semantic_counterfactual_transframe semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+	[[is-type `semantic_counterfactual_transframe semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     [let [[resource_activation_dependency [get semantic_object resource_activation_dependency]]]
 									       [have this add_semantic_object_recursive resource_activation_dependency]]]]
-	[[is-type `semantic_resource                  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_object]
+	[[is-type `semantic_resource                  semantic_object] [prog [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_object]
 									     ]]
 	]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']
-  [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame semantic_plan]
+  [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_plan]
   [let [[start_plan_operator [get semantic_plan start_plan_operator]]]
     [have this add_semantic_object_recursive start_plan_operator]]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]

@@ -22,16 +22,16 @@
 'plan_mental_layer_plan_agency'
 
 [deframe plan_mental_layer_plan_agency [agency] [[internal-semantic_planner nil]
-						 deliberative_knowledge_base_name
-						 deliberative_type_knowledge_base_name
+						 reflective_knowledge_base_name
+						 reflective_type_knowledge_base_name
 						 trace_knowledge_base_names]
-  [new [initial-deliberative_knowledge_base_name
-	initial-deliberative_type_knowledge_base_name
+  [new [initial-reflective_knowledge_base_name
+	initial-reflective_type_knowledge_base_name
 	initial-trace_knowledge_base_names]
        [construct agency `plan]
-       [= deliberative_knowledge_base_name      initial-deliberative_knowledge_base_name]
-       [= deliberative_type_knowledge_base_name initial-deliberative_type_knowledge_base_name]
-       [= trace_knowledge_base_names            initial-trace_knowledge_base_names]
+       [= reflective_knowledge_base_name      initial-reflective_knowledge_base_name]
+       [= reflective_type_knowledge_base_name initial-reflective_type_knowledge_base_name]
+       [= trace_knowledge_base_names          initial-trace_knowledge_base_names]
        [parog [have this add_resource [new plan_mental_layer_focus_on_object_resource                 trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource           trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource trace_knowledge_base_names]]
@@ -49,9 +49,9 @@
        this]]
 
 [deftypefunk plan_mental_layer_plan_agency execute connect_knowledge_reflection []
-  [if [and [not [null deliberative_knowledge_base_name]]
-	   [not [null deliberative_type_knowledge_base_name]]]
-      [have [get this mind] create_knowledge_event_stream_iterator deliberative_knowledge_base_name [get [format nil deliberative_knowledge_base_name '->' deliberative_type_knowledge_base_name] as-symbol]]]]
+  [if [and [not [null reflective_knowledge_base_name]]
+	   [not [null reflective_type_knowledge_base_name]]]
+      [have [get this mind] create_knowledge_event_stream_iterator reflective_knowledge_base_name [get [format nil reflective_knowledge_base_name '->' reflective_type_knowledge_base_name] as-symbol]]]]
 
 [deftypefunk plan_mental_layer_plan_agency execute create_builtin_actions []
   [parog [have-apply [get this mental_layer] create_plan_action `[,[get [get this mental_layer] name] plan focus_on_object]]
@@ -75,7 +75,7 @@
   [if [null internal-semantic_planner]
       [prog [= internal-semantic_planner [new semantic_planner [get [get this mind] semantic_realm]]]
 	    [set internal-semantic_planner planner_type [get [get this mental_layer] name]]
-	    [have [get [get this mind] semantic_knowledge_base deliberative_knowledge_base_name] add_semantic_frame internal-semantic_planner]]]
+	    [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame internal-semantic_planner]]]
   internal-semantic_planner]
 
 [deftypefunk plan_mental_layer_plan_agency get semantic_plan [plan_name]

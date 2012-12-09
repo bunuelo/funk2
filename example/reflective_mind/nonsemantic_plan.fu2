@@ -599,7 +599,7 @@
 
 
 [deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
-  [have mental_layer lookup_action_below action_name_expression]]
+  [have [get mental_layer mental_layer_below] lookup_action action_name_expression]]
 
 [deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
   [have mental_layer lookup_action action_name_expression]]

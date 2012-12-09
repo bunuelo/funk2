@@ -20,11 +20,31 @@
 
 'controllable_object'
 
-[deframe controllable_object [frame] [reflective_knowledge_base_name]
+[deframe controllable_object [frame] [reflective_knowledge_base_name
+				      [action_natural_language_symbol_ptypehash [new ptypehash]]]
   [new [initial-reflective_knowledge_base_name]
        [= reflective_knowledge_base_name initial-reflective_knowledge_base_name]
        ]]
 
 [deftypefunk controllable_object execute create_knowledge []
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base reflective_knowledge_base_name [get [get this mind] semantic_realm]]]]
+
+[deftypefunk controllable_object execute add_action [action]
+  [terminal_format standard-terminal '\n' [type this] ': adding action, "' [get action as-string] '."']
+  [have action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
+
+[deftypefunk controllable_object get actions []
+  [get action_natural_language_symbol_ptypehash values]]
+
+[deftypefunk controllable_object execute lookup_action [natural_language_string]
+  [have action_natural_language_symbol_ptypehash lookup [string-as-natural_language_symbol natural_language_string]]]
+
+[deftypefunk controllable_object execute create_action [layer_name agency_name resource_name :rest resource_arguments]
+  [let [[action [new deliberative_action 
+		     [get this mind]
+		     layer_name
+		     agency_name
+		     resource_name
+		     resource_arguments]]]
+    [have this add_action action]]]
 

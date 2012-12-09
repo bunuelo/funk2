@@ -344,24 +344,10 @@
 										  
 										  [have this learn_precondition_hypothesis_space physical_type_knowledge_base transframe_start_time transframe_end_time]
 										  
-										  'do not need this anymore.'
-										  `[let [[semantic_action [get [get this mind] physical_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
-										     [semantic-add action_sequence transframe    event_transframe]
-										     [semantic-add semantic_action example_event action_sequence]
-										     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-												      'resource, ' name ', learned physical_type_knowledge transframe.']]
-										  
 										  ]]
 		       [[eq [get [get this layer] name] `deliberative]          [let [[deliberative1_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge]]]
 										  
 										  [have this learn_precondition_hypothesis_space deliberative1_type_knowledge_base transframe_start_time transframe_end_time]
-										  
-										  'do not need this anymore.'
-										  `[let [[semantic_action [get [get this mind] deliberative1_semantic_action [get [get this resource_semantic_frame] phenomenal_name]]]]
-										     [semantic-add action_sequence transframe    event_transframe]
-										     [semantic-add semantic_action example_event action_sequence]
-										     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': '
-												      'resource, ' name ', learned deliberative1_type_knowledge transframe.']]
 										  
 										  ]]
 		       [[eq [get [get this layer] name] `reflective]            [prog]]

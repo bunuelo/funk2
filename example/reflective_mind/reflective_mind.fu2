@@ -73,10 +73,10 @@
   [get [get this layer `deliberative] physical_type_knowledge_reflective_timer]]
 
 [deftypefunk reflective_mind execute create_physical_action [layer_name agency_name resource_name :rest resource_arguments]
-  [have-apply [get this layer `deliberative] create_physical_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
+  [have-apply [get this layer `learned_reactive] create_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
 [deftypefunk reflective_mind get physical_actions []
-  [get [get this layer `deliberative] physical_actions]]
+  [get [get this layer `learned_reactive] actions]]
 
 [deftypefunk reflective_mind execute create_deliberative_semantic_plan [name_expression name_patterns variable_definitions expression]
   [have [get this layer `deliberative] create_semantic_plan name_expression name_patterns variable_definitions expression]]
@@ -85,18 +85,14 @@
   [get [get this layer `deliberative] semantic_plans]]
 
 
-[deftypefunk reflective_mind execute create_deliberative_plan_action [layer_name agency_name resource_name :rest resource_arguments]
-  [have-apply [get this layer `deliberative] create_plan_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
+[deftypefunk reflective_mind execute create_deliberative_action [layer_name agency_name resource_name :rest resource_arguments]
+  [have-apply [get this layer `deliberative] create_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind get deliberative_plan_actions []
-  [get [get this layer `deliberative] plan_actions]]
+[deftypefunk reflective_mind get deliberative_actions []
+  [get [get this layer `deliberative] actions]]
 
 [deftypefunk reflective_mind get deliberative_plan_semantic_plans []
   [get [get this layer `deliberative] plan_semantic_plans]]
-
-
-[deftypefunk reflective_mind get physical_semantic_action [phenomenal_name]
-  [get [get this layer `reflective] physical_semantic_action phenomenal_name]]
 
 
 `[deftypefunk reflective_mind execute add_resource_change_property_hypothesis [layer_name agency_name resource_name
@@ -117,15 +113,12 @@
 [deftypefunk reflective_mind get deliberative1_type_knowledge_reflective_timer []
   [get [get this layer `reflective] object_type_knowledge_reflective_timer]]
 
-[deftypefunk reflective_mind get deliberative1_semantic_action [phenomenal_name]
-  [get [get this layer `reflective] deliberative1_semantic_action phenomenal_name]]
 
+[deftypefunk reflective_mind execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
+  [have-apply [get this layer `reflective] create_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind execute create_reflective_plan_action [layer_name agency_name resource_name :rest resource_arguments]
-  [have-apply [get this layer `reflective] create_plan_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
-
-[deftypefunk reflective_mind get reflective_plan_actions []
-  [get [get this layer `reflective] plan_actions]]
+[deftypefunk reflective_mind get reflective_actions []
+  [get [get this layer `reflective] actions]]
 
 [deftypefunk reflective_mind get reflective_plan_semantic_plans []
   [get [get this layer `reflective] plan_semantic_plans]]

@@ -48,17 +48,6 @@
   [type-have plan_mental_layer this create_builtin_actions]]
 
 
-[deftypefunk reflective_layer execute lookup_action_below [natural_language_string]
-  [have [get [get this mind] layer `deliberative] lookup_action natural_language_string]]
-
-
-[deftypefunk reflective_layer get physical_semantic_action [phenomenal_name]
-  [get [get this agency `reflective_event_knowledge] physical_semantic_action phenomenal_name]]
-
-[deftypefunk reflective_layer get deliberative1_semantic_action [phenomenal_name]
-  [get [get this agency `reflective_event_knowledge] deliberative1_semantic_action phenomenal_name]]
-
-
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
   [terminal_format standard-terminal '\nreflective_layer has not implemented check_exists.']
   [error bug_name `reflective_layer-check_exists_not_implemented

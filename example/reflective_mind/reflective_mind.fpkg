@@ -246,20 +246,12 @@
 	     semantic_action
 	     semantic_action_knowledge_base
 	     reflective_resource
-	     reflective_plan_bug_response_agency
-	     reflective_event_knowledge_agency
-	     reflective_credit_assignment_agency]
+	     reflective_event_knowledge_agency]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource
   :packages [reflective_mind_core]
    :sources ['reflective_resource.fu2']]
-
-[defpackage reflective_plan_bug_response_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_expectation_failure]
-   :sources ['reflective_plan_bug_response_agency.fu2']]
 
 [defpackage reflective_event_knowledge_agency
   :packages [reflective_mind_core
@@ -269,11 +261,4 @@
 	     forgetful_semantic_resource_event_knowledge_base
 	     semantic_event_transframe]
    :sources ['reflective_event_knowledge_agency.fu2']]
-
-[defpackage reflective_credit_assignment_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_category
-	     semantic_situation]
-   :sources ['reflective_credit_assignment_agency.fu2']]
 

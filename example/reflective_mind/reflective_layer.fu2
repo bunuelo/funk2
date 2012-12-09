@@ -33,9 +33,6 @@
 	      [have this add_agency [new reflective_event_knowledge_agency]]
 	      [have this add_agency [new reflective_credit_assignment_agency]]]]]
 
-[deftypefunk reflective_layer get mental_layer_below []
-  [get [get this mind] layer `deliberative]]
-
 [deftypefunk reflective_layer execute create_knowledge []
   [type-have plan_mental_layer this create_knowledge]
   [have [get this agency `reflective_event_knowledge] create_knowledge]]
@@ -47,6 +44,8 @@
 [deftypefunk reflective_layer execute create_builtin_actions []
   [type-have plan_mental_layer this create_builtin_actions]]
 
+[deftypefunk reflective_layer get mental_layer_below []
+  [get [get this mind] layer `deliberative]]
 
 [deftypefunk reflective_layer execute check_exists [semantic_partial_state]
   [terminal_format standard-terminal '\nreflective_layer has not implemented check_exists.']
@@ -57,36 +56,4 @@
   [terminal_format standard-terminal '\nreflective_layer has not implemented wait_for.']
   [error bug_name `reflective_layer-wait_for_not_implemented
 	 this     this]]
-
-[deftypefunk reflective_layer execute assure_knowledge_symbols_initialized []
-  [have knowledge_symbol_set_initialized_mutex lock]
-  [if [not knowledge_symbol_set_initialized]
-      [prog [mapc [funk [knowledge_symbol]
-			[have knowledge_symbol_set add knowledge_symbol]]
-		  [append [get [get this mind] all_perception_symbols]
-			  `[property
-			    relationship
-			    relation
-			    preposition
-			    is-me
-			    t]]]
-	    [= knowledge_symbol_set_initialized t]]]
-  [have knowledge_symbol_set_initialized_mutex unlock]]
-
-[deftypefunk reflective_layer get all_knowledge_symbols []
-  [have this assure_knowledge_symbols_initialized]
-  [get knowledge_symbol_set elements]]
-
-[deftypefunk reflective_layer get knowledge_symbol [value]
-  [have this assure_knowledge_symbols_initialized]
-  [let [[symbol [if [is-type `symbol value]
-		    value
-		  [get string as-symbol]]]]
-    [if [get knowledge_symbol_set contains symbol]
-	symbol
-      [prog [terminal_format standard-terminal '\n' [get this type] '-get-knowledge_symbol failure: unknown symbol (' symbol ')']
-	    [error bug_name             `deliberative_layer-get-string_as_knowledge_symbol-no_such_knowledge_symbol
-		   string               string
-		   symbol               symbol
-		   knowledge_symbol_set knowledge_symbol_set]]]]]
 

@@ -24,26 +24,29 @@
 [deframe plan_mental_layer_plan_agency [agency] [[internal-semantic_planner nil]
 						 reflective_knowledge_base_name
 						 reflective_type_knowledge_base_name
+						 resource_knowledge_base_name
 						 trace_knowledge_base_names]
   [new [initial-reflective_knowledge_base_name
 	initial-reflective_type_knowledge_base_name
+	initial-resource_knowledge_base_name
 	initial-trace_knowledge_base_names]
        [construct agency `plan]
        [= reflective_knowledge_base_name      initial-reflective_knowledge_base_name]
        [= reflective_type_knowledge_base_name initial-reflective_type_knowledge_base_name]
+       [= resource_knowledge_base_name        initial-resource_knowledge_base_name]
        [= trace_knowledge_base_names          initial-trace_knowledge_base_names]
-       [parog [have this add_resource [new plan_mental_layer_focus_on_object_resource                 trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource           trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_on_execute_plan_resource           trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_register_a_plan_from_focus_resource      trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_register_b_plan_from_focus_resource      trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_on_register_a_plan_resource        trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_on_register_b_plan_resource        trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_plan_add_after_resource            trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_plan_add_before_resource           trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_plan_add_in_parallel_resource      trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_remember_plan_for_goal_resource          trace_knowledge_base_names]]
+       [parog [have this add_resource [new plan_mental_layer_focus_on_object_resource                 resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource           resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_execute_plan_resource           resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_register_a_plan_from_focus_resource      resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_register_b_plan_from_focus_resource      resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_register_a_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_register_b_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_plan_add_after_resource            resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_plan_add_before_resource           resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_plan_add_in_parallel_resource      resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_remember_plan_for_goal_resource          resource_knowledge_base_name trace_knowledge_base_names]]
 	      ]
        
        this]]
@@ -85,11 +88,13 @@
 'plan_mental_layer_focus_on_object_resource'
 
 [deframe plan_mental_layer_focus_on_object_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_object
 		  [funk [semantic_plan_object]
 			[terminal_format standard-terminal '\n' [get this as-string] ': focusing on ' [get semantic_plan_object phenomenal_name] ', "' [get [get semantic_plan_object nonsemantic_plan] as-string] '."']
 			[set [get [get this agency] semantic_planner] focus_plan semantic_plan_object]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_on_object_resource get as-natural_language_string []
@@ -110,7 +115,8 @@
 'plan_mental_layer_execute_plan_in_focus_resource'
 
 [deframe plan_mental_layer_execute_plan_in_focus_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `execute_plan_in_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
@@ -124,6 +130,7 @@
 				  ]]
 			  
 			  ]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_execute_plan_in_focus_resource get as-natural_language_string []
@@ -134,7 +141,8 @@
 'plan_mental_layer_imagine_executing_plan_in_focus_resource'
 
 [deframe plan_mental_layer_imagine_executing_plan_in_focus_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `imagine_executing_plan_in_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
@@ -148,6 +156,7 @@
 				  ]]
 			  
 			  ]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_imagine_executing_plan_in_focus_resource get as-natural_language_string []
@@ -158,12 +167,14 @@
 'plan_mental_layer_focus_on_execute_plan_resource'
 
 [deframe plan_mental_layer_focus_on_execute_plan_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_execute_plan
 		  [funk []
 			[let [[execute_plan [get [get [get this agency] semantic_planner] execute_plan]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get execute_plan phenomenal_name] ', "' [get [get execute_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan execute_plan]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_on_execute_plan_resource get as-natural_language_string []
@@ -174,12 +185,14 @@
 'plan_mental_layer_register_a_plan_from_focus_resource'
 
 [deframe plan_mental_layer_register_a_plan_from_focus_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `register_a_plan_from_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_a_plan focus_plan]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_register_a_plan_from_focus_resource get as-natural_language_string []
@@ -190,12 +203,14 @@
 'plan_mental_layer_register_b_plan_from_focus_resource'
 
 [deframe plan_mental_layer_register_b_plan_from_focus_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `register_b_plan_from_focus
 		  [funk []
 			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] register_b_plan focus_plan]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_register_b_plan_from_focus_resource get as-natural_language_string []
@@ -206,12 +221,14 @@
 'plan_mental_layer_focus_on_register_a_plan_resource'
 
 [deframe plan_mental_layer_focus_on_register_a_plan_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_register_a_plan
 		  [funk []
 			[let [[register_a_plan [get [get [get this agency] semantic_planner] register_a_plan]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_a_plan]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_on_register_a_plan_resource get as-natural_language_string []
@@ -222,12 +239,14 @@
 'plan_mental_layer_focus_on_register_b_plan_resource'
 
 [deframe plan_mental_layer_focus_on_register_b_plan_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_register_b_plan
 		  [funk []
 			[let [[register_b_plan [get [get [get this agency] semantic_planner] register_b_plan]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
 			  [set [get [get this agency] semantic_planner] focus_plan register_b_plan]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_on_register_b_plan_resource get as-natural_language_string []
@@ -238,12 +257,14 @@
 'plan_mental_layer_focus_plan_add_after_resource'
 
 [deframe plan_mental_layer_focus_plan_add_after_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_plan_add_after
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_plan_add_after_resource get as-natural_language_string []
@@ -254,12 +275,14 @@
 'plan_mental_layer_focus_plan_add_before_resource'
 
 [deframe plan_mental_layer_focus_plan_add_before_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_plan_add_before
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_plan_add_before_resource get as-natural_language_string []
@@ -270,12 +293,14 @@
 'plan_mental_layer_focus_plan_add_in_parallel_resource'
 
 [deframe plan_mental_layer_focus_plan_add_in_parallel_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_plan_add_in_parallel
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
 			
 			]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_focus_plan_add_in_parallel_resource get as-natural_language_string []
@@ -286,7 +311,8 @@
 'plan_mental_layer_remember_plan_for_goal_resource'
 
 [deframe plan_mental_layer_remember_plan_for_goal_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `remember_plan_for_goal
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
@@ -300,6 +326,7 @@
 				     [call 'forget all imagined events']]]
 			
 			]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_remember_plan_for_goal_resource get as-natural_language_string []

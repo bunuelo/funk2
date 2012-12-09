@@ -22,11 +22,12 @@
 'plan_mental_layer_imagination_agency'
 
 [deframe plan_mental_layer_imagination_agency [agency] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct agency `imagination]
        
-       [have this add_resource [new plan_mental_layer_forget_all_imagined_events_resource initial-trace_knowledge_base_names]]
-       [have this add_resource [new plan_mental_layer_imagine_plan_resource               initial-trace_knowledge_base_names]]
+       [have this add_resource [new plan_mental_layer_forget_all_imagined_events_resource initial-resource_knowledge_base_name initial-trace_knowledge_base_names]]
+       [have this add_resource [new plan_mental_layer_imagine_plan_resource               initial-resource_knowledge_base_name initial-trace_knowledge_base_names]]
        
        this]]
 
@@ -38,7 +39,8 @@
 'plan_mental_layer_forget_all_imagined_events_resource'
 
 [deframe plan_mental_layer_forget_all_imagined_events_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `forget_all_imagined_events
 		  [funk []
 			[let [[semantic_planner [get [get [get this mental_layer] agency `plan] semantic_planner]]]
@@ -54,6 +56,7 @@
 			    [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base `physical_type_counterfactual_knowledge [get [get this mind] semantic_realm]]]
 			    
 			    nil]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_forget_all_imagined_events_resource get as-natural_language_string []
@@ -65,7 +68,8 @@
 [globalize imagine_bug_count 0]
 
 [deframe plan_mental_layer_imagine_plan_resource [plan_mental_layer_resource] []
-  [new [initial-trace_knowledge_base_names]
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `imagine_plan
 		  [funk [semantic_plan]
 			[assert-type semantic_plan_object semantic_plan]
@@ -90,6 +94,7 @@
 						       [type [get this layer]] 'resource, ' [get this as-natural_language_string] ', successfully completed imagining plan']
 				      [set [get [get [get this mental_layer] agency `plan] semantic_planner] imagine_plan nil]]]]
 			    nil]]]
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_imagine_plan_resource get as-natural_language_string []

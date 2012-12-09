@@ -27,6 +27,7 @@
 	     [object_type_counterfactual_knowledge_base_name `physical_type_counterfactual_knowledge]
 	     [reflective_knowledge_base_name                 `deliberative1_knowledge]
 	     [reflective_type_knowledge_base_name            `deliberative1_type_knowledge]
+	     [resource_knowledge_base_name                   `reflective_knowledge]
 	     [trace_knowledge_base_names                     `[deliberative1_type_knowledge]]]
 	 [construct plan_mental_layer 2 `deliberative
 		    object_knowledge_base_name
@@ -34,6 +35,7 @@
 		    object_type_counterfactual_knowledge_base_name
 		    reflective_knowledge_base_name
 		    reflective_type_knowledge_base_name
+		    resource_knowledge_base_name
 		    trace_knowledge_base_names]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []

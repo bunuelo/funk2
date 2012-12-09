@@ -82,20 +82,22 @@
 
 'traced_resource'
 
-[deframe traced_resource [resource] [simulate_knowledge_base_names
+[deframe traced_resource [resource] [resource_knowledge_base_name
+				     simulate_knowledge_base_names
 				     [remember_simulate_knowledge_base_tokens_mutex [new mutex]]
 				     [remember_simulate_knowledge_base_tokens_set   [new set]]
 				     [feature_phenomenal_name_ptypehash             [new ptypehash]]
 				     [change_feature_phenomenal_name_ptypehash      [new ptypehash]]
 				     [precondition_hypothesis_space_set             [new set]]]
-  [new [initial-name initial-active_funk initial-simulate_knowledge_base_names]
+  [new [initial-name
+	initial-active_funk
+	initial-resource_knowledge_base_name
+	initial-simulate_knowledge_base_names]
+       [= resource_knowledge_base_name  initial-resource_knowledge_base_name]
+       [= simulate_knowledge_base_names initial-simulate_knowledge_base_names]
        [set initial-active_funk name [get [format nil [type this] '-active_funk'] as-symbol]]
        [let [[wrapped_active_funk [get this wrapped_active_funk initial-active_funk]]]
-	 [construct resource initial-name wrapped_active_funk]
-	 
-	 [= simulate_knowledge_base_names initial-simulate_knowledge_base_names]
-	 
-	 ]]]
+	 [construct resource initial-name wrapped_active_funk]]]]
 
 [deftypefunk traced_resource get remember_tokens []
   [have remember_simulate_knowledge_base_tokens_mutex lock]
@@ -139,9 +141,9 @@
 
 [deftypefunk traced_resource get resource_semantic_frame []
   [let [[resource_semantic_frame [type-get resource this resource_semantic_frame]]]
-    [let [[reflective_knowledge [get [get this mind] semantic_knowledge_base `reflective_knowledge]]]
-      [if [not [get reflective_knowledge contains_semantic_frame resource_semantic_frame]]
-	  [have reflective_knowledge add_semantic_frame resource_semantic_frame]]]
+    [let [[resource_knowledge_base [get [get this mind] semantic_knowledge_base resource_knowledge_base_name]]]
+      [if [not [get resource_knowledge_base contains_semantic_frame resource_semantic_frame]]
+	  [have resource_knowledge_base add_semantic_frame resource_semantic_frame]]]
     resource_semantic_frame]]
 
 [deftypefunk traced_resource execute activate [:rest args]

@@ -23,10 +23,12 @@
 [deframe plan_mental_layer_resource [traced_resource] []
   [new [initial-name
 	initial-active_funk
+	initial-resource_knowledge_base_name
 	initial-trace_knowledge_base_names]
        [construct traced_resource
 		  initial-name
 		  initial-active_funk
+		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]
        ]]
 

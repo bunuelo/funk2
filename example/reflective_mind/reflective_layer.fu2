@@ -28,6 +28,7 @@
 		  `deliberative1_type_counterfactual_knowledge
 		  `deliberative2_knowledge
 		  nil
+		  `reflective_knowledge
 		  nil]
        [parog [have this add_agency [new reflective_plan_bug_response_agency]]
 	      [have this add_agency [new reflective_event_knowledge_agency]]

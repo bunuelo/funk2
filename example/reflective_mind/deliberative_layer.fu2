@@ -45,37 +45,4 @@
 [deftypefunk deliberative_layer execute wait_for [semantic_partial_state]
   [have [get [get this mind] mental_layer `learned_reactive] wait_for_partial_state_to_exist semantic_partial_state]]
 
-[deftypefunk deliberative_layer execute assure_knowledge_symbols_initialized []
-  [have knowledge_symbol_set_initialized_mutex lock]
-  [if [not knowledge_symbol_set_initialized]
-      [prog [mapc [funk [knowledge_symbol]
-			[have knowledge_symbol_set add knowledge_symbol]]
-		  [append [get [get this mind] all_perception_symbols]
-			  `[property
-			    relationship
-			    relation
-			    preposition
-			    is-me
-			    t]]]
-	    [= knowledge_symbol_set_initialized t]]]
-  [have knowledge_symbol_set_initialized_mutex unlock]]
-
-[deftypefunk deliberative_layer get all_knowledge_symbols []
-  [have this assure_knowledge_symbols_initialized]
-  [get knowledge_symbol_set elements]]
-
-[deftypefunk deliberative_layer get knowledge_symbol [value]
-  [have this assure_knowledge_symbols_initialized]
-  [let [[symbol [if [is-type `symbol value]
-		    value
-		  [get string as-symbol]]]]
-    [if [get knowledge_symbol_set contains symbol]
-	symbol
-      [prog [terminal_format standard-terminal '\n' [get this type] '-get-knowledge_symbol failure: unknown symbol (' symbol ')']
-	    [error bug_name             `deliberative_layer-get-string_as_knowledge_symbol-no_such_knowledge_symbol
-		   string               string
-		   symbol               symbol
-		   knowledge_symbol_set knowledge_symbol_set]]]]]
-
-
 

@@ -30,9 +30,7 @@
 		  nil
 		  `reflective_knowledge
 		  nil]
-       [parog [have this add_agency [new reflective_plan_bug_response_agency]]
-	      [have this add_agency [new reflective_event_knowledge_agency]]
-	      [have this add_agency [new reflective_credit_assignment_agency]]]]]
+       [have this add_agency [new reflective_event_knowledge_agency]]]]
 
 [deftypefunk reflective_layer execute create_knowledge []
   [type-have plan_mental_layer this create_knowledge]

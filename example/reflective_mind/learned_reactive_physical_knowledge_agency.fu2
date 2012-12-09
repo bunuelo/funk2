@@ -27,8 +27,7 @@
        ]]
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]
-  ]
+  [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]]
 
 [deftypefunk learned_reactive_physical_knowledge_agency execute check_exists [semantic_partial_state]
   [have [get this resource `translate_visual_knowledge_to_physical_knowledge] check_exists semantic_partial_state]]

@@ -20,11 +20,11 @@
 
 'controllable_object'
 
-[deframe controllable_object [frame] [object_knowledge_base_name]
-  [new [initial-object_knowledge_base_name]
-       [= object_knowledge_base_name initial-object_knowledge_base_name]
+[deframe controllable_object [frame] [reflective_knowledge_base_name]
+  [new [initial-reflective_knowledge_base_name]
+       [= reflective_knowledge_base_name initial-reflective_knowledge_base_name]
        ]]
 
 [deftypefunk controllable_object execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base object_knowledge_base_name [get [get this mind] semantic_realm]]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base reflective_knowledge_base_name [get [get this mind] semantic_realm]]]]
 

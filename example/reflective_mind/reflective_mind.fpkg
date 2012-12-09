@@ -162,7 +162,8 @@
 	     plan_mental_layer_object_type_agency
 	     plan_mental_layer_plan_agency
 	     plan_mental_layer_execution_agency
-	     plan_mental_layer_imagination_agency]
+	     plan_mental_layer_imagination_agency
+	     plan_mental_layer_resource_knowledge_agency]
    :sources ['plan_mental_layer.fu2']]
 
 [defpackage object_type_property_relation_goal
@@ -201,6 +202,15 @@
 	     nonsemantic_plan
 	     semantic_dependency]
    :sources ['plan_mental_layer_imagination_agency.fu2']]
+
+[defpackage plan_mental_layer_resource_knowledge_agency
+  :packages [reflective_mind_core
+	     plan_mental_layer_resource
+	     semantic_resource_action_sequence
+	     semantic_know_of_relationship_event
+	     forgetful_semantic_resource_event_knowledge_base
+	     semantic_event_transframe]
+   :sources ['plan_mental_layer_resource_knowledge_agency.fu2']]
 
 [defpackage plan_mental_layer_resource
   :packages [reflective_mind_core]

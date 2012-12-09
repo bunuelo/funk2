@@ -57,8 +57,9 @@
 					 reflective_type_knowledge_base_name
 					 resource_knowledge_base_name
 					 trace_knowledge_base_names]]
-	      [have this add_agency [new plan_mental_layer_execution_agency   resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_agency [new plan_mental_layer_imagination_agency resource_knowledge_base_name trace_knowledge_base_names]]]]]
+	      [have this add_agency [new plan_mental_layer_execution_agency          resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_agency [new plan_mental_layer_imagination_agency        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_agency [new plan_mental_layer_resource_knowledge_agency]]]]]
 
 [deftypefunk plan_mental_layer execute create_knowledge []
   [type-have controllable_object this create_knowledge]

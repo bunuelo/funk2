@@ -30,6 +30,18 @@
   'move left']
 
 
+'reflective_mind-blocks_world-slow_move_left_resource'
+
+[deframe reflective_mind-blocks_world-slow_move_left_resource [builtin_reactive_resource] []
+  [new []
+       [construct builtin_reactive_resource `slow_move_left
+		  [funk []
+			[have [get this body] slow_move_left]]]]]
+
+[deftypefunk reflective_mind-blocks_world-slow_move_left_resource get as-natural_language_string []
+  'slow move left']
+
+
 'reflective_mind-blocks_world-move_right_resource'
 
 [deframe reflective_mind-blocks_world-move_right_resource [builtin_reactive_resource] []
@@ -40,6 +52,18 @@
 
 [deftypefunk reflective_mind-blocks_world-move_right_resource get as-natural_language_string []
   'move right']
+
+
+'reflective_mind-blocks_world-slow_move_right_resource'
+
+[deframe reflective_mind-blocks_world-slow_move_right_resource [builtin_reactive_resource] []
+  [new []
+       [construct builtin_reactive_resource `slow_move_right
+		  [funk []
+			[have [get this body] slow_move_right]]]]]
+
+[deftypefunk reflective_mind-blocks_world-slow_move_right_resource get as-natural_language_string []
+  'slow move right']
 
 
 'reflective_mind-blocks_world-grab_resource'

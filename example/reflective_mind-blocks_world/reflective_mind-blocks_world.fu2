@@ -45,7 +45,9 @@
   
   'create blocks_world agent specific physical commands in parallel'
   [parog 'builtin resources'
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-slow_move_left_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_left_resource]]
+	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-slow_move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-move_right_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-grab_resource]]
 	 [have this add_resource `builtin_reactive `physical [new reflective_mind-blocks_world-drop_resource]]
@@ -58,7 +60,9 @@
   
   'create blocks_world agent specific actions'
   
-  [parog [have-apply this create_physical_action `[builtin_reactive physical move_left]]
+  [parog [have-apply this create_physical_action `[builtin_reactive physical slow_move_left]]
+	 [have-apply this create_physical_action `[builtin_reactive physical move_left]]
+	 [have-apply this create_physical_action `[builtin_reactive physical slow_move_right]]
 	 [have-apply this create_physical_action `[builtin_reactive physical move_right]]
 	 [have-apply this create_physical_action `[builtin_reactive physical grab]]
 	 [have-apply this create_physical_action `[builtin_reactive physical drop]]

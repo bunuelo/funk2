@@ -175,9 +175,17 @@
   [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: move_left.']
   [set [get mindmon_blocks_world_agent gripper] movement_command-left]]
 
+[deftypefunk mindmon_blocks_world_agent_body execute slow_move_left []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: slow_move_left.']
+  [set [get mindmon_blocks_world_agent gripper] movement_command-slow_left]]
+
 [deftypefunk mindmon_blocks_world_agent_body execute move_right []
   [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: move_right.']
   [set [get mindmon_blocks_world_agent gripper] movement_command-right]]
+
+[deftypefunk mindmon_blocks_world_agent_body execute slow_move_right []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: slow_move_right.']
+  [set [get mindmon_blocks_world_agent gripper] movement_command-slow_right]]
 
 [deftypefunk mindmon_blocks_world_agent_body execute grab []
   [terminal_format standard-terminal '\nmindmon_blocks_world_agent_body: grab.']

@@ -146,7 +146,8 @@
 		
 		[defplan 'a cube is to my right'
 		  :matches ['[? subject] is [? preposition]']
-		   :frame [[shape cube]]
+		   :frame [[subject     'a cube']
+			   [preposition 'to my right']]
 		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
 		
 		[defplan 'assert that a pyramid is on a cube'

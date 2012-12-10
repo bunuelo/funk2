@@ -35,10 +35,11 @@
 		    object_knowledge_base_name
 		    object_type_knowledge_base_name
 		    object_type_counterfactual_knowledge_base_name
-		    resource_knowledge_base_name
-		    resource_event_knowledge_base_name
+		    object_resource_knowledge_base_name
+		    object_resource_event_knowledge_base_name
 		    reflective_knowledge_base_name
 		    reflective_type_knowledge_base_name
+		    reflective_resource_knowledge_base_name
 		    trace_knowledge_base_names]]]]
 
 [deftypefunk deliberative_layer get mental_layer_below []

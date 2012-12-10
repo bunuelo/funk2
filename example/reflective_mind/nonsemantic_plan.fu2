@@ -483,7 +483,7 @@
 
 [deftypefunk nonsemantic_plan execute check_exists [semantic_partial_state]
   [if [not [is-type `semantic_partial_state semantic_partial_state]]
-      [error bug_name     nonsemantic_plan-check_exists-invalid_type
+      [error bug_name     `nonsemantic_plan-check_exists-invalid_type
 	     is_plan_bug  t
 	     correct_type `semantic_partial_state
 	     actual_type  [type semantic_partial_state]]

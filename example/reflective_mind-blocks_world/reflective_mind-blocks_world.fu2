@@ -90,14 +90,14 @@
 				  block property shape [? bottom_shape]]]
 		
 		[defplan 'a pyramid to be on a table'
-		  :matches ['a [? shape] is on a table']
+		  :matches ['a [? shape] to be on a table']
 		   :frame [[shape pyramid]]
 		    [relationship block property shape [? shape]
 				  preposition on
 				  table property color white]]
 		
 		[defplan 'a cube to be to my left'
-		  :matches ['a [? shape] is to my left']
+		  :matches ['a [? shape] to be to my left']
 		   :frame [[shape cube]]
 		    [relationship block property shape [? shape]
 				  preposition left-of

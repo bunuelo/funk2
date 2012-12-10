@@ -155,7 +155,7 @@
 			   [shape     pyramid]]
 		    [if [not [exists [plan-call [plan 'a [? shape] to be below me']]]]
 			[prog [call-below 'slow move [? direction]']
-			      [plan-call [plan 'wait for [? shape] to be below me']]
+			      [plan-call [plan 'wait for a [? shape] to be below me']]
 			      [call-below 'stop']]]]
 		
 		[defplan 'move left until over pyramid'
@@ -163,7 +163,7 @@
 		   :frame [[direction left]
 			   [shape     pyramid]]
 		    [call-below 'move [? direction]']
-		    [plan-call [plan 'wait for [? shape] to be immediately to my [? direction]']]
+		    [plan-call [plan 'wait for a [? shape] to be immediately to my [? direction]']]
 		    [call-below 'stop']]
 		
 		`[compile [plan 'move left until over pyramid']]

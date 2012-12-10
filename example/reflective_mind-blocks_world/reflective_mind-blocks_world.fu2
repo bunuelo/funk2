@@ -146,7 +146,7 @@
 		
 		[defplan 'wait for a pyramid to be below me'
 		  :matches ['wait for [? to-be-partial_state]']
-		   :frame [[shape pyramid]]
+		   :frame [[to-be-partial_state 'a pyramid to be below me']]
 		    [wait-for [plan-call [plan [? to-be-partial_state]]]]]
 		
 		[defplan 'move slowly left until over pyramid'

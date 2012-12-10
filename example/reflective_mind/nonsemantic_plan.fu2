@@ -1724,12 +1724,8 @@
 							      truth_value   truth_value]]]]
 
 [defplanfunk imagine exists [partial_state]
-  [cond [[is-type `nonsemantic_plan_value partial_state] [let [[partial_state [get partial_state value]]]
-							   [have nonsemantic_plan check_exists partial_state]]]
-	[t                                               [error bug_name nonsemantic_plan-exists-invalid_type
-								correct_types `[nonsemantic_plan_value]
-								actual_type   [type partial_state]
-								partial_state partial_state]]]]
+  [let [[partial_state [get partial_state value]]]
+    [have nonsemantic_plan check_exists partial_state]]]
 
 [defplanfunk imagine wait-for [partial_state]
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\nplan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']

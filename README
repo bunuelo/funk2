@@ -50,19 +50,17 @@ TO RUN SYSTEM-WIDE INSTALLATION:
   funk2         (from anywhere on system)
 
 
-
-Homepage:
+HOMEPAGE:
 
   http://funk2.org/
 
 
+GIT ACCESS:
 
-Git Access:
-
-  http://git.neuromin.de/
+  https://github.com/bunuelo/funk
 
 
-Last Modified: 2010.10.25
+Last Modified: 2012.12.10
 
 Code Mass
 
@@ -76,10 +74,10 @@ Code Mass
     Words of C Code.........:  601333 total
     Characters of C Code....: 8349756 total
 
-    Total Lines of Code.....:   214322 total
+    Total Lines of Code.....:   214320 total
     Total Words of Code.....:   879950 total
-    Total Characters of Code: 11339446 total
+    Total Characters of Code: 11339452 total
 
 --------------------------------------------------------------------------------
 
-README Last Generated: Mon Dec 10 13:19:24 EST 2012
+README Last Generated: Mon Dec 10 13:22:09 EST 2012

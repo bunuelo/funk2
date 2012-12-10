@@ -255,20 +255,10 @@
 	     plan_mental_layer
 	     semantic_action
 	     semantic_action_knowledge_base
-	     reflective_resource
-	     reflective_event_knowledge_agency]
+	     reflective_resource]
    :sources ['reflective_layer.fu2']]
 
 [defpackage reflective_resource
   :packages [reflective_mind_core]
    :sources ['reflective_resource.fu2']]
-
-[defpackage reflective_event_knowledge_agency
-  :packages [reflective_mind_core
-	     reflective_resource
-	     semantic_resource_action_sequence
-	     semantic_know_of_relationship_event
-	     forgetful_semantic_resource_event_knowledge_base
-	     semantic_event_transframe]
-   :sources ['reflective_event_knowledge_agency.fu2']]
 

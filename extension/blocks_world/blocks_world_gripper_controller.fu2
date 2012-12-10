@@ -28,7 +28,9 @@
 						  gtk_vbox
 						  gtk_hbox
 						  gtk_left_button
+						  gtk_slow_left_button
 						  gtk_stop_button
+						  gtk_slow_right_button
 						  gtk_right_button
 						  gtk_grab_button
 						  gtk_drop_button
@@ -40,21 +42,25 @@
        [= blocks_world initial-blocks_world]
        [= gripper      initial-gripper]
        
-       [= gtk_frame        [gtk-frame-new [format nil [get gripper name]]]]
-       [= gtk_vbox         [gtk-vbox-new 0]]
-       [= gtk_hbox         [gtk-hbox-new 0]]
-       [= gtk_left_button  [gtk-button-new_with_label 'Left']]
-       [= gtk_stop_button  [gtk-button-new_with_label 'Stop']]
-       [= gtk_right_button [gtk-button-new_with_label 'Right']]
-       [= gtk_grab_button  [gtk-button-new_with_label 'Grab']]
-       [= gtk_drop_button  [gtk-button-new_with_label 'Drop']]
-       [= gtk_text_view    [gtk-text_view-new]]
+       [= gtk_frame             [gtk-frame-new [format nil [get gripper name]]]]
+       [= gtk_vbox              [gtk-vbox-new 0]]
+       [= gtk_hbox              [gtk-hbox-new 0]]
+       [= gtk_left_button       [gtk-button-new_with_label 'Left']]
+       [= gtk_slow_left_button  [gtk-button-new_with_label 'Slow Left']]
+       [= gtk_stop_button       [gtk-button-new_with_label 'Stop']]
+       [= gtk_slow_right_button [gtk-button-new_with_label 'Slow Right']]
+       [= gtk_right_button      [gtk-button-new_with_label 'Right']]
+       [= gtk_grab_button       [gtk-button-new_with_label 'Grab']]
+       [= gtk_drop_button       [gtk-button-new_with_label 'Drop']]
+       [= gtk_text_view         [gtk-text_view-new]]
        
-       [have gtk_hbox pack_start gtk_left_button  nil nil 0]
-       [have gtk_hbox pack_start gtk_stop_button  nil nil 0]
-       [have gtk_hbox pack_start gtk_right_button nil nil 0]
-       [have gtk_hbox pack_start gtk_grab_button  nil nil 0]
-       [have gtk_hbox pack_start gtk_drop_button  nil nil 0]
+       [have gtk_hbox pack_start gtk_left_button       nil nil 0]
+       [have gtk_hbox pack_start gtk_slow_left_button  nil nil 0]
+       [have gtk_hbox pack_start gtk_stop_button       nil nil 0]
+       [have gtk_hbox pack_start gtk_slow_right_button nil nil 0]
+       [have gtk_hbox pack_start gtk_right_button      nil nil 0]
+       [have gtk_hbox pack_start gtk_grab_button       nil nil 0]
+       [have gtk_hbox pack_start gtk_drop_button       nil nil 0]
        
        [have gtk_left_button signal_connect 'clicked'
 	     [funk []
@@ -62,10 +68,22 @@
 		   [set this movement_command-left]]
 	     nil]
        
+       [have gtk_slow_left_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command slow-left.']
+		   [set this movement_command-slow_left]]
+	     nil]
+       
        [have gtk_stop_button signal_connect 'clicked'
 	     [funk []
 		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command stop.']
 		   [set this movement_command-stop]]
+	     nil]
+       
+       [have gtk_slow_right_button signal_connect 'clicked'
+	     [funk []
+		   [terminal_format standard-terminal '\nBlocks World: ' [get gripper name] ' movement_command slow-right.']
+		   [set this movement_command-slow_right]]
 	     nil]
        
        [have gtk_right_button signal_connect 'clicked'
@@ -104,8 +122,14 @@
 [deftypefunk blocks_world_gripper_controller set movement_command-right []
   [set gripper movement_command-right]]
 
+[deftypefunk blocks_world_gripper_controller set movement_command-slow_right []
+  [set gripper movement_command-slow_right]]
+
 [deftypefunk blocks_world_gripper_controller set movement_command-left []
   [set gripper movement_command-left]]
+
+[deftypefunk blocks_world_gripper_controller set movement_command-slow_left []
+  [set gripper movement_command-slow_left]]
 
 [deftypefunk blocks_world_gripper_controller set movement_command-stop []
   [set gripper movement_command-stop]]

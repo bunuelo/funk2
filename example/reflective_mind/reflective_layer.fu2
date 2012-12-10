@@ -31,7 +31,7 @@
 	     [reflective_type_knowledge_base_name            nil]
 	     [reflective_resource_knowledge_base_name        `reflective_resource_knowledge]
 	     [trace_knowledge_base_names                     `[deliberative1_type_knowledge]]]
-	 [construct plan_mental_layer 2 `deliberative
+	 [construct plan_mental_layer 2 `reflective
 		    object_knowledge_base_name
 		    object_type_knowledge_base_name
 		    object_type_counterfactual_knowledge_base_name

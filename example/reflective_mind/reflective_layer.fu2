@@ -22,15 +22,24 @@
 
 [deframe reflective_layer [plan_mental_layer] []
   [new []
-       [construct plan_mental_layer 3 `reflective
-		  `deliberative1_knowledge
-		  `deliberative1_type_knowledge
-		  `deliberative1_type_counterfactual_knowledge
-		  `deliberative2_knowledge
-		  nil
-		  `reflective_knowledge
-		  nil]
-       [have this add_agency [new reflective_event_knowledge_agency]]]]
+       [let [[object_knowledge_base_name                     `deliberative1_knowledge]
+	     [object_type_knowledge_base_name                `deliberative1_type_knowledge]
+	     [object_type_counterfactual_knowledge_base_name `deliberative1_type_counterfactual_knowledge]
+	     [object_resource_knowledge_base_name            `deliberative_resource_knowledge]
+	     [object_resource_event_knowledge_base_name      `deliberative_resource_event_knowledge]
+	     [reflective_knowledge_base_name                 `deliberative2_knowledge]
+	     [reflective_type_knowledge_base_name            nil]
+	     [reflective_resource_knowledge_base_name        `reflective_resource_knowledge]
+	     [trace_knowledge_base_names                     `[deliberative1_type_knowledge]]]
+	 [construct plan_mental_layer 2 `deliberative
+		    object_knowledge_base_name
+		    object_type_knowledge_base_name
+		    object_type_counterfactual_knowledge_base_name
+		    resource_knowledge_base_name
+		    resource_event_knowledge_base_name
+		    reflective_knowledge_base_name
+		    reflective_type_knowledge_base_name
+		    trace_knowledge_base_names]]]]
 
 [deftypefunk reflective_layer execute create_knowledge []
   [type-have plan_mental_layer this create_knowledge]

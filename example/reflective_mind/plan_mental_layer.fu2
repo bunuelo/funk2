@@ -23,8 +23,11 @@
 [deframe plan_mental_layer [mental_layer controllable_object] [object_knowledge_base_name
 							       object_type_knowledge_base_name
 							       object_type_counterfactual_knowledge_base_name
+							       object_resource_knowledge_base_name
+							       object_resource_event_knowledge_base_name
+							       reflective_knowledge_base_name
 							       reflective_type_knowledge_base_name
-							       resource_knowledge_base_name
+							       reflective_resource_knowledge_base_name
 							       trace_knowledge_base_names
 							       [action_natural_language_symbol_ptypehash [new ptypehash]]
 							       [semantic_plan_phenomenal_name_frame      [new frame]]
@@ -36,17 +39,22 @@
 		       initial-object_knowledge_base_name
 		       initial-object_type_knowledge_base_name
 		       initial-object_type_counterfactual_knowledge_base_name
+		       initial-object_resource_knowledge_base_name
+		       initial-object_resource_event_knowledge_base_name
 		       initial-reflective_knowledge_base_name
 		       initial-reflective_type_knowledge_base_name
-		       initial-resource_knowledge_base_name
+		       initial-reflective_resource_knowledge_base_name
 		       initial-trace_knowledge_base_names]
        [construct mental_layer initial-number initial-name]
        [construct controllable_object initial-reflective_knowledge_base_name]
        [= object_knowledge_base_name                     initial-object_knowledge_base_name]
        [= object_type_knowledge_base_name                initial-object_type_knowledge_base_name]
        [= object_type_counterfactual_knowledge_base_name initial-object_type_counterfactual_knowledge_base_name]
+       [= object_resource_knowledge_base_name            initial-object_resource_knowledge_base_name]
+       [= object_resource_event_knowledge_base_name      initial-object_resource_event_knowledge_base_name]
+       [= reflective_knowledge_base_name                 initial-reflective_knowledge_base_name]
        [= reflective_type_knowledge_base_name            initial-reflective_type_knowledge_base_name]
-       [= resource_knowledge_base_name                   initial-resource_knowledge_base_name]
+       [= reflective_resource_knowledge_base_name        initial-reflective_resource_knowledge_base_name]
        [= trace_knowledge_base_names                     initial-trace_knowledge_base_names]
        [parog [have this add_agency [new plan_mental_layer_object_type_agency
 					 object_knowledge_base_name
@@ -55,11 +63,11 @@
 	      [have this add_agency [new plan_mental_layer_plan_agency
 					 reflective_knowledge_base_name
 					 reflective_type_knowledge_base_name
-					 resource_knowledge_base_name
+					 reflective_resource_knowledge_base_name
 					 trace_knowledge_base_names]]
-	      [have this add_agency [new plan_mental_layer_execution_agency          resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_agency [new plan_mental_layer_imagination_agency        resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_agency [new plan_mental_layer_resource_knowledge_agency]]]]]
+	      [have this add_agency [new plan_mental_layer_execution_agency          reflective_resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_agency [new plan_mental_layer_imagination_agency        reflective_resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_agency [new plan_mental_layer_resource_knowledge_agency object_resource_knowledge_base_name object_resource_event_knowledge_base_name]]]]]
 
 [deftypefunk plan_mental_layer execute create_knowledge []
   [type-have controllable_object this create_knowledge]

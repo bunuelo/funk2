@@ -70,12 +70,14 @@
 	      [have this add_agency [new plan_mental_layer_resource_knowledge_agency object_resource_knowledge_base_name object_resource_event_knowledge_base_name]]]]]
 
 [deftypefunk plan_mental_layer execute create_knowledge []
-  [type-have controllable_object this create_knowledge]
-  [have [get this agency `object_type] create_knowledge]]
+  [type-have controllable_object this         create_knowledge]
+  [have [get this agency `object_type]        create_knowledge]
+  [have [get this agency `resource_knowledge] create_knowledge]]
 
 [deftypefunk plan_mental_layer execute connect_knowledge_reflection []
-  [have [get this agency `plan]        connect_knowledge_reflection]
-  [have [get this agency `object_type] connect_knowledge_reflection]]
+  [have [get this agency `plan]               connect_knowledge_reflection]
+  [have [get this agency `object_type]        connect_knowledge_reflection]
+  [have [get this agency `resource_knowledge] connect_knowledge_reflection]]
 
 [deftypefunk plan_mental_layer execute create_builtin_actions []
   [have [get this agency `imagination] create_builtin_actions]

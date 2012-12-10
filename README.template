@@ -1,22 +1,29 @@
-funk2: causally reflective programming language
+funk2: causally reflective parallel programming language
 
-  funk2 [-x <command>] [-p <portnum>] [<source.fu2>]
+  funk2
+  funk2 <source.fu2>
+  funk2 -x <command>
+  funk2 -i <bootstrap-image>
 
     <source.fu2>
 
-        A user supplied filename of file from which to read and execute source
-        code after booting and before exiting.
+        A user supplied filename of file from which to read and
+        execute source code after booting and before exiting.
 
-    -x <command>  [:default [repl]]
+    -x <command>
 
-        A user supplied command to execute after booting and before exiting.
+        A user supplied command to execute after booting and before
+        exiting.
 
-    -p <portnum>  [:default 22222 :try anything from 22222 to 23221]
+    -i <bootstrap-image>
 
-        The localhost peer-command-server port number.  Each copy of funk2
-        sharing a network interface must be able to allocate a unique
-        peer-command-server port number.
+        The bootstrap image to load before parsing any other
+        commands.  This option is useful for scripting Funk2 programs
+        without needing to recompile.
 
+    -p <portnum>
+
+        The localhost peer-command-server port number.
 
 
 TO PERFORM LOCAL BUILD:
@@ -27,7 +34,8 @@ TO PERFORM LOCAL BUILD:
 
 TO RUN LOCAL BUILD:
 
-  ./funk2.sh    (from original compile directory)
+  source funk2-exports
+  bin/funk2     (from original compile directory)
 
 
 TO PERFORM SYSTEM-WIDE INSTALLATION:
@@ -42,16 +50,14 @@ TO RUN SYSTEM-WIDE INSTALLATION:
   funk2         (from anywhere on system)
 
 
-
-Homepage:
+HOMEPAGE:
 
   http://funk2.org/
 
 
+GIT ACCESS:
 
-Git Access:
-
-  http://git.neuromin.de/
+  https://github.com/bunuelo/funk2
 
 
-Last Modified: 2010.10.25
+Last Modified: 2012.12.10

@@ -141,9 +141,10 @@
 
 [deftypefunk traced_resource get resource_semantic_frame []
   [let [[resource_semantic_frame [type-get resource this resource_semantic_frame]]]
-    [let [[resource_knowledge_base [get [get this mind] semantic_knowledge_base resource_knowledge_base_name]]]
-      [if [not [get resource_knowledge_base contains_semantic_frame resource_semantic_frame]]
-	  [have resource_knowledge_base add_semantic_frame resource_semantic_frame]]]
+    [if resource_knowledge_base_name
+	[let [[resource_knowledge_base [get [get this mind] semantic_knowledge_base resource_knowledge_base_name]]]
+	  [if [not [get resource_knowledge_base contains_semantic_frame resource_semantic_frame]]
+	      [have resource_knowledge_base add_semantic_frame resource_semantic_frame]]]]
     resource_semantic_frame]]
 
 [deftypefunk traced_resource execute activate [:rest args]

@@ -23,7 +23,7 @@
 [deframe deliberative_resource [traced_resource] []
   [new [initial-name initial-active_funk]
        [construct traced_resource initial-name initial-active_funk
-		  `reflective_knowledge
+		  `deliberative_resource_knowledge
 		  `[deliberative1_type_knowledge]]
        ]]
 

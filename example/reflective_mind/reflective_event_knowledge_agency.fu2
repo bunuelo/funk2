@@ -23,20 +23,14 @@
 [deframe reflective_event_knowledge_agency [agency] []
   [new []
        [construct agency `reflective_event_knowledge]
-       
-       [have this add_resource [new translate_reflective_knowledge_to_reflective_event_knowledge_resource]]
-       
-       nil]]
-
+       [have this add_resource [new translate_reflective_knowledge_to_reflective_event_knowledge_resource]]]]
 
 [deftypefunk reflective_event_knowledge_agency execute create_knowledge []
-  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_resource_event_knowledge_base `reflective_knowledge           [get [get this mind] semantic_realm]]]
-  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_resource_event_knowledge_base `reflective_event_knowledge     [get [get this mind] semantic_realm]]]
-  ]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_resource_event_knowledge_base `reflective_knowledge       [get [get this mind] semantic_realm]]]
+  [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_resource_event_knowledge_base `reflective_event_knowledge [get [get this mind] semantic_realm]]]]
 
 [deftypefunk reflective_event_knowledge_agency execute connect_knowledge_reflection []
-  [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]
-  ]
+  [have [get this mind] create_knowledge_event_stream_iterator `reflective_knowledge `reflective_knowledge->reflective_event_knowledge]]
 
 
 'translate_reflective_knowledge_to_reflective_event_knowledge_resource'

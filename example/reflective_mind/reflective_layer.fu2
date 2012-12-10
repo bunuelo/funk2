@@ -31,7 +31,7 @@
 	     [reflective_type_knowledge_base_name            nil]
 	     [reflective_resource_knowledge_base_name        `reflective_resource_knowledge]
 	     [trace_knowledge_base_names                     `[deliberative1_type_knowledge]]]
-	 [construct plan_mental_layer 2 `reflective
+	 [construct plan_mental_layer 3 `reflective
 		    object_knowledge_base_name
 		    object_type_knowledge_base_name
 		    object_type_counterfactual_knowledge_base_name
@@ -43,12 +43,10 @@
 		    trace_knowledge_base_names]]]]
 
 [deftypefunk reflective_layer execute create_knowledge []
-  [type-have plan_mental_layer this create_knowledge]
-  [have [get this agency `reflective_event_knowledge] create_knowledge]]
+  [type-have plan_mental_layer this create_knowledge]]
 
 [deftypefunk reflective_layer execute connect_knowledge_reflection []
-  [type-have plan_mental_layer this connect_knowledge_reflection]
-  [have [get this agency `reflective_event_knowledge] connect_knowledge_reflection]]
+  [type-have plan_mental_layer this connect_knowledge_reflection]]
 
 [deftypefunk reflective_layer execute create_builtin_actions []
   [type-have plan_mental_layer this create_builtin_actions]]

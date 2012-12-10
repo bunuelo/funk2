@@ -1,22 +1,29 @@
-funk2: causally reflective programming language
+funk2: causally reflective parallel programming language
 
-  funk2 [-x <command>] [-p <portnum>] [<source.fu2>]
+  funk2
+  funk2 <source.fu2>
+  funk2 -x <command>
+  funk2 -i <bootstrap-image>
 
     <source.fu2>
 
-        A user supplied filename of file from which to read and execute source
-        code after booting and before exiting.
+        A user supplied filename of file from which to read and
+        execute source code after booting and before exiting.
 
-    -x <command>  [:default [repl]]
+    -x <command>
 
-        A user supplied command to execute after booting and before exiting.
+        A user supplied command to execute after booting and before
+        exiting.
 
-    -p <portnum>  [:default 22222 :try anything from 22222 to 23221]
+    -i <bootstrap-image>
 
-        The localhost peer-command-server port number.  Each copy of funk2
-        sharing a network interface must be able to allocate a unique
-        peer-command-server port number.
+        The bootstrap image to load before parsing any other
+        commands.  This option is useful for scripting Funk2 programs
+        without needing to recompile.
 
+    -p <portnum>
+
+        The localhost peer-command-server port number.
 
 
 TO PERFORM LOCAL BUILD:
@@ -27,7 +34,8 @@ TO PERFORM LOCAL BUILD:
 
 TO RUN LOCAL BUILD:
 
-  ./funk2.sh    (from original compile directory)
+  source funk2-exports
+  bin/funk2     (from original compile directory)
 
 
 TO PERFORM SYSTEM-WIDE INSTALLATION:
@@ -60,18 +68,18 @@ Code Mass
 
 --------------------------------------------------------------------------------
 
-    Lines of Funk2 Code.....:   57368 total
-    Words of Funk2 Code.....:  277459 total
-    Characters of Funk2 Code: 2902458 total
+    Lines of Funk2 Code.....:   56259 total
+    Words of Funk2 Code.....:  272768 total
+    Characters of Funk2 Code: 2842887 total
 
     Lines of C Code.........:  156243 total
     Words of C Code.........:  601333 total
     Characters of C Code....: 8349756 total
 
-    Total Lines of Code.....:   215423 total
-    Total Words of Code.....:   884639 total
-    Total Characters of Code: 11398958 total
+    Total Lines of Code.....:   214322 total
+    Total Words of Code.....:   879950 total
+    Total Characters of Code: 11339446 total
 
 --------------------------------------------------------------------------------
 
-README Last Generated: Wed Dec  5 13:37:59 EST 2012
+README Last Generated: Mon Dec 10 13:19:24 EST 2012

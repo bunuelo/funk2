@@ -1,7 +1,8 @@
 #!/bin/sh
 
 emacs start_emacs.sh \
-      README \
+      README.sh \
+      README.template \
       funk2.sh \
       configure.ac \
       Makefile.am \

@@ -326,6 +326,10 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
   assert_argument_type(double, this__gripper_movement_speed);
   double this__gripper_movement_speed__d = f2double__d(this__gripper_movement_speed, cause);
   
+  f2ptr this__gripper_slow_movement_speed = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "gripper_slow_movement_speed"), nil));
+  assert_argument_type(double, this__gripper_slow_movement_speed);
+  double this__gripper_slow_movement_speed__d = f2double__d(this__gripper_slow_movement_speed, cause);
+  
   f2ptr this__gripper_grab_speed = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "gripper_grab_speed"), nil));
   assert_argument_type(double, this__gripper_grab_speed);
   double this__gripper_grab_speed__d = f2double__d(this__gripper_grab_speed, cause);
@@ -349,9 +353,21 @@ f2ptr raw__blocks_world_gripper__handle_movement(f2ptr cause, f2ptr this, double
       this__x_velocity    = f2double__new(cause, this__x_velocity__d);
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x_velocity"), this__x_velocity));
     }
+  } else if (raw__eq(cause, new__symbol(cause, "slow-left"),   this__movement_command)) {
+    {
+      this__x_velocity__d = -this__gripper_slow_movement_speed__d;
+      this__x_velocity    = f2double__new(cause, this__x_velocity__d);
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x_velocity"), this__x_velocity));
+    }
   } else if (raw__eq(cause, new__symbol(cause, "right"),  this__movement_command)) {
     {
       this__x_velocity__d = this__gripper_movement_speed__d;
+      this__x_velocity    = f2double__new(cause, this__x_velocity__d);
+      assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x_velocity"), this__x_velocity));
+    }
+  } else if (raw__eq(cause, new__symbol(cause, "slow-right"),  this__movement_command)) {
+    {
+      this__x_velocity__d = this__gripper_slow_movement_speed__d;
       this__x_velocity    = f2double__new(cause, this__x_velocity__d);
       assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "x_velocity"), this__x_velocity));
     }

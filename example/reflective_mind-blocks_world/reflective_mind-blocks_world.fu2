@@ -80,55 +80,50 @@
   [cause-define cause-ignore_background_bug nil]
   
   [have this imagine_deliberative_plan_expression
-	`[parog [defplan 'a pyramid is on a cube'
-		  :matches ['a [? top_shape] is on a [? bottom_shape]'
-			    'a [? bottom_shape] is below a [? top_shape]']
+	`[parog [defplan 'a pyramid to be on a cube'
+		  :matches ['a [? top_shape] to be on a [? bottom_shape]'
+			    'a [? bottom_shape] to be below a [? top_shape]']
 		   :frame [[top_shape    pyramid]
 			   [bottom_shape cube]]
-		    [exists [relationship block property shape [? top_shape]
-					  preposition on
-					  block property shape [? bottom_shape]]]]
+		    [relationship block property shape [? top_shape]
+				  preposition on
+				  block property shape [? bottom_shape]]]
 		
-		[defplan 'I am holding a cube'
-		  :matches ['I am holding a [? shape]']
-		   :frame [[shape cube]]
-		    [exists [relationship gripper property is-me t
-					  preposition is-holding
-					  block property shape [? shape]]]]
-		
-		[defplan 'a pyramid is on a table'
+		[defplan 'a pyramid to be on a table'
 		  :matches ['a [? shape] is on a table']
 		   :frame [[shape pyramid]]
-		    [exists [relationship block property shape [? shape]
-					  preposition on
-					  table property color white]]]
+		    [relationship block property shape [? shape]
+				  preposition on
+				  table property color white]]
 		
-		[defplan 'a cube is to my left'
+		[defplan 'a cube to be to my left'
 		  :matches ['a [? shape] is to my left']
 		   :frame [[shape cube]]
-		    [exists [relationship block property shape [? shape]
-					  preposition left-of
-					  gripper property is-me t]]]
+		    [relationship block property shape [? shape]
+				  preposition left-of
+				  gripper property is-me t]]
 		
-		[defplan 'a cube is to my right'
-		  :matches ['a [? shape] is to my right']
+		[defplan 'a cube to be to my right'
+		  :matches ['a [? shape] to be to my right']
 		   :frame [[shape cube]]
-		    [exists [relationship block property shape [? shape]
-					  preposition right-of
-					  gripper property is-me t]]]
+		    [relationship block property shape [? shape]
+				  preposition right-of
+				  gripper property is-me t]]
 		
-		[defplan 'assert that a pyramid is on a cube'
-		  :matches ['assert that [? partial_state]']
-		   :frame [[partial_state 'a pyramid is on a cube']]
-		    [if [not [plan-call [plan [? partial_state]]]]
-			[fail]]]
+		[defplan 'me to be holding a cube'
+		  :matches ['me to be holding a [? shape]'
+			    'I to be holding a [? shape]']
+		   :frame [[shape cube]]
+		    [relationship gripper property is-me t
+				  preposition is-holding
+				  block property shape [? shape]]]
 		
 		[defplan 'a pyramid to be below me'
 		  :matches ['a [? shape] to be below me']
 		   :frame [[shape pyramid]]
-		    [wait-for [relationship block property shape [? shape]
-					    preposition below
-					    gripper property is-me t]]]
+		    [relationship block property shape [? shape]
+				  preposition below
+				  gripper property is-me t]]
 		
 		[defplan 'a pyramid to be immediately to my left'
 		  :matches ['a [? shape] to be immediately to my left']
@@ -148,6 +143,17 @@
 		  :matches ['wait for [? to-be-partial_state]']
 		   :frame [[to-be-partial_state 'a pyramid to be below me']]
 		    [wait-for [plan-call [plan [? to-be-partial_state]]]]]
+		
+		[defplan 'a cube is to my right'
+		  :matches ['[? subject] is [? preposition]']
+		   :frame [[shape cube]]
+		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
+		
+		[defplan 'assert that a pyramid is on a cube'
+		  :matches ['assert that [? partial_state]']
+		   :frame [[partial_state 'a pyramid is on a cube']]
+		    [if [not [plan-call [plan [? partial_state]]]]
+			[fail]]]
 		
 		[defplan 'move slowly left until over pyramid'
 		  :matches ['move slowly [? direction] until over [? shape]']

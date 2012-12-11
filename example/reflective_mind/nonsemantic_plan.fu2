@@ -82,12 +82,18 @@
   [get partial_state_existence_dependency_set elements]]
 
 [deftypefunk nonsemantic_plan_value get negative []
-  [let [[new_value [new nonsemantic_plan_value value]]]
-    [mapc [funk [partial_state_existence_dependency]
-		[have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
-	  [get partial_state_existence_dependency_set elements]]
-    [have new_value add_value_dependency this]
-    new_value]]
+  [if [not [or [null value]
+	       [eq value `t]]]
+      [error bug_name    `nonsemantic_plan_value-negative-must_be_nil_or_t
+	     is_plan_bug t
+	     value       value
+	     this        this]
+    [let [[new_value [new nonsemantic_plan_value value]]]
+      [mapc [funk [partial_state_existence_dependency]
+		  [have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
+	    [get partial_state_existence_dependency_set elements]]
+      [have new_value add_value_dependency this]
+      new_value]]]
 
 [deftypefunk nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
@@ -804,6 +810,7 @@
 			    [= top_nonsemantic_plan_execution_nodes imagined_top_execution_nodes]]]]]
     [let [[top_nonsemantic_plan_execution_node [first top_nonsemantic_plan_execution_nodes]]]
       [let [[execution_code [get this execution_node_as_code top_nonsemantic_plan_execution_node]]]
+	[format stdout '\nexecution_code: ' execution_code '\n']
 	[let [[compile_option_frame [frame mode `imagine]]]
 	  [get this expression-compile execution_code compile_option_frame]]]]]]
 
@@ -1709,10 +1716,7 @@
 								      plan           plan]]]]]
 
 [defplanfunk imagine not [truth_value]
-  [cond [[is-type `nonsemantic_plan_value truth_value] [get truth_value negative]]
-	[t                                             [error bug_name      `nonsemantic_plan-not-invalid_type
-							      correct_types `[nonsemantic_plan_value]
-							      truth_value   truth_value]]]]
+  [get truth_value negative]]
 
 [defplanfunk imagine exists [partial_state]
   [let [[partial_state [get partial_state value]]]

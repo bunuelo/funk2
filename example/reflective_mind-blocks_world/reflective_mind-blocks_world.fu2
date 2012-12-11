@@ -166,6 +166,9 @@
 		    [if [not [plan-call [plan [? partial_state]]]]
 			[fail]]]
 		
+		[defplan 'test negative cube below'
+		  [plan-call [plan 'a cube is not below me']]]
+		
 		[defplan 'move slowly left until over pyramid'
 		  :matches ['move slowly [? direction] until over [? shape]']
 		   :frame [[direction left]

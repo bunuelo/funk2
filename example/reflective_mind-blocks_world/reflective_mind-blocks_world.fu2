@@ -166,7 +166,7 @@
 		  :matches ['move slowly [? direction] until over [? shape]']
 		   :frame [[direction left]
 			   [shape     pyramid]]
-		    [if [plan-call [plan 'a [? shape] is below me']]
+		    [if [plan-call [plan 'a [? shape] is not below me']]
 			[prog [call-below 'slow move [? direction]']
 			      [plan-call [plan 'wait for a [? shape] to be below me']]
 			      [call-below 'stop']]]]

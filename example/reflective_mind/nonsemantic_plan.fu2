@@ -769,7 +769,8 @@
 			  [let [[bug result]]
 			    [if [not [have [get bug frame] lookup `is_plan_failure]]
 				[prog [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: marking plan as imagined complete failure.']
-				      [= imagined_complete_failure t]]]]]
+				      [= imagined_complete_failure t]
+				      [have [get this mental_layer] know_of_complete_failure_plan [get this semantic_plan_object]]]]]]
 		      [mapc [funk [imagined_top_execution_node]
 				  [fiber [funk []
 					       [terminal_format standard-terminal '\n' [get [get this mental_layer] name] ' nonsemantic_plan: generating execution node graph.']
@@ -1713,7 +1714,7 @@
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nimagining executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [have nonsemantic_plan imagine_as_thought [frame]]]]
-	  [t                                                   [error bug_name `nonsemantic_plan-plan_call-invalid_execution_mode
+	  [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 								      execution_mode cause-nonsemantic_plan_execution_mode
 								      plan           plan]]]]]
 

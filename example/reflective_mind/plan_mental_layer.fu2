@@ -217,6 +217,18 @@
 	       funkname    `plan
 	       plan_name   plan_name]]]]]
 
+[deftypefunk plan_mental_layer execute know_of_complete_failure_plan [semantic_plan_object]
+  [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
+    [let [[semantic_plan_object-phenomenal_name [get nonsemantic_plan unique_name]]]
+      [let [[memoized_semantic_plans [have memoized_plans_by_name_ptypehash lookup semantic_plan_object-phenomenal_name]]]
+	[let [[new_memoized_semantic_plans nil]]
+	  [mapc [funk [memoized_semantic_plan]
+		      [let [[memoized_semantic_plan-nonsemantic_plan [get memoized_semantic_plan nonsemantic_plan]]]
+			[if [not [get memoized_semantic_plan-nonsemantic_plan imagined_complete_failure]]
+			    [= new_memoized_semantic_plans [cons memoized_semantic_plan new_memoized_semantic_plans]]]]]
+		memoized_semantic_plans]
+	  [have memoized_plans_by_name_ptypehash add semantic_plan_object-phenomenal_name new_memoized_semantic_plans]]]]]]
+
 [deftypefunk plan_mental_layer execute imagine_check_exists [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [terminal_format standard-terminal '\n' [type this] '-imagine_check_exists: checking if relationship exists ' looking_for_event-phenomenal_name '.']

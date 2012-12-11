@@ -280,7 +280,6 @@
 [deftypefunk mindmon_blocks_world execute raw_update_after_step_simulation []
   [have blocks_world calculate_perceptions]]
 
-
 [deftypefunk mindmon_blocks_world execute raw_step_physical_world []
   [have physical_world step_physical_world]]
 

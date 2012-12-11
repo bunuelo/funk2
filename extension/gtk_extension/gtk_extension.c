@@ -4163,9 +4163,9 @@ f2ptr f2__gtk__pop_callback_event(f2ptr pop_cause) {
       }
     }
     f2__free(to_ptr(callback_event));
-    f2ptr callback_event = f2__gtk_callback__new(cause, funk, args);
-    f2ptype__cause__set(callback_event, cause, cause);
-    return callback_event;
+    f2ptr return_value = f2__gtk_callback__new(cause, funk, args);
+    f2ptype__cause__set(return_value, cause, cause);
+    return return_value;
   } else {
     return f2__gtk_not_supported_larva__new(pop_cause);
   }

@@ -88,7 +88,7 @@
 	     is_plan_bug t
 	     value       value
 	     this        this]
-    [let [[new_value [new nonsemantic_plan_value value]]]
+    [let [[new_value [new nonsemantic_plan_value [not value]]]]
       [mapc [funk [partial_state_existence_dependency]
 		  [have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
 	    [get partial_state_existence_dependency_set elements]]

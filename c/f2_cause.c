@@ -857,6 +857,7 @@ f2ptr f2__cause__new(f2ptr cause,
 					   cause_groups_cmutex,
 					   cause_groups);
   //printf("\nnew cause: " u64__fstr ".\n", this); fflush(stdout);
+  f2ptype__cause__set(this, cause, cause);
   return this;
 }
 def_pcfunk0(cause__new,

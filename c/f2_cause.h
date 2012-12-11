@@ -64,7 +64,7 @@ declare_object_type_6_slot(cause_group_interaction,
 typedef struct funk2_object_type__cause_group__slot_s funk2_object_type__cause_group__slot_t;
 declare_object_type_11_slot(cause_group,
 			    bytecode_count_cmutex,
-			   bytecode_count_chunk,
+			    bytecode_count_chunk,
 			    execution_nanoseconds_cmutex,
 			    execution_nanoseconds_chunk,
 			    bytes_allocated_count_cmutex,

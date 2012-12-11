@@ -276,7 +276,8 @@ f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value)
   return nil;
 }
 
-
+boolean_t __ptypes__creation_cause_enabled = boolean__false;
+boolean_t __ptypes__creation_fiber_enabled = boolean__false;
 
 // integer
 
@@ -285,11 +286,11 @@ f2ptr ptype_integer__new(int pool_index, f2ptr cause, s64 i) {
   ptype_integer_block_t* integer_block = (ptype_integer_block_t*)from_ptr(raw__f2ptr_to_ptr(integer_f2ptr));
   debug__assert(integer_block, nil, "block is nil.");
   integer_block->ptype.block.ptype    = ptype_integer;
-  {
+  if (__ptypes__creation_cause_enabled) {
     if (cause != nil) {raw__exp__increment_reference_count(cause);}
     integer_block->ptype.cause = cause;
   }
-  {
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     integer_block->ptype.creation_fiber = creation_fiber;
@@ -328,9 +329,11 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
   ptype_double_block_t* double_block = (ptype_double_block_t*)from_ptr(raw__f2ptr_to_ptr(double_f2ptr));
   debug__assert(double_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
-  double_block->ptype.block.ptype    = ptype_double;
-  double_block->ptype.cause          = cause;
-  {
+  double_block->ptype.block.ptype = ptype_double;
+  if (__ptypes__creation_cause_enabled) {
+    double_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     double_block->ptype.creation_fiber = creation_fiber;
@@ -371,8 +374,10 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
   debug__assert(float_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   float_block->ptype.block.ptype    = ptype_float;
-  float_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    float_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     float_block->ptype.creation_fiber = creation_fiber;
@@ -414,8 +419,10 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
   debug__assert(pointer_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   pointer_block->ptype.block.ptype    = ptype_pointer;
-  pointer_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    pointer_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     pointer_block->ptype.creation_fiber = creation_fiber;
@@ -457,8 +464,10 @@ f2ptr ptype_cmutex__new(int pool_index, f2ptr cause) {
   debug__assert(cmutex_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   cmutex_block->ptype.block.ptype    = ptype_cmutex;
-  cmutex_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    cmutex_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     cmutex_block->ptype.creation_fiber = creation_fiber;
@@ -540,8 +549,10 @@ f2ptr ptype_creadwritelock__new(int pool_index, f2ptr cause) {
   debug__assert(creadwritelock_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   creadwritelock_block->ptype.block.ptype    = ptype_creadwritelock;
-  creadwritelock_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    creadwritelock_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     creadwritelock_block->ptype.creation_fiber = creation_fiber;
@@ -647,13 +658,15 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, funk2_character_t ch) {
   debug__assert(char_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   char_block->ptype.block.ptype    = ptype_char;
-  char_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    char_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     char_block->ptype.creation_fiber = creation_fiber;
   }
-  char_block->ch                   = ch;
+  char_block->ch = ch;
   return char_f2ptr;
 }
 
@@ -689,8 +702,10 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, funk2_character
   debug__assert(string_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   string_block->ptype.block.ptype    = ptype_string;
-  string_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    string_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     string_block->ptype.creation_fiber = creation_fiber;
@@ -858,8 +873,10 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   debug__assert(chunk_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   chunk_block->ptype.block.ptype    = ptype_chunk;
-  chunk_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    chunk_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     chunk_block->ptype.creation_fiber = creation_fiber;
@@ -878,8 +895,10 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   debug__assert(chunk_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   chunk_block->ptype.block.ptype    = ptype_chunk;
-  chunk_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    chunk_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     chunk_block->ptype.creation_fiber = creation_fiber;
@@ -1137,8 +1156,10 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   //debug__assert(!cause || valid_funk2_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_funk2_memblock_ptr(cause) failed");
   if (cause) {raw__exp__increment_reference_count(cause);}
   simple_array_block->ptype.block.ptype    = ptype_simple_array;
-  simple_array_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    simple_array_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     simple_array_block->ptype.creation_fiber = creation_fiber;
@@ -1255,8 +1276,10 @@ f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   traced_array_block->ptype.block.ptype    = ptype_traced_array;
-  traced_array_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    traced_array_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     traced_array_block->ptype.creation_fiber = creation_fiber;
@@ -1283,8 +1306,10 @@ f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 lengt
   debug__assert(traced_array_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   traced_array_block->ptype.block.ptype    = ptype_traced_array;
-  traced_array_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    traced_array_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     traced_array_block->ptype.creation_fiber = creation_fiber;
@@ -1731,8 +1756,10 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug) {
   if (cause) {raw__exp__increment_reference_count(cause);}
   if (bug)   {raw__exp__increment_reference_count(bug);}
   larva_block->ptype.block.ptype    = ptype_larva;
-  larva_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    larva_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     larva_block->ptype.creation_fiber = creation_fiber;
@@ -1787,8 +1814,10 @@ f2ptr ptype_mutable_array_pointer__new(int pool_index, f2ptr cause, f2ptr array,
   if (cause) {raw__exp__increment_reference_count(cause);}
   if (array) {raw__exp__increment_reference_count(array);}
   mutable_array_pointer_block->ptype.block.ptype    = ptype_mutable_array_pointer;
-  mutable_array_pointer_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    mutable_array_pointer_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     mutable_array_pointer_block->ptype.creation_fiber = creation_fiber;
@@ -1944,8 +1973,10 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   debug__assert(symbol_block, nil, "block is nil.");
   if (cause) {raw__exp__increment_reference_count(cause);}
   symbol_block->ptype.block.ptype    = ptype_symbol;
-  symbol_block->ptype.cause          = cause;
-  {
+  if (__ptypes__creation_cause_enabled) {
+    symbol_block->ptype.cause = cause;
+  }
+  if (__ptypes__creation_fiber_enabled) {
     f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
     if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
     symbol_block->ptype.creation_fiber = creation_fiber;

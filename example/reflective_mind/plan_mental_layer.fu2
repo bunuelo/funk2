@@ -34,6 +34,7 @@
 							       [knowledge_symbol_set_initialized_mutex   [new mutex]]
 							       [knowledge_symbol_set_initialized         nil]
 							       [knowledge_symbol_set                     [new set]]
+							       [memoized_plans_by_name_ptypehash_mutex   [new mutex]]
 							       [memoized_plans_by_name_ptypehash         [new ptypehash]]]
   [new [initial-number initial-name
 		       initial-object_knowledge_base_name
@@ -182,6 +183,7 @@
     semantic_plan_matches]]
 
 [deftypefunk plan_mental_layer get plan_by_name [plan_name]
+  [have memoized_plans_by_name_ptypehash_mutex lock]
   [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]]
     [let [[semantic_plans [have memoized_plans_by_name_ptypehash lookup semantic_plan_object-phenomenal_name]]]
       [if [null semantic_plans]
@@ -211,13 +213,16 @@
 	      [mapc [funk [good_semantic_plan]
 			  [have result_multiple_possible_values add_value [new nonsemantic_plan_value good_semantic_plan]]]
 		    good_semantic_plans]
-	      result_multiple_possible_values]]
-	[error bug_name    `could_not_find_matching_semantic_plans
-	       is_plan_bug t
-	       funkname    `plan
-	       plan_name   plan_name]]]]]
+	      [prog [have memoized_plans_by_name_ptypehash_mutex unlock]
+		    result_multiple_possible_values]]]
+	[prog [have memoized_plans_by_name_ptypehash_mutex unlock]
+	      [error bug_name    `could_not_find_matching_semantic_plans
+		     is_plan_bug t
+		     funkname    `plan
+		     plan_name   plan_name]]]]]]
 
 [deftypefunk plan_mental_layer execute know_of_complete_failure_plan [semantic_plan_object]
+  [have memoized_plans_by_name_ptypehash_mutex lock]
   [let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
     [let [[semantic_plan_object-phenomenal_name [get nonsemantic_plan unique_name]]]
       [let [[memoized_semantic_plans [have memoized_plans_by_name_ptypehash lookup semantic_plan_object-phenomenal_name]]]
@@ -227,7 +232,8 @@
 			[if [not [get memoized_semantic_plan-nonsemantic_plan imagined_complete_failure]]
 			    [= new_memoized_semantic_plans [cons memoized_semantic_plan new_memoized_semantic_plans]]]]]
 		memoized_semantic_plans]
-	  [have memoized_plans_by_name_ptypehash add semantic_plan_object-phenomenal_name new_memoized_semantic_plans]]]]]]
+	  [have memoized_plans_by_name_ptypehash add semantic_plan_object-phenomenal_name new_memoized_semantic_plans]]]]]
+  [have memoized_plans_by_name_ptypehash_mutex unlock]]
 
 [deftypefunk plan_mental_layer execute imagine_check_exists [semantic_partial_state]
   [let [[looking_for_event-phenomenal_name [get semantic_partial_state phenomenal_name]]]

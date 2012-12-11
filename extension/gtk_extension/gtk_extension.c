@@ -705,7 +705,7 @@ void funk2_gtk__add_callback(funk2_gtk_t* this, funk2_gtk_callback_t* callback) 
   }
 }
 
-// called by gtk processor thread
+// called by gtk processor read
 void funk2_gtk__add_callback_event(funk2_gtk_t* this, funk2_gtk_callback_t* callback, void* args) {
   funk2_gtk_callback_event_cons_t* cons  = (funk2_gtk_callback_event_cons_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_cons_t)));
   funk2_gtk_callback_event_t*      event = (funk2_gtk_callback_event_t*)     from_ptr(f2__malloc(sizeof(funk2_gtk_callback_event_t)));
@@ -4163,7 +4163,9 @@ f2ptr f2__gtk__pop_callback_event(f2ptr pop_cause) {
       }
     }
     f2__free(to_ptr(callback_event));
-    return f2__gtk_callback__new(cause, funk, args);
+    f2ptr callback_event = f2__gtk_callback__new(cause, funk, args);
+    f2ptype__cause__set(callback_event, cause, cause);
+    return callback_event;
   } else {
     return f2__gtk_not_supported_larva__new(pop_cause);
   }

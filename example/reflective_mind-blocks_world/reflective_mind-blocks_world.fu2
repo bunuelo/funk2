@@ -111,12 +111,16 @@
 				  gripper property is-me t]]
 		
 		[defplan 'me to be holding a cube'
-		  :matches ['me to be holding a [? shape]'
-			    'I to be holding a [? shape]']
+		  :matches ['me to be holding a [? shape]']
 		   :frame [[shape cube]]
 		    [relationship gripper property is-me t
 				  preposition is-holding
 				  block property shape [? shape]]]
+		
+		[defplan 'I am holding a cube'
+		  :matches ['I am [? gerund]']
+		   :frame [[gerund 'holding a cube']]
+		    [exists [plan-call [plan 'me to be [? gerund]']]]]
 		
 		[defplan 'a pyramid to be below me'
 		  :matches ['a [? shape] to be below me']

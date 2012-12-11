@@ -46,6 +46,7 @@
   [have agent_frame lookup agent_name]]
 
 [deftypefunk mindmon_world execute update_after_step_simulation []
+  [have this raw_update_after_step_simulation]
   [have this update_overview_image]
   [mapc [funk [agent_name]
 	      [let [[mindmon_agent [get this agent agent_name]]]
@@ -60,7 +61,6 @@
   [have step_mutex unlock]]
 
 [deftypefunk mindmon_world execute step_physical_world []
-  [have this raw_update_after_step_simulation]
   [have this raw_step_physical_world]]
 
 [deftypefunk mindmon_world get simulator_is_stepping []

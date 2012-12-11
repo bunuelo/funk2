@@ -150,6 +150,12 @@
 			   [preposition 'to my right']]
 		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
 		
+		[defplan 'a cube is not to my right'
+		  :matches ['[? subject] is not [? preposition]']
+		   :frame [[subject     'a cube']
+			   [preposition 'to my right']]
+		    [not [plan-call [plan '[? subject] is [? preposition]']]]]
+		
 		[defplan 'assert that a pyramid is on a cube'
 		  :matches ['assert that [? partial_state]']
 		   :frame [[partial_state 'a pyramid is on a cube']]
@@ -160,7 +166,7 @@
 		  :matches ['move slowly [? direction] until over [? shape]']
 		   :frame [[direction left]
 			   [shape     pyramid]]
-		    [if [not [exists [plan-call [plan 'a [? shape] to be below me']]]]
+		    [if [plan-call [plan 'a [? shape] is below me']]
 			[prog [call-below 'slow move [? direction]']
 			      [plan-call [plan 'wait for a [? shape] to be below me']]
 			      [call-below 'stop']]]]

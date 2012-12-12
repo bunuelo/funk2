@@ -232,6 +232,7 @@ all_core_extensions = extension/blocks_world/libf2e_blocks_world.la \
                       extension/semantic_partial_state/libf2e_semantic_partial_state.la \
                       extension/semantic_partial_state_property/libf2e_semantic_partial_state_property.la \
                       extension/semantic_partial_state_property_relation/libf2e_semantic_partial_state_property_relation.la \
+                      extension/semantic_plan_execution_node/libf2e_semantic_plan_execution_node.la \
                       extension/semantic_plan_object/libf2e_semantic_plan_object.la \
                       extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.la \
                       extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.la \
@@ -323,6 +324,7 @@ finish_compiling_all_core_extensions: $(all_core_extensions)
 	cp -fa extension/semantic_partial_state/.libs/libf2e_*.*                                         $(compile__lib__dir)
 	cp -fa extension/semantic_partial_state_property/.libs/libf2e_*.*                                                 $(compile__lib__dir)
 	cp -fa extension/semantic_partial_state_property_relation/.libs/libf2e_*.*                                                 $(compile__lib__dir)
+	cp -fa extension/semantic_plan_execution_node/.libs/libf2e_*.*                                                 $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object/.libs/libf2e_*.*                                                 $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object_type_event/.libs/libf2e_*.*                           $(compile__lib__dir)
 	cp -fa extension/semantic_plan_object_type_relation_event/.libs/libf2e_*.*         $(compile__lib__dir)
@@ -556,6 +558,7 @@ extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES   
 extension_semantic_partial_state_libf2e_semantic_partial_state_la_SOURCES                                                           = extension/semantic_partial_state/semantic_partial_state.c
 extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_SOURCES                                         = extension/semantic_partial_state_property/semantic_partial_state_property.c
 extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_SOURCES                       = extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.c
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_SOURCES                                               = extension/semantic_plan_execution_node/semantic_plan_execution_node.c
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                               = extension/semantic_plan_object/semantic_plan_object.c
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                                         = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES                       = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
@@ -784,6 +787,9 @@ extension_semantic_partial_state_property_libf2e_semantic_partial_state_property
 extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
@@ -992,6 +998,7 @@ make-install-sh:
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state/"                                                                                                     >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state_property/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_partial_state_property_relation/"                                                                                   >> install-sh
+	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_execution_node/"                                                                                               >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object/"                                                                                                       >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_event/"                                                                                            >> install-sh
 	echo "mkdir -m755 -p $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"                                                                                   >> install-sh
@@ -1139,6 +1146,7 @@ make-install-sh:
 	echo "install -m644 $(source__extension__dir)semantic_partial_state/*.f*                         $(chroot__install__extension__dir)semantic_partial_state/"                         >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_partial_state_property/*.f*                $(chroot__install__extension__dir)semantic_partial_state_property/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_partial_state_property_relation/*.f*       $(chroot__install__extension__dir)semantic_partial_state_property_relation/"       >> install-sh
+	echo "install -m644 $(source__extension__dir)semantic_plan_execution_node/*.f*                   $(chroot__install__extension__dir)semantic_plan_execution_node/"                           >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object/*.f*                           $(chroot__install__extension__dir)semantic_plan_object/"                           >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_event/*.f*                $(chroot__install__extension__dir)semantic_plan_object_type_event/"                >> install-sh
 	echo "install -m644 $(source__extension__dir)semantic_plan_object_type_relation_event/*.f*       $(chroot__install__extension__dir)semantic_plan_object_type_relation_event/"       >> install-sh

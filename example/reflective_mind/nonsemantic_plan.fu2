@@ -790,13 +790,11 @@
 					 nil]]
 			    [get imagined_top_execution_node_set elements]]
 		      [mapc [funk [imagined_top_execution_node]
-				  [terminal_format standard-terminal '\nnonsemantic_plan compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
+				  [format stdout '\nnonsemantic_plan compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
 			    [get imagined_top_execution_node_set elements]]
 		      [terminal_format standard-terminal '\nnonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      result]]]]
-
-
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]

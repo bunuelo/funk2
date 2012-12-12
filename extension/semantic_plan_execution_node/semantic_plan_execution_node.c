@@ -83,7 +83,7 @@ export_cefunk1(semantic_plan_execution_node__type, thing, 0, "Returns the specif
 
 
 f2ptr raw__semantic_plan_execution_node__nonsemantic_plan_execution_node(f2ptr cause, f2ptr this) {
-  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "nonsemantic_plan_execution_node"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "nonsemantic_plan_execution_node"), nil);
 }
 
 f2ptr f2__semantic_plan_execution_node__nonsemantic_plan_execution_node(f2ptr cause, f2ptr this) {

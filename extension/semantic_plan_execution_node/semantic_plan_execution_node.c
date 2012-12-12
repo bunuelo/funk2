@@ -29,7 +29,6 @@ f2ptr raw__semantic_plan_execution_node__type_create(f2ptr cause, f2ptr this, f2
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_plan_execution_node"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "nonsemantic_plan_execution_node"), nonsemantic_plan_execution_node);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "node_type"), node_type);
   return this;

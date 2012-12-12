@@ -796,8 +796,6 @@
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      result]]]]
 
-
-
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]
     [if [null top_nonsemantic_plan_execution_nodes]

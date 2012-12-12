@@ -209,6 +209,7 @@
 						     'extension/semantic_partial_state/'
 						     'extension/semantic_partial_state_property/'
 						     'extension/semantic_partial_state_property_relation/'
+						     'extension/semantic_plan_execution_node/'
 						     'extension/semantic_plan_object/'
 						     'extension/semantic_plan_object_type_event/'
 						     'extension/semantic_plan_object_type_relation_event/'

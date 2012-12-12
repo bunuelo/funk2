@@ -187,6 +187,7 @@
 	     semantic_cons
 	     semantic_thought
 	     semantic_plan_object
+	     semantic_plan_execution_node
 	     nonsemantic_plan]
    :sources ['plan_mental_layer_plan_agency.fu2']]
 

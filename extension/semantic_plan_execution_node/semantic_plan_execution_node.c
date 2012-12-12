@@ -24,29 +24,30 @@
 
 // semantic_plan_execution_node
 
-f2ptr raw__semantic_plan_execution_node__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr nonsemantic_plan_execution_node) {
+f2ptr raw__semantic_plan_execution_node__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr node_type, f2ptr nonsemantic_plan_execution_node) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_plan_execution_node"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "nonsemantic_plan_execution_node"), nonsemantic_plan_execution_node);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "node_type"), node_type);
   return this;
 }
 
-f2ptr raw__semantic_plan_execution_node__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr nonsemantic_plan_execution_node) {
+f2ptr raw__semantic_plan_execution_node__new(f2ptr cause, f2ptr semantic_realm, f2ptr node_type, f2ptr nonsemantic_plan_execution_node) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_plan_execution_node__type_create(cause, this, semantic_realm, phenomenal_name, nonsemantic_plan_execution_node));
+  assert_value(raw__semantic_plan_execution_node__type_create(cause, this, semantic_realm, node_type, nonsemantic_plan_execution_node));
   return this;
 }
 
-f2ptr f2__semantic_plan_execution_node__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr nonsemantic_plan_execution_node) {
+f2ptr f2__semantic_plan_execution_node__new(f2ptr cause, f2ptr semantic_realm, f2ptr node_type, f2ptr nonsemantic_plan_execution_node) {
   if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
     return f2larva__new(cause, 1, nil);
   }
-  return raw__semantic_plan_execution_node__new(cause, semantic_realm, phenomenal_name, nonsemantic_plan_execution_node);
+  return raw__semantic_plan_execution_node__new(cause, semantic_realm, node_type, nonsemantic_plan_execution_node);
 }
-export_cefunk3(semantic_plan_execution_node__new, semantic_realm, phenomenal_name, nonsemantic_plan_execution_node, 0, "Returns a new semantic_plan_execution_node object.");
+export_cefunk3(semantic_plan_execution_node__new, semantic_realm, node_type, nonsemantic_plan_execution_node, 0, "Returns a new semantic_plan_execution_node object.");
 
 
 boolean_t raw__semantic_plan_execution_node__is_type(f2ptr cause, f2ptr thing) {
@@ -80,6 +81,29 @@ f2ptr f2__semantic_plan_execution_node__type(f2ptr cause, f2ptr this) {
   return raw__semantic_plan_execution_node__type(cause, this);
 }
 export_cefunk1(semantic_plan_execution_node__type, thing, 0, "Returns the specific type of object that this semantic_plan_execution_node is.");
+
+
+f2ptr raw__semantic_plan_execution_node__node_type(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "node_type"));
+}
+
+f2ptr f2__semantic_plan_execution_node__node_type(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_plan_execution_node, this);
+  return raw__semantic_plan_execution_node__node_type(cause, this);
+}
+export_cefunk1(semantic_plan_execution_node__node_type, this, 0, "");
+
+
+f2ptr raw__semantic_plan_execution_node__node_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "node_type"), that);
+}
+
+f2ptr f2__semantic_plan_execution_node__node_type__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_plan_execution_node, this);
+  return raw__semantic_plan_execution_node__node_type__set(cause, this, that);
+}
+export_cefunk2(semantic_plan_execution_node__node_type__set, this, that, 0, "");
+
 
 
 f2ptr raw__semantic_plan_execution_node__nonsemantic_plan_execution_node(f2ptr cause, f2ptr this) {
@@ -144,6 +168,8 @@ f2ptr f2__semantic_plan_execution_node__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "plan_object_type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__plan_object_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "plan_object_type"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__plan_object_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "node_type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__node_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "node_type"),                        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__node_type__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "nonsemantic_plan_execution_node"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__nonsemantic_plan_execution_node")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "nonsemantic_plan_execution_node"),  f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__nonsemantic_plan_execution_node__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "subnode"),                          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_execution_node"), new__symbol(cause, "semantic_plan_execution_node__subnode__lookup_set")));}

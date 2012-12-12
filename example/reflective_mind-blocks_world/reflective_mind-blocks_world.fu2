@@ -255,14 +255,6 @@
 		    [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
 		    [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
 		
-		[defplan 'stack a cube on a pyramid'
-		  [plan-call [plan 'pick up a cube']]
-		  [plan-call [plan 'drop the block I am holding on a pyramid']]
-		  [plan-call [plan 'assert that a cube is on a pyramid']]]
-		
-		[defplan 'test stack a pyramid on a cube'
-		  [plan-call [plan 'stack a pyramid on a cube']]]
-		
 		]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in reflective plans.']

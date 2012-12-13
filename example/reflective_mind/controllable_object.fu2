@@ -30,7 +30,7 @@
   [have [get this mind] add_semantic_knowledge_base [new forgetful_semantic_event_knowledge_base reflective_knowledge_base_name [get [get this mind] semantic_realm]]]]
 
 [deftypefunk controllable_object get reflective_knowledge_base []
-  [have [get this mind] lookup_semantic_knowledge_base reflective_knowledge_base_name]]
+  [have [get [get this mind] semantic_realm] lookup_semantic_knowledge_base reflective_knowledge_base_name]]
 
 [deftypefunk controllable_object execute add_action [action]
   [terminal_format standard-terminal '\n' [type this] ': adding action, "' [get action as-string] '."']

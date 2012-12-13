@@ -165,19 +165,22 @@
 
 [deframe nonsemantic_plan_execution_node [frame] [node_type
 						  expression
-						  [subnode_set      [new set]]
+						  [subnode_set                  [new set]]
 						  supernode
 						  first_subnode
 						  previous_node
 						  next_node
-						  [variable_frame   [new frame]]
-						  [return_value_set [new set]]]
+						  [variable_frame               [new frame]]
+						  [return_value_set             [new set]]
+						  [semantic_plan_execution_node nil]]
   [new [initial-node_type initial-expression]
-       [= node_type  initial-node_type]
-       [= expression initial-expression]
-       [= supernode  [cause-lookup cause-nonsemantic_plan_execution_node]]
+       [= node_type                    initial-node_type]
+       [= expression                   initial-expression]
+       [= supernode                    [cause-lookup cause-nonsemantic_plan_execution_node]]
+       [= semantic_plan_execution_node [new semantic_plan_execution_node [get [get cause-top_nonsemantic_plan mind] semantic_realm] node_type this]]
+       [have [get [get cause-top_nonsemantic_plan mental_layer] reflective_knowledge_base] add_semantic_frame semantic_plan_execution_node]
        [if supernode
-	   [have [get supernode subnode_set] add this]]
+	   [prog [have [get supernode subnode_set] add this]]]
        [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
 	   [if [null [cause-lookup cause-nonsemantic_plan_execution_mode]]
 	       [error bug_name   `nonsemantic_plan_execution_node-new-nonsemantic_plan_execution_mode-not_defined

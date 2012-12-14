@@ -34,6 +34,7 @@
 							       [knowledge_symbol_set_initialized_mutex   [new mutex]]
 							       [knowledge_symbol_set_initialized         nil]
 							       [knowledge_symbol_set                     [new set]]
+							       [semantic_plan_linked_list_mutex          [new mutex]]
 							       [semantic_plan_linked_list                nil]
 							       [memoized_plans_by_name_ptypehash_mutex   [new mutex]]
 							       [memoized_plans_by_name_ptypehash         [new ptypehash]]]
@@ -115,10 +116,12 @@
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']
   [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_plan]
+  [have semantic_plan_linked_list_mutex lock]
   [set semantic_plan next semantic_plan_linked_list]
   [if semantic_plan_linked_list
       [set semantic_plan_linked_list previous semantic_plan]]
   [= semantic_plan_linked_list semantic_plan]
+  [have semantic_plan_linked_list_mutex unlock]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get [get this mental_layer] agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
 

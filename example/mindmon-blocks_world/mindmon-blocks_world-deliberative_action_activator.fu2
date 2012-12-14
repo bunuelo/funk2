@@ -44,7 +44,7 @@
 	     [funk []
 		   [have window destroy]]
 	     nil]
-       [have menu_bar append  file_menu_item]
+       [have menu_bar  append file_menu_item]
        [have file_menu append file_exit_menu_item]
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
@@ -69,8 +69,9 @@
 				 [get y as-string]]]]]
        [= scrolled_window [gtk-scrolled_window-new]]
        [have scrolled_window add_with_viewport button_vbox]
-       [have vbox pack_start scrolled_window nil nil 0]
+       [have vbox pack_start scrolled_window t t 0]
        [have window add vbox]
+       [set window size 512 1024]
        [have window show_all]]]
 
 

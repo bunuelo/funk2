@@ -21,6 +21,7 @@
 [deframe mindmon_blocks_world_deliberative_action_activator_window [frame] [mindmon_agent
 									    
 									    window
+									    scrolled_window
 									    vbox
 									    menu_bar
 									    file_menu_item
@@ -34,7 +35,8 @@
        [set window title [format nil [get mindmon_agent name] ' - Deliberative1 Action Activator']]
        [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
-       [= vbox [gtk-vbox-new 2]]
+       [= scrolled_window [gtk-scrolled_window-new]]
+       [= vbox            [gtk-vbox-new 2]]
        
        [= menu_bar            [gtk-menu_bar-new]]
        [= file_menu_item      [gtk-menu_item-new 'File']]
@@ -67,7 +69,8 @@
 			      [> [get x as-string]
 				 [get y as-string]]]]]
        
-       [have window add vbox]
+       [have scrolled_window add vbox]
+       [have window add scrolled_window]
        [have window show_all]]]
 
 

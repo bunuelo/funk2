@@ -35,8 +35,8 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"),    nil);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "nonsemantic_plan"),    nonsemantic_plan);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"), nil);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"), nil);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "next"),     nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),            nil);
+    raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "next"),                nil);
   }
   return this;
 }

@@ -43,13 +43,12 @@
 	      [have this add_resource [new plan_mental_layer_register_b_plan_from_focus_resource      resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_register_a_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_register_b_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_next_object_resource            resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_previous_object_resource        resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_plan_add_after_resource            resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_plan_add_before_resource           resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_plan_add_in_parallel_resource      resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_remember_plan_for_goal_resource          resource_knowledge_base_name trace_knowledge_base_names]]
-	      ]
-       
-       this]]
+	      [have this add_resource [new plan_mental_layer_remember_plan_for_goal_resource          resource_knowledge_base_name trace_knowledge_base_names]]]]]
 
 [deftypefunk plan_mental_layer_plan_agency execute connect_knowledge_reflection []
   [if [and [not [null reflective_knowledge_base_name]]
@@ -65,6 +64,8 @@
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan register_b_plan_from_focus]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_register_a_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_register_b_plan]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_next_object]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_previous_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_plan_add_after]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_plan_add_before]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_plan_add_in_parallel]]
@@ -252,6 +253,39 @@
 [deftypefunk plan_mental_layer_focus_on_register_b_plan_resource get as-natural_language_string []
   'focus on other plan I am registering']
 
+
+'plan_mental_layer_focus_on_next_object_resource'
+
+[deframe plan_mental_layer_focus_on_next_object_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_next_object
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_next_object_resource get as-natural_language_string []
+  'focus on next object']
+
+
+'plan_mental_layer_focus_on_previous_object_resource'
+
+[deframe plan_mental_layer_focus_on_previous_object_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_previous_object
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			
+			]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_previous_object_resource get as-natural_language_string []
+  'focus on previous object']
 
 
 'plan_mental_layer_focus_plan_add_after_resource'

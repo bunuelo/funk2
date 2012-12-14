@@ -27,16 +27,14 @@
 									  file_menu_item
 									  file_menu
 									  file_exit_menu_item
-									  
-									  ]
+									  button_vbox]
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
        [set window title [format nil [get mindmon_agent name] ' - Deliberative2 Action Activator']]
        [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
-       [= scrolled_window [gtk-scrolled_window-new]]
-       [= vbox            [gtk-vbox-new 2]]
+       [= vbox            [gtk-vbox-new 0]]
        
        [= menu_bar            [gtk-menu_bar-new]]
        [= file_menu_item      [gtk-menu_item-new 'File']]
@@ -51,12 +49,13 @@
        [set file_menu_item submenu file_menu]
        [have vbox pack_start menu_bar nil nil 0]
        
+       [= button_vbox [gtk-vbox-new 0]]
        [mapc [funk [action]
 		   [let [[action__hbox   [gtk-hbox-new 2]]
 			 [action__button [gtk-button-new_with_label [get action as-string]]]]
 		     
 		     [have action__hbox pack_start action__button nil nil 0]
-		     [have vbox pack_start action__hbox nil nil 0]
+		     [have button_vbox pack_start action__hbox nil nil 0]
 		     [have action__button signal_connect 'clicked'
 			   [funk []
 				 [fiber [funk []
@@ -68,9 +67,10 @@
 		   sort [funk [x y]
 			      [> [get x as-string]
 				 [get y as-string]]]]]
-       
-       [have scrolled_window add vbox]
-       [have window add scrolled_window]
+       [= scrolled_window [gtk-scrolled_window-new]]
+       [have scrolled_window add_with_viewport button_vbox]
+       [have vbox pack_start scrolled_window t t 0]
+       [have window add vbox]
        [have window show_all]]]
 
 

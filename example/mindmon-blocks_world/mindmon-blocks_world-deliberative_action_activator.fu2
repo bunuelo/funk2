@@ -71,7 +71,7 @@
        [have scrolled_window add_with_viewport button_vbox]
        [have vbox pack_start scrolled_window t t 0]
        [have window add vbox]
-       [set window size 512 1024]
+       [set window size 512 800]
        [have window show_all]]]
 
 

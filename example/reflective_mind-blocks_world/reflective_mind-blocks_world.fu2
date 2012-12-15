@@ -277,7 +277,7 @@
 		      [plan-call [plan 'find next unimagined plan']]]]
 		
 		[defplan 'find plan to accomplish goals'
-		  [plan-call 'find unimagined plan']
+		  [plan-call [plan 'find unimagined plan']]
 		  [call-below 'imagine executing plan in focus']]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']

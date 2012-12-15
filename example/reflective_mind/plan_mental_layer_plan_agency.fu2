@@ -96,7 +96,7 @@
        [construct plan_mental_layer_resource `focus_on_first_plan
 		  [funk []
 			[let [[first_plan [get [get this mental_layer] semantic_plan_linked_list]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first plan, "' [get first_plan as-string] '".']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first plan, "' [get first_plan phenomenal_name] '".']
 			  [set [get [get this agency] semantic_planner] focus_plan first_plan]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]

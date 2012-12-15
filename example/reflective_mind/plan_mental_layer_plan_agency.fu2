@@ -262,8 +262,17 @@
        [construct plan_mental_layer_resource `focus_on_next_object
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
-			
-			]
+			[let* [[semantic_planner [get [get this agency] semantic_planner]]
+			       [focus_plan       [get semantic_planner focus_plan]]]
+			  [if [is-type `semantic_frame focus_plan]
+			      [let [[next_semantic_frame_set [have focus_plan lookup_set `relation `next]]]
+				[if [not [null next_semantic_frame_set]]
+				    [let [[next_semantic_frame [first [get next_semantic_frame_set elements]]]]
+				      [if [is-type `semantic_frame next_semantic_frame]
+					  [set semantic_planner focus_plan next_semantic_frame]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_object: next object is not semantic_frame.']]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_object: no next object.']]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_object: focus_plan is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -279,8 +288,17 @@
        [construct plan_mental_layer_resource `focus_on_previous_object
 		  [funk []
 			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
-			
-			]
+			[let* [[semantic_planner [get [get this agency] semantic_planner]]
+			       [focus_plan       [get semantic_planner focus_plan]]]
+			  [if [is-type `semantic_frame focus_plan]
+			      [let [[previous_semantic_frame_set [have focus_plan lookup_reverse_set `relation `next]]]
+				[if [not [null previous_semantic_frame_set]]
+				    [let [[previous_semantic_frame [first [get previous_semantic_frame_set elements]]]]
+				      [if [is-type `semantic_frame previous_semantic_frame]
+					  [set semantic_planner focus_plan previous_semantic_frame]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object: previous object is not semantic_frame.']]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object: no previous object.']]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object: focus_plan is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 

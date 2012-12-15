@@ -296,7 +296,7 @@
 				[if [not [null previous_semantic_frame_set]]
 				    [let [[previous_semantic_frame [first [get previous_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame previous_semantic_frame]
-					  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_object focusing on ' [type previous_semantic_frame] ': "' [get previous_semantic_frame phenomenal_name] '".']
+					  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object focusing on ' [type previous_semantic_frame] ': "' [get previous_semantic_frame phenomenal_name] '".']
 						[set semantic_planner focus_plan previous_semantic_frame]]
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object: previous object is not semantic_frame.']]]
 				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_object: no previous object.']]]

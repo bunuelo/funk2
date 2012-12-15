@@ -35,7 +35,8 @@
        [= reflective_type_knowledge_base_name initial-reflective_type_knowledge_base_name]
        [= resource_knowledge_base_name        initial-resource_knowledge_base_name]
        [= trace_knowledge_base_names          initial-trace_knowledge_base_names]
-       [parog [have this add_resource [new plan_mental_layer_focus_on_object_resource                 resource_knowledge_base_name trace_knowledge_base_names]]
+       [parog [have this add_resource [new plan_mental_layer_focus_on_first_plan_resource             resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_object_resource                 resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource           resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_execute_plan_resource           resource_knowledge_base_name trace_knowledge_base_names]]
@@ -56,7 +57,8 @@
       [have [get this mind] create_knowledge_event_stream_iterator reflective_knowledge_base_name [get [format nil reflective_knowledge_base_name '->' reflective_type_knowledge_base_name] as-symbol]]]]
 
 [deftypefunk plan_mental_layer_plan_agency execute create_builtin_actions []
-  [parog [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_object]]
+  [parog [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_first_plan]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan execute_plan_in_focus]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan imagine_executing_plan_in_focus]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_execute_plan]]
@@ -84,6 +86,24 @@
 
 [deftypefunk plan_mental_layer_plan_agency get semantic_plan [plan_name]
   [get layer semantic_plan plan_name]]
+
+
+'plan_mental_layer_focus_on_first_plan_resource'
+
+[deframe plan_mental_layer_focus_on_first_plan_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_first_plan
+		  [funk []
+			[let [[first_plan [get [get this mental_layer] semantic_plan_linked_list]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first plan, "' [get first_plan as-string] '".']
+			  [set [get [get this agency] semantic_planner] focus_plan first_plan]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_first_plan_resource get as-natural_language_string []
+  'focus on first plan']
+
 
 
 'plan_mental_layer_focus_on_object_resource'

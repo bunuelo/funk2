@@ -262,80 +262,10 @@
   'reflective plans'
   
   [have this imagine_reflective_plan_expression
-	`[parog [defplan 'a plan to stack a pyramid on a cube'
-		  :matches ['a plan to [? plan]']
-		   :frame [[plan 'stack a pyramid on a cube']]
-		    [plan-below [? plan]]]
-		
-		[defplan 'print a plan to stack a pyramid on a cube'
-		  :matches ['print [? object]']
-		   :frame [[object 'a plan to stack a pyramid on a cube']]
-		    [print [plan-call [plan [? object]]]]]
-		
-		[defplan 'focus on a plan to stack a pyramid on a cube'
-		  :matches ['focus on [? object]']
-		   :frame [[object 'a plan to stack a pyramid on a cube']]
-		    [call-below 'focus on object' [plan-call [? object]]]]
-		
-		[defplan 'execute the plan in focus'
-		  [call-below 'execute plan in focus']]
-		
-		[defplan 'remember a plan for a current goal and execute it'
-		  [call-below 'remember plan for goal']
-		  [call-below 'execute plan in focus']]
-		
-		[defplan 'remember a plan for a current goal and execute it'
-		  [call 'remember a plan for a current goal and execute it']]
-		
-		[defplan 'plan to remember a plan for a current goal and execute it'
-		  :matches ['plan to [? plan]']
-		   :frame [[plan 'remember a plan for a current goal and execute it']]
-		    [plan [? plan]]]
-		
-		[defplan 'focus on plan to remember a plan for a current goal and execute it'
-		  :matches ['focus on [? object]']
-		   :frame [[object 'plan to remember a plan for a current goal and execute it']]
-		    [call 'focus on object' [plan-call [? object]]]]
-		
-		[defplan 'choose a plan'
-		  [call-below 'focus on the plan to stack a cube on a pyramid']]
-		
-		[defplan 'imagine executing the plan in focus'
-		  [call-below 'forget all imagined events']
-		  [call-below 'set imagine time to be now']
-		  [call-below 'imagine current situation']
-		  [call-below 'imagine executing plan in focus']]
-		
-		[defplan 'execute the plan in focus'
-		  [call-below 'focus on the plan to stack a cube on a pyramid']
-		  [call-below 'forget all imagined events']
-		  [call-below 'set imagine time to be now']
-		  [call-below 'imagine current situation']
-		  [call-below 'imagine executing plan in focus']
-		  'check if and how goal is accomplished in imagination.'
-		  
-		  [call-below 'forget all imagined events']
-		  [call-below 'execute plan in focus']]
-
-		[defplan 'choose a plan, imagine executing the plan, and then execute the plan'
-		  :matches ['choose a plan, imagine executing the plan, and then execute the plan']
-		   :frame [[first_step  'choose a plan']
-			   [second_step 'imagine executing the plan']
-			   [third_step  'execute the plan']]
-		    [call 'focus on object' [plan-call [? object]]]]
-		
-		[defplan 'choose a plan, imagine executing it, and then execute it'
-		  [call-below 'focus on the plan to stack a cube on a pyramid']
-		  [call-below 'forget all imagined events']
-		  [call-below 'set imagine time to be now']
-		  [call-below 'imagine current situation']
-		  [call-below 'imagine executing plan in focus']
-		  'check if and how goal is accomplished in imagination.'
-		  
-		  [call-below 'forget all imagined events']
-		  [call-below 'execute plan in focus']]
-		
-		]]
+	`[parog [defplan 'find plan to accomplish goals'
+		  [call-below 'focus on first plan']]]]
+  
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   
   nil]
 

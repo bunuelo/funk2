@@ -35,7 +35,6 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "plan_object_type"),    nil);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "nonsemantic_plan"),    nonsemantic_plan);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"), nil);
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),            nil);
     raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "next"),                nil);
   }
   return this;
@@ -154,29 +153,6 @@ f2ptr f2__semantic_plan_object__start_plan_operator__set(f2ptr cause, f2ptr this
   return raw__semantic_plan_object__start_plan_operator__set(cause, this, that);
 }
 export_cefunk2(semantic_plan_object__start_plan_operator__set, this, that, 0, "");
-
-
-
-f2ptr raw__semantic_plan_object__previous(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"));
-}
-
-f2ptr f2__semantic_plan_object__previous(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__previous(cause, this);
-}
-export_cefunk1(semantic_plan_object__previous, this, 0, "");
-
-
-f2ptr raw__semantic_plan_object__previous__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"), that);
-}
-
-f2ptr f2__semantic_plan_object__previous__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__previous__set(cause, this, that);
-}
-export_cefunk2(semantic_plan_object__previous__set, this, that, 0, "");
 
 
 
@@ -375,8 +351,6 @@ f2ptr f2__semantic_plan_object__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "nonsemantic_plan"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__nonsemantic_plan__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "start_plan_operator"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__start_plan_operator")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "start_plan_operator"),              f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__start_plan_operator__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "previous"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__previous")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "previous"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__previous__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "next"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__next")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "next"),                             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__next__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesis__lookup_set")));}

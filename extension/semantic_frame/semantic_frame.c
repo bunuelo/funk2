@@ -455,7 +455,7 @@ export_cefunk3(semantic_frame__lookup_set, this, key_type, key, 0, "Returns the 
 
 f2ptr raw__semantic_frame__lookup_reverse_set(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
-  f2ptr reverse_frame        = raw__semantic_frame__frame(cause, this);
+  f2ptr reverse_frame        = raw__semantic_frame__reverse_frame(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
   f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
   return raw__frame__lookup_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, nil);

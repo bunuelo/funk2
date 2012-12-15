@@ -126,6 +126,8 @@ f2ptr      f2__semantic_frame__remove                                      (f2pt
 f2ptr     raw__semantic_frame__remove_event__new                           (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);
 f2ptr     raw__semantic_frame__lookup_set                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__lookup_set                                  (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr     raw__semantic_frame__lookup_reverse_set                          (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
+f2ptr      f2__semantic_frame__lookup_reverse_set                          (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__lookup_type_var_value                       (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr      f2__semantic_frame__lookup_type_var_value                       (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key);
 f2ptr     raw__semantic_frame__replace_type_var_value                      (f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value);

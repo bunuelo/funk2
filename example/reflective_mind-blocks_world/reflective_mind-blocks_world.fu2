@@ -263,7 +263,10 @@
   
   [have this imagine_reflective_plan_expression
 	`[parog [defplan 'find plan to accomplish goals'
-		  [call-below 'focus on first plan']]]]
+		  [call-below 'focus on first plan']
+		  [call-below 'imagine executing plan in focus']
+		  [call-below 'focus on next object']
+		  [call-below 'imagine executing plan in focus']]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   

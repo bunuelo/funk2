@@ -118,8 +118,6 @@
   [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_plan]
   [have semantic_plan_linked_list_mutex lock]
   [set semantic_plan next semantic_plan_linked_list]
-  [if semantic_plan_linked_list
-      [set semantic_plan_linked_list previous semantic_plan]]
   [= semantic_plan_linked_list semantic_plan]
   [have semantic_plan_linked_list_mutex unlock]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]

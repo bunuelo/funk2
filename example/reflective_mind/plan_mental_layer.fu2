@@ -288,7 +288,12 @@
 			    relation
 			    preposition
 			    is-me
-			    t]]]
+			    t
+			    nil
+			    semantic_planner
+			    semantic_plan_object
+			    has_been_imagined
+			    imagined_complete_failure]]]
 	    [= knowledge_symbol_set_initialized t]]]
   [have knowledge_symbol_set_initialized_mutex unlock]]
 

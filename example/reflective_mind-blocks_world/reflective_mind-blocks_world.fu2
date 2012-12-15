@@ -262,10 +262,22 @@
   'reflective plans'
   
   [have this imagine_reflective_plan_expression
-	`[parog [defplan 'find plan to accomplish goals'
-		  [call-below 'focus on first plan']
-		  [call-below 'imagine executing plan in focus']
+	`[parog [defplan 'find next unimagined plan'
 		  [call-below 'focus on next object']
+		  [if [exists [relationship semantic_planner property planner_type deliberative
+					    relation focus_plan
+					    semantic_plan_object property has_been_imagined t]]
+		      [plan-call [plan 'find next unimagined plan']]]]
+		
+		[defplan 'find unimagined plan'
+		  [call-below 'focus on first plan']
+		  [if [exists [relationship semantic_planner property planner_type deliberative
+					    relation focus_plan
+					    semantic_plan_object property has_been_imagined t]]
+		      [plan-call [plan 'find next unimagined plan']]]]
+		
+		[defplan 'find plan to accomplish goals'
+		  [plan-call 'find unimagined plan']
 		  [call-below 'imagine executing plan in focus']]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']

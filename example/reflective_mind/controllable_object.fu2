@@ -35,7 +35,7 @@
 [deftypefunk controllable_object get reflective_knowledge_base []
   [have [get [get this mind] semantic_realm] lookup_semantic_knowledge_base reflective_knowledge_base_name]]
 
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_reflective_object [phenomenal_name reflective_object_type]
+[deftypefunk controllable_object get semantic_reflective_object [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]
     [have semantic_reflective_object_mutex lock]
     [= semantic_reflective_object [have [get [get this mind] semantic_realm] lookup_phenomenon_semantic_frame phenomenal_name]]

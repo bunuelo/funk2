@@ -55,4 +55,3 @@
 						[mapc [funk [value]
 							    [funkall type_key_value_funk type key value]]
 						      [get value_set elements]]]]]
-

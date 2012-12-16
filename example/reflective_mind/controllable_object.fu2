@@ -32,6 +32,12 @@
 [deftypefunk controllable_object get reflective_knowledge_base []
   [have [get [get this mind] semantic_realm] lookup_semantic_knowledge_base reflective_knowledge_base_name]]
 
+[deftypefunk controllable_object execute reflective_knowledge_base-add_semantic_frame [semantic_frame]
+  [have [get this reflective_knowledge_base] add_semantic_frame semantic_frame]]
+
+[deftypefunk controllable_object execute reflective_knowledge_base-remove_semantic_frame [semantic_frame]
+  [have [get this reflective_knowledge_base] remove_semantic_frame semantic_frame]]
+
 [deftypefunk controllable_object execute add_action [action]
   [terminal_format standard-terminal '\n' [type this] ': adding action, "' [get action as-string] '."']
   [have action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]

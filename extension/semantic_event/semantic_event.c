@@ -32,12 +32,6 @@ f2ptr raw__semantic_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
   // avoids redefining in cases of multiple inheritance.
   if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name")) == nil) {
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "action_name"),         action_name);
-    //f2ptr start_time                            = f2__time(cause);
-    //f2ptr start_time__nanoseconds_since_1970    = f2__time__nanoseconds_since_1970(cause, start_time);
-    //s64   start_time__nanoseconds_since_1970__i = f2integer__i(start_time__nanoseconds_since_1970, cause);
-    //f2ptr end_time                              = f2__time__new(cause, f2integer__new(cause, start_time__nanoseconds_since_1970__i + 1));
-    //f2ptr start_semantic_time                   = f2__semantic_time__new(cause, start_time);
-    //f2ptr end_semantic_time                     = f2__semantic_time__new(cause, end_time);
     f2ptr start_semantic_time = f2__semantic_time__new(cause, new__symbol(cause, "before"));
     f2ptr end_semantic_time   = f2__semantic_time__new(cause, new__symbol(cause, "after"));
     raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "absolute_start_time"), start_semantic_time);

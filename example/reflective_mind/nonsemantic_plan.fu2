@@ -175,7 +175,7 @@
 						  semantic_plan_execution_node]
   [new [initial-node_type initial-expression]
        [= semantic_plan_execution_node [new semantic_plan_execution_node [get [get cause-top_nonsemantic_plan mind] semantic_realm] node_type this]]
-       [have [get [get cause-top_nonsemantic_plan mental_layer] reflective_knowledge_base] add_semantic_frame semantic_plan_execution_node]
+       [have [get cause-top_nonsemantic_plan mental_layer] reflective_knowledge_base-add_semantic_frame semantic_plan_execution_node]
        [= node_type                    initial-node_type]
        [= expression                   initial-expression]
        [= supernode                    [cause-lookup cause-nonsemantic_plan_execution_node]]

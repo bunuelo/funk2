@@ -81,7 +81,7 @@
   [if [null internal-semantic_planner]
       [prog [= internal-semantic_planner [new semantic_planner [get [get this mind] semantic_realm]]]
 	    [set internal-semantic_planner planner_type [get [get this mental_layer] name]]
-	    [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame internal-semantic_planner]]]
+	    [have [get this mental_layer] reflective_knowledge_base-add_semantic_frame internal-semantic_planner]]]
   internal-semantic_planner]
 
 [deftypefunk plan_mental_layer_plan_agency get semantic_plan [plan_name]

@@ -115,7 +115,7 @@
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']
-  [have [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name] add_semantic_frame semantic_plan]
+  [have this reflective_knowledge_base-add_semantic_frame semantic_plan]
   [have semantic_plan_linked_list_mutex lock]
   [set semantic_plan next semantic_plan_linked_list]
   [= semantic_plan_linked_list semantic_plan]

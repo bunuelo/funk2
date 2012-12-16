@@ -291,6 +291,9 @@
 			    t
 			    nil
 			    semantic_planner
+			    planner_type
+			    deliberative
+			    reflective
 			    semantic_plan_object
 			    has_been_imagined
 			    imagined_complete_failure]]]

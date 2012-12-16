@@ -29,12 +29,6 @@
 [deftypefunk learned_reactive_physical_knowledge_agency execute connect_knowledge_reflection []
   [have [get this mind] create_knowledge_event_stream_iterator `visual_knowledge `visual_knowledge->physical_knowledge]]
 
-[deftypefunk learned_reactive_physical_knowledge_agency execute check_exists [semantic_partial_state]
-  [have [get this resource `translate_visual_knowledge_to_physical_knowledge] check_exists semantic_partial_state]]
-
-[deftypefunk learned_reactive_physical_knowledge_agency execute wait_for_partial_state_to_exist [semantic_partial_state]
-  [have [get this resource `translate_visual_knowledge_to_physical_knowledge] wait_for_partial_state_to_exist semantic_partial_state]]
-
 [deftypefunk learned_reactive_physical_knowledge_agency execute wait_for_physical_knowledge_step [wait_for_step]
   [have [get this resource `translate_visual_knowledge_to_physical_knowledge] wait_for_physical_knowledge_step wait_for_step]]
 
@@ -52,11 +46,8 @@
 
 'translate_visual_knowledge_to_physical_knowledge_resource'
 
-[deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[physical_knowledge_step-conditionlock               [new conditionlock]]
-										     [physical_knowledge_step                             0]
-										     [semantic_reflective_object_mutex                    [new mutex]]
-										     [semantic_reflective_object_set_type_ptypehash_mutex [new mutex]]
-										     [semantic_reflective_object_set_type_ptypehash       [new ptypehash]]]
+[deframe translate_visual_knowledge_to_physical_knowledge_resource [vital_resource] [[physical_knowledge_step-conditionlock [new conditionlock]]
+										     [physical_knowledge_step               0]]
   [new []
        [construct vital_resource `translate_visual_knowledge_to_physical_knowledge
 		  [funk []
@@ -79,27 +70,6 @@
     [have physical_knowledge_step-conditionlock unlock]
     result_step]]
 
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute add_semantic_reflective_object_type [reflective_object_type semantic_reflective_object]
-  [have semantic_reflective_object_set_type_ptypehash_mutex lock]
-  [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
-    [if [null semantic_reflective_object_set]
-	[prog [= semantic_reflective_object_set [new set]]
-	      [have semantic_reflective_object_set_type_ptypehash add reflective_object_type semantic_reflective_object_set]]]
-    [have semantic_reflective_object_set add semantic_reflective_object]]
-  [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
-
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_type [reflective_object_type semantic_reflective_object]
-  [have semantic_reflective_object_set_type_ptypehash_mutex lock]
-  [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
-    [have semantic_reflective_object_set remove semantic_reflective_object]
-    [if [get semantic_reflective_object_set is_empty]
-	[have semantic_reflective_object_set_type_ptypehash remove reflective_object_type]]]
-  [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
-
-'The possible set returned by this funk is READ ONLY and is not to be modified outside of the interface above.'
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute lookup_set_semantic_reflective_object_type [reflective_object_type]
-  [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]
-
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource get semantic_reflective_object [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]
     [have semantic_reflective_object_mutex lock]
@@ -119,8 +89,7 @@
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-add_semantic_reflective_object_to_knowledge_base:'
 		     '\n  (phenomenal_name        = ' phenomenal_name ')'
 		     '\n  (reflective_object_type = ' reflective_object_type ').']
-    [have this add_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
-    [have [get [get this mind] semantic_knowledge_base `physical_knowledge] add_semantic_frame semantic_reflective_object]]]
+    [have [get this mental_layer] reflective_knowledge_base-add_semantic_frame semantic_reflective_object]]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_from_knowledge_base [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
@@ -128,8 +97,7 @@
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-remove_semantic_reflective_object_from_knowledge_base:'
 		     '\n  (phenomenal_name        = ' phenomenal_name ')'
 		     '\n  (reflective_object_type = ' reflective_object_type ').']
-    [have this remove_semantic_reflective_object_type reflective_object_type semantic_reflective_object]
-    [have [get [get this mind] semantic_knowledge_base `physical_knowledge] remove_semantic_frame semantic_reflective_object]]]
+    [have [get this mental_layer] reflective_knowledge_base-remove_semantic_frame semantic_reflective_object]]]
 
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
@@ -210,99 +178,5 @@
 			    ]]
 		    [= chunk_event_count [+ chunk_event_count 1]]]]
 	  [have visual_knowledge_iterator increment]]]]]]
-
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: check semantic partial state property exists "' [get semantic_partial_state as-natural_language_string] '"']
-  [let [[source_type      [get semantic_partial_state source_type]]
-	[source_key_type  [get semantic_partial_state source_key_type]]
-	[source_key       [get semantic_partial_state source_key]]
-	[source_value     [get semantic_partial_state source_value]]
-	[key_type         [get semantic_partial_state key_type]]
-	[key              [get semantic_partial_state key]]
-	[target_type      [get semantic_partial_state target_type]]
-	[found_does_exist nil]]
-    [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
-	   [source_type-semantic_reflective_object_set-iter [if source_type-semantic_reflective_object_set
-								[get source_type-semantic_reflective_object_set elements]
-							      nil]]]
-      [while source_type-semantic_reflective_object_set-iter
-	[let* [[source_type-semantic_reflective_object [car source_type-semantic_reflective_object_set-iter]]
-	       [property_one_set                       [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
-	  [if [and property_one_set
-		   [get property_one_set contains source_value]]
-	      [let [[property_two_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
-		[if [and property_two_set
-			 [get property_two_set contains target_type]]
-		    [prog [terminal_format standard-terminal
-					   '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
-					   '\n    found source semantic_reflective_object = ' source_type-semantic_reflective_object]
-			  [= found_does_exist                                t]
-			  [= source_type-semantic_reflective_object_set-iter nil]]]]]]
-	[if source_type-semantic_reflective_object_set-iter
-	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
-    found_does_exist]]
-
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_semantic_partial_state_property_relation_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: check semantic partial state property relation exists "' [get semantic_partial_state as-natural_language_string] '"']
-  [let [[source_type      [get semantic_partial_state source_type]]
-	[source_key_type  [get semantic_partial_state source_key_type]]
-	[source_key       [get semantic_partial_state source_key]]
-	[source_value     [get semantic_partial_state source_value]]
-	[key_type         [get semantic_partial_state key_type]]
-	[key              [get semantic_partial_state key]]
-	[target_type      [get semantic_partial_state target_type]]
-	[target_key_type  [get semantic_partial_state target_key_type]]
-	[target_key       [get semantic_partial_state target_key]]
-	[target_value     [get semantic_partial_state target_value]]
-	[found_does_exist nil]]
-    [let* [[source_type-semantic_reflective_object_set      [have this lookup_set_semantic_reflective_object_type source_type]]
-	   [source_type-semantic_reflective_object_set-iter [if source_type-semantic_reflective_object_set
-								[get source_type-semantic_reflective_object_set elements]
-							      nil]]]
-      [while source_type-semantic_reflective_object_set-iter
-	[let* [[source_type-semantic_reflective_object              [car source_type-semantic_reflective_object_set-iter]]
-	       [source_type-semantic_reflective_object-property_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
-	  [if [and source_type-semantic_reflective_object-property_set
-		   [get source_type-semantic_reflective_object-property_set contains source_value]]
-	      [let [[relation_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
-		[if relation_set
-		    [let [[relation_iter [get relation_set elements]]]
-		      [while relation_iter
-			[let [[target_semantic_reflective_object [car relation_iter]]]
-			  [if [is-type `semantic_reflective_object target_semantic_reflective_object]
-			      [if [eq [get target_semantic_reflective_object reflective_object_type] target_type]
-				  [let [[target_semantic_reflective_object-property_set [have target_semantic_reflective_object lookup_set target_key_type target_key]]]
-				    [if [and target_semantic_reflective_object-property_set
-					     [get target_semantic_reflective_object-property_set contains target_value]]
-					[prog [terminal_format standard-terminal
-							       '\ntranslate_visual_knowledge_to_physical_knowledge_resource: '
-							       '\n    found source semantic_reflective_object = ' source_type-semantic_reflective_object]
-					      [= found_does_exist                                t]
-					      [= relation_iter                                   nil]
-					      [= source_type-semantic_reflective_object_set-iter nil]]]]]]]
-			[if relation_iter
-			    [= relation_iter [cdr relation_iter]]]]]]]]]
-	[if source_type-semantic_reflective_object_set-iter
-	    [= source_type-semantic_reflective_object_set-iter [cdr source_type-semantic_reflective_object_set-iter]]]]]
-    found_does_exist]]
-
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute check_exists [semantic_partial_state]
-  [let [[semantic_partial_state-type [type semantic_partial_state]]]
-    [cond [[eq semantic_partial_state-type `semantic_partial_state_property]          [have this check_semantic_partial_state_property_exists          semantic_partial_state]]
-	  [[eq semantic_partial_state-type `semantic_partial_state_property_relation] [have this check_semantic_partial_state_property_relation_exists semantic_partial_state]]
-	  [t                                                                          [error bug_name               `translate_visual_knowledge_to_physical_knowledge_resource-execute-check_exists-do_not_know_semantic_partial_state_type
-											     semantic_partial_state semantic_partial_state
-											     this                   this]]]]]
-
-[deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute wait_for_partial_state_to_exist [semantic_partial_state]
-  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
-  [let [[exists    nil]
-	[last_step [have [get this mind] wait_for_physical_knowledge_step 0]]]
-    [while [not exists]
-      [= exists [have this check_exists semantic_partial_state]]
-      [if [not exists]
-	  [= last_step [have [get this mind] wait_for_physical_knowledge_step [+ last_step 1]]]]]]
-  [terminal_format standard-terminal '\ntranslate_visual_knowledge_to_physical_knowledge_resource: done waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
-  nil]
 
 

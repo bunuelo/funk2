@@ -72,20 +72,11 @@
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute add_semantic_reflective_object_to_knowledge_base [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object [get [get this mental_layer] semantic_reflective_object phenomenal_name reflective_object_type]]]
-    [terminal_format standard-terminal
-		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-add_semantic_reflective_object_to_knowledge_base:'
-		     '\n  (phenomenal_name        = ' phenomenal_name ')'
-		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have [get this mental_layer] reflective_knowledge_base-add_semantic_frame semantic_reflective_object]]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_from_knowledge_base [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object [get [get this mental_layer] semantic_reflective_object phenomenal_name reflective_object_type]]]
-    [terminal_format standard-terminal
-		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-remove_semantic_reflective_object_from_knowledge_base:'
-		     '\n  (phenomenal_name        = ' phenomenal_name ')'
-		     '\n  (reflective_object_type = ' reflective_object_type ').']
     [have [get this mental_layer] reflective_knowledge_base-remove_semantic_frame semantic_reflective_object]]]
-
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute execute_resource_raw_funk []
   [let [[visual_knowledge_iterator [get [get this mind] knowledge_event_stream_iterator `visual_knowledge->physical_knowledge]]]

@@ -54,15 +54,30 @@
     [if [null semantic_reflective_object_set]
 	[prog [= semantic_reflective_object_set [new set]]
 	      [have semantic_reflective_object_set_type_ptypehash add reflective_object_type semantic_reflective_object_set]]]
-    [have semantic_reflective_object_set add semantic_reflective_object]]
+    [if [not [get semantic_reflective_object_set contains semantic_reflective_object]]
+	[prog [terminal_format standard-terminal
+			       '\n' [type this] '-add_semantic_reflective_object_to_knowledge_base:'
+			       '\n  (phenomenal_name        = ' [get semantic_reflective_object phenomenal_name] ')'
+			       '\n  (reflective_object_type = ' [get semantic_reflective_object reflective_object_type] ').']
+	      [have semantic_reflective_object_set add semantic_reflective_object]]]]
   [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
 
 [deftypefunk controllable_object execute remove_semantic_reflective_object_type [reflective_object_type semantic_reflective_object]
   [have semantic_reflective_object_set_type_ptypehash_mutex lock]
   [let [[semantic_reflective_object_set [have semantic_reflective_object_set_type_ptypehash lookup reflective_object_type]]]
-    [have semantic_reflective_object_set remove semantic_reflective_object]
-    [if [get semantic_reflective_object_set is_empty]
-	[have semantic_reflective_object_set_type_ptypehash remove reflective_object_type]]]
+    [if [get semantic_reflective_object_set contains semantic_reflective_object]
+	[prog [terminal_format standard-terminal
+			       '\n' [type this] '-remove_semantic_reflective_object_to_knowledge_base:'
+			       '\n  (phenomenal_name        = ' [get semantic_reflective_object phenomenal_name] ')'
+			       '\n  (reflective_object_type = ' [get semantic_reflective_object reflective_object_type] ').']
+	      [have semantic_reflective_object_set remove semantic_reflective_object]
+	      [if [get semantic_reflective_object_set is_empty]
+		  [have semantic_reflective_object_set_type_ptypehash remove reflective_object_type]]]
+      [prog [have semantic_reflective_object_set_type_ptypehash_mutex unlock]
+	    [error bug_name                   `controllable_object-remove_semantic_reflective_object_type-does_not_contain_reflective_object
+		   this                       this
+		   reflective_object_type     reflective_object_type
+		   semantic_reflective_object semantic_reflective_object]]]]
   [have semantic_reflective_object_set_type_ptypehash_mutex unlock]]
 
 'The possible set returned by this funk is READ ONLY and is not to be modified outside of the interface above.'

@@ -251,7 +251,6 @@
 				    argument_definitions
 				    expression]]]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [set semantic_plan_object plan_object_type [get this name]]
       [let [[variable_frame [new frame]]]
 	[let [[result [have plan execute_as_thought variable_frame]]]
 	  [if [is-type `bug result]
@@ -269,7 +268,6 @@
 				    argument_definitions
 				    expression]]]
     [let [[semantic_plan_object [get plan semantic_plan_object]]]
-      [set semantic_plan_object plan_object_type [get this name]]
       [let [[variable_frame [new frame]]]
 	[let [[result [have plan imagine_as_thought variable_frame]]]
 	  [if [is-type `bug result]

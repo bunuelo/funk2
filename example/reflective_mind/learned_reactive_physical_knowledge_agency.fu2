@@ -71,7 +71,7 @@
     result_step]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute add_semantic_reflective_object_to_knowledge_base [phenomenal_name reflective_object_type]
-  [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
+  [let [[semantic_reflective_object [get [get this mental_layer] semantic_reflective_object phenomenal_name reflective_object_type]]]
     [terminal_format standard-terminal
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-add_semantic_reflective_object_to_knowledge_base:'
 		     '\n  (phenomenal_name        = ' phenomenal_name ')'
@@ -79,7 +79,7 @@
     [have [get this mental_layer] reflective_knowledge_base-add_semantic_frame semantic_reflective_object]]]
 
 [deftypefunk translate_visual_knowledge_to_physical_knowledge_resource execute remove_semantic_reflective_object_from_knowledge_base [phenomenal_name reflective_object_type]
-  [let [[semantic_reflective_object [get this semantic_reflective_object phenomenal_name reflective_object_type]]]
+  [let [[semantic_reflective_object [get [get this mental_layer] semantic_reflective_object phenomenal_name reflective_object_type]]]
     [terminal_format standard-terminal
 		     '\ntranslate_visual_knowledge_to_physical_knowledge_resource-remove_semantic_reflective_object_from_knowledge_base:'
 		     '\n  (phenomenal_name        = ' phenomenal_name ')'
@@ -117,7 +117,7 @@
 															   [property [get event value]]]
 														       [let [[subject-phenomenal_name        [get subject phenomenal_name]]
 															     [subject-reflective_object_type [get subject reflective_object_type]]]
-															 [let [[subject-semantic_reflective_object [get this semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]]
+															 [let [[subject-semantic_reflective_object [get [get this mental_layer] semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]]
 															   [have subject-semantic_reflective_object assure_exists key_type key property]]]]]
 											 [[eq key_type `preposition] [let [[subject [get event semantic_frame]]
 															   [object  [get event value]]]
@@ -126,8 +126,8 @@
 																 [subject-reflective_object_type [get subject reflective_object_type]]
 																 [object-phenomenal_name         [get object  phenomenal_name]]
 																 [object-reflective_object_type  [get object  reflective_object_type]]]
-															     [let [[subject-semantic_reflective_object [get this semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]
-																   [object-semantic_reflective_object  [get this semantic_reflective_object object-phenomenal_name  object-reflective_object_type]]]
+															     [let [[subject-semantic_reflective_object [get [get this mental_layer] semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]
+																   [object-semantic_reflective_object  [get [get this mental_layer] semantic_reflective_object object-phenomenal_name  object-reflective_object_type]]]
 															       [have subject-semantic_reflective_object assure_exists `preposition key object-semantic_reflective_object]]]]]]
 											 ]]]
 			    [[and [is-type `semantic_frame_event event]
@@ -138,7 +138,7 @@
 															   [property [get event value]]]
 														       [let [[subject-phenomenal_name      [get subject phenomenal_name]]
 															     [subject-reflective_object_type [get subject reflective_object_type]]]
-															 [let [[subject-semantic_reflective_object [get this semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]]
+															 [let [[subject-semantic_reflective_object [get [get this mental_layer] semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]]
 															   [have subject-semantic_reflective_object remove key_type key property]]]]]
 											 [[eq key_type `preposition] [let [[subject [get event semantic_frame]]
 															   [object  [get event value]]]
@@ -147,8 +147,8 @@
 																 [subject-reflective_object_type [get subject reflective_object_type]]
 																 [object-phenomenal_name         [get object phenomenal_name]]
 																 [object-reflective_object_type  [get object reflective_object_type]]]
-															     [let [[subject-semantic_reflective_object [get this semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]
-																   [object-semantic_reflective_object  [get this semantic_reflective_object object-phenomenal_name  object-reflective_object_type]]]
+															     [let [[subject-semantic_reflective_object [get [get this mental_layer] semantic_reflective_object subject-phenomenal_name subject-reflective_object_type]]
+																   [object-semantic_reflective_object  [get [get this mental_layer] semantic_reflective_object object-phenomenal_name  object-reflective_object_type]]]
 															       [have subject-semantic_reflective_object remove `preposition key object-semantic_reflective_object]]]]]]
 											 ]]]
 			    [[and [is-type `semantic_knowledge_base_event event]

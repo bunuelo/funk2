@@ -295,6 +295,7 @@
 			    deliberative
 			    reflective
 			    semantic_plan_object
+			    focus_plan
 			    has_been_imagined
 			    imagined_complete_failure]]]
 	    [= knowledge_symbol_set_initialized t]]]

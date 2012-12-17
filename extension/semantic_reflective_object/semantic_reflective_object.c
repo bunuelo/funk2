@@ -36,6 +36,7 @@ f2ptr raw__semantic_reflective_object__type_create(f2ptr cause, f2ptr this, f2pt
   return this;
 }
 
+
 f2ptr raw__semantic_reflective_object__new(f2ptr cause, f2ptr semantic_realm) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));

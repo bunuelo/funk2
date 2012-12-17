@@ -25,27 +25,17 @@
 // semantic_plan_object
 
 f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr nonsemantic_plan) {
-  printf("\ndebug 0\n"); fflush(stdout);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_plan_object"));
   }
-  printf("\ndebug 1\n"); fflush(stdout);
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
-  printf("\ndebug 2\n"); fflush(stdout);
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
-  printf("\ndebug 3\n"); fflush(stdout);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "plan"));
-  printf("\ndebug 4\n"); fflush(stdout);
   raw__frame__add_var_value(cause, this, new__symbol(cause, "nonsemantic_plan"), nonsemantic_plan);
-  printf("\ndebug 5\n"); fflush(stdout);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "has_been_imagined"),         nil);
-  printf("\ndebug 6\n"); fflush(stdout);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagined_complete_failure"), nil);
-  printf("\ndebug 7\n"); fflush(stdout);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"),       nil);
-  printf("\ndebug 8\n"); fflush(stdout);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "next"),                      nil);
-  printf("\ndebug 9\n"); fflush(stdout);
   return this;
 }
 

@@ -554,6 +554,15 @@ def_pcfunk1(global_scheduler__contains_active_fiber, fiber,
 
 // user functions
 
+
+f2ptr f2__this__try_fiber(f2ptr cause) {
+  return raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+}
+def_pcfunk0(this__try_fiber,
+	    "Attempt to return the currently executing fiber.",
+	    return f2__this__try_fiber(this_cause));
+
+
 f2ptr f2__this__fiber(f2ptr cause) {
   return raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
 }
@@ -626,6 +635,7 @@ void f2__scheduler__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(global_scheduler__current_fiber);
   f2__primcfunk__init__defragment__fix_pointers(global_scheduler__contains_active_fiber);
   
+  f2__primcfunk__init__defragment__fix_pointers(this__try_fiber);
   f2__primcfunk__init__defragment__fix_pointers(this__fiber);
 }
 
@@ -671,6 +681,7 @@ void f2__scheduler__reinitialize_globalvars() {
   f2__primcfunk__init__0(global_scheduler__current_fiber);
   f2__primcfunk__init__1(global_scheduler__contains_active_fiber,          fiber);
   
+  f2__primcfunk__init__0(this__try_fiber);
   f2__primcfunk__init__0(this__fiber);
   
   __funk2.operating_system.scheduler = environment__safe_lookup_var_value(cause, global_environment(), __funk2.operating_system.scheduler__symbol);

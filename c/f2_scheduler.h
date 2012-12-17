@@ -117,6 +117,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber        (int pool_ind
 
 // user functions
 
+f2ptr f2__this__try_fiber   (f2ptr cause); // attempts to return current fiber.
 f2ptr f2__this__fiber       (f2ptr cause); // returns current fiber.
 f2ptr f2__this__environment (f2ptr cause); // returns current environment.
 void  f2__this__fiber__yield(f2ptr cause);

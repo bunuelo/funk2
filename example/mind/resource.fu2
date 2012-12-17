@@ -96,7 +96,7 @@
 						    [let [[bug             result]
 							  [global_bug_name [get [string-concat 'resource_bug-' [get resource_bug_count as-string]] as-symbol]]]
 						      [++ resource_bug_count]
-						      [terminal_format standard-terminal '\nresource ' [get this name] ': globally defining bug as ' global_bug_name '.']
+						      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-' [get this name] ': globally defining bug as ' global_bug_name '.']
 						      [eval `[globalize ,global_bug_name [quote ,bug]]]]]
 						
 						[have finished-conditionlock lock]

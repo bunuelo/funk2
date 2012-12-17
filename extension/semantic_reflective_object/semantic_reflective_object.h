@@ -25,11 +25,41 @@
 #include "../semantic_object/semantic_object.h"
 
 
+// semantic_reflective_object
+
+f2ptr     raw__semantic_reflective_object__type_create                (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_reflective_object__new                        (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_reflective_object__new                        (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_reflective_object__is_type                    (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_reflective_object__is_type                    (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_reflective_object__type                       (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object__type                       (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object__reflective_object_type     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object__reflective_object_type     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object__reflective_object_type__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object__reflective_object_type__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object__preposition__on__lookup_set(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object__preposition__on__lookup_set(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object__preposition__on__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object__preposition__on__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object__preposition__on__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object__preposition__on__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object__preposition__in__lookup_set(f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_reflective_object__preposition__in__lookup_set(f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_reflective_object__preposition__in__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object__preposition__in__add       (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_reflective_object__preposition__in__remove    (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_reflective_object__preposition__in__remove    (f2ptr cause, f2ptr this, f2ptr that);
+
+f2ptr f2__semantic_reflective_object__primobject_type__new(f2ptr cause);
+
+
 // **
 
-f2ptr f2__semantic_reflective_object__core_extension__ping      (f2ptr cause);
-f2ptr f2__semantic_reflective_object__core_extension__initialize(f2ptr cause);
-f2ptr f2__semantic_reflective_object__core_extension__destroy   (f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__ping        (f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__initialize  (f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__define_types(f2ptr cause);
+f2ptr f2__semantic_reflective_object__core_extension__destroy     (f2ptr cause);
 
 #endif // F2__EXTENSION__SEMANTIC_REFLECTIVE_OBJECT__H
 

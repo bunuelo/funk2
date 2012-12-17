@@ -102,7 +102,7 @@ f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, 
     argument_value           = f2__bug__new_from_larva(cause, argument_value);
   }
   return f2__larva__error__new(cause, source_filename, source_line_number, funktion_name,
-			       f2list12__new(cause,
+			       f2list14__new(cause,
 					     new__symbol(cause, "bug_name"),                 new__symbol(cause, "invalid_argument_type"),
 					     new__symbol(cause, "fiber"),                    f2__this__fiber(cause),
 					     new__symbol(cause, "correct_type"),             correct_type,

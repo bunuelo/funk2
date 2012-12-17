@@ -110,9 +110,12 @@
 
 [deftypefunk bug execute show_inspect_details []
   [have this crawl_through_backtrace standard-terminal 'inspect_bug']
-  [mapc [funk [stack_trace_block]
-	      [terminal_format standard-terminal '\n' stack_trace_block]]
-	[get [get [get this creation_fiber] stack_trace] blocks]]]
+  [let [[fiber [have [get this frame] lookup `fiber]]]
+    [if fiber
+	[mapc [funk [stack_trace_block]
+		    [terminal_format standard-terminal '\n' stack_trace_block]]
+	      [get [get fiber stack_trace] blocks]]
+      [terminal_format standard-terminal '\nbug has no defined fiber.']]]]
 
 [defunk inspect [exp]
   [cond [[is-type `bug exp] [let [[bug exp]]

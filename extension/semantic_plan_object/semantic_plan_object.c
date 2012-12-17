@@ -46,12 +46,11 @@ f2ptr raw__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr ph
 }
 
 f2ptr f2__semantic_plan_object__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr nonsemantic_plan) {
-  if (! raw__semantic_realm__is_type(cause, semantic_realm)) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(semantic_realm, semantic_realm);
   return raw__semantic_plan_object__new(cause, semantic_realm, phenomenal_name, nonsemantic_plan);
 }
 export_cefunk3(semantic_plan_object__new, semantic_realm, phenomenal_name, nonsemantic_plan, 0, "Returns a new semantic_plan_object object.");
+
 
 
 boolean_t raw__semantic_plan_object__is_type(f2ptr cause, f2ptr thing) {

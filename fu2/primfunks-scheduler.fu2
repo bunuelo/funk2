@@ -28,5 +28,6 @@
 [globalize-funk global_scheduler-current_fiber                  &primfunk:global_scheduler__current_fiber]
 [globalize-funk global_scheduler-contains_active_fiber          &primfunk:global_scheduler__contains_active_fiber]
 
-[globalize-funk this-fiber &primfunk:this__fiber]
+[globalize-funk this-try_fiber &primfunk:this__try_fiber]
+[globalize-funk this-fiber     &primfunk:this__fiber]
 

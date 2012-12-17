@@ -25,7 +25,6 @@
 // semantic_reflective_object_type_property_event
 
 f2ptr raw__semantic_reflective_object_type_property_event__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_property_name) {
-  assert_argument_type(symbol, target_property_name);
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_reflective_object_type_property_event"));
   }

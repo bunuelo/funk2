@@ -46,9 +46,9 @@ f2ptr raw__semantic_reflective_object_type_property_event__new(f2ptr cause, f2pt
 }
 
 f2ptr f2__semantic_reflective_object_type_property_event__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr meta_relationship, f2ptr target_property_name) {
-  assert_argument_type(semantic_realm,                    semantic_realm);
-  assert_argument_type(symbol,                            target_property_name);
-  assert_argument_type(relationship_meta_semantic_object, meta_relationship);
+  assert_argument_type(       semantic_realm,                    semantic_realm);
+  assert_argument_type_or_nil(symbol,                            target_property_name);
+  assert_argument_type(       relationship_meta_semantic_object, meta_relationship);
   return raw__semantic_reflective_object_type_property_event__new(cause, semantic_realm, phenomenal_name, meta_relationship, target_property_name);
 }
 export_cefunk4(semantic_reflective_object_type_property_event__new, semantic_realm, phenomenal_name, meta_relationship, target_property_name, 0, "Given a symbol, returns a new semantic_reflective_object_type_property_event object.");

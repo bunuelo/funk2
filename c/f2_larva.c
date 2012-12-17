@@ -29,8 +29,9 @@ f2ptr f2__larva__invalid_value__new(f2ptr cause, f2ptr source_filename, f2ptr so
     value_was_larva = f2bool__new(boolean__true);
     value           = f2__bug__new_from_larva(cause, value);
   }
-  return f2larva__new(cause, 7, f2__bug__new(cause, f2integer__new(cause, 7), f2__frame__new(cause, f2list14__new(cause,
+  return f2larva__new(cause, 7, f2__bug__new(cause, f2integer__new(cause, 7), f2__frame__new(cause, f2list16__new(cause,
 														  new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_value"),
+														  new__symbol(cause, "fiber"),              f2__this__fiber(cause),
 														  new__symbol(cause, "source_filename"),    source_filename,
 														  new__symbol(cause, "source_line_number"), source_line_number,
 														  new__symbol(cause, "funktion_name"),      funktion_name,
@@ -48,8 +49,9 @@ f2ptr f2__larva__caught_invalid_value__new(f2ptr cause, f2ptr source_filename, f
     value_was_larva = f2bool__new(boolean__true);
     value           = f2__bug__new_from_larva(cause, value);
   }
-  f2ptr bug_frame = f2__frame__new(cause, f2list14__new(cause,
+  f2ptr bug_frame = f2__frame__new(cause, f2list16__new(cause,
 							new__symbol(cause, "bug_type"),           new__symbol(cause, "invalid_value"),
+							new__symbol(cause, "fiber"),              f2__this__fiber(cause),
 							new__symbol(cause, "source_filename"),    source_filename,
 							new__symbol(cause, "source_line_number"), source_line_number,
 							new__symbol(cause, "funktion_name"),      funktion_name,
@@ -84,6 +86,7 @@ f2ptr f2__larva__caught_invalid_value__new(f2ptr cause, f2ptr source_filename, f
 f2ptr f2__larva__error__new(f2ptr cause, f2ptr source_filename, f2ptr source_line_number, f2ptr funktion_name, f2ptr frame_args) {
   f2ptr bug_frame = f2__frame__new(cause, frame_args);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),           new__symbol(cause, "error"));
+  f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "fiber"),              f2__this__fiber(cause));
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_filename"),    source_filename);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "source_line_number"), source_line_number);
   f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "funktion_name"),      funktion_name);
@@ -101,6 +104,7 @@ f2ptr f2__larva__invalid_argument_type__new(f2ptr cause, f2ptr source_filename, 
   return f2__larva__error__new(cause, source_filename, source_line_number, funktion_name,
 			       f2list12__new(cause,
 					     new__symbol(cause, "bug_name"),                 new__symbol(cause, "invalid_argument_type"),
+					     new__symbol(cause, "fiber"),                    f2__this__fiber(cause),
 					     new__symbol(cause, "correct_type"),             correct_type,
 					     new__symbol(cause, "actual_type"),              actual_type,
 					     new__symbol(cause, "argument_name"),            argument_name,

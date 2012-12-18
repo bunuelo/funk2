@@ -29,10 +29,7 @@ f2ptr raw__semantic_reflective_object__type_create(f2ptr cause, f2ptr this, f2pt
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_reflective_object"));
   }
   assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "reflective_object_type")) == nil) {
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "reflective_object_type"), nil);
-  }
+  raw__frame__add_var_value(cause, this, new__symbol(cause, "reflective_object_type"), nil);
   return this;
 }
 
@@ -84,7 +81,7 @@ export_cefunk1(semantic_reflective_object__type, thing, 0, "Returns the specific
 
 
 f2ptr raw__semantic_reflective_object__reflective_object_type(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "reflective_object_type"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "reflective_object_type"), nil);
 }
 
 f2ptr f2__semantic_reflective_object__reflective_object_type(f2ptr cause, f2ptr this) {
@@ -95,7 +92,7 @@ export_cefunk1(semantic_reflective_object__reflective_object_type, this, 0, "");
 
 
 f2ptr raw__semantic_reflective_object__reflective_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "reflective_object_type"), that);
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "reflective_object_type"), that);
 }
 
 f2ptr f2__semantic_reflective_object__reflective_object_type__set(f2ptr cause, f2ptr this, f2ptr that) {

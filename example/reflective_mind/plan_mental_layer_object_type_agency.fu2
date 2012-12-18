@@ -122,9 +122,9 @@
 
 [defunk translate_object_knowledge_to_object_type_knowledge_resource-edge_is_type_property [source key_type key target]
   [and [is-type `semantic_reflective_object source]
-       [not [and [eq `property               key_type]
-		 [eq `reflective_object_type key]]]
-       [or [null target] [is-type `symbol target]]]]
+       [not [eq key_type `relation]]
+       [or [null target]
+	   [is-type `symbol target]]]]
 
 [deftypefunk translate_object_knowledge_to_object_type_knowledge_resource get all_semantic_reflective_object_type_events [semantic_reflective_object]
   [let [[semantic_reflective_object_type_events nil]]

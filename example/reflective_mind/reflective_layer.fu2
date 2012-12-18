@@ -54,13 +54,9 @@
 [deftypefunk reflective_layer get mental_layer_below []
   [get [get this mind] layer `deliberative]]
 
-[deftypefunk reflective_layer execute check_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\nreflective_layer has not implemented check_exists.']
-  [error bug_name `reflective_layer-check_exists_not_implemented
-	 this     this]]
+[deftypefunk deliberative_layer execute check_exists [semantic_partial_state]
+  [have [get this mental_layer_below] check_exists semantic_partial_state]]
 
-[deftypefunk reflective_layer execute wait_for [semantic_partial_state]
-  [terminal_format standard-terminal '\nreflective_layer has not implemented wait_for.']
-  [error bug_name `reflective_layer-wait_for_not_implemented
-	 this     this]]
+[deftypefunk deliberative_layer execute wait_for [semantic_partial_state]
+  [have [get this mental_layer_below] wait_for_partial_state_to_exist semantic_partial_state]]
 

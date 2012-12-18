@@ -46,9 +46,9 @@
   [get [get this mind] layer `learned_reactive]]
 
 [deftypefunk deliberative_layer execute check_exists [semantic_partial_state]
-  [have [get [get this mind] mental_layer `learned_reactive] check_exists semantic_partial_state]]
+  [have [get this mental_layer_below] check_exists semantic_partial_state]]
 
 [deftypefunk deliberative_layer execute wait_for [semantic_partial_state]
-  [have [get [get this mind] mental_layer `learned_reactive] wait_for_partial_state_to_exist semantic_partial_state]]
+  [have [get this mental_layer_below] wait_for_partial_state_to_exist semantic_partial_state]]
 
 

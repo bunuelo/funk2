@@ -30,9 +30,9 @@ f2ptr raw__semantic_object__type_create(f2ptr cause, f2ptr this, f2ptr semantic_
   }
   assert_value(raw__semantic_frame__type_create(cause, this, semantic_realm));
   // avoids redefining in cases of multiple inheritance.
-  if (raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name")) == nil) {
+  if (! raw__frame__contains_var(cause, this, new__symbol(cause, "phenomenal_name"))) {
     f2ptr phenomenal_name = f2__gensym(cause, new__string(cause, "semantic_object"));
-    raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), phenomenal_name);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "phenomenal_name"), phenomenal_name);
   }
   return this;
 }
@@ -84,7 +84,7 @@ export_cefunk1(semantic_object__type, thing, 0, "Returns the specific type of ob
 
 
 f2ptr raw__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"));
+  return f2__frame__lookup_var_value(cause, this, new__symbol(cause, "phenomenal_name"), nil);
 }
 
 f2ptr f2__semantic_object__phenomenal_name(f2ptr cause, f2ptr this) {
@@ -95,7 +95,7 @@ export_cefunk1(semantic_object__phenomenal_name, this, 0, "");
 
 
 f2ptr raw__semantic_object__phenomenal_name__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "phenomenal_name"), that);
+  return f2__frame__add_var_value(cause, this, new__symbol(cause, "phenomenal_name"), that);
 }
 
 f2ptr f2__semantic_object__phenomenal_name__set(f2ptr cause, f2ptr this, f2ptr that) {

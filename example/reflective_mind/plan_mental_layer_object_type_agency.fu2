@@ -87,8 +87,7 @@
        [construct vital_resource `translate_object_knowledge_to_object_type_knowledge
 		  [funk []
 			[have this execute_resource_raw_funk]
-			]]
-       nil]]
+			]]]]
 
 [deftypefunk translate_object_knowledge_to_object_type_knowledge_resource get semantic_reflective_object [phenomenal_name reflective_object_type]
   [let [[semantic_reflective_object nil]]

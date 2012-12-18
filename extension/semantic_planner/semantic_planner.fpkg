@@ -19,7 +19,7 @@
 
 [defpackage semantic_planner
   :documentation        'Basic physical knowledge for a planner.'
-   :packages            [semantic_object]
+   :packages            [semantic_reflective_object]
     :sources            ['semantic_planner-core.fu2']
      :dynamic_libraries ['libf2e_semantic_planner.so']]
 

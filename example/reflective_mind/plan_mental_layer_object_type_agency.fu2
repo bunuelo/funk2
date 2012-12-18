@@ -170,9 +170,9 @@
 	      [set relation count [+ [get relation count] 1]]]]]]]
 
 [deftypefunk translate_object_knowledge_to_object_type_knowledge_resource execute remove_type_relation [event_time
-													    semantic_reflective_object_type_event_source
-													    key_type key
-													    semantic_reflective_object_type_event_target]
+													semantic_reflective_object_type_event_source
+													key_type key
+													semantic_reflective_object_type_event_target]
   [if debug [terminal_format standard-terminal '\nremove_type_relation ' [get semantic_reflective_object_type_event_source phenomenal_name] ' ' key_type ' ' key ' ' [get semantic_reflective_object_type_event_target phenomenal_name]]]
   [let [[compound_key [get [format nil [get key_type as-string] '_' [get key as-string]] as-symbol]]]
     [let [[relation_set [have semantic_reflective_object_type_event_source lookup_set compound_key [get semantic_reflective_object_type_event_target phenomenal_name]]]

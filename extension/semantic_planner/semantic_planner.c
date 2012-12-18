@@ -28,7 +28,8 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_planner"));
   }
-  assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
+  assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
+  raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "planner"));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "planner_type"),    nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),    nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "imagine_plan"),    nil);
@@ -349,7 +350,7 @@ export_cefunk2(semantic_planner__thought__remove, this, that, 0, "");
 
 
 f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_reflective_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__type")));}
@@ -381,9 +382,6 @@ f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
 }
 
 
-
-
-
 // **
 
 f2ptr f2__semantic_planner__core_extension__ping(f2ptr cause) {
@@ -392,7 +390,7 @@ f2ptr f2__semantic_planner__core_extension__ping(f2ptr cause) {
 export_cefunk0(semantic_planner__core_extension__ping, 0, "");
 
 f2ptr f2__semantic_planner__core_extension__initialize(f2ptr cause) {
-  assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_object"), new__symbol(cause, "semantic_object__core_extension__ping")), nil));
+  core_extension__ping(semantic_planner, semantic_reflective_object);
   f2__add_type(cause, new__symbol(cause, "semantic_planner"), f2__semantic_planner__primobject_type__new(cause));
   status("semantic_planner initialized.");
   return nil;

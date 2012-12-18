@@ -288,14 +288,8 @@
 			    is-me
 			    t
 			    nil
-			    semantic_planner
-			    planner_type
-			    deliberative
-			    reflective
-			    semantic_plan_object
-			    focus_plan
-			    has_been_imagined
-			    imagined_complete_failure]]]
+			    planner focus_plan planner_type deliberative reflective
+			    plan has_been_imagined imagined_complete_failure]]]
 	    [= knowledge_symbol_set_initialized t]]]
   [have knowledge_symbol_set_initialized_mutex unlock]]
 

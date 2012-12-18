@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_PLANNER__H
 #define F2__EXTENSION__SEMANTIC_PLANNER__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_reflective_object/semantic_reflective_object.h"
 
 
 // **

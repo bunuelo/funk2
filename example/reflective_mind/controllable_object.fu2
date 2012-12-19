@@ -97,7 +97,7 @@
   [have [get this reflective_knowledge_base] remove_semantic_frame semantic_frame]]
 
 [deftypefunk controllable_object execute add_action [action]
-  [terminal_format standard-terminal '\n' [type this] ': adding action, "' [get action as-string] '."']
+  [terminal_format standard-terminal '\n' [type this] ' controllable_object: adding action, "' [get action as-string] '."']
   [have action_natural_language_symbol_ptypehash add [get action as-natural_language_symbol] action]]
 
 [deftypefunk controllable_object get actions []
@@ -116,7 +116,7 @@
     [have this add_action action]]]
 
 [deftypefunk controllable_object execute check_semantic_partial_state_property_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\ncontrollable_object: check semantic partial state property exists "' [get semantic_partial_state as-natural_language_string] '"']
+  [terminal_format standard-terminal '\n' [type this] ' controllable_object: check semantic partial state property exists "' [get semantic_partial_state as-natural_language_string] '"']
   [let [[source_type      [get semantic_partial_state source_type]]
 	[source_key_type  [get semantic_partial_state source_key_type]]
 	[source_key       [get semantic_partial_state source_key]]
@@ -132,13 +132,16 @@
       [while source_type-semantic_reflective_object_set-iter
 	[let* [[source_type-semantic_reflective_object [car source_type-semantic_reflective_object_set-iter]]
 	       [property_one_set                       [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
+	  [terminal_format standard-terminal
+			   '\n' [type this] ' controllable_object: '
+			   '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
 	  [if [and property_one_set
 		   [get property_one_set contains source_value]]
 	      [let [[property_two_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
 		[if [and property_two_set
 			 [get property_two_set contains target_type]]
 		    [prog [terminal_format standard-terminal
-					   '\ncontrollable_object: '
+					   '\n' [type this] ' controllable_object: '
 					   '\n    found source semantic_reflective_object = ' source_type-semantic_reflective_object]
 			  [= found_does_exist                                t]
 			  [= source_type-semantic_reflective_object_set-iter nil]]]]]]
@@ -147,7 +150,7 @@
     found_does_exist]]
 
 [deftypefunk controllable_object execute check_semantic_partial_state_property_relation_exists [semantic_partial_state]
-  [terminal_format standard-terminal '\ncontrollable_object: check semantic partial state property relation exists "' [get semantic_partial_state as-natural_language_string] '"']
+  [terminal_format standard-terminal '\n' [type this] ' controllable_object: check semantic partial state property relation exists "' [get semantic_partial_state as-natural_language_string] '"']
   [let [[source_type      [get semantic_partial_state source_type]]
 	[source_key_type  [get semantic_partial_state source_key_type]]
 	[source_key       [get semantic_partial_state source_key]]
@@ -166,6 +169,9 @@
       [while source_type-semantic_reflective_object_set-iter
 	[let* [[source_type-semantic_reflective_object              [car source_type-semantic_reflective_object_set-iter]]
 	       [source_type-semantic_reflective_object-property_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
+	  [terminal_format standard-terminal
+			   '\n' [type this] ' controllable_object: '
+			   '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
 	  [if [and source_type-semantic_reflective_object-property_set
 		   [get source_type-semantic_reflective_object-property_set contains source_value]]
 	      [let [[relation_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
@@ -179,7 +185,7 @@
 				    [if [and target_semantic_reflective_object-property_set
 					     [get target_semantic_reflective_object-property_set contains target_value]]
 					[prog [terminal_format standard-terminal
-							       '\ncontrollable_object: '
+							       '\n' [type this] ' controllable_object: '
 							       '\n    found source semantic_reflective_object = ' source_type-semantic_reflective_object]
 					      [= found_does_exist                                t]
 					      [= relation_iter                                   nil]
@@ -199,13 +205,13 @@
 											     this                   this]]]]]
 
 [deftypefunk controllable_object execute wait_for_partial_state_to_exist [semantic_partial_state]
-  [terminal_format standard-terminal '\ncontrollable_object: waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
+  [terminal_format standard-terminal '\n' [type this] ' controllable_object: waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
   [let [[exists    nil]
 	[last_step [have [get this mind] wait_for_physical_knowledge_step 0]]]
     [while [not exists]
       [= exists [have this check_exists semantic_partial_state]]
       [if [not exists]
 	  [= last_step [have [get this mind] wait_for_physical_knowledge_step [+ last_step 1]]]]]]
-  [terminal_format standard-terminal '\ncontrollable_object: done waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
+  [terminal_format standard-terminal '\n' [type this] ' controllable_object: done waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
   nil]
 

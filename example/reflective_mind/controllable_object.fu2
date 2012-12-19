@@ -215,3 +215,6 @@
   [terminal_format standard-terminal '\n' [type this] ' controllable_object: done waiting for semantic partial state to exist "' [get semantic_partial_state as-natural_language_string] '"']
   nil]
 
+[deftypefunk controllable_object execute wait_for [semantic_partial_state]
+  [have this wait_for_partial_state_to_exist semantic_partial_state]]
+

@@ -278,6 +278,9 @@
 			   [object  'focusing on a plan that has been imagined']]
 		    [exists [plan-call [plan '[? subject] to be [? object]']]]]
 		
+		[defplan 'test a planner is focusing on a plan that has not been imagined'
+		  [plan-call [plan 'a planner is focusing on a plan that has not been imagined']]]
+		
 		[defplan 'find next unimagined plan'
 		  [call-below 'focus on next object']
 		  [if [plan-call [plan 'a planner is focusing on a plan that has been imagined']]

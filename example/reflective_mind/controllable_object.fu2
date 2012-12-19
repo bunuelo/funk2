@@ -132,9 +132,9 @@
       [while source_type-semantic_reflective_object_set-iter
 	[let* [[source_type-semantic_reflective_object [car source_type-semantic_reflective_object_set-iter]]
 	       [property_one_set                       [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
-	  [terminal_format standard-terminal
-			   '\n' [type this] ' controllable_object: '
-			   '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
+	  `[terminal_format standard-terminal
+			    '\n' [type this] ' controllable_object: '
+			    '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
 	  [if [and property_one_set
 		   [get property_one_set contains source_value]]
 	      [let [[property_two_set [have source_type-semantic_reflective_object lookup_set key_type key]]]
@@ -169,9 +169,9 @@
       [while source_type-semantic_reflective_object_set-iter
 	[let* [[source_type-semantic_reflective_object              [car source_type-semantic_reflective_object_set-iter]]
 	       [source_type-semantic_reflective_object-property_set [have source_type-semantic_reflective_object lookup_set source_key_type source_key]]]
-	  [terminal_format standard-terminal
-			   '\n' [type this] ' controllable_object: '
-			   '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
+	  `[terminal_format standard-terminal
+			    '\n' [type this] ' controllable_object: '
+			    '\n    considering source_type=' source_type ' ' source_type-semantic_reflective_object]
 	  [if [and source_type-semantic_reflective_object-property_set
 		   [get source_type-semantic_reflective_object-property_set contains source_value]]
 	      [let [[relation_set [have source_type-semantic_reflective_object lookup_set key_type key]]]

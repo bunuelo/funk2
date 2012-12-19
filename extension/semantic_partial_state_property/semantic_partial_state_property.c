@@ -135,14 +135,14 @@ f2ptr f2__semantic_partial_state_property__new(f2ptr cause, f2ptr semantic_realm
 					       f2ptr key_type,
 					       f2ptr key,
 					       f2ptr target_type) {
-  assert_argument_type(semantic_realm, semantic_realm);
-  assert_argument_type(symbol,         source_type);
-  assert_argument_type(symbol,         source_key_type);
-  assert_argument_type(symbol,         source_key);
-  assert_argument_type(symbol,         source_value);
-  assert_argument_type(symbol,         key_type);
-  assert_argument_type(symbol,         key);
-  assert_argument_type(symbol,         target_type);
+  assert_argument_type(       semantic_realm, semantic_realm);
+  assert_argument_type_or_nil(symbol,         source_type);
+  assert_argument_type_or_nil(symbol,         source_key_type);
+  assert_argument_type_or_nil(symbol,         source_key);
+  assert_argument_type_or_nil(symbol,         source_value);
+  assert_argument_type_or_nil(symbol,         key_type);
+  assert_argument_type_or_nil(symbol,         key);
+  assert_argument_type_or_nil(symbol,         target_type);
   return raw__semantic_partial_state_property__new(cause, semantic_realm,
 						   source_type,
 						   source_key_type,

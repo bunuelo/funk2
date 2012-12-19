@@ -299,7 +299,8 @@
 
 [deftypefunk plan_mental_layer get knowledge_symbol [value]
   [have this assure_knowledge_symbols_initialized]
-  [let [[symbol [if [is-type `symbol value]
+  [let [[symbol [if [or [null value]
+			[is-type `symbol value]]
 		    value
 		  [get string as-symbol]]]]
     [if [get knowledge_symbol_set contains symbol]

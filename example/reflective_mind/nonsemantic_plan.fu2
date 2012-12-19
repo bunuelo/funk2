@@ -22,11 +22,13 @@
   [cond [[is-type `string this] this]
 	[t                      [get this as-string]]]]
 
-[defunk name_expression-as-symbol [this]
-  [get [name_expression-as-string this] as-symbol]]
+[defunk name_expression-as-symbol_or_nil [this]
+  [if [null this]
+      this
+    [get [name_expression-as-string this] as-symbol]]]
 
 [defunk nonsemantic_plan-unique_name_from_name_expression [name_expression]
-  [name_expression-as-symbol name_expression]]
+  [name_expression-as-symbol_or_nil name_expression]]
 
 
 
@@ -1767,13 +1769,13 @@
 			       key
 			       value]
   [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_value    value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key_type        value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key             value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get value           value]]]]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get value           value]]]]]]
 
 [defplanfunk imagine relationship [source_type
 				   source_key_type
@@ -1786,15 +1788,15 @@
 				   target_key
 				   target_value]
   [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get source_value    value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key_type        value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get key             value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol [get target_value    value]]]]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_type     value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key_type value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key      value]]]
+				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_value    value]]]]]]
 
 

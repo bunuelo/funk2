@@ -164,7 +164,7 @@ f2ptr raw__semantic_knowledge_base__type_create(f2ptr cause, f2ptr this, f2ptr n
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_knowledge_base"));
   }
-  f2ptr semantic_frame_set          = f2__set__new(cause);
+  f2ptr semantic_frame_set          = f2__set__new(cause, nil);
   f2ptr trace_event_stream          = f2__forgetful_event_stream__new(cause);
   f2ptr trace_add_semantic_frame    = nil;
   f2ptr trace_remove_semantic_frame = nil;
@@ -608,7 +608,7 @@ export_cefunk4(semantic_knowledge_base__recursively_add_semantic_frames_to_set, 
 
 
 boolean_t raw__semantic_knowledge_base__add_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64 *exact_size) {
-  f2ptr semantic_frame_set = f2__set__new(cause);
+  f2ptr semantic_frame_set = f2__set__new(cause, nil);
   if (! raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(cause, this, semantic_frame_set, maximum_size, exact_size)) {
     return boolean__false;
   }

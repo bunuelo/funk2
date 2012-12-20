@@ -24,7 +24,7 @@
 def_ceframe1(propogator, propogator, cell_set);
 
 f2ptr raw__propogator__new(f2ptr cause) {
-  f2ptr cell_set = f2__set__new(cause);
+  f2ptr cell_set = f2__set__new(cause, nil);
   return f2propogator__new(cause, cell_set);
 }
 
@@ -130,7 +130,7 @@ def_ceframe2(propogator, propogator_relation, cell_port_frame, process_set);
 
 f2ptr raw__propogator_relation__new(f2ptr cause) {
   f2ptr cell_port_frame = f2__frame__new(cause, nil);
-  f2ptr process_set     = f2__set__new(cause);
+  f2ptr process_set     = f2__set__new(cause, nil);
   return f2propogator_relation__new(cause, cell_port_frame, process_set);
 }
 

@@ -4384,11 +4384,11 @@ f2ptr f2__optimize_context__new(f2ptr cause, f2ptr maximum_loop_count) {
   assert_argument_type(integer, maximum_loop_count);
   f2ptr optimize_bytecode_sequence_hash = f2__ptypehash__new(cause);
   f2ptr initial_fiber          = nil;
-  f2ptr active_fiber_set       = f2__set__new(cause);
-  f2ptr branched_fiber_set     = f2__set__new(cause);
-  f2ptr finished_fiber_set     = f2__set__new(cause);
-  f2ptr evaluated_data_set     = f2__set__new(cause);
-  f2ptr defined_data_set       = f2__set__new(cause);
+  f2ptr active_fiber_set       = f2__set__new(cause, nil);
+  f2ptr branched_fiber_set     = f2__set__new(cause, nil);
+  f2ptr finished_fiber_set     = f2__set__new(cause, nil);
+  f2ptr evaluated_data_set     = f2__set__new(cause, nil);
+  f2ptr defined_data_set       = f2__set__new(cause, nil);
   f2ptr optimized_bytecodes    = nil;
   f2ptr this = f2optimize_context__new(cause,
 				       maximum_loop_count,

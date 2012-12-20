@@ -768,6 +768,7 @@
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]
 			    [cause-define cause-nonsemantic_plan_execution_mode                  `imagine]
+			    [cause-define cause-nonsemantic_plan_current_execution_set           [new set]]
 			    ]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]

@@ -25,7 +25,7 @@ def_ceframe1(forgetful_event_stream, forgetful_event_stream, important_iterator_
 
 f2ptr raw__forgetful_event_stream__new(f2ptr cause) {
   f2ptr this = f2__event_stream__new(cause);
-  f2ptr important_iterator_set = f2__set__new(cause);
+  f2ptr important_iterator_set = f2__set__new(cause, nil);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "type"),                   new__symbol(cause, "forgetful_event_stream"));
   f2__frame__add_var_value(cause, this, new__symbol(cause, "important_iterator_set"), important_iterator_set);
   return this;

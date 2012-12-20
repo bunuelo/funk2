@@ -45,7 +45,7 @@ f2ptr raw__interval_tree__new(f2ptr cause,
 			      f2ptr value_comparison_funk,
 			      f2ptr value_center_funk) {
   f2ptr mutate_cmutex          = f2__cmutex__new(cause);
-  f2ptr interval_set           = f2__set__new(cause);
+  f2ptr interval_set           = f2__set__new(cause, nil);
   f2ptr all_left_redblacktree  = f2__redblacktree__new(cause, left_value_funk,  value_comparison_funk);
   f2ptr all_right_redblacktree = f2__redblacktree__new(cause, right_value_funk, value_comparison_funk);
   return f2interval_tree__new(cause,
@@ -1776,7 +1776,7 @@ f2ptr raw__interval_tree_node__add_intervals_containing_value_to_list(f2ptr caus
   f2ptr center_value_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, center_value, value)));
   f2ptr value_center_comparison        = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_comparison_funk, f2list2__new(cause, value,        center_value)));
   f2ptr center_value_equality          = assert_value(f2__force_funk_apply(cause, f2__this__fiber(cause), value_equality_funk,   f2list2__new(cause, center_value, value)));
-  f2ptr set_found_in_right_overlapping = f2__set__new(cause);
+  f2ptr set_found_in_right_overlapping = f2__set__new(cause, nil);
   if ((center_value_comparison != nil) ||
       (center_value_equality   != nil)) {
     // value is to the right of center_value

@@ -160,7 +160,7 @@ def_primobject_15_slot(package,
 f2ptr f2__package__new(f2ptr cause, f2ptr pathname, f2ptr name, f2ptr package_dependencies, f2ptr source_dependencies, f2ptr documentation, f2ptr binary_dependencies, f2ptr dynamic_library_dependencies) {
   f2ptr load_cmutex                         = f2__cmutex__new(cause);
   f2ptr load_fiber                          = nil;
-  f2ptr object_types_defined_set            = f2__set__new(cause);
+  f2ptr object_types_defined_set            = f2__set__new(cause, nil);
   f2ptr loaded_all_dependencies_time        = nil;
   f2ptr package_dependencies_cmutex         = f2cmutex__new(cause);
   f2ptr source_dependencies_cmutex          = f2cmutex__new(cause);

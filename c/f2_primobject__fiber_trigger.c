@@ -27,7 +27,7 @@ def_primobject_2_slot(fiber_trigger, cmutex, waiting_fiber_set);
 
 f2ptr raw__fiber_trigger__new(f2ptr cause) {
   f2ptr cmutex            = f2cmutex__new(cause);
-  f2ptr waiting_fiber_set = f2__set__new(cause);
+  f2ptr waiting_fiber_set = f2__set__new(cause, nil);
   return f2fiber_trigger__new(cause, cmutex, waiting_fiber_set);
 }
 
@@ -41,7 +41,7 @@ def_pcfunk0(fiber_trigger__new,
 
 f2ptr raw__fiber_trigger__trigger__thread_unsafe(f2ptr cause, f2ptr this) {
   f2ptr waiting_fiber_set = f2__fiber_trigger__waiting_fiber_set(cause, this);
-  f2__fiber_trigger__waiting_fiber_set__set(cause, this, f2__set__new(cause));
+  f2__fiber_trigger__waiting_fiber_set__set(cause, this, f2__set__new(cause, nil));
   set__iteration(cause, waiting_fiber_set, waiting_fiber,
 		 if (raw__fiber__is_type(cause, waiting_fiber)) {
 		   f2ptr processor_assignment_index = f2__fiber__processor_assignment_index(cause, waiting_fiber);

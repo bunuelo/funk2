@@ -71,7 +71,7 @@ declare_object_type_4_slot(set, write_cmutex, key_count, bin_num_power, bin_arra
 declare_primobject_4_slot(set, write_cmutex, key_count, bin_num_power, bin_array);
 
 f2ptr     raw__set__new                 (f2ptr cause, s64 bin_num_power);
-f2ptr      f2__set__new                 (f2ptr cause);
+f2ptr      f2__set__new                 (f2ptr cause, f2ptr elements);
 f2ptr     raw__set__add__debug          (f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name);
 f2ptr      f2__set__add__debug          (f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name);
 boolean_t raw__set__remove              (f2ptr cause, f2ptr this, f2ptr key);

@@ -61,7 +61,7 @@ f2ptr f2__set__new(f2ptr cause, f2ptr elements) {
 }
 def_pcfunk0_and_rest(set__new, elements,
 		     "",
-		     return f2__set__new(this_cause));
+		     return f2__set__new(this_cause, elements));
 
 void raw__set__increase_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
   f2ptr bin_num_power        = f2set__bin_num_power(this, cause);

@@ -296,7 +296,7 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   f2ptr node_left_child_hash  = f2__graph_decomposition_lattice__node_left_child_hash (cause, this);
   f2ptr node_right_child_hash = f2__graph_decomposition_lattice__node_right_child_hash(cause, this);
   
-  f2ptr unsolved_graph_set = f2__set__new(cause);
+  f2ptr unsolved_graph_set = f2__set__new(cause, nil);
   set__iteration(cause, graph_set, graph,
 		 f2__set__add(cause, unsolved_graph_set, graph);
 		 );

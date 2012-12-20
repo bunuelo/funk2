@@ -143,8 +143,8 @@ f2ptr f2graph_edge__primobject_type__new_aux(f2ptr cause) {
 def_primobject_5_slot(graph, node_set, edge_set, nodes_label_hash, edges_label_hash_right_node_hash_left_node_hash, edges_label_hash_left_node_hash_right_node_hash);
 
 f2ptr f2__graph__new(f2ptr cause) {
-  f2ptr node_set                                        = f2__set__new(cause);
-  f2ptr edge_set                                        = f2__set__new(cause);
+  f2ptr node_set                                        = f2__set__new(cause, nil);
+  f2ptr edge_set                                        = f2__set__new(cause, nil);
   f2ptr nodes_label_hash                                = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_right_node_hash_left_node_hash = f2__ptypehash__new(cause);
   f2ptr edges_label_hash_left_node_hash_right_node_hash = f2__ptypehash__new(cause);
@@ -688,7 +688,7 @@ f2ptr raw__graph__connected_node_sets(f2ptr cause, f2ptr this) {
   f2ptr remaining_node_set  = raw__set__new_copy(cause, node_set);
   while (! raw__set__is_empty(cause, remaining_node_set)) {
     f2ptr node               = raw__set__an_arbitrary_element(cause, remaining_node_set);
-    f2ptr connected_node_set = f2__set__new(cause);
+    f2ptr connected_node_set = f2__set__new(cause, nil);
     {
       f2ptr result = raw__graph__connected_node_sets__expand_node(cause, this, remaining_node_set, connected_node_set, node);
       if (raw__larva__is_type(cause, result)) {
@@ -729,8 +729,8 @@ boolean_t raw__graph__contains_cycle__expand_node(f2ptr cause, f2ptr this, f2ptr
 
 boolean_t raw__graph__contains_cycle(f2ptr cause, f2ptr this) {
   f2ptr node_set                          = f2__graph__node_set(cause, this);
-  f2ptr visited_but_not_finished_node_set = f2__set__new(cause);
-  f2ptr finished_node_set                 = f2__set__new(cause);
+  f2ptr visited_but_not_finished_node_set = f2__set__new(cause, nil);
+  f2ptr finished_node_set                 = f2__set__new(cause, nil);
   set__iteration(cause, node_set, node,
 		 if (raw__graph__contains_cycle__expand_node(cause, this, visited_but_not_finished_node_set, finished_node_set, node)) {
 		   // found cycle => is not acyclic
@@ -1071,7 +1071,7 @@ f2ptr raw__graph_decomposition_lattice_node__new(f2ptr cause, f2ptr parent_graph
 		 }
 		 );
   //f2ptr root_graph_set = f2__ptypehash__new(cause);
-  f2ptr root_graph_set = f2__set__new(cause);
+  f2ptr root_graph_set = f2__set__new(cause, nil);
   return f2graph_decomposition_lattice_node__new(cause, parent_graph, left_child_graph, right_child_graph, between_graph, root_graph_set);
 }
 
@@ -1195,13 +1195,13 @@ f2ptr f2graph_decomposition_lattice_node__primobject_type__new_aux(f2ptr cause) 
 def_primobject_7_slot(graph_decomposition_lattice, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
 
 f2ptr f2__graph_decomposition_lattice__new(f2ptr cause) {
-  f2ptr graph_set             = f2__set__new(cause);
-  f2ptr node_set              = f2__set__new(cause);
+  f2ptr graph_set             = f2__set__new(cause, nil);
+  f2ptr node_set              = f2__set__new(cause, nil);
   f2ptr node_parent_hash      = f2__ptypehash__new(cause);
   f2ptr node_left_child_hash  = f2__ptypehash__new(cause);
   f2ptr node_right_child_hash = f2__ptypehash__new(cause);
-  f2ptr leaf_graph_set        = f2__set__new(cause);
-  f2ptr root_graph_set        = f2__set__new(cause);
+  f2ptr leaf_graph_set        = f2__set__new(cause, nil);
+  f2ptr root_graph_set        = f2__set__new(cause, nil);
   return f2graph_decomposition_lattice__new(cause, graph_set, node_set, node_parent_hash, node_left_child_hash, node_right_child_hash, leaf_graph_set, root_graph_set);
 }
 def_pcfunk0(graph_decomposition_lattice__new,
@@ -1226,7 +1226,7 @@ f2ptr raw__graph_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
       f2ptr node_left_child_hash = f2__graph_decomposition_lattice__node_left_child_hash(cause, this);
       f2ptr node_s = f2__ptypehash__lookup(cause, node_left_child_hash, left_child_graph);
       if (node_s == nil) {
-	node_s = f2__set__new(cause);
+	node_s = f2__set__new(cause, nil);
 	f2__ptypehash__add(cause, node_left_child_hash, left_child_graph, node_s);
       }
       f2__set__add(cause, node_s, node);
@@ -1240,7 +1240,7 @@ f2ptr raw__graph_decomposition_lattice__add_node(f2ptr cause, f2ptr this, f2ptr 
       f2ptr node_right_child_hash = f2__graph_decomposition_lattice__node_right_child_hash(cause, this);
       f2ptr node_s = f2__ptypehash__lookup(cause, node_right_child_hash, right_child_graph);
       if (node_s == nil) {
-	node_s = f2__set__new(cause);
+	node_s = f2__set__new(cause, nil);
 	f2__ptypehash__add(cause, node_right_child_hash, right_child_graph, node_s);
       }
       f2__set__add(cause, node_s, node);
@@ -1329,9 +1329,9 @@ def_pcfunk2(graph_decomposition_lattice__decompose_graph, this, graph,
 	    return f2__graph_decomposition_lattice__decompose_graph(this_cause, this, graph));
 
 f2ptr raw__graph_decomposition_lattice__subgraph_isomorphisms(f2ptr cause, f2ptr this, f2ptr graph) {
-  f2ptr unsolved_graph_set = f2__set__new(cause);
-  f2ptr alive_graph_set    = f2__set__new(cause);
-  f2ptr dead_graph_set     = f2__set__new(cause);
+  f2ptr unsolved_graph_set = f2__set__new(cause, nil);
+  f2ptr alive_graph_set    = f2__set__new(cause, nil);
+  f2ptr dead_graph_set     = f2__set__new(cause, nil);
   f2ptr graph_set          = f2__graph_decomposition_lattice__graph_set(cause, this);
   set__iteration(cause, graph_set, graph,
 		 f2__set__add(cause, unsolved_graph_set, graph);

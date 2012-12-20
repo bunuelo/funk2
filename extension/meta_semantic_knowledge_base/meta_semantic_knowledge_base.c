@@ -228,7 +228,7 @@ export_cefunk1(meta_semantic_knowledge_base__type, thing, 0, "Returns the specif
 
 
 f2ptr raw__meta_semantic_knowledge_base__add_trans_level_edges_to_graph_with_node_ptypehash(f2ptr cause, f2ptr this, f2ptr graph, f2ptr node_ptypehash, s64 maximum_size, s64* exact_size) {
-  f2ptr set = f2__set__new(cause);
+  f2ptr set = f2__set__new(cause, nil);
   if (! raw__semantic_knowledge_base__recursively_add_semantic_frames_to_set(cause, this, set, maximum_size, exact_size)) {
     return f2larva__new(cause, 42132, nil);
   }

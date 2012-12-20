@@ -233,7 +233,7 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
     f2ptr trace_event_stream          = nil;
     f2ptr trace_add                   = f2bool__new(boolean__true);
     f2ptr trace_remove                = f2bool__new(boolean__true);
-    f2ptr semantic_knowledge_base_set = f2__set__new(cause);
+    f2ptr semantic_knowledge_base_set = f2__set__new(cause, nil);
     f2ptr frame                       = f2__frame__new(cause, nil);
     f2ptr reverse_frame               = f2__frame__new(cause, nil);
     if (cause != nil) {
@@ -313,7 +313,7 @@ f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr
     f2ptr frame     = raw__semantic_frame__frame(cause, this);
     f2ptr value_set = raw__frame__lookup_type_var_value(cause, frame, key_type__object_key, key__object_key, nil);
     if (value_set == nil) {
-      value_set = f2__set__new(cause);
+      value_set = f2__set__new(cause, nil);
       raw__frame__add_type_var_value(cause, frame, key_type__object_key, key__object_key, value_set);
     }
     raw__set__add(cause, value_set, value);
@@ -322,7 +322,7 @@ f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr
     f2ptr reverse_frame     = raw__semantic_frame__reverse_frame(cause, value);
     f2ptr reverse_value_set = raw__frame__lookup_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, nil);
     if (reverse_value_set == nil) {
-      reverse_value_set = f2__set__new(cause);
+      reverse_value_set = f2__set__new(cause, nil);
       raw__frame__add_type_var_value(cause, reverse_frame, key_type__object_key, key__object_key, reverse_value_set);
     }
     raw__set__add(cause, reverse_value_set, this);

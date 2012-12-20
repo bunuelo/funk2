@@ -202,7 +202,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
   f2ptr semantic_event_transframe = assert_value(f2__semantic_event_transframe__new(cause, semantic_realm));
   {
     f2ptr start_events    = assert_value(raw__semantic_event_knowledge_base__events_containing_time(cause, this, start_semantic_time));
-    f2ptr start_event_set = f2__set__new(cause);
+    f2ptr start_event_set = f2__set__new(cause, nil);
     {
       f2ptr iter = start_events;
       while (iter != nil) {
@@ -212,7 +212,7 @@ f2ptr raw__semantic_event_knowledge_base__event_transframe(f2ptr cause, f2ptr th
       }
     }
     f2ptr end_events    = assert_value(raw__semantic_event_knowledge_base__events_containing_time(cause, this, end_semantic_time));
-    f2ptr end_event_set = f2__set__new(cause);
+    f2ptr end_event_set = f2__set__new(cause, nil);
     {
       f2ptr iter = end_events;
       while (iter != nil) {

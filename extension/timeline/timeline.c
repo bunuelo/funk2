@@ -478,12 +478,12 @@ def_ceframe11(timeline, timeline_event,
 
 
 f2ptr raw__timeline_event__new(f2ptr cause, f2ptr name, f2ptr start_time, f2ptr end_time) {
-  f2ptr contains_set        = f2__set__new(cause);
-  f2ptr is_contained_by_set = f2__set__new(cause);
-  f2ptr next_set            = f2__set__new(cause);
-  f2ptr previous_set        = f2__set__new(cause);
-  f2ptr causes_set          = f2__set__new(cause);
-  f2ptr is_caused_by_set    = f2__set__new(cause);
+  f2ptr contains_set        = f2__set__new(cause, nil);
+  f2ptr is_contained_by_set = f2__set__new(cause, nil);
+  f2ptr next_set            = f2__set__new(cause, nil);
+  f2ptr previous_set        = f2__set__new(cause, nil);
+  f2ptr causes_set          = f2__set__new(cause, nil);
+  f2ptr is_caused_by_set    = f2__set__new(cause, nil);
   f2ptr height              = nil;
   return f2timeline_event__new(cause, name, height, start_time, end_time, contains_set, is_contained_by_set, next_set, previous_set, causes_set, is_caused_by_set, nil);
 }
@@ -752,7 +752,7 @@ def_ceframe5(timeline, timeline_connected_part,
 	     minimum_x);
 
 f2ptr raw__timeline_connected_part__new(f2ptr cause) {
-  f2ptr event_set          = f2__set__new(cause);
+  f2ptr event_set          = f2__set__new(cause, nil);
   f2ptr sorted_event_array = nil;
   f2ptr maximum_y          = nil;
   f2ptr y_position         = nil;
@@ -786,7 +786,7 @@ def_ceframe14(timeline, timeline,
 	      y_height);
 
 f2ptr raw__timeline__new(f2ptr cause) {
-  f2ptr timeline_event_set             = f2__set__new(cause);
+  f2ptr timeline_event_set             = f2__set__new(cause, nil);
   f2ptr left_border                    = f2double__new(cause, 2.0);
   f2ptr right_border                   = f2double__new(cause, 2.0);
   f2ptr top_border                     = f2double__new(cause, 2.0);
@@ -951,7 +951,7 @@ f2ptr raw__timeline__calculate_positions(f2ptr cause, f2ptr this) {
 	    connected_part  = f2__timeline_connected_part__new(cause);
 	    connected_parts = raw__cons__new(cause, connected_part, connected_parts);
 	    f2ptr connected_set = raw__timeline_connected_part__event_set(cause, connected_part);
-	    f2ptr expansion_event_set = f2__set__new(cause);
+	    f2ptr expansion_event_set = f2__set__new(cause, nil);
 	    raw__set__add(cause, expansion_event_set, event);
 	    while (! raw__set__is_empty(cause, expansion_event_set)) {
 	      f2ptr expand_event = raw__set__an_arbitrary_element(cause, expansion_event_set);

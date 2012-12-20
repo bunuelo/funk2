@@ -182,7 +182,7 @@ f2ptr raw__semantic_event_tree__new(f2ptr cause) {
 						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_equality")),
 						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_comparison")),
 						    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_event_tree"), new__symbol(cause, "semantic_event_tree__semantic_event__value_center")));
-  f2ptr semantic_event_set = f2__set__new(cause);
+  f2ptr semantic_event_set = f2__set__new(cause, nil);
   return f2semantic_event_tree__new(cause,
 				    interval_tree,
 				    semantic_event_set);

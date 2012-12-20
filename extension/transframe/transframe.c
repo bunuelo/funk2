@@ -83,7 +83,7 @@ f2ptr f2__transframe_change_type__new_aux(f2ptr cause) {
 def_ceframe1(transframe, transframe, change_set);
 
 f2ptr raw__transframe__new(f2ptr cause) {
-  f2ptr change_set = f2__set__new(cause);
+  f2ptr change_set = f2__set__new(cause, nil);
   return f2transframe__new(cause, change_set);
 }
 

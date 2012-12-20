@@ -1612,7 +1612,6 @@
 								    nonsemantic_plan nonsemantic_plan
 								    time_to_wait     time_to_wait]]]]
 
-
 [defplanfunk imagine list [:rest expressions]
   [new multiple_possible_values [conslist [new nonsemantic_plan_value [conslist @expressions]]]]]
 

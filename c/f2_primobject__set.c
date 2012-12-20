@@ -46,10 +46,22 @@ f2ptr raw__set__new(f2ptr cause, s64 bin_num_power) {
 }
 
 #define set__default_start_bin_num_power 3
-f2ptr f2__set__new(f2ptr cause) {return raw__set__new(cause, set__default_start_bin_num_power);}
-def_pcfunk0(set__new,
-	    "",
-	    return f2__set__new(this_cause));
+f2ptr f2__set__new(f2ptr cause, f2ptr elements) {
+  assert_argument_type(conslist, elements);
+  f2ptr this = raw__set__new(cause, set__default_start_bin_num_power);
+  {
+    f2ptr iter = elements;
+    while (iter != nil) {
+      f2ptr element = f2cons__car(iter, cause);
+      raw__set__add(cause, this, element);
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return this;
+}
+def_pcfunk0_and_rest(set__new, elements,
+		     "",
+		     return f2__set__new(this_cause));
 
 void raw__set__increase_size__thread_unsafe__debug(f2ptr cause, f2ptr this, char* source_filename, int source_line_number, char* source_funktion_name) {
   f2ptr bin_num_power        = f2set__bin_num_power(this, cause);
@@ -181,7 +193,7 @@ def_pcfunk2(set__copy_from, this, that,
 
 
 f2ptr raw__set__new_copy(f2ptr cause, f2ptr this) {
-  f2ptr new_set = f2__set__new(cause);
+  f2ptr new_set = f2__set__new(cause, nil);
   raw__set__copy_from(cause, new_set, this);
   return new_set;
 }
@@ -322,7 +334,7 @@ def_pcfunk1(set__is_empty, this,
 
 
 f2ptr raw__set__union(f2ptr cause, f2ptr rest) {
-  f2ptr set = f2__set__new(cause);
+  f2ptr set = f2__set__new(cause, nil);
   {
     f2ptr iter = rest;
     while (iter != nil) {
@@ -352,7 +364,7 @@ f2ptr raw__set__intersection(f2ptr cause, f2ptr rest) {
   f2ptr set  = nil;
   f2ptr iter = rest;
   if (rest == nil) {
-    set = f2__set__new(cause);
+    set = f2__set__new(cause, nil);
   } else {
     f2ptr first_set = f2__cons__car(cause, iter);
     assert_argument_type(set, first_set);
@@ -384,7 +396,7 @@ def_pcfunk0_and_rest(set__intersection, rest,
 
 
 f2ptr raw__set__minus(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr new_set = f2__set__new(cause);
+  f2ptr new_set = f2__set__new(cause, nil);
   set__iteration(cause, this, element,
 		 if (! raw__set__contains(cause, that, element)) {
 		   raw__set__add(cause, new_set, element);
@@ -404,7 +416,7 @@ def_pcfunk2(set__minus, this, that,
 
 
 f2ptr raw__set__plus(f2ptr cause, f2ptr this, f2ptr that) {
-  f2ptr new_set = f2__set__new(cause);
+  f2ptr new_set = f2__set__new(cause, nil);
   set__iteration(cause, this, element,
 		 raw__set__add(cause, new_set, element);
 		 );

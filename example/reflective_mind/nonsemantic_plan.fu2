@@ -770,7 +770,7 @@
 			    [cause-define cause-nonsemantic_plan_execution_mode        `imagine]
 			    [cause-define cause-nonsemantic_plan_current_execution_set [new set this]]
 			    ]
-		    [cause-define cause-nonsemantic_plan_current_execution_set [new-apply set [cons this cause-nonsemantic_plan_current_execution_set]]]]
+		    [cause-define cause-nonsemantic_plan_current_execution_set [new-apply set [cons this [get cause-nonsemantic_plan_current_execution_set elements]]]]]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
 		    [have [get [get this mental_layer] counterfactual_knowledge_base] add_remember_token remember_token]
 		    [let* [[semantic_planner [get [get this mental_layer] semantic_planner]]

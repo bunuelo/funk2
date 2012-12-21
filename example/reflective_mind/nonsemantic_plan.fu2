@@ -59,19 +59,16 @@
 
 'nonsemantic_plan_value'
 
-[deframe nonsemantic_plan_value [frame] [value
-					 [partial_state_existence_dependency_set [new set]]
+[deframe nonsemantic_plan_value [frame] [[partial_state_existence_dependency_set [new set]]
 					 [dependent_value_set                    [new set]]
 					 [value_dependency_set                   [new set]]
 					 [cause_execution_node                   nil]]
-  [new [initial-value]
-       [= value initial-value]
+  [new []
        [if [cause-lookup cause-last_decision_value]
 	   [have this add_value_dependency cause-last_decision_value]]
        [if [cause-lookup cause-nonsemantic_plan_execution_node]
 	   [= cause_execution_node cause-nonsemantic_plan_execution_node]
-	 [error bug_name `nonsemantic_plan_value-not_created_within_causal_scope_of_execution_node
-		value    value]]]]
+	 [error bug_name `nonsemantic_plan_value-not_created_within_causal_scope_of_execution_node]]]]
 
 [deftypefunk nonsemantic_plan_value execute add_partial_state_existence_dependency [partial_state]
   [have partial_state_existence_dependency_set add partial_state]]
@@ -83,38 +80,57 @@
 [deftypefunk nonsemantic_plan_value get partial_state_dependencies []
   [get partial_state_existence_dependency_set elements]]
 
-[deftypefunk nonsemantic_plan_value get negative []
+[deftypefunk nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node_without_this [graph node_ptypehash]
+  [let* [[cause_execution_node-graph_node [get cause_execution_node as-nonsemantic_plan_execution_node_graph_node graph node_ptypehash]]
+	 [cause_execution_node-graph_edge [new graph_edge `cause_node this-graph_node cause_execution_node-graph_node]]]
+    [have graph add_edge cause_execution_node-graph_edge]]
+  
+  [mapc [funk [value_dependency]
+	      [let* [[value_dependency-graph_node [get value_dependency as-nonsemantic_plan_execution_node_graph_node graph node_ptypehash]]
+		     [value_dependency-graph_edge [new graph_edge `dependency this-graph_node value_dependency-graph_node]]]
+		[have graph add_edge value_dependency-graph_edge]]]
+	[get value_dependency_set elements]]]
+
+[deftypefunk nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
+  [let [[this-graph_node [have node_ptypehash lookup this]]]
+    [if [not this-graph_node]
+	[prog [= this-graph_node [new graph_node [format nil 'unknown value']]]
+	      [have graph add_node this-graph_node]
+	      [have node_ptypehash add this this-graph_node]
+	      
+	      [get this as-nonsemantic_plan_execution_node_graph_node_without_this graph node_ptypehash]]]
+    this-graph_node]]
+
+
+'exact_nonsemantic_plan_value'
+
+[deframe exact_nonsemantic_plan_value [frame] [value]
+  [new [initial-value]
+       [construct nonsemantic_plan_value]
+       [= value initial-value]]]
+
+[deftypefunk exact_nonsemantic_plan_value get negative []
   [if [not [or [null value]
 	       [eq value `t]]]
-      [error bug_name    `nonsemantic_plan_value-negative-must_be_nil_or_t
+      [error bug_name    `exact_nonsemantic_plan_value-negative-must_be_nil_or_t
 	     is_plan_bug t
 	     value       value
 	     this        this]
-    [let [[new_value [new nonsemantic_plan_value [not value]]]]
+    [let [[new_value [new exact_nonsemantic_plan_value [not value]]]]
       [mapc [funk [partial_state_existence_dependency]
 		  [have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
 	    [get partial_state_existence_dependency_set elements]]
       [have new_value add_value_dependency this]
       new_value]]]
 
-[deftypefunk nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
+[deftypefunk exact_nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
     [if [not this-graph_node]
 	[prog [= this-graph_node [new graph_node [format nil 'value: ' [type value]]]]
 	      [have graph add_node this-graph_node]
 	      [have node_ptypehash add this this-graph_node]
 	      
-	      [let* [[cause_execution_node-graph_node [get cause_execution_node as-nonsemantic_plan_execution_node_graph_node graph node_ptypehash]]
-		     [cause_execution_node-graph_edge [new graph_edge `cause_node this-graph_node cause_execution_node-graph_node]]]
-		[have graph add_edge cause_execution_node-graph_edge]]
-	      
-	      [mapc [funk [value_dependency]
-			  [let* [[value_dependency-graph_node [get value_dependency as-nonsemantic_plan_execution_node_graph_node graph node_ptypehash]]
-				 [value_dependency-graph_edge [new graph_edge `dependency this-graph_node value_dependency-graph_node]]]
-			    [have graph add_edge value_dependency-graph_edge]]]
-		    [get value_dependency_set elements]]
-	      
-	      ]]
+	      [get this as-nonsemantic_plan_execution_node_graph_node_without_this graph node_ptypehash]]]
     this-graph_node]]
 
 
@@ -500,30 +516,30 @@
 	     actual_type  [type semantic_partial_state]]
     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
       [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [let* [[simple_truth_value     [have [get this mental_layer_below] check_exists semantic_partial_state]]
-									[nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-								   [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-								   [have result_multiple_possible_values add_value nonsemantic_plan_value]]]
+									[exact_nonsemantic_plan_value [new exact_nonsemantic_plan_value simple_truth_value]]]
+								   [have exact_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+								   [have result_multiple_possible_values add_value exact_nonsemantic_plan_value]]]
 	    [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
 									 [cond [[null found_event]                              [prog [terminal_format standard-terminal '\nnonsemantic_plan imagine: did not find existence event, so using current actual physical knowledge.']
 																      [let* [[simple_truth_value     [have [get this mental_layer_below] check_exists semantic_partial_state]]
-																	     [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-																	[have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-																	[have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
+																	     [exact_nonsemantic_plan_value [new exact_nonsemantic_plan_value simple_truth_value]]]
+																	[have exact_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+																	[have result_multiple_possible_values add_value exact_nonsemantic_plan_value]]]]
 									       [[is-type `multiple_possible_values found_event] [let [[multiple_possible_values found_event]]
 																  [mapc [funk [one_found_event]
 																	      [if [is-type `bug one_found_event]
 																		  [have result_multiple_possible_values add_value one_found_event]
 																		[let* [[simple_truth_value           [not [get one_found_event is_negative_knowledge]]]
-																		       [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-																		  [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-																		  [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]
+																		       [exact_nonsemantic_plan_value [new exact_nonsemantic_plan_value simple_truth_value]]]
+																		  [have exact_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+																		  [have result_multiple_possible_values add_value exact_nonsemantic_plan_value]]]]
 																	[get multiple_possible_values nonbug_and_failure_values]]]]
 									       [t                                               [let* [[simple_truth_value           [not [get found_event is_negative_knowledge]]]
-																       [nonsemantic_plan_value [new nonsemantic_plan_value simple_truth_value]]]
-																  [have nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
-																  [have result_multiple_possible_values add_value nonsemantic_plan_value]]]]]
-								       [let [[outside_hypothesis_space_positive_truth_value [new nonsemantic_plan_value t]]
-									     [outside_hypothesis_space_negative_truth_value [new nonsemantic_plan_value nil]]]
+																       [exact_nonsemantic_plan_value [new exact_nonsemantic_plan_value simple_truth_value]]]
+																  [have exact_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
+																  [have result_multiple_possible_values add_value exact_nonsemantic_plan_value]]]]]
+								       [let [[outside_hypothesis_space_positive_truth_value [new exact_nonsemantic_plan_value t]]
+									     [outside_hypothesis_space_negative_truth_value [new exact_nonsemantic_plan_value nil]]]
 									 [have outside_hypothesis_space_positive_truth_value add_partial_state_existence_dependency semantic_partial_state]
 									 [have outside_hypothesis_space_negative_truth_value add_partial_state_existence_dependency semantic_partial_state]
 									 [have result_multiple_possible_values add_value outside_hypothesis_space_positive_truth_value]
@@ -637,7 +653,7 @@
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node nil ,expression]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+				 [let [[result [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 				   [have nonsemantic_plan_execution_node add_return_value result]
 				   result]]]]]]
 
@@ -645,7 +661,7 @@
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `integer ,expression]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value ,expression]]]]]
+				 [let [[result [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value ,expression]]]]]
 				   [have nonsemantic_plan_execution_node add_return_value result]
 				   result]]]]]]
 
@@ -653,7 +669,7 @@
   [eval `[funk [this]
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `symbol [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-				 [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [quote ,expression]]]]]]
+				 [let [[result [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [quote ,expression]]]]]]
 				   [have nonsemantic_plan_execution_node add_return_value result]
 				   result]]]]]]
 
@@ -662,7 +678,7 @@
 	       [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `string [quote ,expression]]]]
 				 [cause-define cause-nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
 				 [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-				   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]
+				   [let [[result [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [have semantic_thought evaluate_string ,expression]]]]]]
 				     [have nonsemantic_plan_execution_node add_return_value result]
 				     result]]]]]]]
 
@@ -1408,10 +1424,10 @@
   [eval `[funk [nonsemantic_plan]
 	       [let [[expression [quote ,expression]]]
 		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
-		 [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]]]
+		 [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]]]
 
 [defunk defplancommand-quote-evaluate [nonsemantic_plan expression]
-  [new multiple_possible_values [conslist [new nonsemantic_plan_value expression]]]]
+  [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value expression]]]]
 
 [defplancommand imagine quote [expression]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
@@ -1456,7 +1472,7 @@
       [error bug_name                     `nonsemantic_plan-parog-step_complete_failure
 	     is_plan_bug                  t
 	     complete_failure_expressions step_complete_failure_expressions]
-    [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+    [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 
 [defplancommand imagine parog [:rest expressions]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
@@ -1499,7 +1515,7 @@
 		  [++ index]
 		  [terminal_format standard-terminal '\nnonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
 		  [if [or [is-type `bug one_condition]
-			  [and [is-type `nonsemantic_plan_value one_condition]
+			  [and [is-type `exact_nonsemantic_plan_value one_condition]
 			       [is-type `bug                    [get one_condition value]]]]
 		      [prog [terminal_format standard-terminal '\nnonsemantic_plan if: condition ' index '/' conditions-length ' is bug.']
 			    [have multiple_possible_values        add_value one_condition]
@@ -1555,7 +1571,7 @@
 [defunk defplancommand-?-evaluate [nonsemantic_plan variable_name]
   [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
     [terminal_format standard-terminal '\nplan looking up variable value, ' variable_name '.']
-    [new multiple_possible_values [conslist [new nonsemantic_plan_value [have semantic_thought lookup_a_variable_value variable_name]]]]]]
+    [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [have semantic_thought lookup_a_variable_value variable_name]]]]]]
 
 [defplancommand imagine ? [variable_name]
   [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
@@ -1569,7 +1585,7 @@
   [let* [[new_nonsemantic_plan     [new nonsemantic_plan [get nonsemantic_plan mental_layer] name_expression name_patterns variable_definitions plan_body_expression]]
 	 [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
     [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
-    [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+    [let [[result [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
       [terminal_format standard-terminal '\n']
       result]]]
 
@@ -1606,19 +1622,19 @@
 								     [dotimes [i [+ [get time_to_wait value] 1]]
 								       [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan waiting for time step ' i `/ [get time_to_wait value] '.']
 								       [= time_step [have [get nonsemantic_plan mind] wait_for_time_step [+ time_step 1]]]]]
-								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' layer nonsemantic_plan imagining waiting for ' [get time_to_wait value] ' time steps.']
-								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-wait_for_time-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode
 								    nonsemantic_plan nonsemantic_plan
 								    time_to_wait     time_to_wait]]]]
 
 [defplanfunk imagine list [:rest expressions]
-  [new multiple_possible_values [conslist [new nonsemantic_plan_value [conslist @expressions]]]]]
+  [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [conslist @expressions]]]]]
 
 [defplanfunk imagine backquote-list [:rest expressions]
-  [new multiple_possible_values [conslist [new nonsemantic_plan_value [conslist @expressions]]]]]
+  [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [conslist @expressions]]]]]
 
 [defplanfunk imagine print [expression]
   [terminal_format standard-terminal '\nimagined plan printing expression: ' expression]
@@ -1633,7 +1649,7 @@
 									    action_name action_name]
 								   [prog [terminal_format standard-terminal '\nplan calling: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
 								 [if [null action]
@@ -1642,7 +1658,7 @@
 									    action_name action_name]
 								   [prog [terminal_format standard-terminal '\nplan imagining calling: "' [get action as-string] '."']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-call_below-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode
 								    action_name      action_name
@@ -1657,7 +1673,7 @@
 									    action_name action_name]
 								   [prog [terminal_format standard-terminal '\nplan waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action action_name]]]
 								 [if [null action]
@@ -1666,7 +1682,7 @@
 									    action_name action_name]
 								   [prog [terminal_format standard-terminal '\nplan imagining waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
-									   [new multiple_possible_values [conslist [new nonsemantic_plan_value result]]]]]]]]]
+									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-call-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode
 								    action_name      action_name
@@ -1678,37 +1694,8 @@
     [get [get nonsemantic_plan mental_layer] plan_by_name plan_name]]]
 
 [defplanfunk imagine plan-below [plan_name]
-  [cond [[is-type `nonsemantic_plan_value plan_name] [let [[plan_name [get plan_name value]]]
-						       [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]
-							     [variable_frame                       [new frame]]
-							     [semantic_plan_matches                [have [get nonsemantic_plan mental_layer_below] lookup_semantic_plan_matches plan_name]]]
-							 [if semantic_plan_matches
-							     [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-							       [mapc [funk [semantic_plan_match]
-									   [terminal_format standard-terminal '\n' [get [get nonsemantic_plan mental_layer] name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]]
-								     semantic_plan_matches]
-							       [mapc [funk [semantic_plan_match]
-									   [let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
-										 [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
-										 [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
-									     [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' variable_frame]
-									     [if [null semantic_plan_object]
-										 [error bug_name    `nonsemantic_plan-plan-no_such_plan
-											action_name semantic_plan_object-phenomenal_name]
-									       [let* [[nonsemantic_plan         [get semantic_plan_object nonsemantic_plan]]
-										      [new_nonsemantic_plan     [get nonsemantic_plan new_copy_given_variable_frame variable_frame]]
-										      [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
-										 [have result_multiple_possible_values add_value [new nonsemantic_plan_value new_semantic_plan_object]]]]]]
-								     semantic_plan_matches]
-							       result_multiple_possible_values]
-							   [error bug_name    `could_not_find_matching_semantic_plans
-								  is_plan_bug t
-								  funkname    `plan-below
-								  plan_name   plan_name]]]]]
-	[t                                           [error bug_name `nonsemantic_plan-plan_below-invalid_argument_type
-							    correct_types `[nonsemantic_plan_value]
-							    actual_type   [type plan_name]
-							    plan_name     plan_name]]]]
+  [let [[plan_name [get plan_name value]]]
+    [get [get nonsemantic_plan mental_layer_below] plan_by_name plan_name]]]
 
 [defplanfunk imagine plan-call [plan]
   [let* [[semantic_plan_object [get plan value]]
@@ -1717,7 +1704,7 @@
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nimagining executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [if [get cause-nonsemantic_plan_current_execution_set contains nonsemantic_plan]
-									 [new multiple_possible_values [conslist [new nonsemantic_plan_value `recursive_plan_call]]]
+									 [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
 								       [have nonsemantic_plan imagine_as_thought [frame]]]]]
 	  [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 								      execution_mode cause-nonsemantic_plan_execution_mode
@@ -1733,9 +1720,9 @@
 [defplanfunk imagine wait-for [partial_state]
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\nplan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
 								   [have nonsemantic_plan wait_for [get partial_state value]]
-								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nplan imagining waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
-								   [new multiple_possible_values [conslist [new nonsemantic_plan_value nil]]]]]
+								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-wait_for-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode
 								    action_name      action_name
@@ -1771,14 +1758,14 @@
 			       key_type
 			       key
 			       value]
-  [new nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get value           value]]]]]]
+  [new exact_nonsemantic_plan_value [new semantic_partial_state_property [get [get nonsemantic_plan mind] semantic_realm]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get value           value]]]]]]
 
 [defplanfunk imagine relationship [source_type
 				   source_key_type
@@ -1790,16 +1777,16 @@
 				   target_key_type
 				   target_key
 				   target_value]
-  [new nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_type     value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key_type value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key      value]]]
-				   [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_value    value]]]]]]
+  [new exact_nonsemantic_plan_value [new semantic_partial_state_property_relation [get [get nonsemantic_plan mind] semantic_realm]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_type     value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key_type value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_key      value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get source_value    value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key_type        value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get key             value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_type     value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key_type value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_key      value]]]
+					 [get nonsemantic_plan layer_knowledge_symbol [name_expression-as-symbol_or_nil [get target_value    value]]]]]]
 
 

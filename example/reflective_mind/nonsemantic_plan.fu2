@@ -104,7 +104,7 @@
 
 'exact_nonsemantic_plan_value'
 
-[deframe exact_nonsemantic_plan_value [frame] [value]
+[deframe exact_nonsemantic_plan_value [nonsemantic_plan_value] [value]
   [new [initial-value]
        [construct nonsemantic_plan_value]
        [= value initial-value]]]

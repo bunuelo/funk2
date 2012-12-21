@@ -1177,12 +1177,11 @@ def_pcfunk3(cause__var_value__set, this, var, value,
 
 
 boolean_t raw__cause__allocate_traced_arrays(f2ptr cause, f2ptr this) {
-  if (! this) {
-    return (cause__allocate_traced_arrays__default_value != nil);
+  if ((this != nil) && (! raw__cause__is_type(cause, this))) {
+    error(nil, "raw__cause__allocate_traced_arrays error: this is not nil nor cause.");
   }
-  if (! raw__cause__is_type(cause, this)) {
-    status("error: cause is not a cause");
-    return boolean__false;
+  if (this == nil) {
+    return (cause__allocate_traced_arrays__default_value != nil);
   }
   return (f2cause__allocate_traced_arrays(this, cause) != nil);
 }

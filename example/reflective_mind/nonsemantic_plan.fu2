@@ -987,27 +987,36 @@
     new_sequence]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-plan_call [nonsemantic_plan_execution_node]
-  [let [[subnodes                [get nonsemantic_plan_execution_node subnodes]]
-	[argument_decision_nodes nil]]
-    [mapc [funk [subnode]
-		[let [[subnode-node_type [get subnode node_type]]]
-		  [if [and [eq subnode-node_type `argument_decision]
-			   [not [null [get subnode nonbug_and_failure_return_values]]]]
-		      [= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
-	  subnodes]
-    [if [null argument_decision_nodes]
-	[error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes
-	       subnodes                        subnodes
-	       nonsemantic_plan_execution_node nonsemantic_plan_execution_node
-	       this                            this]
-      [prog [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: interpretting ' [length argument_decision_nodes] ' argument decision nodes.']
-	    [let [[multiple_interpretations [remove_equals_duplicates [mapcar [funk [argument_decision_node]
-										    [let [[argument_decision_node-subnodes [get argument_decision_node subnodes]]]
-										      [get this execution_node_as_code [first argument_decision_node-subnodes]]]]
-									      argument_decision_nodes]]]]
-	      [if [== [length multiple_interpretations] 1]
-		  [first multiple_interpretations]
-		`[multiple_interpretations @multiple_interpretations]]]]]]]
+  [let [[plan [get nonsemantic_plan_execution_node variable_value `plan]]]
+    [terminal_format standard-terminal '\n' nonsemantic_plan_execution_node]
+    [let [[subnodes                [get nonsemantic_plan_execution_node subnodes]]
+	  [argument_decision_nodes nil]]
+      [mapc [funk [subnode]
+		  [let [[subnode-node_type [get subnode node_type]]]
+		    [if [and [eq subnode-node_type `argument_decision]
+			     [not [null [get subnode nonbug_and_failure_return_values]]]]
+			[= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
+	    subnodes]
+      [if [null argument_decision_nodes]
+	  [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes
+		 subnodes                        subnodes
+		 nonsemantic_plan_execution_node nonsemantic_plan_execution_node
+		 this                            this]
+	[prog [terminal_format standard-terminal '\nnonsemantic_plan-execution_node_as_code-plan_call: interpretting ' [length argument_decision_nodes] ' argument decision nodes.']
+	      [let [[multiple_interpretations [remove_equals_duplicates [mapcar [funk [argument_decision_node]
+										      [let [[argument_decision_node-subnodes [get argument_decision_node subnodes]]]
+											[if [null argument_decision_node-subnodes]
+											    [let [[nonbug_plans [get plan nonbug_values]]]
+											      [if [null nonbug_plans]
+												  [error bug_name `nonsemantic_plan-get-execution_node_as_code-plan_call-no_nonbug_plans
+													 plan     plan
+													 nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
+												`[plan-call ,[first nonbug_plans]]]]
+											  [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
+										argument_decision_nodes]]]]
+		[if [== [length multiple_interpretations] 1]
+		    [first multiple_interpretations]
+		  `[multiple_interpretations @multiple_interpretations]]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]

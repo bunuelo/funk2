@@ -1011,7 +1011,7 @@
 												  [error bug_name `nonsemantic_plan-get-execution_node_as_code-plan_call-no_nonbug_plans
 													 plan     plan
 													 nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-												`[plan-call ,[first nonbug_plans]]]]
+												`[plan-call ,[get [first nonbug_plans] value]]]]
 											  [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
 										argument_decision_nodes]]]]
 		[if [== [length multiple_interpretations] 1]

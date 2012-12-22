@@ -273,23 +273,25 @@
 				plan property has_been_imagined nil]]
 		
 		[defplan 'a planner is focusing on a plan that has been imagined'
-		  :matches ['[? subject] is [? object]']
-		   :frame [[subject 'a planner']
-			   [object  'focusing on a plan that has been imagined']]
-		    [exists [plan-call [plan '[? subject] to be [? object]']]]]
+		  :matches ['[? subject] is [? preposition]']
+		   :frame [[subject     'a planner']
+			   [preposition 'focusing on a plan that has been imagined']]
+		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
 		
-		[defplan 'test a planner is focusing on a plan that has not been imagined'
-		  [plan-call [plan 'a planner is focusing on a plan that has not been imagined']]]
+		[defplan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan'
+		  :matches ['if [? condition], [? command]']
+		   :frame [[condition 'a planner is focusing on a plan that has been imagined']
+			   [command   'find next unimagined plan']]
+		    [if [plan-call [plan [? condition]]]
+			[plan-call [plan [? command]]]]]
 		
 		[defplan 'find next unimagined plan'
 		  [call-below 'focus on next object']
-		  [if [plan-call [plan 'a planner is focusing on a plan that has been imagined']]
-		      [plan-call [plan 'find next unimagined plan']]]]
+		  [plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		
 		[defplan 'find unimagined plan'
 		  [call-below 'focus on first plan']
-		  [if [plan-call [plan 'a planner is focusing on a plan that has been imagined']]
-		      [plan-call [plan 'find next unimagined plan']]]]
+		  [plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		
 		[defplan 'find plan to accomplish goals'
 		  [plan-call [plan 'find unimagined plan']]

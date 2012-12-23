@@ -1024,7 +1024,6 @@
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-plan_call [nonsemantic_plan_execution_node]
   [let [[plan [get nonsemantic_plan_execution_node variable_value `plan]]]
-    [terminal_format standard-terminal '\n' nonsemantic_plan_execution_node]
     [let [[subnodes                [get nonsemantic_plan_execution_node subnodes]]
 	  [argument_decision_nodes nil]]
       [mapc [funk [subnode]

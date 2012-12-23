@@ -279,8 +279,7 @@
 						     'test/propogator-test/'
 						     'test/keyboard-test/'
 						     'test/timeline-test/'
-						     'test/xmlrpc-test/'
-						     ]]
+						     'test/xmlrpc-test/']]
 
 [defmetro defpackage [name :rest dependencies]
   [terminal_format standard-terminal '\n' `[defpackage ,name]]
@@ -341,7 +340,6 @@
 				       [= iter [cdr iter]]]]
 				 fpkg_filenames]]
 			 this]]]
-
 
 [defunk reload_all_package_definitions []
   [parc [funk [filename]
@@ -449,7 +447,6 @@
 
 [defmetro load-package [name]
   `[package-load [quote ,name]]]
-
 
 [defunk require-package [:rest names]
   [let [[load_if_modified_before_time [time]]]

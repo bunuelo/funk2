@@ -297,7 +297,7 @@
 			 :frame [[partial_state 'a cube to be on a pyramid']]
 			  [relationship planner property planner_type deliberative
 					relation focus_plan
-					plan property hypothesized_to_add_partial_state [plan-call [plan [? partial_state]]]]]
+					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan'
 			:matches ['if [? condition], [? command]']

@@ -34,8 +34,8 @@
 							       [knowledge_symbol_set_initialized_mutex   [new mutex]]
 							       [knowledge_symbol_set_initialized         nil]
 							       [knowledge_symbol_set                     [new set]]
-							       [semantic_plan_linked_list_mutex          [new mutex]]
-							       [semantic_plan_linked_list                nil]
+							       [reverse_semantic_plan_linked_list_mutex          [new mutex]]
+							       [reverse_semantic_plan_linked_list                nil]
 							       [memoized_plans_by_name_ptypehash_mutex   [new mutex]]
 							       [memoized_plans_by_name_ptypehash         [new ptypehash]]]
   [new [initial-number initial-name
@@ -116,12 +116,22 @@
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']
   [have this reflective_knowledge_base-add_semantic_frame semantic_plan]
-  [have semantic_plan_linked_list_mutex lock]
-  [set semantic_plan next semantic_plan_linked_list]
-  [= semantic_plan_linked_list semantic_plan]
-  [have semantic_plan_linked_list_mutex unlock]
+  [have reverse_semantic_plan_linked_list_mutex lock]
+  [set semantic_plan previous reverse_semantic_plan_linked_list]
+  [= reverse_semantic_plan_linked_list semantic_plan]
+  [have reverse_semantic_plan_linked_list_mutex unlock]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get [get this mental_layer] agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
+
+[deftypefunk plan_mental_layer get semantic_plan_objects []
+  [have reverse_semantic_plan_linked_list_mutex lock]
+  [let [[semantic_plan reverse_semantic_plan_linked_list]
+	[seq           nil]]
+    [while semantic_plan
+      [= seq [cons semantic_plan seq]]
+      [= semantic_plan [get semantic_plan previous]]]
+    [have reverse_semantic_plan_linked_list_mutex unlock]
+    seq]]
 
 [deftypefunk plan_mental_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
   [let [[plan [new nonsemantic_plan 
@@ -142,9 +152,6 @@
 	[error bug_type             `plan_mental_layer-semantic_plan-not_found
 	       plan_phenomenal_name phenomenal_name]]
     semantic_plan]]
-
-[deftypefunk plan_mental_layer get semantic_plan_objects []
-  [get semantic_plan_phenomenal_name_frame values]]
 
 [deftypefunk plan_mental_layer get semantic_plans []
   [get this semantic_plan_objects]]

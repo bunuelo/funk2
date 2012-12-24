@@ -286,11 +286,11 @@
 				 [preposition 'focusing on a plan that has been imagined']]
 			  [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
-		      [defplan 'a planner is not focusing on a plan that has been imagined'
-			:matches ['[? subject] is not [? preposition]']
+		      [defplan 'a planner to be not focusing on a plan that has been imagined'
+			:matches ['[? subject] to be not [? preposition]']
 			 :frame [[subject     'a planner']
 				 [preposition 'focusing on a plan that has been imagined']]
-			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
+			  [not [exists [plan-call [plan '[? subject] to be [? preposition]']]]]]
 		      
 		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
 			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']

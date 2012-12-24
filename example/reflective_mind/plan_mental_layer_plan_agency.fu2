@@ -95,7 +95,7 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_first_plan
 		  [funk []
-			[let [[first_plan [get [get this mental_layer] semantic_plan_linked_list]]]
+			[let [[first_plan [first [get [get this mental_layer] semantic_plan_objects]]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first plan, "' [get first_plan phenomenal_name] '".']
 			  [set [get [get this agency] semantic_planner] focus_plan first_plan]]]
 		  initial-resource_knowledge_base_name
@@ -284,7 +284,7 @@
 			[let* [[semantic_planner [get [get this agency] semantic_planner]]
 			       [focus_plan       [get semantic_planner focus_plan]]]
 			  [if [is-type `semantic_frame focus_plan]
-			      [let [[next_semantic_frame_set [have focus_plan lookup_set `relation `next]]]
+			      [let [[next_semantic_frame_set [have focus_plan lookup_reverse_set `relation `previous]]]
 				[if [not [null next_semantic_frame_set]]
 				    [let [[next_semantic_frame [first [get next_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame next_semantic_frame]
@@ -311,7 +311,7 @@
 			[let* [[semantic_planner [get [get this agency] semantic_planner]]
 			       [focus_plan       [get semantic_planner focus_plan]]]
 			  [if [is-type `semantic_frame focus_plan]
-			      [let [[previous_semantic_frame_set [have focus_plan lookup_reverse_set `relation `next]]]
+			      [let [[previous_semantic_frame_set [have focus_plan lookup_set `relation `previous]]]
 				[if [not [null previous_semantic_frame_set]]
 				    [let [[previous_semantic_frame [first [get previous_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame previous_semantic_frame]

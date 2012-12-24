@@ -79,223 +79,223 @@
   [cause-enable_reactive_critics [this-cause]]
   [cause-define cause-ignore_background_bug nil]
   
-  [have this imagine_deliberative_plan_expression
-	`[parog [defplan 'a pyramid to be on a cube'
-		  :matches ['a [? top_shape] to be on a [? bottom_shape]'
-			    'a [? bottom_shape] to be below a [? top_shape]']
-		   :frame [[top_shape    pyramid]
-			   [bottom_shape cube]]
-		    [relationship block property shape [? top_shape]
-				  preposition on
-				  block property shape [? bottom_shape]]]
-		
-		[defplan 'a pyramid to be on a table'
-		  :matches ['a [? shape] to be on a table']
-		   :frame [[shape pyramid]]
-		    [relationship block property shape [? shape]
-				  preposition on
-				  table property color white]]
-		
-		[defplan 'a cube to be to my left'
-		  :matches ['a [? shape] to be to my left']
-		   :frame [[shape cube]]
-		    [relationship block property shape [? shape]
-				  preposition left-of
-				  gripper property is-me t]]
-		
-		[defplan 'a cube to be to my right'
-		  :matches ['a [? shape] to be to my right']
-		   :frame [[shape cube]]
-		    [relationship block property shape [? shape]
-				  preposition right-of
-				  gripper property is-me t]]
-		
-		[defplan 'me to be holding a cube'
-		  :matches ['me to be holding a [? shape]']
-		   :frame [[shape cube]]
-		    [relationship gripper property is-me t
-				  preposition is-holding
-				  block property shape [? shape]]]
-		
-		[defplan 'I am holding a cube'
-		  :matches ['I am [? gerund]']
-		   :frame [[gerund 'holding a cube']]
-		    [exists [plan-call [plan 'me to be [? gerund]']]]]
-		
-		[defplan 'a pyramid to be below me'
-		  :matches ['a [? shape] to be below me']
-		   :frame [[shape pyramid]]
-		    [relationship block property shape [? shape]
-				  preposition below
-				  gripper property is-me t]]
-		
-		[defplan 'a pyramid to be immediately to my left'
-		  :matches ['a [? shape] to be immediately to my left']
-		   :frame [[shape pyramid]]
-		    [relationship block property shape [? shape]
-				  preposition below-left
-				  gripper property is-me t]]
-		
-		[defplan 'a pyramid to be immediately to my right'
-		  :matches ['a [? shape] to be immediately to my right']
-		   :frame [[shape pyramid]]
-		    [relationship block property shape [? shape]
-				  preposition below-right
-				  gripper property is-me t]]
-		
-		[defplan 'wait for a pyramid to be below me'
-		  :matches ['wait for [? to-be-partial_state]']
-		   :frame [[to-be-partial_state 'a pyramid to be below me']]
-		    [wait-for [plan-call [plan [? to-be-partial_state]]]]]
-		
-		[defplan 'a cube is to my right'
-		  :matches ['[? subject] is [? preposition]']
-		   :frame [[subject     'a cube']
-			   [preposition 'to my right']]
-		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
-		
-		[defplan 'a cube is not to my right'
-		  :matches ['[? subject] is not [? preposition]']
-		   :frame [[subject     'a cube']
-			   [preposition 'to my right']]
-		    [not [plan-call [plan '[? subject] is [? preposition]']]]]
-		
-		[defplan 'assert that a pyramid is on a cube'
-		  :matches ['assert that [? partial_state]']
-		   :frame [[partial_state 'a pyramid is on a cube']]
-		    [if [not [plan-call [plan [? partial_state]]]]
-			[fail]]]
-		
-		[defplan 'test negative cube below'
-		  [plan-call [plan 'a cube is not below me']]]
-		
-		[defplan 'move slowly left until over pyramid'
-		  :matches ['move slowly [? direction] until over [? shape]']
-		   :frame [[direction left]
-			   [shape     pyramid]]
-		    [if [plan-call [plan 'a [? shape] is not below me']]
-			[prog [call-below 'slow move [? direction]']
-			      [plan-call [plan 'wait for a [? shape] to be below me']]
-			      [call-below 'stop']]]]
-		
-		[defplan 'move left until over pyramid'
-		  :matches ['move [? direction] until over [? shape]']
-		   :frame [[direction left]
-			   [shape     pyramid]]
-		    [call-below 'move [? direction]']
-		    [plan-call [plan 'wait for a [? shape] to be immediately to my [? direction]']]
-		    [call-below 'stop']]
-		
-		`[compile [plan 'move left until over pyramid']]
-		`[compile [plan 'move left until over cube']]
-		`[compile [plan 'move right until over pyramid']]
-		`[compile [plan 'move right until over cube']]
-		
-		[defplan 'if a cube is to my left, move left until over cube'
-		  :matches ['if [? condition], [? command]']
-		   :frame [[condition 'a cube is to my left']
-			   [command   'move left until over cube']]
-		    [if [plan-call [plan [? condition]]]
-			[plan-call [plan [? command]]]]]
-		
-		[defplan 'if a cube is to my left, move left until over cube, otherwise move right until over cube'
-		  :matches ['if [? condition], [? true_branch], otherwise [? false_branch]']
-		   :frame [[condition    'a cube is to my left']
-			   [true_branch  'move left until over cube']
-			   [false_brance 'move right until over cube']]
-		    [if [plan-call [plan [? condition]]]
-			[plan-call [plan [? true_branch]]]
-		      [plan-call [plan [? false_branch]]]]]
-		
-		[defplan 'move slowly until over cube'
-		  :matches ['move slowly until over [? shape]']
-		   :frame [[shape cube]]
-		    [plan-call [plan 'if a [? shape] is to my left, move slowly left until over [? shape], otherwise if a [? shape] is to my right, move slowly right until over [? shape]']]]
-		
-		[defplan 'move until over cube'
-		  :matches ['move until over [? shape]']
-		   :frame [[shape cube]]
-		    [plan-call [plan 'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]
-		    [plan-call [plan 'move slowly until over [? shape]']]]
-		
-		[defplan 'attempt to grab block until gripper stops moving'
-		  [call-below 'grab']
-		  [wait-for-time 2]
-		  [wait-for [property gripper property is-me t
-				      property movement_command
-				      stop]]]
-		`[compile [plan 'attempt to grab block until gripper stops moving']]
-		
-		[defplan 'pick up a cube'
-		  :matches ['pick up a [? shape]']
-		   :frame [[shape cube]]
-		    [plan-call [plan 'move until over [? shape]']]
-		    [plan-call [plan 'attempt to grab block until gripper stops moving']]
-		    [plan-call [plan 'assert that I am holding a [? shape]']]]
-		
-		[defplan 'test reaching and grabbing'
-		  [plan-call [plan 'attempt to grab block until gripper stops moving']]]
-		
-		[defplan 'drop block and wait for block to fall'
-		  [call-below 'drop']
-		  [wait-for-time 20]]
-		`[compile 'drop block and wait for block to fall']
-		
-		[defplan 'drop the block I am holding on a pyramid'
-		  :matches ['drop the block I am holding on a [? shape]']
-		   :frame [[shape pyramid]]
-		    [plan-call [plan 'move until over [? shape]']]
-		    [plan-call [plan 'drop block and wait for block to fall']]]
-		
-		[defplan 'stack a cube on a pyramid'
-		  :matches ['stack a [? top_shape] on a [? bottom_shape]']
-		   :frame [[top_shape    cube]
-			   [bottom_shape pyramid]]
-		    [plan-call [plan 'pick up a [? top_shape]']]
-		    [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
-		    [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
-		
-		]]
+  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in plans.']
   
-  [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in reflective plans.']
-  
-  'reflective plans'
-  
-  [have this imagine_reflective_plan_expression
-	`[parog [defplan 'a planner to be focusing on a plan that has been imagined'
-		  [relationship planner property planner_type deliberative
-				relation focus_plan
-				plan property has_been_imagined t]]
-		
-		[defplan 'a planner to be focusing on a plan that has not been imagined'
-		  [relationship planner property planner_type deliberative
-				relation focus_plan
-				plan property has_been_imagined nil]]
-		
-		[defplan 'a planner is focusing on a plan that has been imagined'
-		  :matches ['[? subject] is [? preposition]']
-		   :frame [[subject     'a planner']
-			   [preposition 'focusing on a plan that has been imagined']]
-		    [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
-		
-		[defplan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan'
-		  :matches ['if [? condition], [? command]']
-		   :frame [[condition 'a planner is focusing on a plan that has been imagined']
-			   [command   'find next unimagined plan']]
-		    [if [plan-call [plan [? condition]]]
-			[plan-call [plan [? command]]]]]
-		
-		[defplan 'find next unimagined plan'
-		  [call-below 'focus on next object']
-		  [plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
-		
-		[defplan 'find unimagined plan'
-		  [call-below 'focus on first plan']
-		  [plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
-		
-		[defplan 'find plan to accomplish goals'
-		  [plan-call [plan 'find unimagined plan']]
-		  [call-below 'imagine executing plan in focus']]]]
+  [parog [have this imagine_deliberative_plan_expression
+	       `[prog [defplan 'a pyramid to be on a cube'
+			:matches ['a [? top_shape] to be on a [? bottom_shape]'
+				  'a [? bottom_shape] to be below a [? top_shape]']
+			 :frame [[top_shape    pyramid]
+				 [bottom_shape cube]]
+			  [relationship block property shape [? top_shape]
+					preposition on
+					block property shape [? bottom_shape]]]
+		      
+		      [defplan 'a pyramid to be on a table'
+			:matches ['a [? shape] to be on a table']
+			 :frame [[shape pyramid]]
+			  [relationship block property shape [? shape]
+					preposition on
+					table property color white]]
+		      
+		      [defplan 'a cube to be to my left'
+			:matches ['a [? shape] to be to my left']
+			 :frame [[shape cube]]
+			  [relationship block property shape [? shape]
+					preposition left-of
+					gripper property is-me t]]
+		      
+		      [defplan 'a cube to be to my right'
+			:matches ['a [? shape] to be to my right']
+			 :frame [[shape cube]]
+			  [relationship block property shape [? shape]
+					preposition right-of
+					gripper property is-me t]]
+		      
+		      [defplan 'me to be holding a cube'
+			:matches ['me to be holding a [? shape]']
+			 :frame [[shape cube]]
+			  [relationship gripper property is-me t
+					preposition is-holding
+					block property shape [? shape]]]
+		      
+		      [defplan 'I am holding a cube'
+			:matches ['I am [? gerund]']
+			 :frame [[gerund 'holding a cube']]
+			  [exists [plan-call [plan 'me to be [? gerund]']]]]
+		      
+		      [defplan 'a pyramid to be below me'
+			:matches ['a [? shape] to be below me']
+			 :frame [[shape pyramid]]
+			  [relationship block property shape [? shape]
+					preposition below
+					gripper property is-me t]]
+		      
+		      [defplan 'a pyramid to be immediately to my left'
+			:matches ['a [? shape] to be immediately to my left']
+			 :frame [[shape pyramid]]
+			  [relationship block property shape [? shape]
+					preposition below-left
+					gripper property is-me t]]
+		      
+		      [defplan 'a pyramid to be immediately to my right'
+			:matches ['a [? shape] to be immediately to my right']
+			 :frame [[shape pyramid]]
+			  [relationship block property shape [? shape]
+					preposition below-right
+					gripper property is-me t]]
+		      
+		      [defplan 'wait for a pyramid to be below me'
+			:matches ['wait for [? to-be-partial_state]']
+			 :frame [[to-be-partial_state 'a pyramid to be below me']]
+			  [wait-for [plan-call [plan [? to-be-partial_state]]]]]
+		      
+		      [defplan 'a cube is to my right'
+			:matches ['[? subject] is [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'to my right']]
+			  [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
+		      
+		      [defplan 'a cube is not to my right'
+			:matches ['[? subject] is not [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'to my right']]
+			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
+		      
+		      [defplan 'assert that a pyramid is on a cube'
+			:matches ['assert that [? partial_state]']
+			 :frame [[partial_state 'a pyramid is on a cube']]
+			  [if [not [plan-call [plan [? partial_state]]]]
+			      [fail]]]
+		      
+		      [defplan 'test negative cube below'
+			[plan-call [plan 'a cube is not below me']]]
+		      
+		      [defplan 'move slowly left until over pyramid'
+			:matches ['move slowly [? direction] until over [? shape]']
+			 :frame [[direction left]
+				 [shape     pyramid]]
+			  [if [plan-call [plan 'a [? shape] is not below me']]
+			      [prog [call-below 'slow move [? direction]']
+				    [plan-call [plan 'wait for a [? shape] to be below me']]
+				    [call-below 'stop']]]]
+		      
+		      [defplan 'move left until over pyramid'
+			:matches ['move [? direction] until over [? shape]']
+			 :frame [[direction left]
+				 [shape     pyramid]]
+			  [call-below 'move [? direction]']
+			  [plan-call [plan 'wait for a [? shape] to be immediately to my [? direction]']]
+			  [call-below 'stop']]
+		      
+		      `[compile [plan 'move left until over pyramid']]
+		      `[compile [plan 'move left until over cube']]
+		      `[compile [plan 'move right until over pyramid']]
+		      `[compile [plan 'move right until over cube']]
+		      
+		      [defplan 'if a cube is to my left, move left until over cube'
+			:matches ['if [? condition], [? command]']
+			 :frame [[condition 'a cube is to my left']
+				 [command   'move left until over cube']]
+			  [if [plan-call [plan [? condition]]]
+			      [plan-call [plan [? command]]]]]
+		      
+		      [defplan 'if a cube is to my left, move left until over cube, otherwise move right until over cube'
+			:matches ['if [? condition], [? true_branch], otherwise [? false_branch]']
+			 :frame [[condition    'a cube is to my left']
+				 [true_branch  'move left until over cube']
+				 [false_brance 'move right until over cube']]
+			  [if [plan-call [plan [? condition]]]
+			      [plan-call [plan [? true_branch]]]
+			    [plan-call [plan [? false_branch]]]]]
+		      
+		      [defplan 'move slowly until over cube'
+			:matches ['move slowly until over [? shape]']
+			 :frame [[shape cube]]
+			  [plan-call [plan 'if a [? shape] is to my left, move slowly left until over [? shape], otherwise if a [? shape] is to my right, move slowly right until over [? shape]']]]
+		      
+		      [defplan 'move until over cube'
+			:matches ['move until over [? shape]']
+			 :frame [[shape cube]]
+			  [plan-call [plan 'if a [? shape] is to my left, move left until over [? shape], otherwise if a [? shape] is to my right, move right until over [? shape]']]
+			  [plan-call [plan 'move slowly until over [? shape]']]]
+		      
+		      [defplan 'attempt to grab block until gripper stops moving'
+			[call-below 'grab']
+			[wait-for-time 2]
+			[wait-for [property gripper property is-me t
+					    property movement_command
+					    stop]]]
+		      `[compile [plan 'attempt to grab block until gripper stops moving']]
+		      
+		      [defplan 'pick up a cube'
+			:matches ['pick up a [? shape]']
+			 :frame [[shape cube]]
+			  [plan-call [plan 'move until over [? shape]']]
+			  [plan-call [plan 'attempt to grab block until gripper stops moving']]
+			  [plan-call [plan 'assert that I am holding a [? shape]']]]
+		      
+		      [defplan 'test reaching and grabbing'
+			[plan-call [plan 'attempt to grab block until gripper stops moving']]]
+		      
+		      [defplan 'drop block and wait for block to fall'
+			[call-below 'drop']
+			[wait-for-time 20]]
+		      `[compile 'drop block and wait for block to fall']
+		      
+		      [defplan 'drop the block I am holding on a pyramid'
+			:matches ['drop the block I am holding on a [? shape]']
+			 :frame [[shape pyramid]]
+			  [plan-call [plan 'move until over [? shape]']]
+			  [plan-call [plan 'drop block and wait for block to fall']]]
+		      
+		      [defplan 'stack a cube on a pyramid'
+			:matches ['stack a [? top_shape] on a [? bottom_shape]']
+			 :frame [[top_shape    cube]
+				 [bottom_shape pyramid]]
+			  [plan-call [plan 'pick up a [? top_shape]']]
+			  [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
+			  [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
+		      
+		      ]]
+	 
+	 'reflective plans'
+	 
+	 [have this imagine_reflective_plan_expression
+	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property has_been_imagined t]]
+		      
+		      [defplan 'a planner to be focusing on a plan that has not been imagined'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property has_been_imagined nil]]
+		      
+		      [defplan 'a planner is focusing on a plan that has been imagined'
+			:matches ['[? subject] is [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'focusing on a plan that has been imagined']]
+			  [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
+		      
+		      [defplan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan'
+			:matches ['if [? condition], [? command]']
+			 :frame [[condition 'a planner is focusing on a plan that has been imagined']
+				 [command   'find next unimagined plan']]
+			  [if [plan-call [plan [? condition]]]
+			      [plan-call [plan [? command]]]]]
+		      
+		      [defplan 'find next unimagined plan'
+			[call-below 'focus on next object']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
+		      
+		      [defplan 'find unimagined plan'
+			[call-below 'focus on first plan']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
+		      
+		      [defplan 'find plan to accomplish goals'
+			[plan-call [plan 'find unimagined plan']]
+			[call-below 'imagine executing plan in focus']]]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   

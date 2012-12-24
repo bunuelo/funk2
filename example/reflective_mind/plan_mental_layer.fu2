@@ -315,6 +315,7 @@
 	symbol
       [prog [terminal_format standard-terminal '\n' [get this type] '-get-knowledge_symbol failure: unknown symbol (' symbol ')']
 	    [error bug_name             `plan_mental_layer-get-string_as_knowledge_symbol-no_such_knowledge_symbol
+		   is_plan_bug          t
 		   this                 this
 		   value                value
 		   symbol               symbol

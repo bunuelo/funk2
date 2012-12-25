@@ -168,9 +168,6 @@
 			  [if [not [plan-call [plan [? partial_state]]]]
 			      [fail]]]
 		      
-		      [defplan 'test negative cube below'
-			[plan-call [plan 'a cube is not below me']]]
-		      
 		      [defplan 'move slowly left until over pyramid'
 			:matches ['move slowly [? direction] until over [? shape]']
 			 :frame [[direction 'left']
@@ -235,9 +232,6 @@
 			  [plan-call [plan 'attempt to grab block until gripper stops moving']]
 			  [plan-call [plan 'assert that I am holding a [? shape]']]]
 		      
-		      [defplan 'test reaching and grabbing'
-			[plan-call [plan 'attempt to grab block until gripper stops moving']]]
-		      
 		      [defplan 'drop block and wait for block to fall'
 			[call-below 'drop']
 			[wait-for-time 20]]
@@ -299,10 +293,10 @@
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      
-		      [defplan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan'
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find plan to cause a cube to be on a pyramid'
 			:matches ['if [? condition], [? command]']
-			 :frame [[condition 'a planner is focusing on a plan that has been imagined']
-				 [command   'find next unimagined plan']]
+			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']
+				 [command   'find plan to cause a cube to be on a pyramid']]
 			  [if [plan-call [plan [? condition]]]
 			      [plan-call [plan [? command]]]]]
 		      

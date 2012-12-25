@@ -1063,7 +1063,14 @@
 												  [error bug_name `nonsemantic_plan-get-execution_node_as_code-plan_call-no_nonbug_plans
 													 plan     plan
 													 nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-												`[plan-call ,[get [first nonbug_plans] value]]]]
+												[let [[successful_plans nil]
+												      [iter             nonbug_plans]]
+												  [while iter
+												    [let [[nonbug_plan [car iter]]]
+												      [if [not [get [get nonbug_plan value] imagined_complete_failure]]
+													  [= successful_plans [cons nonbug_plan successful_plans]]]]
+												    [= iter [cdr iter]]]
+												  `[plan-call ,[get [first successful_plans] value]]]]]
 											  [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
 										argument_decision_nodes]]]]
 		[if [== [length multiple_interpretations] 1]
@@ -1082,10 +1089,10 @@
 			    [[eq subnode-node_type `if-true]      [= if_true_nodes      [cons subnode if_true_nodes]]]
 			    [[eq subnode-node_type `if-false]     [= if_false_nodes     [cons subnode if_false_nodes]]]]]]]
 	  subnodes]
-    [terminal_format standard-terminal
-		     '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
-		     '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
-		     '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
+    `[terminal_format standard-terminal
+		      '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
+		      '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
+		      '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
     [let [[if_condition_interpretations [remove_equals_duplicates [mapcar [funk [if_condition_node]
 										[get this execution_node_as_code [first [get if_condition_node subnodes]]]]
 									  if_condition_nodes]]]

@@ -168,9 +168,6 @@
 			  [if [not [plan-call [plan [? partial_state]]]]
 			      [fail]]]
 		      
-		      [defplan 'test negative cube below'
-			[plan-call [plan 'a cube is not below me']]]
-		      
 		      [defplan 'move slowly left until over pyramid'
 			:matches ['move slowly [? direction] until over [? shape]']
 			 :frame [[direction 'left']
@@ -234,9 +231,6 @@
 			  [plan-call [plan 'move until over [? shape]']]
 			  [plan-call [plan 'attempt to grab block until gripper stops moving']]
 			  [plan-call [plan 'assert that I am holding a [? shape]']]]
-		      
-		      [defplan 'test reaching and grabbing'
-			[plan-call [plan 'attempt to grab block until gripper stops moving']]]
 		      
 		      [defplan 'drop block and wait for block to fall'
 			[call-below 'drop']

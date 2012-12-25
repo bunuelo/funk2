@@ -1031,6 +1031,8 @@
 	  sequence]
     new_sequence]]
 
+[globalize nonsemantic_plan-compile_multiple_interpretations_mode nil]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-plan_call [nonsemantic_plan_execution_node]
   [let [[plan [get nonsemantic_plan_execution_node variable_value `plan]]]
     [let [[subnodes                [get nonsemantic_plan_execution_node subnodes]]
@@ -1075,7 +1077,9 @@
 										argument_decision_nodes]]]]
 		[if [== [length multiple_interpretations] 1]
 		    [first multiple_interpretations]
-		  `[multiple_interpretations @multiple_interpretations]]]]]]]]
+		  [if nonsemantic_plan-compile_multiple_interpretations_mode
+		      `[multiple_interpretations @multiple_interpretations]
+		    [first multiple_interpretations]]]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-if [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
@@ -1105,13 +1109,19 @@
       `[if ,[cond [[null if_condition_interpretations]          [error bug_name `nonsemantic_plan-get-execution_node_as_code-if-if_condition_interpretations_is_null
 								       subnodes subnodes]]
 		  [[== [length if_condition_interpretations] 1] [first if_condition_interpretations]]
-		  [t                                            `[multiple_interpretations @if_condition_interpretations]]]
+		  [t                                            [if nonsemantic_plan-compile_multiple_interpretations_mode
+								    `[multiple_interpretations @if_condition_interpretations]
+								  [first if_condition_interpretations]]]]
 	   ,[cond [[null if_true_nodes]                         `[fail]]
 		  [[== [length if_true_interpretations]      1] [first if_true_interpretations]]
-		  [t                                            `[multiple_interpretations @if_true_interpretations]]]
+		  [t                                            [if nonsemantic_plan-compile_multiple_interpretations_mode
+								    `[multiple_interpretations @if_true_interpretations]
+								  [first if_true_interpretations]]]]
 	 @[cond [[null if_false_interpretations]                [conslist `[fail]]]
 		[[== [length if_false_interpretations]       1] [conslist [first if_false_interpretations]]]
-		[t                                              [conslist `[multiple_interpretations @if_false_interpretations]]]]]]]]
+		[t                                              [conslist [if nonsemantic_plan-compile_multiple_interpretations_mode
+									      `[multiple_interpretations @if_false_interpretations]
+									    [first if_false_interpretations]]]]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-exists [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]

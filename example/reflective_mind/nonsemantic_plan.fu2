@@ -1788,7 +1788,13 @@
 								      plan           plan]]]]]
 
 [defplanfunk imagine not [truth_value]
-  [get truth_value negative]]
+  [if [is-type `exact_boolean_nonsemantic_plan_value truth_value]
+      [get truth_value negative]
+    [error bug_name     `defplanfunk-not-invalid_type
+	   is_plan_bug  t
+	   correct_type `exact_boolean_nonsemantic_plan_value
+	   actual_type  [type truth_value]
+	   truth_value  truth_value]]]
 
 [defplanfunk imagine exists [partial_state]
   [have nonsemantic_plan check_exists partial_state]]

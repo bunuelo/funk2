@@ -1486,7 +1486,7 @@
 	[defplancommand-raw compile_mode name arguments planfunk_body]]]]]
 
 [defplancommand imagine eval [expression]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[eval ,expression]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[eval ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[expression [quote ,expression]]]
 		 [terminal_format standard-terminal '\nplan imagine warning: not imagining eval, ' expression '.']
@@ -1496,7 +1496,7 @@
   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value expression]]]]
 
 [defplancommand imagine quote [expression]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[quote ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [defplancommand-quote-evaluate nonsemantic_plan [quote ,expression]]]]]
 
@@ -1510,7 +1510,7 @@
       result]]]
 
 [defplancommand imagine prog [:rest expressions]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[prog @expressions]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[prog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [terminal_format standard-terminal '\nplan imagining evaluating serial process.']
 	       [let [[current_nonsemantic_plan_execution_node  nil]
@@ -1541,7 +1541,7 @@
     [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 
 [defplancommand imagine parog [:rest expressions]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[step_complete_failure             nil]
 		     [step_complete_failure_expressions nil]]
@@ -1636,7 +1636,7 @@
 	     true_expression   true_expression
 	     false_expressions false_expressions]
     [let [[false_expression [if false_expressions [car false_expressions]]]]
-      [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
+      `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[if ,condition ,true_expression @false_expressions]]
       [eval `[funk [nonsemantic_plan]
 		   [defplancommand-if-evaluate
 		     nonsemantic_plan
@@ -1648,12 +1648,13 @@
 		     ,[get nonsemantic_plan expression-compile false_expression compile_option_frame]]]]]]]
 
 [defunk defplancommand-?-evaluate [nonsemantic_plan variable_name]
-  [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
-    [terminal_format standard-terminal '\nplan looking up variable value, ' variable_name '.']
-    [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [have semantic_thought lookup_a_variable_value variable_name]]]]]]
+  [let* [[semantic_thought [cause-lookup cause-semantic_thought]]
+	 [variable_value   [have semantic_thought lookup_a_variable_value variable_name]]]
+    [terminal_format standard-terminal '\nplan looking up variable value, ' variable_name ' = "' variable_value '"']
+    [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value variable_value]]]]]
 
 [defplancommand imagine ? [variable_name]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[? ,variable_name]]
   [eval `[funk [nonsemantic_plan]
 	       [defplancommand-?-evaluate
 		 nonsemantic_plan
@@ -1669,7 +1670,7 @@
       result]]]
 
 [defplancommand imagine defplan [name_expression :rest arguments]
-  [terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
+  `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
   [let [[name_patterns        nil]
 	[variable_definitions nil]
 	[plan_body_expression nil]]

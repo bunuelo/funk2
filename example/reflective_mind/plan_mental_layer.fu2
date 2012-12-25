@@ -305,10 +305,10 @@
   [get knowledge_symbol_set elements]]
 
 [deftypefunk plan_mental_layer get knowledge_symbol_without_checks [value]
-  [cond [[is-type `semantic_partial_state value] [get semantic_partial_state phenomenal_name]]
-	[[null                            value] value]
-	[[is-type `symbol                 value] value]
-	[t                                       [get value as-symbol]]]]
+  [name_expression-as-symbol_or_nil [cond [[is-type `semantic_partial_state value] [get semantic_partial_state phenomenal_name]]
+					  [[null                            value] value]
+					  [[is-type `symbol                 value] value]
+					  [t                                       [get value as-symbol]]]]]
 
 [deftypefunk plan_mental_layer get knowledge_symbol [value]
   [have this assure_knowledge_symbols_initialized]

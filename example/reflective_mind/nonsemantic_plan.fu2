@@ -110,20 +110,6 @@
        [construct nonsemantic_plan_value]
        [= value initial-value]]]
 
-[deftypefunk exact_nonsemantic_plan_value get negative []
-  [if [not [or [null value]
-	       [eq value `t]]]
-      [error bug_name    `exact_nonsemantic_plan_value-negative-must_be_nil_or_t
-	     is_plan_bug t
-	     value       value
-	     this        this]
-    [let [[new_value [new exact_nonsemantic_plan_value [not value]]]]
-      [mapc [funk [partial_state_existence_dependency]
-		  [have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
-	    [get partial_state_existence_dependency_set elements]]
-      [have new_value add_value_dependency this]
-      new_value]]]
-
 [deftypefunk exact_nonsemantic_plan_value get as-nonsemantic_plan_execution_node_graph_node [graph node_ptypehash]
   [let [[this-graph_node [have node_ptypehash lookup this]]]
     [if [not this-graph_node]
@@ -135,13 +121,29 @@
     this-graph_node]]
 
 
-[deframe exact_boolean_nonsemantic_plan_value [nonsemantic_plan_value] [value]
+'exact_boolean_nonsemantic_plan_value'
+
+[deframe exact_boolean_nonsemantic_plan_value [exact_nonsemantic_plan_value] [value]
   [new [initial-value]
        [if [not [or [null initial-value]
 		    [eq initial-value `t]]]
 	   [error bug_name      exact_boolean_nonsemantic_plan_value-new-invalid_type
 		  initial-value initial-value]
 	 [construct exact_nonsemantic_plan_value initial-value]]]]
+
+[deftypefunk exact_boolean_nonsemantic_plan_value get negative []
+  [if [not [or [null value]
+	       [eq value `t]]]
+      [error bug_name    `exact_boolean_nonsemantic_plan_value-negative-must_be_nil_or_t
+	     is_plan_bug t
+	     value       value
+	     this        this]
+    [let [[new_value [new exact_boolean_nonsemantic_plan_value [not value]]]]
+      [mapc [funk [partial_state_existence_dependency]
+		  [have new_value add_partial_state_existence_dependency partial_state_existence_dependency]]
+	    [get partial_state_existence_dependency_set elements]]
+      [have new_value add_value_dependency this]
+      new_value]]]
 
 
 'multiple_possible_values'

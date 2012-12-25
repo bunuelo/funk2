@@ -305,7 +305,7 @@
   [get knowledge_symbol_set elements]]
 
 [deftypefunk plan_mental_layer get knowledge_symbol_without_checks [value]
-  [name_expression-as-symbol_or_nil [cond [[is-type `semantic_partial_state value] [get semantic_partial_state phenomenal_name]]
+  [name_expression-as-symbol_or_nil [cond [[is-type `semantic_partial_state value] [get value phenomenal_name]]
 					  [[null                            value] value]
 					  [[is-type `symbol                 value] value]
 					  [t                                       [get value as-symbol]]]]]

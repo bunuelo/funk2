@@ -1080,10 +1080,10 @@
 			    [[eq subnode-node_type `if-true]      [= if_true_nodes      [cons subnode if_true_nodes]]]
 			    [[eq subnode-node_type `if-false]     [= if_false_nodes     [cons subnode if_false_nodes]]]]]]]
 	  subnodes]
-    `[terminal_format standard-terminal
-		      '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
-		      '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
-		      '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
+    [terminal_format standard-terminal
+		     '\nnonsemantic_plan-get-execution_node_as_code-if: ' [length if_condition_nodes] ' if_condition_nodes = ' if_condition_nodes
+		     '\n                                                ' [length if_true_nodes]      ' if_true_nodes      = ' if_true_nodes
+		     '\n                                                ' [length if_false_nodes]     ' if_false_nodes     = ' if_false_nodes]
     [let [[if_condition_interpretations [remove_equals_duplicates [mapcar [funk [if_condition_node]
 										[get this execution_node_as_code [first [get if_condition_node subnodes]]]]
 									  if_condition_nodes]]]

@@ -133,5 +133,10 @@
 		assert_value  assert_value]
        assert_value]]]
 
+[defmetro globalize-bug [bug_type bug]
+  [let [[bug_type_count_symbol [get [format nil bug_type '_count'] as-symbol]]]
+    `[let [[global_environment-frame [get [system-environment [system-node_id]] frame]]]
+       [if [not [get global_environment-frame contains [quote ,bug_type_count_symbol]]]
+	   [globalize ,bug_type_count_symbol 0]]
+       [eval `[globalize ,[get [format nil [quote ,bug_type] '-' ,bug_type_count_symbol] as-symbol] ,[quote ,bug]]]]]]
 
-  

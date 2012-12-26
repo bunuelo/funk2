@@ -697,7 +697,7 @@
 
 [deftypefunk nonsemantic_plan get expression-compile-symbol [expression compile_option_frame]
   [eval `[funk [this]
-	       [nonsemantic_plan-compile-return_simple_value `symbol ,expression]]]]
+	       [nonsemantic_plan-compile-return_simple_value `symbol [quote ,expression]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]

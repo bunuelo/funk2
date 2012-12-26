@@ -1791,7 +1791,10 @@
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nimagining executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [if [get cause-nonsemantic_plan_current_execution_set contains nonsemantic_plan]
-									 [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
+									 [prog [terminal_format standard-terminal
+												'\n' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'
+												'\n  nonsemantic_plan = ' nonsemantic_plan]
+									       [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 								       [have nonsemantic_plan imagine_as_thought [frame]]]]]
 	  [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 								      execution_mode cause-nonsemantic_plan_execution_mode

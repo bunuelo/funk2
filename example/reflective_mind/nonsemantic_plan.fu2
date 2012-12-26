@@ -701,7 +701,7 @@
 
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
-	       [nonsemantic_plan-compile-return_simple_value `string [have semantic_thought evaluate_string ,expression]]]]]
+	       [nonsemantic_plan-compile-return_simple_value `string [have cause-semantic_thought evaluate_string ,expression]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-semantic_plan_object [expression compile_option_frame]
   [eval `[funk [this]

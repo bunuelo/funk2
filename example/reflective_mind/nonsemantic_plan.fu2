@@ -211,13 +211,15 @@
        [= supernode                    [cause-lookup cause-nonsemantic_plan_execution_node]]
        [if supernode
 	   [prog [have [get supernode subnode_set] add this]]]
-       [if [null [cause-lookup cause-nonsemantic_plan_execution_node]]
+       [if [null [cause-lookup cause-top_execution_node]]
 	   [if [null [cause-lookup cause-nonsemantic_plan_execution_mode]]
 	       [error bug_name   `nonsemantic_plan_execution_node-new-nonsemantic_plan_execution_mode-not_defined
 		      node_type  node_type
 		      expression expression]
-	     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [have cause-top_nonsemantic_plan add_executed_top_execution_node this]]
-		   [[eq cause-nonsemantic_plan_execution_mode `imagine] [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]
+	     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [=    cause-top_execution_node                                   this]
+									      [have cause-top_nonsemantic_plan add_executed_top_execution_node this]]]
+		   [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [=    cause-top_execution_node                                   this]
+									      [have cause-top_nonsemantic_plan add_imagined_top_execution_node this]]]
 		   [t                                                   [error bug_name       `nonsemantic_plan_execution_node-new-invalid_execution_mode
 									       execution_mode cause-nonsemantic_plan_execution_mode
 									       node_type      node_type
@@ -817,7 +819,8 @@
 [deftypefunk nonsemantic_plan execute imagine_as_thought [variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: imagining executing "' [get this name_expression] '" with ' variable_frame '.']
   [with-new-cause [if [null [cause-lookup cause-top_nonsemantic_plan]]
-		      [prog [cause-define cause-top_nonsemantic_plan                   this]
+		      [prog [cause-define cause-top_execution_node                     nil]
+			    [cause-define cause-top_nonsemantic_plan                   this]
 			    [cause-define cause-imagine_time                           [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree            [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set         [new set]]
@@ -892,7 +895,8 @@
 [deftypefunk nonsemantic_plan execute execute_as_thought [variable_frame]
   [terminal_format standard-terminal '\nnonsemantic_plan: executing "' [get this name_expression] '" with ' variable_frame '.']
   [with-new-cause [if [null [cause-lookup cause-top_nonsemantic_plan]]
-		      [prog [cause-define cause-top_nonsemantic_plan                             this]
+		      [prog [cause-define cause-top_execution_node                               nil]
+			    [cause-define cause-top_nonsemantic_plan                             this]
 			    [cause-define cause-imagine_time                                     [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree                      [new semantic_event_tree]]
 			    [cause-define cause-traced_resource_activation_set                   [new set]]

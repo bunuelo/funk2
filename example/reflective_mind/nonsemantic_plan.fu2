@@ -1038,7 +1038,7 @@
 	    [mapc [funk [return_value]
 			[if [is-type `bug return_value]
 			    [let [[bug return_value]]
-			      [globalize-bug plan_return_bug bug]]]]
+			      [eval `[globalize-bug plan_return_bug ,bug]]]]]
 		  return_values]
 	    [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes
 		   subnodes                        subnodes

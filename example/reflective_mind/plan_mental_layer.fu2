@@ -177,11 +177,10 @@
       [if [null semantic_plans]
 	  [let [[semantic_plan_matches [have this lookup_semantic_plan_matches plan_name]]]
 	    [mapc [funk [semantic_plan_match]
-			[terminal_format standard-terminal '\n' [get this name] ' nonsemantic_plan: semantic_plan_match = ' `semantic_plan_match]
 			[let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
 			      [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]
 			      [match-pattern_name         [have semantic_plan_match lookup `pattern_name]]]
-			  [terminal_format standard-terminal '\nfound plan with variable frame! "' match-pattern_name '" ' match-variable_frame]
+			  [terminal_format standard-terminal '\n' [type this] ' found plan with variable frame! "' match-pattern_name '" ' match-variable_frame]
 			  [if [null match-semantic_plan_object]
 			      [error bug_name    `nonsemantic_plan-plan-no_such_plan
 				     action_name semantic_plan_object-phenomenal_name]

@@ -547,7 +547,7 @@
 										      correct_type `semantic_partial_state
 										      actual_type  [type semantic_partial_state]]
 									     [let [[found_event [have [get this mental_layer] imagine_check_exists semantic_partial_state]]]
-									       [cond [[null found_event]                              [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan imagine: did not find existence event, so using current actual physical knowledge.']
+									       [cond [[null found_event]                              [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagine: did not find existence event, so using current actual physical knowledge.']
 																	    [let* [[simple_truth_value     [have [get this mental_layer_below] check_exists semantic_partial_state]]
 																		   [exact_boolean_nonsemantic_plan_value [new exact_boolean_nonsemantic_plan_value simple_truth_value]]]
 																	      [have exact_boolean_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]
@@ -652,7 +652,7 @@
 		  [not [have [get bug frame] lookup `is_plan_bug]]]
 	      [let [[global_bug_name [get [string-concat 'plan_bug-' [get plan_bug_count as-string]] as-symbol]]]
 		[++ plan_bug_count]
-		[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan plan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
+		[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: plan "' [get this as-string] '": globally defining bug as ' global_bug_name '.']
 		[eval `[globalize ,global_bug_name [quote ,bug]]]]]
 	  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: returning bug ' bug]]]
     result]]
@@ -756,7 +756,7 @@
 		[if [not [eq bug_name `nonsemantic_plan-expression_encountered_bug]]
 		    [let [[global_bug_name [get [string-concat 'imagine_expression_bug-' [get imagine_expression_bug_count as-string]] as-symbol]]]
 		      [++ imagine_expression_bug_count]
-		      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan globally defining bug as ' global_bug_name '.']
+		      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: globally defining bug as ' global_bug_name '.']
 		      [eval `[globalize ,global_bug_name [quote ,bug]]]]]
 		[error bug_name         `nonsemantic_plan-expression_encountered_bug
 		       expression       expression
@@ -842,9 +842,9 @@
 					 nil]]
 			    [get imagined_top_execution_node_set elements]]
 		      [mapc [funk [imagined_top_execution_node]
-				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
 			    [get imagined_top_execution_node_set elements]]
-		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plannonsemantic_plan: done imagining executing "' [get this name_expression] '".']
+		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      result]]]]
 
@@ -860,7 +860,7 @@
 			    [= top_nonsemantic_plan_execution_nodes imagined_top_execution_nodes]]]]]
     [let [[top_nonsemantic_plan_execution_node [first top_nonsemantic_plan_execution_nodes]]]
       [let [[execution_code [get this execution_node_as_code top_nonsemantic_plan_execution_node]]]
-	[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan execution_code: ' execution_code '\n']
+	[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: execution_code: ' execution_code '\n']
 	[let [[compile_option_frame [frame mode `imagine]]]
 	  [get this expression-compile execution_code compile_option_frame]]]]]]
 
@@ -908,7 +908,7 @@
 					 nil]]
 			    [get executed_top_execution_node_set elements]]
 		      [mapc [funk [executed_top_execution_node]
-				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan compiled: ' [get this execution_node_as_code executed_top_execution_node]]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: compiled: ' [get this execution_node_as_code executed_top_execution_node]]]
 			    [get executed_top_execution_node_set elements]]
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
@@ -1393,7 +1393,7 @@
 	  [let [[done nil]]
 	    [while [not done]
 	      `[terminal_format standard-terminal
-				'\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan apply: argument_max_index = ' argument_max_index
+				'\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: apply: argument_max_index = ' argument_max_index
 				'\n       argument_index     = ' argument_index]
 	      [let* [[single_arguments_bugs nil]
 		     [single_arguments      [let [[index 0]]
@@ -1497,7 +1497,7 @@
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[eval ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[expression [quote ,expression]]]
-		 [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan imagine warning: not imagining eval, ' expression '.']
+		 [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagine warning: not imagining eval, ' expression '.']
 		 [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]]]
 
 [defunk defplancommand-quote-evaluate [nonsemantic_plan expression]
@@ -1520,7 +1520,7 @@
 [defplancommand imagine prog [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[prog @expressions]]
   [eval `[funk [nonsemantic_plan]
-	       [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan imagining evaluating serial process.']
+	       [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining evaluating serial process.']
 	       [let [[current_nonsemantic_plan_execution_node  nil]
 		     [previous_nonsemantic_plan_execution_node nil]]
 		 @[parcar [funk [expression]
@@ -1574,7 +1574,7 @@
 				     [let [[result [shelter [funkall condition_expression_compiled_funk nonsemantic_plan]]]]
 				       [if [is-type `bug result]
 					   [let [[bug result]]
-					     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if true_result bug: ' bug]
+					     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if true_result bug: ' bug]
 					     [if [not [have [get bug frame] lookup `is_plan_bug]]
 						 [bug bug]]]]
 				       [have nonsemantic_plan_execution_node add_return_value result]
@@ -1584,10 +1584,10 @@
 	   [conditions                      [get multiple_possible_values values]]
 	   [conditions-length               [length conditions]]
 	   [index                           0]]
-      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if: considering ' conditions-length ' conditions.']
+      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: considering ' conditions-length ' conditions.']
       [mapc [funk [one_condition]
 		  [++ index]
-		  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if: considering condition ' index '/' conditions-length ': ' `one_condition]
+		  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: considering condition ' index '/' conditions-length ': ' `one_condition]
 		  [if [not [is-type `exact_boolean_nonsemantic_plan_value one_condition]]
 		      [let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_not_boolean
 							is_plan_bug   t
@@ -1596,7 +1596,7 @@
 			[have result_multiple_possible_values add_value bug_result]]
 		    [let [[one_condition-value [get one_condition value]]]
 		      [if [is-type `bug one_condition-value]
-			  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if: condition ' index '/' conditions-length ' is bug.']
+			  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is bug.']
 				[let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_bug
 								  subbug        one_condition-value
 								  is_plan_bug   t
@@ -1604,7 +1604,7 @@
 				  [have multiple_possible_values        add_value bug_result]
 				  [have result_multiple_possible_values add_value bug_result]]]
 			[if [get one_condition value]
-			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if: condition ' index '/' conditions-length ' is true.']
+			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is true.']
 				  [let [[true_result [with-new-cause [cause-define cause-last_decision_value one_condition]
 								     [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true true_expression]]]
 								       [cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
@@ -1619,7 +1619,7 @@
 					       true_result true_result]]
 				    [have multiple_possible_values        add_value true_result]
 				    [have result_multiple_possible_values add_value true_result]]]
-			  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan if: condition ' index '/' conditions-length ' is false.']
+			  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is false.']
 				[let [[false_result [with-new-cause [cause-define cause-last_decision_value one_condition]
 								    [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false false_expression]]]
 								      [cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
@@ -1658,7 +1658,7 @@
 [defunk defplancommand-?-evaluate [nonsemantic_plan variable_name]
   [let* [[semantic_thought [cause-lookup cause-semantic_thought]]
 	 [variable_value   [have semantic_thought lookup_a_variable_value variable_name]]]
-    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan looking up variable value, ' variable_name ' = "' variable_value '"']
+    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan looking up variable value, ' variable_name ' = "' variable_value '"']
     [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value variable_value]]]]]
 
 [defplancommand imagine ? [variable_name]
@@ -1669,7 +1669,7 @@
 		 [quote ,variable_name]]]]]
 
 [defunk defplancommand-defplan-evaluate [nonsemantic_plan name_expression name_patterns variable_definitions plan_body_expression]
-  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan ' [conslist `defplan name_expression]]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: ' [conslist `defplan name_expression]]
   [let* [[new_nonsemantic_plan     [new nonsemantic_plan [get nonsemantic_plan mental_layer] name_expression name_patterns variable_definitions plan_body_expression]]
 	 [new_semantic_plan_object [get new_nonsemantic_plan semantic_plan_object]]]
     [have [get nonsemantic_plan mental_layer] add_semantic_plan new_semantic_plan_object]
@@ -1678,7 +1678,7 @@
       result]]]
 
 [defplancommand imagine defplan [name_expression :rest arguments]
-  `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan nonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
+  `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: nonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
   [let [[name_patterns        nil]
 	[variable_definitions nil]
 	[plan_body_expression nil]]
@@ -1735,7 +1735,7 @@
 								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan calling: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan calling: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
@@ -1744,7 +1744,7 @@
 								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan imagining calling: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining calling: "' [get action as-string] '."']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-call_below-invalid_execution_mode
@@ -1759,7 +1759,7 @@
 								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan waiting to call: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
@@ -1768,7 +1768,7 @@
 								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
 									    is_plan_bug t
 									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan imagining waiting to call: "' [get action as-string] '."']
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-call-invalid_execution_mode
@@ -1788,12 +1788,12 @@
 [defplanfunk imagine plan-call [plan]
   [let* [[semantic_plan_object [get plan value]]
 	 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan executing plan: "' [get nonsemantic_plan as-string] '"']
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan imagining executing plan: "' [get nonsemantic_plan as-string] '"']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: imagining executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [if [get cause-nonsemantic_plan_current_execution_set contains nonsemantic_plan]
 									 [prog [terminal_format standard-terminal
-												'\n' [type [get nonsemantic_plan mental_layer]] '-' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'
+												'\n' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'
 												'\n  nonsemantic_plan = ' nonsemantic_plan]
 									       [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 								       [have nonsemantic_plan imagine_as_thought [frame]]]]]
@@ -1814,10 +1814,10 @@
   [have nonsemantic_plan check_exists partial_state]]
 
 [defplanfunk imagine wait-for [partial_state]
-  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
+  [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
 								   [have nonsemantic_plan wait_for [get partial_state value]]
 								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
-	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan plan imagining waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
+	[[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']
 								   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-wait_for-invalid_execution_mode
 								    execution_mode   cause-nonsemantic_plan_execution_mode

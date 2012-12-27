@@ -293,7 +293,7 @@
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      
-		      [defplan 'test a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
+		      [defplan 'test a planner is focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
 			[plan-call [plan 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']]]
 		      
 		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid'

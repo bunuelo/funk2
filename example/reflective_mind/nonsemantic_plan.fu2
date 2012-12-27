@@ -1034,14 +1034,13 @@
 			[= argument_decision_nodes [cons subnode argument_decision_nodes]]]]]
 	    subnodes]
       [if [null argument_decision_nodes]
-	  [let [[return_values [get [get nonsemantic_plan_execution_node return_value_set] elements]]
-		[subbug        nil]]
+	  [let [[return_values [get [get nonsemantic_plan_execution_node return_value_set] elements]]]
 	    [mapc [funk [return_value]
 			[if [is-type `bug return_value]
-			    [= subbug return_value]]]
+			    [let [[bug return_value]]
+			      [globalize-bug plan_return_bug bug]]]]
 		  return_values]
 	    [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes
-		   subbug                          subbug
 		   subnodes                        subnodes
 		   nonsemantic_plan_execution_node nonsemantic_plan_execution_node
 		   this                            this

@@ -1790,7 +1790,7 @@
 	 [nonsemantic_plan     [get semantic_plan_object nonsemantic_plan]]]
     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\nimagining executing plan: "' [get nonsemantic_plan as-string] '"']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan imagining executing plan: "' [get nonsemantic_plan as-string] '"']
 								     [if [get cause-nonsemantic_plan_current_execution_set contains nonsemantic_plan]
 									 [prog [terminal_format standard-terminal
 												'\n' [type [get nonsemantic_plan mental_layer]] '-' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'

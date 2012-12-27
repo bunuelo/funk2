@@ -1522,7 +1522,7 @@
   [cause-define cause-prog-current_nonsemantic_plan_execution_node  nil]
   [cause-define cause-prog-previous_nonsemantic_plan_execution_node nil]]
 
-[defunk defplancommand-prog-for_each_expression [expression expression_compiled_funk]
+[defunk defplancommand-prog-for_each_expression [nonsemantic_plan expression expression_compiled_funk]
   [with-new-cause [= cause-prog-previous_nonsemantic_plan_execution_node cause-prog-current_nonsemantic_plan_execution_node]
 		  [= cause-prog-current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `prog-sequence expression]]
 		  [if cause-prog-previous_nonsemantic_plan_execution_node
@@ -1537,7 +1537,7 @@
   [eval `[funk [nonsemantic_plan]
 	       [defplancommand-prog-initialize nonsemantic_plan]
 	       @[parcar [funk [expression]
-			      `[defplancommand-prog-for_each_expression [quote ,expression] ,[get nonsemantic_plan expression-compile expression compile_option_frame]]]
+			      `[defplancommand-prog-for_each_expression nonsemantic_plan [quote ,expression] ,[get nonsemantic_plan expression-compile expression compile_option_frame]]]
 			expressions]]]]
 
 [defunk defplancommand-parog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]

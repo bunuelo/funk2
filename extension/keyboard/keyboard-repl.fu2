@@ -469,7 +469,8 @@
     [have keyboard_editor reads]]]
 
 [defunk keyboard-repl []
-  [shelter [cause-define cause-name `keyboard-repl]
+  [shelter [cause-enable_reactive_critics [this-cause]]
+           [cause-define cause-name `keyboard-repl]
 	   [let [[keyboard_editor [new keyboard_editor]]
 		 [repl_bug_count  0]]
 	     [have current_keyboard_editor_mutex lock]

@@ -275,10 +275,9 @@
     [mutate seq [cdr seq]]]]
 
 [defunk critic-reactive-basic_unknown_bug [fiber]
-  [terminal_format standard-terminal [object-get fiber `value]]]
+  [terminal_format standard-terminal '\ncritic-reactive-basic_unknown_bug: ' [object-get fiber `value]]]
 
 [defunk cause-enable_reactive_critics [this]
-  `[format stdout '\ncompile note: reactive_critics not yet defined.']
   [object-set this `critics &critic-reactive-basic_unknown_bug]
   nil]
 

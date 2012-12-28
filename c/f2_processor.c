@@ -826,7 +826,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
 	  pause_gc();
-	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critics, raw__cons__new(processor_cause, fiber, nil));
+	  f2ptr critic_funk = critics;
+	  f2ptr new_fiber   = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critic_funk, raw__cons__new(processor_cause, fiber, nil));
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
 	    if (raw__larva__is_type(processor_cause, result)) {

@@ -891,10 +891,10 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	s64   max_nanoseconds_for_resize__i       = f2integer__i(max_nanoseconds_for_resize, cause);
 	s64   start_nanoseconds_since_1970        = raw__nanoseconds_since_1970();
 	{
-	  s64   low_successful_size           = 0;
-	  s64   high_unsuccessful_size        = 0;
-	  f2ptr max_size                      = original_max_size;
-	  s64   max_size__i                   = f2integer__i(max_size, cause);
+	  s64   low_successful_size    = 0;
+	  s64   high_unsuccessful_size = 0;
+	  f2ptr max_size               = original_max_size;
+	  s64   max_size__i            = f2integer__i(max_size, cause);
 	  s64   last_max_size__i;
 	  raw__terminal_print_frame__failed_max_size_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__false));
 	  f2ptr size_that_fails_to_fit_within_height_constraint = raw__terminal_print_frame__expression_size_that_fails_to_fit_within_height_constraint__thread_unsafe(cause, terminal_print_frame, this);
@@ -998,6 +998,7 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
   raw__terminal_print_frame__use_one_line__set(   cause, terminal_print_frame, use_one_line);
   raw__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   raw__terminal_print_frame__resize_to_fit__set(  cause, terminal_print_frame, resize_to_fit);
+  status("raw__exp__terminal_print_with_frame__thread_unsafe: successfully completed.");
   return nil;
 }
 

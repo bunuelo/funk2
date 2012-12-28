@@ -934,16 +934,11 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	      status("raw__exp__terminal_print_with_frame__thread_unsafe: last_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
 	      if (max_size__i == 0) {
 		if (testing == nil) {
-		  return f2larva__new(cause, 3342,
-				      f2__bug__new(cause, f2integer__new(cause, 3342),
-						   f2__frame__new(cause, f2list10__new(cause, 
-										       new__symbol(cause, "bug_type"),       new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"),
-										       new__symbol(cause, "funk_name"),      new__symbol(cause, "raw__exp__terminal_print_with_frame__thread_unsafe"),
-										       new__symbol(cause, "source_file"),    new__string(cause, __FILE__),
-										       new__symbol(cause, "source_line"),    f2integer__new(cause, __LINE__),
-										       new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
-																				new__symbol(cause, "this"),                 this,
-																				new__symbol(cause, "terminal_print_frame"), terminal_print_frame))))));
+		  return new__error(f2list10__new(cause,
+						  new__symbol(cause, "bug_name"),       new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"),
+						  new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
+															   new__symbol(cause, "this"),                 this,
+															   new__symbol(cause, "terminal_print_frame"), terminal_print_frame))));
 		} else {
 		  raw__terminal_print_frame__failed_max_height_constraint__set(cause, terminal_print_frame, f2bool__new(boolean__true));
 		}
@@ -969,7 +964,8 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	      }
 	    }
 	  }
-	  if (low_successful_size > 0) {
+	  if ((low_successful_size > 0) ||
+	      (high_unsuccessful_size == 2)) {
 	    max_size__i = low_successful_size;
 	    max_size    = f2integer__new(cause, max_size__i);
 	    raw__terminal_print_frame__max_size__set(cause, terminal_print_frame, max_size);

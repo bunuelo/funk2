@@ -817,7 +817,8 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
       if (need_to_launch_larva_handling_critic_fiber) {
 	f2ptr cause_reg = f2fiber__cause_reg(fiber, processor_cause);
 	f2ptr critics   = cause_reg ? f2cause__critics(cause_reg, processor_cause) : nil;
-	if (critics) {
+	if (raw__funkable__is_type(cause, critics)) {
+	  f2ptr critic_funk = critics; // this should be a list.  todo: change everything.
 	  f2ptr fiber_cause = f2fiber__cause_reg(fiber, processor_cause);
 	  if (raw__larva__is_type(processor_cause, f2fiber__value(fiber, processor_cause))) {
 	    f2ptr larva      = f2fiber__value(fiber, processor_cause);
@@ -825,9 +826,9 @@ f2ptr f2processor__execute_next_bytecodes(f2ptr processor, f2ptr processor_cause
 	    status("larva type (" u64__fstr ") found in fiber and fiber has a critic, so launching critic fiber in serial.", larva_type);
 	  }
 	  //status("\n  critic="); f2__fiber__print(cause, nil, critics); fflush(stdout);
+	  status("bug handling critic launching.");
 	  pause_gc();
-	  f2ptr critic_funk = critics;
-	  f2ptr new_fiber   = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critic_funk, raw__cons__new(processor_cause, fiber, nil));
+	  f2ptr new_fiber = raw__fiber__new(fiber_cause, fiber, f2fiber__env(fiber, processor_cause), critic_funk, raw__cons__new(processor_cause, fiber, nil));
 	  {
 	    f2ptr result = raw__processor__add_active_fiber(fiber_cause, processor, new_fiber);
 	    if (raw__larva__is_type(processor_cause, result)) {

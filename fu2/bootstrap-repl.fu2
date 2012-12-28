@@ -773,10 +773,15 @@
 					  @codes]
 		      nil]]]
 
+[globalize shelter-compile-debug t]
+
 [defmetro shelter [:rest codes]
-  `[fiber-sheltered_join [fiber [funk-new_with_name with-new-cause []
-						    [set [this-cause] critics nil]
-						    [cause-define cause-ignore_background_bug t]
+  `[fiber-sheltered_join [fiber [funk-new_with_name shelter []
+						    ,[if shelter-compile-debug
+							 `[prog [cause-enable_reactive_critics [this-cause]]
+								[cause-define cause-ignore_background_bug nil]]
+						       `[prog [set [this-cause] critics nil]
+							      [cause-define cause-ignore_background_bug t]]]
 						    @codes]
 				nil]]]
 

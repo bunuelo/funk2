@@ -934,7 +934,7 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
 	      status("raw__exp__terminal_print_with_frame__thread_unsafe: last_max_size__i=" s64__fstr ", max_size__i=" s64__fstr, last_max_size__i, max_size__i);
 	      if (max_size__i == 0) {
 		if (testing == nil) {
-		  return new__error(f2list10__new(cause,
+		  return new__error(f2list4__new(cause,
 						  new__symbol(cause, "bug_name"),       new__symbol(cause, "reduced_expression_to_print_at_size_zero_and_still_failed_height_constraint"),
 						  new__symbol(cause, "argument_frame"), f2__frame__new(cause, f2list4__new(cause,
 															   new__symbol(cause, "this"),                 this,

@@ -123,15 +123,18 @@
 	[t                  [prog [terminal_format standard-terminal '\ninspect: try inspecting bugs.']
 				  nil]]]]
 
+[defunk assert-type-helper [source_expression correct_type assert_value value_name]
+  [if [not [is-type correct_type assert_value]]
+      [error bug_name           `value_failed_type_assertion
+	     assert-type-source source_expression
+	     expected_type      correct_type
+	     actual_type        [type assert_value]
+	     value_name         value_name
+	     assert_value       assert_value]
+    assert_value]]
+
 [defmetro assert-type [correct_type value]
-  `[let [[assert_value ,value]]
-     [if [not [is-type [quote ,correct_type] assert_value]]
-	 [error bug_name      `value_failed_type_assertion
-		expected_type [quote ,correct_type]
-		actual_type   [type assert_value]
-		value_name    [quote ,value]
-		assert_value  assert_value]
-       assert_value]]]
+  `[assert-type-helper [quote ,[cause-lookup source_expression]] [quote ,correct_type] ,value [quote ,value]]]
 
 [defmetro globalize-bug [bug_type bug]
   [let [[bug_type_count_symbol [get [format nil bug_type '_count'] as-symbol]]]

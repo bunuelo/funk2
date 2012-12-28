@@ -71,6 +71,7 @@
   [have partial_state_existence_dependency_set add partial_state]]
 
 [deftypefunk nonsemantic_plan_value execute add_value_dependency [nonsemantic_plan_value]
+  [assert-type nonsemantic_plan_value nonsemantic_plan_value]
   [have [get nonsemantic_plan_value dependent_value_set] add this]
   [have value_dependency_set                             add nonsemantic_plan_value]]
 

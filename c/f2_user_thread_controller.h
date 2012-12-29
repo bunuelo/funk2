@@ -208,5 +208,11 @@ void  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_p
 void  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely  (funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__need_wait__set                                     (funk2_user_thread_controller_t* this, boolean_t need_wait);
 
+#define check_wait_politely() { \
+    if (__funk2.user_thread_controller.need_wait) {		\
+      funk2_user_thread_controller__user_wait_politely(this);	\
+    }								\
+  }
+
 #endif // F2__USER_THREAD_CONTROLLER__H
 

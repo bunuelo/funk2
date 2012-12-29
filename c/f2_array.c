@@ -114,7 +114,7 @@ def_pcfunk0_and_rest(array, and_rest,
 
 
 u64 raw__array__length(f2ptr cause, f2ptr this) {
-  f2simple_array__length(this, cause);
+  return f2simple_array__length(this, cause);
 }
 
 f2ptr f2__array__length(f2ptr cause, f2ptr x) {

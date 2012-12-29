@@ -22,14 +22,3 @@
 [deftypefunk simple_array execute as-conslist []                [array-as-conslist this]]
 [deftypefunk simple_array execute as-array    []                this]
 [deftypefunk simple_array execute sort        [comparison_funk] [array-sort this comparison_funk]]
-
-
-
-[deftypefunk traced_array get     as-conslist []                [array-as-conslist this]]
-[deftypefunk traced_array get     as-array    []                this]
-[deftypefunk traced_array execute as-conslist []                [array-as-conslist this]]
-[deftypefunk traced_array execute as-array    []                this]
-[deftypefunk traced_array execute sort        [comparison_funk] [array-sort this comparison_funk]]
-
-
-

@@ -238,13 +238,6 @@ def_pcfunk1(array__equals_hash_value, this,
 
 
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
-  u64 length = f2simple_array__length(this, cause);
-  if (index >= length) {
-    return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				   new__symbol(cause, "this"),     this,
-				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
-  }
   return f2simple_array__elt(this, index, cause);
 }
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {

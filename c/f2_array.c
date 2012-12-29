@@ -243,7 +243,14 @@ f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(array,   this);
   assert_argument_type(integer, index);
-  u64 index__i = f2integer__i(index, cause);
+  u64 this__length = f2simple_array__length(this, cause);
+  s64 index__i     = f2integer__i(index, cause);
+  if ((index__i < 0) || (index__i >= this__length)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array-elt-index_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index));
+  }
   return raw__array__elt(cause, this, index__i);
 }
 def_pcfunk2(array__elt, x, y,

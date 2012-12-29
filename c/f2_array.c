@@ -240,6 +240,7 @@ def_pcfunk1(array__equals_hash_value, this,
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
   return f2simple_array__elt(this, index, cause);
 }
+
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(array,   this);
   assert_argument_type(integer, index);

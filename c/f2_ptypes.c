@@ -1278,11 +1278,13 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
+#ifdef DEBUG
   int length = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
     //error(nil, "f2array__elt error: index out of range.");
   }
+#endif
   f2ptr rv = __pure__f2simple_array__elt(this, index);
   container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;

@@ -14,6 +14,5 @@ u8 __ptype__str[][128] = {
   "symbol",
   "chunk",
   "simple_array",
-  "traced_array",
   "larva",
 };

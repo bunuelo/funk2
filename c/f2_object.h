@@ -49,7 +49,7 @@ typedef struct funk2_object_s {
 typedef struct funk2_object_types_s {
   funk2_object_type__nil__slot_t   nil_type;   // unique (value zero in machine register, similar to NULL in c)
   funk2_ptype_object_types_t       ptype;      // parents of everything except nil
-  funk2_object_type__array__slot_t array;      // interface to simple_array and traced_array
+  funk2_object_type__array__slot_t array;      // interface to simple_array
   funk2_primobject_object_types_t  primobject; // built from combinations of array and other ptypes
 } funk2_object_types_t;
 

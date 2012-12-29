@@ -198,14 +198,6 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
       iter ++;
     }
   } return;
-  case ptype_traced_array: {
-    s64 i;
-    funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)ptype_block)->dptr_data;
-    for (i = ((ptype_traced_array_block_t*)ptype_block)->length; i > 0; i --) {
-      funk2_defragmenter__memory_pool__fix_pointers_in_dptr(this, iter);
-      iter ++;
-    }
-  } return;
   case ptype_larva: {
     f2ptr bug = ((ptype_larva_block_t*)ptype_block)->bug;
     if (bug) {

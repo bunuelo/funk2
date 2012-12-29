@@ -63,16 +63,6 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
       }
       return found_invalid;
     }
-    case ptype_traced_array: {
-      boolean_t found_invalid = boolean__false;
-      s64 i;
-      funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
-      for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-	found_invalid |= funk2_dptr__check_all_memory_pointers_valid_in_memory(iter, memory);
-	iter ++;
-      }
-      return found_invalid;
-    }
     case ptype_larva:
       // should check bug is reasonably valid.
       return boolean__false;
@@ -110,7 +100,6 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_symbol:
     case ptype_chunk:
     case ptype_simple_array:
-    case ptype_traced_array:
     case ptype_larva:
     case ptype_mutable_array_pointer:
       break;

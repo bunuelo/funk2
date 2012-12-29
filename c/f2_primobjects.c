@@ -304,7 +304,7 @@ f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termin
   {
     cons_string[0]      = f2char__ch(__funk2.reader.char__right_paren, cause);
     cons_string__length = 1;
-    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, cons_string__length, cons_string);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);
@@ -461,7 +461,7 @@ f2ptr raw__doublelink__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr 
   {
     doublelink_string[0]      = f2char__ch(__funk2.reader.char__doublelink_right_paren, cause);
     doublelink_string__length = 1;
-    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, doublelink_string__length, doublelink_string);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

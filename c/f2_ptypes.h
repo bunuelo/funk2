@@ -182,31 +182,6 @@ u64   pfunk2__f2simple_array__length(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
-// traced_array
-
-f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr);
-f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2ptr_ptr);
-f2ptr pfunk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
-u8    pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause);
-void  pfunk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
-u64   pfunk2__f2traced_array__length(f2ptr this, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, int trace_depth);
-f2ptr pfunk2__f2traced_array__elt(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth);
-f2ptr pfunk2__f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-
-f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-f2ptr pfunk2__f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
-
-
 // larva
 
 typedef enum larva_type_e {

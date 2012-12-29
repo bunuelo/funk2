@@ -210,7 +210,7 @@ void  funk2_user_thread_controller__need_wait__set                              
 
 #define check_wait_politely() { \
     if (__funk2.user_thread_controller.need_wait) {		\
-      funk2_user_thread_controller__user_wait_politely(this);	\
+      funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller)); \
     }								\
   }
 

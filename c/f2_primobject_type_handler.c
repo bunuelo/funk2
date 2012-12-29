@@ -150,7 +150,6 @@ void funk2_primobject_type_handler__add_builtin_ptype_primobjects(funk2_primobje
   {char* type_name = "symbol";                   funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                   f2symbol__primobject_type__new(cause));}
   {char* type_name = "chunk";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2chunk__primobject_type__new_aux(cause));}
   {char* type_name = "simple_array";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2simple_array__primobject_type__new(cause));}
-  {char* type_name = "traced_array";             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),             f2traced_array__primobject_type__new(cause));}
   {char* type_name = "larva";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2larva__primobject_type__new(cause));}
   {char* type_name = "mutable_array_pointer";    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),    f2mutable_array_pointer__primobject_type__new(cause));}
   {char* type_name = "array";                    funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                    f2array__primobject_type__new(cause));} // interface defined in f2_array.c

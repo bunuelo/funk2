@@ -1702,7 +1702,7 @@ f2ptr raw__optimize_fiber__call_bytecode__array__no_increment_pc(f2ptr cause, f2
   if (! raw__integer__is_type(cause, length)) {
     return f2larva__new(cause, 5235, nil);
   }
-  f2ptr new_array = f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));
+  f2ptr new_array = raw__array__new(cause, f2integer__i(length, cause));
   f2__optimize_fiber__iter__set(cause, this, new_array);
   return nil;
 }

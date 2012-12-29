@@ -536,10 +536,7 @@ int f2__fiber__bytecode__array(f2ptr fiber, f2ptr bytecode, f2ptr length) {
   
   f2__fiber__increment_pc(fiber, cause);
   
-  f2ptr new_array = f2traced_array__new(cause, f2integer__i(length, cause), to_ptr(NULL));
-  if (! new_array) {
-    error(nil, "array bytecode error: new array is nil");
-  }
+  f2ptr new_array = raw__array__new(cause, f2integer__i(length, cause));
   f2fiber__iter__set(fiber, cause, new_array);
   return 0;
 }

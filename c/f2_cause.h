@@ -130,11 +130,10 @@ declare_object_type_11_slot(cause_group,
 // cause
 
 typedef struct funk2_object_type__cause__slot_s funk2_object_type__cause__slot_t;
-declare_object_type_17_slot(cause,
+declare_object_type_16_slot(cause,
 			    fibers_cmutex,
 			    fibers,
 			    frame,
-			    allocate_traced_arrays,
 			    bytecode_tracing_on,
 			    memory_tracing_on,
 			    imagination_stack,
@@ -287,14 +286,10 @@ f2ptr f2cause_group__primobject_type__new_aux(f2ptr cause);
 
 // cause
 
-#define cause__allocate_traced_arrays__default_value (nil)
-//#define cause__allocate_traced_arrays__default_value (__funk2.globalenv.true__symbol)
-
-declare_primobject_17_slot(cause,
+declare_primobject_16_slot(cause,
 			   fibers_cmutex,
 			   fibers,
 			   frame,
-			   allocate_traced_arrays,
 			   bytecode_tracing_on,
 			   memory_tracing_on,
 			   imagination_stack,
@@ -332,7 +327,6 @@ f2ptr     raw__cause__var_value__set                    (f2ptr cause, f2ptr this
 f2ptr      f2__cause__var_value__set                    (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);
 boolean_t raw__cause__var_defined                       (f2ptr cause, f2ptr this, f2ptr var);
 f2ptr      f2__cause__var_defined                       (f2ptr cause, f2ptr this, f2ptr var);
-boolean_t raw__cause__allocate_traced_arrays            (f2ptr cause, f2ptr this);
 void      raw__cause__define_type_var                   (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 f2ptr      f2__cause__define_type_var                   (f2ptr cause, f2ptr this, f2ptr type, f2ptr var, f2ptr value);
 void      raw__cause__define                            (f2ptr cause, f2ptr this, f2ptr var, f2ptr value);

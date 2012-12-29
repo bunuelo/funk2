@@ -428,44 +428,6 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 f2ptr f2simple_array__primobject_type__new(f2ptr cause);
 
 
-// traced_array
-
-boolean_t raw__traced_array__is_type                     (f2ptr cause, f2ptr x);
-f2ptr      f2__traced_array__is_type                     (f2ptr cause, f2ptr x);
-f2ptr      f2__traced_array__type                        (f2ptr cause, f2ptr x);
-f2ptr      f2__traced_array__new                         (f2ptr cause, f2ptr length);
-u64       raw__traced_array__length                      (f2ptr cause, f2ptr this);
-f2ptr      f2__traced_array__length                      (f2ptr cause, f2ptr this);
-f2ptr     raw__traced_array__elt                         (f2ptr cause, f2ptr this, u64   index);
-f2ptr      f2__traced_array__elt                         (f2ptr cause, f2ptr this, f2ptr index);
-f2ptr      f2__traced_array__elt__set                    (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr      f2__traced_array__elt__tracing_on             (f2ptr cause, f2ptr x, f2ptr y);
-f2ptr      f2__traced_array__elt__tracing_on__set        (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr      f2__traced_array__elt__trace                  (f2ptr cause, f2ptr x, f2ptr y);
-f2ptr      f2__traced_array__elt__trace__set             (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr      f2__traced_array__elt__imagination_frame      (f2ptr cause, f2ptr x, f2ptr y);
-f2ptr      f2__traced_array__elt__imagination_frame__set (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr      f2__traced_array__elt__mutate_funks           (f2ptr cause, f2ptr x, f2ptr y);
-f2ptr      f2__traced_array__elt__mutate_funks__set      (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-f2ptr      f2__traced_array__elt__read_funks             (f2ptr cause, f2ptr x, f2ptr y);
-f2ptr      f2__traced_array__elt__read_funks__set        (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-boolean_t raw__traced_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__traced_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
-u64       raw__traced_array__eq_hash_value               (f2ptr cause, f2ptr this);
-f2ptr      f2__traced_array__eq_hash_value               (f2ptr cause, f2ptr this);
-boolean_t raw__traced_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__traced_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
-f2ptr     raw__traced_array__equals_hash_value           (f2ptr cause, f2ptr this);
-f2ptr      f2__traced_array__equals_hash_value           (f2ptr cause, f2ptr this);
-f2ptr     raw__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
-f2ptr      f2__traced_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_ptypehash);
-f2ptr      f2__traced_array__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr      f2__traced_array__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
-
-f2ptr f2traced_array__primobject_type__new(f2ptr cause);
-
-
-
 // mutable_array_pointer
 
 f2ptr      f2__mutable_array_pointer__new                         (f2ptr cause, f2ptr array, f2ptr index);
@@ -979,55 +941,6 @@ typedef struct funk2_object_type__simple_array__slot_s {
   f2ptr terminal_print_with_frame__funk;
 } funk2_object_type__simple_array__slot_t;
 
-// traced_array
-
-typedef struct funk2_object_type__traced_array__slot_s {
-  f2ptr is_type__symbol;
-  f2ptr is_type__funk;
-  f2ptr type__symbol;
-  f2ptr type__funk;
-  f2ptr new__symbol;
-  f2ptr new__funk;
-  f2ptr length__symbol;
-  f2ptr length__funk;
-  f2ptr eq__symbol;
-  f2ptr eq__funk;
-  f2ptr eq_hash_value__symbol;
-  f2ptr eq_hash_value__funk;
-  f2ptr equals__symbol;
-  f2ptr equals__funk;
-  f2ptr equals_hash_value__loop_free__symbol;
-  f2ptr equals_hash_value__loop_free__funk;
-  f2ptr equals_hash_value__symbol;
-  f2ptr equals_hash_value__funk;
-  f2ptr elt__symbol;
-  f2ptr elt__funk;
-  f2ptr elt__set__symbol;
-  f2ptr elt__set__funk;
-  f2ptr elt__tracing_on__symbol;
-  f2ptr elt__tracing_on__funk;
-  f2ptr elt__tracing_on__set__symbol;
-  f2ptr elt__tracing_on__set__funk;
-  f2ptr elt__trace__symbol;
-  f2ptr elt__trace__funk;
-  f2ptr elt__trace__set__symbol;
-  f2ptr elt__trace__set__funk;
-  f2ptr elt__imagination_frame__symbol;
-  f2ptr elt__imagination_frame__funk;
-  f2ptr elt__imagination_frame__set__symbol;
-  f2ptr elt__imagination_frame__set__funk;
-  f2ptr elt__mutate_funks__symbol;
-  f2ptr elt__mutate_funks__funk;
-  f2ptr elt__mutate_funks__set__symbol;
-  f2ptr elt__mutate_funks__set__funk;
-  f2ptr elt__read_funks__symbol;
-  f2ptr elt__read_funks__funk;
-  f2ptr elt__read_funks__set__symbol;
-  f2ptr elt__read_funks__set__funk;
-  f2ptr terminal_print_with_frame__symbol;
-  f2ptr terminal_print_with_frame__funk;
-} funk2_object_type__traced_array__slot_t;
-
 // larva
 
 typedef struct funk2_object_type__larva__slot_s {
@@ -1114,7 +1027,6 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__symbol__slot_t                ptype_symbol;
   funk2_object_type__chunk__slot_t                 ptype_chunk;
   funk2_object_type__simple_array__slot_t          ptype_simple_array;
-  funk2_object_type__traced_array__slot_t          ptype_traced_array;
   funk2_object_type__larva__slot_t                 ptype_larva;
   funk2_object_type__mutable_array_pointer__slot_t ptype_mutable_array_pointer;
 } funk2_ptype_object_types_t;

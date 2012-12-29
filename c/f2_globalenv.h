@@ -123,7 +123,6 @@ typedef struct funk2_globalenv_s {
   f2ptr ptype_symbol__symbol;
   f2ptr ptype_chunk__symbol;
   f2ptr ptype_simple_array__symbol;
-  f2ptr ptype_traced_array__symbol;
   f2ptr ptype_larva__symbol;
   f2ptr ptype_mutable_array_pointer__symbol;
   

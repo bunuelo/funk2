@@ -519,9 +519,6 @@ f2ptr new__symbol(f2ptr cause, char* str) {
 // simple_array
 
 
-// traced_array
-
-
 // cons
 
 boolean_t raw__conslist__is_type(f2ptr cause, f2ptr this) {
@@ -907,7 +904,6 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return 0;}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
-  case ptype_traced_array:
     if (raw__cons__is_type(cause, seq)) {
       return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));
     } else {
@@ -925,7 +921,6 @@ f2ptr f2__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return f2integer__new(cause, 0);}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_simple_array:
-  case ptype_traced_array:
     if (raw__cons__is_type(cause, seq)) {
       u64 count = 0;
       f2ptr iter = seq;
@@ -998,7 +993,6 @@ f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
   }
   switch (f2ptype__raw(this, cause)) {
   case ptype_simple_array:
-  case ptype_traced_array:
     if (raw__cons__is_type(cause, this)) {
       int count = raw_index;
       f2ptr iter = this;
@@ -1181,7 +1175,6 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
   }
   switch (f2ptype__raw(this, cause)) {
   case ptype_simple_array:
-  case ptype_traced_array:
     if (raw__cons__is_type(cause, this)) {
       int count = f2integer__i(index, cause);
       f2ptr iter = this;
@@ -1268,7 +1261,6 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_string:
     return f2__string__eq(cause, x, y);
   case ptype_simple_array:
-  case ptype_traced_array:
     if (raw__primobject__is_type(cause, x) &&
 	raw__primobject__is_type(cause, y)) {
       if (f2primobject__is__cause_group(x, cause) &&
@@ -1877,8 +1869,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_string:                   return raw__string__eq_hash_value(          cause, exp);
   case ptype_symbol:                   return raw__symbol__eq_hash_value(          cause, exp);
   case ptype_chunk:                    return raw__chunk__eq_hash_value(           cause, exp);
-  case ptype_simple_array:
-  case ptype_traced_array: {
+  case ptype_simple_array: {
     if (raw__primobject__is_type(cause, exp)) {
       if (f2primobject__is__cause_group(exp, cause)) {
 	return (u64)exp;
@@ -1935,8 +1926,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_string:                   return raw__string__equals(                  cause, x, y);
   case ptype_symbol:                   return raw__symbol__equals(                  cause, x, y);
   case ptype_chunk:                    return raw__chunk__equals(                   cause, x, y);
-  case ptype_simple_array:
-  case ptype_traced_array:             return f2__object__equals(                   cause, x, y);
+  case ptype_simple_array:             return f2__object__equals(                   cause, x, y);
   case ptype_larva:                    return raw__larva__equals(                   cause, x, y);
   case ptype_mutable_array_pointer:    return raw__mutable_array_pointer__equals(   cause, x, y);
   default:                             return boolean__false;
@@ -2045,8 +2035,6 @@ void f2__primcfunks__defragment__fix_pointers() {
   
   // simple_array
   
-  
-  // traced_array
   
   
   f2__primcfunk__init__defragment__fix_pointers(mkdir);
@@ -2340,8 +2328,6 @@ void f2__primcfunks__reinitialize_globalvars() {
   
   // simple_array
   
-  
-  // traced_array
   
   
   f2__primcfunk__init__1(mkdir, directory_name);

@@ -452,14 +452,6 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
 	iter ++;
       }
     } break;
-    case ptype_traced_array: {
-      s64 i;
-      funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)ptype_block)->dptr_data;
-      for (i = ((ptype_traced_array_block_t*)ptype_block)->length; i > 0; i --) {
-	funk2_dptr__decrement_reference_counts(iter, &(__funk2.garbage_collector));
-	iter ++;
-      }
-    } break;
     case ptype_larva: {
       f2ptr             bug       = ((ptype_larva_block_t*)ptype_block)->bug;
       ptr               bug_ptr   = __f2ptr_to_ptr(bug);

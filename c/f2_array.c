@@ -24,28 +24,20 @@
 // array interface
 
 f2ptr raw__array__new(f2ptr cause, u64 length) {
-  f2ptr reflective_cause = nil;
-  if (raw__cause__allocate_traced_arrays(reflective_cause, cause)) {
-    return f2traced_array__new(cause, length, to_ptr(NULL));
-  } else {
-    return f2simple_array__new(cause, length, to_ptr(NULL));
-  }
+  return f2simple_array__new(cause, length, to_ptr(NULL));
 }
 
 f2ptr raw__array__new_copy(f2ptr cause, u64 length, f2ptr init) {
-  f2ptr reflective_cause = nil;
-  if (raw__cause__allocate_traced_arrays(reflective_cause, cause)) {
-    return f2traced_array__new_copy(cause, length, init);
-  } else {
-    return f2simple_array__new_copy(cause, length, init);
-  }
+  return f2simple_array__new_copy(cause, length, init);
 }
 
 boolean_t raw__array__is_type(f2ptr cause, f2ptr x) {
-  return (raw__simple_array__is_type(cause, x) ||
-	  raw__traced_array__is_type(cause, x));
+  return raw__simple_array__is_type(cause, x);
 }
-f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__array__is_type(cause, x));}
+
+f2ptr f2__array__is_type(f2ptr cause, f2ptr x) {
+  return f2bool__new(raw__array__is_type(cause, x));
+}
 def_pcfunk1(array__is_type, x,
 	    "Returns true if object is of type array, otherwise nil.",
 	    return f2__array__is_type(this_cause, x));
@@ -121,10 +113,8 @@ def_pcfunk0_and_rest(array, and_rest,
 		     return f2__array(this_cause, and_rest));
 
 
-u64 raw__array__length(f2ptr cause, f2ptr x) {
-  if      (raw__simple_array__is_type(cause, x)) {return f2simple_array__length(x, cause);}
-  else if (raw__traced_array__is_type(cause, x)) {return f2traced_array__length(x, cause);}
-  else {error(nil, "raw__array__length: invalid type"); return 0;}
+u64 raw__array__length(f2ptr cause, f2ptr this) {
+  f2simple_array__length(this, cause);
 }
 
 f2ptr f2__array__length(f2ptr cause, f2ptr x) {
@@ -149,9 +139,7 @@ def_pcfunk2(array__eq, this, that,
 
 
 u64 raw__array__eq_hash_value(f2ptr cause, f2ptr this) {
-  if      (raw__simple_array__is_type(cause, this)) {return raw__simple_array__eq_hash_value(cause, this);}
-  else if (raw__traced_array__is_type(cause, this)) {return raw__traced_array__eq_hash_value(cause, this);}
-  else {error(nil, "raw__array__length: invalid type"); return 0;}
+  return raw__simple_array__eq_hash_value(cause, this);
 }
 f2ptr f2__array__eq_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(array, this);
@@ -250,52 +238,32 @@ def_pcfunk1(array__equals_hash_value, this,
 
 
 f2ptr raw__array__elt(f2ptr cause, f2ptr this, u64 index) {
-  if (raw__simple_array__is_type(cause, this)) {
-    u64 length = f2simple_array__length(this, cause);
-    if (index >= length) {
-      return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "index"),    f2integer__new(cause, index)));
-    }
-    return f2simple_array__elt(this, index, cause);
-  } else if (raw__traced_array__is_type(cause, this)) {
-    u64 length = f2traced_array__length(this, cause);
-    if (index >= length) {
-      return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
-				     new__symbol(cause, "this"),     this,
-				     new__symbol(cause, "index"),    f2integer__new(cause, index)));
-    }
-    return f2traced_array__elt(this, index, cause);
-  } else {
-    error(nil, "raw__array__elt error: this is invalid type.");
+  u64 length = f2simple_array__length(this, cause);
+  if (index >= length) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "array_access_out_of_bounds"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    f2integer__new(cause, index)));
   }
+  return f2simple_array__elt(this, index, cause);
 }
 f2ptr f2__array__elt(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(array,   this);
   assert_argument_type(integer, index);
-  return raw__array__elt(cause, this, f2integer__i(index, cause));
+  u64 index__i = f2integer__i(index, cause);
+  return raw__array__elt(cause, this, index__i);
 }
 def_pcfunk2(array__elt, x, y,
 	    "",
 	    return f2__array__elt(this_cause, x, y));
 
 f2ptr raw__array__elt__trace_depth(f2ptr cause, f2ptr this, u64 index, int trace_depth) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt(             this, index, cause             ); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__trace_depth(this, index, cause, trace_depth); return nil;}
-  else {
-    error(nil, "raw__array__elt__trace_depth: should be a type of array.");
-    return nil;
-  }
+  return f2simple_array__elt(this, index, cause);
 }
 
 f2ptr raw__array__elt__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(this, index, cause, value); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__set error: this is invalid type.");
-  }
+  f2simple_array__elt__set(this, index, cause, value);
+  return nil;
 }
 
 f2ptr f2__array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
@@ -308,20 +276,12 @@ def_pcfunk3(array__elt__set, x, y, z,
 	    return f2__array__elt__set(this_cause, x, y, z));
 
 f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth) {
-  if      (raw__simple_array__is_type(cause, this)) {f2simple_array__elt__set(             this, index, cause, value             ); return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__set__trace_depth(this, index, cause, value, trace_depth); return nil;}
-  else {
-    error(nil, "raw__array__elt__set__trace_depth: should be a type of array.");
-    return nil;
-  }
+  f2simple_array__elt__set(this, index, cause, value);
+  return nil;
 }
 
 f2ptr raw__array__elt__tracing_on(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__tracing_on(this, index, cause);}
-  else {
-    error(nil, "raw__array__elt__tracing_on error: this is invalid type.");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__tracing_on(f2ptr cause, f2ptr this, f2ptr index) {
@@ -334,11 +294,7 @@ def_pcfunk2(array__elt__tracing_on, x, y,
 	    return f2__array__elt__tracing_on(this_cause, x, y));
 
 f2ptr raw__array__elt__tracing_on__set(f2ptr cause, f2ptr this, u64 index, f2ptr value) {
-  if (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__tracing_on__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__tracing_on__set error: invalid type (2).");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__tracing_on__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
@@ -352,11 +308,7 @@ def_pcfunk3(array__elt__tracing_on__set, x, y, z,
 
 
 f2ptr raw__array__elt__trace(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__trace(this, index, cause);}
-  else {
-    error(nil, "raw__array__elt__trace error: this is invalid type.");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__trace(f2ptr cause, f2ptr this, f2ptr index) {
@@ -369,11 +321,7 @@ def_pcfunk2(array__elt__trace, x, y,
 	    return f2__array__elt__trace(this_cause, x, y));
 
 f2ptr raw__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__trace__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__trace__set error: this is invalid type (2).");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__trace__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
@@ -387,11 +335,7 @@ def_pcfunk3(array__elt__trace__set, x, y, z,
 
 
 f2ptr raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__imagination_frame(this, index, cause);}
-  else {
-    error(nil, "raw__array__elt__imagination_frame error: this is invalid type.");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__imagination_frame(f2ptr cause, f2ptr this, f2ptr index) {
@@ -404,11 +348,7 @@ def_pcfunk2(array__elt__imagination_frame, x, y,
 	    return f2__array__elt__imagination_frame(this_cause, x, y));
 
 f2ptr raw__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__imagination_frame__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__imagination_frame__set error: this is invalid type (2).");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__imagination_frame__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
@@ -422,11 +362,7 @@ def_pcfunk3(array__elt__imagination_frame__set, x, y, z,
 
 
 f2ptr raw__array__elt__mutate_funks(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__mutate_funks(this, index, cause);}
-  else {
-    error(nil, "raw__array__elt__mutate_funks error: this is invalid type.");
-  }
+  return nil;
 }
 
 f2ptr f2__array__elt__mutate_funks(f2ptr cause, f2ptr this, f2ptr index) {
@@ -439,11 +375,7 @@ def_pcfunk2(array__elt__mutate_funks, x, y,
 	    return f2__array__elt__mutate_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__mutate_funks__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__mutate_funks__set error: this is invalid type.");
-  }
+  return nil;
 }
 f2ptr f2__array__elt__mutate_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   assert_argument_type(array,   this);
@@ -456,11 +388,7 @@ def_pcfunk3(array__elt__mutate_funks__set, x, y, z,
 
 
 f2ptr raw__array__elt__read_funks(f2ptr cause, f2ptr this, u64 index) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {return f2traced_array__elt__read_funks(this, index, cause);}
-  else {
-    error(nil, "raw__array__elt__read_funks error: this is invalid type.");
-  }
+  return nil;
 }
 f2ptr f2__array__elt__read_funks(f2ptr cause, f2ptr this, f2ptr index) {
   assert_argument_type(array,   this);
@@ -472,11 +400,7 @@ def_pcfunk2(array__elt__read_funks, x, y,
 	    return f2__array__elt__read_funks(this_cause, x, y));
 
 f2ptr raw__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
-  if      (raw__simple_array__is_type(cause, this)) {return nil;}
-  else if (raw__traced_array__is_type(cause, this)) {f2traced_array__elt__read_funks__set(this, index, cause, value); return nil;}
-  else {
-    error(nil, "raw__array__elt__read_funks__set error: this is invalid type.");
-  }
+  return nil;
 }
 f2ptr f2__array__elt__read_funks__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   assert_argument_type(array,   this);
@@ -530,7 +454,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   {
     array_string[0]      = f2char__ch(__funk2.reader.char__array_left_paren, cause);
     array_string__length = 1;
-    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, array_string__length, array_string);
   }
   {
@@ -564,7 +488,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
 		x__i = f2integer__i(x, cause);
 		if ((x__i + 1) < max_x__i) {
 		  array_string__length = funk2_character_string__snprintf(array_string, 128, " ");
-		  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+		  raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
 		  raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, array_string__length, array_string);
 		}
 	      }
@@ -615,7 +539,7 @@ f2ptr raw__array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
   {
     array_string[0]      = f2char__ch(__funk2.reader.char__array_right_paren, cause);
     array_string__length = 1;
-    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__traced_array__foreground);
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, array_string__length, array_string);
   }
   raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__default__foreground);

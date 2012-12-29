@@ -699,14 +699,6 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
       iter ++;
     }
   } return;
-  case ptype_traced_array: {
-    s64 i;
-    funk2_dptr_t* iter = (funk2_dptr_t*)((ptype_traced_array_block_t*)block)->dptr_data;
-    for (i = ((ptype_traced_array_block_t*)block)->length; i > 0; i --) {
-      funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(this, pool_index, iter);
-      iter ++;
-    }
-  } return;
   case ptype_larva: {
     f2ptr bug = ((ptype_larva_block_t*)block)->bug;
     if (bug) {

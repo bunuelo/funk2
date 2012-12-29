@@ -274,8 +274,7 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
     return f2string__new(cause, temp_str__length, temp_str);
   }
-  case ptype_simple_array:
-  case ptype_traced_array: {
+  case ptype_simple_array: {
     if (raw__cons__is_type(cause, exp)) {
       f2ptr stringlist = nil;
       {

@@ -82,39 +82,43 @@ void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector
 
 // monitor cause-cause read/write interactions
 
+#define container__reflectively_know_of_reading_from(cause, container, data, sizeof_data) { \
+    if (__funk2.ptypes.read_write_reflective_tracing_enabled) {		\
+      raw__container__reflectively_know_of_reading_from(cause, container, data, sizeof_data); \
+    }									\
+  }
+
 void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
-  if (__funk2.ptypes.read_write_reflective_tracing_enabled) {
-    if (cause != nil) {
-      if (container != nil) {
-	f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
-	if (current_fiber != nil) {
-	  f2ptr reflective_cause = nil;
-	  f2ptr container__cause = f2ptype__cause(container, reflective_cause);
-	  if ((container__cause != nil) &&
-	      (container__cause != cause)) {
-	    f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
-	    f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
-	    if ((cause__cause_groups            != nil) &&
-		(container__cause__cause_groups != nil)) {
-	      f2ptr cause__cause_group_iter = cause__cause_groups;
-	      while (cause__cause_group_iter != nil) {
-		f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
-		{
-		  f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
-		  while (container__cause__cause_group_iter != nil) {
-		    f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
-		    {
-		      f2ptr cause__cause_group__cause_group_interaction_scheduler_ptypehash = f2cause_group__cause_group_interaction_scheduler_ptypehash(cause__cause_group, reflective_cause);
-		      f2ptr cause_group_interaction                                         = raw__scheduler_ptypehash__lookup(reflective_cause, cause__cause_group__cause_group_interaction_scheduler_ptypehash, container__cause__cause_group);
-		      if (cause_group_interaction != nil) {
-			raw__cause_group_interaction__increase_bytes_read_count(reflective_cause, cause_group_interaction, sizeof_data);
-		      }
+  if (cause != nil) {
+    if (container != nil) {
+      f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+      if (current_fiber != nil) {
+	f2ptr reflective_cause = nil;
+	f2ptr container__cause = f2ptype__cause(container, reflective_cause);
+	if ((container__cause != nil) &&
+	    (container__cause != cause)) {
+	  f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
+	  f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
+	  if ((cause__cause_groups            != nil) &&
+	      (container__cause__cause_groups != nil)) {
+	    f2ptr cause__cause_group_iter = cause__cause_groups;
+	    while (cause__cause_group_iter != nil) {
+	      f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
+	      {
+		f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
+		while (container__cause__cause_group_iter != nil) {
+		  f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
+		  {
+		    f2ptr cause__cause_group__cause_group_interaction_scheduler_ptypehash = f2cause_group__cause_group_interaction_scheduler_ptypehash(cause__cause_group, reflective_cause);
+		    f2ptr cause_group_interaction                                         = raw__scheduler_ptypehash__lookup(reflective_cause, cause__cause_group__cause_group_interaction_scheduler_ptypehash, container__cause__cause_group);
+		    if (cause_group_interaction != nil) {
+		      raw__cause_group_interaction__increase_bytes_read_count(reflective_cause, cause_group_interaction, sizeof_data);
 		    }
-		    container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 		  }
+		  container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 		}
-		cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
 	      }
+	      cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
 	    }
 	  }
 	}
@@ -123,38 +127,42 @@ void raw__container__reflectively_know_of_reading_from(f2ptr cause, f2ptr contai
   }
 }
 
+#define container__reflectively_know_of_writing_to(cause, container, data, sizeof_data) { \
+    if (__funk2.ptypes.read_write_reflective_tracing_enabled) {		\
+      raw__container__reflectively_know_of_writing_to(cause, container, data, sizeof_data); \
+    }									\
+  }
+
 void raw__container__reflectively_know_of_writing_to(f2ptr cause, f2ptr container, f2ptr data, u64 sizeof_data) {
-  if (__funk2.ptypes.read_write_reflective_tracing_enabled) {
-    if (cause != nil) {
-      if (container != nil) {
-	f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
-	if (current_fiber != nil) {
-	  f2ptr reflective_cause = nil;
-	  f2ptr container__cause = f2ptype__cause(container, reflective_cause);
-	  if (container__cause != nil) {
-	    f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
-	    f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
-	    if ((cause__cause_groups            != nil) &&
-		(container__cause__cause_groups != nil)) {
-	      f2ptr cause__cause_group_iter = cause__cause_groups;
-	      while (cause__cause_group_iter != nil) {
-		f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
-		{
-		  f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
-		  while (container__cause__cause_group_iter != nil) {
-		    f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
-		    {
-		      f2ptr cause__cause_group__cause_group_interaction_scheduler_ptypehash = f2cause_group__cause_group_interaction_scheduler_ptypehash(cause__cause_group, reflective_cause);
-		      f2ptr cause_group_interaction                                         = raw__scheduler_ptypehash__lookup(reflective_cause, cause__cause_group__cause_group_interaction_scheduler_ptypehash, container__cause__cause_group);
-		      if (cause_group_interaction != nil) {
-			raw__cause_group_interaction__increase_bytes_written_count(reflective_cause, cause_group_interaction, sizeof_data);
-		      }
+  if (cause != nil) {
+    if (container != nil) {
+      f2ptr current_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+      if (current_fiber != nil) {
+	f2ptr reflective_cause = nil;
+	f2ptr container__cause = f2ptype__cause(container, reflective_cause);
+	if (container__cause != nil) {
+	  f2ptr cause__cause_groups            = f2cause__cause_groups(cause,            reflective_cause);
+	  f2ptr container__cause__cause_groups = f2cause__cause_groups(container__cause, reflective_cause);
+	  if ((cause__cause_groups            != nil) &&
+	      (container__cause__cause_groups != nil)) {
+	    f2ptr cause__cause_group_iter = cause__cause_groups;
+	    while (cause__cause_group_iter != nil) {
+	      f2ptr cause__cause_group = f2cons__car(cause__cause_group_iter, reflective_cause);
+	      {
+		f2ptr container__cause__cause_group_iter = container__cause__cause_groups;
+		while (container__cause__cause_group_iter != nil) {
+		  f2ptr container__cause__cause_group = f2cons__car(container__cause__cause_group_iter, reflective_cause);
+		  {
+		    f2ptr cause__cause_group__cause_group_interaction_scheduler_ptypehash = f2cause_group__cause_group_interaction_scheduler_ptypehash(cause__cause_group, reflective_cause);
+		    f2ptr cause_group_interaction                                         = raw__scheduler_ptypehash__lookup(reflective_cause, cause__cause_group__cause_group_interaction_scheduler_ptypehash, container__cause__cause_group);
+		    if (cause_group_interaction != nil) {
+		      raw__cause_group_interaction__increase_bytes_written_count(reflective_cause, cause_group_interaction, sizeof_data);
 		    }
-		    container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 		  }
+		  container__cause__cause_group_iter = f2cons__cdr(container__cause__cause_group_iter, reflective_cause);
 		}
-		cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
 	      }
+	      cause__cause_group_iter = f2cons__cdr(cause__cause_group_iter, reflective_cause);
 	    }
 	  }
 	}
@@ -173,7 +181,7 @@ f2ptr initial_cause() {
 // this.system
 
 f2ptr pfunk2__system__environment(f2ptr cause) {
-  raw__container__reflectively_know_of_reading_from(cause, nil, __funk2.memory.global_environment_f2ptr, sizeof(f2ptr));
+  container__reflectively_know_of_reading_from(cause, nil, __funk2.memory.global_environment_f2ptr, sizeof(f2ptr));
   return __funk2.memory.global_environment_f2ptr;
 }
 
@@ -236,7 +244,7 @@ ptype_t pfunk2__f2ptype__raw(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   ptype_t retval = __pure__f2ptype__raw(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -245,7 +253,7 @@ f2ptr pfunk2__f2ptype__cause(f2ptr this, f2ptr cause) {
   //int pool_index = __f2ptr__pool_index(this);
   f2ptr value = __pure__f2ptype__cause(this);
   debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
-  raw__container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
+  container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
   return value;
 }
 
@@ -256,14 +264,14 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   f2ptr old_value = __pure__f2ptype__cause(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   __pure__f2ptype__cause(this) = value;
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
 f2ptr pfunk2__f2ptype__creation_fiber(f2ptr this, f2ptr cause) {
   check_wait_politely();
   f2ptr value = __pure__f2ptype__creation_fiber(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
+  container__reflectively_know_of_reading_from(cause, this, value, sizeof(value));
   return value;
 }
 
@@ -272,7 +280,7 @@ f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value)
   f2ptr old_value = __pure__f2ptype__creation_fiber(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   __pure__f2ptype__creation_fiber(this) = value;
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
 
@@ -319,7 +327,7 @@ s64 pfunk2__f2integer__i(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   s64 i = __pure__f2integer__i(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(i));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(i));
   return i;
 }
 
@@ -366,7 +374,7 @@ double pfunk2__f2double__d(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   double d = __pure__f2double__d(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(d));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(d));
   return d;
 }
 
@@ -414,7 +422,7 @@ float pfunk2__f2float__f(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   float f = __pure__f2float__f(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(f));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(f));
   return f;
 }
 
@@ -463,7 +471,7 @@ ptr pfunk2__f2pointer__p(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   ptr p = __pure__f2pointer__p(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(p));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(p));
   return p;
 }
 
@@ -508,7 +516,7 @@ funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_mutex_t* m = __pure__f2cmutex__m(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(m));
   return m;
 }
 
@@ -521,7 +529,7 @@ boolean_t pfunk2__f2cmutex__is_locked(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   //int pool_index = this_processor_thread__pool_index();
   boolean_t is_locked = funk2_processor_mutex__is_locked(ptype_cmutex__m(this, cause));
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
   return is_locked;
 }
 
@@ -536,7 +544,7 @@ void pfunk2__f2cmutex__unlock(f2ptr this, f2ptr cause) {
   // note that this assumes the cmutex is locked.
   __pure__f2cmutex__locked_state__set(this, boolean__false);
   funk2_processor_mutex__unlock(ptype_cmutex__m(this, cause));
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
 }
 
 int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
@@ -550,9 +558,9 @@ int pfunk2__f2cmutex__trylock(f2ptr this, f2ptr cause) {
   int return_value = funk2_processor_mutex__trylock(ptype_cmutex__m(this, cause));
   if (return_value == 0) {
     __pure__f2cmutex__locked_state__set(this, boolean__true);
-    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+    container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
   }
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -596,7 +604,7 @@ funk2_processor_readwritelock_t* ptype_creadwritelock__rwlock(f2ptr this, f2ptr 
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   funk2_processor_readwritelock_t* rwlock = __pure__f2creadwritelock__rwlock(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(rwlock));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(rwlock));
   return rwlock;
 }
 
@@ -608,7 +616,7 @@ boolean_t pfunk2__f2creadwritelock__is_writelocked(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   boolean_t is_writelocked = funk2_processor_readwritelock__is_writelocked(ptype_creadwritelock__rwlock(this, cause));
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
   return is_writelocked;
 }
 
@@ -620,7 +628,7 @@ boolean_t pfunk2__f2creadwritelock__is_readlocked(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   boolean_t is_readlocked = funk2_processor_readwritelock__is_readlocked(ptype_creadwritelock__rwlock(this, cause));
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(boolean_t));
   return is_readlocked;
 }
 
@@ -634,7 +642,7 @@ void pfunk2__f2creadwritelock__unlock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   // note that this assumes the creadwritelock is locked.
   funk2_processor_readwritelock__unlock(ptype_creadwritelock__rwlock(this, cause));
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
 }
 
 int pfunk2__f2creadwritelock__trywritelock(f2ptr this, f2ptr cause) {
@@ -647,9 +655,9 @@ int pfunk2__f2creadwritelock__trywritelock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   int return_value = funk2_processor_readwritelock__trywritelock(ptype_creadwritelock__rwlock(this, cause));
   if (return_value == 0) {
-    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+    container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
   }
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -663,9 +671,9 @@ int pfunk2__f2creadwritelock__tryreadlock(f2ptr this, f2ptr cause) {
 #endif // F2__PTYPE__TYPE_CHECK
   int return_value = funk2_processor_readwritelock__tryreadlock(ptype_creadwritelock__rwlock(this, cause));
   if (return_value == 0) {
-    raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
+    container__reflectively_know_of_writing_to(cause, this, nil, sizeof(boolean_t));
   }
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -714,7 +722,7 @@ funk2_character_t pfunk2__f2char__ch(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 ch = __pure__f2char__ch(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -765,7 +773,7 @@ u64 pfunk2__f2string__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64  length = __pure__f2string__length(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -777,7 +785,7 @@ funk2_character_t pfunk2__f2string__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2string__str(this)[index];
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -789,7 +797,7 @@ void pfunk2__f2string__elt__set(f2ptr this, int index, f2ptr cause, funk2_charac
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2string__str(this)[index] = ch;
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(ch));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(ch));
 }
 
 void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str) {
@@ -802,7 +810,7 @@ void pfunk2__f2string__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str)
 #endif // F2__PTYPE__TYPE_CHECK
   u64 total_length = __pure__f2string__length(this) * sizeof(funk2_character_t);
   memcpy(str, __pure__f2string__str(this), total_length);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
+  container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
@@ -814,7 +822,7 @@ u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 return_value = (u64)this;
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -848,7 +856,7 @@ u64 pfunk2__f2symbol__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2symbol__length(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -861,7 +869,7 @@ u64 pfunk2__f2symbol__eq_hash_value(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 eq_hash_value = __pure__f2symbol__eq_hash_value(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(eq_hash_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(eq_hash_value));
   return eq_hash_value;
 }
 
@@ -874,7 +882,7 @@ funk2_character_t pfunk2__f2symbol__elt(f2ptr this, int index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   funk2_character_t ch = __pure__f2symbol__str(this)[index];
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(ch));
   return ch;
 }
 
@@ -888,7 +896,7 @@ void pfunk2__f2symbol__str_copy(f2ptr this, f2ptr cause, funk2_character_t* str)
 #endif // F2__PTYPE__TYPE_CHECK
   u64 total_length = __pure__f2symbol__length(this) * sizeof(funk2_character_t);
   memcpy(str, __pure__f2symbol__str(this), total_length);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
+  container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 
@@ -957,7 +965,7 @@ u8* ptype_chunk__bytes(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8* bytes = __pure__f2chunk__bytes(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(bytes));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(bytes));
   return bytes;
 }
 
@@ -984,7 +992,7 @@ u64 pfunk2__f2chunk__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2chunk__length(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -998,7 +1006,7 @@ void pfunk2__f2chunk__str_copy(f2ptr this, f2ptr cause, u8* str) {
 #endif // F2__PTYPE__TYPE_CHECK
   u64 total_length = __pure__f2chunk__length(this);
   memcpy(str, __pure__f2chunk__bytes(this), total_length);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, total_length);
+  container__reflectively_know_of_reading_from(cause, this, nil, total_length);
 }
 
 u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
@@ -1010,7 +1018,7 @@ u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 return_value = (u64)this;
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -1025,7 +1033,7 @@ u64 pfunk2__f2chunk__equals_hash_value(f2ptr this, f2ptr cause) {
   u64 len   = __pure__f2chunk__length(this);
   u8* bytes = __pure__f2chunk__bytes(this);
   u64 return_value = (u64)chararray__hash_value(len, bytes);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
 
@@ -1038,7 +1046,7 @@ u8 pfunk2__f2chunk__bit8__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u8 retval = __pure__f2chunk__bit8__elt(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1049,7 +1057,7 @@ void  pfunk2__f2chunk__bit8__elt__set(f2ptr this, u64 index, f2ptr cause, u8 val
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
   __pure__f2chunk__bit8__elt__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1061,7 +1069,7 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u16 retval = __pure__f2chunk__bit16__elt(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1074,7 +1082,7 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit16__elt__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1086,7 +1094,7 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 retval = __pure__f2chunk__bit32__elt(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1099,7 +1107,7 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit32__elt__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
@@ -1111,7 +1119,7 @@ u64 pfunk2__f2chunk__bit64__elt(f2ptr this, u64 index, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 retval = __pure__f2chunk__bit64__elt(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1124,7 +1132,7 @@ void pfunk2__f2chunk__bit64__elt__set(f2ptr this, u64 index, f2ptr cause, u64 va
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2chunk__bit64__elt__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr env, f2ptr args) {
@@ -1136,7 +1144,7 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr en
   }
 #endif // F2__PTYPE__TYPE_CHECK
   cfunkptr_t jump = (cfunkptr_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
   printf("\nchunk-cfunk_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   return jump(cause, fiber, env, args);
 }
@@ -1150,7 +1158,7 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   bytecode_jump_t jump = (bytecode_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
   f2ptr bytecode = nil;
   return jump(fiber, bytecode);
@@ -1165,7 +1173,7 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, length);
+  container__reflectively_know_of_reading_from(cause, this, nil, length);
   return rv;
 }
 
@@ -1178,7 +1186,7 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, length);
+  container__reflectively_know_of_writing_to(cause, this, nil, length);
   return rv;
 }
 
@@ -1229,7 +1237,7 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
     ptype_error(cause, init_array, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  raw__container__reflectively_know_of_reading_from(cause, init_array, nil, sizeof(f2ptr) * length);
+  container__reflectively_know_of_reading_from(cause, init_array, nil, sizeof(f2ptr) * length);
   return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->slot));
 }
 
@@ -1237,7 +1245,7 @@ u8 pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   u8 retval = __pure__f2simple_array__immutable(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
 
@@ -1245,7 +1253,7 @@ void pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   __pure__f2simple_array__immutable__set(this, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
@@ -1257,7 +1265,7 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 length = __pure__f2simple_array__length(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
   return length;
 }
 
@@ -1276,7 +1284,7 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
     //error(nil, "f2array__elt error: index out of range.");
   }
   f2ptr rv = __pure__f2simple_array__elt(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
+  container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
   return rv;
 }
 
@@ -1301,499 +1309,9 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
   __pure__f2simple_array__elt__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
-
-
-
-
-
-// traced_array
-
-f2ptr ptype_traced_array__new(int pool_index, f2ptr cause, u64 length, ptr dptr_ptr) {
-  f2ptr                       reflective_cause   = nil;
-  boolean_t                   tracing_on         = raw__cause__is_traced(reflective_cause, cause);
-  u64                         data_byte_num      = (sizeof(funk2_dptr_t) * length);
-  f2ptr                       traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
-  ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
-  debug__assert(traced_array_block, nil, "block is nil.");
-  traced_array_block->ptype.block.ptype    = ptype_traced_array;
-  if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
-    traced_array_block->ptype.cause = cause;
-  } else {
-    traced_array_block->ptype.cause = nil;
-  }
-  if (__ptypes__creation_fiber_enabled) {
-    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
-    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
-    traced_array_block->ptype.creation_fiber = creation_fiber;
-  } else {
-    traced_array_block->ptype.creation_fiber = nil;
-  }
-  traced_array_block->length               = length;
-  if (dptr_ptr) {memcpy(traced_array_block->dptr_data, from_ptr(dptr_ptr), data_byte_num);}
-  else {
-    int i;
-    funk2_dptr_t* dptr_iter = (funk2_dptr_t*)(traced_array_block->dptr_data);
-    for (i = length; i > 0; i --) {
-      funk2_dptr__init(dptr_iter, nil, tracing_on, nil, nil, nil, nil);
-      dptr_iter  ++;
-    }
-  }
-  return traced_array_f2ptr;
-}
-
-f2ptr ptype_traced_array__new_from_f2ptrs(int pool_index, f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
-  f2ptr                       reflective_cause   = nil;
-  boolean_t                   tracing_on         = raw__cause__is_traced(reflective_cause, cause);
-  u64                         data_byte_num      = (sizeof(funk2_dptr_t) * length);
-  f2ptr                       traced_array_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_traced_array_block_t) + data_byte_num);
-  ptype_traced_array_block_t* traced_array_block = (ptype_traced_array_block_t*)from_ptr(raw__f2ptr_to_ptr(traced_array_f2ptr));
-  debug__assert(traced_array_block, nil, "block is nil.");
-  traced_array_block->ptype.block.ptype    = ptype_traced_array;
-  if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
-    traced_array_block->ptype.cause = cause;
-  } else {
-    traced_array_block->ptype.cause = nil;
-  }
-  if (__ptypes__creation_fiber_enabled) {
-    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
-    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
-    traced_array_block->ptype.creation_fiber = creation_fiber;
-  } else {
-    traced_array_block->ptype.creation_fiber = nil;
-  }
-  traced_array_block->length = length;
-  if (f2ptr_ptr) {
-    int i;
-    f2ptr*  f2ptr_iter = f2ptr_ptr;
-    funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
-    for (i = length; i > 0; i --) {
-      funk2_dptr__init(dptr_iter, *f2ptr_iter, tracing_on, nil, nil, nil, nil);
-      f2ptr_iter ++;
-      dptr_iter  ++;
-    }
-  } else {
-    int i;
-    funk2_dptr_t* dptr_iter  = traced_array_block->dptr_data;
-    for (i = length; i > 0; i --) {
-      funk2_dptr__init(dptr_iter, nil, tracing_on, nil, nil, nil, nil);
-      dptr_iter  ++;
-    }
-  }
-  return traced_array_f2ptr;
-}
-
-f2ptr pfunk2__f2traced_array__new(f2ptr cause, u64 length, ptr dptr_ptr) {
-  check_wait_politely();
-  int pool_index = this_processor_thread__pool_index();
-  f2ptr this = __pure__f2traced_array__new(pool_index, cause, length, dptr_ptr);
-  return this;
-}
-
-f2ptr pfunk2__f2traced_array__new_from_f2ptrs(f2ptr cause, u64 length, f2ptr* f2ptr_ptr) {
-  check_wait_politely();
-  int pool_index = this_processor_thread__pool_index();
-  f2ptr this = __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, length, f2ptr_ptr);
-  return this;
-}
-
-f2ptr pfunk2__f2traced_array__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(init_array) != ptype_traced_array) {
-    ptype_error(cause, init_array, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  return f2traced_array__new(cause, length, to_ptr(((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->dptr_data));
-}
-
-u8 pfunk2__f2traced_array__immutable(f2ptr this, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-  u8 retval = __pure__f2traced_array__immutable(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
-  return retval;
-}
-
-void pfunk2__f2traced_array__immutable__set(f2ptr this, f2ptr cause, u8 value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-  __pure__f2traced_array__immutable__set(this, value);
-}
-
-u64 pfunk2__f2traced_array__length(f2ptr this, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
-  return length;
-}
-
-f2ptr pfunk2__f2traced_array__elt__trace_depth(f2ptr this, u64 index, f2ptr cause, int trace_depth) {
-  check_wait_politely();
-  //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  int length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-    //error(nil, "f2traced_array__elt error: index out of range.");
-  }
-  f2ptr return_value = nil;
-  f2ptr this__cause = __pure__f2ptype__cause(this);
-  // only apply special memory access effects if we're not looking at our own memory.
-  if (cause != this__cause) {
-    if (raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
-      // this is an imaginary cause, so we need to retrieve the correct imaginary value, or the default (non-imaginary or "real") value is returned.
-      f2ptr the_real_cause_for_really_thinking_imaginarily = nil;
-      f2ptr imagination_name_stack  = f2cause__imagination_stack(cause, the_real_cause_for_really_thinking_imaginarily);
-      f2ptr imagination_frame       = __pure__f2traced_array__elt__imagination_frame(this, index);
-      f2ptr real_value              = __pure__f2traced_array__elt(this, index);
-      return_value = f2__imagination_frame__get_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, imagination_name_stack, real_value, trace_depth - 1);
-    } else {
-      return_value = __pure__f2traced_array__elt(this, index);
-    }
-  } else {
-    return_value = __pure__f2traced_array__elt(this, index);
-  }
-  
-  // after reading a value, execute read_funks
-  {
-    f2ptr read_funks = __pure__f2traced_array__elt__read_funks(this, index);
-    if (read_funks) {
-      f2ptr funkable_iter = read_funks;
-      f2ptr fiber         = f2__this__fiber(cause);
-      f2ptr args          = nil;
-      while (funkable_iter) {
-	f2ptr funkable = f2cons__car(funkable_iter, cause);
-	f2__force_funk_apply(cause, fiber, funkable, args);
-	funkable_iter = f2cons__cdr(funkable_iter, cause);
-      }
-    }
-  }
-  
-  // then execute causal interaction read funks
-  {
-    if (cause) {
-      f2ptr this__cause = __pure__f2ptype__cause(this);
-      if (cause != this__cause) {
-	f2ptr reflective_cause            = nil;
-	f2ptr read_other_memory_callbacks = f2__cause__read_other_memory_callbacks(reflective_cause, cause);
-	if (read_other_memory_callbacks) {
-	  f2ptr fiber = f2__this__fiber(cause);
-	  f2ptr iter  = read_other_memory_callbacks;
-	  while (iter) {
-	    f2ptr callback = f2__cons__car(reflective_cause, iter);
-	    f2__force_funk_apply(reflective_cause, fiber, callback, f2list3__new(reflective_cause, cause, this, f2integer__new(cause, index)));
-	    iter = f2__cons__cdr(reflective_cause, iter);
-	  }
-	}
-      }
-    }
-  }
-  
-  raw__container__reflectively_know_of_reading_from(cause, this, return_value, sizeof(return_value));
-  
-  return return_value;
-}
-
-f2ptr pfunk2__f2traced_array__elt(f2ptr this, u64 index, f2ptr cause) {
-  return pfunk2__f2traced_array__elt__trace_depth(this, index, cause, 1);
-}
-
-f2ptr pfunk2__f2traced_array__elt__set__trace_depth(f2ptr this, u64 index, f2ptr cause, f2ptr value, int trace_depth) {
-  check_wait_politely();
-  //release__assert((! cause) || raw__causep(cause, nil), nil, "f2traced_array_elt failed debug assertion: cause is non-null and not a cause.");
-  
-  //int pool_index = __f2ptr__pool_index(this);
-  
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length     = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-    //error(nil, "f2traced_array__elt__set__trace_depth error: index out of range.");
-  }
-  if (! raw__cause__is_imaginary__trace_depth(cause, cause, trace_depth - 1)) {
-    //f2ptr old_elt    = __pure__f2traced_array__elt(this, index);
-    f2ptr prev_elts  = __pure__f2traced_array__elt__trace(this, index);
-    int   tracing_on = __pure__f2traced_array__elt__tracing_on(this, index);
-    
-    f2ptr new_tracing_doublelink = nil;
-    if (tracing_on && (trace_depth > 0)) {
-      new_tracing_doublelink = f2doublelink__new__trace_depth(cause, prev_elts, nil, value, trace_depth - 1);
-    }
-    
-    if (new_tracing_doublelink) {
-      if (prev_elts) {
-	f2doublelink__next__set__trace_depth(prev_elts, nil, new_tracing_doublelink, trace_depth - 1);
-      }
-      __pure__f2traced_array__elt__trace__set(this, index, new_tracing_doublelink);
-    }
-    
-    f2ptr old_value = __pure__f2traced_array__elt(this, index);
-    
-    funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-    
-    __pure__f2traced_array__elt__set(this, index, value);
-    
-  } else {
-    // cause has imaginary effects
-    // we first find imagination_link with the correct name if it exists or we allocate a new imagination_link with the cause's imagination's name.
-    f2ptr the_real_cause_for_really_thinking_imaginarily = nil;
-    f2ptr imagination_name_stack  = f2cause__imagination_stack(cause, the_real_cause_for_really_thinking_imaginarily);
-    f2ptr imagination_frame       = __pure__f2traced_array__elt__imagination_frame(this, index);
-    f2ptr real_value              = __pure__f2traced_array__elt(this, index);
-    f2ptr name = f2cons__car(imagination_name_stack, the_real_cause_for_really_thinking_imaginarily);
-    f2ptr next = f2cons__cdr(imagination_name_stack, the_real_cause_for_really_thinking_imaginarily);
-    f2ptr slot = f2__imagination_frame__get_slot(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name);
-    if (! slot) {
-      imagination_frame = raw__imagination_frame__new_with_added_slot__trace_depth(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name, next ? real_value : value, trace_depth - 1);
-      __pure__f2traced_array__elt__imagination_frame__set(this, index, imagination_frame);
-      if (next) {
-	slot = f2__imagination_frame__get_slot(the_real_cause_for_really_thinking_imaginarily, imagination_frame, name);
-	release__assert(slot != nil, cause, "pfunk2__f2traced_array__elt__set__trace_depth error 1: !(slot != nil)");
-      }
-    }
-    if (next) {
-      release__assert(slot != nil, cause, "pfunk2__f2traced_array__elt__set__trace_depth error 2: !(slot != nil)");
-      f2__imagination_link__set_value_from_name_stack__trace_depth(the_real_cause_for_really_thinking_imaginarily, slot, next, value, trace_depth - 1);
-    }
-  }
-  
-  // after setting value, execute mutate_funks
-  {
-    f2ptr mutate_funks = __pure__f2traced_array__elt__mutate_funks(this, index);
-    if (mutate_funks) {
-      f2ptr funkable_iter = mutate_funks;
-      f2ptr fiber         = f2__this__fiber(cause);
-      f2ptr args          = nil;
-      while (funkable_iter) {
-	f2ptr funkable = f2cons__car(funkable_iter, cause);
-	f2__force_funk_apply(cause, fiber, funkable, args);
-	funkable_iter = f2cons__cdr(funkable_iter, cause);
-      }
-    }
-  }
-  
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  
-  return nil;
-}
-
-f2ptr pfunk2__f2traced_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  return pfunk2__f2traced_array__elt__set__trace_depth(this, index, cause, value, 1);
-}
-
-f2ptr pfunk2__f2traced_array__elt__tracing_on(f2ptr this, u64 index, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr rv = __pure__f2traced_array__elt__tracing_on(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
-  return rv;
-}
-
-f2ptr pfunk2__f2traced_array__elt__tracing_on__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr old_value = __pure__f2traced_array__elt__tracing_on(this, index);
-  
-  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  
-  __pure__f2traced_array__elt__tracing_on__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  return nil;
-}
-
-
-f2ptr pfunk2__f2traced_array__elt__trace(f2ptr this, u64 index, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr rv = __pure__f2traced_array__elt__trace(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
-  return rv;
-}
-
-f2ptr pfunk2__f2traced_array__elt__trace__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr old_value = __pure__f2traced_array__elt__trace(this, index);
-  
-  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  
-  __pure__f2traced_array__elt__trace__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  return nil;
-}
-
-
-f2ptr pfunk2__f2traced_array__elt__imagination_frame(f2ptr this, u64 index, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr rv = __pure__f2traced_array__elt__imagination_frame(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
-  return rv;
-}
-
-f2ptr pfunk2__f2traced_array__elt__imagination_frame__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr old_value = __pure__f2traced_array__elt__imagination_frame(this, index);
-  
-  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  
-  __pure__f2traced_array__elt__imagination_frame__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  return nil;
-}
-
-
-f2ptr pfunk2__f2traced_array__elt__mutate_funks(f2ptr this, u64 index, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr rv = __pure__f2traced_array__elt__mutate_funks(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
-  return rv;
-}
-
-f2ptr pfunk2__f2traced_array__elt__mutate_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr old_value = __pure__f2traced_array__elt__mutate_funks(this, index);
-  
-  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  
-  __pure__f2traced_array__elt__mutate_funks__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  return nil;
-}
-
-
-f2ptr pfunk2__f2traced_array__elt__read_funks(f2ptr this, u64 index, f2ptr cause) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr rv = __pure__f2traced_array__elt__read_funks(this, index);
-  raw__container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
-  return rv;
-}
-
-f2ptr pfunk2__f2traced_array__elt__read_funks__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
-  check_wait_politely();
-  //int pool_index = __f2ptr__pool_index(this);
-#ifdef F2__PTYPE__TYPE_CHECK
-  if (__pure__f2ptype__raw(this) != ptype_traced_array) {
-    ptype_error(cause, this, __funk2.globalenv.ptype_traced_array__symbol);
-  }
-#endif // F2__PTYPE__TYPE_CHECK
-  u64 length = __pure__f2traced_array__length(this);
-  if (index < 0 || index >= length) {
-    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
-  }
-  f2ptr old_value = __pure__f2traced_array__elt__read_funks(this, index);
-  
-  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  
-  __pure__f2traced_array__elt__read_funks__set(this, index, value);
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
-  return nil;
-}
-
 
 
 
@@ -1843,7 +1361,7 @@ u32 pfunk2__f2larva__larva_type(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u32 type = __pure__f2larva__larva_type(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(type));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(type));
   return type;
 }
 
@@ -1856,7 +1374,7 @@ f2ptr pfunk2__f2larva__bug(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr bug = __pure__f2larva__bug(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, bug, sizeof(bug));
+  container__reflectively_know_of_reading_from(cause, this, bug, sizeof(bug));
   return bug;
 }
 
@@ -1907,7 +1425,7 @@ f2ptr pfunk2__f2mutable_array_pointer__array(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   f2ptr array = __pure__f2mutable_array_pointer__array(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, array, sizeof(array));
+  container__reflectively_know_of_reading_from(cause, this, array, sizeof(array));
   return array;
 }
 
@@ -1926,7 +1444,7 @@ void pfunk2__f2mutable_array_pointer__array__set(f2ptr this, f2ptr cause, f2ptr 
     __pure__f2mutable_array_pointer__array__set(this, value);
   }  
   
-  raw__container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
 }
 
 u64 pfunk2__f2mutable_array_pointer__index(f2ptr this, f2ptr cause) {
@@ -1938,7 +1456,7 @@ u64 pfunk2__f2mutable_array_pointer__index(f2ptr this, f2ptr cause) {
   }
 #endif // F2__PTYPE__TYPE_CHECK
   u64 index = __pure__f2mutable_array_pointer__index(this);
-  raw__container__reflectively_know_of_reading_from(cause, this, nil, sizeof(index));
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(index));
   return index;
 }
 
@@ -1951,7 +1469,7 @@ void pfunk2__f2mutable_array_pointer__index__set(f2ptr this, f2ptr cause, u64 in
   }
 #endif // F2__PTYPE__TYPE_CHECK
   __pure__f2mutable_array_pointer__index__set(this, index);
-  raw__container__reflectively_know_of_writing_to(cause, this, nil, sizeof(index));
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(index));
 }
 
 

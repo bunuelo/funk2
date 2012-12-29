@@ -238,38 +238,6 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 #define __pure__f2simple_array__elt__set(this, index, value)           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data = (value))
 
 
-// traced_array
-
-struct ptype_traced_array_block_s {
-  ptype_block_t ptype;
-  u8            immutable : 1;
-  u64           length : (f2ptr__bit_num - 2);
-  funk2_dptr_t  dptr_data[0];
-} __attribute__((__packed__));
-typedef struct ptype_traced_array_block_s ptype_traced_array_block_t;
-
-ptype_traced_array_block_t* ptype_traced_array_block__new(int pool_index, f2ptr cause, uint len, ptr dptr_ptr);
-
-#define __pure__f2traced_array__new(pool_index, cause, len, dptr_ptr)              ptype_traced_array__new(pool_index, cause, len, dptr_ptr)
-#define __pure__f2traced_array__new_from_f2ptrs(pool_index, cause, len, f2ptr_ptr) ptype_traced_array__new_from_f2ptrs(pool_index, cause, len, f2ptr_ptr)
-#define __pure__f2traced_array__immutable(this)                                    (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
-#define __pure__f2traced_array__immutable__set(this, value)                        (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
-#define __pure__f2traced_array__length(this)                                       (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2traced_array__elt_dptr(this, index)                              (((ptype_traced_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->dptr_data[index])
-#define __pure__f2traced_array__elt(this, index)                                   funk2_dptr__p(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__set(this, index, value)                       funk2_dptr__p__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__tracing_on(this, index)                       funk2_dptr__tracing_on(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__tracing_on__set(this, index, value)           funk2_dptr__tracing_on__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__trace(this, index)                            funk2_dptr__trace(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__trace__set(this, index, value)                funk2_dptr__trace__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__imagination_frame(this, index)                funk2_dptr__imagination_frame(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__imagination_frame__set(this, index, value)    funk2_dptr__imagination_frame__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__mutate_funks(this, index)                     funk2_dptr__mutate_funks(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__mutate_funks__set(this, index, value)         funk2_dptr__mutate_funks__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-#define __pure__f2traced_array__elt__read_funks(this, index)                       funk2_dptr__read_funks(&(__pure__f2traced_array__elt_dptr(this, index)))
-#define __pure__f2traced_array__elt__read_funks__set(this, index, value)           funk2_dptr__read_funks__set(&(__pure__f2traced_array__elt_dptr(this, index)), value)
-
-
 // larva
 
 struct ptype_larva_block_s {

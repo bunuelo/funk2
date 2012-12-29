@@ -64,7 +64,6 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
     object_type_status("chunk");
     return new__symbol(cause, "chunk");
   case ptype_simple_array:
-  case ptype_traced_array:
     object_type_status("array (0)");
     if (raw__primobject__is_type(cause, this)) {
       object_type_status("array (1)");
@@ -84,9 +83,6 @@ f2ptr f2__object__type(f2ptr cause, f2ptr this) {
       if (ptype == ptype_simple_array) {
 	object_type_status("array (5)");
 	return new__symbol(cause, "simple_array");
-      } else if (ptype == ptype_traced_array) {
-	object_type_status("array (6)");
-	return new__symbol(cause, "traced_array");
       }
     }
     object_type_status("array (7)");
@@ -337,8 +333,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
     }
     return result;
   }
-  case ptype_simple_array:
-  case ptype_traced_array: {
+  case ptype_simple_array: {
     if (raw__primobject__is_type(cause, this)) {
       f2ptr primobject_type_name = f2primobject__object_type(this, cause);
       if (raw__eq(cause, primobject_type_name, __funk2.primobject__frame.frame__symbol)) {
@@ -377,25 +372,6 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
 	if (! result) {
 	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, new__symbol(cause, "simple_array"));
 	  result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
-	}
-	if (! result) {
-	  return new__error(f2list12__new(cause,
-					  new__symbol(cause, "bug_name"), new__symbol(cause, "primobject_type_does_not_have_funktion"),
-					  new__symbol(cause, "funkname"), new__symbol(cause, "object-slot-type_funk"),
-					  new__symbol(cause, "this"),      this,
-					  new__symbol(cause, "this-type"), f2__object__type(cause, this),
-					  new__symbol(cause, "slot_type"), slot_type,
-					  new__symbol(cause, "slot_name"), slot_name));
-	}
-	return result;
-      } else if (ptype == ptype_traced_array) {
-	f2ptr result = f2__traced_array__slot__type_funk(cause, this, slot_type, slot_name);
-	if (! result) {
-	  f2ptr primobject_type = funk2_primobject_type_handler__lookup_type(&(__funk2.primobject_type_handler), cause, new__symbol(cause, "traced_array"));
-	  result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, slot_name);
-	  if (! result) {
-	    result = f2__primobject_type__lookup_slot_type_funk(cause, primobject_type, slot_type, new__symbol(cause, "__undefined__"));
-	  }
 	}
 	if (! result) {
 	  return new__error(f2list12__new(cause,

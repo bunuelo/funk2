@@ -1267,6 +1267,10 @@ u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {
   return length;
 }
 
+#ifdef DEBUG
+#  define F2__PTYPE__SIMPLE_ARRAY__BOUNDARY_CHECK
+#endif // DEBUG
+
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
   check_wait_politely();
   //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
@@ -1276,7 +1280,7 @@ f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-#ifdef DEBUG
+#ifdef F2__PTYPE__SIMPLE_ARRAY__BOUNDARY_CHECK
   int length = __pure__f2simple_array__length(this);
   if (index < 0 || index >= length) {
     return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);

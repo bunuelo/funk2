@@ -411,6 +411,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_load.c \
   c/f2_malloc.c \
   c/f2_management_thread.c \
+  c/f2_math.c \
   c/f2_memblock.c \
   c/f2_memory.c \
   c/f2_memorypool.c \

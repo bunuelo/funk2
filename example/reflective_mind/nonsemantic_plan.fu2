@@ -746,8 +746,10 @@
     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: finished evaluating ' expression '.']
     [if [is-type `bug result]
 	[let [[bug result]]
+	  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 0.']
 	  [if [have [get bug frame] lookup `is_plan_bug]
-	      [bug bug]
+	      [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 1.']
+		    [bug bug]]
 	    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 	      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-expression_encountered_bug: ' expression]
 	      [let [[bug_name [have [get bug frame] lookup `bug_name]]]
@@ -761,12 +763,14 @@
 		       semantic_thought semantic_thought
 		       subbug           bug]]]]]
       [if [not [is-type `multiple_possible_values result]]
-	  [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
-		 correct_types `[multiple_possible_values]
-		 actual_type   [type result]
-		 result        result
-		 expression    expression]
-	result]]]]
+	  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 2.']
+		[error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
+		       correct_types `[multiple_possible_values]
+		       actual_type   [type result]
+		       result        result
+		       expression    expression]]
+	[prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 3.']
+	      result]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[null                              expression] [get this expression-compile-nil                      expression compile_option_frame]]

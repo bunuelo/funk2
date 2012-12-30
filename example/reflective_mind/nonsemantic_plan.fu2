@@ -655,13 +655,11 @@
 	  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: returning bug ' bug]]]
     result]]
 
-
 [deftypefunk nonsemantic_plan execute lookup_action_below [action_name_expression]
   [have [get mental_layer mental_layer_below] lookup_action action_name_expression]]
 
 [deftypefunk nonsemantic_plan execute lookup_action [action_name_expression]
   [have mental_layer lookup_action action_name_expression]]
-
 
 [deftypefunk nonsemantic_plan get layer_knowledge_symbol_without_checks [value]
   [get [get this mental_layer] knowledge_symbol_without_checks value]]
@@ -674,9 +672,6 @@
 		 subbug      bug
 		 is_plan_bug t]]
       result]]]
-
-
-
 
 [defunk nonsemantic_plan-compile-return_simple_value [value_type value]
   [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node value_type value]]]
@@ -697,9 +692,12 @@
   [eval `[funk [this]
 	       [nonsemantic_plan-compile-return_simple_value `symbol [quote ,expression]]]]]
 
+[defunk nonsemantic_plan-compile-evaluate_string [expression]
+  [nonsemantic_plan-compile-return_simple_value `string [have cause-semantic_thought evaluate_string expression]]]
+
 [deftypefunk nonsemantic_plan get expression-compile-string [expression compile_option_frame]
   [eval `[funk [nonsemantic_plan]
-	       [nonsemantic_plan-compile-return_simple_value `string [have cause-semantic_thought evaluate_string ,expression]]]]]
+	       [nonsemantic_plan-compile-evaluate_string ,expression]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile-semantic_plan_object [expression compile_option_frame]
   [eval `[funk [this]
@@ -743,7 +741,9 @@
 [globalize imagine_expression_bug_count 0]
 
 [defunk nonsemantic_plan-get-expression_compile-evaluate [nonsemantic_plan expression unwrapped_compile_result]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: starting to evaluate ' expression '.']
   [let [[result [shelter [funkall unwrapped_compile_result nonsemantic_plan]]]]
+    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: finished evaluating ' expression '.']
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [if [have [get bug frame] lookup `is_plan_bug]

@@ -61,6 +61,7 @@
   [load 'fu2/bootstrap-cause_group.fu2']
   [load 'fu2/bootstrap-defragmenter.fu2']
   [load 'fu2/bootstrap-time.fu2']
+  [load 'fu2/bootstrap-math.fu2']
   [load 'fu2/bootstrap-core_extension_funk.fu2']
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']

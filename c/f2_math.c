@@ -37,7 +37,7 @@ def_pcfunk1(double__log, exp,
 
 double raw__integer__log(f2ptr cause, s64 this) {
   double this__d = (double)this;
-  return log(thid__d);
+  return log(this__d);
 }
 
 f2ptr f2__integer__log(f2ptr cause, f2ptr this) {

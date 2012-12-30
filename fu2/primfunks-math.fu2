@@ -17,7 +17,18 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+'double'
+
 [globalize-funk double-log  &primfunk:double__log]
+[globalize-funk double-exp  &primfunk:double__exp]
+
+'integer'
+
 [globalize-funk integer-log &primfunk:integer__log]
-[globalize-funk log         &primfunk:log]
+[globalize-funk integer-exp &primfunk:integer__exp]
+
+'general'
+
+[globalize-funk log &primfunk:log]
+[globalize-funk exp &primfunk:exp]
 

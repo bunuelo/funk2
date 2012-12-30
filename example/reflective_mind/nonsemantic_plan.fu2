@@ -845,7 +845,9 @@
 				[mapc [funk [imagined_top_execution_node]
 					    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
 				      [get imagined_top_execution_node_set elements]]]]
+		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 1.']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
+		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 2.']
 		      result]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []

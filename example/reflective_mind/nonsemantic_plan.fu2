@@ -1813,7 +1813,10 @@
 											  '\n' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'
 											  '\n  nonsemantic_plan = ' nonsemantic_plan]
 									 [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
-								 [have nonsemantic_plan imagine_as_thought [frame]]]]
+								 [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan-call starting imagine_as_thought.']
+								       [let [[result [have nonsemantic_plan imagine_as_thought [frame]]]]
+									 [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan-call finished imagine_as_thought.']
+									 result]]]]
 	  [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 								      execution_mode cause-nonsemantic_plan_execution_mode
 								      plan           plan]]]]]

@@ -1839,15 +1839,21 @@
 								      plan           plan]]]]]
 
 [defplanfunk imagine not [truth_value]
-  [if [is-type truth_value `exact_boolean_nonsemantic_plan_value]
-      [new multiple_possible_values [conslist [get truth_value negative]]]
-    [if [eq [type truth_value] `nonsemantic_plan_value]
-	[new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
-      [error bug_name     `defplanfunk-not-invalid_type
-	     is_plan_bug  t
-	     correct_type `exact_boolean_nonsemantic_plan_value
-	     actual_type  [type truth_value]
-	     truth_value  truth_value]]]]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 0']
+  [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 1']
+									   [let [[result [new multiple_possible_values [conslist [get truth_value negative]]]]]
+									     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 1.1']
+									     result]]]
+	[[eq [type truth_value] `nonsemantic_plan_value]             [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 2']
+									   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]]
+									     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 2.1']
+									     result]]]
+	[t                                                           [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 3']
+									   [error bug_name     `defplanfunk-not-invalid_type
+										  is_plan_bug  t
+										  correct_type `exact_boolean_nonsemantic_plan_value
+										  actual_type  [type truth_value]
+										  truth_value  truth_value]]]]]
 
 [defplanfunk imagine exists [partial_state]
   [if [eq [type partial_state] `nonsemantic_plan_value]

@@ -773,7 +773,7 @@
 					  @codes]
 		      nil]]]
 
-[globalize shelter-compile-debug t]
+[globalize shelter-compile-debug nil]
 
 [defmetro shelter [:rest codes]
   `[fiber-sheltered_join [fiber [funk-new_with_name shelter []

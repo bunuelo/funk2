@@ -69,11 +69,13 @@ def_pcfunk1(log, exp,
 
 void f2__math__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(double__log);
+  f2__primcfunk__init__defragment__fix_pointers(integer__log);
   f2__primcfunk__init__defragment__fix_pointers(log);
 }
 
 void f2__math__reinitialize_globalvars() {
   f2__primcfunk__init(double__log);
+  f2__primcfunk__init(integer__log);
   f2__primcfunk__init(log);
 }
 

@@ -848,7 +848,14 @@
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 1.']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 2.']
-		      result]]]]
+		      [terminal_format standard-terminal '\n    result=' result]
+		      [cond [[is-type `bug                      result] [let [[bug result]]
+									  [new multiple_possible_values [new exact_nonsemantic_plan_value bug]]]]
+			    [[is-type `multiple_possible_values result] result]
+			    [t                                          [error bug_name     `nonsemantic_plan-imagine_as_thought-invalid_return_type
+									       correct_type `multiple_possible_values
+									       actual_type  [type result]
+									       result       result]]]]]]]
 
 [deftypefunk nonsemantic_plan get __compiled_funk []
   [let [[top_nonsemantic_plan_execution_nodes [get imagined_top_execution_node_set elements]]]

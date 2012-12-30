@@ -998,7 +998,7 @@ f2ptr raw__exp__terminal_print_with_frame__thread_unsafe(f2ptr cause, f2ptr this
   raw__terminal_print_frame__use_one_line__set(   cause, terminal_print_frame, use_one_line);
   raw__terminal_print_frame__indent_distance__set(cause, terminal_print_frame, indent_distance);
   raw__terminal_print_frame__resize_to_fit__set(  cause, terminal_print_frame, resize_to_fit);
-  status("raw__exp__terminal_print_with_frame__thread_unsafe: successfully completed.");
+  //status("raw__exp__terminal_print_with_frame__thread_unsafe: successfully completed.");
   return nil;
 }
 

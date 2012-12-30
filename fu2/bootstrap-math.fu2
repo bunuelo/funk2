@@ -18,5 +18,8 @@
  rights to redistribute these changes.'
 
 [deftypefunk double  get log [] [double-log  this]]
+[deftypefunk double  get exp [] [double-exp  this]]
+
 [deftypefunk integer get log [] [integer-log this]]
+[deftypefunk integer get exp [] [integer-exp this]]
 

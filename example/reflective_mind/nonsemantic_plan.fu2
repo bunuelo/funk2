@@ -144,6 +144,18 @@
       new_value]]]
 
 
+'distribution_nonsemantic_plan_value'
+
+[deframe distribution_nonsemantic_plan_value [nonsemantic_plan_value] [[exact_value_to_log_probability_ptypehash [new ptypehash]]]
+  [new [:rest exact_values]
+       [construct nonsemantic_plan_value]
+       [let* [[uniform_probability     [/ 1.0 [length exact_values]]]
+	      [log_uniform_probability [log uniform_probability]]]
+	 [mapc [funk [exact_value]
+		     [have exact_value_to_log_probability_ptypehash exact_value log_uniform_probability]]
+	       exact_values]]]]
+
+
 'multiple_possible_values'
 
 [deframe multiple_possible_values [frame] [[mutate_mutex [new mutex]]

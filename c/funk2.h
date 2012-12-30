@@ -67,6 +67,7 @@
 #include "f2_load.h"
 #include "f2_malloc.h"
 #include "f2_management_thread.h"
+#include "f2_math.h"
 #include "f2_memblock.h"
 #include "f2_memory.h"
 #include "f2_memorypool.h"

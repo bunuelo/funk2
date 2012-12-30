@@ -741,15 +741,13 @@
 [globalize imagine_expression_bug_count 0]
 
 [defunk nonsemantic_plan-get-expression_compile-evaluate [nonsemantic_plan expression unwrapped_compile_result]
-  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: starting to evaluate ' expression '.']
+  `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: starting to evaluate ' expression '.']
   [let [[result [shelter [funkall unwrapped_compile_result nonsemantic_plan]]]]
-    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: finished evaluating ' expression '.']
+    `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: finished evaluating ' expression '.']
     [if [is-type `bug result]
 	[let [[bug result]]
-	  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 0.']
 	  [if [have [get bug frame] lookup `is_plan_bug]
-	      [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 1.']
-		    [bug bug]]
+	      [bug bug]
 	    [let [[semantic_thought [cause-lookup cause-semantic_thought]]]
 	      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-expression_encountered_bug: ' expression]
 	      [let [[bug_name [have [get bug frame] lookup `bug_name]]]
@@ -763,14 +761,12 @@
 		       semantic_thought semantic_thought
 		       subbug           bug]]]]]
       [if [not [is-type `multiple_possible_values result]]
-	  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 2.']
-		[error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
-		       correct_types `[multiple_possible_values]
-		       actual_type   [type result]
-		       result        result
-		       expression    expression]]
-	[prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: debug 3.']
-	      result]]]]]
+	  [error bug_name      `nonsemantic_plan-expression_compile-invalid_return_type
+		 correct_types `[multiple_possible_values]
+		 actual_type   [type result]
+		 result        result
+		 expression    expression]
+	result]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[null                              expression] [get this expression-compile-nil                      expression compile_option_frame]]
@@ -852,10 +848,8 @@
 				[mapc [funk [imagined_top_execution_node]
 					    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: compiled: ' [get this execution_node_as_code imagined_top_execution_node]]]
 				      [get imagined_top_execution_node_set elements]]]]
-		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 1.']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
-		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: debug 2.']
-		      [terminal_format standard-terminal '\n    result=' result]
+		      `[terminal_format standard-terminal '\n    result=' result]
 		      [cond [[is-type `bug                      result] [let [[bug result]]
 									  [new multiple_possible_values [new exact_nonsemantic_plan_value bug]]]]
 			    [[is-type `multiple_possible_values result] result]
@@ -1433,13 +1427,12 @@
 				[have result_multiple_possible_values add_value        single_arguments_bug]]
 			  single_arguments_bugs]
 		  [with-new-cause [let [[nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `argument_decision single_arguments]]]
-				    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-apply_with_multiple_possible_values: debug 0.']
 				    [cause-define cause-nonsemantic_plan_execution_node        nonsemantic_plan_execution_node]
 				    [if [cause-lookup cause-nonsemantic_plan_current_execution_set]
 					[cause-define cause-nonsemantic_plan_current_execution_set [get cause-nonsemantic_plan_current_execution_set new_copy]]]
-				    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-apply_with_multiple_possible_values: starting to evaluate ' funk_name '.']
+				    `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-apply_with_multiple_possible_values: starting to evaluate ' funk_name '.']
 				    [let [[result [shelter [apply funk [cons nonsemantic_plan single_arguments]]]]]
-				      [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-apply_with_multiple_possible_values: finished evaluating ' funk_name '.']
+				      `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-apply_with_multiple_possible_values: finished evaluating ' funk_name '.']
 				      [have nonsemantic_plan_execution_node add_return_value result]
 				      [have result_multiple_possible_values add_value        result]
 				      [if [is-type `bug result]
@@ -1839,21 +1832,13 @@
 								      plan           plan]]]]]
 
 [defplanfunk imagine not [truth_value]
-  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 0']
-  [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 1']
-									   [let [[result [new multiple_possible_values [conslist [get truth_value negative]]]]]
-									     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 1.1']
-									     result]]]
-	[[eq [type truth_value] `nonsemantic_plan_value]             [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 2']
-									   [let [[result [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]]
-									     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 2.1']
-									     result]]]
-	[t                                                           [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: not.  debug 3']
-									   [error bug_name     `defplanfunk-not-invalid_type
-										  is_plan_bug  t
-										  correct_type `exact_boolean_nonsemantic_plan_value
-										  actual_type  [type truth_value]
-										  truth_value  truth_value]]]]]
+  [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [new multiple_possible_values [conslist [get truth_value negative]]]]
+	[[eq [type truth_value] `nonsemantic_plan_value]             [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
+	[t                                                           [error bug_name     `defplanfunk-not-invalid_type
+									    is_plan_bug  t
+									    correct_type `exact_boolean_nonsemantic_plan_value
+									    actual_type  [type truth_value]
+									    truth_value  truth_value]]]]
 
 [defplanfunk imagine exists [partial_state]
   [if [eq [type partial_state] `nonsemantic_plan_value]

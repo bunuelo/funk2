@@ -1557,7 +1557,7 @@
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[eval ,expression]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[expression [quote ,expression]]]
-		 [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagine warning: not imagining eval, ' expression '.']
+		 [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagine warning: not evaluating eval, ' expression '.']
 		 [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]]]
 
 [defunk defplancommand-quote-evaluate [nonsemantic_plan expression]
@@ -1578,7 +1578,7 @@
       result]]]
 
 [defunk defplancommand-prog-initialize [nonsemantic_plan]
-  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining evaluating serial process.']
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan evaluating serial process.']
   [cause-define cause-prog-current_nonsemantic_plan_execution_node  nil]
   [cause-define cause-prog-previous_nonsemantic_plan_execution_node nil]]
 

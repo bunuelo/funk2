@@ -143,7 +143,7 @@
 	   [globalize ,bug_type_count_symbol 0]]
        [let [[global_bug_name_symbol [get [format nil [quote ,bug_type] '-' ,bug_type_count_symbol] as-symbol]]]
 	 [terminal_format standard-terminal '\nGlobalizing bug as ' global_bug_name_symbol '.  Type ' `[inspect ,global_bug_name_symbol] ' for details.']
-	 [eval `[globalize ,global_bug_name_symbol ,[quote ,bug]]]
+	 [have global_environment-frame add global_bug_name_symbol ,bug]
 	 [++ ,bug_type_count_symbol]
 	 nil]]]]
 

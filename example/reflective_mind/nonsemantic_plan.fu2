@@ -1435,7 +1435,7 @@
 				      [let [[fiber [fiber [funk []
 								[shelter [apply funk [cons nonsemantic_plan single_arguments]]]]
 							  nil]]]
-					[= fibers [cons fiber]]]]]]
+					[= fibers [cons fiber fibers]]]]]]
 		  [let [[argument_list_iter argument_lists]]
 		    [let [[argument_list_index  0]
 			  [successful_increment nil]]

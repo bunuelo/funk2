@@ -267,6 +267,28 @@
 									nonsemantic_plan_value
 									bug]]]]]
 
+`[if [not [exists [relationship planner property planner_type deliberative
+				relation focus_plan
+				plan property hypothesized_to_cause_partial_state [relationship block property shape 'cube'
+												preposition on
+												block property shape 'pyramid']]]] 
+     [prog [prog [prog [call-below 'focus on first plan']
+		       [if [exists [relationship ...]]
+			   [prog [...]
+				 [plan-call ...]]
+			 []]]
+		 [call-below 'imagine executing plan in focus']]
+	   [not [if [exists [relationship planner property planner_type deliberative
+					  relation focus_plan
+					  plan property ...]]
+		    [plan-call [semantic_plan_object property has_been_imagined         [...]
+						     property imagined_complete_failure [...]
+						     relation previous                  [...]
+						     relation start_plan_operator       [...]]]
+		  []]]]
+   []]
+
+
 [deftypefunk multiple_possible_values get negative []
   [let [[negative [new multiple_possible_values nil]]]
     [mapc [funk [value]
@@ -1783,7 +1805,8 @@
 					  [error bug_name    `nonsemantic_plan-if-true_branch_only_has_bug_values
 						 is_plan_bug t
 						 true_result true_result]
-					[= return_values [cons true_result return_values]]]]]]
+					[let [[return_value [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
+					  [= return_values [cons return_value return_values]]]]]]]
 			  [if evaluate_false_branch
 			      [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is false.']
 				    [let [[false_result [with-new-cause [cause-define cause-last_decision_value one_condition]
@@ -1798,7 +1821,8 @@
 					  [error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
 						 is_plan_bug  t
 						 false_result false_result]
-					[= return_values [cons false_result return_values]]]]]]
+					[let [[return_value [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
+					  [= return_values [cons return_value return_values]]]]]]]
 			  [let [[distribution_nonsemantic_plan_value [new distribution_nonsemantic_plan_value return_values]]]
 			    [have multiple_possible_values        add_value distribution_nonsemantic_plan_value]
 			    [have result_multiple_possible_values add_value distribution_nonsemantic_plan_value]]]]]]

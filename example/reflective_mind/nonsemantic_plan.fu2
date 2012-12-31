@@ -168,8 +168,8 @@
   [get exact_value_to_log_probability_ptypehash keys]]
 
 [deftypefunk distribution_nonsemantic_plan_value get is-boolean []
-  [let [[iter       [get this values]]
-	[is_boolean [not [null iter]]]]
+  [let* [[iter       [get this values]]
+	 [is_boolean [not [null iter]]]]
     [while iter
       [let [[exact_value [car iter]]]
 	[if [not [is-type `exact_boolean_nonsemantic_plan_value exact_value]]

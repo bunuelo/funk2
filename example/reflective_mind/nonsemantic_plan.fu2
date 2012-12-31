@@ -566,7 +566,7 @@
 										     [[is-type `multiple_possible_values found_event] [let [[multiple_possible_values found_event]]
 																	[mapc [funk [one_found_event]
 																		    [if [is-type `bug one_found_event]
-																			[= equally_possible_values [cons exact_boolean_nonsemantic_plan_value one_found_event]]
+																			[= equally_possible_values [cons one_found_event equally_possible_values]]
 																		      [let* [[simple_truth_value           [not [get one_found_event is_negative_knowledge]]]
 																			     [exact_boolean_nonsemantic_plan_value [new exact_boolean_nonsemantic_plan_value simple_truth_value]]]
 																			[have exact_boolean_nonsemantic_plan_value add_partial_state_existence_dependency semantic_partial_state]

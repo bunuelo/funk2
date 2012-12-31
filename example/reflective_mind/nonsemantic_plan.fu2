@@ -146,26 +146,27 @@
 
 'distribution_nonsemantic_plan_value'
 
-[deframe distribution_nonsemantic_plan_value [nonsemantic_plan_value] [[exact_value_to_log_probability_ptypehash [new ptypehash]]]
-  [new [exact_values]
+[deframe distribution_nonsemantic_plan_value [nonsemantic_plan_value] [[nonsemantic_plan_value_to_log_probability_ptypehash [new ptypehash]]]
+  [new [nonsemantic_plan_values]
        [construct nonsemantic_plan_value]
-       [if exact_values
-	   [let* [[uniform_probability     [/ 1.0 [length exact_values]]]
+       [if nonsemantic_plan_values
+	   [let* [[uniform_probability     [/ 1.0 [length nonsemantic_plan_values]]]
 		  [log_uniform_probability [log uniform_probability]]]
-	     [mapc [funk [exact_value]
-			 [if [not [is-type `exact_nonsemantic_plan_value exact_value]]
-			     [error bug_name     `distribution_nonsemantic_plan_value-new-initial_value_not_exact
-				    exact_value  exact_value
-				    actual_type  [type exact_value]
-				    correct_type `exact_nonsemantic_plan_value]
-			   [have exact_value_to_log_probability_ptypehash add exact_value log_uniform_probability]]]
-		   exact_values]]]]]
+	     [mapc [funk [nonsemantic_plan_value]
+			 [if [not [or [is-type `nonsemantic_plan_value   nonsemantic_plan_value]
+				      [is-type `multiple_possible_values nonsemantic_plan_value]]]
+			     [error bug_name               `distribution_nonsemantic_plan_value-new-initial_value_not_nonsemantic_plan_value
+				    nonsemantic_plan_value nonsemantic_plan_value
+				    actual_type            [type nonsemantic_plan_value]
+				    correct_type           `[nonsemantic_plan_value multiple_possible_values]]
+			   [have nonsemantic_plan_value_to_log_probability_ptypehash add nonsemantic_plan_value log_uniform_probability]]]
+		   nonsemantic_plan_values]]]]]
 
 [deftypefunk distribution_nonsemantic_plan_value get values []
-  [get exact_value_to_log_probability_ptypehash keys]]
+  [get nonsemantic_plan_value_to_log_probability_ptypehash keys]]
 
 [deftypefunk distribution_nonsemantic_plan_value get lookup_value_log_probability [exact_nonsemantic_plan_value]
-  [get exact_value_to_log_probability_ptypehash keys]]
+  [get nonsemantic_plan_value_to_log_probability_ptypehash keys]]
 
 `[not [if [exists [relationship planner property planner_type deliberative
 				relation focus_plan
@@ -190,24 +191,33 @@
   [let* [[iter       [get this values]]
 	 [is_boolean [not [null iter]]]]
     [while iter
-      [let [[exact_value [car iter]]]
-	[if [not [is-type `exact_boolean_nonsemantic_plan_value exact_value]]
-	    [prog [= is_boolean nil]
-		  [= iter       nil]]]]
+      [let [[nonsemantic_plan_value [car iter]]]
+	[cond [     [is-type `multiple_possible_values             nonsemantic_plan_value] [let [[contains_boolean_value nil]]
+											     [let [[nonbug_and_failure_values [get nonsemantic_plan_value nonbug_and_failure_values]]]
+											       [mapc [funk [nonbug_or_failure_value]
+													   [if [is-type `exact_boolean_nonsemantic_plan_value nonbug_or_failure_value]
+													       [= contains_boolean_value t]]]
+												     nonbug_and_failure_values]
+											       [if [not contains_boolean_value]
+												   [prog [= is_boolean nil]
+													 [= iter       nil]]]]]]
+	      [[not [is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]] [prog [= is_boolean nil]
+												  [= iter       nil]]]]]
       [if iter
 	  [= iter [cdr iter]]]]
     is_boolean]]
 
 [deftypefunk distribution_nonsemantic_plan_value get negative []
-  [let* [[negative                                          [new distribution_nonsemantic_plan_value nil]]
-	 [negative-exact_value_to_log_probability_ptypehash [get negative exact_value_to_log_probability_ptypehash]]]
-    [mapc [funk [exact_value]
-		[if [not [is-type `exact_boolean_nonsemantic_plan_value exact_value]]
-		    [error bug_name    `distribution_nonsemantic_plan_value-get-negative-exact_value_is_not_boolean
-			   exact_value exact_value
-			   actual_type [type exact_value]
-			   this        this]
-		  [have negative-exact_value_to_log_probability_ptypehash add [get exact_value negative] [get this lookup_value_log_probability exact_value]]]]
+  [let* [[negative                                                     [new distribution_nonsemantic_plan_value nil]]
+	 [negative-nonsemantic_plan_value_to_log_probability_ptypehash [get negative nonsemantic_plan_value_to_log_probability_ptypehash]]]
+    [mapc [funk [nonsemantic_plan_value]
+		[if [not [or [is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]
+			     [is-type `multiple_possible_values             nonsemantic_plan_value]]]
+		    [error bug_name               `distribution_nonsemantic_plan_value-get-negative-nonsemantic_plan_value_is_not_boolean
+			   nonsemantic_plan_value nonsemantic_plan_value
+			   actual_type            [type nonsemantic_plan_value]
+			   this                   this]
+		  [have negative-nonsemantic_plan_value_to_log_probability_ptypehash add [get nonsemantic_plan_value negative] [get this lookup_value_log_probability nonsemantic_plan_value]]]]
 	  [get this values]]
     negative]]
 
@@ -256,6 +266,19 @@
 							  valid_types `[multiple_possible_values
 									nonsemantic_plan_value
 									bug]]]]]
+
+[deftypefunk multiple_possible_values get negative []
+  [let [[negative [new multiple_possible_values nil]]]
+    [mapc [funk [value]
+		[let [[result [shelter [get value negative]]]]
+		  [if [is-type `bug result]
+		      [let [[bug result]]
+			[if [have [get bug frame] lookup `is_plan_bug]
+			    [have negative add_value bug]
+			  [bug bug]]]
+		    [have negative add_value result]]]]
+	  [get this values]]
+    negative]]
 
 'nonsemantic_plan_execution_node'
 
@@ -1727,10 +1750,8 @@
 												     [= evaluate_true_branch t]
 												   [= evaluate_false_branch t]]]]]
 			      [[is-type `distribution_nonsemantic_plan_value  one_condition] [if [not [get one_condition is-boolean]]
-												 [error bug_name `if-condition-distribution_contains_nonboolean_value
-													correct_type `exact_boolean_nonsemantic_plan_value
-													actual_type  [type exact_value]
-													exact_value  exact_value
+												 [error bug_name         `if-condition-distribution_contains_nonboolean_value
+													one_condition    one_condition
 													nonsemantic_plan nonsemantic_plan]
 											       [prog [= evaluate_true_branch  t]
 												     [= evaluate_false_branch t]]]]

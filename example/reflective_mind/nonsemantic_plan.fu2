@@ -1995,6 +1995,9 @@
 								      plan           plan]]]]]
 
 [defplanfunk imagine not [truth_value]
+  [terminal_format standard-terminal
+		   '\n' [type [get nonsemantic_plan mental_layer]] '-not:'
+		   '\n    truth_value=' truth_value]
   [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [new multiple_possible_values [conslist [get truth_value negative]]]]
 	[[is-type `distribution_nonsemantic_plan_value  truth_value] [new multiple_possible_values [conslist [get truth_value negative]]]]
 	[[eq [type truth_value] `nonsemantic_plan_value]             [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]

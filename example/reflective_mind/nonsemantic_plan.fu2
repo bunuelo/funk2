@@ -167,6 +167,25 @@
 [deftypefunk distribution_nonsemantic_plan_value get lookup_value_log_probability [exact_nonsemantic_plan_value]
   [get exact_value_to_log_probability_ptypehash keys]]
 
+`[not [if [exists [relationship planner property planner_type deliberative
+				relation focus_plan
+				plan property hypothesized_to_cause_partial_state [relationship block property shape 'cube'
+												preposition on
+												block property shape 'pyramid']]] 
+	  [prog [prog [prog [call-below 'focus on first plan']
+			    [if [exists [relationship ...]]
+				[prog [...]
+				      [plan-call ...]]
+			      []]]
+		      [call-below 'imagine executing plan in focus']] 
+		[plan-call [semantic_plan_object property         has_been_imagined         [t]
+						 property         imagined_complete_failure [[]]
+						 relation         previous                  [[]]
+						 relation         start_plan_operator       [[]]
+						 default_variable preposition               ['focusing on a plan that is hypothesized to cause a cube to be on...']
+						 default_variable subject                   ['if a planner']]]]
+	[]]]
+
 [deftypefunk distribution_nonsemantic_plan_value get is-boolean []
   [let* [[iter       [get this values]]
 	 [is_boolean [not [null iter]]]]
@@ -1725,38 +1744,40 @@
 																     one_condition one_condition]]]]
 												     [have multiple_possible_values        add_value bug_result]
 												     [have result_multiple_possible_values add_value bug_result]]]]]
-			[if evaluate_true_branch
-			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is true.']
-				  [let [[true_result [with-new-cause [cause-define cause-last_decision_value one_condition]
-								     [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true true_expression]]]
-								       [cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
-								       [if [cause-lookup cause-nonsemantic_plan_current_execution_set]
-									   [cause-define cause-nonsemantic_plan_current_execution_set [get cause-nonsemantic_plan_current_execution_set new_copy]]]
-								       [let [[result [funkall true_expression_compiled_funk nonsemantic_plan]]]
-									 [have current_nonsemantic_plan_execution_node add_return_value result]
-									 result]]]]]
-				    [if [null [get true_result nonbug_and_failure_values]]
-					[error bug_name    `nonsemantic_plan-if-true_branch_only_has_bug_values
-					       is_plan_bug t
-					       true_result true_result]]
-				    [have multiple_possible_values        add_value true_result]
-				    [have result_multiple_possible_values add_value true_result]]]]
-			[if evaluate_false_branch
-			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is false.']
-				  [let [[false_result [with-new-cause [cause-define cause-last_decision_value one_condition]
-								      [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false false_expression]]]
-									[cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
-									[if [cause-lookup cause-nonsemantic_plan_current_execution_set]
-									    [cause-define cause-nonsemantic_plan_current_execution_set [get cause-nonsemantic_plan_current_execution_set new_copy]]]
-									[let [[result [funkall false_expression_compiled_funk nonsemantic_plan]]]
-									  [have current_nonsemantic_plan_execution_node add_return_value result]
-									  result]]]]]
-				    [if [null [get false_result nonbug_and_failure_values]]
-					[error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
-					       is_plan_bug  t
-					       false_result false_result]]
-				    [have multiple_possible_values        add_value false_result]
-				    [have result_multiple_possible_values add_value false_result]]]]]]]
+			[let [[return_values nil]]
+			  [if evaluate_true_branch
+			      [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is true.']
+				    [let [[true_result [with-new-cause [cause-define cause-last_decision_value one_condition]
+								       [let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-true true_expression]]]
+									 [cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
+									 [if [cause-lookup cause-nonsemantic_plan_current_execution_set]
+									     [cause-define cause-nonsemantic_plan_current_execution_set [get cause-nonsemantic_plan_current_execution_set new_copy]]]
+									 [let [[result [funkall true_expression_compiled_funk nonsemantic_plan]]]
+									   [have current_nonsemantic_plan_execution_node add_return_value result]
+									   result]]]]]
+				      [if [null [get true_result nonbug_and_failure_values]]
+					  [error bug_name    `nonsemantic_plan-if-true_branch_only_has_bug_values
+						 is_plan_bug t
+						 true_result true_result]
+					[= return_values [cons true_result return_values]]]]]]
+			  [if evaluate_false_branch
+			      [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is false.']
+				    [let [[false_result [with-new-cause [cause-define cause-last_decision_value one_condition]
+									[let [[current_nonsemantic_plan_execution_node [new nonsemantic_plan_execution_node `if-false false_expression]]]
+									  [cause-define cause-nonsemantic_plan_execution_node        current_nonsemantic_plan_execution_node]
+									  [if [cause-lookup cause-nonsemantic_plan_current_execution_set]
+									      [cause-define cause-nonsemantic_plan_current_execution_set [get cause-nonsemantic_plan_current_execution_set new_copy]]]
+									  [let [[result [funkall false_expression_compiled_funk nonsemantic_plan]]]
+									    [have current_nonsemantic_plan_execution_node add_return_value result]
+									    result]]]]]
+				      [if [null [get false_result nonbug_and_failure_values]]
+					  [error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
+						 is_plan_bug  t
+						 false_result false_result]
+					[= return_values [cons false_result return_values]]]]]]
+			  [let [[distribution_nonsemantic_plan_value [new distribution_nonsemantic_plan_value return_values]]]
+			    [have multiple_possible_values        add_value distribution_nonsemantic_plan_value]
+			    [have result_multiple_possible_values add_value distribution_nonsemantic_plan_value]]]]]]
 	    conditions]
       result_multiple_possible_values]]]
 

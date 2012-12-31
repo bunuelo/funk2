@@ -153,7 +153,7 @@
 	   [let* [[uniform_probability     [/ 1.0 [length exact_values]]]
 		  [log_uniform_probability [log uniform_probability]]]
 	     [mapc [funk [exact_value]
-			 [have exact_value_to_log_probability_ptypehash exact_value log_uniform_probability]]
+			 [have exact_value_to_log_probability_ptypehash add exact_value log_uniform_probability]]
 		   exact_values]]]]]
 
 

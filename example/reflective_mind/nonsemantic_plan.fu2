@@ -153,8 +153,44 @@
 	   [let* [[uniform_probability     [/ 1.0 [length exact_values]]]
 		  [log_uniform_probability [log uniform_probability]]]
 	     [mapc [funk [exact_value]
-			 [have exact_value_to_log_probability_ptypehash add exact_value log_uniform_probability]]
+			 [if [not [is-type `exact_nonsemantic_plan_value exact_value]]
+			     [error bug_name     `distribution_nonsemantic_plan_value-new-initial_value_not_exact
+				    exact_value  exact_value
+				    actual_type  [type exact_value]
+				    correct_type `exact_nonsemantic_plan_value]
+			   [have exact_value_to_log_probability_ptypehash add exact_value log_uniform_probability]]]
 		   exact_values]]]]]
+
+[deftypefunk distribution_nonsemantic_plan_value get values []
+  [get exact_value_to_log_probability_ptypehash keys]]
+
+[deftypefunk distribution_nonsemantic_plan_value get lookup_value_log_probability [exact_nonsemantic_plan_value]
+  [get exact_value_to_log_probability_ptypehash keys]]
+
+[deftypefunk distribution_nonsemantic_plan_value get is-boolean []
+  [let [[iter       [get this values]]
+	[is_boolean [not [null iter]]]]
+    [while iter
+      [let [[exact_value [car iter]]]
+	[if [not [is-type `exact_boolean_nonsemantic_plan_value exact_value]]
+	    [prog [= is_boolean nil]
+		  [= iter       nil]]]]
+      [if iter
+	  [= iter [cdr iter]]]]
+    is_boolean]]
+
+[deftypefunk distribution_nonsemantic_plan_value get negative []
+  [let* [[negative                                          [new distribution_nonsemantic_plan_value nil]]
+	 [negative-exact_value_to_log_probability_ptypehash [get negative exact_value_to_log_probability_ptypehash]]]
+    [mapc [funk [exact_value]
+		[if [not [is-type `exact_boolean_nonsemantic_plan_value exact_value]]
+		    [error bug_name    `distribution_nonsemantic_plan_value-get-negative-exact_value_is_not_boolean
+			   exact_value exact_value
+			   actual_type [type exact_value]
+			   this        this]
+		  [have negative-exact_value_to_log_probability_ptypehash add [get exact_value negative] [get this lookup_value_log_probability exact_value]]]]
+	  [get this values]]
+    negative]]
 
 
 'multiple_possible_values'
@@ -584,7 +620,8 @@
 									     [have outside_hypothesis_space_negative_truth_value add_partial_state_existence_dependency semantic_partial_state]]]
 								   [= equally_possible_values [cons outside_hypothesis_space_positive_truth_value equally_possible_values]]
 								   [= equally_possible_values [cons outside_hypothesis_space_negative_truth_value equally_possible_values]]]
-								 [have result_multiple_possible_values add_value [new distribution_nonsemantic_plan_value equally_possible_values]]]]
+								 [let [[distribution_nonsemantic_plan_value [new distribution_nonsemantic_plan_value equally_possible_values]]]
+								   [have result_multiple_possible_values add_value distribution_nonsemantic_plan_value]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-check_exists-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode
 								      nonsemantic_plan_value nonsemantic_plan_value]]]
@@ -1658,30 +1695,36 @@
 		  [if [is-type `nonsemantic_plan_value one_condition]
 		      [let [[evaluate_true_branch  nil]
 			    [evaluate_false_branch nil]]
-			[if [is-type `exact_boolean_nonsemantic_plan_value one_condition]
-			    [let [[one_condition-value [get one_condition value]]]
-			      [if [is-type `bug one_condition-value]
-				  [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is bug.']
-					[let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_bug
-									  subbug        one_condition-value
-									  is_plan_bug   t
-									  one_condition one_condition]]]]
-					  [have multiple_possible_values        add_value bug_result]
-					  [have result_multiple_possible_values add_value bug_result]]]
-				[if [get one_condition value]
-				    [= evaluate_true_branch t]
-				  [= evaluate_false_branch t]]]]
-			  [if [eq `nonsemantic_plan_value [type one_condition]]
-			      [prog [= evaluate_true_branch  t]
-				    [= evaluate_false_branch t]]
-			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is bug.']
-				  [let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_wrong_type
-								    correct_types `[exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]
-								    actual_type   [type one_condition]
-								    is_plan_bug   t
-								    one_condition one_condition]]]]
-				    [have multiple_possible_values        add_value bug_result]
-				    [have result_multiple_possible_values add_value bug_result]]]]]
+			[cond [[is-type `exact_boolean_nonsemantic_plan_value one_condition] [let [[one_condition-value [get one_condition value]]]
+											       [if [is-type `bug one_condition-value]
+												   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is bug.']
+													 [let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_bug
+																	   subbug        one_condition-value
+																	   is_plan_bug   t
+																	   one_condition one_condition]]]]
+													   [have multiple_possible_values        add_value bug_result]
+													   [have result_multiple_possible_values add_value bug_result]]]
+												 [if [get one_condition value]
+												     [= evaluate_true_branch t]
+												   [= evaluate_false_branch t]]]]]
+			      [[is-type `distribution_nonsemantic_plan_value  one_condition] [if [not [get one_condition is-boolean]]
+												 [error bug_name `if-condition-distribution_contains_nonboolean_value
+													correct_type `exact_boolean_nonsemantic_plan_value
+													actual_type  [type exact_value]
+													exact_value  exact_value
+													nonsemantic_plan nonsemantic_plan]
+											       [prog [= evaluate_true_branch  t]
+												     [= evaluate_false_branch t]]]]
+			      [[eq `nonsemantic_plan_value [type one_condition]]             [prog [= evaluate_true_branch  t]
+												   [= evaluate_false_branch t]]]
+			      [t                                                             [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is bug.']
+												   [let [[bug_result [shelter [error bug_name      `nonsemantic_plan-if-one_condition_is_wrong_type
+																     correct_types `[exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]
+																     actual_type   [type one_condition]
+																     is_plan_bug   t
+																     one_condition one_condition]]]]
+												     [have multiple_possible_values        add_value bug_result]
+												     [have result_multiple_possible_values add_value bug_result]]]]]
 			[if evaluate_true_branch
 			    [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is true.']
 				  [let [[true_result [with-new-cause [cause-define cause-last_decision_value one_condition]
@@ -1884,6 +1927,7 @@
 
 [defplanfunk imagine not [truth_value]
   [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [new multiple_possible_values [conslist [get truth_value negative]]]]
+	[[is-type `distribution_nonsemantic_plan_value  truth_value] [new multiple_possible_values [conslist [get truth_value negative]]]]
 	[[eq [type truth_value] `nonsemantic_plan_value]             [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 	[t                                                           [error bug_name     `defplanfunk-not-invalid_type
 									    is_plan_bug  t

@@ -209,8 +209,9 @@
 
 [deftypefunk distribution_nonsemantic_plan_value get negative []
   [if [not [get this is-boolean]]
-      [error bug_name `distribution_nonsemantic_plan_value-get-negative-not_boolean
-	     this     this]
+      [error bug_name    `distribution_nonsemantic_plan_value-get-negative-not_boolean
+	     is_plan_bug t
+	     this        this]
     [let* [[negative                                                     [new distribution_nonsemantic_plan_value nil]]
 	   [negative-nonsemantic_plan_value_to_log_probability_ptypehash [get negative nonsemantic_plan_value_to_log_probability_ptypehash]]]
       [mapc [funk [nonsemantic_plan_value]

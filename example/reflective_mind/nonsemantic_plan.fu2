@@ -201,6 +201,9 @@
 											       [if [not contains_boolean_value]
 												   [prog [= is_boolean nil]
 													 [= iter       nil]]]]]]
+	      [     [is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value]  [if [not [get nonsemantic_plan_value is-boolean]]
+												[prog [= is_boolean nil]
+												      [= iter       nil]]]]
 	      [[not [is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]] [prog [= is_boolean nil]
 												  [= iter       nil]]]]]
       [if iter
@@ -1777,7 +1780,7 @@
 				     [let [[result [shelter [funkall condition_expression_compiled_funk nonsemantic_plan]]]]
 				       [if [is-type `bug result]
 					   [let [[bug result]]
-					     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if true_result bug: ' bug]
+					     [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if condition_result bug: ' bug]
 					     [if [not [have [get bug frame] lookup `is_plan_bug]]
 						 [bug bug]]]]
 				       [have nonsemantic_plan_execution_node add_return_value result]

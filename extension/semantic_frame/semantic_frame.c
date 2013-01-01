@@ -305,7 +305,7 @@ f2ptr raw__semantic_frame__add__handle_before_callbacks(f2ptr cause, f2ptr this,
   return nil;
 }
 
-f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_frame__add__without_callbacks__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
   f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
@@ -328,6 +328,14 @@ f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr
     raw__set__add(cause, reverse_value_set, this);
   }
   return nil;
+}
+
+f2ptr raw__semantic_frame__add__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  assert_value(f2__cmutex__lock(cause, frame_mutate_cmutex));
+  f2ptr result = raw__semantic_frame__add__without_callbacks__thread_unsafe(cause, this, key_type, key, value);
+  assert_value(f2__cmutex__unlock(cause, frame_mutate_cmutex));
+  return result;
 }
 
 f2ptr raw__semantic_frame__add__handle_after_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -378,7 +386,7 @@ f2ptr raw__semantic_frame__remove__handle_before_callbacks(f2ptr cause, f2ptr th
   return nil;
 }
 
-f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+f2ptr raw__semantic_frame__remove__without_callbacks__thread_unsafe(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
   f2ptr semantic_realm       = raw__semantic_frame__semantic_realm(cause, this);
   f2ptr key_type__object_key = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key_type));
   f2ptr key__object_key      = assert_value(raw__semantic_realm__object_key(cause, semantic_realm, key));
@@ -409,6 +417,14 @@ f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2
     }
   }
   return nil;
+}
+
+f2ptr raw__semantic_frame__remove__without_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
+  f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
+  assert_value(f2__cmutex__lock(cause, frame_mutate_cmutex));
+  f2ptr result = raw__semantic_frame__remove__without_callbacks__thread_unsafe(cause, this, key_type, key, value);
+  assert_value(f2__cmutex__unlock(cause, frame_mutate_cmutex));
+  return result;
 }
 
 f2ptr raw__semantic_frame__remove__handle_after_callbacks(f2ptr cause, f2ptr this, f2ptr key_type, f2ptr key, f2ptr value) {
@@ -549,7 +565,7 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
   assert_argument_type(semantic_frame, this);
   f2ptr result              = nil;
   f2ptr frame_mutate_cmutex = raw__semantic_frame__frame_mutate_cmutex(cause, this);
-  f2__cmutex__lock(cause, frame_mutate_cmutex);
+  assert_value(f2__cmutex__lock(cause, frame_mutate_cmutex));
   {
     f2ptr current_value = raw__semantic_frame__lookup_type_var_value__thread_unsafe(cause, this, key_type, key);
     if (raw__larva__is_type(cause, current_value)) {
@@ -588,9 +604,9 @@ f2ptr raw__semantic_frame__replace_type_var_value(f2ptr cause, f2ptr this, f2ptr
 	    } while (keep_looping);
 	  }
 	  {
-	    result = raw__semantic_frame__remove__without_callbacks(cause, this, key_type, key, current_value);
+	    result = raw__semantic_frame__remove__without_callbacks__thread_unsafe(cause, this, key_type, key, current_value);
 	    if (! raw__larva__is_type(cause, result)) {
-	      result = raw__semantic_frame__add__without_callbacks(cause, this, key_type, key, value);
+	      result = raw__semantic_frame__add__without_callbacks__thread_unsafe(cause, this, key_type, key, value);
 	    }
 	  }
 	  {

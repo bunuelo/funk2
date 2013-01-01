@@ -240,14 +240,16 @@ f2ptr raw__semantic_frame__type_create(f2ptr cause, f2ptr this, f2ptr semantic_r
       trace_add    = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_add"));
       trace_remove = f2__cause__lookup(cause, cause, new__symbol(cause, "semantic_frame-trace_remove"));
     }
+    f2ptr frame_mutate_cmutex      = f2__cmutex__new(cause);
     f2ptr frame_read_mutate_cmutex = f2__cmutex__new(cause);
-    f2ptr read_count          = f2integer__new(cause, 0);
-    f2ptr write_in_progress   = nil;
+    f2ptr read_count               = f2integer__new(cause, 0);
+    f2ptr write_in_progress        = nil;
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_realm"),              semantic_realm);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_add"),                   trace_add);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_remove"),                trace_remove);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "trace_event_stream"),          trace_event_stream);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "semantic_knowledge_base_set"), semantic_knowledge_base_set);
+    f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_mutate_cmutex"),         frame_mutate_cmutex);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "frame_read_mutate_cmutex"),    frame_read_mutate_cmutex);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "read_count"),                  read_count);
     f2__frame__add_var_value(cause, this, new__symbol(cause, "write_in_progress"),           write_in_progress);

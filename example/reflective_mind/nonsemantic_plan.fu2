@@ -1962,19 +1962,21 @@
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
 								 [if [null action]
-								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
-									    is_plan_bug t
-									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan calling: "' [get action as-string] '."']
+								     [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: failed to execute call-below: "' [get action as-string] '"']
+									   [error bug_name    `nonsemantic_plan-call_below-no_such_action
+										  is_plan_bug t
+										  action_name action_name]]
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan calling: "' [get action as-string] '"']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action_below action_name]]]
 								 [if [null action]
-								     [error bug_name    `nonsemantic_plan-call_below-no_such_action
-									    is_plan_bug t
-									    action_name action_name]
-								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining calling: "' [get action as-string] '."']
+								     [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: failed to imagine call-below: "' [get action as-string] '"']
+									   [error bug_name    `nonsemantic_plan-call_below-no_such_action
+										  is_plan_bug t
+										  action_name action_name]]
+								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining calling: "' [get action as-string] '"']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[t                                                   [error bug_name         `nonsemantic_plan-call_below-invalid_execution_mode
@@ -1986,18 +1988,20 @@
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action action_name]]]
 								 [if [null action]
-								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
-									    is_plan_bug t
-									    action_name action_name]
+								     [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: failed to execute call: "' [get action as-string] '"']
+									   [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+										  is_plan_bug t
+										  action_name action_name]]
 								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action wait_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]
 	[[eq cause-nonsemantic_plan_execution_mode `imagine] [let [[action_name [get action_name value]]]
 							       [let [[action [have nonsemantic_plan lookup_action action_name]]]
 								 [if [null action]
-								     [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
-									    is_plan_bug t
-									    action_name action_name]
+								     [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: failed to imagine call: "' [get action as-string] '"']
+									   [error bug_name    `nonsemantic_plan-wait_to_call-no_such_action
+										  is_plan_bug t
+										  action_name action_name]]
 								   [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan imagining waiting to call: "' [get action as-string] '."']
 									 [let [[result [have action imagine_waiting_to_call [cause-lookup cause-nonsemantic_plan_execution_node] action_arguments]]]
 									   [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value result]]]]]]]]]

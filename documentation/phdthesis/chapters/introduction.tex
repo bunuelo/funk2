@@ -52,8 +52,8 @@ stacking robot thinks to itself:
 \end{quote}
 This story is a story of learning not only about the effects of
 physical actions, but also the effects of mental planning actions.
-The knowledge in the story can be understood in three basic layers of
-knowledge: (1) {\emph{physical}}, (2) {\emph{deliberative}}, and (3)
+The knowledge in the story can be understood in three basic layers:
+(1) {\emph{physical}}, (2) {\emph{deliberative}}, and (3)
 {\emph{reflective}}.  An example of physical knowledge from the story
 is the statement: ``The cube is falling off of the pyramid and onto
 the table.''  Notice that this statement refers only to physical
@@ -70,6 +70,22 @@ recognized by checking for goal statements, such as in this ``want''
 statement.  Goals that involve deliberative objects, such as plans and
 failures, imply that this must be knowledge for a reflective planner
 to think about another planner.
+{\autoref{figure:physical_deliberative_reflective_knowledge}} shows
+the three layers of knowledge in referential hierarchy.  The physical
+knowledge forms the base of the system and does not refer to any other
+knowledge in the system.  Deliberative knowledge is goal-oriented
+knowledge, such as hypotheses and plans, about physical knowledge.
+Reflective knowledge is goal-oriented knowledge, similar to
+deliberative knowledge, but reflective knowledge is about the
+deliberative knowledge and not about the physical knowledge.
+\begin{figure}
+  \center
+  \includegraphics[width=6cm]{gfx/physical_deliberative_reflective_knowledge}
+  \caption{Physical, deliberative, and reflective knowledge arranged
+    in referential hierarchy.  Examples of types of objects in each
+    layer are shown in parentheses.}
+  \label{figure:physical_deliberative_reflective_knowledge}
+\end{figure}
 
 
 
@@ -84,7 +100,8 @@ labelled by whether it is physical, deliberative, or a reflective
 statement:
 
 \begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I want to avoid failures. \\
+  {\emph{reflective}} & I want to avoid failures and accomplish goals.
+  This plan looks like \\
 \end{tabular}
 
 \begin{tabular}{p{2cm}p{8cm}}

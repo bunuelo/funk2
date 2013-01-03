@@ -119,6 +119,7 @@ phdthesis.pdf: \
   gfx/partially_observable.pdf \
   gfx/perception_categorization.pdf \
   gfx/physical_perception.pdf \
+  gfx/physical_deliberative_reflective_knowledge.pdf \
   gfx/planning_machine_operations.pdf \
   gfx/planning_machine_reflective_knowledge.pdf \
   gfx/problem_complexity_versus_algorithm_adaptability.pdf \

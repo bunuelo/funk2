@@ -3,23 +3,27 @@
 \label{chapter:introduction}
 %************************************************
 
-The Substrate for Accountable Layered Systems (SALS) is an open-source
-software platform for developing experimental reflective AIs.  There
-are many AIs that provide explanations for how to accomplish goals or
-gather rewards in a domain.  A basic AI system consists of three
-processes: (1) perceptual data are generalized and categorized to
-learn induced abstract models, (2) abstract models are used to infer
-expected hypothetical states, i.e. states of future, past, or
-otherwise ``hidden'' variables, (3) actions are chosen based on
-considerations of different action and hypothesis dependent
-inferences.  While there are many types of machine learning algorithms
-that focus on this abstract 3-step closed-loop process of learning to
-control, the field of computational metacognition
-\cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
-layers of closed-loop systems.  The first closed-loop learning
-algorithm learns how to deal with the external world, while the second
-closed-loop learning algorithm perceives and controls the state of the
-first learning algorithm.
+Why should we care about reflective AI?  Detecting and responding to
+failure is the primary application of reflective technologies.  Any
+given AI system may be impeccably designed, but it will eventually run
+into a bug, and only reflective systems are capable of responding to
+and learning from these failures.  The Substrate for Accountable
+Layered Systems (SALS) is an open-source software platform for
+developing experimental reflective AIs.  There are many AIs that
+provide explanations for how to accomplish goals or gather rewards in
+a domain.  A basic AI system consists of three processes: (1)
+perceptual data are generalized and categorized to learn induced
+abstract models, (2) abstract models are used to infer expected
+hypothetical states, i.e. states of future, past, or otherwise
+``hidden'' variables, (3) actions are chosen based on considerations
+of different action and hypothesis dependent inferences.  While there
+are many types of machine learning algorithms that focus on this
+abstract 3-step closed-loop process of learning to control, the field
+of computational metacognition \cite[]{cox_and_raja:2008,cox:2010}
+focuses on making at least two layers of closed-loop systems.  The
+first closed-loop learning algorithm learns how to deal with the
+external world, while the second closed-loop learning algorithm
+perceives and controls the state of the first learning algorithm.
 \begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_large-01}
   \caption[An example problem domain.]{An example problem domain.}
@@ -27,13 +31,33 @@ first learning algorithm.
 \end{wrapfigure}
 I see metacognition as a layering of learning algorithms, such that
 the second layer algorithm learns to control the first layer learner.
-While it may be clear how to trace changes in the inputs to layer one
-of the algorithm, it is less than clear how the second layer learner
-should monitor the changes in the state of the first layer learner.
+While it may be clear how to trace the inputs to the first layer
+learner, it is less than clear how the second layer learner should
+monitor the state of the first layer learner.
+
+Why should we care about SALS?  SALS is the software implementation of
+two basic software objects: (1) a controllable object, and (2) a
+planning layer object.  The controllable object includes a knowledge
+base, which can represent a control domain, such as the physical
+knowledge signified by the image in
+{\autoref{figure:introduction_example_problem_domain}}.  The planning
+layer object is a goal-oriented planning machine that learns, creates,
+imagines, and executes plans in order to attempt to control a given
+controllable object.  SALS becomes reflective because the SALS
+planning layer object is also a controllable object, which allows
+creating a linked list of planning layer objects all deriving from a
+single original controllable object.  The form of this reflective
+linked list structure implies a lot about the resulting SALS cognitive
+architecture, and I will return to this idea often throughout the
+dissertation.
 
 Before getting any further into abstract generalizations about
-reflective thinking, here is a simple first-person narrative of a
-robot arm that wants to stack a block on a block.  It is a story of
+reflective thinking, let us consider the wise advice of Seymour
+Papert: ``You can't think about thinking without thinking about
+thinking about something.''  In order to ground an explanation of the
+type of thinking that I am focusing on in this thesis, here is a
+simple first-person narrative of a robot arm that wants to solve the
+physical problem of stacking a block on a block.  It is a story of
 thinking about thinking, failure, and reflective learning.
 {\autoref{figure:introduction_example_problem_domain}} shows the block
 stacking domain in which the narrative takes place.  The block
@@ -50,8 +74,52 @@ stacking robot thinks to itself:
   executed, so I hypothesize that similar plans will also fail when
   executed.
 \end{quote}
-This story is a story of learning not only about the effects of
-physical actions, but also the effects of mental planning actions.
+This story of learning hypothesizes the effects of not only physical
+actions but also mental actions.  The physical goal of the robot in
+the story is to create a stack of two blocks.  However, the robot also
+has another goal, which is to avoid failures.  A failure is not a
+physical object.  A failure is an object that represents a knowledge
+problem.  One basic type of failure is a failure of expectations.  In
+the story, the robot experiences a failure of expectations when it
+expects the plan to stack a cube on a pyramid to achieve its physical
+goal.  When the cube falls off of the pyramid and ends up on the
+table, there is a failure of expectations.  Note that the failure is
+dependent on a plan and a goal existing.  Failures do not exist in
+physical knowledge, but they do exist in deliberative and reflective
+knowledge because these layers have goals and plans, and thus,
+expectations.  In the story, the goal of avoiding failures is
+referring to a goal in the reflective knowledge---the reflective goal
+to avoid failures in deliberative knowledge.
+
+The robot is learning at a reflective level when it thinks the
+following: ``Plan one has failed when executed, so I hypothesize that
+similar plans will also fail when executed.''  This hypothesis is
+about deliberative actions and objects, so we know that it is a piece
+of reflective knowledge.  It means that next time the reflective layer
+is deciding whether or not the deliberative planner should execute a
+given plan, it can consider whether or not the plan is similar to
+plans that have previously failed.  The deliberative layer makes plans
+composed of physical actions in order to accomplish physical goals,
+while the reflective layer makes plans composed of deliberative
+actions in order to accomplish deliberative goals.  Once we start
+learning something about the process of planning itself, that implies
+that we are talking about a form of learning in reflective knowledge.
+Reflective learning allows for the planning process to be recompiled
+into more efficient forms as more experience is gained in terms of how
+plans perform in execution.
+
+In order to help us to imagine the deliberative knowledge that the
+robot in the story might be dealing with, see
+{\autoref{figure:physical_knowledge_large}}.
+\begin{figure}
+  \center
+  \includegraphics[width=6cm]{gfx/physical_knowledge_large}
+  \caption{Physical knowledge.}
+  \label{figure:physical_knowledge_large}
+\end{figure}
+
+\section{Three Layers of Knowledge in the Story}
+
 The knowledge in the story can be understood in three basic layers:
 (1) {\emph{physical}}, (2) {\emph{deliberative}}, and (3)
 {\emph{reflective}}.  An example of physical knowledge from the story
@@ -87,10 +155,31 @@ deliberative knowledge and not about the physical knowledge.
   \label{figure:physical_deliberative_reflective_knowledge}
 \end{figure}
 
+The knowledge in SALS is represented in a powerful, but simple form:
+natural language.  For example, here are three statements that refer to
+the existence of physical knowledge in SALS:
+\begin{samepage}
+  \begin{enumerate}
+  \item{A cube is on a pyramid.}
+  \item{A pyramid is to my left.}
+  \item{I am moving left.}
+  \end{enumerate}
+\end{samepage}
 
-
-
-
+\begin{figure}[h]
+\centering
+{\small
+\begin{Verbatim}[frame=single]
+[defplan 'move slowly until over cube'
+  'if a cube is to my left, move slowly left until over cube,
+   otherwise if a cube is to my right, move slowly right until
+   over cube']
+\end{Verbatim}
+}
+\caption[A simple natural language plan.]{A simple natural language
+  plan.  This plan is a type of deliberative knowledge.}
+\label{figure:semantic_event_knowledge_base}
+\end{figure}
 
 
 

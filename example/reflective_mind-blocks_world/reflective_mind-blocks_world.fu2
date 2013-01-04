@@ -289,7 +289,7 @@
 			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
 			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
 		      
-		      [plan-call [plan 'want a block to be on a block']]
+		      [plan-call [plan 'want a cube to be on a pyramid']]
 		      
 		      ]]
 	 

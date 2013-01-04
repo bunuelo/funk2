@@ -277,9 +277,17 @@
 			[plan-call [plan 'want a cube to be on a pyramid']]
 			[plan-call [plan 'want a pyramid to be on a cube']]]
 		      
+		      [defplan 'avoid a block being on a block'
+			[plan-call [plan 'avoid a cube being on a pyramid']]
+			[plan-call [plan 'avoid a pyramid being on a cube']]]
+		      
 		      [defplan 'stop wanting a block to be on a block'
 			[plan-call [plan 'stop wanting a cube to be on a pyramid']]
 			[plan-call [plan 'stop wanting a pyramid to be on a cube']]]
+		      
+		      [defplan 'stop avoiding a block being on a block'
+			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
+			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
 		      
 		      ]]
 	 

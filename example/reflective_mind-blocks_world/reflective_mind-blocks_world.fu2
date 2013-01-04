@@ -293,8 +293,7 @@
 	 
 	 'reflective plans'
 	 
-	 [have this imagine_reflective_plan_expression
-	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
+	 [let [[reflective_plan_definition_code `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
 			[relationship planner property planner_type deliberative
 				      relation focus_plan
 				      plan property has_been_imagined t]]
@@ -369,6 +368,9 @@
 			  [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
 		      
 		      ]]]
+	   
+	   [parog [have this imagine_reflective_plan_expression       reflective_plan_definition_code]
+		  [have this imagine_super_reflective_plan_expression reflective_plan_definition_code]]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   

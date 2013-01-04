@@ -1,0 +1,56 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+'super_reflective_layer'
+
+[deframe super_reflective_layer [plan_mental_layer] []
+  [new []
+       [let [[object_knowledge_base_name                     `deliberative2_knowledge]
+	     [object_type_knowledge_base_name                `deliberative2_type_knowledge]
+	     [object_type_counterfactual_knowledge_base_name `deliberative2_type_counterfactual_knowledge]
+	     [object_resource_knowledge_base_name            `reflective_resource_knowledge]
+	     [object_resource_event_knowledge_base_name      `reflective_resource_event_knowledge]
+	     [reflective_knowledge_base_name                 `deliberative3_knowledge]
+	     [reflective_type_knowledge_base_name            nil]
+	     [reflective_resource_knowledge_base_name        nil]
+	     [trace_knowledge_base_names                     nil]]
+	 [construct plan_mental_layer 4 `super_reflective
+		    object_knowledge_base_name
+		    object_type_knowledge_base_name
+		    object_type_counterfactual_knowledge_base_name
+		    object_resource_knowledge_base_name
+		    object_resource_event_knowledge_base_name
+		    reflective_knowledge_base_name
+		    reflective_type_knowledge_base_name
+		    reflective_resource_knowledge_base_name
+		    trace_knowledge_base_names]]]]
+
+[deftypefunk super_reflective_layer execute create_knowledge []
+  [type-have plan_mental_layer this create_knowledge]]
+
+[deftypefunk super_reflective_layer execute connect_knowledge_reflection []
+  [type-have plan_mental_layer this connect_knowledge_reflection]]
+
+[deftypefunk super_reflective_layer execute create_builtin_actions []
+  [type-have plan_mental_layer this create_builtin_actions]]
+
+[deftypefunk super_reflective_layer get mental_layer_below []
+  [get [get this mind] layer `reflective]]
+

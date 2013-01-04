@@ -36,7 +36,8 @@
 	     builtin_reactive_layer
 	     learned_reactive_layer
 	     deliberative_layer
-	     reflective_layer]
+	     reflective_layer
+	     super_reflective_layer]
    :sources ['reflective_mind.fu2']]
 
 
@@ -262,4 +263,19 @@
 [defpackage reflective_resource
   :packages [reflective_mind_core]
    :sources ['reflective_resource.fu2']]
+
+
+'super_reflective_layer'
+
+[defpackage super_reflective_layer
+  :packages [reflective_mind_core
+	     plan_mental_layer
+	     semantic_action
+	     semantic_action_knowledge_base
+	     super_reflective_resource]
+   :sources ['super_reflective_layer.fu2']]
+
+[defpackage super_reflective_resource
+  :packages [reflective_mind_core]
+   :sources ['super_reflective_resource.fu2']]
 

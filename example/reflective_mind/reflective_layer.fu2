@@ -28,9 +28,9 @@
 	     [object_resource_knowledge_base_name            `deliberative_resource_knowledge]
 	     [object_resource_event_knowledge_base_name      `deliberative_resource_event_knowledge]
 	     [reflective_knowledge_base_name                 `deliberative2_knowledge]
-	     [reflective_type_knowledge_base_name            nil]
-	     [reflective_resource_knowledge_base_name        nil]
-	     [trace_knowledge_base_names                     nil]]
+	     [reflective_type_knowledge_base_name            `deliberative2_type_knowledge]
+	     [reflective_resource_knowledge_base_name        `reflective_resource_knowledge]
+	     [trace_knowledge_base_names                     `[deliberative2_type_knowledge]]]
 	 [construct plan_mental_layer 3 `reflective
 		    object_knowledge_base_name
 		    object_type_knowledge_base_name

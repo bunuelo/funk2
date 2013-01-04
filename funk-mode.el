@@ -120,6 +120,7 @@
 	      "print"
               "range"
 	      "relationship"
+	      "remove-goal"
 	      "save_memory_image"
 	      "second"
 	      "set-car"

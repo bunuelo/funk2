@@ -254,12 +254,24 @@
 		      [defplan 'want a cube to be on a pyramid'
 			:matches ['want [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [add-goal [plan-call [plan [? partial_state]]]]]
+			  [add-positive-goal [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'avoid a cube being on a pyramid'
+			:matches ['avoid [? subject] being [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'on a pyramid']]
+			  [add-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'stop wanting a cube to be on a pyramid'
 			:matches ['stop wanting [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [remove-goal [plan-call [plan [? partial_state]]]]]
+			  [remove-positive-goal [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'stop avoiding a cube being on a pyramid'
+			:matches ['stop avoiding [? subject] being [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'on a pyramid']]
+			  [remove-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'want a block to be on a block'
 			[plan-call [plan 'want a cube to be on a pyramid']]

@@ -251,6 +251,15 @@
 			  [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
 			  [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
 		      
+		      [defplan 'I want a cube to be on a pyramid'
+			:matches ['I want [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			  [add-goal [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'I want a block to be on a block'
+			[plan-call [plan 'I want a cube to be on a pyramid']]
+			[plan-call [plan 'I want a pyramid to be on a cube']]]
+		      
 		      ]]
 	 
 	 'reflective plans'

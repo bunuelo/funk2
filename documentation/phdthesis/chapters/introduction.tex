@@ -4,7 +4,7 @@
 %************************************************
 
 Why should we care about reflective AI?  Detecting and responding to
-failure is the primary application of reflective technologies.  Any
+failure is the primary application for reflective technologies.  Any
 given AI system may be impeccably designed, but it will eventually run
 into a bug, and only reflective systems are capable of responding to
 and learning from these failures.  The Substrate for Accountable
@@ -74,29 +74,30 @@ stacking robot thinks to itself:
   executed, so I hypothesize that similar plans will also fail when
   executed.
 \end{quote}
-This story of learning hypothesizes the effects of not only physical
-actions but also mental actions.  The physical goal of the robot in
-the story is to create a stack of two blocks.  However, the robot also
-has another goal, which is to avoid failures.  A failure is not a
-physical object.  A failure is an object that represents a knowledge
-problem.  One basic type of failure is a failure of expectations.  In
-the story, the robot experiences a failure of expectations when it
-expects the plan to stack a cube on a pyramid to achieve its physical
-goal.  When the cube falls off of the pyramid and ends up on the
-table, there is a failure of expectations.  Note that the failure is
-dependent on a plan and a goal existing.  Failures do not exist in
-physical knowledge, but they do exist in deliberative and reflective
-knowledge because these layers have goals and plans, and thus,
-expectations.  In the story, the goal of avoiding failures is
-referring to a goal in the reflective knowledge---the reflective goal
-to avoid failures in deliberative knowledge.
+In this story of learning, the robot hypothesizes the effects of not
+only its physical actions but also its mental actions.  The physical
+goal of the robot in the story is to create a stack of two blocks.
+However, the robot also has another goal, which is to avoid failures.
+A failure is not a physical object.  A failure is an object that
+represents a knowledge problem.  One basic type of failure is a
+failure of expectations.  In the story, the robot experiences a
+failure of expectations when it expects the plan to stack a cube on a
+pyramid to achieve its physical goal.  When the cube falls off of the
+pyramid and ends up on the table, there is a failure of expectations.
+Note that the failure is dependent on a plan and a goal existing.
+Failures do not exist in physical knowledge, but they do exist in
+deliberative and reflective knowledge because these layers have goals
+and plans, and thus, expectations that can fail.  In the story, the
+goal of avoiding failures is referring to a goal in the reflective
+knowledge---the reflective goal to avoid failures in deliberative
+knowledge.
 
-The robot is learning at a reflective level when it thinks the
-following: ``Plan one has failed when executed, so I hypothesize that
-similar plans will also fail when executed.''  This hypothesis is
-about deliberative actions and objects, so we know that it is a piece
-of reflective knowledge.  It means that next time the reflective layer
-is deciding whether or not the deliberative planner should execute a
+The robot is learning at a reflective level when it thinks to itself,
+``Plan one has failed when executed, so I hypothesize that similar
+plans will also fail when executed.''  This hypothesis is about
+deliberative actions and objects, so we know that it is a piece of
+reflective knowledge.  The next time that the reflective layer is
+deciding whether or not the deliberative planner should execute a
 given plan, it can consider whether or not the plan is similar to
 plans that have previously failed.  The deliberative layer makes plans
 composed of physical actions in order to accomplish physical goals,
@@ -106,15 +107,83 @@ learning something about the process of planning itself, that implies
 that we are talking about a form of learning in reflective knowledge.
 Reflective learning allows for the planning process to be recompiled
 into more efficient forms as more experience is gained in terms of how
-plans perform in execution.
+deliberative plans are created, imagined, and executed.
 
-In order to help us to imagine the deliberative knowledge that the
-robot in the story might be dealing with, see
-{\autoref{figure:physical_knowledge_large}}.
+Okay, now that we've covered the reflective learning in this first
+story, I will continue the story by describing how the reflective
+learning improves the robot's overall performance at accomplishing its
+goal:
+\begin{quote}
+  I hypothesize the failure was caused by the fact that the plan was
+  hypothesized to cause a cube being on top of a pyramid.  The next
+  time I see a plan that attempts to accomplish a cube being on top of
+  a pyramid, I will be reminded of this failure as a potential outcome
+  of executing similar plans in the future.  Now, I will try again to
+  imagine a way to accomplish my physical goals.  I will try imagining
+  the effects of my second plan to see if it accomplishes my goal of a
+  block being on a block.  I want to avoid plan failures.  Yes, this
+  plan attempts to have a cube on a pyramid, which is a block on a
+  block, but I remember that plans that try to have a cube be on a
+  pyramid might lead to failure, so I will skip this plan for now.
+\end{quote}
+
+
+\begin{tabular}{p{2cm}p{8cm}}
+  {\emph{reflective}} & I hypothesize the failure was caused by the
+  fact that the plan was hypothesized to cause a cube being on top of
+  a pyramid. \\
+  
+  {\emph{reflective}} & The next time I see a plan that attempts to
+  accomplish a cube being on top of a pyramid, I will be reminded of
+  this failure as a potential outcome of executing similar plans in
+  the future. \\
+  
+  {\emph{reflective}} & Now, I will try again to imagine a way to
+  accomplish my physical goals. \\
+  
+  {\emph{reflective}} & I will try imagining the effects of my second
+  plan to see if it accomplishes my goal of a block being on a
+  block. \\
+  
+  {\emph{reflective}} & I want to avoid plan failures. \\
+  
+  {\emph{reflective}} & Yes, this plan attempts to have a cube on a
+  pyramid, which is a block on a block, but I remember that plans that
+  try to have a cube be on a pyramid might lead to failure, so I will
+  skip this plan for now. \\
+\end{tabular}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Physical Knowledge}
+
+The physical knowledge base in SALS is implemented in a frame-based
+representation that keeps track of relationships and properties of
+physical objects.  {\autoref{figure:physical_knowledge_large}} shows a
+visualization of a partial state of the physical knowledge at the
+beginning of the example robot story.
 \begin{figure}
   \center
   \includegraphics[width=6cm]{gfx/physical_knowledge_large}
-  \caption{Physical knowledge.}
+  \caption[A visualization of a partial state of physical
+    knowledge.]{A visualization of a partial state of physical
+    knowledge.  Nodes represent objects and properties, while edges
+    represent relations.  Objects, properties, and relations are each
+    labelled with symbols.}
   \label{figure:physical_knowledge_large}
 \end{figure}
 
@@ -250,18 +319,7 @@ deliberative knowledge on the way between physical knowledge and
 reflective knowledge.
 
 \begin{quote}
-  I hypothesize the failure was caused by the fact that the plan
-  attempted to accomplish a cube being on top of a pyramid.  The next
-  time I see a plan that attempts to accomplish a cube being on top of
-  a pyramid, I will be reminded of this failure as a potential outcome
-  of executing similar plans in the future.  Now, I will try again to
-  imagine a way to accomplish my physical goals.  I will try imagining
-  the effects of my second plan to see if it accomplishes my goal of a
-  block being on a block.  I want to avoid plan failures.  Yes, this
-  plan attempts to have a cube on a pyramid, which is a block on a
-  block, but I remember that plans that try to have a cube be on a
-  pyramid might lead to failure, so I will skip this plan for now.  I
-  will try imagining the effects of my third plan to see if it
+  I will try imagining the effects of my third plan to see if it
   accomplishes my goal of a block being on a block.  Yes, this plan
   attempts to have a pyramid on a cube, which doesn't remind me of any
   plan failures, so I will execute this plan to stack a pyramid on a

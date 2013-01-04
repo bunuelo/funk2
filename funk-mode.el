@@ -70,7 +70,8 @@
     (list
      ;;'("\\([a-zA-Z0-9_-~!@#$%^&*()_+-={}]+\\)" . font-lock-variable-name-face)
      (cons (regexp-opt
-            '("append"
+            '("add-goal"
+	      "append"
 	      "apply"
 	      "car"
 	      "car-set"

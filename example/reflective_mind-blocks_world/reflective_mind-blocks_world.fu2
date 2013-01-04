@@ -304,6 +304,11 @@
 				      relation focus_plan
 				      plan property has_been_imagined nil]]
 		      
+		      [defplan 'a planner to be focusing on a plan that has failed'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property imagined_complete_failure t]]
+		      
 		      [defplan 'a cube to be on a pyramid'
 			:matches ['a [? top_shape] to be on a [? bottom_shape]']
 			 :frame [[top_shape    'cube']
@@ -356,6 +361,10 @@
 		      
 		      [defplan 'test find a plan to cause a cube to be on a pyramid'
 			[plan-call [plan 'find a plan to cause a cube to be on a pyramid']]]
+		      
+		      [defplan 'avoid a planner being focused on a plan that has failed'
+			:matches ['avoid [? subject] being focused [? preposition]']
+			 [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
 		      
 		      ]]]
   

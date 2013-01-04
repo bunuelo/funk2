@@ -293,7 +293,85 @@
 	 
 	 'reflective plans'
 	 
-	 [let [[reflective_plan_definition_code `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
+	 [have this imagine_reflective_plan_expression
+	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property has_been_imagined t]]
+		      
+		      [defplan 'a planner to be focusing on a plan that has not been imagined'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property has_been_imagined nil]]
+		      
+		      [defplan 'a planner to be focusing on a plan that has failed'
+			[relationship planner property planner_type deliberative
+				      relation focus_plan
+				      plan property imagined_complete_failure t]]
+		      
+		      [defplan 'a cube to be on a pyramid'
+			:matches ['a [? top_shape] to be on a [? bottom_shape]']
+			 :frame [[top_shape    'cube']
+				 [bottom_shape 'pyramid']]
+			  [relationship block property shape [? top_shape]
+					preposition on
+					block property shape [? bottom_shape]]]
+		      
+		      [defplan 'a planner is focusing on a plan that has been imagined'
+			:matches ['[? subject] is [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'focusing on a plan that has been imagined']]
+			  [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
+		      
+		      [defplan 'a planner is not focusing on a plan that has been imagined'
+			:matches ['[? subject] is not [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'focusing on a plan that has been imagined']]
+			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
+		      
+		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
+			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			  [relationship planner property planner_type deliberative
+					relation focus_plan
+					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid'
+			:matches ['if [? condition], [? command]']
+			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']
+				 [command   'find a plan to cause a cube to be on a pyramid']]
+			  [if [plan-call [plan [? condition]]]
+			      [plan-call [plan [? command]]]]]
+		      
+		      [defplan 'find next unimagined plan'
+			[call-below 'focus on next object']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
+		      
+		      [defplan 'find unimagined plan'
+			[call-below 'focus on first plan']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
+		      
+		      [defplan 'imagine unimagined plan'
+			[plan-call [plan 'find unimagined plan']]
+			[call-below 'imagine executing plan in focus']]
+		      
+		      [defplan 'find a plan to cause a cube to be on a pyramid'
+			[plan-call [plan 'imagine unimagined plan']]
+			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid']]]
+		      
+		      [defplan 'test find a plan to cause a cube to be on a pyramid'
+			[plan-call [plan 'find a plan to cause a cube to be on a pyramid']]]
+		      
+		      [defplan 'avoid a planner being focused on a plan that has failed'
+			:matches ['avoid [? subject] being focused [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'on a plan that has failed']]
+			  [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+		      
+		      ]]
+	 
+	 [have this imagine_super_reflective_plan_expression
+	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
 			[relationship planner property planner_type deliberative
 				      relation focus_plan
 				      plan property has_been_imagined t]]
@@ -368,9 +446,6 @@
 			  [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
 		      
 		      ]]]
-	   
-	   [parog [have this imagine_reflective_plan_expression       reflective_plan_definition_code]
-		  [have this imagine_super_reflective_plan_expression reflective_plan_definition_code]]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   

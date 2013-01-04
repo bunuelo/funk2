@@ -42,12 +42,17 @@
   :packages [mindmon-blocks_world-core]
    :sources ['mindmon-blocks_world-reflective_action_activator.fu2']]
 
+[defpackage mindmon-blocks_world-super_reflective_action_activator
+  :packages [mindmon-blocks_world-core]
+   :sources ['mindmon-blocks_world-super_reflective_action_activator.fu2']]
+
 [defpackage mindmon-blocks_world
   :packages [mindmon-blocks_world-core
 	     mindmon-blocks_world-reactive_action_activator
 	     mindmon-blocks_world-reactive_plan_activator
 	     mindmon-blocks_world-deliberative_action_activator
 	     mindmon-blocks_world-deliberative_plan_activator
-	     mindmon-blocks_world-reflective_action_activator]
+	     mindmon-blocks_world-reflective_action_activator
+	     mindmon-blocks_world-super_reflective_action_activator]
    :sources ['mindmon-blocks_world.fu2']]
 

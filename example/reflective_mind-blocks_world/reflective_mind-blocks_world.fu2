@@ -289,6 +289,9 @@
 			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
 			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
 		      
+		      [defplan 'test want a pyramid to be on a cube'
+			[plan-call [plan 'want a pyramid to be on a cube']]]
+		      
 		      `[plan-call [plan 'want a pyramid to be on a cube']]
 		      
 		      ]]

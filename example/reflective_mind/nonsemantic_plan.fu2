@@ -671,10 +671,35 @@
 [deftypefunk nonsemantic_plan execute add_goal [nonsemantic_plan_value]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding goal.']
-								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding goal.']
+								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
+												[t                                                              [error bug_name               `nonsemantic_plan-add_goal-invalid_type
+																				       is_plan_bug            t
+																				       correct_type           `exact_nonsemantic_plan_value
+																				       actual_type            [type nonsemantic_plan_value]
+																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
+								       [have [get this mental_layer] add_goal partial_state]
+								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding goal.  (doing nothing)']
 								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-add_plan-invalid_execution_mode
+								      execution_mode         cause-nonsemantic_plan_execution_mode
+								      nonsemantic_plan_value nonsemantic_plan_value]]]
+    result_multiple_possible_values]]
+
+[deftypefunk nonsemantic_plan execute remove_goal [nonsemantic_plan_value]
+  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: removing goal.']
+								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
+												[t                                                              [error bug_name               `nonsemantic_plan-remove_goal-invalid_type
+																				       is_plan_bug            t
+																				       correct_type           `exact_nonsemantic_plan_value
+																				       actual_type            [type nonsemantic_plan_value]
+																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
+								       [have [get this mental_layer] remove_goal partial_state]
+								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining removing goal.  (doing nothing)']
+								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
+	  [t                                                   [error bug_name               `nonsemantic_plan-remove_plan-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode
 								      nonsemantic_plan_value nonsemantic_plan_value]]]
     result_multiple_possible_values]]
@@ -1265,6 +1290,21 @@
 	  subnodes]
     `[add-goal ,[get this execution_node_as_code [first [get partial_state_node subnodes]]]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-remove_goal [nonsemantic_plan_execution_node]
+  [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
+	[partial_state_node nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `partial_state]
+		      [if partial_state_node
+			  [error bug_name           `nonsemantic_plan-get-execution_node_as_code-remove_goal-more_than_one_partial_state_subnode
+				 partial_state_node partial_state_node
+				 subnode            subnode
+				 this               this]
+			[= partial_state_node subnode]]]]]
+	  subnodes]
+    `[remove-goal ,[get this execution_node_as_code [first [get partial_state_node subnodes]]]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-not [nonsemantic_plan_execution_node]
   [let [[subnodes         [get nonsemantic_plan_execution_node subnodes]]
 	[truth_value_node nil]]
@@ -1393,6 +1433,7 @@
 			[[eq node_type `not]                  [get this execution_node_as_code-not                  nonsemantic_plan_execution_node]]
 			[[eq node_type `exists]               [get this execution_node_as_code-exists               nonsemantic_plan_execution_node]]
 			[[eq node_type `add-goal]             [get this execution_node_as_code-add_goal             nonsemantic_plan_execution_node]]
+			[[eq node_type `remove-goal]          [get this execution_node_as_code-remove_goal             nonsemantic_plan_execution_node]]
 			[[eq node_type `wait-for]             [get this execution_node_as_code-wait_for             nonsemantic_plan_execution_node]]
 			[[eq node_type `wait-for-time]        [get this execution_node_as_code-wait_for_time        nonsemantic_plan_execution_node]]
 			[[eq node_type `property]             [get this execution_node_as_code-property             nonsemantic_plan_execution_node]]
@@ -2016,6 +2057,16 @@
       [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
     [if [is-type `exact_nonsemantic_plan_value partial_state]
 	[have nonsemantic_plan add_goal partial_state]
+      [error bug_type      `defplanfunk-exists-invalid_type
+	     is_plan_bug   t
+	     actual_type   [type partial_state]
+	     partial_state partial_state]]]]
+
+[defplanfunk imagine remove-goal [partial_state]
+  [if [eq [type partial_state] `nonsemantic_plan_value]
+      [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
+    [if [is-type `exact_nonsemantic_plan_value partial_state]
+	[have nonsemantic_plan remove_goal partial_state]
       [error bug_type      `defplanfunk-exists-invalid_type
 	     is_plan_bug   t
 	     actual_type   [type partial_state]

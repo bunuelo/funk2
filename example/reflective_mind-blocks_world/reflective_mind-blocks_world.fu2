@@ -256,9 +256,18 @@
 			 :frame [[partial_state 'a cube to be on a pyramid']]
 			  [add-goal [plan-call [plan [? partial_state]]]]]
 		      
+		      [defplan 'stop wanting a cube to be on a pyramid'
+			:matches ['stop wanting [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			  [remove-goal [plan-call [plan [? partial_state]]]]]
+		      
 		      [defplan 'want a block to be on a block'
 			[plan-call [plan 'want a cube to be on a pyramid']]
 			[plan-call [plan 'want a pyramid to be on a cube']]]
+		      
+		      [defplan 'stop wanting a block to be on a block'
+			[plan-call [plan 'stop wanting a cube to be on a pyramid']]
+			[plan-call [plan 'stop wanting a pyramid to be on a cube']]]
 		      
 		      ]]
 	 

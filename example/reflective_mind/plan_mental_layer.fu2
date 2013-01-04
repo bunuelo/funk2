@@ -29,13 +29,15 @@
 							       reflective_type_knowledge_base_name
 							       reflective_resource_knowledge_base_name
 							       trace_knowledge_base_names
+							       [goal_phenomenal_name_ptypehash_mutex     [new mutex]]
+							       [goal_phenomenal_name_ptypehash           [new ptypehash]]
 							       [action_natural_language_symbol_ptypehash [new ptypehash]]
 							       [semantic_plan_phenomenal_name_frame      [new frame]]
 							       [knowledge_symbol_set_initialized_mutex   [new mutex]]
 							       [knowledge_symbol_set_initialized         nil]
 							       [knowledge_symbol_set                     [new set]]
-							       [reverse_semantic_plan_linked_list_mutex          [new mutex]]
-							       [reverse_semantic_plan_linked_list                nil]
+							       [reverse_semantic_plan_linked_list_mutex  [new mutex]]
+							       [reverse_semantic_plan_linked_list        nil]
 							       [memoized_plans_by_name_ptypehash_mutex   [new mutex]]
 							       [memoized_plans_by_name_ptypehash         [new ptypehash]]]
   [new [initial-number initial-name
@@ -112,6 +114,22 @@
 
 [deftypefunk plan_mental_layer get semantic_planner []
   [get [get this agency `plan] semantic_planner]]
+
+[deftypefunk plan_mental_layer execute add_goal [semantic_partial_state]
+  [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex lock]
+    [if [not [get goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
+	[prog [have goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_partial_state]
+	      [semantic-add [get this semantic_planner] goal semantic_partial_state-phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex unlock]]]
+
+[deftypefunk plan_mental_layer execute remove_goal [semantic_partial_state]
+  [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex lock]
+    [if [get goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]
+	[prog [have goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
+	      [semantic-remove [get this semantic_planner] goal semantic_partial_state-phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']

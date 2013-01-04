@@ -1,0 +1,94 @@
+'Copyright (c) 2007-2012 Bo Morgan.
+ All rights reserved.
+ 
+ Author: Bo Morgan
+ 
+ Permission to use, copy, modify and distribute this software and its
+ documentation is hereby granted, provided that both the copyright
+ notice and this permission notice appear in all copies of the
+ software, derivative works or modified versions, and any portions
+ thereof, and that both notices appear in supporting documentation.
+ 
+ BO MORGAN ALLOWS FREE USE OF THIS SOFTWARE IN ITS "AS IS" CONDITION.
+ BO MORGAN DISCLAIMS ANY LIABILITY OF ANY KIND FOR ANY DAMAGES
+ WHATSOEVER RESULTING FROM THE USE OF THIS SOFTWARE.
+ 
+ Bo Morgan requests users of this software to return to bo@mit.edu any
+ improvements or extensions that they make and grant Bo Morgan the
+ rights to redistribute these changes.'
+
+
+[deframe mindmon_blocks_world_super_reflective_action_activator_window [frame] [mindmon_agent
+									  
+									  window
+									  scrolled_window
+									  vbox
+									  menu_bar
+									  file_menu_item
+									  file_menu
+									  file_exit_menu_item
+									  button_vbox]
+  [new [initial-mindmon_agent]
+       [= mindmon_agent initial-mindmon_agent]
+       [= window [gtk-window-new]]
+       [set window title [format nil [get mindmon_agent name] ' - Deliberative2 Action Activator']]
+       [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
+       [set window destroy_with_parent t]
+       [= vbox            [gtk-vbox-new 0]]
+       
+       [= menu_bar            [gtk-menu_bar-new]]
+       [= file_menu_item      [gtk-menu_item-new 'File']]
+       [= file_menu           [gtk-menu-new]]
+       [= file_exit_menu_item [gtk-menu_item-new 'Exit']]
+       [have file_exit_menu_item signal_connect 'activate'
+	     [funk []
+		   [have window destroy]]
+	     nil]
+       [have menu_bar  append file_menu_item]
+       [have file_menu append file_exit_menu_item]
+       [set file_menu_item submenu file_menu]
+       [have vbox pack_start menu_bar nil nil 0]
+       
+       [= button_vbox [gtk-vbox-new 0]]
+       [mapc [funk [action]
+		   [let [[action__hbox   [gtk-hbox-new 2]]
+			 [action__button [gtk-button-new_with_label [get action as-string]]]]
+		     
+		     [have action__hbox pack_start action__button nil nil 0]
+		     [have button_vbox pack_start action__hbox nil nil 0]
+		     [have action__button signal_connect 'clicked'
+			   [funk []
+				 [fiber [funk []
+					      [terminal_format standard-terminal '\nuser: deliberative2 action activator waiting to call "' [get action as-string] '."']
+					      [have action external_wait_to_call]]
+					nil]]
+			   nil]]]
+	     [have [get [get mindmon_agent mind] super_reflective_actions]
+		   sort [funk [x y]
+			      [> [get x as-string]
+				 [get y as-string]]]]]
+       [= scrolled_window [gtk-scrolled_window-new]]
+       [have scrolled_window add_with_viewport button_vbox]
+       [have vbox pack_start scrolled_window t t 0]
+       [have window add vbox]
+       [set window size 512 800]
+       [have window show_all]]]
+
+
+
+
+'mindmon_blocks_world_super_reflective_action_activator'
+
+[deframe mindmon_blocks_world_super_reflective_action_activator [mindmon_agent_tool] []
+  [new [initial-mindmon_agent]
+       [construct mindmon_agent_tool initial-mindmon_agent]
+       ]]
+
+[deftypefunk mindmon_blocks_world_super_reflective_action_activator get mindmon_agent_tool-title []
+  'Deliberative2 Action Activator']
+
+[deftypefunk mindmon_blocks_world_super_reflective_action_activator execute mindmon_agent_tool-start []
+  [terminal_format standard-terminal '\nmindmon_blocks_world_super_reflective_action_activator: starting.']
+  [new mindmon_blocks_world_super_reflective_action_activator_window [get this mindmon_agent]]]
+
+

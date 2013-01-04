@@ -92,9 +92,6 @@
 [deftypefunk reflective_mind execute create_deliberative_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `deliberative] create_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind get deliberative_actions []
-  [get [get this layer `deliberative] actions]]
-
 [deftypefunk reflective_mind get deliberative_plan_semantic_plans []
   [get [get this layer `deliberative] plan_semantic_plans]]
 
@@ -121,9 +118,6 @@
 [deftypefunk reflective_mind execute create_reflective_action [layer_name agency_name resource_name :rest resource_arguments]
   [have-apply [get this layer `reflective] create_action `[,layer_name ,agency_name ,resource_name @resource_arguments]]]
 
-[deftypefunk reflective_mind get reflective_actions []
-  [get [get this layer `reflective] actions]]
-
 [deftypefunk reflective_mind get reflective_plan_semantic_plans []
   [get [get this layer `reflective] plan_semantic_plans]]
 
@@ -136,6 +130,9 @@
 [deftypefunk reflective_mind execute imagine_deliberative_plan_expression [expression]
   [have [get this layer `deliberative] imagine_plan_expression expression]]
 
+[deftypefunk reflective_mind get deliberative_actions []
+  [get [get this layer `deliberative] actions]]
+
 
 'reflective'
 
@@ -144,6 +141,21 @@
 
 [deftypefunk reflective_mind execute imagine_reflective_plan_expression [expression]
   [have [get this layer `reflective] imagine_plan_expression expression]]
+
+[deftypefunk reflective_mind get reflective_actions []
+  [get [get this layer `reflective] actions]]
+
+
+'super_reflective'
+
+[deftypefunk reflective_mind execute evaluate_super_reflective_plan_expression [expression]
+  [have [get this layer `super_reflective] evaluate_plan_expression expression]]
+
+[deftypefunk reflective_mind execute imagine_super_reflective_plan_expression [expression]
+  [have [get this layer `super_reflective] imagine_plan_expression expression]]
+
+[deftypefunk reflective_mind get super_reflective_actions []
+  [get [get this layer `super_reflective] actions]]
 
 
 'pre-knowledge perception functions'

@@ -244,7 +244,8 @@
     visual_knowledge]]
 
 [deftypefunk mindmon_blocks_world_agent get tool_names []
-  `[mindmon_blocks_world_reflective_action_activator
+  `[mindmon_blocks_world_super_reflective_action_activator
+    mindmon_blocks_world_reflective_action_activator
     mindmon_blocks_world_deliberative_plan_activator
     mindmon_blocks_world_deliberative_action_activator
     mindmon_blocks_world_reactive_plan_activator

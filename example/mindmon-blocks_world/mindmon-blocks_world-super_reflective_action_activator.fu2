@@ -31,7 +31,7 @@
   [new [initial-mindmon_agent]
        [= mindmon_agent initial-mindmon_agent]
        [= window [gtk-window-new]]
-       [set window title [format nil [get mindmon_agent name] ' - Deliberative2 Action Activator']]
+       [set window title [format nil [get mindmon_agent name] ' - Deliberative3 (Super Reflective) Action Activator']]
        [set window transient_for [get [get mindmon_agent mindmon_agent_widget] window]]
        [set window destroy_with_parent t]
        [= vbox            [gtk-vbox-new 0]]

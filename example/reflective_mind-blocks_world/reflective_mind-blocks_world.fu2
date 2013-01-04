@@ -289,6 +289,8 @@
 			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
 			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
 		      
+		      [plan-call [plan 'want a block to be on a block']]
+		      
 		      ]]
 	 
 	 'reflective plans'

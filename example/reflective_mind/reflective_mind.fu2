@@ -35,14 +35,16 @@
   [parog [have this add_layer [new builtin_reactive_layer]]
 	 [have this add_layer [new learned_reactive_layer]]
 	 [have this add_layer [new deliberative_layer]]
-	 [have this add_layer [new reflective_layer]]]]
+	 [have this add_layer [new reflective_layer]]
+	 [have this add_layer [new super_reflective_layer]]]]
 
 [deftypefunk reflective_mind execute create_knowledge []
   [terminal_format standard-terminal '\nreflective_mind: creating knowledge.']
   [have [get this layer `builtin_reactive] create_knowledge]
   [have [get this layer `learned_reactive] create_knowledge]
   [have [get this layer `deliberative]     create_knowledge]
-  [have [get this layer `reflective]       create_knowledge]]
+  [have [get this layer `reflective]       create_knowledge]
+  [have [get this layer `super_reflective] create_knowledge]]
 
 [deftypefunk reflective_mind execute connect_knowledge_reflection []
   [terminal_format standard-terminal '\nreflective_mind: connecting knowledge reflection.']
@@ -50,13 +52,15 @@
   [have [get this layer `learned_reactive] connect_knowledge_reflection]
   [have [get this layer `deliberative]     connect_knowledge_reflection]
   [have [get this layer `reflective]       connect_knowledge_reflection]
+  [have [get this layer `super_reflective] connect_knowledge_reflection]
   [terminal_format standard-terminal '\nreflective_mind: connecting all cause group interactions.']
   [have this connect_all_cause_group_interactions]]
 
 [deftypefunk reflective_mind execute create_builtin_actions []
   [terminal_format standard-terminal '\nreflective_mind: creating built-in actions.']
-  [have [get this layer `deliberative] create_builtin_actions]
-  [have [get this layer `reflective]   create_builtin_actions]]
+  [have [get this layer `deliberative]     create_builtin_actions]
+  [have [get this layer `reflective]       create_builtin_actions]]
+  [have [get this layer `super_reflective] create_builtin_actions]]
 
 
 'general actions'

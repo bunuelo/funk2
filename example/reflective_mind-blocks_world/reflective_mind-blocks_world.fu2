@@ -292,7 +292,7 @@
 		      [defplan 'test want a pyramid to be on a cube'
 			[plan-call [plan 'want a pyramid to be on a cube']]]
 		      
-		      [plan-call [plan 'want a pyramid to be on a cube']]
+		      `[plan-call [plan 'want a pyramid to be on a cube']]
 		      
 		      ]]
 	 
@@ -329,10 +329,10 @@
 			  [exists [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'a planner is not focusing on a plan that has been imagined'
-			:matches ['[? subject] is not [? preposition]']
-			 :frame [[subject     'a planner']
-				 [preposition 'focusing on a plan that has been imagined']]
-			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
+			:matches ['[? subject] is not [? relation]']
+			 :frame [[subject  'a planner']
+				 [relation 'focusing on a plan that has been imagined']]
+			  [not [plan-call [plan '[? subject] is [? relation]']]]]
 		      
 		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
 			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']
@@ -361,11 +361,13 @@
 			[call-below 'imagine executing plan in focus']]
 		      
 		      [defplan 'find a plan to cause a cube to be on a pyramid'
+			:matches ['find a plan to cause [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
 			[plan-call [plan 'imagine unimagined plan']]
-			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid']]]
+			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find a plan to cause [? partial_state]']]]
 		      
-		      [defplan 'test find a plan to cause a cube to be on a pyramid'
-			[plan-call [plan 'find a plan to cause a cube to be on a pyramid']]]
+		      [defplan 'test find a plan to cause a pyramid to be on a cube'
+			[plan-call [plan 'find a plan to cause a pyramid to be on a cube']]]
 		      
 		      [defplan 'avoid a planner being focused on a plan that has failed'
 			:matches ['avoid [? subject] being focused [? preposition]']

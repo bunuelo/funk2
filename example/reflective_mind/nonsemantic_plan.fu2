@@ -2128,7 +2128,8 @@
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
 																[have nonsemantic_plan add_positive_goal partial_state]]]
 								     [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: imagining adding positive goal'
-																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']]]
+																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
+																[new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 								     [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 																 execution_mode cause-nonsemantic_plan_execution_mode
 																 plan           plan]]]]
@@ -2144,7 +2145,8 @@
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
 																[have nonsemantic_plan remove_positive_goal partial_state]]]
 								     [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: imagining removing positive goal'
-																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']]]
+																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
+																[new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 								     [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 																 execution_mode cause-nonsemantic_plan_execution_mode
 																 plan           plan]]]]
@@ -2160,7 +2162,8 @@
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
 																[have nonsemantic_plan add_negative_goal partial_state]]]
 								     [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: imagining adding negative goal'
-																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']]]
+																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
+																[new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 								     [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 																 execution_mode cause-nonsemantic_plan_execution_mode
 																 plan           plan]]]]
@@ -2176,7 +2179,8 @@
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
 																[have nonsemantic_plan remove_negative_goal partial_state]]]
 								     [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: imagining removing negative goal'
-																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']]]
+																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
+																[new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 								     [t                                                   [error bug_name       `nonsemantic_plan-plan_call-invalid_execution_mode
 																 execution_mode cause-nonsemantic_plan_execution_mode
 																 plan           plan]]]]

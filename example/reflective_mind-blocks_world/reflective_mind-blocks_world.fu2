@@ -292,7 +292,7 @@
 		      [defplan 'test want a pyramid to be on a cube'
 			[plan-call [plan 'want a pyramid to be on a cube']]]
 		      
-		      `[plan-call [plan 'want a pyramid to be on a cube']]
+		      [plan-call [plan 'want a pyramid to be on a cube']]
 		      
 		      ]]
 	 

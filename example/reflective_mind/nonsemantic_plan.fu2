@@ -2122,6 +2122,7 @@
 	     partial_state partial_state]]]]
 
 [defplanfunk imagine add-positive-goal [partial_state]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: add-positive-goal']
   [cond [[eq [type partial_state] `nonsemantic_plan_value]     [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 	[[is-type `exact_nonsemantic_plan_value partial_state] [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: adding positive goal'
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
@@ -2137,6 +2138,7 @@
 								      partial_state partial_state]]]]
 
 [defplanfunk imagine remove-positive-goal [partial_state]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: remove-positive-goal']
   [cond [[eq [type partial_state] `nonsemantic_plan_value]     [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 	[[is-type `exact_nonsemantic_plan_value partial_state] [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: removing positive goal'
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
@@ -2152,6 +2154,7 @@
 								      partial_state partial_state]]]]
 
 [defplanfunk imagine add-negative-goal [partial_state]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: add-negative-goal']
   [cond [[eq [type partial_state] `nonsemantic_plan_value]     [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 	[[is-type `exact_nonsemantic_plan_value partial_state] [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: adding negative goal'
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']
@@ -2167,6 +2170,7 @@
 								      partial_state partial_state]]]]
 
 [defplanfunk imagine remove-negative-goal [partial_state]
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: remove-negative-goal']
   [cond [[eq [type partial_state] `nonsemantic_plan_value]     [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 	[[is-type `exact_nonsemantic_plan_value partial_state] [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: removing negative goal'
 																		 ' "' [get [get partial_state value] as-declarative_natural_language_string] '".']

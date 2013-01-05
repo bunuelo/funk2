@@ -85,7 +85,7 @@
        ]]
 
 [deftypefunk mindmon_blocks_world_reflective_action_activator get mindmon_agent_tool-title []
-  'Deliberative2 Action Activator']
+  'Deliberative2 (Reflective) Action Activator']
 
 [deftypefunk mindmon_blocks_world_reflective_action_activator execute mindmon_agent_tool-start []
   [terminal_format standard-terminal '\nmindmon_blocks_world_reflective_action_activator: starting.']

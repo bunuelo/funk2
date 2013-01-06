@@ -902,12 +902,10 @@ def_pcfunk1(test_imagine, imagination_name,
 u64 raw__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return 0;}
   switch (f2ptype__raw(seq, cause)) {
+  case ptype_cons:
+    return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));
   case ptype_simple_array:
-    if (raw__cons__is_type(cause, seq)) {
-      return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));
-    } else {
-      return raw__array__length(cause, seq);
-    }
+    return raw__array__length(cause, seq);
   case ptype_chunk:  return f2chunk__length( seq, cause);
   case ptype_symbol: return f2symbol__length(seq, cause);
   case ptype_string: return f2string__length(seq, cause);

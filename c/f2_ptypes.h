@@ -182,6 +182,11 @@ f2ptr pfunk2__f2cons__car__set(f2ptr this, f2ptr cause, f2ptr value);
 f2ptr pfunk2__f2cons__cdr(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2cons__cdr__set(f2ptr this, f2ptr cause, f2ptr value);
 
+#define f2cons__car__trace_depth(this, cause, trace_depth)             f2cons__car(this, cause)
+#define f2cons__car__set__trace_depth(this, cause, value, trace_depth) f2cons__car__set(this, cause, value)
+#define f2cons__cdr__trace_depth(this, cause, trace_depth)             f2cons__cdr(this, cause)
+#define f2cons__cdr__set__trace_depth(this, cause, value, trace_depth) f2cons__cdr__set(this, cause, value)
+
 // simple_array
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);

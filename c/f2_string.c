@@ -274,29 +274,30 @@ f2ptr f2__exp__as__string__with_hash(f2ptr cause, f2ptr exp, f2ptr element_hash)
     u64               temp_str__length = funk2_character_string__snprintf(temp_str, 1024, "<chunk " pointer__fstr ">", to_ptr(exp));
     return f2string__new(cause, temp_str__length, temp_str);
   }
-  case ptype_simple_array: {
-    if (raw__cons__is_type(cause, exp)) {
-      f2ptr stringlist = nil;
-      {
-	f2ptr stringlist_iter = nil;
-	f2ptr iter            = exp;
-	while (iter) {
-	  f2ptr element = f2__cons__car(cause, iter);
-	  f2ptr new_cons = raw__cons__new(cause, f2__exp__as__string__with_hash(cause, element, element_hash), nil);
-	  if (stringlist_iter) {
-	    f2__cons__cdr__set(cause, stringlist_iter, new_cons);
-	  } else {
-	    stringlist = new_cons;
-	  }
-	  stringlist_iter = new_cons;
-	  iter            = f2__cons__cdr(cause, iter);
+  case ptype_cons: {
+    f2ptr stringlist = nil;
+    {
+      f2ptr stringlist_iter = nil;
+      f2ptr iter            = exp;
+      while (iter) {
+	f2ptr element = f2__cons__car(cause, iter);
+	f2ptr new_cons = raw__cons__new(cause, f2__exp__as__string__with_hash(cause, element, element_hash), nil);
+	if (stringlist_iter) {
+	  f2__cons__cdr__set(cause, stringlist_iter, new_cons);
+	} else {
+	  stringlist = new_cons;
 	}
+	stringlist_iter = new_cons;
+	iter            = f2__cons__cdr(cause, iter);
       }
-      return f2__stringlist__concat(cause, f2list3__new(cause,
-							new__string(cause, "["),
-							f2__stringlist__intersperse(cause, stringlist, new__string(cause, " ")),
-							new__string(cause, "]")));
-    } else if (raw__frame__is_type(cause, exp)) {
+    }
+    return f2__stringlist__concat(cause, f2list3__new(cause,
+						      new__string(cause, "["),
+						      f2__stringlist__intersperse(cause, stringlist, new__string(cause, " ")),
+						      new__string(cause, "]")));
+  } break;
+  case ptype_simple_array: {
+    if (raw__frame__is_type(cause, exp)) {
       f2ptr stringlist = nil;
       {
 	f2ptr stringlist_iter = nil;

@@ -218,6 +218,26 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 #define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
 
 
+// cons
+
+struct ptype_cons_block_s {
+  ptype_block_t ptype;
+  u8            immutable : 1;
+  u64           length : (f2ptr__bit_num - 2);
+  f2ptr_t       slot[0];
+} __attribute__((__packed__));
+typedef struct ptype_cons_block_s ptype_cons_block_t;
+
+ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
+
+#define __pure__f2cons__new(pool_index, cause, len, f2ptr_ptr) ptype_cons__new(pool_index, cause, len, f2ptr_ptr)
+#define __pure__f2cons__immutable(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
+#define __pure__f2cons__immutable__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
+#define __pure__f2cons__length(this)                           (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
+#define __pure__f2cons__elt(this, index)                       (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data)
+#define __pure__f2cons__elt__set(this, index, value)           (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data = (value))
+
+
 // simple_array
 
 struct ptype_simple_array_block_s {

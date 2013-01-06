@@ -1192,6 +1192,135 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 
 
 
+// cons
+
+f2ptr ptype_cons__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {
+  u64 data_byte_num = (sizeof(f2ptr_t) * length);
+  f2ptr cons_f2ptr = funk2_memory__funk2_memblock_f2ptr__new_from_pool(&(__funk2.memory), pool_index, sizeof(ptype_cons_block_t) + data_byte_num);
+  ptype_cons_block_t* cons_block = (ptype_cons_block_t*)from_ptr(raw__f2ptr_to_ptr(cons_f2ptr));
+  debug__assert(cons_block, nil, "block is nil.");
+  //debug__assert(!cause || valid_funk2_memblock_ptr(f2ptr_to_ptr(cause)), nil, "valid_funk2_memblock_ptr(cause) failed");
+  cons_block->ptype.block.ptype    = ptype_cons;
+  if (__ptypes__creation_cause_enabled) {
+    if (cause) {raw__exp__increment_reference_count(cause);}
+    cons_block->ptype.cause = cause;
+  } else {
+    cons_block->ptype.cause = nil;
+  }
+  if (__ptypes__creation_fiber_enabled) {
+    f2ptr creation_fiber = raw__global_scheduler__try_get_processor_thread_current_fiber(this_processor_thread__pool_index());
+    if (creation_fiber != nil) {raw__exp__increment_reference_count(creation_fiber);}
+    cons_block->ptype.creation_fiber = creation_fiber;
+  } else {
+    cons_block->ptype.creation_fiber = nil;
+  }
+  cons_block->immutable            = 0;
+  cons_block->length               = length;
+  if (f2ptr_ptr) {memcpy(cons_block->slot, from_ptr(f2ptr_ptr), data_byte_num);}
+  else           {memset(cons_block->slot, 0,                   data_byte_num);}
+  return cons_f2ptr;
+}
+
+f2ptr pfunk2__f2cons__new(f2ptr cause, u64 length, ptr f2ptr_ptr) {
+  check_wait_politely();
+  int pool_index = this_processor_thread__pool_index();
+  f2ptr this = __pure__f2cons__new(pool_index, cause, length, f2ptr_ptr);
+  return this;
+}
+
+f2ptr pfunk2__f2cons__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
+  check_wait_politely();
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(init_array) != ptype_cons) {
+    ptype_error(cause, init_array, __funk2.globalenv.ptype_cons__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  container__reflectively_know_of_reading_from(cause, init_array, nil, sizeof(f2ptr) * length);
+  return pfunk2__f2cons__new(cause, length, to_ptr(((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->slot));
+}
+
+u8 pfunk2__f2cons__immutable(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  u8 retval = __pure__f2cons__immutable(this);
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  return retval;
+}
+
+void pfunk2__f2cons__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  __pure__f2cons__immutable__set(this, value);
+  container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
+}
+
+u64 pfunk2__f2cons__length(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_cons) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_cons__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  u64 length = __pure__f2cons__length(this);
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(length));
+  return length;
+}
+
+#ifdef DEBUG
+#  define F2__PTYPE__CONS__BOUNDARY_CHECK
+#endif // DEBUG
+
+f2ptr pfunk2__f2cons__elt(f2ptr this, u64 index, f2ptr cause) {
+  check_wait_politely();
+  //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
+  //int pool_index = __f2ptr__pool_index(this);
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_cons) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_cons__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+#ifdef F2__PTYPE__CONS__BOUNDARY_CHECK
+  int length = __pure__f2cons__length(this);
+  if (index < 0 || index >= length) {
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
+    //error(nil, "f2array__elt error: index out of range.");
+  }
+#endif
+  f2ptr rv = __pure__f2cons__elt(this, index);
+  container__reflectively_know_of_reading_from(cause, this, rv, sizeof(rv));
+  return rv;
+}
+
+f2ptr pfunk2__f2cons__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  check_wait_politely();
+  //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
+  
+  //int pool_index = __f2ptr__pool_index(this);
+  
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_cons) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_cons__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  u64 length     = __pure__f2cons__length(this);
+  if (index < 0 || index >= length) {
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
+    //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
+  }
+  
+  f2ptr old_value = __pure__f2cons__elt(this, index);
+  funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
+  
+  __pure__f2cons__elt__set(this, index, value);
+  container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
+  return nil;
+}
+
+
+
+
+
 // simple_array
 
 f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr_ptr) {

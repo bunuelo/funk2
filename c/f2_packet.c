@@ -387,6 +387,20 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   case funk2_packet_type__pcs_respond__f2chunk__send:                               recv_packet__respond__f2chunk__send(funk2_node, (pcs_respond__f2chunk__send_t*)packet);                                                             break;
   case funk2_packet_type__pcs_request__f2chunk__recv:                               recv_packet__request__f2chunk__recv(funk2_node, (pcs_request__f2chunk__recv_t*)packet);                                                             break;
   case funk2_packet_type__pcs_respond__f2chunk__recv:                               recv_packet__respond__f2chunk__recv(funk2_node, (pcs_respond__f2chunk__recv_t*)packet);                                                             break;
+  case funk2_packet_type__pcs_request__f2cons__new:                                 recv_packet__request__f2cons__new(funk2_node, (pcs_request__f2cons__new_t*)packet);                                                                 break;
+  case funk2_packet_type__pcs_respond__f2cons__new:                                 recv_packet__respond__f2cons__new(funk2_node, (pcs_respond__f2cons__new_t*)packet);                                                                 break;
+  case funk2_packet_type__pcs_request__f2cons__new_copy:                            recv_packet__request__f2cons__new_copy(funk2_node, (pcs_request__f2cons__new_copy_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_respond__f2cons__new_copy:                            recv_packet__respond__f2cons__new_copy(funk2_node, (pcs_respond__f2cons__new_copy_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_request__f2cons__immutable:                           recv_packet__request__f2cons__immutable(funk2_node, (pcs_request__f2cons__immutable_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_respond__f2cons__immutable:                           recv_packet__respond__f2cons__immutable(funk2_node, (pcs_respond__f2cons__immutable_t*)packet);                                                     break;
+  case funk2_packet_type__pcs_request__f2cons__immutable__set:                      recv_packet__request__f2cons__immutable__set(funk2_node, (pcs_request__f2cons__immutable__set_t*)packet);                                           break;
+  case funk2_packet_type__pcs_respond__f2cons__immutable__set:                      recv_packet__respond__f2cons__immutable__set(funk2_node, (pcs_respond__f2cons__immutable__set_t*)packet);                                           break;
+  case funk2_packet_type__pcs_request__f2cons__length:                              recv_packet__request__f2cons__length(funk2_node, (pcs_request__f2cons__length_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_respond__f2cons__length:                              recv_packet__respond__f2cons__length(funk2_node, (pcs_respond__f2cons__length_t*)packet);                                                           break;
+  case funk2_packet_type__pcs_request__f2cons__elt:                                 recv_packet__request__f2cons__elt(funk2_node, (pcs_request__f2cons__elt_t*)packet);                                                                 break;
+  case funk2_packet_type__pcs_respond__f2cons__elt:                                 recv_packet__respond__f2cons__elt(funk2_node, (pcs_respond__f2cons__elt_t*)packet);                                                                 break;
+  case funk2_packet_type__pcs_request__f2cons__elt__set:                            recv_packet__request__f2cons__elt__set(funk2_node, (pcs_request__f2cons__elt__set_t*)packet);                                                       break;
+  case funk2_packet_type__pcs_respond__f2cons__elt__set:                            recv_packet__respond__f2cons__elt__set(funk2_node, (pcs_respond__f2cons__elt__set_t*)packet);                                                       break;
   case funk2_packet_type__pcs_request__f2simple_array__new:                         recv_packet__request__f2simple_array__new(funk2_node, (pcs_request__f2simple_array__new_t*)packet);                                                 break;
   case funk2_packet_type__pcs_respond__f2simple_array__new:                         recv_packet__respond__f2simple_array__new(funk2_node, (pcs_respond__f2simple_array__new_t*)packet);                                                 break;
   case funk2_packet_type__pcs_request__f2simple_array__new_copy:                    recv_packet__request__f2simple_array__new_copy(funk2_node, (pcs_request__f2simple_array__new_copy_t*)packet);                                       break;
@@ -3818,6 +3832,440 @@ f2ptr f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int fd, int 
     f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__f2chunk__recv(funk2_node, fiber, cause, this, start, length, fd, flags);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr f2ptr_array) {
+  packet_status("send_packet__request__f2cons__new: executing.");
+  int f2ptr_array__size = f2ptr_array ? (sizeof(f2ptr) * length) : 0;
+  pcs_request__f2cons__new_t* packet = (pcs_request__f2cons__new_t*)alloca(sizeof(pcs_request__f2cons__new_t) + f2ptr_array__size);
+  funk2_packet_header__init(&(packet->header), sizeof(packet->payload) + f2ptr_array__size);
+  packet->payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__new;
+  packet->payload.action_payload_header.cause               = cause;
+  packet->payload.action_payload_header.fiber              = this_fiber;
+  packet->payload.length                                    = length;
+  packet->payload.f2ptr_array__defined                      = f2ptr_array ? boolean__true : boolean__false;
+  if (f2ptr_array) {
+    memcpy(packet->payload.f2ptr_array, from_ptr(f2ptr_array), f2ptr_array__size);
+  }
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)packet);
+}
+
+void recv_packet__request__f2cons__new(funk2_node_t* funk2_node, pcs_request__f2cons__new_t* packet) {
+  packet_status("recv_packet__request__f2cons__new: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  u64   length = packet->payload.length;
+  f2ptr* remote_f2ptr_array = (f2ptr*)(packet->payload.f2ptr_array__defined ? packet->payload.f2ptr_array : NULL);
+  f2ptr* f2ptr_array        = NULL;
+  if (remote_f2ptr_array) {
+    f2ptr_array = alloca(sizeof(f2ptr) * length);
+    u64 i;
+    for (i = 0; i < length; i ++) {
+      f2ptr_array[i] = rf2_to_lf2(remote_f2ptr_array[i]);
+    }
+  }
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr new = pfunk2__f2cons__new(cause, packet->payload.length, to_ptr(f2ptr_array));
+  send_packet__respond__f2cons__new(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, new);
+}
+
+void send_packet__respond__f2cons__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new) {
+  packet_status("send_packet__respond__f2cons__new: executing.");
+  pcs_respond__f2cons__new_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__new;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.new                                       = new;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__new(funk2_node_t* funk2_node, pcs_respond__f2cons__new_t* packet) {
+  packet_status("recv_packet__respond__f2cons__new: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2cons__new(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, ptr f2ptr_array) {
+  send_packet__request__f2cons__new(funk2_node, this_fiber, cause, length, f2ptr_array);
+  pcs_respond__f2cons__new_t* packet = (pcs_respond__f2cons__new_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2ptr new = rf2_to_lf2(packet->payload.new);
+  f2__free(to_ptr(packet));
+  return new;
+}
+
+f2ptr f2cons__new(f2ptr cause, u64 length, ptr f2ptr_array) {
+  return pfunk2__f2cons__new(cause, length, f2ptr_array);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array) {
+  packet_status("send_packet__request__f2cons__new_copy: executing.");
+  pcs_request__f2cons__new_copy_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__new_copy;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.length                                    = length;
+  packet.payload.init_array                                = init_array;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__new_copy(funk2_node_t* funk2_node, pcs_request__f2cons__new_copy_t* packet) {
+  packet_status("recv_packet__request__f2cons__new_copy: executing.");
+  f2ptr cause      = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber     = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr init_array = rf2_to_lf2(packet->payload.init_array);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr new_copy = pfunk2__f2cons__new_copy(cause, packet->payload.length, init_array);
+  send_packet__respond__f2cons__new_copy(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, new_copy);
+}
+
+void send_packet__respond__f2cons__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr new_copy) {
+  packet_status("send_packet__respond__f2cons__new_copy: executing.");
+  pcs_respond__f2cons__new_copy_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__new_copy;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.new_copy                                  = new_copy;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__new_copy(funk2_node_t* funk2_node, pcs_respond__f2cons__new_copy_t* packet) {
+  packet_status("recv_packet__respond__f2cons__new_copy: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2cons__new_copy(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length, f2ptr init_array) {
+  send_packet__request__f2cons__new_copy(funk2_node, this_fiber, cause, length, init_array);
+  pcs_respond__f2cons__new_copy_t* packet = (pcs_respond__f2cons__new_copy_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2ptr new_copy = rf2_to_lf2(packet->payload.new_copy);
+  f2__free(to_ptr(packet));
+  return new_copy;
+}
+
+f2ptr f2cons__new_copy(f2ptr cause, u64 length, f2ptr init_array) {
+  return pfunk2__f2cons__new_copy(cause, length, init_array);
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2cons__immutable: executing.");
+  pcs_request__f2cons__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__immutable(funk2_node_t* funk2_node, pcs_request__f2cons__immutable_t* packet) {
+  packet_status("recv_packet__request__f2cons__immutable: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  u8 immutable = pfunk2__f2cons__immutable(this, cause);
+  send_packet__respond__f2cons__immutable(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, immutable);
+}
+
+void send_packet__respond__f2cons__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u8 immutable) {
+  packet_status("send_packet__respond__f2cons__immutable: executing.");
+  pcs_respond__f2cons__immutable_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__immutable;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.immutable                                 = immutable;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__immutable(funk2_node_t* funk2_node, pcs_respond__f2cons__immutable_t* packet) {
+  packet_status("recv_packet__respond__f2cons__immutable: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2cons__immutable(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2cons__immutable(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2cons__immutable_t* packet = (pcs_respond__f2cons__immutable_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  packet_status("funk2_node__f2cons__immutable: packet->payload.immutable = " f2ptr__fstr, packet->payload.immutable);
+  f2ptr immutable = rf2_to_lf2(packet->payload.immutable);
+  packet_status("funk2_node__f2cons__immutable: rf2_to_lf2(packet->payload.immutable) = " f2ptr__fstr, immutable);
+  f2__free(to_ptr(packet));
+  return immutable;
+}
+
+f2ptr f2cons__immutable(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2cons__immutable(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2cons__immutable(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("send_packet__request__f2cons__immutable__set: executing.");
+  pcs_request__f2cons__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__immutable__set(funk2_node_t* funk2_node, pcs_request__f2cons__immutable__set_t* packet) {
+  packet_status("recv_packet__request__f2cons__immutable__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  u8    value  = rf2_to_lf2(packet->payload.value);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2cons__immutable__set(this, cause, value);
+  send_packet__respond__f2cons__immutable__set(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2cons__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2cons__immutable__set: executing.");
+  pcs_respond__f2cons__immutable__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__immutable__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__immutable__set(funk2_node_t* funk2_node, pcs_respond__f2cons__immutable__set_t* packet) {
+  packet_status("recv_packet__respond__f2cons__immutable__set: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2cons__immutable__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u8 value) {
+  packet_status("funk2_node__f2cons__immutable__set: executing.");
+  send_packet__request__f2cons__immutable__set(funk2_node, this_fiber, cause, this, value);
+  pcs_respond__f2cons__immutable__set_t* packet = (pcs_respond__f2cons__immutable__set_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2cons__immutable__set(f2ptr this, f2ptr cause, u8 value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    pfunk2__f2cons__immutable__set(this, cause, value);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    funk2_node__f2cons__immutable__set(funk2_node, fiber, cause, this, value);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2cons__length: executing.");
+  pcs_request__f2cons__length_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__length;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__length(funk2_node_t* funk2_node, pcs_request__f2cons__length_t* packet) {
+  packet_status("recv_packet__request__f2cons__length: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  u64 length = pfunk2__f2cons__length(this, cause);
+  send_packet__respond__f2cons__length(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, length);
+}
+
+void send_packet__respond__f2cons__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 length) {
+  packet_status("send_packet__respond__f2cons__length: executing.");
+  pcs_respond__f2cons__length_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__length;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.length                                    = length;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__length(funk2_node_t* funk2_node, pcs_respond__f2cons__length_t* packet) {
+  packet_status("recv_packet__respond__f2cons__length: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+u64 funk2_node__f2cons__length(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2cons__length(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2cons__length_t* packet = (pcs_respond__f2cons__length_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  u64 length = packet->payload.length;
+  f2__free(to_ptr(packet));
+  return length;
+}
+
+u64 f2cons__length(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2cons__length(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2cons__length(funk2_node, fiber, cause, this);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index) {
+  packet_status("send_packet__request__f2cons__elt: executing.");
+  pcs_request__f2cons__elt_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__elt;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  packet.payload.index                                     = index;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__elt(funk2_node_t* funk2_node, pcs_request__f2cons__elt_t* packet) {
+  packet_status("recv_packet__request__f2cons__elt: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  f2ptr elt = pfunk2__f2cons__elt(this, packet->payload.index, cause);
+  send_packet__respond__f2cons__elt(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, elt);
+}
+
+void send_packet__respond__f2cons__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr elt) {
+  packet_status("send_packet__respond__f2cons__elt: executing.");
+  pcs_respond__f2cons__elt_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__elt;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.elt                                       = elt;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__elt(funk2_node_t* funk2_node, pcs_respond__f2cons__elt_t* packet) {
+  packet_status("recv_packet__respond__f2cons__elt: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+f2ptr funk2_node__f2cons__elt(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index) {
+  send_packet__request__f2cons__elt(funk2_node, this_fiber, cause, this, index);
+  pcs_respond__f2cons__elt_t* packet = (pcs_respond__f2cons__elt_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  packet_status("funk2_node__f2cons__elt: packet->payload.elt = " f2ptr__fstr, packet->payload.elt);
+  f2ptr elt = rf2_to_lf2(packet->payload.elt);
+  packet_status("funk2_node__f2cons__elt: rf2_to_lf2(packet->payload.elt) = " f2ptr__fstr, elt);
+  f2__free(to_ptr(packet));
+  return elt;
+}
+
+f2ptr f2cons__elt(f2ptr this, u64 index, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2cons__elt(this, index, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2cons__elt(funk2_node, fiber, cause, this, index);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2cons__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value) {
+  packet_status("send_packet__request__f2cons__elt__set: executing.");
+  pcs_request__f2cons__elt__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2cons__elt__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  packet.payload.index                                     = index;
+  packet.payload.value                                     = value;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2cons__elt__set(funk2_node_t* funk2_node, pcs_request__f2cons__elt__set_t* packet) {
+  packet_status("recv_packet__request__f2cons__elt__set: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  f2ptr value  = rf2_to_lf2(packet->payload.value);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  pfunk2__f2cons__elt__set(this, packet->payload.index, cause, value);
+  send_packet__respond__f2cons__elt__set(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause);
+}
+
+void send_packet__respond__f2cons__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause) {
+  packet_status("send_packet__respond__f2cons__elt__set: executing.");
+  pcs_respond__f2cons__elt__set_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2cons__elt__set;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2cons__elt__set(funk2_node_t* funk2_node, pcs_respond__f2cons__elt__set_t* packet) {
+  packet_status("recv_packet__respond__f2cons__elt__set: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+void funk2_node__f2cons__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value) {
+  packet_status("funk2_node__f2cons__elt__set: executing.");
+  send_packet__request__f2cons__elt__set(funk2_node, this_fiber, cause, this, index, value);
+  pcs_respond__f2cons__elt__set_t* packet = (pcs_respond__f2cons__elt__set_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  f2__free(to_ptr(packet));
+}
+
+void f2cons__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    pfunk2__f2cons__elt__set(this, index, cause, value);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    funk2_node__f2cons__elt__set(funk2_node, fiber, cause, this, index, value);
   }
 }
 

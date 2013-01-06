@@ -1501,7 +1501,7 @@ f2ptr raw__cons__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr no
 f2ptr f2__cons__gather_lick_notes(f2ptr cause, f2ptr this, f2ptr lick, f2ptr note_object_hash, f2ptr max_size) {
   assert_argument_type(cons,      this);
   assert_argument_type(lick,      lick);
-  assert_argument_type(ptypehash, node_object_hash);
+  assert_argument_type(ptypehash, note_object_hash);
   assert_argument_type(integer,   max_size);
   return raw__cons__gather_lick_notes(cause, this, lick, note_object_hash, max_size);
 }

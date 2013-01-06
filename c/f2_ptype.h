@@ -24,8 +24,6 @@
 
 #define ptype__min_bits 5
 
-extern u8 __ptype__str[][128];
-
 typedef enum ptype_e {
   ptype_free_memory           = 1,
   ptype_newly_allocated       = 2,
@@ -39,9 +37,10 @@ typedef enum ptype_e {
   ptype_string                = 10,
   ptype_symbol                = 11,
   ptype_chunk                 = 12,
-  ptype_simple_array          = 13,
-  ptype_mutable_array_pointer = 14,
-  ptype_larva                 = 15,
+  ptype_cons                  = 13,
+  ptype_simple_array          = 14,
+  ptype_mutable_array_pointer = 15,
+  ptype_larva                 = 16,
 } ptype_t;
 
 #endif // F2__PTYPE__H

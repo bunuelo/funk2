@@ -401,29 +401,175 @@ f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
 f2ptr f2chunk__primobject_type__new(f2ptr cause);
 
 
+// cons
+
+boolean_t raw__cons__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__cons__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__cons__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__cons__new                         (f2ptr cause, f2ptr length);
+u64       raw__cons__length                      (f2ptr cause, f2ptr this);
+f2ptr      f2__cons__length                      (f2ptr cause, f2ptr this);
+f2ptr     raw__cons__elt                         (f2ptr cause, f2ptr this, u64 index);
+f2ptr      f2__cons__elt                         (f2ptr cause, f2ptr this, f2ptr index);
+f2ptr      f2__cons__elt__set                    (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+boolean_t raw__cons__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cons__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__cons__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__cons__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__cons__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__cons__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr      f2__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr     raw__cons__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__cons__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__cons__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__cons__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+
+f2ptr f2cons__primobject_type__new(f2ptr cause);
+
+// cons macros
+
+#define  f2list1__new(cause, elt0)		\
+  raw__cons__new(cause, elt0, nil)
+
+#define  f2list2__new(cause, elt0, elt1)		\
+  raw__cons__new(cause, elt0, f2list1__new(cause, elt1))
+
+#define  f2list3__new(cause, elt0, elt1, elt2)			\
+  raw__cons__new(cause, elt0, f2list2__new(cause, elt1, elt2))
+
+#define  f2list4__new(cause, elt0, elt1, elt2, elt3)			\
+  raw__cons__new(cause, elt0, f2list3__new(cause, elt1, elt2, elt3))
+
+#define  f2list5__new(cause, elt0, elt1, elt2, elt3, elt4)		\
+  raw__cons__new(cause, elt0, f2list4__new(cause, elt1, elt2, elt3, elt4))
+
+#define  f2list6__new(cause, elt0, elt1, elt2, elt3, elt4, elt5)	\
+  raw__cons__new(cause, elt0, f2list5__new(cause, elt1, elt2, elt3, elt4, elt5))
+
+#define  f2list7__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6)	\
+  raw__cons__new(cause, elt0, f2list6__new(cause, elt1, elt2, elt3, elt4, elt5, elt6))
+
+#define  f2list8__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7) \
+  raw__cons__new(cause, elt0, f2list7__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7))
+
+#define  f2list9__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8) \
+  raw__cons__new(cause, elt0, f2list8__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8))
+
+#define f2list10__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9) \
+  raw__cons__new(cause, elt0, f2list9__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9))
+
+#define f2list11__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10) \
+  raw__cons__new(cause, elt0, f2list10__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10))
+
+#define f2list12__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11) \
+  raw__cons__new(cause, elt0, f2list11__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11))
+
+#define f2list13__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12) \
+  raw__cons__new(cause, elt0, f2list12__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12))
+
+#define f2list14__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13) \
+  raw__cons__new(cause, elt0, f2list13__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13))
+
+#define f2list15__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14) \
+  raw__cons__new(cause, elt0, f2list14__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14))
+
+#define f2list16__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15) \
+  raw__cons__new(cause, elt0, f2list15__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15))
+
+#define f2list17__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16) \
+  raw__cons__new(cause, elt0, f2list16__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16))
+
+#define f2list18__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17) \
+  raw__cons__new(cause, elt0, f2list17__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17))
+
+#define f2list19__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18) \
+  raw__cons__new(cause, elt0, f2list18__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18))
+
+#define f2list20__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19) \
+  raw__cons__new(cause, elt0, f2list19__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19))
+
+#define f2list21__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20) \
+  raw__cons__new(cause, elt0, f2list20__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20))
+
+#define f2list22__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21) \
+  raw__cons__new(cause, elt0, f2list21__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21))
+
+#define f2list23__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22) \
+  raw__cons__new(cause, elt0, f2list22__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22))
+
+#define f2list24__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23) \
+  raw__cons__new(cause, elt0, f2list23__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23))
+
+#define f2list25__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24) \
+  raw__cons__new(cause, elt0, f2list24__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24))
+
+#define f2list26__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25) \
+  raw__cons__new(cause, elt0, f2list25__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25))
+
+#define f2list27__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26) \
+  raw__cons__new(cause, elt0, f2list26__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26))
+
+#define f2list28__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27) \
+  raw__cons__new(cause, elt0, f2list27__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27))
+
+#define f2list29__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28) \
+  raw__cons__new(cause, elt0, f2list28__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28))
+
+#define f2list30__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29) \
+  raw__cons__new(cause, elt0, f2list29__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29))
+
+#define f2list31__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30) \
+  raw__cons__new(cause, elt0, f2list30__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30))
+
+#define f2list32__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31) \
+  raw__cons__new(cause, elt0, f2list31__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31))
+
+#define f2list33__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31, elt32) \
+  raw__cons__new(cause, elt0, f2list32__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31, elt32))
+
+#define f2list34__new(cause, elt0, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31, elt32, elt33) \
+  raw__cons__new(cause, elt0, f2list33__new(cause, elt1, elt2, elt3, elt4, elt5, elt6, elt7, elt8, elt9, elt10, elt11, elt12, elt13, elt14, elt15, elt16, elt17, elt18, elt19, elt20, elt21, elt22, elt23, elt24, elt25, elt26, elt27, elt28, elt29, elt30, elt31, elt32, elt33))
+
+
+
+#define f2list__elt_0(     this, cause)        f2cons__car(                                                     this, cause)
+#define f2list__elt_0__set(this, cause, value) f2cons__car__set(                                                this, cause,                                        value)
+#define f2list__elt_1(     this, cause)        f2cons__car(                                         f2cons__cdr(this, cause), cause)
+#define f2list__elt_1__set(this, cause, value) f2cons__car__set(                                    f2cons__cdr(this, cause), cause,                                value)
+#define f2list__elt_2(     this, cause)        f2cons__car(                             f2cons__cdr(f2cons__cdr(this, cause), cause), cause)
+#define f2list__elt_2__set(this, cause, value) f2cons__car__set(                        f2cons__cdr(f2cons__cdr(this, cause), cause), cause,                        value)
+#define f2list__elt_3(     this, cause)        f2cons__car(                 f2cons__cdr(f2cons__cdr(f2cons__cdr(this, cause), cause), cause), cause)
+#define f2list__elt_3__set(this, cause, value) f2cons__car__set(            f2cons__cdr(f2cons__cdr(f2cons__cdr(this, cause), cause), cause),  cause,               value)
+#define f2list__elt_4(     this, cause)        f2cons__car(     f2cons__cdr(f2cons__cdr(f2cons__cdr(f2cons__cdr(this, cause), cause), cause), cause), cause)
+#define f2list__elt_4__set(this, cause, value) f2cons__car__set(f2cons__cdr(f2cons__cdr(f2cons__cdr(f2cons__cdr(this, cause), cause), cause), cause), cause, cause, value)
+
+
+
+
 // simple_array
 
-boolean_t raw__simple_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__is_type(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__type(f2ptr cause, f2ptr x);
-f2ptr f2__simple_array__new(f2ptr cause, f2ptr length);
-u64 raw__simple_array__length(f2ptr cause, f2ptr this);
-f2ptr f2__simple_array__length(f2ptr cause, f2ptr this);
-f2ptr raw__simple_array__elt(f2ptr cause, f2ptr this, u64 index);
-f2ptr f2__simple_array__elt(f2ptr cause, f2ptr this, f2ptr index);
-f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
-boolean_t raw__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that);
-u64   raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
-f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this);
-boolean_t raw__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr f2__simple_array__equals(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr raw__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
-f2ptr f2__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
-f2ptr raw__simple_array__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__simple_array__equals_hash_value(f2ptr cause, f2ptr this);
-f2ptr f2__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
-f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
+boolean_t raw__simple_array__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__simple_array__is_type                     (f2ptr cause, f2ptr x);
+f2ptr      f2__simple_array__type                        (f2ptr cause, f2ptr x);
+f2ptr      f2__simple_array__new                         (f2ptr cause, f2ptr length);
+u64       raw__simple_array__length                      (f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__length                      (f2ptr cause, f2ptr this);
+f2ptr     raw__simple_array__elt                         (f2ptr cause, f2ptr this, u64 index);
+f2ptr      f2__simple_array__elt                         (f2ptr cause, f2ptr this, f2ptr index);
+f2ptr      f2__simple_array__elt__set                    (f2ptr cause, f2ptr x, f2ptr y, f2ptr z);
+boolean_t raw__simple_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__simple_array__eq                          (f2ptr cause, f2ptr this, f2ptr that);
+u64       raw__simple_array__eq_hash_value               (f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__eq_hash_value               (f2ptr cause, f2ptr this);
+boolean_t raw__simple_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__simple_array__equals                      (f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr      f2__simple_array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash);
+f2ptr     raw__simple_array__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__equals_hash_value           (f2ptr cause, f2ptr this);
+f2ptr      f2__simple_array__terminal_print_with_frame   (f2ptr cause, f2ptr this, f2ptr terminal_print_frame);
+f2ptr      f2__simple_array__slot__type_funk             (f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr slot_name);
 
 f2ptr f2simple_array__primobject_type__new(f2ptr cause);
 
@@ -910,6 +1056,37 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr save__funk;
 } funk2_object_type__chunk__slot_t;
 
+// cons
+
+typedef struct funk2_object_type__cons__slot_s {
+  f2ptr is_type__symbol;
+  f2ptr is_type__funk;
+  f2ptr type__symbol;
+  f2ptr type__funk;
+  f2ptr new__symbol;
+  f2ptr new__funk;
+  f2ptr new_copy__symbol;
+  f2ptr new_copy__funk;
+  f2ptr length__symbol;
+  f2ptr length__funk;
+  f2ptr eq__symbol;
+  f2ptr eq__funk;
+  f2ptr eq_hash_value__symbol;
+  f2ptr eq_hash_value__funk;
+  f2ptr equals__symbol;
+  f2ptr equals__funk;
+  f2ptr equals_hash_value__loop_free__symbol;
+  f2ptr equals_hash_value__loop_free__funk;
+  f2ptr equals_hash_value__symbol;
+  f2ptr equals_hash_value__funk;
+  f2ptr elt__symbol;
+  f2ptr elt__funk;
+  f2ptr elt__set__symbol;
+  f2ptr elt__set__funk;
+  f2ptr terminal_print_with_frame__symbol;
+  f2ptr terminal_print_with_frame__funk;
+} funk2_object_type__cons__slot_t;
+
 // simple_array
 
 typedef struct funk2_object_type__simple_array__slot_s {
@@ -1026,6 +1203,7 @@ typedef struct funk2_ptype_object_types_s {
   funk2_object_type__string__slot_t                ptype_string;
   funk2_object_type__symbol__slot_t                ptype_symbol;
   funk2_object_type__chunk__slot_t                 ptype_chunk;
+  funk2_object_type__cons__slot_t                  ptype_cons;
   funk2_object_type__simple_array__slot_t          ptype_simple_array;
   funk2_object_type__larva__slot_t                 ptype_larva;
   funk2_object_type__mutable_array_pointer__slot_t ptype_mutable_array_pointer;

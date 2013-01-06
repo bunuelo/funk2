@@ -1818,26 +1818,31 @@
 		  [cause-define cause-imagine_potential_effect_partial_state_set       [new set]]
 		  [funkall expression_compiled_funk nonsemantic_plan]]]
 
-[defunk defplancommand-parog-finish_up [step_complete_failure step_complete_failure_expressions]
+[defunk defplancommand-parog-finish_up [step_complete_failure step_complete_failure_results step_complete_failure_expressions]
   [if step_complete_failure
-      [error bug_name                     `nonsemantic_plan-parog-step_complete_failure
-	     is_plan_bug                  t
-	     complete_failure_expressions step_complete_failure_expressions]
+      [let [[bug [shelter [error bug_name                     `nonsemantic_plan-parog-step_complete_failure
+				 is_plan_bug                  t
+				 complete_failure_results     step_complete_failure_results
+				 complete_failure_expressions step_complete_failure_expressions]]]]
+	[globalize-bug plan_step_failure_bug bug]
+	[bug bug]]
     [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 
 [defplancommand imagine parog [:rest expressions]
   `[terminal_format standard-terminal '\nnonsemantic_plan_command compiling imagine ' `[parog @expressions]]
   [eval `[funk [nonsemantic_plan]
 	       [let [[step_complete_failure             nil]
+		     [step_complete_failure_results     nil]
 		     [step_complete_failure_expressions nil]]
 		 [parog @[parcar [funk [expression]
 				       `[let [[result [defplancommand-parog-evaluate_expression nonsemantic_plan [quote ,expression] ,[get nonsemantic_plan expression-compile expression compile_option_frame]]]]
 					  [if [null [get result nonbug_and_failure_values]]
-					      [prog [= step_complete_failure t]
+					      [prog [= step_complete_failure             t]
+						    [= step_complete_failure_results     [cons result step_complete_failure_results]]
 						    [= step_complete_failure_expressions [cons [quote ,expression] step_complete_failure_expressions]]]]
 					  result]]
 				 expressions]]
-		 [defplancommand-parog-finish_up step_complete_failure step_complete_failure_expressions]]]]]
+		 [defplancommand-parog-finish_up step_complete_failure step_complete_failure_results step_complete_failure_expressions]]]]]
 
 [defunk defplancommand-if-evaluate [nonsemantic_plan
 				    condition_expression

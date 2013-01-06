@@ -408,6 +408,8 @@ f2ptr      f2__cons__is_type                     (f2ptr cause, f2ptr x);
 f2ptr      f2__cons__type                        (f2ptr cause, f2ptr x);
 f2ptr     raw__cons__new                         (f2ptr cause, f2ptr car, f2ptr cdr);
 f2ptr      f2__cons__new                         (f2ptr cause, f2ptr car, f2ptr cdr);
+f2ptr     raw__cons__length                      (f2ptr cause, f2ptr this);
+f2ptr      f2__cons__length                      (f2ptr cause, f2ptr this);
 f2ptr     raw__cons__car                         (f2ptr cause, f2ptr this);
 f2ptr      f2__cons__car                         (f2ptr cause, f2ptr this);
 void      raw__cons__car__set                    (f2ptr cause, f2ptr this, f2ptr value);
@@ -1069,6 +1071,8 @@ typedef struct funk2_object_type__cons__slot_s {
   f2ptr type__funk;
   f2ptr new__symbol;
   f2ptr new__funk;
+  f2ptr length__symbol;
+  f2ptr length__funk;
   f2ptr eq__symbol;
   f2ptr eq__funk;
   f2ptr eq_hash_value__symbol;

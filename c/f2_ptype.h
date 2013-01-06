@@ -24,8 +24,6 @@
 
 #define ptype__min_bits 5
 
-extern u8 __ptype__str[][128];
-
 typedef enum ptype_e {
   ptype_free_memory           = 1,
   ptype_newly_allocated       = 2,

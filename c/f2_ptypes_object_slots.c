@@ -3923,7 +3923,7 @@ def_pcfunk2(cons__new, car, cdr,
 
 
 f2ptr raw__cons__length(f2ptr cause, f2ptr this) {
-  return f2__length(cause, this);
+  return f2__simple_length(cause, this);
 }
 
 f2ptr f2__cons__length(f2ptr cause, f2ptr this) {

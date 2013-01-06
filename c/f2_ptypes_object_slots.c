@@ -3917,6 +3917,9 @@ f2ptr raw__cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
 f2ptr f2__cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
   return raw__cons__new(cause, car, cdr);
 }
+def_pcfunk2(cons__new, car, cdr,
+	    "",
+	    return f2__cons__new(this_cause, car, cdr));
 
 
 f2ptr raw__cons__car(f2ptr cause, f2ptr this) {
@@ -4096,12 +4099,6 @@ def_pcfunk1(cons__is_type, x,
 def_pcfunk1(cons__type, x,
 	    "",
 	    return f2__cons__type(this_cause, x));
-def_pcfunk1(cons__new, length,
-	    "",
-	    return f2__cons__new(this_cause, length));
-def_pcfunk1(cons__length, x,
-	    "",
-	    return f2__cons__length(this_cause, x));
 
 f2ptr raw__cons__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr max_size           = f2__terminal_print_frame__max_size(cause, terminal_print_frame);

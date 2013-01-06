@@ -50,7 +50,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_string:                   return boolean__false;
     case ptype_symbol:                   return boolean__false;
     case ptype_chunk:                    return boolean__false;
-    case ptype_cons:
+    case ptype_cons: {
       boolean_t found_invalid = boolean__false;
       {
 	f2ptr car = ((ptype_cons_block_t*)block)->car.data;
@@ -67,6 +67,7 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
 	}
       }
       return found_invalid;
+    }
     case ptype_simple_array: {
       boolean_t found_invalid = boolean__false;
       s64 i;

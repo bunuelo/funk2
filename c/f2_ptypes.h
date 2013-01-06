@@ -176,18 +176,16 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
 
 f2ptr pfunk2__f2cons__new(f2ptr cause, u64 length, ptr f2ptr_ptr);
 f2ptr pfunk2__f2cons__new_copy(f2ptr cause, u64 length, f2ptr init_array);
-u8    pfunk2__f2cons__immutable(f2ptr this, f2ptr cause);
-void  pfunk2__f2cons__immutable__set(f2ptr this, f2ptr cause, u8 value);
 u64   pfunk2__f2cons__length(f2ptr this, f2ptr cause);
-f2ptr pfunk2__f2cons__elt(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2cons__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+f2ptr pfunk2__f2cons__car(f2ptr this, f2ptr cause);
+f2ptr pfunk2__f2cons__car__set(f2ptr this, f2ptr cause, f2ptr value);
+f2ptr pfunk2__f2cons__cdr(f2ptr this, f2ptr cause);
+f2ptr pfunk2__f2cons__cdr__set(f2ptr this, f2ptr cause, f2ptr value);
 
 // simple_array
 
 f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);
 f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
-u8    pfunk2__f2simple_array__immutable(f2ptr this, f2ptr cause);
-void  pfunk2__f2simple_array__immutable__set(f2ptr this, f2ptr cause, u8 value);
 u64   pfunk2__f2simple_array__length(f2ptr this, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
 f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);

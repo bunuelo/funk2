@@ -1778,14 +1778,14 @@
   [let [[result [funkall expression_compiled_funk nonsemantic_plan]]]
     [if [null [get result nonbug_and_failure_values]]
 	[let [[bug_values [get result bug_values]]]
-	  [let [[bug [error bug_name    `nonsemantic_plan-prog-step_complete_failure
-			    is_plan_bug t
-			    subbug      [if bug_values
-					    [first bug_values]
-					  nil]
-			    subbugs     bug_values
-			    expression  expression
-			    result      result]]]
+	  [let [[bug [shelter [error bug_name    `nonsemantic_plan-prog-step_complete_failure
+				     is_plan_bug t
+				     subbug      [if bug_values
+						     [first bug_values]
+						   nil]
+				     subbugs     bug_values
+				     expression  expression
+				     result      result]]]]
 	    [globalize-bug plan_step_failure_bug bug]
 	    [bug bug]]]
       result]]]

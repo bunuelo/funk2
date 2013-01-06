@@ -919,19 +919,20 @@ u64 raw__simple_length(f2ptr cause, f2ptr seq) {
 f2ptr f2__simple_length(f2ptr cause, f2ptr seq) {
   if (!seq) {return f2integer__new(cause, 0);}
   switch (f2ptype__raw(seq, cause)) {
+  case ptype_cons: {
+    u64 count = 0;
+    f2ptr iter = seq;
+    while(iter && raw__cons__is_type(cause, iter)) {
+      count ++;
+      iter = f2cons__cdr(iter, cause);
+    }
+    if (iter) {
+      count += f2__simple_length(cause, iter);
+    }
+    return f2integer__new(cause, count);
+  } break;
   case ptype_simple_array:
-    if (raw__cons__is_type(cause, seq)) {
-      u64 count = 0;
-      f2ptr iter = seq;
-      while(iter && raw__cons__is_type(cause, iter)) {
-	count ++;
-	iter = f2cons__cdr(iter, cause);
-      }
-      if (iter) {
-	count += f2__simple_length(cause, iter);
-      }
-      return f2integer__new(cause, count);
-    } else if (raw__doublelink__is_type(cause, seq)) {
+    if (raw__doublelink__is_type(cause, seq)) {
       u64 count = 0;
       if (seq) {
 	{
@@ -991,26 +992,25 @@ f2ptr raw__elt(f2ptr cause, f2ptr this, int raw_index) {
     //return f2__argument_type_check_failure__exception__new(cause, index);
   }
   switch (f2ptype__raw(this, cause)) {
-  case ptype_simple_array:
-    if (raw__cons__is_type(cause, this)) {
-      int count = raw_index;
-      f2ptr iter = this;
-      while(count > 0) {
-	count --;
-	iter = f2cons__cdr(iter, cause);
-	if (!iter || !raw__cons__is_type(cause, iter)) {
-	  printf ("\nseq_elt error: list index out of range."); fflush(stdout);
-	  return f2larva__new(cause, 1, nil);
-	  //return f2__argument_type_check_failure__exception__new(cause, index);
-	}
-      }
-      return f2cons__car(iter, cause);
-    } else {
-      if (raw_index >= raw__array__length(cause, this)) {
-	printf("\nseq_elt error: array index out of range."); fflush(stdout);
+  case ptype_cons: {
+    int count = raw_index;
+    f2ptr iter = this;
+    while(count > 0) {
+      count --;
+      iter = f2cons__cdr(iter, cause);
+      if (!iter || !raw__cons__is_type(cause, iter)) {
+	printf ("\nseq_elt error: list index out of range."); fflush(stdout);
 	return f2larva__new(cause, 1, nil);
 	//return f2__argument_type_check_failure__exception__new(cause, index);
       }
+    }
+    return f2cons__car(iter, cause);
+  } break;
+  case ptype_simple_array:
+    if (raw_index >= raw__array__length(cause, this)) {
+      printf("\nseq_elt error: array index out of range."); fflush(stdout);
+      return f2larva__new(cause, 1, nil);
+      //return f2__argument_type_check_failure__exception__new(cause, index);
     }
     return raw__array__elt(cause, this, raw_index);
   case ptype_chunk:
@@ -1173,27 +1173,26 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
     //return f2__argument_type_check_failure__exception__new(cause, index);
   }
   switch (f2ptype__raw(this, cause)) {
-  case ptype_simple_array:
-    if (raw__cons__is_type(cause, this)) {
-      int count = f2integer__i(index, cause);
-      f2ptr iter = this;
-      while(count > 0) {
-	count --;
-	iter = f2cons__cdr(iter, cause);
-	if (!iter || !raw__cons__is_type(cause, iter)) {
-	  printf ("\nseq_elt-set error: list index out of range."); fflush(stdout);
-	  return f2larva__new(cause, 1, nil);
-	  //return f2__argument_type_check_failure__exception__new(cause, index);
-	}
-      }
-      f2cons__car__set(iter, cause, value);
-      return nil;
-    } else {
-      if (raw_index >= raw__array__length(cause, this)) {
-	printf("\nseq_elt-set error: array index out of range."); fflush(stdout); 
+  case ptype_cons: {
+    int count = f2integer__i(index, cause);
+    f2ptr iter = this;
+    while(count > 0) {
+      count --;
+      iter = f2cons__cdr(iter, cause);
+      if (!iter || !raw__cons__is_type(cause, iter)) {
+	printf ("\nseq_elt-set error: list index out of range."); fflush(stdout);
 	return f2larva__new(cause, 1, nil);
 	//return f2__argument_type_check_failure__exception__new(cause, index);
       }
+    }
+    f2cons__car__set(iter, cause, value);
+    return nil;
+  } break;
+  case ptype_simple_array:
+    if (raw_index >= raw__array__length(cause, this)) {
+      printf("\nseq_elt-set error: array index out of range."); fflush(stdout); 
+      return f2larva__new(cause, 1, nil);
+      //return f2__argument_type_check_failure__exception__new(cause, index);
     }
     raw__array__elt__set(cause, this, raw_index, value);
     return nil;

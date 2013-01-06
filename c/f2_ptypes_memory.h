@@ -230,10 +230,10 @@ typedef struct ptype_cons_block_s ptype_cons_block_t;
 ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 
 #define __pure__f2cons__new(pool_index, cause, car, cdr) ptype_cons__new(pool_index, cause, car, cdr)
-#define __pure__f2cons__car(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car)
-#define __pure__f2cons__car__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car = (value))
-#define __pure__f2cons__cdr(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr)
-#define __pure__f2cons__cdr__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr = (value))
+#define __pure__f2cons__car(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car.data)
+#define __pure__f2cons__car__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car.data = (value))
+#define __pure__f2cons__cdr(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr.data)
+#define __pure__f2cons__cdr__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr.data = (value))
 
 
 // simple_array

@@ -1520,7 +1520,19 @@ f2ptr raw__cons__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) 
 				     new__symbol(cause, "this"),     this));
     }
     s64 element__note__i = f2integer__i(element__note, cause);
-    raw__chunk__bit64__elt__set(cause, chunk, index * 8, (s64)element__note__i);
+    raw__chunk__bit64__elt__set(cause, chunk, 0 << 3, (s64)element__note__i);
+  }
+  {
+    f2ptr element       = raw__cons__cdr(cause, this);
+    f2ptr element__note = raw__ptypehash__lookup(cause, note_object_hash, element);
+    if (element__note == nil) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_type"), new__symbol(cause, "note_changed_while_licking_to_chunk"),
+				     new__symbol(cause, "element"),  element,
+				     new__symbol(cause, "this"),     this));
+    }
+    s64 element__note__i = f2integer__i(element__note, cause);
+    raw__chunk__bit64__elt__set(cause, chunk, 1 << 3, (s64)element__note__i);
   }
   f2ptr lick_note = raw__ptypehash__lookup(cause, note_object_hash, this);
   if (lick_note == nil) {
@@ -1545,7 +1557,6 @@ f2ptr raw__cons__lick_chunk__unlick_with_notes(f2ptr cause, f2ptr lick_chunk, f2
   if (chunk__length != (2 * 8)) {
     return f2larva__new(cause, 32555, nil);
   }
-  
   f2ptr car = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 0 << 3));
   f2ptr cdr = f2integer__new(cause, raw__chunk__bit64__elt(cause, chunk, 1 << 3));
   return raw__cons__new(cause, car, cdr);

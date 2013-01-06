@@ -3910,13 +3910,12 @@ f2ptr f2__cons__type(f2ptr cause, f2ptr x) {
   return new__symbol(cause, "cons");
 }
 
-f2ptr f2__cons__new(f2ptr cause, f2ptr length) {
-  assert_argument_type(integer, length);
-  s64 length__i = f2integer__i(length, cause);
-  if (length__i < 0) {
-    return f2larva__new(cause, 222010, nil);
-  }
-  return f2cons__new(cause, length__i, to_ptr(NULL));
+f2ptr raw__cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
+  return f2cons__new(cause, car, cdr);
+}
+
+f2ptr f2__cons__new(f2ptr cause, f2ptr car, f2ptr cdr) {
+  return raw__cons__new(cause, car, cdr);
 }
 
 f2ptr raw__cons__car(f2ptr cause, f2ptr this) {

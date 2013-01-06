@@ -1215,11 +1215,11 @@ f2ptr ptype_cons__new(int pool_index, f2ptr cause, f2ptr car, f2ptr cdr) {
   }
   {
     if (car != nil) {raw__exp__increment_reference_count(car);}
-    cons_block->car = car;
+    cons_block->car.data = car;
   }
   {
     if (cdr != nil) {raw__exp__increment_reference_count(cdr);}
-    cons_block->cdr = cdr;
+    cons_block->cdr.data = cdr;
   }
   return cons_f2ptr;
 }

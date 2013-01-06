@@ -1574,12 +1574,12 @@ f2ptr raw__cons__lick_chunk__unlick_replace_notes_with_objects(f2ptr cause, f2pt
   {
     f2ptr lick_note = raw__cons__car(cause, this);
     f2ptr object    = raw__ptypehash__lookup(cause, object_note_hash, lick_note);
-    raw__cons__car__set(cause, this, index, object);
+    raw__cons__car__set(cause, this, object);
   }
   {
     f2ptr lick_note = raw__cons__cdr(cause, this);
     f2ptr object    = raw__ptypehash__lookup(cause, object_note_hash, lick_note);
-    raw__cons__cdr__set(cause, this, index, object);
+    raw__cons__cdr__set(cause, this, object);
   }
   return nil;
 }

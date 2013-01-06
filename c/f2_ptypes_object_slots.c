@@ -3900,14 +3900,15 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
 // cons
 
 boolean_t raw__cons__is_type(f2ptr cause, f2ptr x) {
-  //check_wait_politely();
-  //#ifdef F2__PTYPE__TYPE_CHECK
-  //if (cause && (! raw__cause__is_type(nil, cause))) {error(nil, "cause is not cause.");}
-  //#endif // F2__PTYPE__TYPE_CHECK
   return (x && f2ptype__raw(x, cause) == ptype_cons);
 }
-f2ptr f2__cons__is_type(f2ptr cause, f2ptr x) {return f2bool__new(raw__cons__is_type(cause, x));}
-f2ptr f2__cons__type(f2ptr cause, f2ptr x) {return new__symbol(cause, "cons");}
+f2ptr f2__cons__is_type(f2ptr cause, f2ptr x) {
+  return f2bool__new(raw__cons__is_type(cause, x));
+}
+
+f2ptr f2__cons__type(f2ptr cause, f2ptr x) {
+  return new__symbol(cause, "cons");
+}
 
 f2ptr f2__cons__new(f2ptr cause, f2ptr length) {
   assert_argument_type(integer, length);
@@ -3918,13 +3919,24 @@ f2ptr f2__cons__new(f2ptr cause, f2ptr length) {
   return f2cons__new(cause, length__i, to_ptr(NULL));
 }
 
-u64 raw__cons__length(f2ptr cause, f2ptr this) {return f2cons__length(this, cause);}
-f2ptr f2__cons__length(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__cons__length(cause, this));}
+f2ptr raw__cons__car(f2ptr cause, f2ptr this) {
+  return f2cons__car(this, cause);
+}
 
-f2ptr raw__cons__elt(f2ptr cause, f2ptr this, u64 index) {return f2cons__elt(this, index, cause);}
-f2ptr f2__cons__elt(f2ptr cause, f2ptr this, f2ptr index) {return raw__cons__elt(cause, this, f2integer__i(index, cause));}
+f2ptr f2__cons__car(f2ptr cause, f2ptr this) {
+  assert_argument_type(cons, this);
+  return raw__cons__car(cause, this);
+}
 
-f2ptr f2__cons__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2cons__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
+void raw__cons__car__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2cons__car__set(this, cause, value);
+}
+
+f2ptr f2__cons__car__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(cons, this);
+  raw__cons__car__set(cause, this, value);
+  return nil;
+}
 
 boolean_t raw__cons__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return this == that;
@@ -3945,7 +3957,24 @@ def_pcfunk1(cons__eq_hash_value, this,
 
 
 boolean_t raw__cons__equals(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__array__equals(cause, this, that);
+  if (! raw__cons__is_type(cause, that)) {
+    return boolean__false;
+  }
+  {
+    f2ptr this__car = raw__cons__car(cause, this);
+    f2ptr that__car = raw__cons__car(cause, that);
+    if (! raw__equals(cause, this__car, that__car)) {
+      return boolean__false;
+    }
+  }
+  {
+    f2ptr this__cdr = raw__cons__cdr(cause, this);
+    f2ptr that__cdr = raw__cons__cdr(cause, that);
+    if (! raw__equals(cause, this__cdr, that__cdr)) {
+      return boolean__false;
+    }
+  }
+  return boolean__true;
 }
 
 f2ptr f2__cons__equals(f2ptr cause, f2ptr this, f2ptr that) {
@@ -3958,12 +3987,54 @@ def_pcfunk2(cons__equals, this, that,
 
 
 f2ptr raw__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  return raw__array__equals_hash_value__loop_free(cause, this, node_hash);
+  if (raw__ptypehash__contains(cause, node_hash, this)) {
+    return f2integer__new(cause, 1);
+  }
+  {
+    f2ptr node_hash__key_count    = f2__ptypehash__key_count(cause, node_hash);
+    u64   node_hash__key_count__i = f2integer__i(node_hash__key_count, cause);
+    if (node_hash__key_count__i > max_equals_hash_value_recursion_depth) {
+      return f2larva__new(cause, 334, nil);
+    }
+  }
+  u64 hash_value = 1;
+  raw__ptypehash__add(cause, node_hash, this, __funk2.globalenv.true__symbol);
+  {
+    f2ptr this__subexp = raw__cons__car(cause, this);
+    if (this__subexp) {
+      //f2__print(cause, this__subexp);
+      f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, this__subexp, node_hash);
+      if (raw__larva__is_type(cause, subexp__hash_value)) {
+	return subexp__hash_value;
+      }
+      if (! raw__integer__is_type(cause, subexp__hash_value)) {
+	return f2larva__new(cause, 4, nil);
+      }
+      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
+    }
+  }
+  {
+    f2ptr this__subexp = raw__cons__cdr(cause, this);
+    if (this__subexp) {
+      //f2__print(cause, this__subexp);
+      f2ptr subexp__hash_value = f2__object__equals_hash_value__loop_free(cause, this__subexp, node_hash);
+      if (raw__larva__is_type(cause, subexp__hash_value)) {
+	return subexp__hash_value;
+      }
+      if (! raw__integer__is_type(cause, subexp__hash_value)) {
+	return f2larva__new(cause, 4, nil);
+      }
+      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
+    }
+  }
+  return f2integer__new(cause, hash_value);
 }
 
 f2ptr f2__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr node_hash) {
-  assert_argument_type(cons, this);
-  assert_argument_type(ptypehash,    node_hash);
+  assert_argument_type(cons,     this);
+  assert_argument_type(ptypehash, node_hash);
   return raw__cons__equals_hash_value__loop_free(cause, this, node_hash);
 }
 def_pcfunk2(cons__equals_hash_value__loop_free, this, node_hash,
@@ -3972,18 +4043,17 @@ def_pcfunk2(cons__equals_hash_value__loop_free, this, node_hash,
 
 
 f2ptr raw__cons__equals_hash_value(f2ptr cause, f2ptr this) {
-  return raw__array__equals_hash_value(cause, this);
+  f2ptr node_hash = f2__ptypehash__new(cause);
+  return raw__cons__equals_hash_value__loop_free(cause, this, node_hash);
 }
-
 
 f2ptr f2__cons__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(cons, this);
-  return f2__cons__equals_hash_value(cause, this);
+  return raw__cons__equals_hash_value(cause, this);
 }
 def_pcfunk1(cons__equals_hash_value, this,
 	    "",
 	    return f2__cons__equals_hash_value(this_cause, this));
-
 
 def_pcfunk1(cons__is_type, x,
 	    "",

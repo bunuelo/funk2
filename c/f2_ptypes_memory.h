@@ -222,27 +222,24 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 struct ptype_cons_block_s {
   ptype_block_t ptype;
-  u8            immutable : 1;
-  u64           length : (f2ptr__bit_num - 2);
-  f2ptr_t       slot[0];
+  f2ptr_t       car;
+  f2ptr_t       cdr;
 } __attribute__((__packed__));
 typedef struct ptype_cons_block_s ptype_cons_block_t;
 
 ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 
-#define __pure__f2cons__new(pool_index, cause, len, f2ptr_ptr) ptype_cons__new(pool_index, cause, len, f2ptr_ptr)
-#define __pure__f2cons__immutable(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
-#define __pure__f2cons__immutable__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
-#define __pure__f2cons__length(this)                           (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2cons__elt(this, index)                       (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data)
-#define __pure__f2cons__elt__set(this, index, value)           (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data = (value))
+#define __pure__f2cons__new(pool_index, cause, car, cdr) ptype_cons__new(pool_index, cause, car, cdr)
+#define __pure__f2cons__car(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car)
+#define __pure__f2cons__car__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->car = (value))
+#define __pure__f2cons__cdr(this)                        (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr)
+#define __pure__f2cons__cdr__set(this, value)            (((ptype_cons_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cdr = (value))
 
 
 // simple_array
 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
-  u8            immutable : 1;
   u64           length : (f2ptr__bit_num - 2);
   f2ptr_t       slot[0];
 } __attribute__((__packed__));
@@ -251,8 +248,6 @@ typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
 ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 
 #define __pure__f2simple_array__new(pool_index, cause, len, f2ptr_ptr) ptype_simple_array__new(pool_index, cause, len, f2ptr_ptr)
-#define __pure__f2simple_array__immutable(this)                        (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable)
-#define __pure__f2simple_array__immutable__set(this, value)            (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->immutable = (value))
 #define __pure__f2simple_array__length(this)                           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2simple_array__elt(this, index)                       (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data)
 #define __pure__f2simple_array__elt__set(this, index, value)           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index].data = (value))

@@ -223,6 +223,14 @@
 [deftypefunk multiple_possible_values get values []
   [get value_set elements]]
 
+[deftypefunk multiple_possible_values get bug_values []
+  [let [[bug_values nil]]
+    [mapc [funk [value]
+		[if [is-type `bug value]
+		    [= bug_values [cons value bug_values]]]]
+	  [get this values]]
+    bug_values]]
+
 [deftypefunk multiple_possible_values get nonbug_values []
   [let [[nonbug_values nil]]
     [mapc [funk [value]
@@ -834,6 +842,7 @@
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [error bug_name    `nonsemantic_plan-get-knowledge_symbol
+		 value       value
 		 subbug      bug
 		 is_plan_bug t]]
       result]]]
@@ -1768,10 +1777,15 @@
 [defunk defplancommand-prog-evaluate_expression [nonsemantic_plan expression expression_compiled_funk]
   [let [[result [funkall expression_compiled_funk nonsemantic_plan]]]
     [if [null [get result nonbug_and_failure_values]]
-	[error bug_name    `nonsemantic_plan-prog-step_complete_failure
-	       is_plan_bug t
-	       expression  expression
-	       result      result]
+	[let [[bug_values [get result bug_values]]]
+	  [error bug_name    `nonsemantic_plan-prog-step_complete_failure
+		 is_plan_bug t
+		 subbug      [if bug_values
+				 [first bug_values]
+			       nil]
+		 subbugs     bug_values
+		 expression  expression
+		 result      result]]
       result]]]
 
 [defunk defplancommand-prog-initialize [nonsemantic_plan]

@@ -46,6 +46,7 @@ ansi_color_t print__ansi__symbol__foreground                   = ansi_color__lig
 ansi_color_t print__ansi__symbol__key__foreground              = ansi_color__dark_gray;
 ansi_color_t print__ansi__symbol__type__foreground             = ansi_color__dark_cyan;
 ansi_color_t print__ansi__chunk__foreground                    = ansi_color__white;
+ansi_color_t print__ansi__cons__foreground                     = ansi_color__white;
 ansi_color_t print__ansi__simple_array__foreground             = ansi_color__white;
 ansi_color_t print__ansi__larva__foreground                    = ansi_color__dark_red;
 ansi_color_t print__ansi__mutable_array_pointer__foreground    = ansi_color__white;
@@ -506,6 +507,7 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	f2__write__ansi_color(cause, stream, print__ansi__default__foreground, use_ansi_colors, use_html);
       } break;
       case ptype_cons: {
+	f2__write__ansi_color(cause, stream, print__ansi__cons__foreground, use_ansi_colors, use_html);
 	f2ptr car = f2cons__car(exp, cause);
 	if (car == __funk2.globalenv.quote__symbol) {
 	  if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__backquote, cause));} width ++;
@@ -548,27 +550,15 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    f2__write_pretty(cause, fiber, stream, car, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
 	    write_car_with_space = 1;
 	    if (!cdr) {
-	      if (ptype == ptype_simple_array) {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      } else {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      }
+	      f2__write__ansi_color(cause, stream, print__ansi__cons__foreground, use_ansi_colors, use_html);
 	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
 	      iter = nil;
 	    } else if (! raw__cons__is_type(cause, cdr)) {
-	      if (ptype == ptype_simple_array) {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      } else {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      }
+	      f2__write__ansi_color(cause, stream, print__ansi__cons__foreground, use_ansi_colors, use_html);
 	      if (stream) {raw__stream__writef(cause, stream, " .");} width += 2;
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}
 	      f2__write_pretty(cause, fiber, stream, cdr, ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num + width, available_width - width, subexp_size, 1, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];
-	      if (ptype == ptype_simple_array) {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      } else {
-		f2__write__ansi_color(cause, stream, print__ansi__simple_array__foreground, use_ansi_colors, use_html);
-	      }
+	      f2__write__ansi_color(cause, stream, print__ansi__cons__foreground, use_ansi_colors, use_html);
 	      if (stream) {raw__stream__writef(cause, stream, "%c", f2char__ch(__funk2.reader.char__right_paren, cause));} width ++;
 	      iter = nil;
 	    } else {

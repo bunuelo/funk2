@@ -1229,18 +1229,6 @@ void f2__primobjects__defragment__fix_pointers() {
   
   initialize_primobject_1_slot__defragment__fix_pointers(place, thing);
 
-  // cons 
-  
-  initialize_primobject_2_slot__defragment__fix_pointers(cons, car, cdr);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cons__length);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk);
-  
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__symbol);
-  f2__primcfunk__init__defragment__fix_pointers(cons__terminal_print_with_frame);
-  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk);
-  
   // doublelink
   
   initialize_primobject_3_slot__defragment__fix_pointers(doublelink, prev, next, value);
@@ -1480,15 +1468,6 @@ void f2__primobjects__reinitialize_globalvars() {
   
   initialize_primobject_1_slot(place, thing);
 
-  // cons 
-  
-  initialize_primobject_2_slot(cons, car, cdr);
-  
-  {char* symbol_str = "length"; __funk2.globalenv.object_type.primobject.primobject_type_cons.length__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cons.length__funk = never_gc(cfunk);}
-  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
-  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cons__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_cons.terminal_print_with_frame__funk = never_gc(cfunk);}
-  
   // doublelink
   
   initialize_primobject_3_slot(doublelink, prev, next, value);

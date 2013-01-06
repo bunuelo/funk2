@@ -53,14 +53,14 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_cons:
       boolean_t found_invalid = boolean__false;
       {
-	f2ptr car = ((ptype_simple_array_block_t*)block)->car.data;
+	f2ptr car = ((ptype_cons_block_t*)block)->car.data;
 	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(car))) {
 	  found_invalid = boolean__true;
 	  error(nil, "found invalid f2ptr in car of cons.");
 	}
       }
       {
-	f2ptr cdr = ((ptype_simple_array_block_t*)block)->cdr.data;
+	f2ptr cdr = ((ptype_cons_block_t*)block)->cdr.data;
 	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(cdr))) {
 	  found_invalid = boolean__true;
 	  error(nil, "found invalid f2ptr in cdr of cons.");

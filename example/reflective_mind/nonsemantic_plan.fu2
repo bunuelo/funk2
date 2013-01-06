@@ -845,7 +845,7 @@
 				     value       value
 				     subbug      bug
 				     is_plan_bug t]]]]
-	    [globalize-bug knowledge_symbol_bug bug]
+	    `[globalize-bug knowledge_symbol_bug bug]
 	    [bug bug]]]
       result]]]
 
@@ -1788,7 +1788,7 @@
 				     subbugs     bug_values
 				     expression  expression
 				     result      result]]]]
-	    [globalize-bug plan_step_failure_bug bug]
+	    `[globalize-bug plan_step_failure_bug bug]
 	    [bug bug]]]
       result]]]
 
@@ -1828,7 +1828,7 @@
 				 is_plan_bug                  t
 				 complete_failure_results     step_complete_failure_results
 				 complete_failure_expressions step_complete_failure_expressions]]]]
-	[globalize-bug plan_step_failure_bug bug]
+	`[globalize-bug plan_step_failure_bug bug]
 	[bug bug]]
     [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 

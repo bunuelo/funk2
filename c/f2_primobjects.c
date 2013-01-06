@@ -1422,7 +1422,6 @@ void f2__primobjects__preinitialize_globalvars() {
   reinitialize_primobject(compound_object);
   reinitialize_primobject(primobject);
   reinitialize_primobject(place);
-  reinitialize_primobject(cons);
   reinitialize_primobject(doublelink);
   reinitialize_primobject(imagination_link);
   reinitialize_primobject(cfunk);

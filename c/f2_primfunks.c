@@ -728,7 +728,6 @@ def_pcfunk1(sleep_for_nanoseconds_without_yield, nanoseconds,
 
 // larva
 
-//boolean_t raw__larvap(f2ptr x, f2ptr cause) {return (x && f2ptype__raw(x, cause) == ptype_larva);}
 
 // chunk
 
@@ -1873,6 +1872,7 @@ u64 raw__eq_hash_value(f2ptr cause, f2ptr exp) {
   case ptype_string:                   return raw__string__eq_hash_value(          cause, exp);
   case ptype_symbol:                   return raw__symbol__eq_hash_value(          cause, exp);
   case ptype_chunk:                    return raw__chunk__eq_hash_value(           cause, exp);
+  case ptype_cons:                     return raw__cons__eq_hash_value(            cause, exp);
   case ptype_simple_array: {
     if (raw__primobject__is_type(cause, exp)) {
       if (f2primobject__is__cause_group(exp, cause)) {

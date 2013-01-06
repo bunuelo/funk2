@@ -188,6 +188,20 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_string:                   return;
   case ptype_symbol:                   return;
   case ptype_chunk:                    return;
+  case ptype_cons: {
+    {
+      f2ptr car = ((ptype_cons_block_t*)ptype_block)->car.data;
+      if (car) {
+	((ptype_cons_block_t*)ptype_block)->car.data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, car);
+      }
+    }
+    {
+      f2ptr cdr = ((ptype_cons_block_t*)ptype_block)->cdr.data;
+      if (cdr) {
+	((ptype_cons_block_t*)ptype_block)->cdr.data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cdr);
+      }
+    }
+  } return;
   case ptype_simple_array: {
     s64 i;
     f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;

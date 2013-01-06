@@ -530,11 +530,11 @@ f2ptr f2__write_pretty(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp, int re
 	    if (show_slot_causes) {
 	      int subexp_size[2];
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__utf8_slot_key_and_value("car", 3, cause, fiber, stream, f2cons__car(exp, cause),            f2cons__car__tracing_on(exp, cause), f2cons__car__trace(exp, cause), f2cons__car__imagination_frame(exp, cause),
-						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	      {f2__write_pretty__utf8_slot_key_and_value("car", 3, cause, fiber, stream, f2cons__car(exp, cause),            nil, nil, nil,
+							 ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	      if (try_wide) {f2__write__space(cause, stream, use_html); width ++;} else {f2__write__line_break(cause, stream, use_html); width = 0; height ++; int i; for (i = 0; i < indent_space_num + width; i++) {f2__write__space(cause, stream, use_html);}}  
-	      {f2__write_pretty__utf8_slot_key_and_value("cdr", 3, cause, fiber, stream, f2cons__cdr(exp, cause),          f2cons__cdr__tracing_on(exp, cause), f2cons__cdr__trace(exp, cause), f2cons__cdr__imagination_frame(exp, cause),
-						    ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
+	      {f2__write_pretty__utf8_slot_key_and_value("cdr", 3, cause, fiber, stream, f2cons__cdr(exp, cause),          nil, nil, nil,
+							 ((recursion_depth == -1) ? recursion_depth : (recursion_depth - 1)), indent_space_num, available_width - width, subexp_size, try_wide, wide_success, show_slot_causes, use_ansi_colors, use_html, brief_mode); width += subexp_size[0]; height += subexp_size[1];}
 	    } else {
 	      f2ptr car = f2cons__car(exp, cause);
 	      if (car == __funk2.globalenv.quote__symbol) {

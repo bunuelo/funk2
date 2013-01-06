@@ -1260,6 +1260,8 @@ boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {
     return (f2float__f(x, cause) == f2float__f(y, cause));
   case ptype_string:
     return f2__string__eq(cause, x, y);
+  case ptype_cons:
+    return (x == y);
   case ptype_simple_array:
     if (raw__primobject__is_type(cause, x) &&
 	raw__primobject__is_type(cause, y)) {

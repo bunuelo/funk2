@@ -224,18 +224,14 @@ void funk2_peer_command_server_client__execute_request(funk2_peer_command_server
   case funk2_packet_type__pcs_respond__f2chunk__recv:
   case funk2_packet_type__pcs_request__f2cons__new:
   case funk2_packet_type__pcs_respond__f2cons__new:
-  case funk2_packet_type__pcs_request__f2cons__new_copy:
-  case funk2_packet_type__pcs_respond__f2cons__new_copy:
-  case funk2_packet_type__pcs_request__f2cons__immutable:
-  case funk2_packet_type__pcs_respond__f2cons__immutable:
-  case funk2_packet_type__pcs_request__f2cons__immutable__set:
-  case funk2_packet_type__pcs_respond__f2cons__immutable__set:
-  case funk2_packet_type__pcs_request__f2cons__length:
-  case funk2_packet_type__pcs_respond__f2cons__length:
-  case funk2_packet_type__pcs_request__f2cons__elt:
-  case funk2_packet_type__pcs_respond__f2cons__elt:
-  case funk2_packet_type__pcs_request__f2cons__elt__set:
-  case funk2_packet_type__pcs_respond__f2cons__elt__set:
+  case funk2_packet_type__pcs_request__f2cons__car:
+  case funk2_packet_type__pcs_respond__f2cons__car:
+  case funk2_packet_type__pcs_request__f2cons__car__set:
+  case funk2_packet_type__pcs_respond__f2cons__car__set:
+  case funk2_packet_type__pcs_request__f2cons__cdr:
+  case funk2_packet_type__pcs_respond__f2cons__cdr:
+  case funk2_packet_type__pcs_request__f2cons__cdr__set:
+  case funk2_packet_type__pcs_respond__f2cons__cdr__set:
   case funk2_packet_type__pcs_request__f2simple_array__new:
   case funk2_packet_type__pcs_respond__f2simple_array__new:
   case funk2_packet_type__pcs_request__f2simple_array__new_copy:

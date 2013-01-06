@@ -41,10 +41,9 @@ boolean_t raw__exp__is_immutable(f2ptr cause, f2ptr this) {
   case ptype_mutable_array_pointer:
     return boolean__true;
   case ptype_cons:
-    return boolean__false;
-  case ptype_chunk:
   case ptype_simple_array:
-    return (f2simple_array__immutable(this, cause) != 0);
+  case ptype_chunk:
+    return boolean__false;
   default:
     error(nil, "raw__exp__is_funktional: shouldn't get here.");
   }

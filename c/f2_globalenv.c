@@ -139,6 +139,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_string__symbol                   = new__symbol(cause, "ptype_string");
   this->ptype_symbol__symbol                   = new__symbol(cause, "ptype_symbol");
   this->ptype_chunk__symbol                    = new__symbol(cause, "ptype_chunk");
+  this->ptype_cons__symbol                     = new__symbol(cause, "ptype_cons");
   this->ptype_simple_array__symbol             = new__symbol(cause, "ptype_simple_array");
   this->ptype_larva__symbol                    = new__symbol(cause, "ptype_larva");
   this->ptype_mutable_array_pointer__symbol    = new__symbol(cause, "ptype_mutable_array_pointer");
@@ -259,6 +260,7 @@ void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {
   defragment__fix_pointer(this->ptype_string__symbol);
   defragment__fix_pointer(this->ptype_symbol__symbol);
   defragment__fix_pointer(this->ptype_chunk__symbol);
+  defragment__fix_pointer(this->ptype_cons__symbol);
   defragment__fix_pointer(this->ptype_simple_array__symbol);
   defragment__fix_pointer(this->ptype_larva__symbol);
   defragment__fix_pointer(this->ptype_mutable_array_pointer__symbol);

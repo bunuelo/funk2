@@ -50,6 +50,23 @@ boolean_t funk2_memblock__check_all_memory_pointers_valid_in_memory(funk2_memblo
     case ptype_string:                   return boolean__false;
     case ptype_symbol:                   return boolean__false;
     case ptype_chunk:                    return boolean__false;
+    case ptype_cons:
+      boolean_t found_invalid = boolean__false;
+      {
+	f2ptr car = ((ptype_simple_array_block_t*)block)->car.data;
+	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(car))) {
+	  found_invalid = boolean__true;
+	  error(nil, "found invalid f2ptr in car of cons.");
+	}
+      }
+      {
+	f2ptr cdr = ((ptype_simple_array_block_t*)block)->cdr.data;
+	if (! funk2_memory__is_reasonably_valid_used_funk2_memblock_ptr(memory, __f2ptr_to_ptr(cdr))) {
+	  found_invalid = boolean__true;
+	  error(nil, "found invalid f2ptr in cdr of cons.");
+	}
+      }
+      return found_invalid;
     case ptype_simple_array: {
       boolean_t found_invalid = boolean__false;
       s64 i;
@@ -99,6 +116,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_string:
     case ptype_symbol:
     case ptype_chunk:
+    case ptype_cons:
     case ptype_simple_array:
     case ptype_larva:
     case ptype_mutable_array_pointer:

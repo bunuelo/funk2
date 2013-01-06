@@ -691,6 +691,20 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   case ptype_string:                   return;
   case ptype_symbol:                   return;
   case ptype_chunk:                    return;
+  case ptype_cons: {
+    {
+      f2ptr car = ((ptype_cons_block_t*)block)->car.data;
+      if (car) {
+	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, car);
+      }
+    }
+    {
+      f2ptr cdr = ((ptype_cons_block_t*)block)->cdr.data;
+      if (cdr) {
+	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cdr);
+      }
+    }
+  } return;
   case ptype_simple_array: {
     s64 i;
     f2ptr_t* iter = ((ptype_simple_array_block_t*)block)->slot;

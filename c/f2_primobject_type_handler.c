@@ -161,7 +161,6 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "primobject_type";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2primobject_type__primobject_type__new(cause));}
   {char* type_name = "compound_object";                  funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                  f2compound_object__primobject_type__new(cause));}
   {char* type_name = "place";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2place__primobject_type__new(cause));}
-  {char* type_name = "cons";                             funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                             f2cons__primobject_type__new_aux(cause));}
   {char* type_name = "doublelink";                       funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                       f2doublelink__primobject_type__new_aux(cause));}
   {char* type_name = "imagination_link";                 funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                 f2imagination_link__primobject_type__new(cause));}
   {char* type_name = "cfunk";                            funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                            f2cfunk__primobject_type__new_aux(cause));}

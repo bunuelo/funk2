@@ -1794,7 +1794,8 @@ def_pcfunk1(first, exp,
 
 f2ptr f2__first__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__cons__is_type(cause, exp)) {
-    return f2cons__car__set(exp, cause, value);
+    f2cons__car__set(exp, cause, value);
+    return nil;
   } else if (raw__doublelink__is_type(cause, exp)) {
     return f2doublelink__value__set(exp, cause, value);
   } else {
@@ -1822,7 +1823,8 @@ def_pcfunk1(next, exp,
 
 f2ptr f2__next__set(f2ptr cause, f2ptr exp, f2ptr value) {
   if (raw__cons__is_type(cause, exp)) {
-    return f2cons__cdr__set(exp, cause, value);
+    f2cons__cdr__set(exp, cause, value);
+    return nil;
   } else if (raw__doublelink__is_type(cause, exp)) {
     return f2doublelink__next__set(exp, cause, value);
   } else {

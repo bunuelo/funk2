@@ -1926,6 +1926,7 @@ boolean_t raw__equals(f2ptr cause, f2ptr x, f2ptr y) {
   case ptype_string:                   return raw__string__equals(                  cause, x, y);
   case ptype_symbol:                   return raw__symbol__equals(                  cause, x, y);
   case ptype_chunk:                    return raw__chunk__equals(                   cause, x, y);
+  case ptype_cons:                     return f2__object__equals(                   cause, x, y);
   case ptype_simple_array:             return f2__object__equals(                   cause, x, y);
   case ptype_larva:                    return raw__larva__equals(                   cause, x, y);
   case ptype_mutable_array_pointer:    return raw__mutable_array_pointer__equals(   cause, x, y);

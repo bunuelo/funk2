@@ -1511,7 +1511,7 @@ export_cefunk4(cons__gather_lick_notes, this, lick, note_object_hash, max_size, 
 f2ptr raw__cons__lick_to_chunk(f2ptr cause, f2ptr this, f2ptr note_object_hash) {
   f2ptr chunk = raw__chunk__new(cause, 2 * 8);
   {
-    f2ptr element       = raw__cons__car(cause, this, index);
+    f2ptr element       = raw__cons__car(cause, this);
     f2ptr element__note = raw__ptypehash__lookup(cause, note_object_hash, element);
     if (element__note == nil) {
       return new__error(f2list6__new(cause,

@@ -414,7 +414,8 @@
 		      
 		      [defplan 'test go after a cube to be on a pyramid'
 			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find a plan to acheive one of my goals']]]
+			[plan-call [plan 'find a plan to acheive one of my goals']]
+			[call-below 'execute plan in focus']]
 		      
 		      ]]
 	 

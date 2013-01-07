@@ -1199,7 +1199,7 @@
 				[good_subnodes nil]]
 			    [mapc [funk [subnode]
 					[if [not [null [get subnode nonbug_and_failure_return_values]]]
-					    [= good_subnode [cons subnode good_subnode]]]]
+					    [= good_subnodes [cons subnode good_subnodes]]]]
 				  subnodes]
 			    [if [!= [length good_subnodes] 1]
 				[error bug_name                        `nonsemantic_plan-get-execution_node_as_code-prog-must_be_one_subnode

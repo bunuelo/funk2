@@ -82,7 +82,15 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in plans.']
   
   [parog [have this imagine_deliberative_plan_expression
-	       `[prog [defplan 'a pyramid to be on a cube'
+	       `[prog [defplan 'stack a cube on a pyramid'
+			:matches ['stack a [? top_shape] on a [? bottom_shape]']
+			 :frame [[top_shape    'cube']
+				 [bottom_shape 'pyramid']]
+			  [plan-call [plan 'pick up a [? top_shape]']]
+			  [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
+			  [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
+		      
+		      [defplan 'a pyramid to be on a cube'
 			:matches ['a [? top_shape] to be on a [? bottom_shape]'
 				  'a [? bottom_shape] to be below a [? top_shape]']
 			 :frame [[top_shape    'pyramid']
@@ -243,14 +251,6 @@
 			  [plan-call [plan 'move until over [? shape]']]
 			  [plan-call [plan 'drop block and wait for block to fall']]]
 		      
-		      [defplan 'stack a cube on a pyramid'
-			:matches ['stack a [? top_shape] on a [? bottom_shape]']
-			 :frame [[top_shape    'cube']
-				 [bottom_shape 'pyramid']]
-			  [plan-call [plan 'pick up a [? top_shape]']]
-			  [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
-			  [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
-		      
 		      ]]
 	 
 	 'reflective plans'
@@ -263,50 +263,6 @@
 			  [relationship block property shape [? top_shape]
 					preposition on
 					block property shape [? bottom_shape]]]
-		      
-		      [defplan 'want a cube to be on a pyramid'
-			:matches ['want [? partial_state]']
-			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [add-positive-goal [plan-call [plan [? partial_state]]]]]
-		      
-		      [defplan 'avoid a cube being on a pyramid'
-			:matches ['avoid [? subject] being [? preposition]']
-			 :frame [[subject     'a cube']
-				 [preposition 'on a pyramid']]
-			  [add-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
-		      
-		      [defplan 'stop wanting a cube to be on a pyramid'
-			:matches ['stop wanting [? partial_state]']
-			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [remove-positive-goal [plan-call [plan [? partial_state]]]]]
-		      
-		      [defplan 'stop avoiding a cube being on a pyramid'
-			:matches ['stop avoiding [? subject] being [? preposition]']
-			 :frame [[subject     'a cube']
-				 [preposition 'on a pyramid']]
-			  [remove-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
-		      
-		      [defplan 'want a block to be on a block'
-			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'want a pyramid to be on a cube']]]
-		      
-		      [defplan 'avoid a block being on a block'
-			[plan-call [plan 'avoid a cube being on a pyramid']]
-			[plan-call [plan 'avoid a pyramid being on a cube']]]
-		      
-		      [defplan 'stop wanting a block to be on a block'
-			[plan-call [plan 'stop wanting a cube to be on a pyramid']]
-			[plan-call [plan 'stop wanting a pyramid to be on a cube']]]
-		      
-		      [defplan 'stop avoiding a block being on a block'
-			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
-			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
-		      
-		      [defplan 'test want a pyramid to be on a cube'
-			[plan-call [plan 'want a pyramid to be on a cube']]]
-		      
-		      [defplan 'test initialize goals'
-			[plan-call [plan 'want a block to be on a block']]]
 		      
 		      [defplan 'a planner to be focusing on a plan that has been imagined'
 			[relationship planner property planner_type deliberative
@@ -381,9 +337,6 @@
 			 :frame [[partial_state 'a cube to be on a pyramid']]
 			  [exists [plan-call [plan 'me to want [? partial_state]']]]]
 		      
-		      [defplan 'test I want a cube to be on a pyramid'
-			[plan-call [plan 'I want a cube to be on a pyramid']]]
-		      
 		      [defplan 'me to avoid a cube being on a pyramid'
 			:matches ['me to avoid [? subject] being on [? preposition]']
 			 :frame [[subject     'a cube']
@@ -398,7 +351,74 @@
 				 [preposition 'on a pyramid']]
 			  [exists [plan-call [plan 'me to avoid [? subject] being [? preposition]']]]]
 		      
+		      [defplan 'want a cube to be on a pyramid'
+			:matches ['want [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			  [add-positive-goal [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'avoid a cube being on a pyramid'
+			:matches ['avoid [? subject] being [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'on a pyramid']]
+			  [add-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
+		      
+		      [defplan 'stop wanting a cube to be on a pyramid'
+			:matches ['stop wanting [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			  [remove-positive-goal [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'stop avoiding a cube being on a pyramid'
+			:matches ['stop avoiding [? subject] being [? preposition]']
+			 :frame [[subject     'a cube']
+				 [preposition 'on a pyramid']]
+			  [remove-negative-goal [plan-call [plan '[? subject] to be [? preposition]']]]]
+		      
+		      [defplan 'want a block to be on a block'
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'want a pyramid to be on a cube']]]
+		      
+		      [defplan 'avoid a block being on a block'
+			[plan-call [plan 'avoid a cube being on a pyramid']]
+			[plan-call [plan 'avoid a pyramid being on a cube']]]
+		      
+		      [defplan 'stop wanting a block to be on a block'
+			[plan-call [plan 'stop wanting a cube to be on a pyramid']]
+			[plan-call [plan 'stop wanting a pyramid to be on a cube']]]
+		      
+		      [defplan 'stop avoiding a block being on a block'
+			[plan-call [plan 'stop avoiding a cube being on a pyramid']]
+			[plan-call [plan 'stop avoiding a pyramid being on a cube']]]
+		      
+		      `['planner']
+		      
+		      [defplan 'find a plan to acheive one of my goals'
+			[if [plan-call [plan 'I want a cube to be on a pyramid']]
+			    [plan-call [plan 'find a plan to cause a cube to be on a pyramid']]
+			  [if [plan-call [plan 'I want a pyramid to be on a cube']]
+			      [plan-call [plan 'find a plan to cause a pyramid to be on a cube']]
+			    [fail]]]]
+		      
+		      `['tests']
+		      
+		      [defplan 'test I want a cube to be on a pyramid'
+			[plan-call [plan 'I want a cube to be on a pyramid']]]
+		      
+		      [defplan 'test want a pyramid to be on a cube'
+			[plan-call [plan 'want a pyramid to be on a cube']]]
+		      
+		      [defplan 'test initialize goals'
+			[plan-call [plan 'want a block to be on a block']]]
+		      
+		      [defplan 'test find a plan to acheive one of my goals'
+			[plan-call [plan 'find a plan to acheive one of my goals']]]
+		      
+		      [defplan 'test go after a cube to be on a pyramid'
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'find a plan to acheive one of my goals']]]
+		      
 		      ]]
+	 
+	 'super reflective plans'
 	 
 	 [have this imagine_super_reflective_plan_expression
 	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'

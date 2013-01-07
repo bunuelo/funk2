@@ -1048,7 +1048,7 @@
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      `[terminal_format standard-terminal '\n    result=' result]
 		      [cond [[is-type `bug                      result] [let [[bug result]]
-									  [globalize-bug plan_bug bug]
+									  `[globalize-bug plan_bug bug]
 									  [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value bug]]]]]
 			    [[is-type `multiple_possible_values result] result]
 			    [t                                          [error bug_name     `nonsemantic_plan-imagine_as_thought-invalid_return_type

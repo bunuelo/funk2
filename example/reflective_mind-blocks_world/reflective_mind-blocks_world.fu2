@@ -422,17 +422,17 @@
 	 
 	 [have this imagine_super_reflective_plan_expression
 	       `[prog [defplan 'a planner to be focusing on a plan that has been imagined'
-			[relationship planner property planner_type deliberative
+			[relationship planner property planner_type reflective
 				      relation focus_plan
 				      plan property has_been_imagined t]]
 		      
 		      [defplan 'a planner to be focusing on a plan that has not been imagined'
-			[relationship planner property planner_type deliberative
+			[relationship planner property planner_type reflective
 				      relation focus_plan
 				      plan property has_been_imagined nil]]
 		      
 		      [defplan 'a planner to be focusing on a plan that has failed'
-			[relationship planner property planner_type deliberative
+			[relationship planner property planner_type reflective
 				      relation focus_plan
 				      plan property imagined_complete_failure t]]
 		      
@@ -459,7 +459,7 @@
 		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
 			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [relationship planner property planner_type deliberative
+			  [relationship planner property planner_type reflective
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      

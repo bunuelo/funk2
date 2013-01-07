@@ -625,6 +625,7 @@
 									  correct_type `exact_nonsemantic_plan_value
 									  actual_type  [type nonsemantic_plan_value]]
 								 [let [[semantic_partial_state [get nonsemantic_plan_value value]]]
+								   [have cause-check_exists_partial_state_set add semantic_partial_state]
 								   [if [not [is-type `semantic_partial_state semantic_partial_state]]
 								       [error bug_name     `nonsemantic_plan-check_exists-invalid_type
 									      is_plan_bug  t
@@ -638,6 +639,7 @@
 								     [equally_possible_values nil]]
 								 [if [is-type `exact_nonsemantic_plan_value nonsemantic_plan_value]
 								     [prog [= semantic_partial_state [get nonsemantic_plan_value value]]
+									   [have cause-check_exists_partial_state_set add semantic_partial_state]
 									   [if [not [is-type `semantic_partial_state semantic_partial_state]]
 									       [error bug_name     `nonsemantic_plan-check_exists-invalid_type
 										      is_plan_bug  t
@@ -982,6 +984,7 @@
 		      [prog [cause-define cause-top_nonsemantic_plan                   this]
 			    [cause-define cause-imagine_time                           [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree            [new semantic_event_tree]]
+			    [cause-define cause-check_exists_partial_state_set         [new set]]
 			    [cause-define cause-traced_resource_activation_set         [new set]]
 			    [cause-define cause-nonsemantic_plan_execution_mode        `imagine]
 			    [cause-define cause-nonsemantic_plan_current_execution_set [new set this]]]
@@ -1009,7 +1012,7 @@
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [if [eq this cause-top_nonsemantic_plan]
 			  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done imagining executing top level plan "' [get this name_expression] '".']
-				[let [[events [get cause-imagine_semantic_event_tree events]]]
+				[let [[events                      [get cause-imagine_semantic_event_tree events]]]
 				  [if [null events]
 				      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: no hypothesized events to add for "' [get this name_expression] '".']
 				    [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding hypothesized events for "' [get this name_expression] '".']
@@ -1018,6 +1021,15 @@
 							[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: hypothesized to cause ' semantic_event-phenomenal_name ' (' [get this name_expression] ').']
 							[semantic-add [get this semantic_plan_object] hypothesized_to_cause_partial_state semantic_event-phenomenal_name]]]
 						events]]]]
+				[let [[check_exists_partial_states [get cause-check_exists_partial_state_set elements]]]
+				  [if [null check_exists_partial_states]
+				      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: no check_exists states to hypothesize for "' [get this name_expression] '".']
+				    [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: no check_exists states to hypothesize for "' [get this name_expression] '".']
+					  [mapc [funk [check_exists_partial_state]
+						      [let [[check_exists_partial_state-phenomenal_name [get check_exists_partial_state phenomenal_name]]]
+							[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: hypothesizing check_exists state ' check_exists_partial_state-phenomenal_name ' caused by ' [get this name_expression] '.']
+							[semantic-add [get this semantic_plan_object] hypothesized_to_cause_partial_state check_exists_partial_state-phenomenal_name]]]
+						check_exists_partial_states]]]]
 				[mapc [funk [imagined_top_execution_node]
 					    [fiber [funk []
 							 [terminal_format standard-terminal '\n' [type [get this mental_layer]] ' nonsemantic_plan: generating execution node graph.']
@@ -1080,6 +1092,7 @@
 		      [prog [cause-define cause-top_nonsemantic_plan            this]
 			    [cause-define cause-imagine_time                    [new semantic_time [time]]]
 			    [cause-define cause-imagine_semantic_event_tree     [new semantic_event_tree]]
+			    [cause-define cause-check_exists_partial_state_set  [new set]]
 			    [cause-define cause-traced_resource_activation_set  [new set]]
 			    [cause-define cause-nonsemantic_plan_execution_mode `execute]]]
 		  [cause-define cause-this_top_execution_node nil]

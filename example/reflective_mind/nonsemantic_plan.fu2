@@ -678,16 +678,16 @@
 
 [deftypefunk nonsemantic_plan execute add_positive_goal [nonsemantic_plan_value]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding positive_goal.']
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding positive_goal to ' [type [get this mental_layer_below]] '.']
 								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
 												[t                                                              [error bug_name               `nonsemantic_plan-add_positive_goal-invalid_type
 																				       is_plan_bug            t
 																				       correct_type           `exact_nonsemantic_plan_value
 																				       actual_type            [type nonsemantic_plan_value]
 																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
-								       [have [get this mental_layer] add_positive_goal partial_state]
+								       [have [get this mental_layer_below] add_positive_goal partial_state]
 								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding positive_goal.  (doing nothing)']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding positive_goal to ' [type [get this mental_layer_below]] '.  (doing nothing)']
 								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-add_plan-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode
@@ -696,16 +696,16 @@
 
 [deftypefunk nonsemantic_plan execute remove_positive_goal [nonsemantic_plan_value]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: removing positive_goal.']
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: removing positive_goal from ' [type [get this mental_layer_below]] '.']
 								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
 												[t                                                              [error bug_name               `nonsemantic_plan-remove_positive_goal-invalid_type
 																				       is_plan_bug            t
 																				       correct_type           `exact_nonsemantic_plan_value
 																				       actual_type            [type nonsemantic_plan_value]
 																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
-								       [have [get this mental_layer] remove_positive_goal partial_state]
+								       [have [get this mental_layer_below] remove_positive_goal partial_state]
 								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining removing positive_goal.  (doing nothing)']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining removing positive_goal from ' [type [get this mental_layer_below]] '.  (doing nothing)']
 								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-remove_plan-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode
@@ -714,16 +714,16 @@
 
 [deftypefunk nonsemantic_plan execute add_negative_goal [nonsemantic_plan_value]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding negative_goal.']
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: adding negative_goal to ' [type [get this mental_layer_below]] '.']
 								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
 												[t                                                              [error bug_name               `nonsemantic_plan-add_negative_goal-invalid_type
 																				       is_plan_bug            t
 																				       correct_type           `exact_nonsemantic_plan_value
 																				       actual_type            [type nonsemantic_plan_value]
 																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
-								       [have [get this mental_layer] add_negative_goal partial_state]
+								       [have [get this mental_layer_below] add_negative_goal partial_state]
 								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding negative_goal.  (doing nothing)']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining adding negative_goal to ' [type [get this mental_layer_below]] '.  (doing nothing)']
 								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-add_plan-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode
@@ -732,16 +732,16 @@
 
 [deftypefunk nonsemantic_plan execute remove_negative_goal [nonsemantic_plan_value]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: removing negative_goal.']
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: removing negative_goal from ' [type [get this mental_layer_below]] '.']
 								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
 												[t                                                              [error bug_name               `nonsemantic_plan-remove_negative_goal-invalid_type
 																				       is_plan_bug            t
 																				       correct_type           `exact_nonsemantic_plan_value
 																				       actual_type            [type nonsemantic_plan_value]
 																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
-								       [have [get this mental_layer] remove_negative_goal partial_state]
+								       [have [get this mental_layer_below] remove_negative_goal partial_state]
 								       [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]]
-	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining removing negative_goal.  (doing nothing)']
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining removing negative_goal from ' [type [get this mental_layer_below]] '.  (doing nothing)']
 								     [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-remove_plan-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode

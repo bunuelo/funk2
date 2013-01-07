@@ -1187,7 +1187,7 @@
 	 [prog_sequence_subnodes     [cons first_subnode nil]]
 	 [prog_sequence_subnode_iter prog_sequence_subnodes]]
     [while prog_sequence_subnode_iter
-      [let* [[prog_sequence_subnode   [car prog_sequence_subnode_iter]]
+      [let* [[prog_sequence_subnode [car prog_sequence_subnode_iter]]
 	     [next_node [get prog_sequence_subnode next_node]]
 	     [new_cons  nil]]
 	[if next_node
@@ -1195,13 +1195,19 @@
 		  [set prog_sequence_subnode_iter cdr new_cons]]]
 	[= prog_sequence_subnode_iter new_cons]]]
     `[prog @[mapcar [funk [prog_sequence_subnode]
-			  [let [[subnodes [get prog_sequence_subnode subnodes]]]
-			    [if [!= [length subnodes] 1]
+			  [let [[subnodes      [get prog_sequence_subnode subnodes]]
+				[good_subnodes nil]]
+			    [mapc [funk [subnode]
+					[if [not [null [get subnode nonbug_and_failure_return_values]]]
+					    [= good_subnode [cons subnode good_subnode]]]]
+				  subnodes]
+			    [if [!= [length good_subnodes] 1]
 				[error bug_name                        `nonsemantic_plan-get-execution_node_as_code-prog-must_be_one_subnode
 				       subnodes                        subnodes
+				       good_subnodes                   good_subnodes
 				       nonsemantic_plan_execution_node nonsemantic_plan_execution_node]
-			      [let [[subnode [first subnodes]]]
-				[get this execution_node_as_code subnode]]]]]
+			      [let [[good_subnode [first good_subnodes]]]
+				[get this execution_node_as_code good_subnode]]]]]
 		    prog_sequence_subnodes]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-parog [nonsemantic_plan_execution_node]

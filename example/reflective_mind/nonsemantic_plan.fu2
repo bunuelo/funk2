@@ -1888,7 +1888,7 @@
 						 [bug bug]]]]
 				       [have nonsemantic_plan_execution_node add_return_value result]
 				       result]]]]]
-    [if [null [get condition good_values]]
+    [if [null [get condition nonbug_values]]
 	[new multiple_possible_values nil]
       [let* [[multiple_possible_values        condition]
 	     [result_multiple_possible_values [new multiple_possible_values nil]]

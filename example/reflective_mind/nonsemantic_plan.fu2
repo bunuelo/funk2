@@ -1939,9 +1939,13 @@
 									       [have current_nonsemantic_plan_execution_node add_return_value result]
 									       result]]]]]
 					  [if [null [get true_result nonbug_and_failure_values]]
-					      [error bug_name    `nonsemantic_plan-if-true_branch_only_has_bug_values
-						     is_plan_bug t
-						     true_result true_result]
+					      [let [[true_result-bug_values [get true_result bug_values]]]
+						[error bug_name    `nonsemantic_plan-if-true_branch_only_has_bug_values
+						       is_plan_bug t
+						       subbug      [if true_result-bug_values
+								       [first true_result-bug_values]]
+						       subbugs     true_result-bug_values
+						       true_result true_result]]
 					    [let [[return_value [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 					      [= return_values [cons return_value return_values]]]]]]]
 			      [if evaluate_false_branch
@@ -1955,9 +1959,13 @@
 										[have current_nonsemantic_plan_execution_node add_return_value result]
 										result]]]]]
 					  [if [null [get false_result nonbug_and_failure_values]]
-					      [error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
-						     is_plan_bug  t
-						     false_result false_result]
+					      [let [[false_result-bug_values [get false_result bug_values]]]
+						[error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
+						       is_plan_bug  t
+						       subbug       [if false_result-bug_values
+									[first false_result-bug_values]]
+						       subbugs      false_result-bug_values
+						       false_result false_result]]
 					    [let [[return_value [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value nil]]]]]
 					      [= return_values [cons return_value return_values]]]]]]]
 			      [let [[distribution_nonsemantic_plan_value [new distribution_nonsemantic_plan_value return_values]]]

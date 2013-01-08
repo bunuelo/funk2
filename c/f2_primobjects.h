@@ -24,7 +24,6 @@
 
 typedef struct funk2_object_type__compound_object__slot_s  funk2_object_type__compound_object__slot_t;
 typedef struct funk2_object_type__place__slot_s            funk2_object_type__place__slot_t;
-typedef struct funk2_object_type__cons__slot_s             funk2_object_type__cons__slot_t;
 typedef struct funk2_object_type__doublelink__slot_s       funk2_object_type__doublelink__slot_t;
 typedef struct funk2_object_type__imagination_link__slot_s funk2_object_type__imagination_link__slot_t;
 typedef struct funk2_object_type__cfunk__slot_s            funk2_object_type__cfunk__slot_t;

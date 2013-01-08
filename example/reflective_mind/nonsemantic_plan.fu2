@@ -1032,7 +1032,7 @@
 							  [have hypothesize_cause_partial_state_set add check_exists_partial_state-phenomenal_name]]]
 						  check_exists_partial_states]]]]
 				  [mapc [funk [hypothesize_cause_partial_state]
-					      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: hypothesizing partial_state "' check_exists_partial_state-phenomenal_name '" caused by "' [get this name_expression] '".']
+					      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: hypothesizing partial_state "' hypothesize_cause_partial_state '" caused by "' [get this name_expression] '".']
 					      [semantic-add [get this semantic_plan_object] hypothesized_to_cause_partial_state hypothesize_cause_partial_state]]
 					[get hypothesize_cause_partial_state_set elements]]]
 				[mapc [funk [imagined_top_execution_node]

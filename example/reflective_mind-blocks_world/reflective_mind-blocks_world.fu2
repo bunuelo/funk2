@@ -497,13 +497,15 @@
 			[call-below 'imagine executing plan in focus']]
 		      
 		      [defplan 'find a plan to cause a planner to be focusing on a plan that has failed'
-			[plan-call [plan 'imagine unimagined plan']]
-			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed, find a plan to cause a planner to be focusing on a plan that has failed']]]
+			:matches ['find a plan to cause [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [plan-call [plan 'imagine unimagined plan']]
+			  [plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find a plan to cause [? partial_state]']]]
+		      
+		      `['tests']
 		      
 		      [defplan 'test find a plan to cause a planner to be focusing on a plan that has failed'
 			[plan-call [plan 'find a plan to cause a planner to be focusing on a plan that has failed']]]
-		      
-		      `['tests']
 		      
 		      [defplan 'test avoid a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]

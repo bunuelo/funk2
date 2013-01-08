@@ -504,11 +504,11 @@
 			[plan-call [plan 'find a plan to cause a planner to be focusing on a plan that has failed']]]
 		      
 		      `['tests']
-
+		      
 		      [defplan 'test avoid a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
 		      
-		      ]]]
+		      ]]]]
   
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: done creating built-in plans.']
   

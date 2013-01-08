@@ -331,7 +331,7 @@
 			    t
 			    nil
 			    planner positive_goal negative_goal focus_plan planner_type deliberative reflective
-			    plan has_been_imagined imagined_complete_failure hypothesized_to_cause_partial_state]]]
+			    plan has_been_imagined imagined_complete_failure executed_complete_failure hypothesized_to_cause_partial_state]]]
 	    [= knowledge_symbol_set_initialized t]]]
   [have knowledge_symbol_set_initialized_mutex unlock]]
 

@@ -274,10 +274,10 @@
 				      relation focus_plan
 				      plan property has_been_imagined nil]]
 		      
-		      [defplan 'a planner to be focusing on a plan that has failed'
+		      [defplan 'a planner to be focusing on a plan that has failed in execution'
 			[relationship planner property planner_type deliberative
 				      relation focus_plan
-				      plan property imagined_complete_failure t]]
+				      plan property executed_complete_failure t]]
 		      
 		      [defplan 'a planner is focusing on a plan that has been imagined'
 			:matches ['[? subject] is [? preposition]']
@@ -400,6 +400,8 @@
 		      
 		      `['tests']
 		      
+		      [defplan 'test avoid a planner to be focusing on a plan that has failed in execution'
+		      
 		      [defplan 'test I want a cube to be on a pyramid'
 			[plan-call [plan 'I want a cube to be on a pyramid']]]
 		      
@@ -457,9 +459,9 @@
 				 [preposition 'focusing on a plan that has been imagined']]
 			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
 		      
-		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
+		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed'
 			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']
-			 :frame [[partial_state 'a cube to be on a pyramid']]
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
 			  [relationship planner property planner_type reflective
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
@@ -475,10 +477,10 @@
 		      [defplan 'test avoid a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
 		      
-		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid'
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed, find a plan to cause a planner to be focusing on a plan that has failed'
 			:matches ['if [? condition], [? command]']
-			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']
-				 [command   'find a plan to cause a cube to be on a pyramid']]
+			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed']
+				 [command   'find a plan to cause a planner to be focusing on a plan that has failed']]
 			  [if [plan-call [plan [? condition]]]
 			      [plan-call [plan [? command]]]]]
 		      
@@ -494,18 +496,17 @@
 			[plan-call [plan 'find unimagined plan']]
 			[call-below 'imagine executing plan in focus']]
 		      
-		      [defplan 'find a plan to cause a cube to be on a pyramid'
+		      [defplan 'find a plan to cause a planner to be focusing on a plan that has failed'
 			[plan-call [plan 'imagine unimagined plan']]
-			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid']]]
+			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed, find a plan to cause a planner to be focusing on a plan that has failed']]]
 		      
-		      [defplan 'test find a plan to cause a cube to be on a pyramid'
-			[plan-call [plan 'find a plan to cause a cube to be on a pyramid']]]
+		      [defplan 'test find a plan to cause a planner to be focusing on a plan that has failed'
+			[plan-call [plan 'find a plan to cause a planner to be focusing on a plan that has failed']]]
 		      
-		      [defplan 'avoid a planner being focused on a plan that has failed'
-			:matches ['avoid [? subject] being focused [? preposition]']
-			 :frame [[subject     'a planner']
-				 [preposition 'on a plan that has failed']]
-			  [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+		      `['tests']
+
+		      [defplan 'test avoid a planner being focused on a plan that has failed'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
 		      
 		      ]]]
   

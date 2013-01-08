@@ -1127,19 +1127,12 @@
 								 [globalize plan_graph_bug bug]]]]]
 						   nil]]
 				      [get executed_top_execution_node_set elements]]
-				[if [is-type `bug result]
-				    
 				[mapc [funk [executed_top_execution_node]
 					    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: compiled: ' [get this execution_node_as_code executed_top_execution_node]]]
 				      [get executed_top_execution_node_set elements]]]]
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done executing "' [get this name_expression] '".']
 		      [have [get [get this mental_layer] counterfactual_knowledge_base] remove_remember_token remember_token]
 		      result]]]]
-
-
-
-
-
 
 [deftypefunk nonsemantic_plan get __semantic_plan_object []
   [let [[semantic_plan_object [new semantic_plan_object [get [get this mind] semantic_realm] [get this unique_name] this]]]

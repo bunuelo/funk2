@@ -1553,7 +1553,7 @@
 			[[eq node_type `relationship]         [get this execution_node_as_code-relationship         nonsemantic_plan_execution_node]]
 			[[eq node_type `fail]                 [get this execution_node_as_code-fail                 nonsemantic_plan_execution_node]]
 			[t                                    [format nil 'unknown_type: ' node_type]]]]]]
-    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan-get-execution_node_as_node result: ' result]
+    `[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan-get-execution_node_as_node result: ' result]
     result]]
 
 

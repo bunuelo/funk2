@@ -114,7 +114,7 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_last_plan
 		  [funk []
-			[let [[last_plan [last [get [get this mental_layer] semantic_plan_objects]]]]
+			[let [[last_plan [first [reverse [get [get this mental_layer] semantic_plan_objects]]]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last plan, "' [get last_plan phenomenal_name] '".']
 			  [set [get [get this agency] semantic_planner] focus_plan last_plan]]]
 		  initial-resource_knowledge_base_name

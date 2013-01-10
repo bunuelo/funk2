@@ -102,6 +102,22 @@
 %\setlength{\marginparwidth}{7em}%
 %\setlength{\marginparsep}{2em}%
 
+% This is a drop-in replacement for \begin{enumerate}...\end{enumerate} in LaTeX. Just include it in
+% your preamble and use \begin{packed_enum} instead.
+\newenvironment{packed_enumerate}{
+\begin{enumerate}
+\setlength{\itemsep}{2.5pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}{\end{enumerate}}
+\newenvironment{packed_itemize}{
+\begin{itemize}
+\setlength{\itemsep}{2.5pt}
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+}{\end{itemize}}
+
+
 %*******************************************************
 % hack to use citations in float environments 
 % will be fixed with caption package version 3.2

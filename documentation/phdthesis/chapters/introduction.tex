@@ -3,128 +3,290 @@
 \label{chapter:introduction}
 %************************************************
 
-Why should we care about reflective AI?  Detecting and responding to
-failure is the primary application for reflective technologies.  Any
-given AI system may be impeccably designed, but it will eventually run
-into a bug, and only reflective systems are capable of responding to
-and learning from these failures.  The Substrate for Accountable
-Layered Systems (SALS) is an open-source software platform for
-developing experimental reflective AIs.  There are many AIs that
-provide explanations for how to accomplish goals or gather rewards in
-a domain.  A basic AI system consists of three processes: (1)
-perceptual data are generalized and categorized to learn induced
-abstract models, (2) abstract models are used to infer expected
-hypothetical states, i.e. states of future, past, or otherwise
-``hidden'' variables, (3) actions are chosen based on considerations
-of different action and hypothesis dependent inferences.  While there
-are many types of machine learning algorithms that focus on this
-abstract 3-step closed-loop process of learning to control, the field
-of computational metacognition \cite[]{cox_and_raja:2008,cox:2010}
-focuses on making at least two layers of closed-loop systems.  The
-first closed-loop learning algorithm learns how to deal with the
-external world, while the second closed-loop learning algorithm
-perceives and controls the state of the first learning algorithm.
+A basic AI algorithm thinks about a problem domain, learning the
+effects of its actions, constructing and executing plans to accomplish
+goals.  A reflective AI algorithm not only learns to accomplish goals
+in a problem domain, but also learns to accomplish goals in its own
+mind by thinking about its own thinking.  I will refer to the
+non-reflective type of thinking about a problem domain as
+``deliberative'' thinking.  A reflective AI can learn to choose
+between multiple ways of thinking, learning to choose those ways of
+thinking that maintain mental goals.  The Substrate for Accountable
+Layered Systems (SALS) is an open-source software platform
 \begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_large-01}
   \caption[An example problem domain.]{An example problem domain.}
   \label{figure:introduction_example_problem_domain}
 \end{wrapfigure}
-I see metacognition as a layering of learning algorithms, such that
-the second layer algorithm learns to control the first layer learner.
-While it may be clear how to trace the inputs to the first layer
-learner, it is less than clear how the second layer learner should
-monitor the state of the first layer learner.
+for developing experimental reflective AIs.  There are many AIs that
+provide explanations for how to accomplish goals or gather rewards in
+a domain.  A basic deliberative AI system consists of three processes:
+{\mbox{(1)~perceptual}} data are generalized and categorized to learn
+induced abstract models, {\mbox{(2)~abstract}} models are used to
+infer expected hypothetical states, i.e. states of future, past, or
+otherwise ``hidden'' variables, {\mbox{(3)~actions}} are chosen based
+on considerations of different action and hypothesis dependent
+inferences.  While there are many types of machine learning algorithms
+that focus on this abstract 3-step closed-loop process of learning to
+control, the field of computational metacognition
+\cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
+layers of closed-loop systems.  The first closed-loop learning
+algorithm learns how to deal with the external world, while the second
+closed-loop learning algorithm perceives and controls the state of the
+first learning algorithm.  I see metacognition as a layering of
+learning algorithms, such that the second layer algorithm learns to
+control the first layer learner.  While it may be clear how to trace
+the inputs to the first layer learner, it is less than clear how the
+second layer learner should monitor the state of the first layer
+learner.
 
-Why should we care about SALS?  SALS is the software implementation of
-two basic software objects: (1) a controllable object, and (2) a
-planning layer object.  The controllable object includes a knowledge
-base, which can represent a control domain, such as the physical
-knowledge signified by the image in
-{\autoref{figure:introduction_example_problem_domain}}.  The planning
-layer object is a goal-oriented planning machine that learns, creates,
-imagines, and executes plans in order to attempt to control a given
-controllable object.  SALS becomes reflective because the SALS
-planning layer object is also a controllable object, which allows
-creating a linked list of planning layer objects all deriving from a
-single original controllable object.  The form of this reflective
-linked list structure implies a lot about the resulting SALS cognitive
-architecture, and I will return to this idea often throughout the
-dissertation.
+Describe the plan interpretation and imagination process in the story.
 
-Before getting any further into abstract generalizations about
-reflective thinking, let us consider the wise advice of Seymour
-Papert: ``You can't think about thinking without thinking about
-thinking about something.''  In order to ground an explanation of the
-type of thinking that I am focusing on in this thesis, here is a
-simple first-person narrative of a robot arm that wants to solve the
-physical problem of stacking a block on a block.  It is a story of
-thinking about thinking, failure, and reflective learning.
-{\autoref{figure:introduction_example_problem_domain}} shows the block
-stacking domain in which the narrative takes place.  The block
-stacking robot thinks to itself:
+Before getting into abstract generalizations of reflective thinking,
+let us consider the advice of Seymour Papert: ``You can't think about
+thinking without thinking about thinking about something.''  Following
+this advice, consider the simple physical world depicted in
+{\autoref{figure:introduction_example_problem_domain}}.  Now, consider
+that the robot arm in this simple scenario is a reflective AI that
+wants to accomplish the deliberative goal of a block being on a block.
+What types of thoughts might be going through the mind of this block
+stacking AI?  If the reflective AI is capable of reflective thoughts,
+this might be what the AI would think to itself when as it tries to
+reflectively decide how to manipulate and execute plans:
 \begin{quote}
-  I want to avoid failures.  I also want to accomplish physical goals.
-  I will try imagining the effects of my first plan, how to stack a
-  cube on a pyramid.  I hypothesize that this plan will accomplish one
-  of my goals, a block being on a block.  I will stop imagining the
-  rest of my plans and try executing this first plan.  I am picking up
-  a cube and dropping it on a pyramid.  The cube is falling off of the
-  pyramid and onto the table.  Oh no!  A block is not on a block.
-  Plan one has failed to accomplish my goal.  Plan one has failed when
-  executed, so I hypothesize that similar plans will also fail when
-  executed.
+  I want to accomplish the deliberative goal of a block being on a
+  block.  Reflectively, I also want to avoid executing plans that fail
+  before they complete.  I have a number of plans that I have been
+  told, but I don't know what they will do.  I must choose how to
+  think about this problem.  I know a number of plans for how to think
+  as well as for how to physically act.  I am focused on my first plan
+  for how to think, which is called, ``Find and execute a plan to
+  accomplish my goals.''  I can choose to imagine the effects of the
+  various possible interpretations of this underspecified natural
+  language plan.  If I can find enough analogous plans to provide
+  interpretations for all of the parts of this plan, then I will be
+  able to successfully interpret it.  While I am trying to create and
+  interpret these analogous natural language plans, I can imagine what
+  these plans would cause to happen if they were to be executed, based
+  on what I have learned about my deliberative actions in the past.
+  If I can successfully interpret and imagine a way that this plan
+  could accomplish my reflective goals, I will execute this plan.
+  There are analogous plans that can be adapted to interpret this
+  plan, and I imagine that this interpretation will not lead to any
+  failures, so I choose to execute this reflective plan to ``find and
+  execute a plan to accomplish my goals.''
 \end{quote}
-In this story of learning, the robot hypothesizes the effects of not
-only its physical actions but also its mental actions.  The physical
-goal of the robot in the story is to create a stack of two blocks.
-However, the robot also has another goal, which is to avoid failures.
-A failure is not a physical object.  A failure is an object that
-represents a knowledge problem.  One basic type of failure is a
-failure of expectations.  In the story, the robot experiences a
+At this point in the story, the AI has decided on a plan of
+deliberative action.  In this case, the ``find and execute a plan to
+accomplish my goals'' plan is an implementation of a planning
+algorithm within the natural planning language itself.  Now the AI
+begins executing this reflective plan, which becomes the deliberative
+planning process that thinks about the physical problem domain.
+\begin{quote}
+  I will try interpretting and imagining the effects of my first plan
+  for physical action, ``Stack a cube on a pyramid.''  I imagine that
+  executing this plan will accomplish my goal of a block being on a
+  block.  I will stop imagining the rest of my plans and try executing
+  this first plan for physical action.  I am picking up a cube and
+  dropping it on a pyramid.  The cube is falling off of the pyramid
+  and onto the table.  Oh no!  A block is not on a block.  Executing
+  my first plan for physical action has failed to accomplish my
+  deliberative goal and has also led to my negative reflective goal,
+  which is to avoid plan failures.
+\end{quote}
+In this story, the AI learns the effects of not only its physical
+actions but also its mental actions.  Because this story includes both
+deliberative and reflective types of thinking, there are two layers of
+thinking that have ultimately failed.  If we consider what the AI
+might learn from this story, the AI might think:
+\begin{quote}
+  I have new support for the hypothesis that dropping a block while
+  being over a pyramid does not lead to a block being on a block.  I
+  also have new support for the hypothesis that executing plans that
+  try to accomplish the goal of a cube being on a pyramid may lead to
+  an expectation failure when executed.
+\end{quote}
+The deliberative goal of the AI in the story is to create a stack of
+two blocks.  The AI also has another goal: to avoid failures.  A
+failure is not a physical object, so the negative goal to avoid
+failures is not a deliberative goal.  A failure is not something that
+is in the problem domain, but it is something that a reflective
+thinking layer can learn to control.  A failure is an object that
+represents a knowledge problem.  The AI in the story experiences a
 failure of expectations when it expects the plan to stack a cube on a
-pyramid to achieve its physical goal.  When the cube falls off of the
-pyramid and ends up on the table, there is a failure of expectations.
-Note that the failure is dependent on a plan and a goal existing.
-Failures do not exist in physical knowledge, but they do exist in
-deliberative and reflective knowledge because these layers have goals
-and plans, and thus, expectations that can fail.  In the story, the
-goal of avoiding failures is referring to a goal in the reflective
-knowledge---the reflective goal to avoid failures in deliberative
-knowledge.
+pyramid to achieve its deliberative goal.  While failures are not
+physical knowledge, they can be deliberative or reflective knowledge
+because these thinking layers have goals and plans, and thus,
+expectations that can fail.  In the story, the negative goal to avoid
+failures is reflective knowledge---the reflective goal to avoid
+failures in deliberative knowledge.
+{\autoref{table:physical_deliberative_reflective_knowledge}} shows a
+few examples of physical, deliberative and reflective knowledge.
+\begin{table}
+\centering
+\begin{tabular}{|p{2cm}|p{8cm}|}
+\hline \emph{Physical Knowledge} & \begin{packed_itemize}
+\item{A cube is on a pyramid.}
+\item{A gripper is moving left.}
+\item{A gripper is above a cube.}
+\item{A cube is to the left of a pyramid.}
+\end{packed_itemize} \\
+\hline \emph{Deliberative Knowledge} & \begin{packed_itemize}
+\item{I want a cube to be on a pyramid.}
+\item{A deliberative planner is focusing on a deliberative plan that
+  has failed in execution.}
+\item{The next deliberative plan has not been imagined.}
+\item{A deliberative planner is focusing on a deliberative plan that
+  is hypothesized to cause a cube to be on a pyramid.}
+\end{packed_itemize} \\
+\hline \emph{Reflective Knowledge}   & \begin{packed_itemize}
+\item{I am avoiding a deliberative planner being focused on a plan
+  that has failed in execution.}
+\item{A reflective planner is focusing on a reflective plan that has
+  failed in execution.}
+\item{The next reflective plan has not been imagined.}
+\item{A reflective planner is focusing on a reflective plan that is
+  hypothesized to cause a deliberative planner to be focusing on a
+  deliberative plan that has failed in execution.}
+\end{packed_itemize} \\
+\hline
+\end{tabular}
+\caption{Examples of physical, deliberative and reflective knowledge.}
+\label{table:physical_deliberative_reflective_knowledge}
+\end{table}
+Note that there is a strict hierarchy in the knowledge references
+between layers.  Physical knowledge cannot reference knowledge in
+other layers.  Physical knowledge is the representation of the problem
+domain.  Deliberative knowledge cannot reference reflective knowledge
+but can reference physical knowledge.  For example, deliberative
+knowledge includes positive and negative goals that specify which
+partial states of the physical knowledge should be sought or avoided.
+In addition to goals, deliberative knowledge includes plans, a
+planner, and potentially failures as well.  Reflective knowledge can
+reference both deliberative and physical knowledge.  Reflective
+knowledge is analogous to deliberative knowledge, but instead of being
+about accomplishing goals in physical knowledge, reflective knowledge
+is about accomplishing goals in deliberative knowledge.
+{\autoref{figure:three_knowledge_layers}} shows the hierarchical
+relationship between the physical, deliberative and reflective
+knowledge layers in SALS.  In general, one can imagine any number of
+reflective layers added to the top of the reflective AI.
+\begin{figure}
+  \center
+  \includegraphics[width=4cm]{gfx/three_knowledge_layers}
+  \caption{Three knowledge layers.}
+  \label{figure:three_knowledge_layers}
+\end{figure}
 
-The robot is learning at a reflective level when it thinks to itself,
-``Plan one has failed when executed, so I hypothesize that similar
-plans will also fail when executed.''  This hypothesis is about
-deliberative actions and objects, so we know that it is a piece of
-reflective knowledge.  The next time that the reflective layer is
-deciding whether or not the deliberative planner should execute a
-given plan, it can consider whether or not the plan is similar to
-plans that have previously failed.  The deliberative layer makes plans
-composed of physical actions in order to accomplish physical goals,
-while the reflective layer makes plans composed of deliberative
-actions in order to accomplish deliberative goals.  Once we start
-learning something about the process of planning itself, that implies
-that we are talking about a form of learning in reflective knowledge.
-Reflective learning allows for the planning process to be recompiled
-into more efficient forms as more experience is gained in terms of how
-deliberative plans are created, imagined, and executed.
+The deliberative layer makes plans composed of physical actions in
+order to accomplish deliberative goals, while the reflective layer
+makes plans composed of deliberative actions in order to accomplish
+reflective goals.  Deliberative learning allows the AI to better
+predict the effects of deliberative plans for physical action, while
+reflective learning allows the AI to better predict the effects of
+reflective plans for deliberative action.  The AI is learning at a
+reflective level when it thinks to itself, ``I hypothesize that
+executing plans similar to my first plan will also lead to a
+failure.''  This hypothesis is a reflective hypothesis about
+deliberative actions and objects.  The deliberative action, ``execute
+plan in focus'', has been executed, while the deliberative planner is
+focused on a plan that is hypothesized to stack a cube on a pyramid.
+This precondition for the execution of the plan is hypothesized to
+lead to the effects of this action in deliberative knowledge, ``A
+deliberative planner is focused on a plan that has failed.''  The next
+time that the reflective layer is deciding whether or not the
+deliberative planner should execute a given plan, it can consider
+whether or not executing the current plan will put the deliberative
+planner into a negative or positive deliberative goal state.
+
+\section{Introduction to Plans}
+
+SALS includes a simple but powerful planning language that is based on
+the interpretation of natural language plans.  Plans are sequences of
+commands that can be created, mutated, and executed by a planner in
+order to accomplish goals.  The following is an example of a
+definition of one of the deliberative plans that the AI in the story
+could consider executing:
+\begin{samepage}
+\begin{Verbatim}
+[defplan 'move slowly until over a cube'
+  [plan-call [plan 'if a cube is to my left, move slowly
+                    left until over a cube, otherwise if a
+                    cube is to my right, move slowly right
+                    until over a cube']]
+  [plan-call [plan 'assert that a cube is below me']]]
+\end{Verbatim}
+\end{samepage}
+This expression defines a new plan.  The ``defplan'' command is
+shorthand for ``define plan''.  The first argument to the defplan
+expression is the name of the plan: ``move slowly until over a cube''.
+The body of the plan is the remaining sequence of expressions.  The
+first expression in the body of this plan is to interpret and execute
+the natural language phrase beginning with ``if a cube...''  The
+second expression in the body of this plan is to interpret and execute
+the natural language phrase beginning with ``assert that...''  The
+details of when and how the ``plan'' and ``plan-call'' expressions
+interpret and execute natural language plans will be described later.
+While this plan does work for the AI positioning itself over a cube,
+if the planner wanted to find a plan to position the AI over a
+pyramid, this plan would not help unless it was modified.  In order to
+help the planner to know what parts of plans might be generalizable,
+the SALS planning language includes optional natural language pattern
+matching templates and default frame variable bindings that can be
+specified for each plan definition.  The following example shows how
+this simple plan can be generalized to allow positioning the AI over a
+range of shapes:
+\begin{samepage}
+\begin{Verbatim}
+[defplan 'move slowly until over a cube'
+  :matches ['move slowly until over a [? shape]']
+   :frame [[shape 'cube']]
+    [plan-call [plan 'if a [? shape] is to my left, move
+                      slowly left until over a [? shape],
+                      otherwise if a [? shape] is to my
+                      right, move slowly right until over
+                      a [? shape]']]
+    [plan-call [plan 'assert that a [? shape] is below me']]]
+\end{Verbatim}
+\end{samepage}
+This generalized form of the original plan uses natural language
+variables that are specified with a question mark expression, ``?''.
+Note that there are two optional arguments to the defplan expression
+in this example: (1) ``:matches'' and (2) ``:frame''.  The optional
+``:matches'' argument specifies a list of potential patterns that this
+plan may match as it is being interpreted.  In this case, the variable
+``[? shape]'' is allowed to replace the word ``cube'' from the
+original name of the plan.  Also, the optional ``:frame'' argument
+specifies the default natural language variable bindings.  In this
+case, the variable shape is assigned the natural language phrase
+``cube'' by default.  In the body of the generalized form of the plan,
+all occurrences of cube have been replaced with the variable.  Given
+this generalized form of the original plan, the planner can create a
+new analogous plan as an interpretation of the natural language phrase
+``move slowly until over a pyramid''.  In this way, plans can be
+communicated to the AI in a natural language form.  The AI has ``been
+told'' a total of approximately seventy simple natural language plans,
+which can be adapted automatically to provide interpretations for a
+potentially infinite number of possible natural language plans.  The
+details of the planning language will be discussed later.
+
+\section{More of the story}
 
 Okay, now that we've covered the reflective learning in this first
 story, I will continue the story by describing how the reflective
 learning improves the robot's overall performance at accomplishing its
 goal:
 \begin{quote}
-  I hypothesize the failure was caused by the fact that the plan was
-  hypothesized to cause a cube being on top of a pyramid.  The next
-  time I see a plan that attempts to accomplish a cube being on top of
-  a pyramid, I will be reminded of this failure as a potential outcome
-  of executing similar plans in the future.  Now, I will try again to
-  imagine a way to accomplish my physical goals.  I will try imagining
-  the effects of my second plan to see if it accomplishes my goal of a
-  block being on a block.  I want to avoid plan failures.  Yes, this
-  plan attempts to have a cube on a pyramid, which is a block on a
-  block, but I remember that plans that try to have a cube be on a
-  pyramid might lead to failure, so I will skip this plan for now.
+  The next time I see a plan that attempts to accomplish a cube being
+  on top of a pyramid, I will be reminded of this failure as a
+  potential outcome of executing similar plans in the future.  Now, I
+  will try again to imagine a way to accomplish my physical goals.  I
+  will try imagining the effects of my second plan to see if it
+  accomplishes my goal of a block being on a block.  I want to avoid
+  plan failures.  Yes, this plan attempts to have a cube on a pyramid,
+  which is a block on a block, but I remember that plans that try to
+  have a cube be on a pyramid might lead to failure, so I will skip
+  this plan for now.
 \end{quote}
 
 
@@ -156,6 +318,24 @@ goal:
 
 
 
+
+
+\section{SALS Controllable Object and Planning Layer Intro}
+
+SALS includes the software implementation of two basic software
+objects: (1) a controllable object, and (2) a planning layer object.
+The controllable object includes a knowledge base, which can represent
+a control domain, such as the physical knowledge signified by the
+image in {\autoref{figure:introduction_example_problem_domain}}.
+The planning layer object is a goal-oriented planning machine that
+learns, creates, imagines, and executes plans in order to attempt to
+control a given controllable object.  SALS becomes reflective because
+the SALS planning layer object is also a controllable object, which
+allows creating a linked list of planning layer objects all deriving
+from a single original controllable object.  The form of this
+reflective linked list structure implies a lot about the resulting
+SALS cognitive architecture, and I will return to this idea often
+throughout the dissertation.
 
 
 

@@ -60,28 +60,30 @@ reflectively decide how to manipulate and execute plans:
   told, but I don't know what they will do.  I must choose how to
   think about this problem.  I know a number of plans for how to think
   as well as for how to physically act.  I am focused on my first plan
-  for how to think, which is called, ``Find and execute a plan to
-  accomplish my goals.''  I can choose to imagine the effects of the
-  various possible interpretations of this underspecified natural
-  language plan.  If I can find enough analogous plans to provide
-  interpretations for all of the parts of this plan, then I will be
-  able to successfully interpret it.  While I am trying to create and
-  interpret these analogous natural language plans, I can imagine what
-  these plans would cause to happen if they were to be executed, based
-  on what I have learned about my deliberative actions in the past.
-  If I can successfully interpret and imagine a way that this plan
-  could accomplish my reflective goals, I will execute this plan.
-  There are analogous plans that can be adapted to interpret this
-  plan, and I imagine that this interpretation will not lead to any
-  failures, so I choose to execute this reflective plan to ``find and
-  execute a plan to accomplish my goals.''
+  for how to think, which is called, ``Find and execute a recently
+  learned plan to accomplish my goals.''  I can choose to imagine the
+  effects of the various possible interpretations of this
+  underspecified natural language plan.  If I can find enough
+  analogous plans to provide interpretations for all of the parts of
+  this plan, then I will be able to successfully interpret it.  While
+  I am trying to create and interpret these analogous natural language
+  plans, I can imagine what these plans would cause to happen if they
+  were to be executed, based on what I have learned about my
+  deliberative actions in the past.  If I can successfully interpret
+  and imagine a way that this plan could accomplish my reflective
+  goals, I will execute this plan.  There are analogous plans that can
+  be adapted to interpret this plan, and I imagine that this
+  interpretation will not lead to any failures, so I choose to execute
+  this reflective plan to ``find and execute a recently learned plan
+  to accomplish my goals.''
 \end{quote}
 At this point in the story, the AI has decided on a plan of
-deliberative action.  In this case, the ``find and execute a plan to
-accomplish my goals'' plan is an implementation of a planning
-algorithm within the natural planning language itself.  Now the AI
-begins executing this reflective plan, which becomes the deliberative
-planning process that thinks about the physical problem domain.
+deliberative action.  In this case, the ``find and execute a recently
+learned plan to accomplish my goals'' plan is an implementation of a
+planning algorithm within the natural planning language itself.  Now
+the AI begins executing this reflective plan, which becomes the
+deliberative planning process that thinks about the physical problem
+domain.
 \begin{quote}
   I will try interpretting and imagining the effects of my first plan
   for physical action, ``Stack a cube on a pyramid.''  I imagine that
@@ -106,6 +108,12 @@ might learn from this story, the AI might think:
   try to accomplish the goal of a cube being on a pyramid may lead to
   an expectation failure when executed.
 \end{quote}
+The fact that the AI failed at both the deliberative and reflective
+levels allowed the AI to learn two new sets of hypotheses: (1) about
+deliberative actions, and (2) about physical actions.  At the
+reflective level, the AI now considers if it should change the way it
+is thinking about this problem.
+
 The deliberative goal of the AI in the story is to create a stack of
 two blocks.  The AI also has another goal: to avoid failures.  A
 failure is not a physical object, so the negative goal to avoid

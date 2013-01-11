@@ -614,7 +614,12 @@
 		      [defplan 'test avoid a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
 		      
-		      [defplan 'test go away from a planner being focused on a plan that has failed'
+		      [defplan 'test go with recent plan away from a planner being focused on a plan that has failed'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]
+			[plan-call [plan 'find a recent plan to avoid my negative goals']]
+			[call-below 'execute plan in focus']]
+		      
+		      [defplan 'test go with old plan away from a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]
 			[plan-call [plan 'find an old plan to avoid my negative goals']]
 			[call-below 'execute plan in focus']]

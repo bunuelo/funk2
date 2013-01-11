@@ -168,8 +168,9 @@
     [type-have-apply resource this wait_to_call args]
     [let [[result [shelter [semantic-remove agent waiting_to_call target]]]]
       [if [is-type `bug result]
-	  [prog [terminal_format standard-terminal '\ntraced_resource ' name ' warning: ' result]
-		]]]]]
+	  [let [[bug result]]
+	    [prog [terminal_format standard-terminal '\ntraced_resource ' name ' warning: ' bug]
+		  [globalize-bug traced_resource_bug bug]]]]]]]
 
 [deftypefunk traced_resource execute call [:rest args]
   [let [[agent  [get [if [cause-lookup cause-resource] cause-resource this] resource_semantic_frame]]
@@ -344,16 +345,12 @@
 		 
 		 [cond [[or [eq [get [get this layer] name] `builtin_reactive]
 			    [eq [get [get this layer] name] `learned_reactive]] [let [[physical_type_knowledge_base [get [get this mind] semantic_knowledge_base `physical_type_knowledge]]]
-										  
-										  [have this learn_precondition_hypothesis_space physical_type_knowledge_base transframe_start_time transframe_end_time]
-										  
-										  ]]
+										  [have this learn_precondition_hypothesis_space physical_type_knowledge_base transframe_start_time transframe_end_time]]]
 		       [[eq [get [get this layer] name] `deliberative]          [let [[deliberative1_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative1_type_knowledge]]]
-										  
-										  [have this learn_precondition_hypothesis_space deliberative1_type_knowledge_base transframe_start_time transframe_end_time]
-										  
-										  ]]
-		       [[eq [get [get this layer] name] `reflective]            [prog]]
+										  [have this learn_precondition_hypothesis_space deliberative1_type_knowledge_base transframe_start_time transframe_end_time]]]
+		       [[eq [get [get this layer] name] `reflective]            [let [[deliberative2_type_knowledge_base [get [get this mind] semantic_knowledge_base `deliberative2_type_knowledge]]]
+										  [have this learn_precondition_hypothesis_space deliberative2_type_knowledge_base transframe_start_time transframe_end_time]]]
+		       [[eq [get [get this layer] name] `super_reflective]      [prog]]
 		       [t                                                       [terminal_format standard-terminal '\ntraced_resource warning: layer unrecognized, ' [get [get this layer] name] '.']]
 		       ]]
 	   []]

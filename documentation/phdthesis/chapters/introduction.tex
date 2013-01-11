@@ -55,46 +55,48 @@ this might be what the AI would think to itself when as it tries to
 reflectively decide how to manipulate and execute plans:
 \begin{quote}
   I want to accomplish the deliberative goal of a block being on a
-  block.  Reflectively, I also want to avoid executing plans that fail
-  before they complete.  I have a number of plans that I have been
-  told, but I don't know what they will do.  I must choose how to
-  think about this problem.  I know a number of plans for how to think
-  as well as for how to physically act.  I am focused on my first plan
-  for how to think, which is called, ``Find and execute a recently
-  learned plan to accomplish my goals.''  I can choose to imagine the
-  effects of the various possible interpretations of this
-  underspecified natural language plan.  If I can find enough
-  analogous plans to provide interpretations for all of the parts of
-  this plan, then I will be able to successfully interpret it.  While
-  I am trying to create and interpret these analogous natural language
-  plans, I can imagine what these plans would cause to happen if they
-  were to be executed, based on what I have learned about my
-  deliberative actions in the past.  If I can successfully interpret
-  and imagine a way that this plan could accomplish my reflective
-  goals, I will execute this plan.  There are analogous plans that can
-  be adapted to interpret this plan, and I imagine that this
-  interpretation will not lead to any failures, so I choose to execute
-  this reflective plan to ``find and execute a recently learned plan
-  to accomplish my goals.''
+  block.  Reflectively, I also want to avoid executing plans that
+  encounter failures before they complete.  I have a number of plans
+  that I have been told, but I don't know what they will do.  I must
+  choose how to think about this problem.  I know a number of plans
+  for how to think as well as for how to physically act.  I am focused
+  on my most recently learned plan for how to think, which is called,
+  ``Find and execute a recently learned plan to accomplish my goals.''
+  I can choose to imagine the effects of the various possible
+  interpretations of this underspecified natural language plan.  If I
+  can find enough analogous plans to provide interpretations for all
+  of the parts of this plan, then I will be able to successfully
+  interpret it.  While I am trying to create and interpret these
+  analogous natural language plans, I can imagine what these plans
+  would cause to happen if they were to be executed, based on what I
+  have learned about my deliberative actions in the past.  If I can
+  successfully interpret and imagine a way that this plan could
+  accomplish my reflective goals, I will execute this plan.  There are
+  analogous plans that can be adapted to interpret this plan, and I
+  imagine that this interpretation will not lead to any execution
+  failures, so I choose to execute this reflective plan to ``find and
+  execute a recently learned plan to accomplish my goals.''
 \end{quote}
 At this point in the story, the AI has decided on a plan of
 deliberative action.  In this case, the ``find and execute a recently
 learned plan to accomplish my goals'' plan is an implementation of a
-planning algorithm within the natural planning language itself.  Now
-the AI begins executing this reflective plan, which becomes the
-deliberative planning process that thinks about the physical problem
-domain.
+planning algorithm within the natural planning language itself.  The
+AI has a number of ways of trying to find the right plan, and this is
+the method that the AI happened to be focused on at the beginning of
+the story.  Now the AI begins executing this reflective plan, which
+becomes the deliberative planning process that tries to find a plan
+for acting in the physical problem domain:
 \begin{quote}
-  I will try interpretting and imagining the effects of my first plan
-  for physical action, ``Stack a cube on a pyramid.''  I imagine that
-  executing this plan will accomplish my goal of a block being on a
-  block.  I will stop imagining the rest of my plans and try executing
-  this first plan for physical action.  I am picking up a cube and
-  dropping it on a pyramid.  The cube is falling off of the pyramid
-  and onto the table.  Oh no!  A block is not on a block.  Executing
-  my first plan for physical action has failed to accomplish my
-  deliberative goal and has also led to my negative reflective goal,
-  which is to avoid plan failures.
+  I will try interpretting and imagining the effects of my most
+  recently learned plan for physical action, ``Stack a cube on a
+  pyramid.''  I imagine that executing this plan will accomplish my
+  goal of a block being on a block.  I will stop imagining the rest of
+  my plans and try executing this plan for physical action.  I am
+  picking up a cube and dropping it on a pyramid.  The cube is falling
+  off of the pyramid and onto the table.  Oh no!  A block is not on a
+  block.  Executing my most recently learned plan for physical action
+  has failed to accomplish my deliberative goal and has also led to my
+  negative reflective goal, which is to avoid plan failures.
 \end{quote}
 In this story, the AI learns the effects of not only its physical
 actions but also its mental actions.  Because this story includes both
@@ -194,8 +196,8 @@ predict the effects of deliberative plans for physical action, while
 reflective learning allows the AI to better predict the effects of
 reflective plans for deliberative action.  The AI is learning at a
 reflective level when it thinks to itself, ``I hypothesize that
-executing plans similar to my first plan will also lead to a
-failure.''  This hypothesis is a reflective hypothesis about
+executing plans similar to my most recently learned plan will also
+lead to a failure.''  This hypothesis is a reflective hypothesis about
 deliberative actions and objects.  The deliberative action, ``execute
 plan in focus'', has been executed, while the deliberative planner is
 focused on a plan that is hypothesized to stack a cube on a pyramid.

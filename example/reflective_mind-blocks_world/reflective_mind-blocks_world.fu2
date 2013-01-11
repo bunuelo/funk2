@@ -500,14 +500,14 @@
 		      
 		      [defplan 'me to avoid a planner being focused on a plan that has failed'
 			:matches ['me to avoid [? subject] being [? preposition]']
-			 :frame [[subject     'a cube']
+			 :frame [[subject     'a planner']
 				 [preposition 'focused on a plan that has failed']]
 			  [property planner property planner_type reflective
 				    relation negative_goal
 				    [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'I am avoiding a planner being focused on a plan that has failed'
-			:matches ['I am avoiding [? subject] being [? preposition]']
+			:matches['I am avoiding [? subject] being [? preposition]']
 			 :frame [[subject     'a planner']
 				 [preposition 'focused on a plan that has failed']]
 			  [exists [plan-call [plan 'me to avoid [? subject] being [? preposition]']]]]

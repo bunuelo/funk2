@@ -170,7 +170,8 @@
       [if [is-type `bug result]
 	  [let [[bug result]]
 	    [prog [terminal_format standard-terminal '\ntraced_resource ' name ' warning: ' bug]
-		  [globalize-bug traced_resource_bug bug]]]]]]]
+		  [globalize-bug traced_resource_bug bug]]]]
+      result]]]
 
 [deftypefunk traced_resource execute call [:rest args]
   [let [[agent  [get [if [cause-lookup cause-resource] cause-resource this] resource_semantic_frame]]

@@ -602,6 +602,9 @@
 		      
 		      `['tests']
 		      
+		      [defplan 'test I am avoiding a planner being focused on a plan that has failed'
+			[plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]]
+		      
 		      [defplan 'test find a recent plan to avoid my negative goals'
 			[plan-call [plan 'find a recent plan to avoid my negative goals']]]
 		      

@@ -1,7 +1,53 @@
 %************************************************
-\chapter{Grounded Learning of Knowledge Utility}
-\label{chapter:grounded_learning_of_knowledge_utility}
+\chapter{Learning Asynchronously from Experience}
+\label{chapter:learning_asynchronously_from_experience}
 %************************************************
+
+\section{Representing Actions}
+
+The planning as search problem assumes that we have a representation
+of the world and a representation for the changes that actions
+perform.  Given these models, the physical world can be simulated
+according to different plans.  \cite{fikes:1972} describe an action
+representation, called ``STRIPS'', that includes an \emph{add list}
+and a \emph{delete list} to represent the change between states in the
+world.  In the STRIPS model, the world is a set of symbols.  A
+transframe is composed of two sets: one for the removals from the
+world and one for the additions to the world.
+
+An object called a \emph{frame transition} \cite[]{minsky:1975} or a
+\emph{transframe} \cite[]{minsky:1988} is similar to a STRIPS operator
+with add and delete lists but that is also able to simulate actions in
+frame-based and other relational domains.  A transframe represents a
+change between two relational states of the world.  In a symbolic
+relational domain, the state space is a set of symbolic relationships
+rather than just symbols.  Here is an example of a symbolic
+relationship that could exist in a relational domain: {\tt [block-1
+    is-on block-2]}.  Here is an example of a transframe for the world
+in a relational domain: \emph{delete} {\tt [block-1 on table-1]} and
+\emph{add} {\tt [block-1 on block-2]}.  In predicting the effects of
+an action on the world, STRIPS considers one transframe for each
+action.
+
+Transframes can also be dependent on the current state of the world.
+Although many function approximation methods could be used, in my
+simulation model I have addressed the problem of learning to predict
+the correct transframes in the terms of
+{\mbox{\citeauthor{mitchell:1997}'s~\citeyearpar{mitchell:1997}}}
+``hypothesis spaces,'' which provide a simple and understandable
+formulation of the category hypothesis learning problem, given
+labelled examples.  Hypothetical models are learned to predict the
+effects of actions.  The physical state space informs sets of
+hypotheses that can be used to support assumptions, thus, the creation
+of new knowledge from an absence of knowledge, given the listed
+assumptions.
+
+
+
+
+
+
+\section{Old Beginning}
 
 Hypothetical type knowledge transframes are used by the deliberative
 and reflective planning machines in order to infer the effects of

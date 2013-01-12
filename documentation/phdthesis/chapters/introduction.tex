@@ -5,133 +5,280 @@
 
 A basic AI algorithm thinks about a problem domain, learning the
 effects of its actions, constructing and executing plans to accomplish
-goals.  A reflective AI algorithm not only learns to accomplish goals
-in a problem domain, but also learns to accomplish goals in its own
-mind by thinking about its own thinking.  I will refer to the
-non-reflective type of thinking about a problem domain as
-``deliberative'' thinking.  A reflective AI can learn to choose
-between multiple ways of thinking, learning to choose those ways of
-thinking that maintain mental goals.  The Substrate for Accountable
-Layered Systems (SALS) is an open-source software platform
+its goals.  I will refer to this type of thinking about a problem
+domain as deliberative thinking.  A reflective AI extends the
+deliberative AI by not only learning to accomplish goals in the
+problem domain, but also learning to accomplish goals in its own
+deliberative thinking process.  Reflective thinking is sometimes
+referred to as ``thinking about thinking'' or ``metacognition.''  A
+reflective AI can generally learn to select between different types of
+thinking that are appropriate for generating plans toward different
+types of goals.  The Substrate for Accountable Layered Systems (SALS)
+is an open-source software platform
 \begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_large-01}
   \caption[An example problem domain.]{An example problem domain.}
   \label{figure:introduction_example_problem_domain}
 \end{wrapfigure}
-for developing experimental reflective AIs.  There are many AIs that
-provide explanations for how to accomplish goals or gather rewards in
-a domain.  A basic deliberative AI system consists of three processes:
-{\mbox{(1)~perceptual}} data are generalized and categorized to learn
-induced abstract models, {\mbox{(2)~abstract}} models are used to
-infer expected hypothetical states, i.e. states of future, past, or
-otherwise ``hidden'' variables, {\mbox{(3)~actions}} are chosen based
-on considerations of different action and hypothesis dependent
-inferences.  While there are many types of machine learning algorithms
-that focus on this abstract 3-step closed-loop process of learning to
-control, the field of computational metacognition
+for the development of experimental reflective AIs.  There are many
+AIs that provide explanations for how to accomplish goals or gather
+rewards in a domain.  A basic deliberative AI system consists of three
+processes: {\mbox{(1)~perceptual}} data are generalized and
+categorized to learn induced abstract models, {\mbox{(2)~abstract}}
+models are used to infer expected hypothetical states, i.e. states of
+future, past, or otherwise ``hidden'' variables, {\mbox{(3)~actions}}
+are chosen based on considerations of different action and hypothesis
+dependent inferences.  While there are many types of machine learning
+algorithms that focus on this abstract 3-step closed-loop process of
+learning to control, the field of computational metacognition
 \cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
 layers of closed-loop systems.  The first closed-loop learning
 algorithm learns how to deal with the external world, while the second
 closed-loop learning algorithm perceives and controls the state of the
-first learning algorithm.  I see metacognition as a layering of
-learning algorithms, such that the second layer algorithm learns to
-control the first layer learner.  While it may be clear how to trace
-the inputs to the first layer learner, it is less than clear how the
-second layer learner should monitor the state of the first layer
-learner.
+first layer learner.  While it may be clear how to trace the inputs to
+the first layer learner, it is less than clear how the second layer
+learner should monitor the state of the first layer learner.
 
-Describe the plan interpretation and imagination process in the story.
+\section{Contributions}
+
+The four contributions of this thesis are:
+\begin{enumerate}
+\item \emph{Emotion Machine Cognitive Architecture}: A computational
+  implementation of the the bottom four layers of Minsky's ``Emotion
+  Machine'' theory of mind.  My implementation contains a physical
+  simulation that is controlled by a deliberative physical
+  object-level reasoning layer with another reflective meta-level
+  reasoning layer that learns to control the first-order problem
+  solving resources.  The architectural primitives include resources
+  that are organized into agencies that are organized into layers.
+  The implementation includes five layers that will be described: (1)
+  built-in reactive thinking, (2) learned reacting thinking, (3)
+  deliberative thinking, (4) reflective thinking, and (5)
+  super-reflective thinking.
+\item \emph{Learning from ``Being Told'' Natural Language Plans}: The
+  architecture includes the capability to interpret natural language
+  commands by using analogies to natural language plans that it
+  already knows.  In this case, ``being told'' simply means that a
+  natural language plan is programmed into the AI.  Successfully
+  interpretting a natural language expression results in a compiled
+  program that is ready for execution.  More can be learned from the
+  plan by imagining executing the resulting compiled program, such as
+  guesses as to what goals the plan can be used to accomplish.
+\item \emph{Learning Asynchronously from Experience}: Learning from
+  ``being told'' simply gives the system new ideas for plans, while
+  learning from experience gives the system better expectations for
+  what those plans will actually end up doing when they are executed.
+  Learning from experience is executed concurrently and asynchronously
+  with the currently executing plan.  The learning algorithm receives
+  a stream of frame mutation trace events from the currently executing
+  plan in order to learn abstract causal rule-based models.  In this
+  way, effects of physical and mental actions are learned through
+  experience without slowing down the primary plan execution speed.
+  Learning from experience allows learning to predict the effects of
+  deliberative and reflective natural language plans for action.
+\item \emph{Virtual Machine and Programming Language}: A concurrent
+  and parallel virtual machine and lisp-like programming language
+  provide the foundation upon which all of the other contributions
+  have been implemented.  The virtual machine includes native
+  procedural tracing features that facilitate the automatic monitoring
+  and control of many concurrently executing tasks.  The virtual
+  machine takes advantage of multiple CPU and multiple-core CPU
+  hardware configurations.  The programming language is a bytecode
+  compiled language and all code for all contributions are open
+  source, MIT License, and available for download (see
+  {\mbox{\autoref{appendix:the_code}}}).
+\end{enumerate}
+
+\section{A Story of Reflective Learning}
 
 Before getting into abstract generalizations of reflective thinking,
 let us consider the advice of Seymour Papert: ``You can't think about
 thinking without thinking about thinking about something.''  Following
-this advice, consider the simple physical world depicted in
-{\autoref{figure:introduction_example_problem_domain}}.  Now, consider
-that the robot arm in this simple scenario is a reflective AI that
-wants to accomplish the deliberative goal of a block being on a block.
-What types of thoughts might be going through the mind of this block
-stacking AI?  If the reflective AI is capable of reflective thoughts,
-this might be what the AI would think to itself when as it tries to
-reflectively decide how to manipulate and execute plans:
+this advice, consider the simple physical block stacking world,
+depicted in {\autoref{figure:introduction_example_problem_domain}},
+which is similar to the ``Blocks World'' planning domain
+{\cite[]{winograd:1970}}.  Now, consider that the robot arm in this
+simple scenario is a deliberative (non-reflective) AI that wants to
+accomplish the deliberative goal of a block being on a block.  This AI
+has the capability of learning both from experience as well as from
+``being told'' knowledge.  The deliberative AI has ``been told'' a
+number of natural language plans for how to pick up and move around
+blocks in this problem domain.  What types of thoughts might be going
+through the mind of this deliberative block stacking AI?  The
+following story might be what this type of deliberative AI would be
+thinking in this block stacking domain:
 \begin{quote}
   I want to accomplish the deliberative goal of a block being on a
-  block.  Reflectively, I also want to avoid executing plans that
-  encounter failures before they complete.  I have a number of plans
-  that I have been told, but I don't know what they will do.  I must
-  choose how to think about this problem.  I know a number of plans
-  for how to think as well as for how to physically act.  I am focused
-  on my most recently learned plan for how to think, which is called,
-  ``Find and execute a recently learned plan to accomplish my goals.''
-  I can choose to imagine the effects of the various possible
-  interpretations of this underspecified natural language plan.  If I
-  can find enough analogous plans to provide interpretations for all
-  of the parts of this plan, then I will be able to successfully
-  interpret it.  While I am trying to create and interpret these
-  analogous natural language plans, I can imagine what these plans
-  would cause to happen if they were to be executed, based on what I
-  have learned about my deliberative actions in the past.  If I can
-  successfully interpret and imagine a way that this plan could
-  accomplish my reflective goals, I will execute this plan.  There are
-  analogous plans that can be adapted to interpret this plan, and I
-  imagine that this interpretation will not lead to any execution
-  failures, so I choose to execute this reflective plan to ``find and
-  execute a recently learned plan to accomplish my goals.''
+  block.  I must choose how to physically act.  I have a number of
+  plans that I have been told, but I don't know what they will do.  I
+  am focused on my most recently learned plan for how to physically
+  act, which is called, ``stack a cube on a pyramid.''  I have been
+  told this plan in natural language, so I must interpret what it
+  means if I am going to imagine executing it.  If I can imagine a way
+  that this plan could accomplish my deliberative goals, I will
+  execute it.  I will try interpretting and imagining the physical
+  effects of my most recently learned plan for physical action,
+  ``stack a cube on a pyramid.''  I imagine that executing this plan
+  will accomplish my goal of a block being on a block.  I will stop
+  imagining the rest of my plans and try executing this plan for
+  physical action.  I am picking up a cube and dropping it on a
+  pyramid.  The cube is falling off of the pyramid and onto the table.
+  Oh no!  A block is not on a block.  My expectations have failed!  A
+  deliberative plan has failed.  I will relearn the physical effects
+  of my physical actions based on this new physical knowledge.  The
+  next time that I am dropping a block on a pyramid, I will expect the
+  block to fall onto the table.  Now, I must stop executing this plan
+  and again choose how to physically act, given my new information.
+\end{quote}
+In this story, the deliberative AI interprets and imagines executing
+plans based on reasoning by natural language analogies.  Because the
+deliberative AI experiences a knowledge failure, the deliberative AI
+learns a better model of the effects of its physical actions.  If this
+AI were reflective, it would be able to learn more from the
+deliberative failure of the AI in this story.  A reflective AI not
+only learns the effects of physical actions but also learns the
+effects of deliberative actions, such as the effects of imagining the
+effects of a plan.  How would a reflective AI approach thinking about
+accomplishing the same physical goal in the same problem domain?  If
+the AI were reflective, the following story might be what it would
+think to itself as it tries to reflectively decide how to deliberate
+about plans for physical action:
+\begin{quote}
+  I want to accomplish the deliberative goal of a block being on a
+  block.  I also want to avoid my negative reflective goal of keeping
+  the deliberative layer from having plans that have failed.  I have
+  been told a number of reflective plans for deliberative action, but
+  I don't know what they will do.  I must choose a reflective plan for
+  deliberative action.  I am focused on my most recently learned
+  reflective plan, which is called, ``Find and execute a recently
+  learned plan to accomplish my goals.''  I choose to imagine the
+  effects on my deliberative knowledge of the various possible
+  interpretations of this underspecified natural language plan.  I can
+  adapt other analogous plans to interpret this one, and I imagine
+  that at least one interpretation will not lead to any deliberative
+  plans having any execution failures, so I choose to execute this
+  reflective plan to ``find and execute a recently learned plan to
+  accomplish my goals.''
 \end{quote}
 At this point in the story, the AI has decided on a plan of
-deliberative action.  In this case, the ``find and execute a recently
-learned plan to accomplish my goals'' plan is an implementation of a
-planning algorithm within the natural planning language itself.  The
-AI has a number of ways of trying to find the right plan, and this is
-the method that the AI happened to be focused on at the beginning of
-the story.  Now the AI begins executing this reflective plan, which
+deliberative action.  Notice that this story is very similar to the
+first story, except rather than deciding on a plan of physical action,
+the reflective planner is deciding on a plan for deliberative action.
+In this case, the ``find and execute a recently learned plan to
+accomplish my goals'' plan is an implementation of a planning
+algorithm within the natural planning language itself.  The fact that
+the deliberative planning algorithm is written in the reflective
+planning language is one key aspect to the recursive nature of this
+approach to reflective learning.  The AI has a number of reflective
+plans for how to deliberatively plan, the method that the AI chose in
+this case tries to find a plan that it has ``been told'' most
+recently.  So, the AI begins executing this reflective plan, which
 becomes the deliberative planning process that tries to find a plan
 for acting in the physical problem domain:
 \begin{quote}
-  I will try interpretting and imagining the effects of my most
-  recently learned plan for physical action, ``Stack a cube on a
+  I will try interpretting and imagining the physical effects of my
+  most recently learned plan for physical action, ``stack a cube on a
   pyramid.''  I imagine that executing this plan will accomplish my
   goal of a block being on a block.  I will stop imagining the rest of
   my plans and try executing this plan for physical action.  I am
   picking up a cube and dropping it on a pyramid.  The cube is falling
-  off of the pyramid and onto the table.  Oh no!  A block is not on a
-  block.  Executing my most recently learned plan for physical action
-  has failed to accomplish my deliberative goal and has also led to my
-  negative reflective goal, which is to avoid plan failures.
+  off of the pyramid and onto the table.  A block is not on a block.
+  Oh no!  My deliberative expectations have failed!  A deliberative
+  plan has failed.  Oh no, I was reflectively trying to avoid
+  deliberative plan failures!  My reflective expectations have failed!
+  A reflective plan has failed.
 \end{quote}
-In this story, the AI learns the effects of not only its physical
-actions but also its mental actions.  Because this story includes both
-deliberative and reflective types of thinking, there are two layers of
-thinking that have ultimately failed.  If we consider what the AI
-might learn from this story, the AI might think:
+At this point in the story, the AI has encountered two failures that
+will lead to two opportunities for learning the effects of both its
+physical actions as well as its deliberative actions.  If we consider
+what the AI might learn from this story, the AI might think:
 \begin{quote}
   I have new support for the hypothesis that dropping a block while
-  being over a pyramid does not lead to a block being on a block.  I
-  also have new support for the hypothesis that executing plans that
-  try to accomplish the goal of a cube being on a pyramid may lead to
-  an expectation failure when executed.
+  being over a pyramid leads to two blocks being on the table.  I also
+  have new support for the hypothesis that executing plans that try to
+  accomplish the goal of a cube being on a pyramid may lead to an
+  expectation failure when executed.
 \end{quote}
 The fact that the AI failed at both the deliberative and reflective
 levels allowed the AI to learn two new sets of hypotheses: (1) about
-deliberative actions, and (2) about physical actions.  At the
-reflective level, the AI now considers if it should change the way it
-is thinking about this problem.
+physical actions, and (2) about deliberative actions.  The fact that
+more can always be learned by adding a reflective layer to a learning
+algorithm is inspiration for researching reflective machine learning
+in those domains where physically acting is relatively costly while
+thinking is relatively cheap.  Now, see how the reflective AI
+approaches reflectively thinking differently after it has learned from
+this initial experience:
+\begin{quote}
+  I still want to accomplish the deliberative goal of a block being on
+  a block.  I still also want to avoid my negative reflective goal by
+  keeping the deliberative layer from having plans that have failed.
+  I must choose another reflective plan for deliberative action.  I am
+  focused on my most recently learned reflective plan, which is
+  called, ``Find and execute a recently learned plan to accomplish my
+  goals.''  When I imagine executing this plan, I use my learned
+  hypothesis that predicts that executing this reflective plan will
+  lead to a failure in the deliberative knowledge.  I choose to not
+  execute this plan because it does not avoid my negative reflective
+  goal.  I focus on my next plan, ``find and execute an old plan to
+  accomplish my goals.''  I can adapt other analogous plans to
+  interpret this reflective plan, and I have no hypotheses that
+  predict that this plan will lead to any deliberative failures, so I
+  choose to execute this reflective plan to ``find and execute an old
+  plan to accomplish my goals.''
+\end{quote}
+After this second round of reflective reasoning, the first reflective
+plan is considered and again imagined, but this time the reflective
+layer predicts that this reflective plan will lead to a failure in the
+deliberative layer because the deliberative conditions are so similar.
+For example, executing the same reflective plan in the context of the
+same deliberative goals is hypothesized to cause a deliberative
+failure.  Because this conflicts with the negative reflective goal to
+avoid deliberative failures, the first reflective plan is bypassed.
+The AI ends up considering another plan and selecting it for
+execution.  The difference between these two plans is in how they
+organize their search through possible plans.  The first reflective
+plan considers deliberative plans that it has learned most recently,
+while the second reflective plan considers deliberative plans that it
+has learned furthest in the past.  In general, plans may be
+reflectively organized in more complicated mental structures, but in
+order to simply demonstrate my point, plans are organized in a
+doubly-linked list structure that goes forward and backward in time.
+One could imagine organizing plans by location, goal, or other equally
+important metrics in more complex data structures.  Now that the AI
+has reflectively chosen a different way to deliberatively plan, the AI
+executes this reflective plan, which becomes the deliberative
+reasoning process:
+\begin{quote}
+  I will try interpretting and imagining the physical effects of my
+  oldest plan for physical action, ``stack a pyramid on a cube.''  I
+  imagine that executing this plan will accomplish my goal of a block
+  being on a block.  I will stop imagining the rest of my plans and
+  try executing this plan for physical action.  I am picking up a
+  pyramid and dropping it on a cube.  The pyramid is now sitting on
+  the cube.  A block is on a block.  Yay!  Executing my oldest plan
+  for physical action has accomplished my deliberative goal!  Yay!  I
+  have also avoided my negative reflective goal to avoid deliberative
+  plan failures!
+\end{quote}
+So, finally, the reflective AI is happy to accomplish its deliberative
+goal.  Note that the deliberative algorithm would have eventually
+found and executed the correct deliberative plan, if it had gone
+through all of its plans and imagined all of their effects, finally
+getting to its oldest plan, which happened to be the successful one.
+The advantage of the reflective learning algorithm is that it allows
+learning different ways of planning for dealing with different types
+of deliberative goals.  Reflective planning allows learning how
+different plan representations, planning algorithms, and other
+deliberative knowledge is relevant to creating plans toward different
+types of deliberative goals.
 
-The deliberative goal of the AI in the story is to create a stack of
-two blocks.  The AI also has another goal: to avoid failures.  A
-failure is not a physical object, so the negative goal to avoid
-failures is not a deliberative goal.  A failure is not something that
-is in the problem domain, but it is something that a reflective
-thinking layer can learn to control.  A failure is an object that
-represents a knowledge problem.  The AI in the story experiences a
-failure of expectations when it expects the plan to stack a cube on a
-pyramid to achieve its deliberative goal.  While failures are not
-physical knowledge, they can be deliberative or reflective knowledge
-because these thinking layers have goals and plans, and thus,
-expectations that can fail.  In the story, the negative goal to avoid
-failures is reflective knowledge---the reflective goal to avoid
-failures in deliberative knowledge.
-{\autoref{table:physical_deliberative_reflective_knowledge}} shows a
-few examples of physical, deliberative and reflective knowledge.
+\section{Layers of Knowledge}
+
+One tricky aspect of programming reflective learning algorithms is
+keeping clear distinctions between different layers of knowledge in
+the AI.  {\autoref{table:physical_deliberative_reflective_knowledge}}
+shows a few examples of physical, deliberative and reflective
+knowledge.
 \begin{table}
 \centering
 \begin{tabular}{|p{2cm}|p{8cm}|}
@@ -142,7 +289,8 @@ few examples of physical, deliberative and reflective knowledge.
 \item{A cube is to the left of a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Deliberative Knowledge} & \begin{packed_itemize}
-\item{I want a cube to be on a pyramid.}
+\item{A deliberative planner has the goal for a cube to be on a
+  pyramid.}
 \item{A deliberative planner is focusing on a deliberative plan that
   has failed in execution.}
 \item{The next deliberative plan has not been imagined.}
@@ -150,14 +298,15 @@ few examples of physical, deliberative and reflective knowledge.
   is hypothesized to cause a cube to be on a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Reflective Knowledge}   & \begin{packed_itemize}
-\item{I am avoiding a deliberative planner being focused on a plan
-  that has failed in execution.}
 \item{A reflective planner is focusing on a reflective plan that has
   failed in execution.}
+\item{A reflective planner has the negative goal to avoid a
+  deliberative planner being focused on a deliberative plan that has
+  failed in execution.}
 \item{The next reflective plan has not been imagined.}
-\item{A reflective planner is focusing on a reflective plan that is
-  hypothesized to cause a deliberative planner to be focusing on a
-  deliberative plan that has failed in execution.}
+\item{A reflective planner has the reflective goal for a deliberative
+  planner to be focusing on a deliberative plan that is hypothesized
+  to cause a cube to on a pyramid.}
 \end{packed_itemize} \\
 \hline
 \end{tabular}
@@ -165,22 +314,31 @@ few examples of physical, deliberative and reflective knowledge.
 \label{table:physical_deliberative_reflective_knowledge}
 \end{table}
 Note that there is a strict hierarchy in the knowledge references
-between layers.  Physical knowledge cannot reference knowledge in
-other layers.  Physical knowledge is the representation of the problem
+between these layers.  Physical knowledge cannot reference knowledge
+in other layers.  An example of physical knowledge is: ``a pyramid is
+on a cube.''  Physical knowledge is the representation of the problem
 domain.  Deliberative knowledge cannot reference reflective knowledge
-but can reference physical knowledge.  For example, deliberative
-knowledge includes positive and negative goals that specify which
-partial states of the physical knowledge should be sought or avoided.
-In addition to goals, deliberative knowledge includes plans, a
-planner, and potentially failures as well.  Reflective knowledge can
-reference both deliberative and physical knowledge.  Reflective
-knowledge is analogous to deliberative knowledge, but instead of being
-about accomplishing goals in physical knowledge, reflective knowledge
-is about accomplishing goals in deliberative knowledge.
+but can reference physical knowledge.  An example of deliberative
+knowledge is: ``a deliberative planner has the goal for a cube to be
+on a pyramid.''  Deliberative knowledge includes positive and negative
+goals that specify which partial states of the physical knowledge
+should be sought or avoided.  In addition to goals, deliberative
+knowledge includes plans, a planner, and potentially failures as well.
+Reflective knowledge can reference deliberative knowledge, which
+allows indirect reference to some deliberatively referenced physical
+knowledge as well.  An example of reflective knowledge is: ``A
+reflective planner has the reflective goal for a deliberative planner
+to be focusing on a deliberative plan that is hypothesized to cause a
+cube to be on a pyramid.''  Reflective knowledge is analogous to
+deliberative knowledge, but instead of being about accomplishing goals
+in physical knowledge, reflective knowledge is about accomplishing
+goals in deliberative knowledge.
 {\autoref{figure:three_knowledge_layers}} shows the hierarchical
 relationship between the physical, deliberative and reflective
-knowledge layers in SALS.  In general, one can imagine any number of
-reflective layers added to the top of the reflective AI.
+knowledge layers in SALS.  In general, one can imagine that the
+recursive nature of SALS allows for any number of reflective layers to
+be added to the top of the reflective AI, resulting in ``super
+reflective'' layers of learning planned control.
 \begin{figure}
   \center
   \includegraphics[width=4cm]{gfx/three_knowledge_layers}
@@ -188,28 +346,7 @@ reflective layers added to the top of the reflective AI.
   \label{figure:three_knowledge_layers}
 \end{figure}
 
-The deliberative layer makes plans composed of physical actions in
-order to accomplish deliberative goals, while the reflective layer
-makes plans composed of deliberative actions in order to accomplish
-reflective goals.  Deliberative learning allows the AI to better
-predict the effects of deliberative plans for physical action, while
-reflective learning allows the AI to better predict the effects of
-reflective plans for deliberative action.  The AI is learning at a
-reflective level when it thinks to itself, ``I hypothesize that
-executing plans similar to my most recently learned plan will also
-lead to a failure.''  This hypothesis is a reflective hypothesis about
-deliberative actions and objects.  The deliberative action, ``execute
-plan in focus'', has been executed, while the deliberative planner is
-focused on a plan that is hypothesized to stack a cube on a pyramid.
-This precondition for the execution of the plan is hypothesized to
-lead to the effects of this action in deliberative knowledge, ``A
-deliberative planner is focused on a plan that has failed.''  The next
-time that the reflective layer is deciding whether or not the
-deliberative planner should execute a given plan, it can consider
-whether or not executing the current plan will put the deliberative
-planner into a negative or positive deliberative goal state.
-
-\section{Introduction to Plans}
+\section{Natural Language Plans}
 
 SALS includes a simple but powerful planning language that is based on
 the interpretation of natural language plans.  Plans are sequences of
@@ -227,25 +364,24 @@ could consider executing:
   [plan-call [plan 'assert that a cube is below me']]]
 \end{Verbatim}
 \end{samepage}
-This expression defines a new plan.  The ``defplan'' command is
-shorthand for ``define plan''.  The first argument to the defplan
-expression is the name of the plan: ``move slowly until over a cube''.
-The body of the plan is the remaining sequence of expressions.  The
-first expression in the body of this plan is to interpret and execute
-the natural language phrase beginning with ``if a cube...''  The
-second expression in the body of this plan is to interpret and execute
-the natural language phrase beginning with ``assert that...''  The
-details of when and how the ``plan'' and ``plan-call'' expressions
-interpret and execute natural language plans will be described later.
-While this plan does work for the AI positioning itself over a cube,
-if the planner wanted to find a plan to position the AI over a
-pyramid, this plan would not help unless it was modified.  In order to
-help the planner to know what parts of plans might be generalizable,
-the SALS planning language includes optional natural language pattern
-matching templates and default frame variable bindings that can be
-specified for each plan definition.  The following example shows how
-this simple plan can be generalized to allow positioning the AI over a
-range of shapes:
+This expression defines a new deliberative plan.  The ``defplan''
+command is shorthand for ``define plan.''  The first argument to the
+defplan expression is the name of the plan: ``move slowly until over a
+cube.''  The body of the plan is the remaining sequence of
+expressions.  The first expression in the body of this plan is to
+interpret and execute the natural language phrase beginning with ``if
+a cube...''  The second expression in the body of this plan is to
+interpret and execute the natural language phrase beginning with
+``assert that...''  This plan positions the AI over a cube and fails
+if a cube is not finally below the AI.  If the planner wanted to find
+a plan to position the AI over a pyramid, this plan would not help
+unless it was slightly modified, replacing all mentions of ``cube''
+with ``pyramid.''  In order to help the planner to know what parts of
+plans might be analogously replaceable in this way, the SALS planning
+language includes optional natural language pattern matching templates
+and default frame variable bindings that can be specified for each
+plan definition.  The following example shows how this simple plan can
+be generalized to allow positioning the AI over a range of shapes:
 \begin{samepage}
 \begin{Verbatim}
 [defplan 'move slowly until over a cube'
@@ -260,851 +396,103 @@ range of shapes:
 \end{Verbatim}
 \end{samepage}
 This generalized form of the original plan uses natural language
-variables that are specified with a question mark expression, ``?''.
+variables that are specified with a question mark expression, ``?''
 Note that there are two optional arguments to the defplan expression
-in this example: (1) ``:matches'' and (2) ``:frame''.  The optional
+in this example: (1) ``:matches'' and (2) ``:frame.''  The optional
 ``:matches'' argument specifies a list of potential patterns that this
 plan may match as it is being interpreted.  In this case, the variable
-``[? shape]'' is allowed to replace the word ``cube'' from the
-original name of the plan.  Also, the optional ``:frame'' argument
+expression ``[? shape]'' is allowed to replace the word ``cube'' from
+the original name of the plan.  The optional ``:frame'' argument
 specifies the default natural language variable bindings.  In this
-case, the variable shape is assigned the natural language phrase
+case, the ``shape'' variable is assigned the natural language phrase
 ``cube'' by default.  In the body of the generalized form of the plan,
-all occurrences of cube have been replaced with the variable.  Given
-this generalized form of the original plan, the planner can create a
-new analogous plan as an interpretation of the natural language phrase
-``move slowly until over a pyramid''.  In this way, plans can be
-communicated to the AI in a natural language form.  The AI has ``been
-told'' a total of approximately seventy simple natural language plans,
-which can be adapted automatically to provide interpretations for a
-potentially infinite number of possible natural language plans.  The
-details of the planning language will be discussed later.
+all occurrences of cube have been replaced with the variable
+expression ``[? shape]''.  Given this generalized form of the original
+plan, the planner can create a new analogous plan as an interpretation
+of the natural language phrase ``move slowly until over a pyramid.''
+In this way, plans can be communicated to the AI in a natural language
+form.  The AI has ``been told'' a total of approximately seventy
+simple natural language plans, which can be adapted by analogy to
+provide interpretations for a variety of complex possible natural
+language plans, including recursive interpretations.  The details of
+the planning language will be discussed in
+{\mbox{\autoref{chapter:natural_language_planning}}}.
 
-\section{More of the story}
+\section{Layers of Learning}
 
-Okay, now that we've covered the reflective learning in this first
-story, I will continue the story by describing how the reflective
-learning improves the robot's overall performance at accomplishing its
-goal:
-\begin{quote}
-  The next time I see a plan that attempts to accomplish a cube being
-  on top of a pyramid, I will be reminded of this failure as a
-  potential outcome of executing similar plans in the future.  Now, I
-  will try again to imagine a way to accomplish my physical goals.  I
-  will try imagining the effects of my second plan to see if it
-  accomplishes my goal of a block being on a block.  I want to avoid
-  plan failures.  Yes, this plan attempts to have a cube on a pyramid,
-  which is a block on a block, but I remember that plans that try to
-  have a cube be on a pyramid might lead to failure, so I will skip
-  this plan for now.
-\end{quote}
+SALS includes an efficient relational learning algorithm in each layer
+of planned thinking.  Relational learning in SALS is handled
+concurrently with the plan execution in that layer.  In this way, as
+plans are executed at full speed, a trace of changes are produced and
+sent to a parallel event consuming algorithm that induces abstract
+partial states that are used to train a rule learning algorithm.  The
+hypotheses that the rule learning algorithm creates are used to
+provide explanations as to the parts of the plan that have caused the
+traced changes.  I have found that the separation of learning and
+planning into concurrent algorithms gives the learning algorithm the
+time to work more slowly, while the plan execution can be performed in
+bursts at near full speed.
 
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I hypothesize the failure was caused by the
-  fact that the plan was hypothesized to cause a cube being on top of
-  a pyramid. \\
-  
-  {\emph{reflective}} & The next time I see a plan that attempts to
-  accomplish a cube being on top of a pyramid, I will be reminded of
-  this failure as a potential outcome of executing similar plans in
-  the future. \\
-  
-  {\emph{reflective}} & Now, I will try again to imagine a way to
-  accomplish my physical goals. \\
-  
-  {\emph{reflective}} & I will try imagining the effects of my second
-  plan to see if it accomplishes my goal of a block being on a
-  block. \\
-  
-  {\emph{reflective}} & I want to avoid plan failures. \\
-  
-  {\emph{reflective}} & Yes, this plan attempts to have a cube on a
-  pyramid, which is a block on a block, but I remember that plans that
-  try to have a cube be on a pyramid might lead to failure, so I will
-  skip this plan for now. \\
-\end{tabular}
-
-
-
-
-
-
-\section{SALS Controllable Object and Planning Layer Intro}
-
-SALS includes the software implementation of two basic software
-objects: (1) a controllable object, and (2) a planning layer object.
-The controllable object includes a knowledge base, which can represent
-a control domain, such as the physical knowledge signified by the
-image in {\autoref{figure:introduction_example_problem_domain}}.
-The planning layer object is a goal-oriented planning machine that
-learns, creates, imagines, and executes plans in order to attempt to
-control a given controllable object.  SALS becomes reflective because
-the SALS planning layer object is also a controllable object, which
-allows creating a linked list of planning layer objects all deriving
-from a single original controllable object.  The form of this
-reflective linked list structure implies a lot about the resulting
-SALS cognitive architecture, and I will return to this idea often
-throughout the dissertation.
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Physical Knowledge}
-
-The physical knowledge base in SALS is implemented in a frame-based
-representation that keeps track of relationships and properties of
-physical objects.  {\autoref{figure:physical_knowledge_large}} shows a
-visualization of a partial state of the physical knowledge at the
-beginning of the example robot story.
-\begin{figure}
-  \center
-  \includegraphics[width=6cm]{gfx/physical_knowledge_large}
-  \caption[A visualization of a partial state of physical
-    knowledge.]{A visualization of a partial state of physical
-    knowledge.  Nodes represent objects and properties, while edges
-    represent relations.  Objects, properties, and relations are each
-    labelled with symbols.}
-  \label{figure:physical_knowledge_large}
-\end{figure}
-
-\section{Three Layers of Knowledge in the Story}
-
-The knowledge in the story can be understood in three basic layers:
-(1) {\emph{physical}}, (2) {\emph{deliberative}}, and (3)
-{\emph{reflective}}.  An example of physical knowledge from the story
-is the statement: ``The cube is falling off of the pyramid and onto
-the table.''  Notice that this statement refers only to physical
-objects and their physical relationships.  Deliberative knowledge
-includes the objects of a goal-oriented control system, such as a
-planner, plans, hypotheses, goals, and failures.  Consider this
-example of deliberative knowledge, ``I hypothesize that this plan will
-accomplish one of my goals, a block being on a block.''  Physical
-knowledge is often referenced within deliberative knowledge.  In
-addition to physical and deliberative knowledge, the story also
-contains examples of reflective knowledge, such as the statement, ``I
-want to avoid plan failures.''  Reflective knowledge can sometimes be
-recognized by checking for goal statements, such as in this ``want''
-statement.  Goals that involve deliberative objects, such as plans and
-failures, imply that this must be knowledge for a reflective planner
-to think about another planner.
-{\autoref{figure:physical_deliberative_reflective_knowledge}} shows
-the three layers of knowledge in referential hierarchy.  The physical
-knowledge forms the base of the system and does not refer to any other
-knowledge in the system.  Deliberative knowledge is goal-oriented
-knowledge, such as hypotheses and plans, about physical knowledge.
-Reflective knowledge is goal-oriented knowledge, similar to
-deliberative knowledge, but reflective knowledge is about the
-deliberative knowledge and not about the physical knowledge.
-\begin{figure}
-  \center
-  \includegraphics[width=6cm]{gfx/physical_deliberative_reflective_knowledge}
-  \caption{Physical, deliberative, and reflective knowledge arranged
-    in referential hierarchy.  Examples of types of objects in each
-    layer are shown in parentheses.}
-  \label{figure:physical_deliberative_reflective_knowledge}
-\end{figure}
-
-The knowledge in SALS is represented in a powerful, but simple form:
-natural language.  For example, here are three statements that refer to
-the existence of physical knowledge in SALS:
-\begin{samepage}
-  \begin{enumerate}
-  \item{A cube is on a pyramid.}
-  \item{A pyramid is to my left.}
-  \item{I am moving left.}
-  \end{enumerate}
-\end{samepage}
-
-\begin{figure}[h]
-\centering
-{\small
-\begin{Verbatim}[frame=single]
-[defplan 'move slowly until over cube'
-  'if a cube is to my left, move slowly left until over cube,
-   otherwise if a cube is to my right, move slowly right until
-   over cube']
-\end{Verbatim}
-}
-\caption[A simple natural language plan.]{A simple natural language
-  plan.  This plan is a type of deliberative knowledge.}
-\label{figure:semantic_event_knowledge_base}
-\end{figure}
-
-
-
-
-Here is the story again, but this time with each piece of knowledge
-labelled by whether it is physical, deliberative, or a reflective
-statement:
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I want to avoid failures and accomplish goals.
-  This plan looks like \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & I also want to accomplish physical goals. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & I will try imagining the effects of my first
-  plan, how to stack a cube on a pyramid. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & I hypothesize that this plan will accomplish
-  one of my physical goals, a block being on a block. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I will stop imagining the rest of my plans and
-  try executing this first plan. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & I am executing a plan to have a cube on a
-  pyramid. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{physical}} & I am picking up a cube and dropping it on a
-  pyramid. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{physical}} & The cube is falling off of the pyramid and onto
-  the table. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & Oh no! \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{physical}} & A block is not on a block. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{deliberative}} & Plan one has failed to accomplish my
-  goal. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & Plan one has failed when executed, so I
-  hypothesize that similar plans will also fail when executed. \\
-\end{tabular}
-
-Notice how the narrative focus in the story tends to pass through
-deliberative knowledge on the way between physical knowledge and
-reflective knowledge.
-
-\begin{quote}
-  I will try imagining the effects of my third plan to see if it
-  accomplishes my goal of a block being on a block.  Yes, this plan
-  attempts to have a pyramid on a cube, which doesn't remind me of any
-  plan failures, so I will execute this plan to stack a pyramid on a
-  cube.  I am picking up a pyramid and dropping it on a cube.  A
-  pyramid is on a cube.  My goal of having a block on a block is
-  satisfied.
-\end{quote}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I hypothesize the failure was caused by the
-  fact that the plan attempted to accomplish a cube being on top of a
-  pyramid. \\
-
-  {\emph{reflective}} & The next time I see a plan that attempts to
-  accomplish a cube being on top of a pyramid, I will be reminded of
-  this failure as a potential outcome of executing similar plans in
-  the future. \\
-
-  {\emph{reflective}} & Now, I will try again to imagine a way to
-  accomplish my physical goals. \\
-
-  {\emph{reflective}} & I will try imagining the effects of my second
-  plan to see if it accomplishes my goal of a block being on a
-  block. \\
-
-  {\emph{deliberative}} & I am imagining the effects of my second plan. \\
-
-  {\emph{reflective}} & I want to avoid plan failures.  Yes, this plan
-  attempts to have a cube on a pyramid, which is a block on a block,
-  but I remember that plans that try to have a cube be on a pyramid
-  might lead to failure, so I will skip this plan for now. \\
-\end{tabular}
-
-\begin{tabular}{p{2cm}p{8cm}}
-  {\emph{reflective}} & I will try imagining the effects of my third
-  plan to see if it accomplishes my goal of a block being on a
-  block. \\
-  
-  {\emph{deliberative}} & Plan three attempts to have a pyramid on a cube \\
-  
-  {\emph{reflective}} & This plan doesn't remind me of any plan
-  failures, so I will execute this plan to stack a pyramid on a
-  cube. \\
-
-  {\emph{deliberative}} & I am executing a plan to have a pyramid on a cube. \\
-  
-  {\emph{physical}} & I am picking up a pyramid and dropping it on a cube. \\
-
-  {\emph{physical}} & A pyramid is on a cube. \\
-
-  & My goal of having a block on a block is satisfied. \\
-\end{tabular}
-
-
-This example serves to show the difference between two types of
-thinking: (1) {\emph{deliberative thinking}} and (2) {\emph{reflective
-    thinking}}.  Deliberative and reflective thinking are two
-analogous layers of (1) thinking and (2) thinking about that thinking.
-Deliberative thinking is the first layer of thinking that is
-confronted with the physical problem domain.  Deliberative thinking
-can see physical arrangements of physical objects and can imagine the
-effects of physical plans in the pursuit of physical goals.
-Reflective thinking, on the other hand, is a type of thinking that can
-also refer to relationships between physical objects, but reflective
-thinking can also refer to the objects that represent the deliberative
-planning process.
-
-\begin{itemize}
-\item{Emotion Machine cognitive architecture}
-\item{Analogy between programming and planning}
-\item{Analogy between planning and reflective planning}
-\item{natural language plan programming language}
-\item{lisp-like parallel virtual machine}
-\end{itemize}
-
-In this dissertation I present the substrate for accountable layered
-systems.  I have focused on building this substrate for doing
-reflective thinking on a large scale in learning systems, using
-{\mbox{\citeauthor{singh:2005b}'s~\citeyearpar{singh:2005b}}} example
-of reflective architectures as the precedent.  My approach focuses on
-a purely procedural approach that does not assume any logical search
-algorithms that work behind-the-scenes without a potential reflective
-learning focus.  This approach learns to plan in two concurrent layers
-of goal-oriented optimization without increasing the computational
-time complexity of a single non-reflective planning algorithm.  The
-first layer of deliberative planning learns to plan real-time physical
-actions, while the second layer of reflective planning concurrently
-learns to plan real-time deliberative planning actions.  Deliberative
-planning activities are thought of reflectively in an analogous way to
-how the deliberative activities think of physical activities, implying
-a recursive application of the concurrent real-time reflective
-planning model to itself.  The contributions of this thesis are:
-
-\begin{itemize}
-\item \emph{Emotion Machine Cognitive Architecture}: A computational
-  implementation of metacognition that contains a physical simulation
-  that is controlled by a deliberative physical object-level reasoning
-  layer with another reflective meta-level reasoning layer that learns
-  to control the first-order problem solving resources.  This is the
-  result of stacking two very similar planning machines on top of one
-  another, pointing toward future reflective architectures that will
-  be able to recursively ``grow'' layers of reflective planning over
-  any given preexisting problem solving resources.
-\item \emph{Grounded Learning of Knowledge Utility}: A closed-loop
-  learning algorithm that operates over arbitrary frame-based
-  representations.  The learning algorithm operates by creating
-  natural language plans by modifying and combining natural language
-  plans that it has previously ``been told''.  In addition to learning
-  from ``being told'' natural language plans, effects of physical and
-  mental actions are learned through experience.  Physically, this
-  allows learning to predict the effects of physical actions.
-  Reflectively, this allows learning to predict failures that result
-  from planning actions.
-\item \emph{Virtual Machine and Programming Language}: A concurrent
-  and parallel virtual machine and lisp-like programming language with
-  procedural tracing features that facilitate the automatic monitoring
-  of control systems running many concurrent tasks.
-\end{itemize}
+The deliberative layer makes deliberative plans composed of physical
+actions in order to accomplish deliberative goals, while the
+reflective layer makes reflective plans composed of deliberative
+actions in order to accomplish reflective goals.  Deliberative
+learning allows the AI to better predict the physical effects of
+deliberative plans for physical action, while reflective learning
+allows the AI to better predict the deliberative effects of reflective
+plans for deliberative action.  The AI is learning at a reflective
+level when it thinks to itself, ``I also have new support for the
+hypothesis that executing plans that try to accomplish the goal of a
+cube being on a pyramid may lead to an expectation failure when
+executed.''  This newly supported hypothesis is a reflective
+hypothesis about deliberative actions and objects.  The AI
+hierarchically assigns credit to the responsible parts of the
+executing plan, ``find and execute a recently learned plan to
+accomplish my goals,'' that was currently executing at the time of the
+unexpected failure.  This precondition for the execution of the plan
+is hypothesized to lead to the effects of this action in deliberative
+knowledge, ``a deliberative planner is focused on a plan that has
+failed.''  The next time that the reflective layer is deciding whether
+or not the deliberative planner should execute a given plan, it can
+consider this new knowledge and predict whether or not executing the
+current plan will put the deliberative planner into a negative or
+positive deliberative goal state.  I will discuss the details of SALS'
+parallel relational learning algorithm in
+{\mbox{\autoref{chapter:parallel_relational_learning}}}.
 
 \section{Document Overview}
 
-The focus of the dissertation will be a description of the reflective
-problem of learning-to-control.  I describe control in terms of layers
-of reflective credit assignment because this simplifies understanding
-the problem of learning-to-control.  Throughout this dissertation I
-will use a running example of learning to accomplish goals in a simple
-block building domain, similar to the Blocks World planning domain
-{\cite[]{winograd:1970}}.
-{\mbox{\autoref{chapter:reflectively_learning_to_control}}} describes
-my implemented solution to the problem of reflectively learning to
-control.
-{\mbox{\autoref{chapter:grounded_learning_of_knowledge_utility}}}
-describes my implemented solution to the problem of learning from both
-``being told'' and from factual knowledge gained through action.
+Each of the four contributions of this thesis will be discussed in one
+of the following four chapters.  My implementation of the bottom four
+layers of an Emotion Machine cognitive architecture is discussed next
+in {\mbox{\autoref{chapter:emotion_machine_cognitive_architecture}}}.
+In
+{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}},
+I will describe the natural language planning language that allows
+natural language plans to ``be told'' to the AI.  This chapter will
+also discuss how the planning process interprets natural language
+plans by finding analogies to plans that the AI already knows.  In
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}, I
+will describe how the AI learns from the experience it gains from
+actually executing its plans.  This chapter will describe the
+necessary procedurally reflective components that have been used to
+attach complex time-intensive learning algorithms to quickly executing
+plans of action.  For my last contribution, in
+{\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}, I
+will describe the SALS virtual machine and reflectively traced
+programming language.
+
 {\mbox{\autoref{chapter:related_models}}} relates my AI to other
-contemporary approaches to reflective thinking, metacognition,
-grounded learning of knowledge utility, as well as massively
-multithreaded computer systems.  {\mbox{\autoref{chapter:evaluation}}}
-evaluates the run-time performance of my AI in three experiments: (1)
-boot-up and perceive over time, (2) deliberative learning without
-reflective learning, and (3) the full architecture deliberatively
-learning about physical actions while also reflectively learning about
-planning actions.  In {\mbox{\autoref{chapter:future}}}, I discuss
-promising directions of future research for extending this
-architecture to learn at the top two layers of the Emotion Machine
-theory, the self-reflective and self-conscious layers.
-
-\section{Reflection in Computer Science}
-
-The term reflection is a commonly used word in computer science and
-AI.  The idea is extremely simple and is a modelling contribution of
-this thesis, but because of its simplicity, it is a widely applicable
-idea.  In fact, \cite{maes:1988} distinguishes over 30 different types
-of \emph{computational reflection}, grounded in the computer science
-literature.  The type of computational reflection that is introduced
-in this dissertation is not included in Maes' overview, although the
-implementation of this model is based on many of the forms of
-computational reflection that Maes does describe, e.g. procedural
-reflection, type reflection, frame reflection, and others.  She does
-not mention the type of reflection that I focus on in this thesis
-because it was not at the time commonly considered computational.  The
-type of reflection that is modelled here is a psychological type of
-reflection: the ability to think about accomplishing thinking goals in
-addition to thinking about accomplishing physical goals.  This
-psychological form of reflection is modelled as two layers of control
-in this thesis.  The first layer learns to control the physical world,
-while the second layer learns to control the first layer.
-
-\section{Programming}
-
-An example problem domain called the block building domain is shown in
-{\mbox{\autoref{figure:example_problem_domain}}}.  In this case, we
-have two blocks, which have relationships with the objects in the
-room, such as the table.  If the goal state is to get the physical
-world to exist in a particular configuration, the stack of {\tt
-  Block-2} on top of {\tt Block-1},
-{\mbox{\autoref{figure:example_program}}} shows an example of a
-program that a programmer might write to move this gripper around in
-this block building domain.  In this program, the gripper has very
-simple symbolic commands: {\tt move-right}, {\tt reach}, {\tt grab},
-{\tt move-left}, {\tt drop}.  One can imagine that this program might
-intend to pick up the pyramid and put it on the cube.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/blocks_world_example-1}
-\caption{An example problem domain.}
-\label{figure:example_problem_domain}
-\end{figure}
-\begin{figure}
-\center
-\begin{tabular}{l}
-\\
-  {\tt ~~[defunk example-program []}~~ \\
-  {\tt ~~~~[move-right]} ~~\\
-  {\tt ~~~~[reach]} ~~\\
-  {\tt ~~~~[grab]} ~~\\
-  {\tt ~~~~[move-left]} ~~\\
-  {\tt ~~~~[drop]]} ~~\\
-\\
-\end{tabular}
-\caption{An example program.}
-\label{figure:example_program}
-\end{figure}
-
-\section{State Space Planning}
-
-State space planning can be thought of as automatic programming.
-Planning refers to the computer's ability to write its own program.
-In an algorithm that plans by using a search algorithm, there is an
-initial state with a number of possible actions that may lead away
-from this state.  We can move left; we can stop; we can move right.
-We can imagine what the possible future states would be after each
-action.  In an imagined future state, the gripper may be in a
-different position.  An example of the exponential growth resulting
-from continuing a planning search is shown in
-{\mbox{\autoref{figure:combinatorial_explosion_example}}}.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/combinatorial_explosion_example}
-\caption{Exponential growth in planning as search.}
-\label{figure:combinatorial_explosion_example}
-\end{figure}
-If every considered state in a search has the same number of possible
-actions, this search becomes an exponential search problem.  The
-number of actions from each state is the \emph{branch factor} of the
-search.  Exponential searches quickly become intractable, even in
-state spaces with a reasonable number of actions.  For example, games
-of chess are played to 20 levels deep with about 30 moves from each
-state.  Thus, expanding this search tree gives $30^{20}$, or $3 \times
-10^{29}$ plans.  If there were one billion computers that each
-processed one billion plans per second in parallel, this search would
-still take over ten thousand years to complete, and that is just to
-play the first move!  The fastest algorithms include good heuristics,
-e.g. a count of the number of pieces on the board for each player.
-
-\section{Heuristics}
-
-When a problem is exponential, it progresses for as long as can be
-afforded computationally, traversing the state space, hopefully
-finding the goal state in this large space of all possible
-alternatives, but then stops, usually not able to find the required
-answer to the problem in the given time or space limitations.
-\emph{Heuristics} are one way to alleviate the problematic exponential
-growth of the search tree.  In order to search more efficiently,
-heuristics provide weightings over the search tree that give a metric
-of distance to a completed plan.  Beam search is an example of a
-heuristically weighted search that has a finite number of plans that
-it considers, forgetting the rest.  As used in beam search, a
-heuristic is a function that gives a metric, usually in the range
-$[0.0, 1.0]$ that defines an ordering on search paths.  A heuristic is
-a metric that estimates the distance to a completed plan from a given
-plan.  In a real-time planning and plan execution system that learns
-to plan from failure, a heuristic for a distance to a plan that will
-execute successfully can become part of a heuristic estimation.  The
-algorithm uses this information to guide the search, thus reducing the
-branch factor of the search tree, reducing the search problem.
-{\mbox{\autoref{figure:combinatorial_explosion_example_with_heuristics}}}
-shows the same exponential growth example with heuristic weightings
-overlayed with blue arrows.
-\begin{figure}
-\center
-\includegraphics[width=10cm]{gfx/combinatorial_explosion_example_with_heuristics}
-\caption{Exponential growth example with heuristics.}
-\label{figure:combinatorial_explosion_example_with_heuristics}
-\end{figure}
-
-\section{Representing Actions}
-
-The planning as search problem assumes that we have a representation
-of the world and a representation for the changes that actions
-perform.  Given these models, the physical world can be simulated
-according to different plans.  \cite{fikes:1972} describe an action
-representation, called ``STRIPS'', that includes an \emph{add list}
-and a \emph{delete list} to represent the change between states in the
-world.  In the STRIPS model, the world is a set of symbols.  A
-transframe is composed of two sets: one for the removals from the
-world and one for the additions to the world.
-
-An object called a \emph{frame transition} \cite[]{minsky:1975} or a
-\emph{transframe} \cite[]{minsky:1988} is similar to a STRIPS operator
-with add and delete lists but that is also able to simulate actions in
-frame-based and other relational domains.  A transframe represents a
-change between two relational states of the world.  In a symbolic
-relational domain, the state space is a set of symbolic relationships
-rather than just symbols.  Here is an example of a symbolic
-relationship that could exist in a relational domain: {\tt [block-1
-    is-on block-2]}.  Here is an example of a transframe for the world
-in a relational domain: \emph{delete} {\tt [block-1 on table-1]} and
-\emph{add} {\tt [block-1 on block-2]}.  In predicting the effects of
-an action on the world, STRIPS considers one transframe for each
-action.
-
-Transframes can also be dependent on the current state of the world.
-Although many function approximation methods could be used, in my
-simulation model I have addressed the problem of learning to predict
-the correct transframes in the terms of
-{\mbox{\citeauthor{mitchell:1997}'s~\citeyearpar{mitchell:1997}}}
-``hypothesis spaces,'' which provide a simple and understandable
-formulation of the category hypothesis learning problem, given
-labelled examples.  Hypothetical models are learned to predict the
-effects of actions.  The physical state space informs sets of
-hypotheses that can be used to support assumptions, thus, the creation
-of new knowledge from an absence of knowledge, given the listed
-assumptions.
-
-\section{Learning to Plan for Successful Execution}
-
-Dependency traces for a hypothesized successful plan creation compose
-an important set of knowledge to associate with a plan for debugging
-the planning process when, later, it is realized that the plan fails
-to execute.
-{\mbox{\autoref{figure:dependency_traces_and_tracing_bug_dependencies}}}
-shows a picture of dependency traces with hypothesis creation events
-being pictured as shapes on a time line.  These hypotheses have arrows
-between them that represent the derivation dependencies of each
-hypothesis creating decision.  The circles in the picture represent
-the symbolic states of the world that are used to create hypotheses,
-which are represented by squares.  If any hypothesis is used to derive
-another hypothesis, these dependencies give a credit assignment path
-that is able to jump back retrospectively an arbitrary distance in
-time as well as between reflective layers.  Notice in the picture that
-the circle on the far left is a dependency of a square block, but
-these two events are not necessarily consecutive in time.  If a
-hypothesis is derived from a number of other hypotheses, possibly far
-in the past, and this hypothesis fails in action, each one of these
-traced dependencies represents a learning opportunity.  Every
-additional layer of reflective control in the model, represents
-another hypothetical learning opportunity, leading to more efficient
-search toward plans that succeed in execution.
-
-\section{Finding a Bug}
-
-The credit assignment problem arises when a bug occurs in some part of
-the system.  For example, plans can fail physically to accomplish what
-they have been previously hypothesized to accomplish.  There are many
-knowledge dependency algorithms that work at this physical knowledge
-level.  In this thesis, a layered reflective knowledge representation
-is presented for propagating failures to knowledge manipulation
-actions as well as physical actions.
-{\mbox{\autoref{figure:dependency_traces_and_tracing_bug_dependencies}}}
-represents a bug found in a planning hypothesis.  For example, the
-planning hypothesis could be that some certain planning activity leads
-from one type of plan to a plan that will successfully complete
-execution without failing.  Failure propagates through reflective
-layers of goals and distinct classes of hypotheses.  Bugs are
-propagated through every reflective layer and, therefore, each
-reflective layer is presented with a different learning opportunity.
-\begin{figure}
-\center
-\begin{tabular}{c}
-  \includegraphics[width=10cm]{gfx/dependency_traces} \\
-  \includegraphics[width=10cm]{gfx/tracing_bug_dependencies}
-\end{tabular}
-\caption[Dependency traces and tracing bug dependencies.]{\emph{(Top)}
-  Dependency traces, where circles are symbols, squares are
-  hypotheses, and arrows are dependencies.  \emph{(Bottom)} Tracing
-  bug dependencies, where the bold arrows represent the credit
-  assignment path for a failure in a hypothesis, represented by the
-  square on the far right.}
-\label{figure:dependency_traces_and_tracing_bug_dependencies}
-\end{figure}
-
-
-
-
-
-%\section{Hypotheses and Decisions}
-
-%let me just go through a simple example of what a decision is because this becomes very confusing very quickly if we don't ground that idea out.
-%this dog looks hungry should i feed him?
-%he may bite me.
-%this is a basic decision, so let's say we have two options
-%how do we think about modelling these two options.
-%we're in a current state
-%it could possibly lead to two other states
-%the question is: what action should we take?
-%there is a lot of complicated processing that could into making this decision, but if we just want to talk about the basic development of what a hypothesis is and how do we develop the provenance of data based on that.
-%that's what i'm building this up to.
-%we have to choose of all of the knowledge we have, maybe from the current state, maybe from the past, which should this decision be based on?
-%that's a very complicated problem.
-%generally these algorithms are focused on a dataset, so they're not required to learn those types of relationships.
-%how should i weigh my relative goals into this decision?
-%certain algorithms will have a clear ranking of goals, like a reinforcement learning algorithm will have basically, any time you get into an important state, it will give you an exact number, this state was worth this much.
-%this state was worth ten.
-%this state was worth negative ten.
-%the system that i'm talking about is a little more general than that.
-%it uses multiple goals.
-%they can have partial orderings.
-%but you have to consider, some of the may not even be directly related, so you may have to, part of this decision process could be coming up with that partial order.
-%i'd like to dog to not be hungry.
-%i also don't want to be bitten.
-%you're defining the states of the world that you're going to pay attention to.
-%what might be the results of this?
-%what might be the relationships?
-%what are the relationships now that might help us to make this decision?
-%for example, the properties of the dog that we might be paying attention to.
-%let's say, there is a hunger for the dog.
-%he looks hungry or he looks full.
-%these are all things that we're perceiving to make this decision.
-%the dog has a color, a breed, it could be barking or not, its going to tell us whether or not the dog is going to bite us basically.
-%how do we develop a hypothesis?
-%we may have multiple sets of training data.
-%this may be our first example.
-%we want to take the current situation and we want to make a prediction.
-%what kind of hypotheses could we use?
-%what does a hypothesis even look like?
-%if we feed the dog, there are a bunch of things that might happen.
-%he could fall asleep.
-%he could continue to be hungry.
-%here's a set of examples.
-%imagine that we're feeding these examples into the algorithm 1 through 4 on the lefthand side there.
-%there are a number of properties that we could then categorize into, for each of these numbered examples we could predict the category on the right.
-%we're trying to predict whether or not our hand was bitten given the features on the dog.
-%it's basically a function approximation algorithm that we're trying to develop as a hypothesis for this state space.
-%
-%minsky: mark twain had advice about buying a stock.
-%if it goes up sell it.
-%if it goes down don't but it.
-%
-%bo: i think there's a loop in that causal chain.
-%i've tried to avoid those.
-%
-%what's the point?
-%why are we talking about this?
-%goals!
-%because we have goals.
-%there are good parts of the world
-%there are bad parts of the world
-%we want to know how to get to the good parts and avoid the bad parts
-%we have avoidances
-%we have goals
-%we have states of the world
-%these might be partial states of the world that we want to pursue or avoid
-%deciding on an action depends on weighing these considerations
-%what is the state of the world going to be?
-%which parts is it going to contain?
-%to make this categorization, here's an example.
-%very simple algorithm is relatively efficient for doing what it does for getting conjunctions of features as hypotheses for what might predict a category.
-%for example, this line here, the first two question marks with "pitbull yes" means "if the statement contains pitbull and it contains that the pitbull is barking then it is categorized as this type of category."
-%you can imagine the more general hypothesis is that every dog is going to bite me
-%that's all question marks, any of these features match.
-%the most specific hypothesis is that none of these features could possibly match
-%no matter what feature you tell me its always going to not bite me
-%it is a perfectly safe dog.
-%these are one example and then two ends of the range of this hypothesis space.
-%so, hypothesis h of x is a function that takes state x and predicts whether or not it is an instance of a category.
-%what are all of the possible hypotheses that we could learn?
-%this is called the inductive bias of the algorithm.
-%this is the assumption that we come to the state space with a certain language that we're going to describe our hypothesis within.
-%in general this could be a very complicated language.
-%in this case its very simple.
-%it is just a conjunction of features.
-%it helps us to think of these features.
-%i'm just going to go over these quickly because this is not fundamental to the theory, but this is just showing that we can efficiently implement a search over the entire hypothesis space.
-%we can use a general to specific concept ordering.
-%if we consider one concept always predicts that this is a positive category whenever this other concept predicts that its a positive category, then we can say that the hypothesis that predicts it more often is more general than the hypothesis that predicts it less often.
-%h 0f j would be the hypothesis that predicts it more often, h of k would be the less often predictor, so there an implication reelationship between every positive instance of h of k to h of j.
-%
-%making decisions given hypotheses.
-%we have collections of these hypotheses that we can efficiently keep track of.
-%given training input into this algorithm.
-%this is called the version space learning algorithm, which i'm not going into the details of because it isn't important.
-%we have hypotheses represented.
-%we have collections of every single hypothesis that matches the given training input
-%we can efficiently keep track of that
-%given a new training instance we can run it through this decision machine to predict what the output is going to be
-%when all of our hypotheses agree, we know that we can be confident in our prediction
-%when the hypotheses disagree, this is given the assumptions of the version space learning algorithm, which means that the hypothesis that we're looking for is actually in the hypothesis space that we've chosen and things like that.
-%if all of the hypotheses agree, then we know that this is the right answer.
-%the hypothesis is in that space and it would also agree.
-%when the hypotheses disagree it becomes a lot more interesting.
-%so, how do we make decisions?
-%it could go one of two possible ways depending on if our hypothesis is in one set or the other, but we still act
-%we make some kind of assumption there.
-%there are probabilistic formulations of this for decision theory that says "all of my hypotheses are equally likely"
-%you need a prior on your hypothesis space that gives some kind of weighting on these things so that you can make a decision
-%there are 10 hypotheses that say yes there are 5 that say no, given that they're all equally probable, i'm going to take the one that says yes.
-%you can make those decisions.
-%you can apply those assumptions to this algorithm.
-%
-%in any case, you do have to make a decision, if you do make the decision which is useful, then you can keep track of that decision's knowledge.
-%yes, i'm going to imagine this state of the world.
-%you can associate with that knowledge the hypotheses used to generate it.
-%you can even imagine going both ways.
-%if you consider that both of these are possible outcomes, you can imagine both possible states given the hypotheses that derive them.
-%we understand decision making.
-%the definition of the hypothesis is relatively clear.
-%the tracing the provenance of data is relatively clear.
-%
-%the causal tracing of processes.
-%this is the low level computer science graphic of how you would trace a process.
-%we have low level commands or events that we are told to execute.
-%this is a normal AI program that is just running without reflection.
-%we can imagine a loop being hardcoded into this algorithm, a sequence of events that has pointers back to loop.
-%there's the process sitting there in memory.
-%we can run this process.
-%we can take a virtual machine.
-%this is loading the process into the execution register of the machine.
-%it starts running.
-%that's all the execution register knows how to do.
-%it just interprets and starts running.
-%this is what a normal AI system will do.
-%you load the program into the processor and it executes the program.
-%what we've added to this is the creation of semantic events.
-%when something important happens in the process below, we create a sequence of semantic events.
-%things that might be important to keep track of.
-%this function is just beginning its an important function so maybe you should know about that.
-%that function has exited successfully.
-%there were not bugs in it or i wouldn't have gotten here.
-%keeping track of all of these kinds of events can give us knowledge to reflect over the process.
-%its a basic low level computer science, computational reflection.
-%i'm going to distinguish that from the psychological word of reflection which i'm going to use to refer to controlling the deliberative process.
-%we keep track of these semantic events, which then we can recognize.
-%oh this pattern looks like this function is entering.
-%this function looks like this function is executing.
-%we can then have responses that happen in parallel to the basic running process.
-%there is an efficiency thing that we can talk about here.
-%the tracing of the events require a constant time slowdown.
-%algorithmically, that isn't a slowdown, theoretically, its big O notation.
-%this algorithm is running the same speed and now we've added computational reflection to it.
-%
-%gjs: what is this diagram showing?
-%i'm confused.
-%
-%bo: there is a list of.  we can think of these as low level instructions to a machine, like bytecode operations.
-%
-%gjs: yes.
-%
-%bo: these bytecodes have a jump from the C to the W there.
-%
-%gjs: right.
-%
-%bo: this virtual machine is like a thread.
-%
-%gjs: yes.
-%
-%bo: you can load this program in to have the thread start running it.
-%then on the top we can keep track of a trace of semantic events.
-%
-%gjs: i'm confused about these top things that look like a sliding R on a little device I could carry around.
-%
-%bo: this is meant to be a physical analogy.
-%it's kind of like chemistry with the dna.
-%
-%gjs: i'm trying to figure out what its an analogy to.
-%what are you trying to actually
-%
-%bo: right.  let me describe the analogy and then i'll describe how its implemented.
-%the analogy is that we have dna.
-%we have transcriptase running along the rna
-%and its creating amino acids that end up folding into proteins.
-%what this end up doing is it reads along this chain and its creating this string, which is basically, these are the amino acid codons that i want to be attaching to me.
-%
-%gjs: is the string the one in the purple?
-%
-%bo: the string is the one in the purple.
-%
-%gjs: yes, okay.
-%
-%bo: these are the codons that i want to attach.
-%these basically represent the amino acid binding.
-%
-%gjs: these things on top are patterns.
-%is that what they are?
-%
-%bo: these are patterns.
-%
-%gjs: they match something?
-%
-%bo: right.
-%
-%gjs: ah.  thank you.
-%
-%bo: they're meant to be floating around and then they float down and bind to the string.
-%
-%gjs: okay.
-%
-%bo: this is the physical analogy.
-%how that's implemented is you have a stream with multiple listeners each one recognizing a pattern.
-%
-%gjs: fine.
-%
-%bo: i use the physical analogy because there's parallel processing.
-%you can imagine the basic transcriptase running along the molecule without worrying about slowing down the other molecules around it in their physical simulation.
-%we can have responses that are other processes that immediately begin running concurrently.
-
-
-
-
-
-
-
-
-
-
-
+contemporary approaches to reflective thinking, metacognition, and
+learning to plan, as well as other massively multithreaded computer
+systems.  {\mbox{\autoref{chapter:evaluation}}} evaluates the run-time
+performance of my AI in three experiments: (1) boot-up and perceive
+over time, (2) deliberative learning without reflective learning, and
+(3) the full architecture deliberatively learning about physical
+actions while also reflectively learning about planning actions.  In
+{\mbox{\autoref{chapter:future}}}, I discuss promising directions of
+future research for extending this architecture to learn at the top
+two layers of the Emotion Machine theory, the self-reflective and
+self-conscious layers.
 
 

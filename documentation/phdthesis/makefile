@@ -22,14 +22,14 @@ phdthesis.pdf: \
   frontbackmatter/titlepage.tex \
   chapters/introduction.tex \
   chapters/emotion_machine_cognitive_architecture.tex \
-  chapters/reflectively_learning_to_control.tex \
-  chapters/grounded_learning_of_knowledge_utility.tex \
+  chapters/learning_from_being_told_natural_language_plans.tex \
+  chapters/learning_asynchronously_from_experience.tex \
   chapters/modelling_the_continuously_dynamic.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
-  chapters/virtual_operating_system_and_programming_language.tex \
+  chapters/virtual_machine_and_programming_language.tex \
   chapters/related_models.tex \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \

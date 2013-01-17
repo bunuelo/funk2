@@ -32,11 +32,11 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "plan"));
   raw__frame__add_var_value(cause, this, new__symbol(cause, "nonsemantic_plan"), nonsemantic_plan);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "has_been_imagined"),                 nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagined_complete_failure"),         nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "executed_complete_failure"),         nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"),               nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),                          nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "has_been_imagined"),         nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagined_complete_failure"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "executed_complete_failure"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"),       nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),                  nil);
   return this;
 }
 

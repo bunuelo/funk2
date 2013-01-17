@@ -142,6 +142,7 @@ phdthesis.pdf: \
   gfx/built_in_reactive_and_physical_layers.pdf \
   gfx/learned_reactive_and_built_in_reactive_layers.pdf \
   gfx/deliberative_and_learned_reactive_layers.pdf \
+  gfx/reflective_and_deliberative_layers.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

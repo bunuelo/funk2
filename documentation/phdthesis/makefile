@@ -143,6 +143,13 @@ phdthesis.pdf: \
   gfx/learned_reactive_and_built_in_reactive_layers.pdf \
   gfx/deliberative_and_learned_reactive_layers.pdf \
   gfx/reflective_and_deliberative_layers.pdf \
+  gfx/physical_knowledge_base_graph.pdf \
+  gfx/deliberative_plan_knowledge_base_graph.pdf \
+  gfx/reflective_plan_knowledge_base_graph.pdf \
+  gfx/learning_from_being_told_in_layers.pdf \
+  gfx/relationship_partial_state_graph.pdf \
+  gfx/property_partial_state_graph.pdf \
+  gfx/hierarchical_partial_state_graph.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
@@ -157,6 +164,9 @@ phdthesis.pdf: \
 	pdflatex temp.tex
 	rm -f temp.tex
 	mv -f temp.pdf $@
+
+%.pdf: %.fudot makefile
+	dot -Tpdf $< -o $@
 
 %.pdf: %.png makefile
 	pngtopnm $< > $<.pnm

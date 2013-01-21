@@ -1,0 +1,45 @@
+[defunk deliberative_plan_knowledge_base_graph-new []
+  [let [[graph     [new graph]]
+	[plan-1    [new graph_node 'Plan']]
+	[plan-2    [new graph_node 'Plan']]
+	[plan-3    [new graph_node 'Plan']]
+	[plan-4    [new graph_node 'Plan']]
+	[failure-1 [new graph_node 'Failure']]
+	[planner-1 [new graph_node 'Planner']]]
+    [have graph add_edge [new graph_edge 'has-been-imagined'               plan-1    [new graph_node 'true']]]
+    [have graph add_edge [new graph_edge 'default-slot-value top-shape'    plan-1    [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'default-slot-value bottom-shape' plan-1    [new graph_node 'pyramid']]]
+    [have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'a cube to be on a pyramid']]]
+    [have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a pyramid']]]
+    [have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a cube']]]
+    
+    [have graph add_edge [new graph_edge 'has-been-imagined'               plan-2    [new graph_node 'false']]]
+    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-2    [new graph_node 'me']]]
+    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-2    [new graph_node 'over a cube']]]
+    
+    [have graph add_edge [new graph_edge 'has-been-imagined'               plan-3    [new graph_node 'false']]]
+    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-3    [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-3    [new graph_node 'on a pyramid']]]
+    
+    [have graph add_edge [new graph_edge 'has-been-imagined'               plan-4    [new graph_node 'false']]]
+    [have graph add_edge [new graph_edge 'default-slot-value top-shape'    plan-4    [new graph_node 'pyramid']]]
+    [have graph add_edge [new graph_edge 'default-slot-value bottom-shape' plan-4    [new graph_node 'cube']]]
+    `[have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a pyramid']]]
+    `[have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a cube']]]
+    
+    [have graph add_edge [new graph_edge 'positive-goal'                   planner-1 [new graph_node 'a cube to be on a pyramid']]]
+    [have graph add_edge [new graph_edge 'positive-goal'                   planner-1 [new graph_node 'a pyramid to be on a cube']]]
+    
+    [have graph add_edge [new graph_edge 'focus-plan'     planner-1 plan-1]]
+    [have graph add_edge [new graph_edge 'execution-plan' planner-1 [new graph_node 'nil']]]
+    [have graph add_edge [new graph_edge 'next'           plan-1    plan-2]]
+    [have graph add_edge [new graph_edge 'next'           plan-2    plan-3]]
+    [have graph add_edge [new graph_edge 'next'           plan-3    plan-4]]
+    
+    graph]]
+
+[defunk deliberative_plan_knowledge_base_graph-save []
+  [let [[dot_code [get [deliberative_plan_knowledge_base_graph-new] as-dot_code]]]
+    [have dot_code save 'deliberative_plan_knowledge_base_graph.fudot']]]
+
+[deliberative_plan_knowledge_base_graph-save]

@@ -1,0 +1,15 @@
+[defunk hierarchical_partial_state_graph-new []
+  [let [[graph        [new graph]]
+	[source-1       [new graph_node 'planner']]
+	[source-value-1 [new graph_node 'deliberative']]
+	[value-1        [new graph_node 'a cube shaped block to be on a pyramid shaped block']]]
+    [have graph add_edge [new graph_edge 'property layer' source-1 source-value-1]]
+    [have graph add_edge [new graph_edge 'property positive-goal' source-1 value-1]]
+    
+    graph]]
+
+[defunk hierarchical_partial_state_graph-save []
+  [let [[dot_code [get [hierarchical_partial_state_graph-new] as-dot_code]]]
+    [have dot_code save 'hierarchical_partial_state_graph.fudot']]]
+
+[hierarchical_partial_state_graph-save]

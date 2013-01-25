@@ -8,9 +8,9 @@
 	[source-value-2 [new graph_node 'true']]
 	[target-2       [new graph_node 'block']]
 	[target-value-2 [new graph_node 'cube']]]
-    [have graph add_edge [new graph_edge 'source-key source-key-type' source-1 source-value-1]]
-    [have graph add_edge [new graph_edge 'target-key target-key-type' target-1 target-value-1]]
-    [have graph add_edge [new graph_edge 'key key-type' source-1 target-1]]
+    [have graph add_edge [new graph_edge 'source-key-type source-key' source-1 source-value-1]]
+    [have graph add_edge [new graph_edge 'target-key-type target-key' target-1 target-value-1]]
+    [have graph add_edge [new graph_edge 'key-type key' source-1 target-1]]
     
     [have graph add_edge [new graph_edge 'property is-me' source-2 source-value-2]]
     [have graph add_edge [new graph_edge 'property shape' target-2 target-value-2]]

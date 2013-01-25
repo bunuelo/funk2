@@ -1,0 +1,50 @@
+[defunk plan_execution_node_graph-new []
+  [let [[graph                    [new graph]]
+	[plan-1                   [new graph_node 'Plan']]
+	[planner-1                [new graph_node 'Planner']]
+	[execution-node-1         [new graph_node 'Execution-Node']]
+	[expression-type-1        [new graph_node 'not']]
+	[argument-decision-node-1 [new graph_node 'Argument-Decision-Node']]
+	[argument-decision-node-2 [new graph_node 'Argument-Decision-Node']]
+	[execution-node-2         [new graph_node 'Execution-Node']]
+	[expression-type-2        [new graph_node 'plan-call']]
+	[execution-node-3         [new graph_node 'Execution-Node']]
+	[expression-type-3        [new graph_node 'exists']]
+	[execution-node-4         [new graph_node 'Execution-Node']]
+	[expression-type-4        [new graph_node 'exists']]
+	[execution-node-5         [new graph_node 'Execution-Node']]
+	[expression-type-5        [new graph_node 'plan']]]
+    
+    [have graph add_edge [new graph_edge 'positive-goal'     planner-1 [new graph_node 'a cube to be on a pyramid']]]
+    
+    [have graph add_edge [new graph_edge 'has-been-imagined' plan-1 [new graph_node 'false']]]
+    [have graph add_edge [new graph_edge 'first-node'        plan-1 execution-node-1]]
+    
+    [have graph add_edge [new graph_edge 'expression-type'   execution-node-1 expression-type-1]]
+    [have graph add_edge [new graph_edge 'subnode'           execution-node-1 execution-node-2]]
+    
+    [have graph add_edge [new graph_edge 'expression-type'   execution-node-5 expression-type-5]]
+    [have graph add_edge [new graph_edge 'subnode'           execution-node-2 execution-node-5]]
+    [have graph add_edge [new graph_edge 'argument-decision' execution-node-2 argument-decision-node-1]]
+    [have graph add_edge [new graph_edge 'argument-decision' execution-node-2 argument-decision-node-2]]
+    
+    [have graph add_edge [new graph_edge 'subnode' argument-decision-node-1 execution-node-3]]
+    
+    [have graph add_edge [new graph_edge 'subnode' argument-decision-node-2 execution-node-4]]
+    
+    [have graph add_edge [new graph_edge 'expression-type' execution-node-2 expression-type-2]]
+
+    [have graph add_edge [new graph_edge 'expression-type' execution-node-3 expression-type-3]]
+    
+    [have graph add_edge [new graph_edge 'expression-type' execution-node-4 expression-type-4]]
+    
+    [have graph add_edge [new graph_edge 'focus-plan'     planner-1 plan-1]]
+    [have graph add_edge [new graph_edge 'execution-plan' planner-1 [new graph_node 'nil']]]
+    
+    graph]]
+
+[defunk plan_execution_node_graph-save []
+  [let [[dot_code [get [plan_execution_node_graph-new] as-dot_code]]]
+    [have dot_code save 'plan_execution_node_graph.fudot']]]
+
+[plan_execution_node_graph-save]

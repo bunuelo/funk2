@@ -7,20 +7,27 @@
 	[failure-1 [new graph_node 'Failure']]
 	[planner-1 [new graph_node 'Planner']]]
     [have graph add_edge [new graph_edge 'has-been-imagined'               plan-1    [new graph_node 'true']]]
+    [have graph add_edge [new graph_edge 'default-slot-value top-shape'    plan-1    [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'default-slot-value bottom-shape' plan-1    [new graph_node 'pyramid']]]
     [have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'a planner to be focusing on a plan that has been imagined']]]
     [have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid']]]
     
     [have graph add_edge [new graph_edge 'has-been-imagined'               plan-2    [new graph_node 'false']]]
-    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-2    [new graph_node 'a planner']]]
-    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-2    [new graph_node 'focusing on a plan that has been imagined']]]
+    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-2    [new graph_node 'me']]]
+    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-2    [new graph_node 'over a cube']]]
     
     [have graph add_edge [new graph_edge 'has-been-imagined'               plan-3    [new graph_node 'false']]]
-    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-3    [new graph_node 'a planner']]]
-    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-3    [new graph_node 'focusing on a plan that has failed in execution']]]
+    [have graph add_edge [new graph_edge 'default-slot-value subject'      plan-3    [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'default-slot-value relation'     plan-3    [new graph_node 'on a pyramid']]]
     
     [have graph add_edge [new graph_edge 'has-been-imagined'               plan-4    [new graph_node 'false']]]
+    [have graph add_edge [new graph_edge 'default-slot-value top-shape'    plan-4    [new graph_node 'pyramid']]]
+    [have graph add_edge [new graph_edge 'default-slot-value bottom-shape' plan-4    [new graph_node 'cube']]]
+    `[have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a pyramid']]]
+    `[have graph add_edge [new graph_edge 'hypothesized-to-cause'           plan-1    [new graph_node 'me to be over a cube']]]
     
-    [have graph add_edge [new graph_edge 'negative-goal'                   planner-1 [new graph_node 'a planner to be focusing on a plan that has failed in execution']]]
+    [have graph add_edge [new graph_edge 'positive-goal'                   planner-1 [new graph_node 'a cube to be on a pyramid']]]
+    [have graph add_edge [new graph_edge 'positive-goal'                   planner-1 [new graph_node 'a pyramid to be on a cube']]]
     
     [have graph add_edge [new graph_edge 'focus-plan'     planner-1 plan-1]]
     [have graph add_edge [new graph_edge 'execution-plan' planner-1 [new graph_node 'nil']]]

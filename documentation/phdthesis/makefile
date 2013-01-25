@@ -150,6 +150,10 @@ phdthesis.pdf: \
   gfx/relationship_partial_state_graph.pdf \
   gfx/property_partial_state_graph.pdf \
   gfx/hierarchical_partial_state_graph.pdf \
+  gfx/plan_execution_node_graph.pdf \
+  gfx/deliberative_two_experiential_event_streams.pdf \
+  gfx/reflective_two_experiential_event_streams.pdf \
+  gfx/super_reflective_two_experiential_event_streams.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

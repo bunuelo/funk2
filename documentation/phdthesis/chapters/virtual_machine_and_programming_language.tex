@@ -1,104 +1,141 @@
 \chapter{Virtual Machine and Programming Language}
 \label{chapter:virtual_machine_and_programming_language}
 
-Large concurrent and parallel systems are difficult to build and debug
-because of the complex causal interactions between all of the
-different processes.  For this reason, every parallel task in
-\emph{SALS}, or \emph{Substrate for Accountable Layered Systems}, has
-an associated \emph{cause} object.  If any task creates a new parallel
-task, then a new cause object is created for the child task with a
-parent cause object reference.  Cause objects represent the properties
-of a task, which can be used for causally organizing groups of
-parallel tasks, controlling and monitoring the occurrence of any type
-of event through any of the procedural abstraction barriers of the
-SALS virtual machine.
+The SALS AI is a cognitive architecture that is constructed on a
+virtual machine and low-level Lisp-like programming language that
+implicitly supports the tracing of results and behavior of the system
+to the data and through the procedures that produced those results and
+that behavior.  Good traces make a system accountable and help to
+enable the analysis of success and failure, and thus enhancing the
+ability of the system to learn from mistakes.  The low-level Lisp-like
+programming language is not to be confused with the high-level natural
+programming language presented in
+{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}},
+where I have described many of the high-level natural language
+interpretation and imagination failures that the SALS AI is able to
+detect and avoid through backtracking.  In this chapter, I will focus
+on the details of the low-level Lisp-like programming language that
+enable those types of backtracking and failure avoidance.  In
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}, I
+described the details of how an asynchronous learning algorithm can
+learn from these failures so that these failures can be avoided in
+future natural language plan executions through learning refined
+causal models of the hypothetical imagined effects of natural language
+plans.  In this chapter, I will describe the details of the low-level
+Lisp-like language that enable these types of of asynchronous learning
+algorithms.
 
-\section{Virtual Operating System}
+The SALS architecture provides for general parallelism and
+concurrency, while supporting the automatic collection of audit trails
+for all processes, including the processes that analyze audit trails.
+The native support of a low-level Lisp-like language in the SALS
+architecture allows, as in machine language, a program to be data that
+can be easily manipulated by a program, making it easier for a user or
+an automatic procedure to read, edit, and write programs as they are
+debugged.  Large concurrent and parallel systems are often difficult
+to build and debug because of the complex causal interactions between
+all of the different processes.  For this reason, every parallel task
+in SALS has an associated ``cause'' object.  If any task creates a new
+parallel task, then a new cause object is created for the child task
+with a parent cause object reference.  Cause objects represent
+meta-information about a task, such as in what way a compiled
+procedure should be executed, which can be used for causally
+organizing the effects of groups of parallel tasks, controlling and
+monitoring the occurrence of any type of event through any of the
+procedural abstraction barriers of the SALS virtual machine.
 
-Parallel tasks in the virtual operating system are called
-\emph{fibers} in order to distinguish them from the \emph{threads} in
-the underlying non-virtual operating system.  The parallel fibers
-create, mutate, and read from memory as they execute sequences of
-bytecodes.  At any point between bytecode executions, the memory
-system is static.  The current execution state of every fiber is
-represented in the global environment.  To be fully reflective on all
-of the procedural effects of any given fiber, I introduce a technique
-that I call \emph{causal reflective tracing}.  Causal reflective
-tracing is a way of defining variables that are specific to each fiber
-that can be used to control the low-level memory access, mutation, and
-creation functions.  This allows one fiber to subscribe to the
-procedural trace events of another fiber without receiving procedural
-trace events of its own execution, which would lead to an infinite
-regress, halting the system.  Further, because the virtual operating
-system is inherently a parallel processing system, a given fiber will
-often start a number of child fibers that handle part of the
-processing for the parent fiber.  When a new fiber is created, the
-child fiber inherits the causal variable bindings of its parent fiber,
-enabling the same procedural tracing options for the child as well.
-So, causal reflective tracing is one of the basic tools for keeping
-track of which pieces of memory were created, mutated, or read by
-which other fibers.  When evaluating the theoretical time complexity
-of concurrent procedurally reflective control algorithms, it should be
-noted that creating procedural trace events for the execution of a
-given fiber slows the fiber down only by a constant factor, not
-affecting the algorithm's ``big-O'' time complexity on an ideal
-concurrent shared-memory system, of which the virtual operating system
-is an approximation.
+\section{Causal Reflective Tracing}
 
-\section{Semantic Memory Focuses Reflective Tracing}
+Parallel tasks in the virtual machine are called ``fibers'' in order
+to distinguish them from the ``threads'' in the underlying operating
+system kernel.  The parallel fibers create, mutate, and read from
+memory as they execute sequences of compiled bytecodes.  At any point
+between bytecode executions, the memory system is static and can be
+saved or loaded from non-volatile memory, such as a harddisk.  The
+current execution state of every fiber is represented in the global
+environment.  To be fully reflective on all of the procedural effects
+of any given fiber, I introduce a technique called ``causal reflective
+tracing.''  Causal reflective tracing is a way of defining variables
+that are specific to each fiber that can be used to control the
+low-level memory access, mutation, and creation functions.  This
+allows one fiber to subscribe to the procedural trace events of
+another fiber without receiving procedural trace events of its own
+execution, which would lead to an infinite regress, halting the
+system.  Further, because the virtual machine is inherently a parallel
+processing system, a given fiber will often start a number of child
+fibers that handle part of the processing for the parent fiber.  When
+a new fiber is created, the child fiber inherits the causal variable
+bindings of its parent fiber, enabling the same procedural tracing
+options for the child as well.  So, causal reflective tracing is one
+of the basic tools for keeping track of which pieces of memory were
+created, mutated, or read by which other fibers.  When evaluating the
+theoretical time complexity of concurrent procedurally reflective
+control algorithms, it should be noted that creating procedural trace
+events for the execution of a given fiber slows the fiber down only by
+a constant factor, not affecting the algorithm's ``big-O'' time
+complexity on an ideal concurrent shared-memory system, of which the
+virtual machine is an approximation.
 
 While causal reflective tracing focuses the procedural event tracing
-to memory interactions of specific fibers, this still results in
-millions of events to consider every real-time second of execution.
-In order to further focus on specific objects within the memory
-system, specific pieces of memory can be created called \emph{semantic
-  memory}.  Semantic memory objects are created, mutated, and accessed
-in roughly the same way as all of the frame-based objects in the
-memory system with a few extra reflective tracing features.  For
-example, semantic objects provide event streams that can be subscribed
-to by a number of different parallel listeners in different fibers.
+to memory interactions of specific groups of fibers, this still
+results in millions of events to consider every real-time second of
+execution.  In order to further focus on specific objects within the
+memory system, specific pieces of memory can be created called
+``semantic memory.''  Semantic memory objects are created, mutated,
+and accessed in roughly the same way as all of the frame-based objects
+in the memory system with a few extra reflective tracing features.
+For example, semantic objects provide event streams that can be
+subscribed to by a number of different parallel listeners in different
+fibers.  Also semantic object pointers are bidirectional in order to
+ease traversal by reflective pattern matching algorithms.
 
 Because it becomes awkward to subscribe to each an every frame-based
 object that may be interesting to the reflective focus, semantic
 frames that are created by specific fibers can be added to collections
-of semantic frames that are called \emph{semantic knowledge-bases}.
-Semantic knowledge-bases are good for organizing entire layers or
+of semantic frames that are called ``semantic knowledge bases.''
+Semantic knowledge bases are good for organizing entire layers or
 subsets of reflective layers that contain different types of semantic
-frames.  Semantic knowledge-bases allow the same forgetful event
-stream subscription services as semantic frames with the additional
-capability of tracing the addition and removal of entire semantic
-frames to and from the knowledge-base.
+frame objects.  Semantic knowledge bases allow the same forgetful
+event stream subscription services as semantic frames with the
+additional capability of tracing the addition and removal of entire
+semantic frames to and from the knowledge base.
 
-While knowledge-base reconstructions are extremely fast to reference,
+While knowledge base reconstructions are extremely fast to reference,
 $O(1)$, they require a duplication of the memory requirements of the
 focus knowledge base for every different point in time that is
 required.  In order to allow efficient access of the state of
-knowledge-bases at arbitrary points in the past, \emph{semantic event
-  interval-tree knowledge-bases} are another type of representation
-that is reflectively maintained without slowing down the procedure
-under reflective focus.  A semantic event knowledge-base stores a type
-of semantic frame that represents when a given semantic frame has a
-specific slot value called a \emph{semantic event}.  A semantic event
-is a semantic frame is an interval that spans a time from a beginning
-time and an ending time, each of which may or may not be specified.
-Semantic event knowledge-bases are reflectively traced and the
-knowledge is always stored in two different representations, the basic
-semantic event frames as well as a balanced interval tree that always
-represents the current state of the semantic event knowledge-base.
-The balanced interval tree allows accessing the state of the focus
-knowledge-base in $O(log n)$ time, where $n$ is the number of events
-stored in the semantic event knowledge base.  Although the time
-complexity is not as efficient as the constant, $O(1)$, access time of
-the reflectively reconstructed semantic knowledge-base, the semantic
-event interval-tree knowledge base only requires $O(n)$ memory
-complexity in order to allow access to the structure of the
-knowledge-base at any point in the past, where $n$ is the number of
-semantic events.
+knowledge bases at arbitrary points in the past, ``semantic event
+knowledge bases'' are another type of representation that is
+reflectively and asynchronously maintained in order to not slow down
+the primary procedure under reflective focus.  Uses of the event
+knowledge base object in the SALS asynchronous learning algorithm have
+been described in
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.  I
+will briefly review the features of the event knowledge base as well
+as a few details about how this object is initialized and used in the
+SALS low-level Lisp-like programming language.  The semantic event
+knowledge base stores a type of semantic frame called a ``semantic
+event.''  A semantic event is a type of semantic frame object that
+represents an interval in time, each of which may or may not be
+specified, making the interval potentially open-ended.  Semantic event
+knowledge bases are reflectively traced and the knowledge is always
+stored in two different representations, the basic semantic event
+frames as well as a balanced interval tree that always represents the
+current state of the semantic event knowledge base.  The balanced
+interval tree allows accessing the state of the focus knowledge base
+in $O(\log{(n)})$ time, where $n$ is the number of events stored in
+the semantic event knowledge base.  Although the time complexity is
+not as efficient as the constant, $O(1)$, access time of the
+reflectively reconstructed semantic knowledge base, the semantic event
+interval tree knowledge base only requires $O(n)$ memory complexity in
+order to allow access to the structure of the knowledge base at any
+point in the past, where $n$ is the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
-create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object.
+create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
+in the SALS low-level Lisp-like interactive programming language.
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [new semantic_event_knowledge_base nil [new semantic_realm]]
 out-> [semantic_event_knowledge_base
@@ -118,12 +155,10 @@ out-> [semantic_event_knowledge_base
   object.  When ``{\tt{semantic\_event}}'' type objects are added,
   removed, or modified while they are in this type of knowledge base,
   the knowledge base updates an always-accurate event interval tree
-  structure for all of the events for efficient, $O(\log n)$, access
-  to the events at any point in time.}
+  structure for all of the events for efficient, $O(\log{(n)})$,
+  access to the events at any point in time.}
 \label{figure:semantic_event_knowledge_base}
 \end{figure}
-
-\section{Forgetful Event Streams}
 
 By default, when there are no listeners to the procedural event
 streams of a semantic frame-based object, no reflective events are
@@ -135,7 +170,7 @@ parallel listeners are subscribed to a given event stream, only those
 events that have not already been seen by all of the subscribers are
 remembered.  Once all subscribers have processed an event, all events
 before this event are forgotten.  This type of memory conserving event
-stream is referred to as a \emph{forgetful event stream}.  In this way
+stream is referred to as a ``forgetful event stream.''  In this way
 semantic frames report the addition and removal of slot values to
 reflective forgetful event stream subscribers.  Once a knowledge base
 is created and we have an important event stream iterator, we can
@@ -149,7 +184,7 @@ reflective fiber can be created to process an
 {\tt{semantic\_planner}}.
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [let* [[realm          [new semantic_realm]]
              [knowledge_base [new semantic_event_knowledge_base
@@ -193,7 +228,7 @@ out-> []
 
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
 [semantic_frame_event
   time           [time
@@ -242,7 +277,7 @@ out-> []
   command mutates the {\tt{imagine\_time}} slot value for the planner.
   Notice that the first of the two events is a {\tt{remove}} type of
   event, while the second is an {\tt{add}} type event.  This event
-  knowledge is used in the AI to create reconstructions of entire
+  knowledge is used in the SALS AI to create reconstructions of entire
   knowledge bases of physical as well as deliberative object types,
   like planners.  Note that the first event removes the {\tt{[]}} slot
   value of the {\tt{imagine\_time}} {\tt{property}} of the
@@ -251,30 +286,28 @@ out-> []
 \label{figure:remove_add_set_events}
 \end{figure}
 
-\section{Causal Tracing of Statistics}
-
-Every parallel fiber is part of a causal scope of execution.  Every
-fiber is created with a unique {\tt{cause}} object that provides a
-consolidation of reflective tracing features for the fiber.  While a
-fiber's cause may be changed so that multiple fibers share the same
-cause object, a convenient solution to organizing very dynamic causal
-reflection is provided by the {\tt{cause\_group}} object.  Cause
-groups are added to cause objects and inherited from parent to child
-when new causes are created.  Because {\tt{cause}} objects and
-{\tt{cause\_group}} objects exist at the locus of every single memory
-creation or mutation event in the entire virtual operating system,
-they are a valuable and necessarily efficient means of tracing any
-event that modifies any part of the operating system.  For example,
-{\mbox{\autoref{figure:cause_group_statistics}}} the simplest type of
-causal reflective tracing simply gathers run-time statistics of a
-fiber execution by using a {\tt{cause\_group}} object.
-{\mbox{\autoref{figure:hierarchical_cause_group_statistics}}} shows an
-example of using a hierarchy of causal scopes in order to trace a
-total of $30$ parallel fibers that are organized into $3$ groups of
-$10$.
+While every parallel fiber is allocated a unique {\tt{cause}} object
+that provides a representation of the reflective tracing features for
+that fiber, sometimes it is useful to collect events from a
+overlapping sets or different hierarchies of many fiber objects.  A
+convenient solution to causally organizing very dynamic sets of fibers
+is provided by a ``cause group'' object.  Cause groups are added to
+cause objects and inherited from parent to child when new causes are
+created.  Because cause objects and cause group objects exist at the
+locus of every memory creation and mutation event in the SALS virtual
+machine, they provide a means of tracing any event that modifies any
+part of the SALS virtual machine.
+{\mbox{\autoref{figure:cause_group_statistics}}} shows an example of
+causal reflective tracing that takes advantage of cause group objects
+in order to gather run-time statistics of a fiber execution.
+{\mbox{\autoref{figure:hierarchical_cause_group_statistics}}} shows
+another example of using a hierarchy of multiple cause group objects
+in order to causally scope the tracing of $30$ parallel fibers that
+are hierarchically organized into $3$ cause groups that contain $10$
+fibers each.
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [globalize cause_group [new cause_group]]
 out-> []
@@ -305,23 +338,22 @@ out-> [cause_group
 }
 \caption[Using a {\tt{cause\_group}} object to gather statistics from
   causally scoped executions.]{Using a {\tt{cause\_group}} object to
-  gather statistics from causally scoped executions.  First, a new
-  {\tt{cause\_group}} object is created in the global environment.
-  Then, the gathering of run-time statistics involves creating a new
-  cause with the ``{\tt{with-new-cause}}'' operator, adding this cause
-  to the {\tt{cause\_group}} object, and then running an experiment.
-  The experiment in this case creates ten parallel fibers that each
-  simply print their index, a number from $0$ to $9$.  Finally, the
-  global {\tt{cause\_group}} object is printed to the screen, showing
-  processor execution time, total bytes allocated, total bytecodes
-  executed, and also the number of bytes garbage collected during the
-  experiment.  Note that multiple experiments could be run in parallel
-  and have separately scoped cause groups and statistics.}
+  gather statistics from causally scoped executions.  A new
+  {\tt{cause\_group}} object is first created in the global
+  environment.  The gathering of run-time statistics involves creating
+  a new cause with the ``{\tt{with-new-cause}}'' operator, adding this
+  cause to the {\tt{cause\_group}} object, and subsequently running an
+  experiment.  This example creates ten parallel fibers that each
+  print their numerical index from $0$ to $9$.  At the final output of
+  the example, the global {\tt{cause\_group}} object is printed to the
+  screen, showing processor execution time, total bytes allocated,
+  total bytecodes executed, and also the number of bytes garbage
+  collected during the experiment.}
 \label{figure:cause_group_statistics}
 \end{figure}
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [globalize cause_group [new cause_group]]
 out-> []
@@ -379,32 +411,25 @@ out-> [cause_group
 \label{figure:hierarchical_cause_group_statistics}
 \end{figure}
 
-\section{Causal Tracing of Memory Creation}
-
 Sometimes it is helpful to know which fiber or cause created a
 specific piece of memory.  For this reason, every piece of memory in
-the entire virtual operating system includes a reference to its
-creation cause as well as its creation fiber.  This increases memory
-usage by a constant factor, not making any algorithms in the operating
-system require any greater time or memory complexity, but for small
-objects it does triple the memory requirements.  This information can
-be useful in many statistical ways, such as keeping track of memory
-interactions between {\tt{cause\_group}} objects.  The focus of this
-thesis is not, however, a statistical point.
+the entire virtual machine includes a reference to its creation cause
+as well as its creation fiber.
 {\mbox{\autoref{figure:reflective_event_causal_tracing}}} shows how a
-reflective fiber can retrieve the creation cause of a procedurally
-generated event, a reflective tracing experiment where the creation
-cause of the reflective event is a useful piece of information to know
-for non-statistical reasons, such as learning from the separate
-effects of different causal scopes on a given knowledge base.  Causal
-tracing in the AI is used to detect when one resource interacts with
-another resource, for example, by activating that resource or waiting
-for that resource to complete execution.  An entire reflective
-knowledge base of current parallel resource interactions is maintained
-in this way.
+fiber can retrieve the creation cause of a semantic event object, it
+is useful to know which fiber or cause is responsible for creating a
+given semantic event object so that a reflective fiber can learn from
+the separate effects of different causal scopes that make
+modifications to semantic objects within a given knowledge base.  This
+form of causal tracing is used in the SALS cognitive architecture to
+detect when one resource interacts with another resource, for example,
+by activating that resource or waiting for that resource to complete
+execution.  An entire reflective knowledge base of current parallel
+resource interactions is maintained by tracing the causes of resource
+interactions in this way.
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [let* [[realm          [new semantic_realm]]
              [knowledge_base [new semantic_event_knowledge_base
@@ -449,8 +474,8 @@ event-in-causal-focus
 }
 \caption[Causally scoped reflective event tracing.]{Causally scoped
   reflective event tracing.  Since every piece of memory in the
-  virtual operating system has a reference to its {\tt{cause}} object,
-  causally focusing the reflective tracing example shown in
+  virtual machine has a reference to its {\tt{cause}} object, causally
+  focusing the reflective tracing example shown in
   {\mbox{\autoref{figure:reflective_fiber}}} is simply a matter of
   accessing the creation cause of each event, using the expression,
   {\tt{[get event cause]}}.}
@@ -459,28 +484,28 @@ event-in-causal-focus
 
 \section{Conjunctive Hypothesis Space Concept Learning}
 
-I have implemented a learning algorithm that is inspired by
-\citeauthor{mitchell:1997}'s \citeyear{mitchell:1997} version-space
-hypothesis space concept learning algorithm.  My implementation
-predicts a binary output feature given a frame of slots and symbolic
-slot values as input features with a relatively compact representation
-of the entire conjunctive hypothesis space by only representing the
-most general and most specific boundaries in the overall hypothesis
-generality lattice, thus the entire space is represented without
-redundancy of hypotheses that predict the same things as other
-hypotheses, given the training data seen so far.  The algorithm is
-incremental, meaning that it learns incrementally in real-time by
-being given new examples whenever they become available.  Also, I've
-implemented hooks into the concept version space learning algorithm,
-so that the most specific hypotheses or most general hypotheses that
-support a positive or negative outcome, respectively, can be easily
-retrieved from the version space, and each of these hypotheses have
-``removal callbacks'' that will be called if this hypothesis is ever
-removed from the version space.  These hooks allow the implementation
-of the dependency tracing learning algorithm for correcting
-hypothetically supported counterfactual knowledge by having these
-callbacks invalidate dependency objects that are the supports for all
-counterfactual knowledge.
+The SALS architecture includes a ``version space''
+\cite[]{mitchell:1997} hypothesis rule-learning algorithm.  A use of
+this hypothesis version space rule-learning algorithm was described in
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}} as
+part of a larger asynchronous learning algorithm that learns to
+predict the partial state ``transframe'' \cite[]{minsky:1975} effects
+of resource executions given the partial state preconditions of the
+execution.  The hypothesis version space rule-learning algorithm
+included in the SALS architecture predicts one binary output feature
+given a number of binary input features.  The benefit of the version
+space rule-learning algorithm is that it provides a relatively compact
+representation of an entire conjunctive hypothesis space by only
+representing the most general and most specific boundaries in the
+overall lattice of potential hypotheses.  The included rule-learning
+algorithm is incremental, meaning that it refines its space of
+hypotheses as new examples of training data become known.  The SALS AI
+hypothesis version space learning algorithm also includes ``removal
+callbacks'' for most general and most specific hypotheses, so that if
+these hypotheses are no longer supported given new training data,
+these hooks allow tracing dependencies for correcting hypothetically
+supported counterfactual knowledge in the counterfactual knowledge
+base of each planning layer of the SALS AI.
 {\mbox{\autoref{figure:concept_version_space}}} shows how to create a
 {\tt{concept\_version\_space}} object that can be trained.
 {\mbox{\autoref{figure:concept_version_space_training}}} shows an
@@ -492,7 +517,7 @@ of support for a specific example, attempting to find new support
 whenever the previous hypothetical support is lost.
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [new concept_version_space]
 
@@ -505,16 +530,16 @@ out-> [concept_version_space
 \caption[Creating a new {\tt{concept\_version\_space}} conjunctive
   hypothesis learning algorithm.]{Creating a new
   {\tt{concept\_version\_space}} conjunctive hypothesis learning
-  algorithm.  Notice that this object keeps a list of specific
-  hypotheses that support positive output predictions as well as
-  general hypotheses that support negative output predictions.  Also,
-  there is a set of variable names, or frame slot names, that the
-  algorithm has seen previously.}
+  algorithm.  This object keeps a list of the most specific hypotheses
+  that support positive output predictions as well as the most general
+  hypotheses that support negative output predictions.  Also, there is
+  a set of variable names, or frame slot names, that the algorithm has
+  seen previously.}
 \label{figure:concept_version_space}
 \end{figure}
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [let [[concept [new concept_version_space]]]
    
@@ -553,16 +578,16 @@ out-> [concept_version_space
 \caption[Training a {\tt{concept\_version\_space}} conjunctive
   hypothesis learning algorithm.]{Training a
   {\tt{concept\_version\_space}} conjunctive hypothesis learning
-  algorithm.  First, a new {\tt{concept\_version\_space}} is created,
-  then two {\tt{concept\_version\_space\_example}}s are created, one
-  positive and one negative.  The concept is printed after learning
-  from the positive example, and then the final concept is returned
-  after being trained on both examples.}
+  algorithm.  A new {\tt{concept\_version\_space}} is created.  Two
+  {\tt{concept\_version\_space\_example}}s are created, one positive
+  and one negative.  The concept is printed after learning from the
+  positive example.  The final concept is returned after being trained
+  on both examples.}
 \label{figure:concept_version_space_training}
 \end{figure}
 \begin{figure}[h]
 \centering
-{\small
+{\scriptsize
 \begin{Verbatim}[frame=single]
  in-> [let [[concept [new concept_version_space]]]
         [print 'Training on positive example.']
@@ -613,8 +638,8 @@ out-> []
   removal callbacks monitor the loss of support for a specific
   example, attempting to find new support whenever the previous
   hypothetical support is lost.  In this case, a positive example of a
-  {\tt{green}} {\tt{cube}} is what is attempting to maintain
-  hypothetical support in the concept's hypothesis space.}
+  {\tt{green}} {\tt{cube}} is attempting to maintain hypothetical
+  support in the concept's hypothesis space.}
 \label{figure:concept_version_space_hypothetical_support}
 \end{figure}
 

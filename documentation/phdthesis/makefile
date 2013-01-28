@@ -154,6 +154,9 @@ phdthesis.pdf: \
   gfx/deliberative_two_experiential_event_streams.pdf \
   gfx/reflective_two_experiential_event_streams.pdf \
   gfx/super_reflective_two_experiential_event_streams.pdf \
+  gfx/relationship_partial_state_abstraction_remove.pdf \
+  gfx/relationship_partial_state_abstraction_add.pdf \
+  gfx/hypothesis_version_space_set_divisions.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

@@ -22,7 +22,7 @@ learn from these failures so that these failures can be avoided in
 future natural language plan executions through learning refined
 causal models of the hypothetical imagined effects of natural language
 plans.  In this chapter, I will describe the details of the low-level
-Lisp-like language that enable these types of of asynchronous learning
+Lisp-like language that enable these types of asynchronous learning
 algorithms.
 
 The SALS architecture provides for general parallelism and
@@ -43,6 +43,61 @@ procedure should be executed, which can be used for causally
 organizing the effects of groups of parallel tasks, controlling and
 monitoring the occurrence of any type of event through any of the
 procedural abstraction barriers of the SALS virtual machine.
+
+\section{Virtual Machine}
+
+The SALS virtual machine is built to take advantage of modern
+supercomputer hardware with multiple CPUs and multiple cores per CPU.
+The SALS virtual machine has been tested with a maximum of 32
+processors and 128 gigabytes of RAM on the Nautilus supercomputer at
+the National Institute for Computational Sciences.  However, most of
+the examples presented in this dissertation have been executed on a
+personal computer with only eight CPU cores.  The SALS memory system
+is organized with a separate memory allocation pool for each
+concurrent processor in order to avoid mutual exclusion locks for
+memory allocation.  The SALS virtual machine has a tricolor garbage
+collection algorithm that takes advantage of parallelizing work in
+concurrent processors.  Memory pointers in the SALS memory system are
+64-bit integers that have space reserved for three hierarchical memory
+tiers: (1) ``computer identity,'' (2) ``pool index,'' (3) and ``block
+address.''  {\mbox{\autoref{table:sals_memory_pointer}}} shows the bit
+allocation within the 64-bit SALS memory pointer.
+\begin{table}
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\emph{bit range} &\emph{\# of values} &\emph{memory tier name} \\
+\hline
+~1 -- 17 &$131,072$         &computer identity \\ % 17
+\hline
+18 -- 27 &$1,024$           &pool index        \\ % 10
+\hline
+28 -- 64 &$137,438,953,472$ &block address     \\ % 37
+\hline
+\end{tabular}
+\caption[Bit allocation within the SALS memory pointer.]{Bit
+  allocation within the SALS memory pointer.}
+\label{table:sals_memory_pointer}
+\end{table}
+The computer identity is zero if the memory pointer is referencing
+memory on the local computer.  The computer identity is an integer
+greater than zero if the memory is on another computer that has
+connected to the SALS memory system through a low-level peer-to-peer
+socket connection.  The ability of the SALS architecture to connect to
+other running SALS architectures allows it to potentially scale to
+take advantage of the hardware on multiple networked computers to
+solve one large shared-memory problem.  The pool index is an integer
+reference into an array of memory pools on the given computer.  On any
+given computer, one memory pool is allocated for each concurrent
+processor.  The block address is an integer that is a block index into
+the given memory pool.  A block size of one byte has been used for the
+examples presented in this dissertation.
+
+
+
+
+
+
 
 \section{Causal Reflective Tracing}
 

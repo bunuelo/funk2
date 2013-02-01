@@ -3,190 +3,273 @@
 \label{chapter:related_models}
 %************************************************
 
+The SALS AI has been inspired by a previously implemented Emotion
+Machine cognitive architecture called ``EM-ONE'' \cite[]{singh:2005b}.
+EM-ONE implements reflective thinking using a commonsense narrative
+representation based on an Allegro Prolog extension of Allegro Lisp.
+The EM-ONE architecture is a ``critic-selector'' model of problem
+solving
+\cite[]{singh:2002a,singh:2004,singh:2005a,singh:2005b,minsky:2006,morgan:2009}.
+Knowledge in the EM-ONE architecture is divided into three domains:
+(1) physical, (2) social, and (3) mental.  The EM-ONE AI controls a
+physical simulation that contains two one-armed robots that can work
+together to build a table.  The EM-ONE AI contains three layers of
+reflective control: (1) reactive, (2) deliberative, and (3)
+reflective.  While the EM-ONE cognitive architecture represents the
+first major implementation of the Emotion Machine theory of mind, it
+was limited in a number of ways:
+\begin{packed_enumerate}
+\item{Critics are specified in a declarative logical form, which does
+  not allow for learning to optimize the procedural aspects of
+  Prolog's implicit declarative search.}
+\item{The implemented ``Critic-L'' language allows for inserted
+  procedural Lisp code, but any procedural code inserted in this way
+  is not reflectively traced.}
+\item{Only learns from ``being told'' commonsense narratives and does
+  not learn from its ``experience'' in order to better predict the
+  effects of executing its physical or mental actions.}
+\item{Commonsense narratives cannot be specified in natural language.}
+\item{Commonsense narratives do not have ambiguous interpretations.}
+\item{All activities execute in serial, so no critics or selectors can
+  execute in parallel.  Reasoning activities in each layer also occur
+  in serial, so that the layers of control cannot execute
+  concurrently.}
+\item{Does not take advantage of multiple CPUs or CPUs with multiple
+  cores.}
+\item{Allegro Lisp and Allegro Prolog are expensive tools, barring
+  collaborative research with many independent researchers that cannot
+  afford such tools.}
+\end{packed_enumerate}
+The SALS cognitive architecture aims to provide one cohesive solution
+to these limitations in the foundation of the EM-ONE Emotion Machine
+implementation.  In focusing on solving these limitations, the SALS
+architecture has failed to model some good aspects of the EM-ONE
+architecture.  The following are a number of parts of EM-ONE that are
+still future research for the SALS AI:
+\begin{packed_enumerate}
+\item{Self-reflective social knowledge.}
+\item{The ability to refer to arbitrary partial states of a problem
+  domain.}
+\item{Critics.}
+\end{packed_enumerate}
+The EM-ONE architecture includes a separate knowledge base for storing
+self-reflective social knowledge, the knowledge in the minds of other
+AIs, such as their beliefs and goals.  The ability of an AI to learn
+abstract models of its own mind and use these models to hypothesize
+the state of mind in other AIs is referred to as ``self-reflective''
+thinking in the Emotion Machine theory.  This type of self-reflective
+thinking is also referred to as ``theory of mind'' in the cognitive
+science literature and has been found to exist in different neural
+circuits in the brain when compared to deliberative or ``executive''
+functions in the brain \cite[]{saxe:2006}.  Because the EM-ONE
+architecture is based on a Prolog substrate, it has the ability to
+refer to arbitrary partial states of a problem domain, while the SALS
+AI is currently limited to the two simple ``relationship'' and
+``property'' types of partial states, which must be procedurally
+combined in order to reference more complex types of partial states.
+This means that the EM-ONE architecture can easily define critics that
+recognize arbitrarily complex declarative patterns in the problem
+domain.  The disadvantage of relying on a declarative substrate, such
+as Prolog, is that the procedural aspects of this substrate are not
+reflectively traced and cannot be optimized by the EM-ONE
+architecture.  While the SALS architecture must have explicit plans
+for recognizing more complex partial states, the fact that these
+procedures are plans in the SALS AI means that different procedures
+for recognizing these partial states in the problem domain can be
+reflected upon, modified, compared and optimized by the SALS AI.  The
+addition of critics as well as self-reflective and self-conscious
+layers of thinking is described as a future extension for the SALS
+architecture in {\mbox{\autoref{chapter:future}}}.
+
+\section{Computational Metacognition}
+
+The type of reflection implemented in this thesis is a form of
+``computational metacognition'' \cite[]{cox_and_raja:2008,cox:2010}:
+the ability to think about accomplishing thinking goals in addition to
+thinking about accomplishing physical goals.  Computational
+metacognition as described by Cox and Raja begins with a ``ground
+level,'' which is the problem domain for the AI to control.  The
+computational metacognition ground level is analogous to the physical
+knowledge base and physical agency of the learned reactive layer in
+the SALS Emotion Machine cognitive architecture.  The ``object level''
+of computational metacognition is a control loop that receives inputs
+from the ground level, processes these, and sends commands back to the
+ground level.  The object level of computational metacognition is
+analogous to the deliberative planning layer in the SALS Emotion
+Machine cognitive architecture.  The ``meta-level'' of computational
+metacognition completes two cascaded control loops: the object level
+controlling the ground level and the meta-level controlling the object
+level.  The meta-level of computational metacognition is analogous to
+the reflective planning layer of the SALS Emotion Machine cognitive
+architecture.
+\begin{table}
+\begin{tabular}{|rll|}
+\hline
+Metacognition Meta Level   &${\approx}$ &Emotion Machine Reflective Layer \\
+Metacognition Object Level &${\approx}$ &Emotion Machine Deliberative Layer \\
+Metacognition Ground Level &${\approx}$ &Emotion Machine Learned Reactive Layer \\
+\hline
+\end{tabular}
+\caption{The levels of computational metacognition mapped to the
+  Emotion Machine cognitive architecture presented in this
+  dissertation.}
+\label{table:computational_metacognition_as_reflective_order_notation}
+\end{table}
+\autoref{table:computational_metacognition_as_reflective_order_notation}
+shows how the levels of computational metacognition map to the Emotion
+Machine cognitive architecture presented in this dissertation.  The
+Emotion Machine theory makes a distinction between layers of
+self-reflective knowledge and reflective knowledge that is not clearly
+defined in the metacognitive theory.  The Emotion Machine theory
+describes how humans think of themselves in terms of different
+subpersonalities that depend on the current context and gives a short
+list as examples of common subpersonalities.
+\cite{minsky:2006} begins his representation of ``selves'' as
+analogous to how one might think of others:
+\begin{quote}
+How do people construct their Self-models?  We'll start by asking
+simpler questions about how we describe our aquaintances.  Thus, when
+Charles tries to think about his friend Joan, he might begin by
+describing some of her characteristics.  These could include his ideas
+about: the appearance of Joan's body and face, the range and qualities
+of her abilities, her motives, goals, aversions, and tastes, the ways
+in which she is disposed to behave, her various roles in the social
+world.
+\end{quote}
+{\mbox{\autoref{figure:emotion_machine_multiple_models_of_self}}}
+shows a few examples of different subpersonalities or ``selves'' that
+a person may use to think in different contexts.
+\begin{figure}
+\centering
+\includegraphics[width=8cm]{gfx/emotion_machine_multiple_models_of_self}
+\caption{Multiple models of self.}
+\label{figure:emotion_machine_multiple_models_of_self}
+\end{figure}
+
+\section{Optimality in Metacognition}
+
+Artificial intelligence researchers often approach problem solving
+from the perspective of theories of ``rationality'' from the fields of
+decision theory and economics.  From this perspective, rationality
+requires the AI to decide upon optimal actions with respect to the
+values or costs of its goals and activities.  In the basic
+formulation, different actions have different costs and the optimal
+decision is the decision that minimizes this cost over some time
+period, possibly an infinite horizon.  In simple domains, the solution
+to a problem of optimal control can be specified in closed form
+\cite[]{bertsekas:1995}.  In complex domains, optimal decision making
+requires intractable computations to be performed, and approximate or
+``satisficing'' solutions to problems become necessary
+\cite[]{simon:1957,simon:1982}.  \cite{good:1971} describes a decision
+making problem that includes costs for acting as well as costs for
+decision making that he calls ``type II rationality,'' a type of
+metacognition.  \cite{zilberstein:2008} describes ``optimal
+metareasoning'' as an approach to developing a formalism for
+evaluating the performance of a problem solver that is performing type
+II rationality.  Optimal metacognition does not imply that the object
+level problem solver is optimal but instead that the meta-level
+problem solver is optimal.  In ``bounded optimality'' the object level
+problem solver has certain trade-offs, such as solution quality versus
+time, that can be optimally manipulated by the meta-level problem
+solver \cite[]{russell:1991}.  \cite{zilberstein:2008} describes
+bounded optimality:
+\begin{quote}
+This approach marks a shift from optimization over actions to
+optimization over programs.  The program is bounded optimal for a
+given computational device for a given environment, if the expected
+utility of the program running on the device in the environment is at
+least as high as that of all other programs for the device.  When the
+space of programs is finite, one can certainly argue that a bounded
+optimal solution exists.  Finding it, however, could be very hard.
+\end{quote}
+
+
+\section{Meta-planning}
+
+``Meta-planning: Representing and using knowledge about planning in
+problem solving and natural language understanding''
+\cite[]{wilensky:1981}.
+
+leads into Mike's work on story understanding and meta-aqua.
+
 \section{Reflection in Computer Science}
 
 The term reflection is a commonly used word in computer science and
 AI.  The idea is extremely simple and is a modelling contribution of
-this thesis, but because of its simplicity, it is a widely applicable
-idea.  In fact, \cite{maes:1988} distinguishes over 30 different types
-of \emph{computational reflection}, grounded in the computer science
-literature.  The type of computational reflection that is introduced
-in this dissertation is not included in Maes' overview, although the
-implementation of this model is based on many of the forms of
-computational reflection that Maes does describe, e.g. procedural
-reflection, type reflection, frame reflection, and others.  She does
-not mention the type of reflection that I focus on in this thesis
-because it was not at the time commonly considered computational.  The
-type of reflection that is modelled here is a psychological type of
-reflection: the ability to think about accomplishing thinking goals in
-addition to thinking about accomplishing physical goals.  This
-psychological form of reflection is modelled as two layers of control
-in this thesis.  The first layer learns to control the physical world,
-while the second layer learns to control the first layer.
+this dissertation, but because of its simplicity, it is a widely
+applicable idea.  In fact, \cite{maes:1987,maes:1988} distinguishes over 30
+different types of ``computational reflection,'' grounded in the
+computer science literature.  The type of computational reflection
+that is introduced in this dissertation is not included in Maes'
+overview, although it is based on many of the forms of computational
+reflection that Maes describes, i.e. procedural reflection, type
+reflection, and frame reflection.
 
-\section{The Emotion Machine v1.0}
+\section{Massively Multithreaded Programming}
 
-One previously developed cognitive architecture that implements
-commonsense reasoning, based on Minsky's Emotion Machine theory of
-mind \cite[]{minsky:2006}, is a metareasoning system for correcting
-faulty plans, called EM-ONE (Emotion Machine, v1)
-\cite[]{singh:2005b}. EM-ONE is written in Lisp, using a Prolog
-extension as a logical resolution tool. EM-ONE is a layered
-architecture consisting of reactive, deliberative, and reflective
-layers. Mental critics are represented as commonsense narratives that
-result in queries to a collection of different Prolog knowledge
-bases. The commonsense narratives are given to the system in a Lisp
-format that is compiled into the knowledge bases as collections of
-horn clauses. These knowledge bases consist of collections of
-domain-specific horn clauses that are divided into physical, social,
-and mental domains of reasoning. On top of this Prolog logical
-substrate, the Lisp program is organized into layers as a
-critic-selector model of mind. The narrative plans that are generated
-by the deliberative layer are executed by a lower-layer, called the
-reactive layer. Part of the reactive layer of the algorithm is written
-in C and runs PID control loops in a simulated social two-wheeled
-inverted pendulum type robot. EM-ONE demonstrates how a system can use
-commonsense narratives in order to reason by analogy in order to
-generate plans. Also, EM-ONE demonstrates a learning process that is a
-carefully crafted collection of reflective critics that recognize
-types of social failures to infer the goals of other AIs.  Because of
-the complexity of the rigid-body physics in the world, sometimes even
-the most carefully constructed plans fail. EM-ONE has a layer of
-reflective critics that debug deliberative narratives as they are
-being interpreted by using a collection of commonsense narrative
-debugging critics.  Using narratives about social situations, EM-ONE
-infers the goals of the other AIs in the world given partial knowledge
-of their visible physical actions. When mistakes are made in this
-inference process, the failure is recognized reflectively, after the
-fact. Specific types of debugging responses are implemented for
-different forms of critical failures. EM-ONE is a step toward a large
-and complex commonsense reasoning AI with multiple layers of
-metareasoning that inspect, control, and debug mental representations.
+Optimization principles and application performance evaluation of a
+multithreaded GPU using CUDA \cite[]{ryoo:2008}.
 
-In my AI, I have focused on implementing a form of learning where
-resource executions are of constant time complexity, $O(1)$, so that
-there are no search algorithms operating ``behind the scenes'', such
-as those in any system based on Prolog with its implicit logical
-resolution of declarative program statements.  The substrate presented
-in this thesis is developed with the intention of building a stable
-platform for larger cognitive architectures in the same vein as
-EM-ONE.  For this reason, the substrate presented in this thesis is
-distributed as an extensible open-source program that can be easily
-downloaded, modified and used by others.  The rigid body physics
-simulation implemented in EM-ONE has been extended in capability with
-our kitchen cooking simulator, IsisWorld \cite[]{smith:2010}, which
-allows experimenting with multiple social AIs in a rigid-body physical
-kitchen that can work together to learn how to perform cooperative
-cooking tasks.
 
-\section{HACKER}
 
-A good precedent for reflective debugging responses to catalogs of
-failures is \emph{HACKER}, one of the first reflective planning and
-debugging models, written by \cite{sussman:1973}.  [complete]
 
-\section{EM-ONE}
 
-\cite{singh:2005b} provided \emph{EM-ONE}, a most recent example of an
-extension of HACKER that reasons about a more complicated
-three-dimensional physical and social block building domain.
-[complete]
 
-\section{Propagators}
 
-\cite{radul_and_sussman:2009} describe an object called a \emph{cell}
-that is closely related to the knowledge dependencies depicted in
-{\mbox{\autoref{figure:dependency_traces}}}.  These cells can be
-connected by dependency sets that specify functions that derive new
-knowledge from the dependencies, as well as, functions for merging the
-collected knowledge in cells.  Collections of Radul and Sussman's
-cells are called a \emph{propagator}.  The knowledge dependencies in
-this model can be thought of as a type of propagator.  The combination
-of a propagator model of knowledge maintenance with a reflective
-organization is described as future research in
-\autoref{chapter:future}.
-%\begin{figure}
-%\center
-%\includegraphics[width=10cm]{gfx/dependency_traces}
-%\caption{Dependency traces as propagator cells.}
-%\label{figure:propogators_dependency_traces}
-%\end{figure}
 
-\section{Interior Grounding}
+%% \section{Interior Grounding}
 
-\cite{minsky:2005} describes an evolutionary reflective model of mind
-called \emph{interior grounding}.  Interior grounding states that each
-layer of reflective thinking could be genetically predestined to each
-have different and specific types of useful ways of thinking.  Minsky
-rejects the \emph{physical grounding hypothesis}, which stipulates
-that thoughts must necessarily develop from the lowest layer first and
-only subsequently to the higher layers of thinking.
+%% \cite{minsky:2005} describes an evolutionary reflective model of mind
+%% called ``interior grounding.''  Interior grounding states that each
+%% layer of reflective thinking could be genetically predestined to each
+%% have different and specific types of useful ways of thinking.  Minsky
+%% rejects the ``physical grounding hypothesis,'' which stipulates that
+%% thoughts must necessarily develop from the lowest layer first and only
+%% subsequently to the higher layers of thinking.
 
-Because my AI is modelled after Minsky's Emotion Machine cognitive
-architecture, activities in the mind can create and manipulate
-symbolic arrangements without these symbols necessarily referring to
-the physical layer of activity.  My model considers factual grounding
-in both the perception of physical knowledge as well as the perception
-of internal mental states, such as the deliberative planning machine
-knowledge.
+%% Because my AI is modelled after Minsky's Emotion Machine cognitive
+%% architecture, activities in the mind can create and manipulate
+%% symbolic arrangements without these symbols necessarily referring to
+%% the physical layer of activity.  My model considers factual grounding
+%% in both the perception of physical knowledge as well as the perception
+%% of internal mental states, such as the deliberative planning machine
+%% knowledge.
 
-In terms of the Emotion Machine cognitive architecture, each
-reflective layer of my model can be considered to have a unique
-built-in reactive layer, which makes room for these genetic
-dispositions that Minsky describes as the basis for interior
-grounding.  My AI demonstrates interior grounding by having sets of
-factual knowledge as the control domain for both the deliberative as
-well as the reflective planning machines, so factual grounding of
-hypothetical counterfactual inferences in my AI need not begin by
-reasoning about physical activity, growing from lower layers to higher
-layers, but may instead begin by reasoning about the factual events in
-the deliberative planning machine knowledge bases.
+%% In terms of the Emotion Machine cognitive architecture, each
+%% reflective layer of my model can be considered to have a unique
+%% built-in reactive layer, which makes room for these genetic
+%% dispositions that Minsky describes as the basis for interior
+%% grounding.  My AI demonstrates interior grounding by having sets of
+%% factual knowledge as the control domain for both the deliberative as
+%% well as the reflective planning machines, so factual grounding of
+%% hypothetical counterfactual inferences in my AI need not begin by
+%% reasoning about physical activity, growing from lower layers to higher
+%% layers, but may instead begin by reasoning about the factual events in
+%% the deliberative planning machine knowledge bases.
 
-\section{Metareasoning}
+%% \section{HACKER}
 
-\cite{cox_and_raja:2008,cox:2010} present a reflective model of mind
-called \emph{metareasoning}.  My AI demonstrates metareasoning in the
-reflective layer, which controls the deliberative planning machine.
-The metareasoning described by Cox and Raja begins with a ``ground
-level'', which corresponds to the physical knowledge base in my AI,
-then describe how a second level, the ``object level'', is a control
-loop that receives perceptions from the ground level, processes these,
-and sends actionable commands back to the ground level.  The
-metacognitive object level corresponds with the deliberative layer and
-the deliberative planning machine knowledge base in my AI.  They then
-proceed to a third level, which completes two cascaded control loops:
-one controlling the ground level with another controlling the object
-level.  This third level is called the ``meta-level''.  Cox and Raja's
-meta-level corresponds to the reflective layer and reflective planning
-machine knowledge base in my AI.
-\begin{figure}[bth]
-\begin{align*}
-\text{Cox and Raja's Ground Level } &{\approx} \text{ Reactive Layers} \\
-\text{Cox and Raja's Object Level } &{\approx} \text{ Deliberative Layer} \\
-\text{Cox and Raja's Meta-Level }   &{\approx} \text{ Reflective Layer}
-\end{align*}
-\caption{The lower levels of Cox and Raja's metareasoning model mapped
-  to the Emotion Machine cognitive architecture presented in this
-  thesis.}
-\label{figure:metareasoning_as_reflective_order_notation}
-\end{figure}
-\autoref{figure:metareasoning_as_reflective_order_notation} shows how
-Cox and Raja's levels map to the Emotion Machine cognitive
-architecture presented in this thesis.  Here they explain what happens
-when the object level fails in either the creation or execution of a
-plan:
-\begin{quote}
-When reasoning fails at some task, it may involve the explanation of
-the causal contributions of failure and the diagnosis of the
-object-level reasoning process.
-\end{quote}
-Cox and Raja explain how debugging causal models of the reasoning
-process itself is a form of meta-level reasoning, or reflective layer
-of thinking.  My model has a separate distinct class of resource
-activation hypotheses for the separate layers of deliberative and
-reflective thinking, so learning physical causal models is a distinct
-activity from reflectively learning deliberative thinking causal
-models.  The implementation demonstrates how two distinct layers of
-hypothetical inference models allow not only learning to act but also
-learning to think about acting.
+%% A good precedent for reflective debugging responses to catalogs of
+%% failures is ``HACKER,'' one of the first reflective planning and
+%% debugging models, written by \cite{sussman:1973}.  [complete]
+
+%% \section{Propagators}
+
+%% \cite{radul_and_sussman:2009} describe an object called a \emph{cell}
+%% that is closely related to the knowledge dependencies depicted in
+%% {\mbox{\autoref{figure:dependency_traces}}}.  These cells can be
+%% connected by dependency sets that specify functions that derive new
+%% knowledge from the dependencies, as well as, functions for merging the
+%% collected knowledge in cells.  Collections of Radul and Sussman's
+%% cells are called a \emph{propagator}.  The knowledge dependencies in
+%% this model can be thought of as a type of propagator.  The combination
+%% of a propagator model of knowledge maintenance with a reflective
+%% organization is described as future research in
+%% \autoref{chapter:future}.
+%% %\begin{figure}
+%% %\center
+%% %\includegraphics[width=10cm]{gfx/dependency_traces}
+%% %\caption{Dependency traces as propagator cells.}
+%% %\label{figure:propogators_dependency_traces}
+%% %\end{figure}
 

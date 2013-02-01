@@ -93,11 +93,61 @@ processor.  The block address is an integer that is a block index into
 the given memory pool.  A block size of one byte has been used for the
 examples presented in this dissertation.
 
+\section{Package Manager}
 
+The SALS programming language allows compiling and running computer
+programs that consist of many thousands of lines of code.  For
+example, the examples presented in this dissertation depend on loading
+154 packages, which are composed of over 30,000 lines of code that are
+written in the SALS low-level Lisp-like programming language.  The
+SALS programming language includes a package manager in order to
+organize dependencies within this codebase.  In addition to a
+low-level Lisp-like codebase of packages, the SALS virtual machine has
+the ability to load packages that contain optimized routines that are
+composed of compiled machine code.  Machine code extensions to the
+SALS virtual machine are written in the C programming language.  The C
+codebase that compiles to this machine code totals over 150,000 lines
+of C code.  The following is a declaration of a package definition in
+the SALS programming language that helps to organize these different
+types of dependencies within the SALS codebase:
+\begin{samepage}
+\begin{Verbatim}
+  [defpackage semantic_knowledge_base
+    :packages          [equals_hash
+                        forgetful_event_stream
+                        semantic_realm
+                        semantic_causal_event
+                        semantic_relationship_key
+                        semantic_frame
+                        semantic_object
+                        semantic_event]
+    :sources           ['semantic_knowledge_base-core.sals']
+    :dynamic_libraries ['libf2e_semantic_knowledge_base.so']]
+\end{Verbatim}
+\end{samepage}
+The ``defpackage'' expression in the SALS programming language means
+``define package.''  The first argument to the defpackage expression
+is the name of the package to be defined, ``semantic knowledge base''
+in this case.  The remaining arguments to the defpackage expression
+are optional and three such arguments are shown in this example: (1)
+``packages,'' (2) ``sources,'' and (3) ``dynamic libraries.''  The
+``packages'' optional argument specifies a list of other packages that
+must be loaded before this package is loaded.  The ``sources''
+optional argument specifies a list of SALS low-level Lisp-like
+programming language files that are to be loaded when this package is
+loaded.  The ``dynamic libraries'' optional argument specifies a list
+of files that contain machine code extensions that should be loaded
+into the SALS virtual machine when this package is loaded.
 
-
-
-
+Every package and machine code extension to the SALS virtual machine
+and programming language performs ``causal reflective tracing'' on
+each concurrently executing process.  The following sections describe
+examples of different uses of the causal reflective tracing features
+that have been implemented throughout the SALS virtual machine and its
+extensions.  At the end of this chapter I will describe one high-level
+package in the SALS programming language that is key to the
+asynchronous rule-learning algorithm presented in
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
 
 \section{Causal Reflective Tracing}
 
@@ -697,4 +747,5 @@ out-> []
   support in the concept's hypothesis space.}
 \label{figure:concept_version_space_hypothetical_support}
 \end{figure}
+
 

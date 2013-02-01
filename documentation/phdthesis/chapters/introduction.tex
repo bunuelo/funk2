@@ -44,49 +44,58 @@ learner should monitor the state of the first layer learner.
 The four contributions of this thesis are:
 \begin{enumerate}
 \item \emph{Emotion Machine Cognitive Architecture}: A computational
-  implementation of the the bottom four layers the ``Emotion Machine''
-  theory of mind described by \cite[]{minsky:2006}.  My implementation
-  contains a physical simulation that is controlled by a deliberative
-  physical object-level reasoning layer with another reflective
-  meta-level reasoning layer that learns to control the first-order
-  problem solving resources.  The architectural primitives include
-  resources that are organized into agencies that are organized into
-  layers.  The implementation includes five layers that will be
-  described: (1) built-in reactive thinking, (2) learned reacting
-  thinking, (3) deliberative thinking, (4) reflective thinking, and
-  (5) super-reflective thinking.
-\item \emph{Learning from ``Being Told'' Natural Language Plans}: The
-  architecture includes the capability to interpret natural language
-  commands by using analogies to natural language plans that it
-  already knows.  In this case, ``being told'' simply means that a
-  natural language plan is programmed into the AI.  Successfully
-  interpretting a natural language expression results in a compiled
-  program that is ready for execution.  More can be learned from the
-  plan by imagining executing the resulting compiled program, such as
-  guesses as to what goals the plan can be used to accomplish.
+  implementation of the the bottom four layers of the ``Emotion
+  Machine'' six-layered theory of mind \cite[]{minsky:2006}.  The
+  implementation contains a physical simulation that is controlled by
+  a deliberative physical object-level reasoning layer with another
+  reflective meta-level reasoning layer that learns to control the
+  first-order problem solving resources.  The architectural primitives
+  include resources that are organized into agencies that are
+  organized into layers.  The implementation includes five layers that
+  will be described: (1) built-in reactive thinking, (2) learned
+  reacting thinking, (3) deliberative thinking, (4) reflective
+  thinking, and (5) super-reflective thinking.  The implementation
+  leaves self-reflective and self-conscious layers of the Emotion
+  Machine theory as future extensions of this research.
+\item \emph{Learning from Being Told Natural Language Plans}: The
+  implementation includes the ability to interpret and imagine
+  executing natural language commands by using analogies to natural
+  language plans that it already knows.  In this case, ``being told''
+  means that a natural language plan is programmed into the AI by the
+  user.  Successfully interpretting and imagining the execution of a
+  natural language expression results in a compiled program that is
+  ready for execution as well as a collection of guesses as to what
+  the effects of the plan may be.  These guesses are based on what
+  partial states the plan checks for in the control domain as well as
+  rules learned from previous executions of similar actions in the
+  past.
 \item \emph{Learning Asynchronously from Experience}: Learning from
-  ``being told'' simply gives the system new ideas for plans, while
-  learning from experience gives the system better expectations for
-  what those plans will actually end up doing when they are executed.
-  Learning from experience is executed concurrently and asynchronously
-  with the currently executing plan.  The learning algorithm receives
-  a stream of frame mutation trace events from the currently executing
-  plan in order to learn abstract causal rule-based models.  In this
-  way, effects of physical and mental actions are learned through
+  ``being told'' simply gives the system new ambiguous natural
+  language ideas for plans, while learning from experience gives the
+  system better expectations for what those plans will actually end up
+  doing when they are interpretted, imagined and executed.  Many types
+  of failures can occur when interpretting, imagining and actually
+  executing ambiguous natural language plans.  These experiences of
+  different types of failures inform reflective learning algorithms to
+  subsequently predict these types of plan failures.  Learning from
+  experience is executed concurrently and asynchronously with the
+  currently executing plan.  The learning algorithm receives a stream
+  of frame mutation trace events from the currently executing plan in
+  order to learn abstract causal rule-based models.  In this way,
+  effects of physical and mental actions are learned through
   experience without slowing down the primary plan execution speed.
   Learning from experience allows learning to predict the effects of
   deliberative and reflective natural language plans for action.
 \item \emph{Virtual Machine and Programming Language}: A concurrent
-  and parallel virtual machine and lisp-like programming language
-  provide the foundation upon which all of the other contributions
-  have been implemented.  The virtual machine includes native
-  procedural tracing features that facilitate the automatic monitoring
-  and control of many concurrently executing tasks.  The virtual
-  machine takes advantage of multiple CPU and multiple-core CPU
-  hardware configurations.  The programming language is a bytecode
+  and parallel virtual machine and low-level Lisp-like programming
+  language provide the foundation upon which all of the above
+  contributions have been implemented.  The virtual machine includes
+  native procedural tracing features that facilitate the automatic
+  monitoring and control of many concurrently executing tasks.  The
+  virtual machine takes advantage of multiple CPU and multiple-core
+  CPU hardware configurations.  The programming language is a bytecode
   compiled language and all code for all contributions are open
-  source, MIT License, and available for download (see
-  {\mbox{\autoref{appendix:the_code}}}).
+  source.
 \end{enumerate}
 
 \section{A Story of Reflective Learning}
@@ -97,16 +106,16 @@ thinking without thinking about thinking about something.''  Following
 this advice, consider the simple physical block stacking world,
 depicted in {\autoref{figure:introduction_example_problem_domain}},
 which is similar to the ``Blocks World'' planning domain
-{\cite[]{winograd:1970}}.  Now, consider that the robot arm in this
-simple scenario is a deliberative (non-reflective) AI that wants to
+{\cite[]{winograd:1970}}.  Imagine that the robot arm in this simple
+scenario is a deliberative (non-reflective) AI that wants to
 accomplish the deliberative goal of a block being on a block.  This AI
 has the capability of learning both from experience as well as from
-``being told'' knowledge.  The deliberative AI has ``been told'' a
-number of natural language plans for how to pick up and move around
-blocks in this problem domain.  What types of thoughts might be going
-through the mind of this deliberative block stacking AI?  The
-following story might be what this type of deliberative AI would be
-thinking in this block stacking domain:
+being told knowledge.  The deliberative AI has been told a number of
+natural language plans for how to pick up and move around blocks in
+this problem domain.  What types of thoughts might be going through
+the mind of this deliberative block stacking AI?  The following story
+might be what this type of deliberative AI would be thinking in this
+block stacking domain:
 \begin{quote}
   I want to accomplish the deliberative goal of a block being on a
   block.  I must choose how to physically act.  I have a number of
@@ -152,13 +161,13 @@ about plans for physical action:
   deliberative action.  I am focused on my most recently learned
   reflective plan, which is called, ``Find and execute a recently
   learned plan to accomplish my goals.''  I choose to imagine the
-  effects on my deliberative knowledge of the various possible
-  interpretations of this underspecified natural language plan.  I can
-  adapt other analogous plans to interpret this one, and I imagine
-  that at least one interpretation will not lead to any deliberative
-  plans having any execution failures, so I choose to execute this
-  reflective plan to ``find and execute a recently learned plan to
-  accomplish my goals.''
+  effects of the various possible interpretations of this
+  underspecified natural language plan on my deliberative knowledge.
+  I can adapt other analogous plans to interpret this one, and I
+  imagine that at least one interpretation will not lead to any
+  deliberative plans having any execution failures, so I choose to
+  execute this reflective plan to ``find and execute a recently
+  learned plan to accomplish my goals.''
 \end{quote}
 At this point in the story, the AI has decided on a plan of
 deliberative action.  Notice that this story is very similar to the
@@ -169,12 +178,12 @@ accomplish my goals'' plan is an implementation of a planning
 algorithm within the natural planning language itself.  The fact that
 the deliberative planning algorithm is written in the reflective
 planning language is one key aspect to the recursive nature of this
-approach to reflective learning.  The AI has a number of reflective
-plans for how to deliberatively plan, the method that the AI chose in
-this case tries to find a plan that it has ``been told'' most
-recently.  So, the AI begins executing this reflective plan, which
-becomes the deliberative planning process that tries to find a plan
-for acting in the physical problem domain:
+approach to reflective learning and control.  The reflective AI has a
+number of reflective plans for how to deliberatively plan, the method
+that the AI chose in this case tries to find a plan that it has been
+told most recently.  So, the AI begins executing this reflective plan,
+which becomes the deliberative planning process that tries to find a
+plan for acting in the physical problem domain:
 \begin{quote}
   I will try interpretting and imagining the physical effects of my
   most recently learned plan for physical action, ``stack a cube on a

@@ -3,13 +3,24 @@
 \label{chapter:related_models}
 %************************************************
 
+The term reflection is a commonly used word in computer science and
+AI.  The idea is extremely simple and is a modelling contribution of
+this dissertation, but because of its simplicity, it is a widely
+applicable idea.  In fact, \cite{maes:1987,maes:1988} distinguishes
+over 30 different types of ``computational reflection,'' grounded in
+the computer science literature.  The type of computational reflection
+that is introduced in this dissertation is not included in Maes'
+overview, although it is based on many of the forms of computational
+reflection that Maes describes, i.e. procedural reflection, type
+reflection, and frame reflection.
+
 The SALS AI has been inspired by a previously implemented Emotion
 Machine cognitive architecture called ``EM-ONE'' \cite[]{singh:2005b}.
 EM-ONE implements reflective thinking using a commonsense narrative
 representation based on an Allegro Prolog extension of Allegro Lisp.
 The EM-ONE architecture is a ``critic-selector'' model of problem
 solving
-\cite[]{singh:2002a,singh:2004,singh:2005a,singh:2005b,minsky:2006,morgan:2009}.
+\cite[]{sussman:1973,singh:2002a,singh:2004,singh:2005a,singh:2005b,minsky:2006,morgan:2009}.
 Knowledge in the EM-ONE architecture is divided into three domains:
 (1) physical, (2) social, and (3) mental.  The EM-ONE AI controls a
 physical simulation that contains two one-armed robots that can work
@@ -117,62 +128,128 @@ Metacognition Ground Level &${\approx}$ &Emotion Machine Learned Reactive Layer 
 \end{table}
 \autoref{table:computational_metacognition_as_reflective_order_notation}
 shows how the levels of computational metacognition map to the Emotion
-Machine cognitive architecture presented in this dissertation.  The
-Emotion Machine theory makes a distinction between layers of
-self-reflective knowledge and reflective knowledge that is not clearly
-defined in the metacognitive theory.  The Emotion Machine theory
-describes how humans think of themselves in terms of different
-subpersonalities that depend on the current context and gives a short
-list as examples of common subpersonalities.
-\cite{minsky:2006} begins his representation of ``selves'' as
-analogous to how one might think of others:
-\begin{quote}
-How do people construct their Self-models?  We'll start by asking
-simpler questions about how we describe our aquaintances.  Thus, when
-Charles tries to think about his friend Joan, he might begin by
-describing some of her characteristics.  These could include his ideas
-about: the appearance of Joan's body and face, the range and qualities
-of her abilities, her motives, goals, aversions, and tastes, the ways
-in which she is disposed to behave, her various roles in the social
-world.
-\end{quote}
-{\mbox{\autoref{figure:emotion_machine_multiple_models_of_self}}}
-shows a few examples of different subpersonalities or ``selves'' that
-a person may use to think in different contexts.
-\begin{figure}
-\centering
-\includegraphics[width=8cm]{gfx/emotion_machine_multiple_models_of_self}
-\caption{Multiple models of self.}
-\label{figure:emotion_machine_multiple_models_of_self}
-\end{figure}
+Machine cognitive architecture presented in this dissertation.
+
+\section{Meta-planning and Meta-Plan Recognition}
+
+\cite{wilensky:1981} describes ``meta-planning'' as representing and
+using knowledge about planning in problem solving and natural language
+understanding domains.  He describes ``PAM,'' a story understanding
+system, and ``PANDORA,'' a story understanding and problem solving
+system, that both use higher-level goals and plans that he calls
+``meta-goals'' and ``meta-plans.''  The basic goals and plans in
+PANDORA are analogous to the goals and plans in the SALS deliberative
+planning layer, while the meta-goals and meta-plans are analogous to
+the goals and plans in the SALS reflective planning layer.  Wilensky
+describes story understanding as a form of inverse planning or plan
+recognition.  In this sense, a planning system is given a set of goals
+that are used to generate a sequence of actions that accomplish the
+goals, while a story understanding system is given a sequence of
+actions that are used to generate a set of goals that explain those
+actions.  Wilensky emphasizes that both story understanding and
+planning require representations of meta-goals and meta-plans in order
+to reason about common types of human thinking.  Wilensky gives the
+following two example story understanding problems:
+\begin{packed_enumerate}
+\item{John was in a hurry to get to Las Vegas, but he noticed that
+  there were a lot of cops around so he stuck to the speed limit.}
+\item{John was eating dinner when he noticed that a thief was trying
+  to break into his house.  After he finished his dessert, John called
+  the police.}
+\end{packed_enumerate}
+In Wilensky's first example, John is understood to have two goals: (1)
+to get to Las Vegas as quickly as possible, and (2) to avoid getting a
+ticket.  Wilensky's reasoning system recognizes that these two goals
+conflict and that John has pursued the meta-goal of resolving goal
+conflicts.  Because getting a ticket has more negative value than the
+positive value of getting to Las Vegas quickly, it understands that
+the goal of speeding is abandoned due to pursuing this meta-goal.  In
+the second story, Wilensky's reasoning system recognizes that John has
+made an unintelligent decision to continue eating his dessert while
+someone is robbing his house.  In terms of meta-goals, Wilensky's
+system recognizes that John did not have the meta-goal to delay
+pursuing a less valuable goal in light of the presence of a new more
+valuable goal.  So, Wilensky's system is able to perform meta-planning
+and meta-plan recognition, which are both future research goals for
+the SALS architecture.  There are a few key differences between the
+SALS architecture and PANDORA:
+\begin{packed_enumerate}
+\item{Meta-goals and goals in PANDORA are considered the same type of
+  knowledge and are stored in the same knowledge base that is reasoned
+  about by one monolithic planner, while the SALS AI keeps these
+  categorically different types of knowledge separated into
+  hierarchical layers of different knowledge bases and types of
+  planning processes.}
+\item{Because PANDORA is not connected to an external problem domain,
+  while the SALS AI responds to the various types of plan failures
+  that result from executing plans, such as physical expectation
+  failures.}
+\item{PANDORA only learns from ``being told'' knowledge, while the
+  SALS AI learns from both ``being told'' natural language plans as
+  well as from the ``experience'' of executing these plans.}
+\end{packed_enumerate}
+
+%\section{Meta-AQUA Story Understanding}
+
+
+
+%% \section{Meta-management}
+
+%% Varieties of Meta-cognition in Natural and Artificial Systems
+%% \cite[]{sloman:2011}.
+
+%% \begin{quote}
+%% One implication of the generalisation to biological phenomena (and
+%% human-like robots) is that the ``ground level'' ... may include
+%% arbitrarily complex physical and social environments.  In humans,
+%% while awake, there are sensors and effectors continuously coupled to
+%% the environment: i.e. the coupling does not alternate between being on
+%% and off while more central processes analyze sensory inputs or decide
+%% what to do. Consequently, instead of an ``action-perception cycle,''
+%% we need an architecture with concurrent processes of many kinds, which
+%% can interact with one another. (Even a single-cpu computer can support
+%% concurrent enduring processes because, while the cpu is shared, the
+%% majority of the state of each process endures in memory.
+%% \end{quote}
+
+%% \section{Massively Multithreaded Programming}
+
+%% Optimization principles and application performance evaluation of a
+%% multithreaded GPU using CUDA \cite[]{ryoo:2008}.
+
+
+
+
+
+
 
 \section{Optimality in Metacognition}
 
-Artificial intelligence researchers often approach problem solving
-from the perspective of theories of ``rationality'' from the fields of
-decision theory and economics.  From this perspective, rationality
-requires the AI to decide upon optimal actions with respect to the
-values or costs of its goals and activities.  In the basic
-formulation, different actions have different costs and the optimal
-decision is the decision that minimizes this cost over some time
-period, possibly an infinite horizon.  In simple domains, the solution
-to a problem of optimal control can be specified in closed form
-\cite[]{bertsekas:1995}.  In complex domains, optimal decision making
-requires intractable computations to be performed, and approximate or
-``satisficing'' solutions to problems become necessary
-\cite[]{simon:1957,simon:1982}.  \cite{good:1971} describes a decision
-making problem that includes costs for acting as well as costs for
-decision making that he calls ``type II rationality,'' a type of
-metacognition.  \cite{zilberstein:2008} describes ``optimal
-metareasoning'' as an approach to developing a formalism for
-evaluating the performance of a problem solver that is performing type
-II rationality.  Optimal metacognition does not imply that the object
-level problem solver is optimal but instead that the meta-level
-problem solver is optimal.  In ``bounded optimality'' the object level
-problem solver has certain trade-offs, such as solution quality versus
-time, that can be optimally manipulated by the meta-level problem
-solver \cite[]{russell:1991}.  \cite{zilberstein:2008} describes
-bounded optimality:
+AI researchers often approach problem solving from the perspective of
+theories of ``rationality'' from the fields of decision theory and
+economics.  From this perspective, rationality requires the AI to
+decide upon optimal actions with respect to the values or costs of its
+goals and activities.  In the basic formulation, different actions
+have different costs and the optimal decision is the decision that
+minimizes this cost over some time period, possibly an infinite
+horizon.  In simple domains, the solution to a problem of optimal
+control can be specified in closed form \cite[]{bertsekas:1995}.  In
+complex domains, optimal decision making requires intractable
+computations to be performed, and approximate or ``satisficing''
+solutions to problems become necessary \cite[]{simon:1957,simon:1982}.
+\cite{good:1971} describes a decision making problem that includes
+costs for acting as well as costs for decision making that he calls
+``type II rationality,'' a type of metacognition.
+\cite{zilberstein:2008} describes ``optimal metareasoning'' as an
+approach to developing a formalism for evaluating the performance of a
+problem solver that is performing type II rationality.  Optimal
+metacognition does not imply that the object level problem solver is
+optimal but instead that the meta-level problem solver is optimal.  In
+``bounded optimality'' the object level problem solver has certain
+trade-offs, such as solution quality versus time, that can be
+optimally manipulated by the meta-level problem solver
+\cite[]{russell:1991}.  \cite{zilberstein:2008} describes bounded
+optimality:
 \begin{quote}
 This approach marks a shift from optimization over actions to
 optimization over programs.  The program is bounded optimal for a
@@ -182,38 +259,34 @@ least as high as that of all other programs for the device.  When the
 space of programs is finite, one can certainly argue that a bounded
 optimal solution exists.  Finding it, however, could be very hard.
 \end{quote}
+While the SALS AI is neither an optimal problem solver nor an optimal
+meta-level problem solver, the field of optimal problem solving does
+have the attractive feature that there is an objective metric of
+performance for all problem solving algorithms when viewed through the
+lens of optimality.  There are a few key differences between most
+optimal meta-planning algorithms and the SALS AI:
+\begin{packed_enumerate}
+\item{Optimal metacognitive algorithms only learn from ``experience,''
+  while the SALS AI learns both from ``being told'' natural language
+  plans as well as from the ``experience'' of executing these plans.}
+\item{Optimal metacognitive algorithms tend to only consider simple
+  control parameters of an object-level algorithm, such as the
+  allocated execution time for a contract or anytime algorithm, while
+  the SALS AI considers all possible programs that implement
+  object-level reasoning.}
+\end{packed_enumerate}
+While the SALS AI does not currently have an objective performance
+metric, it is interesting to consider how the field of bounded
+rationality could benefit from ``being told'' deliberative and
+reflective natural language plans as a method of more quickly
+searching the space of all possible planning programs.
 
-
-\section{Meta-planning}
-
-``Meta-planning: Representing and using knowledge about planning in
-problem solving and natural language understanding''
-\cite[]{wilensky:1981}.
-
-leads into Mike's work on story understanding and meta-aqua.
-
-\section{Reflection in Computer Science}
-
-The term reflection is a commonly used word in computer science and
-AI.  The idea is extremely simple and is a modelling contribution of
-this dissertation, but because of its simplicity, it is a widely
-applicable idea.  In fact, \cite{maes:1987,maes:1988} distinguishes over 30
-different types of ``computational reflection,'' grounded in the
-computer science literature.  The type of computational reflection
-that is introduced in this dissertation is not included in Maes'
-overview, although it is based on many of the forms of computational
-reflection that Maes describes, i.e. procedural reflection, type
-reflection, and frame reflection.
-
-\section{Massively Multithreaded Programming}
-
-Optimization principles and application performance evaluation of a
-multithreaded GPU using CUDA \cite[]{ryoo:2008}.
-
-
-
-
-
+%% \cite{horvitz:1988} describes bounded rationality as 
+%% The bounded optimality approach to metacognition is primarily focused
+%% on allocating computational resources to improve the ground
+%% performance of the object level algorithm in the problem domain.  If
+%% the object level problem solving algorithm is specified as an
+%% ``anytime'' algorithm, meaning that .
 
 
 

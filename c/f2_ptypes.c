@@ -282,8 +282,8 @@ f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value)
   return nil;
 }
 
-boolean_t __ptypes__creation_cause_enabled = boolean__false;
-boolean_t __ptypes__creation_fiber_enabled = boolean__false;
+boolean_t __ptypes__creation_cause_enabled = boolean__true;
+boolean_t __ptypes__creation_fiber_enabled = boolean__true;
 
 // integer
 

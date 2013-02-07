@@ -19,7 +19,7 @@
 
 [defpackage semantic_goal
   :documentation        'Basic knowledge for dealing with keeping track of information about physical relationship event goals.'
-   :packages            [semantic_object
+   :packages            [semantic_reflective_object
 			 semantic_event]
     :sources            ['semantic_goal-core.fu2']
      :dynamic_libraries ['libf2e_semantic_goal.so']]

@@ -22,21 +22,22 @@
 #ifndef F2__EXTENSION__SEMANTIC_GOAL__H
 #define F2__EXTENSION__SEMANTIC_GOAL__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_reflective_object/semantic_reflective_object.h"
 #include "../semantic_event/semantic_event.h"
 
+// semantic_goal
 
-f2ptr     raw__semantic_goal__type_create      (f2ptr cause, f2ptr this, f2ptr semantic_realm);
-f2ptr     raw__semantic_goal__new              (f2ptr cause, f2ptr semantic_realm);
-f2ptr      f2__semantic_goal__new              (f2ptr cause, f2ptr semantic_realm);
-boolean_t raw__semantic_goal__is_type          (f2ptr cause, f2ptr thing);
-f2ptr      f2__semantic_goal__is_type          (f2ptr cause, f2ptr thing);
-f2ptr     raw__semantic_goal__type             (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_goal__type             (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_goal__is_occurring     (f2ptr cause, f2ptr this);
-f2ptr      f2__semantic_goal__is_occurring     (f2ptr cause, f2ptr this);
-f2ptr     raw__semantic_goal__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
-f2ptr      f2__semantic_goal__is_occurring__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr     raw__semantic_goal__type_create       (f2ptr cause, f2ptr this, f2ptr semantic_realm);
+f2ptr     raw__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm);
+f2ptr      f2__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm);
+boolean_t raw__semantic_goal__is_type           (f2ptr cause, f2ptr thing);
+f2ptr      f2__semantic_goal__is_type           (f2ptr cause, f2ptr thing);
+f2ptr     raw__semantic_goal__type              (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_goal__type              (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_goal__partial_state     (f2ptr cause, f2ptr this);
+f2ptr      f2__semantic_goal__partial_state     (f2ptr cause, f2ptr this);
+f2ptr     raw__semantic_goal__partial_state__set(f2ptr cause, f2ptr this, f2ptr that);
+f2ptr      f2__semantic_goal__partial_state__set(f2ptr cause, f2ptr this, f2ptr that);
 
 // **
 

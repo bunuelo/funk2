@@ -435,8 +435,14 @@
 		      [defplan 'test I want a cube to be on a pyramid'
 			[plan-call [plan 'I want a cube to be on a pyramid']]]
 		      
+		      [defplan 'test I want a pyramid to be on a cube'
+			[plan-call [plan 'I want a pyramid to be on a cube']]]
+		      
 		      [defplan 'test want a pyramid to be on a cube'
 			[plan-call [plan 'want a pyramid to be on a cube']]]
+		      
+		      [defplan 'test want a cube to be on a pyramid'
+			[plan-call [plan 'want a cube to be on a pyramid']]]
 		      
 		      [defplan 'test initialize goals'
 			[plan-call [plan 'want a block to be on a block']]]

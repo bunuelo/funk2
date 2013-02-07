@@ -519,9 +519,9 @@
 		      [defplan 'me to want a planner to be focusing on a plan that has failed'
 			:matches ['me to want [? partial_state]']
 			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
-			  [property planner property planner_type reflective
-				    relation positive_goal
-				    [plan-call [plan [? partial_state]]]]]
+			  [relationship planner property planner_type reflective
+					relation positive_goal
+					goal property partial_state [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'I want a planner to be focusing on a plan that has failed'
 			:matches ['I want [? partial_state]']
@@ -532,9 +532,9 @@
 			:matches ['me to avoid [? subject] being focused [? preposition]']
 			 :frame [[subject     'a planner']
 				 [preposition 'on a plan that has failed']]
-			  [property planner property planner_type reflective
-				    relation negative_goal
-				    [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+			  [relationship planner property planner_type reflective
+					relation negative_goal
+					goal property partial_state [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
 		      
 		      [defplan 'I am avoiding a planner being focused on a plan that has failed'
 			:matches['I am avoiding [? subject] being [? preposition]']

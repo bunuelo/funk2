@@ -24,28 +24,31 @@
 
 // semantic_goal
 
-f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr partial_state) {
+f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr partial_state) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_goal"));
   }
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
+  f2ptr phenomenal_name = assert_value(f2__stringlist__concat(cause, f2list2__new(cause,
+										  new__string(cause, "goal_"),
+										  f2__exp__as__string(cause, partial_state))));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "goal"));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "partial_state"), partial_state);
   return this;
 }
 
-f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr partial_state) {
+f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr partial_state) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_goal__type_create(cause, this, semantic_realm, phenomenal_name, partial_state));
+  assert_value(raw__semantic_goal__type_create(cause, this, semantic_realm, partial_state));
   return this;
 }
 
-f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr phenomenal_name, f2ptr partial_state) {
+f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr partial_state) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_goal__new(cause, semantic_realm, phenomenal_name, partial_state);
+  return raw__semantic_goal__new(cause, semantic_realm, partial_state);
 }
-export_cefunk3(semantic_goal__new, semantic_realm, phenomenal_name, partial_state, 0, "Returns a new semantic_goal object.");
+export_cefunk2(semantic_goal__new, semantic_realm, partial_state, 0, "Returns a new semantic_goal object.");
 
 
 boolean_t raw__semantic_goal__is_type(f2ptr cause, f2ptr thing) {

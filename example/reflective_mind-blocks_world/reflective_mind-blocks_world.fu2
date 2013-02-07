@@ -436,9 +436,9 @@
 			[plan-call [plan 'want a pyramid to be on a cube']]
 			[plan-call [plan 'want a cube to be on a cube']]
 			[plan-call [plan 'find a recent plan to acheive one of my goals']]
-			[call-below 'register plan currently in focus']]
+			[call-below 'register plan currently in focus']
 			[plan-call [plan 'find a recent plan to acheive one of my goals']]
-			[call-below 'register another plan currently in focus']]
+			[call-below 'add a plan before the beginning of plan currently in focus']
 			[call-below 'execute plan in focus']]
 		      
 		      [defplan 'test go after a cube to be on a pyramid'

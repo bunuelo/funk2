@@ -121,32 +121,36 @@
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have positive_goal_phenomenal_name_ptypehash_mutex lock]
     [if [not [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[prog [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_partial_state]
-	      [semantic-add [get this semantic_planner] positive_goal semantic_partial_state-phenomenal_name]]]
+	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
+	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
+	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]]]
     [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have positive_goal_phenomenal_name_ptypehash_mutex lock]
-    [if [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]
-	[prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
-	      [semantic-remove [get this semantic_planner] positive_goal semantic_partial_state-phenomenal_name]]]
+    [let [[semantic_goal [have positive_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
+      [if semantic_goal
+	  [prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
+		[semantic-remove [get this semantic_planner] positive_goal semantic_goal]]]]
     [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute add_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have negative_goal_phenomenal_name_ptypehash_mutex lock]
     [if [not [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[prog [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_partial_state]
-	      [semantic-add [get this semantic_planner] negative_goal semantic_partial_state-phenomenal_name]]]
+	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
+	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
+	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]]]
     [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have negative_goal_phenomenal_name_ptypehash_mutex lock]
-    [if [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]
-	[prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
-	      [semantic-remove [get this semantic_planner] negative_goal semantic_partial_state-phenomenal_name]]]
+    [let [[semantic_goal [have negative_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
+      [if semantic_goal
+	  [prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
+		[semantic-remove [get this semantic_planner] negative_goal semantic_goal]]]]
     [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
@@ -330,6 +334,7 @@
 			    is-me
 			    t
 			    nil
+			    goal partial_state
 			    planner positive_goal negative_goal focus_plan planner_type deliberative reflective
 			    plan has_been_imagined imagined_complete_failure executed_complete_failure hypothesized_to_cause_partial_state]]]
 	    [= knowledge_symbol_set_initialized t]]]

@@ -139,8 +139,13 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_first_positive_goal
 		  [funk []
-			[let [[first_positive_goal [first [get [get this mental_layer] positive_goals]]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [get first_positive_goal phenomenal_name] '".']
+			[let* [[positive_goals      [get [get this mental_layer] positive_goals]]
+			       [first_positive_goal [if positive_goals
+							[first positive_goals]
+						      nil]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [if first_positive_goal
+																  [get first_positive_goal phenomenal_name]
+																nil] '".']
 			  [set [get [get this agency] semantic_planner] focus_goal first_positive_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -156,8 +161,13 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_last_positive_goal
 		  [funk []
-			[let [[last_positive_goal [first [reverse [get [get this mental_layer] positive_goals]]]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [get last_positive_goal phenomenal_name] '".']
+			[let* [[positive_goals     [get [get this mental_layer] positive_goals]]
+			       [last_positive_goal [if positive_goals
+						       [first [reverse positive_goals]]
+						     nil]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [if last_positive_goal
+																 [get last_positive_goal phenomenal_name]
+															       nil] '".']
 			  [set [get [get this agency] semantic_planner] focus_goal last_positive_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -173,8 +183,13 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_first_negative_goal
 		  [funk []
-			[let [[first_negative_goal [first [get [get this mental_layer] negative_goals]]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first negative goal, "' [get first_negative_goal phenomenal_name] '".']
+			[let* [[negative_goals      [get [get this mental_layer] negative_goals]]
+			       [first_negative_goal [if negative_goals
+							[first negative_goals]
+						      nil]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first negative goal, "' [if first_negative_goal
+																  [get first_negative_goal phenomenal_name]
+																nil] '".']
 			  [set [get [get this agency] semantic_planner] focus_goal first_negative_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -190,8 +205,13 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_last_negative_goal
 		  [funk []
-			[let [[last_negative_goal [first [reverse [get [get this mental_layer] negative_goals]]]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last negative goal, "' [get last_negative_goal phenomenal_name] '".']
+			[let* [[negative_goals     [get [get this mental_layer] negative_goals]]
+			       [last_negative_goal [if negative_goals
+						       [first [reverse negative_goals]]
+						     nil]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last negative goal, "' [if last_negative_goal
+																 [get last_negative_goal phenomenal_name]
+															       nil] '".']
 			  [set [get [get this agency] semantic_planner] focus_goal last_negative_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]

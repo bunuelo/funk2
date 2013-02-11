@@ -58,39 +58,39 @@ the bytecode threads that execute in the SALS virtual machine.  In
 this way, each SALS fiber can be assigned to a specific hyperthread in
 the target hardware platform.  In order to prevent local cache misses
 for on-chip caches, the SALS virtual machine has a separate memory
-pool allocated for each of the SALS virtual processors.  So, for the
-Intel Core i7 CPU that has 4 cores and 2 hyperthreads per core, 8
-memory pools are allocated when the SALS virtual machine is created.
-Also, a major bottleneck in systems with large numbers of processors
-and cores are mutual exclusion or ``mutex'' locks that protect shared
-resources.  The SALS virtual machine avoids all mutexes in the memory
-layer by using these separate dedicated memory pools for each
-hyperthread in each CPU core for memory allocation and concurrent
-garbage collection.  Mutexes are provided in the SALS architecture but
-low-level memory allocation and collection can operate at full-speed
-without any mutex locks for low-level memory operations.
+pool allocated for each of the SALS virtual processors.  So, for CPUs
+that has 4 cores and 2 hyperthreads per core, 8 memory pools are
+allocated when the SALS virtual machine is created.  Also, a major
+bottleneck in systems with large numbers of processors and cores are
+mutual exclusion or ``mutex'' locks that protect shared resources.
+The SALS virtual machine avoids all mutexes in the memory layer by
+using these separate dedicated memory pools for each hyperthread in
+each CPU core for memory allocation and concurrent garbage collection.
+Mutexes are provided in the SALS architecture but low-level memory
+allocation and collection can operate at full-speed without any mutex
+locks for low-level memory operations.
 {\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
 example of how SALS allocates virtual processors for a hardware
-configuration with two Intel Core i7 processors, each having four
-cores and each core having two hyperthreads.  Each hyperthread is
-organized into a binary tree structure that is used in order to
-calculate distances between hardware hyperthreads.  This binary tree
-distance metric is used to dynamically distribute fiber loads across
-hyperthreaded CPU cores in order to attempt to utilize as much on-chip
-CPU cache as possible.
+configuration with two processors, each having four cores and each
+core having two hyperthreads.  Each hyperthread is organized into a
+binary tree structure that is used in order to calculate distances
+between hardware hyperthreads.  This binary tree distance metric is
+used to dynamically distribute fiber loads across hyperthreaded CPU
+cores in order to attempt to utilize as much on-chip CPU cache as
+possible.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/cpu_core_hyperthread_distances}
 \caption[An example of how SALS allocates virtual processors for a
-  hardware configuration with two Intel Core i7 processors.]{An
-  example of how SALS allocates virtual processors (VP) for a hardware
-  configuration with two Intel Core i7 processors, each having four
-  cores and each core having two hyperthreads (HT).  Each hyperthread
-  is organized into a binary tree structure that is used in order to
-  calculate distances between hardware hyperthreads.  This binary tree
-  distance metric is used to dynamically distribute fiber loads across
-  hyperthreaded CPU cores in order to attempt to utilize as much
-  on-chip CPU cache as possible.}
+  hardware configuration with two multithreaded multicore
+  processors.]{An example of how SALS allocates virtual processors
+  (VP) for a hardware configuration with two multithreaded multicore
+  processors, each having four cores and each core having two
+  hyperthreads (HT).  Each hyperthread is organized into a binary tree
+  structure that is used in order to calculate distances between
+  hardware hyperthreads.  This binary tree distance metric is used to
+  dynamically distribute fiber loads across hyperthreaded CPU cores in
+  order to attempt to utilize as much on-chip CPU cache as possible.}
 \label{figure:cpu_core_hyperthread_distances}
 \end{figure}
 

@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -29,10 +29,12 @@
 							       reflective_type_knowledge_base_name
 							       reflective_resource_knowledge_base_name
 							       trace_knowledge_base_names
-							       [positive_goal_phenomenal_name_ptypehash_mutex [new mutex]]
+							       [positive_goal_mutex                           [new mutex]]
 							       [positive_goal_phenomenal_name_ptypehash       [new ptypehash]]
-							       [negative_goal_phenomenal_name_ptypehash_mutex [new mutex]]
+							       [reverse_positive_goal_linked_list             nil]
+							       [negative_goal_mutex                           [new mutex]]
 							       [negative_goal_phenomenal_name_ptypehash       [new ptypehash]]
+							       [reverse_negative_goal_linked_list             nil]
 							       [action_natural_language_symbol_ptypehash      [new ptypehash]]
 							       [semantic_plan_phenomenal_name_frame           [new frame]]
 							       [knowledge_symbol_set_initialized_mutex        [new mutex]]
@@ -119,39 +121,39 @@
 
 [deftypefunk plan_mental_layer execute add_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex lock]
+    [have positive_goal_mutex lock]
     [if [not [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
+	[let [[semantic_goal [new semantic_goal t [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
 	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have positive_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex lock]
+    [have positive_goal_mutex lock]
     [let [[semantic_goal [have positive_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
       [if semantic_goal
 	  [prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
 		[semantic-remove [get this semantic_planner] positive_goal semantic_goal]]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have positive_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute add_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex lock]
+    [have negative_goal_mutex lock]
     [if [not [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
+	[let [[semantic_goal [new semantic_goal nil [get [get this mind] semantic_realm] semantic_partial_state-phenomenal_name]]]
 	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have negative_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex lock]
+    [have negative_goal_mutex lock]
     [let [[semantic_goal [have negative_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
       [if semantic_goal
 	  [prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
 		[semantic-remove [get this semantic_planner] negative_goal semantic_goal]]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have negative_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']

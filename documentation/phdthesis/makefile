@@ -6,6 +6,7 @@ phdthesis.pdf: \
   bibliography.bib \
   frontbackmatter/dirtytitlepage.tex \
   frontbackmatter/abstract_front.tex \
+  frontbackmatter/abstract_raw.tex \
   frontbackmatter/reader_signature_page_01.tex \
   frontbackmatter/reader_signature_page_02.tex \
   frontbackmatter/reader_signature_page_03.tex \
@@ -157,6 +158,7 @@ phdthesis.pdf: \
   gfx/relationship_partial_state_abstraction_remove.pdf \
   gfx/relationship_partial_state_abstraction_add.pdf \
   gfx/hypothesis_version_space_set_divisions.pdf \
+  gfx/cpu_core_hyperthread_distances.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

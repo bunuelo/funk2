@@ -5,11 +5,11 @@ The SALS AI is a cognitive architecture that is constructed on a
 virtual machine and low-level Lisp-like programming language that
 implicitly supports the tracing of results and behavior of the system
 to the data and through the procedures that produced those results and
-that behavior.  Good traces make a system accountable and help to
-enable the analysis of success and failure, and thus enhancing the
-ability of the system to learn from mistakes.  The low-level Lisp-like
-programming language is not to be confused with the high-level natural
-programming language presented in
+that behavior \cite[]{morgan:2009}.  Good traces make a system
+accountable and help to enable the analysis of success and failure,
+and thus enhancing the ability of the system to learn from mistakes.
+The low-level Lisp-like programming language is not to be confused
+with the high-level natural programming language presented in
 {\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}},
 where I have described many of the high-level natural language
 interpretation and imagination failures that the SALS AI is able to
@@ -23,45 +23,89 @@ future natural language plan executions through learning refined
 causal models of the hypothetical imagined effects of natural language
 plans.  In this chapter, I will describe the details of the low-level
 Lisp-like language that enable these types of asynchronous learning
-algorithms.
-
-The SALS architecture provides for general parallelism and
-concurrency, while supporting the automatic collection of audit trails
-for all processes, including the processes that analyze audit trails.
-The native support of a low-level Lisp-like language in the SALS
-architecture allows, as in machine language, a program to be data that
-can be easily manipulated by a program, making it easier for a user or
-an automatic procedure to read, edit, and write programs as they are
-debugged.  Large concurrent and parallel systems are often difficult
-to build and debug because of the complex causal interactions between
-all of the different processes.  For this reason, every parallel task
-in SALS has an associated ``cause'' object.  If any task creates a new
-parallel task, then a new cause object is created for the child task
-with a parent cause object reference.  Cause objects represent
-meta-information about a task, such as in what way a compiled
-procedure should be executed, which can be used for causally
-organizing the effects of groups of parallel tasks, controlling and
-monitoring the occurrence of any type of event through any of the
-procedural abstraction barriers of the SALS virtual machine.
+algorithms.  The SALS virtual machine provides for general parallelism
+and concurrency, while supporting the automatic collection of audit
+trails for all processes, including the processes that analyze audit
+trails.  The native support of a low-level Lisp-like language in the
+SALS architecture allows, as in machine language, a program to be data
+that can be easily manipulated by a program, making it easier for a
+user or an automatic procedure to read, edit, and write programs as
+they are debugged.  Large concurrent and parallel systems are often
+difficult to build and debug because of the complex causal
+interactions between all of the different processes.  For this reason,
+every parallel task in SALS has an associated ``cause'' object.  If
+any task creates a new parallel task, then a new cause object is
+created for the child task with a parent cause object reference.
+Cause objects represent meta-information about a task, such as in what
+way a compiled procedure should be executed, which can be used for
+causally organizing the effects of groups of parallel tasks,
+controlling and monitoring the occurrence of any type of event through
+any of the procedural abstraction barriers of the SALS virtual
+machine.
 
 \section{Virtual Machine}
 
-The SALS virtual machine is built to take advantage of modern
-supercomputer hardware with multiple CPUs and multiple cores per CPU.
+The SALS virtual machine is designed to take advantage of the next
+generation of multithreaded and multicore CPUs, so that new reflective
+algorithms will more easily be designed to exhibit ``strong'' scaling
+properties \cite[]{sodan:2010}.  In order to allow the development of
+these new types of algorithms, the SALS virtual machine includes an
+explicit representation, called a ``virtual processor'' object, that
+represents each hyperthread in each core of each CPU in the target
+hardware platform.  Each of the SALS virtual processors is used in
+order to organize the scheduling of SALS ``fiber'' objects, which are
+the bytecode threads that execute in the SALS virtual machine.  In
+this way, each SALS fiber can be assigned to a specific hyperthread in
+the target hardware platform.  In order to prevent local cache misses
+for on-chip caches, the SALS virtual machine has a separate memory
+pool allocated for each of the SALS virtual processors.  So, for the
+Intel Core i7 CPU that has 4 cores and 2 hyperthreads per core, 8
+memory pools are allocated when the SALS virtual machine is created.
+Also, a major bottleneck in systems with large numbers of processors
+and cores are mutual exclusion or ``mutex'' locks that protect shared
+resources.  The SALS virtual machine avoids all mutexes in the memory
+layer by using these separate dedicated memory pools for each
+hyperthread in each CPU core for memory allocation and concurrent
+garbage collection.  Mutexes are provided in the SALS architecture but
+low-level memory allocation and collection can operate at full-speed
+without any mutex locks for low-level memory operations.
+{\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
+example of how SALS allocates virtual processors for a hardware
+configuration with two Intel Core i7 processors, each having four
+cores and each core having two hyperthreads.  Each hyperthread is
+organized into a binary tree structure that is used in order to
+calculate distances between hardware hyperthreads.  This binary tree
+distance metric is used to dynamically distribute fiber loads across
+hyperthreaded CPU cores in order to attempt to utilize as much on-chip
+CPU cache as possible.
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{gfx/cpu_core_hyperthread_distances}
+\caption[An example of how SALS allocates virtual processors for a
+  hardware configuration with two Intel Core i7 processors.]{An
+  example of how SALS allocates virtual processors (VP) for a hardware
+  configuration with two Intel Core i7 processors, each having four
+  cores and each core having two hyperthreads (HT).  Each hyperthread
+  is organized into a binary tree structure that is used in order to
+  calculate distances between hardware hyperthreads.  This binary tree
+  distance metric is used to dynamically distribute fiber loads across
+  hyperthreaded CPU cores in order to attempt to utilize as much
+  on-chip CPU cache as possible.}
+\label{figure:cpu_core_hyperthread_distances}
+\end{figure}
+
 The SALS virtual machine has been tested with a maximum of 32
 processors and 128 gigabytes of RAM on the Nautilus supercomputer at
 the National Institute for Computational Sciences.  However, most of
 the examples presented in this dissertation have been executed on a
-personal computer with only eight CPU cores.  The SALS memory system
-is organized with a separate memory allocation pool for each
-concurrent processor in order to avoid mutual exclusion locks for
-memory allocation.  The SALS virtual machine has a tricolor garbage
-collection algorithm that takes advantage of parallelizing work in
-concurrent processors.  Memory pointers in the SALS memory system are
-64-bit integers that have space reserved for three hierarchical memory
-tiers: (1) ``computer identity,'' (2) ``pool index,'' (3) and ``block
-address.''  {\mbox{\autoref{table:sals_memory_pointer}}} shows the bit
-allocation within the 64-bit SALS memory pointer.
+personal computer with only 4 CPU cores and 2 hyperthreads per core.
+The SALS virtual machine has a tricolor garbage collection algorithm
+that takes advantage of parallelizing work in concurrent processors.
+Memory pointers in the SALS memory system are 64-bit integers that
+have space reserved for three hierarchical memory tiers: (1)
+``computer identity,'' (2) ``pool index,'' (3) and ``block address.''
+{\mbox{\autoref{table:sals_memory_pointer}}} shows the bit allocation
+within the 64-bit SALS memory pointer.
 \begin{table}
 \centering
 \begin{tabular}{|l|l|l|}
@@ -88,10 +132,12 @@ other running SALS architectures allows it to potentially scale to
 take advantage of the hardware on multiple networked computers to
 solve one large shared-memory problem.  The pool index is an integer
 reference into an array of memory pools on the given computer.  On any
-given computer, one memory pool is allocated for each concurrent
-processor.  The block address is an integer that is a block index into
-the given memory pool.  A block size of one byte has been used for the
-examples presented in this dissertation.
+given computer, one memory pool is allocated for each hyperthread in
+each CPU core on each CPU.  The block address is an integer that is a
+block index into the given memory pool.  A block size of one byte has
+been used for the examples presented in this dissertation but larger
+block sizes have been tested and can be used if more memory must be
+addressed.
 
 \section{Package Manager}
 
@@ -108,8 +154,8 @@ composed of compiled machine code.  Machine code extensions to the
 SALS virtual machine are written in the C programming language.  The C
 codebase that compiles to this machine code totals over 150,000 lines
 of C code.  The following is a declaration of a package definition in
-the SALS programming language that helps to organize these different
-types of dependencies within the SALS codebase:
+the SALS low-level Lisp-like language that helps to organize these
+different types of dependencies within the SALS codebase:
 \begin{samepage}
 \begin{Verbatim}
   [defpackage semantic_knowledge_base
@@ -145,8 +191,9 @@ each concurrently executing process.  The following sections describe
 examples of different uses of the causal reflective tracing features
 that have been implemented throughout the SALS virtual machine and its
 extensions.  At the end of this chapter I will describe one high-level
-package in the SALS programming language that is key to the
-asynchronous rule-learning algorithm presented in
+package in the SALS programming language that performs the conjunctive
+hypothesis space version space rule-learning algorithm, which is key
+to the asynchronous experiential learning presented in
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
 
 \section{Causal Reflective Tracing}
@@ -587,7 +634,7 @@ event-in-causal-focus
 \label{figure:reflective_event_causal_tracing}
 \end{figure}
 
-\section{Conjunctive Hypothesis Space Concept Learning}
+\section{Conjunctive Hypothesis Version Space Rule-Learning}
 
 The SALS architecture includes a ``version space''
 \cite[]{mitchell:1997} hypothesis rule-learning algorithm.  A use of

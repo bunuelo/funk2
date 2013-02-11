@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -24,7 +24,7 @@
 
 // semantic_goal
 
-f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr partial_state) {
+f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state) {
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_goal"));
   }
@@ -34,21 +34,23 @@ f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
 														assert_value(f2__exp__as__string(cause, partial_state))))));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "goal"));
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"),      positive);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "partial_state"), partial_state);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "previous"),      nil);
   return this;
 }
 
-f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr partial_state) {
+f2ptr raw__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state) {
   f2ptr this = assert_value(f2__frame__new(cause, nil));
-  assert_value(raw__semantic_goal__type_create(cause, this, semantic_realm, partial_state));
+  assert_value(raw__semantic_goal__type_create(cause, this, semantic_realm, positive, partial_state));
   return this;
 }
 
-f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr partial_state) {
+f2ptr f2__semantic_goal__new(f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state) {
   assert_argument_type(semantic_realm, semantic_realm);
-  return raw__semantic_goal__new(cause, semantic_realm, partial_state);
+  return raw__semantic_goal__new(cause, semantic_realm, positive, partial_state);
 }
-export_cefunk2(semantic_goal__new, semantic_realm, partial_state, 0, "Returns a new semantic_goal object.");
+export_cefunk3(semantic_goal__new, semantic_realm, positive, partial_state, 0, "Returns a new semantic_goal object.");
 
 
 boolean_t raw__semantic_goal__is_type(f2ptr cause, f2ptr thing) {
@@ -84,6 +86,28 @@ f2ptr f2__semantic_goal__type(f2ptr cause, f2ptr this) {
 export_cefunk1(semantic_goal__type, thing, 0, "Returns the specific type of object that this semantic_goal is.");
 
 
+f2ptr raw__semantic_goal__positive(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"));
+}
+
+f2ptr f2__semantic_goal__positive(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_goal, this);
+  return raw__semantic_goal__positive(cause, this);
+}
+export_cefunk1(semantic_goal__positive, this, 0, "");
+
+
+f2ptr raw__semantic_goal__positive__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"), that);
+}
+
+f2ptr f2__semantic_goal__positive__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_goal, this);
+  return raw__semantic_goal__positive__set(cause, this, that);
+}
+export_cefunk2(semantic_goal__positive__set, this, that, 0, "");
+
+
 f2ptr raw__semantic_goal__partial_state(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "partial_state"));
 }
@@ -106,13 +130,40 @@ f2ptr f2__semantic_goal__partial_state__set(f2ptr cause, f2ptr this, f2ptr that)
 export_cefunk2(semantic_goal__partial_state__set, this, that, 0, "");
 
 
+f2ptr raw__semantic_goal__previous(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"));
+}
+
+f2ptr f2__semantic_goal__previous(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_goal, this);
+  return raw__semantic_goal__previous(cause, this);
+}
+export_cefunk1(semantic_goal__previous, this, 0, "");
+
+
+f2ptr raw__semantic_goal__previous__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"), that);
+}
+
+f2ptr f2__semantic_goal__previous__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_goal, this);
+  return raw__semantic_goal__previous__set(cause, this, that);
+}
+export_cefunk2(semantic_goal__previous__set, this, that, 0, "");
+
+
+
 f2ptr f2__semantic_goal_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_reflective_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),           f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "positive"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__positive")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "positive"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__positive__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "partial_state"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__partial_state")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "partial_state"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__partial_state__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "previous"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__previous")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, "previous"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_goal"), new__symbol(cause, "semantic_goal__previous__set")));}
   return this;
 }
 

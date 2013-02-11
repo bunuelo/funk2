@@ -1,11 +1,14 @@
-%\pdfbookmark[1]{Abstract}{Abstract}
+\thispagestyle{empty}
+
 \begingroup
 \let\clearpage\relax
 \let\cleardoublepage\relax
 \let\cleardoublepage\relax
 
-%\begin{addmargin}[1cm]{-2cm}
-\begin{center}
+\begin{addmargin}[1cm]{-3cm}
+\begin{samepage}
+{\centering
+
     \begingroup
         \color{Maroon}
         {\Large\textsc{\myTitle}}
@@ -34,40 +37,23 @@ Massachusetts Institute of Technology
 
 February 2013
 
-\vspace{-4mm}
-
-\end{center}
+%\begin{flushleft}
 
 %\end{addmargin}
 
-\chapter*{Abstract}
+}
 
-A system built on a layered reflective cognitive architecture presents
-many novel and difficult software engineering problems.  Some of these
-problems can be ameliorated by erecting the system on a substrate that
-implicitly supports tracing of results and behavior of the system to
-the data and through the procedures that produced those results and
-that behavior.  Good traces make the system accountable; it enables
-the analysis of success and failure, and thus enhances the ability to
-learn from mistakes.
+{\Large{\textsc{abstract}}}
 
-This constructed substrate provides for general parallelism and
-concurrency, while supporting the automatic collection of audit trails
-for all processes, including the processes that analyze audit trails.
-My system natively supports a Lisp-like language.  In such a language,
-as in machine language, a program is data that can be easily
-manipulated by a program, making it easier for a user or an automatic
-procedure to read, edit, and write programs as they are debugged.
+\begin{tabular}{p{12cm}}
+\hline\\
+\end{tabular}
 
-Here, I build and demonstrate an example of reflective problem solving
-in a block building problem domain.  In my demonstration an AI model
-can learn from experience of success or failure.  The AI not only
-learns about physical activities but also reflectively learns about
-thinking activities, refining and learning the utility of built-in
-knowledge.  Procedurally traced memory can be used to assign credit to
-those thinking processes that are responsible for the failure,
-facilitating learning how to better plan for these types of problems
-in the future.
+%\chapter*{Abstract}
+
+{\small
+\input{frontbackmatter/abstract_raw}
+}
 
 \vspace{4mm}
 \noindent
@@ -76,7 +62,66 @@ Thesis Supervisor:&Joseph Paradiso, PhD\\
                   &Associate Professor of Media Arts and Sciences
 \end{tabular}
 
+%\end{flushleft}
+\end{samepage}
+
+\end{addmargin}
 \endgroup
 
-\vfill
+%% %\pdfbookmark[1]{Abstract}{Abstract}
+%% \begingroup
+%% \let\clearpage\relax
+%% \let\cleardoublepage\relax
+%% \let\cleardoublepage\relax
+
+%% %\begin{addmargin}[1cm]{-2cm}
+%% \begin{center}
+%%     \begingroup
+%%         \color{Maroon}
+%%         {\Large\textsc{\myTitle}}
+%%         %\myTitle
+%%     \endgroup
+
+%%     by
+
+%%     \myName
+
+%%     \vspace{4mm}
+
+%%  Submitted to the program in Media Arts and Sciences, School of
+%%  Architecture and Planning in partial fulfullment of the requirements
+%%  for the degree of
+
+%%     \vspace{2mm}
+
+%% Doctor of Philosophy in Media Arts and Sciences
+
+%% at the
+
+%% Massachusetts Institute of Technology
+
+%%     \vspace{2mm}
+
+%% February 2013
+
+%% \vspace{-4mm}
+
+%% \end{center}
+
+%% %\end{addmargin}
+
+%% \chapter*{Abstract}
+
+%% \input{frontbackmatter/abstract_raw}
+
+%% \vspace{4mm}
+%% \noindent
+%% \begin{tabular}{rl}
+%% Thesis Supervisor:&Joseph Paradiso, PhD\\
+%%                   &Associate Professor of Media Arts and Sciences
+%% \end{tabular}
+
+%% \endgroup
+
+%% \vfill
 

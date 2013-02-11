@@ -148,6 +148,16 @@
 			  [= iter_goal prev_goal]]]]]]]]
     [have positive_goal_mutex unlock]]]
 
+[deftypefunk plan_mental_layer get positive_goals []
+  [have positive_goal_mutex lock]
+  [let [[goal reverse_positive_goal_linked_list]
+	[seq  nil]]
+    [while goal
+      [= seq [cons goal seq]]
+      [= goal [get goal previous]]]
+    [have positive_goal_mutex unlock]
+    seq]]
+
 [deftypefunk plan_mental_layer execute add_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have negative_goal_mutex lock]
@@ -176,6 +186,16 @@
 		      [if iter_goal
 			  [= iter_goal prev_goal]]]]]]]]
     [have negative_goal_mutex unlock]]]
+
+[deftypefunk plan_mental_layer get negative_goals []
+  [have negative_goal_mutex lock]
+  [let [[goal reverse_negative_goal_linked_list]
+	[seq  nil]]
+    [while goal
+      [= seq [cons goal seq]]
+      [= goal [get goal previous]]]
+    [have negative_goal_mutex unlock]
+    seq]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']

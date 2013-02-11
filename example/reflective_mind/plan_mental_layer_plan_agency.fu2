@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -37,6 +37,10 @@
        [= trace_knowledge_base_names          initial-trace_knowledge_base_names]
        [parog [have this add_resource [new plan_mental_layer_focus_on_first_plan_resource             resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_last_plan_resource              resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_first_positive_goal_resource    resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_last_positive_goal_resource     resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_first_negative_goal_resource    resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_last_negative_goal_resource     resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_object_resource                 resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource           resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource resource_knowledge_base_name trace_knowledge_base_names]]
@@ -60,6 +64,10 @@
 [deftypefunk plan_mental_layer_plan_agency execute create_builtin_actions []
   [parog [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_first_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_last_plan]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_first_positive_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_last_positive_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_first_negative_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_last_negative_goal]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan execute_plan_in_focus]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan imagine_executing_plan_in_focus]]
@@ -122,6 +130,74 @@
 
 [deftypefunk plan_mental_layer_focus_on_last_plan_resource get as-natural_language_string []
   'focus on last plan']
+
+
+'plan_mental_layer_focus_on_first_positive_goal_resource'
+
+[deframe plan_mental_layer_focus_on_first_positive_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_first_positive_goal
+		  [funk []
+			[let [[first_positive_goal [first [get [get this mental_layer] positive_goals]]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [get first_positive_goal phenomenal_name] '".']
+			  [set [get [get this agency] semantic_planner] focus_goal first_positive_goal]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_first_positive_goal_resource get as-natural_language_string []
+  'focus on first positive goal']
+
+
+'plan_mental_layer_focus_on_last_positive_goal_resource'
+
+[deframe plan_mental_layer_focus_on_last_positive_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_last_positive_goal
+		  [funk []
+			[let [[last_positive_goal [first [reverse [get [get this mental_layer] positive_goals]]]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [get last_positive_goal phenomenal_name] '".']
+			  [set [get [get this agency] semantic_planner] focus_goal last_positive_goal]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_last_positive_goal_resource get as-natural_language_string []
+  'focus on last positive goal']
+
+
+'plan_mental_layer_focus_on_first_negative_goal_resource'
+
+[deframe plan_mental_layer_focus_on_first_negative_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_first_negative_goal
+		  [funk []
+			[let [[first_negative_goal [first [get [get this mental_layer] negative_goals]]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first negative goal, "' [get first_negative_goal phenomenal_name] '".']
+			  [set [get [get this agency] semantic_planner] focus_goal first_negative_goal]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_first_negative_goal_resource get as-natural_language_string []
+  'focus on first negative goal']
+
+
+'plan_mental_layer_focus_on_last_negative_goal_resource'
+
+[deframe plan_mental_layer_focus_on_last_negative_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_last_negative_goal
+		  [funk []
+			[let [[last_negative_goal [first [reverse [get [get this mental_layer] negative_goals]]]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last negative goal, "' [get last_negative_goal phenomenal_name] '".']
+			  [set [get [get this agency] semantic_planner] focus_goal last_negative_goal]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_last_negative_goal_resource get as-natural_language_string []
+  'focus on last negative goal']
 
 
 'plan_mental_layer_focus_on_object_resource'

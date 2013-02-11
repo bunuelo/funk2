@@ -36,7 +36,7 @@ f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "goal"));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"),      positive);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "partial_state"), partial_state);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "previous"),      nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),      nil);
   return this;
 }
 

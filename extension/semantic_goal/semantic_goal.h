@@ -27,9 +27,9 @@
 
 // semantic_goal
 
-f2ptr     raw__semantic_goal__type_create       (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state);
-f2ptr     raw__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state);
-f2ptr      f2__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state);
+f2ptr     raw__semantic_goal__type_create       (f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state_phenomenal_name, f2ptr partial_state);
+f2ptr     raw__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state_phenomenal_name, f2ptr partial_state);
+f2ptr      f2__semantic_goal__new               (f2ptr cause, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state_phenomenal_name, f2ptr partial_state);
 boolean_t raw__semantic_goal__is_type           (f2ptr cause, f2ptr thing);
 f2ptr      f2__semantic_goal__is_type           (f2ptr cause, f2ptr thing);
 f2ptr     raw__semantic_goal__type              (f2ptr cause, f2ptr this);

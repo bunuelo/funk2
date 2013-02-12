@@ -36,7 +36,7 @@ f2ptr raw__semantic_plan_object__type_create(f2ptr cause, f2ptr this, f2ptr sema
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "imagined_complete_failure"), nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "executed_complete_failure"), nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_plan_operator"),       nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_hypothesized_to_cause_partial_state"),       nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "start_hypothesized_to_cause_goal"),       nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "previous"),                  nil);
   return this;
 }
@@ -271,37 +271,37 @@ export_cefunk2(semantic_plan_object__previous__set, this, that, 0, "");
 
 
 
-f2ptr raw__semantic_plan_object__hypothesized_to_cause_partial_state__lookup_set(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_partial_state"));
+f2ptr raw__semantic_plan_object__hypothesized_to_cause_goal__lookup_set(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_goal"));
 }
 
-f2ptr f2__semantic_plan_object__hypothesized_to_cause_partial_state__lookup_set(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_plan_object__hypothesized_to_cause_goal__lookup_set(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__hypothesized_to_cause_partial_state__lookup_set(cause, this);
+  return raw__semantic_plan_object__hypothesized_to_cause_goal__lookup_set(cause, this);
 }
-export_cefunk1(semantic_plan_object__hypothesized_to_cause_partial_state__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
+export_cefunk1(semantic_plan_object__hypothesized_to_cause_goal__lookup_set, this, 0, "Returns the set of ordered_objects that happen after this ordered_object, returns nil if no such set exists.");
 
 
-f2ptr raw__semantic_plan_object__hypothesized_to_cause_partial_state__add(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_partial_state"), that);
+f2ptr raw__semantic_plan_object__hypothesized_to_cause_goal__add(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_goal"), that);
 }
 
-f2ptr f2__semantic_plan_object__hypothesized_to_cause_partial_state__add(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_plan_object__hypothesized_to_cause_goal__add(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__hypothesized_to_cause_partial_state__add(cause, this, that);
+  return raw__semantic_plan_object__hypothesized_to_cause_goal__add(cause, this, that);
 }
-export_cefunk2(semantic_plan_object__hypothesized_to_cause_partial_state__add, this, that, 0, "Adds the given that to happen after this ordered_object.");
+export_cefunk2(semantic_plan_object__hypothesized_to_cause_goal__add, this, that, 0, "Adds the given that to happen after this ordered_object.");
 
 
-f2ptr raw__semantic_plan_object__hypothesized_to_cause_partial_state__remove(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_partial_state"), that);
+f2ptr raw__semantic_plan_object__hypothesized_to_cause_goal__remove(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__remove(cause, this, new__symbol(cause, "property"), new__symbol(cause, "hypothesized_to_cause_goal"), that);
 }
 
-f2ptr f2__semantic_plan_object__hypothesized_to_cause_partial_state__remove(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_plan_object__hypothesized_to_cause_goal__remove(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_plan_object, this);
-  return raw__semantic_plan_object__hypothesized_to_cause_partial_state__remove(cause, this, that);
+  return raw__semantic_plan_object__hypothesized_to_cause_goal__remove(cause, this, that);
 }
-export_cefunk2(semantic_plan_object__hypothesized_to_cause_partial_state__remove, this, that, 0, "Removes the given that to no longer happen after this that.");
+export_cefunk2(semantic_plan_object__hypothesized_to_cause_goal__remove, this, that, 0, "Removes the given that to no longer happen after this that.");
 
 
 
@@ -487,9 +487,9 @@ f2ptr f2__semantic_plan_object__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "start_hypothesized_to_cause_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__start_hypothesized_to_cause_goal__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "previous"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__previous")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "previous"),                         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__previous__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "hypothesized_to_cause_partial_state"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_partial_state__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "hypothesized_to_cause_partial_state"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_partial_state__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "hypothesized_to_cause_partial_state"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_partial_state__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "hypothesized_to_cause_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_goal__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "hypothesized_to_cause_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_goal__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "hypothesized_to_cause_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesized_to_cause_goal__remove")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesis__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesis__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "hypothesis"),                       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_plan_object"), new__symbol(cause, "semantic_plan_object__hypothesis__remove")));}

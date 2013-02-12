@@ -21,3 +21,7 @@
 [defcorefunk semantic_plan_object-core_extension-initialize semantic_plan_object semantic_plan_object__core_extension__initialize]
 
 [semantic_plan_object-core_extension-ping]
+
+
+[deftypefunk semantic_plan_object execute add_hypothesized_to_cause_goal [semantic_goal]
+  [semantic-add semantic_plan_object hypothesized_to_cause_goal semantic_goal]]

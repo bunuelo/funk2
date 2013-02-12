@@ -409,8 +409,8 @@
 		  [funk []
 			[let [[focus_goal [get [get [get this agency] semantic_planner] focus_goal]]]
 			  [if [is-type `semantic_object focus_goal]
-			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] '."']
-			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_goal '."']]
+			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] '.']
+			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_goal '.']]
 			  [set [get [get this agency] semantic_planner] goal_register_a focus_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -429,8 +429,8 @@
 		  [funk []
 			[let [[focus_goal [get [get [get this agency] semantic_planner] focus_goal]]]
 			  [if [is-type `semantic_object focus_goal]
-			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] '."']
-			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_goal '."']]
+			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] '.']
+			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_goal '.']]
 			  [set [get [get this agency] semantic_planner] goal_register_b focus_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -448,7 +448,7 @@
        [construct plan_mental_layer_resource `copy_goal_register_a_to_focus_goal
 		  [funk []
 			[let [[goal_register_a [get [get [get this agency] semantic_planner] goal_register_a]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get goal_register_a phenomenal_name] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get goal_register_a phenomenal_name] '.']
 			  [set [get [get this agency] semantic_planner] focus_goal goal_register_a]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -466,7 +466,7 @@
        [construct plan_mental_layer_resource `copy_goal_register_b_to_focus_goal
 		  [funk []
 			[let [[goal_register_b [get [get [get this agency] semantic_planner] goal_register_b]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get goal_register_b phenomenal_name] '."']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get goal_register_b phenomenal_name] '.']
 			  [set [get [get this agency] semantic_planner] focus_goal goal_register_b]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]

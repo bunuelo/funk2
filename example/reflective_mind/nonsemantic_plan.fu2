@@ -753,7 +753,7 @@
 [deftypefunk nonsemantic_plan get goal_register_a_equals_goal_register_b []
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: goal_register_a_equals_goal_register_b.']
-								     [let [[semantic_planner [get [get this mental_layer] semantic_planner]]]
+								     [let [[semantic_planner [get [get this mental_layer_below] semantic_planner]]]
 								       [let [[goal_register_a [get semantic_planner goal_register_a]]
 									     [goal_register_b [get semantic_planner goal_register_b]]]
 									 [let [[return_value [eq goal_register_a

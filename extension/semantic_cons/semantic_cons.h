@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -22,7 +22,7 @@
 #ifndef F2__EXTENSION__SEMANTIC_CONS__H
 #define F2__EXTENSION__SEMANTIC_CONS__H
 
-#include "../semantic_object/semantic_object.h"
+#include "../semantic_reflective_object/semantic_reflective_object.h"
 
 
 // **

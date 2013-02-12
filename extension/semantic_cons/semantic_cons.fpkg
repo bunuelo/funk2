@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -19,7 +19,7 @@
 
 [defpackage semantic_cons
   :documentation        'Basic knowledge for relationships between two things.'
-   :packages            [semantic_object]
+   :packages            [semantic_reflective_object]
     :sources            ['semantic_cons-core.fu2']
      :dynamic_libraries ['libf2e_semantic_cons.so']]
 

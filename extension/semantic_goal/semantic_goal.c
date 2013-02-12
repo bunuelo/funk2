@@ -31,7 +31,7 @@ f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
   f2ptr phenomenal_name = assert_value(f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause,
 														new__string(cause, "goal_"),
-														assert_value(f2__exp__as__string(cause, partial_state))))));
+														assert_value(f2__exp__as__string(cause, partial_state_phenomenal_name))))));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "goal"));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"),                      positive);

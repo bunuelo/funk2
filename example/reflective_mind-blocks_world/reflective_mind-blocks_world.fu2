@@ -243,13 +243,13 @@
 			  [plan-call [plan 'move until over [? shape]']]
 			  [plan-call [plan 'drop block and wait for block to fall']]]
 		      
-		      [defplan 'goal-register A equals goal-register B'
+		      [defplan 'goal register A equals goal register B'
 			[goal-register-A-equals-goal-register-B]]
 		      
 		      `['tests']
 		      
-		      [defplan 'test goal-register A equals goal-register B'
-			[plan-call [plan 'goal-register A equals goal-register B']]]
+		      [defplan 'test goal register A equals goal register B'
+			[plan-call [plan 'goal register A equals goal register B']]]
 		      
 		      ]]
 	 

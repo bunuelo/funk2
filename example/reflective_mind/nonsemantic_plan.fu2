@@ -750,27 +750,20 @@
 								      nonsemantic_plan_value nonsemantic_plan_value]]]
     result_multiple_possible_values]]
 
-[deftypefunk nonsemantic_plan get goal_register_a_equals_goal_register_b [nonsemantic_plan_value]
+[deftypefunk nonsemantic_plan get goal_register_a_equals_goal_register_b []
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: goal_register_a_equals_goal_register_b.']
-								     [let [[partial_state [cond [[is-type `exact_nonsemantic_plan_value nonsemantic_plan_value] [get nonsemantic_plan_value value]]
-												[t                                                              [error bug_name               `nonsemantic_plan-goal_register_a_equals_goal_register_b-invalid_type
-																				       is_plan_bug            t
-																				       correct_type           `exact_nonsemantic_plan_value
-																				       actual_type            [type nonsemantic_plan_value]
-																				       nonsemantic_plan_value nonsemantic_plan_value]]]]]
-								       [let [[semantic_planner [get [get this mental_layer_below] semantic_planner]]]
-									 [let [[goal_register_a [get semantic_planner goal_register_a]]
-									       [goal_register_b [get semantic_planner goal_register_b]]]
-									   [let [[return_value [eq goal_register_a
-												   goal_register_b]]]
-									     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value return_value]]]]]]]]
+								     [let [[semantic_planner [get [get this mental_layer_below] semantic_planner]]]
+								       [let [[goal_register_a [get semantic_planner goal_register_a]]
+									     [goal_register_b [get semantic_planner goal_register_b]]]
+									 [let [[return_value [eq goal_register_a
+												 goal_register_b]]]
+									   [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value return_value]]]]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining goal_register_a_equals_goal_register_b (both possibilities)']
 								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value t]]
 								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value nil]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-add_plan-invalid_execution_mode
-								      execution_mode         cause-nonsemantic_plan_execution_mode
-								      nonsemantic_plan_value nonsemantic_plan_value]]]
+								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
     result_multiple_possible_values]]
 
 [deftypefunk nonsemantic_plan execute wait_for [semantic_partial_state]

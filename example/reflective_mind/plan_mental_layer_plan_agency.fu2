@@ -49,6 +49,10 @@
 	      [have this add_resource [new plan_mental_layer_register_b_plan_from_focus_resource      resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_register_a_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_register_b_plan_resource        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_goal_register_a_to_focus_goal_resource   resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_goal_register_b_to_focus_goal_resource   resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_goal_to_goal_register_a_resource   resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_goal_to_goal_register_b_resource   resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_next_object_resource            resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_previous_object_resource        resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_next_goal_resource              resource_knowledge_base_name trace_knowledge_base_names]]
@@ -76,6 +80,10 @@
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_execute_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan register_a_plan_from_focus]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan register_b_plan_from_focus]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_goal_register_a_to_focus_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_goal_register_b_to_focus_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_goal_to_goal_register_a]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_goal_to_goal_register_b]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_register_a_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_register_b_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_next_object]]
@@ -320,7 +328,6 @@
   'focus on currently executing plan']
 
 
-
 'plan_mental_layer_register_a_plan_from_focus_resource'
 
 [deframe plan_mental_layer_register_a_plan_from_focus_resource [plan_mental_layer_resource] []
@@ -390,6 +397,80 @@
 
 [deftypefunk plan_mental_layer_focus_on_register_b_plan_resource get as-natural_language_string []
   'focus on other plan I am registering']
+
+
+
+//
+
+'plan_mental_layer_copy_focus_goal_to_goal_register_a_resource'
+
+[deframe plan_mental_layer_copy_focus_goal_to_goal_register_a_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_focus_goal_to_goal_register_a
+		  [funk []
+			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] goal_register_a focus_plan]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_focus_goal_to_goal_register_a_resource get as-natural_language_string []
+  'copy focus goal to goal register A']
+
+
+
+'plan_mental_layer_copy_focus_goal_to_goal_register_b_resource'
+
+[deframe plan_mental_layer_copy_focus_goal_to_goal_register_b_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_focus_goal_to_goal_register_b
+		  [funk []
+			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] goal_register_b focus_plan]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_focus_goal_to_goal_register_b_resource get as-natural_language_string []
+  'copy focus goal to goal register B']
+
+
+
+'plan_mental_layer_copy_goal_register_a_to_focus_goal_resource'
+
+[deframe plan_mental_layer_copy_goal_register_a_to_focus_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_goal_register_a_to_focus_goal
+		  [funk []
+			[let [[goal_register_a [get [get [get this agency] semantic_planner] goal_register_a]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] focus_plan goal_register_a]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_goal_register_a_to_focus_goal_resource get as-natural_language_string []
+  'copy goal register A to focus goal']
+
+
+
+'plan_mental_layer_copy_goal_register_b_to_focus_goal_resource'
+
+[deframe plan_mental_layer_copy_goal_register_b_to_focus_goal_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_goal_register_b_to_focus_goal
+		  [funk []
+			[let [[goal_register_b [get [get [get this agency] semantic_planner] goal_register_b]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] focus_plan goal_register_b]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_goal_register_b_to_focus_goal_resource get as-natural_language_string []
+  'copy goal register B to focus goal']
 
 
 'plan_mental_layer_focus_on_next_object_resource'
@@ -462,11 +543,11 @@
 				    [let [[next_semantic_frame [first [get next_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame next_semantic_frame]
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal focusing on ' [type next_semantic_frame] ': "' [get next_semantic_frame phenomenal_name] '".']
-					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal: next goal is not semantic_frame.  (focus_goal = nil)']]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal: next goal is not semantic_frame.  (focus_goal = ' next_semantic_frame ')']]
 				      [set semantic_planner focus_goal next_semantic_frame]]
 				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal: no next object.  (focus_goal = nil)']
 					[set semantic_planner focus_goal nil]]]]
-			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal: focus_goal is not semantic_frame.']]]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_next_goal warning: focus_goal is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -490,11 +571,11 @@
 				    [let [[previous_semantic_frame [first [get previous_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame previous_semantic_frame]
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal focusing on ' [type previous_semantic_frame] ': "' [get previous_semantic_frame phenomenal_name] '".']
-					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal: previous goal is not semantic_frame (focus_goal = nil).']]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal: previous goal is not semantic_frame.  (focus_goal = ' previous_semantic_frame ')']]
 				      [set semantic_planner focus_goal previous_semantic_frame]]
-				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal: no previous object.']
+				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal: no previous object.  (focus_goal = nil)']
 					[set semantic_planner focus_goal nil]]]]
-			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal: focus_goal is not semantic_frame.']]]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_previous_goal warning: focus_goal is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 

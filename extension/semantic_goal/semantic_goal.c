@@ -22,6 +22,17 @@
 #include "semantic_goal.h"
 
 
+f2ptr f2__semantic_goal__new_phenomenal_name(f2ptr cause, f2ptr positive, f2ptr partial_state_phenomenal_name) {
+  f2ptr positive_string = (positive != nil) ? new__string(cause, "positive") : new__string(cause, "negative");
+  return assert_value(f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list4__new(cause,
+											       new__string(cause, "goal_"),
+											       positive_string,
+											       new__string(cause, "_"),
+											       assert_value(f2__exp__as__string(cause, partial_state_phenomenal_name))))));
+}
+export_cefunk2(semantic_goal__new_phenomenal_name, positive, partial_state_phenomenal_name, 0, "Returns a new semantic_goal-phenomenal_name symbol.");
+
+
 // semantic_goal
 
 f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_realm, f2ptr positive, f2ptr partial_state_phenomenal_name, f2ptr partial_state) {
@@ -29,9 +40,7 @@ f2ptr raw__semantic_goal__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_goal"));
   }
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
-  f2ptr phenomenal_name = assert_value(f2__string__as__symbol(cause, f2__stringlist__concat(cause, f2list2__new(cause,
-														new__string(cause, "goal_"),
-														assert_value(f2__exp__as__string(cause, partial_state_phenomenal_name))))));
+  f2ptr phenomenal_name = assert_value(f2__semantic_goal__new_phenomenal_name(cause, positive, partial_state_phenomenal_name));
   raw__semantic_object__phenomenal_name__set(cause, this, phenomenal_name);
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "goal"));
   raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "positive"),                      positive);

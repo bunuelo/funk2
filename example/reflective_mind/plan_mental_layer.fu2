@@ -29,6 +29,8 @@
 							       reflective_type_knowledge_base_name
 							       reflective_resource_knowledge_base_name
 							       trace_knowledge_base_names
+							       [goal_phenomenal_name_ptypehash_mutex          [new mutex]]
+							       [goal_phenomenal_name_ptypehash                [new ptypehash]]
 							       [positive_goal_mutex                           [new mutex]]
 							       [positive_goal_phenomenal_name_ptypehash       [new ptypehash]]
 							       [reverse_positive_goal_linked_list             nil]
@@ -119,11 +121,24 @@
 [deftypefunk plan_mental_layer get semantic_planner []
   [get [get this agency `plan] semantic_planner]]
 
+[deftypefunk plan_mental_layer execute lookup_goal_by_partial_state [positive partial_state_phenomenal_name partial_state]
+  [let [[goal-phenomenal_name [semantic_goal-new_phenomenal_name positive partial_state_phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex lock]
+    [let [[goal [have goal_phenomenal_name_ptypehash lookup goal-phenomenal_name]]]
+      [if [null goal]
+	  [prog [= goal [new semantic_goal [get [get this mind] semantic_realm] positive partial_state_phenomenal_name partial_state]]
+		[have goal_phenomenal_name_ptypehash add goal-phenomenal_name goal]]]
+      [if [and partial_state
+	       [null [get goal partial_state]]]
+	  [set goal partial_state partial_state]]
+      [have goal_phenomenal_name_ptypehash_mutex unlock]
+      goal]]]
+
 [deftypefunk plan_mental_layer execute add_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have positive_goal_mutex lock]
     [if [not [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] t semantic_partial_state-phenomenal_name semantic_partial_state]]]
+	[let [[semantic_goal [have this lookup_goal_by_partial_state t semantic_partial_state-phenomenal_name semantic_partial_state]]]
 	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]
 	  [set semantic_goal previous reverse_positive_goal_linked_list]
@@ -162,7 +177,7 @@
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have negative_goal_mutex lock]
     [if [not [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[let [[semantic_goal [new semantic_goal [get [get this mind] semantic_realm] nil semantic_partial_state-phenomenal_name semantic_partial_state]]]
+	[let [[semantic_goal [have this lookup_goal_by_partial_state nil semantic_partial_state-phenomenal_name semantic_partial_state]]]
 	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]
 	  [set semantic_goal previous reverse_negative_goal_linked_list]

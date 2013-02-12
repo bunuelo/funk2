@@ -407,9 +407,9 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `copy_focus_goal_to_goal_register_a
 		  [funk []
-			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] goal_register_a focus_plan]]]
+			[let [[focus_goal [get [get [get this agency] semantic_planner] focus_goal]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] ', "' [get [get focus_goal nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] goal_register_a focus_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -425,9 +425,9 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `copy_focus_goal_to_goal_register_b
 		  [funk []
-			[let [[focus_plan [get [get [get this agency] semantic_planner] focus_plan]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_plan phenomenal_name] ', "' [get [get focus_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] goal_register_b focus_plan]]]
+			[let [[focus_goal [get [get [get this agency] semantic_planner] focus_goal]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_goal phenomenal_name] ', "' [get [get focus_goal nonsemantic_plan] as-string] '."']
+			  [set [get [get this agency] semantic_planner] goal_register_b focus_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -445,7 +445,7 @@
 		  [funk []
 			[let [[goal_register_a [get [get [get this agency] semantic_planner] goal_register_a]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_a_plan phenomenal_name] ', "' [get [get register_a_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] focus_plan goal_register_a]]]
+			  [set [get [get this agency] semantic_planner] focus_goal goal_register_a]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -463,7 +463,7 @@
 		  [funk []
 			[let [[goal_register_b [get [get [get this agency] semantic_planner] goal_register_b]]]
 			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_b_plan phenomenal_name] ', "' [get [get register_b_plan nonsemantic_plan] as-string] '."']
-			  [set [get [get this agency] semantic_planner] focus_plan goal_register_b]]]
+			  [set [get [get this agency] semantic_planner] focus_goal goal_register_b]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 

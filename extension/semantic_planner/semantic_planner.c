@@ -38,6 +38,7 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b"),          nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_positive_goal"), nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_negative_goal"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_plan"),          nil);
   return this;
 }
 
@@ -263,6 +264,28 @@ f2ptr f2__semantic_planner__first_negative_goal__set(f2ptr cause, f2ptr this, f2
 export_cefunk2(semantic_planner__first_negative_goal__set, this, that, 0, "");
 
 
+f2ptr raw__semantic_planner__first_plan(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_plan"));
+}
+
+f2ptr f2__semantic_planner__first_plan(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_planner, this);
+  return raw__semantic_planner__first_plan(cause, this);
+}
+export_cefunk1(semantic_planner__first_plan, this, 0, "");
+
+
+f2ptr raw__semantic_planner__first_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_plan"), that);
+}
+
+f2ptr f2__semantic_planner__first_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_planner, this);
+  return raw__semantic_planner__first_plan__set(cause, this, that);
+}
+export_cefunk2(semantic_planner__first_plan__set, this, that, 0, "");
+
+
 f2ptr raw__semantic_planner__positive_goal__lookup_set(f2ptr cause, f2ptr this) {
   return raw__semantic_frame__lookup_set(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "positive_goal"));
 }
@@ -416,6 +439,8 @@ f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "first_positive_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_positive_goal__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "first_negative_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_negative_goal")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "first_negative_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_negative_goal__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "first_plan"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_plan")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "first_plan"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_plan__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__lookup_set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__add")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__remove")));}

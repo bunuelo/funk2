@@ -30,8 +30,8 @@ f2ptr raw__semantic_cons__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
   }
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "cons"));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), car);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"), cdr);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"), car);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"), cdr);
   return this;
 }
 
@@ -82,7 +82,7 @@ export_cefunk1(semantic_cons__type, thing, 0, "Returns the specific type of obje
 
 
 f2ptr raw__semantic_cons__car(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"));
 }
 
 f2ptr f2__semantic_cons__car(f2ptr cause, f2ptr this) {
@@ -93,7 +93,7 @@ export_cefunk1(semantic_cons__car, this, 0, "");
 
 
 f2ptr raw__semantic_cons__car__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), that);
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"), that);
 }
 
 f2ptr f2__semantic_cons__car__set(f2ptr cause, f2ptr this, f2ptr that) {
@@ -104,7 +104,7 @@ export_cefunk2(semantic_cons__car__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_cons__cdr(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"));
 }
 
 f2ptr f2__semantic_cons__cdr(f2ptr cause, f2ptr this) {
@@ -115,7 +115,7 @@ export_cefunk1(semantic_cons__cdr, this, 0, "");
 
 
 f2ptr raw__semantic_cons__cdr__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"), that);
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"), that);
 }
 
 f2ptr f2__semantic_cons__cdr__set(f2ptr cause, f2ptr this, f2ptr that) {

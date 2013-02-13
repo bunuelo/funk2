@@ -55,6 +55,8 @@
 	      [have this add_resource [new plan_mental_layer_copy_focus_goal_to_goal_register_b_resource                       resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_next_object_resource                                     resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_previous_object_resource                                 resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_car_object_resource                                      resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_on_cdr_object_resource                                      resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_next_goal_resource                                       resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_first_hypothesized_to_cause_goal_object_resource         resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_reverse_focus_on_first_hypothesized_to_cause_goal_object_resource resource_knowledge_base_name trace_knowledge_base_names]]
@@ -93,6 +95,8 @@
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan reverse_focus_on_first_hypothesized_to_cause_goal_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_previous_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_next_goal]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_car_object]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_cdr_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_previous_goal]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_plan_add_after]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_plan_add_before]]
@@ -531,6 +535,60 @@
 
 [deftypefunk plan_mental_layer_focus_on_previous_object_resource get as-natural_language_string []
   'focus on previous object']
+
+
+'plan_mental_layer_focus_on_car_object_resource'
+
+[deframe plan_mental_layer_focus_on_car_object_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_car_object
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			[let* [[semantic_planner [get [get this agency] semantic_planner]]
+			       [focus_plan       [get semantic_planner focus_plan]]]
+			  [if [is-type `semantic_frame focus_plan]
+			      [let [[car_semantic_frame_set [have focus_plan lookup_set `relation `car]]]
+				[if [not [null car_semantic_frame_set]]
+				    [let [[car_semantic_frame [first [get car_semantic_frame_set elements]]]]
+				      [if [is-type `semantic_frame car_semantic_frame]
+					  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object focusing on ' [type car_semantic_frame] ': "' [get car_semantic_frame phenomenal_name] '".']
+						[set semantic_planner focus_plan car_semantic_frame]]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: car object is not semantic_frame.']]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: no car object.']]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: focus_plan is not semantic_frame.']]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_car_object_resource get as-natural_language_string []
+  'focus on car object']
+
+
+'plan_mental_layer_focus_on_cdr_object_resource'
+
+[deframe plan_mental_layer_focus_on_cdr_object_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `focus_on_cdr_object
+		  [funk []
+			[terminal_format standard-terminal '\n' [get this as-string] ': here.']
+			[let* [[semantic_planner [get [get this agency] semantic_planner]]
+			       [focus_plan       [get semantic_planner focus_plan]]]
+			  [if [is-type `semantic_frame focus_plan]
+			      [let [[cdr_semantic_frame_set [have focus_plan lookup_set `relation `cdr]]]
+				[if [not [null cdr_semantic_frame_set]]
+				    [let [[cdr_semantic_frame [first [get cdr_semantic_frame_set elements]]]]
+				      [if [is-type `semantic_frame cdr_semantic_frame]
+					  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object focusing on ' [type cdr_semantic_frame] ': "' [get cdr_semantic_frame phenomenal_name] '".']
+						[set semantic_planner focus_plan cdr_semantic_frame]]
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: cdr object is not semantic_frame.']]]
+				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: no cdr object.']]]
+			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: focus_plan is not semantic_frame.']]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_focus_on_cdr_object_resource get as-natural_language_string []
+  'focus on cdr object']
 
 
 'plan_mental_layer_focus_on_next_goal_resource'

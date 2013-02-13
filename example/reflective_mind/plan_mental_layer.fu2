@@ -147,9 +147,9 @@
 	[let [[semantic_goal [have this lookup_goal_by_partial_state t semantic_partial_state-phenomenal_name semantic_partial_state]]]
 	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]
-	  [set semantic_goal previous reverse_positive_goal_linked_list]
-	  [= reverse_positive_goal_linked_list semantic_goal]
-	  ]]
+	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal reverse_positive_goal_linked_list]]]
+	    [have reflective_knowledge_base add_semantic_frame semantic_cons]
+	    [= reverse_positive_goal_linked_list semantic_cons]]]]
     [have positive_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_positive_goal [semantic_partial_state]
@@ -159,23 +159,27 @@
       [if semantic_goal
 	  [prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
 		[semantic-remove [get this semantic_planner] positive_goal semantic_goal]
-		[let [[iter_goal reverse_positive_goal_linked_list]]
-		  [while iter_goal
-		    [let [[prev_goal [get iter_goal previous]]]
-		      [if [eq prev_goal semantic_goal]
-			  [prog [set iter_goal previous [get prev_goal previous]]
-				[= iter_goal nil]]]
-		      [if iter_goal
-			  [= iter_goal prev_goal]]]]]]]]
+		[let [[iter reverse_positive_goal_linked_list]]
+		  [while iter
+		    [let [[semantic_goal [get iter car]]
+			  [prev          [get iter cdr]]]
+		      [let [[prev_semantic_goal [get prev car]]]
+			[if [eq prev_semantic_goal semantic_goal]
+			    [prog [set iter cdr [get prev cdr]]
+				  [have reflective_knowledge_base remove_semantic_frame prev]
+				  [= iter nil]]]]
+		      [if iter
+			  [= iter prev]]]]]]]]
     [have positive_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer get positive_goals []
   [have positive_goal_mutex lock]
-  [let [[goal reverse_positive_goal_linked_list]
+  [let [[iter reverse_positive_goal_linked_list]
 	[seq  nil]]
-    [while goal
-      [= seq [cons goal seq]]
-      [= goal [get goal previous]]]
+    [while iter
+      [let [[semantic_goal [get iter car]]]
+	[= seq [cons semantic_goal seq]]
+	[= goal [get iter cdr]]]]
     [have positive_goal_mutex unlock]
     seq]]
 
@@ -183,12 +187,12 @@
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
     [have negative_goal_mutex lock]
     [if [not [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[let [[semantic_goal [have this lookup_goal_by_partial_state nil semantic_partial_state-phenomenal_name semantic_partial_state]]]
+	[let [[semantic_goal [have this lookup_goal_by_partial_state t semantic_partial_state-phenomenal_name semantic_partial_state]]]
 	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]
-	  [set semantic_goal previous reverse_negative_goal_linked_list]
-	  [= reverse_negative_goal_linked_list semantic_goal]
-	  ]]
+	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal reverse_negative_goal_linked_list]]]
+	    [have reflective_knowledge_base add_semantic_frame semantic_cons]
+	    [= reverse_negative_goal_linked_list semantic_cons]]]]
     [have negative_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_negative_goal [semantic_partial_state]
@@ -198,23 +202,27 @@
       [if semantic_goal
 	  [prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
 		[semantic-remove [get this semantic_planner] negative_goal semantic_goal]
-		[let [[iter_goal reverse_negative_goal_linked_list]]
-		  [while iter_goal
-		    [let [[prev_goal [get iter_goal previous]]]
-		      [if [eq prev_goal semantic_goal]
-			  [prog [set iter_goal previous [get prev_goal previous]]
-				[= iter_goal nil]]]
-		      [if iter_goal
-			  [= iter_goal prev_goal]]]]]]]]
+		[let [[iter reverse_negative_goal_linked_list]]
+		  [while iter
+		    [let [[semantic_goal [get iter car]]
+			  [prev          [get iter cdr]]]
+		      [let [[prev_semantic_goal [get prev car]]]
+			[if [eq prev_semantic_goal semantic_goal]
+			    [prog [set iter cdr [get prev cdr]]
+				  [have reflective_knowledge_base remove_semantic_frame prev]
+				  [= iter nil]]]]
+		      [if iter
+			  [= iter prev]]]]]]]]
     [have negative_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer get negative_goals []
   [have negative_goal_mutex lock]
-  [let [[goal reverse_negative_goal_linked_list]
+  [let [[iter reverse_negative_goal_linked_list]
 	[seq  nil]]
-    [while goal
-      [= seq [cons goal seq]]
-      [= goal [get goal previous]]]
+    [while iter
+      [let [[semantic_goal [get iter car]]]
+	[= seq [cons semantic_goal seq]]
+	[= goal [get iter cdr]]]]
     [have negative_goal_mutex unlock]
     seq]]
 

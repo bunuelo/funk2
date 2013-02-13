@@ -30,15 +30,14 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
   }
   assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
   raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "planner"));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "planner_type"),    nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),    nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "imagine_plan"),    nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_plan"),      nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_goal"),      nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a_plan"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b_plan"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_a"), nil);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_b"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "planner_type"),        nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),        nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "imagine_plan"),        nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_register"),      nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a"),          nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b"),          nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_positive_goal"), nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_negative_goal"), nil);
   return this;
 }
 
@@ -154,136 +153,114 @@ f2ptr f2__semantic_planner__imagine_plan__set(f2ptr cause, f2ptr this, f2ptr tha
 export_cefunk2(semantic_planner__imagine_plan__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_planner__focus_plan(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_plan"));
+f2ptr raw__semantic_planner__focus_register(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_register"));
 }
 
-f2ptr f2__semantic_planner__focus_plan(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_planner__focus_register(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__focus_plan(cause, this);
+  return raw__semantic_planner__focus_register(cause, this);
 }
-export_cefunk1(semantic_planner__focus_plan, this, 0, "");
+export_cefunk1(semantic_planner__focus_register, this, 0, "");
 
 
-f2ptr raw__semantic_planner__focus_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_plan"), that);
+f2ptr raw__semantic_planner__focus_register__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_register"), that);
 }
 
-f2ptr f2__semantic_planner__focus_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_planner__focus_register__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__focus_plan__set(cause, this, that);
+  return raw__semantic_planner__focus_register__set(cause, this, that);
 }
-export_cefunk2(semantic_planner__focus_plan__set, this, that, 0, "");
+export_cefunk2(semantic_planner__focus_register__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_planner__focus_goal(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_goal"));
+f2ptr raw__semantic_planner__register_a(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a"));
 }
 
-f2ptr f2__semantic_planner__focus_goal(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_planner__register_a(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__focus_goal(cause, this);
+  return raw__semantic_planner__register_a(cause, this);
 }
-export_cefunk1(semantic_planner__focus_goal, this, 0, "");
+export_cefunk1(semantic_planner__register_a, this, 0, "");
 
 
-f2ptr raw__semantic_planner__focus_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_goal"), that);
+f2ptr raw__semantic_planner__register_a__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a"), that);
 }
 
-f2ptr f2__semantic_planner__focus_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_planner__register_a__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__focus_goal__set(cause, this, that);
+  return raw__semantic_planner__register_a__set(cause, this, that);
 }
-export_cefunk2(semantic_planner__focus_goal__set, this, that, 0, "");
+export_cefunk2(semantic_planner__register_a__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_planner__register_a_plan(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a_plan"));
+f2ptr raw__semantic_planner__register_b(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b"));
 }
 
-f2ptr f2__semantic_planner__register_a_plan(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_planner__register_b(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__register_a_plan(cause, this);
+  return raw__semantic_planner__register_b(cause, this);
 }
-export_cefunk1(semantic_planner__register_a_plan, this, 0, "");
+export_cefunk1(semantic_planner__register_b, this, 0, "");
 
 
-f2ptr raw__semantic_planner__register_a_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a_plan"), that);
+f2ptr raw__semantic_planner__register_b__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b"), that);
 }
 
-f2ptr f2__semantic_planner__register_a_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_planner__register_b__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__register_a_plan__set(cause, this, that);
+  return raw__semantic_planner__register_b__set(cause, this, that);
 }
-export_cefunk2(semantic_planner__register_a_plan__set, this, that, 0, "");
+export_cefunk2(semantic_planner__register_b__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_planner__register_b_plan(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b_plan"));
+f2ptr raw__semantic_planner__first_positive_goal(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_positive_goal"));
 }
 
-f2ptr f2__semantic_planner__register_b_plan(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_planner__first_positive_goal(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__register_b_plan(cause, this);
+  return raw__semantic_planner__first_positive_goal(cause, this);
 }
-export_cefunk1(semantic_planner__register_b_plan, this, 0, "");
+export_cefunk1(semantic_planner__first_positive_goal, this, 0, "");
 
 
-f2ptr raw__semantic_planner__register_b_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b_plan"), that);
+f2ptr raw__semantic_planner__first_positive_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_positive_goal"), that);
 }
 
-f2ptr f2__semantic_planner__register_b_plan__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_planner__first_positive_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__register_b_plan__set(cause, this, that);
+  return raw__semantic_planner__first_positive_goal__set(cause, this, that);
 }
-export_cefunk2(semantic_planner__register_b_plan__set, this, that, 0, "");
+export_cefunk2(semantic_planner__first_positive_goal__set, this, that, 0, "");
 
 
-f2ptr raw__semantic_planner__goal_register_a(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_a"));
+f2ptr raw__semantic_planner__first_negative_goal(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_negative_goal"));
 }
 
-f2ptr f2__semantic_planner__goal_register_a(f2ptr cause, f2ptr this) {
+f2ptr f2__semantic_planner__first_negative_goal(f2ptr cause, f2ptr this) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__goal_register_a(cause, this);
+  return raw__semantic_planner__first_negative_goal(cause, this);
 }
-export_cefunk1(semantic_planner__goal_register_a, this, 0, "");
+export_cefunk1(semantic_planner__first_negative_goal, this, 0, "");
 
 
-f2ptr raw__semantic_planner__goal_register_a__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_a"), that);
+f2ptr raw__semantic_planner__first_negative_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "first_negative_goal"), that);
 }
 
-f2ptr f2__semantic_planner__goal_register_a__set(f2ptr cause, f2ptr this, f2ptr that) {
+f2ptr f2__semantic_planner__first_negative_goal__set(f2ptr cause, f2ptr this, f2ptr that) {
   assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__goal_register_a__set(cause, this, that);
+  return raw__semantic_planner__first_negative_goal__set(cause, this, that);
 }
-export_cefunk2(semantic_planner__goal_register_a__set, this, that, 0, "");
-
-
-f2ptr raw__semantic_planner__goal_register_b(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_b"));
-}
-
-f2ptr f2__semantic_planner__goal_register_b(f2ptr cause, f2ptr this) {
-  assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__goal_register_b(cause, this);
-}
-export_cefunk1(semantic_planner__goal_register_b, this, 0, "");
-
-
-f2ptr raw__semantic_planner__goal_register_b__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "goal_register_b"), that);
-}
-
-f2ptr f2__semantic_planner__goal_register_b__set(f2ptr cause, f2ptr this, f2ptr that) {
-  assert_argument_type(semantic_planner, this);
-  return raw__semantic_planner__goal_register_b__set(cause, this, that);
-}
-export_cefunk2(semantic_planner__goal_register_b__set, this, that, 0, "");
+export_cefunk2(semantic_planner__first_negative_goal__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_planner__positive_goal__lookup_set(f2ptr cause, f2ptr this) {
@@ -420,39 +397,37 @@ export_cefunk2(semantic_planner__thought__remove, this, that, 0, "");
 
 f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_reflective_object")));
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__new")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__is_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "planner_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "planner_type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "execute_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "execute_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "imagine_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "imagine_plan"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "focus_plan"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_plan")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "focus_plan"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_plan__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "focus_goal"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_goal")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "focus_goal"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_goal__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_a_plan"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a_plan")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "register_a_plan"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a_plan__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_b_plan"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_b_plan")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "register_b_plan"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_b_plan__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "goal_register_a"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__goal_register_a")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "goal_register_a"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__goal_register_a__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "goal_register_b"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__goal_register_b")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "goal_register_b"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__goal_register_b__set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "positive_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "positive_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "positive_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "negative_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "negative_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "negative_goal"),   f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "bug_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "bug_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "bug_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__remove")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "thought"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__lookup_set")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "thought"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__add")));}
-  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "thought"),         f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "new"),                 f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__new")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"),             new__symbol(cause, "is_type"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__is_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "type"),                f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "planner_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "planner_type"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__planner_type__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "execute_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "execute_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__execute_plan__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "imagine_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "imagine_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "focus_register"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_register")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "focus_register"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_register__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_a"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "register_a"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_b"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_b")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "register_b"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_b__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "first_positive_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_positive_goal")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "first_positive_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_positive_goal__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "first_negative_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_negative_goal")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "first_negative_goal"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__first_negative_goal__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "positive_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__positive_goal__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "negative_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "negative_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "negative_goal"),       f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__negative_goal__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "bug_plan"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "bug_plan"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "bug_plan"),            f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__bug_plan__remove")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-lookup_set"), new__symbol(cause, "thought"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__lookup_set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-add"),        new__symbol(cause, "thought"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__add")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "semantic-remove"),     new__symbol(cause, "thought"),             f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__thought__remove")));}
   return this;
 }
 

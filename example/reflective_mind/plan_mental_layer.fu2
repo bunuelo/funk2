@@ -148,7 +148,8 @@
 	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]
 	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal reverse_positive_goal_linked_list]]]
-	    [have reflective_knowledge_base add_semantic_frame semantic_cons]
+	    [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+	      [have reflective_knowledge_base add_semantic_frame semantic_cons]]
 	    [= reverse_positive_goal_linked_list semantic_cons]]]]
     [have positive_goal_mutex unlock]]]
 
@@ -166,7 +167,8 @@
 		      [let [[prev_semantic_goal [get prev car]]]
 			[if [eq prev_semantic_goal semantic_goal]
 			    [prog [set iter cdr [get prev cdr]]
-				  [have reflective_knowledge_base remove_semantic_frame prev]
+				  [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+				    [have reflective_knowledge_base remove_semantic_frame prev]]
 				  [= iter nil]]]]
 		      [if iter
 			  [= iter prev]]]]]]]]
@@ -191,7 +193,8 @@
 	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
 	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]
 	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal reverse_negative_goal_linked_list]]]
-	    [have reflective_knowledge_base add_semantic_frame semantic_cons]
+	    [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+	      [have reflective_knowledge_base add_semantic_frame semantic_cons]]
 	    [= reverse_negative_goal_linked_list semantic_cons]]]]
     [have negative_goal_mutex unlock]]]
 
@@ -209,7 +212,8 @@
 		      [let [[prev_semantic_goal [get prev car]]]
 			[if [eq prev_semantic_goal semantic_goal]
 			    [prog [set iter cdr [get prev cdr]]
-				  [have reflective_knowledge_base remove_semantic_frame prev]
+				  [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+				    [have reflective_knowledge_base remove_semantic_frame prev]]
 				  [= iter nil]]]]
 		      [if iter
 			  [= iter prev]]]]]]]]

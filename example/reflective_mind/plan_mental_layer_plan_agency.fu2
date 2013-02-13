@@ -357,7 +357,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_focus_register_to_register_a_resource get as-natural_language_string []
-  'copy focus goal to goal register A']
+  'copy focus register to register A']
 
 
 
@@ -377,7 +377,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_focus_register_to_register_b_resource get as-natural_language_string []
-  'copy focus goal to goal register B']
+  'copy focus register to register B']
 
 
 
@@ -397,7 +397,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_focus_register_to_register_c_resource get as-natural_language_string []
-  'copy focus goal to goal register C']
+  'copy focus register to register C']
 
 
 
@@ -417,7 +417,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_focus_register_to_register_d_resource get as-natural_language_string []
-  'copy focus goal to goal register D']
+  'copy focus register to register D']
 
 
 
@@ -435,7 +435,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_register_a_to_focus_register_resource get as-natural_language_string []
-  'copy goal register A to focus goal']
+  'copy register A to focus register']
 
 
 
@@ -453,7 +453,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_register_b_to_focus_register_resource get as-natural_language_string []
-  'copy goal register B to focus goal']
+  'copy register B to focus register']
 
 
 'plan_mental_layer_copy_register_c_to_focus_register_resource'
@@ -470,7 +470,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_register_c_to_focus_register_resource get as-natural_language_string []
-  'copy goal register C to focus goal']
+  'copy register C to focus register']
 
 
 

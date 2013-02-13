@@ -45,10 +45,14 @@
 	      [have this add_resource [new plan_mental_layer_execute_plan_in_focus_resource                                    resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_imagine_executing_plan_in_focus_resource                          resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_execute_plan_resource                                    resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_copy_register_a_to_focus_register_resource                            resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_copy_register_b_to_focus_register_resource                            resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_a_resource                            resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_b_resource                            resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_register_a_to_focus_register_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_register_b_to_focus_register_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_register_c_to_focus_register_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_register_d_to_focus_register_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_a_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_b_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_c_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_copy_focus_register_to_register_d_resource                        resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_next_object_resource                                     resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_previous_object_resource                                 resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_car_object_resource                                      resource_knowledge_base_name trace_knowledge_base_names]]
@@ -57,9 +61,9 @@
 	      [have this add_resource [new plan_mental_layer_focus_on_reverse_cdr_object_resource                              resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_focus_on_first_hypothesized_to_cause_goal_object_resource         resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_reverse_focus_on_first_hypothesized_to_cause_goal_object_resource resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_register_add_after_resource                                     resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_register_add_before_resource                                    resource_knowledge_base_name trace_knowledge_base_names]]
-	      [have this add_resource [new plan_mental_layer_focus_register_add_in_parallel_resource                               resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_register_add_after_resource                                 resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_register_add_before_resource                                resource_knowledge_base_name trace_knowledge_base_names]]
+	      [have this add_resource [new plan_mental_layer_focus_register_add_in_parallel_resource                           resource_knowledge_base_name trace_knowledge_base_names]]
 	      [have this add_resource [new plan_mental_layer_remember_plan_for_goal_resource                                   resource_knowledge_base_name trace_knowledge_base_names]]]]]
 
 [deftypefunk plan_mental_layer_plan_agency execute connect_knowledge_reflection []
@@ -80,8 +84,12 @@
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_execute_plan]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_register_a_to_focus_register]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_register_b_to_focus_register]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_register_c_to_focus_register]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_register_d_to_focus_register]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_register_to_register_a]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_register_to_register_b]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_register_to_register_c]]
+	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan copy_focus_register_to_register_d]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_next_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan focus_on_first_hypothesized_to_cause_goal_object]]
 	 [have-apply [get this mental_layer] create_action `[,[get [get this mental_layer] name] plan reverse_focus_on_first_hypothesized_to_cause_goal_object]]
@@ -373,6 +381,46 @@
 
 
 
+'plan_mental_layer_copy_focus_register_to_register_c_resource'
+
+[deframe plan_mental_layer_copy_focus_register_to_register_c_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_focus_register_to_register_c
+		  [funk []
+			[let [[focus_register [get [get [get this agency] semantic_planner] focus_register]]]
+			  [if [is-type `semantic_object focus_register]
+			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_register phenomenal_name] '.']
+			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_register '.']]
+			  [set [get [get this agency] semantic_planner] register_c focus_register]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_focus_register_to_register_c_resource get as-natural_language_string []
+  'copy focus goal to goal register C']
+
+
+
+'plan_mental_layer_copy_focus_register_to_register_d_resource'
+
+[deframe plan_mental_layer_copy_focus_register_to_register_d_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_focus_register_to_register_d
+		  [funk []
+			[let [[focus_register [get [get [get this agency] semantic_planner] focus_register]]]
+			  [if [is-type `semantic_object focus_register]
+			      [terminal_format standard-terminal '\n' [get this as-string] ': ' [get focus_register phenomenal_name] '.']
+			    [terminal_format standard-terminal '\n' [get this as-string] ': ' focus_register '.']]
+			  [set [get [get this agency] semantic_planner] register_d focus_register]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_focus_register_to_register_d_resource get as-natural_language_string []
+  'copy focus goal to goal register D']
+
+
+
 'plan_mental_layer_copy_register_a_to_focus_register_resource'
 
 [deframe plan_mental_layer_copy_register_a_to_focus_register_resource [plan_mental_layer_resource] []
@@ -406,6 +454,41 @@
 
 [deftypefunk plan_mental_layer_copy_register_b_to_focus_register_resource get as-natural_language_string []
   'copy goal register B to focus goal']
+
+
+'plan_mental_layer_copy_register_c_to_focus_register_resource'
+
+[deframe plan_mental_layer_copy_register_c_to_focus_register_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_register_c_to_focus_register
+		  [funk []
+			[let [[register_c [get [get [get this agency] semantic_planner] register_c]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_c phenomenal_name] '.']
+			  [set [get [get this agency] semantic_planner] focus_register register_c]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_register_c_to_focus_register_resource get as-natural_language_string []
+  'copy goal register C to focus goal']
+
+
+
+'plan_mental_layer_copy_register_d_to_focus_register_resource'
+
+[deframe plan_mental_layer_copy_register_d_to_focus_register_resource [plan_mental_layer_resource] []
+  [new [initial-resource_knowledge_base_name
+	initial-trace_knowledge_base_names]
+       [construct plan_mental_layer_resource `copy_register_d_to_focus_register
+		  [funk []
+			[let [[register_d [get [get [get this agency] semantic_planner] register_d]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': ' [get register_d phenomenal_name] '.']
+			  [set [get [get this agency] semantic_planner] focus_register register_d]]]
+		  initial-resource_knowledge_base_name
+		  initial-trace_knowledge_base_names]]]
+
+[deftypefunk plan_mental_layer_copy_register_d_to_focus_register_resource get as-natural_language_string []
+  'copy goal register D to focus goal']
 
 
 'plan_mental_layer_focus_on_next_object_resource'

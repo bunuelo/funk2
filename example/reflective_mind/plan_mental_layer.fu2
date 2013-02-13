@@ -181,7 +181,7 @@
     [while iter
       [let [[semantic_goal [get iter car]]]
 	[= seq [cons semantic_goal seq]]
-	[= goal [get iter cdr]]]]
+	[= iter [get iter cdr]]]]
     [have positive_goal_mutex unlock]
     seq]]
 
@@ -226,7 +226,7 @@
     [while iter
       [let [[semantic_goal [get iter car]]]
 	[= seq [cons semantic_goal seq]]
-	[= goal [get iter cdr]]]]
+	[= iter [get iter cdr]]]]
     [have negative_goal_mutex unlock]
     seq]]
 

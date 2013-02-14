@@ -261,6 +261,9 @@
 [deftypefunk plan_mental_layer execute lookup_semantic_plan [phenomenal_name]
   [have semantic_plan_phenomenal_name_frame lookup phenomenal_name]]
 
+[deftypefunk plan_mental_layer get semantic_plan_objects []
+  [get semantic_plan_phenomenal_name_frame values]]
+
 [deftypefunk plan_mental_layer get semantic_plan [phenomenal_name]
   [let [[semantic_plan [have this lookup_semantic_plan phenomenal_name]]]
     [if [null semantic_plan]

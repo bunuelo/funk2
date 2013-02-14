@@ -780,7 +780,7 @@
 
 [deftypefunk nonsemantic_plan execute lookup_slot_value [key_type key]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
-    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  slot_name=' slot_name]
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  key_type=' key_type ' key=' key]
 								     [if [not [and [or [is-type `string key_type]
 										       [is-type `symbol key_type]]
 										   [or [is-type `string key]

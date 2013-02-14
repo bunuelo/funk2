@@ -457,6 +457,9 @@
 		      [defplan 'test this goal is a positive goal'
 			[plan-call [plan 'this goal is a positive goal']]]
 		      
+		      [defplan 'test this goal is one of my positive goals'
+			[plan-call [plan 'this goal is one of my positive goals']]]
+		      
 		      [defplan 'test find a recent plan to acheive one of my positive goals'
 			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]]
 		      

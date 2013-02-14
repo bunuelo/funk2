@@ -164,13 +164,8 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_first_positive_goal
 		  [funk []
-			[let* [[positive_goals      [get [get this mental_layer] positive_goals]]
-			       [first_positive_goal [if positive_goals
-							[first positive_goals]
-						      nil]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [if first_positive_goal
-																  [get first_positive_goal phenomenal_name]
-																nil] '".']
+			[let [[first_positive_goal [get [get [get this mental_layer] semantic_planner] first_positive_goal]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [get first_positive_goal phenomenal_name] '".']
 			  [set [get [get this agency] semantic_planner] focus_register first_positive_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -186,14 +181,14 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_last_positive_goal
 		  [funk []
-			[let* [[positive_goals     [get [get this mental_layer] positive_goals]]
-			       [last_positive_goal [if positive_goals
-						       [first [reverse positive_goals]]
-						     nil]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [if last_positive_goal
-																 [get last_positive_goal phenomenal_name]
-															       nil] '".']
-			  [set [get [get this agency] semantic_planner] focus_register last_positive_goal]]]
+			[let [[first_positive_goal [get [get [get this mental_layer] semantic_planner] first_positive_goal]]]
+			  [let [[last_positive_goal nil]
+				[iter               first_positive_goal]]
+			    [while iter
+			      [= last_positive_goal iter]
+			      [= iter [get iter cdr]]]
+			    [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [get last_positive_goal phenomenal_name] '".']
+			    [set [get [get this agency] semantic_planner] focus_register last_positive_goal]]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -208,13 +203,8 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_first_negative_goal
 		  [funk []
-			[let* [[negative_goals      [get [get this mental_layer] negative_goals]]
-			       [first_negative_goal [if negative_goals
-							[first negative_goals]
-						      nil]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first negative goal, "' [if first_negative_goal
-																  [get first_negative_goal phenomenal_name]
-																nil] '".']
+			[let [[first_negative_goal [get [get [get this mental_layer] semantic_planner] first_negative_goal]]]
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first negative goal, "' [get first_negative_goal phenomenal_name] '".']
 			  [set [get [get this agency] semantic_planner] focus_register first_negative_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -230,14 +220,14 @@
 	initial-trace_knowledge_base_names]
        [construct plan_mental_layer_resource `focus_on_last_negative_goal
 		  [funk []
-			[let* [[negative_goals     [get [get this mental_layer] negative_goals]]
-			       [last_negative_goal [if negative_goals
-						       [first [reverse negative_goals]]
-						     nil]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last negative goal, "' [if last_negative_goal
-																 [get last_negative_goal phenomenal_name]
-															       nil] '".']
-			  [set [get [get this agency] semantic_planner] focus_register last_negative_goal]]]
+			[let [[first_negative_goal [get [get [get this mental_layer] semantic_planner] first_negative_goal]]]
+			  [let [[last_negative_goal nil]
+				[iter               first_negative_goal]]
+			    [while iter
+			      [= last_negative_goal iter]
+			      [= iter [get iter cdr]]]
+			    [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last negative goal, "' [get last_negative_goal phenomenal_name] '".']
+			    [set [get [get this agency] semantic_planner] focus_register last_negative_goal]]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
 
@@ -559,14 +549,17 @@
 			       [focus_register       [get semantic_planner focus_register]]]
 			  [if [is-type `semantic_frame focus_register]
 			      [let [[car_semantic_frame_set [have focus_register lookup_set `relation `car]]]
-				[if [not [null car_semantic_frame_set]]
+				[if [and [not [null car_semantic_frame_set]]
+					 [not [get car_semantic_frame_set is_empty]]]
 				    [let [[car_semantic_frame [first [get car_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame car_semantic_frame]
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object focusing on ' [type car_semantic_frame] ': "' [get car_semantic_frame phenomenal_name] '".']
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: car object is not semantic_frame.']]
 				      [set semantic_planner focus_register car_semantic_frame]]
 				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: no car object.']
-					[set semantic_planner focus_register nil]]]]
+					[error bug_name       `plan_agency-focus_on_car_object-no_car_object
+					       is_plan_bug    t
+					       focus_register focus_register]]]]
 			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: focus_register is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -594,7 +587,9 @@
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: reverse_car object is not semantic_frame.']]
 				      [set semantic_planner focus_register reverse_car_semantic_frame]]
 				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: no reverse_car object.']
-					[set semantic_planner focus_register nil]]]]
+					[error bug_name       `plan_agency-focus_on_reverse_car_object-no_reverse_car_object
+					       is_plan_bug    t
+					       focus_register focus_register]]]]
 			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: focus_register is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]

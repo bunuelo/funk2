@@ -778,7 +778,7 @@
 								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
     result_multiple_possible_values]]
 
-[deftypefunk nonsemantic_plan get lookup_slot_value [key_type key]
+[deftypefunk nonsemantic_plan execute lookup_slot_value [key_type key]
   [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
     [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  slot_name=' slot_name]
 								     [if [not [and [or [is-type `string key_type]

@@ -488,7 +488,7 @@
 		  initial-trace_knowledge_base_names]]]
 
 [deftypefunk plan_mental_layer_copy_register_d_to_focus_register_resource get as-natural_language_string []
-  'copy goal register D to focus goal']
+  'copy register D to focus register']
 
 
 'plan_mental_layer_focus_on_next_object_resource'

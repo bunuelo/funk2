@@ -423,12 +423,26 @@
 		      [defplan 'this goal is a positive goal'
 			[boolean [lookup-slot-value property positive]]]
 		      
-		      [defplan 'find a recent plan to acheive one of my goals'
+		      [defplan 'register A goal is one of the rest of my positive goals'
+			[call-below 'focus on cdr object']
+			]
+		      
+		      [defplan 'this goal is one of my positive goals'
+			[call-below 'copy focus register to register A']
+			[call-below 'focus on first positive goal']
+			[call-below 'focus on car object']
+			[call-below 'copy focus register to register B']
+			[call-below 'focus on reverse_car object']
+			[if [register-A-equals-register-B]
+			    [boolean t]
+			  [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
+		      
+		      [defplan 'find a recent plan to acheive one of my positive goals'
 			[call-below 'focus on first plan']
 			[call-below 'focus on car object']
 			[call-below 'imagine executing plan in focus']
 			[call-below 'focus on first_hypothesized_to_cause_goal object']
-			[if [not [plan-call [plan 'this goal is a positive goal']]]
+			[if [not [plan-call [plan 'this goal is one of my positive goals']]]
 			    [plan-call [plan 'find next most recent plan to achieve one of my goals']]]]
 		      
 		      [defplan 'find an old plan to acheive one of my goals'
@@ -443,8 +457,8 @@
 		      [defplan 'test this goal is a positive goal'
 			[plan-call [plan 'this goal is a positive goal']]]
 		      
-		      [defplan 'test find a recent plan to acheive one of my goals'
-			[plan-call [plan 'find a recent plan to acheive one of my goals']]]
+		      [defplan 'test find a recent plan to acheive one of my positive goals'
+			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]]
 		      
 		      [defplan 'test I want a cube to be on a pyramid'
 			[plan-call [plan 'I want a cube to be on a pyramid']]]

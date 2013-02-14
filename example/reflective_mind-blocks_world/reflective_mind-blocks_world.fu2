@@ -416,11 +416,20 @@
 			      [plan-call [plan 'find a recent plan to cause a pyramid to be on a cube']]
 			    [fail]]]]
 		      
+		      [defplan 'find next most recent plan to achieve one of my goals'
+			[call-below 'focus on reverse_car object']
+			]
+		      
+		      [defplan 'this goal is a positive goal'
+			[boolean [lookup-slot-value property positive]]]
+		      
 		      [defplan 'find a recent plan to acheive one of my goals'
 			[call-below 'focus on first plan']
 			[call-below 'focus on car object']
 			[call-below 'imagine executing plan in focus']
-			]
+			[call-below 'focus on first_hypothesized_to_cause_goal object']
+			[if [not [plan-call [plan 'this goal is a positive goal']]]
+			    [plan-call [plan 'find next most recent plan to achieve one of my goals']]]]
 		      
 		      [defplan 'find an old plan to acheive one of my goals'
 			[if [plan-call [plan 'I want a cube to be on a pyramid']]
@@ -430,6 +439,9 @@
 			    [fail]]]]
 		      
 		      `['tests']
+		      
+		      [defplan 'test this goal is a positive goal'
+			[plan-call [plan 'this goal is a positive goal']]]
 		      
 		      [defplan 'test find a recent plan to acheive one of my goals'
 			[plan-call [plan 'find a recent plan to acheive one of my goals']]]

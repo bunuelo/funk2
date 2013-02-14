@@ -762,7 +762,65 @@
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining register_a_equals_register_b (both possibilities)']
 								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value t]]
 								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value nil]]]]
-	  [t                                                   [error bug_name               `nonsemantic_plan-add_plan-invalid_execution_mode
+	  [t                                                   [error bug_name               `nonsemantic_plan-register_a_equals_register_b-invalid_execution_mode
+								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
+    result_multiple_possible_values]]
+
+[deftypefunk nonsemantic_plan get focus_register []
+  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: focus_register.']
+								     [let [[semantic_planner [get [get this mental_layer_below] semantic_planner]]]
+								       [let [[focus_register [get semantic_planner focus_register]]]
+									 [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value focus_register]]]]]]
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining focus_register']
+								     [have result_multiple_possible_values add_value [new nonsemantic_plan_value]]]]
+	  [t                                                   [error bug_name               `nonsemantic_plan-focus_register-invalid_execution_mode
+								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
+    result_multiple_possible_values]]
+
+[deftypefunk nonsemantic_plan get lookup_slot_value [key_type key]
+  [let [[result_multiple_possible_values [new multiple_possible_values nil]]]
+    [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  slot_name=' slot_name]
+								     [if [not [and [or [is-type `string key_type]
+										       [is-type `symbol key_type]]
+										   [or [is-type `string key]
+										       [is-type `symbol key]]]]
+									 [error bug_name `nonsemantic_plan-lookup_slot_value-key_type_or_key_invalid_type
+										actual_key_type_type [type key_type]
+										actual_key_type      [type key]
+										key_type             key_type
+										key                  key]
+								       [let [[semantic_planner [get [get this mental_layer_below] semantic_planner]]]
+									 [let [[focus_register [get semantic_planner focus_register]]]
+									   [if [is-type `semantic_frame focus_register]
+									       [let [[value_set [have focus_register lookup_set key_type key]]]
+										 [if [or [null value_set]
+											 [get value_set is_empty]]
+										     [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  no such slot.']
+											   [error bug_name       `nonsemantic_plan-lookup_slot_value-no_such_slot
+												  is_plan_bug    t
+												  focus_register focus_register
+												  key_type       key_type
+												  key            key]]
+										   [have result_multiple_possible_values add_value [new exact_nonsemantic_plan_value [first [get value_set elements]]]]]]
+									     [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  focus_register is not semantic_frame.']
+										   [error bug_name       `nonsemantic_plan-lookup_slot_value-focus_register_is_not_semantic_frame
+											  is_plan_bug    t
+											  focus_register focus_register
+											  key_type       key_type
+											  key            key]]]]]]]]
+	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: lookup_slot_value.  key_type=' key_type ' key=' key]
+								     [if [not [and [or [is-type `string key_type]
+										       [is-type `symbol key_type]]
+										   [or [is-type `string key]
+										       [is-type `symbol key]]]]
+									 [error bug_name `nonsemantic_plan-lookup_slot_value-key_type_or_key_invalid_type
+										actual_key_type_type [type key_type]
+										actual_key_type      [type key]
+										key_type             key_type
+										key                  key]
+								       [have result_multiple_possible_values add_value [new nonsemantic_plan_value]]]]]
+	  [t                                                   [error bug_name               `nonsemantic_plan-focus_register-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
     result_multiple_possible_values]]
 
@@ -1381,7 +1439,29 @@
 				 this             this]
 			[= truth_value_node subnode]]]]]
 	  subnodes]
-    `[exists ,[get this execution_node_as_code [first [get truth_value_node subnodes]]]]]]
+    `[boolean ,[get this execution_node_as_code [first [get truth_value_node subnodes]]]]]]
+
+[deftypefunk nonsemantic_plan get execution_node_as_code-lookup_slot_value [nonsemantic_plan_execution_node]
+  [let [[subnodes      [get nonsemantic_plan_execution_node subnodes]]
+	[key_type_node nil]
+	[key_node      nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [cond [[eq subnode-node_type `key_type] [if key_type_node
+							      [error bug_name       `nonsemantic_plan-get-execution_node_as_code-lookup_slot_value-more_than_one_key_type_subnode
+								     key_type_node key_type_node
+								     subnode        subnode
+								     this           this]
+							    [= key_type_node subnode]]]
+			[[eq subnode-node_type `key]      [if key_node
+							      [error bug_name `nonsemantic_plan-get-execution_node_as_code-lookup_slot_value-more_than_one_key_subnode
+								     key_node key_node
+								     subnode  subnode
+								     this     this]
+							    [= key_node subnode]]]]]]
+	  subnodes]
+    `[lookup-slot-value ,[get this execution_node_as_code [first [get key_type_node subnodes]]]
+			,[get this execution_node_as_code [first [get key_node subnodes]]]]]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-add_positive_goal [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
@@ -1445,6 +1525,9 @@
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-register_a_equals_register_b [nonsemantic_plan_execution_node]
   `[register-A-equals-register-B]]
+
+[deftypefunk nonsemantic_plan get execution_node_as_code-focus_register [nonsemantic_plan_execution_node]
+  `[focus-register]]
 
 [deftypefunk nonsemantic_plan get execution_node_as_code-not [nonsemantic_plan_execution_node]
   [let [[subnodes         [get nonsemantic_plan_execution_node subnodes]]
@@ -1574,11 +1657,13 @@
 			[[eq node_type `not]                          [get this execution_node_as_code-not                          nonsemantic_plan_execution_node]]
 			[[eq node_type `exists]                       [get this execution_node_as_code-exists                       nonsemantic_plan_execution_node]]
 			[[eq node_type `boolean]                      [get this execution_node_as_code-boolean                      nonsemantic_plan_execution_node]]
+			[[eq node_type `lookup-slot-value]            [get this execution_node_as_code-lookup_slot_value            nonsemantic_plan_execution_node]]
 			[[eq node_type `add-positive-goal]            [get this execution_node_as_code-add_positive_goal            nonsemantic_plan_execution_node]]
 			[[eq node_type `remove-positive-goal]         [get this execution_node_as_code-remove_positive_goal         nonsemantic_plan_execution_node]]
 			[[eq node_type `add-negative-goal]            [get this execution_node_as_code-add_negative_goal            nonsemantic_plan_execution_node]]
 			[[eq node_type `remove-negative-goal]         [get this execution_node_as_code-remove_negative_goal         nonsemantic_plan_execution_node]]
 			[[eq node_type `register-A-equals-register-B] [get this execution_node_as_code-register_a_equals_register_b nonsemantic_plan_execution_node]]
+			[[eq node_type `focus-register]               [get this execution_node_as_code-focus_register               nonsemantic_plan_execution_node]]
 			[[eq node_type `wait-for]                     [get this execution_node_as_code-wait_for                     nonsemantic_plan_execution_node]]
 			[[eq node_type `wait-for-time]                [get this execution_node_as_code-wait_for_time                nonsemantic_plan_execution_node]]
 			[[eq node_type `property]                     [get this execution_node_as_code-property                     nonsemantic_plan_execution_node]]
@@ -2215,10 +2300,24 @@
       [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
     [if [is-type `exact_nonsemantic_plan_value truth_value]
 	[new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [get truth_value value]]]]
-      [error bug_type      `defplanfunk-exists-invalid_type
+      [error bug_type      `defplanfunk-boolean-invalid_type
 	     is_plan_bug   t
 	     actual_type   [type truth_value]
 	     truth_value   truth_value]]]]
+
+[defplanfunk imagine lookup-slot-value [key_type key]
+  [if [or [eq [type key_type] `nonsemantic_plan_value]
+	  [eq [type key]      `nonsemantic_plan_value]]
+      [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
+    [if [and [is-type `exact_nonsemantic_plan_value key_type]
+	     [is-type `exact_nonsemantic_plan_value key]]
+	[have nonsemantic_plan lookup_slot_value [get key_type value] [get key value]]
+      [error bug_type             `defplanfunk-lookup_slot_value-invalid_type
+	     is_plan_bug          t
+	     actual_key_type_type [type key_type]
+	     actual_key_type      [type key]
+	     key_type             key_type
+	     key                  key]]]]
 
 [defplanfunk imagine add-positive-goal [partial_state]
   [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: add-positive-goal']
@@ -2291,6 +2390,10 @@
 [defplanfunk imagine register-A-equals-register-B []
   [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: register-A-equals-register-B']
   [get nonsemantic_plan register_a_equals_register_b]]
+
+[defplanfunk imagine focus-register []
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: focus-register']
+  [get nonsemantic_plan focus_register]]
 
 [defplanfunk imagine wait-for [partial_state]
   [cond [[eq cause-nonsemantic_plan_execution_mode `execute] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan waiting for: "' [get [get partial_state value] as-declarative_natural_language_string] '."']

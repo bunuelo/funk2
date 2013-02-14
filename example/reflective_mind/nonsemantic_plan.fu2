@@ -1368,6 +1368,21 @@
 	  subnodes]
     `[exists ,[get this execution_node_as_code [first [get partial_state_node subnodes]]]]]]
 
+[deftypefunk nonsemantic_plan get execution_node_as_code-boolean [nonsemantic_plan_execution_node]
+  [let [[subnodes         [get nonsemantic_plan_execution_node subnodes]]
+	[truth_value_node nil]]
+    [mapc [funk [subnode]
+		[let [[subnode-node_type [get subnode node_type]]]
+		  [if [eq subnode-node_type `truth_value]
+		      [if truth_value_node
+			  [error bug_name         `nonsemantic_plan-get-execution_node_as_code-exists-more_than_one_truth_value_subnode
+				 truth_value_node truth_value_node
+				 subnode          subnode
+				 this             this]
+			[= truth_value_node subnode]]]]]
+	  subnodes]
+    `[exists ,[get this execution_node_as_code [first [get truth_value_node subnodes]]]]]]
+
 [deftypefunk nonsemantic_plan get execution_node_as_code-add_positive_goal [nonsemantic_plan_execution_node]
   [let [[subnodes           [get nonsemantic_plan_execution_node subnodes]]
 	[partial_state_node nil]]
@@ -1558,6 +1573,7 @@
 			[[eq node_type `plan-call]                    [get this execution_node_as_code-plan_call                    nonsemantic_plan_execution_node]]
 			[[eq node_type `not]                          [get this execution_node_as_code-not                          nonsemantic_plan_execution_node]]
 			[[eq node_type `exists]                       [get this execution_node_as_code-exists                       nonsemantic_plan_execution_node]]
+			[[eq node_type `boolean]                      [get this execution_node_as_code-boolean                      nonsemantic_plan_execution_node]]
 			[[eq node_type `add-positive-goal]            [get this execution_node_as_code-add_positive_goal            nonsemantic_plan_execution_node]]
 			[[eq node_type `remove-positive-goal]         [get this execution_node_as_code-remove_positive_goal         nonsemantic_plan_execution_node]]
 			[[eq node_type `add-negative-goal]            [get this execution_node_as_code-add_negative_goal            nonsemantic_plan_execution_node]]
@@ -2193,6 +2209,16 @@
 	     is_plan_bug   t
 	     actual_type   [type partial_state]
 	     partial_state partial_state]]]]
+
+[defplanfunk imagine boolean [truth_value]
+  [if [eq [type truth_value] `nonsemantic_plan_value]
+      [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
+    [if [is-type `exact_nonsemantic_plan_value truth_value]
+	[new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [get truth_value value]]]]
+      [error bug_type      `defplanfunk-exists-invalid_type
+	     is_plan_bug   t
+	     actual_type   [type truth_value]
+	     truth_value   truth_value]]]]
 
 [defplanfunk imagine add-positive-goal [partial_state]
   [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: add-positive-goal']

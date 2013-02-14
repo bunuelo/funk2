@@ -343,32 +343,17 @@
 		      
 		      `['goals']
 		      
-		      `[defplan 'me to want a cube to be on a pyramid'
-			 :matches ['me to want [? partial_state]']
-			  :frame [[partial_state 'a cube to be on a pyramid']]
-			   [property planner property planner_type deliberative
-				     relation positive_goal
-				     [plan-call [plan [? partial_state]]]]]
-		      
 		      [defplan 'me to want a cube to be on a pyramid'
 			:matches ['me to want [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
 			  [relationship planner property planner_type deliberative
 					relation positive_goal
-					goal property partial_state [plan-call [plan [? partial_state]]]]]
+					goal property partial_state_phenomenal_name [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'I want a cube to be on a pyramid'
 			:matches ['I want [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
 			  [exists [plan-call [plan 'me to want [? partial_state]']]]]
-		      
-		      `[defplan 'me to avoid a cube being on a pyramid'
-			 :matches ['me to avoid [? subject] being on [? preposition]']
-			  :frame [[subject     'a cube']
-				  [preposition 'on a pyramid']]
-			   [property planner property planner_type deliberative
-				     relation positive_goal
-				     [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'me to avoid a cube being on a pyramid'
 			:matches ['me to avoid [? subject] being on [? preposition]']
@@ -376,7 +361,7 @@
 				 [preposition 'on a pyramid']]
 			  [relationship planner property planner_type deliberative
 					relation positive_goal
-					goal property partial_state [plan-call [plan '[? subject] to be [? preposition]']]]]
+					goal property partial_state_phenomenal_name [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'I am avoiding a cube being on a pyramid'
 			:matches ['I am avoiding [? subject] being [? preposition]']
@@ -424,12 +409,18 @@
 		      
 		      `['planner']
 		      
-		      [defplan 'find a recent plan to acheive one of my goals'
+		      `[defplan 'find a recent plan to acheive one of my goals'
 			[if [plan-call [plan 'I want a cube to be on a pyramid']]
 			    [plan-call [plan 'find a recent plan to cause a cube to be on a pyramid']]
 			  [if [plan-call [plan 'I want a pyramid to be on a cube']]
 			      [plan-call [plan 'find a recent plan to cause a pyramid to be on a cube']]
 			    [fail]]]]
+		      
+		      [defplan 'find a recent plan to acheive one of my goals'
+			[call-below 'focus on first plan']
+			[call-below 'focus on car object']
+			[call-below 'imagine executing plan in focus']
+			]
 		      
 		      [defplan 'find an old plan to acheive one of my goals'
 			[if [plan-call [plan 'I want a cube to be on a pyramid']]
@@ -439,6 +430,9 @@
 			    [fail]]]]
 		      
 		      `['tests']
+		      
+		      [defplan 'test find a recent plan to acheive one of my goals'
+			[plan-call [plan 'find a recent plan to acheive one of my goals']]]
 		      
 		      [defplan 'test I want a cube to be on a pyramid'
 			[plan-call [plan 'I want a cube to be on a pyramid']]]
@@ -529,7 +523,7 @@
 			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
 			  [relationship planner property planner_type reflective
 					relation positive_goal
-					goal property partial_state [plan-call [plan [? partial_state]]]]]
+					goal property partial_state_phenomenal_name [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'I want a planner to be focusing on a plan that has failed'
 			:matches ['I want [? partial_state]']
@@ -542,7 +536,7 @@
 				 [preposition 'on a plan that has failed']]
 			  [relationship planner property planner_type reflective
 					relation negative_goal
-					goal property partial_state [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+					goal property partial_state_phenomenal_name [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
 		      
 		      [defplan 'I am avoiding a planner being focused on a plan that has failed'
 			:matches['I am avoiding [? subject] being [? preposition]']

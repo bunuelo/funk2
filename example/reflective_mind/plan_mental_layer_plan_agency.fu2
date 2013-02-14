@@ -165,7 +165,7 @@
        [construct plan_mental_layer_resource `focus_on_first_positive_goal
 		  [funk []
 			[let [[first_positive_goal [get [get [get this mental_layer] semantic_planner] first_positive_goal]]]
-			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [get first_positive_goal phenomenal_name] '".']
+			  [terminal_format standard-terminal '\n' [get this as-string] ': focusing on first positive goal, "' [type first_positive_goal] '".']
 			  [set [get [get this agency] semantic_planner] focus_register first_positive_goal]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]
@@ -187,7 +187,7 @@
 			    [while iter
 			      [= last_positive_goal iter]
 			      [= iter [get iter cdr]]]
-			    [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [get last_positive_goal phenomenal_name] '".']
+			    [terminal_format standard-terminal '\n' [get this as-string] ': focusing on last positive goal, "' [type last_positive_goal] '".']
 			    [set [get [get this agency] semantic_planner] focus_register last_positive_goal]]]]
 		  initial-resource_knowledge_base_name
 		  initial-trace_knowledge_base_names]]]

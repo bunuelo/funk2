@@ -423,9 +423,20 @@
 		      [defplan 'this goal is a positive goal'
 			[boolean [lookup-slot-value property positive]]]
 		      
+		      `[[focus-register [input this-goal]]
+			[register-A     this-goal]
+			[register-B     positive-goal]]
+		      
 		      [defplan 'register A goal is one of the rest of my positive goals'
 			[call-below 'focus on cdr object']
-			]
+			[if [boolean [focus-register]]
+			    [prog [call-below 'focus on car object']
+				  [call-below 'copy focus register to register B']
+				  [call-below 'focus on reverse_car object']
+				  [if [register-A-equals-register-B]
+				      [boolean t]
+				    [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
+			  [boolean nil]]]
 		      
 		      [defplan 'this goal is one of my positive goals'
 			[call-below 'copy focus register to register A']

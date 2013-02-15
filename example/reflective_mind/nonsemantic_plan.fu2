@@ -202,17 +202,27 @@
 [deftypefunk distribution_nonsemantic_plan_value get as-boolean []
   [if [get this is-boolean]
       this
-    [new distribution_nonsemantic_plan_value [mapcar [funk [nonsemantic_plan_value]
-							   [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
-								 [[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
-								 [[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] nonsemantic_plan_value]
-								 [[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
-								 [[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [get nonsemantic_plan_value as-boolean]]
-								 [t                                                                      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean
-																		is_plan_bug            t
-																		actual_type            [type nonsemantic_plan_value]
-																		nonsemantic_plan_value nonsemantic_plan_value]]]]
-						     [get this values]]]]]
+    [let [[new_values nil]]
+      [mapc [funk [nonsemantic_plan_value]
+		  [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [not [null [get boolean values]]]
+												      [= new_values [cons boolean new_values]]]]]
+			[[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [not [null [get boolean values]]]
+												      [= new_values [cons boolean new_values]]]]]
+			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] nonsemantic_plan_value]
+			[[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]
+			[[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]
+			[t                                                                      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean
+												       is_plan_bug            t
+												       actual_type            [type nonsemantic_plan_value]
+												       nonsemantic_plan_value nonsemantic_plan_value]]]]
+	    [get this values]]
+      [if [null new_values]
+	  [error bug_name    `distribution_nonsemantic_plan_value-get-as-boolean-no_possible_boolean_values
+		 is_plan_bug t
+		 this        this]
+	[new distribution_nonsemantic_plan_value new_values]]]]]
 
 [deftypefunk distribution_nonsemantic_plan_value get negative []
   [if [not [get this is-boolean]]

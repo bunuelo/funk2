@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -36,19 +36,24 @@ boolean_t raw__stringlist__is_type(f2ptr cause, f2ptr object) {
   return boolean__true;
 }
 
+// #define F2__STRING__DEBUG
 
 f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   u64 total_length = 0;
   {
     f2ptr iter = this;
     while (iter) {
+#if defined(F2__STRING__DEBUG)
       if (! raw__cons__is_type(cause, iter)) {
 	error(nil, "raw__stringlist__new_string_from_concatenation error: expected cons.");
       }
+#endif // F2__STRING__DEBUG
       f2ptr str = f2cons__car(iter, cause);
+#if defined(F2__STRING__DEBUG)
       if (! raw__string__is_type(cause, str)) {
 	error(nil, "raw__stringlist__new_string_from_concatenation error: expected string.");
       }
+#endif // F2__STRING__DEBUG
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);
@@ -76,8 +81,13 @@ f2ptr f2__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   return raw__stringlist__new_string_from_concatenation(cause, this);
 }
 
+f2ptr raw__stringlist__concat(f2ptr cause, f2ptr this) {
+  return raw__stringlist__new_string_from_concatenation(cause, this);
+}
+
 f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
-  return f2__stringlist__new_string_from_concatenation(cause, this);
+  assert_argument_type(stringlist, this);
+  return raw__stringlist__concat(cause, this);
 }
 def_pcfunk1(stringlist__concat, this,
 	    "concatenate a list of strings together into a new resultant string.checks for the return value for a finished system command started by this fiber.",
@@ -91,13 +101,17 @@ f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_st
   {
     f2ptr iter = this;
     while (iter) {
+#if defined(F2__STRING__DEBUG)
       if (! raw__cons__is_type(cause, iter)) {
 	error(nil, "raw__stringlist__intersperse error: iter is not cons.");
       }
+#endif // F2__STRING__DEBUG
       f2ptr str = f2cons__car(iter, cause);
+#if defined(F2__STRING__DEBUG)
       if (! raw__string__is_type(cause, str)) {
 	error(nil, "raw__stringlist__intersperse error: str is not string.");
       }
+#endif // F2__STRING__DEBUG
       u64 str_length = f2string__length(str, cause);
       total_length += str_length;
       iter = f2cons__cdr(iter, cause);

@@ -1,0 +1,17 @@
+digraph G {
+node [fillcolor = white, color = "#000000", style = filled];
+edge [color = "#000000"];
+ptr_550703315257 [label = <planner>, color="#000000"];
+ptr_550668292673 [label = <a cube shaped block to be on a pyramid shaped block>, color="#000000"];
+ptr_550692848336 [label = <deliberative>, color="#000000"];
+LABEL__ptr_1100122966113__LEFT_NODE__ptr_550675677677__RIGHT_NODE__ptr_550709006060 [shape=box,fillcolor=white,style=filled,label=<property layer>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550703315257 -> LABEL__ptr_1100122966113__LEFT_NODE__ptr_550675677677__RIGHT_NODE__ptr_550709006060;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_1100122966113__LEFT_NODE__ptr_550675677677__RIGHT_NODE__ptr_550709006060 -> ptr_550692848336;
+LABEL__ptr_1100123047731__LEFT_NODE__ptr_550679484879__RIGHT_NODE__ptr_550703464358 [shape=box,fillcolor=white,style=filled,label=<property positive-goal>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550703315257 -> LABEL__ptr_1100123047731__LEFT_NODE__ptr_550679484879__RIGHT_NODE__ptr_550703464358;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_1100123047731__LEFT_NODE__ptr_550679484879__RIGHT_NODE__ptr_550703464358 -> ptr_550668292673;
+}

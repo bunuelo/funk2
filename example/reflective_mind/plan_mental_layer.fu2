@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -29,17 +29,18 @@
 							       reflective_type_knowledge_base_name
 							       reflective_resource_knowledge_base_name
 							       trace_knowledge_base_names
-							       [positive_goal_phenomenal_name_ptypehash_mutex [new mutex]]
+							       [goal_phenomenal_name_ptypehash_mutex          [new mutex]]
+							       [goal_phenomenal_name_ptypehash                [new ptypehash]]
+							       [positive_goal_mutex                           [new mutex]]
 							       [positive_goal_phenomenal_name_ptypehash       [new ptypehash]]
-							       [negative_goal_phenomenal_name_ptypehash_mutex [new mutex]]
+							       [negative_goal_mutex                           [new mutex]]
 							       [negative_goal_phenomenal_name_ptypehash       [new ptypehash]]
 							       [action_natural_language_symbol_ptypehash      [new ptypehash]]
 							       [semantic_plan_phenomenal_name_frame           [new frame]]
 							       [knowledge_symbol_set_initialized_mutex        [new mutex]]
 							       [knowledge_symbol_set_initialized              nil]
 							       [knowledge_symbol_set                          [new set]]
-							       [reverse_semantic_plan_linked_list_mutex       [new mutex]]
-							       [reverse_semantic_plan_linked_list             nil]
+							       [semantic_plans_mutex                          [new mutex]]
 							       [memoized_plans_by_name_ptypehash_mutex        [new mutex]]
 							       [memoized_plans_by_name_ptypehash              [new ptypehash]]]
   [new [initial-number initial-name
@@ -117,57 +118,147 @@
 [deftypefunk plan_mental_layer get semantic_planner []
   [get [get this agency `plan] semantic_planner]]
 
+[deftypefunk plan_mental_layer execute add_plan_hypothesized_to_cause_goal [semantic_plan_object semantic_goal]
+  [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+    [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal [get semantic_plan_object first_hypothesized_to_cause_goal]]]]
+      [have reflective_knowledge_base add_semantic_frame semantic_cons]
+      [semantic-add semantic_plan_object hypothesized_to_cause_partial_state [get semantic_goal partial_state_phenomenal_name]]
+      [set semantic_plan_object first_hypothesized_to_cause_goal semantic_cons]]]]
+
+[deftypefunk plan_mental_layer execute lookup_goal_by_partial_state [positive partial_state_phenomenal_name partial_state]
+  [let [[goal-phenomenal_name [semantic_goal-new_phenomenal_name positive partial_state_phenomenal_name]]]
+    [have goal_phenomenal_name_ptypehash_mutex lock]
+    [let [[goal [have goal_phenomenal_name_ptypehash lookup goal-phenomenal_name]]]
+      [if [null goal]
+	  [prog [= goal [new semantic_goal [get [get this mind] semantic_realm] positive partial_state_phenomenal_name partial_state]]
+		[have goal_phenomenal_name_ptypehash add goal-phenomenal_name goal]]]
+      [if [and partial_state
+	       [null [get goal partial_state]]]
+	  [set goal partial_state partial_state]]
+      [have goal_phenomenal_name_ptypehash_mutex unlock]
+      goal]]]
+
 [deftypefunk plan_mental_layer execute add_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex lock]
+    [have positive_goal_mutex lock]
     [if [not [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[prog [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_partial_state]
-	      [semantic-add [get this semantic_planner] positive_goal semantic_partial_state-phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
+	[let [[semantic_goal [have this lookup_goal_by_partial_state t semantic_partial_state-phenomenal_name semantic_partial_state]]]
+	  [have positive_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
+	  [semantic-add [get this semantic_planner] positive_goal semantic_goal]
+	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal nil]]
+		[iter          [get [get this semantic_planner] first_positive_goal]]
+		[last          nil]]
+	    [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+	      [have reflective_knowledge_base add_semantic_frame semantic_cons]]
+	    [while iter
+	      [= last iter]
+	      [= iter [get iter cdr]]]
+	    [if [null last]
+		[set [get this semantic_planner] first_positive_goal semantic_cons]
+	      [set last cdr semantic_cons]]]]]
+    [have positive_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_positive_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex lock]
-    [if [get positive_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]
-	[prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
-	      [semantic-remove [get this semantic_planner] positive_goal semantic_partial_state-phenomenal_name]]]
-    [have positive_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have positive_goal_mutex lock]
+    [let [[semantic_goal [have positive_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
+      [if semantic_goal
+	  [prog [have positive_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
+		[semantic-remove [get this semantic_planner] positive_goal semantic_goal]
+		[let [[iter [get [get this semantic_planner] first_positive_goal]]]
+		  [while iter
+		    [let [[semantic_goal [get iter car]]
+			  [next          [get iter cdr]]]
+		      [let [[next_semantic_goal [get next car]]]
+			[if [eq next_semantic_goal semantic_goal]
+			    [prog [set iter cdr [get next cdr]]
+				  [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+				    [have reflective_knowledge_base remove_semantic_frame next]]
+				  [= iter nil]]]]
+		      [if iter
+			  [= iter next]]]]]]]]
+    [have positive_goal_mutex unlock]]]
+
+[deftypefunk plan_mental_layer get positive_goals []
+  [have positive_goal_mutex lock]
+  [let [[iter [get [get this semantic_planner] first_positive_goal]]
+	[seq  nil]]
+    [while iter
+      [let [[semantic_goal [get iter car]]]
+	[= seq [cons semantic_goal seq]]
+	[= iter [get iter cdr]]]]
+    [have positive_goal_mutex unlock]
+    [reverse seq]]]
 
 [deftypefunk plan_mental_layer execute add_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex lock]
+    [have negative_goal_mutex lock]
     [if [not [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]]
-	[prog [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_partial_state]
-	      [semantic-add [get this semantic_planner] negative_goal semantic_partial_state-phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
+	[let [[semantic_goal [have this lookup_goal_by_partial_state t semantic_partial_state-phenomenal_name semantic_partial_state]]]
+	  [have negative_goal_phenomenal_name_ptypehash add semantic_partial_state-phenomenal_name semantic_goal]
+	  [semantic-add [get this semantic_planner] negative_goal semantic_goal]
+	  [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal nil]]
+		[iter          [get [get this semantic_planner] first_negative_goal]]
+		[last          nil]]
+	    [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+	      [have reflective_knowledge_base add_semantic_frame semantic_cons]]
+	    [while iter
+	      [= last iter]
+	      [= iter [get iter cdr]]]
+	    [if [null last]
+		[set [get this semantic_planner] first_negative_goal semantic_cons]
+	      [set last cdr semantic_cons]]]]]
+    [have negative_goal_mutex unlock]]]
 
 [deftypefunk plan_mental_layer execute remove_negative_goal [semantic_partial_state]
   [let [[semantic_partial_state-phenomenal_name [get semantic_partial_state phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex lock]
-    [if [get negative_goal_phenomenal_name_ptypehash contains semantic_partial_state-phenomenal_name]
-	[prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
-	      [semantic-remove [get this semantic_planner] negative_goal semantic_partial_state-phenomenal_name]]]
-    [have negative_goal_phenomenal_name_ptypehash_mutex unlock]]]
+    [have negative_goal_mutex lock]
+    [let [[semantic_goal [have negative_goal_phenomenal_name_ptypehash lookup semantic_partial_state-phenomenal_name]]]
+      [if semantic_goal
+	  [prog [have negative_goal_phenomenal_name_ptypehash remove semantic_partial_state-phenomenal_name]
+		[semantic-remove [get this semantic_planner] negative_goal semantic_goal]
+		[let [[iter [get [get this semantic_planner] first_negative_goal]]]
+		  [while iter
+		    [let [[semantic_goal [get iter car]]
+			  [next          [get iter cdr]]]
+		      [let [[next_semantic_goal [get next car]]]
+			[if [eq next_semantic_goal semantic_goal]
+			    [prog [set iter cdr [get next cdr]]
+				  [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
+				    [have reflective_knowledge_base remove_semantic_frame next]]
+				  [= iter nil]]]]
+		      [if iter
+			  [= iter next]]]]]]]]
+    [have negative_goal_mutex unlock]]]
+
+[deftypefunk plan_mental_layer get negative_goals []
+  [have negative_goal_mutex lock]
+  [let [[iter [get [get this semantic_planner] first_negative_goal]]
+	[seq  nil]]
+    [while iter
+      [let [[semantic_goal [get iter car]]]
+	[= seq [cons semantic_goal seq]]
+	[= iter [get iter cdr]]]]
+    [have negative_goal_mutex unlock]
+    [reverse seq]]]
 
 [deftypefunk plan_mental_layer execute add_semantic_plan [semantic_plan]
   [terminal_format standard-terminal '\n' [type this] ': adding plan, "' [get [get [get semantic_plan nonsemantic_plan] unique_name] as-string] '."']
   [have this reflective_knowledge_base-add_semantic_frame semantic_plan]
-  [have reverse_semantic_plan_linked_list_mutex lock]
-  [set semantic_plan previous reverse_semantic_plan_linked_list]
-  [= reverse_semantic_plan_linked_list semantic_plan]
-  [have reverse_semantic_plan_linked_list_mutex unlock]
+  [have semantic_plans_mutex lock]
+  [let [[prev nil]
+	[iter [get [get this semantic_planner] first_plan]]]
+    [while iter
+      [= prev iter]
+      [= iter [cdr iter]]]
+    [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_plan nil]]]
+      [have this reflective_knowledge_base-add_semantic_frame semantic_cons]
+      [if [null prev]
+	  [set [get this semantic_planner] first_plan semantic_cons]
+	[set prev cdr semantic_cons]]]]
+  [have semantic_plans_mutex unlock]
   [have semantic_plan_phenomenal_name_frame add [get semantic_plan phenomenal_name] semantic_plan]
   [have [get [get this mental_layer] agency `plan] create_plan_propositionalized_actions [get semantic_plan phenomenal_name]]]
-
-[deftypefunk plan_mental_layer get semantic_plan_objects []
-  [have reverse_semantic_plan_linked_list_mutex lock]
-  [let [[semantic_plan reverse_semantic_plan_linked_list]
-	[seq           nil]]
-    [while semantic_plan
-      [= seq [cons semantic_plan seq]]
-      [= semantic_plan [get semantic_plan previous]]]
-    [have reverse_semantic_plan_linked_list_mutex unlock]
-    seq]]
 
 [deftypefunk plan_mental_layer execute create_semantic_plan [name_expression name_patterns variable_definitions expression]
   [let [[plan [new nonsemantic_plan 
@@ -181,6 +272,9 @@
 
 [deftypefunk plan_mental_layer execute lookup_semantic_plan [phenomenal_name]
   [have semantic_plan_phenomenal_name_frame lookup phenomenal_name]]
+
+[deftypefunk plan_mental_layer get semantic_plan_objects []
+  [get semantic_plan_phenomenal_name_frame values]]
 
 [deftypefunk plan_mental_layer get semantic_plan [phenomenal_name]
   [let [[semantic_plan [have this lookup_semantic_plan phenomenal_name]]]
@@ -330,8 +424,9 @@
 			    is-me
 			    t
 			    nil
+			    goal partial_state partial_state_phenomenal_name
 			    planner positive_goal negative_goal focus_plan planner_type deliberative reflective
-			    plan has_been_imagined imagined_complete_failure hypothesized_to_cause_partial_state]]]
+			    plan has_been_imagined imagined_complete_failure executed_complete_failure hypothesized_to_cause_partial_state]]]
 	    [= knowledge_symbol_set_initialized t]]]
   [have knowledge_symbol_set_initialized_mutex unlock]]
 

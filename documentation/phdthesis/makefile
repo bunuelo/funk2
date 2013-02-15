@@ -6,6 +6,7 @@ phdthesis.pdf: \
   bibliography.bib \
   frontbackmatter/dirtytitlepage.tex \
   frontbackmatter/abstract_front.tex \
+  frontbackmatter/abstract_raw.tex \
   frontbackmatter/reader_signature_page_01.tex \
   frontbackmatter/reader_signature_page_02.tex \
   frontbackmatter/reader_signature_page_03.tex \
@@ -22,14 +23,14 @@ phdthesis.pdf: \
   frontbackmatter/titlepage.tex \
   chapters/introduction.tex \
   chapters/emotion_machine_cognitive_architecture.tex \
-  chapters/reflectively_learning_to_control.tex \
-  chapters/grounded_learning_of_knowledge_utility.tex \
+  chapters/learning_from_being_told_natural_language_plans.tex \
+  chapters/learning_asynchronously_from_experience.tex \
   chapters/modelling_the_continuously_dynamic.tex \
   chapters/learning_causal_hypotheses.tex \
   chapters/layers_of_reflective_thinking.tex \
   chapters/learning_from_success_and_failure.tex \
   chapters/problematic_interpretations.tex \
-  chapters/virtual_operating_system_and_programming_language.tex \
+  chapters/virtual_machine_and_programming_language.tex \
   chapters/related_models.tex \
   chapters/introducing_simulation.tex \
   chapters/graph_notation.tex \
@@ -132,10 +133,32 @@ phdthesis.pdf: \
   gfx/fibermon_many_fibers.pdf \
   gfx/magritte_pipe.pdf \
   gfx/four_layers_overview.pdf \
+  gfx/five_layers_overview.pdf \
   gfx/isis_world_two_agents.pdf \
+  gfx/isis_world_two_agents_labelled.pdf \
   gfx/physical_type_knowledge_induction.pdf \
   gfx/deliberative_type_knowledge_induction.pdf \
   gfx/deliberative_planning_machine_knowledge_base.pdf \
+  gfx/three_knowledge_layers.pdf \
+  gfx/built_in_reactive_and_physical_layers.pdf \
+  gfx/learned_reactive_and_built_in_reactive_layers.pdf \
+  gfx/deliberative_and_learned_reactive_layers.pdf \
+  gfx/reflective_and_deliberative_layers.pdf \
+  gfx/physical_knowledge_base_graph.pdf \
+  gfx/deliberative_plan_knowledge_base_graph.pdf \
+  gfx/reflective_plan_knowledge_base_graph.pdf \
+  gfx/learning_from_being_told_in_layers.pdf \
+  gfx/relationship_partial_state_graph.pdf \
+  gfx/property_partial_state_graph.pdf \
+  gfx/hierarchical_partial_state_graph.pdf \
+  gfx/plan_execution_node_graph.pdf \
+  gfx/deliberative_two_experiential_event_streams.pdf \
+  gfx/reflective_two_experiential_event_streams.pdf \
+  gfx/super_reflective_two_experiential_event_streams.pdf \
+  gfx/relationship_partial_state_abstraction_remove.pdf \
+  gfx/relationship_partial_state_abstraction_add.pdf \
+  gfx/hypothesis_version_space_set_divisions.pdf \
+  gfx/cpu_core_hyperthread_distances.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
@@ -150,6 +173,9 @@ phdthesis.pdf: \
 	pdflatex temp.tex
 	rm -f temp.tex
 	mv -f temp.pdf $@
+
+%.pdf: %.fudot makefile
+	dot -Tpdf $< -o $@
 
 %.pdf: %.png makefile
 	pngtopnm $< > $<.pnm

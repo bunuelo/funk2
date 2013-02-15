@@ -185,6 +185,7 @@
   :packages [reflective_mind_core
 	     plan_mental_layer_resource
 	     semantic_planner
+	     semantic_goal
 	     semantic_cons
 	     semantic_thought
 	     semantic_plan_object

@@ -1,0 +1,21 @@
+[defunk property_partial_state_graph-new []
+  [let [[graph        [new graph]]
+	[source-1       [new graph_node 'source-type']]
+	[source-value-1 [new graph_node 'source-value']]
+	[value-1        [new graph_node 'value']]
+	[source-2       [new graph_node 'gripper']]
+	[source-value-2 [new graph_node 'true']]
+	[value-2        [new graph_node 'stop']]]
+    [have graph add_edge [new graph_edge 'source-key-type source-key' source-1 source-value-1]]
+    [have graph add_edge [new graph_edge 'key-type key' source-1 value-1]]
+    
+    [have graph add_edge [new graph_edge 'property is-me' source-2 source-value-2]]
+    [have graph add_edge [new graph_edge 'property movement-command' source-2 value-2]]
+    
+    graph]]
+
+[defunk property_partial_state_graph-save []
+  [let [[dot_code [get [property_partial_state_graph-new] as-dot_code]]]
+    [have dot_code save 'property_partial_state_graph.fudot']]]
+
+[property_partial_state_graph-save]

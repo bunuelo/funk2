@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -28,9 +28,10 @@ f2ptr raw__semantic_cons__type_create(f2ptr cause, f2ptr this, f2ptr semantic_re
   if (! raw__frame__contains_var(cause, this, new__symbol(cause, "type"))) {
     raw__frame__add_var_value(cause, this, new__symbol(cause, "type"), new__symbol(cause, "semantic_cons"));
   }
-  assert_value(raw__semantic_object__type_create(cause, this, semantic_realm));
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), car);
-  raw__semantic_frame__add(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"), cdr);
+  assert_value(raw__semantic_reflective_object__type_create(cause, this, semantic_realm));
+  raw__semantic_reflective_object__reflective_object_type__set(cause, this, new__symbol(cause, "cons"));
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"), car);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"), cdr);
   return this;
 }
 
@@ -81,7 +82,7 @@ export_cefunk1(semantic_cons__type, thing, 0, "Returns the specific type of obje
 
 
 f2ptr raw__semantic_cons__car(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"));
 }
 
 f2ptr f2__semantic_cons__car(f2ptr cause, f2ptr this) {
@@ -92,7 +93,7 @@ export_cefunk1(semantic_cons__car, this, 0, "");
 
 
 f2ptr raw__semantic_cons__car__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "car"), that);
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "car"), that);
 }
 
 f2ptr f2__semantic_cons__car__set(f2ptr cause, f2ptr this, f2ptr that) {
@@ -103,7 +104,7 @@ export_cefunk2(semantic_cons__car__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_cons__cdr(f2ptr cause, f2ptr this) {
-  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"));
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"));
 }
 
 f2ptr f2__semantic_cons__cdr(f2ptr cause, f2ptr this) {
@@ -114,7 +115,7 @@ export_cefunk1(semantic_cons__cdr, this, 0, "");
 
 
 f2ptr raw__semantic_cons__cdr__set(f2ptr cause, f2ptr this, f2ptr that) {
-  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "property"), new__symbol(cause, "cdr"), that);
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "cdr"), that);
 }
 
 f2ptr f2__semantic_cons__cdr__set(f2ptr cause, f2ptr this, f2ptr that) {
@@ -125,7 +126,7 @@ export_cefunk2(semantic_cons__cdr__set, this, that, 0, "");
 
 
 f2ptr f2__semantic_cons__primobject_type__new(f2ptr cause) {
-  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_object")));
+  f2ptr this = f2__primobject_type__new(cause, f2list1__new(cause, new__symbol(cause, "semantic_reflective_object")));
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "new"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_cons"), new__symbol(cause, "semantic_cons__new")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, "is_type"), f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_cons"), new__symbol(cause, "semantic_cons__is_type")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, "type"),    f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_cons"), new__symbol(cause, "semantic_cons__type")));}
@@ -149,7 +150,7 @@ export_cefunk0(semantic_cons__core_extension__ping, 0, "");
 
 
 f2ptr f2__semantic_cons__core_extension__initialize(f2ptr cause) {
-  core_extension__ping(semantic_cons, semantic_object);
+  core_extension__ping(semantic_cons, semantic_reflective_object);
   status("semantic_cons initialized.");
   return nil;
 }

@@ -16,6 +16,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcorefunk semantic_goal-new_phenomenal_name semantic_goal semantic_goal__new_phenomenal_name]
+
 [defcorefunk semantic_goal-core_extension-ping         semantic_goal semantic_goal__core_extension__ping]
 [defcorefunk semantic_goal-core_extension-initialize   semantic_goal semantic_goal__core_extension__initialize]
 [defcorefunk semantic_goal-core_extension-define_types semantic_goal semantic_goal__core_extension__define_types]

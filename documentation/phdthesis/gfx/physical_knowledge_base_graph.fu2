@@ -1,0 +1,37 @@
+
+[defunk physical_knowledge_base_graph-new []
+  [let [[graph     [new graph]]
+	[block-1   [new graph_node 'Block']]
+	[block-2   [new graph_node 'Block']]
+	[block-3   [new graph_node 'Block']]
+	[block-4   [new graph_node 'Block']]
+	[table-1   [new graph_node 'Table']]
+	[gripper-1 [new graph_node 'Gripper']]]
+    [have graph add_edge [new graph_edge 'color' block-1   [new graph_node 'red']]]
+    [have graph add_edge [new graph_edge 'shape' block-1   [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'color' block-2   [new graph_node 'blue']]]
+    [have graph add_edge [new graph_edge 'shape' block-2   [new graph_node 'pyramid']]]
+    [have graph add_edge [new graph_edge 'color' block-3   [new graph_node 'green']]]
+    [have graph add_edge [new graph_edge 'shape' block-3   [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'color' block-4   [new graph_node 'brown']]]
+    [have graph add_edge [new graph_edge 'shape' block-4   [new graph_node 'pyramid']]]
+    [have graph add_edge [new graph_edge 'color' table-1   [new graph_node 'white']]]
+    [have graph add_edge [new graph_edge 'color'            gripper-1 [new graph_node 'black']]]
+    [have graph add_edge [new graph_edge 'movement-command' gripper-1 [new graph_node 'stop']]]
+    
+    [have graph add_edge [new graph_edge 'on' block-1 table-1]]
+    [have graph add_edge [new graph_edge 'on' block-2 table-1]]
+    [have graph add_edge [new graph_edge 'on' block-3 table-1]]
+    [have graph add_edge [new graph_edge 'on' block-4 table-1]]
+    
+    [have graph add_edge [new graph_edge 'left-of'  gripper-1 block-1]]
+    [have graph add_edge [new graph_edge 'right-of' gripper-1 block-2]]
+    [have graph add_edge [new graph_edge 'right-of' gripper-1 block-3]]
+    [have graph add_edge [new graph_edge 'right-of' gripper-1 block-4]]
+    
+    graph]]
+
+[defunk physical_knowledge_base_graph-save []
+  [let [[dot_code [get [physical_knowledge_base_graph-new] as-dot_code]]]
+    [have dot_code save 'physical_knowledge_base_graph.dot']]]
+

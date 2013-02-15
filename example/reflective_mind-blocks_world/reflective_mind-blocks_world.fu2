@@ -193,11 +193,6 @@
 			  [plan-call [plan 'wait for a [? shape] to be immediately to my [? direction]']]
 			  [call-below 'stop']]
 		      
-		      `[compile [plan 'move left until over pyramid']]
-		      `[compile [plan 'move left until over cube']]
-		      `[compile [plan 'move right until over pyramid']]
-		      `[compile [plan 'move right until over cube']]
-		      
 		      [defplan 'if a cube is to my left, move left until over cube'
 			:matches ['if [? condition], [? command]']
 			 :frame [[condition 'a cube is to my left']
@@ -231,8 +226,6 @@
 			[wait-for [property gripper property is-me t
 					    property movement_command
 					    stop]]]
-		      `[compile [plan 'attempt to grab block until gripper stops moving']]
-		      
 		      [defplan 'pick up a cube'
 			:matches ['pick up a [? shape]']
 			 :frame [[shape 'cube']]
@@ -243,13 +236,20 @@
 		      [defplan 'drop block and wait for block to fall'
 			[call-below 'drop']
 			[wait-for-time 20]]
-		      `[compile 'drop block and wait for block to fall']
 		      
 		      [defplan 'drop the block I am holding on a pyramid'
 			:matches ['drop the block I am holding on a [? shape]']
 			 :frame [[shape pyramid]]
 			  [plan-call [plan 'move until over [? shape]']]
 			  [plan-call [plan 'drop block and wait for block to fall']]]
+		      
+		      [defplan 'goal register A equals goal register B'
+			[goal-register-A-equals-goal-register-B]]
+		      
+		      `['tests']
+		      
+		      [defplan 'test goal register A equals goal register B'
+			[plan-call [plan 'goal register A equals goal register B']]]
 		      
 		      ]]
 	 
@@ -274,10 +274,10 @@
 				      relation focus_plan
 				      plan property has_been_imagined nil]]
 		      
-		      [defplan 'a planner to be focusing on a plan that has failed'
+		      [defplan 'a planner to be focusing on a plan that has failed in execution'
 			[relationship planner property planner_type deliberative
 				      relation focus_plan
-				      plan property imagined_complete_failure t]]
+				      plan property executed_complete_failure t]]
 		      
 		      [defplan 'a planner is focusing on a plan that has been imagined'
 			:matches ['[? subject] is [? preposition]']
@@ -298,10 +298,10 @@
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      
-		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid'
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a recent plan to cause a cube to be on a pyramid'
 			:matches ['if [? condition], [? command]']
 			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']
-				 [command   'find a plan to cause a cube to be on a pyramid']]
+				 [command   'find a recent plan to cause a cube to be on a pyramid']]
 			  [if [plan-call [plan [? condition]]]
 			      [plan-call [plan [? command]]]]]
 		      
@@ -309,28 +309,46 @@
 			[call-below 'focus on next object']
 			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		      
-		      [defplan 'find unimagined plan'
+		      [defplan 'find previous unimagined plan'
+			[call-below 'focus on previous object']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find previous unimagined plan']]]
+		      
+		      [defplan 'find recent unimagined plan'
 			[call-below 'focus on first plan']
 			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		      
-		      [defplan 'imagine unimagined plan'
-			[plan-call [plan 'find unimagined plan']]
+		      [defplan 'find old unimagined plan'
+			[call-below 'focus on last plan']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find previous unimagined plan']]]
+		      
+		      [defplan 'imagine recent unimagined plan'
+			[plan-call [plan 'find recent unimagined plan']]
 			[call-below 'imagine executing plan in focus']]
 		      
-		      [defplan 'find a plan to cause a cube to be on a pyramid'
-			:matches ['find a plan to cause [? partial_state]']
+		      [defplan 'imagine old unimagined plan'
+			[plan-call [plan 'find old unimagined plan']]
+			[call-below 'imagine executing plan in focus']]
+		      
+		      [defplan 'find a recent plan to cause a cube to be on a pyramid'
+			:matches ['find a recent plan to cause [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
-			[plan-call [plan 'imagine unimagined plan']]
-			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find a plan to cause [? partial_state]']]]
+			[plan-call [plan 'imagine recent unimagined plan']]
+			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find a recent plan to cause [? partial_state]']]]
+		      
+		      [defplan 'find an old plan to cause a cube to be on a pyramid'
+			:matches ['find an old plan to cause [? partial_state]']
+			 :frame [[partial_state 'a cube to be on a pyramid']]
+			[plan-call [plan 'imagine old unimagined plan']]
+			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find an old plan to cause [? partial_state]']]]
 		      
 		      `['goals']
 		      
 		      [defplan 'me to want a cube to be on a pyramid'
 			:matches ['me to want [? partial_state]']
 			 :frame [[partial_state 'a cube to be on a pyramid']]
-			  [property planner property planner_type deliberative
-				    relation positive_goal
-				    [plan-call [plan [? partial_state]]]]]
+			  [relationship planner property planner_type deliberative
+					relation positive_goal
+					goal property partial_state_phenomenal_name [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'I want a cube to be on a pyramid'
 			:matches ['I want [? partial_state]']
@@ -341,9 +359,9 @@
 			:matches ['me to avoid [? subject] being on [? preposition]']
 			 :frame [[subject     'a cube']
 				 [preposition 'on a pyramid']]
-			  [property planner property planner_type deliberative
-				    relation positive_goal
-				    [plan-call [plan '[? subject] to be [? preposition]']]]]
+			  [relationship planner property planner_type deliberative
+					relation positive_goal
+					goal property partial_state_phenomenal_name [plan-call [plan '[? subject] to be [? preposition]']]]]
 		      
 		      [defplan 'I am avoiding a cube being on a pyramid'
 			:matches ['I am avoiding [? subject] being [? preposition]']
@@ -391,30 +409,104 @@
 		      
 		      `['planner']
 		      
-		      [defplan 'find a plan to acheive one of my goals'
+		      `[defplan 'find a recent plan to acheive one of my goals'
 			[if [plan-call [plan 'I want a cube to be on a pyramid']]
-			    [plan-call [plan 'find a plan to cause a cube to be on a pyramid']]
+			    [plan-call [plan 'find a recent plan to cause a cube to be on a pyramid']]
 			  [if [plan-call [plan 'I want a pyramid to be on a cube']]
-			      [plan-call [plan 'find a plan to cause a pyramid to be on a cube']]
+			      [plan-call [plan 'find a recent plan to cause a pyramid to be on a cube']]
+			    [fail]]]]
+		      
+		      [defplan 'find next most recent plan to achieve one of my goals'
+			[call-below 'focus on reverse_car object']
+			]
+		      
+		      [defplan 'this goal is a positive goal'
+			[boolean [lookup-slot-value property positive]]]
+		      
+		      `[[focus-register [input this-goal]]
+			[register-A     this-goal]
+			[register-B     positive-goal]]
+		      
+		      [defplan 'register A goal is one of the rest of my positive goals'
+			[call-below 'focus on cdr object']
+			[if [boolean [focus-register]]
+			    [prog [call-below 'focus on car object']
+				  [call-below 'copy focus register to register B']
+				  [call-below 'focus on reverse_car object']
+				  [if [register-A-equals-register-B]
+				      [boolean t]
+				    [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'this goal is one of my positive goals'
+			[call-below 'copy focus register to register A']
+			[call-below 'focus on first positive goal']
+			[call-below 'focus on car object']
+			[call-below 'copy focus register to register B']
+			[call-below 'focus on reverse_car object']
+			[boolean [if [register-A-equals-register-B]
+				     t
+				   [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]]
+		      
+		      [defplan 'find a recent plan to acheive one of my positive goals'
+			[call-below 'focus on first plan']
+			[call-below 'focus on car object']
+			[call-below 'imagine executing plan in focus']
+			[call-below 'focus on first_hypothesized_to_cause_goal object']
+			[if [not [plan-call [plan 'this goal is one of my positive goals']]]
+			    [plan-call [plan 'find next most recent plan to achieve one of my goals']]]]
+		      
+		      [defplan 'find an old plan to acheive one of my goals'
+			[if [plan-call [plan 'I want a cube to be on a pyramid']]
+			    [plan-call [plan 'find an old plan to cause a cube to be on a pyramid']]
+			  [if [plan-call [plan 'I want a pyramid to be on a cube']]
+			      [plan-call [plan 'find an old plan to cause a pyramid to be on a cube']]
 			    [fail]]]]
 		      
 		      `['tests']
 		      
+		      [defplan 'test this goal is a positive goal'
+			[plan-call [plan 'this goal is a positive goal']]]
+		      
+		      [defplan 'test this goal is one of my positive goals'
+			[plan-call [plan 'this goal is one of my positive goals']]]
+		      
+		      [defplan 'test find a recent plan to acheive one of my positive goals'
+			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]]
+		      
 		      [defplan 'test I want a cube to be on a pyramid'
 			[plan-call [plan 'I want a cube to be on a pyramid']]]
+		      
+		      [defplan 'test I want a pyramid to be on a cube'
+			[plan-call [plan 'I want a pyramid to be on a cube']]]
 		      
 		      [defplan 'test want a pyramid to be on a cube'
 			[plan-call [plan 'want a pyramid to be on a cube']]]
 		      
+		      [defplan 'test want a cube to be on a pyramid'
+			[plan-call [plan 'want a cube to be on a pyramid']]]
+		      
 		      [defplan 'test initialize goals'
 			[plan-call [plan 'want a block to be on a block']]]
 		      
-		      [defplan 'test find a plan to acheive one of my goals'
-			[plan-call [plan 'find a plan to acheive one of my goals']]]
+		      [defplan 'test find a recent plan to acheive one of my goals'
+			[plan-call [plan 'find a recent plan to acheive one of my goals']]]
+		      
+		      [defplan 'test find an old plan to acheive one of my goals'
+			[plan-call [plan 'find an old plan to acheive one of my goals']]]
+		      
+		      [defplan 'test go after a stack of a pyramid on a cube on a cube'
+			[plan-call [plan 'want a pyramid to be on a cube']]
+			[plan-call [plan 'want a cube to be on a cube']]
+			[plan-call [plan 'find a recent plan to acheive one of my goals']]
+			[call-below 'register plan currently in focus']
+			[plan-call [plan 'find a recent plan to acheive one of my goals']]
+			[call-below 'add a plan before the beginning of plan currently in focus']
+			[call-below 'execute plan in focus']]
 		      
 		      [defplan 'test go after a cube to be on a pyramid'
 			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find a plan to acheive one of my goals']]
+			[plan-call [plan 'find a recent plan to acheive one of my goals']]
 			[call-below 'execute plan in focus']]
 		      
 		      ]]
@@ -457,14 +549,45 @@
 				 [preposition 'focusing on a plan that has been imagined']]
 			  [not [plan-call [plan '[? subject] is [? preposition]']]]]
 		      
-		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
+		      [defplan 'a planner to be focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed'
 			:matches ['a planner to be focusing on a plan that is hypothesized to cause [? partial_state]']
-			 :frame [[partial_state 'a cube to be on a pyramid']]
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
 			  [relationship planner property planner_type reflective
 					relation focus_plan
 					plan property hypothesized_to_cause_partial_state [plan-call [plan [? partial_state]]]]]
 		      
 		      `['goals']
+		      
+		      [defplan 'me to want a planner to be focusing on a plan that has failed'
+			:matches ['me to want [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [relationship planner property planner_type reflective
+					relation positive_goal
+					goal property partial_state_phenomenal_name [plan-call [plan [? partial_state]]]]]
+		      
+		      [defplan 'I want a planner to be focusing on a plan that has failed'
+			:matches ['I want [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [exists [plan-call [plan 'me to want [? partial_state]']]]]
+		      
+		      [defplan 'me to avoid a planner being focused on a plan that has failed'
+			:matches ['me to avoid [? subject] being focused [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'on a plan that has failed']]
+			  [relationship planner property planner_type reflective
+					relation negative_goal
+					goal property partial_state_phenomenal_name [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+		      
+		      [defplan 'I am avoiding a planner being focused on a plan that has failed'
+			:matches['I am avoiding [? subject] being [? preposition]']
+			 :frame [[subject     'a planner']
+				 [preposition 'focused on a plan that has failed']]
+			  [exists [plan-call [plan 'me to avoid [? subject] being [? preposition]']]]]
+		      
+		      [defplan 'want a planner to be focusing on a plan that has failed'
+			:matches ['want [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [add-positive-goal [plan-call [plan [? partial_state]]]]]
 		      
 		      [defplan 'avoid a planner being focused on a plan that has failed'
 			:matches ['avoid [? subject] being focused [? preposition]']
@@ -475,10 +598,17 @@
 		      [defplan 'test avoid a planner being focused on a plan that has failed'
 			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
 		      
-		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid'
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed, find a recent plan to cause a planner to be focusing on a plan that has failed'
 			:matches ['if [? condition], [? command]']
-			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid']
-				 [command   'find a plan to cause a cube to be on a pyramid']]
+			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed']
+				 [command   'find a recent plan to cause a planner to be focusing on a plan that has failed']]
+			  [if [plan-call [plan [? condition]]]
+			      [plan-call [plan [? command]]]]]
+		      
+		      [defplan 'if a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed, find an old plan to cause a planner to be focusing on a plan that has failed'
+			:matches ['if [? condition], [? command]']
+			 :frame [[condition 'a planner is not focusing on a plan that is hypothesized to cause a planner to be focusing on a plan that has failed']
+				 [command   'find an old plan to cause a planner to be focusing on a plan that has failed']]
 			  [if [plan-call [plan [? condition]]]
 			      [plan-call [plan [? command]]]]]
 		      
@@ -486,26 +616,85 @@
 			[call-below 'focus on next object']
 			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		      
-		      [defplan 'find unimagined plan'
+		      [defplan 'find previous unimagined plan'
+			[call-below 'focus on previous object']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find previous unimagined plan']]]
+		      
+		      [defplan 'find recent unimagined plan'
 			[call-below 'focus on first plan']
 			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find next unimagined plan']]]
 		      
-		      [defplan 'imagine unimagined plan'
-			[plan-call [plan 'find unimagined plan']]
+		      [defplan 'find old unimagined plan'
+			[call-below 'focus on last plan']
+			[plan-call [plan 'if a planner is focusing on a plan that has been imagined, find previous unimagined plan']]]
+		      
+		      [defplan 'imagine recent unimagined plan'
+			[plan-call [plan 'find recent unimagined plan']]
 			[call-below 'imagine executing plan in focus']]
 		      
-		      [defplan 'find a plan to cause a cube to be on a pyramid'
-			[plan-call [plan 'imagine unimagined plan']]
-			[plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause a cube to be on a pyramid, find a plan to cause a cube to be on a pyramid']]]
+		      [defplan 'imagine old unimagined plan'
+			[plan-call [plan 'find old unimagined plan']]
+			[call-below 'imagine executing plan in focus']]
 		      
-		      [defplan 'test find a plan to cause a cube to be on a pyramid'
-			[plan-call [plan 'find a plan to cause a cube to be on a pyramid']]]
+		      [defplan 'find a recent plan to cause a planner to be focusing on a plan that has failed'
+			:matches ['find a recent plan to cause [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [plan-call [plan 'imagine recent unimagined plan']]
+			  [plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find a recent plan to cause [? partial_state]']]]
 		      
-		      [defplan 'avoid a planner being focused on a plan that has failed'
-			:matches ['avoid [? subject] being focused [? preposition]']
-			 :frame [[subject     'a planner']
-				 [preposition 'on a plan that has failed']]
-			  [add-negative-goal [plan-call [plan '[? subject] to be focusing [? preposition]']]]]
+		      [defplan 'find a recent plan to not cause a planner to be focusing on a plan that has failed'
+			:matches ['find a recent plan to not cause [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [plan-call [plan 'imagine recent unimagined plan']]
+			  [plan-call [plan 'if a planner is focusing on a plan that is hypothesized to cause [? partial_state], find a recent plan to not cause [? partial_state]']]]
+		      
+		      [defplan 'find an old plan to cause a planner to be focusing on a plan that has failed'
+			:matches ['find an old plan to cause [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [plan-call [plan 'imagine old unimagined plan']]
+			  [plan-call [plan 'if a planner is not focusing on a plan that is hypothesized to cause [? partial_state], find an old plan to cause [? partial_state]']]]
+		      
+		      [defplan 'find an old plan to not cause a planner to be focusing on a plan that has failed'
+			:matches ['find an old plan to not cause [? partial_state]']
+			 :frame [[partial_state 'a planner to be focusing on a plan that has failed']]
+			  [plan-call [plan 'imagine old unimagined plan']]
+			  [plan-call [plan 'if a planner is focusing on a plan that is hypothesized to cause [? partial_state], find an old plan to not cause [? partial_state]']]]
+		      
+		      `['planner']
+		      
+		      [defplan 'find a recent plan to avoid my negative goals'
+			[if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
+			    [plan-call [plan 'find a recent plan to not cause a planner to be focusing on a plan that has failed']]
+			  [fail]]]
+		      
+		      [defplan 'find an old plan to avoid my negative goals'
+			[if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
+			    [plan-call [plan 'find an old plan to cause a planner to be focusing on a plan that has failed']]
+			  [fail]]]
+		      
+		      `['tests']
+		      
+		      [defplan 'test I am avoiding a planner being focused on a plan that has failed'
+			[plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]]
+		      
+		      [defplan 'test find a recent plan to avoid my negative goals'
+			[plan-call [plan 'find a recent plan to avoid my negative goals']]]
+		      
+		      [defplan 'test find an old plan to to avoid my negative goals'
+			[plan-call [plan 'find an old plan to avoid my negative goals']]]
+		      
+		      [defplan 'test avoid a planner being focused on a plan that has failed'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]]
+		      
+		      [defplan 'test go with recent plan away from a planner being focused on a plan that has failed'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]
+			[plan-call [plan 'find a recent plan to avoid my negative goals']]
+			[call-below 'execute plan in focus']]
+		      
+		      [defplan 'test go with old plan away from a planner being focused on a plan that has failed'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]
+			[plan-call [plan 'find an old plan to avoid my negative goals']]
+			[call-below 'execute plan in focus']]
 		      
 		      ]]]
   

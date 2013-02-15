@@ -1,0 +1,30 @@
+digraph G {
+node [fillcolor = white, color = "#000000", style = filled];
+edge [color = "#000000"];
+ptr_550709802439 [label = <source-type>, color="#000000"];
+ptr_550703667015 [label = <gripper>, color="#000000"];
+ptr_550707665902 [label = <true>, color="#000000"];
+ptr_550707664901 [label = <value>, color="#000000"];
+ptr_550703668028 [label = <stop>, color="#000000"];
+ptr_550707664370 [label = <source-value>, color="#000000"];
+LABEL__ptr_328247692__LEFT_NODE__ptr_550709866269__RIGHT_NODE__ptr_550707726684 [shape=box,fillcolor=white,style=filled,label=<property movement-command>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550703667015 -> LABEL__ptr_328247692__LEFT_NODE__ptr_550709866269__RIGHT_NODE__ptr_550707726684;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_328247692__LEFT_NODE__ptr_550709866269__RIGHT_NODE__ptr_550707726684 -> ptr_550703668028;
+LABEL__ptr_329633259__LEFT_NODE__ptr_550705885636__RIGHT_NODE__ptr_550703720048 [shape=box,fillcolor=white,style=filled,label=<property is-me>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550703667015 -> LABEL__ptr_329633259__LEFT_NODE__ptr_550705885636__RIGHT_NODE__ptr_550703720048;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_329633259__LEFT_NODE__ptr_550705885636__RIGHT_NODE__ptr_550703720048 -> ptr_550707665902;
+LABEL__ptr_329032732__LEFT_NODE__ptr_550707711183__RIGHT_NODE__ptr_550709848744 [shape=box,fillcolor=white,style=filled,label=<source-key-type source-key>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550709802439 -> LABEL__ptr_329032732__LEFT_NODE__ptr_550707711183__RIGHT_NODE__ptr_550709848744;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_329032732__LEFT_NODE__ptr_550707711183__RIGHT_NODE__ptr_550709848744 -> ptr_550707664370;
+LABEL__ptr_321693950__LEFT_NODE__ptr_550703704565__RIGHT_NODE__ptr_550703703645 [shape=box,fillcolor=white,style=filled,label=<key-type key>,height=.1,width=.1];
+edge [arrowtail = crow, arrowhead = none];
+ptr_550709802439 -> LABEL__ptr_321693950__LEFT_NODE__ptr_550703704565__RIGHT_NODE__ptr_550703703645;
+edge [arrowtail = none, arrowhead = normal];
+LABEL__ptr_321693950__LEFT_NODE__ptr_550703704565__RIGHT_NODE__ptr_550703703645 -> ptr_550707664901;
+}

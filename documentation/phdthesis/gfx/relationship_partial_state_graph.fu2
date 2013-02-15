@@ -1,0 +1,25 @@
+[defunk relationship_partial_state_graph-new []
+  [let [[graph        [new graph]]
+	[source-1       [new graph_node 'source-type']]
+	[source-value-1 [new graph_node 'source-value']]
+	[target-1       [new graph_node 'target-type']]
+	[target-value-1 [new graph_node 'target-value']]
+	[source-2       [new graph_node 'gripper']]
+	[source-value-2 [new graph_node 'true']]
+	[target-2       [new graph_node 'block']]
+	[target-value-2 [new graph_node 'cube']]]
+    [have graph add_edge [new graph_edge 'source-key-type source-key' source-1 source-value-1]]
+    [have graph add_edge [new graph_edge 'target-key-type target-key' target-1 target-value-1]]
+    [have graph add_edge [new graph_edge 'key-type key' source-1 target-1]]
+    
+    [have graph add_edge [new graph_edge 'property is-me' source-2 source-value-2]]
+    [have graph add_edge [new graph_edge 'property shape' target-2 target-value-2]]
+    [have graph add_edge [new graph_edge 'preposition left-of' source-2 target-2]]
+    
+    graph]]
+
+[defunk relationship_partial_state_graph-save []
+  [let [[dot_code [get [relationship_partial_state_graph-new] as-dot_code]]]
+    [have dot_code save 'relationship_partial_state_graph.fudot']]]
+
+[relationship_partial_state_graph-save]

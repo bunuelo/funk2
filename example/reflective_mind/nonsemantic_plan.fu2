@@ -2296,7 +2296,8 @@
 
 [defplanfunk imagine boolean [truth_value]
   [if [eq [type truth_value] `nonsemantic_plan_value]
-      [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]
+      [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]
+					      [new exact_boolean_nonsemantic_plan_value t]]]
     [if [is-type `exact_nonsemantic_plan_value truth_value]
 	[new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [if [get truth_value value]
 											      t

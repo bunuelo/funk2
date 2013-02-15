@@ -2083,7 +2083,7 @@
 										result]]]]]
 					  [if [null [get false_result nonbug_and_failure_values]]
 					      [let [[false_result-bug_values [get false_result bug_values]]]
-						[error bug_name     `nonsemantic_plan-if-true_branch_only_has_bug_values
+						[error bug_name     `nonsemantic_plan-if-false_branch_only_has_bug_values
 						       is_plan_bug  t
 						       subbug       [if false_result-bug_values
 									[first false_result-bug_values]]

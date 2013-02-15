@@ -669,9 +669,9 @@
 				[if [not [null first_hypothesized_to_cause_goal_semantic_frame_set]]
 				    [let [[first_hypothesized_to_cause_goal_semantic_frame [first [get first_hypothesized_to_cause_goal_semantic_frame_set elements]]]]
 				      [if [is-type `semantic_frame first_hypothesized_to_cause_goal_semantic_frame]
-					  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object focusing on ' [type first_hypothesized_to_cause_goal_semantic_frame] ': "' [get first_hypothesized_to_cause_goal_semantic_frame phenomenal_name] '".']
-						[set semantic_planner focus_register first_hypothesized_to_cause_goal_semantic_frame]]
-					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object: first_hypothesized_to_cause_goal object is not semantic_frame.']]]
+					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object focusing on ' [type first_hypothesized_to_cause_goal_semantic_frame] ': "' [get first_hypothesized_to_cause_goal_semantic_frame phenomenal_name] '".']
+					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object: first_hypothesized_to_cause_goal object is not semantic_frame.']]
+				      [set semantic_planner focus_register first_hypothesized_to_cause_goal_semantic_frame]]
 				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object: no first_hypothesized_to_cause_goal object.']]]
 			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_first_hypothesized_to_cause_goal_object: focus_register is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name

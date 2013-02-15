@@ -2339,12 +2339,9 @@
 
 [defplanfunk imagine boolean [truth_value]
   [let [[result [shelter [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [new multiple_possible_values [conslist truth_value]]]
-			       [[is-type `exact_nonsemantic_plan_value truth_value]         [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [if [get truth_value value]
-																						  t
-																						nil]]]]]
+			       [[is-type `exact_nonsemantic_plan_value         truth_value] [new multiple_possible_values [conslist [get truth_value as-boolean]]]]
 			       [[is-type `distribution_nonsemantic_plan_value  truth_value] [new multiple_possible_values [conslist [get truth_value as-boolean]]]]
-			       [[eq [type truth_value] `nonsemantic_plan_value]             [new multiple_possible_values [conslist [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
-																						       [new exact_boolean_nonsemantic_plan_value t]]]]]]
+			       [[eq      `nonsemantic_plan_value        [type truth_value]] [new multiple_possible_values [conslist [get truth_value as-boolean]]]]
 			       [t                                                           [error bug_name     `defplanfunk-boolean-invalid_type
 												   is_plan_bug  t
 												   actual_type  [type truth_value]

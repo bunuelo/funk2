@@ -122,7 +122,7 @@
   [let [[reflective_knowledge_base [get [get this mind] semantic_knowledge_base reflective_knowledge_base_name]]]
     [let [[semantic_cons [new semantic_cons [get [get this mind] semantic_realm] semantic_goal [get semantic_plan_object first_hypothesized_to_cause_goal]]]]
       [have reflective_knowledge_base add_semantic_frame semantic_cons]
-      [set semantic_plan_object hypothesized_to_cause_partial_state [get semantic_goal partial_state_phenomenal_name]]
+      [semantic-add semantic_plan_object hypothesized_to_cause_partial_state [get semantic_goal partial_state_phenomenal_name]]
       [set semantic_plan_object first_hypothesized_to_cause_goal semantic_cons]]]]
 
 [deftypefunk plan_mental_layer execute lookup_goal_by_partial_state [positive partial_state_phenomenal_name partial_state]

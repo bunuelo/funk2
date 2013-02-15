@@ -2275,10 +2275,10 @@
 												   correct_type `exact_boolean_nonsemantic_plan_value
 												   actual_type  [type truth_value]
 												   truth_value  truth_value]]]]]]    
-    `[terminal_format standard-terminal
-		      '\n' [type [get nonsemantic_plan mental_layer]] '-not:'
-		      '\n    truth_value = ' truth_value
-		      '\n    result      = ' result]
+    [terminal_format standard-terminal
+		     '\n' [type [get nonsemantic_plan mental_layer]] '-not:'
+		     '\n    truth_value = ' truth_value
+		     '\n    result      = ' result]
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [bug bug]]
@@ -2295,17 +2295,25 @@
 	     partial_state partial_state]]]]
 
 [defplanfunk imagine boolean [truth_value]
-  [if [eq [type truth_value] `nonsemantic_plan_value]
-      [new multiple_possible_values [conslist [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
-												 [new exact_boolean_nonsemantic_plan_value t]]]]]
-    [if [is-type `exact_nonsemantic_plan_value truth_value]
-	[new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [if [get truth_value value]
-											      t
-											    nil]]]]
-      [error bug_type      `defplanfunk-boolean-invalid_type
-	     is_plan_bug   t
-	     actual_type   [type truth_value]
-	     truth_value   truth_value]]]]
+  [let [[result [shelter [cond [[is-type `exact_boolean_nonsemantic_plan_value truth_value] [new multiple_possible_values [conslist truth_value]]]
+			       [[is-type `exact_nonsemantic_plan_value truth_value]         [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value [if [get truth_value value]
+																						  t
+																						nil]]]]]
+			       [[is-type `distribution_nonsemantic_plan_value  truth_value] [new multiple_possible_values [conslist truth_value]]]
+			       [[eq [type truth_value] `nonsemantic_plan_value]             [new multiple_possible_values [conslist [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
+																						       [new exact_boolean_nonsemantic_plan_value t]]]]]]
+			       [t                                                           [error bug_name     `defplanfunk-boolean-invalid_type
+												   is_plan_bug  t
+												   actual_type  [type truth_value]
+												   truth_value  truth_value]]]]]]
+    [terminal_format standard-terminal
+		     '\n' [type [get nonsemantic_plan mental_layer]] '-boolean:'
+		     '\n    truth_value = ' truth_value
+		     '\n    result      = ' result]
+    [if [is-type `bug result]
+	[let [[bug result]]
+	  [bug bug]]
+      result]]]
 
 [defplanfunk imagine lookup-slot-value [key_type key]
   [if [or [eq [type key_type] `nonsemantic_plan_value]

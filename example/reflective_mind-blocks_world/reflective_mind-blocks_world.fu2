@@ -416,16 +416,13 @@
 			      [plan-call [plan 'find a recent plan to cause a pyramid to be on a cube']]
 			    [fail]]]]
 		      
-		      [defplan 'find next most recent plan to achieve one of my goals'
-			[call-below 'focus on reverse_car object']
-			]
-		      
 		      [defplan 'this goal is a positive goal'
 			[boolean [lookup-slot-value property positive]]]
 		      
 		      `[[focus-register [input this-goal]]
 			[register-A     this-goal]
-			[register-B     positive-goal]]
+			[register-B     positive-goal]
+			[register-C     plan-iter]]
 		      
 		      [defplan 'register A goal is one of the rest of my positive goals'
 			[call-below 'focus on cdr object']
@@ -448,13 +445,32 @@
 			    [boolean t]
 			  [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
 		      
+		      [defplan 'one of these goals is one of my positive goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'focus on car object']
+				  [if [boolean [plan-call [plan 'this goal is one of my positive goals']]]
+				      [boolean t]
+				    [prog [call-below 'focus on reverse_car object']
+					  [call-below 'focus on cdr object']
+					  [plan-call [plan 'one of these goals is one of my positive goals']]]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'find one of these plans that is hypothesized to acheive one of my positive goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register C']
+				  [call-below 'focus on car object']
+				  [call-below 'imagine executing plan in focus']
+				  [call-below 'focus on first_hypothesized_to_cause_goal object']
+				  [if [boolean [plan-call [plan 'one of these goals is one of my positive goals']]]
+				      nil
+				    [prog [call-below 'copy register C to focus register']
+					  [call-below 'focus on cdr object']
+					  [plan-call [plan 'find one of these plans that is hypothesized to acheive one of my positive goals']]]]]
+			  [fail]]]
+		      
 		      [defplan 'find a recent plan to acheive one of my positive goals'
 			[call-below 'focus on first plan']
-			[call-below 'focus on car object']
-			[call-below 'imagine executing plan in focus']
-			[call-below 'focus on first_hypothesized_to_cause_goal object']
-			[if [not [boolean [plan-call [plan 'this goal is one of my positive goals']]]]
-			    [plan-call [plan 'find next most recent plan to achieve one of my goals']]]]
+			[plan-call [plan 'find one of these plans that is hypothesized to acheive one of my positive goals']]]
 		      
 		      [defplan 'find an old plan to acheive one of my goals'
 			[if [plan-call [plan 'I want a cube to be on a pyramid']]

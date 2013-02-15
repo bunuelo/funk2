@@ -444,16 +444,16 @@
 			[call-below 'focus on car object']
 			[call-below 'copy focus register to register B']
 			[call-below 'focus on reverse_car object']
-			[boolean [if [register-A-equals-register-B]
-				     t
-				   [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]]
+			[if [register-A-equals-register-B]
+			    t
+			  [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
 		      
 		      [defplan 'find a recent plan to acheive one of my positive goals'
 			[call-below 'focus on first plan']
 			[call-below 'focus on car object']
 			[call-below 'imagine executing plan in focus']
 			[call-below 'focus on first_hypothesized_to_cause_goal object']
-			[if [not [plan-call [plan 'this goal is one of my positive goals']]]
+			[if [not [boolean [plan-call [plan 'this goal is one of my positive goals']]]]
 			    [plan-call [plan 'find next most recent plan to achieve one of my goals']]]]
 		      
 		      [defplan 'find an old plan to acheive one of my goals'

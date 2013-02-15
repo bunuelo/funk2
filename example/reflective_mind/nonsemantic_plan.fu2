@@ -100,6 +100,10 @@
 	      [get this as-nonsemantic_plan_execution_node_graph_node_without_this graph node_ptypehash]]]
     this-graph_node]]
 
+[deftypefunk nonsemantic_plan_value get as-boolean []
+  [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
+						     [new exact_boolean_nonsemantic_plan_value t]]]]
+
 
 'exact_nonsemantic_plan_value'
 
@@ -118,6 +122,10 @@
 	      [get this as-nonsemantic_plan_execution_node_graph_node_without_this graph node_ptypehash]]]
     this-graph_node]]
 
+[deftypefunk exact_nonsemantic_plan_value get as-boolean []
+  [new exact_boolean_nonsemantic_plan_value [if [get this value]
+						t
+					      nil]]]
 
 'exact_boolean_nonsemantic_plan_value'
 
@@ -195,30 +203,11 @@
   [if [get this is-boolean]
       this
     [new distribution_nonsemantic_plan_value [mapcar [funk [nonsemantic_plan_value]
-							   [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [let [[contains_true_boolean_value  nil]
-																	       [contains_false_boolean_value nil]]
-																	   [let [[nonbug_and_failure_values [get nonsemantic_plan_value nonbug_and_failure_values]]]
-																	     [mapc [funk [nonbug_or_failure_value]
-																			 [if [is-type `exact_boolean_nonsemantic_plan_value nonbug_or_failure_value]
-																			     [if [get nonbug_or_failure_value value]
-																				 [= contains_true_boolean_value t]
-																			       [= contains_false_boolean_value t]]]]
-																		   nonbug_and_failure_values]
-																	     [if contains_true_boolean_value
-																		 [if contains_false_boolean_value
-																		     [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]
-																							     [new exact_boolean_nonsemantic_plan_value t]]]
-																		   [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value t]]]]
-																	       [if contains_false_boolean_value
-																		   [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]]]
-																		 [new multiple_possible_values nil]]]]]]
-								 [[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value]  [get this as-boolean]]
+							   [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
+								 [[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
 								 [[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] nonsemantic_plan_value]
-								 [[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [new exact_boolean_nonsemantic_plan_value [if [get nonsemantic_plan_value value]
-																						       t
-																						     nil]]]
-								 [[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
-																							    [new exact_boolean_nonsemantic_plan_value t]]]]
+								 [[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [get nonsemantic_plan_value as-boolean]]
+								 [[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [get nonsemantic_plan_value as-boolean]]
 								 [t                                                                      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean
 																		is_plan_bug            t
 																		actual_type            [type nonsemantic_plan_value]
@@ -320,6 +309,26 @@
 	       this     this
 	       negative negative]
       negative]]]
+
+[deftypefunk multiple_possible_values get as-boolean []
+  [let [[contains_true_boolean_value  nil]
+	[contains_false_boolean_value nil]]
+    [let [[nonbug_and_failure_values [get this nonbug_and_failure_values]]]
+      [mapc [funk [nonbug_or_failure_value]
+		  [if [is-type `exact_boolean_nonsemantic_plan_value nonbug_or_failure_value]
+		      [if [get nonbug_or_failure_value value]
+			  [= contains_true_boolean_value t]
+			[= contains_false_boolean_value t]]]]
+	    nonbug_and_failure_values]
+      [if contains_true_boolean_value
+	  [if contains_false_boolean_value
+	      [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]
+						      [new exact_boolean_nonsemantic_plan_value t]]]
+	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value t]]]]
+	[if contains_false_boolean_value
+	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]]]
+	  [new multiple_possible_values nil]]]]]]
+
 
 'nonsemantic_plan_execution_node'
 

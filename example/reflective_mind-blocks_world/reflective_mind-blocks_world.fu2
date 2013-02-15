@@ -489,9 +489,6 @@
 		      [defplan 'test initialize goals'
 			[plan-call [plan 'want a block to be on a block']]]
 		      
-		      [defplan 'test find a recent plan to acheive one of my goals'
-			[plan-call [plan 'find a recent plan to acheive one of my goals']]]
-		      
 		      [defplan 'test find an old plan to acheive one of my goals'
 			[plan-call [plan 'find an old plan to acheive one of my goals']]]
 		      

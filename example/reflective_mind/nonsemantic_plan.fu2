@@ -210,7 +210,7 @@
 			[[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
 												  [if [not [null [get boolean values]]]
 												      [= new_values [cons boolean new_values]]]]]
-			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [= new_values [cons nonsemantic_plan_value]]]
+			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [= new_values [cons      nonsemantic_plan_value             new_values]]]
 			[[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]
 			[[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]
 			[t                                                                      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean

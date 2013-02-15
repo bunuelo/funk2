@@ -556,7 +556,7 @@
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object focusing on ' [type car_semantic_frame] ': "' [get car_semantic_frame phenomenal_name] '".']
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: car object is not semantic_frame.']]
 				      [set semantic_planner focus_register car_semantic_frame]]
-				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: no car object.']
+				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_car_object: no car object.  focus_register=' focus_register]
 					[error bug_name       `plan_agency-focus_on_car_object-no_car_object
 					       is_plan_bug    t
 					       focus_register focus_register]]]]
@@ -586,7 +586,7 @@
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object focusing on ' [type reverse_car_semantic_frame] ': "' [get reverse_car_semantic_frame phenomenal_name] '".']
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: reverse_car object is not semantic_frame.']]
 				      [set semantic_planner focus_register reverse_car_semantic_frame]]
-				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: no reverse_car object.']
+				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_car_object: no reverse_car object.  focus_register=' focus_register]
 					[error bug_name       `plan_agency-focus_on_reverse_car_object-no_reverse_car_object
 					       is_plan_bug    t
 					       focus_register focus_register]]]]
@@ -616,7 +616,7 @@
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object focusing on ' [type cdr_semantic_frame] ': "' [get cdr_semantic_frame phenomenal_name] '".']
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: cdr object is not semantic_frame.']]
 				      [set semantic_planner focus_register cdr_semantic_frame]]
-				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: no cdr object.']
+				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: no cdr object.  focus_register=' focus_register]
 					[set semantic_planner focus_register nil]]]]
 			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_cdr_object: focus_register is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name
@@ -644,7 +644,7 @@
 					  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_cdr_object focusing on ' [type reverse_cdr_semantic_frame] ': "' [get reverse_cdr_semantic_frame phenomenal_name] '".']
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_cdr_object: reverse_cdr object is not semantic_frame.']]
 				      [set semantic_planner focus_register reverse_cdr_semantic_frame]]
-				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_cdr_object: no reverse_cdr object.']
+				  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_cdr_object: no reverse_cdr object.  focus_register=' focus_register]
 					[set semantic_planner focus_register nil]]]]
 			    [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-focus_on_reverse_cdr_object: focus_register is not semantic_frame.']]]]
 		  initial-resource_knowledge_base_name

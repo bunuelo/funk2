@@ -104,6 +104,9 @@
   [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value nil]
 						     [new exact_boolean_nonsemantic_plan_value t]]]]
 
+[deftypefunk nonsemantic_plan_value get is-boolean []
+  nil]
+
 
 'exact_nonsemantic_plan_value'
 
@@ -129,6 +132,9 @@
 						  t
 						nil]]]]
 
+[deftypefunk exact_nonsemantic_plan_value get is-boolean []
+  nil]
+
 'exact_boolean_nonsemantic_plan_value'
 
 [deframe exact_boolean_nonsemantic_plan_value [exact_nonsemantic_plan_value] [value]
@@ -153,6 +159,8 @@
       [have new_value add_value_dependency this]
       new_value]]]
 
+[deftypefunk exact_boolean_nonsemantic_plan_value get is-boolean []
+  t]
 
 'distribution_nonsemantic_plan_value'
 

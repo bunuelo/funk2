@@ -2090,14 +2090,22 @@
 	[mapc [funk [one_condition]
 		    [++ index]
 		    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: considering condition ' index '/' conditions-length ': ' `one_condition]
-		    [if [not [or [is-type `exact_boolean_nonsemantic_plan_value one_condition]
-				 [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]]
+		    [if [or [is-type `exact_boolean_nonsemantic_plan_value one_condition]
+			    [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]
 			[prog [terminal_format standard-terminal
 					       '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
 			      [if [eq cause-nonsemantic_plan_execution_mode `execute]
 				  [terminal_format standard-terminal
-						   '\n' '  condition-type=' [type one_condition]
-						   '\n' '  condition     =' one_condition]]]
+						   '\n' '  condition-type                          = ' [type one_condition]
+						   '\n' '  condition                               = ' one_condition
+						   '\n' '  condition-cause_execution_node          = ' [let [[cause_execution_node [shelter [get one_condition cause_execution_node]]]]
+													 [if [is-type `bug cause_execution_node]
+													     `bug
+													   cause_execution_node]]
+						   '\n' '  condition-cause_execution_node-subnodes = ' [let [[subnodes [shelter [get [get one_condition cause_execution_node] subnodes]]]]
+													 [if [is-type `bug subnodes]
+													     `bug
+													   subnodes]]]]]
 		      [if [is-type `nonsemantic_plan_value one_condition]
 			  [let [[evaluate_true_branch  nil]
 				[evaluate_false_branch nil]]
@@ -2381,9 +2389,10 @@
 			       [[is-type `distribution_nonsemantic_plan_value  truth_value] [new multiple_possible_values [conslist [get truth_value as-boolean]]]]
 			       [[eq      `nonsemantic_plan_value        [type truth_value]] [new multiple_possible_values [conslist [get truth_value as-boolean]]]]
 			       [t                                                           [error bug_name     `defplanfunk-boolean-invalid_type
-												   is_plan_bug  t
 												   actual_type  [type truth_value]
 												   truth_value  truth_value]]]]]]
+    [terminal_format standard-terminal
+		     '\n' [type [get nonsemantic_plan mental_layer]] '-boolean.  truth_value-type=' [type truth_value]]
     `[terminal_format standard-terminal
 		      '\n' [type [get nonsemantic_plan mental_layer]] '-boolean:'
 		      '\n    truth_value = ' truth_value
@@ -2391,7 +2400,11 @@
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [bug bug]]
-      result]]]
+      [prog [if [not [get result is-boolean]]
+		[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-boolean: result is not boolean.'
+				 '\n    result-type = ' [type result]
+				 '\n    result      = ' result]]
+	    result]]]]
 
 [defplanfunk imagine lookup-slot-value [key_type key]
   [if [or [eq [type key_type] `nonsemantic_plan_value]

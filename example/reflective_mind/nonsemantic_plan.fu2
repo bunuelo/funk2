@@ -228,7 +228,13 @@
 												       actual_type            [type nonsemantic_plan_value]
 												       nonsemantic_plan_value nonsemantic_plan_value]]]]
 	    [get this values]]
-      [new distribution_nonsemantic_plan_value new_values]]]]
+      [let [[result [new distribution_nonsemantic_plan_value new_values]]]
+	[if [get result is-boolean]
+	    result
+	  [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-result_is_not_boolean
+		 is_plan_bug            t
+		 result_type            [type result]
+		 result                 result]]]]]]
 
 [deftypefunk distribution_nonsemantic_plan_value get negative []
   [if [not [get this is-boolean]]

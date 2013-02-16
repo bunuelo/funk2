@@ -332,25 +332,20 @@
       negative]]]
 
 [deftypefunk multiple_possible_values get as-boolean []
-  [let [[contains_true_boolean_value  nil]
-	[contains_false_boolean_value nil]]
-    [let [[nonbug_and_failure_values [get this nonbug_and_failure_values]]]
-      [mapc [funk [nonbug_or_failure_value]
-		  [if [is-type `exact_boolean_nonsemantic_plan_value nonbug_or_failure_value]
-		      [if [get nonbug_or_failure_value value]
-			  [= contains_true_boolean_value t]
-			[= contains_false_boolean_value t]]]]
-	    nonbug_and_failure_values]
-      [if contains_true_boolean_value
-	  [if contains_false_boolean_value
-	      [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]
-						      [new exact_boolean_nonsemantic_plan_value t]]]
-	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value t]]]]
-	[if contains_false_boolean_value
-	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]]]
-	  [error bug_name    `multiple_possible_values-get-as-boolean-no_values_are_boolean
-		 is_plan_bug t
-		 this        this]]]]]]
+  [let [[result_multiple_possible_values [new multiple_possible_values nil]]
+	[nonbug_and_failure_values       [get this nonbug_and_failure_values]]
+	[found_boolean_value             nil]]
+    [mapc [funk [nonbug_or_failure_value]
+		[let [[nonbug_or_failure_value-as-boolean [shelter [get nonbug_or_failure_value as-boolean]]]]
+		  [if [not [is-type `bug nonbug_or_failure_value-as-boolean]]
+		      [prog [= found_boolean_value t]
+			    [have result_multiple_possible_values add_value nonbug_or_failure_value-as-boolean]]]]]
+	  nonbug_and_failure_values]
+    [if found_boolean_value
+	result_multiple_possible_values
+      [error bug_name    `multiple_possible_values-get-as-boolean-no_values_are_boolean
+	     is_plan_bug t
+	     this        this]]]]
 
 [deftypefunk multiple_possible_values get is-boolean []
   [let [[is-boolean nil]]

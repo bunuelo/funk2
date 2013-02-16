@@ -2108,8 +2108,8 @@
 	[mapc [funk [one_condition]
 		    [++ index]
 		    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: considering condition ' index '/' conditions-length ': ' `one_condition]
-		    [if [or [is-type `exact_boolean_nonsemantic_plan_value one_condition]
-			    [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]
+		    [if [not [or [is-type `exact_boolean_nonsemantic_plan_value one_condition]
+				 [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]]
 			[prog [terminal_format standard-terminal
 					       '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
 			      [if [or [eq cause-nonsemantic_plan_execution_mode `execute]

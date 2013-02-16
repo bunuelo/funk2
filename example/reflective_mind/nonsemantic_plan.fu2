@@ -1421,6 +1421,11 @@
 													  [= successful_plans [cons nonbug_plan successful_plans]]]]
 												    [= iter [cdr iter]]]
 												  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: found ' [length successful_plans] ' successful plans.']
+												  [mapc [funk [successful_plan]
+													      [terminal_format standard-terminal
+															       '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: successful plan...'
+															       '\n' '  ' successful_plan]]
+													successful_plans]
 												  `[plan-call ,[get [first successful_plans] value]]]]]
 											  [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
 										argument_decision_nodes]]]]

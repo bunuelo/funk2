@@ -1391,6 +1391,12 @@
 		    [if [not [get [get nonbug_plan value] imagined_complete_failure]]
 			[= successful_plans [cons nonbug_plan successful_plans]]]]
 		  [= iter [cdr iter]]]
+		[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: argument_decision_nodes is null.  found ' [length successful_plans] ' successful plans.']
+		[mapc [funk [successful_plan]
+			    [terminal_format standard-terminal
+					     '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: successful plan'
+					     '\n' '  ' successful_plan]]
+		      successful_plans]
 		[if [null successful_plans]
 		    [error bug_name                        `nonsemantic_plan-get-execution_node_as_code-plan_call-no_good_argument_decision_nodes_and_no_good_plan_values
 			   nonsemantic_plan_execution_node nonsemantic_plan_execution_node

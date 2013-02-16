@@ -34,6 +34,7 @@ f2ptr raw__semantic_planner__type_create(f2ptr cause, f2ptr this, f2ptr semantic
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "execute_plan"),        nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "imagine_plan"),        nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "focus_register"),      nil);
+  raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "return_register"),     nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_a"),          nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_b"),          nil);
   raw__semantic_frame__add(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "register_c"),          nil);
@@ -176,6 +177,28 @@ f2ptr f2__semantic_planner__focus_register__set(f2ptr cause, f2ptr this, f2ptr t
   return raw__semantic_planner__focus_register__set(cause, this, that);
 }
 export_cefunk2(semantic_planner__focus_register__set, this, that, 0, "");
+
+
+f2ptr raw__semantic_planner__return_register(f2ptr cause, f2ptr this) {
+  return raw__semantic_frame__lookup_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "return_register"));
+}
+
+f2ptr f2__semantic_planner__return_register(f2ptr cause, f2ptr this) {
+  assert_argument_type(semantic_planner, this);
+  return raw__semantic_planner__return_register(cause, this);
+}
+export_cefunk1(semantic_planner__return_register, this, 0, "");
+
+
+f2ptr raw__semantic_planner__return_register__set(f2ptr cause, f2ptr this, f2ptr that) {
+  return raw__semantic_frame__replace_type_var_value(cause, this, new__symbol(cause, "relation"), new__symbol(cause, "return_register"), that);
+}
+
+f2ptr f2__semantic_planner__return_register__set(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(semantic_planner, this);
+  return raw__semantic_planner__return_register__set(cause, this, that);
+}
+export_cefunk2(semantic_planner__return_register__set, this, that, 0, "");
 
 
 f2ptr raw__semantic_planner__register_a(f2ptr cause, f2ptr this) {
@@ -477,6 +500,8 @@ f2ptr f2__semantic_planner__primobject_type__new(f2ptr cause) {
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "imagine_plan"),        f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__imagine_plan__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "focus_register"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_register")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "focus_register"),      f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__focus_register__set")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "return_register"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__return_register")));}
+  {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "return_register"),     f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__return_register__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_a"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),                 new__symbol(cause, "register_a"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_a__set")));}
   {f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),                 new__symbol(cause, "register_b"),          f2__core_extension_funk__new(cause, new__symbol(cause, "semantic_planner"), new__symbol(cause, "semantic_planner__register_b")));}

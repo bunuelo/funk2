@@ -237,13 +237,13 @@
 			[call-below 'drop']
 			[wait-for-time 20]]
 		      
-		      [defplan 'goal register A equals goal register B'
-			[goal-register-A-equals-goal-register-B]]
+		      [defplan 'register A equals register B'
+			[register-A-equals-register-B]]
 		      
 		      `['tests']
 		      
-		      [defplan 'test goal register A equals goal register B'
-			[plan-call [plan 'goal register A equals goal register B']]]
+		      [defplan 'test register A equals register B'
+			[plan-call [plan 'register A equals register B']]]
 		      
 		      [defplan 'drop the block I am holding on a pyramid'
 			:matches ['drop the block I am holding on a [? shape]']

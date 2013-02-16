@@ -123,9 +123,11 @@
     this-graph_node]]
 
 [deftypefunk exact_nonsemantic_plan_value get as-boolean []
-  [new exact_boolean_nonsemantic_plan_value [if [get this value]
-						t
-					      nil]]]
+  [if [is-type `bug value]
+      this
+    [new exact_boolean_nonsemantic_plan_value [if [get this value]
+						  t
+						nil]]]]
 
 'exact_boolean_nonsemantic_plan_value'
 

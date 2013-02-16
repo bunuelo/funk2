@@ -471,7 +471,7 @@
 			[if [boolean [focus-register]]
 			    [prog [call-below 'copy focus register to register C']
 				  [call-below 'focus on car object']
-				  `[call-below 'imagine executing plan in focus']
+				  [call-below 'imagine executing plan in focus']
 				  [call-below 'focus on first_hypothesized_to_cause_goal object']
 				  [if [boolean [plan-call [plan 'one of these goals is one of my positive goals']]]
 				      nil

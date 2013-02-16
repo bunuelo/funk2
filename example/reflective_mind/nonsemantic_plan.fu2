@@ -2112,7 +2112,8 @@
 			    [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]
 			[prog [terminal_format standard-terminal
 					       '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
-			      [if [eq cause-nonsemantic_plan_execution_mode `execute]
+			      [if [or [eq cause-nonsemantic_plan_execution_mode `execute]
+				      [eq cause-nonsemantic_plan_execution_mode `imagine]]
 				  [terminal_format standard-terminal
 						   '\n' '  condition-type                          = ' [type one_condition]
 						   '\n' '  condition                               = ' one_condition
@@ -2382,6 +2383,7 @@
 												   correct_type `exact_boolean_nonsemantic_plan_value
 												   actual_type  [type truth_value]
 												   truth_value  truth_value]]]]]]    
+    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-not: truth_value-type=' [type truth_value]]
     `[terminal_format standard-terminal
 		      '\n' [type [get nonsemantic_plan mental_layer]] '-not:'
 		      '\n    truth_value = ' truth_value

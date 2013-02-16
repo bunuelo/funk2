@@ -340,8 +340,18 @@
 	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value t]]]]
 	[if contains_false_boolean_value
 	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]]]
-	  [new multiple_possible_values nil]]]]]]
+	  [error bug_name    multiple_possible_values-get-as-boolean-no_values_are_boolean
+		 is_plan_bug t
+		 this        this]]]]]]
 
+[deftypefunk multiple_possible_values get is-boolean []
+  [let [[is-boolean nil]]
+    [mapc [funk [value]
+		[if [and [not is-boolean]
+			 [get value is-boolean]]
+		    [= is-boolean t]]]
+	  [get this nonbug_and_failure_values]]
+    is-boolean]]
 
 'nonsemantic_plan_execution_node'
 

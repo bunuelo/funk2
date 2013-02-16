@@ -508,6 +508,11 @@
 			[plan-call [plan 'want a cube to be on a pyramid']]
 			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]]
 		      
+		      [defplan 'test go after an old plan to stack a block on a block'
+			[plan-call [plan 'want a pyramid to be on a cube']]
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'find an old plan to acheive one of my positive goals']]]
+		      
 		      [defplan 'test this goal is a positive goal'
 			[plan-call [plan 'this goal is a positive goal']]]
 		      

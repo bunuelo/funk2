@@ -2371,10 +2371,10 @@
 												   is_plan_bug  t
 												   actual_type  [type truth_value]
 												   truth_value  truth_value]]]]]]
-    `[terminal_format standard-terminal
-		      '\n' [type [get nonsemantic_plan mental_layer]] '-boolean:'
-		      '\n    truth_value = ' truth_value
-		      '\n    result      = ' result]
+    [terminal_format standard-terminal
+		     '\n' [type [get nonsemantic_plan mental_layer]] '-boolean:'
+		     '\n    truth_value = ' truth_value
+		     '\n    result      = ' result]
     [if [is-type `bug result]
 	[let [[bug result]]
 	  [bug bug]]

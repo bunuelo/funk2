@@ -424,7 +424,7 @@
 			[register-B     positive-goal]
 			[register-C     plan-iter]]
 		      
-		      [defplan 'register A goal is one of the rest of my positive goals'
+		      [defplan 'register A goal equals one of the rest of my positive goals'
 			[call-below 'focus on cdr object']
 			[if [boolean [focus-register]]
 			    [prog [call-below 'focus on car object']
@@ -432,7 +432,7 @@
 				  [call-below 'focus on reverse_car object']
 				  [if [register-A-equals-register-B]
 				      [boolean t]
-				    [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
+				    [plan-call [plan 'register A goal equals one of the rest of my positive goals']]]]
 			  [boolean nil]]]
 		      
 		      [defplan 'this goal is one of my positive goals'
@@ -443,7 +443,7 @@
 			[call-below 'focus on reverse_car object']
 			[if [register-A-equals-register-B]
 			    [boolean t]
-			  [plan-call [plan 'register A goal is one of the rest of my positive goals']]]]
+			  [plan-call [plan 'register A goal equals one of the rest of my positive goals']]]]
 		      
 		      [defplan 'one of these goals is one of my positive goals'
 			[if [boolean [focus-register]]

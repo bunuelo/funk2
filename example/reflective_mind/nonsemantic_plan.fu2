@@ -2068,7 +2068,12 @@
 		    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: considering condition ' index '/' conditions-length ': ' `one_condition]
 		    [if [not [or [is-type `exact_boolean_nonsemantic_plan_value one_condition]
 				 [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]]
-			[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
+			[prog [terminal_format standard-terminal
+					       '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
+			      [if [eq cause-nonsemantic_plan_execution_mode `execute]
+				  [terminal_format standard-terminal
+						   '\n' '  condition-type=' [type one_condition]
+						   '\n' '  condition     =' one_condition]]]
 		      [if [is-type `nonsemantic_plan_value one_condition]
 			  [let [[evaluate_true_branch  nil]
 				[evaluate_false_branch nil]]

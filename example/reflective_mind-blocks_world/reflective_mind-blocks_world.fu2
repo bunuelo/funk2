@@ -489,7 +489,7 @@
 				  [if [boolean [plan-call [plan 'one of these goals is one of my positive goals']]]
 				      nil
 				    [prog [call-below 'copy register C to focus register']
-					  [call-below 'focus on cdr object']
+					  [call-below 'focus on reverse_cdr object']
 					  [plan-call [plan 'find one of these old plans that is hypothesized to acheive one of my positive goals']]]]]
 			  [fail]]]
 		      

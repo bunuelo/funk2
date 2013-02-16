@@ -237,12 +237,6 @@
 			[call-below 'drop']
 			[wait-for-time 20]]
 		      
-		      [defplan 'drop the block I am holding on a pyramid'
-			:matches ['drop the block I am holding on a [? shape]']
-			 :frame [[shape pyramid]]
-			  [plan-call [plan 'move until over [? shape]']]
-			  [plan-call [plan 'drop block and wait for block to fall']]]
-		      
 		      [defplan 'goal register A equals goal register B'
 			[goal-register-A-equals-goal-register-B]]
 		      
@@ -250,6 +244,17 @@
 		      
 		      [defplan 'test goal register A equals goal register B'
 			[plan-call [plan 'goal register A equals goal register B']]]
+		      
+		      [defplan 'drop the block I am holding on a pyramid'
+			:matches ['drop the block I am holding on a [? shape]']
+			 :frame [[shape pyramid]]
+			  [plan-call [plan 'move until over [? shape]']]
+			  [plan-call [plan 'drop block and wait for block to fall']]]
+		      
+		      `['last plan']
+		      
+		      [defplan 'test stack a pyramid on a cube'
+			[plan-call [plan 'stack a pyramid on a cube']]]
 		      
 		      ]]
 	 
@@ -484,7 +489,7 @@
 			[if [boolean [focus-register]]
 			    [prog [call-below 'copy focus register to register C']
 				  [call-below 'focus on car object']
-				  `[call-below 'imagine executing plan in focus']
+				  [call-below 'imagine executing plan in focus']
 				  [call-below 'focus on first_hypothesized_to_cause_goal object']
 				  [if [boolean [plan-call [plan 'one of these goals is one of my positive goals']]]
 				      nil

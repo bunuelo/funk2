@@ -229,7 +229,12 @@
 	   [negative-nonsemantic_plan_value_to_log_probability_ptypehash [get negative nonsemantic_plan_value_to_log_probability_ptypehash]]]
       [mapc [funk [nonsemantic_plan_value]
 		  [cond [[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [have negative-nonsemantic_plan_value_to_log_probability_ptypehash add [get nonsemantic_plan_value negative] [get this lookup_value_log_probability nonsemantic_plan_value]]]
-			[[is-type `multiple_possible_values             nonsemantic_plan_value] [have negative-nonsemantic_plan_value_to_log_probability_ptypehash add [get nonsemantic_plan_value negative] [get this lookup_value_log_probability nonsemantic_plan_value]]]
+			[[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [not [null [get boolean values]]]
+												      [have negative-nonsemantic_plan_value_to_log_probability_ptypehash add [get nonsemantic_plan_value negative] [get this lookup_value_log_probability nonsemantic_plan_value]]]]]
+			[[is-type `multiple_possible_values             nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [not [null [get boolean values]]]
+												      [have negative-nonsemantic_plan_value_to_log_probability_ptypehash add [get nonsemantic_plan_value negative] [get this lookup_value_log_probability nonsemantic_plan_value]]]]]
 			[t                                                                      [error bug_name               `distribution_nonsemantic_plan_value-get-negative-nonsemantic_plan_value_is_not_boolean
 												       nonsemantic_plan_value nonsemantic_plan_value
 												       actual_type            [type nonsemantic_plan_value]

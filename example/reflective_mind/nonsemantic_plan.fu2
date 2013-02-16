@@ -348,7 +348,7 @@
 	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value t]]]]
 	[if contains_false_boolean_value
 	    [new multiple_possible_values [conslist [new exact_boolean_nonsemantic_plan_value nil]]]
-	  [error bug_name    multiple_possible_values-get-as-boolean-no_values_are_boolean
+	  [error bug_name    `multiple_possible_values-get-as-boolean-no_values_are_boolean
 		 is_plan_bug t
 		 this        this]]]]]]
 

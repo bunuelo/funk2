@@ -835,8 +835,8 @@
 												 register_b]]]
 									   [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value return_value]]]]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: imagining register_a_equals_register_b (both possibilities)']
-								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value t]]
-								     [have result_multiple_possible_values add_value [new exact_boolean_nonsemantic_plan_value nil]]]]
+								     [have result_multiple_possible_values add_value [new distribution_nonsemantic_plan_value [conslist [new exact_boolean_nonsemantic_plan_value t]
+																					[new exact_boolean_nonsemantic_plan_value nil]]]]]]
 	  [t                                                   [error bug_name               `nonsemantic_plan-register_a_equals_register_b-invalid_execution_mode
 								      execution_mode         cause-nonsemantic_plan_execution_mode]]]
     result_multiple_possible_values]]

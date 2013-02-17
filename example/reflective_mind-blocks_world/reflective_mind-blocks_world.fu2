@@ -490,10 +490,7 @@
 			    [prog [call-below 'copy focus register to register C']
 				  [call-below 'focus on car object']
 				  [call-below 'imagine executing plan in focus']
-				  [call-below 'focus on first_hypothesized_to_cause_goal object']
-				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
-				      nil
-				    nil]]
+				  [call-below 'focus on first_hypothesized_to_cause_goal object']]
 			  [fail]]]
 		      
 		      [defplan 'find one of these old plans that is hypothesized to acheive one of my positive goals'

@@ -3,41 +3,44 @@
 \label{chapter:introduction}
 %************************************************
 
-A basic AI algorithm thinks about a problem domain, learning the
+An intelligent system thinks about a problem domain, learning the
 effects of its actions, constructing and executing plans to accomplish
 its goals.  I will refer to this type of thinking about a problem
-domain as deliberative thinking.  A reflective AI extends the
-deliberative AI by not only learning to accomplish goals in the
-problem domain, but also learning to accomplish goals in its own
+domain as deliberative thinking.  A reflective intelligence extends
+the deliberative intelligence by not only learning to accomplish goals
+in the problem domain but also learning to accomplish goals in its own
 deliberative thinking process.  Reflective thinking is sometimes
 referred to as ``thinking about thinking'' or ``metacognition.''  A
-reflective AI can generally learn to select between different types of
-thinking that are appropriate for generating plans toward different
-types of goals.  The Substrate for Accountable Layered Systems (SALS)
-is an open-source software platform
+reflective intelligence can generally learn to select between
+different types of thinking that are appropriate for generating plans
+toward different types of goals.  The Substrate for Accountable
+Layered Systems (SALS) is an open-source software
 \begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_large-01}
   \caption[An example problem domain.]{An example problem domain.}
   \label{figure:introduction_example_problem_domain}
 \end{wrapfigure}
-for the development of experimental reflective AIs.  There are many
-AIs that provide explanations for how to accomplish goals or gather
-rewards in a domain.  A basic deliberative AI system consists of three
-processes: {\mbox{(1)~perceptual}} data are generalized and
-categorized to learn induced abstract models, {\mbox{(2)~abstract}}
-models are used to infer expected hypothetical states, i.e. states of
-future, past, or otherwise ``hidden'' variables, {\mbox{(3)~actions}}
-are chosen based on considerations of different action and hypothesis
-dependent inferences.  While there are many types of machine learning
-algorithms that focus on this abstract 3-step closed-loop process of
-learning to control, the field of computational metacognition
+platform for the development of experimental reflective Artificial
+Intelligences (AI).  There are many AIs that provide explanations for
+how to accomplish goals or gather rewards in a domain.  A basic
+deliberative AI system consists of three processes:
+{\mbox{(1)~perceptual}} data are generalized and categorized to learn
+induced abstract models, {\mbox{(2)~abstract}} models are used to
+infer expected hypothetical states, i.e. states of future, past, or
+otherwise ``hidden'' variables, {\mbox{(3)~actions}} are chosen based
+on considerations of different action and hypothesis dependent
+inferences.  While there are many types of machine learning algorithms
+that focus on this abstract 3-step closed-loop process of learning to
+control, the field of computational metacognition
 \cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
-layers of closed-loop systems.  The first closed-loop learning
-algorithm learns how to deal with the external world, while the second
-closed-loop learning algorithm perceives and controls the state of the
-first layer learner.  While it may be clear how to trace the inputs to
-the first layer learner, it is less than clear how the second layer
-learner should monitor the state of the first layer learner.
+layers of closed-loop systems.  Deliberative thinking is here modelled
+as a closed-loop learning algorithm that perceives and learns to
+control the external world, while reflective thinking is modelled as a
+second closed-loop learning algorithm that perceives and learns to
+control the deliberative thinking process.  While it may be clear how
+to trace the inputs to deliberative thinking, it is less than clear
+how reflective thinking should monitor the state of deliberative
+thinking.
 
 \section{Contributions}
 
@@ -60,15 +63,17 @@ The four contributions of this thesis are:
 \item \emph{Learning from Being Told Natural Language Plans}: The
   implementation includes the ability to interpret and imagine
   executing natural language commands by using analogies to natural
-  language plans that it already knows.  In this case, ``being told''
-  means that a natural language plan is programmed into the AI by the
-  user.  Successfully interpreting and imagining the execution of a
-  natural language expression results in a compiled program that is
-  ready for execution as well as a collection of guesses as to what
-  the effects of the plan may be.  These guesses are based on what
-  partial states the plan checks for in the control domain as well as
-  rules learned from previous executions of similar actions in the
-  past.
+  language plans that it already knows.  Natural language is not
+  modeled as a general grammar, as in \cite{winograd:1970}, but
+  instead as a simple string processing functional grammar.  In this
+  case, ``being told'' means that a natural language plan is
+  programmed into the AI by the user.  Successfully interpreting and
+  imagining the execution of a natural language expression results in
+  a compiled program that is ready for execution as well as a
+  collection of guesses as to what the effects of the plan may be.
+  These guesses are based on what partial states the plan checks for
+  in the control domain as well as rules learned from previous
+  executions of similar actions in the past.
 \item \emph{Learning Asynchronously from Experience}: Learning from
   ``being told'' simply gives the system new ambiguous natural
   language ideas for plans, while learning from experience gives the
@@ -211,7 +216,7 @@ what the AI might learn from this story, the AI might think:
 The fact that the AI failed at both the deliberative and reflective
 levels allowed the AI to learn two new sets of hypotheses: (1) about
 physical actions, and (2) about deliberative actions.  The fact that
-more can always be learned by adding a reflective layer to a learning
+more can be learned by adding a reflective layer to a learning
 algorithm is inspiration for researching reflective machine learning
 in those domains where physically acting is relatively costly while
 thinking is relatively cheap.  Now, see how the reflective AI
@@ -298,24 +303,37 @@ knowledge.
 \item{A cube is to the left of a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Deliberative Knowledge} & \begin{packed_itemize}
-\item{A deliberative planner has the goal for a cube to be on a
-  pyramid.}
-\item{A deliberative planner is focusing on a deliberative plan that
-  has failed in execution.}
-\item{The next deliberative plan has not been imagined.}
-\item{A deliberative planner is focusing on a deliberative plan that
-  is hypothesized to cause a cube to be on a pyramid.}
+\item{Goal 1 is for a cube to be on a pyramid.}
+\item{Plan 1 is to stack a pyramid on a cube.}
+\item{Plan 1 fails for Goal 1.}
+\item{Goal 2 is for a pyramid to be on a cube.}
+\item{Plan 1 succeeds for Goal 2.}
+%% \item{A deliberative planner has the goal for a cube to be on a
+%%   pyramid.}
+%% \item{A deliberative planner is focusing on a deliberative plan that
+%%   has failed in execution.}
+%% \item{The next deliberative plan has not been imagined.}
+%% \item{A deliberative planner is focusing on a deliberative plan that
+%%   is hypothesized to cause a cube to be on a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Reflective Knowledge}   & \begin{packed_itemize}
-\item{A reflective planner is focusing on a reflective plan that has
-  failed in execution.}
-\item{A reflective planner has the negative goal to avoid a
-  deliberative planner being focused on a deliberative plan that has
-  failed in execution.}
-\item{The next reflective plan has not been imagined.}
-\item{A reflective planner has the reflective goal for a deliberative
-  planner to be focusing on a deliberative plan that is hypothesized
-  to cause a cube to on a pyramid.}
+\item{Goal 3 is to avoid a deliberative planner being focused on a
+  deliberative plan that has failed in execution.}
+\item{Plan 2 is to find a recent plan to acheive one of my positive
+  goals.}
+\item{Plan 2 fails for Goal 3.}
+\item{Plan 3 is to find an old plan to acheive one of my positive
+  goals.}
+\item{Plan 3 did not fail for Goal 3.}
+%% \item{A reflective planner is focusing on a reflective plan that has
+%%   failed in execution.}
+%% \item{A reflective planner has the negative goal to avoid a
+%%   deliberative planner being focused on a deliberative plan that has
+%%   failed in execution.}
+%% \item{The next reflective plan has not been imagined.}
+%% \item{A reflective planner has the reflective goal for a deliberative
+%%   planner to be focusing on a deliberative plan that is hypothesized
+%%   to cause a cube to on a pyramid.}
 \end{packed_itemize} \\
 \hline
 \end{tabular}

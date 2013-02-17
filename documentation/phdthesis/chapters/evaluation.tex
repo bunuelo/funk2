@@ -3,234 +3,253 @@
 \label{chapter:evaluation}
 %************************************************
 
-This dissertation consists of four contributions that work together to
-form the SALS AI.  From the low-level virtual machine and Lisp-like
-programming language to the reflective and super-reflective layers of
-the Emotion Machine cognitive architecture, it is difficult to
-evaluate all aspects of the SALS AI by a single simple metric.
-Therefore, this chapter presents a number of different metrics that
-are used to measure all of the four contributions presented in this
-dissertation:
-\begin{packed_enumerate}
-\item{\emph{Emotion Machine Cognitive Architecture}: The primary
-  contribution of this thesis is a recursive implementation of a
-  reflective planning layer that controls a deliberative planning
-  process.  Because of the recursive nature of the implementation, a
-  super-reflective layer is also used to control and learn about the
-  reflective planning process.  The benefit of adding each additional
-  reflective layer is that more can be learned from each deliberative
-  failure by adding each additional reflective layer, but there is a
-  computational trade-off in that each additional reflective layer
-  also increases the computational complexity of the overall
-  architecture.  This chapter evaluates the Emotion Machine cognitive
-  architectural component of the SALS AI by asking the following
-  question: What is the increase in computational complexity
-  introduced by adding additional reflective planning layers to the
-  basic deliberative planning process?  The answer to this question is
-  not at first obvious because of the exponentially larger state-space
-  confronted by each higher planning layer.  The result is that each
-  additional layer adds a roughly linear increase in computational
-  complexity to the overall architecture.  This chapter discusses how
-  the increased computational complexity of each additional reflective
-  planning layer is kept from becoming exponential in the SALS AI.
-  This chapter also discusses how using concurrent hardware in order
-  to separately simulate each additional reflective layer has the
-  potential to reduce the overall time-complexity of the architecture
-  to sub-linear per additional layer.}
-\item{\emph{Learning from Being Told Natural Language Plans}: The
-  ability of each planning layer in the SALS AI to interpret and
-  imagine the effects of ambiguous natural language plans relies on a
-  search through possible interpretations of each natural language
-  phrase in any given plan.  This search would quickly become
-  intractable if it were not controlled by a number of different types
-  of low-level programmatic constraints.  Only those natural language
-  plan interpretations that make programmatic sense according to these
-  constraints are further considered for imagination or execution.  In
-  practice, each low-level constraint helps to reduce the overall
-  search complexity by varying amounts depending on the domain of
-  control, whether the natural language plan is describing a control
-  process for the physical, deliberative, or reflective knowledge
-  domains.  This chapter shows empirical results that compare the size
-  of the overall natural language plan interpretation search with and
-  without each of these constraints for the control of each knowledge
-  domain in the SALS AI.  This chapter also discusses the trade-offs
-  between introducing language specific constraints, such as
-  English-only semantics or syntax, versus purely programmatic
-  constraints that keep the SALS natural planning language as it is
-  currently applicable to all natural human languages.}
-\item{\emph{Learning Asynchronously from Experience}: The ability of
-  each planning layer in the SALS AI to asynchronously abstract the
-  partial state events in its control knowledge domain as well as
-  asynchronously learn rule-based causal models of resource
-  activations of the layer below introduces two potentially
-  problematic scaling factors for the computational complexity of the
-  overall SALS AI.  Firstly, the number of partial states in arbitrary
-  knowledge domains could in the worst case introduce a factorial
-  growth with the size of the knowledge domain and the size of the
-  partial states being abstracted.  As factorial growth would be an
-  intractable scaling factor for the computational complexity, this
-  chapter shows empirical evidence for the actual scaling factors for
-  abstracting partial states from each of the control knowledge
-  domains, including the physical, deliberative, and reflective
-  knowledge domains.  The causal hypothesis rule-learning algorithm
-  could potentially even have a worse scaling factor that is a
-  multiplier on the number of partial states abstracted in the first
-  asynchronous stage in the SALS AI's learning from experience.  This
-  chapter will also present empirical evidence of the actual scaling
-  factor introduced by the conjunctive rule-learning algorithm
-  employed in learning causal models of resource activations in the
-  SALS AI for each planning layer, including the deliberative,
-  reflective, and super-reflective layers.}
-\item{\emph{Virtual Machine and Programming Language}: The SALS AI is
-  constructed on a low-level virtual machine and Lisp-like programming
-  language that takes advantage of multithreaded and multicore CPUs.
-  The SALS virtual machine executes concurrent bytecode processes that
-  are called ``fibers,'' which are an abstraction of the POSIX threads
-  provided by the underlying operating system.  In order to minimize
-  hyperthread-specific cache-miss effects for each concurrently
-  executing fiber, a separate memory pool is allocated for each
-  hardware hyperthread in each CPU core in the underlying hardware
-  platform.  The SALS virtual machine performs dynamic load balancing
-  in order to take advantage of as many CPU cores as possible while
-  executing multiple fibers.  Also, the SALS virtual machine includes
-  a concurrent tricolor garbage collection algorithm that has been
-  optimized to be used over multiple memory pools.  In a perfect
-  symmetric multiprocessing (SMP) system, executing $N$ fibers on $N$
-  processors should have a constant time-complexity, but modern
-  multithreaded and multicore CPUs have shared caches between
-  hyperthreads and cores, which makes systems based on these CPUs less
-  than ideal SMPs.  Furthermore, mutual exclusion (mutex) locks
-  required for garbage collection slow down garbage collection across
-  multiple memory pools by a factor depending on the number of
-  cross-references between pools.  This chapter empirically evaluates
-  how the SALS virtual machine performs at minimizing these cache-miss
-  and locking effects on an Intel Core i7 CPU, which has 4 cores, each
-  with 2 hyperthreads, while executing various numbers of concurrent
-  fibers.}
-\end{packed_enumerate}
+The primary contribution of this thesis is a recursive implementation
+of a reflective planning layer that controls a deliberative planning
+process.  Because of the recursive nature of the implementation, a
+super-reflective layer is also used to control and learn about the
+reflective planning process.  The benefit of adding each additional
+reflective layer is that more can be learned from each deliberative
+failure by adding each additional reflective layer, but there is a
+computational trade-off in that each additional reflective layer also
+increases the computational complexity of the overall architecture.
+This chapter evaluates the Emotion Machine cognitive architectural
+component of the SALS AI by asking the following question: What is the
+increase in computational complexity introduced by adding additional
+reflective planning layers to the basic deliberative planning process?
 
-\section{Computational Complexity of Reflective Layers}
+%% \section{Old Stuff}
 
-The SALS AI consists of 100 parallel heterogeneous resources,
-organized into 29 agencies, which comprise the 5 layers.  The causal
-procedurally reflective tracing features of the SALS virtual machine
-that have been described in
-{\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}
-allow for the run-time evaluation of each separate causally scoped
-component of the SALS AI.  In the evaluation of the complexity of each
-additional reflective layer, the following execution events are
-measured:
-\begin{packed_enumerate}
-\item{Memory Allocation in Bytes}
-\item{Garbage Collection in Bytes}
-\item{Bytecode Execution Count}
-\item{Semantic Frame Slot Mutations}
-\item{Plan Interpretation Nodes Considered}
-\item{Analogical Plan Matches Considered}
-\end{packed_enumerate}
-Each planning layer in the SALS AI can be used to specify very similar
-types of goals.  For example, consider the following three different
-pieces of knowledge:
-\begin{packed_enumerate}
-\item{``A pyramid is on a cube.''}
-\item{``A deliberative planner has the positive goal for a pyramid to
-  be on a cube.''}
-\item{``A reflective planner has the positive goal for a deliberative
-  planner to have the positive goal for a pyramid to be on a cube.''}
-\end{packed_enumerate}
-This is the feared, worst-case scenario that the analogical language
-interpretation process in each subsequently higher reflective layer of
-reasoning becomes an exponentially more difficult problem.  In
-general, however, this is not true because reflective reasoning does
-not and in practice often does not involve directly interpreting these
-types of exponentially more difficult natural language interpretation
-problems.  This is because reflective natural language plans are very
-rarely directly about specific states of knowledge in the physical
-knowledge base as in these examples.  Usually, reflective knowledge is
-about much simpler partial states of the deliberative planning machine
-that do not involve any physical knowledge at all.  For example,
-consider the following pieces of knowledge:
-\begin{packed_enumerate}
-\item{``A deliberative planner is focused on a plan that has failed.''}
-\item{``A reflective planner is focused on a plan that has failed.''}
-\end{packed_enumerate}
+%% This dissertation consists of four contributions that work together to
+%% form the SALS AI.  From the low-level virtual machine and Lisp-like
+%% programming language to the reflective and super-reflective layers of
+%% the Emotion Machine cognitive architecture, it is difficult to
+%% evaluate all aspects of the SALS AI by a single simple metric.
+%% Therefore, this chapter presents a number of different metrics that
+%% are used to evaluate the four contributions:
+%% \begin{packed_enumerate}
+%% \item{\emph{Emotion Machine Cognitive Architecture}: The primary
+%%   contribution of this thesis is a recursive implementation of a
+%%   reflective planning layer that controls a deliberative planning
+%%   process.  Because of the recursive nature of the implementation, a
+%%   super-reflective layer is also used to control and learn about the
+%%   reflective planning process.  The benefit of adding each additional
+%%   reflective layer is that more can be learned from each deliberative
+%%   failure by adding each additional reflective layer, but there is a
+%%   computational trade-off in that each additional reflective layer
+%%   also increases the computational complexity of the overall
+%%   architecture.  This chapter evaluates the Emotion Machine cognitive
+%%   architectural component of the SALS AI by asking the following
+%%   question: What is the increase in computational complexity
+%%   introduced by adding additional reflective planning layers to the
+%%   basic deliberative planning process?}
+%% \item{\emph{Learning from Being Told Natural Language Plans}: The
+%%   ability of each planning layer in the SALS AI to interpret and
+%%   imagine the effects of ambiguous natural language plans relies on a
+%%   search through possible interpretations of each natural language
+%%   phrase in any given plan.  This search would quickly become
+%%   intractable if it were not controlled by a number of different types
+%%   of low-level programmatic constraints.  Only those natural language
+%%   plan interpretations that make programmatic sense according to these
+%%   constraints are further considered for imagination or execution.  In
+%%   practice, each low-level constraint helps to reduce the overall
+%%   search complexity by varying amounts depending on the domain of
+%%   control, whether the natural language plan is describing a control
+%%   process for the physical, deliberative, or reflective knowledge
+%%   domains.  This chapter shows empirical results that compare the size
+%%   of the overall natural language plan interpretation search with and
+%%   without each of these constraints for the control of each knowledge
+%%   domain in the SALS AI.  This chapter also discusses the trade-offs
+%%   between introducing language specific constraints, such as
+%%   English-only semantics or syntax, versus purely programmatic
+%%   constraints that keep the SALS natural planning language as it is
+%%   currently applicable to all natural human languages.}
+%% \item{\emph{Learning Asynchronously from Experience}: The ability of
+%%   each planning layer in the SALS AI to asynchronously abstract the
+%%   partial state events in its control knowledge domain as well as
+%%   asynchronously learn rule-based causal models of resource
+%%   activations of the layer below introduces two potentially
+%%   problematic scaling factors for the computational complexity of the
+%%   overall SALS AI.  Firstly, the number of partial states in arbitrary
+%%   knowledge domains could in the worst case introduce a factorial
+%%   growth with the size of the knowledge domain and the size of the
+%%   partial states being abstracted.  As factorial growth would be an
+%%   intractable scaling factor for the computational complexity, this
+%%   chapter shows empirical evidence for the actual scaling factors for
+%%   abstracting partial states from each of the control knowledge
+%%   domains, including the physical, deliberative, and reflective
+%%   knowledge domains.  The causal hypothesis rule-learning algorithm
+%%   could potentially even have a worse scaling factor that is a
+%%   multiplier on the number of partial states abstracted in the first
+%%   asynchronous stage in the SALS AI's learning from experience.  This
+%%   chapter will also present empirical evidence of the actual scaling
+%%   factor introduced by the conjunctive rule-learning algorithm
+%%   employed in learning causal models of resource activations in the
+%%   SALS AI for each planning layer, including the deliberative,
+%%   reflective, and super-reflective layers.}
+%% \item{\emph{Virtual Machine and Programming Language}: The SALS AI is
+%%   constructed on a low-level virtual machine and Lisp-like programming
+%%   language that takes advantage of multithreaded and multicore CPUs.
+%%   The SALS virtual machine executes concurrent bytecode processes that
+%%   are called ``fibers,'' which are an abstraction of the POSIX threads
+%%   provided by the underlying operating system.  In order to minimize
+%%   hyperthread-specific cache-miss effects for each concurrently
+%%   executing fiber, a separate memory pool is allocated for each
+%%   hardware hyperthread in each CPU core in the underlying hardware
+%%   platform.  The SALS virtual machine performs dynamic load balancing
+%%   in order to take advantage of as many CPU cores as possible while
+%%   executing multiple fibers.  Also, the SALS virtual machine includes
+%%   a concurrent tricolor garbage collection algorithm that has been
+%%   optimized to be used over multiple memory pools.  In a perfect
+%%   symmetric multiprocessing (SMP) system, executing $N$ fibers on $N$
+%%   processors should have a constant time-complexity, but modern
+%%   multithreaded and multicore CPUs have shared caches between
+%%   hyperthreads and cores, which makes systems based on these CPUs less
+%%   than ideal SMPs.  Furthermore, mutual exclusion (mutex) locks
+%%   required for garbage collection slow down garbage collection across
+%%   multiple memory pools by a factor depending on the number of
+%%   cross-references between pools.  This chapter empirically evaluates
+%%   how the SALS virtual machine performs at minimizing these cache-miss
+%%   and locking effects on an Intel Core i7 CPU, which has 4 cores, each
+%%   with 2 hyperthreads, while executing various numbers of concurrent
+%%   fibers.}
+%% \end{packed_enumerate}
 
-{\mbox{\autoref{table:plan_interpretation_computational_complexity_of_layers}}}
-shows measures of computational complexity for each planning layer in
-SALS AI as it goes through the learning scenario presented in the
-introduction to this dissertation.
-\begin{table}
-\centering
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-                 &Alloc &GC &BC &Mutate \\
-\hline
-Deliberative     &      &   &   &       \\
-\hline
-Reflective       &      &   &   &       \\
-\hline
-Super Reflective &      &   &   &       \\
-\hline
-\end{tabular}
-\caption{Computational complexity of plan interpretation for each
-  planning layer.}
-\label{table:plan_interpretation_computational_complexity_of_layers}
-\end{table}
-In order to measure the increase in computational complexity
-introduced by adding additional reflective planning layers to the
-basic deliberative planning process,   While more can be learned from
-each deliberative failure by adding additional reflective planning
-layers, each additional reflective layer also increases the
-computational complexity of the overall architecture.  First, let us
-consider the computational complexity of the deliberative planning
-layer.
+%% \section{Computational Complexity of Reflective Layers}
 
-The answer to this question is not at first obvious because of the
-exponentially larger state-space confronted by each higher planning
-layer.
+%% What is the increase in computational complexity introduced by adding
+%% additional reflective planning layers to the basic deliberative
+%% planning process?  The answer to this question is not at first obvious
+%% because of the exponentially larger state-space confronted by each
+%% higher planning layer.  The result is that each additional layer adds
+%% a roughly linear increase in computational complexity to the overall
+%% architecture.  This chapter discusses how the increased computational
+%% complexity of each additional reflective planning layer is kept from
+%% becoming exponential in the SALS AI.  This chapter also discusses how
+%% using concurrent hardware in order to separately simulate each
+%% additional reflective layer has the potential to reduce the overall
+%% time-complexity of the architecture to sub-linear per additional
+%% layer.
 
-The result is that each additional layer adds a roughly linear
-increase in computational complexity to the overall architecture.
+%% The SALS AI consists of 100 parallel heterogeneous resources,
+%% organized into 29 agencies, which comprise the 5 layers.  The causal
+%% procedurally reflective tracing features of the SALS virtual machine
+%% that have been described in
+%% {\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}
+%% allow for the run-time evaluation of each separate causally scoped
+%% component of the SALS AI.  In the evaluation of the complexity of each
+%% additional reflective layer, the following execution events are
+%% measured:
+%% \begin{packed_enumerate}
+%% \item{Memory Allocation in Bytes}
+%% \item{Garbage Collection in Bytes}
+%% \item{Bytecode Execution Count}
+%% \item{Semantic Frame Slot Mutations}
+%% \item{Plan Interpretation Nodes Considered}
+%% \item{Analogical Plan Matches Considered}
+%% \end{packed_enumerate}
+%% Each planning layer in the SALS AI can be used to specify very similar
+%% types of goals.  For example, consider the following three different
+%% pieces of knowledge:
+%% \begin{packed_enumerate}
+%% \item{``A pyramid is on a cube.''}
+%% \item{``A deliberative planner has the positive goal for a pyramid to
+%%   be on a cube.''}
+%% \item{``A reflective planner has the positive goal for a deliberative
+%%   planner to have the positive goal for a pyramid to be on a cube.''}
+%% \end{packed_enumerate}
+%% This is the feared, worst-case scenario that the analogical language
+%% interpretation process in each subsequently higher reflective layer of
+%% reasoning becomes an exponentially more difficult problem.  In
+%% general, however, this is not true because reflective reasoning does
+%% not and in practice often does not involve directly interpreting these
+%% types of exponentially more difficult natural language interpretation
+%% problems.  This is because reflective natural language plans are very
+%% rarely directly about specific states of knowledge in the physical
+%% knowledge base as in these examples.  Usually, reflective knowledge is
+%% about much simpler partial states of the deliberative planning machine
+%% that do not involve any physical knowledge at all.  For example,
+%% consider the following pieces of knowledge:
+%% \begin{packed_enumerate}
+%% \item{``A deliberative planner is focused on a plan that has failed.''}
+%% \item{``A reflective planner is focused on a plan that has failed.''}
+%% \end{packed_enumerate}
 
-This chapter discusses how the increased computational complexity of
-each additional reflective planning layer is kept from becoming
-exponential in the SALS AI.
+%% {\mbox{\autoref{table:plan_interpretation_computational_complexity_of_layers}}}
+%% shows measures of computational complexity for each planning layer in
+%% SALS AI as it goes through the learning scenario presented in the
+%% introduction to this dissertation.
+%% \begin{table}
+%% \centering
+%% \begin{tabular}{|l|l|l|l|l|}
+%% \hline
+%%                  &Alloc &GC &BC &Mutate \\
+%% \hline
+%% Deliberative     &      &   &   &       \\
+%% \hline
+%% Reflective       &      &   &   &       \\
+%% \hline
+%% Super Reflective &      &   &   &       \\
+%% \hline
+%% \end{tabular}
+%% \caption{Computational complexity of plan interpretation for each
+%%   planning layer.}
+%% \label{table:plan_interpretation_computational_complexity_of_layers}
+%% \end{table}
+%% In order to measure the increase in computational complexity
+%% introduced by adding additional reflective planning layers to the
+%% basic deliberative planning process,   While more can be learned from
+%% each deliberative failure by adding additional reflective planning
+%% layers, each additional reflective layer also increases the
+%% computational complexity of the overall architecture.  First, let us
+%% consider the computational complexity of the deliberative planning
+%% layer.
 
-This chapter also discusses how using concurrent hardware in order to
-separately simulate each additional reflective layer has the potential
-to reduce the overall time-complexity of the architecture to
-sub-linear per additional layer.
+%% The answer to this question is not at first obvious because of the
+%% exponentially larger state-space confronted by each higher planning
+%% layer.
 
-\section{Computational Scaling of Natural Language Interpretation Constraints}
+%% The result is that each additional layer adds a roughly linear
+%% increase in computational complexity to the overall architecture.
 
-\section{Computational Scaling of Partial State Abstraction and Rule-Learning}
+%% This chapter discusses how the increased computational complexity of
+%% each additional reflective planning layer is kept from becoming
+%% exponential in the SALS AI.
 
-Given that each planning layer in the SALS AI is based on perceiving
-and acting based on the existence or non-existence of partial states
-in the knowledge base that is being controlled by the planning layer,
-the state-space of the control domain that is perceived and reacted to
-by a planning layer is directly related to the number of partial
-states that can be abstracted from this control domain.  For example,
-if we consider that the knowledge base that is being controlled by a
-given planning layer is represented as a graph, which is not exactly
-correct but will suit our purposes here, the set of partial states
-that can be abstracted from this control domain includes a subset of
-all possible subgraphs of this graph representation.  In order to
-avoid an intractable number of partial states being automatically
-abstracted from a given knowledge base, the types of partial states
-that the SALS AI abstracts are limited to the ``relationship'' and
-``property'' types of partial states described in
-{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
-These simple types of partial states limit the complexity
+%% This chapter also discusses how using concurrent hardware in order to
+%% separately simulate each additional reflective layer has the potential
+%% to reduce the overall time-complexity of the architecture to
+%% sub-linear per additional layer.
+
+%% \section{Computational Scaling of Natural Language Interpretation Constraints}
+
+%% \section{Computational Scaling of Partial State Abstraction and Rule-Learning}
+
+%% Given that each planning layer in the SALS AI is based on perceiving
+%% and acting based on the existence or non-existence of partial states
+%% in the knowledge base that is being controlled by the planning layer,
+%% the state-space of the control domain that is perceived and reacted to
+%% by a planning layer is directly related to the number of partial
+%% states that can be abstracted from this control domain.  For example,
+%% if we consider that the knowledge base that is being controlled by a
+%% given planning layer is represented as a graph, which is not exactly
+%% correct but will suit our purposes here, the set of partial states
+%% that can be abstracted from this control domain includes a subset of
+%% all possible subgraphs of this graph representation.  In order to
+%% avoid an intractable number of partial states being automatically
+%% abstracted from a given knowledge base, the types of partial states
+%% that the SALS AI abstracts are limited to the ``relationship'' and
+%% ``property'' types of partial states described in
+%% {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
+%% These simple types of partial states limit the complexity
 
 
 
-%\begin{equation}
-%({2^n}-1)\left(\frac{n(n-1)}{2}\right)^{\ell}
-%\end{equation}
+%% %\begin{equation}
+%% %({2^n}-1)\left(\frac{n(n-1)}{2}\right)^{\ell}
+%% %\end{equation}
 
 
-\section{Computational Scaling of Concurrent Processing Hardware}
+%% \section{Computational Scaling of Concurrent Processing Hardware}
 
 
 %% \section{old stuff}

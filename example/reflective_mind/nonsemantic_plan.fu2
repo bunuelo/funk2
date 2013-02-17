@@ -232,21 +232,35 @@
     [let [[new_values nil]]
       [mapc [funk [nonsemantic_plan_value]
 		  [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
-												  [if [not [null [get boolean values]]]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found boolean value: ' nonsemantic_plan_value]
+												  [if [get boolean is-boolean]
+												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted multiple_possible_values to boolean...'
+															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found non-boolean value: ' nonsemantic_plan_value]]]]
+												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of multiple_possible_values failed...'
+														     '\n  ' boolean]]]]
 			[[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
-												  [if [not [null [get boolean values]]]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found boolean value: ' nonsemantic_plan_value]
+												  [if [get boolean is-boolean]
+												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted distribution_nonsemantic_value to boolean...'
+															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found non-boolean value: ' nonsemantic_plan_value]]]]
-			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found boolean value: ' nonsemantic_plan_value]
+												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of distribution_nonsemantic_value failed...'
+														     '\n  ' nonsemantic_plan_value]]]]
+			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean using boolean value: ' nonsemantic_plan_value]
 												      [= new_values [cons nonsemantic_plan_value new_values]]]]
-			[[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found boolean value: ' nonsemantic_plan_value]
-												      [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]]
-			[[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found boolean value: ' nonsemantic_plan_value]
-												      [= new_values [cons [get nonsemantic_plan_value as-boolean] new_values]]]]
+			[[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [get boolean is-boolean]
+												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted exact_nonsemantic_plan_value to boolean...'
+															     '\n  ' boolean]
+													    [= new_values [cons boolean new_values]]]
+												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of exact_nonsemantic_plan_value failed...'
+														     '\n  ' nonsemantic_plan_value]]]]
+			[[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
+												  [if [get boolean is-boolean]
+												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted nonsemantic_plan_value to boolean...'
+															     '\n  ' boolean]
+													    [= new_values [cons boolean new_values]]]
+												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of nonsemantic_plan_value failed...'
+														     '\n  ' nonsemantic_plan_value]]]]
 			[t                                                                      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found invalid value (FAIL): ' nonsemantic_plan_value]
 												      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean
 													     is_plan_bug            t

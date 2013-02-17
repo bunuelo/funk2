@@ -456,8 +456,7 @@
 			[call-below 'focus on car object']
 			[call-below 'copy focus register to register B']
 			[call-below 'focus on reverse_car object']
-			[register-A-equals-register-B]
-			[boolean t]]
+			[boolean [register-A-equals-register-B]]]
 		      
 		      `[defplan 'one of these goals equals one of my positive goals'
 			[if [boolean [focus-register]]

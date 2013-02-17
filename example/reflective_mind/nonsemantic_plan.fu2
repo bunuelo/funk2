@@ -195,24 +195,24 @@
       [let [[nonsemantic_plan_value [car iter]]]
 	[cond [[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] nil]
 	      [[is-type `multiple_possible_values             nonsemantic_plan_value] [if [not [get nonsemantic_plan_value is-boolean]]
-											  [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (1): ' nonsemantic_plan_value]
+											  [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (1): ' nonsemantic_plan_value]
 												[= is_boolean nil]
 												[= iter       nil]]]]
 	      [[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [if [not [get nonsemantic_plan_value is-boolean]]
-											  [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (2): ' nonsemantic_plan_value]
+											  [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (2): ' nonsemantic_plan_value]
 												[= is_boolean nil]
 												[= iter       nil]]]]
 	      [[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [let [[value [get nonsemantic_plan_value value]]]
 											[if [is-type `bug value]
 											    [let [[bug value]]
 											      [if [not [have [get bug frame] lookup `is_plan_failure]]
-												  [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (3): ' nonsemantic_plan_value]
+												  [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (3): ' nonsemantic_plan_value]
 													[= is_boolean nil]
 													[= iter       nil]]]]
-											  [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (4): ' nonsemantic_plan_value]
+											  [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (4): ' nonsemantic_plan_value]
 												[= is_boolean nil]
 												[= iter       nil]]]]]
-	      [t                                                                      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (5): ' nonsemantic_plan_value]
+	      [t                                                                      [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-is-boolean not-boolean because (5): ' nonsemantic_plan_value]
 											    [= is_boolean nil]
 											    [= iter       nil]]]]]
       [if iter
@@ -227,33 +227,33 @@
       [mapc [funk [nonsemantic_plan_value]
 		  [cond [[is-type `multiple_possible_values             nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
 												  [if [get boolean is-boolean]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted multiple_possible_values to boolean...'
+												      [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted multiple_possible_values to boolean...'
 															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of multiple_possible_values failed...'
+												    `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of multiple_possible_values failed...'
 														     '\n  ' boolean]]]]
 			[[is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
 												  [if [get boolean is-boolean]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted distribution_nonsemantic_value to boolean...'
+												      [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted distribution_nonsemantic_value to boolean...'
 															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of distribution_nonsemantic_value failed...'
+												    `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of distribution_nonsemantic_value failed...'
 														     '\n  ' nonsemantic_plan_value]]]]
-			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean using boolean value: ' nonsemantic_plan_value]
+			[[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value] [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean using boolean value: ' nonsemantic_plan_value]
 												      [= new_values [cons nonsemantic_plan_value new_values]]]]
 			[[is-type `exact_nonsemantic_plan_value         nonsemantic_plan_value] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
 												  [if [get boolean is-boolean]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted exact_nonsemantic_plan_value to boolean...'
+												      [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted exact_nonsemantic_plan_value to boolean...'
 															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of exact_nonsemantic_plan_value failed...'
+												    `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of exact_nonsemantic_plan_value failed...'
 														     '\n  ' nonsemantic_plan_value]]]]
 			[[eq      `nonsemantic_plan_value        [type nonsemantic_plan_value]] [let [[boolean [get nonsemantic_plan_value as-boolean]]]
 												  [if [get boolean is-boolean]
-												      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted nonsemantic_plan_value to boolean...'
+												      [prog `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean converted nonsemantic_plan_value to boolean...'
 															     '\n  ' boolean]
 													    [= new_values [cons boolean new_values]]]
-												    [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of nonsemantic_plan_value failed...'
+												    `[terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean conversion of nonsemantic_plan_value failed...'
 														     '\n  ' nonsemantic_plan_value]]]]
 			[t                                                                      [prog [terminal_format standard-terminal '\ndistribution_nonsemantic_plan_value-get-as-boolean found invalid value (FAIL): ' nonsemantic_plan_value]
 												      [error bug_name               `distribution_nonsemantic_plan_value-get-as-boolean-cannot_convert_type_to_boolean

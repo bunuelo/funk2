@@ -1094,11 +1094,11 @@
 		 result        result
 		 expression    expression]
 	[if [null [get result nonbug_values]]
-	    [new multiple_possible_values [conslist [new exact_nonsemantic_plan_value [shelter [error bug_name      `nonsemantic_plan-expression_compile-result_contains_no_nonbug_values
-												      is_plan_bug   t
-												      actual_type   [type result]
-												      result        result
-												      expression    expression]]]]]
+	    [new multiple_possible_values [conslist [shelter [error bug_name      `nonsemantic_plan-expression_compile-result_contains_no_nonbug_values
+								    is_plan_bug   t
+								    actual_type   [type result]
+								    result        result
+								    expression    expression]]]]
 	  result]]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]

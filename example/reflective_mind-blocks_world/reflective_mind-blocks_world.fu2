@@ -464,8 +464,7 @@
 		      [defplan 'one of these goals equals one of my positive goals'
 			[if [boolean [focus-register]]
 			    [prog [call-below 'copy focus register to register D']
-				  [call-below 'focus on car object']
-				  [plan-call [plan 'this goal is one of my positive goals']]]
+				  [call-below 'focus on car object']]
 			  [boolean nil]]]
 		      
 		      `[defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'

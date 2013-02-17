@@ -203,7 +203,10 @@
 	      [     [is-type `distribution_nonsemantic_plan_value  nonsemantic_plan_value]  [if [not [get nonsemantic_plan_value is-boolean]]
 												[prog [= is_boolean nil]
 												      [= iter       nil]]]]
-	      [[not [is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]] [prog [= is_boolean nil]
+	      [[and [is-type `exact_nonsemantic_plan_value nonsemantic_plan_value]
+		    [is-type `bug [get nonsemantic_plan_value value]]]                      nil]
+	      [[is-type `exact_boolean_nonsemantic_plan_value nonsemantic_plan_value]       nil]
+	      [t                                                                            [prog [= is_boolean nil]
 												  [= iter       nil]]]]]
       [if iter
 	  [= iter [cdr iter]]]]

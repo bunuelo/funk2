@@ -451,17 +451,6 @@
 			  [plan-call [plan 'register A goal equals one of the rest of my positive goals']]]]
 		      
 		      `[defplan 'one of these goals equals one of my positive goals'
-			 [if [boolean [focus-register]]
-			     [prog [call-below 'copy focus register to register D']
-				   [call-below 'focus on car object']
-				   [if [boolean [plan-call [plan 'this goal is one of my positive goals']]]
-				       [boolean t]
-				     [prog [call-below 'copy register D to focus register']
-					   [call-below 'focus on cdr object']
-					   [plan-call [plan 'one of these goals equals one of my positive goals']]]]]
-			   [boolean nil]]]
-		      
-		      [defplan 'one of these goals equals one of my positive goals'
 			[if [boolean [focus-register]]
 			    [prog [call-below 'copy focus register to register D']
 				  [call-below 'focus on car object']
@@ -470,6 +459,11 @@
 				    [prog [call-below 'copy register D to focus register']
 					  [call-below 'focus on cdr object']
 					  [plan-call [plan 'one of these goals equals one of my positive goals']]]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'one of these goals equals one of my positive goals'
+			[if [boolean [focus-register]]
+			    [boolean nil]
 			  [boolean nil]]]
 		      
 		      `[defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'
@@ -491,9 +485,7 @@
 				  [call-below 'focus on car object']
 				  [call-below 'imagine executing plan in focus']
 				  [call-below 'focus on first_hypothesized_to_cause_goal object']
-				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
-				      nil
-				    nil]]
+				  [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]]
 			  [fail]]]
 		      
 		      [defplan 'find one of these old plans that is hypothesized to acheive one of my positive goals'

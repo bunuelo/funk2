@@ -1129,9 +1129,8 @@
 		 actual_type   [type result]
 		 result        result
 		 expression    expression]
-	[if [null [get result nonbug_values]]
-	    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-result_contains_no_nonbug_values...'
-			     '\n  expression  = ' expression]]
+	[if [null [get result nonbug_and_failure_values]]
+	    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan result contains no nonbug or failure values: ' expression]]
 	result]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
@@ -1484,11 +1483,11 @@
 													  [= successful_plans [cons nonbug_plan successful_plans]]]]
 												    [= iter [cdr iter]]]
 												  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: found ' [length successful_plans] ' successful plans.']
-												  [mapc [funk [successful_plan]
-													      [terminal_format standard-terminal
-															       '\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: successful plan...'
-															       '\n' '  ' successful_plan]]
-													successful_plans]
+												  `[mapc [funk [successful_plan]
+													       [terminal_format standard-terminal
+																'\n' [type [get this mental_layer]] '-nonsemantic_plan-execution_node_as_code-plan_call: successful plan...'
+																'\n' '  ' successful_plan]]
+													 successful_plans]
 												  `[plan-call ,[get [first successful_plans] value]]]]]
 											  [get this execution_node_as_code [first argument_decision_node-subnodes]]]]]
 										argument_decision_nodes]]]]
@@ -2152,19 +2151,19 @@
 				 [and [is-type `distribution_nonsemantic_plan_value one_condition] [get one_condition is-boolean]]]]
 			[prog [terminal_format standard-terminal
 					       '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: if: condition ' index '/' conditions-length ' is not boolean.']
-			      [if [or [eq cause-nonsemantic_plan_execution_mode `execute]
-				      [eq cause-nonsemantic_plan_execution_mode `imagine]]
-				  [terminal_format standard-terminal
-						   '\n' '  condition-type                          = ' [type one_condition]
-						   '\n' '  condition                               = ' one_condition
-						   '\n' '  condition-cause_execution_node          = ' [let [[cause_execution_node [shelter [get one_condition cause_execution_node]]]]
-													 [if [is-type `bug cause_execution_node]
-													     `bug
-													   cause_execution_node]]
-						   '\n' '  condition-cause_execution_node-subnodes = ' [let [[subnodes [shelter [get [get one_condition cause_execution_node] subnodes]]]]
-													 [if [is-type `bug subnodes]
-													     `bug
-													   subnodes]]]]]
+			      `[if [or [eq cause-nonsemantic_plan_execution_mode `execute]
+				       [eq cause-nonsemantic_plan_execution_mode `imagine]]
+				   [terminal_format standard-terminal
+						    '\n' '  condition-type                          = ' [type one_condition]
+						    '\n' '  condition                               = ' one_condition
+						    '\n' '  condition-cause_execution_node          = ' [let [[cause_execution_node [shelter [get one_condition cause_execution_node]]]]
+													  [if [is-type `bug cause_execution_node]
+													      `bug
+													    cause_execution_node]]
+						    '\n' '  condition-cause_execution_node-subnodes = ' [let [[subnodes [shelter [get [get one_condition cause_execution_node] subnodes]]]]
+													  [if [is-type `bug subnodes]
+													      `bug
+													    subnodes]]]]]
 		      [if [is-type `nonsemantic_plan_value one_condition]
 			  [let [[evaluate_true_branch  nil]
 				[evaluate_false_branch nil]]
@@ -2404,9 +2403,7 @@
 								     [have nonsemantic_plan execute_as_thought [frame]]]]
 	  [[eq cause-nonsemantic_plan_execution_mode `imagine] [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-plan_call imagine: "' [get nonsemantic_plan as-string] '".']
 								     [if [get cause-nonsemantic_plan_current_execution_set contains nonsemantic_plan]
-									 [prog [terminal_format standard-terminal
-												'\n' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.'
-												'\n  nonsemantic_plan = ' nonsemantic_plan]
+									 [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-plan_call: found recursive call.  "' [get nonsemantic_plan as-string] '"']
 									       [new multiple_possible_values [conslist [new nonsemantic_plan_value]]]]
 								       [prog [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan-call starting imagine_as_thought.']
 									     [let [[result [have nonsemantic_plan imagine_as_thought [frame]]]]

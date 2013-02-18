@@ -271,6 +271,12 @@
 			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]
 			[call-below 'execute plan in focus']]
 		      
+		      [defplan 'test try to stack a block on a block with an old plan'
+			[plan-call [plan 'want a pyramid to be on a cube']]
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'find an old plan to acheive one of my positive goals']]
+			[call-below 'execute plan in focus']]
+		      
 		      [defplan 'a cube to be on a pyramid'
 			:matches ['a [? top_shape] to be on a [? bottom_shape]']
 			 :frame [[top_shape    'cube']
@@ -540,17 +546,11 @@
 			[call-below 'add a plan before the beginning of plan currently in focus']
 			[call-below 'execute plan in focus']]
 		      
+		      `['oldest reflective plan (only recent plans used by super-reflective layer)']
+		      
 		      [defplan 'test go after a cube to be on a pyramid'
 			[plan-call [plan 'want a cube to be on a pyramid']]
 			[plan-call [plan 'find a recent plan to acheive one of my goals']]
-			[call-below 'execute plan in focus']]
-		      
-		      `['oldest reflective plan']
-		      
-		      [defplan 'test try to stack a block on a block with an old plan'
-			[plan-call [plan 'want a pyramid to be on a cube']]
-			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find an old plan to acheive one of my positive goals']]
 			[call-below 'execute plan in focus']]
 		      
 		      ]]

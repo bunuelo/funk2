@@ -291,6 +291,7 @@
     [mapc [funk [semantic_plan_object]
 		[let [[nonsemantic_plan [get semantic_plan_object nonsemantic_plan]]]
 		  [let [[semantic_plan_object-name_pattern_match_pairs [get nonsemantic_plan name_pattern_match_pairs name_expression]]]
+		    [= cause-top_plan_analogy_count [+ cause-top_plan_analogy_count [length semantic_plan_object-name_pattern_match_pairs]]]
 		    [mapc [funk [semantic_plan_object-name_pattern_match_pair]
 				[let [[semantic_plan_match [frame semantic_plan_object semantic_plan_object
 								  name_pattern         [car semantic_plan_object-name_pattern_match_pair]

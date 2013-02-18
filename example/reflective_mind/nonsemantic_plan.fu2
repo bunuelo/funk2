@@ -1110,6 +1110,7 @@
 
 [defunk nonsemantic_plan-get-expression_compile-evaluate [nonsemantic_plan expression unwrapped_compile_result]
   `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: starting to evaluate ' expression '.']
+  [= cause-top_execution_node_count [+ cause-top_execution_node_count 1]]
   [let [[result [shelter [funkall unwrapped_compile_result nonsemantic_plan]]]]
     `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-get-expression_compile-evaluate: finished evaluating ' expression '.']
     [if [is-type `bug result]
@@ -1179,7 +1180,9 @@
 			    [cause-define cause-check_exists_partial_state_set         [new set]]
 			    [cause-define cause-traced_resource_activation_set         [new set]]
 			    [cause-define cause-nonsemantic_plan_execution_mode        `imagine]
-			    [cause-define cause-nonsemantic_plan_current_execution_set [new set this]]]
+			    [cause-define cause-nonsemantic_plan_current_execution_set [new set this]]
+			    [cause-define cause-top_execution_node_count               0]
+			    [cause-define cause-top_plan_analogy_count                 0]]
 		    [cause-define cause-nonsemantic_plan_current_execution_set [new-apply set [cons this [get cause-nonsemantic_plan_current_execution_set elements]]]]]
 		  [cause-define cause-this_nonsemantic_plan   this]
 		  [cause-define cause-this_top_execution_node nil]
@@ -1209,7 +1212,10 @@
 		      [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done imagining executing "' [get this name_expression] '".']
 		      [if [eq this cause-top_nonsemantic_plan]
 			  [prog [let [[hypothesize_cause_partial_state_set [new set]]]
-				  [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done imagining executing top level plan "' [get this name_expression] '".']
+				  [terminal_format standard-terminal
+						   '\n' [type [get this mental_layer]] '-nonsemantic_plan imagine: done imagining executing top level plan "' [get this name_expression] '".'
+						   '\n  execution_node_count = ' cause-top_execution_node_count
+						   '\n  plan_analogy_count   = ' cause-top_plan_analogy_count]
 				  [let [[events                      [get cause-imagine_semantic_event_tree events]]]
 				    [if [null events]
 					[terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: no hypothesized events to add for "' [get this name_expression] '".']
@@ -1302,7 +1308,9 @@
 			    [cause-define cause-imagine_semantic_event_tree     [new semantic_event_tree]]
 			    [cause-define cause-check_exists_partial_state_set  [new set]]
 			    [cause-define cause-traced_resource_activation_set  [new set]]
-			    [cause-define cause-nonsemantic_plan_execution_mode `execute]]]
+			    [cause-define cause-nonsemantic_plan_execution_mode `execute]
+			    [cause-define cause-top_execution_node_count               0]
+			    [cause-define cause-top_plan_analogy_count                 0]]]
 		  [cause-define cause-this_top_execution_node nil]
 		  [cause-define cause-this_nonsemantic_plan   this]
 		  [let [[remember_token [new remember_token cause-imagine_time]]]
@@ -1313,7 +1321,10 @@
 							 [have this eval]]
 						   []]]]
 		      [if [eq this cause-top_nonsemantic_plan]
-			  [prog [terminal_format standard-terminal '\n' [type [get this mental_layer]] '-nonsemantic_plan: done executing top level plan "' [get this name_expression] '".']
+			  [prog [terminal_format standard-terminal
+						 '\n' [type [get this mental_layer]] '-nonsemantic_plan execute: done executing top level plan "' [get this name_expression] '".'
+						 '\n  execution_node_count = ' cause-top_execution_node_count
+						 '\n  plan_analogy_count   = ' cause-top_plan_analogy_count]
 				[if [is-type `bug result]
 				    [let [[bug result]]
 				      [set [get this semantic_plan_object] executed_complete_failure t]]]

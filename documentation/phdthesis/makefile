@@ -159,6 +159,7 @@ phdthesis.pdf: \
   gfx/relationship_partial_state_abstraction_add.pdf \
   gfx/hypothesis_version_space_set_divisions.pdf \
   gfx/cpu_core_hyperthread_distances.pdf \
+  gfx/meta_meta_knowledge.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

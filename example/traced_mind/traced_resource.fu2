@@ -366,8 +366,8 @@
 		       [t                                                       [terminal_format standard-terminal '\ntraced_resource warning: layer unrecognized, ' [get [get this layer] name] '.']]]
 		 [if [cause-lookup cause-new_concept_version_space_hypothesis_count]
 		     [terminal_format standard-terminal '\n' [get [time] date_and_time_string] ': ' [type [get this mental_layer]] ' resource, ' name ', finished learning.  Layer learning object counts...'
-				      '\n  ' [type [get this mental_layer]] '-new_concept_version_space_hypothesis_count = ' [cause-lookup cause-new_concept_version_space_hypothesis_count]
-				      '\n  ' [type [get this mental_layer]] '-new_concept_version_space_count            = ' [cause-lookup cause-new_concept_version_space_count]]]]
+				      '\n  ' [type [get cause-resource mental_layer]] '-new_concept_version_space_hypothesis_count = ' [cause-lookup cause-new_concept_version_space_hypothesis_count]
+				      '\n  ' [type [get cause-resource mental_layer]] '-new_concept_version_space_count            = ' [cause-lookup cause-new_concept_version_space_count]]]]
 	   []]
     
     ]]

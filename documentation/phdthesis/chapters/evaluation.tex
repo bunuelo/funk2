@@ -16,6 +16,31 @@ This chapter evaluates the Emotion Machine cognitive architectural
 component of the SALS AI by asking the following question: What is the
 increase in computational complexity introduced by adding additional
 reflective planning layers to the basic deliberative planning process?
+The answer is that knowledge in each subsequently higher reflective
+layer has the potential to be more complex and thus more difficult to
+reason about than the knowledge in the layers below that knowledge.
+For example, a partial state of the physical problem domain can be a
+simple statement such as ``a pyramid is on a cube.''  Since the
+deliberative layer contains meta-physical knowledge, or ``knowledge
+about physical knowledge,'' a simple deliberative partial state could
+be ``a deliberative planner has the positive goal for a pyramid to be
+on a cube.''  Further, the reflective layer contains
+meta-meta-physical knowledge, so a piece of reflective knowledge could
+be ``a reflective planner has the positive goal for a deliberative
+planner to have the positive goal for a pyramid to be on a cube.''
+{\mbox{\autoref{figure:meta_meta_knowledge}}} shows an example of
+meta-meta-knowledge with a reflective partial state that references a
+deliberative partial state that references a physical partial state.  
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{gfx/meta_meta_knowledge}
+\caption{Meta-meta-knowledge with a reflective partial state that
+  references a deliberative partial state that references a physical
+  partial state.}
+\label{figure:meta_meta_knowledge}
+\end{figure}
+
+
 
 \begin{table}
 \centering
@@ -23,22 +48,39 @@ reflective planning layers to the basic deliberative planning process?
 \hline
                  &Execution Nodes &Plan Analogies \\
 \hline
-Super Reflective & 141            & 9             \\
+Super Reflective & 152            & 11            \\
 \hline
-Reflective       & 159            & 11            \\
+Reflective       & 170            & 13            \\
 \hline
 Deliberative     & 3003           & 240           \\
 \hline
 \end{tabular}
+
+\begin{tabular}{|l|r|r|}
+\hline
+                 &Version Spaces &Hypotheses \\
+\hline
+Super Reflective &               &           \\
+\hline
+Reflective       &               &           \\
+\hline
+Deliberative     &               &           \\
+\hline
+\end{tabular}
 \caption{The number of execution nodes and plan analogies that were
-  made during in different stages of plans processing in the different
-  planning layers during a typical planning scenario involving the
-  super reflective layer interpreting and compiling a plan that
-  becomes the reflective planning process, the reflective planning
-  process interpreting, imagining and executing a reflective plan that
-  becomes the deliberative planning process, and the deliberative
-  layer interpreting, imagining and executing a plan that performs
-  physical actions in the problem domain.}
+  made during in different stages of plan processing in the different
+  planning layers during a planning scenario involving the super
+  reflective layer interpreting and compiling a plan to ``find and
+  execute a recently learned plan that avoids a negative reflective
+  goal.''  The execution of the super reflective plan becomes the
+  reflective planning process.  The reflective planning process
+  searches through deliberative plans until it finds a plan to ``find
+  and execute a recently learned plan for accomplishing a positive
+  deliberative goal.''  The execution of the reflective plan becomes
+  the deliberative planning process.  The deliberative planning
+  process interprets and imagines a plan to ``stack a cube on a
+  pyramid,'' which is hypothesized to accomplish a positive
+  deliberative goal.}
 \label{table:plan_interpretation_computational_complexity_of_layers}
 \end{table}
 

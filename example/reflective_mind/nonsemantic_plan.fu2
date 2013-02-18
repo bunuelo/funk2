@@ -2573,7 +2573,7 @@
 								    action_arguments action_arguments]]]]
 
 [defplanfunk imagine fail []
-  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan failing."']
+  [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: plan failing.']
   [error bug_name        `failure
 	 is_plan_bug     t
 	 is_plan_failure t]]

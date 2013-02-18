@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -93,6 +93,10 @@
   [have action_sequence_resource_ptypehash remove resource]]
 
 [deftypefunk translate_resource_knowledge_to_resource_event_knowledge_resource execute execute_resource_raw_funk []
+  [cause-define cause-new_concept_version_space_hypothesis_count-cmutex [new cmutex]]
+  [cause-define cause-new_concept_version_space_hypothesis_count        0]
+  [cause-define cause-new_concept_version_space_count-cmutex            [new cmutex]]
+  [cause-define cause-new_concept_version_space_count                   0]
   [let [[mind_pseudo_semantic_resource [new semantic_resource [get [get this mind] semantic_realm]]]]
     [set mind_pseudo_semantic_resource phenomenal_name `mind_pseudo_resource]
     [let [[mind_action_sequence [get this action_sequence mind_pseudo_semantic_resource]]]

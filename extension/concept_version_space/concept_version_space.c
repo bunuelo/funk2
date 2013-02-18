@@ -1,5 +1,5 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
 // Author: Bo Morgan
@@ -146,6 +146,21 @@ f2ptr raw__concept_version_space_hypothesis__new(f2ptr cause) {
   f2ptr removal_callbacks_cmutex      = f2cmutex__new(cause);
   f2ptr removal_callbacks             = nil;
   f2ptr is_removed                    = nil;
+  {
+    f2ptr cause__new_concept_version_space_hypothesis_count__cmutex = (cause != nil) ? assert_value(f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_hypothesis_count-cmutex"))) : nil;
+    if (cause__new_concept_version_space_hypothesis_count__cmutex != nil) {
+      assert_value(f2__cmutex__lock(cause, cause__new_concept_version_space_hypothesis_count__cmutex));
+      f2ptr cause__new_concept_version_space_hypothesis_count = (cause != nil) ? assert_value(f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_hypothesis_count"))) : nil;
+      if (cause__new_concept_version_space_hypothesis_count != nil) {
+	if (raw__integer__is_type(cause, cause__new_concept_version_space_hypothesis_count)) {
+	  s64 cause__new_concept_version_space_hypothesis_count__i = f2integer__i(cause__new_concept_version_space_hypothesis_count, cause);
+	  cause__new_concept_version_space_hypothesis_count = f2integer__new(cause, cause__new_concept_version_space_hypothesis_count__i + 1);
+	  assert_value(f2__cause__type_var_value__set(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_hypothesis_count"), cause__new_concept_version_space_hypothesis_count));
+	}
+      }
+      assert_value(f2__cmutex__unlock(cause, cause__new_concept_version_space_hypothesis_count__cmutex));
+    }
+  }
   return f2concept_version_space_hypothesis__new(cause,
 						 value_variable_name_ptypehash,
 						 removal_callbacks_cmutex,
@@ -533,6 +548,21 @@ f2ptr raw__concept_version_space__new(f2ptr cause) {
   f2ptr variable_value_set_name_ptypehash = f2__ptypehash__new(cause);
   f2ptr specific_hypotheses               = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
   f2ptr general_hypotheses                = f2list1__new(cause, f2__concept_version_space_hypothesis__new(cause));
+  {
+    f2ptr cause__new_concept_version_space_count__cmutex = (cause != nil) ? assert_value(f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_count-cmutex"))) : nil;
+    if (cause__new_concept_version_space_count__cmutex != nil) {
+      assert_value(f2__cmutex__lock(cause, cause__new_concept_version_space_count__cmutex));
+      f2ptr cause__new_concept_version_space_count = (cause != nil) ? assert_value(f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_count"))) : nil;
+      if (cause__new_concept_version_space_count != nil) {
+	if (raw__integer__is_type(cause, cause__new_concept_version_space_count)) {
+	  s64 cause__new_concept_version_space_count__i = f2integer__i(cause__new_concept_version_space_count, cause);
+	  cause__new_concept_version_space_count = f2integer__new(cause, cause__new_concept_version_space_count__i + 1);
+	  assert_value(f2__cause__type_var_value__set(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "cause-new_concept_version_space_count"), cause__new_concept_version_space_count));
+	}
+      }
+      assert_value(f2__cmutex__unlock(cause, cause__new_concept_version_space_count__cmutex));
+    }
+  }
   return f2concept_version_space__new(cause, variable_value_set_name_ptypehash, specific_hypotheses, general_hypotheses);
 }
 

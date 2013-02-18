@@ -468,7 +468,9 @@
 				  [call-below 'imagine executing plan in focus']
 				  [call-below 'focus on first_hypothesized_to_cause_goal object']
 				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
-				      nil
+				      [prog [call-below 'copy register C to focus register']
+					    [call-below 'focus on car object']
+					    nil]
 				    [prog [call-below 'copy register C to focus register']
 					  [call-below 'focus on cdr object']
 					  [plan-call [plan 'find one of these recent plans that is hypothesized to acheive one of my positive goals']]]]]
@@ -497,10 +499,11 @@
 		      
 		      `['tests']
 		      
-		      [defplan 'test go after a recent plan to stack a block on a block'
+		      [defplan 'test try to stack a block on a block with a recent plan'
 			[plan-call [plan 'want a pyramid to be on a cube']]
 			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]]
+			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]
+			[call-below 'execute plan in focus']]
 		      
 		      [defplan 'test go after an old plan to stack a block on a block'
 			[plan-call [plan 'want a pyramid to be on a cube']]

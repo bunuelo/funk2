@@ -291,8 +291,8 @@
 						[boolean t]
 					      [plan-call [plan 'register A goal equals one of the rest of these']]]]
 					
-					[defplan 'one of these goals equals one of my positive goals'
-					  :matches ['one of these goals equals one of my [? goal-type] goals']
+					[defplan 'one of these goals is one of my positive goals'
+					  :matches ['one of these goals is one of my [? goal-type] goals']
 					   :frame [[goal-type 'positive']]
 					    [if [boolean [focus-register]]
 						[prog [call-below 'copy focus register to register D']
@@ -301,7 +301,7 @@
 							  [boolean t]
 							[prog [call-below 'copy register D to focus register']
 							      [call-below 'focus on cdr object']
-							      [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]]]
+							      [plan-call [plan 'one of these goals is one of my [? goal-type] goals']]]]]
 					      [boolean nil]]]
 					
 					[defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'
@@ -313,7 +313,7 @@
 						      [call-below 'focus on car object']
 						      [call-below 'imagine executing plan in focus']
 						      [call-below 'focus on first_hypothesized_to_cause_goal object']
-						      [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
+						      [if [boolean [plan-call [plan 'one of these goals is one of my [? goal-type] goals']]]
 							  [prog [call-below 'copy register C to focus register']
 								[call-below 'focus on car object']
 								nil]
@@ -331,7 +331,7 @@
 						      [call-below 'focus on car object']
 						      [call-below 'imagine executing plan in focus']
 						      [call-below 'focus on first_hypothesized_to_cause_goal object']
-						      [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
+						      [if [boolean [plan-call [plan 'one of these goals is one of my [? goal-type] goals']]]
 							  [prog [call-below 'copy register C to focus register']
 								[call-below 'focus on cdr object']
 								[plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']]]

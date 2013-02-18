@@ -86,8 +86,8 @@
 			:matches ['stack a [? top_shape] on a [? bottom_shape]']
 			 :frame [[top_shape    'cube']
 				 [bottom_shape 'pyramid']]
-			  [plan-call [plan 'pick up a [? top_shape]']]
-			  [plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
+			  `[plan-call [plan 'pick up a [? top_shape]']]
+			  `[plan-call [plan 'drop the block I am holding on a [? bottom_shape]']]
 			  [plan-call [plan 'assert that a [? top_shape] is on a [? bottom_shape]']]]
 		      
 		      [defplan 'a pyramid to be on a cube'

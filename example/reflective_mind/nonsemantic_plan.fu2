@@ -1131,9 +1131,7 @@
 		 expression    expression]
 	[if [null [get result nonbug_values]]
 	    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-result_contains_no_nonbug_values...'
-			     '\n  expression  = ' expression
-			     '\n  result-type = ' [type result]
-			     '\n  result      = ' result]]
+			     '\n  expression  = ' expression]]
 	result]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]

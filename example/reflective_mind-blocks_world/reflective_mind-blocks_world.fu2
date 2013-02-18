@@ -260,106 +260,106 @@
 		      
 		      ]]
 	 
-	 [let [[shared_planing_plans `[[defplan 'this goal is a positive goal'
-					 [boolean [lookup-slot-value property positive]]]
-				       
-				       `[[focus-register [input this-goal]]
-					 [register-A     this-goal]
-					 [register-B     positive-goal]
-					 [register-C     plan-iter]]
-				       
-				       [defplan 'register A goal equals one of the rest of these'
-					 [call-below 'focus on cdr object']
-					 [if [boolean [focus-register]]
-					     [prog [call-below 'focus on car object']
-						   [call-below 'copy focus register to register B']
-						   [call-below 'focus on reverse_car object']
-						   [if [boolean [register-A-equals-register-B]]
-						       [boolean t]
-						     [plan-call [plan 'register A goal equals one of the rest of these']]]]
-					   [boolean nil]]]
-				       
-				       [defplan 'this goal is one of my positive goals'
-					 :matches ['this goal is one of my [? goal-type] goals']
-					  :frame [[goal-type 'positive']]
-					   [call-below 'copy focus register to register A']
-					   [call-below 'focus on first [? goal-type] goal']
-					   [call-below 'focus on car object']
-					   [call-below 'copy focus register to register B']
-					   [call-below 'focus on reverse_car object']
-					   [if [boolean [register-A-equals-register-B]]
-					       [boolean t]
-					     [plan-call [plan 'register A goal equals one of the rest of these']]]]
-				       
-				       [defplan 'one of these goals equals one of my positive goals'
-					 :matches ['one of these goals equals one of my [? goal-type] goals']
-					  :frame [[goal-type 'positive']]
-					   [if [boolean [focus-register]]
-					       [prog [call-below 'copy focus register to register D']
-						     [call-below 'focus on car object']
-						     [if [boolean [plan-call [plan 'this goal is one of my [? goal-type] goals']]]
-							 [boolean t]
-						       [prog [call-below 'copy register D to focus register']
-							     [call-below 'focus on cdr object']
-							     [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]]]
-					     [boolean nil]]]
-				       
-				       [defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'
-					 :matches ['find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']
-					  :frame [[goal-type  'positive']
-						  [recent/old 'recent']]
-					   [if [boolean [focus-register]]
-					       [prog [call-below 'copy focus register to register C']
-						     [call-below 'focus on car object']
-						     [call-below 'imagine executing plan in focus']
-						     [call-below 'focus on first_hypothesized_to_cause_goal object']
-						     [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
-							 [prog [call-below 'copy register C to focus register']
-							       [call-below 'focus on car object']
-							       nil]
-						       [prog [call-below 'copy register C to focus register']
-							     [call-below 'focus on cdr object']
-							     [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']]]]]
-					     [fail]]]
-				       
-				       [defplan 'find one of these recent plans that is hypothesized to avoid all of my negative goals'
-					 :matches ['find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']
-					  :frame [[recent/old 'recent']
-						  [goal-type  'negative']]
-					 [if [boolean [focus-register]]
-					     [prog [call-below 'copy focus register to register C']
-						   [call-below 'focus on car object']
-						   [call-below 'imagine executing plan in focus']
-						   [call-below 'focus on first_hypothesized_to_cause_goal object']
-						   [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
-						       [prog [call-below 'copy register C to focus register']
-							     [call-below 'focus on cdr object']
-							     [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']]]
-						     [prog [call-below 'copy register C to focus register']
-							   [call-below 'focus on car object']
-							   nil]]]
-					   [fail]]]
-				       
-				       [defplan 'focus on most recent plan'
-					 [call-below 'focus on first plan']]
-				       
-				       [defplan 'focus on most old plan'
-					 [call-below 'focus on last plan']]
-				       
-				       [defplan 'find recent plan to acheive one of my positive goals'
-					 :matches ['find [? recent/old] plan to acheive one of my [? goal-type] goals']
-					  :frame [[recent/old 'recent']
-						  [goal-type  'positive']]
-					   [plan-call [plan 'focus on most [? recent/old] plan']]
-					   [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']]]
-				       
-				       [defplan 'find recent plan to avoid all of my negative goals'
-					 :matches ['find [? recent/old] plan to avoid all of my [? goal-type] goals']
-					  :frame [[recent/old 'recent']
-						  [goal-type  'negative']]
-					   [plan-call [plan 'focus on most [? recent/old] plan']]
-					   [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']]]
-				       ]]]
+	 [let [[shared_planning_plans `[[defplan 'this goal is a positive goal'
+					  [boolean [lookup-slot-value property positive]]]
+					
+					`[[focus-register [input this-goal]]
+					  [register-A     this-goal]
+					  [register-B     positive-goal]
+					  [register-C     plan-iter]]
+					
+					[defplan 'register A goal equals one of the rest of these'
+					  [call-below 'focus on cdr object']
+					  [if [boolean [focus-register]]
+					      [prog [call-below 'focus on car object']
+						    [call-below 'copy focus register to register B']
+						    [call-below 'focus on reverse_car object']
+						    [if [boolean [register-A-equals-register-B]]
+							[boolean t]
+						      [plan-call [plan 'register A goal equals one of the rest of these']]]]
+					    [boolean nil]]]
+					
+					[defplan 'this goal is one of my positive goals'
+					  :matches ['this goal is one of my [? goal-type] goals']
+					   :frame [[goal-type 'positive']]
+					    [call-below 'copy focus register to register A']
+					    [call-below 'focus on first [? goal-type] goal']
+					    [call-below 'focus on car object']
+					    [call-below 'copy focus register to register B']
+					    [call-below 'focus on reverse_car object']
+					    [if [boolean [register-A-equals-register-B]]
+						[boolean t]
+					      [plan-call [plan 'register A goal equals one of the rest of these']]]]
+					
+					[defplan 'one of these goals equals one of my positive goals'
+					  :matches ['one of these goals equals one of my [? goal-type] goals']
+					   :frame [[goal-type 'positive']]
+					    [if [boolean [focus-register]]
+						[prog [call-below 'copy focus register to register D']
+						      [call-below 'focus on car object']
+						      [if [boolean [plan-call [plan 'this goal is one of my [? goal-type] goals']]]
+							  [boolean t]
+							[prog [call-below 'copy register D to focus register']
+							      [call-below 'focus on cdr object']
+							      [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]]]
+					      [boolean nil]]]
+					
+					[defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'
+					  :matches ['find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']
+					   :frame [[goal-type  'positive']
+						   [recent/old 'recent']]
+					    [if [boolean [focus-register]]
+						[prog [call-below 'copy focus register to register C']
+						      [call-below 'focus on car object']
+						      [call-below 'imagine executing plan in focus']
+						      [call-below 'focus on first_hypothesized_to_cause_goal object']
+						      [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
+							  [prog [call-below 'copy register C to focus register']
+								[call-below 'focus on car object']
+								nil]
+							[prog [call-below 'copy register C to focus register']
+							      [call-below 'focus on cdr object']
+							      [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']]]]]
+					      [fail]]]
+					
+					[defplan 'find one of these recent plans that is hypothesized to avoid all of my negative goals'
+					  :matches ['find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']
+					   :frame [[recent/old 'recent']
+						   [goal-type  'negative']]
+					    [if [boolean [focus-register]]
+						[prog [call-below 'copy focus register to register C']
+						      [call-below 'focus on car object']
+						      [call-below 'imagine executing plan in focus']
+						      [call-below 'focus on first_hypothesized_to_cause_goal object']
+						      [if [boolean [plan-call [plan 'one of these goals equals one of my [? goal-type] goals']]]
+							  [prog [call-below 'copy register C to focus register']
+								[call-below 'focus on cdr object']
+								[plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']]]
+							[prog [call-below 'copy register C to focus register']
+							      [call-below 'focus on car object']
+							      nil]]]
+					      [fail]]]
+					
+					[defplan 'focus on most recent plan'
+					  [call-below 'focus on first plan']]
+					
+					[defplan 'focus on most old plan'
+					  [call-below 'focus on last plan']]
+					
+					[defplan 'find recent plan to acheive one of my positive goals'
+					  :matches ['find [? recent/old] plan to acheive one of my [? goal-type] goals']
+					   :frame [[recent/old 'recent']
+						   [goal-type  'positive']]
+					    [plan-call [plan 'focus on most [? recent/old] plan']]
+					    [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to acheive one of my [? goal-type] goals']]]
+					
+					[defplan 'find recent plan to avoid all of my negative goals'
+					  :matches ['find [? recent/old] plan to avoid all of my [? goal-type] goals']
+					   :frame [[recent/old 'recent']
+						   [goal-type  'negative']]
+					    [plan-call [plan 'focus on most [? recent/old] plan']]
+					    [plan-call [plan 'find one of these [? recent/old] plans that is hypothesized to avoid all of my [? goal-type] goals']]]
+					]]]
 	   
 	   'reflective plans'
 	   

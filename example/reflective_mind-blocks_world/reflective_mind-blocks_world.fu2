@@ -82,7 +82,9 @@
   [terminal_format standard-terminal '\nblocks_world_reflective_mind: creating built-in plans.']
   
   [parog [have this imagine_deliberative_plan_expression
-	       `[prog [defplan 'stack a cube on a pyramid'
+	       `[prog `['most recent deliberative plan']
+		      
+		      [defplan 'stack a cube on a pyramid'
 			:matches ['stack a [? top_shape] on a [? bottom_shape]']
 			 :frame [[top_shape    'cube']
 				 [bottom_shape 'pyramid']]
@@ -251,7 +253,7 @@
 			  [plan-call [plan 'move until over [? shape]']]
 			  [plan-call [plan 'drop block and wait for block to fall']]]
 		      
-		      `['last plan']
+		      `['oldest deliberative plan']
 		      
 		      [defplan 'test stack a pyramid on a cube'
 			[plan-call [plan 'stack a pyramid on a cube']]]
@@ -261,7 +263,15 @@
 	 'reflective plans'
 	 
 	 [have this imagine_reflective_plan_expression
-	       `[prog [defplan 'a cube to be on a pyramid'
+	       `[prog `['most recent reflective plan']
+		      
+		      [defplan 'test try to stack a block on a block with a recent plan'
+			[plan-call [plan 'want a pyramid to be on a cube']]
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]
+			[call-below 'execute plan in focus']]
+		      
+		      [defplan 'a cube to be on a pyramid'
 			:matches ['a [? top_shape] to be on a [? bottom_shape]']
 			 :frame [[top_shape    'cube']
 				 [bottom_shape 'pyramid']]
@@ -414,13 +424,6 @@
 		      
 		      `['planner']
 		      
-		      `[defplan 'find a recent plan to acheive one of my goals'
-			[if [plan-call [plan 'I want a cube to be on a pyramid']]
-			    [plan-call [plan 'find a recent plan to cause a cube to be on a pyramid']]
-			  [if [plan-call [plan 'I want a pyramid to be on a cube']]
-			      [plan-call [plan 'find a recent plan to cause a pyramid to be on a cube']]
-			    [fail]]]]
-		      
 		      [defplan 'this goal is a positive goal'
 			[boolean [lookup-slot-value property positive]]]
 		      
@@ -483,7 +486,9 @@
 				  [call-below 'imagine executing plan in focus']
 				  [call-below 'focus on first_hypothesized_to_cause_goal object']
 				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
-				      nil
+				      [prog [call-below 'copy register C to focus register']
+					    [call-below 'focus on car object']
+					    nil]
 				    [prog [call-below 'copy register C to focus register']
 					  [call-below 'focus on reverse_cdr object']
 					  [plan-call [plan 'find one of these old plans that is hypothesized to acheive one of my positive goals']]]]]
@@ -498,17 +503,6 @@
 			[plan-call [plan 'find one of these old plans that is hypothesized to acheive one of my positive goals']]]
 		      
 		      `['tests']
-		      
-		      [defplan 'test try to stack a block on a block with a recent plan'
-			[plan-call [plan 'want a pyramid to be on a cube']]
-			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find a recent plan to acheive one of my positive goals']]
-			[call-below 'execute plan in focus']]
-		      
-		      [defplan 'test go after an old plan to stack a block on a block'
-			[plan-call [plan 'want a pyramid to be on a cube']]
-			[plan-call [plan 'want a cube to be on a pyramid']]
-			[plan-call [plan 'find an old plan to acheive one of my positive goals']]]
 		      
 		      [defplan 'test this goal is a positive goal'
 			[plan-call [plan 'this goal is a positive goal']]]
@@ -549,6 +543,14 @@
 		      [defplan 'test go after a cube to be on a pyramid'
 			[plan-call [plan 'want a cube to be on a pyramid']]
 			[plan-call [plan 'find a recent plan to acheive one of my goals']]
+			[call-below 'execute plan in focus']]
+		      
+		      `['oldest reflective plan']
+		      
+		      [defplan 'test try to stack a block on a block with an old plan'
+			[plan-call [plan 'want a pyramid to be on a cube']]
+			[plan-call [plan 'want a cube to be on a pyramid']]
+			[plan-call [plan 'find an old plan to acheive one of my positive goals']]
 			[call-below 'execute plan in focus']]
 		      
 		      ]]
@@ -704,17 +706,140 @@
 		      
 		      `['planner']
 		      
-		      [defplan 'find a recent plan to avoid my negative goals'
-			[if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
-			    [plan-call [plan 'find a recent plan to not cause a planner to be focusing on a plan that has failed']]
+		      `[defplan 'find a recent plan to avoid my negative goals'
+			 [if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
+			     [plan-call [plan 'find a recent plan to not cause a planner to be focusing on a plan that has failed']]
+			   [fail]]]
+		      
+		      `[defplan 'find an old plan to avoid my negative goals'
+			 [if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
+			     [plan-call [plan 'find an old plan to cause a planner to be focusing on a plan that has failed']]
+			   [fail]]]
+		      
+		      [defplan 'this goal is a positive goal'
+			[boolean [lookup-slot-value property positive]]]
+		      
+		      `[[focus-register [input this-goal]]
+			[register-A     this-goal]
+			[register-B     positive-goal]
+			[register-C     plan-iter]]
+		      
+		      [defplan 'register A goal equals one of the rest of these'
+			[call-below 'focus on cdr object']
+			[if [boolean [focus-register]]
+			    [prog [call-below 'focus on car object']
+				  [call-below 'copy focus register to register B']
+				  [call-below 'focus on reverse_car object']
+				  [if [boolean [register-A-equals-register-B]]
+				      [boolean t]
+				    [plan-call [plan 'register A goal equals one of the rest of my positive goals']]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'this goal is one of my positive goals'
+			[call-below 'copy focus register to register A']
+			[call-below 'focus on first positive goal']
+			[call-below 'focus on car object']
+			[call-below 'copy focus register to register B']
+			[call-below 'focus on reverse_car object']
+			[if [boolean [register-A-equals-register-B]]
+			    [boolean t]
+			  [plan-call [plan 'register A goal equals one of the rest of these']]]]
+		      
+		      [defplan 'this goal is one of my negative goals'
+			[call-below 'copy focus register to register A']
+			[call-below 'focus on first negative goal']
+			[call-below 'focus on car object']
+			[call-below 'copy focus register to register B']
+			[call-below 'focus on reverse_car object']
+			[if [boolean [register-A-equals-register-B]]
+			    [boolean t]
+			  [plan-call [plan 'register A goal equals one of the rest of these']]]]
+		      
+		      [defplan 'one of these goals equals one of my positive goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register D']
+				  [call-below 'focus on car object']
+				  [if [boolean [plan-call [plan 'this goal is one of my positive goals']]]
+				      [boolean t]
+				    [prog [call-below 'copy register D to focus register']
+					  [call-below 'focus on cdr object']
+					  [plan-call [plan 'one of these goals equals one of my positive goals']]]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'one of these goals equals one of my negative goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register D']
+				  [call-below 'focus on car object']
+				  [if [boolean [plan-call [plan 'this goal is one of my negative goals']]]
+				      [boolean t]
+				    [prog [call-below 'copy register D to focus register']
+					  [call-below 'focus on cdr object']
+					  [plan-call [plan 'one of these goals equals one of my negative goals']]]]]
+			  [boolean nil]]]
+		      
+		      [defplan 'find one of these recent plans that is hypothesized to acheive one of my positive goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register C']
+				  [call-below 'focus on car object']
+				  [call-below 'imagine executing plan in focus']
+				  [call-below 'focus on first_hypothesized_to_cause_goal object']
+				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
+				      [prog [call-below 'copy register C to focus register']
+					    [call-below 'focus on car object']
+					    nil]
+				    [prog [call-below 'copy register C to focus register']
+					  [call-below 'focus on cdr object']
+					  [plan-call [plan 'find one of these recent plans that is hypothesized to acheive one of my positive goals']]]]]
 			  [fail]]]
 		      
-		      [defplan 'find an old plan to avoid my negative goals'
-			[if [plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]
-			    [plan-call [plan 'find an old plan to cause a planner to be focusing on a plan that has failed']]
+		      [defplan 'find one of these old plans that is hypothesized to acheive one of my positive goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register C']
+				  [call-below 'focus on car object']
+				  [call-below 'imagine executing plan in focus']
+				  [call-below 'focus on first_hypothesized_to_cause_goal object']
+				  [if [boolean [plan-call [plan 'one of these goals equals one of my positive goals']]]
+				      [prog [call-below 'copy register C to focus register']
+					    [call-below 'focus on car object']
+					    nil]
+				    [prog [call-below 'copy register C to focus register']
+					  [call-below 'focus on reverse_cdr object']
+					  [plan-call [plan 'find one of these old plans that is hypothesized to acheive one of my positive goals']]]]]
 			  [fail]]]
+		      
+		      [defplan 'find one of these recent plans that is hypothesized to avoid all of my negative goals'
+			[if [boolean [focus-register]]
+			    [prog [call-below 'copy focus register to register C']
+				  [call-below 'focus on car object']
+				  [call-below 'imagine executing plan in focus']
+				  [call-below 'focus on first_hypothesized_to_cause_goal object']
+				  [if [boolean [plan-call [plan 'one of these goals equals one of my negative goals']]]
+				      [prog [call-below 'copy register C to focus register']
+					    [call-below 'focus on cdr object']
+					    [plan-call [plan 'find one of these recent plans that is hypothesized to avoid all of my negative goals']]]
+				    [prog [call-below 'copy register C to focus register']
+					  [call-below 'focus on car object']
+					  nil]]]
+			  [fail]]]
+		      
+		      [defplan 'find a recent plan to acheive one of my positive goals'
+			[call-below 'focus on first plan']
+			[plan-call [plan 'find one of these recent plans that is hypothesized to acheive one of my positive goals']]]
+		      
+		      [defplan 'find an old plan to acheive one of my positive goals'
+			[call-below 'focus on last plan']
+			[plan-call [plan 'find one of these old plans that is hypothesized to acheive one of my positive goals']]]
+		      
+		      [defplan 'find a recent plan to avoid all of my negative goals'
+			[call-below 'focus on first plan']
+			[plan-call [plan 'find one of these recent plans that is hypothesized to avoid all of my negative goals']]]
 		      
 		      `['tests']
+		      
+		      [defplan 'test try to avoid a planner being focused on a plan that has failed with a recent plan'
+			[plan-call [plan 'avoid a planner being focused on a plan that has failed']]
+			[plan-call [plan 'find a recent plan to avoid all of my negative goals']]
+			[call-below 'execute plan in focus']]
 		      
 		      [defplan 'test I am avoiding a planner being focused on a plan that has failed'
 			[plan-call [plan 'I am avoiding a planner being focused on a plan that has failed']]]

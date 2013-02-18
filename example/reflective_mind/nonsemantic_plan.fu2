@@ -1130,12 +1130,11 @@
 		 result        result
 		 expression    expression]
 	[if [null [get result nonbug_values]]
-	    [new multiple_possible_values [conslist [shelter [error bug_name      `nonsemantic_plan-expression_compile-result_contains_no_nonbug_values
-								    is_plan_bug   t
-								    actual_type   [type result]
-								    result        result
-								    expression    expression]]]]
-	  result]]]]]
+	    [terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan-result_contains_no_nonbug_values...'
+			     '\n  expression  = ' expression
+			     '\n  result-type = ' [type result]
+			     '\n  result      = ' result]]
+	result]]]]
 
 [deftypefunk nonsemantic_plan get expression-compile [expression compile_option_frame]
   [let [[unwrapped_compile_result [cond [[null                              expression] [get this expression-compile-nil                      expression compile_option_frame]]

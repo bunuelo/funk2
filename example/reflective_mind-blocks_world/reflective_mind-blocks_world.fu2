@@ -732,7 +732,7 @@
 				  [call-below 'focus on reverse_car object']
 				  [if [boolean [register-A-equals-register-B]]
 				      [boolean t]
-				    [plan-call [plan 'register A goal equals one of the rest of my positive goals']]]]
+				    [plan-call [plan 'register A goal equals one of the rest of these']]]]
 			  [boolean nil]]]
 		      
 		      [defplan 'this goal is one of my positive goals'

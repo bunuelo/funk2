@@ -773,8 +773,8 @@
 			
 			`['tests']
 			
-			[defplan 'test a reflective planner is focusing on a plan that is hypothesized to cause a reflective planner to be focusing on a plan that has failed'
-			  [plan-call [plan 'a reflective planner is focusing on a plan that is hypothesized to cause a reflective planner to be focusing on a plan that has failed']]]
+			[defplan 'test a reflective planner is focusing on a plan that is hypothesized to cause a deliberative planner to be hypothesized to cause a cube to be on a pyramid'
+			  [plan-call [plan 'a reflective planner is focusing on a plan that is hypothesized to cause a deliberative planner to be hypothesized to cause a cube to be on a pyramid']]]
 			
 			[defplan 'test try to avoid a deliberative planner being focused on a plan that has failed with recent plan'
 			  [plan-call [plan 'avoid a deliberative planner being focused on a plan that has failed']]

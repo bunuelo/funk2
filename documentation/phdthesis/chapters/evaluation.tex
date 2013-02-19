@@ -72,7 +72,27 @@ abstractions, additional planning layers do not depend on many of the
 details of the problem domain that would otherwise slow down more
 diligent planning algorithms.
 
-\section{Partial States Referring to Partial States}
+{\mbox{\autoref{table:frames_slots_partial_states}}} shows compares
+the number of frames and slots in a number of knowledge bases as well
+as the number of partial states abstracted from these knowledge bases.
+\begin{table}
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+                 & Frames  & Slots & Partial States  \\
+\hline
+Physical         & 6       & 21    & 174             \\
+\hline
+Deliberative     & 120     & 317   & 24              \\
+\hline
+Reflective       & 224     & 488   & 18              \\
+\hline
+Super-Reflective & 208     & 470   & {\scriptsize{\emph{N/A}}}      \\
+\hline
+\end{tabular}
+\caption{}
+\label{table:frames_slots_partial_states}
+\end{table}
 
 Knowledge in a SALS planning layer includes plans, goals, a planner,
 and other knowledge used in the planning process.  In addition to the

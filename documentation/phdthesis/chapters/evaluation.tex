@@ -17,21 +17,14 @@ contribution of this thesis by measuring the computational complexity
 introduced by adding additional reflective planning layers to the SALS
 deliberative planning process.
 
-%% If one is careless with knowledge representations in each subsequently
-%% higher reflective layer, each layer of reflective control will require
-%% exponentially more processing time and space to reason about this
-%% knowledge.  This evaluation will describe how additional reflective
-%% layers in SALS have been carefully designed in order to keep each
-%% additional layer only requiring a linear increase in computational
-%% complexity.
-
 The key to thinking about computational complexity in a planning layer
 of the SALS cognitive architecture is in considering the perceptual
 inputs to that layer.  The perceptual inputs to a planning layer
 determine the complexity of the goals that the planner can attempt to
 achieve as well as the complexity of the causal models that are
 constructed for a given a rule-learning algorithm.  There are two
-different types of inputs to a SALS planning layer:
+different types of inputs to a SALS planning layer from the layer
+below:
 \begin{packed_enumerate}
 \item{Procedurally Reflective Event Streams}
 \item{Direct Read Access}
@@ -79,9 +72,7 @@ abstractions, additional planning layers do not depend on many of the
 details of the problem domain that would otherwise slow down more
 diligent planning algorithms.
 
-The key thing to realize in terms of computational complexity is how
-the number of partial states differ for each subsequent reflective
-layer that is added to the SALS architecture.
+\section{Partial States Referring to Partial States}
 
 Knowledge in a SALS planning layer includes plans, goals, a planner,
 and other knowledge used in the planning process.  In addition to the

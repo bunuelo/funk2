@@ -58,7 +58,7 @@
        [= knowledge_label [gtk-label-new [format nil knowledge_name]]]
        [have knowledge_button_label_hbox pack_start knowledge_label t t 0]
        
-       [= knowledge_print_stats_button [gtk-button-new_with_label 'Graph']]
+       [= knowledge_print_stats_button [gtk-button-new_with_label 'Stats']]
        [have knowledge_button_label_hbox pack_start knowledge_print_stats_button nil nil 0]
        [have knowledge_print_stats_button signal_connect 'clicked'
 	     [funk []
@@ -160,7 +160,7 @@
 	    semantic_frames]
       [terminal_format standard-terminal
 		       '\nMindmon printing stats for ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.'
-		       '\n  semantic_frame_count      = ' semantic_frame_count
+		       '\n  semantic_frame_count      = ' [length semantic_frames]
 		       '\n  semantic_frame_slot_count = ' semantic_frame_slot_count]]]]
 
 [deftypefunk mindmon_knowledge execute timeline_view_knowledge []

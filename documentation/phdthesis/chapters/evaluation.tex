@@ -5,7 +5,7 @@
 
 The primary contribution of this thesis is a recursive implementation
 of a reflective planning layer that controls a deliberative planning
-process.  Because of the recursive nature of the implementation, a
+process.  Because of the recursive nature of this implementation, a
 super-reflective layer is also used to control and learn about the
 reflective planning process.  The benefit of adding each additional
 reflective layer is that more can be learned from each deliberative
@@ -14,8 +14,8 @@ computational trade-off in that each additional reflective layer also
 increases the computational complexity of the overall architecture.
 This chapter evaluates the Emotion Machine cognitive architecture
 contribution of this thesis by measuring the computational complexity
-introduced by adding additional reflective planning layers to the
-basic SALS deliberative planning process.
+introduced by adding additional reflective planning layers to the SALS
+deliberative planning process.
 
 %% If one is careless with knowledge representations in each subsequently
 %% higher reflective layer, each layer of reflective control will require
@@ -27,12 +27,57 @@ basic SALS deliberative planning process.
 
 The key to thinking about computational complexity in a planning layer
 of the SALS cognitive architecture is in considering the perceptual
-inputs to that layer.  There are two different types of inputs to a
-SALS planning layer:
+inputs to that layer.  The perceptual inputs to a planning layer
+determine the complexity of the goals that the planner can attempt to
+achieve as well as the complexity of the causal models that are
+constructed for a given a rule-learning algorithm.  There are two
+different types of inputs to a SALS planning layer:
 \begin{packed_enumerate}
-\item{Direct Read Access}
 \item{Procedurally Reflective Event Streams}
+\item{Direct Read Access}
 \end{packed_enumerate}
+The first, procedurally reflective event streams, is the basis of the
+asynchronous learning from experience that was discussed in detail in
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
+To briefly review, learning from experience asynchronously abstracts a
+small subset of all possible partial states from a stream of events
+that represent changes that have occurred in the knowledge base that
+the planning layer is trying to control.  These abstracted partial
+state events are then woven together with resource activation and
+completion events through a rule-learning algorithm in order to learn
+abstract hypothetical models of resource executions in the layer
+below.  These hypothetical models can then be used by the planning
+layer in order to imagine the effects of plans before they are
+executed.  The second type of input to a planning layer, direct read
+access, allows an executing plan to access the real-time state of the
+knowledge base that it is in the process of trying to control.  The
+important thing to realize about both of these different methods of
+accessing and referring to the knowledge base in the layer below is
+that both of these methods work exclusively through a small subset of
+possible partial state structures.
+{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}}
+describes two specific types of these partial state abstractions that
+can be perceived by the planning layer: (1) the ``relationship''
+expression, and (2) the ``property'' expression.  The fact that all
+perceptual input to a planning layer is limited to these specific
+types of partial state structures limits the complexity of the control
+problem that the planning layer confronts.  For example, because of
+the simplicity of the included partial states, the SALS AI cannot
+directly pursue a single goal to create a stack of three blocks.
+Instead, the SALS AI must pursue two goals composed of these simpler
+partial states in order to make a plan to stack three blocks: (1)
+``Block-1 to be on Block-2'' and (2) ``Block-2 to be on Block-3.''
+The simplicity of the partial states that are currently abstracted in
+the SALS AI is a current limitation that can be ameliorated by adding
+more types of partial state abstractions in the future.  The important
+point is not that the abstracted partial states are currently simple
+but instead that the planning layer is limited to perceiving its
+problem domain through partial state abstractions of some sort.
+Because a planning layer in the SALS AI is limited to achieving goals
+and perceiving its problem domain in terms of partial state
+abstractions, additional planning layers do not depend on many of the
+details of the problem domain that would otherwise slow down more
+diligent planning algorithms.
 
 The key thing to realize in terms of computational complexity is how
 the number of partial states differ for each subsequent reflective

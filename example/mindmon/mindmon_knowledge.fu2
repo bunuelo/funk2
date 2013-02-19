@@ -148,10 +148,20 @@
 
 [deftypefunk mindmon_knowledge execute print_stats_knowledge []
   [let [[knowledge_base [get [get [get mindmon_agent mindmon_agent] mind] semantic_knowledge_base knowledge_name]]]
-    [let [[semantic_frame_count [get [get knowledge_base semantic_frame_set] elements]]]
+    [let [[semantic_frames           [get [get knowledge_base semantic_frame_set] elements]]
+	  [semantic_frame_slot_count 0]]
+      [mapc [funk [semantic_frame]
+		  [let [[type_ptypehash [get [get semantic_frame frame] type_ptypehash]]]
+		    [mapc [funk [type_key]
+				[mapc [funk [key]
+					    [= semantic_frame_slot_count [+ semantic_frame_slot_count 1]]]
+				      [get type_ptypehash keys]]]
+			  [get type_ptypehash keys]]]]
+	    semantic_frames]
       [terminal_format standard-terminal
 		       '\nMindmon printing stats for ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.'
-		       '\n  semantic_frame_count = ' semantic_frame_count]]]]
+		       '\n  semantic_frame_count      = ' semantic_frame_count
+		       '\n  semantic_frame_slot_count = ' semantic_frame_slot_count]]]]
 
 [deftypefunk mindmon_knowledge execute timeline_view_knowledge []
   [terminal_format standard-terminal '\nMindmon generating and displaying timeline of ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.']

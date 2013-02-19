@@ -159,7 +159,7 @@
 					      [= semantic_frame_slot_count [+ semantic_frame_slot_count 1]]
 					      [let [[value [have key_ptypehash lookup key]]]
 						[if [and [not [is-type `semantic_frame value]]
-							 [not [eq `relation key_type]]]
+							 [not [eq `relation type_key]]]
 						    [= semantic_frame_property_count [+ semantic_frame_property_count 1]]]]]
 					[get key_ptypehash keys]]]]
 			  [get type_ptypehash keys]]]]

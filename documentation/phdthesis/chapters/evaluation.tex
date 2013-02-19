@@ -17,33 +17,110 @@ contribution of this thesis by measuring the computational complexity
 introduced by adding additional reflective planning layers to the
 basic SALS deliberative planning process.
 
-If one is careless with knowledge representations in each subsequently
-higher reflective layer, each layer of reflective control will require
-exponentially more processing time and space to reason about this
-knowledge.  This evaluation will describe how additional reflective
-layers in SALS have been carefully designed in order to keep each
-additional layer only requiring a linear increase in computational
-complexity.
+%% If one is careless with knowledge representations in each subsequently
+%% higher reflective layer, each layer of reflective control will require
+%% exponentially more processing time and space to reason about this
+%% knowledge.  This evaluation will describe how additional reflective
+%% layers in SALS have been carefully designed in order to keep each
+%% additional layer only requiring a linear increase in computational
+%% complexity.
+
+The key to thinking about computational complexity in a planning layer
+of the SALS cognitive architecture is in considering the perceptual
+inputs to that layer.  There are two different types of inputs to a
+SALS planning layer:
+\begin{packed_enumerate}
+\item{Direct Read Access}
+\item{Procedurally Reflective Event Streams}
+\end{packed_enumerate}
+
+The key thing to realize in terms of computational complexity is how
+the number of partial states differ for each subsequent reflective
+layer that is added to the SALS architecture.
 
 Knowledge in a SALS planning layer includes plans, goals, a planner,
 and other knowledge used in the planning process.  In addition to the
 planning objects, knowledge in a planning layer includes references to
-knowledge in the layer below.  has the potential to be more complex
-and thus more difficult to reason about than the knowledge in the
-layers below that knowledge.  For example, a partial state of the
-physical problem domain can be a simple relationship such as ``a
-pyramid being on a cube.''  Since the deliberative layer contains
-meta-physical knowledge, or ``knowledge about physical knowledge,'' a
-simple deliberative partial state could be that ``a deliberative plan
-fails to accomplish the goal for a cube to be on a pyramid.''  This
-deliberative knowledge appears at first glance to be more complex than
-the physical knowledge that it is about because it contains, in some
-sense, the physical knowledge as well as additional relationships
-between this physical knowledge and a plan and a goal.  Further, the
-reflective layer contains meta-meta-physical knowledge, so a piece of
-reflective knowledge could be that ``a reflective plan fails to avoid
-the negative goal of a deliberative plan failing to achieve the goal
-of a cube being on a pyramid.''
+knowledge in the layer below.  Keeping clear distinctions between
+knowledge in different layers is critical to reducing the potential
+complexity of the SALS architecture.  For example, while the
+deliberative plan knowledge base references physical knowledge in the
+learned reactive physical knowledge base, the deliberative plan
+knowledge does not actually contain physical knowledge.  Instead, the
+deliberative plan knowledge base contains symbolized reifications of
+potential partial states of the physical knowledge base.
+{\mbox{\autoref{figure:deliberative_physical_partial_state_reification}}}
+shows a simple example of a deliberative goal that refers to a
+potential partial state of the physical knowledge base and how this
+partial state is symbolically reified in the deliberative layer.
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{gfx/deliberative_physical_partial_state_reification}
+\caption[Deliberative physical partial state
+  reification.]{Deliberative physical partial state reification.  (A)
+  A visualization of the idea that a deliberative goal object can
+  refer to a potential partial state of the physical knowledge base.
+  (B) The actual representation of a deliberative goal object that has
+  a symbolic ``partial-state'' property, the symbolic phrase, ``A cube
+  is on a pyramid,'' being a reference to the potential physical
+  partial state visualized in (A).  Each planning layer is limited to
+  reflecting upon reified symbols that refer to partial states in the
+  layer below and not the complexity of the partial states
+  themselves.}
+\label{figure:deliberative_physical_partial_state_reification}
+\end{figure}
+Because deliberative knowledge only contains symbols that refer to
+physical partial states, this allows the deliberative layer to ignore
+the internal details of the physical partial state and simply treat
+the goal symbolically.
+
+{\mbox{\autoref{figure:meta_meta_knowledge}}} shows a visualization of
+an example of reflective knowledge that references potential
+deliberative knowledge, while this potential deliberative knowledge
+references potential physical knowledge.
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{gfx/meta_meta_knowledge}
+\caption[A visualization of a reflective partial state with references
+  to potential knowledge in the layers below.]{A visualization of a
+  reflective partial state with references to potential knowledge in
+  the layers below.  Although this reflective knowledge is visualized
+  as a hyper-graph that includes deliberative and physical knowledge,
+  all deliberative and physical knowledge is actually symbolically
+  reified in the reflective partial state.  This is not a
+  visualization of deliberative knowledge or physical knowledge.  This
+  is a visualization of reflective knowledge.}
+\label{figure:meta_meta_knowledge}
+\end{figure}
+
+\section{The Interpretation Process in Three Layers}
+
+\begin{enumerate}
+\item{\emph{Physical Partial State}: ``A pyramid is on a cube.''}
+\item{\emph{Deliberative Partial State}: ``A deliberative planner is
+  focusing on a plan that is hypothesized to cause a cube to be on a
+  pyramid.''}
+\item{\emph{Reflective Partial State}: ``A reflective planner is
+  focusing on a plan that is hypothesized to cause a deliberative
+  planner to be focusing on a plan that is hypothesized to cause a
+  cube to be on a pyramid.''}
+\end{enumerate}
+
+has the potential to be more complex and thus more difficult to reason
+about than the knowledge in the layers below that knowledge.  For
+example, a partial state of the physical problem domain can be a
+simple relationship such as ``a pyramid being on a cube.''  Since the
+deliberative layer contains meta-physical knowledge, or ``knowledge
+about physical knowledge,'' a simple deliberative partial state could
+be that ``a deliberative plan fails to accomplish the goal for a cube
+to be on a pyramid.''  This deliberative knowledge appears at first
+glance to be more complex than the physical knowledge that it is about
+because it contains, in some sense, the physical knowledge as well as
+additional relationships between this physical knowledge and a plan
+and a goal.  Further, the reflective layer contains meta-meta-physical
+knowledge, so a piece of reflective knowledge could be that ``a
+reflective plan fails to avoid the negative goal of a deliberative
+plan failing to achieve the goal of a cube being on a pyramid.''
 {\mbox{\autoref{figure:meta_meta_knowledge}}} shows a visualization of
 this example of meta-meta-knowledge with a reflective partial state
 that references a deliberative partial state that references a

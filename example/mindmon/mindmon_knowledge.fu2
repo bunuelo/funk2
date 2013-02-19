@@ -1,4 +1,4 @@
-'Copyright (c) 2007-2012 Bo Morgan.
+'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
  Author: Bo Morgan
@@ -31,6 +31,7 @@
 				    knowledge_graph_expansion_button
 				    knowledge_timeline_expansion_button
 				    knowledge_label
+				    knowledge_print_stats_view_button
 				    knowledge_graph_view_button
 				    knowledge_timeline_view_button
 				    
@@ -56,6 +57,13 @@
        
        [= knowledge_label [gtk-label-new [format nil knowledge_name]]]
        [have knowledge_button_label_hbox pack_start knowledge_label t t 0]
+       
+       [= knowledge_print_stats_button [gtk-button-new_with_label 'Graph']]
+       [have knowledge_button_label_hbox pack_start knowledge_print_stats_button nil nil 0]
+       [have knowledge_print_stats_button signal_connect 'clicked'
+	     [funk []
+		   [have this print_stats_knowledge]]
+	     nil]
        
        [= knowledge_graph_view_button [gtk-button-new_with_label 'Graph']]
        [have knowledge_button_label_hbox pack_start knowledge_graph_view_button nil nil 0]
@@ -137,6 +145,13 @@
 								    [conslist [get [get [get mindmon_agent mindmon_agent] mind] semantic_knowledge_base knowledge_name]]]
 							    '\n']]]]
     [fiber [funk [] [dot_code-gview dot_code]] nil]]]
+
+[deftypefunk mindmon_knowledge execute print_stats_knowledge []
+  [let [[knowledge_base [get [get [get mindmon_agent mindmon_agent] mind] semantic_knowledge_base knowledge_name]]]
+    [let [[semantic_frame_count [get [get knowledge_base semantic_frame_set] elements]]]
+      [terminal_format standard-terminal
+		       '\nMindmon printing stats for ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.'
+		       '\n  semantic_frame_count = ' semantic_frame_count]]]]
 
 [deftypefunk mindmon_knowledge execute timeline_view_knowledge []
   [terminal_format standard-terminal '\nMindmon generating and displaying timeline of ' [get mindmon_agent name] '\'s ' knowledge_name ' semantic knowledge.']

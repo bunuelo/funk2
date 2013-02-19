@@ -12,22 +12,34 @@ reflective layer is that more can be learned from each deliberative
 failure by adding each additional reflective layer, but there is a
 computational trade-off in that each additional reflective layer also
 increases the computational complexity of the overall architecture.
-This chapter evaluates the Emotion Machine cognitive architectural
-component of the SALS AI by asking the following question: What is the
-increase in computational complexity introduced by adding additional
-reflective planning layers to the basic deliberative planning process?
-The answer is that knowledge in each subsequently higher reflective
-layer has the potential to be more complex and thus more difficult to
-reason about than the knowledge in the layers below that knowledge.
-For example, a partial state of the physical problem domain can be a
-simple relationship such as ``a pyramid being on a cube.''  Since the
-deliberative layer contains meta-physical knowledge, or ``knowledge
-about physical knowledge,'' a simple deliberative partial state could
-be that ``a deliberative plan fails to achieve the goal of a cube
-being on a pyramid.''  This deliberative knowledge appears at first
-glance to be more complex than the physical knowledge that it is about
-because it contains, in some sense, the physical knowledge as well as
-additional information about a plan and a goal.  Further, the
+This chapter evaluates the Emotion Machine cognitive architecture
+contribution of this thesis by measuring the computational complexity
+introduced by adding additional reflective planning layers to the
+basic SALS deliberative planning process.
+
+If one is careless with knowledge representations in each subsequently
+higher reflective layer, each layer of reflective control will require
+exponentially more processing time and space to reason about this
+knowledge.  This evaluation will describe how additional reflective
+layers in SALS have been carefully designed in order to keep each
+additional layer only requiring a linear increase in computational
+complexity.
+
+Knowledge in a SALS planning layer includes plans, goals, a planner,
+and other knowledge used in the planning process.  In addition to the
+planning objects, knowledge in a planning layer includes references to
+knowledge in the layer below.  has the potential to be more complex
+and thus more difficult to reason about than the knowledge in the
+layers below that knowledge.  For example, a partial state of the
+physical problem domain can be a simple relationship such as ``a
+pyramid being on a cube.''  Since the deliberative layer contains
+meta-physical knowledge, or ``knowledge about physical knowledge,'' a
+simple deliberative partial state could be that ``a deliberative plan
+fails to accomplish the goal for a cube to be on a pyramid.''  This
+deliberative knowledge appears at first glance to be more complex than
+the physical knowledge that it is about because it contains, in some
+sense, the physical knowledge as well as additional relationships
+between this physical knowledge and a plan and a goal.  Further, the
 reflective layer contains meta-meta-physical knowledge, so a piece of
 reflective knowledge could be that ``a reflective plan fails to avoid
 the negative goal of a deliberative plan failing to achieve the goal
@@ -44,46 +56,84 @@ physical partial state.
   physical partial state.}
 \label{figure:meta_meta_knowledge}
 \end{figure}
+{\mbox{\autoref{table:meta_meta_knowledge_complexity}}} shows the
+computational complexity of evaluating each one of these increasingly
+complex forms of knowledge.  The phrase, ``a cube is on a pyramid,''
+is interpreted in the deliberative layer and results in the following
+SALS program:
 
 \begin{samepage}
 \begin{Verbatim}
-[exists [relationship planner property planner_type deliberative
-                      relation focus_plan
-                      plan property hypothesized_to_cause_partial_state
-                      [relationship block property shape 'cube'
-                                    preposition on
-                                    block property shape 'pyramid']]]
+[exists
+  [relationship block property shape 'cube'
+                preposition on
+                block property shape 'pyramid']]
 \end{Verbatim}
 \end{samepage}
 
+\noindent The phrase, ``a deliberative planner is focusing on a plan
+that is hypothesized to cause a cube to be on a pyramid,'' is
+interpreted by the reflective layer and refers to a partial state of
+the deliberative plan knowledge base, which results in the following
+SALS program:
+
+\begin{samepage}
+\begin{Verbatim}
+[exists
+  [relationship planner property planner_type deliberative
+                relation focus_plan
+                plan property hypothesized_to_cause
+                [relationship block property shape 'cube'
+                              preposition on
+                              block property shape 'pyramid']]]
+\end{Verbatim}
+\end{samepage}
+
+\noindent The phrase, ``a reflective planner is focusing on a plan
+that is hypothesized to cause a deliberative planner to be focusing on
+a plan that is hypothesized to cause a cube to be on a pyramid,'' is
+interpreted by the super-reflective layer and refers to a partial
+state of the reflective plan knowledge base, which results in the
+following SALS program:
+
+\begin{samepage}
+\begin{Verbatim}
+[exists 
+  [relationship planner property planner_type reflective
+                relation focus_plan
+                plan property hypothesized_to_cause
+    [relationship planner property planner_type deliberative
+                  relation focus_plan
+                  plan property hypothesized_to_cause
+                  [relationship block property shape 'cube'
+                                preposition on
+                                block property shape 'pyramid']]]]
+\end{Verbatim}
+\end{samepage}
+
+
+
 \begin{table}
 \centering
-\begin{tabular}{|l|r|r|}
+\begin{tabular}{|l|c|c|}
 \hline
-                 &Execution Nodes &Plan Analogies \\
+                 &Execution Nodes   &Plan Analogies    \\
+                 &{\scriptsize{(Imagine/Execute)}} &{\scriptsize{(Imagine/Execute)}} \\
 \hline
-Super Reflective &                &               \\
+Deliberative     & 18/12            & 2/0              \\
 \hline
-Reflective       & 98/22          & 10/0          \\
+Reflective       & 98/22            & 10/0             \\
 \hline
-Deliberative     & 18/12          & 2/0           \\
+Super Reflective & 348/32           & 27/0             \\
 \hline
 \end{tabular}
 \caption{The number of execution nodes and plan analogies that were
-  made during in different stages of plan processing in the different
-  planning layers during a planning scenario involving the super
-  reflective layer interpreting and compiling a plan to ``find and
-  execute a recently learned plan that avoids a negative reflective
-  goal.''  The execution of the super reflective plan becomes the
-  reflective planning process.  The reflective planning process
-  searches through deliberative plans until it finds a plan to ``find
-  and execute a recently learned plan for accomplishing a positive
-  deliberative goal.''  The execution of the reflective plan becomes
-  the deliberative planning process.  The deliberative planning
-  process interprets and imagines a plan to ``stack a cube on a
-  pyramid,'' which is hypothesized to accomplish a positive
-  deliberative goal.}
-\label{table:plan_interpretation_computational_complexity_of_layers}
+  made interpreting a deliberative statement about physical knowledge,
+  a reflective meta-knowledge statement about deliberative knowledge
+  that references the same physical knowledge, and a super-reflective
+  meta-meta-knowledge statement that references the same physical
+  knowledge through deliberative knowledge.}
+\label{table:meta_meta_knowledge_complexity}
 \end{table}
 
 

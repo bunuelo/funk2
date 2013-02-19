@@ -1354,6 +1354,8 @@
 		      [[is-type `cons   variable_definition] [if [== [length variable_definition] 2]
 								 [let [[variable   [first  variable_definition]]
 								       [definition [second variable_definition]]]
+								   [if [is-type `string definition]
+								       [= definition [get definition as-symbol]]]
 								   [semantic-add semantic_plan_object default_variable variable definition]]
 							       [error bug_name   `invalid_plan_variable_definition
 								      expression variable_definition]]]

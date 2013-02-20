@@ -281,8 +281,8 @@
 						   relation focus_plan
 						   plan property failed_to_achieve [plan-call [plan [? partial_state]]]]]
 				 
-				 [defplan 'a deliberative planner to be focusing on a plan that has failed to avoid the goal for a cube to be on a pyramid'
-				   :matches ['a [? planner-type] planner to be focusing on a plan that has failed to avoid the goal for [? partial_state]']
+				 [defplan 'a deliberative planner to be focusing on a plan that has failed to avoid the negative goal for a cube to be on a pyramid'
+				   :matches ['a [? planner-type] planner to be focusing on a plan that has failed to avoid the negative goal for [? partial_state]']
 				    :frame [[partial_state 'a cube to be on a pyramid']
 					    [planner-type  'deliberative']]
 				     [relationship planner property planner_type [? planner-type]
@@ -559,6 +559,9 @@
 			[prog @shared_planning_plans]
 			
 			`['tests']
+			
+			[defplan 'test a deliberative planner to be focusing on a plan that has failed to avoid the negative goal for a cube to be on a pyramid'
+			  [plan-call [plan 'a deliberative planner to be focusing on a plan that has failed to avoid the negative goal for a cube to be on a pyramid']]]
 			
 			[defplan 'test a deliberative planner is focusing on a plan that is hypothesized to cause a cube to be on a pyramid'
 			  [plan-call [plan 'a deliberative planner is focusing on a plan that is hypothesized to cause a cube to be on a pyramid']]]

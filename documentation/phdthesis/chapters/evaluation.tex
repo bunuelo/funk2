@@ -67,9 +67,46 @@ abstractions that reduce the complexity of the problem domain to a set
 of symbolic reifications that either exist or do not exist in the
 control domain.
 
+Knowledge in a SALS planning layer includes plans, goals, a planner,
+and other knowledge used in the planning process.  In addition to the
+planning objects, knowledge in a planning layer includes symbolically
+reified references to the knowledge in the layer below.  Keeping clear
+distinctions between knowledge in different layers is critical to
+reducing the potential complexity of the SALS architecture.  For
+example, while the deliberative plan knowledge base references
+physical knowledge in the learned reactive physical knowledge base,
+the deliberative plan knowledge does not actually contain physical
+knowledge.  Instead, the deliberative plan knowledge base contains
+symbolized reifications of potential partial states of the physical
+knowledge base.
+{\mbox{\autoref{figure:deliberative_physical_partial_state_reification}}}
+shows a simple example of a deliberative goal that refers to a
+potential partial state of the physical knowledge base and how this
+partial state is symbolically reified in the deliberative layer.
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{gfx/deliberative_physical_partial_state_reification}
+\caption[Deliberative physical partial state
+  reification.]{Deliberative physical partial state reification.  (A)
+  A visualization of the idea that a deliberative goal object can
+  refer to a potential partial state of the physical knowledge base.
+  (B) The actual representation of a deliberative goal object that has
+  a symbolic ``partial-state'' property, the symbolic phrase, ``A cube
+  is on a pyramid,'' being a reference to the potential physical
+  partial state visualized in (A).  Each planning layer is limited to
+  reflecting upon reified symbols that refer to partial states in the
+  layer below and not the complexity of the partial states
+  themselves.}
+\label{figure:deliberative_physical_partial_state_reification}
+\end{figure}
+Because deliberative knowledge only contains symbols that refer to
+physical partial states, this allows the deliberative layer to ignore
+the internal details of the physical partial state and simply treat
+the goal symbolically.
+
 The number of partial states that are abstracted from any given
 knowledge base depends primarily on the structure of the knowledge
-within that knowledge base and whether or not this structure contains
+within that knowledge base and whether or not that structure contains
 the types of partial states that the SALS AI is prepared to abstract.
 The partial states that are currently included in the SALS AI are
 meant to be both specific enough to handle the simple types of
@@ -86,15 +123,15 @@ bases by the layers above.
 \centering
 \begin{tabular}{|l|c|c|}
 \hline
-\emph{Knowledge Base}     & \emph{Frames}  & \emph{Partial States Abstracted}  \\
+\emph{Knowledge Base}     & \emph{Frames} & \emph{Partial States Abstracted} \\
 \hline
-Learned Reactive Physical & 6              & 174             \\
+Learned Reactive Physical & 6             & 174                              \\
 \hline
-Deliberative Plan         & 120            & 122             \\
+Deliberative Plan         & 120           & 122                              \\
 \hline
-Reflective Plan           & 224            & 103             \\
+Reflective Plan           & 224           & 103                              \\
 \hline
-Super-Reflective Plan     & 208            & {\scriptsize{\emph{N/A}}} \\
+Super-Reflective Plan     & 208           & {\scriptsize{\emph{N/A}}}        \\
 \hline
 \end{tabular}
 \caption[A comparison of the sizes of knowledge bases in the layers of
@@ -137,43 +174,46 @@ the current state of the architecture, the number of perceptual inputs
 to subsequently higher layers of reflective control grows
 sub-linearly.
 
-\section{Complexity of Learning from Being Told}
+\section{Complexity of Higher-Level Planning}
 
-Knowledge in a SALS planning layer includes plans, goals, a planner,
-and other knowledge used in the planning process.  In addition to the
-planning objects, knowledge in a planning layer includes references to
-knowledge in the layer below.  Keeping clear distinctions between
-knowledge in different layers is critical to reducing the potential
-complexity of the SALS architecture.  For example, while the
-deliberative plan knowledge base references physical knowledge in the
-learned reactive physical knowledge base, the deliberative plan
-knowledge does not actually contain physical knowledge.  Instead, the
-deliberative plan knowledge base contains symbolized reifications of
-potential partial states of the physical knowledge base.
-{\mbox{\autoref{figure:deliberative_physical_partial_state_reification}}}
-shows a simple example of a deliberative goal that refers to a
-potential partial state of the physical knowledge base and how this
-partial state is symbolically reified in the deliberative layer.
-\begin{figure}
-\centering
-\includegraphics[width=10cm]{gfx/deliberative_physical_partial_state_reification}
-\caption[Deliberative physical partial state
-  reification.]{Deliberative physical partial state reification.  (A)
-  A visualization of the idea that a deliberative goal object can
-  refer to a potential partial state of the physical knowledge base.
-  (B) The actual representation of a deliberative goal object that has
-  a symbolic ``partial-state'' property, the symbolic phrase, ``A cube
-  is on a pyramid,'' being a reference to the potential physical
-  partial state visualized in (A).  Each planning layer is limited to
-  reflecting upon reified symbols that refer to partial states in the
-  layer below and not the complexity of the partial states
-  themselves.}
-\label{figure:deliberative_physical_partial_state_reification}
-\end{figure}
-Because deliberative knowledge only contains symbols that refer to
-physical partial states, this allows the deliberative layer to ignore
-the internal details of the physical partial state and simply treat
-the goal symbolically.
+While the perceptual inputs to higher-level planning layers in the
+SALS AI are currently kept at a tractable sub-linear complexity for
+each additional layer, there is still the question of how the planning
+process for each subsequently higher layer scales in time-complexity.
+The planning process can be broken down into two main stages:
+\begin{packed_enumerate}
+\item{Plan Interpretation}
+\item{Plan Execution}
+\end{packed_enumerate}
+Plan interpretation involves a search through possible interpretations
+of natural language phrases expressed in the simple SALS template
+matching programming language, which is described in detail in
+{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}}.
+To briefly review, the search through possible natural language
+interpretations involves finding analogies to other already known
+natural language plans that match the phrase that is currently being
+interpreted.  The interpretation process considers the current state
+of the domain that the planning layer is trying to control, ignores
+interpretations that compile to programs that are imagined to have
+bugs, such as passing the wrong argument type to a low-level function,
+and also ignores interpretations that do not accomplish the current
+goals of the planning layer or fail to avoid negative goals.
+Depending on the type of reflectively chosen planning process, plan
+execution generally occurs after a natural language plan has been
+interpreted, all natural language ambiguity has been compiled away,
+and the plan has been deemed relevant to either accomplishing positive
+goals or avoiding negative goals.
+
+Because the plan interpretation process requires a search through a
+number of ambiguously specified analogies to previously known natural
+language plans, this process can potentially have a considerable
+time-complexity as natural language phrases become longer and more
+complex.  This fact can become problematic if care is not taken in the
+design of reflective natural language plans because, although the
+knowledge at higher layers of reflective control is symbolically
+reified, the creation of these reified symbolic references directly
+from natural language phrases can require an intractable
+time-complexity at higher layers.
 
 {\mbox{\autoref{figure:meta_meta_knowledge}}} shows a visualization of
 an example of reflective knowledge that references potential
@@ -182,19 +222,12 @@ references potential physical knowledge.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/meta_meta_knowledge}
-\caption[A visualization of a reflective partial state with references
-  to potential knowledge in the layers below.]{A visualization of a
-  reflective partial state with references to potential knowledge in
-  the layers below.  Although this reflective knowledge is visualized
-  as a hyper-graph that includes deliberative and physical knowledge,
-  all deliberative and physical knowledge is actually symbolically
-  reified in the reflective partial state.  This is not a
-  visualization of deliberative knowledge or physical knowledge.  This
-  is a visualization of reflective knowledge.}
+\caption[A visualization of the idea that a reflective partial state
+  can indirectly reference physical knowledge.]{A visualization of the
+  idea that a reflective partial state can indirectly reference
+  physical knowledge.}
 \label{figure:meta_meta_knowledge}
 \end{figure}
-
-\section{The Interpretation Process in Three Layers}
 
 \begin{enumerate}
 \item{\emph{Physical Partial State}: ``A pyramid is on a cube.''}

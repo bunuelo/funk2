@@ -160,6 +160,7 @@ phdthesis.pdf: \
   gfx/hypothesis_version_space_set_divisions.pdf \
   gfx/cpu_core_hyperthread_distances.pdf \
   gfx/meta_meta_knowledge.pdf \
+  gfx/deliberative_physical_partial_state_reification.pdf \
   gfx/inference_of_physical_knowledge.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis

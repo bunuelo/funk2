@@ -240,6 +240,36 @@ references potential physical knowledge.
   cube to be on a pyramid.''}
 \end{enumerate}
 
+\begin{samepage}
+\begin{Verbatim}
+[exists 
+  [relationship planner property planner_type reflective
+                relation focus_plan
+                plan property failed_to_avoid 
+    [relationship planner property planner_type deliberative
+                  relation focus_plan
+                  plan property failed_to_achieve
+      [relationship block property shape cube
+                    preposition on
+                    block property shape pyramid]]]]
+\end{Verbatim}
+\end{samepage}
+
+\begin{table}
+\centering
+\begin{tabular}{|l|r|r|}
+\hline
+                 &Execution Nodes &Plan Analogies \\
+\hline
+Deliberative     &                &               \\
+\hline
+Reflective       &                &               \\
+\hline
+Super Reflective & 125            & 9             \\
+\hline
+\end{tabular}
+
+
 has the potential to be more complex and thus more difficult to reason
 about than the knowledge in the layers below that knowledge.  For
 example, a partial state of the physical problem domain can be a
@@ -316,9 +346,9 @@ following SALS program:
     [relationship planner property planner_type deliberative
                   relation focus_plan
                   plan property hypothesized_to_cause
-                  [relationship block property shape 'cube'
-                                preposition on
-                                block property shape 'pyramid']]]]
+      [relationship block property shape 'cube'
+                    preposition on
+                    block property shape 'pyramid']]]]
 \end{Verbatim}
 \end{samepage}
 

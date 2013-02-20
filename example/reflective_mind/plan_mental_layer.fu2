@@ -306,7 +306,9 @@
   [let [[semantic_plan_object-phenomenal_name [nonsemantic_plan-unique_name_from_name_expression plan_name]]]
     [let [[semantic_plans [have memoized_plans_by_name_ptypehash lookup semantic_plan_object-phenomenal_name]]]
       [if [null semantic_plans]
-	  [let [[semantic_plan_matches [have this lookup_semantic_plan_matches plan_name]]]
+	  [let [[semantic_plan_matches [have this lookup_semantic_plan_matches [if [is-type `string plan_name]
+										   plan_name
+										 [get plan_name as-string]]]]]
 	    [mapc [funk [semantic_plan_match]
 			[let [[match-semantic_plan_object [have semantic_plan_match lookup `semantic_plan_object]]
 			      [match-variable_frame       [have semantic_plan_match lookup `variable_frame]]

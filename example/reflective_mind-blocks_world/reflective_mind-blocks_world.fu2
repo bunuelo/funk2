@@ -407,6 +407,9 @@
 			[defplan 'test a cube is on a pyramid'
 			  [plan-call [plan 'a cube is on a pyramid']]]
 			
+			[defplan 'test a pyramid is on a cube'
+			  [plan-call [plan 'a pyramid is on a cube']]]
+			
 			`['oldest deliberative plan']
 			
 			[defplan 'test stack a pyramid on a cube'

@@ -45,7 +45,7 @@ u64 raw__nanoseconds_since_1970() {
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 }
 
-#define max_loop_count ((u64)5000000000ull)
+#define max_loop_count ((u64)2500000000ull)
 
 void* pthread_start_function(void* user_ptr) {
   //my_pthread_t* my_pthread = user_ptr;

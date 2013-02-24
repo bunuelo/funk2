@@ -8,14 +8,11 @@ to the data and through the procedures that produced those results and
 that behavior \cite[]{morgan:2009}.  Good traces make a system
 accountable and help to enable the analysis of success and failure,
 and thus enhancing the ability of the system to learn from mistakes.
-The low-level Lisp-like programming language is not to be confused
-with the high-level natural programming language presented in
-{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}},
-where I have described many of the high-level natural language
-interpretation and imagination failures that the SALS AI is able to
-detect and avoid through backtracking.  In this chapter, I will focus
-on the details of the low-level Lisp-like programming language that
-enable those types of backtracking and failure avoidance.  In
+The SALS virtual machine and low-level Lisp-like programming language
+collectively form the substrate that executes the entire SALS
+cognitive architecture.  In this chapter, I will focus on the details
+of the low-level Lisp-like programming language that enable learning
+from failure.  In
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}, I
 described the details of how an asynchronous learning algorithm can
 learn from these failures so that these failures can be avoided in
@@ -23,25 +20,26 @@ future natural language plan executions through learning refined
 causal models of the hypothetical imagined effects of natural language
 plans.  In this chapter, I will describe the details of the low-level
 Lisp-like language that enable these types of asynchronous learning
-algorithms.  The SALS virtual machine provides for general parallelism
-and concurrency, while supporting the automatic collection of audit
-trails for all processes, including the processes that analyze audit
-trails.  The native support of a low-level Lisp-like language in the
-SALS architecture allows, as in machine language, a program to be data
-that can be easily manipulated by a program, making it easier for a
-user or an automatic procedure to read, edit, and write programs as
-they are debugged.  Large concurrent and parallel systems are often
-difficult to build and debug because of the complex causal
-interactions between all of the different processes.  For this reason,
-every parallel task in SALS has an associated ``cause'' object.  If
-any task creates a new parallel task, then a new cause object is
-created for the child task with a parent cause object reference.
-Cause objects represent meta-information about a task, such as in what
-way a compiled procedure should be executed, which can be used for
-causally organizing the effects of groups of parallel tasks,
-controlling and monitoring the occurrence of any type of event through
-any of the procedural abstraction barriers of the SALS virtual
-machine.
+algorithms.
+
+The SALS virtual machine provides for general parallelism and
+concurrency, while supporting the automatic collection of audit trails
+for all processes, including the processes that analyze audit trails.
+The native support of a low-level Lisp-like language in the SALS
+architecture allows, as in machine language, a program to be data that
+can be easily manipulated by a program, making it easier for a user or
+an automatic procedure to read, edit, and write programs as they are
+debugged.  Large concurrent and parallel systems are often difficult
+to build and debug because of the complex causal interactions between
+all of the different processes.  For this reason, every parallel task
+in SALS has an associated ``cause'' object.  If any task creates a new
+parallel task, then a new cause object is created for the child task
+with a parent cause object reference.  Cause objects represent
+meta-information about a task, such as in what way a compiled
+procedure should be executed, which can be used for causally
+organizing the effects of groups of parallel tasks, controlling and
+monitoring the occurrence of any type of event through any of the
+procedural abstraction barriers of the SALS virtual machine.
 
 \section{Virtual Machine}
 
@@ -241,7 +239,7 @@ subscribed to by a number of different parallel listeners in different
 fibers.  Also semantic object pointers are bidirectional in order to
 ease traversal by reflective pattern matching algorithms.
 
-Because it becomes awkward to subscribe to each an every frame-based
+Because it becomes awkward to subscribe to each and every frame-based
 object that may be interesting to the reflective focus, semantic
 frames that are created by specific fibers can be added to collections
 of semantic frames that are called ``semantic knowledge bases.''
@@ -259,29 +257,30 @@ required.  In order to allow efficient access of the state of
 knowledge bases at arbitrary points in the past, ``semantic event
 knowledge bases'' are another type of representation that is
 reflectively and asynchronously maintained in order to not slow down
-the primary procedure under reflective focus.  Uses of the event
-knowledge base object in the SALS asynchronous learning algorithm have
-been described in
-{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.  I
-will briefly review the features of the event knowledge base as well
-as a few details about how this object is initialized and used in the
-SALS low-level Lisp-like programming language.  The semantic event
+the primary procedure under reflective focus.
+{\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}
+describes how the SALS asynchronous learning algorithm uses the event
+knowledge base object to calculate partial state transframes.  I will
+briefly review the features of the event knowledge base as well as a
+few details about how this object is initialized and used in the SALS
+low-level Lisp-like programming language.  The semantic event
 knowledge base stores a type of semantic frame called a ``semantic
 event.''  A semantic event is a type of semantic frame object that
-represents an interval in time, each of which may or may not be
-specified, making the interval potentially open-ended.  Semantic event
-knowledge bases are reflectively traced and the knowledge is always
-stored in two different representations, the basic semantic event
-frames as well as a balanced interval tree that always represents the
-current state of the semantic event knowledge base.  The balanced
-interval tree allows accessing the state of the focus knowledge base
-in $O(\log{(n)})$ time, where $n$ is the number of events stored in
-the semantic event knowledge base.  Although the time complexity is
-not as efficient as the constant, $O(1)$, access time of the
-reflectively reconstructed semantic knowledge base, the semantic event
-interval tree knowledge base only requires $O(n)$ memory complexity in
-order to allow access to the structure of the knowledge base at any
-point in the past, where $n$ is the number of semantic events.
+represents an interval in time, which may include partial knowledge if
+the start or end times do not exist, making the interval potentially
+open-ended.  Semantic event knowledge bases are reflectively traced
+and the knowledge is always stored in two different representations,
+the basic semantic event frames as well as a balanced interval tree
+that always represents the current state of the semantic event
+knowledge base.  The balanced interval tree allows accessing the state
+of the focus knowledge base in $O(\log{(n)})$ time, where $n$ is the
+number of events stored in the semantic event knowledge base.
+Although the time complexity is not as efficient as the constant,
+$O(1)$, access time of the reflectively reconstructed semantic
+knowledge base, the semantic event interval tree knowledge base only
+requires $O(n)$ memory complexity in order to allow access to the
+structure of the knowledge base at any point in the past, where $n$ is
+the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
 create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
 in the SALS low-level Lisp-like interactive programming language.
@@ -325,12 +324,12 @@ before this event are forgotten.  This type of memory conserving event
 stream is referred to as a ``forgetful event stream.''  In this way
 semantic frames report the addition and removal of slot values to
 reflective forgetful event stream subscribers.  Once a knowledge base
-is created and we have an important event stream iterator, we can
+is created and we have an ``important event stream iterator,'' we can
 define a concurrent reflective fiber that processes the events
 reflectively, after the real-time execution of the processes that
 modify this knowledge base.
 {\mbox{\autoref{figure:reflective_fiber}}} shows an example of how a
-reflective fiber can be created to process an
+reflective fiber can be created to process a
 {\tt{forgetful\_event\_stream}} generated by a
 {\tt{semantic\_knowledge\_base}}, which includes a traced
 {\tt{semantic\_planner}}.
@@ -440,11 +439,11 @@ out-> []
 
 While every parallel fiber is allocated a unique {\tt{cause}} object
 that provides a representation of the reflective tracing features for
-that fiber, sometimes it is useful to collect events from a
-overlapping sets or different hierarchies of many fiber objects.  A
-convenient solution to causally organizing very dynamic sets of fibers
-is provided by a ``cause group'' object.  Cause groups are added to
-cause objects and inherited from parent to child when new causes are
+that fiber, sometimes it is useful to collect events from overlapping
+sets or different hierarchies of many fiber objects.  A convenient
+solution to causally organizing very dynamic sets of fibers is
+provided by a ``cause group'' object.  Cause groups are added to cause
+objects and inherited from parent to child when new causes are
 created.  Because cause objects and cause group objects exist at the
 locus of every memory creation and mutation event in the SALS virtual
 machine, they provide a means of tracing any event that modifies any

@@ -5,42 +5,45 @@
 
 An intelligent system thinks about a problem domain, learning the
 effects of its actions, constructing and executing plans to accomplish
-its goals.  I will refer to this type of thinking about a problem
+its goals.  I will refer to these types of thinking about a problem
 domain as deliberative thinking.  A reflective intelligence extends
-the deliberative intelligence by not only learning to accomplish goals
-in the problem domain but also learning to accomplish goals in its own
-deliberative thinking process.  Reflective thinking is sometimes
+the deliberative intelligence by learning to accomplish goals in its
+own deliberative thinking process.  Reflective thinking is sometimes
 referred to as ``thinking about thinking'' or ``metacognition.''  A
-reflective intelligence can generally learn to select between
-different types of thinking that are appropriate for generating plans
-toward different types of goals.  The Substrate for Accountable
-Layered Systems (SALS) is an open-source software
+reflective intelligence can learn to select between different types of
+thinking that are appropriate for generating plans toward different
+types of goals.  In this thesis, I present the Substrate for
+Accountable Layered Systems (SALS), an open-source
 \begin{wrapfigure}{r}{6.125cm}
   \includegraphics[width=6cm]{gfx/blocks_world_large-01}
-  \caption[An example problem domain.]{An example problem domain.}
+  \caption[An example ``Blocks World'' problem domain.]{An example
+    ``Blocks World'' problem domain.}
   \label{figure:introduction_example_problem_domain}
 \end{wrapfigure}
-platform for the development of experimental reflective Artificial
-Intelligences (AI).  There are many AIs that provide explanations for
-how to accomplish goals or gather rewards in a domain.  A basic
-deliberative AI system consists of three processes:
-{\mbox{(1)~perceptual}} data are generalized and categorized to learn
-induced abstract models, {\mbox{(2)~abstract}} models are used to
-infer expected hypothetical states, i.e. states of future, past, or
+software platform for the development of experimental reflective
+Artificial Intelligences (AI).  A deliberative AI system consists of
+three processes: {\mbox{(1)~perceptual}} data are generalized and
+categorized to learn abstract models, {\mbox{(2)~abstract}} models are
+used to infer hypothetical states, i.e. states of future, past, or
 otherwise ``hidden'' variables, {\mbox{(3)~actions}} are chosen based
-on considerations of different action and hypothesis dependent
-inferences.  While there are many types of machine learning algorithms
-that focus on this abstract 3-step closed-loop process of learning to
-control, the field of computational metacognition
-\cite[]{cox_and_raja:2008,cox:2010} focuses on making at least two
-layers of closed-loop systems.  Deliberative thinking is here modelled
-as a closed-loop learning algorithm that perceives and learns to
-control the external world, while reflective thinking is modelled as a
-second closed-loop learning algorithm that perceives and learns to
-control the deliberative thinking process.  While it may be clear how
-to trace the inputs to deliberative thinking, it is less than clear
-how reflective thinking should monitor the state of the deliberative
-thinking process.
+on considerations of hypothesis dependent inferences.  There are many
+approaches to machine learning that focus on this abstract 3-step
+closed-loop process of learning to control: reinforcement learning
+\cite[]{kaelbling:1996,dvzeroski:2001}, game theory
+\cite[]{bowling:2000,rapoport:2001}, and control theory
+\cite[]{simon:1982, bertsekas:1995}.  The discipline of computational
+metacognition \cite[]{cox_and_raja:2008,cox:2010} focuses on making at
+least two layers of closed-loop systems.  Organizing the three-step
+architecture within the metacognitive framework, deliberative thinking
+is modeled as a closed-loop learning algorithm that perceives and
+learns to control the external world, while reflective thinking is
+modeled as a second closed-loop learning algorithm that perceives and
+learns to control the deliberative thinking process.  While it may be
+clear how to trace the inputs to deliberative thinking, there is not a
+consensus in the literature on a tractable approach to modeling the
+inputs to reflective thinking.  In this thesis, I present a tractable
+approach to reflective thinking that scales to $N$ layers of
+reflective control.
 
 \section{Contributions}
 
@@ -51,46 +54,51 @@ The four contributions of this thesis are:
   six-layered theory of mind \cite[]{minsky:2006}.  The implementation
   contains a physical simulation that is controlled by a deliberative
   physical object-level reasoning layer with another reflective
-  meta-level reasoning layer that learns to control the first-order
+  meta-level reasoning layer that learns to control the deliberative
   problem solving resources.  The architectural primitives include
   resources that are organized into agencies that are organized into
-  layers.  The implementation includes five layers that will be
-  described: (1) built-in reactive thinking, (2) learned reacting
-  thinking, (3) deliberative thinking, (4) reflective thinking, and
-  (5) super-reflective thinking.  The implementation leaves
+  layers.  The implementation includes five layers that are described
+  in
+  {\mbox{\autoref{chapter:emotion_machine_cognitive_architecture}}}:
+  (1) built-in reactive thinking, (2) learned reacting thinking, (3)
+  deliberative thinking, (4) reflective thinking, and (5)
+  super-reflective thinking.  The implementation leaves
   self-reflective and self-conscious layers of the Emotion Machine
   theory as future extensions of this research.
-\item \emph{Learning from Being Told Natural Language Plans}: The
-  implementation includes the ability to interpret and imagine
-  executing natural language commands by using analogies to natural
-  language plans that it already knows.  Natural language is not
-  modeled as a general grammar, as in \cite{winograd:1970}, but
-  instead as a simple string processing functional grammar.  In this
-  case, ``being told'' means that a natural language plan is
-  programmed into the AI by the user.  Successfully interpreting and
-  imagining the execution of a natural language expression results in
-  a compiled program that is ready for execution as well as a
-  collection of guesses as to what the effects of the plan may be.
-  These guesses are based on what partial states the plan checks for
-  in the control domain as well as rules learned from previous
-  executions of similar actions in the past.
-\item \emph{Learning Asynchronously from Experience}: Learning from
-  ``being told'' simply gives the system new ambiguous natural
-  language ideas for plans, while learning from experience gives the
-  system better expectations for what those plans will actually end up
-  doing when they are interpreted, imagined and executed.  Many types
-  of failures can occur when interpreting, imagining and actually
+\item \emph{Learning from Being Told Natural Language Plans}: A system
+  needs a plan library.  Plan libraries can be authored by humans as
+  sequences of simple natural language sentences.  The implementation
+  includes the ability to interpret and imagine executing natural
+  language commands by using analogies to natural language plans that
+  it already knows.  In this case, ``being told'' means that a natural
+  language plan is programmed into the AI by the user.  Interpreting a
+  natural language plan involves parsing the English and generating a
+  compiled program, along with imagined hypotheses about the program's
+  effects.  These guesses are based on what partial states the plan
+  checks for in the control domain as well as rules learned from
+  previous executions of similar actions in the past.
+\item \emph{Learning Asynchronously from Experience}: Executing plans
+  in the external problem domain gives the system better expectations
+  for what plans will actually end up doing when they are interpreted
+  ({\mbox{\autoref{section:natural_language_plans_interpreting_natural_language_plans}}}),
+  imagined
+  ({\mbox{\autoref{section:imagining_the_effects_of_ambiguous_natural_language_plans}}})
+  and executed
+  ({\mbox{\autoref{section:two_experiential_event_streams_flow_to_each_planning_layer}}}).
+  I refer to this form of learning the effects of actions in the
+  problem domain as learning from ``experience.''  Many types of
+  failures can occur when interpreting, imagining and actually
   executing ambiguous natural language plans.  These experiences of
   different types of failures inform reflective learning algorithms to
   subsequently predict these types of plan failures.  Learning from
   experience is executed concurrently and asynchronously with the
   currently executing plan.  The learning algorithm receives a stream
-  of frame mutation trace events from the currently executing plan in
-  order to learn abstract causal rule-based models.  In this way,
-  effects of physical and mental actions are learned through
+  of frame mutation trace events from the currently executing plan and
+  uses this stream to learn abstract causal rule-based models.  In
+  this way, effects of physical and mental actions are learned through
   experience without slowing down the primary plan execution speed.
-  Learning from experience allows learning to predict the effects of
-  deliberative and reflective natural language plans for action.
+  Such failures are input to the reflective layer, which can learn to
+  predict and avoid these failures in the future.
 \item \emph{Virtual Machine and Programming Language}: A concurrent
   and parallel virtual machine and low-level Lisp-like programming
   language provide the foundation upon which all of the above
@@ -112,7 +120,7 @@ this advice, consider the simple physical block stacking world,
 depicted in {\autoref{figure:introduction_example_problem_domain}},
 which is similar to the ``Blocks World'' planning domain
 {\cite[]{winograd:1970}}.  Imagine that the robot arm in this simple
-scenario is a deliberative (non-reflective) AI that wants to
+scenario is an entirely deliberative (non-reflective) AI that wants to
 accomplish the deliberative goal of a block being on a block.  This AI
 has the capability of learning both from experience as well as from
 being told knowledge.  The deliberative AI has been told a number of
@@ -364,8 +372,8 @@ goals in deliberative knowledge.
 relationship between the physical, deliberative and reflective
 knowledge layers in SALS.  In general, one can imagine that the
 recursive nature of SALS allows for any number of reflective layers to
-be added to the top of the reflective AI, resulting in ``super
-reflective'' layers of learning planned control.
+be added to the top of the reflective AI, resulting in
+``super-reflective'' layers of learning planned control.
 \begin{figure}
   \center
   \includegraphics[width=4cm]{gfx/three_knowledge_layers}
@@ -514,10 +522,8 @@ contemporary cognitive architectures, approaches to reflective
 thinking, metacognition, and learning to plan, as well as other
 massively multithreaded computer systems.
 {\mbox{\autoref{chapter:evaluation}}} evaluates the run-time
-performance of my AI in three experiments: (1) boot-up and perceive
-over time, (2) deliberative learning without reflective learning, and
-(3) the full architecture deliberatively learning about physical
-actions while also reflectively learning about planning actions.  In
+performance of the SALS AI and shows a sub-linear increase in
+time-complexity for each additional reflective layer.  In
 {\mbox{\autoref{chapter:future}}}, I discuss promising directions of
 future research for extending this architecture to learn at the top
 two layers of the Emotion Machine theory, the self-reflective and

@@ -2,37 +2,39 @@
 
 \section{Open-Source Download}
 
-All of the code that I developed for this PhD is free and openly
-developed, can be downloaded from my webpage, and compiled by simply
-typing "./configure; make".  See the on-line Funk2 website for
-download instruction for Funk, \url{http://funk2.org/}, for downloads,
-documentation, user community resources, and latest news.  Also, see
-\url{http://em-two.net/} for research news on my Moral Compass
-cognitive architecture that currently is distributed with Funk.
+All of the code developed for this PhD is open-source and should be
+available for download by contacting the author.
 
 \section{README}
 
 \lstset{basicstyle=\scriptsize}
 \begin{lstlisting}
-funk2: causally reflective programming language
+funk2: causally reflective parallel programming language
 
-  funk2 [-x <command>] [-p <portnum>] [<source.fu2>]
+  funk2
+  funk2 <source.fu2>
+  funk2 -x <command>
+  funk2 -i <bootstrap-image>
 
     <source.fu2>
 
-        A user supplied filename of file from which to read and execute source
-        code after booting and before exiting.
+        A user supplied filename of file from which to read and
+        execute source code after booting and before exiting.
 
-    -x <command>  [:default [repl]]
+    -x <command>
 
-        A user supplied command to execute after booting and before exiting.
+        A user supplied command to execute after booting and before
+        exiting.
 
-    -p <portnum>  [:default 22222 :try anything from 22222 to 23221]
+    -i <bootstrap-image>
 
-        The localhost peer-command-server port number.  Each copy of funk2
-        sharing a network interface must be able to allocate a unique
-        peer-command-server port number.
+        The bootstrap image to load before parsing any other
+        commands.  This option is useful for scripting Funk2 programs
+        without needing to recompile.
 
+    -p <portnum>
+
+        The localhost peer-command-server port number.
 
 
 TO PERFORM LOCAL BUILD:
@@ -43,7 +45,8 @@ TO PERFORM LOCAL BUILD:
 
 TO RUN LOCAL BUILD:
 
-  ./funk2.sh    (from original compile directory)
+  source funk2-exports
+  bin/funk2     (from original compile directory)
 
 
 TO PERFORM SYSTEM-WIDE INSTALLATION:
@@ -58,45 +61,79 @@ TO RUN SYSTEM-WIDE INSTALLATION:
   funk2         (from anywhere on system)
 
 
-
-Homepage:
+HOMEPAGE:
 
   http://funk2.org/
 
 
+GIT ACCESS:
 
-Git Access:
-
-  http://git.neuromin.de/
+  https://github.com/bunuelo/funk2
 
 
-Last Modified: 2010.10.25
+Last Modified: 2012.12.10
 
 Code Mass
 
---------------------------------------------------------------------------------
+---------------------------------------------------------------------
 
-    Lines of Funk2 Code.....:   53249 total
-    Words of Funk2 Code.....:  261289 total
-    Characters of Funk2 Code: 2688091 total
+    Lines of Funk2 Code.....:   57647 total
+    Words of Funk2 Code.....:  281326 total
+    Characters of Funk2 Code: 2930311 total
 
-    Lines of C Code.........:  144868 total
-    Words of C Code.........:  564287 total
-    Characters of C Code....: 7718554 total
+    Lines of C Code.........:  154911 total
+    Words of C Code.........:  596846 total
+    Characters of C Code....: 8239563 total
 
-    Total Lines of Code.....:   199564 total
-    Total Words of Code.....:   830914 total
-    Total Characters of Code: 10537116 total
+    Total Lines of Code.....:   214387 total
+    Total Words of Code.....:   884054 total
+    Total Characters of Code: 11317806 total
 
---------------------------------------------------------------------------------
+---------------------------------------------------------------------
 
-README Last Generated: Wed Aug 22 19:20:31 EDT 2012
+README Last Generated: Sun Feb 24 13:04:54 EST 2013
 \end{lstlisting}
 
 \section{File Listing}
 
 \lstset{basicstyle=\scriptsize}
 \begin{lstlisting}
+built-in/alien/alien.fpkg
+built-in/alien/alien.fu2
+built-in/ansi/ansi.fpkg
+built-in/ansi/primfunks-ansi.fu2
+built-in/basic_bug_responses/basic_bug_responses.fpkg
+built-in/basic_bug_responses/basic_bug_responses.fu2
+built-in/graph_cluster/bootstrap-graph_cluster.fu2
+built-in/graph_cluster/graph_cluster.fpkg
+built-in/graph_cluster/primfunks-graph_cluster.fu2
+built-in/graph_match_error_correcting/graph_match_error_correcting.fpkg
+built-in/graph_match_error_correcting/graph_match_error_correcting.fu2
+built-in/graph_match_error_correcting/graph_match_error_correcting-primfunks.fu2
+built-in/graphviz/graphviz.fpkg
+built-in/graphviz/graphviz.fu2
+built-in/graphviz/graphviz-primfunks.fu2
+built-in/math/math.fpkg
+built-in/math/math.fu2
+built-in/mutex/mutex.fpkg
+built-in/mutex/mutex.fu2
+built-in/natural_language/dictionary_frame.fu2
+built-in/natural_language/natural_language_command.fu2
+built-in/natural_language/natural_language.fpkg
+built-in/natural_language/natural_language-primfunks.fu2
+built-in/natural_language/parse_tree.fu2
+built-in/natural_language/skb-test.fu2
+built-in/number/bootstrap-number.fu2
+built-in/number/number.fpkg
+built-in/number/primfunks-number.fu2
+built-in/utilities/errno.fu2
+built-in/utilities/fcntl.fu2
+built-in/utilities/ioctl.fu2
+built-in/utilities/socket.fu2
+built-in/utilities/utilities.fpkg
+built-in/xmlrpc/bootstrap-xmlrpc.fu2
+built-in/xmlrpc/primfunks-xmlrpc.fu2
+built-in/xmlrpc/xmlrpc.fpkg
 c/configurator.c
 c/debugbreak.c
 c/f2_ansi.c
@@ -189,6 +226,8 @@ c/f2_malloc.c
 c/f2_malloc.h
 c/f2_management_thread.c
 c/f2_management_thread.h
+c/f2_math.c
+c/f2_math.h
 c/f2_matlab.c
 c/f2_matlab.h
 c/f2_memblock.c
@@ -238,12 +277,16 @@ c/f2_primfunks__locale.c
 c/f2_primfunks__locale.h
 c/f2_primfunks__stdlib.c
 c/f2_primfunks__stdlib.h
+c/f2_primmetros.c
+c/f2_primmetros.h
 c/f2_primobject__boolean.c
 c/f2_primobject__boolean.h
 c/f2_primobject__char_pointer.c
 c/f2_primobject__char_pointer.h
 c/f2_primobject__circular_buffer.c
 c/f2_primobject__circular_buffer.h
+c/f2_primobject__counter.c
+c/f2_primobject__counter.h
 c/f2_primobject__doublelinklist.c
 c/f2_primobject__doublelinklist.h
 c/f2_primobject__dynamic_library.c
@@ -273,6 +316,8 @@ c/f2_primobject__ptypehash.h
 c/f2_primobject__redblacktree.c
 c/f2_primobject__redblacktree.h
 c/f2_primobjects.c
+c/f2_primobject__scheduler_ptypehash.c
+c/f2_primobject__scheduler_ptypehash.h
 c/f2_primobject__set.c
 c/f2_primobject__set.h
 c/f2_primobjects.h
@@ -292,6 +337,10 @@ c/f2_processor.c
 c/f2_processor.h
 c/f2_processor_mutex.c
 c/f2_processor_mutex.h
+c/f2_processor_readwritelock.c
+c/f2_processor_readwritelock.h
+c/f2_processor_spinlock.c
+c/f2_processor_spinlock.h
 c/f2_processor_thread.c
 c/f2_processor_thread.h
 c/f2_processor_thread_handler.c
@@ -367,168 +416,527 @@ c/funk2.c
 c/funk2.h
 c/funk2_main.c
 c/test.c
+documentation/phdthesis/gfx/deliberative_plan_knowledge_base_graph.fu2
+documentation/phdthesis/gfx/hierarchical_partial_state_graph.fu2
+documentation/phdthesis/gfx/physical_knowledge_base_graph.fu2
+documentation/phdthesis/gfx/plan_execution_node_graph.fu2
+documentation/phdthesis/gfx/property_partial_state_graph.fu2
+documentation/phdthesis/gfx/reflective_plan_knowledge_base_graph.fu2
+documentation/phdthesis/gfx/relationship_partial_state_graph.fu2
+example/cannons_algorithm/cannons_algorithm.fpkg
+example/cannons_algorithm/cannons_algorithm.fu2
+example/divisi2/divisi2.fpkg
+example/divisi2/divisi2.fu2
+example/em_two_webpage/em_two_webpage.fpkg
+example/em_two_webpage/em_two_webpage.fu2
+example/english_language/english_dictionary.fu2
+example/english_language/english_dictionary_parse.fu2
+example/english_language/english_language.fpkg
+example/facebook/facebook.fpkg
+example/facebook/facebook.fu2
+example/funk2-htmldoc/funk2-htmldoc.fpkg
+example/funk2-htmldoc/funk2-htmldoc.fu2
+example/funk2-webpage/funk2-webpage.fpkg
+example/funk2-webpage/funk2-webpage.fu2
+example/graph_match/graph_match.fpkg
+example/graph_match/graph_match.fu2
+example/graph_match/graph_match-test.fpkg
+example/graph_match/graph_match-test.fu2
+example/gtk_timeline/gtk_timeline.fpkg
+example/gtk_timeline/gtk_timeline.fu2
+example/isis_world_client/isis_world_client.fpkg
+example/isis_world_client/isis_world_client.fu2
+example/isis_world/isis_agent_body.fu2
+example/isis_world/isis_visual_agent.fu2
+example/isis_world/isis_visual_object.fu2
+example/isis_world/isis_world.fpkg
+example/isis_world/isis_world.fu2
+example/macbeth/macbeth.fpkg
+example/macbeth/macbeth.fu2
+example/mind/agency.fu2
+example/mind/agent_body.fu2
+example/mind/character.fu2
+example/mind/mental_layer.fu2
+example/mind/mind.fpkg
+example/mind/mind.fu2
+example/mind/mind_runtime_metric.fu2
+example/mindmon-1.0/mindmon-1.0.fpkg
+example/mindmon-1.0/mindmon-1.0.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-deliberative_action_activator.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-deliberative_plan_activator.fu2
+example/mindmon-blocks_world/mindmon-blocks_world.fpkg
+example/mindmon-blocks_world/mindmon-blocks_world.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-reactive_action_activator.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-reactive_plan_activator.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-reflective_action_activator.fu2
+example/mindmon-blocks_world/mindmon-blocks_world-super_reflective_action_activator.fu2
+example/mindmon-isis_world/mindmon-isis_world-builtin_reactive_physical_activator.fu2
+example/mindmon-isis_world/mindmon-isis_world-deliberative_goal_activator.fu2
+example/mindmon-isis_world/mindmon-isis_world.fpkg
+example/mindmon-isis_world/mindmon-isis_world.fu2
+example/mindmon-isis_world/mindmon-isis_world-learned_reactive_physical_activator.fu2
+example/mindmon/mindmon_agent.fu2
+example/mindmon/mindmon_agent_tool.fu2
+example/mindmon/mindmon_agent_tool_widget.fu2
+example/mindmon/mindmon_agent_widget.fu2
+example/mindmon/mindmon_file.fu2
+example/mindmon/mindmon.fpkg
+example/mindmon/mindmon.fu2
+example/mindmon/mindmon_knowledge.fu2
+example/mindmon/mindmon_preference_editor.fu2
+example/mindmon/mindmon_world.fu2
+example/mind/physical_world.fu2
+example/mind/resource.fu2
+example/mind/self_model.fu2
+example/mind/story.fu2
+example/mind/story-graph.fu2
+example/mind/vital_resource.fu2
+example/moral_compass-isis_world/moral_compass-isis_world-builtin_reactive_physical_agency_resources.fu2
+example/moral_compass-isis_world/moral_compass-isis_world.fpkg
+example/moral_compass-isis_world/moral_compass-isis_world.fu2
+example/moral_compass-isis_world/moral_compass-isis_world-learned_reactive_physical_agency_resources.fu2
+example/moral_compass-isis_world/moral_compass-isis_world-learned_reactive_physical_agency_resources-functions.fu2
+example/moral_compass/moral_agent_body.fu2
+example/moral_compass/moral_compass.fpkg
+example/moral_compass/moral_compass.fu2
+example/moral_compass/self_conscious_imprimer_agency.fu2
+example/moral_compass/self_conscious_layer.fu2
+example/moral_compass/self_conscious_resource.fu2
+example/moral_compass/self_reflective_layer.fu2
+example/moral_compass/self_reflective_other_agents_knowledge_agency.fu2
+example/moral_compass/self_reflective_resource.fu2
+example/rct_webpage/rct_webpage.fpkg
+example/rct_webpage/rct_webpage.fu2
+example/reflective_mind-blocks_world/reflective_mind-blocks_world-builtin_reactive_physical_agency_resources.fu2
+example/reflective_mind-blocks_world/reflective_mind-blocks_world.fpkg
+example/reflective_mind-blocks_world/reflective_mind-blocks_world.fu2
+example/reflective_mind-blocks_world/reflective_mind-blocks_world-learned_reactive_physical_agency_resources.fu2
+example/reflective_mind/builtin_reactive_layer.fu2
+example/reflective_mind/builtin_reactive_neural_plug_agency.fu2
+example/reflective_mind/builtin_reactive_physical_agency.fu2
+example/reflective_mind/builtin_reactive_resource.fu2
+example/reflective_mind/builtin_reactive_sensory_agency.fu2
+example/reflective_mind/controllable_object.fu2
+example/reflective_mind/deliberative1_type_property_relation_goal.fu2
+example/reflective_mind/deliberative_action.fu2
+example/reflective_mind/deliberative_layer.fu2
+example/reflective_mind/deliberative_resource.fu2
+example/reflective_mind/learned_reactive_language_agency.fu2
+example/reflective_mind/learned_reactive_layer.fu2
+example/reflective_mind/learned_reactive_physical_agency.fu2
+example/reflective_mind/learned_reactive_physical_knowledge_agency.fu2
+example/reflective_mind/learned_reactive_resource.fu2
+example/reflective_mind/learned_reactive_sensory_agency.fu2
+example/reflective_mind/nonsemantic_plan.fu2
+example/reflective_mind/object_type_property_relation_goal.fu2
+example/reflective_mind/physical_type_property_relation_goal.fu2
+example/reflective_mind/plan_mental_layer_execution_agency.fu2
+example/reflective_mind/plan_mental_layer.fu2
+example/reflective_mind/plan_mental_layer_imagination_agency.fu2
+example/reflective_mind/plan_mental_layer_object_type_agency.fu2
+example/reflective_mind/plan_mental_layer_plan_agency.fu2
+example/reflective_mind/plan_mental_layer_resource.fu2
+example/reflective_mind/plan_mental_layer_resource_knowledge_agency.fu2
+example/reflective_mind/reflective_layer.fu2
+example/reflective_mind/reflective_mind.fpkg
+example/reflective_mind/reflective_mind.fu2
+example/reflective_mind/reflective_mind_perception.fu2
+example/reflective_mind/reflective_mind_proprioceptual_object.fu2
+example/reflective_mind/reflective_mind_visual_agent.fu2
+example/reflective_mind/reflective_mind_visual_object.fu2
+example/reflective_mind/reflective_resource.fu2
+example/reflective_mind/reflective_timer.fu2
+example/reflective_mind/super_reflective_layer.fu2
+example/reflective_mind/super_reflective_resource.fu2
+example/reflective_timer/reflective_timer.fpkg
+example/reflective_timer/reflective_timer.fu2
+example/roboverse/roboverse.fpkg
+example/roboverse/roboverse.fu2
+example/socket-client/socket-client.fpkg
+example/socket-client/socket-client.fu2
+example/socket-server/socket-server.fpkg
+example/socket-server/socket-server.fu2
+example/traced_mind/traced_mind.fpkg
+example/traced_mind/traced_mind.fu2
+example/traced_mind/traced_resource.fu2
+example/visualize/isismon_agent_visualization.fpkg
+example/visualize/isismon_agent_visualization.fu2
+example/visualize/visualize_test.fpkg
+example/visualize/visualize_test.fu2
+extension/blocks_world/blocks_world_block.fu2
 extension/blocks_world/blocks_world.c
+extension/blocks_world/blocks_world-core.fu2
+extension/blocks_world/blocks_world.fpkg
+extension/blocks_world/blocks_world.fu2
+extension/blocks_world/blocks_world_gripper_controller.fu2
+extension/blocks_world/blocks_world_gripper.fu2
 extension/blocks_world/blocks_world.h
+extension/blocks_world/blocks_world_physics.fu2
+extension/blocks_world/blocks_world_sprite.fu2
+extension/blocks_world/blocks_world_table.fu2
+extension/blocks_world/blocks_world_window.fu2
 extension/cairo/cairo.c
+extension/cairo/cairo-core.fu2
+extension/cairo/cairo.fpkg
 extension/cairo/cairo.h
 extension/conceptnet/conceptnet.c
+extension/conceptnet/conceptnet-core.fu2
+extension/conceptnet/conceptnet.fpkg
 extension/conceptnet/conceptnet.h
 extension/concept_version_space/concept_version_space.c
+extension/concept_version_space/concept_version_space-core.fu2
+extension/concept_version_space/concept_version_space.fpkg
 extension/concept_version_space/concept_version_space.h
 extension/equals_hash/equals_hash.c
+extension/equals_hash/equals_hash-core.fu2
+extension/equals_hash/equals_hash.fpkg
 extension/equals_hash/equals_hash.h
 extension/event_stream/event_stream.c
+extension/event_stream/event_stream-core.fu2
+extension/event_stream/event_stream.fpkg
 extension/event_stream/event_stream.h
+extension/fibermon/fibermon1.fu2
 extension/fibermon/fibermon.c
+extension/fibermon/fibermon-core.fu2
+extension/fibermon/fibermon.fpkg
+extension/fibermon/fibermon.fu2
 extension/forgetful_event_stream/forgetful_event_stream.c
+extension/forgetful_event_stream/forgetful_event_stream-core.fu2
+extension/forgetful_event_stream/forgetful_event_stream.fpkg
 extension/forgetful_event_stream/forgetful_event_stream.h
+extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.c
+extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base-core.fu2
+extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.fpkg
+extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.h
+extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.c
+extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base-core.fu2
+extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.fpkg
+extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.h
 extension/forward_planner/forward_planner.c
+extension/forward_planner/forward_planner-core.fu2
+extension/forward_planner/forward_planner.fpkg
 extension/frame_ball/frame_ball.c
+extension/frame_ball/frame_ball-core.fu2
+extension/frame_ball/frame_ball.fpkg
 extension/graph_isomorphism/graph_isomorphism.c
+extension/graph_isomorphism/graph_isomorphism-core.fu2
+extension/graph_isomorphism/graph_isomorphism.fpkg
 extension/graph_isomorphism/graph_isomorphism.h
 extension/gtk_extension/gtk_extension.c
+extension/gtk_extension/gtk_extension-core.fu2
+extension/gtk_extension/gtk_extension.fpkg
 extension/gtk_extension/gtk_extension.h
+extension/gtk_extension/old_primfunks.fu2
 extension/image/image.c
+extension/image/image-core.fu2
+extension/image/image.fpkg
 extension/image/image.h
 extension/image_sequence/image_sequence.c
+extension/image_sequence/image_sequence-core.fu2
+extension/image_sequence/image_sequence.fpkg
 extension/image_sequence/image_sequence.h
 extension/interval_tree/interval_tree.c
+extension/interval_tree/interval_tree-core.fu2
+extension/interval_tree/interval_tree.fpkg
 extension/interval_tree/interval_tree.h
 extension/keyboard/keyboard.c
+extension/keyboard/keyboard-core.fu2
+extension/keyboard/keyboard.fpkg
 extension/keyboard/keyboard.h
+extension/keyboard/keyboard-repl.fu2
 extension/lick/lick.c
+extension/lick/lick-core.fu2
+extension/lick/lick.fpkg
 extension/lick/lick.h
 extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base-core.fu2
+extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.fpkg
 extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.h
 extension/movie/movie.c
+extension/movie/movie-core.fu2
+extension/movie/movie.fpkg
 extension/movie/movie.h
+extension/pattern_match/pattern_match.c
+extension/pattern_match/pattern_match-core.fu2
+extension/pattern_match/pattern_match.fpkg
+extension/pattern_match/pattern_match.h
 extension/propogator/propogator.c
+extension/propogator/propogator-core.fu2
+extension/propogator/propogator.fpkg
 extension/propogator/propogator.h
 extension/semantic_action_event/semantic_action_event.c
+extension/semantic_action_event/semantic_action_event-core.fu2
+extension/semantic_action_event/semantic_action_event.fpkg
 extension/semantic_action_event/semantic_action_event.h
 extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
+extension/semantic_action_knowledge_base/semantic_action_knowledge_base-core.fu2
+extension/semantic_action_knowledge_base/semantic_action_knowledge_base.fpkg
 extension/semantic_action_knowledge_base/semantic_action_knowledge_base.h
 extension/semantic_action/semantic_action.c
+extension/semantic_action/semantic_action-core.fu2
+extension/semantic_action/semantic_action.fpkg
 extension/semantic_action/semantic_action.h
 extension/semantic_agent/semantic_agent.c
+extension/semantic_agent/semantic_agent-core.fu2
+extension/semantic_agent/semantic_agent.fpkg
 extension/semantic_agent/semantic_agent.h
 extension/semantic_category/semantic_category.c
+extension/semantic_category/semantic_category-core.fu2
+extension/semantic_category/semantic_category.fpkg
 extension/semantic_category/semantic_category.h
 extension/semantic_causal_concept/semantic_causal_concept.c
+extension/semantic_causal_concept/semantic_causal_concept-core.fu2
+extension/semantic_causal_concept/semantic_causal_concept.fpkg
 extension/semantic_causal_concept/semantic_causal_concept.h
 extension/semantic_causal_event/semantic_causal_event.c
+extension/semantic_causal_event/semantic_causal_event-core.fu2
+extension/semantic_causal_event/semantic_causal_event.fpkg
 extension/semantic_causal_event/semantic_causal_event.h
 extension/semantic_causal_object/semantic_causal_object.c
+extension/semantic_causal_object/semantic_causal_object-core.fu2
+extension/semantic_causal_object/semantic_causal_object.fpkg
 extension/semantic_causal_object/semantic_causal_object.h
+extension/semantic_cons/semantic_cons.c
+extension/semantic_cons/semantic_cons-core.fu2
+extension/semantic_cons/semantic_cons.fpkg
+extension/semantic_cons/semantic_cons.h
 extension/semantic_containment_object/semantic_containment_object.c
+extension/semantic_containment_object/semantic_containment_object-core.fu2
+extension/semantic_containment_object/semantic_containment_object.fpkg
 extension/semantic_containment_object/semantic_containment_object.h
 extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
+extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe-core.fu2
+extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.fpkg
 extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.h
+extension/semantic_dependency/semantic_dependency.c
+extension/semantic_dependency/semantic_dependency-core.fu2
+extension/semantic_dependency/semantic_dependency.fpkg
+extension/semantic_dependency/semantic_dependency.h
 extension/semantic_directed_action_event/semantic_directed_action_event.c
+extension/semantic_directed_action_event/semantic_directed_action_event-core.fu2
+extension/semantic_directed_action_event/semantic_directed_action_event.fpkg
 extension/semantic_directed_action_event/semantic_directed_action_event.h
+extension/semantic_environment/semantic_environment.c
+extension/semantic_environment/semantic_environment-core.fu2
+extension/semantic_environment/semantic_environment.fpkg
+extension/semantic_environment/semantic_environment.h
 extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
+extension/semantic_event_knowledge_base/semantic_event_knowledge_base-core.fu2
+extension/semantic_event_knowledge_base/semantic_event_knowledge_base.fpkg
 extension/semantic_event_knowledge_base/semantic_event_knowledge_base.h
 extension/semantic_event/semantic_event.c
+extension/semantic_event/semantic_event-core.fu2
+extension/semantic_event/semantic_event.fpkg
 extension/semantic_event/semantic_event.h
 extension/semantic_event_sequence/semantic_event_sequence.c
+extension/semantic_event_sequence/semantic_event_sequence-core.fu2
+extension/semantic_event_sequence/semantic_event_sequence.fpkg
 extension/semantic_event_sequence/semantic_event_sequence.h
 extension/semantic_event_transframe/semantic_event_transframe.c
+extension/semantic_event_transframe/semantic_event_transframe-core.fu2
+extension/semantic_event_transframe/semantic_event_transframe.fpkg
 extension/semantic_event_transframe/semantic_event_transframe.h
 extension/semantic_event_tree/semantic_event_tree.c
+extension/semantic_event_tree/semantic_event_tree-core.fu2
+extension/semantic_event_tree/semantic_event_tree.fpkg
 extension/semantic_event_tree/semantic_event_tree.h
 extension/semantic_expectation_failure/semantic_expectation_failure.c
+extension/semantic_expectation_failure/semantic_expectation_failure-core.fu2
+extension/semantic_expectation_failure/semantic_expectation_failure.fpkg
 extension/semantic_expectation_failure/semantic_expectation_failure.h
 extension/semantic_frame/semantic_frame.c
+extension/semantic_frame/semantic_frame-core.fu2
+extension/semantic_frame/semantic_frame.fpkg
 extension/semantic_frame/semantic_frame.h
 extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
+extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis-core.fu2
+extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.fpkg
 extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.h
 extension/semantic_goal_event/semantic_goal_event.c
+extension/semantic_goal_event/semantic_goal_event-core.fu2
+extension/semantic_goal_event/semantic_goal_event.fpkg
 extension/semantic_goal_event/semantic_goal_event.h
 extension/semantic_goal/semantic_goal.c
+extension/semantic_goal/semantic_goal-core.fu2
+extension/semantic_goal/semantic_goal.fpkg
 extension/semantic_goal/semantic_goal.h
 extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension/semantic_knowledge_base/semantic_knowledge_base-core.fu2
+extension/semantic_knowledge_base/semantic_knowledge_base.fpkg
 extension/semantic_knowledge_base/semantic_knowledge_base.h
 extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
+extension/semantic_know_of_existence_event/semantic_know_of_existence_event-core.fu2
+extension/semantic_know_of_existence_event/semantic_know_of_existence_event.fpkg
 extension/semantic_know_of_existence_event/semantic_know_of_existence_event.h
 extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
+extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event-core.fu2
+extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.fpkg
 extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.h
 extension/semantic_object/semantic_object.c
+extension/semantic_object/semantic_object-core.fu2
+extension/semantic_object/semantic_object.fpkg
 extension/semantic_object/semantic_object.h
 extension/semantic_object_type_event/semantic_object_type_event.c
+extension/semantic_object_type_event/semantic_object_type_event-core.fu2
+extension/semantic_object_type_event/semantic_object_type_event.fpkg
 extension/semantic_object_type_event/semantic_object_type_event.h
 extension/semantic_ordered_object/semantic_ordered_object.c
+extension/semantic_ordered_object/semantic_ordered_object-core.fu2
+extension/semantic_ordered_object/semantic_ordered_object.fpkg
 extension/semantic_ordered_object/semantic_ordered_object.h
 extension/semantic_packable_object/semantic_packable_object.c
+extension/semantic_packable_object/semantic_packable_object-core.fu2
+extension/semantic_packable_object/semantic_packable_object.fpkg
 extension/semantic_packable_object/semantic_packable_object.h
+extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.c
+extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation-core.fu2
+extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.fpkg
+extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.h
+extension/semantic_partial_state_property/semantic_partial_state_property.c
+extension/semantic_partial_state_property/semantic_partial_state_property-core.fu2
+extension/semantic_partial_state_property/semantic_partial_state_property.fpkg
+extension/semantic_partial_state_property/semantic_partial_state_property.h
+extension/semantic_partial_state/semantic_partial_state.c
+extension/semantic_partial_state/semantic_partial_state-core.fu2
+extension/semantic_partial_state/semantic_partial_state.fpkg
+extension/semantic_partial_state/semantic_partial_state.h
+extension/semantic_plan_execution_node/semantic_plan_execution_node.c
+extension/semantic_plan_execution_node/semantic_plan_execution_node-core.fu2
+extension/semantic_plan_execution_node/semantic_plan_execution_node.fpkg
+extension/semantic_plan_execution_node/semantic_plan_execution_node.h
 extension/semantic_planner/semantic_planner.c
+extension/semantic_planner/semantic_planner-core.fu2
+extension/semantic_planner/semantic_planner.fpkg
 extension/semantic_planner/semantic_planner.h
 extension/semantic_plan_object/semantic_plan_object.c
+extension/semantic_plan_object/semantic_plan_object-core.fu2
+extension/semantic_plan_object/semantic_plan_object.fpkg
 extension/semantic_plan_object/semantic_plan_object.h
 extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension/semantic_plan_object_type_event/semantic_plan_object_type_event-core.fu2
+extension/semantic_plan_object_type_event/semantic_plan_object_type_event.fpkg
 extension/semantic_plan_object_type_event/semantic_plan_object_type_event.h
 extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
+extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event-core.fu2
+extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.fpkg
 extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.h
 extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
+extension/semantic_plan_operator_activation/semantic_plan_operator_activation-core.fu2
+extension/semantic_plan_operator_activation/semantic_plan_operator_activation.fpkg
 extension/semantic_plan_operator_activation/semantic_plan_operator_activation.h
 extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
+extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel-core.fu2
+extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.fpkg
 extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.h
 extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
+extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence-core.fu2
+extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.fpkg
 extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.h
+extension/semantic_plan_operator_suppression/semantic_plan_operator_suppession.fpkg
 extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
+extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression-core.fu2
+extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.fpkg
 extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.h
 extension/semantic_proprioception/semantic_proprioception.c
+extension/semantic_proprioception/semantic_proprioception-core.fu2
+extension/semantic_proprioception/semantic_proprioception.fpkg
 extension/semantic_proprioception/semantic_proprioception.h
 extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
+extension/semantic_proprioceptual_object/semantic_proprioceptual_object-core.fu2
+extension/semantic_proprioceptual_object/semantic_proprioceptual_object.fpkg
 extension/semantic_proprioceptual_object/semantic_proprioceptual_object.h
 extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
+extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation-core.fu2
+extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.fpkg
 extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.h
 extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
+extension/semantic_proprioceptual_position/semantic_proprioceptual_position-core.fu2
+extension/semantic_proprioceptual_position/semantic_proprioceptual_position.fpkg
 extension/semantic_proprioceptual_position/semantic_proprioceptual_position.h
 extension/semantic_realm/semantic_realm.c
+extension/semantic_realm/semantic_realm-core.fu2
+extension/semantic_realm/semantic_realm.fpkg
 extension/semantic_realm/semantic_realm.h
 extension/semantic_reflective_object/semantic_reflective_object.c
+extension/semantic_reflective_object/semantic_reflective_object-core.fu2
+extension/semantic_reflective_object/semantic_reflective_object.fpkg
 extension/semantic_reflective_object/semantic_reflective_object.h
 extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.c
+extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event-core.fu2
+extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.fpkg
 extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.h
 extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.c
+extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event-core.fu2
+extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.fpkg
 extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.h
 extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.c
+extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event-core.fu2
+extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.fpkg
 extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.h
 extension/semantic_relationship_key/semantic_relationship_key.c
+extension/semantic_relationship_key/semantic_relationship_key-core.fu2
+extension/semantic_relationship_key/semantic_relationship_key.fpkg
 extension/semantic_relationship_key/semantic_relationship_key.h
 extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension/semantic_resource_action_event/semantic_resource_action_event-core.fu2
+extension/semantic_resource_action_event/semantic_resource_action_event.fpkg
 extension/semantic_resource_action_event/semantic_resource_action_event.h
 extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
+extension/semantic_resource_action_sequence/semantic_resource_action_sequence-core.fu2
+extension/semantic_resource_action_sequence/semantic_resource_action_sequence.fpkg
 extension/semantic_resource_action_sequence/semantic_resource_action_sequence.h
-extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.c
-extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.h
 extension/semantic_resource/semantic_resource.c
+extension/semantic_resource/semantic_resource-core.fu2
+extension/semantic_resource/semantic_resource.fpkg
 extension/semantic_resource/semantic_resource.h
 extension/semantic_self/semantic_self.c
+extension/semantic_self/semantic_self-core.fu2
+extension/semantic_self/semantic_self.fpkg
 extension/semantic_self/semantic_self.h
 extension/semantic_situation_category/semantic_situation_category.c
+extension/semantic_situation_category/semantic_situation_category-core.fu2
+extension/semantic_situation_category/semantic_situation_category.fpkg
 extension/semantic_situation_category/semantic_situation_category.h
 extension/semantic_situation/semantic_situation.c
+extension/semantic_situation/semantic_situation-core.fu2
+extension/semantic_situation/semantic_situation.fpkg
 extension/semantic_situation/semantic_situation.h
 extension/semantic_situation_transition/semantic_situation_transition.c
+extension/semantic_situation_transition/semantic_situation_transition-core.fu2
+extension/semantic_situation_transition/semantic_situation_transition.fpkg
 extension/semantic_situation_transition/semantic_situation_transition.h
 extension/semantic_somatosensation/semantic_somatosensation.c
+extension/semantic_somatosensation/semantic_somatosensation-core.fu2
+extension/semantic_somatosensation/semantic_somatosensation.fpkg
 extension/semantic_somatosensation/semantic_somatosensation.h
 extension/semantic_somatosensory_object/semantic_somatosensory_object.c
+extension/semantic_somatosensory_object/semantic_somatosensory_object-core.fu2
+extension/semantic_somatosensory_object/semantic_somatosensory_object.fpkg
 extension/semantic_somatosensory_object/semantic_somatosensory_object.h
 extension/semantic_temporal_object/semantic_temporal_object.c
+extension/semantic_temporal_object/semantic_temporal_object-core.fu2
+extension/semantic_temporal_object/semantic_temporal_object.fpkg
 extension/semantic_temporal_object/semantic_temporal_object.h
+extension/semantic_thought/semantic_thought.c
+extension/semantic_thought/semantic_thought-core.fu2
+extension/semantic_thought/semantic_thought.fpkg
+extension/semantic_thought/semantic_thought.h
 extension/semantic_time/semantic_time.c
+extension/semantic_time/semantic_time-core.fu2
+extension/semantic_time/semantic_time.fpkg
 extension/semantic_time/semantic_time.h
 extension/semantic_visual_object/semantic_visual_object.c
+extension/semantic_visual_object/semantic_visual_object-core.fu2
+extension/semantic_visual_object/semantic_visual_object.fpkg
 extension/semantic_visual_object/semantic_visual_object.h
 extension/timeline/timeline.c
+extension/timeline/timeline-core.fu2
+extension/timeline/timeline.fpkg
 extension/timeline/timeline.h
 extension/transframe/transframe.c
+extension/transframe/transframe-core.fu2
+extension/transframe/transframe.fpkg
 extension/transframe/transframe.h
-test/keyboard-test/ncurses-test.c
-python/funk2module/c/funk2module.c
-python/funk2module/c/funk2test.c
 fu2/action.fu2
 fu2/actor.fu2
 fu2/actortest.fu2
@@ -540,7 +948,9 @@ fu2/bootstrap-bug.fu2
 fu2/bootstrap-bugs.fu2
 fu2/bootstrap-cause.fu2
 fu2/bootstrap-cause_group.fu2
+fu2/bootstrap-command_line.fu2
 fu2/bootstrap-compound_object.fu2
+fu2/bootstrap-conditionlock.fu2
 fu2/bootstrap-cons.fu2
 fu2/bootstrap-core_extension.fu2
 fu2/bootstrap-core_extension_funk.fu2
@@ -548,6 +958,7 @@ fu2/bootstrap-critic.fu2
 fu2/bootstrap-critics-reactive.fu2
 fu2/bootstrap-default_critics.fu2
 fu2/bootstrap-defragmenter.fu2
+fu2/bootstrap-dotimes.fu2
 fu2/bootstrap-dynamic_library.fu2
 fu2/bootstrap-fiber.fu2
 fu2/bootstrap-frame.fu2
@@ -559,6 +970,7 @@ fu2/bootstrap-grid.fu2
 fu2/bootstrap-hash.fu2
 fu2/bootstrap-largeinteger.fu2
 fu2/bootstrap-list.fu2
+fu2/bootstrap-math.fu2
 fu2/bootstrap-nil.fu2
 fu2/bootstrap-object.fu2
 fu2/bootstrap-package.fu2
@@ -572,6 +984,7 @@ fu2/bootstrap-sort.fu2
 fu2/bootstrap-string.fu2
 fu2/bootstrap-surrogate_parent.fu2
 fu2/bootstrap-terminal_print.fu2
+fu2/bootstrap-time.fu2
 fu2/bootstrap-type_conversions.fu2
 fu2/bootstrap-zlib.fu2
 fu2/brainviz.fu2
@@ -602,6 +1015,7 @@ fu2/primfunks-array.fu2
 fu2/primfunks-bug.fu2
 fu2/primfunks-cause.fu2
 fu2/primfunks-chunk.fu2
+fu2/primfunks-command_line.fu2
 fu2/primfunks-compile.fu2
 fu2/primfunks-core_extension.fu2
 fu2/primfunks-core_extension_funk.fu2
@@ -622,12 +1036,14 @@ fu2/primfunks-ioctl.fu2
 fu2/primfunks-largeinteger.fu2
 fu2/primfunks-locale.fu2
 fu2/primfunks-management_thread.fu2
+fu2/primfunks-math.fu2
 fu2/primfunks-memory.fu2
 fu2/primfunks-object.fu2
 fu2/primfunks-optimize.fu2
 fu2/primfunks-package.fu2
 fu2/primfunks-package_handler.fu2
 fu2/primfunks-primes.fu2
+fu2/primfunks-primmetros.fu2
 fu2/primfunks-primobjects.fu2
 fu2/primfunks-primobject_type.fu2
 fu2/primfunks-primobject_type_handler.fu2
@@ -667,370 +1083,25 @@ misc/officer_joke.fu2
 misc/roboverse-blocks_world.fu2
 misc/roboverse-demo.fu2
 misc/simple_game.fu2
-built-in/alien/alien.fu2
-built-in/ansi/primfunks-ansi.fu2
-built-in/basic_bug_responses/basic_bug_responses.fu2
-built-in/graph_cluster/bootstrap-graph_cluster.fu2
-built-in/graph_cluster/primfunks-graph_cluster.fu2
-built-in/graph_match_error_correcting/graph_match_error_correcting.fu2
-built-in/graph_match_error_correcting/graph_match_error_correcting-primfunks.fu2
-built-in/graphviz/graphviz.fu2
-built-in/graphviz/graphviz-primfunks.fu2
-built-in/math/math.fu2
-built-in/mutex/mutex.fu2
-built-in/natural_language/dictionary_frame.fu2
-built-in/natural_language/natural_language_command.fu2
-built-in/natural_language/natural_language-primfunks.fu2
-built-in/natural_language/parse_tree.fu2
-built-in/natural_language/skb-test.fu2
-built-in/number/bootstrap-number.fu2
-built-in/number/primfunks-number.fu2
-built-in/utilities/errno.fu2
-built-in/utilities/fcntl.fu2
-built-in/utilities/ioctl.fu2
-built-in/utilities/socket.fu2
-built-in/xmlrpc/bootstrap-xmlrpc.fu2
-built-in/xmlrpc/primfunks-xmlrpc.fu2
-example/cannons_algorithm/cannons_algorithm.fu2
-example/divisi2/divisi2.fu2
-example/em_two_webpage/em_two_webpage.fu2
-example/english_language/english_dictionary.fu2
-example/english_language/english_dictionary_parse.fu2
-example/facebook/facebook.fu2
-example/funk2-htmldoc/funk2-htmldoc.fu2
-example/funk2-webpage/funk2-webpage.fu2
-example/graph_match/graph_match.fu2
-example/graph_match/graph_match-test.fu2
-example/gtk_timeline/gtk_timeline.fu2
-example/isis_world_client/isis_world_client.fu2
-example/isis_world/isis_agent_body.fu2
-example/isis_world/isis_visual_agent.fu2
-example/isis_world/isis_visual_object.fu2
-example/isis_world/isis_world.fu2
-example/macbeth/macbeth.fu2
-example/mind/agency.fu2
-example/mind/agent_body.fu2
-example/mind/character.fu2
-example/mind/mental_layer.fu2
-example/mind/mind.fu2
-example/mind/mind_runtime_metric.fu2
-example/mindmon-1.0/mindmon-1.0.fu2
-example/mindmon-blocks_world/mindmon-blocks_world-deliberative_action_activator.fu2
-example/mindmon-blocks_world/mindmon-blocks_world-deliberative_plan_activator.fu2
-example/mindmon-blocks_world/mindmon-blocks_world.fu2
-example/mindmon-blocks_world/mindmon-blocks_world-reactive_action_activator.fu2
-example/mindmon-blocks_world/mindmon-blocks_world-reactive_plan_activator.fu2
-example/mindmon-blocks_world/mindmon-blocks_world-reflective_action_activator.fu2
-example/mindmon-isis_world/mindmon-isis_world-builtin_reactive_physical_activator.fu2
-example/mindmon-isis_world/mindmon-isis_world-deliberative_goal_activator.fu2
-example/mindmon-isis_world/mindmon-isis_world.fu2
-example/mindmon-isis_world/mindmon-isis_world-learned_reactive_physical_activator.fu2
-example/mindmon/mindmon_agent.fu2
-example/mindmon/mindmon_agent_tool.fu2
-example/mindmon/mindmon_agent_tool_widget.fu2
-example/mindmon/mindmon_agent_widget.fu2
-example/mindmon/mindmon.fu2
-example/mindmon/mindmon_knowledge.fu2
-example/mindmon/mindmon_world.fu2
-example/mind/physical_world.fu2
-example/mind/resource.fu2
-example/mind/self_model.fu2
-example/mind/story.fu2
-example/mind/story-graph.fu2
-example/moral_compass-isis_world/moral_compass-isis_world-builtin_reactive_physical_agency_resources.fu2
-example/moral_compass-isis_world/moral_compass-isis_world.fu2
-example/moral_compass-isis_world/moral_compass-isis_world-learned_reactive_physical_agency_resources.fu2
-example/moral_compass-isis_world/moral_compass-isis_world-learned_reactive_physical_agency_resources-functions.fu2
-example/moral_compass/moral_agent_body.fu2
-example/moral_compass/moral_compass.fu2
-example/moral_compass/self_conscious_imprimer_agency.fu2
-example/moral_compass/self_conscious_layer.fu2
-example/moral_compass/self_conscious_resource.fu2
-example/moral_compass/self_reflective_layer.fu2
-example/moral_compass/self_reflective_other_agents_knowledge_agency.fu2
-example/moral_compass/self_reflective_resource.fu2
-example/rct_webpage/rct_webpage.fu2
-example/reflective_mind-blocks_world/reflective_mind-blocks_world-builtin_reactive_physical_agency_resources.fu2
-example/reflective_mind-blocks_world/reflective_mind-blocks_world.fu2
-example/reflective_mind-blocks_world/reflective_mind-blocks_world-learned_reactive_physical_agency_resources.fu2
-example/reflective_mind/builtin_reactive_layer.fu2
-example/reflective_mind/builtin_reactive_neural_plug_agency.fu2
-example/reflective_mind/builtin_reactive_physical_agency.fu2
-example/reflective_mind/builtin_reactive_resource.fu2
-example/reflective_mind/builtin_reactive_sensory_agency.fu2
-example/reflective_mind/deliberative1_type_property_relation_goal.fu2
-example/reflective_mind/deliberative_action.fu2
-example/reflective_mind/deliberative_execution_agency.fu2
-example/reflective_mind/deliberative_imagination_agency.fu2
-example/reflective_mind/deliberative_layer.fu2
-example/reflective_mind/deliberative_physical_object_type_goal_agency.fu2
-example/reflective_mind/deliberative_plan_agency.fu2
-example/reflective_mind/deliberative_resource.fu2
-example/reflective_mind/learned_reactive_language_agency.fu2
-example/reflective_mind/learned_reactive_layer.fu2
-example/reflective_mind/learned_reactive_physical_agency.fu2
-example/reflective_mind/learned_reactive_physical_knowledge_agency.fu2
-example/reflective_mind/learned_reactive_resource.fu2
-example/reflective_mind/learned_reactive_sensory_agency.fu2
-example/reflective_mind/nonsemantic_plan.fu2
-example/reflective_mind/object_type_property_relation_goal.fu2
-example/reflective_mind/physical_type_property_relation_goal.fu2
-example/reflective_mind/reflective_credit_assignment_agency.fu2
-example/reflective_mind/reflective_event_knowledge_agency.fu2
-example/reflective_mind/reflective_execution_agency.fu2
-example/reflective_mind/reflective_imagination_agency.fu2
-example/reflective_mind/reflective_layer.fu2
-example/reflective_mind/reflective_mind.fu2
-example/reflective_mind/reflective_mind_perception.fu2
-example/reflective_mind/reflective_mind_proprioceptual_object.fu2
-example/reflective_mind/reflective_mind_visual_agent.fu2
-example/reflective_mind/reflective_mind_visual_object.fu2
-example/reflective_mind/reflective_plan_agency.fu2
-example/reflective_mind/reflective_plan_bug_response_agency.fu2
-example/reflective_mind/reflective_plan_object_type_goal_agency.fu2
-example/reflective_mind/reflective_resource.fu2
-example/reflective_mind/reflective_timer.fu2
-example/reflective_timer/reflective_timer.fu2
-example/roboverse/roboverse.fu2
-example/socket-client/socket-client.fu2
-example/socket-server/socket-server.fu2
-example/traced_mind/traced_mind.fu2
-example/traced_mind/traced_resource.fu2
-example/visualize/isismon_agent_visualization.fu2
-example/visualize/visualize_test.fu2
-extension/blocks_world/blocks_world_block.fu2
-extension/blocks_world/blocks_world-core.fu2
-extension/blocks_world/blocks_world.fu2
-extension/blocks_world/blocks_world_gripper_controller.fu2
-extension/blocks_world/blocks_world_gripper.fu2
-extension/blocks_world/blocks_world_physics.fu2
-extension/blocks_world/blocks_world_sprite.fu2
-extension/blocks_world/blocks_world_table.fu2
-extension/blocks_world/blocks_world_window.fu2
-extension/cairo/cairo-core.fu2
-extension/conceptnet/conceptnet-core.fu2
-extension/concept_version_space/concept_version_space-core.fu2
-extension/equals_hash/equals_hash-core.fu2
-extension/event_stream/event_stream-core.fu2
-extension/fibermon/fibermon1.fu2
-extension/fibermon/fibermon-core.fu2
-extension/fibermon/fibermon.fu2
-extension/forgetful_event_stream/forgetful_event_stream-core.fu2
-extension/forward_planner/forward_planner-core.fu2
-extension/frame_ball/frame_ball-core.fu2
-extension/graph_isomorphism/graph_isomorphism-core.fu2
-extension/gtk_extension/gtk_extension-core.fu2
-extension/gtk_extension/old_primfunks.fu2
-extension/image/image-core.fu2
-extension/image_sequence/image_sequence-core.fu2
-extension/interval_tree/interval_tree-core.fu2
-extension/keyboard/keyboard-core.fu2
-extension/keyboard/keyboard-repl.fu2
-extension/lick/lick-core.fu2
-extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base-core.fu2
-extension/movie/movie-core.fu2
-extension/propogator/propogator-core.fu2
-extension/semantic_action_event/semantic_action_event-core.fu2
-extension/semantic_action_knowledge_base/semantic_action_knowledge_base-core.fu2
-extension/semantic_action/semantic_action-core.fu2
-extension/semantic_agent/semantic_agent-core.fu2
-extension/semantic_category/semantic_category-core.fu2
-extension/semantic_causal_concept/semantic_causal_concept-core.fu2
-extension/semantic_causal_event/semantic_causal_event-core.fu2
-extension/semantic_causal_object/semantic_causal_object-core.fu2
-extension/semantic_containment_object/semantic_containment_object-core.fu2
-extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe-core.fu2
-extension/semantic_directed_action_event/semantic_directed_action_event-core.fu2
-extension/semantic_event_knowledge_base/semantic_event_knowledge_base-core.fu2
-extension/semantic_event/semantic_event-core.fu2
-extension/semantic_event_sequence/semantic_event_sequence-core.fu2
-extension/semantic_event_transframe/semantic_event_transframe-core.fu2
-extension/semantic_event_tree/semantic_event_tree-core.fu2
-extension/semantic_expectation_failure/semantic_expectation_failure-core.fu2
-extension/semantic_frame/semantic_frame-core.fu2
-extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis-core.fu2
-extension/semantic_goal_event/semantic_goal_event-core.fu2
-extension/semantic_goal/semantic_goal-core.fu2
-extension/semantic_knowledge_base/semantic_knowledge_base-core.fu2
-extension/semantic_know_of_existence_event/semantic_know_of_existence_event-core.fu2
-extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event-core.fu2
-extension/semantic_object/semantic_object-core.fu2
-extension/semantic_object_type_event/semantic_object_type_event-core.fu2
-extension/semantic_ordered_object/semantic_ordered_object-core.fu2
-extension/semantic_packable_object/semantic_packable_object-core.fu2
-extension/semantic_planner/semantic_planner-core.fu2
-extension/semantic_plan_object/semantic_plan_object-core.fu2
-extension/semantic_plan_object_type_event/semantic_plan_object_type_event-core.fu2
-extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event-core.fu2
-extension/semantic_plan_operator_activation/semantic_plan_operator_activation-core.fu2
-extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel-core.fu2
-extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence-core.fu2
-extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression-core.fu2
-extension/semantic_proprioception/semantic_proprioception-core.fu2
-extension/semantic_proprioceptual_object/semantic_proprioceptual_object-core.fu2
-extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation-core.fu2
-extension/semantic_proprioceptual_position/semantic_proprioceptual_position-core.fu2
-extension/semantic_realm/semantic_realm-core.fu2
-extension/semantic_reflective_object/semantic_reflective_object-core.fu2
-extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event-core.fu2
-extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event-core.fu2
-extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event-core.fu2
-extension/semantic_relationship_key/semantic_relationship_key-core.fu2
-extension/semantic_resource_action_event/semantic_resource_action_event-core.fu2
-extension/semantic_resource_action_sequence/semantic_resource_action_sequence-core.fu2
-extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base-core.fu2
-extension/semantic_resource/semantic_resource-core.fu2
-extension/semantic_self/semantic_self-core.fu2
-extension/semantic_situation_category/semantic_situation_category-core.fu2
-extension/semantic_situation/semantic_situation-core.fu2
-extension/semantic_situation_transition/semantic_situation_transition-core.fu2
-extension/semantic_somatosensation/semantic_somatosensation-core.fu2
-extension/semantic_somatosensory_object/semantic_somatosensory_object-core.fu2
-extension/semantic_temporal_object/semantic_temporal_object-core.fu2
-extension/semantic_time/semantic_time-core.fu2
-extension/semantic_visual_object/semantic_visual_object-core.fu2
-extension/timeline/timeline-core.fu2
-extension/transframe/transframe-core.fu2
-test/cairo-test/cairo-test.fu2
-test/concept_version_space-test/concept_version_space-test.fu2
-test/gtk-test/gtk-test.fu2
-test/interval_tree-test/interval_tree-test.fu2
-test/keyboard-test/keyboard-test.fu2
-test/optimize-test/optimize-test.fu2
-test/propogator-test/propogator-test.fu2
-test/timeline-test/timeline-test.fu2
-test/xmlrpc-test/xmlrpc-test.fu2
-built-in/alien/alien.fpkg
-built-in/ansi/ansi.fpkg
-built-in/basic_bug_responses/basic_bug_responses.fpkg
-built-in/graph_cluster/graph_cluster.fpkg
-built-in/graph_match_error_correcting/graph_match_error_correcting.fpkg
-built-in/graphviz/graphviz.fpkg
-built-in/math/math.fpkg
-built-in/mutex/mutex.fpkg
-built-in/natural_language/natural_language.fpkg
-built-in/number/number.fpkg
-built-in/utilities/utilities.fpkg
-built-in/xmlrpc/xmlrpc.fpkg
-example/cannons_algorithm/cannons_algorithm.fpkg
-example/divisi2/divisi2.fpkg
-example/em_two_webpage/em_two_webpage.fpkg
-example/english_language/english_language.fpkg
-example/facebook/facebook.fpkg
-example/funk2-htmldoc/funk2-htmldoc.fpkg
-example/funk2-webpage/funk2-webpage.fpkg
-example/graph_match/graph_match.fpkg
-example/graph_match/graph_match-test.fpkg
-example/gtk_timeline/gtk_timeline.fpkg
-example/isis_world_client/isis_world_client.fpkg
-example/isis_world/isis_world.fpkg
-example/macbeth/macbeth.fpkg
-example/mind/mind.fpkg
-example/mindmon-1.0/mindmon-1.0.fpkg
-example/mindmon-blocks_world/mindmon-blocks_world.fpkg
-example/mindmon-isis_world/mindmon-isis_world.fpkg
-example/mindmon/mindmon.fpkg
-example/moral_compass-isis_world/moral_compass-isis_world.fpkg
-example/moral_compass/moral_compass.fpkg
-example/rct_webpage/rct_webpage.fpkg
-example/reflective_mind-blocks_world/reflective_mind-blocks_world.fpkg
-example/reflective_mind/reflective_mind.fpkg
-example/reflective_timer/reflective_timer.fpkg
-example/roboverse/roboverse.fpkg
-example/socket-client/socket-client.fpkg
-example/socket-server/socket-server.fpkg
-example/traced_mind/traced_mind.fpkg
-example/visualize/isismon_agent_visualization.fpkg
-example/visualize/visualize_test.fpkg
-extension/blocks_world/blocks_world.fpkg
-extension/cairo/cairo.fpkg
-extension/conceptnet/conceptnet.fpkg
-extension/concept_version_space/concept_version_space.fpkg
-extension/equals_hash/equals_hash.fpkg
-extension/event_stream/event_stream.fpkg
-extension/fibermon/fibermon.fpkg
-extension/forgetful_event_stream/forgetful_event_stream.fpkg
-extension/forward_planner/forward_planner.fpkg
-extension/frame_ball/frame_ball.fpkg
-extension/graph_isomorphism/graph_isomorphism.fpkg
-extension/gtk_extension/gtk_extension.fpkg
-extension/image/image.fpkg
-extension/image_sequence/image_sequence.fpkg
-extension/interval_tree/interval_tree.fpkg
-extension/keyboard/keyboard.fpkg
-extension/lick/lick.fpkg
-extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.fpkg
-extension/movie/movie.fpkg
-extension/propogator/propogator.fpkg
-extension/semantic_action_event/semantic_action_event.fpkg
-extension/semantic_action_knowledge_base/semantic_action_knowledge_base.fpkg
-extension/semantic_action/semantic_action.fpkg
-extension/semantic_agent/semantic_agent.fpkg
-extension/semantic_category/semantic_category.fpkg
-extension/semantic_causal_concept/semantic_causal_concept.fpkg
-extension/semantic_causal_event/semantic_causal_event.fpkg
-extension/semantic_causal_object/semantic_causal_object.fpkg
-extension/semantic_containment_object/semantic_containment_object.fpkg
-extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.fpkg
-extension/semantic_directed_action_event/semantic_directed_action_event.fpkg
-extension/semantic_event_knowledge_base/semantic_event_knowledge_base.fpkg
-extension/semantic_event/semantic_event.fpkg
-extension/semantic_event_sequence/semantic_event_sequence.fpkg
-extension/semantic_event_transframe/semantic_event_transframe.fpkg
-extension/semantic_event_tree/semantic_event_tree.fpkg
-extension/semantic_expectation_failure/semantic_expectation_failure.fpkg
-extension/semantic_frame/semantic_frame.fpkg
-extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.fpkg
-extension/semantic_goal_event/semantic_goal_event.fpkg
-extension/semantic_goal/semantic_goal.fpkg
-extension/semantic_knowledge_base/semantic_knowledge_base.fpkg
-extension/semantic_know_of_existence_event/semantic_know_of_existence_event.fpkg
-extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.fpkg
-extension/semantic_object/semantic_object.fpkg
-extension/semantic_object_type_event/semantic_object_type_event.fpkg
-extension/semantic_ordered_object/semantic_ordered_object.fpkg
-extension/semantic_packable_object/semantic_packable_object.fpkg
-extension/semantic_planner/semantic_planner.fpkg
-extension/semantic_plan_object/semantic_plan_object.fpkg
-extension/semantic_plan_object_type_event/semantic_plan_object_type_event.fpkg
-extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.fpkg
-extension/semantic_plan_operator_activation/semantic_plan_operator_activation.fpkg
-extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.fpkg
-extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.fpkg
-extension/semantic_plan_operator_suppression/semantic_plan_operator_suppession.fpkg
-extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.fpkg
-extension/semantic_proprioception/semantic_proprioception.fpkg
-extension/semantic_proprioceptual_object/semantic_proprioceptual_object.fpkg
-extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.fpkg
-extension/semantic_proprioceptual_position/semantic_proprioceptual_position.fpkg
-extension/semantic_realm/semantic_realm.fpkg
-extension/semantic_reflective_object/semantic_reflective_object.fpkg
-extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.fpkg
-extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.fpkg
-extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.fpkg
-extension/semantic_relationship_key/semantic_relationship_key.fpkg
-extension/semantic_resource_action_event/semantic_resource_action_event.fpkg
-extension/semantic_resource_action_sequence/semantic_resource_action_sequence.fpkg
-extension/semantic_resource_event_knowledge_base/semantic_resource_event_knowledge_base.fpkg
-extension/semantic_resource/semantic_resource.fpkg
-extension/semantic_self/semantic_self.fpkg
-extension/semantic_situation_category/semantic_situation_category.fpkg
-extension/semantic_situation/semantic_situation.fpkg
-extension/semantic_situation_transition/semantic_situation_transition.fpkg
-extension/semantic_somatosensation/semantic_somatosensation.fpkg
-extension/semantic_somatosensory_object/semantic_somatosensory_object.fpkg
-extension/semantic_temporal_object/semantic_temporal_object.fpkg
-extension/semantic_time/semantic_time.fpkg
-extension/semantic_visual_object/semantic_visual_object.fpkg
-extension/timeline/timeline.fpkg
-extension/transframe/transframe.fpkg
+python/funk2module/c/funk2module.c
+python/funk2module/c/funk2test.c
 test/cairo-test/cairo-test.fpkg
+test/cairo-test/cairo-test.fu2
 test/concept_version_space-test/concept_version_space-test.fpkg
+test/concept_version_space-test/concept_version_space-test.fu2
 test/gtk-test/gtk-test.fpkg
+test/gtk-test/gtk-test.fu2
 test/interval_tree-test/interval_tree-test.fpkg
+test/interval_tree-test/interval_tree-test.fu2
 test/keyboard-test/keyboard-test.fpkg
+test/keyboard-test/keyboard-test.fu2
+test/keyboard-test/ncurses-test.c
 test/optimize-test/optimize-test.fpkg
+test/optimize-test/optimize-test.fu2
 test/propogator-test/propogator-test.fpkg
+test/propogator-test/propogator-test.fu2
 test/timeline-test/timeline-test.fpkg
+test/timeline-test/timeline-test.fu2
 test/xmlrpc-test/xmlrpc-test.fpkg
+test/xmlrpc-test/xmlrpc-test.fu2
 \end{lstlisting}

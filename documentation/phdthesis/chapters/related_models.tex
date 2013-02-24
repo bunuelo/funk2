@@ -4,7 +4,7 @@
 %************************************************
 
 The term reflection is a commonly used word in computer science and
-AI.  The idea is extremely simple and is a modelling contribution of
+AI.  The idea is extremely simple and is a modeling contribution of
 this dissertation, but because of its simplicity, it is a widely
 applicable idea.  In fact, \cite{maes:1987,maes:1988} distinguishes
 over 30 different types of ``computational reflection,'' grounded in
@@ -14,12 +14,12 @@ overview, although it is based on many of the forms of computational
 reflection that Maes describes, i.e. procedural reflection, type
 reflection, and frame reflection.
 
-The SALS AI has been inspired by a previously implemented Emotion
-Machine cognitive architecture called ``EM-ONE'' \cite[]{singh:2005b}.
-EM-ONE implements reflective thinking using a commonsense narrative
-representation based on an Allegro Prolog extension of Allegro Lisp.
-The EM-ONE architecture is a ``critic-selector'' model of problem
-solving
+The SALS AI has been inspired by a previous implementation of an
+Emotion Machine cognitive architecture, called ``EM-ONE''
+\cite[]{singh:2005b}.  EM-ONE implements reflective thinking using a
+commonsense narrative representation based on an Allegro Prolog
+extension of Allegro Lisp.  The EM-ONE architecture is a
+``critic-selector'' model of problem solving
 \cite[]{sussman:1973,singh:2002a,singh:2004,singh:2005a,singh:2005b,minsky:2006,morgan:2009}.
 Knowledge in the EM-ONE architecture is divided into three domains:
 (1) physical, (2) social, and (3) mental.  The EM-ONE AI controls a
@@ -71,25 +71,25 @@ thinking in the Emotion Machine theory.  This type of self-reflective
 thinking is also referred to as ``theory of mind'' in the cognitive
 science literature and has been found to exist in different neural
 circuits in the brain when compared to deliberative or ``executive''
-functions in the brain \cite[]{saxe:2006}.  Because the EM-ONE
-architecture is based on a Prolog substrate, it has the ability to
-refer to arbitrary partial states of a problem domain, while the SALS
-AI is currently limited to the two simple ``relationship'' and
-``property'' types of partial states, which must be procedurally
-combined in order to reference more complex types of partial states.
-This means that the EM-ONE architecture can easily define critics that
-recognize arbitrarily complex declarative patterns in the problem
-domain.  The disadvantage of relying on a declarative substrate, such
-as Prolog, is that the procedural aspects of this substrate are not
-reflectively traced and cannot be optimized by the EM-ONE
-architecture.  While the SALS architecture must have explicit plans
-for recognizing more complex partial states, the fact that these
-procedures are plans in the SALS AI means that different procedures
-for recognizing these partial states in the problem domain can be
-reflected upon, modified, compared and optimized by the SALS AI.  The
-addition of critics as well as self-reflective and self-conscious
-layers of thinking is described as a future extension for the SALS
-architecture in {\mbox{\autoref{chapter:future}}}.
+functions \cite[]{saxe:2006}.  Because the EM-ONE architecture is
+based on a Prolog substrate, it has the ability to refer to arbitrary
+partial states of a problem domain, while the SALS AI is currently
+limited to the two simple ``relationship'' and ``property'' types of
+partial states.  {\mbox{\autoref{chapter:future}}} describes a plan
+for defining general subgraphs as partial states in the SALS AI.  The
+EM-ONE architecture can easily define critics that recognize
+arbitrarily complex declarative patterns in the problem domain.  The
+disadvantage of relying on a declarative substrate, such as Prolog, is
+that the procedural aspects of this substrate are not reflectively
+traced and cannot be optimized by the EM-ONE architecture.  While the
+SALS architecture must have explicit plans for recognizing more
+complex partial states, the fact that these procedures are plans in
+the SALS AI means that different procedures for recognizing these
+partial states in the problem domain can be reflected upon, modified,
+compared and optimized by the SALS AI.  The addition of critics as
+well as self-reflective and self-conscious layers of thinking is
+described as a future extension for the SALS architecture in
+{\mbox{\autoref{chapter:future}}}.
 
 \section{Computational Metacognition}
 
@@ -129,7 +129,8 @@ Metacognition Ground Level &${\approx}$ &Emotion Machine Learned Reactive Layer 
 shows how the levels of computational metacognition map to the Emotion
 Machine cognitive architecture presented in this dissertation.
 
-\section{Meta-planning and Meta-Plan Recognition}
+\section{Meta-Planning and Meta-Plan Recognition}
+\label{section:meta_planning_and_meta_plan_recognition}
 
 \cite{wilensky:1981} describes ``meta-planning'' as representing and
 using knowledge about planning in problem solving and natural language
@@ -173,16 +174,16 @@ and meta-plan recognition, which are both future research goals for
 the SALS architecture.  There are a few key differences between the
 SALS architecture and PANDORA:
 \begin{packed_enumerate}
-\item{Meta-goals and goals in PANDORA are considered the same type of
-  knowledge and are stored in the same knowledge base that is reasoned
-  about by one monolithic planner, while the SALS AI keeps these
-  categorically different types of knowledge separated into
-  hierarchical layers of different knowledge bases and types of
+\item{Goals and meta-goals in PANDORA are both considered to be the
+  same type of knowledge and are stored in the same knowledge base
+  that is reasoned about by one monolithic planner, while the SALS AI
+  keeps these categorically different types of knowledge separated
+  into hierarchical layers of different knowledge bases and types of
   planning processes.}
-\item{Because PANDORA is not connected to an external problem domain,
-  while the SALS AI responds to the various types of plan failures
-  that result from executing plans, such as physical expectation
-  failures.}
+\item{PANDORA is not connected to an external problem domain, while
+  the SALS AI is capable of responding to the various types of plan
+  failures that result from executing plans, such as physical
+  expectation failures.}
 \item{PANDORA only learns from ``being told'' knowledge, while the
   SALS AI learns from both ``being told'' natural language plans as
   well as from the ``experience'' of executing these plans.}
@@ -259,7 +260,7 @@ routines that become ``plans to perceive''
 \cite[]{pryor:1992,pryorcollins:1995,velez:2011} in the low-level
 visual system.
 
-Although, the first planning layer in the SALS AI is the deliberative
+Although the first planning layer in the SALS AI is the deliberative
 layer, one can imagine that a solution to combining Winston's Genesis
 AI with Rao's AVR AI would be to extend the SALS planning layers into
 the learned reactive layer of the SALS AI, so that the translation of
@@ -398,7 +399,7 @@ parallelism and concurrency to hide resource latency problems.  The
 current economical trend in HPC is to build computers with thousands
 of commercially available CPUs and GPUs, which means that these trends
 in the consumer PC market are beginning to require software changes
-for high-performance scientific modelling applications.
+for high-performance scientific modeling applications.
 \cite{sodan:2010} describes two types of performance scaling in
 parallel algorithms:
 \begin{packed_enumerate}

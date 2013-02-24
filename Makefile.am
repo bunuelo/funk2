@@ -126,6 +126,11 @@ bin/configurator: c/configurator.c
 	mkdir -p lib/.libs
 	gcc $(cc_flags) c/configurator.c -lrt -o $@
 
+bin/speed_test: c/speed_test.c
+	mkdir -p bin
+	mkdir -p lib/.libs
+	gcc $(cc_flags) c/speed_test.c -lrt -o $@
+
 config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h
 	echo "" > config_bit_num.h

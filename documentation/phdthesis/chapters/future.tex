@@ -2,6 +2,436 @@
 \chapter{Future}\label{chapter:future}
 %*****************************************
 
+The primary focus of this thesis is a tractable implementation of a
+cognitive architecture for the recursive application of reflective
+layers of planning and learning.  Because the focus of this
+dissertation has been on the larger recursive structure of the SALS
+cognitive architecture, one layer of which is a closed-loop
+non-reflective AI, each necessary sub-component of a single planning
+layer in the SALS AI has been kept relatively simple.  Therefore, each
+of these components of the current skeleton of the SALS AI can be
+fleshed out in the future, while keeping the core tractable cognitive
+architecture for a many-layered reflective AI.  The following are four
+areas of research that would improve every layer in the SALS AI:
+\begin{packed_enumerate}
+\item{General partial state abstraction processes.  The ability to
+  abstract more complex types of partial states from a control domain
+  would allow the addition of ``Critics'' that recognize relatively
+  specific and intricate problematic partial states in the control
+  domain, as is done in the EM-ONE architecture \cite[]{singh:2005b},
+  the precedent for this work.}
+\item{A propagation model of knowledge maintenance that traces
+  knowledge provenance from refined hypotheses learned from experience
+  to plan goal accomplishment and avoidance hypotheses
+  \cite[]{radul:2009}.  Currently, the SALS AI must completely
+  re-imagine the effects of a plan when new hypotheses are learned
+  from experience.}
+%% \item{Currently, the SALS AI is limited to the same simple conjunctive
+%%   hypothesis space for each reflective layer.  Learning of hypothesis
+%%   priors that predict which hypothesis spaces may contain the correct
+%%   hypothesis for specific types of resource executions and problem
+%%   domains.  In Bayesian terms, a general approach could amount to
+%%   learning hierarchical hypotheses over structured priors
+%%   \cite[]{mansinghka:2012}, adapted in order to learn a distinct
+%%   hierarchical model of priors for each reflective planning layer
+%%   domain in the SALS AI.}
+\item{General grammar definitions in the natural language programming
+  language, such as those presented by \cite{winograd:1970}.
+  Currently, the SALS natural programming language is limited to a
+  simple functional grammar.}
+\item{Efficient usage of multicore, hyperthreaded, and
+  multiple-processor hardware platforms as well as completion of the
+  distributed processing model that is partially implemented in the
+  memory layer of the SALS virtual machine, which would allow
+  peer-to-peer distributed processor support.}
+\end{packed_enumerate}
+In addition to making improvements to the existent structure of the
+SALS AI, there are a number of aspects missing from the SALS AI that
+could be added to the architecture in order to better model human
+commonsense thinking.  A few selected ideas for new additions to the
+SALS AI are as follows:
+\begin{packed_enumerate}
+\item{Self-reflective and self-consciously reflective thinking, the
+  top two layers of the Emotion Machine theory of human commonsense
+  thinking \cite[]{minsky:2006}, including self-models and social
+  knowledge.}
+\item{Extending reflective planning layers downward into the domain of
+  plans-to-perceive \cite[]{pryor:1992,pryorcollins:1995,velez:2011},
+  so that the SALS AI can learn plans for abstracting spatial
+  relations between symbolic perceptions, such as the visual routines
+  first implemented by \cite{ullman:1984}.}
+\item{Plan and meta-plan recognition as a way to include current
+  research on reflective story understanding architectures that
+  attempt to explain the actions of actors in terms of goals and
+  meta-goals that the actor may be trying to accomplish
+  \cite[]{wilensky:1981,cox:1999b,cox:2010,winston:2011}.}
+\end{packed_enumerate}
+
+\section{General Partial State Abstraction}
+
+The SALS AI is currently restricted in the types of partial states
+that it can abstract from the knowledge base that it is trying to
+control.  The two types of partial states that are included in the
+current implementation are the ``relationship'' and ``property'' types
+that have been described in
+{\mbox{\autoref{chapter:learning_from_being_told_natural_language_plans}}}.
+Implementing more general types of partial state abstraction in the
+SALS AI must be done carefully in order to keep the architecture
+tractable at higher layers.  One goal for implementing perceptual
+partial state abstractions of greater complexity would be to allow for
+implementing ``Critics'' from EM-ONE \cite[]{singh:2005b}.  Putting
+efficiency aside for the moment, implementing new types of partial
+state abstractions for the SALS AI is a straightforward task.  There
+are two places in each planning layer where partial state abstraction
+processes are executed:
+\begin{packed_enumerate}
+\item{\emph{Asynchronous Procedural Event Stream Abstraction}: The
+  asynchronous learning algorithm that exists in each reflective layer
+  abstracts partial states from a historical reconstructed copy of the
+  knowledge base that the planning layer is trying to control.}
+\item{\emph{Direct Real-Time Read Abstraction}: An executing plan may
+  execute a procedure that checks to see if a specific type of partial
+  state currently exists in the knowledge base that it is trying to
+  control.}
+\end{packed_enumerate}
+Asynchronous learning from procedural event streams requires that,
+when a planning layer receives a change event from the knowledge base
+in the layer below that it is trying to control, the planning layer
+integrates this change into a reconstructed copy of that knowledge
+base.  The reconstructed knowledge base represents the state of the
+knowledge base that the planning layer is trying to control at a point
+in the past.  The asynchronous abstraction process works on this
+reconstruction in order to determine whether or not the change has
+either created a new instance of a type of partial state or has
+removed a previously existing instance.  The asynchronous procedural
+event stream abstraction of partial state types works in order to
+learn causal hypotheses for the effects of resource executions in the
+layer below.  When a plan is currently executing in the planning
+layer, it is sometimes useful to determine whether or not a specific
+partial state currently exists in the knowledge base that the planning
+layer is trying to control.  The asynchronous partial state
+abstraction cannot be used for this type of real-time query because
+the asynchronous abstraction algorithm works on an historical copy of
+the knowledge in question.  Therefore, the direct real-time read
+abstraction of a specific partial state from the current state of the
+knowledge base is sometimes necessary for this purpose.
+
+In order to demonstrate the difference in time-complexity between
+these two methods of abstracting types of partial states, let us
+consider that a partial state is a specific subgraph that is to be
+symbolically reified both asynchronously as well as by direct read
+access from a graph representation of the frame-based knowledge base
+that the planning layer is trying to control.
+{\mbox{\autoref{figure:general_partial_state_arch}}} shows an example
+of a more complex type of partial state than the SALS AI can currently
+abstract, which represents an ``arch,'' similar to the arch category
+learned by near-miss learning by \cite{winston:1970}.
+\begin{figure}
+\centering
+\includegraphics[width=10cm]{gfx/general_partial_state_arch}
+\caption[An example of a more complex type of partial state than the
+  SALS AI can currently abstract, which represents an arch.]{An
+  example of a more complex type of partial state than the SALS AI can
+  currently abstract, which represents an arch.}
+\label{figure:general_partial_state_arch}
+\end{figure}
+As these types of partial states become more complex, the direct
+real-time read approach to abstraction becomes very similar to the
+NP-complete subgraph isomorphism decision problem, which quickly
+becomes intractable for large subgraphs.\footnote{Given a set of
+  subgraphs that are of interest, preprocessing these subgraphs can
+  lead to a practically more efficient hierarchical ``graph
+  stitching'' algorithm for finding which of this set of subgraphs
+  exist within a target graph \cite[]{messmer:1995,messmer:2000}.  For
+  large enough graphs, however, these algorithms are still intractable
+  for real-time queries.  These algorithms have been implemented and
+  are included in the SALS AI, but are not used for the examples in
+  this dissertation.}
+
+Consider how the asynchronous abstraction of subgraphs from change
+event streams can improve upon the intractable subgraph isomorphism
+problem.  The key to realize is that the change event focuses the task
+of the asynchronous abstraction process, which changes the general
+graph isomorphism problem into a focused tree matching problem, given
+that spanning trees are precomputed for each edge in the partial state
+graph of interest.
+{\mbox{\autoref{figure:general_partial_state_arch_spanning_trees}}}
+shows an example of five minimum spanning trees, one for each edge of
+the arch example partial state.  Computing a minimum spanning tree for
+a connected graph has polynomial (FP) time-complexity.  Precomputing
+one minimum spanning tree for each edge in the partial state of
+interest reduces the general NP-complete graph isomorphism decision
+problem to finding a tree of edges beginning at a starting edge in a
+graph that is initially focused on the specific edge that has been
+added to or removed from the reconstructed knowledge based in the
+asynchronous learning algorithm in each layer of the SALS AI.  The
+constraints in this case are that some potentially matching trees must
+be ignored if their edges do not connect in the same way as in the
+partial state graph of interest.
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{gfx/general_partial_state_arch_spanning_trees}
+\caption[Five minimum spanning trees between the edges of the arch
+  example partial state.]{Five minimum spanning trees between the
+  edges of the arch example partial state.  One minimum spanning tree
+  is shown for each edge in the partial state of interest.
+  Precomputing one minimum spanning tree for each edge in the partial
+  state of interest reduces the general NP-complete graph isomorphism
+  decision problem to a tree matching problem that is focused on the
+  specific edge that has been added to or removed from the
+  reconstructed knowledge based in the asynchronous learning algorithm
+  in each layer of the SALS AI.}
+\label{figure:general_partial_state_arch_spanning_trees}
+\end{figure}
+
+While there may be a more efficient solution to the asynchronous
+abstraction of partial states in the SALS AI, the problem of real-time
+abstraction is still an NP-complete problem.  One solution to the
+NP-complete problem of real-time abstraction of partial states is to
+ignore it.  If the asynchronous abstraction of partial states can run
+quickly enough, perhaps by allocating a parallel processor and a
+separate reconstructed knowledge base to each type of partial state,
+the asynchronous algorithm could potentially show little enough
+latency to make it near enough to real-time to be practically useful.
+
+\section{Propagation by Provenance of Hypothetical Knowledge}
+
+Currently in the SALS AI, when a resource is executed by a planning
+layer, generalized hypotheses are learned that are used to predict the
+effects of those resource executions in the future.  For example,
+these hypotheses are used to predict the effects of a plan when that
+plan is imagined being executed as part of the planning process in a
+planning layer.  When a plan is imagined in this way, these effects
+are associated with the plan object in the plan knowledge base of that
+layer.  Subsequently, when the hypotheses that support these
+conclusions are refined due to new experience gained through the
+execution of similar plans or actions, the hypothetical support for
+these original conclusions may be lost.  The problem is that these
+original conclusions remain associated with the plan objects, even in
+the case when the hypothetical support for those conclusions are lost
+through the refinement of the hypothesis spaces from which they were
+originally derived.  Because of the potential loss of hypothetical
+support for the effects of plans, the plan must be completely
+re-imagined whenever the asynchronous learning algorithms have learned
+new information through the experiential event streams.
+
+\cite{radul:2009} explain a type of Truth Maintenance System (TMS)
+\cite[]{doyle:1978} called a ``Propagator.''  A propagator network is
+composed of ``cells'' that represent variables in a computational
+process that can have multiple ambiguous values.  The propagator
+network also has the ability to track the provenance of the
+derivations for the values stored in these cells.  The advantage of
+TMSs and propagator networks is the ability to perform dependency
+directed backtracking in order to find new justifications for beliefs
+when contradictions in knowledge are encountered.  If the knowledge
+derivations in the SALS AI were built based upon a propagator network,
+the contradictions between hypothetical assumptions and new
+experiential input could be propagated efficiently to the effects that
+are associated with plan objects.  One advantage of propagator
+networks over traditional TMS systems is their ability to maintain
+multiple possibly contradictory sets of beliefs that are derived from
+different sources of information.  The ability to maintain multiple,
+possibly conflicting belief structures in a propagator network would
+allow the SALS AI to consider the source of the knowledge and develop
+ways of reasoning that determine when one source is more reliable than
+another.  For example, when the SALS AI learns new plans from ``being
+told,'' the source of this knowledge could be associated with
+different users or other specific AIs that are the source of these new
+assertions.  When one source is found to be valid for one domain but
+invalid for another, the SALS AI could use the features of a
+propagator network to easily switch between reasoning using different
+sets of knowledge sources in different circumstances.
+
+%% \section{Learning Hypothesis Space Priors}
+
+%% Currently, the SALS AI is limited to the same simple conjunctive
+%% hypothesis space for each reflective layer.  Learning of hypothesis
+%% priors that predict which hypothesis spaces may contain the correct
+%% hypothesis for specific types of resource executions and problem
+%% domains would be a useful addition to the SALS AI.  In Bayesian terms,
+%% a general approach could amount to learning hierarchical hypotheses
+%% over structured priors \cite[]{mansinghka:2012}, adapted in order to
+%% learn a distinct hierarchical model of priors for each reflective
+%% planning layer domain in the SALS AI.
+
+\section{General Natural Language Grammar}
+
+The SALS AI currently interprets natural language plans, while
+simultaneously considering syntax, semantics, current environmental
+context, learned hypothetical knowledge about the effects of actions
+as well as the current positive and negative goals of the AI.  The
+SALS natural programming language is currently limited to a simple
+functional grammar.  One problem with many natural language grammars
+are that they usually assume a specific language, such as English, as
+the basis for their grammar.  Although the SALS AI grammar is simple,
+the benefit of this simplicity is that because it is based on a
+Unicode string matching template, it is able to represent and reason
+with natural language phrases from any natural human language,
+including languages like Chinese and Japanese, which do not have words
+separated by spaces.  While there are many ways to improve the SALS
+natural language interpreter, the following are four that are
+immediately applicable to the SALS AI:
+\begin{packed_enumerate}
+\item{\emph{Mutation, Side-Effects and Causal Variables}: One
+  immediate way to maintain the generality of the SALS natural
+  language interpreter, while adding the complexities of a general
+  natural language grammar, is to allow the language to have mutation
+  side-effects, so that the interpreter can be stateful.  Adding
+  mutation side-effects to the SALS natural language interpreter
+  introduces a complexity to the current interpretation search process
+  that would become intractable without an explicit additional method
+  of curbing this complexity.  Dependency tracing would be a promising
+  way to reign in the complexity of this search process.}
+\item{\emph{One Consolidated Natural Language Interface}: The SALS AI
+  currently receives natural language plans through a separate
+  interface to each planning layer.  One future goal for the
+  architecture is to have one natural language input to the entire
+  architecture that enters the architecture through the lowest-level
+  perceptual knowledge bases of the built-in reactive layer and
+  propagates upward through the planning layers until the natural
+  language phrase is completely understood.}
+\item{\emph{Incremental Natural Language Understanding}: In order to
+  increase the realism of the SALS natural language interpreter, the
+  ability of the interpreter to receive and process a stream of
+  phonetic or character-level symbols in temporal order, rather than
+  in template form, could allow the SALS AI to begin imagining
+  multiple possible interpretations of a statement or phrase before
+  that statement or phrase has been completely communicated to the
+  SALS AI.}
+\item{\emph{Natural Language Analogies Between Layers}: The inherent
+  ambiguity of natural language plans allows analogies to be made
+  between plans within any given planning layer.  An exciting avenue
+  for future research is the creation of analogies between planning
+  layers in the SALS AI.  For example, consider that the AI has
+  learned a plan for stacking blocks in the Blocks World domain that
+  involves first dividing the blocks into two groups on the table: (1)
+  cubes and (2) pyramids.  The AI can execute a simple block stacking
+  plan that simply selects blocks from the group with only cubes in
+  order to create a stack without again considering the shapes of the
+  blocks in question.  This plan for physical action, could provide an
+  analogy for the reflective thinking layer if the AI confronts a
+  problem that requires plans to be grouped into two lists: (1) those
+  plans that activate resources concurrently, and (2) those plans that
+  execute resources sequentially.  This could be a way to plan quickly
+  without imagining potential resource conflicts in plans with
+  concurrent resource executions.  Finding analogies between natural
+  language plans of different layers in the SALS AI could lead to
+  faster learning in new domains of reflective thinking, for example,
+  if the AI knew many plans for physical action and few for reflective
+  action.}
+\end{packed_enumerate}
+Natural language plans are an important part of a cognitive
+architecture because of the potential for the AI to be able to explain
+its own reasoning processes in terms of this natural language
+understanding.  There are many directions for extending the use of
+natural language in the SALS AI.
+
+%% \section{Distributed Hardware Support}
+
+\section{Self-Reflective and Self-Conscious Thinking}
+
+The ``self-reflective'' and ``self-conscious'' layers are the top two
+layers of the Emotion Machine theory of human commonsense thinking
+\cite[]{minsky:2006}.  These two layers are not included in the
+current version of the SALS AI.  The self-reflective layer includes
+plans that control the planning resources in the lower reflective
+layers.  The self-reflective layer contains ``self-models'' which
+represent large-scale reconfigurations of the thinking resources in
+the lower reflective layers of the AI.  These global changes to the
+way an AI is thinking are sometimes referred to as ``emotions'' or
+``personalities'' depending on the time-scale.  My usage of these
+terms is analogous to the usage of the terms ``weather'' and
+``climate.''  A personality is a longer-term plan involving
+shorter-term emotion actions.  The following is a list of some simple
+emotion and personality plan definitions that could be added to a
+self-reflective layer of the SALS AI:
+
+\begin{packed_itemize}
+\item{Be happy: Do nothing.}
+\item{Be tired: Make a plan to go to sleep.}
+\item{Sleep: Imagine executing recently used plans in a variety of
+  contexts.}
+\item{Be frustrated: Try to find goals to give up that are not worth
+  accomplishing.}
+\item{Grieve: Replace old plans and goals that depend upon lost
+  resources.}
+\item{Be athletic: Get better at making plans that require me to exercise.}
+\item{Be friendly: Get better at making plans to help friends accomplish their goals.}
+\end{packed_itemize}
+
+\noindent The self-reflective layer's plan knowledge base could include the
+following types of self-model knowledge, which would be reflections of
+the above plans being executed:
+
+\begin{packed_itemize}
+\item{I am happy.}
+\item{I am tired.}
+\item{I am frustrated.}
+\item{I am grieving.}
+\item{I am athletic.}
+\item{I am friendly.}
+\end{packed_itemize}
+
+\noindent One distinguishing factor of the self-reflective layer is
+that it not only includes ``self-models'' but also analogous
+``other-models.''  The following is a list of ``other-model''
+knowledge:
+
+\begin{packed_itemize}
+\item{Joe is happy.}
+\item{Carol is tired.}
+\item{Carol is frustrated.}
+\item{Suzy is grieving.}
+\item{Ralph is athletic.}
+\item{Lauren is friendly.}
+\end{packed_itemize}
+
+\noindent The self-reflective layer has the capability to abstractly
+simulate self-models and other-models in terms of all of the partial
+states in the layers below.  This simulation can probably be performed
+tractably because only a linear increase in complexity has been seen
+to be added to the SALS overall architecture with each additional
+layer in the current architecture.
+
+One way to simulate other-models and self-models analogously is by
+adding an ontology to the SALS AI's knowledge bases.  Currently the
+SALS AI can only abstract and simulate symbolically reified partial
+states that represent the problem domain.  These collections of
+symbols that are the input to each planning layer of the SALS AI are
+not ``object-oriented.''  Meaning that they are not organized into
+frame-based object representations.  Learning an ontology of object
+types is future research for the SALS AI.  The ability to abstract and
+simulate object types may be related to learning object binding
+affordances \cite[]{stoytchev:2005}.  Also, learning these object
+types may lead to an object model that could naturally be extended for
+learning self-models and other-models.
+
+\section{Planning to Perceive}
+
+{\mbox{\autoref{section:meta_planning_and_meta_plan_recognition}}}
+describes the Architecture for Visual Routines (AVR) \cite[]{rao:1998}
+that is based on an idea originally proposed by \cite{ullman:1984}.
+To briefly review, ``visual routines'' define objects and parts by
+having a visual plan interpreter that is focused on a specific part of
+the low-level visual input at any given point in time.  Although the
+first planning layer in the SALS AI is the deliberative layer, one can
+imagine that a solution to including a perceptual planning layer would
+be to extend the SALS planning layers into the learned reactive layer
+of the SALS AI, so that the translation of visual knowledge from the
+built-in reactive visual knowledge base to the physical knowledge base
+in the learned reactive layer would be performed by a planning layer
+below the deliberative layer.  Thus, the technique of extending the
+SALS AI's planning layers to higher layers of super-reflective control
+could be just as easily reversed by extending the SALS AI's planning
+layers to lower layers of planned control, so that reflective control
+could be applied to the types of planning-to-perceive problems as a
+coherent integration of Ullman's visual routines into deliberative
+reasoning layers of reflective control.
+
+\section{Plan Recognition and Story Understanding}
+
+
+
 %% \section{from related models (EM-ONE)}
 
 %% The EM-ONE architecture does not have an explicit self-reflective
@@ -178,7 +608,7 @@
 %% It is interesting to consider how children learn from parents as well
 %% as how parents guide a child's cooperative behavior, but to study this
 %% type of thinking, the AI must be extended in order to allow for
-%% modelling what one agent thinks about what another agent thinks about
+%% modeling what one agent thinks about what another agent thinks about
 %% her.  This form of double reflective recursion is self-conscious
 %% knowledge and the problems that are represented in this type of
 %% knowledge are handled by what is called self-conscious thought
@@ -189,7 +619,7 @@
 %% "Ralph, your sister was going to use some of that butter that you just
 %% finished." The little boy, Ralph in this case, thinks that his mother
 %% thinks that he made a self-reflective mistake. I hypothesize that
-%% modelling this form of double reflective recursion in conjunction with
+%% modeling this form of double reflective recursion in conjunction with
 %% respectful social relationships may be useful for understanding
 %% emotions such as Guilt and Pride.  I have described
 %% \cite[]{morgan:2010} a theory of children could learn cooperative

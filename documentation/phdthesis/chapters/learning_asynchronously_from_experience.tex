@@ -42,6 +42,7 @@ SALS AI new hypothetical models of the effects of activating resources
 in the layer below that a given planning layer is trying to control.
 
 \section{Two Experiential Event Streams Flow to Each Planning Layer}
+\label{section:two_experiential_event_streams_flow_to_each_planning_layer}
 
 Each planning layer in the SALS AI receives two event streams from the
 layer below that it is trying to control: (1) a stream of all changes
@@ -194,9 +195,9 @@ into the planning layer above.  The first agency in the planning layer
 that receives this event stream reconstructs a copy of the knowledge
 base that it is trying to control.  Because an event stream can be
 buffered, this reconstructed knowledge base can move forward in time
-more slowly than the knowledge base that is the planning layer is
-trying to control.  Creating a reconstruction of the knowledge base
-under control is important because this allows the partial state event
+more slowly than the knowledge base that the planning layer is trying
+to control.  Creating a reconstruction of the knowledge base under
+control is important because this allows the partial state event
 abstraction to occur asynchronously with the process that is making
 changes to the knowledge base under control.  In practice, because
 sets of changes to knowledge bases often occur in bursts, the
@@ -580,8 +581,8 @@ for the third of these three partial state change sets, $\{D, E, F\}$,
 is a copy of the second allocated partial state hypothesis version
 space, which is also refined with the information in the third
 computed transframe.  Finally, three hypothesis version space objects
-have been allocated in order to predict three the maximally disjoint
-sets of partial state changes.
+have been allocated in order to predict the maximal disjoint sets of
+partial state changes.
 {\mbox{\autoref{figure:hypothesis_version_space_set_divisions}}} shows
 the inheritance structure of hypothesis version space rule-learning
 algorithms in this simple example.

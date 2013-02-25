@@ -328,7 +328,7 @@ natural language in the SALS AI.
 
 %% \section{Distributed Hardware Support}
 
-\section{Self-Reflective and Self-Conscious Thinking}
+\section{Self-Reflective Thinking}
 
 The ``self-reflective'' and ``self-conscious'' layers are the top two
 layers of the Emotion Machine theory of human commonsense thinking
@@ -406,6 +406,24 @@ affordances \cite[]{stoytchev:2005}.  Also, learning these object
 types may lead to an object model that could naturally be extended for
 learning self-models and other-models.
 
+\section{Self-Conscious Thinking}
+
+The ``self-conscious'' layer is the top layer of the Emotion Machine
+theory of human commonsense thinking.  The self-conscious layer is a
+planning layer that controls the self-reflective layer below.
+Self-conscious thinking involves thinking about what one person is
+thinking about another person.  Self-conscious thinking objects
+involve relationships between self-models and other-models from the
+self-reflective layer.  The following are examples of self-conscious
+knowledge:
+\begin{packed_itemize}
+\item{Joe is imagining that Lauren is happy.}
+\item{Ralph is unaware that Suzy is grieving.}
+\item{Carol imagines that Ralph knows a plan to stack two blocks.}
+\item{Lauren knows that I failed to stack two blocks.}
+\end{packed_itemize}
+
+
 \section{Planning to Perceive}
 
 {\mbox{\autoref{section:meta_planning_and_meta_plan_recognition}}}
@@ -430,7 +448,33 @@ reasoning layers of reflective control.
 
 \section{Plan Recognition and Story Understanding}
 
-
+{\mbox{\autoref{section:meta_planning_and_meta_plan_recognition}}} has
+described the relationship between the planning implemented in the
+SALS AI and the related problems of plan recognition, meta-plan
+recognition, and story understanding.  To briefly review,
+\cite{wilensky:1981} describes story understanding as a form of
+inverse planning or plan recognition.  In this sense, a planning
+system is given a set of goals that are used to generate a sequence of
+actions that accomplish the goals, while a story understanding system
+is given a sequence of actions that are used to generate a set of
+goals that explain those actions.  Wilensky emphasizes that both story
+understanding and planning require representations of meta-goals and
+meta-plans in order to reason about common types of human thinking.
+Plan recognition could occur analogously in each layer of the SALS AI.
+Resource executions are the actions of each planning layer.  The plan
+recognition problem for the deliberative layer could be considered to
+be a problem that takes a collection of resource execution events and
+gives as output the goals that these actions could be hypothetically
+trying to accomplish.  One method for accomplishing this would be to
+compare the input traces to the imaginative traces from executing each
+plan for physical action, then, hypothesize the goals that the plans
+with matching traces are hypothesized to cause.  Currently, the SALS
+AI is directed more toward planning, so that plans for plan
+recognition can be reflected upon by the SALS AI.  The SALS AI is
+currently more of a planning system than a plan recognition system for
+one simple reason: methods for plan recognition can be written in the
+planning system so that they can be automatically learned about and
+debugged by the SALS AI.
 
 %% \section{from related models (EM-ONE)}
 

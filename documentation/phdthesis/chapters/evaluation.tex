@@ -462,9 +462,43 @@ layers are added to the SALS AI.
 37 1.72
 38 1.75
 39 1.74
+40 1.73
+41 1.62
+42 1.56
+43 1.55
+44 1.77
+45 1.69
+46 1.69
+47 1.64
+48 1.62
+49 1.54
+50 1.69
+51 1.58
+52 1.65
+53 1.57
+54 1.48
+55 1.57
+56 1.62
+57 1.48
+58 1.50
+59 1.51
+60 1.50
+61 1.55
+62 1.62
+63 1.51
+64 1.51
 \end{filecontents}
 
 \begin{filecontents}{parallel_processing_speedup_pthread.data}
+1  1
+2  1.90
+3  2.78
+4  3.47
+5  2.91
+6  3.39
+7  3.31
+8  3.17
+64 3.17
 \end{filecontents}
 
 The SALS virtual machine is built to take advantage of multiple
@@ -481,48 +515,74 @@ that simulates parallelism for a number of parallel processes, called
 ``fibers'' in order to distinguish them from the low-level operating
 system thread objects.  The SALS garbage collector is a concurrent
 implementation of a tricolor garbage collection algorithm.
-{\mbox{\autoref{table:parallel_processing_speedup}}} shows the speedup
-gained by executing multiple processes in parallel on the SALS virtual
-machine.
+{\mbox{\autoref{table:parallel_processing_speedup}}} compares the
+speedup gained by executing multiple processes in parallel on the SALS
+virtual machine to the optimal speedup that could be expected.  These
+tests were executed on a GNU/Linux system.
 \begin{table}
 \centering
-\begin{tikzpicture}[y=2cm, x=.15cm,font=\rmfamily]
-    \draw (0,0) -- coordinate (x axis mid) (64,0);
-    \foreach \y in {0,...,3}
-        \draw (0pt,\y) -- (-3pt,\y)
-        node[anchor=east] {\y};
-    \foreach \y in {2.20}
-        \draw (0pt,\y) -- (-3pt,\y)
-        node[anchor=east] {\y};
-    \draw (0,0) -- coordinate (y axis mid) (0,3);
-    \foreach \x in {0,16,...,64}
-        \draw (\x,0pt) -- (\x,-3pt)
-        node[anchor=north] {\x};
-    \foreach \x in {7}
-        \draw (\x,0pt) -- (\x,-3pt)
-        node[anchor=north] {\x};
-    \node[below=0.8cm] at (x axis mid) {Processes};
-    \node[left=0.8cm] at (y axis mid) {Speedup};
-    \draw[dashed] (0,2.20) -- (7,2.20);
-    \draw[dashed] (7,2.20) -- (7,0);
-    \draw plot[mark=*, mark size=1] file {parallel_processing_speedup.data};
+\begin{tikzpicture}
+\begin{axis}[%
+scale only axis,
+width=1.0\textwidth,
+height=0.4\textheight,
+xmin=0, xmax=64,
+ymin=0, ymax=4,
+legend entries={Optimal GNU/Linux,SALS Virtual Machine},
+legend style={nodes=right},
+legend pos= south east,
+grid = major,
+grid style={dashed, gray!30},
+/pgfplots/xtick={0,8,...,64}]
+        
+%\addplot [color=black, solid]
+\addplot[dashed] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_pthread.data};
+
+%\addplot [color=black, solid]
+\addplot plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup.data};
+
+\end{axis}
 \end{tikzpicture}
 \caption[The speedup gained by executing multiple processes
   concurrently in the SALS virtual machine.]{The speedup gained by
   executing multiple processes concurrently in the SALS virtual
-  machine.  Each parallel process in this experiment is performing the
-  same numerical processing task on memory that is independent of
-  other tasks.  The number of computations performed by a single
-  parallel process is used as the unity standard for the speedup
-  comparisons.  These tests were run on an Intel Core i7 processor
-  with 4 cores, each with 2 hardware hyperthreads.  In these tests, 8
-  virtual processors and 8 memory pools were allocated, one for each
-  hyperthread in the target hardware platform.  Each test was
-  performed 100 times in order to average out variations caused by
-  intermittent garbage collections.  The SALS virtual machine performs
-  most efficiently on this hardware with 7 parallel fibers executing.}
+  machine.  The solid line plot represents the speedup experienced by
+  the SALS AI as more ``fiber'' processes are executed in parallel.
+  The dashed line plot represents the optimal speedup that can be
+  expected on this specific hardware.  Each parallel process in this
+  experiment is performing the same numerical processing task on
+  memory that is independent of other tasks.  The number of
+  computations performed by a single parallel process is used as the
+  unity standard for the speedup comparisons.  These tests were run on
+  an Intel Core i7 processor with 4 cores, each with 2 hardware
+  hyperthreads.  In these tests, 8 virtual processors and 8 memory
+  pools were allocated, one for each hyperthread in the target
+  hardware platform.  Each test was performed 100 times in order to
+  average out variations caused by intermittent garbage collections.
+  The optimal speedup is calculated by a short C program that uses
+  POSIX thread primitives, optimized C arithmetic, and no memory
+  allocation or garbage collection.  The SALS AI has a small overhead
+  for each additional parallel process, which is seen by the downward
+  slope of the solid plot.  The SALS virtual machine performs most
+  efficiently on this hardware with 7 parallel fibers executing.
+  These tests were executed on a GNU/Linux system.}
 \label{table:parallel_processing_speedup}
 \end{table}
+Each parallel process in this experiment is performing the same
+numerical processing task on memory that is independent of other
+tasks.  The number of computations performed by a single parallel
+process is used as the unity standard for the speedup comparisons.
+These tests were run on an Intel Core i7 processor with 4 cores, each
+with 2 hardware hyperthreads.  In these tests, 8 virtual processors
+and 8 memory pools were allocated, one for each hyperthread in the
+target hardware platform.  Each test was performed 100 times in order
+to average out variations caused by intermittent garbage collections.
+The optimal speedup is calculated by a short C program that uses POSIX
+thread primitives, optimized C arithmetic, and no memory allocation or
+garbage collection.  The SALS AI has a small overhead for each
+additional parallel process, which is seen by the downward slope of
+the solid plot.
+
 All of the time-complexities that have been presented in this chapter
 do not incorporate any speedup that is gained by using concurrent or
 parallel hardware.  There are many aspects of the SALS AI that take

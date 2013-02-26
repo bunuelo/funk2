@@ -16,9 +16,9 @@ told as well as learning from experience.
 \centering
 \includegraphics[width=6cm]{gfx/learning_from_being_told_in_layers}
 \caption[Learning from ``being told'' and learning from ``experience''
-  both occur in each of SALS' planning layers.]{Learning from ``being
-  told'' and learning from ``experience'' both occur in each of SALS'
-  planning layers.  When a layer of the AI learns from being told, a
+  both occur in each SALS planning layer.]{Learning from ``being
+  told'' and learning from ``experience'' both occur in each SALS
+  planning layer.  When a layer of the AI learns from being told, a
   natural language plan is communicated to that layer from a source
   external to the AI, such as a human user.  When a layer of the AI
   learns from experience, two streams of trace events are received
@@ -377,8 +377,10 @@ an analogy for any natural language plans that use the ``if''
 expression:
 \begin{samepage}
 \begin{Verbatim}
-  [defplan 'if a cube is to my left, move left, otherwise move right'
-    :matches ['if [? condition], [? true-branch], otherwise [? false-branch]']
+  [defplan 'if a cube is to my left, move left,
+            otherwise move right'
+    :matches ['if [? condition], [? true-branch],
+               otherwise [? false-branch]']
      :frame [[condition    'a cube is to my left']
              [true-branch  'move left']
              [false-branch 'move right']]
@@ -424,7 +426,8 @@ generalize this natural language usage of the ``not'' expression:
     :matches ['[? subject] is not [? preposition]']
      :frame [[subject     'a cube']
              [preposition 'to my left']]
-      [not [plan-call [plan '[? subject] is [? preposition]']]]]
+      [not [plan-call [plan '[? subject] is
+                             [? preposition]']]]]
 \end{Verbatim}
 \end{samepage}
 This plan allows many negative expressions to analogously have a
@@ -668,9 +671,11 @@ plans that are created as analogies to other known plans:
     :matches ['a [? top-shape] is on a [? bottom-shape]']
      :frame [[top-shape    'pyramid']
              [bottom-shape 'cube']]
-      [exists [relationship block property shape [? top-shape]
+      [exists [relationship block property shape
+                              [? top-shape]
                             preposition on
-                            block property shape [? bottom-shape]]]]
+                            block property shape
+                              [? bottom-shape]]]]
 \end{Verbatim}
 \end{samepage}
 }
@@ -681,9 +686,11 @@ plans that are created as analogies to other known plans:
     :matches ['a [? top-color] is on a [? bottom-color]']
      :frame [[top-color    'pyramid']
              [bottom-color 'cube']]
-      [exists [relationship block property color [? top-color]
+      [exists [relationship block property color
+                              [? top-color]
                             preposition on
-                            block property color [? bottom-color]]]]
+                            block property color
+                              [? bottom-color]]]]
 \end{Verbatim}
 \end{samepage}
 }
@@ -701,9 +708,11 @@ already knows:
     :matches ['a [? top-color] is on a [? bottom-color]']
      :frame [[top-color    'red']
              [bottom-color 'blue']]
-      [exists [relationship block property color [? top-color]
+      [exists [relationship block property color
+                              [? top-color]
                             preposition on
-                            block property color [? bottom-color]]]]
+                            block property color
+                              [? bottom-color]]]]
 \end{Verbatim}
 \end{samepage}
 The SALS AI does not immediately know that ``red'' and ``blue'' are

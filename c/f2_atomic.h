@@ -1,8 +1,21 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
-// Author: Bo Morgan
+// Authors:
+//
+//   Tudor Golubenco (2008):
+//
+//     Original code for a gcc-specific replacement of asm/atomic.h in
+//     the linux kernal, which is no longer available in user-space.  Bo
+//     copied and adapted this code from this webpage:
+//     http://golubenco.org/blog/atomic-operations/
+// 
+//   Bo Morgan (2007-2013): Initial implementation.
+//
+// This program is distributed under the terms of the GNU General
+// Public License.  See the COPYING file that is distributed with this
+// file.
 // 
 // Permission to use, copy, modify and distribute this software and its
 // documentation is hereby granted, provided that both the copyright
@@ -22,16 +35,6 @@
 #ifndef F2__ATOMIC__H
 #define F2__ATOMIC__H
  
-// **********************************************************************
-// **                                                                  **
-// **  This code is a gcc-specific replacement for asm/atomic.h in the **
-// **  linux kernal, which is no longer available in user-space.  We   **
-// **  copied and adapted this code from this webpage:                 **
-// **                                                                  **
-// **    http://golubenco.org/blog/atomic-operations/                  **
-// **                                                                  **
-// **********************************************************************
-
 /**
  * Atomic type.
  */

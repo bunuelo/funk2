@@ -47,6 +47,7 @@ phdthesis.pdf: \
   chapters/related_implementations.tex \
   chapters/evaluation.tex \
   chapters/future.tex \
+  chapters/conclusion.tex \
   chapters/science.tex \
   chapters/education.tex \
   chapters/experiment_data.tex \

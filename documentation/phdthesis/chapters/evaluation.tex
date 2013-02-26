@@ -15,7 +15,12 @@ increases the computational complexity of the overall architecture.
 This chapter evaluates the Emotion Machine cognitive architecture
 contribution of this thesis by measuring the computational complexity
 introduced by adding additional reflective planning layers to the SALS
-deliberative planning process.
+deliberative planning process.  First, the perceptual inputs to each
+planning layer are described and evaluated.  Next, the time-complexity
+of the natural language plan interpretation at each reflective layer
+is evaluated.  Finally, the performance of the SALS virtual machine at
+efficiently executing parallel processes concurrently on multicore and
+hyperthreaded CPUs is evaluated.
 
 \section{Complexity of Perceptual Inputs to Each Planning Layer}
 
@@ -347,15 +352,18 @@ the deliberative and reflective layers, respectively.
 \emph{(C)} &Super-Reflective Plan & 18                    \\
 \hline
 \end{tabular}
-\caption[Time-complexities of interpreting natural language phrases
-  that specify goals for the deliberative and reflective
-  layers.]{Time-complexities of interpreting natural language phrases
-  that specify goals for the deliberative and reflective layers.  Note
-  that the time-complexity of interpreting these natural language
-  phrases that specify goals in the deliberative and reflective layers
-  have equal time-complexity.  This result implies a linear
-  time-complexity for specifying goals in each additional reflective
-  layer in the SALS AI.}
+\caption[Time-complexities of interpreting natural language plans that
+  specify goals in only the immediate layer below the
+  plan.]{Time-complexities of interpreting natural language plans that
+  specify goals in only the immediate layer below the plan.  Note that
+  the time-complexity of interpreting these natural language phrases
+  that specify goals in the deliberative and reflective layers have
+  equal time-complexity.  This result implies a linear increase in
+  time-complexity for each additional layer of plans that specify
+  goals in only the one layer immediately below the plans.  As
+  previously shown, plans that specify goals that indirectly reference
+  knowledge in layers multiple levels below the plan have a greater
+  than linear increase in time-complexity.}
 \label{table:time_complexity_of_interpreting_goals}
 \end{table}
 The time-complexity of interpreting these natural language phrases
@@ -490,15 +498,70 @@ layers are added to the SALS AI.
 \end{filecontents}
 
 \begin{filecontents}{parallel_processing_speedup_pthread.data}
-1  1
-2  1.90
-3  2.78
-4  3.47
-5  2.91
-6  3.39
-7  3.31
-8  3.17
-64 3.17
+1 1.00
+2 1.80
+3 2.52
+4 3.22
+5 2.85
+6 3.29
+7 3.31
+8 3.37
+9 3.29
+10 3.35
+11 3.35
+12 3.39
+13 3.40
+14 3.42
+15 3.42
+16 3.43
+17 3.41
+18 3.43
+19 3.43
+20 3.44
+21 3.44
+22 3.46
+23 3.45
+24 3.46
+25 3.44
+26 3.45
+27 3.45
+28 3.44
+29 3.45
+30 3.46
+31 3.46
+32 3.45
+33 3.44
+34 3.45
+35 3.45
+36 3.45
+37 3.45
+38 3.45
+39 3.45
+40 3.46
+41 3.46
+42 3.46
+43 3.46
+44 3.46
+45 3.46
+46 3.47
+47 3.47
+48 3.46
+49 3.47
+50 3.46
+51 3.46
+52 3.46
+53 3.46
+54 3.46
+55 3.46
+56 3.46
+57 3.46
+58 3.46
+59 3.46
+60 3.46
+61 3.47
+62 3.46
+63 3.46
+64 3.45
 \end{filecontents}
 
 The SALS virtual machine is built to take advantage of multiple
@@ -515,11 +578,11 @@ that simulates parallelism for a number of parallel processes, called
 ``fibers'' in order to distinguish them from the low-level operating
 system thread objects.  The SALS garbage collector is a concurrent
 implementation of a tricolor garbage collection algorithm.
-{\mbox{\autoref{table:parallel_processing_speedup}}} compares the
+{\mbox{\autoref{figure:parallel_processing_speedup}}} compares the
 speedup gained by executing multiple processes in parallel on the SALS
 virtual machine to the optimal speedup that could be expected.  These
 tests were executed on a GNU/Linux system.
-\begin{table}
+\begin{figure}
 \centering
 \begin{tikzpicture}
 \begin{axis}[%
@@ -528,6 +591,8 @@ width=1.0\textwidth,
 height=0.4\textheight,
 xmin=0, xmax=64,
 ymin=0, ymax=4,
+xlabel={Process Count},
+ylabel={Speedup Factor},
 legend entries={Optimal GNU/Linux,SALS Virtual Machine},
 legend style={nodes=right},
 legend pos= south east,
@@ -566,8 +631,8 @@ grid style={dashed, gray!30},
   slope of the solid plot.  The SALS virtual machine performs most
   efficiently on this hardware with 7 parallel fibers executing.
   These tests were executed on a GNU/Linux system.}
-\label{table:parallel_processing_speedup}
-\end{table}
+\label{figure:parallel_processing_speedup}
+\end{figure}
 Each parallel process in this experiment is performing the same
 numerical processing task on memory that is independent of other
 tasks.  The number of computations performed by a single parallel

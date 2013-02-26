@@ -28,8 +28,8 @@ used to infer hypothetical states, i.e. states of future, past, or
 otherwise ``hidden'' variables, {\mbox{(3)~actions}} are chosen based
 on considerations of hypothesis dependent inferences.  There are many
 approaches to machine learning that focus on this abstract 3-step
-closed-loop process of learning to control: reinforcement learning
-\cite[]{kaelbling:1996,dvzeroski:2001}, game theory
+closed-loop process of learning to control, such as: reinforcement
+learning \cite[]{kaelbling:1996,dvzeroski:2001}, game theory
 \cite[]{bowling:2000,rapoport:2001}, and control theory
 \cite[]{simon:1982, bertsekas:1995}.  The discipline of computational
 metacognition \cite[]{cox_and_raja:2008,cox:2010} focuses on making at
@@ -42,8 +42,8 @@ learns to control the deliberative thinking process.  While it may be
 clear how to trace the inputs to deliberative thinking, there is not a
 consensus in the literature on a tractable approach to modeling the
 inputs to reflective thinking.  In this thesis, I present a tractable
-approach to reflective thinking that scales to $N$ layers of
-reflective control.
+approach to reflective thinking that implies a scaling to $N$ layers
+of reflective control.
 
 \section{Contributions}
 
@@ -88,17 +88,20 @@ The four contributions of this thesis are:
   I refer to this form of learning the effects of actions in the
   problem domain as learning from ``experience.''  Many types of
   failures can occur when interpreting, imagining and actually
-  executing ambiguous natural language plans.  These experiences of
-  different types of failures inform reflective learning algorithms to
-  subsequently predict these types of plan failures.  Learning from
-  experience is executed concurrently and asynchronously with the
-  currently executing plan.  The learning algorithm receives a stream
-  of frame mutation trace events from the currently executing plan and
-  uses this stream to learn abstract causal rule-based models.  In
-  this way, effects of physical and mental actions are learned through
-  experience without slowing down the primary plan execution speed.
-  Such failures are input to the reflective layer, which can learn to
-  predict and avoid these failures in the future.
+  executing ambiguous natural language plans, such as: expectation
+  failures, interpretation failures, type failures, activation
+  failures, and a variety of low-level system failures.  These
+  experiences of different types of failures inform reflective
+  learning algorithms to subsequently predict these types of plan
+  failures.  Learning from experience is executed concurrently and
+  asynchronously with the currently executing plan.  The learning
+  algorithm receives a stream of frame mutation trace events from the
+  currently executing plan and uses this stream to learn abstract
+  causal rule-based models.  In this way, effects of physical and
+  mental actions are learned through experience without slowing down
+  the primary plan execution speed.  Such failures are input to the
+  reflective layer, which can learn to predict and avoid these
+  failures in the future.
 \item \emph{Virtual Machine and Programming Language}: A concurrent
   and parallel virtual machine and low-level Lisp-like programming
   language provide the foundation upon which all of the above

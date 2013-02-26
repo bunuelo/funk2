@@ -1,8 +1,15 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
-// Author: Bo Morgan
+// Authors:
+//
+//   Bo Morgan (2007-2013): Initial implementation.
+//   Panupong Pasupat (2010): Error correcting graph isomorphisms.
+// 
+// This program is distributed under the terms of the GNU General
+// Public License.  See the COPYING file that is distributed with this
+// file.
 // 
 // Permission to use, copy, modify and distribute this software and its
 // documentation is hereby granted, provided that both the copyright

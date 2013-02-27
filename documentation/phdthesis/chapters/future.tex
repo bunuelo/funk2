@@ -14,12 +14,12 @@ fleshed out in the future, while keeping the core tractable cognitive
 architecture for a many-layered reflective AI.  The following are four
 areas of research that would improve every layer in the SALS AI:
 \begin{packed_enumerate}
-\item{General partial state abstraction processes.  The ability to
-  abstract more complex types of partial states from a control domain
-  would allow the addition of ``Critics'' that recognize relatively
-  specific and intricate problematic partial states in the control
-  domain, as is done in the EM-ONE architecture \cite[]{singh:2005b},
-  the precedent for this work.}
+\item{General partial state abstraction.  The ability to abstract more
+  general partial states from a control domain would allow the
+  addition of ``Critics'' that recognize relatively specific and
+  intricate problematic partial states in the control domain, as is
+  done in the EM-ONE architecture \cite[]{singh:2005b}, the precedent
+  for this work.}
 \item{A propagation model of knowledge maintenance that traces
   knowledge provenance from refined hypotheses learned from experience
   to plan goal accomplishment and avoidance hypotheses
@@ -39,7 +39,7 @@ areas of research that would improve every layer in the SALS AI:
   language, such as those presented by \cite{winograd:1970}.
   Currently, the SALS natural programming language is limited to a
   simple functional grammar.}
-\item{Efficient usage of multicore, hyperthreaded, and
+\item{More efficient usage of multicore, hyperthreaded, and
   multiple-processor hardware platforms as well as completion of the
   distributed processing model that is partially implemented in the
   memory layer of the SALS virtual machine, which would allow
@@ -94,27 +94,27 @@ processes are executed:
   state currently exists in the knowledge base that it is trying to
   control.}
 \end{packed_enumerate}
-Asynchronous learning from procedural event streams requires that,
-when a planning layer receives a change event from the knowledge base
-in the layer below that it is trying to control, the planning layer
-integrates this change into a reconstructed copy of that knowledge
-base.  The reconstructed knowledge base represents the state of the
-knowledge base that the planning layer is trying to control at a point
-in the past.  The asynchronous abstraction process works on this
-reconstruction in order to determine whether or not the change has
-either created a new instance of a type of partial state or has
-removed a previously existing instance.  The asynchronous procedural
-event stream abstraction of partial state types works in order to
-learn causal hypotheses for the effects of resource executions in the
-layer below.  When a plan is currently executing in the planning
-layer, it is sometimes useful to determine whether or not a specific
-partial state currently exists in the knowledge base that the planning
-layer is trying to control.  The asynchronous partial state
-abstraction cannot be used for this type of real-time query because
-the asynchronous abstraction algorithm works on an historical copy of
-the knowledge in question.  Therefore, the direct real-time read
-abstraction of a specific partial state from the current state of the
-knowledge base is sometimes necessary for this purpose.
+Asynchronous learning from procedural event streams requires that when
+a planning layer receives a change event from the knowledge base in
+the layer below, the planning layer integrates this change into a
+reconstructed copy of that knowledge base.  The reconstructed
+knowledge base represents the state of the knowledge base that the
+planning layer is trying to control at a point in the past.  The
+asynchronous abstraction process works on this reconstruction in order
+to determine whether or not the change has either created a new
+instance of a type of partial state or has removed a previously
+existing instance.  The asynchronous procedural event stream
+abstraction of partial state types works in order to learn causal
+hypotheses for the effects of resource executions in the layer below.
+When a plan is currently executing in the planning layer, it is
+sometimes useful to determine whether or not a specific partial state
+currently exists in the knowledge base that the planning layer is
+trying to control.  The asynchronous partial state abstraction cannot
+be used for this type of real-time query because the asynchronous
+abstraction algorithm works on an historical copy of the knowledge in
+question.  Therefore, the direct real-time read abstraction of a
+specific partial state from the current state of the knowledge base is
+sometimes necessary for this purpose.
 
 In order to demonstrate the difference in time-complexity between
 these two methods of abstracting types of partial states, let us
@@ -159,15 +159,9 @@ graph of interest.
 shows an example of five minimum spanning trees, one for each edge of
 the arch example partial state.  Computing a minimum spanning tree for
 a connected graph has polynomial (FP) time-complexity.  Precomputing
-one minimum spanning tree for each edge in the partial state of
+one minimum spanning tree rooted at each edge in the partial state of
 interest reduces the general NP-complete graph isomorphism decision
-problem to finding a tree of edges beginning at a starting edge in a
-graph that is initially focused on the specific edge that has been
-added to or removed from the reconstructed knowledge based in the
-asynchronous learning algorithm in each layer of the SALS AI.  The
-constraints in this case are that some potentially matching trees must
-be ignored if their edges do not connect in the same way as in the
-partial state graph of interest.
+problem to a rooted tree matching problem.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/general_partial_state_arch_spanning_trees}
@@ -175,24 +169,29 @@ partial state graph of interest.
   example partial state.]{Five minimum spanning trees between the
   edges of the arch example partial state.  One minimum spanning tree
   is shown for each edge in the partial state of interest.
-  Precomputing one minimum spanning tree for each edge in the partial
-  state of interest reduces the general NP-complete graph isomorphism
-  decision problem to a tree matching problem that is focused on the
-  specific edge that has been added to or removed from the
-  reconstructed knowledge based in the asynchronous learning algorithm
-  in each layer of the SALS AI.}
+  Precomputing one minimum spanning tree rooted at each edge in the
+  partial state of interest reduces the general NP-complete graph
+  isomorphism decision problem to a rooted tree matching problem.}
 \label{figure:general_partial_state_arch_spanning_trees}
 \end{figure}
 
 While there may be a more efficient solution to the asynchronous
 abstraction of partial states in the SALS AI, the problem of real-time
-abstraction is still an NP-complete problem.  One solution to the
-NP-complete problem of real-time abstraction of partial states is to
-ignore it.  If the asynchronous abstraction of partial states can run
-quickly enough, perhaps by allocating a parallel processor and a
-separate reconstructed knowledge base to each type of partial state,
-the asynchronous algorithm could potentially show little enough
-latency to make it near enough to real-time to be practically useful.
+abstraction is still an NP-complete problem.  I do not see any easy
+solutions to this problem, but there are two ways that I see to avoid
+it.  One way to avoid the problem is to limit the real-time partial
+state abstraction to a predefined set of small graphs that only
+involve 5 to 10 nodes.  \cite{messmer:1995} describes an efficient
+algorithm for this type of query.  Note that this type of query would
+still allow the asynchronous learning of causal models from partial
+states with precomputed minimum spanning trees rooted at change
+events.  Another way to avoid the NP-complete problem of real-time
+abstraction of partial states is to ignore it.  If the asynchronous
+abstraction of partial states can run quickly enough, perhaps by
+allocating a parallel processor and a separate reconstructed knowledge
+base to each type of partial state, the asynchronous algorithm could
+potentially show little enough latency to make it near enough to
+real-time to be practically useful.
 
 \section{Propagation by Provenance of Hypothetical Knowledge}
 

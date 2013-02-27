@@ -21,7 +21,7 @@
  
  Bo Morgan requests users of this software to return to bo@mit.edu any
  improvements or extensions that they make and grant Bo Morgan the
- rights to redistribute these changes.']
+ rights to redistribute these changes.'
 
 [primfunk:ansi__stream__reset stdout]
 [primfunk:ansi__stream__foreground stdout 9]

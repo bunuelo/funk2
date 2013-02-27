@@ -1,7 +1,13 @@
 'Copyright (c) 2007-2013 Bo Morgan.
  All rights reserved.
  
- Author: Bo Morgan
+ Authors:
+ 
+   Bo Morgan (2007-2013): Initial implementation.
+ 
+ This program is distributed under the terms of the GNU General
+ Public License.  See the COPYING file that is distributed with this
+ file.
  
  Permission to use, copy, modify and distribute this software and its
  documentation is hereby granted, provided that both the copyright
@@ -125,7 +131,7 @@
 											    [let [[agent  event-semantic_frame]
 												  [target event-value]]
 											      [let [[resource_relationship [have [get [get this mind] semantic_realm] lookup_or_create_meta_relationship
-																   agent event-key_type event-key target]]]
+																 agent event-key_type event-key target]]]
 												[let [[relationship_event [get this resource_relationship_existence resource_relationship]]]
 												  [set relationship_event absolute_start_time [new semantic_time [get event time]]]
 												  [let [[action_sequence [if [get this action_sequence-exists agent]

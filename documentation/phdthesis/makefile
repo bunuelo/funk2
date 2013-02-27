@@ -23,7 +23,7 @@ phdthesis.pdf: \
   frontbackmatter/titlepage.tex \
   chapters/introduction.tex \
   chapters/emotion_machine_cognitive_architecture.tex \
-  chapters/learning_from_being_told_natural_language_plans.tex \
+  chapters/learning_from_being_told.tex \
   chapters/learning_asynchronously_from_experience.tex \
   chapters/modelling_the_continuously_dynamic.tex \
   chapters/learning_causal_hypotheses.tex \

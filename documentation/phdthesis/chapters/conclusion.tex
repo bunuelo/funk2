@@ -7,27 +7,29 @@ Building a model of general human intelligence is a massive
 engineering effort that includes the shared expertise between all of
 the disciplines of cognitive science, including: philosophy,
 artificial intelligence, psychology, linguistics, anthropology, and
-neuroscience.  While this dissertation is focused on building an
-artificial intelligence that models novel forms of metacognition that
-occur at higher layers of reflective intelligence than have before
-been modeled, I hope that the future of the SALS architecture enjoys
-contributions from all of the diverse sub-disciplines of cognitive
-science.  The SALS AI is meant to be a user-friendly platform for
-encoding many specific types of intelligences from each of these
-domains that are usually researched separately.  The current strengths
-and weaknesses of the SALS AI have been discussed throughout this
-dissertation, but in this case, I hope that the following features of
-the SALS architecture help toward this collaborative end:
+neuroscience.  While this dissertation is focused on building an AI
+that scales to novel forms of metacognition that occur at higher
+layers of reflective intelligence than have before been modeled, I
+hope that the future of the SALS architecture enjoys contributions
+from all of the diverse sub-disciplines of cognitive science.  The
+SALS AI is meant to be a user-friendly platform for encoding many
+examples of intelligence from each of these disciplines that are
+usually researched separately.  While the current strengths and
+weaknesses of the SALS AI have been discussed throughout this
+dissertation, I hope that the following features of the SALS
+architecture help toward this collaborative end:
 \begin{packed_enumerate}
-\item{Simple Syntax}
-\item{Object-Oriented Frame-Based Representation}
+\item{Simple Syntax.}
+\item{Natural Language Programming Interface.}
+\item{Object-Oriented Frame-Based Representations.}
 \item{Cognitive Architectural Primitives, such as Resources, Agencies,
-  and Layers.}
-\item{Reflectively Traced Semantic Knowledge Bases}
-\item{Causal Organization of Parallel and Concurrent Processes}
-\item{Extension Package Manager}
-\item{On-Line Documentation and Open-Source Community
-  \cite[]{morgan:2012}}
+  Planning Layers, and Reflectively Traced Knowledge Bases.}
+\item{Causal Organization of Parallel Processes.}
+\item{Concurrent Virtual Machine.}
+\item{Included Machine Learning and Graph Algorithms.}
+\item{Extension Package Manager.}
+\item{On-Line Documentation \cite[]{morgan:2012}.}
+\item{Open-Source Community.}
 \end{packed_enumerate}
 Given that the current five-layered version of the SALS AI is designed
 to take advantage of multicore processors with local cache, as
@@ -37,15 +39,51 @@ local to computations, the SALS virtual machine is well placed to
 benefit from this coming wave of distributed multithreaded hardware
 platforms.  This dissertation has described the four contributions of
 this thesis:
+\begin{samepage}
 \begin{packed_enumerate}
-\item \emph{Emotion Machine Cognitive Architecture}
-\item \emph{Learning from Being Told Natural Language Plans}
-\item \emph{Learning Asynchronously from Experience}
-\item \emph{Virtual Machine and Programming Language}
+\item Emotion Machine Cognitive Architecture ({\mbox{\autoref{chapter:emotion_machine_cognitive_architecture}}})
+\item Learning from Being Told Natural Language Plans ({\mbox{\autoref{chapter:learning_from_being_told}}})
+\item Learning Asynchronously from Experience ({\mbox{\autoref{chapter:learning_asynchronously_from_experience}}})
+\item Virtual Machine and Programming Language ({\mbox{\autoref{chapter:virtual_machine_and_programming_language}}})
 \end{packed_enumerate}
-The SALS AI has been evaluated to scale at a tractable linear increase
-in time-complexity for each additional layer, which implies an $N$
-layered metacognitive architecture that allows not only reasoning
-about a problem domain but also any number of reflective layers of
-planning and learning about the thinking processes themselves.
+\end{samepage}
+{\mbox{\autoref{chapter:related_models}}} has compared the SALS AI to
+a number of related contemporary research disciplines, including:
+computational metacognition, meta-planning and meta-plan recognition,
+optimality in metacognition, and massively multithreaded programming.
+{\mbox{\autoref{chapter:evaluation}}} evaluates the SALS AI by showing
+the reflective architecture to scale at a tractable linear increase in
+time-complexity for each additional layer, which implies an $N$
+layered metacognitive architecture that allows not only planning and
+learning about a problem domain but also any number of reflective
+layers of planning and learning about the thinking processes
+themselves.  A number of promising directions for future research with
+the SALS AI have been described in {\mbox{\autoref{chapter:future}}}:
+\begin{packed_enumerate}
+\item{Self-reflective and self-consciously reflective thinking, the
+  top two layers of the Emotion Machine theory of human commonsense
+  thinking \cite[]{minsky:2006}, including self-models and social
+  knowledge.}
+\item{Extending reflective planning layers downward into the domain of
+  plans-to-perceive \cite[]{pryor:1992,pryorcollins:1995,velez:2011},
+  so that the SALS AI can learn plans for abstracting spatial
+  relations between symbolic perceptions, such as the visual routines
+  first implemented by \cite{ullman:1984}.}
+\item{Plan and meta-plan recognition as a way to include current
+  research on reflective story understanding architectures.}
+\item{General partial state abstraction processes.}
+\item{A propagation model of knowledge maintenance that traces
+  knowledge provenance from refined hypotheses learned from experience
+  to plan goal accomplishment and avoidance hypotheses.}
+\item{General grammar definitions for the natural language programming
+  language.}
+\item{More efficient usage of multicore, hyperthreaded, and
+  multiple-processor hardware platforms as well as completion of the
+  distributed processing model that is partially implemented in the
+  memory layer of the SALS virtual machine, which would allow
+  peer-to-peer distributed processor support.}
+\end{packed_enumerate}
+For more information about downloading and getting started
+experimenting with the freely distributed open source implementation
+of the SALS AI, please see {\mbox{\autoref{appendix:the_code}}}.
 

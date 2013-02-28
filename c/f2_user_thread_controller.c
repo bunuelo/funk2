@@ -683,7 +683,7 @@ void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t
 
 
 s64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_controller_t* this, s64 processor_index) {
-  return -1;
+  return this->total_nanoseconds_spent_waiting[processor_index];
 }
 
 u64 raw__user_thread_controller__total_processor_time_used(f2ptr cause, s64 processor_index) {

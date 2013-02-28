@@ -282,6 +282,7 @@
 						     'test/gtk-test/'
 						     'test/interval_tree-test/'
 						     'test/optimize-test/'
+						     'test/parallel_processing-test/'
 						     'test/propogator-test/'
 						     'test/keyboard-test/'
 						     'test/timeline-test/'

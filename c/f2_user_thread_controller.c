@@ -682,12 +682,23 @@ void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t
 }
 
 
-u64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_controller_t* this) {
-  return 0;
+s64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_controller_t* this, s64 processor_index) {
+  return -1;
 }
 
-f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause) {
-  return f2integer__new(cause, funk2_user_thread_controller__total_processor_time_used(&(__funk2.user_thread_controller)));
+u64 raw__user_thread_controller__total_processor_time_used(f2ptr cause, s64 processor_index) {
+  return funk2_user_thread_controller__total_processor_time_used(&(__funk2.user_thread_controller));
+}
+
+f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause, f2ptr processor_index) {
+  assert_argument_type(integer, processor_index);
+  s64 processor_index__i = f2integer__i(processor_index, cause);
+  if ((processor_index__i < 0) || (processor_index__i >= memory_pool_num)) {
+    return new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "user_thread_controller-total_processor_time_used-processor_index_out_of_range"),
+				   new__symbol(cause, "processor_index"), processor_index));
+  }
+  return f2integer__new(cause, raw__user_thread_controller__total_processor_time_used(cause, processor_index__i));
 }
 def_pcfunk0(user_thread_controller__total_processor_time_used,
 	    "",

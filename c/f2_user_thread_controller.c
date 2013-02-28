@@ -519,9 +519,16 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   pthread_cond_init(&(this->waiting_count_cond), NULL);
   this->waiting_count = 0;
   
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      this->total_nanoseconds_spent_waiting[pool_index] = 0;
+    }
+  }
+  
   pthread_mutex_init(&(this->something_to_do_while_waiting_politely_mutex), NULL);
   pthread_cond_init(&(this->something_to_do_while_waiting_politely_cond), NULL);
-
+  
   funk2_user_thread_controller__touch_all_protected_alloc_arrays__init(&(this->touch_all_protected_alloc_arrays));
   funk2_user_thread_controller__blacken_grey_nodes__init(&(this->blacken_grey_nodes));
   funk2_user_thread_controller__grey_from_other_nodes__init(&(this->grey_from_other_nodes));
@@ -568,6 +575,8 @@ void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_
 }
 
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
+  u64 pool_index                           = this_processor_thread__pool_index();
+  u64 start_waiting_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   funk2_user_thread_controller__signal_user_waiting_politely(this);
   
   {
@@ -612,6 +621,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   this->waiting_count --;
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));
+  this->total_nanoseconds_spent_waiting[pool_index] += (raw__nanoseconds_since_1970() - start_waiting_nanoseconds_since_1970);
 }
 
 void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this) {

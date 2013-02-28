@@ -182,6 +182,7 @@ typedef struct funk2_user_thread_controller_s {
   pthread_mutex_t                                                  waiting_count_mutex;
   pthread_cond_t                                                   waiting_count_cond;
   s64                                                              waiting_count;
+  u64                                                              total_nanoseconds_spent_waiting[memory_pool_num];
   funk2_user_thread_controller__touch_all_protected_alloc_arrays_t touch_all_protected_alloc_arrays;
   funk2_user_thread_controller__blacken_grey_nodes_t               blacken_grey_nodes;
   funk2_user_thread_controller__grey_from_other_nodes_t            grey_from_other_nodes;

@@ -809,16 +809,6 @@
 			
 			`['planner']
 			
-			`[defplan 'find recent plan to avoid my negative goals'
-			   [if [plan-call [plan 'I am avoiding a deliberative planner being focused on a plan that has failed']]
-			       [plan-call [plan 'find recent plan to not cause a deliberative planner to be focusing on a plan that has failed']]
-			     [fail]]]
-			
-			`[defplan 'find old plan to avoid my negative goals'
-			   [if [plan-call [plan 'I am avoiding a deliberative planner being focused on a plan that has failed']]
-			       [plan-call [plan 'find old plan to cause a deliberative planner to be focusing on a plan that has failed']]
-			     [fail]]]
-			
 			[prog @shared_planning_plans]
 			
 			`['tests']
@@ -837,8 +827,8 @@
 			[defplan 'test I am avoiding a deliberative planner being focused on a plan that has failed'
 			  [plan-call [plan 'I am avoiding a deliberative planner being focused on a plan that has failed']]]
 			
-			[defplan 'test find recent plan to avoid my negative goals'
-			  [plan-call [plan 'find recent plan to avoid my negative goals']]]
+			[defplan 'test find recent plan to avoid all of my negative goals'
+			  [plan-call [plan 'find recent plan to avoid all of my negative goals']]]
 			
 			[defplan 'test find old plan to to avoid my negative goals'
 			  [plan-call [plan 'find old plan to avoid my negative goals']]]
@@ -848,7 +838,7 @@
 			
 			[defplan 'test go with recent plan away from a deliberative planner being focused on a plan that has failed'
 			  [plan-call [plan 'avoid a deliberative planner being focused on a plan that has failed']]
-			  [plan-call [plan 'find recent plan to avoid my negative goals']]
+			  [plan-call [plan 'find recent plan to avoid all of my negative goals']]
 			  [call-below 'execute plan in focus']]
 			
 			[defplan 'test go with old plan away from a deliberative planner being focused on a plan that has failed'

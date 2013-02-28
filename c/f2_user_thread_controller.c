@@ -687,7 +687,7 @@ s64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_co
 }
 
 u64 raw__user_thread_controller__total_processor_time_used(f2ptr cause, s64 processor_index) {
-  return funk2_user_thread_controller__total_processor_time_used(&(__funk2.user_thread_controller));
+  return funk2_user_thread_controller__total_processor_time_used(&(__funk2.user_thread_controller), processor_index);
 }
 
 f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause, f2ptr processor_index) {

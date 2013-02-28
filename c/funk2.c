@@ -115,6 +115,7 @@ void f2__initialize() {
   f2__management_thread__initialize();
   f2__simple_repl__initialize();
   f2__garbage_collector__initialize();
+  f2__user_thread_controller__initialize();
   f2__defragmenter__initialize();
   f2__frame_objects__initialize();
   f2__primobject_hash__initialize();

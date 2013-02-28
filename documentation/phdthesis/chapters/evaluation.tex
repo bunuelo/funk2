@@ -436,7 +436,74 @@ layers are added to the SALS AI.
 
 \section{Efficiency of Concurrent Execution}
 
-\begin{filecontents}{parallel_processing_speedup.data}
+\begin{filecontents}{parallel_processing_speedup_amd64_8_core_pthread.data}
+1 1.00
+2 2.00
+3 3.00
+4 4.00
+5 4.99
+6 5.97
+7 6.94
+8 7.90
+9 6.81
+10 7.15
+11 7.35
+12 7.47
+13 7.44
+14 7.61
+15 7.69
+16 7.75
+17 7.56
+18 7.71
+19 7.80
+20 7.85
+21 7.79
+22 7.84
+23 7.89
+24 7.94
+25 7.82
+26 7.86
+27 7.87
+28 7.89
+29 7.90
+30 7.93
+31 7.95
+32 7.95
+33 7.86
+34 7.91
+35 7.94
+36 7.94
+37 7.95
+38 7.94
+39 7.96
+40 7.93
+41 7.92
+42 7.94
+43 7.96
+44 7.96
+45 7.97
+46 7.97
+47 7.97
+48 7.96
+49 7.94
+50 7.96
+51 7.97
+52 7.97
+53 7.97
+54 7.97
+55 7.97
+56 7.97
+57 7.97
+58 7.97
+59 7.97
+60 7.98
+61 7.97
+62 7.98
+63 7.98
+64 7.98
+\end{filecontents}
+
+\begin{filecontents}{parallel_processing_speedup_intel_4_core.data}
 1  1.00
 2  1.52
 3  1.72
@@ -503,7 +570,7 @@ layers are added to the SALS AI.
 64 1.51
 \end{filecontents}
 
-\begin{filecontents}{parallel_processing_speedup_pthread.data}
+\begin{filecontents}{parallel_processing_speedup_intel_4_core_pthread.data}
 1 1.00
 2 1.80
 3 2.52
@@ -607,10 +674,10 @@ grid style={dashed, gray!30},
 /pgfplots/xtick={0,8,...,64}]
         
 %\addplot [color=black, solid]
-\addplot[dashed] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_pthread.data};
+\addplot[dashed] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_intel_4_core_pthread.data};
 
 %\addplot [color=black, solid]
-\addplot plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup.data};
+\addplot plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_intel_4_core.data};
 
 \end{axis}
 \end{tikzpicture}
@@ -638,6 +705,33 @@ grid style={dashed, gray!30},
   efficiently on this hardware with 7 parallel fibers executing.
   These tests were executed on a GNU/Linux system.}
 \label{figure:parallel_processing_speedup}
+\end{figure}
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\begin{axis}[%
+scale only axis,
+width=1.0\textwidth,
+height=0.4\textheight,
+xmin=0, xmax=64,
+ymin=0, ymax=10,
+xlabel={Process Count},
+ylabel={Speedup Factor},
+legend entries={Optimal GNU/Linux,SALS Virtual Machine},
+legend style={nodes=right},
+legend pos= south east,
+grid = major,
+grid style={dashed, gray!30},
+/pgfplots/xtick={0,8,...,64}]
+        
+%\addplot [color=black, solid]
+\addplot[dashed] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_amd64_8_core_pthread.data};
+
+\end{axis}
+\end{tikzpicture}
+\caption{Parallel processing speedup on Dual AMD64 CPUs with 4 cores
+  each.}
+\label{figure:parallel_processing_speedup_amd64_8_core}
 \end{figure}
 Each parallel process in this experiment is performing the same
 numerical processing task on memory that is independent of other

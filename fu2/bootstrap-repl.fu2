@@ -112,6 +112,7 @@
 [primfunk:load 'fu2/primfunks-termios.fu2']
 [primfunk:load 'fu2/primfunks-time.fu2']
 [primfunk:load 'fu2/primfunks-trace.fu2']
+[primfunk:load 'fu2/primfunks-user_thread_controller.fu2']
 [primfunk:load 'fu2/primfunks-virtual_processor_handler.fu2']
 [primfunk:load 'fu2/primfunks-zlib.fu2']
 

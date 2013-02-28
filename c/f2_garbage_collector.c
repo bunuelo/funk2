@@ -167,6 +167,7 @@ void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   funk2_processor_mutex__unlock(&(this->total_garbage_collection_count__mutex));
 }
 
+
 u64 funk2_garbage_collector__total_garbage_collection_count(funk2_garbage_collector_t* this) {
   u64 total_count = 0;
   funk2_processor_mutex__lock(&(this->total_garbage_collection_count__mutex));
@@ -182,6 +183,7 @@ def_pcfunk0(garbage_collector__total_garbage_collection_count,
 	    "Returns to total number of times that the garbage collector has collected garbage.",
 	    return f2__garbage_collector__total_garbage_collection_count(this_cause));
 
+
 void funk2_garbage_collector__user_signal_garbage_collect_now(funk2_garbage_collector_t* this) {
   this->user_signal_garbage_collect_now = boolean__true;
 }
@@ -193,6 +195,7 @@ f2ptr f2__garbage_collector__user_signal_garbage_collect_now(f2ptr cause) {
 def_pcfunk0(garbage_collector__user_signal_garbage_collect_now,
 	    "Tells the garbage collector to collect garbage as soon as possible.",
 	    return f2__garbage_collector__user_signal_garbage_collect_now(this_cause));
+
 
 // memory handling thread should never call this function
 void funk2_garbage_collector__signal_enter_protected_region(funk2_garbage_collector_t* this, char* source_filename, int source_line_num) {

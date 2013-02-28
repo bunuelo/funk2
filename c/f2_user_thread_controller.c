@@ -681,3 +681,37 @@ void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t
   }
 }
 
+
+u64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_controller_t* this) {
+  return 0;
+}
+
+f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause) {
+  return f2integer__new(cause, funk2_user_thread_controller__total_processor_time_used(&(__funk2.user_thread_controller)));
+}
+def_pcfunk0(user_thread_controller__total_processor_time_used,
+	    "",
+	    return f2__user_thread_controller__total_processor_time_used(this_cause));
+
+
+// **
+
+void f2__user_thread_controller__defragment__fix_pointers() {
+  // -- reinitialize --
+  
+  
+  // -- initialize --
+  
+  f2__primcfunk__init__defragment__fix_pointers(user_thread_controller__total_processor_time_used);
+}
+
+void f2__user_thread_controller__reinitialize_globalvars() {
+  f2__primcfunk__init__0(user_thread_controller__total_processor_time_used);
+}
+
+void f2__user_thread_controller__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "user_thread_controller", "", &f2__user_thread_controller__reinitialize_globalvars, &f2__user_thread_controller__defragment__fix_pointers);
+  
+  f2__user_thread_controller__reinitialize_globalvars();
+}
+

@@ -221,5 +221,11 @@ void  funk2_user_thread_controller__need_wait__set                              
     }								\
   }
 
+// **
+
+void f2__user_thread_controller__defragment__fix_pointers();
+void f2__user_thread_controller__reinitialize_globalvars();
+void f2__user_thread_controller__initialize();
+
 #endif // F2__USER_THREAD_CONTROLLER__H
 

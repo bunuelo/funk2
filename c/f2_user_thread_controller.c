@@ -700,9 +700,9 @@ f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause, f2ptr p
   }
   return f2integer__new(cause, raw__user_thread_controller__total_processor_time_used(cause, processor_index__i));
 }
-def_pcfunk0(user_thread_controller__total_processor_time_used,
+def_pcfunk1(user_thread_controller__total_processor_time_used, processor_index,
 	    "",
-	    return f2__user_thread_controller__total_processor_time_used(this_cause));
+	    return f2__user_thread_controller__total_processor_time_used(this_cause, processor_index));
 
 
 // **

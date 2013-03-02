@@ -172,6 +172,7 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
       raw__symbol__is_type( cause, expression)) {
     return boolean__true;
   }
+  return boolean__false;
 }
 
 

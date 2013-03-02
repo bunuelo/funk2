@@ -110,9 +110,17 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
 	iter = f2cons__cdr(iter, cause);
       }
     }
+    f2ptr fiber                                = assert_value(f2__this__fiber(cause));
+    f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
+    f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, body_expressions));
+    f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "let"), variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
+    f2ptr primmetro_new_funk = f2list3__new(cause,
+					    new__symbol(cause, "funk-new_copy_in_environment"),
+					    compiled_funk,
+					    environment);
     return f2list3__new(cause,
 			new__symbol(cause, "funk-apply"),
-			raw__primmetro__funk__new_with_name(cause, new__symbol(cause, "let"), variables, body_expressions),
+			primmetro_new_funk,
 			f2cons__new(cause,
 				    new__symbol(cause, "immutable_conslist"),
 				    definitions));

@@ -56,7 +56,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   this->free_memory_heap__load_buffer__length = 0;
   this->free_memory_heap__load_buffer         = NULL;
   
-  funk2_hash__init(&(this->temporary_bytes_freed_count_fiber_hash), 10);
+  funk2_hash__init(&(this->temporary_bytes_freed_count_fiber_hash), 16);
   
   funk2_memorypool__debug_memory_test(this, 1);
 }

@@ -115,7 +115,7 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
     f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
     f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "let"), variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
     return f2list3__new(cause,
-			new__symbol(cause, "funk-apply"),
+			new__symbol(cause, "funk-local_apply"),
 			compiled_funk,
 			f2cons__new(cause,
 				    new__symbol(cause, "immutable_conslist"),

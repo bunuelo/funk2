@@ -47,6 +47,20 @@ def_pcfunk1(cfunk__as__metrocfunk, this,
 	    return f2__cfunk__as__metrocfunk(this_cause, this));
 
 
+boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
+  if (raw__integer__is_type(cause, expression) ||
+      raw__double__is_type( cause, expression) ||
+      raw__float__is_type(  cause, expression) ||
+      raw__pointer__is_type(cause, expression) ||
+      raw__char__is_type(   cause, expression) ||
+      raw__string__is_type( cause, expression) ||
+      raw__symbol__is_type( cause, expression)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
+
 
 
 /*
@@ -180,20 +194,6 @@ f2ptr f2__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_exp
 def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
 		     "",
 		     return f2__primmetro__let(this_cause, variable_definitions, body_expressions));
-
-
-boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
-  if (raw__integer__is_type(cause, expression) ||
-      raw__double__is_type( cause, expression) ||
-      raw__float__is_type(  cause, expression) ||
-      raw__pointer__is_type(cause, expression) ||
-      raw__char__is_type(   cause, expression) ||
-      raw__string__is_type( cause, expression) ||
-      raw__symbol__is_type( cause, expression)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
 
 
 /*  

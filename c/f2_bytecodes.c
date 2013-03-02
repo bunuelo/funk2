@@ -574,6 +574,8 @@ int f2__fiber__bytecode__funk_env__no_increment_pc_reg(f2ptr cause, f2ptr fiber,
     f2fiber__env__set(fiber, cause, fiber__env);
   } else if (raw__cfunk__is_type(cause, fiber__value)) {
     // do nothing.
+  } else if (raw__core_extension_funk__is_type(cause, fiber__value)) {
+    // do nothing.
   } else if (raw__metrocfunk__is_type(cause, fiber__value)) {
     // do nothing.
   } else if (raw__metro__is_type(cause, fiber__value)) {

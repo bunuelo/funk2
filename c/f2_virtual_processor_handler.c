@@ -264,10 +264,13 @@ funk2_virtual_processor_t* funk2_virtual_processor_handler__try_get_my_virtual_p
 }
 
 funk2_virtual_processor_t* funk2_virtual_processor_handler__my_virtual_processor(funk2_virtual_processor_handler_t* this) {
-  funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__try_get_my_virtual_processor(this);
-  if (my_virtual_processor == NULL) {
+  s64 virtual_processor_assignment_index = funk2_virtual_processor_handler__try_get_my_virtual_processor_index(this);
+#if defined(DEBUG)
+  if (virtual_processor_assignment_index == -1) {
     error(nil, "funk2_virtual_processor_handler__my_virtual_processor fatal error: could not get my virtual processor.");
   }
+#endif // defined(DEBUG)
+  funk2_virtual_processor_t* my_virtual_processor = this->virtual_processor[virtual_processor_assignment_index];
   return my_virtual_processor;
 }
 

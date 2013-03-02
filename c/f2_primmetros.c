@@ -290,10 +290,11 @@ f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr rep
     }
   }
   if (raw__cons__is_type(cause, expression)) {
-    f2ptr new_expression = nil;
+    f2ptr command        = f2cons__car(expression, cause);
+    f2ptr new_expression = f2cons__new(cause, command, nil);
     {
-      f2ptr iter = f2cons__cdr(expression, cause);
-      f2ptr new_expression_iter = nil;
+      f2ptr iter                = f2cons__cdr(expression, cause);
+      f2ptr new_expression_iter = new_expression;
       while (iter != nil) {
 	f2ptr subexpression = f2cons__car(iter, cause);
 	{

@@ -1806,7 +1806,7 @@ f2ptr raw__expression__replace_variable__define_funk(f2ptr cause, f2ptr fiber, f
   f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
   f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
   f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
-  return f2list3__new(cause, new__symbol(cause, "define-funk"), variable_name, new_value_expression);
+  return f2list3__new(cause, __funk2.globalenv.define_funk__symbol, variable_name, new_value_expression);
 }
 
 f2ptr raw__expression__replace_variable__define(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
@@ -1818,7 +1818,64 @@ f2ptr raw__expression__replace_variable__define(f2ptr cause, f2ptr fiber, f2ptr 
   f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
   f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
   f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
-  return f2list3__new(cause, new__symbol(cause, "define"), variable_name, new_value_expression);
+  return f2list3__new(cause, __funk2.globalenv.define__symbol, variable_name, new_value_expression);
+}
+
+f2ptr raw__expression__replace_variable__mutatefunk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
+  f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
+  return f2list3__new(cause, __funk2.globalenv.mutatefunk__symbol, variable_name, new_value_expression);
+}
+
+f2ptr raw__expression__replace_variable__mutate(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  if (raw__eq(cause, variable_name, replace_variable)) {
+    return f2larva__new(cause, 555, nil);
+  }
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
+  f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
+  return f2list3__new(cause, __funk2.globalenv.mutate__symbol, variable_name, new_value_expression);
+}
+
+f2ptr raw__expression__replace_variable__globalize(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
+  f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
+  return f2list3__new(cause, __funk2.globalenv.globalize__symbol, variable_name, new_value_expression);
+}
+
+f2ptr raw__expression__replace_variable__globalize_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
+  f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));
+  return f2list3__new(cause, __funk2.globalenv.globalize_funk__symbol, variable_name, new_value_expression);
+}
+
+f2ptr raw__expression__replace_variable__increment(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  if (raw__eq(cause, variable_name, replace_variable)) {
+    return f2larva__new(cause, 555, nil);
+  }
+  return f2list2__new(cause, __funk2.globalenv.increment__symbol, variable_name);
+}
+
+f2ptr raw__expression__replace_variable__decrement(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr variable_name        = f2cons__car(cdr, cause);
+  if (raw__eq(cause, variable_name, replace_variable)) {
+    return f2larva__new(cause, 555, nil);
+  }
+  return f2list2__new(cause, __funk2.globalenv.decrement__symbol, variable_name);
 }
 
 f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr replace_variable, f2ptr replace_argument) {
@@ -1834,12 +1891,12 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return exp;}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return assert_value(raw__expression__replace_variable__define_funk(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return assert_value(raw__expression__replace_variable__define(cause, fiber, env, exp, replace_variable, replace_argument));}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return exp;} // should handle special case
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return exp;} // potential problematic variable mutate
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return exp;} // should handle special case
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return assert_value(raw__expression__replace_variable__mutatefunk(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return assert_value(raw__expression__replace_variable__mutate(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return assert_value(raw__expression__replace_variable__globalize(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return assert_value(raw__expression__replace_variable__globalize_funk(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                       {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return exp;} // should handle special case?
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return exp;} // should handle special case
   if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return exp;} // should handle special case?
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
@@ -1852,8 +1909,8 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return exp;} // potential problematic variable mutate
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return exp;} // potential problematic variable mutate
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return assert_value(raw__expression__replace_variable__increment(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return assert_value(raw__expression__replace_variable__decrement(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}

@@ -399,7 +399,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       f2fiber__value__set(fiber, cause, body_bcs);
       return 1;
     }
-    f2fiber__env__set(            fiber, cause, funk_env);
+    //f2fiber__env__set(            fiber, cause, funk_env);
     f2fiber__program_counter__set(fiber, cause, body_bcs);
     if (machine_code) {
       return f2chunk__bytecode_jump(machine_code, cause, fiber);

@@ -472,12 +472,15 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   s64    maximum_block__byte_num__i                    = f2integer__i(maximum_block__byte_num, cause);
   double this__fragmentation__d                        = 1.0 - ((this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i)));
   f2ptr  this__fragmentation                           = f2double__new(cause, this__fragmentation__d);
-  double this__total_garbage_collection_nanoseconds__i = raw__user_thread_controller__total_processor_time_used(cause, this__index__i);
+  u64    this__total_nanoseconds__i                    = raw__nanoseconds_since_1970();
+  f2ptr  this__total_nanoseconds                       = f2integer__new(cause, this__total_nanoseconds__i);
+  u64    this__total_garbage_collection_nanoseconds__i = raw__user_thread_controller__total_processor_time_used(cause, this__index__i);
   f2ptr  this__total_garbage_collection_nanoseconds    = f2integer__new(cause, this__total_garbage_collection_nanoseconds__i);
   
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"),                    this__total_used_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"),                    this__total_free_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "fragmentation"),                        this__fragmentation);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "total_nanoseconds"),                    this__total_nanoseconds);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_garbage_collection_nanoseconds"), this__total_garbage_collection_nanoseconds);
   return nil;
 }

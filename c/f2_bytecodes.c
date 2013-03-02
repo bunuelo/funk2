@@ -168,6 +168,7 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("bytecode execution counts follow:");
   status("  bytecode__block_eval_args_next__execution_count       = " u64__fstr, this->bytecode__block_eval_args_next__execution_count);
   status("  bytecode__lookup__execution_count                     = " u64__fstr, this->bytecode__lookup__execution_count);
+  status("  bytecode__funk_env__execution_count                   = " u64__fstr, this->bytecode__funk_env__execution_count);
   status("  bytecode__block_pop__execution_count                  = " u64__fstr, this->bytecode__block_pop__execution_count);
   status("  bytecode__copy__execution_count                       = " u64__fstr, this->bytecode__copy__execution_count);
   status("  bytecode__funk__execution_count                       = " u64__fstr, this->bytecode__funk__execution_count);
@@ -201,7 +202,6 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__less_than__execution_count                  = " u64__fstr, this->bytecode__less_than__execution_count);
   status("  bytecode__not__execution_count                        = " u64__fstr, this->bytecode__not__execution_count);
   // zero counts
-  status("  bytecode__funk_env__execution_count                   = " u64__fstr, this->bytecode__funk_env__execution_count);
   status("  bytecode__globalize_type_var__execution_count         = " u64__fstr, this->bytecode__globalize_type_var__execution_count);
   status("  bytecode__push_constant__execution_count              = " u64__fstr, this->bytecode__push_constant__execution_count);
   status("  bytecode__jump_funk__execution_count                  = " u64__fstr, this->bytecode__jump_funk__execution_count);

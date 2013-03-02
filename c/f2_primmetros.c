@@ -190,9 +190,7 @@ f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
     return f2list3__new(cause,
 			new__symbol(cause, "funk-local_apply"),
 			compiled_funk,
-			f2cons__new(cause,
-				    new__symbol(cause, "immutable_conslist"),
-				    definitions));
+			nil);
   }
 }
 

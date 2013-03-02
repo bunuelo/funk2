@@ -205,6 +205,18 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  if (raw__cons__is_type(cause, funkable)) {
+    f2ptr command = f2cons__car(funkable, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
+      f2ptr cdr = f2cons__cdr(funkable, cause);
+      if (raw__cons__is_type(cause, cdr)) {
+	f2ptr compiled_funk = f2cons__car(cdr, cause);
+	return f2list2__new(cause,
+			    new__symbol(cause, "funk-local_apply"),
+			    compiled_funk);
+      }
+    }
+  }
   return f2list3__new(cause,
 		      new__symbol(cause, "funk-apply"),
 		      funkable,

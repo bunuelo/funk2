@@ -55,6 +55,7 @@ void                        funk2_hash__add                 (funk2_hash_t* this,
 boolean_t                   funk2_hash__remove              (funk2_hash_t* this, u64 key);
 funk2_hash_keyvalue_pair_t* funk2_hash__lookup_keyvalue_pair(funk2_hash_t* this, u64 key);
 u64                         funk2_hash__lookup              (funk2_hash_t* this, u64 key);
+u64                         funk2_hash__try_lookup          (funk2_hash_t* this, u64 key, u64 fail_value);
 boolean_t                   funk2_hash__contains            (funk2_hash_t* this, u64 key);
 
 #define funk2_hash__iteration(this, funk2_hash__iteration__user_key, funk2_hash__iteration__user_value, code) {			\

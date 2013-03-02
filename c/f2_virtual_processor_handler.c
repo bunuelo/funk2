@@ -240,12 +240,8 @@ s64 funk2_virtual_processor_handler__try_get_my_virtual_processor_index(funk2_vi
   if (__funk2.memory.bootstrapping_mode) {
     return 0;
   }
-  pthread_t pthread                 = pthread_self();
-  s64       virtual_processor_index = -1;
-  if (funk2_hash__contains(&(this->virtual_processor_index_pthread_hash), (u64)pthread)) {
-    virtual_processor_index = funk2_hash__lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread);
-  }
-  return virtual_processor_index;
+  pthread_t pthread = pthread_self();
+  return funk2_hash__try_lookup(&(this->virtual_processor_index_pthread_hash), (u64)pthread, (u64)-1);
 }
 
 u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {

@@ -175,6 +175,14 @@ u64 funk2_hash__lookup(funk2_hash_t* this, u64 key) {
   error(nil, "funk2_hash__lookup error: attempted to lookup key that is not in funk2_hash.");
 }
 
+u64 funk2_hash__try_lookup(funk2_hash_t* this, u64 key, u64 fail_value) {
+  funk2_hash_keyvalue_pair_t* keyvalue_pair = funk2_hash__lookup_keyvalue_pair(this, key);
+  if (keyvalue_pair) {
+    return keyvalue_pair->value;
+  }
+  return fail_value;
+}
+
 boolean_t funk2_hash__contains(funk2_hash_t* this, u64 key) {
   funk2_hash_keyvalue_pair_t* keyvalue_pair = funk2_hash__lookup_keyvalue_pair(this, key);
   return keyvalue_pair ? boolean__true : boolean__false;

@@ -298,14 +298,10 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	  f2ptr compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
 	  return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
 	}
-	f2ptr cdr_cdr = f2cons__cdr(cdr, cause);
-	if (raw__cons__is_type(cause, cdr_cdr)) {
-	  f2ptr args = f2cons__car(cdr_cdr, cause);
-	  return f2list3__new(cause,
-			      new__symbol(cause, "funk-local_apply"),
-			      compiled_funk,
-			      args);
-	}
+	return f2list3__new(cause,
+			    new__symbol(cause, "funk-local_apply"),
+			    compiled_funk,
+			    arguments);
       }
     }
   }

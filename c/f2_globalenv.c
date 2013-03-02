@@ -77,6 +77,7 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->mutate__symbol                 = new__symbol(cause, "mutate");
   this->and_rest__symbol               = new__symbol(cause, ":rest");
   this->apply__symbol                  = new__symbol(cause, "funk-apply");
+  this->local_apply__symbol            = new__symbol(cause, "funk-local_apply");
   this->globalize__symbol              = new__symbol(cause, "globalize");
   this->globalize_funk__symbol         = new__symbol(cause, "globalize-funk");
   this->yield__symbol                  = new__symbol(cause, "yield");
@@ -213,6 +214,7 @@ void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {
   defragment__fix_pointer(this->mutate__symbol);
   defragment__fix_pointer(this->and_rest__symbol);
   defragment__fix_pointer(this->apply__symbol);
+  defragment__fix_pointer(this->local_apply__symbol);
   defragment__fix_pointer(this->globalize__symbol);
   defragment__fix_pointer(this->globalize_funk__symbol);
   defragment__fix_pointer(this->yield__symbol);

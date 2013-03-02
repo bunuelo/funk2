@@ -794,6 +794,45 @@ f2ptr f2__compile__apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolea
   return bcs_valid(full_bcs);
 }
 
+f2ptr f2__compile__local_apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return) {
+  release__assert(__funk2.compile.f2__compile__local_apply_exp__symbol != -1, nil, "__funk2.compile.f2__compile__local_apply_exp__symbol not yet defined.");
+  f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__local_apply_exp__symbol, exps);
+  
+  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr funk_exp = f2cons__car(exps, cause);
+  exps = f2cons__cdr(exps, cause); if (! raw__cons__is_type(cause, exps)) {return __funk2.compile.compile__exception;} f2ptr args_exp = f2cons__car(exps, cause);
+  
+  f2ptr full_bcs = assert_value(raw__compile(cause, fiber, funk_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL));
+  if (full_bcs && (! raw__cons__is_type(cause, full_bcs))) {
+    return f2larva__new(cause, 246416, nil);
+  }
+  f2ptr iter = full_bcs;
+  
+  iter          = raw__list_cdr__set(cause, iter, f2__compile__push_value(cause));
+  f2ptr exp_bcs = assert_value(raw__compile(cause, fiber, args_exp, boolean__true, boolean__false, NULL, NULL, nil, NULL));
+  if (exp_bcs && (! raw__cons__is_type(cause, exp_bcs))) {
+    return f2larva__new(cause, 131365, nil);
+  }
+  iter = raw__list_cdr__set(cause, iter, exp_bcs);
+  iter = raw__list_cdr__set(cause, iter, f2__compile__copy_value_to_args(cause));
+  iter = raw__list_cdr__set(cause, iter, f2__compile__pop_value(cause));
+  if (optimize_tail_recursion) {
+    if (popped_env_and_return != NULL) {
+      *popped_env_and_return = boolean__true;
+    }
+    iter = raw__list_cdr__set(cause, iter, f2__compile__block_pop(cause));
+  }
+  if (protect_environment) {
+    iter = raw__list_cdr__set(cause, iter, f2__compile__block_push(cause));
+    iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
+    iter = raw__list_cdr__set(cause, iter, f2__compile__funk_bc(cause));
+    iter = raw__list_cdr__set(cause, iter, f2__compile__block_pop(cause));
+  } else {
+    iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
+    iter = raw__list_cdr__set(cause, iter, f2__compile__jump_funk(cause));
+  }
+  return bcs_valid(full_bcs);
+}
+
 f2ptr raw__apply_funk(f2ptr simple_cause, f2ptr fiber, f2ptr funk, f2ptr args);
 
 f2ptr f2__compile__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional) {
@@ -1296,6 +1335,7 @@ boolean_t raw__is_compile_special_symbol(f2ptr cause, f2ptr exp) {
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.while__symbol))                       ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.return__symbol))                      ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.apply__symbol))                       ||
+	  (raw__symbol__eq(cause, exp, __funk2.globalenv.local_apply__symbol))                 ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.funkvar__symbol))                     ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define_funk__symbol))                 ||
 	  (raw__symbol__eq(cause, exp, __funk2.globalenv.define__symbol))                      ||
@@ -1337,6 +1377,7 @@ f2ptr f2__compile__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                                                                                                                            {return bcs_valid(f2__compile__while_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__return_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                  {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__apply_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__local_apply_exp(cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__lookup_funkvar_exp(cause, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))            {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_funk_exp(cause, fiber, exp));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                 {if (is_funktional) {*is_funktional = boolean__false;} if (is_locally_funktional) {*is_locally_funktional = boolean__false;} return bcs_valid(f2__compile__define_exp(cause, fiber, exp));}
@@ -1618,6 +1659,7 @@ f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2p
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return raw__cons__new(cause, nil, exp);}
@@ -1811,6 +1853,7 @@ void f2__compile__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.compile.f2__compile__globalize_var_exp__symbol);
   defragment__fix_pointer(__funk2.compile.f2__compile__globalize_funkvar_exp__symbol);
   defragment__fix_pointer(__funk2.compile.f2__compile__apply_exp__symbol);
+  defragment__fix_pointer(__funk2.compile.f2__compile__local_apply_exp__symbol);
   defragment__fix_pointer(__funk2.compile.f2__compile__funkvar_call__symbol);
   defragment__fix_pointer(__funk2.compile.raw__apply_metro__symbol);
   defragment__fix_pointer(__funk2.compile.raw__apply_funk__symbol);
@@ -1861,6 +1904,7 @@ void f2__compile__reinitialize_globalvars() {
   {char* str = "compile:f2__compile__globalize_var_exp";        __funk2.compile.f2__compile__globalize_var_exp__symbol        = new__symbol(cause, str);}
   {char* str = "compile:f2__compile__globalize_funkvar_exp";    __funk2.compile.f2__compile__globalize_funkvar_exp__symbol    = new__symbol(cause, str);}
   {char* str = "compile:f2__compile__apply_exp";                __funk2.compile.f2__compile__apply_exp__symbol                = new__symbol(cause, str);}
+  {char* str = "compile:f2__compile__local_apply_exp";          __funk2.compile.f2__compile__local_apply_exp__symbol          = new__symbol(cause, str);}
   {char* str = "compile:f2__compile__funkvar_call";             __funk2.compile.f2__compile__funkvar_call__symbol             = new__symbol(cause, str);}
   {char* str = "compile:raw__apply_metro";                      __funk2.compile.raw__apply_metro__symbol                      = new__symbol(cause, str);}
   {char* str = "compile:raw__apply_funk";                       __funk2.compile.raw__apply_funk__symbol                       = new__symbol(cause, str);}

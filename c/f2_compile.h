@@ -52,6 +52,7 @@ struct funk2_compile_s {
   f2ptr f2__compile__globalize_var_exp__symbol;
   f2ptr f2__compile__globalize_funkvar_exp__symbol;
   f2ptr f2__compile__apply_exp__symbol;
+  f2ptr f2__compile__local_apply_exp__symbol;
   f2ptr f2__compile__funkvar_call__symbol;
   f2ptr raw__apply_metro__symbol;
   f2ptr raw__apply_funk__symbol;
@@ -222,6 +223,7 @@ f2ptr      f2__compile__mutatefunk_exp                 (f2ptr simple_cause, f2pt
 f2ptr      f2__compile__globalize_var_exp              (f2ptr simple_cause, f2ptr fiber, f2ptr exps);
 f2ptr      f2__compile__globalize_funkvar_exp          (f2ptr simple_cause, f2ptr fiber, f2ptr exps);
 f2ptr      f2__compile__apply_exp                      (f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return);
+f2ptr      f2__compile__local_apply_exp                (f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return);
 f2ptr      f2__compile__funkvar_call                   (f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t* popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
 f2ptr     raw__apply_metro                             (f2ptr simple_cause, f2ptr fiber, f2ptr metro, f2ptr args);
 f2ptr     raw__apply_funk                              (f2ptr simple_cause, f2ptr fiber, f2ptr funk, f2ptr args);

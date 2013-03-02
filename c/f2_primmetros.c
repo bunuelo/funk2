@@ -111,7 +111,7 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
       }
     }
     return f2list3__new(cause,
-			new__symbol(cause, "funk-apply"),
+			new__symbol(cause, "funk-local_apply"),
 			raw__primmetro__funk__new_with_name(cause, new__symbol(cause, "let"), variables, body_expressions),
 			f2cons__new(cause,
 				    new__symbol(cause, "immutable_conslist"),

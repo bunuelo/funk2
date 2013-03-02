@@ -313,7 +313,7 @@ f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr repla
     while (iter != nil) {
       f2ptr expression = f2cons__car(iter, cause);
       {
-	f2ptr new_expression = raw__expression__replace_variable(cause, expression, replace_variable, replace_argument);
+	f2ptr new_expression = assert_value(raw__expression__replace_variable(cause, expression, replace_variable, replace_argument));
 	f2ptr new_cons       = f2cons__new(cause, new_expression, nil);
 	if (new_demetropolized_body == nil) {
 	  new_demetropolized_body = new_cons;
@@ -361,9 +361,14 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	      f2ptr argument = f2cons__car(arguments_iter, cause);
 	      f2ptr variable = f2cons__car(variables_iter, cause);
 	      if (raw__expression__is_funktional(cause, argument)) {
-		funk_was_reduced      = boolean__true;
 		reduced_compiled_funk = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-	      } else {
+		if (raw__larva__is_type(cause, reduced_compiled_funk)) {
+		  funk_was_reduced = boolean__false;
+		} else {
+		  funk_was_reduced = boolean__true;
+		}
+	      }
+	      if (! funk_was_reduced) {
 		f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
 		if (remaining_arguments == nil) {
 		  remaining_arguments = new_arguments_cons;

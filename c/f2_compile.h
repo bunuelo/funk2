@@ -254,6 +254,7 @@ f2ptr      f2__compile__rawcode_exp                    (f2ptr cause, f2ptr exp, 
 f2ptr      f2__demetropolize__special_symbol_exp       (f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp);
 f2ptr      f2__demetropolize_once                      (f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp);
 f2ptr      f2__demetropolize_full__with_status         (f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp);
+f2ptr     raw__expression__replace_variable            (f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument);
 f2ptr     raw__compile                                 (f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect_environment, boolean_t optimize_tail_recursion, boolean_t *popped_env_and_return, boolean_t* is_funktional, f2ptr local_variables, boolean_t* is_locally_funktional);
 
 

@@ -283,38 +283,6 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 
-f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
-  if (raw__symbol__is_type(cause, expression)) {
-    if (raw__eq(cause, expression, replace_variable)) {
-      return replace_argument;
-    }
-  }
-  if (raw__cons__is_type(cause, expression)) {
-    f2ptr command        = f2cons__car(expression, cause);
-    f2ptr new_expression = f2cons__new(cause, command, nil);
-    {
-      f2ptr iter                = f2cons__cdr(expression, cause);
-      f2ptr new_expression_iter = new_expression;
-      while (iter != nil) {
-	f2ptr subexpression = f2cons__car(iter, cause);
-	{
-	  f2ptr new_subexpression = raw__expression__replace_variable(cause, subexpression, replace_variable, replace_argument);
-	  f2ptr new_cons          = f2cons__new(cause, new_subexpression, nil);
-	  if (new_expression == nil) {
-	    new_expression = new_cons;
-	  } else {
-	    f2cons__cdr__set(new_expression_iter, cause, new_cons);
-	  }
-	  new_expression_iter = new_cons;
-	}
-	iter = f2cons__cdr(iter, cause);
-      }
-    }
-    return new_expression;
-  }
-  return expression;
-}
-
 f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr old_name                = f2funk__name(               this, cause);
   f2ptr old_args                = f2funk__args(               this, cause);

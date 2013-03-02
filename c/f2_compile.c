@@ -1776,6 +1776,41 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
   return raw__cons__new(cause, nil, exp);
 }
 
+f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr fiber                     = f2__this__fiber(cause);
+  f2ptr env                       = f2fiber__env(fiber, cause);
+  f2ptr demetropolized_expression = assert_value(f2__demetropolize_full(cause, fiber, env, expression));
+  if (raw__symbol__is_type(cause, demetropolized_expression)) {
+    if (raw__eq(cause, demetropolized_expression, replace_variable)) {
+      return replace_argument;
+    }
+  }
+  if (raw__cons__is_type(cause, demetropolized_expression)) {
+    f2ptr command        = f2cons__car(demetropolized_expression, cause);
+    f2ptr new_demetropolized_expression = f2cons__new(cause, command, nil);
+    {
+      f2ptr iter                = f2cons__cdr(demetropolized_expression, cause);
+      f2ptr new_demetropolized_expression_iter = new_demetropolized_expression;
+      while (iter != nil) {
+	f2ptr subdemetropolized_expression = f2cons__car(iter, cause);
+	{
+	  f2ptr new_subdemetropolized_expression = raw__expression__replace_variable(cause, subdemetropolized_expression, replace_variable, replace_argument);
+	  f2ptr new_cons          = f2cons__new(cause, new_subdemetropolized_expression, nil);
+	  if (new_demetropolized_expression == nil) {
+	    new_demetropolized_expression = new_cons;
+	  } else {
+	    f2cons__cdr__set(new_demetropolized_expression_iter, cause, new_cons);
+	  }
+	  new_demetropolized_expression_iter = new_cons;
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    return new_demetropolized_expression;
+  }
+  return demetropolized_expression;
+}
+
 
 
 int __compile__recursion_count = 0;

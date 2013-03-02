@@ -23,11 +23,12 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk funk-new                     &primfunk:funk__new]
-[globalize-funk funk-new_copy                &primfunk:funk__new_copy]
-[globalize-funk funk-new_copy_in_environment &primfunk:funk__new_copy_in_environment]
-[globalize-funk funk-optimize                &primfunk:funk__optimize]
-[globalize-funk metro-new                    &primfunk:metro__new]
-[globalize-funk metrocfunk-new               &primfunk:metrocfunk__new]
+[globalize-funk funk-new                          &primfunk:funk__new]
+[globalize-funk funk-new_copy                     &primfunk:funk__new_copy]
+[globalize-funk funk-new_copy_in_environment      &primfunk:funk__new_copy_in_environment]
+[globalize-funk funk-new_copy_in_this_environment &primfunk:funk__new_copy_in_this_environment]
+[globalize-funk funk-optimize                     &primfunk:funk__optimize]
+[globalize-funk metro-new                         &primfunk:metro__new]
+[globalize-funk metrocfunk-new                    &primfunk:metrocfunk__new]
 
 

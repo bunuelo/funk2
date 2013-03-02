@@ -285,10 +285,10 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr old_name                = f2funk__name(               this, cause);
-  f2ptr old_body_bytecodes      = f2funk__body_bytecodes(     this, cause);
+  //f2ptr old_body_bytecodes      = f2funk__body_bytecodes(     this, cause);
   f2ptr old_args                = f2funk__args(               this, cause);
   f2ptr old_demetropolized_body = f2funk__demetropolized_body(this, cause);
-  f2ptr old_body                = f2funk__body(               this, cause);
+  //f2ptr old_body                = f2funk__body(               this, cause);
   f2ptr old_env                 = f2funk__env(                this, cause);
   //f2ptr old_machine_code        = f2funk__machine_code(       this, cause);
   //f2ptr old_is_funktional       = f2funk__is_funktional(      this, cause);

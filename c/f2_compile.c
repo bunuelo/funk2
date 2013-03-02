@@ -1811,31 +1811,31 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return exp;}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return exp;} // potential problematic variable mutate
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize__symbol))                   {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return exp;} // should handle special case
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                       {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {return exp;}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return exp;} // should handle special case?
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return exp;} // should handle special case?
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_or__symbol))                 {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_add__symbol))                {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_negative__symbol))           {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_subtract__symbol))           {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_multiply__symbol))           {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_inverse__symbol))            {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_divide__symbol))             {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_modulo__symbol))             {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_increment__symbol))          {return exp;} // potential problematic variable mutate
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_decrement__symbol))          {return exp;} // potential problematic variable mutate
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))          {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))       {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("raw__expression__replace_variable__special_symbol_exp error: expression is not special symbol expression.");

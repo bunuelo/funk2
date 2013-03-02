@@ -365,6 +365,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	      f2ptr argument = f2cons__car(arguments_iter, cause);
 	      f2ptr variable = f2cons__car(variables_iter, cause);
 	      if (raw__expression__is_funktional(cause, argument)) {
+		funk_was_reduced      = boolean__true;
 		reduced_compiled_funk = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
 	      } else {
 		f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);

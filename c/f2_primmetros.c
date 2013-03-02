@@ -283,6 +283,8 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 
+
+
 f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
   f2ptr fiber                   = f2__this__fiber(cause);
   f2ptr env                     = f2fiber__env(fiber, cause);
@@ -297,6 +299,38 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	if (compiled_funk__args == nil) {
 	  f2ptr compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
 	  return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
+	}
+	if (raw__cons__is_type(cause, arguments)) {
+	  f2ptr arguments_command = f2cons__car(arguments, cause);
+	  if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
+	    f2ptr reduced_compiled_funk    = compiled_funk;
+	    f2ptr arguments_iter           = f2cons__cdr(arguments, cause);
+	    f2ptr variables_iter           = compiled_funk__args;
+	    f2ptr remaining_arguments      = nil;
+	    f2ptr remaining_variables      = nil;
+	    f2ptr remaining_arguments_iter = nil;
+	    f2ptr remaining_variables_iter = nil;
+	    while ((arguments_iter != nil) &&
+		   (variables_iter != nil)) {
+	      f2ptr argument = f2cons__car(arguments_iter, cause);
+	      if (raw__expression__is_funktional(cause, argument)) {
+		reduced_compiled_funk = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
+	      } else {
+		f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
+		if (remaining_arguments == nil) {
+		  remaining_arguments = new_arguments_cons;
+		} else {
+		  f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+		}
+		remaining_arguments_iter = new_arguments_cons;
+	      }
+	      arguments_iter = f2cons__cdr(arguments_iter, cause);
+	    }
+	    return f2list3__new(cause,
+				new__symbol(cause, "funk-local_apply"),
+				reduced_compiled_funk,
+				remaining_arguments);
+	  }
 	}
 	return f2list3__new(cause,
 			    new__symbol(cause, "funk-local_apply"),

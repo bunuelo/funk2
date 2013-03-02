@@ -1803,13 +1803,13 @@ f2ptr raw__expression__replace_variable__funkvar_call(f2ptr cause, f2ptr fiber, 
 f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr car = f2cons__car(exp, cause);
   if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                       {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))             {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol))      {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                          {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))             {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list_append__symbol))      {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                          {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return raw__cons__new(cause, nil, exp);}

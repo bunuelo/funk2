@@ -413,10 +413,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     f2ptr creation_fiber = ((ptype_block_t*)block)->creation_fiber;
     if (creation_fiber != nil) {
-      u64 old_value = 0;
-      if (funk2_hash__contains(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber)) {
-	old_value = funk2_hash__lookup(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber);
-      }
+      u64 old_value = funk2_hash__try_lookup(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, 0);
       u64 new_value = old_value + funk2_memblock__byte_num(block);
       funk2_hash__add(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, new_value);
     }

@@ -197,11 +197,7 @@ void funk2_protected_alloc_array_fiber_hash__destroy_and_deallocate_protected_al
 }
 
 funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__try_lookup_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {
-  funk2_protected_alloc_array_t* protected_alloc_array = NULL;
-  if (funk2_hash__contains(&(this->used_fiber_hash), fiber)) {
-    protected_alloc_array = (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__lookup(&(this->used_fiber_hash), fiber));
-  }
-  return protected_alloc_array;
+  return (funk2_protected_alloc_array_t*)from_ptr(funk2_hash__try_lookup(&(this->used_fiber_hash), fiber, (u64)NULL));
 }
 
 funk2_protected_alloc_array_t* funk2_protected_alloc_array_fiber_hash__lookup_protected_alloc_array(funk2_protected_alloc_array_fiber_hash_t* this, f2ptr fiber) {

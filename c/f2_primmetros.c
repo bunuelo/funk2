@@ -291,7 +291,7 @@ def_pcfunk3_and_rest(primmetro__funk__new_with_name_and_environment, name, envir
 f2ptr raw__primmetro__funk__new_with_name(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions) {
   f2ptr fiber                                = assert_value(f2__this__fiber(cause));
   f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
-  f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, body_expressions));
+  f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
   return f2list3__new(cause,
 		      new__symbol(cause, "funk-new_copy_in_this_environment"),

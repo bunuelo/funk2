@@ -336,7 +336,8 @@
 				     total_used_memory
 				     total_free_memory
 				     total_nanoseconds
-				     total_garbage_collection_nanoseconds]
+				     total_garbage_collection_nanoseconds
+				     garbage_collection_percentage]
   [new [index]
        [set this index index]
        [fibermon_processor-construct_fast this]

@@ -407,14 +407,14 @@ export_cefunk1(fibermon_processor__construct_fast, this, 0, "");
 
 
 f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
-  f2ptr this__progress_bar                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),                         nil); if (! this__progress_bar) {return f2larva__new(cause, 92, nil);}
-  f2ptr this__table_labels                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),                         nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 93, nil);}
-  f2ptr this__bytecodes_per_second                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"),                 nil);
-  f2ptr this__execution_efficiency                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"),                 nil);
-  f2ptr this__total_used_memory                    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_used_memory"),                    nil);
-  f2ptr this__total_free_memory                    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_free_memory"),                    nil);
-  f2ptr this__total_garbage_collection_nanoseconds = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_garbage_collection_nanoseconds"), nil);
-  f2ptr this__fragmentation                        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fragmentation"),                        nil);
+  f2ptr this__progress_bar                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "progress_bar"),                  nil); if (! this__progress_bar) {return f2larva__new(cause, 92, nil);}
+  f2ptr this__table_labels                         = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "table_labels"),                  nil); if (! raw__array__is_type(cause, this__table_labels)) {return f2larva__new(cause, 93, nil);}
+  f2ptr this__bytecodes_per_second                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "bytecodes_per_second"),          nil);
+  f2ptr this__execution_efficiency                 = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "execution_efficiency"),          nil);
+  f2ptr this__total_used_memory                    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_used_memory"),             nil);
+  f2ptr this__total_free_memory                    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_free_memory"),             nil);
+  f2ptr this__garbage_collection_percentage        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "garbage_collection_percentage"), nil);
+  f2ptr this__fragmentation                        = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fragmentation"),                 nil);
   
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 0), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__fibermon__bytes__to_memory_string(cause, ((this__bytecodes_per_second != nil) ? this__bytecodes_per_second : f2integer__new(cause, 0))),
 																		       new__string(cause, "Bc/s"))));
@@ -427,7 +427,7 @@ f2ptr f2__fibermon_processor__redraw_fast(f2ptr cause, f2ptr this) {
 																		       new__string(cause, "b"))));
   f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 4), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__fragmentation != nil) ? this__fragmentation : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 																		       new__string(cause, "%"))));
-  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 5), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__total_garbage_collection_nanoseconds != nil) ? this__total_garbage_collection_nanoseconds : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
+  f2__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels, 5), 1), f2__stringlist__concat(cause, f2list2__new(cause, f2__exp__as__string(cause, f2__number__multiplied_by(cause, ((this__garbage_collection_percentage != nil) ? this__garbage_collection_percentage : f2integer__new(cause, 0)), f2double__new(cause, 100.0))),
 																		       new__string(cause, "%"))));
   {
     f2ptr progress_fraction = (this__execution_efficiency != nil) ? this__execution_efficiency : f2double__new(cause, 0.0);
@@ -484,11 +484,15 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   u64 elapsed_nanoseconds                    = this__total_nanoseconds__i                    - previous_total_nanoseconds__i;
   u64 elapsed_garbage_collection_nanoseconds = this__total_garbage_collection_nanoseconds__i - previous_total_garbage_collection_nanoseconds__i;
   
+  double this__garbage_collection_percentage__d = (elapsed_nanoseconds == 0) ? 0 : ((double)elapsed_garbage_collection_nanoseconds) / ((double)elapsed_nanoseconds);
+  f2ptr  this__garbage_collection_percentage    = f2double__new(cause, this__garbage_collection_percentage__d);
+  
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"),                    this__total_used_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_free_memory"),                    this__total_free_memory);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "fragmentation"),                        this__fragmentation);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_nanoseconds"),                    this__total_nanoseconds);
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_garbage_collection_nanoseconds"), this__total_garbage_collection_nanoseconds);
+  f2__frame__add_var_value(cause, this, new__symbol(cause, "garbage_collection_percentage"),        this__garbage_collection_percentage);
   return nil;
 }
 export_cefunk1(fibermon_processor__recompute_statistics_fast, this, 0, "");

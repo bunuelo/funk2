@@ -379,7 +379,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	      variables_iter = f2cons__cdr(variables_iter, cause);
 	    }
 	    if (funk_was_reduced) {
-	      return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), reduced_arguments));
+	      return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments));
 	    } else {
 	      return f2list3__new(cause,
 				  new__symbol(cause, "funk-local_apply"),

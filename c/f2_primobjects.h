@@ -2291,13 +2291,15 @@ declare_object_type_10_slot(funk,
 			    is_funktional,
 			    has_no_side_effects,
 			    documentation,
-			   f2ptr new_copy__symbol;
-			   f2ptr new_copy__funk;
-			   f2ptr optimize__symbol;
-			   f2ptr optimize__funk;
-			   f2ptr terminal_print_with_frame__symbol;
-			   f2ptr terminal_print_with_frame__funk;
-			   );
+			    f2ptr new_copy__symbol;
+			    f2ptr new_copy__funk;
+			    f2ptr new_copy_in_environment__symbol;
+			    f2ptr new_copy_in_environment__funk;
+			    f2ptr optimize__symbol;
+			    f2ptr optimize__funk;
+			    f2ptr terminal_print_with_frame__symbol;
+			    f2ptr terminal_print_with_frame__funk;
+			    );
 
 // metro
 

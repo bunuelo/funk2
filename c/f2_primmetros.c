@@ -254,25 +254,9 @@ f2ptr raw__primmetro__funk__new_with_name_and_environment(f2ptr cause, f2ptr nam
   f2ptr compiled_bytecodes                   = assert_value(f2__funk__body_bytecodes(cause, compiled_funk));
   f2ptr is_funktional                        = assert_value(f2__funk__is_funktional(cause, compiled_funk));
   return f2list9__new(cause,
-		      new__symbol(cause, "funk-new"),
-		      environment,
-		      f2list2__new(cause,
-				   new__symbol(cause, "quote"),
-				   name),
-		      f2list2__new(cause,
-				   new__symbol(cause, "quote"),
-				   variables),
-		      f2list2__new(cause,
-				   new__symbol(cause, "quote"),
-				   body_expressions__demetropolize_full),
-		      f2list2__new(cause,
-				   new__symbol(cause, "quote"),
-				   body_expressions),
-		      f2list2__new(cause,
-				   new__symbol(cause, "quote"),
-				   compiled_bytecodes),
-		      is_funktional,
-		      nil);
+		      new__symbol(cause, "funk-new_copy_in_environment"),
+		      compiled_funk,
+		      environment);
 }
 
 f2ptr f2__primmetro__funk__new_with_name_and_environment(f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions) {

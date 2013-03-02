@@ -125,7 +125,7 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
 					    compiled_funk,
 					    environment);
     return f2list3__new(cause,
-			new__symbol(cause, "funk-apply"),
+			new__symbol(cause, "funk-local_apply"),
 			primmetro_new_funk,
 			f2cons__new(cause,
 				    new__symbol(cause, "immutable_conslist"),

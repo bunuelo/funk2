@@ -358,17 +358,18 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	    boolean_t funk_was_reduced         = boolean__false;
 	    while ((arguments_iter != nil) &&
 		   (variables_iter != nil)) {
-	      f2ptr argument = f2cons__car(arguments_iter, cause);
-	      f2ptr variable = f2cons__car(variables_iter, cause);
+	      f2ptr     argument             = f2cons__car(arguments_iter, cause);
+	      f2ptr     variable             = f2cons__car(variables_iter, cause);
+	      boolean_t variable_was_removed = boolean__false;
 	      if (raw__expression__is_funktional(cause, argument)) {
-		reduced_compiled_funk = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-		if (raw__larva__is_type(cause, reduced_compiled_funk)) {
-		  funk_was_reduced = boolean__false;
-		} else {
-		  funk_was_reduced = boolean__true;
+		f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
+		if (raw__larva__is_type(cause, result)) {
+		  variable_was_removed  = boolean__true;
+		  funk_was_reduced      = boolean__true;
+		  reduced_compiled_funk = result;
 		}
 	      }
-	      if (! funk_was_reduced) {
+	      if (! variable_was_removed) {
 		f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
 		if (remaining_arguments == nil) {
 		  remaining_arguments = new_arguments_cons;

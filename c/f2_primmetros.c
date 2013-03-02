@@ -162,6 +162,19 @@ def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
 		     return f2__primmetro__let(this_cause, variable_definitions, body_expressions));
 
 
+boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
+  if (raw__integer__is_type(cause, expression) ||
+      raw__double__is_type( cause, expression) ||
+      raw__float__is_type(  cause, expression) ||
+      raw__pointer__is_type(cause, expression) ||
+      raw__char__is_type(   cause, expression) ||
+      raw__string__is_type( cause, expression) ||
+      raw__symbol__is_type( cause, expression)) {
+    return boolean__true;
+  }
+}
+
+
 /*  
  *  [defmetro prog [:rest body]
  *    [if body
@@ -172,6 +185,26 @@ def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
  */
 
 f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
+  f2ptr condensed_body_expressions = nil;
+  {
+    f2ptr iter           = body_expressions;
+    f2ptr condensed_iter = nil;
+    while (iter != nil) {
+      f2ptr car = f2cons__car(iter, cause);
+      f2ptr cdr = f2cons__cdr(iter, cause);
+      if ((cdr != nil) &&
+	  (! raw__expression__is_funktional(cause, car))) {
+	f2ptr new_cons = f2cons__new(cause, car, nil);
+	if (condensed_iter == nil) {
+	  condensed_body_expressions = new_cons;
+	} else {
+	  f2cons__cdr__set(condensed_iter, cause, new_cons);
+	}
+	condensed_iter = new_cons;
+      }
+      iter = cdr;
+    }
+  }
   if (body_expressions == nil) {
     return nil;
   } else if (f2cons__cdr(body_expressions, cause) == nil) {

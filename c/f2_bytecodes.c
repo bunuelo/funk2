@@ -569,15 +569,22 @@ int f2__fiber__bytecode__funk(f2ptr fiber, f2ptr bytecode) {
 
 int f2__fiber__bytecode__funk_env__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   f2ptr fiber__value = f2fiber__value(fiber, cause);
-  if (! raw__funk__is_type(cause, fiber__value)) {
+  if (raw__funk__is_type(cause, fiber__value)) {
+    f2ptr fiber__env = f2funk__env(fiber__value, cause);
+    f2fiber__env__set(fiber, cause, fiber__env);
+  } else if (raw__cfunk__is_type(cause, fiber__value)) {
+    // do nothing.
+  } else if (raw__metrocfunk__is_type(cause, fiber__value)) {
+    // do nothing.
+  } else if (raw__metro__is_type(cause, fiber__value)) {
+    f2ptr fiber__env = f2funk__env(fiber__value, cause);
+    f2fiber__env__set(fiber, cause, fiber__env);
+  } else {
     f2ptr bug_frame = f2__frame__new(cause, nil);
-    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_value_is_not_funk"));
+    f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"), new__symbol(cause, "fiber_value_is_not_funkable"));
     fiber__value = f2larva__new(cause, 1, f2__bug__new(cause, f2integer__new(cause, 1), bug_frame));
     f2fiber__value__set(fiber, cause, fiber__value);
-    return 0;
   }
-  f2ptr fiber__env = f2funk__env(fiber__value, cause);
-  f2fiber__env__set(fiber, cause, fiber__env);
   return 0;
 }
 

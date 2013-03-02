@@ -316,7 +316,7 @@ f2ptr raw__primmetro__metro__new_with_name_and_environment(f2ptr cause, f2ptr na
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
   return f2list2__new(cause,
 		      new__symbol(cause, "metro-new"),
-		      f2list2__new(cause,
+		      f2list3__new(cause,
 				   new__symbol(cause, "funk-new_copy_in_environment"),
 				   compiled_funk,
 				   environment));

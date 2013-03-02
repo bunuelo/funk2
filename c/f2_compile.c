@@ -823,11 +823,11 @@ f2ptr f2__compile__local_apply_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exps, 
   }
   if (protect_environment) {
     iter = raw__list_cdr__set(cause, iter, f2__compile__block_push(cause));
-    iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
+    //iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
     iter = raw__list_cdr__set(cause, iter, f2__compile__funk_bc(cause));
     iter = raw__list_cdr__set(cause, iter, f2__compile__block_pop(cause));
   } else {
-    iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
+    //iter = raw__list_cdr__set(cause, iter, f2__compile__funk_env(cause));
     iter = raw__list_cdr__set(cause, iter, f2__compile__jump_funk(cause));
   }
   return bcs_valid(full_bcs);

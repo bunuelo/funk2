@@ -93,6 +93,7 @@ struct funk2_compile_s {
 
 f2ptr f2__compile__funk_bc            (f2ptr cause);
 f2ptr f2__compile__jump_funk          (f2ptr cause);
+f2ptr f2__compile__funk_env           (f2ptr cause);
 f2ptr f2__compile__array              (f2ptr cause, f2ptr length);
 f2ptr f2__compile__cons               (f2ptr cause);
 f2ptr f2__compile__consp              (f2ptr cause);

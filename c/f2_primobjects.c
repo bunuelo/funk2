@@ -606,6 +606,7 @@ def_pcfunk1(funk__new_copy, this,
 	    "",
 	    return f2__funk__new_copy(this_cause, this));
 
+
 // defined in f2_optimize.c
 def_pcfunk2(funk__optimize, this, maximum_loop_count,
 	    "",

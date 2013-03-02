@@ -37,6 +37,8 @@ typedef struct funk2_bytecode_s {
   u64   bytecode__funk__execution_count;
   f2ptr bytecode__jump_funk__symbol;
   u64   bytecode__jump_funk__execution_count;
+  f2ptr bytecode__funk_env__symbol;
+  u64   bytecode__funk_env__execution_count;
   f2ptr bytecode__array__symbol;
   u64   bytecode__array__execution_count;
   f2ptr bytecode__cons__symbol;
@@ -204,6 +206,7 @@ typedef int (*bytecode_jump__f2ptr_f2ptr_t)(f2ptr fiber, f2ptr bytecode, f2ptr a
 int                    f2__fiber__bytecode__funk                                   (f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode_helper__funk__no_increment_pc_reg       (f2ptr fiber, f2ptr cause, f2ptr bytecode);
 int                    f2__fiber__bytecode__jump_funk                              (f2ptr fiber, f2ptr bytecode);
+int                    f2__fiber__bytecode__funk_env                               (f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__array                                  (f2ptr fiber, f2ptr bytecode, f2ptr length);
 int                    f2__fiber__bytecode__cons                                   (f2ptr fiber, f2ptr bytecode);
 int                    f2__fiber__bytecode__conslist                               (f2ptr fiber, f2ptr bytecode);

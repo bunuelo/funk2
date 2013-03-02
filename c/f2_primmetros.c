@@ -77,7 +77,7 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
     return boolean__true;
   }
   if (raw__cons__is_type(cause, expression)) {
-    f2ptr command = f2cons__car(expression);
+    f2ptr command = f2cons__car(expression, cause);
     if (raw__eq(cause, command, new__symbol(cause, "bytecode:add"))) {
       return raw__expression__bytecode_add__is_funktional(cause, expression);
     }

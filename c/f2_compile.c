@@ -1776,7 +1776,7 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
   return raw__cons__new(cause, nil, exp);
 }
 
-f2ptr raw__expression__replace_variable__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr expression) {
+f2ptr raw__expression__replace_variable__funkvar_call(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression) {
   f2ptr command        = f2cons__car(expression, cause);
   f2ptr new_expression = f2cons__new(cause, command, nil);
   {
@@ -1800,7 +1800,7 @@ f2ptr raw__expression__replace_variable__funkvar_call(f2ptr simple_cause, f2ptr 
   return new_expression;
 }
 
-f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp) {
+f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   f2ptr car = f2cons__car(exp, cause);
   if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                       {return exp;}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.backquote__list__symbol))             {return f2__expression__replace_variable__funkvar_call(cause, fiber, env, exp);}

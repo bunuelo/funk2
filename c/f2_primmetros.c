@@ -205,10 +205,13 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
-  if (raw__cons__is_type(cause, funkable)) {
-    f2ptr command = f2cons__car(funkable, cause);
+  f2ptr fiber                   = f2__this__fiber(cause);
+  f2ptr env                     = f2fiber__env(fiber, cause);
+  f2ptr demetropolized_funkable = assert_value(f2__demetropolize_full(cause, fiber, env, funkable));
+  if (raw__cons__is_type(cause, demetropolized_funkable)) {
+    f2ptr command = f2cons__car(demetropolized_funkable, cause);
     if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
-      f2ptr cdr = f2cons__cdr(funkable, cause);
+      f2ptr cdr = f2cons__cdr(demetropolized_funkable, cause);
       if (raw__cons__is_type(cause, cdr)) {
 	f2ptr compiled_funk = f2cons__car(cdr, cause);
 	return f2list2__new(cause,
@@ -219,7 +222,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
   }
   return f2list3__new(cause,
 		      new__symbol(cause, "funk-apply"),
-		      funkable,
+		      demetropolized_funkable,
 		      arguments);
 }
 

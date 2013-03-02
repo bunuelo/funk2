@@ -214,6 +214,11 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
       f2ptr cdr = f2cons__cdr(demetropolized_funkable, cause);
       if (raw__cons__is_type(cause, cdr)) {
 	f2ptr compiled_funk = f2cons__car(cdr, cause);
+	f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
+	if (compiled_funk__args == nil) {
+	  f2ptr compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
+	  return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
+	}
 	return f2list2__new(cause,
 			    new__symbol(cause, "funk-local_apply"),
 			    compiled_funk);

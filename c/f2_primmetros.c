@@ -342,9 +342,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	    f2ptr arguments_iter           = f2cons__cdr(arguments, cause);
 	    f2ptr variables_iter           = compiled_funk__args;
 	    f2ptr remaining_arguments      = nil;
-	    f2ptr remaining_variables      = nil;
 	    f2ptr remaining_arguments_iter = nil;
-	    f2ptr remaining_variables_iter = nil;
 	    while ((arguments_iter != nil) &&
 		   (variables_iter != nil)) {
 	      f2ptr argument = f2cons__car(arguments_iter, cause);

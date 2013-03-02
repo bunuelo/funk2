@@ -44,7 +44,6 @@ typedef struct funk2_hash_s funk2_hash_t;
 struct funk2_hash_s {
   u64                     key_count;
   u64                     bin_num_power;
-  u64                     hash_value_mask;
   funk2_hash_bin_node_t** bin_array;
 };
 

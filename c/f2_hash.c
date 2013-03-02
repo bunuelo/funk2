@@ -32,10 +32,9 @@ u64 funk2_hash__bin_count(funk2_hash_t* this) {
 }
 
 void funk2_hash__init(funk2_hash_t* this, u64 bin_num_power) {
-  this->key_count       = 0;
-  this->bin_num_power   = bin_num_power;
-  this->hash_value_mask = (0xffffffffffffffffll >> (64 - bin_num_power));
-  this->bin_array       = (funk2_hash_bin_node_t**)from_ptr(f2__malloc(sizeof(funk2_hash_bin_node_t*) * funk2_hash__bin_count(this)));
+  this->key_count            = 0;
+  this->bin_num_power        = bin_num_power;
+  this->bin_array            = (funk2_hash_bin_node_t**)from_ptr(f2__malloc(sizeof(funk2_hash_bin_node_t*) * funk2_hash__bin_count(this)));
   memset(this->bin_array, 0, sizeof(funk2_hash_bin_node_t*) * funk2_hash__bin_count(this));
 }
 
@@ -83,7 +82,8 @@ void funk2_hash__increase_size(funk2_hash_t* this) {
 void funk2_hash__add(funk2_hash_t* this, u64 key, u64 value) {
   u64                         key__hash_value    = key;
   u64                         hash_value         = (key__hash_value * PRIME_NUMBER__16_BIT);
-  u64                         index              = hash_value & this->hash_value_mask;
+  u64                         hash_value_mask    = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
+  u64                         index              = hash_value & hash_value_mask;
   funk2_hash_keyvalue_pair_t* keyvalue_pair      = NULL;
   {
     funk2_hash_bin_node_t* keyvalue_pair_iter = this->bin_array[index];
@@ -120,7 +120,8 @@ boolean_t funk2_hash__remove(funk2_hash_t* this, u64 key) {
   {
     u64 key__hash_value  = key;
     u64 hash_value       = (key__hash_value * PRIME_NUMBER__16_BIT);
-    u64 index            = hash_value & this->hash_value_mask;
+    u64 hash_value_mask  = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
+    u64 index            = hash_value & hash_value_mask;
     {
       funk2_hash_bin_node_t* prev = NULL;
       funk2_hash_bin_node_t* iter = this->bin_array[index];
@@ -150,7 +151,8 @@ boolean_t funk2_hash__remove(funk2_hash_t* this, u64 key) {
 funk2_hash_keyvalue_pair_t* funk2_hash__lookup_keyvalue_pair(funk2_hash_t* this, u64 key) {
   u64 key__hash_value = key;
   u64 hash_value      = (key__hash_value * PRIME_NUMBER__16_BIT);
-  u64 index           = hash_value & this->hash_value_mask;
+  u64 hash_value_mask = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
+  u64 index           = hash_value & hash_value_mask;
   {
     funk2_hash_bin_node_t* keyvalue_pair_iter = this->bin_array[index];
     while(keyvalue_pair_iter) {

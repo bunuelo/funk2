@@ -354,11 +354,12 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	if (raw__cons__is_type(cause, arguments)) {
 	  f2ptr arguments_command = f2cons__car(arguments, cause);
 	  if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
-	    f2ptr reduced_compiled_funk    = compiled_funk;
-	    f2ptr arguments_iter           = f2cons__cdr(arguments, cause);
-	    f2ptr variables_iter           = compiled_funk__args;
-	    f2ptr remaining_arguments      = nil;
-	    f2ptr remaining_arguments_iter = nil;
+	    f2ptr     reduced_compiled_funk    = compiled_funk;
+	    f2ptr     arguments_iter           = f2cons__cdr(arguments, cause);
+	    f2ptr     variables_iter           = compiled_funk__args;
+	    f2ptr     remaining_arguments      = nil;
+	    f2ptr     remaining_arguments_iter = nil;
+	    boolean_t funk_was_reduced         = boolean__false;
 	    while ((arguments_iter != nil) &&
 		   (variables_iter != nil)) {
 	      f2ptr argument = f2cons__car(arguments_iter, cause);
@@ -377,10 +378,14 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	      arguments_iter = f2cons__cdr(arguments_iter, cause);
 	      variables_iter = f2cons__cdr(variables_iter, cause);
 	    }
-	    return f2list3__new(cause,
-				new__symbol(cause, "funk-local_apply"),
-				reduced_compiled_funk,
-				remaining_arguments);
+	    if (funk_was_reduced) {
+	      return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), reduced_arguments));
+	    } else {
+	      return f2list3__new(cause,
+				  new__symbol(cause, "funk-local_apply"),
+				  compiled_funk,
+				  arguments);
+	    }
 	  }
 	}
 	return f2list3__new(cause,

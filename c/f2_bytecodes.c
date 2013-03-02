@@ -497,6 +497,35 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     } else {
       return 1;
     }
+  } else if (raw__metrocfunk__is_type(cause, funktion)) {
+#ifdef DEBUG_BYTECODES
+    {
+      f2ptr name = f2metrocfunk__name(funktion, cause);
+      u8*   name__utf8_str;
+      if (raw__symbol__is_type(cause, name)) {
+	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);
+	name__utf8_str = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
+	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
+	name__utf8_str[name__utf8_length] = 0;
+      } else {
+	name__utf8_str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)name__utf8_str, "<none>");
+      }
+      bytecode_status("executing cfunk name=|%s|", name__utf8_str);
+      f2__free(to_ptr(name__utf8_str));
+    }
+#endif // DEBUG_BYTECODES
+    f2ptr return_reg = f2fiber__return_reg(fiber, cause);
+    {
+      f2ptr args = f2fiber__args(fiber, cause);
+      release__assert(!args || raw__cons__is_type(cause, args), fiber, "args failed args type assertion.");
+      {
+	f2ptr value = f2__metrocfunk__apply(cause, funktion, fiber, args);
+	f2fiber__value__set(fiber, cause, value);
+      }
+    }
+    f2fiber__program_counter__set(fiber, cause, return_reg);
+    return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
   }
   f2ptr larva = new__error(f2list4__new(cause,
 					new__symbol(cause, "bug_name"), new__symbol(cause, "cannot_funk_unfunkable_funktion"),

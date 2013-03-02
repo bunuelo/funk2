@@ -607,6 +607,41 @@ def_pcfunk1(funk__new_copy, this,
 	    return f2__funk__new_copy(this_cause, this));
 
 
+f2ptr raw__funk__new_copy_in_environment(f2ptr cause, f2ptr this, f2ptr env) {
+  f2ptr name                = f2funk__name(               this, cause);
+  f2ptr body_bytecodes      = f2funk__body_bytecodes(     this, cause);
+  f2ptr args                = f2funk__args(               this, cause);
+  f2ptr demetropolized_body = f2funk__demetropolized_body(this, cause);
+  f2ptr body                = f2funk__body(               this, cause);
+  f2ptr env                 = env;
+  f2ptr machine_code        = f2funk__machine_code(       this, cause);
+  f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
+  f2ptr has_no_side_effects = f2funk__has_no_side_effects(this, cause);
+  f2ptr documentation       = f2funk__documentation(      this, cause);
+  f2ptr new_funk = f2funk__new(cause,
+			       name,
+			       body_bytecodes,
+			       args,
+			       demetropolized_body,
+			       body,
+			       env,
+			       machine_code,
+			       is_funktional,
+			       has_no_side_effects,
+			       documentation);
+  return new_funk;
+}
+
+f2ptr f2__funk__new_copy_in_environment(f2ptr cause, f2ptr this, f2ptr env) {
+  assert_argument_type(funk,        this);
+  assert_argument_type(environment, env);
+  return raw__funk__new_copy_in_environment(cause, this, env);
+}
+def_pcfunk2(funk__new_copy_in_environment, this, env,
+	    "",
+	    return f2__funk__new_copy_in_environment(this_cause, this, env));
+
+
 // defined in f2_optimize.c
 def_pcfunk2(funk__optimize, this, maximum_loop_count,
 	    "",
@@ -1289,6 +1324,10 @@ void f2__primobjects__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(funk__new_copy);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy_in_environment__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(funk__new_copy_in_environment);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy_in_environment__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__symbol);
   f2__primcfunk__init__defragment__fix_pointers(funk__optimize);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk);
@@ -1522,6 +1561,8 @@ void f2__primobjects__reinitialize_globalvars() {
   
   {char* symbol_str = "new_copy"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy__funk = never_gc(cfunk);}
+  {char* symbol_str = "new_copy_in_environment"; __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy_in_environment__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__new_copy_in_environment, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.new_copy_in_environment__funk = never_gc(cfunk);}
   {char* symbol_str = "optimize"; __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(funk__optimize, this, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_funk.optimize__funk = never_gc(cfunk);}
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_funk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}

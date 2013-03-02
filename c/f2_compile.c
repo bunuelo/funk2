@@ -1854,9 +1854,9 @@ f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr rep
   if (raw__cons__is_type(cause, demetropolized_expression)) {
     f2ptr command        = f2cons__car(demetropolized_expression, cause);
     if (raw__is_compile_special_symbol(cause, command)) {
-      return raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, demetropolized_expression);
+      return raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, demetropolized_expression, replace_variable, replace_argument);
     } else {
-      return raw__expression__replace_variable__funkvar_call(cause, fiber, env, demetropolized_expression);
+      return raw__expression__replace_variable__funkvar_call(cause, fiber, env, demetropolized_expression, replace_variable, replace_argument);
     }
   }
   return demetropolized_expression;

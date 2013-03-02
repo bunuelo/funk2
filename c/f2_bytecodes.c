@@ -577,7 +577,7 @@ int f2__fiber__bytecode__funk_env__no_increment_pc_reg(f2ptr cause, f2ptr fiber,
   } else if (raw__metrocfunk__is_type(cause, fiber__value)) {
     // do nothing.
   } else if (raw__metro__is_type(cause, fiber__value)) {
-    f2ptr fiber__env = f2metro__env(fiber__value, cause);
+    f2ptr fiber__env = raw__metro__env(cause, fiber__value);
     f2fiber__env__set(fiber, cause, fiber__env);
   } else {
     f2ptr bug_frame = f2__frame__new(cause, nil);

@@ -503,71 +503,76 @@ layers are added to the SALS AI.
 64 7.98
 \end{filecontents}
 
-\begin{filecontents}{parallel_processing_speedup_intel_4_core.data}
-1  1.00
-2  1.52
-3  1.72
-4  1.77
-5  1.95
-6  2.14
-7  2.20
-8  2.17
-9  2.11
-10 2.14
-11 2.06
-12 1.98
-13 2.09
-14 2.05
-15 2.00
-16 1.94
-17 2.08
-18 1.97
-19 1.94
-20 1.72
-21 1.91
-22 1.97
-23 2.00
-24 1.82
-25 1.88
-26 1.82
-27 1.82
-28 1.73
-29 1.85
-30 1.86
-31 1.53
-32 1.48
-33 1.79
-34 1.82
-35 1.87
-36 1.71
-37 1.72
-38 1.75
-39 1.74
-40 1.73
-41 1.62
-42 1.56
-43 1.55
-44 1.77
-45 1.69
-46 1.69
-47 1.64
-48 1.62
-49 1.54
-50 1.69
-51 1.58
-52 1.65
-53 1.57
-54 1.48
-55 1.57
-56 1.62
-57 1.48
-58 1.50
-59 1.51
-60 1.50
-61 1.55
-62 1.62
-63 1.51
-64 1.51
+\begin{filecontents}{parallel_processing_speedup_amd64_8_core.data}
+1 1.00
+2 1.91
+3 2.37
+4 2.16
+5 2.54
+6 2.96
+7 3.85
+8 3.94
+9 3.78
+10 3.57
+11 3.68
+12 3.82
+13 3.85
+14 3.88
+15 3.93
+16 4.13
+17 3.99
+18 4.40
+19 4.28
+20 4.18
+21 4.12
+22 4.15
+23 4.01
+24 4.03
+25 4.28
+26 4.41
+27 3.59
+28 3.66
+29 3.73
+30 3.76
+31 3.93
+32 3.86
+33 3.91
+\end{filecontents}
+
+\begin{filecontents}{parallel_processing_speedup_amd64_8_core_no_gc.data}
+1 1.00
+2 1.99
+3 2.47
+4 2.24
+5 2.65
+6 3.12
+7 4.14
+8 4.22
+9 4.07
+10 3.84
+11 3.93
+12 4.10
+13 4.13
+14 4.25
+15 4.28
+16 4.54
+17 4.42
+18 4.60
+19 4.63
+20 4.56
+21 4.42
+22 4.45
+23 4.47
+24 4.45
+25 4.73
+26 4.96
+27 3.93
+28 3.97
+29 4.06
+30 4.09
+31 4.21
+32 4.19
+33 4.20
 \end{filecontents}
 
 \begin{filecontents}{parallel_processing_speedup_intel_4_core_pthread.data}
@@ -637,6 +642,104 @@ layers are added to the SALS AI.
 64 3.45
 \end{filecontents}
 
+\begin{filecontents}{parallel_processing_speedup_intel_4_core.data}
+1 1.00
+2 1.42
+3 1.90
+4 2.34
+5 2.66
+6 3.07
+7 3.14
+8 3.26
+9 3.23
+10 3.03
+11 3.18
+12 3.60
+13 3.34
+14 3.34
+15 3.09
+16 3.31
+17 3.17
+18 3.13
+19 3.17
+20 3.16
+21 3.29
+22 3.26
+23 3.26
+24 3.23
+25 3.59
+26 3.51
+27 3.48
+28 3.47
+29 3.06
+30 3.17
+31 2.98
+32 3.29
+33 3.23
+34 3.61
+35 3.63
+36 3.40
+37 3.11
+38 3.06
+39 3.10
+40 3.17
+41 3.29
+42 2.98
+43 3.19
+44 3.11
+45 3.06
+46 3.22
+\end{filecontents}
+
+\begin{filecontents}{parallel_processing_speedup_intel_4_core_no_gc.data}
+1 1.00
+2 1.43
+3 1.93
+4 2.39
+5 2.71
+6 3.15
+7 3.26
+8 3.36
+9 3.35
+10 3.10
+11 3.31
+12 3.69
+13 3.48
+14 3.47
+15 3.22
+16 3.39
+17 3.27
+18 3.25
+19 3.29
+20 3.25
+21 3.36
+22 3.35
+23 3.37
+24 3.36
+25 3.80
+26 3.66
+27 3.68
+28 3.60
+29 3.21
+30 3.31
+31 3.10
+32 3.44
+33 3.34
+34 3.83
+35 3.80
+36 3.55
+37 3.31
+38 3.20
+39 3.22
+40 3.30
+41 3.42
+42 3.09
+43 3.29
+44 3.22
+45 3.17
+46 3.33
+\end{filecontents}
+
 The SALS virtual machine is built to take advantage of multiple
 processors and multicore processors with hardware hyperthreads.
 {\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}
@@ -666,7 +769,7 @@ xmin=0, xmax=64,
 ymin=0, ymax=4,
 xlabel={Process Count},
 ylabel={Speedup Factor},
-legend entries={Optimal GNU/Linux,SALS Virtual Machine},
+legend entries={Optimal GNU/Linux,SALS Virtual Machine,SALS Virtual Machine (No GC)},
 legend style={nodes=right},
 legend pos= south east,
 grid = major,
@@ -678,6 +781,9 @@ grid style={dashed, gray!30},
 
 %\addplot [color=black, solid]
 \addplot plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_intel_4_core.data};
+
+%\addplot [color=black, solid]
+\addplot[dotted] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_intel_4_core_no_gc.data};
 
 \end{axis}
 \end{tikzpicture}
@@ -717,7 +823,7 @@ xmin=0, xmax=64,
 ymin=0, ymax=10,
 xlabel={Process Count},
 ylabel={Speedup Factor},
-legend entries={Optimal GNU/Linux,SALS Virtual Machine},
+legend entries={Optimal GNU/Linux,SALS Virtual Machine,SALS Virtual Machine (No GC)},
 legend style={nodes=right},
 legend pos= south east,
 grid = major,
@@ -726,6 +832,12 @@ grid style={dashed, gray!30},
         
 %\addplot [color=black, solid]
 \addplot[dashed] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_amd64_8_core_pthread.data};
+
+%\addplot [color=black, solid]
+\addplot plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_amd64_8_core.data};
+
+%\addplot [color=black, solid]
+\addplot[dotted] plot[color=black, mark=*, mark size=1] file {parallel_processing_speedup_amd64_8_core_no_gc.data};
 
 \end{axis}
 \end{tikzpicture}

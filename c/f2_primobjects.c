@@ -613,7 +613,6 @@ f2ptr raw__funk__new_copy_in_environment(f2ptr cause, f2ptr this, f2ptr env) {
   f2ptr args                = f2funk__args(               this, cause);
   f2ptr demetropolized_body = f2funk__demetropolized_body(this, cause);
   f2ptr body                = f2funk__body(               this, cause);
-  f2ptr env                 = env;
   f2ptr machine_code        = f2funk__machine_code(       this, cause);
   f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
   f2ptr has_no_side_effects = f2funk__has_no_side_effects(this, cause);

@@ -193,7 +193,7 @@ f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
     while (iter != nil) {
       f2ptr car = f2cons__car(iter, cause);
       f2ptr cdr = f2cons__cdr(iter, cause);
-      if ((cdr != nil) &&
+      if ((cdr == nil) ||
 	  (! raw__expression__is_funktional(cause, car))) {
 	f2ptr new_cons = f2cons__new(cause, car, nil);
 	if (condensed_iter == nil) {

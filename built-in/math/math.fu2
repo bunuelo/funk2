@@ -27,38 +27,96 @@
 
 [defmetro + [x :rest rest]
   [if [null rest]
-      x
-    `[bytecode:add ,x ,[apply &+ rest]]]]
+      [demetropolize x]
+    [let [[rest_result [apply &+ rest]]]
+      [if [and [or [is-type `integer      x]
+		   [is-type `double       x]
+		   [is-type `float        x]
+		   [is-type `largeinteger x]]
+	       [or [is-type `integer      rest_result]
+		   [is-type `double       rest_result]
+		   [is-type `float        rest_result]
+		   [is-type `largeinteger rest_result]]]
+	  [bytecode:add x rest_result]
+	`[bytecode:add ,[demetropolize x] ,[demetropolize rest_result]]]]]]
 
 
 'subtraction'
 
 [defmetro negative [x]
-  `[bytecode:negative ,x]]
+  [if [or [is-type `integer      x]
+	  [is-type `double       x]
+	  [is-type `float        x]
+	  [is-type `largeinteger x]]
+      [bytecode:negative x]
+    `[bytecode:negative ,[demetropolize x]]]]
 
 [defmetro - [x :rest rest]
-  [if [null rest]
-      `[bytecode:negative ,x]
-    `[bytecode:subtract ,x ,[apply &+ rest]]]]
+  [if [or [is-type `integer      x]
+	  [is-type `double       x]
+	  [is-type `float        x]
+	  [is-type `largeinteger x]]
+      [if [null rest]
+	  [bytecode:negative x]
+	[let [[rest_result [apply &+ rest]]]
+	  [if [or [is-type `integer      rest_result]
+		  [is-type `double       rest_result]
+		  [is-type `float        rest_result]
+		  [is-type `largeinteger rest_result]]
+	      [bytecode:subtract x rest_result]
+	    `[bytecode:subtract ,[demetropolize x] ,[demetropolize rest_result]]]]]
+    [if [null rest]
+	`[bytecode:negative ,[demetropolize x]]
+      [let [[rest_result [apply &+ rest]]]
+	`[bytecode:subtract ,[demetropolize x] ,[demetropolize rest_result]]]]]]
 
 
 'multiplication'
 
 [defmetro * [x :rest rest]
   [if [null rest]
-      x
-    `[bytecode:multiply ,x ,[apply &* rest]]]]
+      [demetropolize x]
+    [let [[rest_result [apply &+ rest]]]
+      [if [and [or [is-type `integer      x]
+		   [is-type `double       x]
+		   [is-type `float        x]
+		   [is-type `largeinteger x]]
+	       [or [is-type `integer      rest_result]
+		   [is-type `double       rest_result]
+		   [is-type `float        rest_result]
+		   [is-type `largeinteger rest_result]]]
+	  [bytecode:multiply x rest_result]
+	`[bytecode:multiply ,[demetropolize x] ,[demetropolize rest_result]]]]]]
 
 
 'division'
 
 [defmetro inverse [x]
-  `[bytecode:inverse ,x]]
+  [if [or [is-type `integer      x]
+	  [is-type `double       x]
+	  [is-type `float        x]
+	  [is-type `largeinteger x]]
+      [bytecode:inverse x]
+    `[bytecode:inverse ,[demetropolize x]]]]
 
 [defmetro / [x :rest rest]
-  [if [null rest]
-      `[bytecode:inverse ,x]
-    `[bytecode:divide ,x ,[apply &* rest]]]]
+  [if [or [is-type `integer      x]
+	  [is-type `double       x]
+	  [is-type `float        x]
+	  [is-type `largeinteger x]]
+      [if [null rest]
+	  [bytecode:inverse x]
+	[let [[rest_result [apply &* rest]]]
+	  [if [or [is-type `integer      rest_result]
+		  [is-type `double       rest_result]
+		  [is-type `float        rest_result]
+		  [is-type `largeinteger rest_result]]
+	      [bytecode:divide x rest_result]
+	    `[bytecode:divide ,[demetropolize x] ,[demetropolize rest_result]]]]]
+    [if [null rest]
+	`[bytecode:inverse ,[demetropolize x]]
+      [let [[rest_result [apply &* rest]]]
+	`[bytecode:divide ,[demetropolize x] ,[demetropolize rest_result]]]]]]
 
 
 'modulo'

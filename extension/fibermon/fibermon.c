@@ -396,7 +396,7 @@ f2ptr f2__fibermon_processor__construct_fast(f2ptr cause, f2ptr this) {
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  2), 0), new__string(cause, "total_used_memory"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  3), 0), new__string(cause, "total_free_memory"));
   raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  4), 0), new__string(cause, "fragmentation"));
-  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 0), new__string(cause, "garbage_collection"));
+  raw__gtk__label__set_text(cause, raw__array__elt(cause, raw__array__elt(cause, this__table_labels,  5), 0), new__string(cause, "garbage_collection_time"));
   f2__gtk__box__pack_start(cause, this__vbox, this__table,        nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__progress_bar, nil, nil, f2integer__new(cause, 0));
   f2__gtk__box__pack_start(cause, this__vbox, this__fiber_vbox, f2bool__new(boolean__true), f2bool__new(boolean__true), f2integer__new(cause, 0));

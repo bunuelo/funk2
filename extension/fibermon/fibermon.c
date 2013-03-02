@@ -444,7 +444,7 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   f2ptr this__index                                      = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),                                nil); if (! raw__integer__is_type(  cause, this__index))                                   {return f2larva__new(cause, 92, nil);}
   s64   this__index__i                                   = f2integer__i(this__index, cause);
   f2ptr previous_total_nanoseconds                       = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_nanoseconds"),                    nil);
-  f2ptr previous_total_garbage_collection_nanoseconds    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_garbage_collection_nanoseconds"), nil); if (! raw__integer__is_type(  cause, previous_total_garbage_collection_nanoseconds)) {return f2larva__new(cause, 94, nil);}
+  f2ptr previous_total_garbage_collection_nanoseconds    = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "total_garbage_collection_nanoseconds"), nil);
   u64   previous_total_nanoseconds__i                    = raw__integer__is_type(cause, previous_total_nanoseconds)                    ? f2integer__i(previous_total_nanoseconds, cause)                    : raw__nanoseconds_since_1970();
   u64   previous_total_garbage_collection_nanoseconds__i = raw__integer__is_type(cause, previous_total_garbage_collection_nanoseconds) ? f2integer__i(previous_total_garbage_collection_nanoseconds, cause) : raw__user_thread_controller__total_processor_time_used(cause, this__index__i);
   {

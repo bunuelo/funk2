@@ -442,6 +442,7 @@ export_cefunk1(fibermon_processor__redraw_fast, this, 0, "");
 f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this) {
   f2ptr this__fibermon_fiber_hash = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "fibermon_fiber_hash"), nil); if (! raw__ptypehash__is_type(cause, this__fibermon_fiber_hash)) {return f2larva__new(cause, 91, nil);}
   f2ptr this__index               = f2__frame__lookup_var_value(cause, this, new__symbol(cause, "index"),               nil); if (! raw__integer__is_type(  cause, this__index))               {return f2larva__new(cause, 92, nil);}
+  s64   this__index__i            = f2integer__i(this__index, cause);
   {
     f2ptr this__bytecodes_per_second = f2integer__new(cause, 0);
     f2ptr this__execution_efficiency = f2integer__new(cause, 0);
@@ -471,7 +472,7 @@ f2ptr f2__fibermon_processor__recompute_statistics_fast(f2ptr cause, f2ptr this)
   s64    maximum_block__byte_num__i                    = f2integer__i(maximum_block__byte_num, cause);
   double this__fragmentation__d                        = 1.0 - ((this__total_free_memory__i == 0) ? 0.0 : (((double)maximum_block__byte_num__i) / ((double)this__total_free_memory__i)));
   f2ptr  this__fragmentation                           = f2double__new(cause, this__fragmentation__d);
-  double this__total_garbage_collection_nanoseconds__i = 0.0;
+  double this__total_garbage_collection_nanoseconds__i = raw__user_thread_controller__total_processor_time_used(cause, this__index__i);
   f2ptr  this__total_garbage_collection_nanoseconds    = f2integer__new(cause, this__total_garbage_collection_nanoseconds__i);
   
   f2__frame__add_var_value(cause, this, new__symbol(cause, "total_used_memory"),                    this__total_used_memory);

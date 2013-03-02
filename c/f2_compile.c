@@ -1800,6 +1800,14 @@ f2ptr raw__expression__replace_variable__funkvar_call(f2ptr cause, f2ptr fiber, 
   return new_expression;
 }
 
+f2ptr raw__expression__replace_variable__define_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
+  f2ptr new_value_expression = raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument);
+  return new_value_expression;
+}
+
 f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr car = f2cons__car(exp, cause);
   if (raw__symbol__eq(cause, car, __funk2.globalenv.quote__symbol))                       {return exp;}
@@ -1811,7 +1819,7 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return exp;}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return exp;} // should handle special case
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return raw__expression__replace_variable__define_funk(cause, fiber, env, exp, replace_variable, replace_argument);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return exp;} // should handle special case
   if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return exp;} // should handle special case
   if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return exp;} // potential problematic variable mutate

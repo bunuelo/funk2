@@ -301,30 +301,12 @@ f2ptr raw__primmetro__metro__new_with_name_and_environment(f2ptr cause, f2ptr na
   f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
   f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, body_expressions));
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
-  f2ptr compiled_bytecodes                   = assert_value(f2__funk__body_bytecodes(cause, compiled_funk));
-  f2ptr is_funktional                        = assert_value(f2__funk__is_funktional(cause, compiled_funk));
   return f2list2__new(cause,
 		      new__symbol(cause, "metro-new"),
-		      f2list9__new(cause,
-				   new__symbol(cause, "funk-new"),
-				   environment,
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						name),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						variables),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						body_expressions__demetropolize_full),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						body_expressions),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						compiled_bytecodes),
-				   is_funktional,
-				   nil));
+		      f2list3__new(cause,
+				   new__symbol(cause, "funk-new_copy_in_environment"),
+				   compiled_funk,
+				   environment));
 }
 
 f2ptr f2__primmetro__metro__new_with_name_and_environment(f2ptr cause, f2ptr name, f2ptr environment, f2ptr variables, f2ptr body_expressions) {
@@ -349,30 +331,12 @@ f2ptr raw__primmetro__metro__new_with_name(f2ptr cause, f2ptr name, f2ptr variab
   f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
   f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, body_expressions));
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
-  f2ptr compiled_bytecodes                   = assert_value(f2__funk__body_bytecodes(cause, compiled_funk));
-  f2ptr is_funktional                        = assert_value(f2__funk__is_funktional(cause, compiled_funk));
   return f2list2__new(cause,
 		      new__symbol(cause, "metro-new"),
-		      f2list9__new(cause,
-				   new__symbol(cause, "funk-new"),
-				   environment,
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						name),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						variables),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						body_expressions__demetropolize_full),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						body_expressions),
-				   f2list2__new(cause,
-						new__symbol(cause, "quote"),
-						compiled_bytecodes),
-				   is_funktional,
-				   nil));
+		      f2list3__new(cause,
+				   new__symbol(cause, "funk-new_copy_in_environment"),
+				   compiled_funk,
+				   environment));
 }
 
 f2ptr f2__primmetro__metro__new_with_name(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body_expressions) {

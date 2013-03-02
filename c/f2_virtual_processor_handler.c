@@ -246,9 +246,11 @@ s64 funk2_virtual_processor_handler__try_get_my_virtual_processor_index(funk2_vi
 
 u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {
   s64 virtual_processor_index = funk2_virtual_processor_handler__try_get_my_virtual_processor_index(this);
+#if defined(DEBUG)
   if (virtual_processor_index == -1) {
     error(nil, "funk2_virtual_processor_handler__my_virtual_processor_index fatal error: could not find virtual processor index.");
   }
+#endif // defined(DEBUG)
   return (u64)virtual_processor_index;
 }
 

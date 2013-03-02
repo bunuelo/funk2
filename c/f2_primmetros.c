@@ -363,7 +363,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	      boolean_t variable_was_removed = boolean__false;
 	      if (raw__expression__is_funktional(cause, argument)) {
 		f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-		if (raw__larva__is_type(cause, result)) {
+		if (! raw__larva__is_type(cause, result)) {
 		  variable_was_removed  = boolean__true;
 		  funk_was_reduced      = boolean__true;
 		  reduced_compiled_funk = result;

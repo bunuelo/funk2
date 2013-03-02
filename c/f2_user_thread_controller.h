@@ -214,6 +214,9 @@ void  funk2_user_thread_controller__need_start_count__wait_until_nonzero        
 void  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely  (funk2_user_thread_controller_t* this);
 void  funk2_user_thread_controller__need_wait__set                                     (funk2_user_thread_controller_t* this, boolean_t need_wait);
+s64   funk2_user_thread_controller__total_processor_time_used                          (funk2_user_thread_controller_t* this, s64 processor_index);
+u64    raw__user_thread_controller__total_processor_time_used                          (f2ptr cause, s64 processor_index);
+f2ptr   f2__user_thread_controller__total_processor_time_used                          (f2ptr cause, f2ptr processor_index);
 
 #define check_wait_politely() { \
     if (__funk2.user_thread_controller.need_wait) {		\

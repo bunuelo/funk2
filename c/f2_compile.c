@@ -1427,7 +1427,8 @@ f2ptr f2__compile__cons_exp(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_
   //f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
   f2ptr funkvar_value = f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, car);
   // check to see if we can find metro binding for this funkvar.
-  if (raw__metro__is_type(cause, funkvar_value)) {
+  if (raw__metro__is_type(cause, funkvar_value) ||
+      raw__metrocfunk__is_type(cause, funkvar_value)) {
     f2ptr metro_apply_result = assert_value(raw__apply_metro(cause, fiber, funkvar_value, f2cons__cdr(exp, cause)));
     return raw__compile(cause, fiber, metro_apply_result, boolean__true, boolean__false, NULL, is_funktional, local_variables, is_locally_funktional);
   }
@@ -1654,7 +1655,8 @@ f2ptr f2__demetropolize_once(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr e
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
-      if (raw__metro__is_type(cause, funkvar_value)) {
+      if (raw__metro__is_type(cause, funkvar_value) ||
+	  raw__metrocfunk__is_type(cause, funkvar_value)) {
 	f2ptr metro_apply_result = assert_value(raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause)));
 	values = raw__cons__new(simple_cause, __funk2.globalenv.true__symbol, metro_apply_result);
       }
@@ -1691,7 +1693,8 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
     {
       f2ptr car = f2cons__car(exp, cause);
       f2ptr funkvar_value = environment__lookup_funkvar_value(cause, f2fiber__env(fiber, cause), car);
-      if (raw__metro__is_type(cause, funkvar_value)) {
+      if (raw__metro__is_type(cause, funkvar_value) ||
+	  raw__metrocfunk__is_type(cause, funkvar_value)) {
 	f2ptr metro_apply_result = assert_value(raw__apply_metro(simple_cause, fiber, funkvar_value, f2cons__cdr(exp, cause)));
 	values = raw__cons__new(simple_cause, __funk2.globalenv.true__symbol, metro_apply_result);
       }

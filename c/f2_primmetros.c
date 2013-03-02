@@ -348,6 +348,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	    while ((arguments_iter != nil) &&
 		   (variables_iter != nil)) {
 	      f2ptr argument = f2cons__car(arguments_iter, cause);
+	      f2ptr variable = f2cons__car(variables_iter, cause);
 	      if (raw__expression__is_funktional(cause, argument)) {
 		reduced_compiled_funk = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
 	      } else {
@@ -360,6 +361,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 		remaining_arguments_iter = new_arguments_cons;
 	      }
 	      arguments_iter = f2cons__cdr(arguments_iter, cause);
+	      variables_iter = f2cons__cdr(variables_iter, cause);
 	    }
 	    return f2list3__new(cause,
 				new__symbol(cause, "funk-local_apply"),

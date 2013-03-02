@@ -1812,6 +1812,9 @@ f2ptr raw__expression__replace_variable__define_funk(f2ptr cause, f2ptr fiber, f
 f2ptr raw__expression__replace_variable__define(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr cdr                  = f2cons__cdr(expression, cause);
   f2ptr variable_name        = f2cons__car(cdr, cause);
+  if (raw__eq(cause, variable_name, replace_variable)) {
+    return f2larva__new(cause, 555, nil);
+  }
   f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
   f2ptr value_expression     = f2cons__car(cdr_cdr, cause);
   f2ptr new_value_expression = assert_value(raw__expression__replace_variable(cause, value_expression, replace_variable, replace_argument));

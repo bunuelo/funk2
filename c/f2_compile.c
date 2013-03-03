@@ -1754,7 +1754,7 @@ f2ptr f2__demetropolize__define_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr 
       if (raw__cons__is_type(cause, exp__cddr)) {
 	f2ptr value                      = f2cons__car(exp__cddr, cause);
 	f2ptr demetro_value__values      = assert_value(f2__demetropolize_once(cause, fiber, env, value));
-	f2ptr demetro_value__values__car = assert_value(f2__cons__car(cause, demetro_arg__values));
+	f2ptr demetro_value__values__car = assert_value(f2__cons__car(cause, demetro_value__values));
 	if(demetro_value__values__car != nil) {
 	  did_something = __funk2.globalenv.true__symbol;
 	}

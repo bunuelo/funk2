@@ -1743,7 +1743,7 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   return raw__cons__new(cause, did_something, demetro_exp);
 }
 
-f2ptr f2__demetropolize__define_funk(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp) {
+f2ptr f2__demetropolize__define_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   f2ptr did_something = nil;
   f2ptr demetro_exp   = exp;
   if (raw__cons__is_type(cause, exp)) {

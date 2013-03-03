@@ -204,6 +204,7 @@ f2ptr      f2__compile__symbol                              (f2ptr cause, f2ptr 
 f2ptr      f2__wrong_argument_number__bcs__set              (f2ptr cause, f2ptr bytecodes);
 f2ptr      f2__compile__push_debug_funk_call                (f2ptr cause);
 f2ptr      f2__compile__pop_debug_funk_call                 (f2ptr cause);
+boolean_t raw__expression__is_funktional                    (f2ptr cause, f2ptr expression);
 f2ptr      f2__compile__funk                                (f2ptr simple_cause, f2ptr fiber, f2ptr funk);
 f2ptr      f2__compile__metro                               (f2ptr simple_cause, f2ptr fiber, f2ptr metro);
 f2ptr     raw__list_cdr__set                                (f2ptr cause, f2ptr seq, f2ptr cdr_value);

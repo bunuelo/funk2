@@ -46,37 +46,8 @@ def_pcfunk1(cfunk__as__metrocfunk, this,
 	    "",
 	    return f2__cfunk__as__metrocfunk(this_cause, this));
 
-boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression);
 
 
-boolean_t raw__expression__bytecode_add__is_funktional(f2ptr cause, f2ptr expression) {
-  f2ptr cdr = f2cons__cdr(expression, cause);
-  if (raw__cons__is_type(cause, cdr)) {
-    f2ptr arg1    = f2cons__car(cdr, cause);
-    if (raw__expression__is_funktional(cause, arg1)) {
-      f2ptr cdr_cdr = f2cons__cdr(cdr, cause);
-      if (raw__cons__is_type(cause, cdr_cdr)) {
-	f2ptr arg2 = f2cons__car(cdr_cdr, cause);
-	if (raw__expression__is_funktional(cause, arg2)) {
-	  return boolean__true;
-	}
-      }
-    }
-  }
-  return boolean__false;
-}
-
-boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
-  if (raw__integer__is_type(cause, expression) ||
-      raw__double__is_type( cause, expression) ||
-      raw__float__is_type(  cause, expression) ||
-      raw__pointer__is_type(cause, expression) ||
-      raw__char__is_type(   cause, expression) ||
-      raw__string__is_type( cause, expression)) {
-    return boolean__true;
-  }
-  return boolean__false;
-}
 
 
 

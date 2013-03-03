@@ -203,6 +203,18 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
   return full_bcs;
 }
 
+boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
+  if (raw__integer__is_type(cause, expression) ||
+      raw__double__is_type( cause, expression) ||
+      raw__float__is_type(  cause, expression) ||
+      raw__pointer__is_type(cause, expression) ||
+      raw__char__is_type(   cause, expression) ||
+      raw__string__is_type( cause, expression)) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
 f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
@@ -211,8 +223,8 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
       f2ptr expression__cddr = f2cons__cdr(expression__cdr, cause);
       if (raw__cons__is_type(cause, expression__cddr)) {
 	f2ptr arguments = f2cons__car(expression__cddr, cause);
-	f2ptr fiber                   = f2__this__fiber(cause);
-	f2ptr env                     = f2fiber__env(fiber, cause);
+	//f2ptr fiber                   = f2__this__fiber(cause);
+	//f2ptr env                     = f2fiber__env(fiber, cause);
 	//f2ptr demetropolized_funkable = assert_value(f2__demetropolize_full(cause, fiber, env, funkable));
 	if (raw__cons__is_type(cause, demetropolized_funkable)) {
 	  f2ptr command = f2cons__car(demetropolized_funkable, cause);

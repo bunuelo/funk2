@@ -242,6 +242,8 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		      f2ptr cdr = f2cons__cdr(iter, cause);
 		      if ((cdr == nil) ||
 			  (! raw__expression__is_funktional(cause, car))) {
+			// do nothing.
+		      } else {
 			can_be_condensed = boolean__true;
 		      }
 		      iter = cdr;

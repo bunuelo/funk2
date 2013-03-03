@@ -212,7 +212,6 @@ f2ptr raw__funk__flatten_local_applies(f2ptr cause, f2ptr this) {
 	   (! can_optimize)) {
       f2ptr expression = f2cons__car(iter, cause);
       {
-	boolean_t expression_rewritten = boolean__false;
 	if (raw__cons__is_type(cause, expression)) {
 	  f2ptr command = f2cons__car(expression, cause);
 	  if (raw__eq(cause, command, __funk2.globalenv.local_apply__symbol)) {

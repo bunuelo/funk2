@@ -204,12 +204,12 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
 }
 
 f2ptr raw__funk__flatten_local_applies(f2ptr cause, f2ptr this) {
-  f2ptr demetropolized_body     = assert_value(f2funk__demetropolized_body(this, cause));
-  f2ptr new_demetropolized_body = nil;
+  f2ptr     demetropolized_body = assert_value(f2funk__demetropolized_body(this, cause));
+  boolean_t can_optimize        = boolean__false;
   {
-    f2ptr new_demetropolized_body_iter = nil;
-    f2ptr iter                         = demetropolized_body;
-    while (iter != nil) {
+    f2ptr iter = demetropolized_body;
+    while ((iter != nil) &&
+	   (! can_optimize)) {
       f2ptr expression = f2cons__car(iter, cause);
       {
 	boolean_t expression_rewritten = boolean__false;
@@ -222,41 +222,70 @@ f2ptr raw__funk__flatten_local_applies(f2ptr cause, f2ptr this) {
 	      if (raw__funk__is_type(cause, funkable)) {
 		f2ptr funkable__args = f2funk__args(funkable, cause);
 		if (funkable__args == nil) {
-		  expression_rewritten                = boolean__true;
-		  f2ptr funkable__demetropolized_body = assert_value(f2funk__demetropolized_body(funkable, cause));
-		  f2ptr funkable__iter                = funkable__demetropolized_body;
-		  while (funkable__iter != nil) {
-		    f2ptr funkable__expression = f2cons__car(funkable__iter, cause);
-		    {
-		      f2ptr new_cons = f2cons__new(cause, funkable__expression, nil);
-		      if (new_demetropolized_body == nil) {
-			new_demetropolized_body = new_cons;
-		      } else {
-			f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
-		      }
-		      new_demetropolized_body_iter = new_cons;
-		    }		
-		    funkable__iter = f2cons__cdr(funkable__iter, cause);
-		  }
+		  can_optimize = boolean__true;
 		}
 	      }
 	    }
 	  }
 	}
-	if (! expression_rewritten) {
-	  f2ptr new_cons = f2cons__new(cause, expression, nil);
-	  if (new_demetropolized_body == nil) {
-	    new_demetropolized_body = new_cons;
-	  } else {
-	    f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
-	  }
-	  new_demetropolized_body_iter = new_cons;
-	}
       }
       iter = f2cons__cdr(iter, cause);
     }
   }
-  f2funk__demetropolized_body__set(this, cause, new_demetropolized_body);
+  if (can_optimize) {
+    f2ptr new_demetropolized_body = nil;
+    {
+      f2ptr new_demetropolized_body_iter = nil;
+      f2ptr iter                         = demetropolized_body;
+      while (iter != nil) {
+	f2ptr expression = f2cons__car(iter, cause);
+	{
+	  boolean_t expression_rewritten = boolean__false;
+	  if (raw__cons__is_type(cause, expression)) {
+	    f2ptr command = f2cons__car(expression, cause);
+	    if (raw__eq(cause, command, __funk2.globalenv.local_apply__symbol)) {
+	      f2ptr cdr = f2cons__cdr(expression, cause);
+	      if (raw__cons__is_type(cause, cdr)) {
+		f2ptr funkable = f2cons__car(cdr, cause);
+		if (raw__funk__is_type(cause, funkable)) {
+		  f2ptr funkable__args = f2funk__args(funkable, cause);
+		  if (funkable__args == nil) {
+		    expression_rewritten                = boolean__true;
+		    f2ptr funkable__demetropolized_body = assert_value(f2funk__demetropolized_body(funkable, cause));
+		    f2ptr funkable__iter                = funkable__demetropolized_body;
+		    while (funkable__iter != nil) {
+		      f2ptr funkable__expression = f2cons__car(funkable__iter, cause);
+		      {
+			f2ptr new_cons = f2cons__new(cause, funkable__expression, nil);
+			if (new_demetropolized_body == nil) {
+			  new_demetropolized_body = new_cons;
+			} else {
+			  f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
+			}
+			new_demetropolized_body_iter = new_cons;
+		      }		
+		      funkable__iter = f2cons__cdr(funkable__iter, cause);
+		    }
+		  }
+		}
+	      }
+	    }
+	  }
+	  if (! expression_rewritten) {
+	    f2ptr new_cons = f2cons__new(cause, expression, nil);
+	    if (new_demetropolized_body == nil) {
+	      new_demetropolized_body = new_cons;
+	    } else {
+	      f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
+	    }
+	    new_demetropolized_body_iter = new_cons;
+	  }
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    f2funk__demetropolized_body__set(this, cause, new_demetropolized_body);
+  }
   return this;
 }
 

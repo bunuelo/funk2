@@ -1290,12 +1290,39 @@ def_pcfunk2(largeinteger__multiplied_by, this, that,
 f2ptr f2__largeinteger__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   assert_argument_type(largeinteger, this);
   if (raw__integer__is_type(cause, number)) {
+    s64 denomenator = f2integer__i(number, cause);
+    if (denomenator == 0) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "divide_by_zero"),
+				     new__symbol(cause, "this"),     this,
+				     new__symbol(cause, "number"),   number));
+    }
     return f2__largeinteger__divide(cause, this, f2__largeinteger__new(cause, number));
   } else if (raw__double__is_type(cause, number)) {
-    return f2double__new(cause, raw__largeinteger__as__double(cause, this) / f2double__d(number, cause));
+    double denomenator = f2double__d(number, cause);
+    if (denomenator == 0.0) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "divide_by_zero"),
+				     new__symbol(cause, "this"),     this,
+				     new__symbol(cause, "number"),   number));
+    }
+    return f2double__new(cause, raw__largeinteger__as__double(cause, this) / denomenator);
   } else if (raw__float__is_type(cause, number)) {
-    return f2float__new(cause, (float)raw__largeinteger__as__double(cause, this) / f2float__f(number, cause));
+    float denomenator = f2float__f(number, cause);
+    if (denomenator == 0.0) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "divide_by_zero"),
+				     new__symbol(cause, "this"),     this,
+				     new__symbol(cause, "number"),   number));
+    }
+    return f2float__new(cause, (float)raw__largeinteger__as__double(cause, this) / denomenator);
   } else if (raw__largeinteger__is_type(cause, number)) {
+    if (raw__largeinteger__is_zero(cause, number)) {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"), new__symbol(cause, "divide_by_zero"),
+				     new__symbol(cause, "this"),     this,
+				     new__symbol(cause, "number"),   number));
+    }
     return f2__largeinteger__divide(cause, this, number);
   }
   return f2larva__new(cause, 126111, nil);

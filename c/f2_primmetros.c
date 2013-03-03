@@ -219,10 +219,10 @@ def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
  */
 
 f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
-  f2ptr fiber                                          = assert_value(f2__this__fiber(cause));
-  f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
+  f2ptr fiber                                = assert_value(f2__this__fiber(cause));
+  f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
   f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
-  f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
+  f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
   return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), nil);
 }
 

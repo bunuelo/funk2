@@ -2102,7 +2102,7 @@ f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr rep
       return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
     }
   }
-  return demetropolized_expression;
+  return expression;
 }
 
 

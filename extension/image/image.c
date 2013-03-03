@@ -33,23 +33,23 @@ f2ptr raw__image__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
   if ((width__i < 0) || (height__i < 0)) {
-    return new__error(list8__new(cause,
-				 new__symbol(cause, "bug_name"),  new__symbol(cause, "image-new-width_or_height_is_less_than_zero"),
-				 new__symbol(cause, "width"),     width,
-				 new__symbol(cause, "height"),    height,
-				 new__symbol(cause, "rgba_data"), rgba_data));
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"),  new__symbol(cause, "image-new-width_or_height_is_less_than_zero"),
+				   new__symbol(cause, "width"),     width,
+				   new__symbol(cause, "height"),    height,
+				   new__symbol(cause, "rgba_data"), rgba_data));
   }
   if (rgba_data == nil) {
     rgba_data = raw__chunk__new(cause, 4 * width__i * height__i);
   } else {
     s64 rgba_data__length = f2chunk__length(rgba_data, cause);
     if (rgba_data__length != 4 * width__i * height__i) {
-      return new__error(list10__new(cause,
-				    new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgba_data_wrong_length"),
-				    new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 4 must equal the length of the given rgba_data."),
-				    new__symbol(cause, "width"),           width,
-				    new__symbol(cause, "height"),          height,
-				    new__symbol(cause, "rgba_data"),       rgba_data));
+      return new__error(f2list10__new(cause,
+				      new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgba_data_wrong_length"),
+				      new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 4 must equal the length of the given rgba_data."),
+				      new__symbol(cause, "width"),           width,
+				      new__symbol(cause, "height"),          height,
+				      new__symbol(cause, "rgba_data"),       rgba_data));
     }
   }
   return f2image__new(cause, width, height, rgba_data);
@@ -68,20 +68,20 @@ f2ptr raw__image__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2pt
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
   if ((width__i < 0) || (height__i < 0)) {
-    return new__error(list8__new(cause,
-				 new__symbol(cause, "bug_name"), new__symbol(cause, "image-new_from_rgb_data-width_or_height_is_less_than_zero"),
-				 new__symbol(cause, "width"),    width,
-				 new__symbol(cause, "height"),   height,
-				 new__symbol(cause, "rgb_data"), rgb_data));
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "image-new_from_rgb_data-width_or_height_is_less_than_zero"),
+				   new__symbol(cause, "width"),    width,
+				   new__symbol(cause, "height"),   height,
+				   new__symbol(cause, "rgb_data"), rgb_data));
   }
   s64 rgb_data__length = f2chunk__length(rgb_data, cause);
   if (rgb_data__length != 3 * width__i * height__i) {
-    return new__error(list10__new(cause,
-				  new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgb_data_wrong_length"),
-				  new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 3 must equal the length of the given rgb_data."),
-				  new__symbol(cause, "width"),           width,
-				  new__symbol(cause, "height"),          height,
-				  new__symbol(cause, "rgb_data"),        rgb_data));
+    return new__error(f2list10__new(cause,
+				    new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgb_data_wrong_length"),
+				    new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 3 must equal the length of the given rgb_data."),
+				    new__symbol(cause, "width"),           width,
+				    new__symbol(cause, "height"),          height,
+				    new__symbol(cause, "rgb_data"),        rgb_data));
   }
   f2ptr rgba_data = raw__chunk__new(cause, 4 * width__i * height__i);
   {

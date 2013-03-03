@@ -266,7 +266,7 @@ f2ptr f2__integer__divided_by(f2ptr cause, f2ptr this, f2ptr number) {
   assert_argument_type(integer, this);
   s64 value = f2integer__i(this, cause);
   if (raw__integer__is_type(cause, number)) {
-    s64 demomenator = f2integer__i(number, cause);
+    s64 denomenator = f2integer__i(number, cause);
     if (denomenator == 0) {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"), new__symbol(cause, "divide_by_zero"),

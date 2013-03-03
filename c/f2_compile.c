@@ -2080,21 +2080,27 @@ f2ptr raw__expression__replace_variable__funk__new_copy_in_this_environment(f2pt
   return f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), new_funkable);
 }
 
-f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+f2ptr raw__undemetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr fiber                     = f2__this__fiber(cause);
   f2ptr env                       = f2fiber__env(fiber, cause);
   f2ptr demetropolized_expression = assert_value(f2__demetropolize_full(cause, fiber, env, expression));
-  if (raw__symbol__is_type(cause, demetropolized_expression)) {
-    if (raw__eq(cause, demetropolized_expression, replace_variable)) {
+  return raw__expression__replace_variable(cause, demetropolized_expression, replace_variable, replace_argument);
+}
+
+f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr env   = f2fiber__env(fiber, cause);
+  if (raw__symbol__is_type(cause, expression)) {
+    if (raw__eq(cause, expression, replace_variable)) {
       return replace_argument;
     }
   }
-  if (raw__cons__is_type(cause, demetropolized_expression)) {
-    f2ptr command = f2cons__car(demetropolized_expression, cause);
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
     if (raw__is_compile_special_symbol(cause, command)) {
-      return assert_value(raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, demetropolized_expression, replace_variable, replace_argument));
+      return assert_value(raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, expression, replace_variable, replace_argument));
     } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
-      return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, demetropolized_expression, replace_variable, replace_argument));
+      return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
     }
   }
   return demetropolized_expression;

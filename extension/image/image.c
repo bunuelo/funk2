@@ -33,25 +33,32 @@ f2ptr raw__image__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
   if ((width__i < 0) || (height__i < 0)) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(list8__new(cause,
+				 new__symbol(cause, "bug_name"),  new__symbol(cause, "image-new-width_or_height_is_less_than_zero"),
+				 new__symbol(cause, "width"),     width,
+				 new__symbol(cause, "height"),    height,
+				 new__symbol(cause, "rgba_data"), rgba_data));
   }
   if (rgba_data == nil) {
     rgba_data = raw__chunk__new(cause, 4 * width__i * height__i);
   } else {
     s64 rgba_data__length = f2chunk__length(rgba_data, cause);
     if (rgba_data__length != 4 * width__i * height__i) {
-      return f2larva__new(cause, 3, nil);
+      return new__error(list10__new(cause,
+				    new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgba_data_wrong_length"),
+				    new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 4 must equal the length of the given rgba_data."),
+				    new__symbol(cause, "width"),           width,
+				    new__symbol(cause, "height"),          height,
+				    new__symbol(cause, "rgba_data"),       rgba_data));
     }
   }
   return f2image__new(cause, width, height, rgba_data);
 }
 
 f2ptr f2__image__new(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgba_data) {
-  if ((! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      ((rgba_data != nil) && (! raw__chunk__is_type(cause, rgba_data)))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(       integer, width);
+  assert_argument_type(       integer, height);
+  assert_argument_type_or_nil(chunk,   rgba_data);
   return raw__image__new(cause, width, height, rgba_data);
 }
 export_cefunk3(image__new, width, height, rgba_data, 0, "Returns a new image object.  rgba_data can be nil, in which case a black image is returned.");
@@ -61,11 +68,20 @@ f2ptr raw__image__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2pt
   s64 width__i  = f2integer__i(width,  cause);
   s64 height__i = f2integer__i(height, cause);
   if ((width__i < 0) || (height__i < 0)) {
-    return f2larva__new(cause, 2, nil);
+    return new__error(list8__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "image-new_from_rgb_data-width_or_height_is_less_than_zero"),
+				 new__symbol(cause, "width"),    width,
+				 new__symbol(cause, "height"),   height,
+				 new__symbol(cause, "rgb_data"), rgb_data));
   }
   s64 rgb_data__length = f2chunk__length(rgb_data, cause);
   if (rgb_data__length != 3 * width__i * height__i) {
-    return f2larva__new(cause, 3, nil);
+    return new__error(list10__new(cause,
+				  new__symbol(cause, "bug_name"),        new__symbol(cause, "image-new-rgb_data_wrong_length"),
+				  new__symbol(cause, "bug_description"), new__string(cause, "Width * Height * 3 must equal the length of the given rgb_data."),
+				  new__symbol(cause, "width"),           width,
+				  new__symbol(cause, "height"),          height,
+				  new__symbol(cause, "rgb_data"),        rgb_data));
   }
   f2ptr rgba_data = raw__chunk__new(cause, 4 * width__i * height__i);
   {
@@ -90,11 +106,9 @@ f2ptr raw__image__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2pt
 }
 
 f2ptr f2__image__new_from_rgb_data(f2ptr cause, f2ptr width, f2ptr height, f2ptr rgb_data) {
-  if ((! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__chunk__is_type(  cause, rgb_data))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(integer, width);
+  assert_argument_type(integer, height);
+  assert_argument_type(chunk,   rgb_data);
   return raw__image__new_from_rgb_data(cause, width, height, rgb_data);
 }
 export_cefunk3(image__new_from_rgb_data, width, height, rgb_data, 0, "Returns a new image object from rgb_data.");
@@ -146,13 +160,11 @@ f2ptr raw__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr redu
 }
 
 f2ptr f2__image__write_reduction_image_part(f2ptr cause, f2ptr this, f2ptr reduced_image, f2ptr reduction_factor, f2ptr x_offset, f2ptr y_offset) {
-  if ((! raw__image__is_type(cause, this)) ||
-      (! raw__image__is_type(cause, reduced_image)) ||
-      (! raw__integer__is_type(cause, reduction_factor)) ||
-      (! raw__integer__is_type(cause, x_offset)) ||
-      (! raw__integer__is_type(cause, y_offset))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(image, this);
+  assert_argument_type(image, reduced_image);
+  assert_argument_type(integer, reduction_factor);
+  assert_argument_type(integer, x_offset);
+  assert_argument_type(integer, y_offset);
   return raw__image__write_reduction_image_part(cause, this, reduced_image, reduction_factor, x_offset, y_offset);
 }
 export_cefunk5(image__write_reduction_image_part, this, reduced_image, reduction_factor, x_offset, y_offset, 0, "");
@@ -175,19 +187,19 @@ f2ptr raw__image__copy_rectangle_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_
       ((min_y           < 0) || (min_y        + rectangle_height > this__height__i)) ||
       ((target_min_x    < 0) || (target_min_x + rectangle_width  > target__width__i)) ||
       ((target_min_y    < 0) || (target_min_y + rectangle_height > target__height__i))) {
-    return f2larva__new(cause, 3, f2__bug__new(cause, f2integer__new(cause, 3), f2__frame__new(cause, f2list24__new(cause,
-														    new__symbol(cause, "bug_type"),         new__symbol(cause, "copy_dimensions_are_outside_of_image_dimensions"),
-														    new__symbol(cause, "funkname"),         new__symbol(cause, "image-copy_rectangle_to"),
-														    new__symbol(cause, "rectangle_width"),  f2integer__new(cause, rectangle_width),
-														    new__symbol(cause, "rectangle_height"), f2integer__new(cause, rectangle_height),
-														    new__symbol(cause, "this-min_x"),       f2integer__new(cause, min_x),
-														    new__symbol(cause, "this-min_y"),       f2integer__new(cause, min_y),
-														    new__symbol(cause, "target-min_x"),     f2integer__new(cause, target_min_x),
-														    new__symbol(cause, "target-min_y"),     f2integer__new(cause, target_min_y),
-														    new__symbol(cause, "this-width"),       f2integer__new(cause, this__width__i),
-														    new__symbol(cause, "this-height"),      f2integer__new(cause, this__height__i),
-														    new__symbol(cause, "target-width"),     f2integer__new(cause, target__width__i),
-														    new__symbol(cause, "target-height"),    f2integer__new(cause, target__height__i)))));
+    return new__error(f2list24__new(cause,
+				    new__symbol(cause, "bug_type"),         new__symbol(cause, "copy_dimensions_are_outside_of_image_dimensions"),
+				    new__symbol(cause, "funkname"),         new__symbol(cause, "image-copy_rectangle_to"),
+				    new__symbol(cause, "rectangle_width"),  f2integer__new(cause, rectangle_width),
+				    new__symbol(cause, "rectangle_height"), f2integer__new(cause, rectangle_height),
+				    new__symbol(cause, "this-min_x"),       f2integer__new(cause, min_x),
+				    new__symbol(cause, "this-min_y"),       f2integer__new(cause, min_y),
+				    new__symbol(cause, "target-min_x"),     f2integer__new(cause, target_min_x),
+				    new__symbol(cause, "target-min_y"),     f2integer__new(cause, target_min_y),
+				    new__symbol(cause, "this-width"),       f2integer__new(cause, this__width__i),
+				    new__symbol(cause, "this-height"),      f2integer__new(cause, this__height__i),
+				    new__symbol(cause, "target-width"),     f2integer__new(cause, target__width__i),
+				    new__symbol(cause, "target-height"),    f2integer__new(cause, target__height__i)));
   }
   {
     s64 y;
@@ -217,16 +229,14 @@ f2ptr raw__image__copy_rectangle_to(f2ptr cause, f2ptr this, s64 min_x, s64 min_
 }
 
 f2ptr f2__image__copy_rectangle_to(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr target, f2ptr target_min_x, f2ptr target_min_y, f2ptr rectangle_width, f2ptr rectangle_height) {
-  if ((! raw__image__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, min_x)) ||
-      (! raw__integer__is_type(cause, min_y)) ||
-      (! raw__image__is_type(cause, target)) ||
-      (! raw__integer__is_type(cause, target_min_x)) ||
-      (! raw__integer__is_type(cause, target_min_y)) ||
-      (! raw__integer__is_type(cause, rectangle_width)) ||
-      (! raw__integer__is_type(cause, rectangle_height))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(image, this);
+  assert_argument_type(integer, min_x);
+  assert_argument_type(integer, min_y);
+  assert_argument_type(image, target);
+  assert_argument_type(integer, target_min_x);
+  assert_argument_type(integer, target_min_y);
+  assert_argument_type(integer, rectangle_width);
+  assert_argument_type(integer, rectangle_height);
   s64 min_x__i            = f2integer__i(min_x,            cause);
   s64 min_y__i            = f2integer__i(min_y,            cause);
   s64 target_min_x__i     = f2integer__i(target_min_x,     cause);
@@ -248,7 +258,16 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
       (height < 0) ||
       ((min_x < 0) || (min_x + width  > this__width__i)) ||
       ((min_y < 0) || (min_y + height > this__height__i))) {
-    return f2larva__new(cause, 3, nil);
+    return new__error(f2list18__new(cause,
+				    new__symbol(cause, "bug_name"), new__symbol(cause, "image-fill_rectangle-dimensions_out_of_range"),
+				    new__symbol(cause, "min_x"),    min_x,
+				    new__symbol(cause, "min_y"),    min_y,
+				    new__symbol(cause, "width"),    width,
+				    new__symbol(cause, "height"),   height,
+				    new__symbol(cause, "red"),      red,
+				    new__symbol(cause, "green"),    green,
+				    new__symbol(cause, "blue"),     blue,
+				    new__symbol(cause, "alpha"),    alpha));
   }
   {
     s64 y;
@@ -271,30 +290,37 @@ f2ptr raw__image__fill_rectangle(f2ptr cause, f2ptr this, s64 min_x, s64 min_y, 
 }
 
 f2ptr f2__image__fill_rectangle(f2ptr cause, f2ptr this, f2ptr min_x, f2ptr min_y, f2ptr width, f2ptr height, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
-  if ((! raw__image__is_type(cause, this)) ||
-      (! raw__integer__is_type(cause, min_x)) ||
-      (! raw__integer__is_type(cause, min_y)) ||
-      (! raw__integer__is_type(cause, width)) ||
-      (! raw__integer__is_type(cause, height)) ||
-      (! raw__integer__is_type(cause, red)) ||
-      (! raw__integer__is_type(cause, green)) ||
-      (! raw__integer__is_type(cause, blue)) ||
-      (! raw__integer__is_type(cause, alpha))) {
-    return f2larva__new(cause, 1, nil);
-  }
-  s64 min_x__i        = f2integer__i(min_x,  cause);
-  s64 min_y__i        = f2integer__i(min_y,  cause);
-  s64 width__i        = f2integer__i(width,  cause);
-  s64 height__i       = f2integer__i(height, cause);
-  s64 red__i          = f2integer__i(red,    cause);
-  s64 green__i        = f2integer__i(green,  cause);
-  s64 blue__i         = f2integer__i(blue,   cause);
-  s64 alpha__i        = f2integer__i(alpha,  cause);
+  assert_argument_type(image,   this);
+  assert_argument_type(integer, min_x);
+  assert_argument_type(integer, min_y);
+  assert_argument_type(integer, width);
+  assert_argument_type(integer, height);
+  assert_argument_type(integer, red);
+  assert_argument_type(integer, green);
+  assert_argument_type(integer, blue);
+  assert_argument_type(integer, alpha);
+  s64 min_x__i  = f2integer__i(min_x,  cause);
+  s64 min_y__i  = f2integer__i(min_y,  cause);
+  s64 width__i  = f2integer__i(width,  cause);
+  s64 height__i = f2integer__i(height, cause);
+  s64 red__i    = f2integer__i(red,    cause);
+  s64 green__i  = f2integer__i(green,  cause);
+  s64 blue__i   = f2integer__i(blue,   cause);
+  s64 alpha__i  = f2integer__i(alpha,  cause);
   if (((red__i   < 0) || (red__i   >= 256)) ||
       ((green__i < 0) || (green__i >= 256)) ||
       ((blue__i  < 0) || (blue__i  >= 256)) ||
       ((alpha__i < 0) || (alpha__i >= 256))) {
-    return f2larva__new(cause, 592, nil);
+    return new__error(f2list18__new(cause,
+				    new__symbol(cause, "bug_name"), new__symbol(cause, "image-fill_rectangle-color_index_out_of_range"),
+				    new__symbol(cause, "min_x"),    min_x,
+				    new__symbol(cause, "min_y"),    min_y,
+				    new__symbol(cause, "width"),    width,
+				    new__symbol(cause, "height"),   height,
+				    new__symbol(cause, "red"),      red,
+				    new__symbol(cause, "green"),    green,
+				    new__symbol(cause, "blue"),     blue,
+				    new__symbol(cause, "alpha"),    alpha));
   }
   return raw__image__fill_rectangle(cause, this, min_x__i, min_y__i, width__i, height__i, red__i, green__i, blue__i, alpha__i);
 }
@@ -310,13 +336,11 @@ f2ptr raw__image__clear(f2ptr cause, f2ptr this, u8 red, u8 green, u8 blue, u8 a
 }
 
 f2ptr f2__image__clear(f2ptr cause, f2ptr this, f2ptr red, f2ptr green, f2ptr blue, f2ptr alpha) {
-  if ((! raw__image__is_type(  cause, this)) ||
-      (! raw__integer__is_type(cause, red)) ||
-      (! raw__integer__is_type(cause, green)) ||
-      (! raw__integer__is_type(cause, blue)) ||
-      (! raw__integer__is_type(cause, alpha))) {
-    return f2larva__new(cause, 1, nil);
-  }
+  assert_argument_type(image, this);
+  assert_argument_type(integer, red);
+  assert_argument_type(integer, green);
+  assert_argument_type(integer, blue);
+  assert_argument_type(integer, alpha);
   s64 red__i          = f2integer__i(red,    cause);
   s64 green__i        = f2integer__i(green,  cause);
   s64 blue__i         = f2integer__i(blue,   cause);

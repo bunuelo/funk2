@@ -349,18 +349,18 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	  return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
 	}
 	{
-	  boolean_t arguments_contain_rest = boolean__false;
+	  boolean_t variables_contain_rest = boolean__false;
 	  {
-	    f2ptr iter = arguments;
+	    f2ptr iter = compiled_funk__args;
 	    while (iter != nil) {
-	      f2ptr argument = f2cons__car(iter, cause);
-	      if (raw__eq(cause, argument, new__symbol(cause, ":rest"))) {
-		arguments_contain_rest = boolean__true;
+	      f2ptr variable = f2cons__car(iter, cause);
+	      if (raw__eq(cause, variable, new__symbol(cause, ":rest"))) {
+		variables_contain_rest = boolean__true;
 	      }
 	      iter = f2cons__cdr(iter, cause);
 	    }
 	  }
-	  if (! arguments_contain_rest) {
+	  if (! variables_contain_rest) {
 	    if (raw__cons__is_type(cause, arguments)) {
 	      f2ptr arguments_command = f2cons__car(arguments, cause);
 	      if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {

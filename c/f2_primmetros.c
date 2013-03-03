@@ -284,6 +284,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 				nil);
 	  }
 	}
+	/*
 	{
 	  boolean_t variables_contain_rest = boolean__false;
 	  {
@@ -343,6 +344,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	    }
 	  }
 	}
+	*/
 	return f2list3__new(cause,
 			    new__symbol(cause, "funk-local_apply"),
 			    compiled_funk,

@@ -76,7 +76,7 @@
 [defmetro * [x :rest rest]
   [if [null rest]
       [demetropolize x]
-    [let [[rest_result [apply &+ rest]]]
+    [let [[rest_result [apply &* rest]]]
       [if [and [or [is-type `integer      x]
 		   [is-type `double       x]
 		   [is-type `float        x]

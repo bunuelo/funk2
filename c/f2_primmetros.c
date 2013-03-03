@@ -179,14 +179,6 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
     f2ptr condensed_body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, condensed_body_expressions));
     f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "let"), variables, condensed_body_expressions__demetropolize_full, condensed_body_expressions, nil, nil, nil));
     return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), definitions));
-    /*
-    return f2list3__new(cause,
-			new__symbol(cause, "funk-local_apply"),
-			compiled_funk,
-			f2cons__new(cause,
-				    new__symbol(cause, "conslist"),
-				    definitions));
-    */
   }
 }
 
@@ -233,53 +225,11 @@ def_pcfunk1_and_rest(primmetro__let, variable_definitions, body_expressions,
  */
 
 f2ptr raw__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
-  /*
-  f2ptr condensed_body_expressions = nil;
-  {
-    f2ptr iter           = body_expressions;
-    f2ptr condensed_iter = nil;
-    while (iter != nil) {
-      f2ptr car = f2cons__car(iter, cause);
-      f2ptr cdr = f2cons__cdr(iter, cause);
-      if ((cdr == nil) ||
-	  (! raw__expression__is_funktional(cause, car))) {
-	f2ptr new_cons = f2cons__new(cause, car, nil);
-	if (condensed_iter == nil) {
-	  condensed_body_expressions = new_cons;
-	} else {
-	  f2cons__cdr__set(condensed_iter, cause, new_cons);
-	}
-	condensed_iter = new_cons;
-      }
-      iter = cdr;
-    }
-  }
-  if (condensed_body_expressions == nil) {
-    return nil;
-  } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
-    return f2cons__car(condensed_body_expressions, cause);
-  } else {
-  */
-    /*
-    f2ptr environment                                    = f2list5__new(cause,
-									new__symbol(cause, "bytecode"),
-									new__symbol(cause, "copy"),
-									new__symbol(cause, "env"),
-									new__symbol(cause, "value"),
-									nil);
-    */
-    f2ptr fiber                                          = assert_value(f2__this__fiber(cause));
-    f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
-    f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
-    f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
-    return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), nil);
-    /*
-    return f2list3__new(cause,
-			new__symbol(cause, "funk-local_apply"),
-			compiled_funk,
-			nil);
-    */
-    //  }
+  f2ptr fiber                                          = assert_value(f2__this__fiber(cause));
+  f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
+  f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
+  f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
+  return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), nil);
 }
 
 f2ptr f2__primmetro__prog(f2ptr cause, f2ptr body_expressions) {
@@ -379,14 +329,6 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	  } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
 	    return f2cons__car(condensed_body_expressions, cause);
 	  } else {
-	    /*
-	      f2ptr environment                                    = f2list5__new(cause,
-	      new__symbol(cause, "bytecode"),
-	      new__symbol(cause, "copy"),
-	      new__symbol(cause, "env"),
-	      new__symbol(cause, "value"),
-	      nil);
-	    */
 	    f2ptr fiber                                          = assert_value(f2__this__fiber(cause));
 	    f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
 	    f2ptr condensed_body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, condensed_body_expressions));
@@ -396,7 +338,6 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 				compiled_funk,
 				nil);
 	  }
-	  //return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
 	}
 	{
 	  boolean_t variables_contain_rest = boolean__false;

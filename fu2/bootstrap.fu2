@@ -72,7 +72,6 @@
   [load 'fu2/bootstrap-core_extension.fu2']
   [load 'fu2/bootstrap-package.fu2']
   
-  `[prog
   `[load_necessary_builtin_package_definitions]
   [reload_all_package_definitions]
   
@@ -95,7 +94,7 @@
 	       [millisleep 100]]
 	     [have trigger trigger]
 	     nil]]]
-  ]]
+  ]
 
 
 

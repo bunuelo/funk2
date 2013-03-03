@@ -272,18 +272,9 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		      return nil;
 		    } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
 		      return f2cons__car(condensed_body_expressions, cause);
-		    } else {
-		      f2ptr fiber              = assert_value(f2__this__fiber(cause));
-		      f2ptr fiber__environment = assert_value(f2__fiber__env(cause, fiber));
-		      f2ptr compiled_funk      = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, condensed_body_expressions, condensed_body_expressions, nil, nil, nil));
-		      return f2list3__new(cause,
-					  new__symbol(cause, "funk-local_apply"),
-					  compiled_funk,
-					  nil);
 		    }
 		  }
-		}
-		{
+		} else {
 		  boolean_t variables_contain_rest = boolean__false;
 		  {
 		    f2ptr iter = compiled_funk__args;

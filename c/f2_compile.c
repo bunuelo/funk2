@@ -203,6 +203,10 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
   return full_bcs;
 }
 
+f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
+  return expression;
+}
+
 f2ptr raw__funk__flatten_local_applies(f2ptr cause, f2ptr this) {
   f2ptr     demetropolized_body = assert_value(f2funk__demetropolized_body(this, cause));
   boolean_t can_optimize        = boolean__false;
@@ -295,6 +299,30 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
   assert_argument_type(funk,  original_funk);
   
   f2ptr funk = assert_value(raw__funk__flatten_local_applies(cause, original_funk));
+  
+  {
+    f2ptr funk__demetropolized_body    = f2funk__demetropolized_body(funk, cause);
+    f2ptr new_demetropolized_body      = nil;
+    {
+      f2ptr new_demetropolized_body_iter = nil;
+      f2ptr iter                         = funk__demetropolized_body;
+      while (iter != nil) {
+	f2ptr expression = f2cons__car(iter, cause);
+	{
+	  f2ptr new_expression = assert_value(raw__expression__optimize(cause, expression));
+	  f2ptr new_cons       = f2cons__new(cause, new_expression, nil);
+	  if (new_demetropolized_body == nil) {
+	    new_demetropolized_body = new_cons;
+	  } else {
+	    f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
+	  }
+	  new_demetropolized_body_iter = new_cons;
+	}
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    f2funk__demetropolized_body__set(funk, cause, new_demetropolized_body);
+  }
   
   f2ptr funk_bcs = f2__compile__value__set(cause, funk);
   if (f2funk__body_bytecodes(funk, cause)) {

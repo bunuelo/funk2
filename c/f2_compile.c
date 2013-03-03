@@ -263,7 +263,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
   assert_argument_type(fiber, fiber);
   assert_argument_type(funk,  original_funk);
   
-  f2ptr funk = assert_value(raw__funk__flatten_local_applies(caues, original_funk));
+  f2ptr funk = assert_value(raw__funk__flatten_local_applies(cause, original_funk));
   
   f2ptr funk_bcs = f2__compile__value__set(cause, funk);
   if (f2funk__body_bytecodes(funk, cause)) {

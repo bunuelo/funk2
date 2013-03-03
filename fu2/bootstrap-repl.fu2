@@ -215,12 +215,12 @@
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
 
-[defmetro object-get           [this slot_name :rest args] [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
-[defmetro object-get-apply     [this slot_name args]       [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
-[defmetro object-set           [this slot_name :rest args] [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
-[defmetro object-set-apply     [this slot_name args]       [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
-[defmetro object-execute       [this slot_name :rest args] [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [immutable_conslist ,this_gensym @args]]]]
-[defmetro object-execute-apply [this slot_name args]       [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [cons               ,this_gensym ,args]]]]
+[defmetro object-get           [this slot_name :rest args] [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-get-apply     [this slot_name args]       [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-set           [this slot_name :rest args] [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-set-apply     [this slot_name args]       [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-execute       [this slot_name :rest args] [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-execute-apply [this slot_name args]       [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
 
 
 
@@ -383,9 +383,9 @@
 
 [defmetro parog [:rest codes]
   'run commands in parallel'
-  `[let [[parog-fibers [immutable_conslist @[mapcar [funk [code]
-							  `[fiber [funk [] ,code] []]]
-						    codes]]]]
+  `[let [[parog-fibers [conslist @[mapcar [funk [code]
+						`[fiber [funk [] ,code] []]]
+					  codes]]]]
      [apply &join parog-fibers]]]
 
 [defunk parc [proc seq]

@@ -72,8 +72,7 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
       raw__float__is_type(  cause, expression) ||
       raw__pointer__is_type(cause, expression) ||
       raw__char__is_type(   cause, expression) ||
-      raw__string__is_type( cause, expression) ||
-      raw__symbol__is_type( cause, expression)) {
+      raw__string__is_type( cause, expression)) {
     return boolean__true;
   }
   if (raw__cons__is_type(cause, expression)) {
@@ -179,13 +178,15 @@ f2ptr raw__primmetro__let(f2ptr cause, f2ptr variable_definitions, f2ptr body_ex
     f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
     f2ptr condensed_body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, environment, condensed_body_expressions));
     f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "let"), variables, condensed_body_expressions__demetropolize_full, condensed_body_expressions, nil, nil, nil));
-    //return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), definitions));
+    return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), definitions));
+    /*
     return f2list3__new(cause,
 			new__symbol(cause, "funk-local_apply"),
 			compiled_funk,
 			f2cons__new(cause,
 				    new__symbol(cause, "conslist"),
 				    definitions));
+    */
   }
 }
 

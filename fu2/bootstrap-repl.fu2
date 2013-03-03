@@ -271,7 +271,7 @@
 [exp-format stdout '\ndebug 0']
 [defunk wrong_argument_number [] [error-new `bug_type `wrong_number_of_arguments] nil]
 [exp-format stdout '\ndebug 1']
-`[wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
+[wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]
 [exp-format stdout '\ndebug 2']
 
 [defmetro label [name args :rest body]

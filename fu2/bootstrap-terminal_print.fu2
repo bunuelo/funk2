@@ -23,7 +23,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[deftypefunk terminal_print_frame get     new_copy     []       [terminal_print_frame-new_copy     this]]
+`[deftypefunk terminal_print_frame get     new_copy     []       [terminal_print_frame-new_copy     this]]
 [deftypefunk terminal_print_frame execute write_string [string] [terminal_print_frame-write_string this string]]
 
 [defunk terminal_print_frame-write_ansi-move [this x y]

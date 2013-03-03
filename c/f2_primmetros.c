@@ -237,6 +237,11 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
+  return f2list3__new(cause,
+		      new__symbol(cause, "funk-apply"),
+		      funkable,
+		      arguments);
+  /*
   f2ptr fiber                   = f2__this__fiber(cause);
   f2ptr env                     = f2fiber__env(fiber, cause);
   f2ptr demetropolized_funkable = assert_value(f2__demetropolize_full(cause, fiber, env, funkable));
@@ -284,7 +289,6 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 				nil);
 	  }
 	}
-	/*
 	{
 	  boolean_t variables_contain_rest = boolean__false;
 	  {
@@ -344,7 +348,6 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	    }
 	  }
 	}
-	*/
 	return f2list3__new(cause,
 			    new__symbol(cause, "funk-local_apply"),
 			    compiled_funk,
@@ -356,6 +359,7 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 		      new__symbol(cause, "funk-apply"),
 		      demetropolized_funkable,
 		      arguments);
+	*/
 }
 
 f2ptr f2__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {

@@ -26,7 +26,6 @@
 [globalize-funk cfunk-as-metrocfunk &primfunk:cfunk__as__metrocfunk]
 
 [globalize-funk let                                 [cfunk-as-metrocfunk &primfunk:primmetro__let]]
-[globalize-funk let2                                [cfunk-as-metrocfunk &primfunk:primmetro__let2]]
 [globalize-funk prog                                [cfunk-as-metrocfunk &primfunk:primmetro__prog]]
 [globalize-funk apply                               [cfunk-as-metrocfunk &primfunk:primmetro__apply]]
 [globalize-funk funk                                [cfunk-as-metrocfunk &primfunk:primmetro__funk]]

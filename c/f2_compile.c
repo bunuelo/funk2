@@ -334,10 +334,10 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 	      }
 	    }
 	  }
-	  return f2list3__new(cause,
-			      new__symbol(cause, "funk-apply"),
-			      funkable,
-			      arguments);
+	  //return f2list3__new(cause,
+	  //		      new__symbol(cause, "funk-apply"),
+	  //		      funkable,
+	  //		      arguments);
 	}
       }
     }

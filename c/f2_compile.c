@@ -232,40 +232,55 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		f2ptr compiled_funk = f2cons__car(cdr, cause);
 		f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
 		if (compiled_funk__args == nil) {
-		  f2ptr compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
-		  f2ptr condensed_body_expressions = nil;
+		  f2ptr     compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
+		  boolean_t can_be_condensed                   = boolean__false;
 		  {
-		    f2ptr iter           = compiled_funk__demetropolized_body;
-		    f2ptr condensed_iter = nil;
-		    while (iter != nil) {
+		    f2ptr iter = compiled_funk__demetropolized_body;
+		    while ((iter != nil) &&
+			   (! can_be_condensed)) {
 		      f2ptr car = f2cons__car(iter, cause);
 		      f2ptr cdr = f2cons__cdr(iter, cause);
 		      if ((cdr == nil) ||
 			  (! raw__expression__is_funktional(cause, car))) {
-			f2ptr new_cons = f2cons__new(cause, car, nil);
-			if (condensed_iter == nil) {
-			  condensed_body_expressions = new_cons;
-			} else {
-			  f2cons__cdr__set(condensed_iter, cause, new_cons);
-			}
-			condensed_iter = new_cons;
+			can_be_condensed = boolean__true;
 		      }
 		      iter = cdr;
 		    }
 		  }
-		  if (condensed_body_expressions == nil) {
-		    return nil;
-		  } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
-		    return f2cons__car(condensed_body_expressions, cause);
-		  } else {
-		    f2ptr fiber                                          = assert_value(f2__this__fiber(cause));
-		    f2ptr fiber__environment                             = assert_value(f2__fiber__env(cause, fiber));
-		    f2ptr condensed_body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, condensed_body_expressions));
-		    f2ptr compiled_funk                                  = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, condensed_body_expressions__demetropolize_full, condensed_body_expressions, nil, nil, nil));
-		    return f2list3__new(cause,
-					new__symbol(cause, "funk-local_apply"),
-					compiled_funk,
-					nil);
+		  if (can_be_condensed) {
+		    f2ptr condensed_body_expressions = nil;
+		    {
+		      f2ptr iter           = compiled_funk__demetropolized_body;
+		      f2ptr condensed_iter = nil;
+		      while (iter != nil) {
+			f2ptr car = f2cons__car(iter, cause);
+			f2ptr cdr = f2cons__cdr(iter, cause);
+			if ((cdr == nil) ||
+			    (! raw__expression__is_funktional(cause, car))) {
+			  f2ptr new_cons = f2cons__new(cause, car, nil);
+			  if (condensed_iter == nil) {
+			    condensed_body_expressions = new_cons;
+			  } else {
+			    f2cons__cdr__set(condensed_iter, cause, new_cons);
+			  }
+			  condensed_iter = new_cons;
+			}
+			iter = cdr;
+		      }
+		    }
+		    if (condensed_body_expressions == nil) {
+		      return nil;
+		    } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
+		      return f2cons__car(condensed_body_expressions, cause);
+		    } else {
+		      f2ptr fiber              = assert_value(f2__this__fiber(cause));
+		      f2ptr fiber__environment = assert_value(f2__fiber__env(cause, fiber));
+		      f2ptr compiled_funk      = assert_value(f2__funk__new(cause, fiber, fiber__environment, new__symbol(cause, "prog"), nil, condensed_body_expressions, condensed_body_expressions, nil, nil, nil));
+		      return f2list3__new(cause,
+					  new__symbol(cause, "funk-local_apply"),
+					  compiled_funk,
+					  nil);
+		    }
 		  }
 		}
 		{

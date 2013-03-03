@@ -215,7 +215,7 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
   return boolean__false;
 }
 
-f2ptr raw__expression__optimize__apply__exp(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
     if (raw__cons__is_type(cause, expression__cdr)) {

@@ -355,6 +355,14 @@ f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr f2__expression__optimize(f2ptr cause, f2ptr expression) {
+  return raw__expression__optimize(cause, expression);
+}
+def_pcfunk1(expression__optimize, expression,
+	    "Returns an optimized version of a demetropolized expression.",
+	    return f2__expression__optimize(this_cause, expression));
+
+
 f2ptr raw__funk__flatten_local_applies(f2ptr cause, f2ptr this) {
   f2ptr     demetropolized_body = assert_value(f2funk__demetropolized_body(this, cause));
   boolean_t can_optimize        = boolean__false;
@@ -2399,6 +2407,7 @@ void f2__compile__defragment__fix_pointers() {
   // -- initialize --
   
   f2__primcfunk__init__defragment__fix_pointers(wrong_argument_number__bcs__set);
+  f2__primcfunk__init__defragment__fix_pointers(expression__optimize);
   
   
 }
@@ -2447,6 +2456,7 @@ void f2__compile__reinitialize_globalvars() {
   __funk2.compile.wrong_argument_number__bcs = environment__lookup_var_value(cause, global_environment(), new__symbol(cause, "--wrong_argument_number-bcs--"));
   
   f2__primcfunk__init__1(wrong_argument_number__bcs__set, bytecodes);
+  f2__primcfunk__init__1(expression__optimize, expression);
 }
 
 void f2__compile__initialize() {

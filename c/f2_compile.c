@@ -2279,8 +2279,9 @@ f2ptr raw__undemetropolized_expression__replace_variable(f2ptr cause, f2ptr expr
   return raw__demetropolized_expression__replace_variable(cause, demetropolized_expression, replace_variable, replace_argument);
 }
 
+// should only be used on demetropolized expressions (as are found in funks, during compile)
 f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
-  return raw__undemetropolized_expression__replace_variable(cause, expression, replace_variable, replace_argument);
+  return raw__demetropolized_expression__replace_variable(cause, expression, replace_variable, replace_argument);
 }
 
 int __compile__recursion_count = 0;

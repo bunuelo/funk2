@@ -2079,14 +2079,7 @@ f2ptr raw__expression__replace_variable__funk__new_copy_in_this_environment(f2pt
   return f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), new_funkable);
 }
 
-f2ptr raw__undemetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
-  f2ptr fiber                     = f2__this__fiber(cause);
-  f2ptr env                       = f2fiber__env(fiber, cause);
-  f2ptr demetropolized_expression = assert_value(f2__demetropolize_full(cause, fiber, env, expression));
-  return raw__expression__replace_variable(cause, demetropolized_expression, replace_variable, replace_argument);
-}
-
-f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr env   = f2fiber__env(fiber, cause);
   if (raw__symbol__is_type(cause, expression)) {
@@ -2105,7 +2098,16 @@ f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr rep
   return expression;
 }
 
+f2ptr raw__undemetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr fiber                     = f2__this__fiber(cause);
+  f2ptr env                       = f2fiber__env(fiber, cause);
+  f2ptr demetropolized_expression = assert_value(f2__demetropolize_full(cause, fiber, env, expression));
+  return raw__expression__replace_variable(cause, demetropolized_expression, replace_variable, replace_argument);
+}
 
+f2ptr raw__expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  return raw__undemetropolized_expression__replace_variable(cause, expression, replace_variable, replace_argument);
+}
 
 int __compile__recursion_count = 0;
 int __total_enter_compile_count = 0;

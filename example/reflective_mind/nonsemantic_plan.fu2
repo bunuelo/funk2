@@ -2314,7 +2314,7 @@
       result]]]
 
 [defplancommand imagine defplan [name_expression :rest arguments]
-  `[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: nonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
+  ``[terminal_format standard-terminal '\n' [type [get nonsemantic_plan mental_layer]] '-nonsemantic_plan: nonsemantic_plan_command compiling ' `[defplan ,name_expression @arguments]]
   [let [[name_patterns        nil]
 	[variable_definitions nil]
 	[plan_body_expression nil]]

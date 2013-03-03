@@ -236,55 +236,6 @@ def_pcfunk0_and_rest(primmetro__prog, body_expressions,
 
 
 
-f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr replace_variable, f2ptr replace_argument) {
-  f2ptr old_name                = f2funk__name(               this, cause);
-  f2ptr old_args                = f2funk__args(               this, cause);
-  f2ptr old_demetropolized_body = f2funk__demetropolized_body(this, cause);
-  f2ptr old_env                 = f2funk__env(                this, cause);
-  f2ptr new_args                = nil;
-  {
-    f2ptr iter          = old_args;
-    f2ptr new_args_iter = nil;
-    while (iter != nil) {
-      f2ptr arg = f2cons__car(iter, cause);
-      if (! raw__eq(cause, arg, replace_variable)) {
-	f2ptr new_cons = f2cons__new(cause, arg, nil);
-	if (new_args == nil) {
-	  new_args = new_cons;
-	} else {
-	  f2cons__cdr__set(new_args_iter, cause, new_cons);
-	}
-	new_args_iter = new_cons;
-      }
-      iter = f2cons__cdr(iter, cause);
-    }
-  }
-  f2ptr new_demetropolized_body = nil;
-  {
-    f2ptr iter                         = old_demetropolized_body;
-    f2ptr new_demetropolized_body_iter = nil;
-    while (iter != nil) {
-      f2ptr expression = f2cons__car(iter, cause);
-      {
-	f2ptr new_expression = assert_value(raw__expression__replace_variable(cause, expression, replace_variable, replace_argument));
-	f2ptr new_cons       = f2cons__new(cause, new_expression, nil);
-	if (new_demetropolized_body == nil) {
-	  new_demetropolized_body = new_cons;
-	} else {
-	  f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
-	}
-	new_demetropolized_body_iter = new_cons;
-      }
-      iter = f2cons__cdr(iter, cause);
-    }
-  }
-  f2ptr fiber                                       = assert_value(f2__this__fiber(cause));
-  f2ptr fiber__environment                          = assert_value(f2__fiber__env(cause, fiber));
-  f2ptr new_demetropolized_body__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, new_demetropolized_body));
-  f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body__demetropolize_full, new_demetropolized_body, nil, nil, nil));
-  return compiled_funk;
-}
-
 f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
   f2ptr fiber                   = f2__this__fiber(cause);
   f2ptr env                     = f2fiber__env(fiber, cause);

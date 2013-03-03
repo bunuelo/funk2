@@ -1776,6 +1776,55 @@ f2ptr f2__demetropolize_full__with_status(f2ptr simple_cause, f2ptr fiber, f2ptr
   return raw__cons__new(cause, nil, exp);
 }
 
+f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr old_name                = f2funk__name(               this, cause);
+  f2ptr old_args                = f2funk__args(               this, cause);
+  f2ptr old_demetropolized_body = f2funk__demetropolized_body(this, cause);
+  f2ptr old_env                 = f2funk__env(                this, cause);
+  f2ptr new_args                = nil;
+  {
+    f2ptr iter          = old_args;
+    f2ptr new_args_iter = nil;
+    while (iter != nil) {
+      f2ptr arg = f2cons__car(iter, cause);
+      if (! raw__eq(cause, arg, replace_variable)) {
+	f2ptr new_cons = f2cons__new(cause, arg, nil);
+	if (new_args == nil) {
+	  new_args = new_cons;
+	} else {
+	  f2cons__cdr__set(new_args_iter, cause, new_cons);
+	}
+	new_args_iter = new_cons;
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  f2ptr new_demetropolized_body = nil;
+  {
+    f2ptr iter                         = old_demetropolized_body;
+    f2ptr new_demetropolized_body_iter = nil;
+    while (iter != nil) {
+      f2ptr expression = f2cons__car(iter, cause);
+      {
+	f2ptr new_expression = assert_value(raw__expression__replace_variable(cause, expression, replace_variable, replace_argument));
+	f2ptr new_cons       = f2cons__new(cause, new_expression, nil);
+	if (new_demetropolized_body == nil) {
+	  new_demetropolized_body = new_cons;
+	} else {
+	  f2cons__cdr__set(new_demetropolized_body_iter, cause, new_cons);
+	}
+	new_demetropolized_body_iter = new_cons;
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  f2ptr fiber                                       = assert_value(f2__this__fiber(cause));
+  f2ptr fiber__environment                          = assert_value(f2__fiber__env(cause, fiber));
+  f2ptr new_demetropolized_body__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, new_demetropolized_body));
+  f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body__demetropolize_full, new_demetropolized_body, nil, nil, nil));
+  return compiled_funk;
+}
+
 f2ptr raw__expression__replace_variable__funkvar_call(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr command        = f2cons__car(expression, cause);
   f2ptr new_expression = f2cons__new(cause, command, nil);
@@ -1798,6 +1847,24 @@ f2ptr raw__expression__replace_variable__funkvar_call(f2ptr cause, f2ptr fiber, 
     }
   }
   return new_expression;
+}
+
+f2ptr raw__expression__replace_variable__local_apply(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr                  = f2cons__cdr(expression, cause);
+  f2ptr funkable             = f2cons__car(cdr, cause);
+  if (! raw__funk__is_type(cause, funkable)) {
+    return f2larva__new(cause, 555, nil);
+    //return new__error(f2list6__new(cause,
+    //				   new__symbol(cause, "bug_name"),         new__symbol(cause, "expression-replace_variable-local_apply-funkable_must_be_funk_to_safely_remove_variable"),
+    //				   new__symbol(cause, "expression"),       expression,
+    //				   new__symbol(cause, "replace_variable"), replace_variable,
+    //				   new__symbol(cause, "replace_argument"), replace_argument));
+  }
+  f2ptr new_funkable         = assert_value(raw__funk__new_with_replaced_variable(cause, funkable, replace_variable, replace_argument));
+  f2ptr cdr_cdr              = f2cons__cdr(cdr, cause);
+  f2ptr arguments            = f2cons__car(cdr_cdr, cause);
+  f2ptr new_arguments        = assert_value(raw__expression__replace_variable(cause, arguments, replace_variable, replace_argument));
+  return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, new_funkable, new_arguments);
 }
 
 f2ptr raw__expression__replace_variable__define_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
@@ -1887,7 +1954,7 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return assert_value(raw__expression__replace_variable__local_apply(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return exp;}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return assert_value(raw__expression__replace_variable__define_funk(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return assert_value(raw__expression__replace_variable__define(cause, fiber, env, exp, replace_variable, replace_argument));}

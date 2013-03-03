@@ -466,9 +466,11 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
 	    new_expression  = assert_value(raw__expression__optimize(cause, expression));
 	    loop_count ++;
 	    if (loop_count > 10) {
-	      return f2__print(cause, new__error(f2list4__new(cause,
-							      new__symbol(cause, "bug_name"),      new__symbol(cause, "compile-funk-too_many_optimization_loops"),
-							      new__symbol(cause, "original_funk"), original_funk)));
+	      f2__print(cause, expression);
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),      new__symbol(cause, "compile-funk-too_many_optimization_loops"),
+					     new__symbol(cause, "expression"),    expression,
+					     new__symbol(cause, "original_funk"), original_funk));
 	    }
 	  }
 	  f2ptr new_cons = f2cons__new(cause, new_expression, nil);

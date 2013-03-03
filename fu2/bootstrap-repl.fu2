@@ -472,7 +472,7 @@
 	   [max_index ,max_index]]
        [while [integer-less_than ,var max_index]
 	 [prog @body]
-	 [mutate ,var [integer-add ,var 1]]]]]]
+	 [bytecode:increment ,var]]]]]
 
 [defunk range [min max]
   [if [integer-less_than min max]

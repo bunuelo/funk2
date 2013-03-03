@@ -348,47 +348,62 @@ f2ptr raw__primmetro__apply(f2ptr cause, f2ptr funkable, f2ptr arguments) {
 	  f2ptr compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
 	  return raw__primmetro__prog(cause, compiled_funk__demetropolized_body);
 	}
-	if (raw__cons__is_type(cause, arguments)) {
-	  f2ptr arguments_command = f2cons__car(arguments, cause);
-	  if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
-	    f2ptr     reduced_compiled_funk    = compiled_funk;
-	    f2ptr     arguments_iter           = f2cons__cdr(arguments, cause);
-	    f2ptr     variables_iter           = compiled_funk__args;
-	    f2ptr     remaining_arguments      = nil;
-	    f2ptr     remaining_arguments_iter = nil;
-	    boolean_t funk_was_reduced         = boolean__false;
-	    while ((arguments_iter != nil) &&
-		   (variables_iter != nil)) {
-	      f2ptr     argument             = f2cons__car(arguments_iter, cause);
-	      f2ptr     variable             = f2cons__car(variables_iter, cause);
-	      boolean_t variable_was_removed = boolean__false;
-	      if (raw__expression__is_funktional(cause, argument)) {
-		f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-		if (! raw__larva__is_type(cause, result)) {
-		  variable_was_removed  = boolean__true;
-		  funk_was_reduced      = boolean__true;
-		  reduced_compiled_funk = result;
-		}
+	{
+	  boolean_t arguments_contain_rest = boolean__false;
+	  {
+	    f2ptr iter = arguments;
+	    while (iter != nil) {
+	      f2ptr argument = f2cons__car(iter, cause);
+	      if (raw__eq(cause, argument, new__symbol(cause, ":rest"))) {
+		arguments_contain_rest = boolean__true;
 	      }
-	      if (! variable_was_removed) {
-		f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
-		if (remaining_arguments == nil) {
-		  remaining_arguments = new_arguments_cons;
-		} else {
-		  f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
-		}
-		remaining_arguments_iter = new_arguments_cons;
-	      }
-	      arguments_iter = f2cons__cdr(arguments_iter, cause);
-	      variables_iter = f2cons__cdr(variables_iter, cause);
+	      iter = f2cons__cdr(iter, cause);
 	    }
-	    if (funk_was_reduced) {
-	      return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments));
-	    } else {
-	      return f2list3__new(cause,
-				  new__symbol(cause, "funk-local_apply"),
-				  compiled_funk,
-				  arguments);
+	  }
+	  if (! arguments_contain_rest) {
+	    if (raw__cons__is_type(cause, arguments)) {
+	      f2ptr arguments_command = f2cons__car(arguments, cause);
+	      if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
+		f2ptr     reduced_compiled_funk    = compiled_funk;
+		f2ptr     arguments_iter           = f2cons__cdr(arguments, cause);
+		f2ptr     variables_iter           = compiled_funk__args;
+		f2ptr     remaining_arguments      = nil;
+		f2ptr     remaining_arguments_iter = nil;
+		boolean_t funk_was_reduced         = boolean__false;
+		while ((arguments_iter != nil) &&
+		       (variables_iter != nil)) {
+		  f2ptr     argument             = f2cons__car(arguments_iter, cause);
+		  f2ptr     variable             = f2cons__car(variables_iter, cause);
+		  boolean_t variable_was_removed = boolean__false;
+		  if (raw__expression__is_funktional(cause, argument)) {
+		    f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
+		    if (! raw__larva__is_type(cause, result)) {
+		      variable_was_removed  = boolean__true;
+		      funk_was_reduced      = boolean__true;
+		      reduced_compiled_funk = result;
+		    }
+		  }
+		  if (! variable_was_removed) {
+		    f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
+		    if (remaining_arguments == nil) {
+		      remaining_arguments = new_arguments_cons;
+		    } else {
+		      f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+		    }
+		    remaining_arguments_iter = new_arguments_cons;
+		  }
+		  arguments_iter = f2cons__cdr(arguments_iter, cause);
+		  variables_iter = f2cons__cdr(variables_iter, cause);
+		}
+		if (funk_was_reduced) {
+		  return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments));
+		} else {
+		  return f2list3__new(cause,
+				      new__symbol(cause, "funk-local_apply"),
+				      compiled_funk,
+				      arguments);
+		}
+	      }
 	    }
 	  }
 	}

@@ -1743,6 +1743,29 @@ f2ptr f2__demetropolize__funkvar_call(f2ptr simple_cause, f2ptr fiber, f2ptr env
   return raw__cons__new(cause, did_something, demetro_exp);
 }
 
+f2ptr f2__demetropolize__define_funk(f2ptr simple_cause, f2ptr fiber, f2ptr env, f2ptr exp) {
+  f2ptr did_something = nil;
+  f2ptr demetro_exp   = exp;
+  if (raw__cons__is_type(cause, exp)) {
+    f2ptr exp__cdr = f2cons__cdr(exp, cause);
+    if (raw__cons__is_type(cause, exp__cdr)) {
+      f2ptr variable  = f2cons__car(exp__cdr, cause);
+      f2ptr exp__cddr = f2cons__cdr(exp__cdr, cause);
+      if (raw__cons__is_type(cause, exp__cddr)) {
+	f2ptr value                      = f2cons__car(exp__cddr, cause);
+	f2ptr demetro_value__values      = assert_value(f2__demetropolize_once(cause, fiber, env, value));
+	f2ptr demetro_value__values__car = assert_value(f2__cons__car(cause, demetro_arg__values));
+	if(demetro_value__values__car != nil) {
+	  did_something = __funk2.globalenv.true__symbol;
+	}
+	f2ptr demetro_value = assert_value(f2__cons__cdr(cause, demetro_value__values));
+	demetro_exp = f2list3__new(cause, __funk2.globalenv.define_funk__symbol, variable, demetro_value);
+      }
+    }
+  }
+  return raw__cons__new(cause, did_something, demetro_exp);
+}
+
 void dont_know_how_to_compile() {
   status("don't know how to compile [breakpoint].");
 }
@@ -1947,7 +1970,7 @@ f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2p
   if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return raw__cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return raw__cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return f2__demetropolize__define_funk(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define__symbol))                      {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.mutatefunk__symbol))                  {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.mutate__symbol))                      {return raw__cons__new(cause, nil, exp);}
@@ -2292,6 +2315,8 @@ f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expres
     if (raw__is_compile_special_symbol(cause, command)) {
       return assert_value(raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, expression, replace_variable, replace_argument));
     } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
+      return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
+    } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_with_name"))) {
       return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
     }
   }

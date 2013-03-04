@@ -2299,13 +2299,6 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   return f2larva__new(cause, 12643, nil);
 }
 
-f2ptr raw__expression__replace_variable__funk__new_copy_in_this_environment(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
-  f2ptr cdr          = f2cons__cdr(expression, cause);
-  f2ptr funkable     = f2cons__car(cdr, cause);
-  f2ptr new_funkable = assert_value(raw__funk__new_with_replaced_variable(cause, funkable, replace_variable, replace_argument));
-  return f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), new_funkable);
-}
-
 f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr env   = f2fiber__env(fiber, cause);

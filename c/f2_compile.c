@@ -578,12 +578,46 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   return f2larva__new(cause, 126, nil);
 }
 
+f2ptr raw__expression__optimize__funkvar_call(f2ptr cause, f2ptr expression) {
+  f2ptr     command            = f2cons__car(expression, cause);
+  boolean_t expression_changed = boolean__false;
+  f2ptr     rest               = f2cons__cdr(expression, cause);
+  f2ptr     new_rest           = nil;
+  {
+    f2ptr new_rest_iter = nil;
+    f2ptr rest_iter     = rest;
+    while (rest_iter != nil) {
+      f2ptr subexpression = f2cons__car(rest_iter, cause);
+      {
+	f2ptr new_subexpression = raw__expression__optimize(cause, subexpression);
+	if (subexpression != new_subexpression) {
+	  expression_changed = boolean__true;
+	}
+	f2ptr new_cons = f2cons__new(cause, new_subexpression, nil);
+	if (new_rest == nil) {
+	  new_rest = new_cons;
+	} else {
+	  f2cons__cdr__set(new_rest_iter, cause, new_cons);
+	}
+	new_rest_iter = new_cons;
+      }
+      rest_iter = f2cons__cdr(rest_iter, cause);
+    }
+  }
+  if (expression_changed) {
+    return f2cons__new(cause, command, new_rest);
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
   f2ptr result = expression;
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if (raw__is_compile_special_symbol(cause, command)) {
       result = raw__expression__optimize__special_expression(cause, expression);
+    } else {
+      result = raw__expression__optimize__funkvar_call(cause, expression);
     }
   }
   if (result != expression) {

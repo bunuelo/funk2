@@ -2163,6 +2163,11 @@ f2ptr raw__expression__replace_variable__local_apply(f2ptr cause, f2ptr fiber, f
   return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, new_funkable, new_arguments);
 }
 
+f2ptr raw__expression__replace_variable__apply(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  // cannot remove variables unless the apply has been reduced to a local_apply.
+  return f2larva__new(cause, 555, nil);
+}
+
 f2ptr raw__expression__replace_variable__define_funk(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
   f2ptr cdr                  = f2cons__cdr(expression, cause);
   f2ptr variable_name        = f2cons__car(cdr, cause);
@@ -2249,7 +2254,7 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.if__symbol))                          {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.while__symbol))                       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.return__symbol))                      {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.apply__symbol))                       {return assert_value(raw__expression__replace_variable__apply(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.local_apply__symbol))                 {return assert_value(raw__expression__replace_variable__local_apply(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.funkvar__symbol))                     {return exp;}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.define_funk__symbol))                 {return assert_value(raw__expression__replace_variable__define_funk(cause, fiber, env, exp, replace_variable, replace_argument));}

@@ -222,7 +222,6 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
-  /*
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
     f2ptr condition = f2cons__car(cdr, cause);
@@ -234,6 +233,7 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	  return true_expression;
 	}
       } else {
+	/*
 	f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
 	if (raw__cons__is_type(cause, cdr__cdr)) {
 	  f2ptr false_expressions = f2cons__cdr(cdr__cdr, cause);
@@ -248,10 +248,10 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	  }
 	  return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
 	}
+	*/
       }
     }
   }
-  */
   return expression;
 }
 

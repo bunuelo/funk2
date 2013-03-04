@@ -524,7 +524,7 @@ f2ptr raw__expression__optimize__define(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
-f2ptr raw__expression__optimize__mutate_funk(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__optimize__mutatefunk(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
     f2ptr variable = f2cons__car(cdr, cause);
@@ -533,7 +533,7 @@ f2ptr raw__expression__optimize__mutate_funk(f2ptr cause, f2ptr expression) {
       f2ptr value     = f2cons__car(cdr__cdr, cause);
       f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
       if (value != new_value) {
-	return f2list3__new(cause, __funk2.globalenv.mutate_funk__symbol, variable, new_value);
+	return f2list3__new(cause, __funk2.globalenv.mutatefunk__symbol, variable, new_value);
       }
     }
   }

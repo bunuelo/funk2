@@ -59,8 +59,8 @@
 
 [defunk cause_group-test []
   [let [[n 10000]]
-    [dotimes [i 9]                                                           
-      [let [[p [<< 1 i]]]                                                    
+    [dotimes [i 9]
+      [let [[p [<< 1 i]]]
 	[terminal_format standard-terminal '\ni=' i ' p=' p]
 	[eval `[count_bytecodes [partimes [i ,p] [dotimes [i ,[/ n p]]]]]]]]]]
 

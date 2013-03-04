@@ -401,6 +401,12 @@ f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
 	  return f2__number__plus(cause, arg1, arg2);
 	}
       }
+      f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
+      f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
+      if ((arg1 != arg1_optimized) ||
+	  (arg2 != arg2_optimized)) {
+	return f2list3__new(cause, __funk2.globalenv.bytecode_add__symbol, arg1_optimized, arg2_optimized);
+      }
     }
   }
   return expression;
@@ -423,6 +429,12 @@ f2ptr raw__expression__optimize__bytecode_multiply(f2ptr cause, f2ptr expression
 	    raw__largeinteger__is_type(cause, arg2)) {
 	  return f2__number__multiplied_by(cause, arg1, arg2);
 	}
+      }
+      f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
+      f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
+      if ((arg1 != arg1_optimized) ||
+	  (arg2 != arg2_optimized)) {
+	return f2list3__new(cause, __funk2.globalenv.bytecode_multiply__symbol, arg1_optimized, arg2_optimized);
       }
     }
   }

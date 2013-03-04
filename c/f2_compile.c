@@ -2292,7 +2292,6 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_numerically_equals__symbol))   {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_less_than__symbol))            {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_greater_than__symbol))         {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
-  if (raw__symbol__eq(cause, car, new__symbol(cause, "funk-new_copy_in_this_environment"))) {return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, exp, replace_variable, replace_argument));}
   status("tried to compile special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
   status("raw__expression__replace_variable__special_symbol_exp error: expression is not special symbol expression.");

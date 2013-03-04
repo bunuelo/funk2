@@ -38,7 +38,7 @@
 
 [defmetro - [x :rest rest]
   [if [null rest]
-      [bytecode:negative x]
+      `[bytecode:negative ,x]
     `[bytecode:subtract ,x ,[apply &+ rest]]]]
 
 

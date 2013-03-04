@@ -700,8 +700,8 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
       while (iter != nil) {
 	f2ptr expression = f2cons__car(iter, cause);
 	{
-	  new_expression = assert_value(raw__expression__optimize(cause, expression));
-	  f2ptr new_cons = f2cons__new(cause, new_expression, nil);
+	  f2ptr new_expression = assert_value(raw__expression__optimize(cause, expression));
+	  f2ptr new_cons       = f2cons__new(cause, new_expression, nil);
 	  if (new_demetropolized_body == nil) {
 	    new_demetropolized_body = new_cons;
 	  } else {

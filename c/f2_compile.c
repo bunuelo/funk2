@@ -330,7 +330,8 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			  variables_iter = f2cons__cdr(variables_iter, cause);
 			}
 			if (funk_was_reduced) {
-			  return raw__primmetro__apply(cause, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments));
+			  f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
+			  return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), remaining_arguments_expression);
 			}
 		      }
 		    }
@@ -2302,8 +2303,6 @@ f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expres
     if (raw__is_compile_special_symbol(cause, command)) {
       return assert_value(raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, expression, replace_variable, replace_argument));
     } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
-      return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
-    } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_with_name"))) {
       return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
     }
   }

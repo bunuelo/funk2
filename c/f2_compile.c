@@ -304,7 +304,7 @@ f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
 	f2ptr subexpression  = f2cons__car(rest_iter, cause);
 	f2ptr rest_iter__cdr = f2cons__cdr(rest_iter, cause);
 	{
-	  f2ptr new_subexpression = assert_value(raw__exprssion__optimize(cause, subexpression));
+	  f2ptr new_subexpression = assert_value(raw__expression__optimize(cause, subexpression));
 	  if (subexpression != new_subexpression) {
 	    changed_expression = boolean__true;
 	  }

@@ -813,6 +813,10 @@ f2ptr raw__expression__optimize__funkvar_call(f2ptr cause, f2ptr expression) {
   boolean_t expression_changed = boolean__false;
   f2ptr     rest               = f2cons__cdr(expression, cause);
   f2ptr     new_rest           = nil;
+  if (raw__eq(cause, command, new__symbol(cause, "eq"))) {
+    expression_changed = boolean__true;
+    command = __funk2.globalenv.bytecode_eq__symbol;
+  }
   {
     f2ptr new_rest_iter = nil;
     f2ptr rest_iter     = rest;

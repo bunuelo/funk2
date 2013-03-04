@@ -492,6 +492,102 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__define_funk(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.define_funk__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
+f2ptr raw__expression__optimize__define(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.define__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
+f2ptr raw__expression__optimize__mutate_funk(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.mutate_funk__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
+f2ptr raw__expression__optimize__mutate(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.mutate__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
+f2ptr raw__expression__optimize__globalize(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.globalize__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
+f2ptr raw__expression__optimize__globalize_funk(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr variable = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr value     = f2cons__car(cdr__cdr, cause);
+      f2ptr new_value = assert_value(raw__expression__optimize(cause, value));
+      if (value != new_value) {
+	return f2list3__new(cause, __funk2.globalenv.globalize_funk__symbol, variable, new_value);
+      }
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
   f2ptr     rawcodes           = f2cons__cdr(expression, cause);
   f2ptr     new_rawcodes       = nil;
@@ -733,12 +829,12 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.apply__symbol))                       {return raw__expression__optimize__apply(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.local_apply__symbol))                 {return raw__expression__optimize__local_apply(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.funkvar__symbol))                     {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.define_funk__symbol))                 {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.define__symbol))                      {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutatefunk__symbol))                  {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutate__symbol))                      {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize__symbol))                   {return expression;}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize_funk__symbol))              {return expression;}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.define_funk__symbol))                 {return raw__expression__optimize__define_funk(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.define__symbol))                      {return raw__expression__optimize__define(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutatefunk__symbol))                  {return raw__expression__optimize__mutate_funk(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutate__symbol))                      {return raw__expression__optimize__mutate(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize__symbol))                   {return raw__expression__optimize__globalize(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize_funk__symbol))              {return raw__expression__optimize__globalize_funk(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.yield__symbol))                       {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode__symbol))                    {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.rawcode__symbol))                     {return raw__expression__optimize__rawcode(cause, expression);}

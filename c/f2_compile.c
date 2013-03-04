@@ -222,6 +222,7 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
+  /*
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
     f2ptr condition = f2cons__car(cdr, cause);
@@ -245,11 +246,12 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	      return false_expression;
 	    }
 	  }
-	  //return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
+	  return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
 	}
       }
     }
   }
+  */
   return expression;
 }
 

@@ -398,7 +398,7 @@ f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
 	    raw__double__is_type(cause, arg2) ||
 	    raw__float__is_type(cause, arg2) ||
 	    raw__largeinteger__is_type(cause, arg2)) {
-	  return raw__number__plus(cause, arg1, arg2);
+	  return f2__number__plus(cause, arg1, arg2);
 	}
       }
     }

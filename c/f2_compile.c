@@ -390,8 +390,14 @@ f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
     f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
     if (raw__cons__is_type(cdr__cdr, cause)) {
       f2ptr arg2 = f2cons__car(cdr__cdr, cause);
-      if (raw__number__is_type(cause, arg1)) {
-	if (raw__number__is_type(cause, arg2)) {
+      if (raw__integer__is_type(cause, arg1) ||
+	  raw__double__is_type(cause, arg1) ||
+	  raw__float__is_type(cause, arg1) ||
+	  raw__largeinteger__is_type(cause, arg1)) {
+	if (raw__integer__is_type(cause, arg2) ||
+	    raw__double__is_type(cause, arg2) ||
+	    raw__float__is_type(cause, arg2) ||
+	    raw__largeinteger__is_type(cause, arg2)) {
 	  return raw__number__plus(cause, arg1, arg2);
 	}
       }

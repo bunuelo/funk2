@@ -476,6 +476,14 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
       rawcodes_iter = rawcodes_iter__cdr;
     }
     if (changed_expression) {
+      if (new_rawcodes == nil) {
+	return nil;
+      }
+      f2ptr new_rawcodes__cdr = f2cons__cdr(new_rawcodes, cause);
+      if (new_rawcodes__cdr == nil) {
+	f2ptr new_rawcodes__car = f2cons__car(new_rawcodes, cause);
+	return new_rawcodes__car;
+      }
       return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, new_rawcodes);
     }
   }

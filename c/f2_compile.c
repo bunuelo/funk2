@@ -204,22 +204,15 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
 }
 
 boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
-  if ((! raw__cons__is_type(  cause, expression)) &&
-      (! raw__symbol__is_type(cause, expression))) {
-    return boolean__true;
+  if (raw__cons__is_type(  cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (! raw__eq(cause, command, __funk2.globalenv.quote__symbol)) {
+      return boolean__false;
+    }
+  } else if (raw__symbol__is_type(cause, expression)) {
+    return boolean__false;
   }
-  /*
-    if ((expression == nil) ||
-      raw__integer__is_type(cause, expression) ||
-      raw__double__is_type( cause, expression) ||
-      raw__float__is_type(  cause, expression) ||
-      raw__pointer__is_type(cause, expression) ||
-      raw__char__is_type(   cause, expression) ||
-      raw__string__is_type( cause, expression)) {
-    return boolean__true;
-  }
-  */
-  return boolean__false;
+  return boolean__true;
 }
 
 f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {

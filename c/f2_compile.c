@@ -383,6 +383,23 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr arg1     = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cdr__cdr, cause)) {
+      f2ptr arg2 = f2cons__car(cdr__cdr, cause);
+      if (raw__number__is_type(cause, arg1)) {
+	if (raw__number__is_type(cause, arg2)) {
+	  return raw__number__plus(cause, arg1, arg2);
+	}
+      }
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
@@ -390,6 +407,8 @@ f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
       return raw__expression__optimize__apply(cause, expression);
     } else if (raw__eq(cause, command, __funk2.globalenv.local_apply__symbol)) {
       return raw__expression__optimize__local_apply(cause, expression);
+    } else if (raw__eq(cause, command, __funk2.globalenv.bytecode_add__symbol)) {
+      return raw__expression__optimize__bytecode_add(cause, expression);
     }
   }
   return expression;

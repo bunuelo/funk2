@@ -364,6 +364,20 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
 	  }
 	}
       }
+    } else if (raw__funk__is_type(cause, funkable)) {
+      f2ptr funkable__args = f2funk__args(funkable, cause);
+      if (funkable__args == nil) {
+	f2ptr funkable__demetropolized_body = f2funk__demetropolized_body(funkable, cause);
+	if (funkable__demetropolized_body == nil) {
+	  return nil;
+	} else if (raw__cons__is_type(cause, funkable__demetropolized_body)) {
+	  f2ptr funkable__demetropolized_body__cdr = f2cons__cdr(funkable__demetropolized_body, cause);
+	  if (funkable__demetropolized_body__cdr == nil) {
+	    f2ptr funkable__demetropolized_body__car = f2cons__car(funkable__demetropolized_body, cause);
+	    return funkable__demetropolized_body__car;
+	  }
+	}
+      }
     }
   }
   return expression;

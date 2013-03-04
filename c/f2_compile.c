@@ -657,6 +657,21 @@ f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr arg     = f2cons__car(cdr, cause);
+    f2ptr arg_optimized = raw__expression__optimize(cause, arg1);
+    if (raw__expression__is_funktional(cause, arg_optimized)) {
+      return (arg_optimized != nil);
+    }
+    if (arg != arg_optimized) {
+      return f2list2__new(cause, __funk2.globalenv.bytecode_eq__symbol, arg_optimized);
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
@@ -815,10 +830,6 @@ f2ptr raw__expression__optimize__funkvar_call(f2ptr cause, f2ptr expression) {
   boolean_t expression_changed = boolean__false;
   f2ptr     rest               = f2cons__cdr(expression, cause);
   f2ptr     new_rest           = nil;
-  if (raw__eq(cause, command, new__symbol(cause, "eq"))) {
-    expression_changed = boolean__true;
-    command = __funk2.globalenv.bytecode_eq__symbol;
-  }
   {
     f2ptr new_rest_iter = nil;
     f2ptr rest_iter     = rest;
@@ -867,7 +878,7 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode__symbol))                    {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.rawcode__symbol))                     {return raw__expression__optimize__rawcode(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_eq__symbol))                 {return raw__expression__optimize__eq(cause, expression);}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_not__symbol))                {return expression;}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_not__symbol))                {return raw__expression__optimize__not(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_and__symbol))                {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_or__symbol))                 {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_add__symbol))                {return raw__expression__optimize__bytecode_add(cause, expression);}
@@ -894,6 +905,10 @@ f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
     f2ptr command = f2cons__car(expression, cause);
     if (raw__is_compile_special_symbol(cause, command)) {
       result = raw__expression__optimize__special_expression(cause, expression);
+    } else if (raw__eq(cause, command, new__symbol(cause, "eq"))) {
+      result = raw__expression__optimize__eq(cause, expression);
+    } else if (raw__eq(cause, command, new__symbol(cause, "not"))) {
+      result = raw__expression__optimize__not(cause, expression);
     } else {
       result = raw__expression__optimize__funkvar_call(cause, expression);
     }

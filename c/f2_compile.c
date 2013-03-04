@@ -308,8 +308,7 @@ f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
 	  if (subexpression != new_subexpression) {
 	    changed_expression = boolean__true;
 	  }
-	  if ((rest_iter__cdr != nil) &&
-	      raw__expression__is_funktional(cause, new_subexpression)) {
+	  if (raw__expression__is_funktional(cause, new_subexpression)) {
 	    changed_expression = boolean__true;
 	  } else {
 	    f2ptr new_cons = f2cons__new(cause, new_subexpression, nil);

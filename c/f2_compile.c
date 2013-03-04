@@ -461,7 +461,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
 	  f2ptr last_expression = nil;
 	  f2ptr new_expression  = expression;
 	  s64   loop_count      = 0;
-	  while (last_expression != new_expression) {
+	  do {
 	    last_expression = new_expression;
 	    new_expression  = assert_value(raw__expression__optimize(cause, last_expression));
 	    loop_count ++;
@@ -472,7 +472,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
 					     new__symbol(cause, "expression"),    expression,
 					     new__symbol(cause, "original_funk"), original_funk));
 	    }
-	  }
+	  } while (last_expression != new_expression);
 	  f2ptr new_cons = f2cons__new(cause, new_expression, nil);
 	  if (new_demetropolized_body == nil) {
 	    new_demetropolized_body = new_cons;

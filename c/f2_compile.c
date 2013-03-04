@@ -347,11 +347,35 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr funkable = f2cons__car(cdr, cause);
+    if (raw__cons__is_type(cause, funkable)) {
+      f2ptr funkable__command = f2cons__car(funkable, cause);
+      if (raw__eq(cause, funkable__command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
+	f2ptr funkable__cdr = f2cons__cdr(funkable, cause);
+	if (raw__cons__is_type(cause, funkable__cdr)) {
+	  f2ptr funkable__funkable = f2cons__car(funkable__cdr, cause);
+	  f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+	  if (raw__cons__is_type(cause, cdr__cdr)) {
+	    f2ptr arguments = f2cons__car(cdr__cdr, cause);
+	    return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, funkable__funkable, arguments);
+	  }
+	}
+      }
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if (raw__eq(cause, command, __funk2.globalenv.apply__symbol)) {
       return raw__expression__optimize__apply(cause, expression);
+    } else if (raw__eq(cause, command, __funk2.globalenv.local_apply__symbol)) {
+      return raw__expression__optimize__local_apply(cause, expression);
     }
   }
   return expression;

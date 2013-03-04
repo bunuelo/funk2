@@ -572,9 +572,9 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_numerically_equals__symbol)) {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_less_than__symbol))          {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_greater_than__symbol))       {return expression;}
-  status("tried to optimize special symbol exp: "); f2__write(cause, fiber, exp); fflush(stdout);
+  status("tried to optimize special symbol exp: "); f2__write(cause, f2__this__fiber(cause), expression); fflush(stdout);
   status("isn't a special symbol expression."); // should throw exception...
-  status("f2__demetropolize__special_symbol_exp error: expression is not special symbol expression.");
+  status("raw__expression__optimize__special_expression error: expression is not special symbol expression.");
   return f2larva__new(cause, 126, nil);
 }
 

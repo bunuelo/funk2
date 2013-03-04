@@ -283,6 +283,54 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    boolean_t changed_expression = boolean__false;
+    f2ptr     condition          = f2cons__car(cdr, cause);
+    f2ptr     new_condition      = assert_value(raw__expression__optimize(cause, condition));
+    if (new_condition == nil) {
+      return nil;
+    }
+    if (condition != new_condition) {
+      changed_expression = boolean__true;
+    }
+    f2ptr rest     = f2cons__cdr(cdr, cause);
+    f2ptr new_rest = nil;
+    {
+      f2ptr rest_iter     = rest;
+      f2ptr new_rest_iter = nil;
+      while (rest_iter != nil) {
+	f2ptr subexpression  = f2cons__car(rest_iter, cause);
+	f2ptr rest_iter__cdr = f2cons__cdr(rest_iter, cause);
+	{
+	  f2ptr new_subexpression = assert_value(raw__exprssion__optimize(cause, subexpression));
+	  if (subexpression != new_subexpression) {
+	    changed_expression = boolean__true;
+	  }
+	  if ((rest_iter__cdr != nil) &&
+	      raw__expression__is_funktional(cause, new_subexpression)) {
+	    changed_expression = boolean__true;
+	  } else {
+	    f2ptr new_cons = f2cons__new(cause, new_subexpression, nil);
+	    if (new_rest == nil) {
+	      new_rest = new_cons;
+	    } else {
+	      f2cons__cdr__set(new_rest_iter, cause, new_cons);
+	    }
+	    new_rest_iter = new_cons;
+	  }
+	}
+	rest_iter = rest_iter__cdr;
+      }
+    }
+    if (changed_expression) {
+      return f2cons__new(cause, __funk2.globalenv.while__symbol, f2cons__new(cause, new_condition, new_rest));
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
@@ -681,7 +729,7 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.backquote__list__symbol))             {return raw__expression__optimize__funkvar_call(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.backquote__list_append__symbol))      {return raw__expression__optimize__funkvar_call(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.if__symbol))                          {return raw__expression__optimize__if(cause, expression);}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.while__symbol))                       {return expression;}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.while__symbol))                       {return raw__expression__optimize__while(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.return__symbol))                      {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.apply__symbol))                       {return raw__expression__optimize__apply(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.local_apply__symbol))                 {return raw__expression__optimize__local_apply(cause, expression);}

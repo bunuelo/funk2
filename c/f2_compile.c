@@ -446,6 +446,33 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
+  f2ptr     rawcodes           = f2cons__cdr(expression, cause);
+  f2ptr     new_rawcodes       = nil;
+  boolean_t changed_expression = boolean__false;
+  {
+    f2ptr rawcodes_iter     = rawcodes;
+    f2ptr new_rawcodes_iter = nil;
+    while (rawcodes_iter != nil) {
+      f2ptr rawcode = f2cons__car(rawcodes_iter, cause);
+      {
+	f2ptr new_rawcode = assert_value(raw__expression__optimize(cause, rawcode));
+	if (rawcode != new_rawcode) {
+	  changed_expression = boolean__true;
+	}
+	f2ptr new_cons = f2cons__new(cause, new_rawcode, nil);
+	if (new_rawcodes == nil) {
+	  new_rawcodes = new_cons;
+	} else {
+	  f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
+	}
+	new_rawcodes_iter = new_cons;
+      }
+      rawcodes_iter = f2cons__cdr(rawcodes_iter, cause);
+    }
+    if (changed_expression) {
+      return f2cons__new(cause, __funk2.globalenv.rawcodes__symbol, new_rawcodes);
+    }
+  }
   return expression;
 }
 

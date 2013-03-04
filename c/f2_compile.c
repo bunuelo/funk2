@@ -663,7 +663,7 @@ f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
     f2ptr arg           = f2cons__car(cdr, cause);
     f2ptr arg_optimized = raw__expression__optimize(cause, arg);
     if (raw__expression__is_funktional(cause, arg_optimized)) {
-      return (arg_optimized != nil);
+      return (arg_optimized == nil);
     }
     if (arg != arg_optimized) {
       return f2list2__new(cause, __funk2.globalenv.bytecode_eq__symbol, arg_optimized);

@@ -633,6 +633,28 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr arg1     = f2cons__car(cdr, cause);
+    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+    if (raw__cons__is_type(cause, cdr__cdr)) {
+      f2ptr arg2 = f2cons__car(cdr__cdr, cause);
+      f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
+      f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
+      if (raw__expression__is_funktional(cause, arg1_optimized) &&
+	  raw__expression__is_funktional(cause, arg2_optimized)) {
+	return raw__eq(cause, arg1_optimized, arg2_optimized);
+      }
+      if ((arg1 != arg1_optimized) ||
+	  (arg2 != arg2_optimized)) {
+	return f2list3__new(cause, __funk2.globalenv.bytecode_eq__symbol, arg1_optimized, arg2_optimized);
+      }
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
@@ -838,7 +860,7 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.yield__symbol))                       {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode__symbol))                    {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.rawcode__symbol))                     {return raw__expression__optimize__rawcode(cause, expression);}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_eq__symbol))                 {return expression;}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_eq__symbol))                 {return raw__expression__optimize__eq(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_not__symbol))                {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_and__symbol))                {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_or__symbol))                 {return expression;}

@@ -249,6 +249,42 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	  return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
 	}
       }
+    } else {
+      f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+      if (raw__cons__is_type(cause, cdr__cdr)) {
+	boolean_t expression_changed    = boolean__false;
+	f2ptr     true_expression       = f2cons__car(cdr__cdr, cause);
+	f2ptr     false_expressions     = f2cons__cdr(cdr__cdr, cause);
+	f2ptr     new_true_expression   = assert_value(raw__expression__optimize(cause, true_expression));
+	if (true_expression != new_true_expression) {
+	  expression_changed = boolean__true;
+	}
+	f2ptr new_false_expressions = nil;
+	{
+	  f2ptr false_expressions_iter     = false_expressions;
+	  f2ptr new_false_expressions_iter = nil;
+	  while (false_expressions_iter != nil) {
+	    f2ptr false_expression = f2cons__car(false_expressions_iter, cause);
+	    {
+	      f2ptr new_false_expression = assert_value(raw__expression__optimize(cause, false_expression));
+	      if (false_expression != new_false_expression) {
+		expression_changed = boolean__true;
+	      }
+	      f2ptr new_cons = f2cons__new(cause, new_false_expression, nil);
+	      if (new_false_expressions == nil) {
+		new_false_expressions = new_cons;
+	      } else {
+		f2cons__cdr__set(new_false_expressions_iter, cause, new_cons);
+	      }
+	      new_false_expressions_iter = new_cons;
+	    }
+	    false_expressions_iter = f2cons__cdr(false_expressions_iter, cause);
+	  }
+	}
+	if (expression_changed) {
+	  return f2cons__new(cause, __funk2.globalenv.if__symbol, f2cons__new(cause, new_true_expression, new_false_expressions));
+	}
+      }
     }
   }
   return expression;

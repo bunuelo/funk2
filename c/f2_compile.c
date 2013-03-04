@@ -458,8 +458,8 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
       while (iter != nil) {
 	f2ptr expression = f2cons__car(iter, cause);
 	{
-	  f2ptr last_expression = expression;
-	  f2ptr new_expression  = nil;
+	  f2ptr last_expression = nil;
+	  f2ptr new_expression  = expression;
 	  s64   loop_count      = 0;
 	  while (last_expression != new_expression) {
 	    last_expression = new_expression;

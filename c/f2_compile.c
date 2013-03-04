@@ -646,7 +646,7 @@ f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
       f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
       if (raw__expression__is_funktional(cause, arg1_optimized) &&
 	  raw__expression__is_funktional(cause, arg2_optimized)) {
-	return raw__eq(cause, arg1_optimized, arg2_optimized);
+	return f2__eq(cause, arg1_optimized, arg2_optimized);
       }
       if ((arg1 != arg1_optimized) ||
 	  (arg2 != arg2_optimized)) {

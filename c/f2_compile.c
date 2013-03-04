@@ -204,7 +204,8 @@ f2ptr f2__compile__pop_debug_funk_call(f2ptr cause) {
 }
 
 boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
-  if (raw__integer__is_type(cause, expression) ||
+  if ((expression == nil) ||
+      raw__integer__is_type(cause, expression) ||
       raw__double__is_type( cause, expression) ||
       raw__float__is_type(  cause, expression) ||
       raw__pointer__is_type(cause, expression) ||

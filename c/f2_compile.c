@@ -831,7 +831,7 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.funkvar__symbol))                     {return expression;}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.define_funk__symbol))                 {return raw__expression__optimize__define_funk(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.define__symbol))                      {return raw__expression__optimize__define(cause, expression);}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutatefunk__symbol))                  {return raw__expression__optimize__mutate_funk(cause, expression);}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.mutatefunk__symbol))                  {return raw__expression__optimize__mutatefunk(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.mutate__symbol))                      {return raw__expression__optimize__mutate(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize__symbol))                   {return raw__expression__optimize__globalize(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.globalize_funk__symbol))              {return raw__expression__optimize__globalize_funk(cause, expression);}

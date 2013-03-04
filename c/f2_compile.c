@@ -470,8 +470,8 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
 	  } else {
 	    f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
 	  }
+	  new_rawcodes_iter = new_cons;
 	}
-	new_rawcodes_iter = new_cons;
       }
       rawcodes_iter = rawcodes_iter__cdr;
     }

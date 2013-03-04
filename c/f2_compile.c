@@ -245,7 +245,7 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	      return false_expression;
 	    }
 	  }
-	  return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
+	  //return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, false_expressions);
 	}
       }
     }

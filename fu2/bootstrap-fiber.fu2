@@ -36,9 +36,9 @@
       [get this value]]]]
 
 [defunk join [:rest fibers]
-  [let [[result nil]]
+  [let [[join_result nil]]
     [mapc [funk [fiber]
-		[= result [have fiber join]]]
+		[= join_result [have fiber join]]]
 	  fibers]
-    result]]
+    join_result]]
 

@@ -660,8 +660,8 @@ f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
 f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
-    f2ptr arg     = f2cons__car(cdr, cause);
-    f2ptr arg_optimized = raw__expression__optimize(cause, arg1);
+    f2ptr arg           = f2cons__car(cdr, cause);
+    f2ptr arg_optimized = raw__expression__optimize(cause, arg);
     if (raw__expression__is_funktional(cause, arg_optimized)) {
       return (arg_optimized != nil);
     }

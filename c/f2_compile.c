@@ -666,7 +666,7 @@ f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
       return f2bool__new(arg_optimized == nil);
     }
     if (arg != arg_optimized) {
-      return f2list2__new(cause, __funk2.globalenv.bytecode_eq__symbol, arg_optimized);
+      return f2list2__new(cause, __funk2.globalenv.bytecode_not__symbol, arg_optimized);
     }
   }
   return expression;

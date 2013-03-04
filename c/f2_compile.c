@@ -2275,7 +2275,7 @@ f2ptr f2__demetropolize__special_symbol_exp(f2ptr simple_cause, f2ptr fiber, f2p
   if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))              {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                       {return raw__cons__new(cause, nil, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                    {return raw__cons__new(cause, nil, exp);}
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return raw__cons__new(cause, nil, exp);}
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                     {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                 {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                {return f2__demetropolize__funkvar_call(cause, fiber, env, exp);}

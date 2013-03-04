@@ -646,7 +646,11 @@ f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
       f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
       if (raw__expression__is_funktional(cause, arg1_optimized) &&
 	  raw__expression__is_funktional(cause, arg2_optimized)) {
-	return f2__eq(cause, arg1_optimized, arg2_optimized);
+	if (raw__eq(cause, arg1_optimized, arg2_optimized)) {
+	  return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));
+	} else {
+	  return nil;
+	}
       }
       if ((arg1 != arg1_optimized) ||
 	  (arg2 != arg2_optimized)) {
@@ -663,7 +667,11 @@ f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
     f2ptr arg           = f2cons__car(cdr, cause);
     f2ptr arg_optimized = raw__expression__optimize(cause, arg);
     if (raw__expression__is_funktional(cause, arg_optimized)) {
-      return f2bool__new(arg_optimized == nil);
+      if (arg_optimized == nil) {
+	return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));
+      } else {
+	return nil;
+      }
     }
     if (arg != arg_optimized) {
       return f2list2__new(cause, __funk2.globalenv.bytecode_not__symbol, arg_optimized);

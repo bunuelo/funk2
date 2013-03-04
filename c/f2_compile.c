@@ -282,7 +282,7 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	  }
 	}
 	if (expression_changed) {
-	  return f2cons__new(cause, __funk2.globalenv.if__symbol, f2cons__new(cause, new_true_expression, new_false_expressions));
+	  return f2cons__new(cause, __funk2.globalenv.if__symbol, f2cons__new(cause, condition, f2cons__new(cause, new_true_expression, new_false_expressions)));
 	}
       }
     }

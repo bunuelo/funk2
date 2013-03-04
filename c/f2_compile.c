@@ -579,13 +579,17 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
 }
 
 f2ptr raw__expression__optimize(f2ptr cause, f2ptr expression) {
+  f2ptr result = expression;
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if (raw__is_compile_special_symbol(cause, command)) {
-      return raw__expression__optimize__special_expression(cause, expression);
+      result = raw__expression__optimize__special_expression(cause, expression);
     }
   }
-  return expression;
+  if (result != expression) {
+    result = raw__expression__optimize(cause, result);
+  }
+  return result;
 }
 
 f2ptr f2__expression__optimize(f2ptr cause, f2ptr expression) {

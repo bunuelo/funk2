@@ -248,8 +248,10 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	boolean_t expression_changed    = boolean__false;
 	f2ptr     true_expression       = f2cons__car(cdr__cdr, cause);
 	f2ptr     false_expressions     = f2cons__cdr(cdr__cdr, cause);
+	f2ptr     new_condition         = assert_value(raw__expression__optimize(cause, condition));
 	f2ptr     new_true_expression   = assert_value(raw__expression__optimize(cause, true_expression));
-	if (true_expression != new_true_expression) {
+	if ((new_condition != condition) ||
+	    (true_expression != new_true_expression)) {
 	  expression_changed = boolean__true;
 	}
 	f2ptr new_false_expressions = nil;
@@ -275,7 +277,7 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
 	  }
 	}
 	if (expression_changed) {
-	  return f2cons__new(cause, __funk2.globalenv.if__symbol, f2cons__new(cause, condition, f2cons__new(cause, new_true_expression, new_false_expressions)));
+	  return f2cons__new(cause, __funk2.globalenv.if__symbol, f2cons__new(cause, new_condition, f2cons__new(cause, new_true_expression, new_false_expressions)));
 	}
       }
     }

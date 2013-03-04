@@ -495,7 +495,7 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
     f2funk__demetropolized_body__set(original_funk, cause, new_demetropolized_body);
   }
   */
-
+  
   f2ptr funk = assert_value(raw__funk__flatten_local_applies(cause, original_funk));
   
   f2ptr funk_bcs = f2__compile__value__set(cause, funk);
@@ -2252,7 +2252,7 @@ f2ptr raw__expression__replace_variable__funk__new_copy_in_this_environment(f2pt
   if (! raw__funk__is_type(cause, funkable)) {
     return f2larva__new(cause, 555, nil);
   }
-  f2ptr new_funkable = raw__funk__new_with_replaced_variable(cause, funkable, replace_variable, replace_argument);
+  f2ptr new_funkable = assert_value(raw__funk__new_with_replaced_variable(cause, funkable, replace_variable, replace_argument));
   return f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), new_funkable);
 }
 
@@ -2312,6 +2312,8 @@ f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expres
       return assert_value(raw__expression__replace_variable__special_symbol_exp(cause, fiber, env, expression, replace_variable, replace_argument));
     } else if (raw__eq(cause, command, new__symbol(cause, "funk-new_copy_in_this_environment"))) {
       return assert_value(raw__expression__replace_variable__funk__new_copy_in_this_environment(cause, fiber, env, expression, replace_variable, replace_argument));
+    } else if (raw__cons__is_type(cause, expression)) {
+      return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, expression, replace_variable, replace_argument));
     }
   }
   return expression;

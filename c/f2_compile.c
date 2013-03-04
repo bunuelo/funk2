@@ -470,7 +470,7 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
       rawcodes_iter = f2cons__cdr(rawcodes_iter, cause);
     }
     if (changed_expression) {
-      return f2cons__new(cause, __funk2.globalenv.rawcodes__symbol, new_rawcodes);
+      return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, new_rawcodes);
     }
   }
   return expression;

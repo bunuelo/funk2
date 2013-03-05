@@ -488,6 +488,8 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
 	  if (funkable__demetropolized_body__cdr == nil) {
 	    f2ptr funkable__demetropolized_body__car = f2cons__car(funkable__demetropolized_body, cause);
 	    return funkable__demetropolized_body__car;
+	  } else {
+	    return f2cons__new(cause, __funk2.globalenv.rawcode__symbol, funkable__demetropolized_body);
 	  }
 	}
       }

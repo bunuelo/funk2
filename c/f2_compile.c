@@ -765,6 +765,27 @@ f2ptr raw__expression__optimize__bytecode_add(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+f2ptr raw__expression__optimize__bytecode_negative(f2ptr cause, f2ptr expression) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr arg           = f2cons__car(cdr, cause);
+    f2ptr arg_optimized = raw__expression__optimize(cause, arg);
+    if (raw__integer__is_type(cause, arg_optimized)) {
+      return f2integer__new(cause, -f2integer__i(arg_optimized, cause));
+    } else if (raw__double__is_type(cause, arg_optimized)) {
+      return f2double__new(cause, -f2double__d(arg_optimized, cause));
+    } else if (raw__float__is_type(cause, arg_optimized)) {
+      return f2float__new(cause, -f2float__f(arg_optimized, cause));
+    } else if (raw__largeinteger__is_type(cause, arg_optimized)) {
+      return raw__largeinteger__negative(cause, arg_optimized);
+    }
+    if (arg != arg_optimized) {
+      return f2list2__new(cause, __funk2.globalenv.bytecode_negative__symbol, arg_optimized);
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__optimize__bytecode_subtract(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
@@ -946,7 +967,7 @@ f2ptr raw__expression__optimize__special_expression(f2ptr cause, f2ptr expressio
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_and__symbol))                {return raw__expression__optimize__and(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_or__symbol))                 {return raw__expression__optimize__or(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_add__symbol))                {return raw__expression__optimize__bytecode_add(cause, expression);}
-  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_negative__symbol))           {return expression;}
+  if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_negative__symbol))           {return raw__expression__optimize__bytecode_negative(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_subtract__symbol))           {return raw__expression__optimize__bytecode_subtract(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_multiply__symbol))           {return raw__expression__optimize__bytecode_multiply(cause, expression);}
   if (raw__symbol__eq(cause, command, __funk2.globalenv.bytecode_inverse__symbol))            {return expression;}

@@ -210,7 +210,9 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
       return boolean__false;
     }
   } else if (raw__symbol__is_type(cause, expression)) {
-    return boolean__false;
+    if (! raw__eq(cause, expression, __funk2.globalenv.true__symbol)) {
+      return boolean__false;
+    }
   }
   return boolean__true;
 }

@@ -647,9 +647,6 @@ f2ptr raw__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
   return raw__funk__new_copy_in_environment(cause, this, env);
 }
 
-f2ptr raw__funk__new_copy_in_environment(f2ptr cause, f2ptr this) {
-  f2ptr fiber               = f2__this__fiber(cause);
-  f2ptr env                 = f2fiber__env(fiber, cause);  
 f2ptr f2__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
   assert_argument_type(funk, this);
   return raw__funk__new_copy_in_this_environment(cause, this);

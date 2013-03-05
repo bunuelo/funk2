@@ -2748,11 +2748,8 @@ f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr repla
       iter = f2cons__cdr(iter, cause);
     }
   }
-  f2ptr fiber                                       = assert_value(f2__this__fiber(cause));
-  //f2ptr fiber__environment                          = assert_value(f2__fiber__env(cause, fiber));
-  //f2ptr new_demetropolized_body__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, new_demetropolized_body));
-  //f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body__demetropolize_full, new_demetropolized_body, nil, nil, nil));
-  f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body, new_demetropolized_body, nil, nil, nil));
+  f2ptr fiber         = assert_value(f2__this__fiber(cause));
+  f2ptr compiled_funk = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body, new_demetropolized_body, nil, nil, nil));
   return compiled_funk;
 }
 
@@ -2934,6 +2931,19 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
 }
 
 f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  boolean_t print_debug_info = boolean__false;
+  if (raw__cause__is_type(cause, cause)) {
+    f2ptr print_debug_info__value = f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "replace_variable_debug"));
+    if (! raw__larva__is_type(cause, print_debug_info__value)) {
+      print_debug_info = (print_debug_info__value != nil);
+    }
+  }
+  if (print_debug_info) {
+    f2__print(cause, new__string(cause, "replace_debug_info:"));
+    f2__print(cause, expression);
+    f2__print(cause, replace_variable);
+    f2__print(cause, replace_argument);
+  }
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr env   = f2fiber__env(fiber, cause);
   if (raw__symbol__is_type(cause, expression)) {

@@ -1167,9 +1167,8 @@ f2ptr f2__compile__funk(f2ptr simple_cause, f2ptr fiber, f2ptr original_funk) {
     }
     f2funk__demetropolized_body__set(original_funk, cause, new_demetropolized_body);
   }
-
+  
   f2ptr funk = assert_value(raw__funk__flatten_local_applies(cause, original_funk));
-  //f2ptr funk = original_funk;
   
   f2ptr funk_bcs = f2__compile__value__set(cause, funk);
   if (f2funk__body_bytecodes(funk, cause)) {

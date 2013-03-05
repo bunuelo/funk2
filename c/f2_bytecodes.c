@@ -607,6 +607,12 @@ int f2__fiber__bytecode__funk_env(f2ptr fiber, f2ptr bytecode) {
 // bytecode funk_local_copy []
 
 int f2__fiber__bytecode__funk_local_copy__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2ptr funk = f2bytecode__arg0(bytecode, cause);
+  if (! raw__funk__is_type(cause, funk)) {
+    error(nil, "bytecode-funk_local_copy fatal error: funk is not funk.");
+  }
+  f2ptr new_funk = raw__funk__new_copy_in_this_environment(cause, funk);
+  f2fiber__value__set(fiber, cause, new_funk);
   return 0;
 }
 
@@ -1869,7 +1875,7 @@ int f2__fiber__bytecode__if_jump(f2ptr fiber, f2ptr bytecode, f2ptr new_program_
   
   f2ptr value = f2fiber__value(fiber, cause);
   
-  if (cause) {
+  if (cause != nil) {
     f2ptr bytecode_branch_callbacks = f2cause__bytecode_branch_callbacks(cause, cause);
     if (bytecode_branch_callbacks) {
       f2ptr program_counter = f2fiber__program_counter(fiber, cause);

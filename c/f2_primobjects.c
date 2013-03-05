@@ -668,7 +668,7 @@ f2ptr raw__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
-  assert_argument_type(funk,        this);
+  assert_argument_type(funk, this);
   return raw__funk__new_copy_in_this_environment(cause, this);
 }
 def_pcfunk1(funk__new_copy_in_this_environment, this,

@@ -421,7 +421,7 @@ f2ptr raw__primmetro__funk__new_with_name(f2ptr cause, f2ptr name, f2ptr variabl
   f2ptr fiber__environment                   = assert_value(f2__fiber__env(cause, fiber));
   f2ptr body_expressions__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, body_expressions));
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
-  return f2list4__new(cause,
+  return f2list5__new(cause,
 		      new__symbol(cause, "bytecode"),
 		      new__symbol(cause, "funk_local_copy"),
 		      compiled_funk,
@@ -471,7 +471,7 @@ f2ptr raw__primmetro__metro__new_with_name(f2ptr cause, f2ptr name, f2ptr variab
   f2ptr compiled_funk                        = assert_value(f2__funk__new(cause, fiber, fiber__environment, name, variables, body_expressions__demetropolize_full, body_expressions, nil, nil, nil));
   return f2list2__new(cause,
 		      new__symbol(cause, "metro-new"),
-		      f2list4__new(cause,
+		      f2list5__new(cause,
 				   new__symbol(cause, "bytecode"),
 				   new__symbol(cause, "funk_local_copy"),
 				   compiled_funk,

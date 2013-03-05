@@ -2936,6 +2936,7 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
 }
 
 f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  /*
   boolean_t print_debug_info = boolean__false;
   if (raw__cause__is_type(cause, cause)) {
     f2ptr print_debug_info__value = f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "replace_variable_debug"));
@@ -2949,6 +2950,7 @@ f2ptr raw__demetropolized_expression__replace_variable(f2ptr cause, f2ptr expres
     f2__print(cause, replace_variable);
     f2__print(cause, replace_argument);
   }
+  */
   f2ptr fiber = f2__this__fiber(cause);
   f2ptr env   = f2fiber__env(fiber, cause);
   if (raw__symbol__is_type(cause, expression)) {

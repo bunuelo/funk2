@@ -611,7 +611,8 @@ int f2__fiber__bytecode__funk_local_copy__no_increment_pc_reg(f2ptr cause, f2ptr
   if (! raw__funk__is_type(cause, funk)) {
     error(nil, "bytecode-funk_local_copy fatal error: funk is not funk.");
   }
-  f2ptr new_funk = raw__funk__new_copy_in_this_environment(cause, funk);
+  f2ptr env      = f2fiber__env(fiber, cause);
+  f2ptr new_funk = raw__funk__new_copy_in_environment(cause, funk, env);
   f2fiber__value__set(fiber, cause, new_funk);
   return 0;
 }

@@ -641,32 +641,6 @@ def_pcfunk2(funk__new_copy_in_environment, this, env,
 	    return f2__funk__new_copy_in_environment(this_cause, this, env));
 
 
-f2ptr raw__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
-  f2ptr fiber               = f2__this__fiber(cause);
-  f2ptr env                 = f2fiber__env(fiber, cause);  
-  f2ptr name                = f2funk__name(               this, cause);
-  f2ptr body_bytecodes      = f2funk__body_bytecodes(     this, cause);
-  f2ptr args                = f2funk__args(               this, cause);
-  f2ptr demetropolized_body = f2funk__demetropolized_body(this, cause);
-  f2ptr body                = f2funk__body(               this, cause);
-  f2ptr machine_code        = f2funk__machine_code(       this, cause);
-  f2ptr is_funktional       = f2funk__is_funktional(      this, cause);
-  f2ptr has_no_side_effects = f2funk__has_no_side_effects(this, cause);
-  f2ptr documentation       = f2funk__documentation(      this, cause);
-  f2ptr new_funk = f2funk__new(cause,
-			       name,
-			       body_bytecodes,
-			       args,
-			       demetropolized_body,
-			       body,
-			       env,
-			       machine_code,
-			       is_funktional,
-			       has_no_side_effects,
-			       documentation);
-  return new_funk;
-}
-
 f2ptr f2__funk__new_copy_in_this_environment(f2ptr cause, f2ptr this) {
   assert_argument_type(funk, this);
   return raw__funk__new_copy_in_this_environment(cause, this);

@@ -406,6 +406,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		    }
 		  }
 		} else {
+		  /*
 		  boolean_t variables_contain_rest = boolean__false;
 		  {
 		    f2ptr iter = compiled_funk__args;
@@ -418,6 +419,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		    }
 		  }
 		  if (! variables_contain_rest) {
+		  */
 		    if (raw__cons__is_type(cause, arguments)) {
 		      f2ptr arguments_command = f2cons__car(arguments, cause);
 		      if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
@@ -426,31 +428,59 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			f2ptr     variables_iter           = compiled_funk__args;
 			f2ptr     remaining_arguments      = nil;
 			f2ptr     remaining_arguments_iter = nil;
+			boolean_t variables_contain_rest   = boolean__false;
+			f2ptr     rest_arguments           = nil;
+			f2ptr     rest_variable            = nil;
 			boolean_t funk_was_reduced         = boolean__false;
 			while ((arguments_iter != nil) &&
 			       (variables_iter != nil)) {
-			  f2ptr     argument             = f2cons__car(arguments_iter, cause);
-			  f2ptr     variable             = f2cons__car(variables_iter, cause);
-			  boolean_t variable_was_removed = boolean__false;
-			  if (raw__expression__is_constant(cause, argument)) {
-			    f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-			    if (! raw__larva__is_type(cause, result)) {
-			      variable_was_removed  = boolean__true;
-			      funk_was_reduced      = boolean__true;
-			      reduced_compiled_funk = result;
+			  f2ptr argument = f2cons__car(arguments_iter, cause);
+			  f2ptr variable = f2cons__car(variables_iter, cause);
+			  if (raw__eq(cause, variable, new__symbol(cause, ":rest"))) {
+			    variables_contain_rest = boolean__true;
+			    rest_arguments = f2cons__cdr(arguments_iter, cause);
+			    f2ptr variables_iter__cdr = f2cons__cdr(variables_iter, cause);
+			    if (! raw__cons__is_type(cause, variables_iter__cdr)) {
+			      return new__error(f2list8__new(cause,
+							     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-optimize-apply-rest_argument_not_defined"),
+							     new__symbol(cause, "expression"), expression,
+							     new__symbol(cause, "arguments"),  arguments,
+							     new__symbol(cause, "compiled_funk"), compiled_funk));
 			    }
-			  }
-			  if (! variable_was_removed) {
-			    f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
-			    if (remaining_arguments == nil) {
-			      remaining_arguments = new_arguments_cons;
-			    } else {
-			      f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+			    rest_variable = f2cons__car(variables_iter__cdr, cause);
+			    {
+			      f2ptr new_arguments_cons = f2cons__new(cause, f2cons__new(cause, new__symbol(cause, "conslist"), rest_arguments), nil);
+			      if (remaining_arguments == nil) {
+				remaining_arguments = new_arguments_cons;
+			      } else {
+				f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+			      }
+			      remaining_arguments_iter = new_arguments_cons;
 			    }
-			    remaining_arguments_iter = new_arguments_cons;
+			    arguments_iter = nil;
+			    variables_iter = nil;
+			  } else {
+			    boolean_t variable_was_removed = boolean__false;
+			    if (raw__expression__is_constant(cause, argument)) {
+			      f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
+			      if (! raw__larva__is_type(cause, result)) {
+				variable_was_removed  = boolean__true;
+				funk_was_reduced      = boolean__true;
+				reduced_compiled_funk = result;
+			      }
+			    }
+			    if (! variable_was_removed) {
+			      f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
+			      if (remaining_arguments == nil) {
+				remaining_arguments = new_arguments_cons;
+			      } else {
+				f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+			      }
+			      remaining_arguments_iter = new_arguments_cons;
+			    }
+			    arguments_iter = f2cons__cdr(arguments_iter, cause);
+			    variables_iter = f2cons__cdr(variables_iter, cause);
 			  }
-			  arguments_iter = f2cons__cdr(arguments_iter, cause);
-			  variables_iter = f2cons__cdr(variables_iter, cause);
 			}
 			if (funk_was_reduced) {
 			  f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
@@ -458,7 +488,9 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			}
 		      }
 		    }
+		    /*
 		  }
+		    */
 		}
 	      }
 	    }

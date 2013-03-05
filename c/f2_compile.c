@@ -360,110 +360,112 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 	      f2ptr cdr = f2cons__cdr(funkable, cause);
 	      if (raw__cons__is_type(cause, cdr)) {
 		f2ptr bytecode__command = f2cons__car(cdr, cause);
-		f2ptr bytecode__cdr     = f2cons__cdr(cdr, cause);
-		if (raw__cons__is_type(cause, bytecode__cdr)) {
-		  f2ptr compiled_funk       = f2cons__car(bytecode__cdr, cause);
-		  f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
-		  if (compiled_funk__args == nil) {
-		    f2ptr     compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
-		    boolean_t can_be_condensed                   = boolean__false;
-		    {
-		      f2ptr iter = compiled_funk__demetropolized_body;
-		      while ((iter != nil) &&
-			     (! can_be_condensed)) {
-			f2ptr car = f2cons__car(iter, cause);
-			f2ptr cdr = f2cons__cdr(iter, cause);
-			if ((cdr == nil) ||
-			    (! raw__expression__is_funktional(cause, car))) {
-			  // do nothing.
-			} else {
-			  can_be_condensed = boolean__true;
-			}
-			iter = cdr;
-		      }
-		    }
-		    if (can_be_condensed) {
-		      f2ptr condensed_body_expressions = nil;
+		if (raw__eq(cause, bytecode__command, __funk2.bytecode.bytecode__funk_local_copy__symbol)) {
+		  f2ptr bytecode__cdr     = f2cons__cdr(cdr, cause);
+		  if (raw__cons__is_type(cause, bytecode__cdr)) {
+		    f2ptr compiled_funk       = f2cons__car(bytecode__cdr, cause);
+		    f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
+		    if (compiled_funk__args == nil) {
+		      f2ptr     compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
+		      boolean_t can_be_condensed                   = boolean__false;
 		      {
-			f2ptr iter           = compiled_funk__demetropolized_body;
-			f2ptr condensed_iter = nil;
-			while (iter != nil) {
+			f2ptr iter = compiled_funk__demetropolized_body;
+			while ((iter != nil) &&
+			       (! can_be_condensed)) {
 			  f2ptr car = f2cons__car(iter, cause);
 			  f2ptr cdr = f2cons__cdr(iter, cause);
 			  if ((cdr == nil) ||
 			      (! raw__expression__is_funktional(cause, car))) {
-			    f2ptr new_cons = f2cons__new(cause, car, nil);
-			    if (condensed_iter == nil) {
-			      condensed_body_expressions = new_cons;
-			    } else {
-			      f2cons__cdr__set(condensed_iter, cause, new_cons);
-			    }
-			    condensed_iter = new_cons;
+			    // do nothing.
+			  } else {
+			    can_be_condensed = boolean__true;
 			  }
 			  iter = cdr;
 			}
 		      }
-		      if (condensed_body_expressions == nil) {
-			return nil;
-		      } else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
-			return f2cons__car(condensed_body_expressions, cause);
-		      }
-		    }
-		  } else {
-		    if (raw__cons__is_type(cause, arguments)) {
-		      f2ptr arguments_command = f2cons__car(arguments, cause);
-		      if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
-			f2ptr     reduced_compiled_funk    = compiled_funk;
-			f2ptr     arguments_iter           = f2cons__cdr(arguments, cause);
-			f2ptr     variables_iter           = compiled_funk__args;
-			f2ptr     remaining_arguments      = nil;
-			f2ptr     remaining_arguments_iter = nil;
-			boolean_t found_rest_variable      = boolean__false;
-			boolean_t funk_was_reduced         = boolean__false;
-			while ((arguments_iter != nil) &&
-			       (variables_iter != nil)) {
-			  f2ptr argument = f2cons__car(arguments_iter, cause);
-			  f2ptr variable = f2cons__car(variables_iter, cause);
-			  if (raw__eq(cause, variable, new__symbol(cause, ":rest"))) {
-			    found_rest_variable = boolean__true;
-			    f2ptr variables_iter__cdr = f2cons__cdr(variables_iter, cause);
-			    if (! raw__cons__is_type(cause, variables_iter__cdr)) {
-			      return new__error(f2list8__new(cause,
-							     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-optimize-apply-rest_argument_not_defined"),
-							     new__symbol(cause, "expression"),    expression,
-							     new__symbol(cause, "arguments"),     arguments,
-							     new__symbol(cause, "compiled_funk"), compiled_funk));
-			    }
-			    variables_iter = variables_iter__cdr;
-			  } else {
-			    boolean_t variable_was_removed = boolean__false;
-			    if ((! found_rest_variable) &&
-				raw__expression__is_constant(cause, argument)) {
-			      f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
-			      if (! raw__larva__is_type(cause, result)) {
-				variable_was_removed  = boolean__true;
-				funk_was_reduced      = boolean__true;
-				reduced_compiled_funk = result;
-			      }
-			    }
-			    if (! variable_was_removed) {
-			      f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
-			      if (remaining_arguments == nil) {
-				remaining_arguments = new_arguments_cons;
+		      if (can_be_condensed) {
+			f2ptr condensed_body_expressions = nil;
+			{
+			  f2ptr iter           = compiled_funk__demetropolized_body;
+			  f2ptr condensed_iter = nil;
+			  while (iter != nil) {
+			    f2ptr car = f2cons__car(iter, cause);
+			    f2ptr cdr = f2cons__cdr(iter, cause);
+			    if ((cdr == nil) ||
+				(! raw__expression__is_funktional(cause, car))) {
+			      f2ptr new_cons = f2cons__new(cause, car, nil);
+			      if (condensed_iter == nil) {
+				condensed_body_expressions = new_cons;
 			      } else {
-				f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+				f2cons__cdr__set(condensed_iter, cause, new_cons);
 			      }
-			      remaining_arguments_iter = new_arguments_cons;
+			      condensed_iter = new_cons;
 			    }
-			    arguments_iter = f2cons__cdr(arguments_iter, cause);
-			    variables_iter = f2cons__cdr(variables_iter, cause);
+			    iter = cdr;
 			  }
 			}
-			if (funk_was_reduced) {
-			  f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
-			  return f2list3__new(cause, __funk2.globalenv.local_apply__symbol,
-					      f2list5__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, reduced_compiled_funk, nil, nil),
-					      remaining_arguments_expression);
+			if (condensed_body_expressions == nil) {
+			  return nil;
+			} else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
+			  return f2cons__car(condensed_body_expressions, cause);
+			}
+		      }
+		    } else {
+		      if (raw__cons__is_type(cause, arguments)) {
+			f2ptr arguments_command = f2cons__car(arguments, cause);
+			if (raw__eq(cause, arguments_command, new__symbol(cause, "conslist"))) {
+			  f2ptr     reduced_compiled_funk    = compiled_funk;
+			  f2ptr     arguments_iter           = f2cons__cdr(arguments, cause);
+			  f2ptr     variables_iter           = compiled_funk__args;
+			  f2ptr     remaining_arguments      = nil;
+			  f2ptr     remaining_arguments_iter = nil;
+			  boolean_t found_rest_variable      = boolean__false;
+			  boolean_t funk_was_reduced         = boolean__false;
+			  while ((arguments_iter != nil) &&
+				 (variables_iter != nil)) {
+			    f2ptr argument = f2cons__car(arguments_iter, cause);
+			    f2ptr variable = f2cons__car(variables_iter, cause);
+			    if (raw__eq(cause, variable, new__symbol(cause, ":rest"))) {
+			      found_rest_variable = boolean__true;
+			      f2ptr variables_iter__cdr = f2cons__cdr(variables_iter, cause);
+			      if (! raw__cons__is_type(cause, variables_iter__cdr)) {
+				return new__error(f2list8__new(cause,
+							       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-optimize-apply-rest_argument_not_defined"),
+							       new__symbol(cause, "expression"),    expression,
+							       new__symbol(cause, "arguments"),     arguments,
+							       new__symbol(cause, "compiled_funk"), compiled_funk));
+			      }
+			      variables_iter = variables_iter__cdr;
+			    } else {
+			      boolean_t variable_was_removed = boolean__false;
+			      if ((! found_rest_variable) &&
+				  raw__expression__is_constant(cause, argument)) {
+				f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
+				if (! raw__larva__is_type(cause, result)) {
+				  variable_was_removed  = boolean__true;
+				  funk_was_reduced      = boolean__true;
+				  reduced_compiled_funk = result;
+				}
+			      }
+			      if (! variable_was_removed) {
+				f2ptr new_arguments_cons = f2cons__new(cause, argument, nil);
+				if (remaining_arguments == nil) {
+				  remaining_arguments = new_arguments_cons;
+				} else {
+				  f2cons__cdr__set(remaining_arguments_iter, cause, new_arguments_cons);
+				}
+				remaining_arguments_iter = new_arguments_cons;
+			      }
+			      arguments_iter = f2cons__cdr(arguments_iter, cause);
+			      variables_iter = f2cons__cdr(variables_iter, cause);
+			    }
+			  }
+			  if (funk_was_reduced) {
+			    f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
+			    return f2list3__new(cause, __funk2.globalenv.local_apply__symbol,
+						f2list5__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, reduced_compiled_funk, nil, nil),
+						remaining_arguments_expression);
+			  }
 			}
 		      }
 		    }

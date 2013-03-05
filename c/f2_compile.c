@@ -462,7 +462,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			if (funk_was_reduced) {
 			  f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
 			  return f2list3__new(cause, __funk2.globalenv.local_apply__symbol,
-					      f2list4__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, reduced_compiled_funk, nil, nil),
+					      f2list5__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, reduced_compiled_funk, nil, nil),
 					      remaining_arguments_expression);
 			}
 		      }

@@ -610,10 +610,11 @@ boolean_t f2__fiber__execute_bytecode(f2ptr cause, f2ptr fiber, f2ptr bytecode) 
     f2__fiber__print(cause, fiber, command);
     f2__fiber__print(cause, fiber, bytecode);
     f2__fiber__print(cause, fiber, __funk2.bytecode.bytecode__block_enter__symbol);
-    f2fiber__value__set(fiber, cause, new__error(f2list6__new(cause,
-							      new__symbol(cause, "bug_name"),         new__symbol(cause, "fiber-execute_bytecode-invalid_bytecode_command"),
-							      new__symbol(cause, "bytecode-command"), command,
-							      new__symbol(cause, "bytecode"),         bytecode)));
+    f2ptr error_value = new__error(f2list6__new(cause,
+						new__symbol(cause, "bug_name"),         new__symbol(cause, "fiber-execute_bytecode-invalid_bytecode_command"),
+						new__symbol(cause, "bytecode-command"), command,
+						new__symbol(cause, "bytecode"),         bytecode));
+    f2fiber__value__set(fiber, cause, error_value);
   }
   return boolean__false;
 }

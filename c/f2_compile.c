@@ -493,7 +493,7 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
 	  f2ptr funkable__bytecode__command = f2cons__car(funkable__cdr, cause);
 	  f2ptr funkable__cdr__cdr          = f2cons__cdr(funkable__cdr, cause);
 	  if (raw__cons__is_type(cause, funkable__cdr__cdr)) {
-	    f2ptr funkable = f2cons__car(funkable__cdr__cdr, cause);
+	    f2ptr funkable__funkable = f2cons__car(funkable__cdr__cdr, cause);
 	    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
 	    if (raw__cons__is_type(cause, cdr__cdr)) {
 	      f2ptr arguments = f2cons__car(cdr__cdr, cause);

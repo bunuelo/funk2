@@ -491,13 +491,15 @@ f2ptr raw__expression__optimize__local_apply(f2ptr cause, f2ptr expression) {
 	f2ptr funkable__cdr = f2cons__cdr(funkable, cause);
 	if (raw__cons__is_type(cause, funkable__cdr)) {
 	  f2ptr funkable__bytecode__command = f2cons__car(funkable__cdr, cause);
-	  f2ptr funkable__cdr__cdr          = f2cons__cdr(funkable__cdr, cause);
-	  if (raw__cons__is_type(cause, funkable__cdr__cdr)) {
-	    f2ptr funkable__funkable = f2cons__car(funkable__cdr__cdr, cause);
-	    f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
-	    if (raw__cons__is_type(cause, cdr__cdr)) {
-	      f2ptr arguments = f2cons__car(cdr__cdr, cause);
-	      return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, funkable__funkable, arguments);
+	  if (raw__eq(cause, funkable__bytecode__command, __funk2.bytecode.bytecode__funk_local_copy__symbol)) {
+	    f2ptr funkable__cdr__cdr          = f2cons__cdr(funkable__cdr, cause);
+	    if (raw__cons__is_type(cause, funkable__cdr__cdr)) {
+	      f2ptr funkable__funkable = f2cons__car(funkable__cdr__cdr, cause);
+	      f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+	      if (raw__cons__is_type(cause, cdr__cdr)) {
+		f2ptr arguments = f2cons__car(cdr__cdr, cause);
+		return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, funkable__funkable, arguments);
+	      }
 	    }
 	  }
 	}

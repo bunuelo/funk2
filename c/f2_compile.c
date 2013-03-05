@@ -209,6 +209,16 @@ boolean_t raw__expression__is_funktional(f2ptr cause, f2ptr expression) {
     if (! raw__eq(cause, command, __funk2.globalenv.quote__symbol)) {
       return boolean__false;
     }
+  }
+  return boolean__true;
+}
+
+boolean_t raw__expression__is_constant(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(  cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (! raw__eq(cause, command, __funk2.globalenv.quote__symbol)) {
+      return boolean__false;
+    }
   } else if (raw__symbol__is_type(cause, expression)) {
     if (! raw__eq(cause, expression, __funk2.globalenv.true__symbol)) {
       return boolean__false;
@@ -221,7 +231,7 @@ f2ptr raw__expression__optimize__if(f2ptr cause, f2ptr expression) {
   f2ptr cdr = f2cons__cdr(expression, cause);
   if (raw__cons__is_type(cause, cdr)) {
     f2ptr condition = f2cons__car(cdr, cause);
-    if (raw__expression__is_funktional(cause, condition)) {
+    if (raw__expression__is_constant(cause, condition)) {
       if (condition != nil) {
 	f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
 	if (raw__cons__is_type(cause, cdr__cdr)) {
@@ -422,7 +432,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			  f2ptr     argument             = f2cons__car(arguments_iter, cause);
 			  f2ptr     variable             = f2cons__car(variables_iter, cause);
 			  boolean_t variable_was_removed = boolean__false;
-			  if (raw__expression__is_funktional(cause, argument)) {
+			  if (raw__expression__is_constant(cause, argument)) {
 			    f2ptr result = raw__funk__new_with_replaced_variable(cause, reduced_compiled_funk, variable, argument);
 			    if (! raw__larva__is_type(cause, result)) {
 			      variable_was_removed  = boolean__true;
@@ -673,8 +683,8 @@ f2ptr raw__expression__optimize__eq(f2ptr cause, f2ptr expression) {
       f2ptr arg2 = f2cons__car(cdr__cdr, cause);
       f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
       f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
-      if (raw__expression__is_funktional(cause, arg1_optimized) &&
-	  raw__expression__is_funktional(cause, arg2_optimized)) {
+      if (raw__expression__is_constant(cause, arg1_optimized) &&
+	  raw__expression__is_constant(cause, arg2_optimized)) {
 	if (raw__eq(cause, arg1_optimized, arg2_optimized)) {
 	  return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));
 	} else {
@@ -695,7 +705,7 @@ f2ptr raw__expression__optimize__not(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, cdr)) {
     f2ptr arg           = f2cons__car(cdr, cause);
     f2ptr arg_optimized = raw__expression__optimize(cause, arg);
-    if (raw__expression__is_funktional(cause, arg_optimized)) {
+    if (raw__expression__is_constant(cause, arg_optimized)) {
       if (arg_optimized == nil) {
 	return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));
       } else {
@@ -718,8 +728,8 @@ f2ptr raw__expression__optimize__and(f2ptr cause, f2ptr expression) {
       f2ptr arg2 = f2cons__car(cdr__cdr, cause);
       f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
       f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
-      if (raw__expression__is_funktional(cause, arg1_optimized) &&
-	  raw__expression__is_funktional(cause, arg2_optimized)) {
+      if (raw__expression__is_constant(cause, arg1_optimized) &&
+	  raw__expression__is_constant(cause, arg2_optimized)) {
 	if ((arg1_optimized != nil) &&
 	    (arg2_optimized != nil)) {
 	  return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));
@@ -745,8 +755,8 @@ f2ptr raw__expression__optimize__or(f2ptr cause, f2ptr expression) {
       f2ptr arg2 = f2cons__car(cdr__cdr, cause);
       f2ptr arg1_optimized = raw__expression__optimize(cause, arg1);
       f2ptr arg2_optimized = raw__expression__optimize(cause, arg2);
-      if (raw__expression__is_funktional(cause, arg1_optimized) &&
-	  raw__expression__is_funktional(cause, arg2_optimized)) {
+      if (raw__expression__is_constant(cause, arg1_optimized) &&
+	  raw__expression__is_constant(cause, arg2_optimized)) {
 	if ((arg1_optimized != nil) ||
 	    (arg2_optimized != nil)) {
 	  return f2list2__new(cause, __funk2.globalenv.quote__symbol, f2bool__new(boolean__true));

@@ -2889,7 +2889,27 @@ f2ptr raw__expression__replace_variable__funk__new_copy_in_this_environment(f2pt
   return f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), new_funkable);
 }
 
+f2ptr raw__expression__replace_variable__bytecode__funk_local_copy(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr      = f2cons__cdr(expression, cause);
+  f2ptr cdr__cdr = f2cons__cdr(cdr, cause);
+  if (raw__cons__is_type(cause, cdr__cdr)) {
+    f2ptr funk = f2cons__car(cdr__cdr, cause);
+    if (raw__funk__is_type(cause, funk)) {
+      f2ptr new_funk = assert_value(raw__funk__new_with_replaced_variable(cause, funk, replace_variable, replace_argument));
+      return f2list4__new(cause, __funk2.bytecode.bytecode__funk_local_copy__symbol, new_funk, nil, nil);
+    }
+  }
+  return expression;
+}
+
 f2ptr raw__expression__replace_variable__bytecode(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr expression, f2ptr replace_variable, f2ptr replace_argument) {
+  f2ptr cdr = f2cons__cdr(expression, cause);
+  if (raw__cons__is_type(cause, cdr)) {
+    f2ptr command = f2cons__car(cdr, cause);
+    if (raw__eq(cause, command, __funk2.bytecode.bytecode__funk_local_copy__symbol)) {
+      return raw__expression__replace_variable__bytecode__funk_local_copy(cause, fiber, env, expression, replace_variable, replace_argument);
+    }
+  }
   // might arbitrarily reference local environment, so can't assume variables won't be used.
   return f2larva__new(cause, 555, nil);
 }

@@ -2749,7 +2749,7 @@ f2ptr raw__funk__new_with_replaced_variable(f2ptr cause, f2ptr this, f2ptr repla
     }
   }
   f2ptr fiber                                       = assert_value(f2__this__fiber(cause));
-  f2ptr fiber__environment                          = assert_value(f2__fiber__env(cause, fiber));
+  //f2ptr fiber__environment                          = assert_value(f2__fiber__env(cause, fiber));
   //f2ptr new_demetropolized_body__demetropolize_full = assert_value(f2__exps_demetropolize_full(cause, fiber, fiber__environment, new_demetropolized_body));
   //f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body__demetropolize_full, new_demetropolized_body, nil, nil, nil));
   f2ptr compiled_funk                               = assert_value(f2__funk__new(cause, fiber, old_env, old_name, new_args, new_demetropolized_body, new_demetropolized_body, nil, nil, nil));

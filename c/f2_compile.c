@@ -613,13 +613,38 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
 	    raw__expression__is_funktional(cause, new_rawcode)) {
 	  changed_expression = boolean__true;
 	} else {
-	  f2ptr new_cons = f2cons__new(cause, new_rawcode, nil);
-	  if (new_rawcodes == nil) {
-	    new_rawcodes = new_cons;
-	  } else {
-	    f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
+	  boolean_t flattened_new_rawcode = boolean__false;
+	  if (raw__cons__is_type(cause, new_rawcode)) {
+	    f2ptr new_rawcode__command = f2cons__car(new_rawcode, cause);
+	    if (raw__eq(cause, new_rawcode__command, __funk2.globalenv.rawcode__symbol)) {
+	      changed_expression    = boolean__true;
+	      flattened_new_rawcode = boolean__true;
+	      f2ptr new_rawcode__rawcodes      = f2cons__cdr(new_rawcode, cause);
+	      f2ptr new_rawcode__rawcodes_iter = new_rawcode__rawcodes;
+	      while (new_rawcode__rawcodes_iter != nil) {
+		f2ptr new_rawcode__rawcode = f2cons__car(new_rawcode__rawcodes_iter, cause);
+		{
+		  f2ptr new_cons = f2cons__new(cause, new_rawcode__rawcode, nil);
+		  if (new_rawcodes == nil) {
+		    new_rawcodes = new_cons;
+		  } else {
+		    f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
+		  }
+		  new_rawcodes_iter = new_cons;
+		}
+		new_rawcode__rawcodes_iter = f2cons__cdr(new_rawcode__rawcodes_iter, cause);
+	      }
+	    }
 	  }
-	  new_rawcodes_iter = new_cons;
+	  if (! flattened_new_rawcode) {
+	    f2ptr new_cons = f2cons__new(cause, new_rawcode, nil);
+	    if (new_rawcodes == nil) {
+	      new_rawcodes = new_cons;
+	    } else {
+	      f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
+	    }
+	    new_rawcodes_iter = new_cons;
+	  }
 	}
       }
       rawcodes_iter = rawcodes_iter__cdr;

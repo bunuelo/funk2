@@ -345,6 +345,7 @@ f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
+  /*
   if (raw__cons__is_type(cause, expression)) {
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
     if (raw__cons__is_type(cause, expression__cdr)) {
@@ -469,6 +470,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
       }
     }
   }
+  */
   return expression;
 }
 

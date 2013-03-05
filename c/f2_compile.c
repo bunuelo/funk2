@@ -457,7 +457,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		      }
 		      if (funk_was_reduced) {
 			f2ptr remaining_arguments_expression = (remaining_arguments == nil) ? nil : f2cons__new(cause, new__symbol(cause, "conslist"), remaining_arguments);
-			return f2list3__new(cause, __funk2.globalenv.apply__symbol, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), remaining_arguments_expression);
+			return f2list3__new(cause, __funk2.globalenv.local_apply__symbol, f2list2__new(cause, new__symbol(cause, "funk-new_copy_in_this_environment"), reduced_compiled_funk), remaining_arguments_expression);
 		      }
 		    }
 		  }
@@ -2909,7 +2909,7 @@ f2ptr raw__expression__replace_variable__special_symbol_exp(f2ptr cause, f2ptr f
   if (raw__symbol__eq(cause, car, __funk2.globalenv.globalize_funk__symbol))                {return assert_value(raw__expression__replace_variable__globalize_funk(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.yield__symbol))                         {return exp;}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode__symbol))                      {return exp;} // should handle special case
-  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                       {return exp;} // should handle special case?
+  if (raw__symbol__eq(cause, car, __funk2.globalenv.rawcode__symbol))                       {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_eq__symbol))                   {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_not__symbol))                  {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}
   if (raw__symbol__eq(cause, car, __funk2.globalenv.bytecode_and__symbol))                  {return assert_value(raw__expression__replace_variable__funkvar_call(cause, fiber, env, exp, replace_variable, replace_argument));}

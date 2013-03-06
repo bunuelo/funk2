@@ -3816,10 +3816,32 @@ def_pcfunk3(chunk__bit64__elt__set, this, index, value,
 def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args,
 	    "",
 	    return f2chunk__cfunk_jump(this, this_cause, fiber, env, args));
+
 def_pcfunk2(chunk__bytecode_jump, this, fiber,
 	    "",
 	    return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, fiber)));
 
+u64 raw__chunk__jump(f2ptr cause, f2ptr this, u64 pointer) {
+  return f2chunk__jump(this, cause, pointer);
+}
+
+f2ptr f2__chunk__jump(f2ptr cause, f2ptr this, f2ptr pointer) {
+  assert_argument_type(pointer, pointer);
+  u64 pointer__p = f2pointer__p(pointer, cause);
+  return f2integer__new(cause, raw__chunk__jump(cause, this, pointer__p));
+}
+
+u64 raw__chunk__bytes(f2ptr cause, f2ptr this) {
+  return __pure__f2chunk__bytes(this);
+}
+
+f2ptr f2__chunk__bytes(f2ptr cause, f2ptr this) {
+  assert_argument_type(chunk, this);
+  return f2pointer__new(cause, raw__chunk__bytes(cause, this));
+}
+def_pcfunk1(chunk__bytes, this,
+	    "",
+	    return f2__chunk__bytes(this_cause, this));
 
 f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   f2ptr size                     = f2__terminal_print_frame__size(                    cause, terminal_print_frame);
@@ -3952,6 +3974,8 @@ f2ptr f2__chunk__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2ptr
       return __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk;
     } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk;
+    } else if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_chunk.bytes__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_chunk.bytes__funk;
     }
   }
   return nil;
@@ -3979,6 +4003,7 @@ f2ptr f2chunk__primobject_type__new(f2ptr cause) {
   {char* slot_name = "bit64-elt";                   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bit64__elt__set__funk);}
   {char* slot_name = "cfunk_jump";                  f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk);}
   {char* slot_name = "bytecode_jump";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk);}
+  {char* slot_name = "bytes";                       f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.bytes__funk);}
   {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk);}
   return this;
 }
@@ -5703,6 +5728,10 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(chunk__bytecode_jump);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bytes__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__bytes);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.bytes__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(chunk__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk);
@@ -6300,6 +6329,8 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__4_arg(chunk__cfunk_jump, this, fiber, env, args, cfunk); __funk2.globalenv.object_type.ptype.ptype_chunk.cfunk_jump__funk = never_gc(cfunk);}
   {char* str = "bytecode_jump"; __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__bytecode_jump, this, fiber, cfunk); __funk2.globalenv.object_type.ptype.ptype_chunk.bytecode_jump__funk = never_gc(cfunk);}
+  {char* str = "bytes"; __funk2.globalenv.object_type.ptype.ptype_chunk.bytes__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__1_arg(chunk__bytes, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_chunk.bytes__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.ptype.ptype_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   

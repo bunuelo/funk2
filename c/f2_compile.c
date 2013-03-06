@@ -345,6 +345,35 @@ f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
   return expression;
 }
 
+boolean_t raw__expression__is_variable_definition(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, __funk2.globalenv.bytecode__symbol) ||
+	raw__eq(cause, command, __funk2.globalenv.define__symbol) ||
+	raw__eq(cause, command, __funk2.globalenv.define_funk__symbol)) {
+      return boolean__true;
+    }
+  }
+  return boolean__false;
+}
+
+boolean_t raw__funk__contains_immediate_defines(f2ptr cause, f2ptr this) {
+  f2ptr demetropolized_body = f2funk__demetropolized_body(cause, this);
+  {
+    f2ptr iter = demetropolized_body;
+    while (iter != nil) {
+      f2ptr expression = f2cons__car(iter, cause);
+      {
+	if (raw__expression__is_variable_definition(cause, expression)) {
+	  return boolean__true;
+	}
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  return boolean__false;
+}
+
 f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
@@ -365,7 +394,7 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 		  if (raw__cons__is_type(cause, bytecode__cdr)) {
 		    f2ptr compiled_funk       = f2cons__car(bytecode__cdr, cause);
 		    f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
-		    if (compiled_funk__args == nil) {
+		    if (raw__funk__contains_immediate_defines(cause, compiled_funk)) {
 		      f2ptr     compiled_funk__demetropolized_body = f2__funk__demetropolized_body(cause, compiled_funk);
 		      boolean_t can_be_condensed                   = boolean__false;
 		      {

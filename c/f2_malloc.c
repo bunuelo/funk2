@@ -47,7 +47,7 @@ ptr malloc_executable(size_t required_bytes) {
 		 alloc_bytes,
 		 PROT_READ | PROT_WRITE | PROT_EXEC,
 		 MAP_ANONYMOUS | MAP_PRIVATE,
-		 0,
+		 -1,
 		 0);
   if (p == NULL) {
     perror("malloc_executable() malloc");

@@ -62,27 +62,42 @@ void free_executable(ptr p) {
 }
 
 ptr f2__malloc(f2size_t byte_num) {
-  ptr this = malloc_executable(byte_num);
-  if (this == to_ptr(NULL)) {
+  void* raw_memory = malloc(byte_num);
+  if (raw_memory == NULL) {
     error(nil, "f2__malloc error: out of memory.");
   }
-  //void* raw_memory = malloc(byte_num);
-  //if (raw_memory == NULL) {
-  //  error(nil, "f2__malloc error: out of memory.");
-  //}
-  //ptr this = to_ptr(raw_memory);
+  ptr this = to_ptr(raw_memory);
   return this;
 }
 
 void f2__free(ptr this) {
-  free_executable(this);
-  //free(from_ptr(this));
+  free(from_ptr(this));
 }
 
 ptr f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {
   ptr new_mem = f2__malloc(new_byte_num);
   memcpy(from_ptr(new_mem), from_ptr(this), (old_byte_num < new_byte_num) ? old_byte_num : new_byte_num);
   f2__free(this);
+  return new_mem;
+}
+
+
+ptr f2__malloc_executable(f2size_t byte_num) {
+  ptr this = malloc_executable(byte_num);
+  if (this == to_ptr(NULL)) {
+    error(nil, "f2__malloc error: out of memory.");
+  }
+  return this;
+}
+
+void f2__free_executable(ptr this) {
+  free_executable(this);
+}
+
+ptr f2__new_alloc_executable(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {
+  ptr new_mem = f2__malloc_executable(new_byte_num);
+  memcpy(from_ptr(new_mem), from_ptr(this), (old_byte_num < new_byte_num) ? old_byte_num : new_byte_num);
+  f2__free_executable(this);
   return new_mem;
 }
 

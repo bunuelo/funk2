@@ -44,7 +44,7 @@ ptr malloc_executable(size_t required_bytes) {
   size_t page_size   = getpagesize();
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
   void* p = mmap(NULL, alloc_bytes, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANON, -1, 0);
-  if (! p) {
+  if (p == NULL) {
     perror("malloc_executable() malloc");
     error(nil, "malloc_executable malloc failed.");
   }
@@ -57,24 +57,21 @@ void free_executable(ptr p) {
 }
 
 ptr f2__malloc(f2size_t byte_num) {
-  //ptr this = malloc_executable(byte_num);
-  //if (this == to_ptr(NULL)) {
-  //  error(nil, "f2__malloc error: out of memory.");
-  //}
-  void* raw_memory = malloc(byte_num);
-  if (raw_memory == NULL) {
+  ptr this = malloc_executable(byte_num);
+  if (this == to_ptr(NULL)) {
     error(nil, "f2__malloc error: out of memory.");
   }
-  if (mprotect(raw_memory, byte_num, PROT_READ | PROT_WRITE | PROT_EXEC) != nil) {
-    error(nil, "f2__malloc error: cannot mprotect memory.");
-  }
-  ptr this = to_ptr(raw_memory);
+  //void* raw_memory = malloc(byte_num);
+  //if (raw_memory == NULL) {
+  //  error(nil, "f2__malloc error: out of memory.");
+  //}
+  //ptr this = to_ptr(raw_memory);
   return this;
 }
 
 void f2__free(ptr this) {
-  //free_executable(this);
-  free(from_ptr(this));
+  free_executable(this);
+  //free(from_ptr(this));
 }
 
 ptr f2__new_alloc(ptr this, f2size_t old_byte_num, f2size_t new_byte_num) {

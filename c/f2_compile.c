@@ -1421,7 +1421,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
       return exp_bcs;
     }
     exps = f2cons__cdr(exps, cause);
-    if (iter = nil) {
+    if (iter == nil) {
       full_bcs = exp_bcs;
       iter     = exp_bcs;
     } else {

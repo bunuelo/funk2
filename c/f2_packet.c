@@ -3749,7 +3749,7 @@ void recv_packet__respond__f2chunk__jump(funk2_node_t* funk2_node, pcs_respond__
   funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
 }
 
-int funk2_node__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 pointer) {
+u64 funk2_node__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 pointer) {
   send_packet__request__f2chunk__jump(funk2_node, this_fiber, cause, this, pointer);
   pcs_respond__f2chunk__jump_t* packet = (pcs_respond__f2chunk__jump_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
   u64 jump_return = packet->payload.jump_return;

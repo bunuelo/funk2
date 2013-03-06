@@ -614,8 +614,8 @@ int f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg(f2ptr cause, f2p
   if (! raw__chunk__is_type(cause, chunk)) {
     error(nil, "f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg error: value register does not contain chunk.");
   }
-  s64   value = f2chunk__bytecode_jump(chunk, cause, fiber);
-  f2fiber__value__set(fiber, cause, value);
+  s64 value = f2chunk__bytecode_jump(chunk, cause, fiber);
+  f2fiber__value__set(fiber, cause, f2integer__new(cause, value));
   return 0;
 }
 

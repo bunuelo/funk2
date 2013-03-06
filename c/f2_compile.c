@@ -346,32 +346,23 @@ f2ptr raw__expression__optimize__while(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
-  printf("\ndebug 0");
   if (raw__cons__is_type(cause, expression)) {
-    printf("\ndebug 1");
     f2ptr expression__cdr = f2cons__cdr(expression, cause);
     if (raw__cons__is_type(cause, expression__cdr)) {
-      printf("\ndebug 2");
       f2ptr funkable         = f2cons__car(expression__cdr, cause);
       f2ptr expression__cddr = f2cons__cdr(expression__cdr, cause);
       if (raw__cons__is_type(cause, expression__cddr)) {
-	printf("\ndebug 3");
 	f2ptr arguments = f2cons__car(expression__cddr, cause);
 	{
 	  if (raw__cons__is_type(cause, funkable)) {
-	    printf("\ndebug 4");
 	    f2ptr command = f2cons__car(funkable, cause);
 	    if (raw__eq(cause, command, __funk2.globalenv.bytecode__symbol)) {
-	      printf("\ndebug 5");
 	      f2ptr cdr = f2cons__cdr(funkable, cause);
 	      if (raw__cons__is_type(cause, cdr)) {
-		printf("\ndebug 6");
 		f2ptr bytecode__command = f2cons__car(cdr, cause);
 		if (raw__eq(cause, bytecode__command, __funk2.bytecode.bytecode__funk_local_copy__symbol)) {
-		  printf("\ndebug 7");
 		  f2ptr bytecode__cdr = f2cons__cdr(cdr, cause);
 		  if (raw__cons__is_type(cause, bytecode__cdr)) {
-		    printf("\ndebug 8");
 		    f2ptr compiled_funk       = f2cons__car(bytecode__cdr, cause);
 		    f2ptr compiled_funk__args = assert_value(f2__funk__args(cause, compiled_funk));
 		    if (compiled_funk__args == nil) {

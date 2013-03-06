@@ -1349,7 +1349,7 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
   f2ptr cause = f2cause__compiled_from__new(simple_cause, __funk2.compile.f2__compile__rawcode__symbol, exps);
   
   //printf("rawcode: "); f2__write(exps); fflush(stdout);
-  if (!exps) {
+  if (exps == nil) {
     return nil;
   }
   release__assert(raw__cons__is_type(cause, exps), nil, "exps failed cons type assertion.");
@@ -1377,16 +1377,16 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
     }
   } while(optimize_unused && 
 	  exp__is_funktional && next);
-  if (!exps) {
+  if (exps == nil) {
     return full_bcs;
   }
-  if (full_bcs && (! raw__cons__is_type(cause, full_bcs))) {
+  if ((full_bcs != nil) && (! raw__cons__is_type(cause, full_bcs))) {
     return full_bcs;
   }
   exps = f2cons__cdr(exps, cause);
   
   f2ptr iter = full_bcs;
-  while (exps) {
+  while (exps != nil) {
     if (! raw__cons__is_type(cause, exps)) {
       return f2__argument_type_check_failure__larva__new(simple_cause, exps);
       //error(nil, "f2__compile__rawcode error: exps is not of type cons.");
@@ -1421,7 +1421,12 @@ f2ptr f2__compile__rawcode(f2ptr simple_cause, f2ptr fiber, f2ptr exps, boolean_
       return exp_bcs;
     }
     exps = f2cons__cdr(exps, cause);
-    iter = raw__list_cdr__set(cause, iter, exp_bcs);
+    if (iter = nil) {
+      full_bcs = exp_bcs;
+      iter     = exp_bcs;
+    } else {
+      iter = raw__list_cdr__set(cause, iter, exp_bcs);
+    }
   }
   return bcs_valid(full_bcs);
 }

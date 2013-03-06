@@ -32,6 +32,8 @@ void funk2_bytecode__init(funk2_bytecode_t* this) {
   this->bytecode__funk__execution_count                       = 0;
   this->bytecode__jump_funk__symbol                           = -1;
   this->bytecode__jump_funk__execution_count                  = 0;
+  this->bytecode__jump_machine_code__symbol                   = -1;
+  this->bytecode__jump_machine_code__execution_count          = 0;
   this->bytecode__funk_env__symbol                            = -1;
   this->bytecode__funk_env__execution_count                   = 0;
   this->bytecode__funk_local_copy__symbol                     = -1;
@@ -208,6 +210,7 @@ void funk2_bytecode__destroy(funk2_bytecode_t* this) {
   status("  bytecode__globalize_type_var__execution_count         = " u64__fstr, this->bytecode__globalize_type_var__execution_count);
   status("  bytecode__push_constant__execution_count              = " u64__fstr, this->bytecode__push_constant__execution_count);
   status("  bytecode__jump_funk__execution_count                  = " u64__fstr, this->bytecode__jump_funk__execution_count);
+  status("  bytecode__jump_machine_code__execution_count          = " u64__fstr, this->bytecode__jump_machine_code__execution_count);
   status("  bytecode__array__execution_count                      = " u64__fstr, this->bytecode__array__execution_count);
   status("  bytecode__consp__execution_count                      = " u64__fstr, this->bytecode__consp__execution_count);
   status("  bytecode__car__execution_count                        = " u64__fstr, this->bytecode__car__execution_count);
@@ -601,6 +604,23 @@ int f2__fiber__bytecode__funk_env(f2ptr fiber, f2ptr bytecode) {
   f2__fiber__increment_pc(fiber, cause);
   
   return f2__fiber__bytecode__funk_env__no_increment_pc_reg(cause, fiber, bytecode);
+}
+
+
+// bytecode jump_machine_code []
+
+int f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  return 0;
+}
+
+int f2__fiber__bytecode__jump_machine_code(f2ptr fiber, f2ptr bytecode) {
+  bytecode_status("bytecode jump_machine_code beginning.");
+  f2ptr cause = f2fiber__cause_reg(fiber, nil);
+  __funk2.bytecode.bytecode__jump_machine_code__execution_count ++;
+  
+  f2__fiber__increment_pc(fiber, cause);
+  
+  return f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg(cause, fiber, bytecode);
 }
 
 
@@ -3134,6 +3154,7 @@ void f2__bytecodes__reinitialize_globalvars() {
   __funk2.bytecode.bytecode__jump_funk__symbol                  = new__symbol(cause, "jump-funk");
   __funk2.bytecode.bytecode__funk__symbol                       = new__symbol(cause, "funk");
   __funk2.bytecode.bytecode__funk_env__symbol                   = new__symbol(cause, "funk_env");
+  __funk2.bytecode.bytecode__jump_machine_code__symbol          = new__symbol(cause, "jump_machine_code");
   __funk2.bytecode.bytecode__funk_local_copy__symbol            = new__symbol(cause, "funk_local_copy");
   __funk2.bytecode.bytecode__array__symbol                      = new__symbol(cause, "array");
   __funk2.bytecode.bytecode__cons__symbol                       = new__symbol(cause, "cons");
@@ -3207,6 +3228,7 @@ void f2__bytecodes__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.bytecode.bytecode__jump_funk__symbol);
   defragment__fix_pointer(__funk2.bytecode.bytecode__funk__symbol);
   defragment__fix_pointer(__funk2.bytecode.bytecode__funk_env__symbol);
+  defragment__fix_pointer(__funk2.bytecode.bytecode__jump_machine_code__symbol);
   defragment__fix_pointer(__funk2.bytecode.bytecode__funk_local_copy__symbol);
   defragment__fix_pointer(__funk2.bytecode.bytecode__array__symbol);
   defragment__fix_pointer(__funk2.bytecode.bytecode__cons__symbol);

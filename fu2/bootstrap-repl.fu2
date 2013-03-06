@@ -465,7 +465,7 @@
 	[if [integer-less_than ,var max_index]
 	    [dotimes-loop]]]]]
 
-[defmetro mydotimes [variable_max_value_pair :rest commands]
+[defmetro dotimes [variable_max_value_pair :rest commands]
   [let [[variable  [first  variable_max_value_pair]]
 	[max-value [second variable_max_value_pair]]]
     `[rawcode [bytecode set value 0 nil]
@@ -476,7 +476,7 @@
 		[bytecode increment value value nil]
 		[bytecode mutate-type_var variable ,variable nil]]]]]
 
-[defmetro dotimes [var-max_index :rest body]
+`[defmetro dotimes [var-max_index :rest body]
   [let [[var       [car  var-max_index]]
 	[max_index [cadr var-max_index]]]
     `[let [[,var      0]

@@ -1168,7 +1168,7 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber) {
   return jump(fiber, bytecode);
 }
 
-typedef u64 (chunk_jump_t*)(u64 pointer);
+typedef u64 (*chunk_jump_t)(u64 pointer);
 
 u64 pfunk2__f2chunk__jump(f2ptr this, f2ptr cause, f2ptr pointer) {
   check_wait_politely();

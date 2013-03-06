@@ -29,9 +29,9 @@
 
 void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num) {
   this->byte_num = byte_num;
-  ptr temp_ptr = f2__malloc(byte_num + f2ptr_block__max_value);
+  ptr temp_ptr = f2__malloc_executable(byte_num + f2ptr_block__max_value);
   if (from_ptr(temp_ptr) == NULL) {
-    perror("f2__malloc");
+    perror("f2__malloc_executable");
     exit(-1);
   }
   this->raw_ptr = temp_ptr;
@@ -40,14 +40,14 @@ void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num)
 }
 
 void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
-  f2__free(this->raw_ptr);
+  f2__free_executable(this->raw_ptr);
   this->byte_num = 0;
   this->raw_ptr  = to_ptr(NULL);
   this->ptr      = to_ptr(NULL);
 }
 
 void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
-  new_memory->raw_ptr = to_ptr(f2__new_alloc(old_memory->raw_ptr, old_memory->byte_num, byte_num + f2ptr_block__max_value));
+  new_memory->raw_ptr = to_ptr(f2__new_alloc_executable(old_memory->raw_ptr, old_memory->byte_num, byte_num + f2ptr_block__max_value));
   if (from_ptr(new_memory->raw_ptr) == NULL) {
     status("f2dynamicmemory__realloc fatal: realloc error \"%s\".", strerror(errno));
     status("                                byte_num=" u64__fstr ".", (u64)byte_num);

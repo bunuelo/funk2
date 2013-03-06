@@ -610,12 +610,21 @@ int f2__fiber__bytecode__funk_env(f2ptr fiber, f2ptr bytecode) {
 // bytecode jump_machine_code []
 
 int f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
-  f2ptr chunk = f2fiber__value(fiber, cause);
+  f2ptr chunk   = f2bytecode__arg0(bytecode, cause);
+  f2ptr pointer = f2fiber__value(fiber, cause);
   if (! raw__chunk__is_type(cause, chunk)) {
-    error(nil, "f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg error: value register does not contain chunk.");
+    error(nil, "f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg error: bytecode arg0 is not chunk.");
   }
-  s64 value = f2chunk__bytecode_jump(chunk, cause, fiber);
-  f2fiber__value__set(fiber, cause, f2integer__new(cause, value));
+  if ((pointer != nil) &&
+      (! raw__pointer__is_type(cause, pointer))) {
+    error(nil, "f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg error: value register does not contain pointer or nil.");
+  }
+  u64 pointer__p = 0;
+  if (raw__pointer__is_type(cause, pointer)) {
+    pointer__p = f2pointer__p(pointer, cause);
+  }
+  u64 return_value = f2chunk__jump(chunk, cause, pointer__p);
+  f2fiber__value__set(fiber, cause, f2integer__new(cause, return_value));
   return 0;
 }
 

@@ -152,6 +152,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2chunk__cfunk_jump                        ,
   funk2_packet_type__pcs_request__f2chunk__bytecode_jump                     , //int              (f2ptr cause, f2ptr this, f2ptr fiber);
   funk2_packet_type__pcs_respond__f2chunk__bytecode_jump                     ,
+  funk2_packet_type__pcs_request__f2chunk__jump                              , //int              (f2ptr cause, f2ptr this, f2ptr fiber);
+  funk2_packet_type__pcs_respond__f2chunk__jump                              ,
   funk2_packet_type__pcs_request__f2chunk__send                              , //f2ptr            (f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
   funk2_packet_type__pcs_respond__f2chunk__send                              ,
   funk2_packet_type__pcs_request__f2chunk__recv                              , //f2ptr            (f2ptr cause, f2ptr this, int start, int length, int fd, int flags);
@@ -2402,6 +2404,46 @@ void recv_packet__respond__f2chunk__bytecode_jump(funk2_node_t* funk2_node, pcs_
 
 int funk2_node__f2chunk__bytecode_jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber);
 int f2chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber);
+
+
+//  funk2_packet_type__pcs_request__f2chunk__jump                     = 0x35, //int              (f2ptr cause, f2ptr this, f2ptr fiber);
+
+// request f2chunk__jump
+
+struct pcs_packet_payload_request__f2chunk__jump_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                pointer;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2chunk__jump_s pcs_packet_payload_request__f2chunk__jump_t;
+
+struct pcs_request__f2chunk__jump_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_request__f2chunk__jump_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2chunk__jump_s pcs_request__f2chunk__jump_t;
+
+// respond f2chunk__jump
+
+struct pcs_packet_payload_respond__f2chunk__jump_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  u64                                                jump_return;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2chunk__jump_s pcs_packet_payload_respond__f2chunk__jump_t;
+
+struct pcs_respond__f2chunk__jump_s {
+  funk2_packet_header_t                       header;
+  pcs_packet_payload_respond__f2chunk__jump_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2chunk__jump_s pcs_respond__f2chunk__jump_t;
+
+void send_packet__request__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr pointer);
+void recv_packet__request__f2chunk__jump(funk2_node_t* funk2_node, pcs_request__f2chunk__jump_t* packet);
+void send_packet__respond__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 jump_return);
+void recv_packet__respond__f2chunk__jump(funk2_node_t* funk2_node, pcs_respond__f2chunk__jump_t* packet);
+
+u64 funk2_node__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr pointer);
+u64 f2chunk__jump(f2ptr cause, f2ptr this, u64 pointer);
 
 
 //  funk2_packet_type__pcs_request__f2chunk__send                              = 0x36, //f2ptr            (f2ptr cause, f2ptr this, int start, int length, int fd, int flags);

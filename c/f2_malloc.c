@@ -57,12 +57,15 @@ void free_executable(ptr p) {
 }
 
 ptr f2__malloc(f2size_t byte_num) {
-  //ptr this = malloc_executable(byte_num);
-  void* raw_memory = malloc(byte_num);
-  if (raw_memory == NULL) {
+  ptr this = malloc_executable(byte_num);
+  if (this == to_ptr(NULL)) {
     error(nil, "f2__malloc error: out of memory.");
   }
-  ptr this = to_ptr(raw_memory);
+  //void* raw_memory = malloc(byte_num);
+  //if (raw_memory == NULL) {
+  //  error(nil, "f2__malloc error: out of memory.");
+  //}
+  //ptr this = to_ptr(raw_memory);
   return this;
 }
 

@@ -408,11 +408,11 @@ f2ptr raw__expression__optimize__apply(f2ptr cause, f2ptr expression) {
 			  return nil;
 			} else if (f2cons__cdr(condensed_body_expressions, cause) == nil) {
 			  return f2cons__car(condensed_body_expressions, cause);
-			} else {
-			  return f2list3__new(cause, __funk2.globalenv.local_apply__symbol,
-					      f2list5__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, compiled_funk, nil, nil),
-					      arguments);
 			}
+		      } else {
+			return f2list3__new(cause, __funk2.globalenv.local_apply__symbol,
+					    f2list5__new(cause, __funk2.globalenv.bytecode__symbol, __funk2.bytecode.bytecode__funk_local_copy__symbol, compiled_funk, nil, nil),
+					    arguments);
 		      }
 		    } else {
 		      if (raw__cons__is_type(cause, arguments)) {

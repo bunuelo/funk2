@@ -43,7 +43,12 @@ size_t total_bytes_allocated = 0;
 ptr malloc_executable(size_t required_bytes) {
   size_t page_size   = getpagesize();
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
-  void* p = mmap(NULL, alloc_bytes, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANON, -1, 0);
+  void* p = mmap(NULL,
+		 alloc_bytes,
+		 PROT_READ | PROT_WRITE | PROT_EXEC,
+		 MAP_ANONYMOUS | MAP_PRIVATE,
+		 0,
+		 0);
   if (p == NULL) {
     perror("malloc_executable() malloc");
     error(nil, "malloc_executable malloc failed.");

@@ -3709,7 +3709,7 @@ int f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr user_fiber) {
 // * 
 // * 
 
-void send_packet__request__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr fiber) {
+void send_packet__request__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 pointer) {
   packet_status("send_packet__request__f2chunk__jump: executing.");
   pcs_request__f2chunk__jump_t packet;
   funk2_packet_header__init(&(packet.header), sizeof(packet.payload));

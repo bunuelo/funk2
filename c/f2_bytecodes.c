@@ -1794,7 +1794,8 @@ int f2__fiber__bytecode__lookup(f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr v
 int f2__fiber__bytecode__define__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode, f2ptr type, f2ptr var) {
   f2ptr env   = f2fiber__env(fiber, cause);
   f2ptr value = f2fiber__value(fiber, cause);
-  f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, env, type, var, value));
+  //f2fiber__value__set(fiber, cause, f2__environment__define_type_var_value(cause, env, type, var, value));
+  f2__environment__define_type_var_value(cause, env, type, var, value);
   return 0;
 }
 

@@ -2442,7 +2442,7 @@ void recv_packet__request__f2chunk__jump(funk2_node_t* funk2_node, pcs_request__
 void send_packet__respond__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 jump_return);
 void recv_packet__respond__f2chunk__jump(funk2_node_t* funk2_node, pcs_respond__f2chunk__jump_t* packet);
 
-u64 funk2_node__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, f2ptr pointer);
+u64 funk2_node__f2chunk__jump(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 pointer);
 u64 f2chunk__jump(f2ptr cause, f2ptr this, u64 pointer);
 
 

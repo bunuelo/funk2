@@ -610,6 +610,9 @@ int f2__fiber__bytecode__funk_env(f2ptr fiber, f2ptr bytecode) {
 // bytecode jump_machine_code []
 
 int f2__fiber__bytecode__jump_machine_code__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
+  f2ptr chunk = f2fiber__value(fiber, cause);
+  s64   value = f2chunk__bytecode_jump(chunk, cause, fiber);
+  f2fiber__value__set(fiber, cause, value);
   return 0;
 }
 

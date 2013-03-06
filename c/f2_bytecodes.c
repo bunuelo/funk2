@@ -452,7 +452,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
 	raw__symbol__utf8_str_copy(cause, name, name__utf8_str);
 	name__utf8_str[name__utf8_length] = 0;
       } else {
-	name__utf8_str = (u8*)from_ptr(malloc(strlen("<none>") + 1));
+	name__utf8_str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
 	strcpy((char*)name__utf8_str, "<none>");
       }
       bytecode_status("executing core_extension_funk name=|%s|", name__utf8_str);

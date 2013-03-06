@@ -271,7 +271,7 @@ void funk2_node_handler__destroy(funk2_node_handler_t* this) {
     funk2_node_t*      node = &(iter->node);
     funk2_node_list_t* next = iter->next;
     funk2_node__destroy(node);
-    free(iter);
+    f2__free(to_ptr(iter));
     iter = next;
   }
   funk2_processor_mutex__destroy(&(this->remote_fiber_hash_mutex));
@@ -290,7 +290,7 @@ computer_id_t funk2_node_handler__add_node(funk2_node_handler_t* this, node_id_t
     this->next_computer_id ++;
     funk2_processor_mutex__unlock(&(this->next_computer_id_mutex));
   }
-  funk2_node_list_t* new_node_list = (funk2_node_list_t*)malloc(sizeof(funk2_node_list_t));
+  funk2_node_list_t* new_node_list = (funk2_node_list_t*)from_ptr(f2__malloc(sizeof(funk2_node_list_t)));
   funk2_node__init(&(new_node_list->node), node_id, computer_id, client_id, this->new_node__send_buffer_byte_num, this->new_node__recv_buffer_byte_num);
   new_node_list->next = this->node_list;
   this->node_list = new_node_list;

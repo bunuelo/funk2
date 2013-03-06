@@ -2,11 +2,11 @@
 
 void socket_client__init(socket_client_t* this, char* bind_device, char* hostname, int port_num, u32 recv_buffer_byte_num, u32 send_buffer_byte_num) {
   int bind_device__length = strlen(bind_device);
-  this->bind_device = (char*)malloc(bind_device__length + 1);
+  this->bind_device = (char*)from_ptr(f2__malloc(bind_device__length + 1));
   memcpy(this->bind_device, bind_device, bind_device__length + 1);
   
   int hostname__length = strlen(hostname);
-  this->hostname = (char*)malloc(hostname__length + 1);
+  this->hostname = (char*)from_ptr(f2__malloc(hostname__length + 1));
   memcpy(this->hostname, hostname, hostname__length + 1);
   
   this->port_num = port_num;
@@ -17,8 +17,8 @@ void socket_client__init(socket_client_t* this, char* bind_device, char* hostnam
 }
 
 void socket_client__destroy(socket_client_t* this) {
-  free(this->bind_device);
-  free(this->hostname);
+  f2__free(to_ptr(this->bind_device));
+  f2__free(to_ptr(this->hostname));
   shutdown(this->socket.socket_fd, SHUT_RDWR);
   close(this->socket.socket_fd);
   buffered_socket__destroy(&(this->socket));

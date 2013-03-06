@@ -36,7 +36,7 @@ void funk2_never_delete_list__init(funk2_never_delete_list_t* this) {
 }
 
 void funk2_never_delete_list__destroy(funk2_never_delete_list_t* this) {
-  free(this->data);
+  f2__free(to_ptr(this->data));
 }
 
 void funk2_never_delete_list__add_f2ptr(funk2_never_delete_list_t* this, f2ptr exp) {

@@ -142,7 +142,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
 		       &value__length,
 		       (const unsigned char**)&value__str);
     f2ptr new_chunk = f2chunk__new(cause, value__length, value__str);
-    free(value__str);
+    f2__free(to_ptr(value__str));
     return new_chunk;
   }
   case XMLRPC_TYPE_BOOL: {// boolean  [0 | 1]
@@ -188,7 +188,7 @@ f2ptr funk2_xmlrpc__new_exp_from_xmlrpc_value(xmlrpc_env* env, f2ptr cause, xmlr
       new_string = new__string(cause, (char*)temp_str__utf8_str);
       f2__free(to_ptr(temp_str__utf8_str));
     }
-    free(string__utf8_str); // note this memory was allocated by funk2 code, so use normal free.
+    f2__free(to_ptr(string__utf8_str));
     return new_string;
   }
   case XMLRPC_TYPE_ARRAY: {  // vector array

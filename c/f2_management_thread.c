@@ -112,8 +112,8 @@ void funk2_management_thread__destroy(funk2_management_thread_t* this) {
     funk2_management_thread_command_node_t* iter = this->command_list__first;
     while (iter) {
       funk2_management_thread_command_node_t* next = iter->next;
-      free(iter->command);
-      free(iter);
+      f2__free(to_ptr(iter->command));
+      f2__free(to_ptr(iter));
       iter = next;
     }
   }
@@ -121,8 +121,8 @@ void funk2_management_thread__destroy(funk2_management_thread_t* this) {
     funk2_management_thread_command_node_t* iter = this->finished_command_list;
     while (iter) {
       funk2_management_thread_command_node_t* next = iter->next;
-      free(iter->command);
-      free(iter);
+      f2__free(to_ptr(iter->command));
+      f2__free(to_ptr(iter));
       iter = next;
     }
   }
@@ -177,7 +177,7 @@ funk2_management_thread_command_t* funk2_management_thread__pop_command(funk2_ma
   }
   funk2_processor_mutex__unlock(&(this->command_list__mutex));
   funk2_management_thread_command_t* command = node->command;
-  free(node);
+  f2__free(to_ptr(node));
   return command;
 }
 
@@ -248,8 +248,8 @@ boolean_t funk2_management_thread__check_command_uid_finished(funk2_management_t
       } else {
 	this->finished_command_list = next;
       }
-      free(iter->command);
-      free(iter);
+      f2__free(to_ptr(iter->command));
+      f2__free(to_ptr(iter));
       found_uid = boolean__true;
       break;
     }

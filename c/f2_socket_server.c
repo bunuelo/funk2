@@ -18,7 +18,7 @@ void client_id__init(client_id_t* this, u8* bind_device, u8* ip_addr, u16 port_n
 }
 
 client_id_t* client_id__new(u8* bind_device, u8* ip_addr, u16 port_num) {
-  client_id_t* this = (client_id_t*)malloc(sizeof(client_id_t));
+  client_id_t* this = (client_id_t*)from_ptr(f2__malloc(sizeof(client_id_t)));
   client_id__init(this, bind_device, ip_addr, port_num);
   return this;
 }
@@ -28,7 +28,7 @@ void client_id__copy(client_id_t* this, client_id_t* client_id) {
 }
 
 client_id_t* client_id__new_copy(client_id_t* client_id) {
-  client_id_t* this = (client_id_t*)malloc(sizeof(client_id_t));
+  client_id_t* this = (client_id_t*)from_ptr(f2__malloc(sizeof(client_id_t)));
   client_id__copy(this, client_id);
   return this;
 }
@@ -197,7 +197,7 @@ void socket_server__destroy(socket_server_t* this) {
     socket_server_client_list_t* next   = iter->next;
     socket_server_client_t*      client = &(iter->client);
     socket_server_client__destroy(client);
-    free(iter);
+    f2__free(to_ptr(iter));
     iter = next;
   }
   status("socket_server__destroy: closing socket server socket_fd=%d", this->socket_fd);
@@ -266,7 +266,7 @@ void socket_server__accept_new_clients(socket_server_t* this) {
   client_id_t client_id;
   int         socket_fd = socket_server__accept(this, &client_id);
   if (socket_fd != -1) {
-    socket_server_client_list_t* client_node = (socket_server_client_list_t*)malloc(sizeof(socket_server_client_list_t));
+    socket_server_client_list_t* client_node = (socket_server_client_list_t*)from_ptr(f2__malloc(sizeof(socket_server_client_list_t)));
     client_id__bind_device__set(&client_id, this->client_id.bind_device);
     socket_server_client__init(&(client_node->client), socket_fd, this->client__recv_buffer__byte_num, this->client__send_buffer__byte_num, &client_id);
     client_node->next = this->clients;
@@ -287,7 +287,7 @@ void socket_server__remove_dead_clients(socket_server_t* this) {
 	this->clients = iter->next;
       }
       socket_server_client__destroy(client);
-      free(iter);
+      f2__free(to_ptr(iter));
     }
     iter = next;
   }

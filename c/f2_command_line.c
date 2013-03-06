@@ -91,7 +91,7 @@ boolean_t string__parse_new_hostname_colon_portnum(char* this, char** hostname, 
     printf("\n  error parsing <hostname>:<port_num>: couldn't find first colon, \"%s\".", this);
     return boolean__true; // parse error
   }
-  char *new_hostname = (char*)malloc(first_colon_index + 1);
+  char *new_hostname = (char*)from_ptr(f2__malloc(first_colon_index + 1));
   memcpy(new_hostname, this, first_colon_index);
   new_hostname[first_colon_index] = 0;
   int user_port_num;

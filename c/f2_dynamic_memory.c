@@ -31,7 +31,7 @@ void f2dynamicmemory__init_and_alloc(f2dynamicmemory_t* this, f2size_t byte_num)
   this->byte_num = byte_num;
   ptr temp_ptr = f2__malloc(byte_num + f2ptr_block__max_value);
   if (from_ptr(temp_ptr) == NULL) {
-    perror("malloc");
+    perror("f2__malloc");
     exit(-1);
   }
   this->raw_ptr = temp_ptr;

@@ -385,7 +385,7 @@ f2ptr f2package__primobject_type__new_aux(f2ptr cause) {
 f2ptr f2__current_working_directory(f2ptr cause) {
   char* current_working_directory__str = getcwd(NULL, 0);
   f2ptr current_working_directory = new__string(cause, current_working_directory__str);
-  free(current_working_directory__str);
+  f2__free(to_ptr(current_working_directory__str));
   return current_working_directory;
 }
 def_pcfunk0(current_working_directory,

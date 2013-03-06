@@ -102,11 +102,11 @@ f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
   }
   u64 file__length = lseek(fd, 0, SEEK_END);
   lseek(fd, 0, SEEK_SET);
-  u8* file__str = (u8*)malloc(file__length);
+  u8* file__str = (u8*)from_ptr(f2__malloc(file__length));
   u64 read_length = read(fd, file__str, file__length);
   if (read_length != file__length) {
     printf("\nread_length=" u64__fstr ", file__length=" u64__fstr "\n", read_length, file__length);
-    free(file__str);
+    f2__free(to_ptr(file__str));
     {
       f2ptr bug_frame = f2__frame__new(cause, nil);
       f2__frame__add_var_value(cause, bug_frame, new__symbol(cause, "bug_type"),    new__symbol(cause, "could_not_read_complete_file"));
@@ -118,7 +118,7 @@ f2ptr f2__chunk__load(f2ptr cause, f2ptr filename) {
     }
   }
   f2ptr new_chunk = f2chunk__new(cause, file__length, file__str);
-  free(file__str);
+  f2__free(to_ptr(file__str));
   close(fd);
   return new_chunk;
 }

@@ -36,7 +36,7 @@ void funk2_protected_alloc_array_event_array__init(funk2_protected_alloc_array_e
 }
 
 void funk2_protected_alloc_array_event_array__destroy(funk2_protected_alloc_array_event_array_t* this) {
-  free(this->data);
+  f2__free(to_ptr(this->data));
 }
 
 void funk2_protected_alloc_array_event_array__add_event(funk2_protected_alloc_array_event_array_t* this, funk2_protected_alloc_array_event_type_t type, char* source_filename, int source_line_num) {
@@ -75,7 +75,7 @@ void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this) {
 }
 
 void funk2_protected_alloc_array__destroy(funk2_protected_alloc_array_t* this) {
-  free(this->data);
+  f2__free(to_ptr(this->data));
 #ifdef F2__DEBUG__PROTECTED_ALLOC_ARRAY
   funk2_protected_alloc_array_event_array__destroy(&(this->event_array));
 #endif // F2__DEBUG__PROTECTED_ALLOC_ARRAY

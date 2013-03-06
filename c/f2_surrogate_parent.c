@@ -102,7 +102,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
     error(nil, (char*)error_message);
   } else if (surrogate_parent_pid == 0) {
     u64 read_buffer__length = 128 * 1024;
-    u8* read_buffer         = malloc(read_buffer__length);
+    u8* read_buffer         = from_ptr(f2__malloc(read_buffer__length));
     while (getppid() != 1) {
       waitpid_reap_children();
       f2ptr fiber;
@@ -208,7 +208,7 @@ void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
       memcpy(&result, buffer, sizeof(funk2_return_result_t));
       funk2_processor_mutex__lock(&(this->return_values__mutex));
       {
-	funk2_return_value_node_t* new_node = (funk2_return_value_node_t*)malloc(sizeof(funk2_return_value_node_t));
+	funk2_return_value_node_t* new_node = (funk2_return_value_node_t*)from_ptr(f2__malloc(sizeof(funk2_return_value_node_t)));
 	memcpy(&(new_node->result), &result, sizeof(funk2_return_result_t));
 	new_node->next = this->return_values;
 	this->return_values = new_node;
@@ -233,7 +233,7 @@ boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_pare
       } else {
 	this->return_values = iter->next;
       }
-      free(iter);
+      f2__free(to_ptr(iter));
     }
     prev = iter;
     iter = next;

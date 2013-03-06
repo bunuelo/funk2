@@ -47,11 +47,11 @@ void f2dynamicmemory__destroy_and_free(f2dynamicmemory_t* this) {
 }
 
 void f2dynamicmemory__realloc(f2dynamicmemory_t* new_memory, f2dynamicmemory_t* old_memory, f2size_t byte_num) {
-  new_memory->raw_ptr = to_ptr(realloc(from_ptr(old_memory->raw_ptr), byte_num + f2ptr_block__max_value));
+  new_memory->raw_ptr = to_ptr(f2__new_alloc(from_ptr(old_memory->raw_ptr), old_memory->byte_num, byte_num + f2ptr_block__max_value));
   if (from_ptr(new_memory->raw_ptr) == NULL) {
     status("f2dynamicmemory__realloc fatal: realloc error \"%s\".", strerror(errno));
     status("                                byte_num=" u64__fstr ".", (u64)byte_num);
-    perror("realloc");
+    //perror("realloc");
     exit(-1);
   }
   new_memory->ptr = ((new_memory->raw_ptr + f2ptr_block__max_value) >> f2ptr_block__bit_num) << f2ptr_block__bit_num;

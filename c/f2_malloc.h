@@ -28,12 +28,15 @@
 #ifndef F2__MALLOC__H
 #define F2__MALLOC__H
 
-void assert_failed    (f2ptr fiber, char* filename, int line_num, char* str);
-ptr  malloc_executable(size_t required_bytes);
-void free_executable  (ptr p);
-ptr  f2__malloc       (f2size_t byte_num);
-void f2__free         (ptr this);
-ptr  f2__new_alloc    (ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
+void assert_failed           (f2ptr fiber, char* filename, int line_num, char* str);
+ptr  malloc_executable       (size_t required_bytes);
+void free_executable         (ptr p);
+ptr  f2__malloc              (f2size_t byte_num);
+void f2__free                (ptr this);
+ptr  f2__new_alloc           (ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
+ptr  f2__malloc_executable   (f2size_t byte_num);
+void f2__free_executable     (ptr this);
+ptr  f2__new_alloc_executable(ptr this, f2size_t old_byte_num, f2size_t new_byte_num);
 
 #endif // F2__MALLOC__H
 

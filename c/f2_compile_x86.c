@@ -1275,7 +1275,7 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
 
 
 f2ptr raw__expression__compile_x86__ret(f2ptr cause, f2ptr expression) {
-  if (raw__simple_length(cause, expression != 1)) {
+  if (raw__simple_length(cause, expression) != 1) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-ret-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));

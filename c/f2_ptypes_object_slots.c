@@ -3832,7 +3832,7 @@ f2ptr f2__chunk__jump(f2ptr cause, f2ptr this, f2ptr pointer) {
 }
 
 u64 raw__chunk__bytes(f2ptr cause, f2ptr this) {
-  return __pure__f2chunk__bytes(this);
+  return (u64)to_ptr(__pure__f2chunk__bytes(this));
 }
 
 f2ptr f2__chunk__bytes(f2ptr cause, f2ptr this) {

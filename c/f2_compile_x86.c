@@ -1276,7 +1276,7 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
 
 f2ptr raw__expression__compile_x86__ret(f2ptr cause, f2ptr expression) {
   f2ptr chunk = raw__chunk__new(cause, 1);
-  raw__chunk__bit8_elt__set(cause, chunk, 0, 0xC3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC3);
   return chunk;
 }
 

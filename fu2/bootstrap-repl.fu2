@@ -68,6 +68,7 @@
 [primfunk:load 'fu2/primfunks-core_extension.fu2']
 [primfunk:load 'fu2/primfunks-core_extension_funk.fu2']
 [primfunk:load 'fu2/primfunks-compile.fu2']
+[primfunk:load 'fu2/primfunks-compile_x86.fu2']
 [primfunk:load 'fu2/primfunks-cpu.fu2']
 [primfunk:load 'fu2/primfunks-defragmenter.fu2']
 [primfunk:load 'fu2/primfunks-dlfcn.fu2']

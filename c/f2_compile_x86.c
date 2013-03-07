@@ -1273,6 +1273,38 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
   return this;
 }
 
+
+f2ptr raw__expression__compile_x86__ret(f2ptr cause, f2ptr expression) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8_elt__set(cause, chunk, 0, 0xC3);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "ret"))) {
+      return raw__expression__compile_x86__ret(cause, expression);
+    }
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),
+				   new__symbol(cause, "command"),    command,
+				   new__symbol(cause, "expression"), expression));
+  }
+  return new__error(f2list6__new(cause,
+				 new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),
+				 new__symbol(cause, "expression-type"), f2__object__type(cause, expression),
+				 new__symbol(cause, "expression"),      expression));
+}
+
+f2ptr f2__expression__compile_x86(f2ptr cause, f2ptr expression) {
+  return raw__expression__compile_x86(cause, expression);
+}
+def_pcfunk1(expression__compile_x86, expression,
+	    "Compile x86 assembly expression to machine code chunk.",
+	    return f2__expression__compile_x86(this_cause, expression));
+
+
 // **
 
 void f2__compile_x86__defragment__fix_pointers() {
@@ -1287,6 +1319,12 @@ void f2__compile_x86__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(machine_code_chunk__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk);
   
+  
+  // compile_x86 funks
+  
+  f2__primcfunk__init__defragment__fix_pointers(expression__compile_x86);
+  
+  
 }
 
 void f2__compile_x86__reinitialize_globalvars() {
@@ -1300,6 +1338,11 @@ void f2__compile_x86__reinitialize_globalvars() {
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(machine_code_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+  
+  // compile_x86 funks
+  
+  f2__primcfunk__init__1(expression__x86_compile, expression);
   
 }
 

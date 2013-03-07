@@ -25,6 +25,20 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__COMPILE_X86__TYPES__H
+#define F2__COMPILE_X86__TYPES__H
+
+// machine_code_chunk
+
+typedef struct funk2_object_type__machine_code_chunk__slot_s funk2_object_type__machine_code_chunk__slot_t;
+declare_object_type_2_slot(machine_code_chunk, chunk, index_label_ptypehash,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
+#endif // F2__COMPILE_X86__TYPES__H
+
+
 #ifndef F2__COMPILE_X86__H
 #define F2__COMPILE_X86__H
 
@@ -43,7 +57,23 @@ typedef enum x86_reg_e {
   x86_reg__edi
 } x86_reg_t;
 
+
+// machine_code_chunk
+
+declare_primobject_2_slot(machine_code_chunk, chunk, index_label_ptypehash);
+
+f2ptr raw__machine_code_chunk__new(f2ptr cause);
+f2ptr  f2__machine_code_chunk__new(f2ptr cause);
+
+
+
 f2ptr f2chunk__new_compiled_from_funk(f2ptr cause, f2ptr funk);
 f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro);
+
+// **
+
+void f2__compile_x86__defragment__fix_pointers();
+void f2__compile_x86__reinitialize_globalvars();
+void f2__compile_x86__initialize();
 
 #endif // F2__COMPILE_X86__H

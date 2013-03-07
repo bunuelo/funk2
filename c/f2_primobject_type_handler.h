@@ -1,8 +1,14 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
-// Author: Bo Morgan
+// Authors:
+//
+//   Bo Morgan (2007-2013): Initial implementation.
+// 
+// This program is distributed under the terms of the GNU General
+// Public License.  See the COPYING file that is distributed with this
+// file.
 // 
 // Permission to use, copy, modify and distribute this software and its
 // documentation is hereby granted, provided that both the copyright
@@ -56,6 +62,7 @@
 #include "f2_primobject__file_handle.h"
 #include "f2_primobject__matrix.h"
 #include "f2_primobject__counter.h"
+#include "f2_compile_x86.h"
 
 typedef struct funk2_primobject_type_handler_s {
   funk2_processor_mutex_t type_hash_cmutex;
@@ -155,6 +162,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__file_handle__slot_t                      primobject_type_file_handle;
   funk2_object_type__matrix__slot_t                           primobject_type_matrix;
   funk2_object_type__counter__slot_t                          primobject_type_counter;
+  funk2_object_type__machine_code_chunk__slot_t               primobject_type_machine_code_chunk;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__clause__slot_t                           primobject_type_clause;

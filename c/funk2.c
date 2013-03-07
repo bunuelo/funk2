@@ -147,6 +147,7 @@ void f2__initialize() {
   f2__primobject__matrix__initialize();
   f2__primobject__counter__initialize();
   f2__math__initialize();
+  f2__compile_x86__initialize();
 }
 
 #define u64_large_prime ((u64)12764787846358441471ull)

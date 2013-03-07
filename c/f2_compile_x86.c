@@ -28,21 +28,21 @@
 #include "funk2.h"
 #include "f2_ptypes_memory.h"
 
-void raw__chunk__compile_x86__value_bit8( f2ptr this, uint index, f2ptr cause, uint* next_index, u8  value) {
+void raw__chunk__compile_x86__value_bit8( f2ptr this, u64 index, f2ptr cause, u64* next_index, u8  value) {
   if (this) {
     f2chunk__bit8__elt__set(this, index, cause, value);
   }
   *next_index = index + 1;
 }
 
-void raw__chunk__compile_x86__value_bit16(f2ptr this, uint index, f2ptr cause, uint* next_index, u16 value) {
+void raw__chunk__compile_x86__value_bit16(f2ptr this, u64 index, f2ptr cause, u64* next_index, u16 value) {
   if (this) {
     f2chunk__bit16__elt__set(this, index, cause, value);
   }
   *next_index = index + 2;
 }
 
-void raw__chunk__compile_x86__value_bit32(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 value) {
+void raw__chunk__compile_x86__value_bit32(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 value) {
   if (this) {
     f2chunk__bit32__elt__set(this, index, cause, value);
   }
@@ -58,7 +58,7 @@ void raw__chunk__compile_x86__value_bit32(f2ptr this, uint index, f2ptr cause, u
 //80483e2:	56                   	push   %esi
 //80483e3:	57                   	push   %edi
 
-void raw__chunk__compile_x86__push_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__push_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x50); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x51); break;
@@ -80,7 +80,7 @@ void raw__chunk__compile_x86__push_reg(f2ptr this, uint index, f2ptr cause, uint
 //80483ea:	5e                   	pop    %esi
 //80483eb:	5f                   	pop    %edi
 
-void raw__chunk__compile_x86__pop_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__pop_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x58); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x59); break;
@@ -95,21 +95,21 @@ void raw__chunk__compile_x86__pop_reg(f2ptr this, uint index, f2ptr cause, uint*
 
 //80483d1:	c3                   	ret    
 
-void raw__chunk__compile_x86__ret(f2ptr this, uint index, f2ptr cause, uint* next_index) {
+void raw__chunk__compile_x86__ret(f2ptr this, u64 index, f2ptr cause, u64* next_index) {
   raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0xC3);
 }
 
 //80483ff:	e8 b0 ff ff ff       	call   80483b4 <test1>
 
-void raw__chunk__compile_x86__call(f2ptr this, uint index, f2ptr cause, uint* next_index, s32 relative_address) {
+void raw__chunk__compile_x86__call(f2ptr this, u64 index, f2ptr cause, u64* next_index, s32 relative_address) {
   raw__chunk__compile_x86__value_bit8( this, index, cause, next_index, 0xE8); index = *next_index;
   raw__chunk__compile_x86__value_bit32(this, index, cause, next_index, relative_address);
 }
 
-void raw__chunk__compile_x86__call_absolute(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 absolute_address) {
+void raw__chunk__compile_x86__call_absolute(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 absolute_address) {
   s32 relative_jump_addr;
   if (this != nil) {
-    uint after_call_index;
+    u64 after_call_index;
     raw__chunk__compile_x86__call(nil, index, cause, &after_call_index, 0);
     relative_jump_addr = (s32)absolute_address - ((s32)(to_ptr(ptype_chunk__bytes(this, cause))) + after_call_index);
   } else {
@@ -120,28 +120,28 @@ void raw__chunk__compile_x86__call_absolute(f2ptr this, uint index, f2ptr cause,
 
 //  17:	ff d0                	call   *%eax
 
-void raw__chunk__compile_x86__call_eax(f2ptr this, uint index, f2ptr cause, uint* next_index) {
+void raw__chunk__compile_x86__call_eax(f2ptr this, u64 index, f2ptr cause, u64* next_index) {
   raw__chunk__compile_x86__value_bit16( this, index, cause, next_index, 0xD0FF);
 }
 
 
 //804840e:	83 c4 10             	add    $0x10,%esp
 
-void raw__chunk__compile_x86__add(f2ptr this, uint index, f2ptr cause, uint* next_index, u8 value) {
+void raw__chunk__compile_x86__add(f2ptr this, u64 index, f2ptr cause, u64* next_index, u8 value) {
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, (u16)0xC483); index = *next_index;
   raw__chunk__compile_x86__value_bit8( this, index, cause, next_index, value);
 }
 
 //80483d6:	83 ec 10             	sub    $0x10,%esp
 
-void raw__chunk__compile_x86__sub__const_from_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, u8 value) {
+void raw__chunk__compile_x86__sub__const_from_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, u8 value) {
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, (u16)0xEC83); index = *next_index;
   raw__chunk__compile_x86__value_bit8( this, index, cause, next_index, value);
 }
 
 //80483da:	c9                   	leave  
 
-void raw__chunk__compile_x86__leave(f2ptr this, uint index, f2ptr cause, uint* next_index) {
+void raw__chunk__compile_x86__leave(f2ptr this, u64 index, f2ptr cause, u64* next_index) {
   raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0xC9);
 }
 
@@ -150,7 +150,7 @@ void raw__chunk__compile_x86__leave(f2ptr this, uint index, f2ptr cause, uint* n
 //'80483c1:	c7 05 cc 96 04 08 01 	movl   $0x1,0x80496cc'
 //'80483c8:	00 00 00 '
 
-void raw__chunk__compile_x86__movl(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 constant, u32 addr) {
+void raw__chunk__compile_x86__movl(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 constant, u32 addr) {
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x05C7); index = *next_index;
   raw__chunk__compile_x86__value_bit32(this, index, cause, next_index, addr);   index = *next_index;
   raw__chunk__compile_x86__value_bit32(this, index, cause, next_index, constant);
@@ -165,7 +165,7 @@ void raw__chunk__compile_x86__movl(f2ptr this, uint index, f2ptr cause, uint* ne
 //8048591:	be c8 96 04 08       	mov    $0x80496c8,%esi'
 //8048596:	bf c8 96 04 08       	mov    $0x80496c8,%edi'
 
-void raw__chunk__compile_x86__mov_const_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 constant, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_const_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 constant, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0xB8); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0xB9); break;
@@ -191,7 +191,7 @@ void raw__chunk__compile_x86__mov_const_to_reg(f2ptr this, uint index, f2ptr cau
 //80483f8:	89 c6                	mov    %eax,%esi
 //80483fa:	89 c7                	mov    %eax,%edi
 
-void raw__chunk__compile_x86__mov_eax_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_eax_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC089); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC189); break;
@@ -213,7 +213,7 @@ void raw__chunk__compile_x86__mov_eax_to_reg(f2ptr this, uint index, f2ptr cause
 //80483e8:	89 ce                	mov    %ecx,%esi
 //80483ea:	89 cf                	mov    %ecx,%edi
 
-void raw__chunk__compile_x86__mov_ecx_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_ecx_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC889); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC989); break;
@@ -236,7 +236,7 @@ void raw__chunk__compile_x86__mov_ecx_to_reg(f2ptr this, uint index, f2ptr cause
 //8048408:	89 d6                	mov    %edx,%esi
 //804840a:	89 d7                	mov    %edx,%edi
 
-void raw__chunk__compile_x86__mov_edx_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_edx_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xD089); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xD189); break;
@@ -259,7 +259,7 @@ void raw__chunk__compile_x86__mov_edx_to_reg(f2ptr this, uint index, f2ptr cause
 //8048418:	89 de                	mov    %ebx,%esi
 //804841a:	89 df                	mov    %ebx,%edi
 
-void raw__chunk__compile_x86__mov_ebx_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_ebx_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xD889); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xD989); break;
@@ -282,7 +282,7 @@ void raw__chunk__compile_x86__mov_ebx_to_reg(f2ptr this, uint index, f2ptr cause
 //8048428:	89 e6                	mov    %esp,%esi
 //804842a:	89 e7                	mov    %esp,%edi
 
-void raw__chunk__compile_x86__mov_esp_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_esp_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xE089); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xE189); break;
@@ -305,7 +305,7 @@ void raw__chunk__compile_x86__mov_esp_to_reg(f2ptr this, uint index, f2ptr cause
 //8048438:	89 ee                	mov    %ebp,%esi
 //804843a:	89 ef                	mov    %ebp,%edi
 
-void raw__chunk__compile_x86__mov_ebp_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_ebp_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xE889); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xE989); break;
@@ -328,7 +328,7 @@ void raw__chunk__compile_x86__mov_ebp_to_reg(f2ptr this, uint index, f2ptr cause
 //8048448:	89 f6                	mov    %esi,%esi
 //804844a:	89 f7                	mov    %esi,%edi
 
-void raw__chunk__compile_x86__mov_esi_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_esi_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xF089); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xF189); break;
@@ -351,7 +351,7 @@ void raw__chunk__compile_x86__mov_esi_to_reg(f2ptr this, uint index, f2ptr cause
 //8048458:	89 fe                	mov    %edi,%esi
 //804845a:	89 ff                	mov    %edi,%edi
 
-void raw__chunk__compile_x86__mov_edi_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_edi_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xF889); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xF989); break;
@@ -365,7 +365,7 @@ void raw__chunk__compile_x86__mov_edi_to_reg(f2ptr this, uint index, f2ptr cause
 }
 
 
-void raw__chunk__compile_x86__mov_reg_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t src_reg, x86_reg_t dest_reg) {
+void raw__chunk__compile_x86__mov_reg_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t src_reg, x86_reg_t dest_reg) {
   switch(src_reg) {
   case x86_reg__eax: raw__chunk__compile_x86__mov_eax_to_reg(this, index, cause, next_index, dest_reg); break;
   case x86_reg__ecx: raw__chunk__compile_x86__mov_ecx_to_reg(this, index, cause, next_index, dest_reg); break;
@@ -387,7 +387,7 @@ void raw__chunk__compile_x86__mov_reg_to_reg(f2ptr this, uint index, f2ptr cause
 //80483c6:	89 70 0c             	mov    %esi,0xc(%eax)
 //80483c9:	89 78 0c             	mov    %edi,0xc(%eax)
 
-void raw__chunk__compile_x86__mov_reg_to_eax_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_eax_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4089); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4889); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -410,7 +410,7 @@ void raw__chunk__compile_x86__mov_reg_to_eax_offset(f2ptr this, uint index, f2pt
 //80483de:	89 71 0c             	mov    %esi,0xc(%ecx)
 //80483e1:	89 79 0c             	mov    %edi,0xc(%ecx)
 
-void raw__chunk__compile_x86__mov_reg_to_ecx_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_ecx_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4189); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4989); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -433,7 +433,7 @@ void raw__chunk__compile_x86__mov_reg_to_ecx_offset(f2ptr this, uint index, f2pt
 //80483f6:	89 72 0c             	mov    %esi,0xc(%edx)
 //80483f9:	89 7a 0c             	mov    %edi,0xc(%edx)
 
-void raw__chunk__compile_x86__mov_reg_to_edx_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_edx_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4289); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4A89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -456,7 +456,7 @@ void raw__chunk__compile_x86__mov_reg_to_edx_offset(f2ptr this, uint index, f2pt
 //804840e:	89 73 0c             	mov    %esi,0xc(%ebx)
 //8048411:	89 7b 0c             	mov    %edi,0xc(%ebx)
 
-void raw__chunk__compile_x86__mov_reg_to_ebx_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_ebx_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4389); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4B89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -479,7 +479,7 @@ void raw__chunk__compile_x86__mov_reg_to_ebx_offset(f2ptr this, uint index, f2pt
 //804842c:	89 74 24 0c          	mov    %esi,0xc(%esp)
 //8048430:	89 7c 24 0c          	mov    %edi,0xc(%esp)
 
-void raw__chunk__compile_x86__mov_reg_to_esp_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_esp_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4489); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x24); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4C89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, 0x24); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -502,7 +502,7 @@ void raw__chunk__compile_x86__mov_reg_to_esp_offset(f2ptr this, uint index, f2pt
 //8048446:	89 75 0c             	mov    %esi,0xc(%ebp)
 //8048449:	89 7d 0c             	mov    %edi,0xc(%ebp)
 
-void raw__chunk__compile_x86__mov_reg_to_ebp_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_ebp_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4589); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4D89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -525,7 +525,7 @@ void raw__chunk__compile_x86__mov_reg_to_ebp_offset(f2ptr this, uint index, f2pt
 //804845e:	89 76 0c             	mov    %esi,0xc(%esi)
 //8048461:	89 7e 0c             	mov    %edi,0xc(%esi)
 
-void raw__chunk__compile_x86__mov_reg_to_esi_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_esi_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4689); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4E89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -548,7 +548,7 @@ void raw__chunk__compile_x86__mov_reg_to_esi_offset(f2ptr this, uint index, f2pt
 //8048476:	89 77 0c             	mov    %esi,0xc(%edi)
 //8048479:	89 7f 0c             	mov    %edi,0xc(%edi)
 
-void raw__chunk__compile_x86__mov_reg_to_edi_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_edi_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4789); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x4F89); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -561,7 +561,7 @@ void raw__chunk__compile_x86__mov_reg_to_edi_offset(f2ptr this, uint index, f2pt
   }
 }
 
-void raw__chunk__compile_x86__mov_reg_to_reg_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t src_reg, x86_reg_t dest_reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_to_reg_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t src_reg, x86_reg_t dest_reg, u8 offset) {
   switch(dest_reg) {
   case x86_reg__eax: raw__chunk__compile_x86__mov_reg_to_eax_offset(this, index, cause, next_index, src_reg, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__mov_reg_to_ecx_offset(this, index, cause, next_index, src_reg, offset); break;
@@ -583,7 +583,7 @@ void raw__chunk__compile_x86__mov_reg_to_reg_offset(f2ptr this, uint index, f2pt
 //804848f:	8b 46 0d             	mov    0xd(%esi),%eax
 //8048492:	8b 47 0d             	mov    0xd(%edi),%eax
 
-void raw__chunk__compile_x86__mov_reg_offset_to_eax(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_eax(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x408B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x418B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -606,7 +606,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_eax(f2ptr this, uint index, f2pt
 //80484a8:	8b 4e 0d             	mov    0xd(%esi),%ecx
 //80484ab:	8b 4f 0d             	mov    0xd(%edi),%ecx
 
-void raw__chunk__compile_x86__mov_reg_offset_to_ecx(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_ecx(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x488B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x498B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -629,7 +629,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_ecx(f2ptr this, uint index, f2pt
 //80484c1:	8b 56 0d             	mov    0xd(%esi),%edx
 //80484c4:	8b 57 0d             	mov    0xd(%edi),%edx
 
-void raw__chunk__compile_x86__mov_reg_offset_to_edx(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_edx(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x508B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x518B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -652,7 +652,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_edx(f2ptr this, uint index, f2pt
 //80484da:	8b 5e 0d             	mov    0xd(%esi),%ebx
 //80484dd:	8b 5f 0d             	mov    0xd(%edi),%ebx
 
-void raw__chunk__compile_x86__mov_reg_offset_to_ebx(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_ebx(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x588B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x598B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -675,7 +675,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_ebx(f2ptr this, uint index, f2pt
 //80484f3:	8b 66 0d             	mov    0xd(%esi),%esp
 //80484f6:	8b 67 0d             	mov    0xd(%edi),%esp
 
-void raw__chunk__compile_x86__mov_reg_offset_to_esp(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_esp(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x608B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x618B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -698,7 +698,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_esp(f2ptr this, uint index, f2pt
 //804850c:	8b 6e 0d             	mov    0xd(%esi),%ebp
 //804850f:	8b 6f 0d             	mov    0xd(%edi),%ebp
 
-void raw__chunk__compile_x86__mov_reg_offset_to_ebp(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_ebp(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x688B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x698B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -721,7 +721,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_ebp(f2ptr this, uint index, f2pt
 //8048525:	8b 76 0d             	mov    0xd(%esi),%esi
 //8048528:	8b 77 0d             	mov    0xd(%edi),%esi
 
-void raw__chunk__compile_x86__mov_reg_offset_to_esi(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_esi(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x708B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x718B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -744,7 +744,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_esi(f2ptr this, uint index, f2pt
 //804853e:	8b 7e 0d             	mov    0xd(%esi),%edi
 //8048541:	8b 7f 0d             	mov    0xd(%edi),%edi
 
-void raw__chunk__compile_x86__mov_reg_offset_to_edi(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t reg, u8 offset) {
+void raw__chunk__compile_x86__mov_reg_offset_to_edi(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t reg, u8 offset) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x788B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x798B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, offset); break;
@@ -757,7 +757,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_edi(f2ptr this, uint index, f2pt
   }
 }
 
-void raw__chunk__compile_x86__mov_reg_offset_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, x86_reg_t src_reg, u8 offset, x86_reg_t dest_reg) {
+void raw__chunk__compile_x86__mov_reg_offset_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, x86_reg_t src_reg, u8 offset, x86_reg_t dest_reg) {
   switch(dest_reg) {
   case x86_reg__eax: raw__chunk__compile_x86__mov_reg_offset_to_eax(this, index, cause, next_index, src_reg, offset); break;
   case x86_reg__ecx: raw__chunk__compile_x86__mov_reg_offset_to_ecx(this, index, cause, next_index, src_reg, offset); break;
@@ -780,7 +780,7 @@ void raw__chunk__compile_x86__mov_reg_offset_to_reg(f2ptr this, uint index, f2pt
 //804869a:	c7 06 25 88 04 08    	movl   $0x8048825,(%esi)
 //80486a0:	c7 07 25 88 04 08    	movl   $0x8048825,(%edi)
 
-void raw__chunk__compile_x86__mov_const_to_reg_addr(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 constant, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_const_to_reg_addr(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 constant, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x00C7); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, constant); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x01C7); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, constant); break;
@@ -798,7 +798,7 @@ void raw__chunk__compile_x86__mov_const_to_reg_addr(f2ptr this, uint index, f2pt
 //
 // warning: not verified for other registers...
 
-void raw__chunk__compile_x86__mov_const_to_reg_offset(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 constant, x86_reg_t reg, s8 offset) {
+void raw__chunk__compile_x86__mov_const_to_reg_offset(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 constant, x86_reg_t reg, s8 offset) {
   switch(reg) {
   case x86_reg__eax:
     raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x40C7); index = *next_index;
@@ -862,7 +862,7 @@ void raw__chunk__compile_x86__mov_const_to_reg_offset(f2ptr this, uint index, f2
 //8048567:	8b 35 c8 96 04 08    	mov    0x80496c8,%esi
 //804856d:	8b 3d c8 96 04 08    	mov    0x80496c8,%edi
 
-void raw__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr cause, uint* next_index, u32 addr, x86_reg_t reg) {
+void raw__chunk__compile_x86__mov_addr_to_reg(f2ptr this, u64 index, f2ptr cause, u64* next_index, u32 addr, x86_reg_t reg) {
   switch(reg) {
   case x86_reg__eax: raw__chunk__compile_x86__value_bit8( this, index, cause, next_index,   0xA1); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, addr); break;
   case x86_reg__ecx: raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x0D8B); index = *next_index; raw__chunk__compile_x86__value_bit8(this, index, cause, next_index, addr); break;
@@ -1003,7 +1003,7 @@ void raw__chunk__compile_x86__mov_addr_to_reg(f2ptr this, uint index, f2ptr caus
 //
 // **
 
-void raw__chunk__compile_x86__jump_bytecode(f2ptr this, uint index, f2ptr cause, uint* next_index, bytecode_jump_t jump_bytecode) {
+void raw__chunk__compile_x86__jump_bytecode(f2ptr this, u64 index, f2ptr cause, u64* next_index, bytecode_jump_t jump_bytecode) {
   
   raw__chunk__compile_x86__mov_const_to_reg(this, index, cause, next_index, (u32)to_ptr(jump_bytecode), x86_reg__eax); index = *next_index;
   raw__chunk__compile_x86__call_eax(        this, index, cause, next_index);
@@ -1025,7 +1025,7 @@ void raw__chunk__compile_x86__jump_bytecode(f2ptr this, uint index, f2ptr cause,
 //
 // **
 
-void raw__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr cause, uint* next_index,
+void raw__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, u64 index, f2ptr cause, u64* next_index,
 						  bytecode_jump__f2ptr_t jump_bytecode,
 						  f2ptr arg0) {
   raw__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
@@ -1056,7 +1056,7 @@ void raw__chunk__compile_x86__jump_bytecode__f2ptr(f2ptr this, uint index, f2ptr
 //
 // **
 
-void raw__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(f2ptr this, uint index, f2ptr cause, uint* next_index, bytecode_jump__f2ptr_f2ptr_t jump_bytecode, f2ptr arg0, f2ptr arg1) {
+void raw__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(f2ptr this, u64 index, f2ptr cause, u64* next_index, bytecode_jump__f2ptr_f2ptr_t jump_bytecode, f2ptr arg0, f2ptr arg1) {
   raw__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg1) & 0xffffffff), x86_reg__esp, 0x10); index = *next_index;
   raw__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg1) >> 32),        x86_reg__esp, 0x14); index = *next_index;
   raw__chunk__compile_x86__mov_const_to_reg_offset(this, index, cause, next_index, (u32)(((u64)arg0) & 0xffffffff), x86_reg__esp, 0x08); index = *next_index;
@@ -1068,7 +1068,7 @@ void raw__chunk__compile_x86__jump_bytecode__f2ptr_f2ptr(f2ptr this, uint index,
 }
 
 
-void raw__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr bytecode) {
+void raw__chunk__compile_x86__bytecode(f2ptr this, u64 index, f2ptr cause, u64* next_index, f2ptr bytecode) {
   debug__assert(raw__bytecode__is_type(cause, bytecode), nil, "raw__chunk__compile_x86__bytecode error: bytecode type assertion failed.");
   f2ptr command = f2bytecode__command(bytecode, cause);
   if      (command == __funk2.bytecode.bytecode__push__symbol)               {raw__chunk__compile_x86__jump_bytecode(             this, index, cause, next_index,  f2__compile__bytecode__push(cause, f2bytecode__arg0(bytecode, cause)));}
@@ -1102,13 +1102,13 @@ void raw__chunk__compile_x86__bytecode(f2ptr this, uint index, f2ptr cause, uint
 //  b5:	85 c0                	test   %eax,%eax
 //  b7:	74 0e                	je     c7 <return_if_not_eq+0x36>
 
-void raw__chunk__compile_x86__return_if_eax_is_true(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr expected_pc) {
+void raw__chunk__compile_x86__return_if_eax_is_true(f2ptr this, u64 index, f2ptr cause, u64* next_index, f2ptr expected_pc) {
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC085); index = *next_index;
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0x0274); index = *next_index;
   raw__chunk__compile_x86__value_bit16(this, index, cause, next_index, 0xC3C9); // leave, ret
 }
 
-void raw__chunk__compile_x86__bytecodes(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr bytecodes) {
+void raw__chunk__compile_x86__bytecodes(f2ptr this, u64 index, f2ptr cause, u64* next_index, f2ptr bytecodes) {
   f2ptr iter = bytecodes;
   while (iter) {
     f2ptr bytecode = f2cons__car(iter, cause);
@@ -1169,7 +1169,7 @@ u8        compile_x86__funk__footer[] = {
   0xc3
 };
 
-void raw__chunk__compile_x86__funk(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr funk) {
+void raw__chunk__compile_x86__funk(f2ptr this, u64 index, f2ptr cause, u64* next_index, f2ptr funk) {
   u8* iter;
   iter = compile_x86__funk__header;
   int i;
@@ -1188,15 +1188,15 @@ void raw__chunk__compile_x86__funk(f2ptr this, uint index, f2ptr cause, uint* ne
 }
 
 f2ptr f2chunk__new_compiled_from_funk(f2ptr cause, f2ptr funk) {
-  uint chunk_length;
-  uint next_index;
+  u64 chunk_length;
+  u64 next_index;
   raw__chunk__compile_x86__funk(nil, 0, cause, &chunk_length, funk);
   f2ptr this = f2chunk__new(cause, chunk_length, NULL);
   raw__chunk__compile_x86__funk(this, 0, cause, &next_index, funk);
   return this;
 }
 
-void raw__chunk__compile_x86__metro(f2ptr this, uint index, f2ptr cause, uint* next_index, f2ptr metro) {
+void raw__chunk__compile_x86__metro(f2ptr this, u64 index, f2ptr cause, u64* next_index, f2ptr metro) {
   u8* iter;
   iter = compile_x86__funk__header;
   int i;
@@ -1215,11 +1215,95 @@ void raw__chunk__compile_x86__metro(f2ptr this, uint index, f2ptr cause, uint* n
 }
 
 f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro) {
-  uint chunk_length;
-  uint next_index;
+  u64 chunk_length;
+  u64 next_index;
   raw__chunk__compile_x86__metro(nil, 0, cause, &chunk_length, metro);
   f2ptr this = f2chunk__new(cause, chunk_length, NULL);
   raw__chunk__compile_x86__metro(this, 0, cause, &next_index, metro);
   return this;
+}
+
+
+// machine_code_chunk
+
+def_primobject_2_slot(machine_code_chunk,
+		      chunk,
+		      index_label_ptypehash);
+
+f2ptr raw__machine_code_chunk__new(f2ptr cause) {
+  return f2machine_code_chunk__new(cause, nil, nil);
+}
+
+f2ptr f2__machine_code_chunk__new(f2ptr cause) {
+  return raw__machine_code_chunk__new(cause);
+}
+def_pcfunk0(machine_code_chunk__new,
+	    "",
+	    return f2__machine_code_chunk__new(this_cause));
+
+
+f2ptr raw__machine_code_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"),     new__symbol(cause, "machine_code_chunk"),
+					       new__symbol(cause, "chunk"),                 f2__machine_code_chunk__chunk(cause, this),
+					       new__symbol(cause, "index_label_ptypehash"), f2__machine_code_chunk__index_label_ptypehash(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__machine_code_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(machine_code_chunk,            this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__machine_code_chunk__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(machine_code_chunk__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__machine_code_chunk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2machine_code_chunk__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk);}
+  return this;
+}
+
+// **
+
+void f2__compile_x86__defragment__fix_pointers() {
+  // -- reinitialize --
+  // -- initialize --
+
+  // machine_code_chunk
+  
+  initialize_primobject_2_slot__defragment__fix_pointers(machine_code_chunk, chunk, index_label_ptypehash);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(machine_code_chunk__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk);
+  
+}
+
+void f2__compile_x86__reinitialize_globalvars() {
+  f2ptr cause = initial_cause();
+  
+  reinitialize_primobject(machine_code_chunk);
+  
+  // machine_code_chunk
+  
+  initialize_primobject_2_slot(machine_code_chunk, chunk, index_label_ptypehash);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(machine_code_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
+  
+}
+
+void f2__compile_x86__initialize() {
+  funk2_module_registration__add_module(&(__funk2.module_registration), "compile_x86", "", &f2__compile_x86__reinitialize_globalvars, &f2__compile_x86__defragment__fix_pointers);
+  
+  f2__compile_x86__reinitialize_globalvars();
 }
 

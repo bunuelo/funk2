@@ -1,8 +1,14 @@
 // 
-// Copyright (c) 2007-2012 Bo Morgan.
+// Copyright (c) 2007-2013 Bo Morgan.
 // All rights reserved.
 // 
-// Author: Bo Morgan
+// Authors:
+//
+//   Bo Morgan (2007-2013): Initial implementation.
+// 
+// This program is distributed under the terms of the GNU General
+// Public License.  See the COPYING file that is distributed with this
+// file.
 // 
 // Permission to use, copy, modify and distribute this software and its
 // documentation is hereby granted, provided that both the copyright
@@ -220,6 +226,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "file_handle";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2file_handle__primobject_type__new_aux(cause));}
   {char* type_name = "matrix";                           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                           f2matrix__primobject_type__new_aux(cause));}
   {char* type_name = "counter";                          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                          f2counter__primobject_type__new_aux(cause));}
+  {char* type_name = "machine_code_chunk";               funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),               f2machine_code_chunk__primobject_type__new_aux(cause));}
 }
 
 void funk2_primobject_type_handler__add_builtin_frame_objects(funk2_primobject_type_handler_t* this, f2ptr cause) {

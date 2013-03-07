@@ -1170,7 +1170,7 @@ int pfunk2__f2chunk__bytecode_jump(f2ptr this, f2ptr cause, f2ptr fiber) {
 
 typedef u64 (*chunk_jump_t)(u64 pointer);
 
-u64 pfunk2__f2chunk__jump(f2ptr this, f2ptr cause, f2ptr pointer) {
+u64 pfunk2__f2chunk__jump(f2ptr this, f2ptr cause, u64 pointer) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this); 
 #ifdef F2__PTYPE__TYPE_CHECK
@@ -1181,11 +1181,7 @@ u64 pfunk2__f2chunk__jump(f2ptr this, f2ptr cause, f2ptr pointer) {
   chunk_jump_t jump = (chunk_jump_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
   //printf("\nchunk-bytecode_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
-  u64 pointer__p = 0;
-  if (pointer != nil) {
-    pointer__p = f2pointer__p(pointer, cause);
-  }
-  return jump(pointer__p);
+  return jump(pointer);
 }
 
 f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int fd, int flags) {

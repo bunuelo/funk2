@@ -1066,6 +1066,8 @@ typedef struct funk2_object_type__chunk__slot_s {
   f2ptr cfunk_jump__funk;
   f2ptr bytecode_jump__symbol;
   f2ptr bytecode_jump__funk;
+  f2ptr bytes__symbol;
+  f2ptr bytes__funk;
   f2ptr terminal_print_with_frame__symbol;
   f2ptr terminal_print_with_frame__funk;
   f2ptr save__symbol;

@@ -906,7 +906,7 @@ def_pcfunk1(test_imagine, imagination_name,
 // sequence (array, list, doublelist, etc.)
 
 u64 raw__simple_length(f2ptr cause, f2ptr seq) {
-  if (!seq) {return 0;}
+  if (seq == nil) {return 0;}
   switch (f2ptype__raw(seq, cause)) {
   case ptype_cons:
     return 1 + raw__simple_length(cause, f2cons__cdr(seq, cause));

@@ -1342,7 +1342,7 @@ void f2__compile_x86__reinitialize_globalvars() {
   
   // compile_x86 funks
   
-  f2__primcfunk__init__1(expression__x86_compile, expression);
+  f2__primcfunk__init__1(expression__compile_x86, expression);
   
 }
 

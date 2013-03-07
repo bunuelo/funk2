@@ -1230,12 +1230,14 @@ def_primobject_2_slot(machine_code_chunk,
 		      chunk,
 		      index_label_ptypehash);
 
-f2ptr raw__machine_code_chunk__new(f2ptr cause) {
-  return f2machine_code_chunk__new(cause, nil, nil);
+f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash) {
+  return f2machine_code_chunk__new(cause, chunk, index_label_ptypehash);
 }
 
 f2ptr f2__machine_code_chunk__new(f2ptr cause) {
-  return raw__machine_code_chunk__new(cause);
+  f2ptr chunk                 = raw__chunk__new(cause, 0);
+  f2ptr index_label_ptypehash = f2__ptypehash__new(cause);
+  return raw__machine_code_chunk__new(cause, chunk, index_label_ptypehash);
 }
 def_pcfunk0(machine_code_chunk__new,
 	    "",

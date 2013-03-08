@@ -1498,7 +1498,11 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
-  if (raw__cons__is_type(cause, expression)) {
+  if (raw__integer__is_type(cause, expression)) {
+    return raw__expression__compile_x86__integer(cause, expression);
+  } else if (raw__pointer__is_type(cause, expression)) {
+    return raw__expression__compile_x86__pointer(cause, expression);
+  } else if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if      (raw__eq(cause, command, new__symbol(cause, "ret")))     {return raw__expression__compile_x86__ret(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
@@ -1511,10 +1515,6 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "command"),    command,
 				     new__symbol(cause, "expression"), expression));
     }
-  } else if (raw__integer__is_type(cause, expression)) {
-    return raw__expression__compile_x86__integer(cause, expression);
-  } else if (raw__pointer__is_type(cause, expression)) {
-    return raw__expression__compile_x86__pointer(cause, expression);
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),

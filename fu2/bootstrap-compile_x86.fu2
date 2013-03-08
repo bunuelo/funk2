@@ -24,11 +24,19 @@
  rights to redistribute these changes.'
 
 
-[defunk machine_code-eval [assembly_code]
-  [eval `[rawcode [bytecode set value nil nil]
-		  [bytecode jump_machine_code
-			    ,[chunklist-concat `[,[expression-compile_x86 assembly_code]
-						 ,[let [[chunk [new chunk 1]]]
-						    [set chunk bit8-elt 0 #xC3]]]]
-			    nil
-			    nil]]]]
+[defmetro machine_code [assembly_code]
+  `[rawcode [bytecode set value nil nil]
+	    [bytecode jump_machine_code
+		      ,[expression-compile_x86 `[rawcode ,assembly_code
+							 [ret]]]
+		      nil
+		      nil]]]
+
+`[defunk machine_code-test-integer []
+   [machine_code 1]]
+
+`[defunk machine_code-test-pointer []
+   [machine_code #xFEEDFEEDFEEDFEED]]
+
+
+

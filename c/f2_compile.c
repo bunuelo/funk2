@@ -654,9 +654,10 @@ f2ptr raw__expression__optimize__globalize_funk(f2ptr cause, f2ptr expression) {
 }
 
 f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
-  f2ptr     rawcodes           = f2cons__cdr(expression, cause);
-  f2ptr     new_rawcodes       = nil;
-  boolean_t changed_expression = boolean__false;
+  f2ptr     rawcodes            = f2cons__cdr(expression, cause);
+  f2ptr     new_rawcodes        = nil;
+  s64       new_rawcodes_length = 0;
+  boolean_t changed_expression  = boolean__false;
   {
     f2ptr rawcodes_iter     = rawcodes;
     f2ptr new_rawcodes_iter = nil;
@@ -690,6 +691,7 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
 		    f2cons__cdr__set(new_rawcodes_iter, cause, new_cons);
 		  }
 		  new_rawcodes_iter = new_cons;
+		  new_rawcodes_length ++;
 		}
 		new_rawcode__rawcodes_iter = f2cons__cdr(new_rawcode__rawcodes_iter, cause);
 	      }
@@ -707,6 +709,10 @@ f2ptr raw__expression__optimize__rawcode(f2ptr cause, f2ptr expression) {
 	}
       }
       rawcodes_iter = rawcodes_iter__cdr;
+    }
+    if (new_rawcodes_length == 1) {
+      f2ptr new_rawcodes__car = f2cons__car(new_rawcodes, cause);
+      return new_rawcodes__car;
     }
     if (changed_expression) {
       if (new_rawcodes == nil) {

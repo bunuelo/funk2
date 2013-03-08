@@ -1459,7 +1459,7 @@ f2ptr raw__expression__compile_x86__absmov(f2ptr cause, f2ptr expression) {
   f2ptr argument_1 = f2cons__car(cddr,       cause);
   if (raw__expression__is_constant_expression(cause, argument_0)) {
     f2ptr constant_value = raw__constant_expression__constant_value(cause, argument_0);
-    if (raw__constant_value__is_pointer(cause, constant_value)) {
+    if (raw__pointer__is_type(cause, constant_value)) {
       u64 constant_value__p = f2pointer__p(constant_value, cause);
       if (raw__expression__is_register_expression(cause, argument_1)) {
 	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);

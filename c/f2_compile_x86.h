@@ -70,6 +70,10 @@ f2ptr  f2__machine_code_chunk__new(f2ptr cause);
 f2ptr f2chunk__new_compiled_from_funk(f2ptr cause, f2ptr funk);
 f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro);
 
+f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression);
+f2ptr  f2__expression__compile_x86(f2ptr cause, f2ptr expression);
+
+
 // **
 
 void f2__compile_x86__defragment__fix_pointers();

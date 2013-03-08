@@ -28,6 +28,9 @@
 [defunk string-concat [:rest seq]
   [stringlist-concat seq]]
 
+[defunk chunk-concat [:rest seq]
+  [chunklist-concat seq]]
+
 [defunk string-intersperse [intersperse_string :rest seq]
   [stringlist-intersperse seq intersperse_string]]
 

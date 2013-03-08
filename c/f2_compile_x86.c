@@ -1285,21 +1285,45 @@ f2ptr raw__expression__compile_x86__ret(f2ptr cause, f2ptr expression) {
   return chunk;
 }
 
+f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
+  f2ptr subexpressions       = f2cons__cdr(expression, cause);
+  f2ptr subexpression_chunks = nil;
+  {
+    f2ptr iter                       = subexpressions;
+    f2ptr subexpression_chunks__iter = nil;
+    while (iter != nil) {
+      f2ptr subexpression       = f2cons__car(iter, cause);
+      f2ptr subexpression_chunk = assert_value(raw__expression__compile_x86(cause, subexpression));
+      f2ptr new_cons = f2cons__new(cause, subexpression_chunk, nil);
+      if (subexpression_chunks == nil) {
+	subexpression_chunks = new_cons;
+      } else {
+	f2cons__cdr__set(subexpression_chunks__iter, cause, new_cons);
+      }
+      subexpression_chunks__iter = new_cons;
+      iter                       = f2cons__cdr(iter, cause);
+    }
+  }
+  return raw__chunklist__concat(cause, subexpression_chunks);
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
-    if (raw__eq(cause, command, new__symbol(cause, "ret"))) {
-      return raw__expression__compile_x86__ret(cause, expression);
+    if      (raw__eq(cause, command, new__symbol(cause, "ret")))     {return raw__expression__compile_x86__ret(cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__ret(cause, expression);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),
+				     new__symbol(cause, "command"),    command,
+				     new__symbol(cause, "expression"), expression));
     }
+  } else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),
-				   new__symbol(cause, "command"),    command,
-				   new__symbol(cause, "expression"), expression));
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),
+				   new__symbol(cause, "expression-type"), f2__object__type(cause, expression),
+				   new__symbol(cause, "expression"),      expression));
   }
-  return new__error(f2list6__new(cause,
-				 new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),
-				 new__symbol(cause, "expression-type"), f2__object__type(cause, expression),
-				 new__symbol(cause, "expression"),      expression));
 }
 
 f2ptr f2__expression__compile_x86(f2ptr cause, f2ptr expression) {

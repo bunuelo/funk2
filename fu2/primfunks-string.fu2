@@ -24,6 +24,7 @@
  rights to redistribute these changes.'
 
 [globalize-funk stringlist-concat      &primfunk:stringlist__concat]
+[globalize-funk chunklist-concat       &primfunk:chunklist__concat]
 [globalize-funk stringlist-intersperse &primfunk:stringlist__intersperse]
 [globalize-funk stringlist-rawcode     &primfunk:stringlist__rawcode]
 [globalize-funk exp-as-string          &primfunk:exp__as__string]

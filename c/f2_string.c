@@ -27,6 +27,8 @@
 
 #include "funk2.h"
 
+// #define F2__STRING__DEBUG
+
 boolean_t raw__stringlist__is_type(f2ptr cause, f2ptr object) {
   f2ptr iter = object;
   while (iter != nil) {
@@ -41,8 +43,6 @@ boolean_t raw__stringlist__is_type(f2ptr cause, f2ptr object) {
   }
   return boolean__true;
 }
-
-// #define F2__STRING__DEBUG
 
 f2ptr raw__stringlist__new_string_from_concatenation(f2ptr cause, f2ptr this) {
   u64 total_length = 0;
@@ -98,6 +98,78 @@ f2ptr f2__stringlist__concat(f2ptr cause, f2ptr this) {
 def_pcfunk1(stringlist__concat, this,
 	    "concatenate a list of strings together into a new resultant string.checks for the return value for a finished system command started by this fiber.",
 	    return f2__stringlist__concat(this_cause, this));
+
+
+boolean_t raw__chunklist__is_type(f2ptr cause, f2ptr object) {
+  f2ptr iter = object;
+  while (iter != nil) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return boolean__false;
+    }
+    f2ptr element = f2cons__car(iter, cause);
+    if (! raw__chunk__is_type(cause, element)) {
+      return boolean__false;
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  return boolean__true;
+}
+
+f2ptr raw__chunklist__new_chunk_from_concatenation(f2ptr cause, f2ptr this) {
+  u64 total_length = 0;
+  {
+    f2ptr iter = this;
+    while (iter) {
+#if defined(F2__CHUNK__DEBUG)
+      if (! raw__cons__is_type(cause, iter)) {
+	error(nil, "raw__chunklist__new_chunk_from_concatenation error: expected cons.");
+      }
+#endif // F2__CHUNK__DEBUG
+      f2ptr str = f2cons__car(iter, cause);
+#if defined(F2__CHUNK__DEBUG)
+      if (! raw__chunk__is_type(cause, str)) {
+	error(nil, "raw__chunklist__new_chunk_from_concatenation error: expected chunk.");
+      }
+#endif // F2__CHUNK__DEBUG
+      u64 str_length = f2chunk__length(str, cause);
+      total_length += str_length;
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  funk2_character_t* temp_str = (funk2_character_t*)from_ptr(f2__malloc((total_length + 1) * sizeof(funk2_character_t)));
+  u64 index = 0;
+  {
+    f2ptr iter = this;
+    while (iter) {
+      f2ptr str = f2cons__car(iter, cause);
+      u64 str_length = f2chunk__length(str, cause);
+      f2chunk__str_copy(str, cause, temp_str + index);
+      index += str_length;
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  f2ptr new_chunk = f2chunk__new(cause, total_length, temp_str);
+  f2__free(to_ptr(temp_str));
+  return new_chunk;
+}
+
+f2ptr f2__chunklist__new_chunk_from_concatenation(f2ptr cause, f2ptr this) {
+  assert_argument_type(chunklist, this);
+  return raw__chunklist__new_chunk_from_concatenation(cause, this);
+}
+
+f2ptr raw__chunklist__concat(f2ptr cause, f2ptr this) {
+  return raw__chunklist__new_chunk_from_concatenation(cause, this);
+}
+
+f2ptr f2__chunklist__concat(f2ptr cause, f2ptr this) {
+  assert_argument_type(chunklist, this);
+  return raw__chunklist__concat(cause, this);
+}
+def_pcfunk1(chunklist__concat, this,
+	    "concatenate a list of chunks together into a new resultant chunk.checks for the return value for a finished system command started by this fiber.",
+	    return f2__chunklist__concat(this_cause, this));
+
 
 f2ptr raw__stringlist__intersperse(f2ptr cause, f2ptr this, f2ptr intersperse_string) {
   u64                intersperse_string__length = f2string__length(intersperse_string, cause);
@@ -915,6 +987,7 @@ void f2__string__defragment__fix_pointers() {
   // -- initialize --
 
   f2__primcfunk__init__defragment__fix_pointers(stringlist__concat);
+  f2__primcfunk__init__defragment__fix_pointers(chunklist__concat);
   f2__primcfunk__init__defragment__fix_pointers(stringlist__intersperse);
   f2__primcfunk__init__defragment__fix_pointers(stringlist__rawcode);
   
@@ -972,6 +1045,7 @@ void f2__string__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   f2__primcfunk__init__1(stringlist__concat,      this);
+  f2__primcfunk__init__1(chunklist__concat,       this);
   f2__primcfunk__init__2(stringlist__intersperse, this, intersperse_string);
   f2__primcfunk__init__1(stringlist__rawcode,     this);
   

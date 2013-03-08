@@ -1313,6 +1313,22 @@ f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
 // 5d                   	pop    %rbp
 // c3                   	retq   
 
+f2ptr raw__expression__is_register_expression(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "register"))) {
+      if (raw__simple_length(cause, expression) == 2) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr raw__register_expression__register_name(f2ptr cause, f2ptr expression) {
+  return f2cons__car(f2cons__cdr(expression, cause), cause);
+}
+
 f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause, f2ptr expression) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x55);
@@ -1325,14 +1341,21 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
   }
-  f2ptr cdr           = f2cons__cdr(expression, cause);
-  f2ptr register_name = f2cons__car(cdr,        cause);
-  if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__push_rbp(cause, expression);}
-  else {
+  f2ptr cdr      = f2cons__cdr(expression, cause);
+  f2ptr argument = f2cons__car(cdr,        cause);
+  if (raw__expression__is_register_expression(cause, argument)) {
+    f2ptr register_name = raw__register_expression__register_name(cause, argument);
+    if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__push_rbp(cause, expression);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-push-unknown_register_name"),
+				     new__symbol(cause, "register_name"), register_name,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-push-unknown_register_name"),
-				   new__symbol(cause, "register_name"), register_name,
-				   new__symbol(cause, "expression"),    expression));
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
   }
 }
 

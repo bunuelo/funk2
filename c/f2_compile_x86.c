@@ -1488,6 +1488,15 @@ f2ptr raw__expression__compile_x86__absmov(f2ptr cause, f2ptr expression) {
   }
 }
 
+f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
+  f2ptr pointer = f2pointer__new(cause, f2integer__i(expression, cause));
+  return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "absmov"), f2list2__new(cause, new__symbol(cause, "constant"), pointer), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
+}
+
+f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
+  return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "absmov"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
@@ -1502,6 +1511,10 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "command"),    command,
 				     new__symbol(cause, "expression"), expression));
     }
+  } else if (raw__integer__is_type(cause, expression)) {
+    return raw__expression__compile_x86__integer(cause, expression);
+  } else if (raw__pointer__is_type(cause, expression)) {
+    return raw__expression__compile_x86__pointer(cause, expression);
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),

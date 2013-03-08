@@ -1432,7 +1432,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 // 48 b8 00 00 64 a7 b3 b6 e0 0d 	movabs $0x0de0b6b3a7640000,%rax
 
 
-f2ptr raw__expression__compile_x86__constant_rax(f2ptr cause, f2ptr expression, u64 constant_value) {
+f2ptr raw__expression__compile_x86__absmov_constant_rax(f2ptr cause, f2ptr expression, u64 constant_value) {
   f2ptr chunk = raw__chunk__new(cause, 10);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB8);

@@ -1353,7 +1353,7 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "expression"),    expression));
     }
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }

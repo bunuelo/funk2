@@ -1307,11 +1307,13 @@ f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
   return raw__chunklist__concat(cause, subexpression_chunks);
 }
 
-// 55                   	push   %rbp
-// 48 89 e5             	mov    %rsp,%rbp
-// b8 15 cd 5b 07       	mov    $0x75bcd15,%eax
-// 5d                   	pop    %rbp
-// c3                   	retq   
+//  4004b4:	55                   	push   %rbp
+//  4004b5:	48 89 e5             	mov    %rsp,%rbp
+//  4004b8:	48 b8 00 00 64 a7 b3 	movabs $0xde0b6b3a7640000,%rax
+//  4004bf:	b6 e0 0d 
+//  4004c2:	5d                   	pop    %rbp
+//  4004c3:	c3                   	retq   
+
 
 f2ptr raw__expression__is_register_expression(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
@@ -1328,6 +1330,26 @@ f2ptr raw__expression__is_register_expression(f2ptr cause, f2ptr expression) {
 f2ptr raw__register_expression__register_name(f2ptr cause, f2ptr expression) {
   return f2cons__car(f2cons__cdr(expression, cause), cause);
 }
+
+
+f2ptr raw__expression__is_constant_expression(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "constant"))) {
+      if (raw__simple_length(cause, expression) == 2) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr raw__constant_expression__constant_value(f2ptr cause, f2ptr expression) {
+  return f2cons__car(f2cons__cdr(expression, cause), cause);
+}
+
+
+
 
 f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause, f2ptr expression) {
   f2ptr chunk = raw__chunk__new(cause, 1);
@@ -1407,12 +1429,72 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
   }
 }
 
+// 48 b8 00 00 64 a7 b3 b6 e0 0d 	movabs $0x0de0b6b3a7640000,%rax
+
+
+f2ptr raw__expression__compile_x86__constant_rax(f2ptr cause, f2ptr expression, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB8);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__absmov(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 3) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr cdr        = f2cons__cdr(expression, cause);
+  f2ptr cddr       = f2cons__cdr(cdr,        cause);
+  f2ptr argument_0 = f2cons__car(cdr,        cause);
+  f2ptr argument_1 = f2cons__car(cddr,       cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value = raw__constant_expression__constant_value(cause, argument_0);
+    if (raw__constant_value__is_pointer(cause, constant_value)) {
+      u64 constant_value__p = f2pointer__p(constant_value, cause);
+      if (raw__expression__is_register_expression(cause, argument_1)) {
+	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__absmov_constant_rax(cause, expression, constant_value__p);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-push-unknown_register_name"),
+					 new__symbol(cause, "register_name"), register_name_1,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list4__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				       new__symbol(cause, "expression"), expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-push-constant_value_must_be_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if      (raw__eq(cause, command, new__symbol(cause, "ret")))     {return raw__expression__compile_x86__ret(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "absmov")))  {return raw__expression__compile_x86__absmov( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else {
       return new__error(f2list6__new(cause,

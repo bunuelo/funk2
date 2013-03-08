@@ -26,5 +26,9 @@
 
 [defunk machine_code-eval [assembly_code]
   [eval `[rawcode [bytecode set value nil nil]
-		  [bytecode jump_machine_code ,[expression-compile_x86 assembly_code]
-			    nil nil]]]]
+		  [bytecode jump_machine_code
+			    ,[chunklist-concat `[,[expression-compile_x86 assembly_code]
+						 ,[let [[chunk [new chunk 1]]]
+						    [set chunk bit8-elt 0 #xC3]]]]
+			    nil
+			    nil]]]]

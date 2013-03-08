@@ -1307,10 +1307,40 @@ f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
   return raw__chunklist__concat(cause, subexpression_chunks);
 }
 
+// 55                   	push   %rbp
+// 48 89 e5             	mov    %rsp,%rbp
+// b8 15 cd 5b 07       	mov    $0x75bcd15,%eax
+// 5d                   	pop    %rbp
+// c3                   	retq   
+
+f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause, f2ptr expression) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x55);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr cdr           = f2cons__cdr(expression, cause);
+  f2ptr register_name = f2cons__car(cdr,        cause);
+  if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__push_rbp(cause, expression);}
+  else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-push-unknown_register_name"),
+				   new__symbol(cause, "register_name"), register_name,
+				   new__symbol(cause, "expression"),    expression));
+  }
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if      (raw__eq(cause, command, new__symbol(cause, "ret")))     {return raw__expression__compile_x86__ret(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else {
       return new__error(f2list6__new(cause,

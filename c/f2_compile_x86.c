@@ -1274,10 +1274,10 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
 }
 
 
-f2ptr raw__expression__compile_x86__ret(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__retq(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 1) {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-ret-invalid_expression_length"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-retq-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
   }
   f2ptr chunk = raw__chunk__new(cause, 1);
@@ -1380,6 +1380,40 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "expression"), expression));
   }
 }
+
+
+
+f2ptr raw__expression__compile_x86__pop_rbp(f2ptr cause, f2ptr expression) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5D);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__pop(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-pop-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr cdr      = f2cons__cdr(expression, cause);
+  f2ptr argument = f2cons__car(cdr,        cause);
+  if (raw__expression__is_register_expression(cause, argument)) {
+    f2ptr register_name = raw__register_expression__register_name(cause, argument);
+    if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__pop_rbp(cause, expression);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-pop-unknown_register_name"),
+				     new__symbol(cause, "register_name"), register_name,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-pop-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+
 
 f2ptr raw__expression__compile_x86__mov_rsp_rbp(f2ptr cause, f2ptr expression) {
   f2ptr chunk = raw__chunk__new(cause, 3);
@@ -1504,8 +1538,9 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     return raw__expression__compile_x86__pointer(cause, expression);
   } else if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
-    if      (raw__eq(cause, command, new__symbol(cause, "ret")))     {return raw__expression__compile_x86__ret(    cause, expression);}
+    if      (raw__eq(cause, command, new__symbol(cause, "retq")))    {return raw__expression__compile_x86__retq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "pop")))     {return raw__expression__compile_x86__pop(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "absmov")))  {return raw__expression__compile_x86__absmov( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}

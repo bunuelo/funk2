@@ -1631,6 +1631,9 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
+  return new__error(f2list4__new(cause,
+				 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-should_never_get_here"),
+				 new__symbol(cause, "expression"), expression));
 }
 
 // 48 b8 00 00 64 a7 b3 b6 e0 0d 	movabs $0x0de0b6b3a7640000,%rax

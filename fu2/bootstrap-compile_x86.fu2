@@ -49,13 +49,13 @@
    4004d3:	5d                   	pop    %rbp
    4004d4:	c3                   	retq   '
 
-[defunk machine_code-test-return_memory_value []
-  [machine_code [push [register rbp]]
-		[mov  [register rsp] [register rbp]]
-		[mov  [register rdi] [relative [- #x8] [register rbp]]]
-		[mov  [relative [- #x8] [register rbp]] [register rax]]
-		[mov  [deref [register rax]] [register rax]]
-		[pop  [register rbp]]
-		[retq]]]
+`[defunk machine_code-test-return_memory_value []
+   [machine_code [push [register rbp]]
+		 [mov  [register rsp] [register rbp]]
+		 [mov  [register rdi] [relative [- #x8] [register rbp]]]
+		 [mov  [relative [- #x8] [register rbp]] [register rax]]
+		 [mov  [deref [register rax]] [register rax]]
+		 [pop  [register rbp]]
+		 [retq]]]
 
 

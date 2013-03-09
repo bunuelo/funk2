@@ -24,11 +24,11 @@
  rights to redistribute these changes.'
 
 
-[defmetro machine_code [assembly_code]
+[defmetro machine_code [:rest assembly_codes]
   `[rawcode [bytecode set value nil nil]
 	    [bytecode jump_machine_code
-		      ,[expression-compile_x86 `[rawcode ,assembly_code
-							 [ret]]]
+		      ,[expression-compile_x86 `[rawcode [rawcode @assembly_codes]
+							 [retq]]]
 		      nil
 		      nil]]]
 
@@ -38,5 +38,24 @@
 `[defunk machine_code-test-pointer []
    [machine_code #xFEEDFEEDFEEDFEED]]
 
+'00000000004004c4 <return_memory_value>:
+   4004c4:	55                   	push   %rbp
+   4004c5:	48 89 e5             	mov    %rsp,%rbp
+
+   4004c8:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
+
+   4004cc:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
+   4004d0:	48 8b 00             	mov    (%rax),%rax
+   4004d3:	5d                   	pop    %rbp
+   4004d4:	c3                   	retq   '
+
+[defunk machine_code-test-return_memory_value []
+  [machine_code [push [register rbp]]
+		[mov  [register rsp] [register rbp]]
+		[mov  [register rdi] [relative [- #x8] [register rbp]]]
+		[mov  [relative [- #x8] [register rbp]] [register rax]]
+		[mov  [deref [register rax]] [register rax]]
+		[pop  [register rbp]]
+		[retq]]]
 
 

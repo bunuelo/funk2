@@ -1471,7 +1471,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rdi__rbp(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
     return chunk;
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rdi-rbp-unknown_relative_offset_range"),
 				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset_value)));
   }

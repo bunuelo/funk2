@@ -1617,7 +1617,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
       } else {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-mov-unknown_register_name"),
-				       new__symbol(cause, "register_name"), register_name,
+				       new__symbol(cause, "register_name"), register_name_0,
 				       new__symbol(cause, "expression"),    expression));
       }
     } else {

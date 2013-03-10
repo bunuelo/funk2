@@ -1573,6 +1573,14 @@ f2ptr raw__expression__compile_x86__movzbl__deref_rax__eax(f2ptr cause) {
   return chunk;
 }
 
+f2ptr raw__expression__compile_x86__movzbl__al__eax(cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB6);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
+  return chunk;
+}
+
 f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -1816,7 +1824,32 @@ f2ptr raw__expression__compile_x86__movzbl(f2ptr cause, f2ptr expression) {
   }
   f2ptr argument_0 =             f2cons__car(f2cons__cdr(expression, cause), cause);
   f2ptr argument_1 = f2cons__car(f2cons__cdr(f2cons__cdr(expression, cause), cause), cause);
-  if (raw__expression__is_deref_expression(cause, argument_0)) {
+  if (raw__expression__is_register_expression(cause, argument_0)) {
+    f2ptr register_name_0 = raw__register_expression__register_name(cause, argument_0);
+    if (raw__eq(cause, register_name_0, new__symbol(cause, "al"))) {
+      if (raw__expression__is_register_expression(cause, argument_1)) {
+	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	if (raw__eq(cause, register_name_1, new__symbol(cause, "eax"))) {
+	  return raw__expression__compile_x86__movzbl__al__eax(cause);
+	} else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movzbl-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movzbl-invalid_argument_expression_type"),
+				       new__symbol(cause, "argument"),   argument_1,
+				       new__symbol(cause, "expression"), expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movzbl-unknown_register"),
+				     new__symbol(cause, "register_name"), register_name_0,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else if (raw__expression__is_deref_expression(cause, argument_0)) {
     f2ptr deref_expression__argument = raw__deref_expression__argument(cause, argument_0);
     if (raw__expression__is_register_expression(cause, deref_expression__argument)) {
       f2ptr register_name_0 = raw__register_expression__register_name(cause, deref_expression__argument);

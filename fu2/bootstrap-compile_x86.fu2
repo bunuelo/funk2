@@ -142,22 +142,6 @@
    400530:	5d                   	pop    %rbp
    400531:	c3                   	retq   '
 
- #x55
- #x48 #x89 #xe5
- #x48 #x89 #x7d #xe8
- #x48 #x8b #x45 #xe8
- #x48 #x8b #x00
- #x48 #x89 #x45 #xf0
- #x48 #x8b #x45 #xe8
- #x48 #x8b #x40 #x08
- #x48 #x89 #x45 #xf8
- #x48 #x8b #x45 #xf8
- #x48 #x8b #x55 #xf0
- #x48 #x01 #xd0
- #x48 #x8b #x00
- #x5d
- #xc3
-
 [defunk machine_code-call_and_return_dynamic_relative_memory_value [pointer]
   [machine_code-apply pointer
 		      [push   [register rbp]]
@@ -180,9 +164,42 @@
   [let [[chunk [new chunk 16]]]
     [set chunk bit64-elt 0 [get chunk bytes]]
     [set chunk bit64-elt 8 #x08]
-    [let [[result [machine_code-return_dynamic_relative_memory_value [get chunk bytes]]]]
-      [cons result chunk]]]]
+    [machine_code-call_and_return_dynamic_relative_memory_value [get chunk bytes]]]]
 
 
+'0000000000400572 <dotimes_loop>:
+   400572:	55                   	push   %rbp
+   400573:	48 89 e5             	mov    %rsp,%rbp
+   400576:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
+   40057a:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
+   40057e:	48 8b 00             	mov    (%rax),%rax
+   400581:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   400585:	eb 05                	jmp    40058c <dotimes_loop+0x1a>
+   400587:	48 83 6d f8 01       	subq   $0x1,-0x8(%rbp)
+   40058c:	48 83 7d f8 00       	cmpq   $0x0,-0x8(%rbp)
+   400591:	75 f4                	jne    400587 <dotimes_loop+0x15>
+   400593:	5d                   	pop    %rbp
+   400594:	c3                   	retq   '
     
+`[defunk machine_code-dotimes_loop [pointer]
+   [machine_code-apply pointer
+		       [push   [register rbp]]
+		       [mov    [register rsp] [register rbp]]
+		       [mov    [register rdi] [relative [- #x18] [register rbp]]]
+		       [mov    [relative [- #x18] [register rbp]] [register rax]]
+		       [mov    [deref [register rax]] [register rax]]
+		       [mov    [register rax] [relative [- #x08] [register rbp]]]
+		       
+		       [jmp    #x05]
+		       
+		       [subq   [constant #x01] [relative [- #x08] [register rbp]]]
+		       [cmpq   [constant #x00] [relative [- #x08] [register rbp]]]
+		       [jne    [- #x0C]]
+		       [pop    [register rbp]]
+		       [retq]]]
+
+[defunk machine_code-dotimes_loop-test [loop_count]
+  [let [[chunk [new chunk 8]]]
+    [set chunk bit64-elt 0 [get loop_count as-pointer]]
+    [machine_code-dotimes_loop [get chunk bytes]]]]
 

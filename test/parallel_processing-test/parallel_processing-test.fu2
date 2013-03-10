@@ -80,7 +80,7 @@
       [let [[total_cycles_per_second                          0]
 	    [total_cycles_per_second_without_user_thread_time 0]]
 	[dotimes [j loop-count]
-	  [let [[result_frame [test-parallel-processing-helper fiber-count 10000]]]
+	  [let [[result_frame [test-parallel-processing-helper fiber-count 100000]]]
 	    [let [[cycles_per_second                          [have result_frame lookup `cycles_per_second]]
 		  [cycles_per_second_without_user_thread_time [have result_frame lookup `cycles_per_second_without_user_thread_time]]]
 	      [= total_cycles_per_second                          [+ total_cycles_per_second                          cycles_per_second]]

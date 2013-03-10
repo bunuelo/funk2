@@ -142,7 +142,23 @@
    400530:	5d                   	pop    %rbp
    400531:	c3                   	retq   '
 
-`[defunk machine_code-call_and_return_dynamic_relative_memory_value [pointer]
+ #x55
+ #x48 #x89 #xe5
+ #x48 #x89 #x7d #xe8
+ #x48 #x8b #x45 #xe8
+ #x48 #x8b #x00
+ #x48 #x89 #x45 #xf0
+ #x48 #x8b #x45 #xe8
+ #x48 #x8b #x40 #x08
+ #x48 #x89 #x45 #xf8
+ #x48 #x8b #x45 #xf8
+ #x48 #x8b #x55 #xf0
+ #x48 #x01 #xd0
+ #x48 #x8b #x00
+ #x5d
+ #xc3
+
+[defunk machine_code-call_and_return_dynamic_relative_memory_value [pointer]
   [machine_code-apply pointer
 		      [push   [register rbp]]
 		      [mov    [register rsp] [register rbp]]
@@ -155,27 +171,18 @@
 		      [mov    [register rax] [relative [- #x08] [register rbp]]]
 		      [mov    [relative [- #x08] [register rbp]] [register rax]]
 		      [mov    [relative [- #x10] [register rbp]] [register rdx]]
-		      
 		      [add    [register rdx] [register rax]]
-		      
 		      [mov    [deref [register rax]] [register rax]]
-		      [pop    [register rbp]]
-		      [retq]]]
-
-[defunk machine_code-call_and_return_dynamic_relative_memory_value [pointer]
-  [machine_code-apply pointer
-		      [push   [register rbp]]
-		      [mov    [register rsp] [register rbp]]
-		      [mov    [register rdi] [relative [- #x18] [register rbp]]]
-		      [mov    [relative [- #x18] [register rbp]] [register rax]]
-		      [mov    [deref [register rax]] [register rax]]
-		      
 		      [pop    [register rbp]]
 		      [retq]]]
 
 [defunk machine_code-call_and_return_dynamic_relative_memory_value-test []
   [let [[chunk [new chunk 16]]]
-    [set chunk bit64-elt 8 #x00]
     [set chunk bit64-elt 0 [get chunk bytes]]
-    [machine_code-return_dynamic_relative_memory_value [get chunk bytes]]]]
+    [set chunk bit64-elt 8 #x08]
+    [let [[result [machine_code-return_dynamic_relative_memory_value [get chunk bytes]]]]
+      [cons result chunk]]]]
+
+
+    
 

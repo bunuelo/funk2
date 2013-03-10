@@ -2106,7 +2106,7 @@ f2ptr raw__expression__compile_x86__jmp__relative(f2ptr cause, s64 relative_jump
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jmp-relative_rax-rax-unknown_relative_offset_range"),
-				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset_value)));
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_jump_distance)));
   }
 }
 

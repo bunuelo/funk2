@@ -154,10 +154,10 @@
 		      [mov    [relative #x08 [register rax]] [register rax]]
 		      [mov    [register rax] [relative [- #x08] [register rbp]]]
 		      [mov    [relative [- #x08] [register rbp]] [register rax]]
-		      
 		      [mov    [relative [- #x10] [register rbp]] [register rdx]]
 		      
 		      [add    [register rdx] [register rax]]
+		      
 		      [mov    [deref [register rax]] [register rax]]
 		      [pop    [register rbp]]
 		      [retq]]]

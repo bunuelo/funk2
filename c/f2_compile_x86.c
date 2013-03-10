@@ -1589,6 +1589,14 @@ f2ptr raw__expression__compile_x86__add__relative_rbp__rax(cause, relative_offse
   }
 }
 
+f2ptr raw__expression__compile_x86__add__rdx__rax(cause, relative_offset_value) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD0);
+  return chunk;
+}
+
 f2ptr raw__expression__compile_x86__mov__deref_rax__rax(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 3);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
@@ -1980,7 +1988,32 @@ f2ptr raw__expression__compile_x86__add(f2ptr cause, f2ptr expression) {
   }
   f2ptr argument_0 =             f2cons__car(f2cons__cdr(expression, cause), cause);
   f2ptr argument_1 = f2cons__car(f2cons__cdr(f2cons__cdr(expression, cause), cause), cause);
-  if (raw__expression__is_relative_expression(cause, argument_0)) {
+  if (raw__expression__is_register_expression(cause, argument_0)) {
+    f2ptr register_name_0 = raw__register_expression__register_name(cause, argument_0);
+    if (raw__eq(cause, register_name_0, new__symbol(cause, "rdx"))) {
+      if (raw__expression__is_register_expression(cause, argument_1)) {
+	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
+	  return raw__expression__compile_x86__add__rdx__rax(cause, relative_offset_value);
+	} else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-add-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_1,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-add-invalid_argument_expression_type"),
+				       new__symbol(cause, "argument"),   argument_1,
+				       new__symbol(cause, "expression"), expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-add-unknown_register"),
+				     new__symbol(cause, "register_name"), register_name_0,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else if (raw__expression__is_relative_expression(cause, argument_0)) {
     f2ptr relative_offset               = raw__relative_expression__relative_offset(cause, argument_0);
     f2ptr relative_expression__argument = raw__relative_expression__argument(       cause, argument_0);
     s64   relative_offset_value = 0;

@@ -115,6 +115,7 @@
 		      [add    [relative [- #x08] [register rbp]] [register rax]]
 		      
 		      [movzbl [deref [register rax]] [register eax]]
+		      [movzbl [register al] [register eax]]
 		      
 		      [pop    [register rbp]]
 		      [retq]]]

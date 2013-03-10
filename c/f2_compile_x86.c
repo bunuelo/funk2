@@ -2170,15 +2170,15 @@ f2ptr raw__expression__compile_x86__subq(f2ptr cause, f2ptr expression) {
 	  return raw__expression__compile_x86__subq__constant__relative_rbp(cause, constant_value__i, relative_offset_value);
 	} else {
 	  return new__error(f2list6__new(cause,
-					 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-subq-invalid_argument_expression_type"),
-					 new__symbol(cause, "argument"),   argument_1,
-					 new__symbol(cause, "expression"), expression));
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-subq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name,
+					 new__symbol(cause, "expression"),    expression));
 	}
       } else {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-subq-unknown_register"),
-				       new__symbol(cause, "register_name"), register_name,
-				       new__symbol(cause, "expression"),    expression));
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-subq-invalid_argument_expression_type"),
+				       new__symbol(cause, "argument"),   argument_1,
+				       new__symbol(cause, "expression"), expression));
       }
     } else {
       return new__error(f2list6__new(cause,

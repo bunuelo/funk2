@@ -1461,6 +1461,22 @@ s64 raw__minus_expression__argument(f2ptr cause, f2ptr expression) {
   return f2cons__car(f2cons__cdr(expression, cause), cause);
 }
 
+boolean_t raw__expression__is_deref_expression(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr car = f2cons__car(expression, cause);
+    if (raw__eq(cause, car, new__symbol(cause, "deref"))) {
+      if (raw__simple_length(cause, expression) == 2) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr raw__deref_expression__argument(f2ptr cause, f2ptr expression) {
+  return f2cons__car(f2cons__cdr(expression, cause), cause);
+}
+
 f2ptr raw__expression__compile_x86__mov__rdi__relative_rbp(f2ptr cause, s64 relative_offset_value) {
   if ((relative_offset_value <   128) &&
       (relative_offset_value >= -128)) {
@@ -1499,6 +1515,7 @@ f2ptr raw__expression__compile_x86__mov__deref_rax__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x00);
 }
+
 
 f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {

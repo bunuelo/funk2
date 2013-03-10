@@ -1541,6 +1541,22 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rax(f2ptr cause, s64 rela
   }
 }
 
+f2ptr raw__expression__compile_x86__mov__relative_rbp__rdx(f2ptr cause, s64 relative_offset_value) {
+  if ((relative_offset_value <   128) &&
+      (relative_offset_value >= -128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x55);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
+    return chunk;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset_value)));
+  }
+}
+
 f2ptr raw__expression__compile_x86__mov__relative_rax__rax(f2ptr cause, s64 relative_offset_value) {
   if ((relative_offset_value <   128) &&
       (relative_offset_value >= -128)) {
@@ -1807,6 +1823,8 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 	  f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
 	  if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
 	    return raw__expression__compile_x86__mov__relative_rbp__rax(cause, relative_offset_value);
+	  } else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {
+	    return raw__expression__compile_x86__mov__relative_rbp__rdx(cause, relative_offset_value);
 	  } else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-mov-unknown_register_name"),

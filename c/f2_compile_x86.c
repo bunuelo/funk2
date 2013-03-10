@@ -1514,6 +1514,7 @@ f2ptr raw__expression__compile_x86__mov__deref_rax__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x00);
+  return chunk;
 }
 
 

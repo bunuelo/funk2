@@ -1493,6 +1493,13 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rax(f2ptr cause, s64 rela
   }
 }
 
+f2ptr raw__expression__compile_x86__mov__deref_rax__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x00);
+}
+
 f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -1626,8 +1633,38 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "argument"),   argument,
 				     new__symbol(cause, "expression"), expression));
     }
-    //} else if (raw__expression__is_deref_expression(cause, argument_0)) {
-    
+  } else if (raw__expression__is_deref_expression(cause, argument_0)) {
+    f2ptr deref_argument = raw__deref_expression__argument(cause, argument_0);
+    if (raw__expression__is_register_expression(cause, deref_argument)) {
+      f2ptr register_name_0 = raw__register_expression__register_name(cause, deref_argument);
+      if (raw__eq(cause, register_name_0, new__symbol(cause, "rax"))) {
+	if (raw__expression__is_register_expression(cause, argument_1)) {
+	  f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	  if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
+	    return raw__expression__compile_x86__mov__deref_rax__rax(cause);
+	  } else {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-mov-unknown_register_name"),
+					   new__symbol(cause, "register_name"), register_name_1,
+					   new__symbol(cause, "expression"),    expression));
+	  }
+	} else {
+	  return new__error(f2list4__new(cause,
+					 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-unknown_deref_target_argument_expression_type"),
+					 new__symbol(cause, "argument"),   argument_1,
+					 new__symbol(cause, "expression"), expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-mov-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name_0,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-unknown_deref_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
+    }
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),

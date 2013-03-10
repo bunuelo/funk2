@@ -70,6 +70,21 @@
     [set chunk bit8-elt 0 #x01]
     [machine_code-return_memory_value [get chunk bytes]]]]
 
+[defunk machine_code-return_relative_memory_value_offset [pointer]
+  [machine_code-apply pointer
+		      [push [register rbp]]
+		      [mov  [register rsp] [register rbp]]
+		      [mov  [register rdi] [relative [- #x8] [register rbp]]]
+		      [mov  [relative [- #x08] [register rbp]] [register rax]]
+		      [mov  [relative    #x08  [register rax]] [register rax]]
+		      [pop  [register rbp]]
+		      [retq]]]
+
+[defunk machine_code-return_memory_value_offset-test []
+  [let [[chunk [new chunk 16]]]
+    [set chunk bit8-elt 8 #x01]
+    [machine_code-return_memory_value_offset [get chunk bytes]]]]
+
 [defunk machine_code-test-return_memory_value []
   [machine_code [push [register rbp]]
 		[mov  [register rsp] [register rbp]]

@@ -2170,7 +2170,7 @@ f2ptr raw__expression__compile_x86__jmp(f2ptr cause, f2ptr expression) {
     } else if (raw__integer__is_type(cause, minus_expression__argument)) {
       relative_jump_distance = -f2integer__i(minus_expression__argument, cause);
     } else {
-      return new__error(f2list4__new(cause,
+      return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-push-invalid_minus_expression_argument_expression_type"),
 				     new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
 				     new__symbol(cause, "expression"),                expression));

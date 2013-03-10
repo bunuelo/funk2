@@ -1626,6 +1626,8 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "argument"),   argument,
 				     new__symbol(cause, "expression"), expression));
     }
+    //} else if (raw__expression__is_deref_expression(cause, argument_0)) {
+    
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),

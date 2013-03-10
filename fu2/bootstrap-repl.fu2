@@ -823,6 +823,9 @@
 	  [terminal_format standard-terminal '  Memory is valid.']
 	  nil]]]
 
+[defunk clear []
+  [ansi-stream-clear_screen stdout]]
+
 [defunk exit [value]
   [management_thread-add_exit_command value]
   [let [[signal_exit_fiber [this-fiber]]]

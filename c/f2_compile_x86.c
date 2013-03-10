@@ -1589,7 +1589,7 @@ f2ptr raw__expression__compile_x86__add__relative_rbp__rax(cause, relative_offse
   }
 }
 
-f2ptr raw__expression__compile_x86__add__rdx__rax(cause, relative_offset_value) {
+f2ptr raw__expression__compile_x86__add__rdx__rax(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 3);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);

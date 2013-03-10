@@ -1953,6 +1953,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "pop")))     {return raw__expression__compile_x86__pop(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "add")))     {return raw__expression__compile_x86__add(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "absmov")))  {return raw__expression__compile_x86__absmov( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else {

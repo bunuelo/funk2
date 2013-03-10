@@ -110,8 +110,8 @@
 		      [push   [register rbp]]
 		      [mov    [register rsp] [register rbp]]
 		      [mov    [register rdi] [relative [- #x08] [register rbp]]]
-		      
 		      [mov    [register rsi] [relative [- #x10] [register rbp]]]
+		      
 		      [mov    [relative [- #x10] [register rbp]] [register rax]]
 		      [add    [relative [- #x08] [register rbp]] [register rax]]
 		      [movzbl [deref [register rax]] [register eax]]
@@ -124,6 +124,7 @@
 		      [push   [register rbp]]
 		      [mov    [register rsp] [register rbp]]
 		      [mov    [register rdi] [relative [- #x08] [register rbp]]]
+		      [mov    [register rsi] [relative [- #x10] [register rbp]]]
 		      
 		      [pop    [register rbp]]
 		      [retq]]]

@@ -3073,25 +3073,29 @@ f2ptr raw__compile(f2ptr simple_cause, f2ptr fiber, f2ptr exp, boolean_t protect
   __compile__recursion_count ++;
 #endif // DEBUG_COMPILE
   f2ptr result_bcs = nil;
-  if      (!exp)                                {result_bcs = f2__compile__value__set(cause, nil);}
-  else if (raw__integer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__pointer__is_type(cause, exp))   {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__float__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__double__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__string__is_type(cause, exp))    {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__symbol__is_type(cause, exp))    {result_bcs = f2__compile__symbol(    cause, exp, is_funktional, local_variables, is_locally_funktional);}
-  else if (raw__cons__is_type(cause, exp))      {result_bcs = f2__compile__cons_exp(  cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional);}
-  else if (raw__array__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__cfunk__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__funk__is_type(cause, exp))      {result_bcs = f2__compile__funk(      cause, fiber, exp);}
-  else if (raw__metro__is_type(cause, exp))     {result_bcs = f2__compile__metro(     cause, fiber, exp);}
+  if      (exp == nil)                          {result_bcs = f2__compile__value__set(cause, nil);}
+  else if (raw__integer__is_type(  cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__pointer__is_type(  cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__float__is_type(    cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__double__is_type(   cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__string__is_type(   cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__symbol__is_type(   cause, exp)) {result_bcs = f2__compile__symbol(    cause, exp, is_funktional, local_variables, is_locally_funktional);}
+  else if (raw__cons__is_type(     cause, exp)) {result_bcs = f2__compile__cons_exp(  cause, fiber, exp, protect_environment, optimize_tail_recursion, popped_env_and_return, is_funktional, local_variables, is_locally_funktional);}
+  else if (raw__array__is_type(    cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__cfunk__is_type(    cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__funk__is_type(     cause, exp)) {result_bcs = f2__compile__funk(      cause, fiber, exp);}
+  else if (raw__metro__is_type(    cause, exp)) {result_bcs = f2__compile__metro(     cause, fiber, exp);}
   else if (raw__exception__is_type(cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__bytecode__is_type(cause, exp))  {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__larva__is_type(cause, exp))     {result_bcs = f2__compile__value__set(cause, exp);}
-  else if (raw__char__is_type(cause, exp))      {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__bytecode__is_type( cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__larva__is_type(    cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__char__is_type(     cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
+  else if (raw__chunk__is_type(    cause, exp)) {result_bcs = f2__compile__value__set(cause, exp);}
   else {
     status("unrecognized type in compile.");
-    return f2larva__new(cause, 128, nil);
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "compile-unrecognized_type_in_compile"),
+				   new__symbol(cause, "expression-type"), f2__object__type(cause, exp),
+				   new__symbol(cause, "expression"),      exp));
   }
   __compile__recursion_count --;
 #ifdef DEBUG_COMPILE

@@ -189,10 +189,10 @@
 		       [mov    [relative [- #x18] [register rbp]] [register rax]]
 		       [mov    [deref [register rax]] [register rax]]
 		       [mov    [register rax] [relative [- #x08] [register rbp]]]
-		       
 		       [jmp    #x05]
 		       
 		       [subq   [constant #x01] [relative [- #x08] [register rbp]]]
+		       
 		       [cmpq   [constant #x00] [relative [- #x08] [register rbp]]]
 		       [jne    [- #x0C]]
 		       [pop    [register rbp]]

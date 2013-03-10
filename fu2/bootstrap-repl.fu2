@@ -824,7 +824,8 @@
 	  nil]]]
 
 [defunk clear []
-  [ansi-stream-clear_screen stdout]]
+  [ansi-stream-clear_screen stdout]
+  [ansi-stream-move_cursor  stdout 0 0]]
 
 [defunk exit [value]
   [management_thread-add_exit_command value]

@@ -2118,7 +2118,7 @@ f2ptr raw__expression__compile_x86__subq(f2ptr cause, f2ptr expression) {
       constant_value__i = (s64)f2pointer__p(cause, constant_value);
     } else if (raw__integer__is_type(cause, constant_value)) {
       constant_value__i = f2integer__i(cause, constant_value);
-    } else if (raw__minus_expression__is_type(cause, constant_value)) {
+    } else if (raw__expression__is_minus_expression(cause, constant_value)) {
       f2ptr minus_expression__argument = raw__minus_expression__argument(cause, constant_value);
       if (raw__pointer__is_type(cause, minus_expression__argument)) {
 	constant_value__i = -(s64)f2pointer__p(cause, minus_expression__argument);

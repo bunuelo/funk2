@@ -1819,7 +1819,7 @@ f2ptr raw__expression__compile_x86__movzbl(f2ptr cause, f2ptr expression) {
   if (raw__expression__is_deref_expression(cause, argument_0)) {
     f2ptr deref_expression__argument = raw__deref_expression__argument(cause, argument_0);
     if (raw__expression__is_register_expression(cause, deref_expression__argument)) {
-      f2ptr register_name_0 = raw__register_expression__register_name(cause, relative_expression__argument);
+      f2ptr register_name_0 = raw__register_expression__register_name(cause, deref_expression__argument);
       if (raw__eq(cause, register_name_0, new__symbol(cause, "rax"))) {
 	if (raw__expression__is_register_expression(cause, argument_1)) {
 	  f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);

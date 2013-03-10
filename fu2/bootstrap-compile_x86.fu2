@@ -30,11 +30,11 @@
 	     nil
 	     nil]]
 
-[defmetro machine_code-apply [chunk :rest assembly_codes]
+[defmetro machine_code-apply [pointer :rest assembly_codes]
   [let [[machine_code_chunk [expression-compile_x86 `[rawcode @assembly_codes]]]]
-    `[let [[chunk              [get ,chunk bytes]]
+    `[let [[pointer            ,pointer]
 	   [machine_code_chunk ,machine_code_chunk]]
-       [eval `[rawcode [bytecode set value ,chunk nil]
+       [eval `[rawcode [bytecode set value ,pointer nil]
 		       [bytecode jump_machine_code
 				 ,machine_code_chunk
 				 nil
@@ -51,21 +51,24 @@
    4004c5:	48 89 e5             	mov    %rsp,%rbp
    4004c8:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
    4004cc:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
-
    4004d0:	48 8b 00             	mov    (%rax),%rax
-
    4004d3:	5d                   	pop    %rbp
    4004d4:	c3                   	retq   '
 
-`[defunk machine_code-test-return_memory_value []
-   [machine_code [push [register rbp]]
-		 [mov  [register rsp] [register rbp]]
-		 [mov  [register rdi] [relative [- #x8] [register rbp]]]
-		 [mov  [relative [- #x8] [register rbp]] [register rax]]
-		 [mov  [deref [register rax]] [register rax]]
-		 [pop  [register rbp]]
-		 [retq]]]
+[defunk machine_code-return_memory_value [pointer]
+  [machine_code-apply pointer
+		      [push [register rbp]]
+		      [mov  [register rsp] [register rbp]]
+		      [mov  [register rdi] [relative [- #x8] [register rbp]]]
+		      [mov  [relative [- #x8] [register rbp]] [register rax]]
+		      [mov  [deref [register rax]] [register rax]]
+		      [pop  [register rbp]]
+		      [retq]]]
 
+[defunk machine_code-return_memory_value-test []
+  [let [[chunk [new chunk 8]]]
+    [set chunk bit8-elt 0 #x01]
+    [machine_code-return_memory_value [get chunk bytes]]]]
 
 [defunk machine_code-test-return_memory_value []
   [machine_code [push [register rbp]]

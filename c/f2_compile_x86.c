@@ -1603,12 +1603,12 @@ f2ptr raw__expression__compile_x86__subq__constant__relative_rbp(f2ptr cause, s6
       return chunk;
     } else {
       return new__error(f2list4__new(cause,
-				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-add-relative_rpb-rax-unknown_relative_offset_range"),
+				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-subq-constant-relative_rbp-unknown_relative_offset_range"),
 				     new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset_value)));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-add-relative_rpb-rax-unknown_constant_value_range"),
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-subq-constant-relative_rbp-unknown_constant_value_range"),
 				   new__symbol(cause, "relative_offset"), f2integer__new(cause, constant_value)));
   }
 }
@@ -2115,15 +2115,15 @@ f2ptr raw__expression__compile_x86__subq(f2ptr cause, f2ptr expression) {
     f2ptr constant_value = raw__constant_expression__constant_value(cause, argument_0);
     s64   constant_value__i = 0;
     if (raw__pointer__is_type(cause, constant_value)) {
-      constant_value__i = (s64)f2pointer__p(cause, constant_value);
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
     } else if (raw__integer__is_type(cause, constant_value)) {
-      constant_value__i = f2integer__i(cause, constant_value);
+      constant_value__i = f2integer__i(constant_value, cause);
     } else if (raw__expression__is_minus_expression(cause, constant_value)) {
       f2ptr minus_expression__argument = raw__minus_expression__argument(cause, constant_value);
       if (raw__pointer__is_type(cause, minus_expression__argument)) {
-	constant_value__i = -(s64)f2pointer__p(cause, minus_expression__argument);
+	constant_value__i = -(s64)f2pointer__p(minus_expression__argument, cause);
       } else if (raw__integer__is_type(cause, minus_expression__argument)) {
-	constant_value__i = -f2integer__i(cause, minus_expression__argument);
+	constant_value__i = -f2integer__i(minus_expression__argument, cause);
       } else {
 	return new__error(f2list8__new(cause,
 				       new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-subq-invalid_constant_argument_expression_type"),
@@ -2143,7 +2143,7 @@ f2ptr raw__expression__compile_x86__subq(f2ptr cause, f2ptr expression) {
       f2ptr relative_expression__argument = raw__relative_expression__argument(       cause, argument_1);
       s64   relative_offset_value = 0;
       if (raw__pointer__is_type(cause, relative_offset)) {
-	relative_offset_value = f2pointer__p(relative_offset, cause);
+	relative_offset_value = (s64)f2pointer__p(relative_offset, cause);
       } else if (raw__integer__is_type(cause, relative_offset)) {
 	relative_offset_value = f2integer__i(relative_offset, cause);
       } else if (raw__expression__is_minus_expression(cause, relative_offset)) {

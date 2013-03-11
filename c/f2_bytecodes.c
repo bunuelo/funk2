@@ -376,7 +376,7 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	iter = f2cons__cdr(iter, cause);
       }
     }
-    s64   value__i = raw__x86_funk__apply(cause, funktion, argument_array);
+    s64   value__i = raw__x86_funk__apply(cause, x86_funk, argument_array);
     f2ptr value    = f2integer__new(cause, value__i);
     f2fiber__value__set(fiber, cause, value);
   }

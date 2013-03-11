@@ -207,18 +207,18 @@
    400599:	48 89 7d e8          	mov    %rdi,-0x18(%rbp)
    40059d:	48 8b 45 e8          	mov    -0x18(%rbp),%rax
    4005a1:	48 8b 00             	mov    (%rax),%rax
-   4005a4:	48 89 45 f0          	mov    %rax,-0x10(%rbp)
-   4005a8:	48 c7 45 f8 00 00 00 	movq   $0x0,-0x8(%rbp)
+   4005a4:	48 89 45 f8          	mov    %rax,-0x8(%rbp)
+   4005a8:	48 c7 45 f0 00 00 00 	movq   $0x0,-0x10(%rbp)
    4005af:	00 
    4005b0:	eb 05                	jmp    4005b7 <dotimes_loop+0x22>
    4005b2:	48 83 45 f0 01       	addq   $0x1,-0x10(%rbp)
-   4005b7:	48 8b 45 f8          	mov    -0x8(%rbp),%rax
-   4005bb:	48 3b 45 f0          	cmp    -0x10(%rbp),%rax
+   4005b7:	48 8b 45 f0          	mov    -0x10(%rbp),%rax
+   4005bb:	48 3b 45 f8          	cmp    -0x8(%rbp),%rax
    4005bf:	72 f1                	jb     4005b2 <dotimes_loop+0x1d>
    4005c1:	5d                   	pop    %rbp
    4005c2:	c3                   	retq   '
 
-`[defunk machine_code-dotimes_loop [pointer]
+[defunk machine_code-dotimes_loop [pointer]
   [machine_code-apply pointer
 		      [push   [register rbp]]
 		      [mov    [register rsp] [register rbp]]
@@ -229,10 +229,8 @@
 		      [movq   [constant #x00] [relative [- #x08] [register rbp]]]
 		      [jmp    #x05]
 		      [addq   [constant #x01] [relative [- #x10] [register rbp]]]
-		      [mov    [relative [- #x08] [register rbp]] [register rax]]
-		      
-		      [cmp    [relative [- #x10] [register rbp]] [register rax]]
-		      
+		      [mov    [relative [- #x10] [register rbp]] [register rax]]
+		      [cmp    [relative [- #x08] [register rbp]] [register rax]]
 		      [jb     [- #x0F]]
 		      [pop    [register rbp]]
 		      [retq]]]

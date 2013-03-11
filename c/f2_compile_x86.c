@@ -2919,7 +2919,7 @@ f2ptr raw__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
-    frame = f2__frame__new(cause, f2list6__new(cause,
+    frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"),       new__symbol(cause, "x86_funk"),
 					       new__symbol(cause, "print_object_slot_order"), f2list2__new(cause,
 													   new__symbol(cause, "name"),

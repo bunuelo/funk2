@@ -1351,11 +1351,76 @@ f2ptr raw__constant_expression__constant_value(f2ptr cause, f2ptr expression) {
 
 
 
-f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause, f2ptr expression) {
+//  4000a2:	50                   	push   %rax
+
+f2ptr raw__expression__compile_x86__push_rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x50);
+  return chunk;
+}
+
+//  4000a6:	51                   	push   %rcx
+
+f2ptr raw__expression__compile_x86__push_rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x51);
+  return chunk;
+}
+
+//  4000a5:	52                   	push   %rdx
+
+f2ptr raw__expression__compile_x86__push_rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x52);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x55);
   return chunk;
 }
+
+//  4000a4:	56                   	push   %rsi
+
+f2ptr raw__expression__compile_x86__push_rsi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x56);
+  return chunk;
+}
+
+//  4000a3:	57                   	push   %rdi
+
+f2ptr raw__expression__compile_x86__push_rdi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x57);
+  return chunk;
+}
+
+//  4000a7:	41 50                	push   %r8
+
+f2ptr raw__expression__compile_x86__push_r8(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x50);
+  return chunk;
+}
+
+//  4000a9:	41 51                	push   %r9
+
+f2ptr raw__expression__compile_x86__push_r9(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x51);
+  return chunk;
+}
+
+
+
+
+
+
+
 
 f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 2) {
@@ -1367,7 +1432,14 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
   f2ptr argument = f2cons__car(cdr,        cause);
   if (raw__expression__is_register_expression(cause, argument)) {
     f2ptr register_name = raw__register_expression__register_name(cause, argument);
-    if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__push_rbp(cause, expression);}
+    if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__push_rax(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__push_rcx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__push_rdx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__push_rbp(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__push_rsi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__push_rdi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__push_r8(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__push_r9(cause);}
     else {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-push-unknown_register_name"),
@@ -1383,9 +1455,67 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
 
 
 
-f2ptr raw__expression__compile_x86__pop_rbp(f2ptr cause, f2ptr expression) {
+//  4000ab:	58                   	pop    %rax
+
+f2ptr raw__expression__compile_x86__pop_rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x58);
+  return chunk;
+}
+
+//  4000af:	59                   	pop    %rcx
+
+f2ptr raw__expression__compile_x86__pop_rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x59);
+  return chunk;
+}
+
+//  4000ae:	5a                   	pop    %rdx
+
+f2ptr raw__expression__compile_x86__pop_rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5A);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__pop_rbp(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5D);
+  return chunk;
+}
+
+//  4000ac:	5f                   	pop    %rdi
+
+f2ptr raw__expression__compile_x86__pop_rdi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5F);
+  return chunk;
+}
+
+//  4000ad:	5e                   	pop    %rsi
+
+f2ptr raw__expression__compile_x86__pop_rsi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5E);
+  return chunk;
+}
+
+//  4000b0:	41 58                	pop    %r8
+
+f2ptr raw__expression__compile_x86__pop_r8(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x58);
+  return chunk;
+}
+
+//  4000b2:	41 59                	pop    %r9
+
+f2ptr raw__expression__compile_x86__pop_r9(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x59);
   return chunk;
 }
 
@@ -1399,7 +1529,14 @@ f2ptr raw__expression__compile_x86__pop(f2ptr cause, f2ptr expression) {
   f2ptr argument = f2cons__car(cdr,        cause);
   if (raw__expression__is_register_expression(cause, argument)) {
     f2ptr register_name = raw__register_expression__register_name(cause, argument);
-    if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__pop_rbp(cause, expression);}
+    if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__pop_rax(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__pop_rcx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__pop_rdx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__pop_rbp(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__pop_rdi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__pop_rsi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__pop_r8(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__pop_r9(cause);}
     else {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-pop-unknown_register_name"),
@@ -1997,7 +2134,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 	}
       } else {
 	return new__error(f2list4__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-invalid_argument_expression_type"),
 				       new__symbol(cause, "expression"), expression));
       }
     } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rdi"))) {
@@ -2045,7 +2182,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 	}
       } else {
 	return new__error(f2list4__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-invalid_argument_expression_type"),
 				       new__symbol(cause, "expression"), expression));
       }
     } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rsi"))) {
@@ -2093,7 +2230,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 	}
       } else {
 	return new__error(f2list4__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-invalid_argument_expression_type"),
 				       new__symbol(cause, "expression"), expression));
       }
     } else {
@@ -2185,7 +2322,7 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
 	  }
 	} else {
 	  return new__error(f2list6__new(cause,
-					 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-unknown_deref_target_argument_expression_type"),
+					 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-unknown_deref_target_argument_expression_type"),
 					 new__symbol(cause, "argument"),   argument_1,
 					 new__symbol(cause, "expression"), expression));
 	}
@@ -2197,16 +2334,16 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
       }
     } else {
       return new__error(f2list4__new(cause,
-				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-unknown_deref_argument_expression_type"),
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-unknown_deref_argument_expression_type"),
 				     new__symbol(cause, "expression"), expression));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
   return new__error(f2list4__new(cause,
-				 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-should_never_get_here"),
+				 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-mov-should_never_get_here"),
 				 new__symbol(cause, "expression"), expression));
 }
 
@@ -2922,18 +3059,18 @@ f2ptr raw__expression__compile_x86__absmov(f2ptr cause, f2ptr expression) {
 	}
       } else {
 	return new__error(f2list4__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-absmov-invalid_argument_expression_type"),
 				       new__symbol(cause, "expression"), expression));
       }
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-push-constant_value_must_be_pointer"),
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-absmov-constant_value_must_be_pointer"),
 				     new__symbol(cause, "constant_value"), constant_value,
 				     new__symbol(cause, "expression"),     expression));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-absmov-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
 }
@@ -2958,13 +3095,13 @@ f2ptr raw__expression__compile_x86__jmp(f2ptr cause, f2ptr expression) {
       relative_jump_distance = -f2integer__i(minus_expression__argument, cause);
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-push-invalid_minus_expression_argument_expression_type"),
+				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-jmp-invalid_minus_expression_argument_expression_type"),
 				     new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
 				     new__symbol(cause, "expression"),                expression));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jmp-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
   return raw__expression__compile_x86__jmp__relative(cause, relative_jump_distance);
@@ -2990,13 +3127,13 @@ f2ptr raw__expression__compile_x86__jb(f2ptr cause, f2ptr expression) {
       relative_jump_distance = -f2integer__i(minus_expression__argument, cause);
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-push-invalid_minus_expression_argument_expression_type"),
+				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-jb-invalid_minus_expression_argument_expression_type"),
 				     new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
 				     new__symbol(cause, "expression"),                expression));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jb-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
   return raw__expression__compile_x86__jb__relative(cause, relative_jump_distance);
@@ -3022,13 +3159,13 @@ f2ptr raw__expression__compile_x86__jne(f2ptr cause, f2ptr expression) {
       relative_jump_distance = -f2integer__i(minus_expression__argument, cause);
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-push-invalid_minus_expression_argument_expression_type"),
+				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-jne-invalid_minus_expression_argument_expression_type"),
 				     new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
 				     new__symbol(cause, "expression"),                expression));
     }
   } else {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-push-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jne-invalid_argument_expression_type"),
 				   new__symbol(cause, "expression"), expression));
   }
   return raw__expression__compile_x86__jne__relative(cause, relative_jump_distance);

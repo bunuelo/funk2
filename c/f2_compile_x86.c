@@ -1573,7 +1573,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rax__rax(f2ptr cause, s64 rela
   }
 }
 
-f2ptr raw__expression__compile_x86__add__relative_rbp__rax(f2ptr cause, f2ptr relative_offset_value) {
+f2ptr raw__expression__compile_x86__add__relative_rbp__rax(f2ptr cause, s64 relative_offset_value) {
   if ((relative_offset_value <   128) &&
       (relative_offset_value >= -128)) {
     f2ptr chunk = raw__chunk__new(cause, 4);
@@ -1589,7 +1589,7 @@ f2ptr raw__expression__compile_x86__add__relative_rbp__rax(f2ptr cause, f2ptr re
   }
 }
 
-f2ptr raw__expression__compile_x86__cmp__relative_rbp__rax(f2ptr cause, f2ptr relative_offset_value) {
+f2ptr raw__expression__compile_x86__cmp__relative_rbp__rax(f2ptr cause, s64 relative_offset_value) {
   if ((relative_offset_value <   128) &&
       (relative_offset_value >= -128)) {
     f2ptr chunk = raw__chunk__new(cause, 4);

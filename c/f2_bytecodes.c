@@ -612,15 +612,17 @@ int f2__fiber__bytecode__funk(f2ptr fiber, f2ptr bytecode) {
 
 int f2__fiber__bytecode__funk_env__no_increment_pc_reg(f2ptr cause, f2ptr fiber, f2ptr bytecode) {
   f2ptr fiber__value = f2fiber__value(fiber, cause);
-  if (raw__funk__is_type(cause, fiber__value)) {
-    f2ptr fiber__env = f2funk__env(fiber__value, cause);
-    f2fiber__env__set(fiber, cause, fiber__env);
-  } else if (raw__cfunk__is_type(cause, fiber__value)) {
+  if (raw__cfunk__is_type(cause, fiber__value)) {
     // do nothing.
   } else if (raw__core_extension_funk__is_type(cause, fiber__value)) {
     // do nothing.
+  } else if (raw__x86_funk__is_type(cause, fiber__value)) {
+    // do nothing.
   } else if (raw__metrocfunk__is_type(cause, fiber__value)) {
     // do nothing.
+  } else if (raw__funk__is_type(cause, fiber__value)) {
+    f2ptr fiber__env = f2funk__env(fiber__value, cause);
+    f2fiber__env__set(fiber, cause, fiber__env);
   } else if (raw__metro__is_type(cause, fiber__value)) {
     f2ptr fiber__env = raw__metro__env(cause, fiber__value);
     f2fiber__env__set(fiber, cause, fiber__env);

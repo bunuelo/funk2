@@ -289,7 +289,7 @@
     [with-new-cause [cause-define x86_variable_name_ptypehash [new ptypehash]]
 		    [let [[offset 8]]
 		      [mapc [funk [variable]
-				  [= offset [+ offset 8]]
+				  [= offset [bytecode:add offset 8]]
 				  [have x86_variable_name_ptypehash add variable `[relative [- ,[get offset as-pointer]] [register rbp]]]]
 			    variables]
 		      [set this machine_code_chunk [expression-compile_x86 [x86:demetropolize `[rawcode [push   [register rbp]]
@@ -304,6 +304,7 @@
     [eval `[globalize-funk ,name ,this]]
     nil]]
 
-`[defx86funk x86funk-test []
-  [movq [constant #x00] [register rax]]]
+[defx86funk x86funk-test [a]
+  [mov [variable a] [register rax]]]
+
 

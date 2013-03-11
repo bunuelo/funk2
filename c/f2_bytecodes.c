@@ -371,8 +371,16 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
       u64   index = 0;
       f2ptr iter  = args;
       while ((iter != nil) && (index < args__length)) {
-	f2ptr arg = f2cons__car(iter, cause);
-	argument_array[index] = arg;
+	f2ptr arg        = f2cons__car(iter, cause);
+	u64   arg__value = 0;
+	if (raw__integer__is_type(cause, arg)) {
+	  arg__value = f2integer__i(arg, cause);
+	} else if (raw__pointer__is_type(cause, arg)) {
+	  arg__value = f2pointer__p(arg, cause);
+	} else {
+	  error(nil, "jump_funk-x86_funk with invalid argument type.");
+	}
+	argument_array[index] = arg__value;
 	index ++;
 	iter = f2cons__cdr(iter, cause);
       }

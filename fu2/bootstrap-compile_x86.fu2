@@ -228,11 +228,11 @@
 		      [mov    [register rax] [relative [- #x10] [register rbp]]]
 		      [movq   [constant #x00] [relative [- #x08] [register rbp]]]
 		      [jmp    #x05]
-		      
 		      [addq   [constant #x01] [relative [- #x10] [register rbp]]]
-		      
 		      [mov    [relative [- #x08] [register rbp]] [register rax]]
+		      
 		      [cmp    [relative [- #x10] [register rbp]] [register rax]]
+		      
 		      [jb     [- #x0F]]
 		      [pop    [register rbp]]
 		      [retq]]]

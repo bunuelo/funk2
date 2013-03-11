@@ -331,8 +331,7 @@
 				  [have x86_variable_name_ptypehash add variable `[argument ,argument_number]]
 				  [= argument_number [bytecode:add 1 argument_number]]]
 			    variables]
-		      [let [[demetropolized_body [x86:demetropolize `[rawcode [rawcode @body]
-									      [retq]]]]]
+		      [let [[demetropolized_body [x86:demetropolize `[rawcode @body]]]]
 			[set this stack_demetropolized_body demetropolized_body]
 			[set this stack_machine_code_chunk [expression-compile_x86 demetropolized_body]]]]]]]
 

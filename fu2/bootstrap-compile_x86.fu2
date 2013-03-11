@@ -259,3 +259,12 @@
     [set chunk bit64-elt 0 [get loop_count as-pointer]]
     [machine_code-dotimes_loop [get chunk bytes]]]]
 
+
+[defmetro defx86funk [name variables :rest body]
+  [let [[this [new x86_funk name variables body]]]
+    [eval `[globalize-funk ,name ,this]]
+    nil]]
+
+[defx86funk x86funk-test []
+  [movq [constant #x00] [register rax]]]
+

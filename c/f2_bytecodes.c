@@ -366,16 +366,17 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	iter = f2cons__cdr(iter, cause);
       }
     }
-    u64* argument_array = from_ptr(f2__malloc(sizeof(u64) * args__length));
+    u64* argument_array = from_ptr(f2__malloc(sizeof(u64) * (args__length + 1)));
     {
       u64   index = 0;
       f2ptr iter  = args;
-      while (iter != nil) {
+      while ((iter != nil) && (index < args__length)) {
 	f2ptr arg = f2cons__car(iter, cause);
 	argument_array[index] = arg;
 	index ++;
 	iter = f2cons__cdr(iter, cause);
       }
+      argument_array[args__length] = 0;
     }
     s64   value__i = raw__x86_funk__apply(cause, x86_funk, argument_array);
     f2ptr value    = f2integer__new(cause, value__i);

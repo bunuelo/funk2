@@ -381,7 +381,7 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
     f2fiber__value__set(fiber, cause, value);
   }
   f2fiber__program_counter__set(fiber, cause, return_reg);
-  return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
+  return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, x86_funk);
 }
 
 // bytecode jump_funk []

@@ -2843,6 +2843,8 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "absmov"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
 }
 
+
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__integer__is_type(cause, expression)) {
     return raw__expression__compile_x86__integer(cause, expression);
@@ -2888,6 +2890,62 @@ def_pcfunk1(expression__compile_x86, expression,
 	    return f2__expression__compile_x86(this_cause, expression));
 
 
+
+// x86_funk
+
+def_primobject_4_slot(x86_funk,
+		      name,
+		      variables,
+		      body,
+		      machine_code_chunk);
+
+f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr machine_code_chunk) {
+  return f2x86_funk__new(cause,
+			 name,
+			 variables,
+			 body,
+			 machine_code_chunk);
+}
+
+f2ptr f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body) {
+  return raw__x86_funk__new(cause, name, variables, body, nil);
+}
+def_pcfunk3(x86_funk__new, name, variables, body,
+	    "Returns a new x86_funk object.",
+	    return f2__x86_funk__new(this_cause, name, variables, body));
+
+
+f2ptr raw__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list6__new(cause,
+					       new__symbol(cause, "print_object_type"), new__symbol(cause, "x86_funk"),
+					       new__symbol(cause, "name"),      f2__x86_funk__name(     cause, this),
+					       new__symbol(cause, "variables"), f2__x86_funk__variables(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(x86_funk,             this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__x86_funk__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(x86_funk__terminal_print_with_frame, this, terminal_print_frame,
+	    "Prints this x86_funk to the given terminal.",
+	    return f2__x86_funk__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2x86_funk__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2x86_funk__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
+
 // **
 
 void f2__compile_x86__defragment__fix_pointers() {
@@ -2907,6 +2965,18 @@ void f2__compile_x86__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(expression__compile_x86);
   
+
+  // x86_funk
+  
+  initialize_primobject_4_slot__defragment__fix_pointers(x86_funk,
+							 mutate_cmutex,
+							 zero_value,
+							 column_row_ptypehash,
+							 row_column_ptypehash);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(x86_funk__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__funk);
   
 }
 
@@ -2927,6 +2997,16 @@ void f2__compile_x86__reinitialize_globalvars() {
   
   f2__primcfunk__init__1(expression__compile_x86, expression);
   
+  // x86_funk
+  
+  initialize_primobject_4_slot(x86_funk,
+			       mutate_cmutex,
+			       zero_value,
+			       column_row_ptypehash,
+			       row_column_ptypehash);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(x86_funk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__funk = never_gc(cfunk);}
 }
 
 void f2__compile_x86__initialize() {

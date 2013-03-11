@@ -163,6 +163,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__matrix__slot_t                           primobject_type_matrix;
   funk2_object_type__counter__slot_t                          primobject_type_counter;
   funk2_object_type__machine_code_chunk__slot_t               primobject_type_machine_code_chunk;
+  funk2_object_type__x86_funk__slot_t                         primobject_type_x86_funk;
   // frame objects
   funk2_object_type__terminal_print_frame__slot_t             primobject_type_terminal_print_frame;
   funk2_object_type__clause__slot_t                           primobject_type_clause;

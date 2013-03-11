@@ -36,6 +36,18 @@ declare_object_type_2_slot(machine_code_chunk, chunk, index_label_ptypehash,
 			   f2ptr terminal_print_with_frame__funk;
 			   );
 
+// x86_funk
+
+typedef struct funk2_object_type__x86_funk__slot_s funk2_object_type__x86_funk__slot_t;
+declare_object_type_4_slot(x86_funk,
+			   name,
+			   variables,
+			   body,
+			   machine_code_chunk,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 #endif // F2__COMPILE_X86__TYPES__H
 
 
@@ -75,6 +87,19 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause);
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression);
 f2ptr  f2__expression__compile_x86(f2ptr cause, f2ptr expression);
 
+
+// x86_funk
+
+declare_primobject_4_slot(x86_funk,
+			  name,
+			  variables,
+			  body,
+			  machine_code_chunk);
+
+f2ptr raw__x86_funk__new(f2ptr cause);
+f2ptr  f2__x86_funk__new(f2ptr cause);
+
+f2ptr f2x86_funk__primobject_type__new_aux(f2ptr cause);
 
 // **
 

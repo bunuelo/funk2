@@ -1637,9 +1637,9 @@ f2ptr raw__expression__compile_x86__cmpq__constant__relative_rbp(f2ptr cause, s6
   }
 }
 
-f2ptr raw__expression__compile_x86__movq__constant__relative_rbp(f2ptr cause, u64 constant_value, s64 relative_offset_value) {
-  if ((constant_value <   128) &&
-      (constant_value >= -128)) {
+f2ptr raw__expression__compile_x86__movq__constant__relative_rbp(f2ptr cause, s64 constant_value, s64 relative_offset_value) {
+  if ((constant_value <   (1ll << 31)) &&
+      (constant_value >= -(1ll << 31))) {
     if ((relative_offset_value <   128) &&
 	(relative_offset_value >= -128)) {
       f2ptr chunk = raw__chunk__new(cause, 8);

@@ -284,13 +284,14 @@
     [have x86_variable_name_ptypehash lookup name]]]
 
 [defmetro defx86funk [name variables :rest body]
-  [terminal_format standard-terminal `[defx86funk ,name ,variables]]
+  [terminal_format standard-terminal '\n' `[defx86funk ,name ,variables]]
   [let [[this [new x86_funk name variables body]]]
     [with-new-cause [cause-define x86_variable_name_ptypehash [new ptypehash]]
-		    [let [[offset 8]]
+		    [let [[offset 0]]
 		      [mapc [funk [variable]
-				  [= offset [bytecode:add offset 8]]
-				  [have x86_variable_name_ptypehash add variable `[relative [- ,[get offset as-pointer]] [register rbp]]]]
+				  [have x86_variable_name_ptypehash add variable `[rawcode [mov [relative [- #x08] [register rbp]] [register rax]]
+											   [mov [relative ,[get offset as-pointer] [register rax]] [register rax]]]]
+				  [= offset [bytecode:add offset 8]]]
 			    variables]
 		      [set this machine_code_chunk [expression-compile_x86 [x86:demetropolize `[rawcode [push   [register rbp]]
 													[mov    [register rsp] [register rbp]]
@@ -305,6 +306,7 @@
     nil]]
 
 [defx86funk x86funk-test [a]
-  [mov [variable a] [register rax]]]
+  [variable a]]
+
 
 

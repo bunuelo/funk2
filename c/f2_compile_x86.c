@@ -2920,9 +2920,12 @@ f2ptr raw__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list6__new(cause,
-					       new__symbol(cause, "print_object_type"), new__symbol(cause, "x86_funk"),
-					       new__symbol(cause, "name"),      f2__x86_funk__name(     cause, this),
-					       new__symbol(cause, "variables"), f2__x86_funk__variables(cause, this)));
+					       new__symbol(cause, "print_object_type"),       new__symbol(cause, "x86_funk"),
+					       new__symbol(cause, "print_object_slot_order"), f2list2__new(cause,
+													   new__symbol(cause, "name"),
+													   new__symbol(cause, "variables")),
+					       new__symbol(cause, "name"),                    f2__x86_funk__name(     cause, this),
+					       new__symbol(cause, "variables"),               f2__x86_funk__variables(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);

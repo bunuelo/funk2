@@ -335,7 +335,7 @@
     [eval `[globalize-funk ,name ,this]]
     nil]]
 
-[defx86funk x86funk-test [a]
+`[defx86funk x86funk-test [a]
   [mov [variable a] [register rax]]]
 
 

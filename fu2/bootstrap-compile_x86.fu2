@@ -242,11 +242,12 @@
 
 
 [defmetro defx86funk [name variables :rest body]
+  [print `[defx86funk ,name ,variables]]
   [let [[this [new x86_funk name variables body]]]
     [set this machine_code_chunk [expression-compile_x86 `[rawcode @body]]]
     [eval `[globalize-funk ,name ,this]]
     nil]]
 
-[defx86funk x86funk-test []
+`[defx86funk x86funk-test []
   [movq [constant #x00] [register rax]]]
 

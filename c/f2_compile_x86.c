@@ -2284,6 +2284,18 @@ f2ptr raw__expression__compile_x86__movzbl(f2ptr cause, f2ptr expression) {
   }
 }
 
+//   4000a2:	48 01 d0             	add    %rdx,%rax
+
+f2ptr raw__expression__compile_x86__add__rdx__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD0);
+  return chunk;
+}
+
+
+
 f2ptr raw__expression__compile_x86__add(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,

@@ -240,12 +240,51 @@
     [set chunk bit64-elt 0 [get loop_count as-pointer]]
     [machine_code-dotimes_loop [get chunk bytes]]]]
 
-[defmetro x86:variable [name]
+[globalize x86:metro_name_ptypehash [new ptypehash]]
+
+[defmetro defx86metro [name variables :rest body]
+  [terminal_format standard-terminal '\n' `[defx86metro ,name ,variables]]
+  [have x86:metro_name_ptypehash add name [eval `[metro-new_with_name ,name ,variables
+								      @body]]]
+  nil]
+
+[defunk x86:demetropolize_full [expression]
+  [let [[did_something nil]
+	[result        expression]]
+    [if [is-type `cons expression]
+	[let [[command [car expression]]]
+	  [let [[command_metro [have x86:metro_name_ptypehash lookup command]]]
+	    [if command_metro
+		[prog [= did_something t]
+		      [= result [apply command_metro [cdr expression]]]]
+	      [let [[argument_results [mapcar [funk [argument]
+						    [let [[argument-resultpair [x86:demetropolize_full argument]]]
+						      [let [[argument-did_something [car argument-resultpair]]
+							    [argument-result        [cdr argument-resultpair]]]
+							[if argument-did_something
+							    [= did_something t]]
+							argument-result]]]
+					      [cdr expression]]]]
+		[if did_something
+		    [= result [cons command argument_results]]]]]]]]
+    [if did_something
+	[let [[resultpair [x86:demetropolize_full result]]]
+	  [let [[resultpair-did_something [car resultpair]]
+		[resultpair-result        [cdr resultpair]]]
+	    [cons t resultpair-result]]]
+      [cons nil expression]]]]
+
+[defunk x86:demetropolize [expression]
+  [let [[resultpair [x86:demetropolize_full expression]]]
+    [cdr resultpair]]]
+
+
+[defx86metro variable [name]
   [let [[x86_variable_name_ptypehash [have [this-cause] lookup `x86_variable_name_ptypehash]]]
     [have x86_variable_name_ptypehash lookup name]]]
 
 [defmetro defx86funk [name variables :rest body]
-  [print `[defx86funk ,name ,variables]]
+  [terminal_format standard-terminal `[defx86funk ,name ,variables]]
   [let [[this [new x86_funk name variables body]]]
     [with-new-cause [cause-define x86_variable_name_ptypehash [new ptypehash]]
 		    [let [[offset 8]]
@@ -253,15 +292,15 @@
 				  [= offset [+ offset 8]]
 				  [have x86_variable_name_ptypehash add variable `[relative [- ,[get offset as-pointer]] [register rbp]]]]
 			    variables]
-		      [set this machine_code_chunk [expression-compile_x86 [demetropolize `[rawcode [push   [register rbp]]
-												    [mov    [register rsp] [register rbp]]
-												    [mov    [register rdi] [relative [- #x18] [register rbp]]]
-												    [mov    [relative [- #x18] [register rbp]] [register rax]]
-												    [mov    [deref [register rax]] [register rax]]
-												    [mov    [register rax] [relative [- #x08] [register rbp]]]
-												    [rawcode @body]
-												    [pop    [register rbp]]
-												    [retq]]]]]]]
+		      [set this machine_code_chunk [expression-compile_x86 [x86:demetropolize `[rawcode [push   [register rbp]]
+													[mov    [register rsp] [register rbp]]
+													[mov    [register rdi] [relative [- #x18] [register rbp]]]
+													[mov    [relative [- #x18] [register rbp]] [register rax]]
+													[mov    [deref [register rax]] [register rax]]
+													[mov    [register rax] [relative [- #x08] [register rbp]]]
+													[rawcode @body]
+													[pop    [register rbp]]
+													[retq]]]]]]]
     [eval `[globalize-funk ,name ,this]]
     nil]]
 

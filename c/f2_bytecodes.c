@@ -349,6 +349,37 @@ f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_f
 
 int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funktion);
 
+int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2ptr x86_funk) {
+  f2ptr return_reg = f2fiber__return_reg(fiber, cause);
+  {
+    f2ptr args         = f2fiber__args(fiber, cause);
+    u64   args__length = 0;
+    {
+      f2ptr iter = args;
+      while (iter != nil) {
+	f2ptr arg = f2cons__car(iter, cause);
+	args__length ++;
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    u64*  argument_array = from_ptr(f2__malloc(sizeof(u64) * args__length));
+    {
+      u64   index = 0;
+      f2ptr iter  = args;
+      while (iter != nil) {
+	f2ptr arg = f2cons__car(iter, cause);
+	argument_array[index] = arg;
+	iter = f2cons__cdr(iter, cause);
+      }
+    }
+    s64   value__i = raw__x86_funk__apply(cause, funktion, argument_array);
+    f2ptr value    = f2integer__new(cause, value__i);
+    f2fiber__value__set(fiber, cause, value);
+  }
+  f2fiber__program_counter__set(fiber, cause, return_reg);
+  return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
+}
+
 // bytecode jump_funk []
 
 int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2ptr cause, f2ptr bytecode) {
@@ -378,41 +409,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
       }
     }
   }
-  if (raw__funk__is_type(cause, funktion)) {
-    //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
-    //f2ptr funk_env     = f2funk__env(funktion, cause);
-    f2ptr body_bcs     = f2funk__body_bytecodes(funktion, cause);
-    f2ptr machine_code = f2funk__machine_code(funktion, cause);
-#ifdef DEBUG_BYTECODES
-    {
-      f2ptr name = f2funk__name(funktion, cause);
-      u8*   str;
-      if (raw__symbol__is_type(cause, name)) {
-	u64 str_len = f2symbol__length(name, cause);
-	str = (u8*)from_ptr(f2__malloc(str_len + 1));
-	raw__symbol__utf8_str_copy(cause, name, str);
-	str[str_len] = 0;
-      } else {
-	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
-	strcpy((char*)str, "<none>");
-      }
-      bytecode_status("executing funk name=|%s| body_bcs=%s machine_code=%s", str, body_bcs ? "<not nil>" : "nil", machine_code ? "<not nil>" : "nil");
-      f2__free(to_ptr(str));
-    }
-#endif // DEBUG_BYTECODES
-    if (raw__larva__is_type(cause, body_bcs)) {
-      bytecode_status("body_bcs is larva!");
-      f2fiber__value__set(fiber, cause, body_bcs);
-      return 1;
-    }
-    //f2fiber__env__set(            fiber, cause, funk_env);
-    f2fiber__program_counter__set(fiber, cause, body_bcs);
-    if (machine_code) {
-      return f2chunk__bytecode_jump(machine_code, cause, fiber);
-    } else {
-      return 1;
-    }
-  } else if (raw__cfunk__is_type(cause, funktion)) {
+  if (raw__cfunk__is_type(cause, funktion)) {
 #ifdef DEBUG_BYTECODES
     {
       f2ptr name = f2cfunk__name(funktion, cause);
@@ -474,6 +471,42 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
     }
     f2fiber__program_counter__set(fiber, cause, return_reg);
     return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, funktion);
+  } else if (raw__x86_funk__is_type(cause, funktion)) {
+    return raw__fiber__jump_funk__x86_funk(fiber, cause, bytecode, funktion);
+  } else if (raw__funk__is_type(cause, funktion)) {
+    //trace2(bytecode__jump_funk, funktion, f2fiber__args(fiber));
+    //f2ptr funk_env     = f2funk__env(funktion, cause);
+    f2ptr body_bcs     = f2funk__body_bytecodes(funktion, cause);
+    f2ptr machine_code = f2funk__machine_code(funktion, cause);
+#ifdef DEBUG_BYTECODES
+    {
+      f2ptr name = f2funk__name(funktion, cause);
+      u8*   str;
+      if (raw__symbol__is_type(cause, name)) {
+	u64 str_len = f2symbol__length(name, cause);
+	str = (u8*)from_ptr(f2__malloc(str_len + 1));
+	raw__symbol__utf8_str_copy(cause, name, str);
+	str[str_len] = 0;
+      } else {
+	str = (u8*)from_ptr(f2__malloc(strlen("<none>") + 1));
+	strcpy((char*)str, "<none>");
+      }
+      bytecode_status("executing funk name=|%s| body_bcs=%s machine_code=%s", str, body_bcs ? "<not nil>" : "nil", machine_code ? "<not nil>" : "nil");
+      f2__free(to_ptr(str));
+    }
+#endif // DEBUG_BYTECODES
+    if (raw__larva__is_type(cause, body_bcs)) {
+      bytecode_status("body_bcs is larva!");
+      f2fiber__value__set(fiber, cause, body_bcs);
+      return 1;
+    }
+    //f2fiber__env__set(            fiber, cause, funk_env);
+    f2fiber__program_counter__set(fiber, cause, body_bcs);
+    if (machine_code) {
+      return f2chunk__bytecode_jump(machine_code, cause, fiber);
+    } else {
+      return 1;
+    }
   } else if (raw__metro__is_type(cause, funktion)) {
 #ifdef DEBUG_BYTECODES
     {

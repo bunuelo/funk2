@@ -105,7 +105,7 @@
    400501:	5d                   	pop    %rbp
    400502:	c3                   	retq   '
 
-[defunk machine_code-return_dynamic_relative_memory_value [pointer]
+`[defunk machine_code-return_dynamic_relative_memory_value [pointer]
   [machine_code-apply pointer
 		      [push   [register rbp]]
 		      [mov    [register rsp] [register rbp]]

@@ -98,7 +98,7 @@ declare_primobject_5_slot(x86_funk,
 			  demetropolized_body,
 			  machine_code_chunk);
 
-f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr machine_code_chunk);
+f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr demetropolized_body, f2ptr machine_code_chunk);
 f2ptr  f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body);
 
 f2ptr f2x86_funk__primobject_type__new_aux(f2ptr cause);

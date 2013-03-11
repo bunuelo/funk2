@@ -2508,7 +2508,7 @@ f2ptr raw__expression__compile_x86__cmp(f2ptr cause, f2ptr expression) {
       if (raw__eq(cause, register_name_0, new__symbol(cause, "rbp"))) {
 	if (raw__expression__is_register_expression(cause, argument_1)) {
 	  f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
-	  if (raw__eq(cause, register_name_1, new__symbol(cause, "rbp"))) {
+	  if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
 	    return raw__expression__compile_x86__cmp__relative_rbp__rax(cause, relative_offset_value);
 	  } else {
 	    return new__error(f2list6__new(cause,

@@ -2914,7 +2914,7 @@ f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f
 }
 
 f2ptr f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body) {
-  return raw__x86_funk__new(cause, name, variables, body, nil, nil, nil);
+  return raw__x86_funk__new(cause, name, variables, body, nil, nil, nil, nil);
 }
 def_pcfunk3(x86_funk__new, name, variables, body,
 	    "Returns a new x86_funk object.",

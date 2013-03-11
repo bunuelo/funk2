@@ -2893,24 +2893,28 @@ def_pcfunk1(expression__compile_x86, expression,
 
 // x86_funk
 
-def_primobject_5_slot(x86_funk,
+def_primobject_7_slot(x86_funk,
 		      name,
 		      variables,
 		      body,
-		      demetropolized_body,
-		      machine_code_chunk);
+		      stack_demetropolized_body,
+		      heap_demetropolized_body,
+		      stack_machine_code_chunk,
+		      heap_machine_code_chunk);
 
-f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr demetropolized_body, f2ptr machine_code_chunk) {
+f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr stack_demetropolized_body, f2ptr heap_demetropolized_body, f2ptr stack_machine_code_chunk, f2ptr heap_machine_code_chunk) {
   return f2x86_funk__new(cause,
 			 name,
 			 variables,
 			 body,
-			 demetropolized_body,
-			 machine_code_chunk);
+			 stack_demetropolized_body,
+			 heap_demetropolized_body,
+			 stack_machine_code_chunk,
+			 heap_machine_code_chunk);
 }
 
 f2ptr f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body) {
-  return raw__x86_funk__new(cause, name, variables, body, nil, nil);
+  return raw__x86_funk__new(cause, name, variables, body, nil, nil, nil);
 }
 def_pcfunk3(x86_funk__new, name, variables, body,
 	    "Returns a new x86_funk object.",
@@ -2973,12 +2977,14 @@ void f2__compile_x86__defragment__fix_pointers() {
 
   // x86_funk
   
-  initialize_primobject_5_slot__defragment__fix_pointers(x86_funk,
+  initialize_primobject_7_slot__defragment__fix_pointers(x86_funk,
 							 name,
 							 variables,
 							 body,
-							 demetropolized_body,
-							 machine_code_chunk);
+							 stack_demetropolized_body,
+							 heap_demetropolized_body,
+							 stack_machine_code_chunk,
+							 heap_machine_code_chunk);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(x86_funk__terminal_print_with_frame);
@@ -3005,12 +3011,14 @@ void f2__compile_x86__reinitialize_globalvars() {
   
   // x86_funk
   
-  initialize_primobject_5_slot(x86_funk,
+  initialize_primobject_7_slot(x86_funk,
 			       name,
 			       variables,
 			       body,
-			       demetropolized_body,
-			       machine_code_chunk);
+			       stack_demetropolized_body,
+			       heap_demetropolized_body,
+			       stack_machine_code_chunk,
+			       heap_machine_code_chunk);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(x86_funk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_x86_funk.terminal_print_with_frame__funk = never_gc(cfunk);}

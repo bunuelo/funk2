@@ -357,7 +357,6 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
     {
       f2ptr iter = args;
       while (iter != nil) {
-	f2ptr arg = f2cons__car(iter, cause);
 	args__length ++;
 	iter = f2cons__cdr(iter, cause);
       }

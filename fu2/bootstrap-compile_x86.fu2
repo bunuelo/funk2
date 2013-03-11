@@ -243,6 +243,7 @@
 
 [defmetro defx86funk [name variables :rest body]
   [let [[this [new x86_funk name variables body]]]
+    [set this machine_code_chunk [expression-compile_x86 `[rawcode @body]]]
     [eval `[globalize-funk ,name ,this]]
     nil]]
 

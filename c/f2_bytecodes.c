@@ -350,7 +350,7 @@ f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_f
 int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funktion);
 
 u64 raw__x86_funk__apply(f2ptr cause, f2ptr this, u64* argument_array) {
-  f2ptr machine_code_chunk = f2x86_funk__machine_code_chunk(cause, this);
+  f2ptr machine_code_chunk = f2x86_funk__machine_code_chunk(this, cause);
   return raw__chunk__jump(cause, machine_code_chunk, to_ptr(argument_array));
 }
 
@@ -366,19 +366,21 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	iter = f2cons__cdr(iter, cause);
       }
     }
-    u64*  argument_array = from_ptr(f2__malloc(sizeof(u64) * args__length));
+    u64* argument_array = from_ptr(f2__malloc(sizeof(u64) * args__length));
     {
       u64   index = 0;
       f2ptr iter  = args;
       while (iter != nil) {
 	f2ptr arg = f2cons__car(iter, cause);
 	argument_array[index] = arg;
+	index ++;
 	iter = f2cons__cdr(iter, cause);
       }
     }
     s64   value__i = raw__x86_funk__apply(cause, x86_funk, argument_array);
     f2ptr value    = f2integer__new(cause, value__i);
     f2fiber__value__set(fiber, cause, value);
+    f2__free(to_ptr(argument_array));
   }
   f2fiber__program_counter__set(fiber, cause, return_reg);
   return raw__cause__call_all_endfunks(nil, cause, fiber, bytecode, x86_funk);

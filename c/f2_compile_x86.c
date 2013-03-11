@@ -1415,7 +1415,7 @@ f2ptr raw__expression__compile_x86__pop(f2ptr cause, f2ptr expression) {
 
 
 
-f2ptr raw__expression__compile_x86__mov__rsp__rbp(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__mov__rsp__rbp(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 3);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);

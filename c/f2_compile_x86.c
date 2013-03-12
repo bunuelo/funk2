@@ -2046,6 +2046,16 @@ f2ptr raw__expression__compile_x86__mov__rdx__rax(f2ptr cause) {
   return chunk;
 }
 
+//  4000a2:	48 89 d6             	mov    %rdx,%rsi
+
+f2ptr raw__expression__compile_x86__mov__rdx__rsi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD6);
+  return chunk;
+}
+
 //  4000ab:	48 89 c8             	mov    %rcx,%rax
 
 f2ptr raw__expression__compile_x86__mov__rcx__rax(f2ptr cause) {
@@ -2189,6 +2199,8 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
       } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rdx"))) {
 	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
 	  return raw__expression__compile_x86__mov__rdx__rax(cause);
+	} else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {
+	  return raw__expression__compile_x86__mov__rdx__rsi(cause);
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-mov-unknown_register_name"),

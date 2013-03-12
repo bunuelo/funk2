@@ -3444,6 +3444,8 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "command"),    command,
 				     new__symbol(cause, "expression"), expression));
     }
+  } else if (raw__symbol__is_type(cause, expression)) {
+    return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "mov"), f2list2__new(cause, new__symbol(cause, "variable"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),

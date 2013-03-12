@@ -415,5 +415,28 @@
 	 [imul [register rdx] [register rax]]
 	 [pop [register rdx]]]
        
+       [defx86funk x86:divide [x y] 
+	 [push [register rcx]]
+	 [push [register rdx]]
+	 [mov [variable x] [register rax]]
+	 [mov [register rax] [register rdx]]
+	 [mov [variable y] [register rcx]]
+	 [sar [constant #x3F] [register rdx]]
+	 [idivq [register rcx]]
+	 [pop [register rdx]]
+	 [pop [register rcx]]]
+       
+       [defx86funk x86:modulo [x y] 
+	 [push [register rcx]]
+	 [push [register rdx]]
+	 [mov [variable x] [register rax]]
+	 [mov [register rax] [register rdx]]
+	 [mov [variable y] [register rcx]]
+	 [sar [constant #x3F] [register rdx]]
+	 [idivq [register rcx]]
+	 [mov [register rdx] [register rax]]
+	 [pop [register rdx]]
+	 [pop [register rcx]]]
+       
        ]
 

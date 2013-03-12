@@ -3080,6 +3080,150 @@ f2ptr raw__expression__compile_x86__cmp(f2ptr cause, f2ptr expression) {
 }
 
 
+//  4000b6:	66 48 0f 6e c0       	movq   %rax,%xmm0
+
+f2ptr raw__expression__compile_x86__movq__rax__xmm0(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC0);
+  return chunk;
+}
+
+//  4000bb:	66 48 0f 6e c1       	movq   %rcx,%xmm0
+
+f2ptr raw__expression__compile_x86__movq__rcx__xmm0(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC1);
+  return chunk;
+}
+
+//  4000c0:	66 48 0f 6e c2       	movq   %rdx,%xmm0
+
+f2ptr raw__expression__compile_x86__movq__rdx__xmm0(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC2);
+  return chunk;
+}
+
+//  4000c5:	66 48 0f 6e c8       	movq   %rax,%xmm1
+
+f2ptr raw__expression__compile_x86__movq__rax__xmm1(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC8);
+  return chunk;
+}
+
+//  4000ca:	66 48 0f 6e c9       	movq   %rcx,%xmm1
+
+f2ptr raw__expression__compile_x86__movq__rcx__xmm1(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC9);
+  return chunk;
+}
+
+//  4000cf:	66 48 0f 6e ca       	movq   %rdx,%xmm1
+
+f2ptr raw__expression__compile_x86__movq__rdx__xmm1(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xCA);
+  return chunk;
+}
+
+//  4000d4:	66 48 0f 7e c0       	movq   %xmm0,%rax
+
+f2ptr raw__expression__compile_x86__movq__xmm0__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC0);
+  return chunk;
+}
+
+//  4000d9:	66 48 0f 7e c1       	movq   %xmm0,%rcx
+
+f2ptr raw__expression__compile_x86__movq__xmm0__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC1);
+  return chunk;
+}
+
+//  4000de:	66 48 0f 7e c2       	movq   %xmm0,%rdx
+
+f2ptr raw__expression__compile_x86__movq__xmm0__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC2);
+  return chunk;
+}
+
+//  4000e3:	66 48 0f 7e c8       	movq   %xmm1,%rax
+
+f2ptr raw__expression__compile_x86__movq__xmm1__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC8);
+  return chunk;
+}
+
+//  4000e8:	66 48 0f 7e c9       	movq   %xmm1,%rcx
+
+f2ptr raw__expression__compile_x86__movq__xmm1__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC9);
+  return chunk;
+}
+
+//  4000ed:	66 48 0f 7e ca       	movq   %xmm1,%rdx
+
+f2ptr raw__expression__compile_x86__movq__xmm1__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 5);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x66);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, 0xCA);
+  return chunk;
+}
+
 f2ptr raw__expression__compile_x86__movq(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -3088,7 +3232,70 @@ f2ptr raw__expression__compile_x86__movq(f2ptr cause, f2ptr expression) {
   }
   f2ptr argument_0 =             f2cons__car(f2cons__cdr(expression, cause), cause);
   f2ptr argument_1 = f2cons__car(f2cons__cdr(f2cons__cdr(expression, cause), cause), cause);
-  if (raw__expression__is_constant_expression(cause, argument_0)) {
+  if (raw__expression__is_register_expression(cause, argument_0)) {
+    f2ptr register_name_0 = raw__register_expression__register_name(cause, argument_0);
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+      if (raw__eq(cause, register_name_0, new__symbol(cause, "rax"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "xmm0"))) {return raw__expression__compile_x86__movq__rax__xmm0(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "xmm1"))) {return raw__expression__compile_x86__movq__rax__xmm1(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rcx"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "xmm0"))) {return raw__expression__compile_x86__movq__rcx__xmm0(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "xmm1"))) {return raw__expression__compile_x86__movq__rcx__xmm1(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rdx"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "xmm0"))) {return raw__expression__compile_x86__movq__rdx__xmm0(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "xmm1"))) {return raw__expression__compile_x86__movq__rdx__xmm1(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else if (raw__eq(cause, register_name_0, new__symbol(cause, "xmm0"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movq__xmm0__rax(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movq__xmm0__rcx(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movq__xmm0__rdx(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else if (raw__eq(cause, register_name_0, new__symbol(cause, "xmm1"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movq__xmm1__rax(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movq__xmm1__rcx(cause);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movq__xmm1__rdx(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_0,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+				       new__symbol(cause, "register_name"), register_name_0,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movq-invalid_argument_expression_type"),
+				     new__symbol(cause, "argument"),   argument_1,
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else if (raw__expression__is_constant_expression(cause, argument_0)) {
     f2ptr constant_value = raw__constant_expression__constant_value(cause, argument_0);
     s64   constant_value__i = 0;
     if (raw__pointer__is_type(cause, constant_value)) {

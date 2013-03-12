@@ -3935,8 +3935,8 @@ f2ptr raw__expression__compile_x86__idivq__rdx(f2ptr cause) {
   return chunk;
 }
 
-f2ptr raw__expression__compile_x86__idivq(f2ptr cause) {
-  if (raw__simple_length(cause, expression) != 3) {
+f2ptr raw__expression__compile_x86__idivq(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-idivq-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
@@ -3949,7 +3949,7 @@ f2ptr raw__expression__compile_x86__idivq(f2ptr cause) {
     else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__idivq__rdx(cause);}
     else {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-sar-unknown_register_name"),
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-idivq-unknown_register_name"),
 				       new__symbol(cause, "register_name"), register_name,
 				       new__symbol(cause, "expression"),    expression));
     }

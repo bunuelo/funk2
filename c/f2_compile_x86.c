@@ -2016,6 +2016,16 @@ f2ptr raw__expression__compile_x86__mov__rsi__rax(f2ptr cause) {
   return chunk;
 }
 
+//  4000a2:	48 89 f1             	mov    %rsi,%rcx
+
+f2ptr raw__expression__compile_x86__mov__rsi__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF1);
+  return chunk;
+}
+
 //  4000a2:	48 89 f2             	mov    %rsi,%rdx
 
 f2ptr raw__expression__compile_x86__mov__rsi__rdx(f2ptr cause) {
@@ -2186,6 +2196,8 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
       } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rsi"))) {
 	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
 	  return raw__expression__compile_x86__mov__rsi__rax(cause);
+	} else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {
+	  return raw__expression__compile_x86__mov__rsi__rcx(cause);
 	} else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {
 	  return raw__expression__compile_x86__mov__rsi__rdx(cause);
 	} else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {

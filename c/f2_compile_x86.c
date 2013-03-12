@@ -4167,6 +4167,74 @@ f2ptr raw__expression__compile_x86__idivq(f2ptr cause, f2ptr expression) {
   }
 }
 
+//  4000a2:	f2 0f 58 c8          	addsd  %xmm0,%xmm1
+
+f2ptr raw__expression__compile_x86__addsd__xmm0__xmm1(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 4);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xF2);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x58);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC8);
+  return chunk;
+}
+
+//  4000a6:	f2 0f 58 c1          	addsd  %xmm1,%xmm0
+
+f2ptr raw__expression__compile_x86__addsd__xmm1__xmm0(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 4);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xF2);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0x58);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC1);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__addsd(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 3) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-addsd-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 =             f2cons__car(f2cons__cdr(expression, cause), cause);
+  f2ptr argument_1 = f2cons__car(f2cons__cdr(f2cons__cdr(expression, cause), cause), cause);
+  if (raw__expression__is_register_expression(cause, argument_0)) {
+    f2ptr register_name_0 = raw__register_expression__register_name(cause, argument_0);
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+      if (raw__eq(cause, register_name_0, new__symbol(cause, "xmm0"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "xmm1"))) {return raw__expression__compile_x86__addsd__xmm0__xmm1(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-addsd-unknown_register_name"),
+					 new__symbol(cause, "register_name"), register_name_1,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else if (raw__eq(cause, register_name_0, new__symbol(cause, "xmm1"))) {
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "xmm0"))) {return raw__expression__compile_x86__addsd__xmm1__xmm0(cause);}
+	else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-addsd-unknown_register_name"),
+					 new__symbol(cause, "register_name"), register_name_1,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-addsd-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name_0,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-addsd-invalid_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-addsd-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
 
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
   f2ptr pointer = f2pointer__new(cause, f2integer__i(expression, cause));
@@ -4193,6 +4261,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "add")))      {return raw__expression__compile_x86__add(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "subq")))     {return raw__expression__compile_x86__subq(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "addq")))     {return raw__expression__compile_x86__addq(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "addsd")))    {return raw__expression__compile_x86__addsd(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "cmpq")))     {return raw__expression__compile_x86__cmpq(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "cmp")))      {return raw__expression__compile_x86__cmp(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "movabs")))   {return raw__expression__compile_x86__movabs(  cause, expression);}

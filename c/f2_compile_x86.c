@@ -3917,7 +3917,7 @@ f2ptr raw__expression__compile_x86__idivq__rax(f2ptr cause) {
 
 //  4000a5:	48 f7 f9             	idiv   %rcx
 
-f2ptr raw__expression__compile_x86__idivq__rax(f2ptr cause) {
+f2ptr raw__expression__compile_x86__idivq__rcx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 3);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xF7);

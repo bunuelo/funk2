@@ -3090,24 +3090,6 @@ f2ptr raw__expression__compile_x86__movq(f2ptr cause, f2ptr expression) {
 
 
 
-// 48 b8 00 00 64 a7 b3 b6 e0 0d 	movabs $0x0de0b6b3a7640000,%rax
-
-
-f2ptr raw__expression__compile_x86__movabs_constant_rax(f2ptr cause, f2ptr expression, u64 constant_value) {
-  f2ptr chunk = raw__chunk__new(cause, 10);
-  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
-  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB8);
-  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
-  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
-}
-
 f2ptr raw__expression__compile_x86__jmp__relative(f2ptr cause, s64 relative_jump_distance) {
   if ((relative_jump_distance <   128) &&
       (relative_jump_distance >= -128)) {
@@ -3150,6 +3132,132 @@ f2ptr raw__expression__compile_x86__jne__relative(f2ptr cause, s64 relative_jump
   }
 }
 
+// 48 b8 00 00 64 a7 b3 b6 e0 0d 	movabs $0x0de0b6b3a7640000,%rax
+
+
+f2ptr raw__expression__compile_x86__movabs__constant_rax(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB8);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000ac:	48 bf ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rdi
+//  4000b3:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_rdi(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xBF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000b6:	48 be ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rsi
+//  4000bd:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_rsi(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xBE);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000c0:	48 ba ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rdx
+//  4000c7:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_rdx(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xBA);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000ca:	48 b9 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rcx
+//  4000d1:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_rcx(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB9);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000d4:	49 b8 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%r8
+//  4000db:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_r8(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB8);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
+//  4000de:	49 b9 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%r9
+//  4000e5:	be ad de 
+
+f2ptr raw__expression__compile_x86__movabs__constant_r9(f2ptr cause, u64 constant_value) {
+  f2ptr chunk = raw__chunk__new(cause, 10);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB9);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, (constant_value >>  0) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, (constant_value >>  8) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 4, (constant_value >> 16) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >> 24) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 32) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
+  return chunk;
+}
+
 f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -3166,7 +3274,13 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
       u64 constant_value__p = f2pointer__p(constant_value, cause);
       if (raw__expression__is_register_expression(cause, argument_1)) {
 	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
-	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs_constant_rax(cause, expression, constant_value__p);}
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs__constant_rax(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__movabs__constant_rdi(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__movabs__constant_rsi(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movabs__constant_rdx(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8(cause, constant_value);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9(cause, constant_value);}
 	else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),

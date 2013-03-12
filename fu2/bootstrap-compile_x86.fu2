@@ -383,6 +383,13 @@
 	 [add [register rdx] [register rax]]
 	 [pop [register rdx]]]
        
+       [defx86funk binary-subtract [x y]
+	 [push [register rdx]]
+	 [mov [variable x] [register rax]]
+	 [mov [variable y] [register rdx]]
+	 [sub [register rdx] [register rax]]
+	 [pop [register rdx]]]
+       
        [defx86funk triple-add [x y z] 
 	 [apply-inline binary-add [variable x] [variable y]] 
 	 [apply-inline binary-add [register rax] [variable z]]]

@@ -3942,7 +3942,7 @@ f2ptr raw__expression__compile_x86__idivq(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "expression"), expression));
   }
   f2ptr argument = f2cons__car(f2cons__cdr(expression, cause), cause);
-  if (raw__expression__is_register_argument(cause, argument)) {
+  if (raw__expression__is_register_expression(cause, argument)) {
     f2ptr register_name = raw__register_expression__register_name(cause, argument);
     if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__idivq__rax(cause);}
     else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__idivq__rcx(cause);}

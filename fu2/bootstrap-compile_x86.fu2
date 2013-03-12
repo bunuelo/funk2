@@ -373,25 +373,33 @@
     [eval `[globalize-funk ,name ,this]]
     nil]]
 
-`[defx86funk x86funk-test [a]
-  [mov [variable a] [register rax]]]
-
-
-`[defx86funk binary-add [x y] 
-   [push [register rdx]]      
-   [mov [variable x] [register rax]] 
-   [mov [variable y] [register rdx]] 
-   [add [register rdx] [register rax]]
-   [pop [register rdx]]]
-
-`[defx86funk triple-add [x y z] 
-   [apply-inline binary-add [variable x] [variable y]] 
-   [apply-inline binary-add [register rax] [variable z]]]
-
-`[defx86funk shift-left [x y]
-   [push [register rcx]]
-   [mov [variable x] [register rax]]
-   [mov [variable y] [register rcx]]
-   [shl [register cl] [register rax]]
-   [pop [register rcx]]]
+`[prog [defx86funk x86funk-test [a]
+	 [mov [variable a] [register rax]]]
+       
+       [defx86funk binary-add [x y] 
+	 [push [register rdx]]      
+	 [mov [variable x] [register rax]] 
+	 [mov [variable y] [register rdx]] 
+	 [add [register rdx] [register rax]]
+	 [pop [register rdx]]]
+       
+       [defx86funk triple-add [x y z] 
+	 [apply-inline binary-add [variable x] [variable y]] 
+	 [apply-inline binary-add [register rax] [variable z]]]
+       
+       [defx86funk shift-left [x y]
+	 [push [register rcx]]
+	 [mov [variable x] [register rax]]
+	 [mov [variable y] [register rcx]]
+	 [shl [register cl] [register rax]]
+	 [pop [register rcx]]]
+       
+       [defx86funk shift-right [x y]
+	 [push [register rcx]]
+	 [mov [variable x] [register rax]]
+	 [mov [variable y] [register rcx]]
+	 [shr [register cl] [register rax]]
+	 [pop [register rcx]]]
+       
+       ]
 

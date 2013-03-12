@@ -388,3 +388,10 @@
    [apply-inline binary-add [variable x] [variable y]] 
    [apply-inline binary-add [register rax] [variable z]]]
 
+`[defx86funk shift-left [x y]
+   [push [register rcx]]
+   [mov [variable x] [register rax]]
+   [mov [variable y] [register rcx]]
+   [shl [register cl] [register rax]]
+   [pop [register rcx]]]
+

@@ -3705,14 +3705,6 @@ f2ptr raw__expression__compile_x86__sub(f2ptr cause, f2ptr expression) {
   }
 }
 
-return raw__expression__compile_x86__sub__rax__rcx(cause);
-return raw__expression__compile_x86__sub__rax__rdx(cause);
-return raw__expression__compile_x86__sub__rcx__rax(cause);
-return raw__expression__compile_x86__sub__rcx__rdx(cause);
-return raw__expression__compile_x86__sub__rdx__rax(cause);
-return raw__expression__compile_x86__sub__rdx__rcx(cause);
-
-
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
   f2ptr pointer = f2pointer__new(cause, f2integer__i(expression, cause));
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), pointer), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));

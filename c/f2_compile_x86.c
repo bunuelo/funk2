@@ -3445,7 +3445,15 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "expression"), expression));
     }
   } else if (raw__symbol__is_type(cause, expression)) {
-    return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "mov"), f2list2__new(cause, new__symbol(cause, "variable"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
+    if (raw__cause__is_type(cause, cause)) {
+      f2ptr x86_variable_name_ptypehash = assert_value(f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "x86_variable_name_ptypehash")));
+      f2ptr variable_place              = assert_value(f2__ptypehash__lookup(cause, x86_variable_name_ptypehash, expression));
+      return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "mov"), variable_place, f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-cause_variable_undefined"),
+				     new__symbol(cause, "expression"), expression));
+    }
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-unknown_expression_type"),

@@ -3269,34 +3269,37 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
   f2ptr argument_0 = f2cons__car(cdr,        cause);
   f2ptr argument_1 = f2cons__car(cddr,       cause);
   if (raw__expression__is_constant_expression(cause, argument_0)) {
-    f2ptr constant_value = raw__constant_expression__constant_value(cause, argument_0);
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    u64   constant_value__p = 0;
     if (raw__pointer__is_type(cause, constant_value)) {
-      u64 constant_value__p = f2pointer__p(constant_value, cause);
-      if (raw__expression__is_register_expression(cause, argument_1)) {
-	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
-	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs__constant_rax(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__movabs__constant_rdi(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__movabs__constant_rsi(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movabs__constant_rdx(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8(cause, constant_value);}
-	else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9(cause, constant_value);}
-	else {
-	  return new__error(f2list6__new(cause,
-					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
-					 new__symbol(cause, "register_name"), register_name_1,
-					 new__symbol(cause, "expression"),    expression));
-	}
-      } else {
-	return new__error(f2list4__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),
-				       new__symbol(cause, "expression"), expression));
-      }
+      constant_value__p = f2pointer__p(constant_value, cause);
+    } else if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__p = f2integer__i(constant_value, cause);
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-movabs-constant_value_must_be_pointer"),
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-movabs-constant_value_must_be_pointer_or_integer"),
 				     new__symbol(cause, "constant_value"), constant_value,
 				     new__symbol(cause, "expression"),     expression));
+    }
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+      if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs__constant_rax(cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__movabs__constant_rdi(cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__movabs__constant_rsi(cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movabs__constant_rdx(cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8( cause, constant_value__p);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9( cause, constant_value__p);}
+      else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name_1,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
     }
   } else {
     return new__error(f2list4__new(cause,

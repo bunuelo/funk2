@@ -2558,7 +2558,15 @@ f2ptr raw__expression__compile_x86__add__rdx__rax(f2ptr cause) {
   return chunk;
 }
 
+//  4000a2:	48 01 c2             	add    %rax,%rdx
 
+f2ptr raw__expression__compile_x86__add__rax__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC2);
+  return chunk;
+}
 
 f2ptr raw__expression__compile_x86__add(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
@@ -2575,6 +2583,23 @@ f2ptr raw__expression__compile_x86__add(f2ptr cause, f2ptr expression) {
 	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
 	if (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {
 	  return raw__expression__compile_x86__add__rdx__rax(cause);
+	} else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-add-unknown_register"),
+					 new__symbol(cause, "register_name"), register_name_1,
+					 new__symbol(cause, "expression"),    expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-add-invalid_argument_expression_type"),
+				       new__symbol(cause, "argument"),   argument_1,
+				       new__symbol(cause, "expression"), expression));
+      }
+    } else if (raw__eq(cause, register_name_0, new__symbol(cause, "rax"))) {
+      if (raw__expression__is_register_expression(cause, argument_1)) {
+	f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {
+	  return raw__expression__compile_x86__add__rax__rdx(cause);
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-add-unknown_register"),

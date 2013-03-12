@@ -3828,6 +3828,82 @@ f2ptr raw__expression__compile_x86__imul(f2ptr cause, f2ptr expression) {
   }
 }
 
+//  4000a2:	48 c1 f8 3f          	sar    $0x3f,%rax
+
+f2ptr raw__expression__compile_x86__sar__constant__rax(f2ptr cause, u8 constant) {
+  f2ptr chunk = raw__chunk__new(cause, 4);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF8);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
+  return chunk;
+}
+
+//  4000a6:	48 c1 f9 3f          	sar    $0x3f,%rcx
+
+f2ptr raw__expression__compile_x86__sar__constant__rcx(f2ptr cause, u8 constant) {
+  f2ptr chunk = raw__chunk__new(cause, 4);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF9);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
+  return chunk;
+}
+
+//  4000aa:	48 c1 fa 3f          	sar    $0x3f,%rdx
+
+f2ptr raw__expression__compile_x86__sar__constant__rdx(f2ptr cause, u8 constant) {
+  f2ptr chunk = raw__chunk__new(cause, 4);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xFA);
+  raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__sar(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 3) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-sar-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 =             f2cons__car(f2cons__cdr(expression, cause), cause);
+  f2ptr argument_1 = f2cons__car(f2cons__cdr(f2cons__cdr(expression, cause), cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-sar-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name = raw__register_expression__register_name(cause, argument_1);
+      if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__sar__constant__rax(cause, constant_value__i);}
+      else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__sar__constant__rcx(cause, constant_value__i);}
+      else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__sar__constant__rdx(cause, constant_value__i);}
+      else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-sar-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-sar-invalid_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-sar-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
 
 
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
@@ -3864,7 +3940,8 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "shl")))      {return raw__expression__compile_x86__shl(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shr")))      {return raw__expression__compile_x86__shr(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "sub")))      {return raw__expression__compile_x86__sub(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "imul")))     {return raw__expression__compile_x86__imul(     cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "imul")))     {return raw__expression__compile_x86__imul(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "sar")))      {return raw__expression__compile_x86__sar(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode")))  {return raw__expression__compile_x86__rawcode( cause, expression);}
     else {
       return new__error(f2list6__new(cause,

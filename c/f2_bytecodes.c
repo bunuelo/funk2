@@ -390,8 +390,8 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
       while (iter != nil) {
 	f2ptr variable = f2cons__car(iter, cause);
 	{
-	  f2ptr variable_type = f2cons__car(iter, cause);
-	  //f2ptr variable_name = f2cons__car(f2cons__cdr(iter, cause), cause);
+	  f2ptr variable_type = f2cons__car(variable, cause);
+	  //f2ptr variable_name = f2cons__car(f2cons__cdr(variable, cause), cause);
 	  x86_funk__variables__length ++;
 	  x86_funk__variables__byte_length += raw__x86_funk_variable_type__byte_length(cause, variable_type);
 	}
@@ -408,8 +408,8 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	f2ptr variable = f2cons__car(iter, cause);
 	f2ptr arg      = f2cons__car(arg_iter, cause);
 	{
-	  f2ptr variable_type = f2cons__car(iter, cause);
-	  //f2ptr variable_name = f2cons__car(f2cons__cdr(iter, cause), cause);
+	  f2ptr variable_type = f2cons__car(variable, cause);
+	  //f2ptr variable_name = f2cons__car(f2cons__cdr(variable, cause), cause);
 	  if (raw__eq(cause, variable_type, new__symbol(cause, "u64"))) {
 	    if (raw__integer__is_type(cause, arg)) {
 	      (*((u64*)(variable_array + index))) = f2integer__i(arg, cause);

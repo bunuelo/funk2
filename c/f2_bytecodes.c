@@ -622,22 +622,30 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
     }
     u64   raw_return_value = raw__x86_funk__apply(cause, x86_funk, variable_array);
     f2ptr return_value     = nil;
-    if      (raw__eq(cause, expression, new__symbol(cause, "u64")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "s64")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "u32")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "s32")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "u16")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "s16")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, expression, new__symbol(cause, "double"))) {
+    f2ptr return_type = f2x86_funk__return_type(x86_funk, cause);
+    if      (raw__eq(cause, return_type, new__symbol(cause, "u64")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s64")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u32")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s32")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u16")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s16")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "double"))) {
       double *d = &raw_return_value;
       return_value = f2double__new(cause, d);
-    } else if (raw__eq(cause, expression, new__symbol(cause, "float"))) {
+    } else if (raw__eq(cause, return_type, new__symbol(cause, "float"))) {
       float *f = &raw_return_value;
       return_value = f2float__new(cause, f);
-    } else if (raw__eq(cause, expression, new__symbol(cause, "f2ptr"))) {
+    } else if (raw__eq(cause, return_type, new__symbol(cause, "f2ptr"))) {
       return_value = raw_return_value;
+    } else {
+      f2ptr error_value = new__error(f2list6__new(cause,
+						  new__symbol(cause, "bug_name"),    new__symbol(cause, "fiber-jump_funk-x86_funk-invalid_return_type"),
+						  new__symbol(cause, "return_type"), return_type,
+						  new__symbol(cause, "x86_funk"),    x86_funk));
+      f2fiber__value__set(fiber, cause, error_value);
+      return 1;
     }
     f2fiber__value__set(fiber, cause, return_value);
     f2__free(to_ptr(variable_array));

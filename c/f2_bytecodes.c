@@ -620,9 +620,26 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	return 1;
       }
     }
-    s64   value__i = raw__x86_funk__apply(cause, x86_funk, variable_array);
-    f2ptr value    = f2integer__new(cause, value__i);
-    f2fiber__value__set(fiber, cause, value);
+    u64   raw_return_value = raw__x86_funk__apply(cause, x86_funk, variable_array);
+    f2ptr return_value     = nil;
+    if      (raw__eq(cause, expression, new__symbol(cause, "u64")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "s64")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "u32")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "s32")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "u16")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "s16")))    {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause, raw_return_value);}
+    else if (raw__eq(cause, expression, new__symbol(cause, "double"))) {
+      double *d = &raw_return_value;
+      return_value = f2double__new(cause, d);
+    } else if (raw__eq(cause, expression, new__symbol(cause, "float"))) {
+      float *f = &raw_return_value;
+      return_value = f2float__new(cause, f);
+    } else if (raw__eq(cause, expression, new__symbol(cause, "f2ptr"))) {
+      return_value = raw_return_value;
+    }
+    f2fiber__value__set(fiber, cause, return_value);
     f2__free(to_ptr(variable_array));
   }
   f2fiber__program_counter__set(fiber, cause, return_reg);

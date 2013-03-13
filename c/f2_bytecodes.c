@@ -632,11 +632,11 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
     else if (raw__eq(cause, return_type, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause, raw_return_value);}
     else if (raw__eq(cause, return_type, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause, raw_return_value);}
     else if (raw__eq(cause, return_type, new__symbol(cause, "double"))) {
-      double *d = &raw_return_value;
-      return_value = f2double__new(cause, d);
+      double *d = (double*)&raw_return_value;
+      return_value = f2double__new(cause, *d);
     } else if (raw__eq(cause, return_type, new__symbol(cause, "float"))) {
-      float *f = &raw_return_value;
-      return_value = f2float__new(cause, f);
+      float *f = (float*)&raw_return_value;
+      return_value = f2float__new(cause, *f);
     } else if (raw__eq(cause, return_type, new__symbol(cause, "f2ptr"))) {
       return_value = raw_return_value;
     } else {

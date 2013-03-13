@@ -420,11 +420,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((u64*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u64"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u64"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(u64);
@@ -438,11 +439,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((s64*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s64"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s64"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(s64);
@@ -456,11 +458,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((u32*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u32"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u32"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(u32);
@@ -474,11 +477,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((s32*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s32"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s32"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(s32);
@@ -492,11 +496,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((u16*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u16"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u16"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(u16);
@@ -510,11 +515,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((s16*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s16"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s16"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(s16);
@@ -528,11 +534,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((u8*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u8"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_u8"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(u8);
@@ -546,11 +553,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((s8*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s8"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_s8"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(s8);
@@ -564,11 +572,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((double*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_double"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_double"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(double);
@@ -582,11 +591,12 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	    } else if (raw__float__is_type(cause, arg)) {
 	      (*((float*)(variable_array + index))) = f2float__f(arg, cause);
 	    } else {
-	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_float"),
-									new__symbol(cause, "variable"), variable,
-									new__symbol(cause, "arg"),      arg,
-									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      f2ptr error_value = new__error(f2list8__new(cause,
+							  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_variable_type_to_float"),
+							  new__symbol(cause, "variable"), variable,
+							  new__symbol(cause, "arg"),      arg,
+							  new__symbol(cause, "arg-type"), f2__object__type(cause, arg)));
+	      f2fiber__value__set(fiber, cause, error_value);
 	      return 1;
 	    }
 	    index += sizeof(float);
@@ -602,12 +612,13 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	arg_iter = f2cons__cdr(arg_iter, cause);
       }
       if (iter != arg_iter) {
-	f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
-								  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-variable_number_mismatch"),
-								  new__symbol(cause, "variables"), x86_funk__variables,
-								  new__symbol(cause, "args"),      args)));
-	return 1;
-      }
+	f2ptr error_value = new__error(f2list8__new(cause,
+						    new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-variable_number_mismatch"),
+						    new__symbol(cause, "variables"), x86_funk__variables,
+						    new__symbol(cause, "args"),      args)));
+      f2fiber__value__set(fiber, cause, error_value);
+      return 1;
+    }
     }
     s64   value__i = raw__x86_funk__apply(cause, x86_funk, variable_array);
     f2ptr value    = f2integer__new(cause, value__i);

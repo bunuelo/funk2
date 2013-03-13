@@ -4320,7 +4320,53 @@ f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f
 			 heap_machine_code_chunk);
 }
 
+boolean_t raw__expression__is_x86_funk_variable_type(f2ptr cause, f2ptr expression) {
+  if (raw__eq(cause, expression, new__symbol(cause, "u64")) ||
+      raw__eq(cause, expression, new__symbol(cause, "s64")) ||
+      raw__eq(cause, expression, new__symbol(cause, "u32")) ||
+      raw__eq(cause, expression, new__symbol(cause, "s32")) ||
+      raw__eq(cause, expression, new__symbol(cause, "u16")) ||
+      raw__eq(cause, expression, new__symbol(cause, "s16")) ||
+      raw__eq(cause, expression, new__symbol(cause, "u8")) ||
+      raw__eq(cause, expression, new__symbol(cause, "s8")) ||
+      raw__eq(cause, expression, new__symbol(cause, "double")) ||
+      raw__eq(cause, expression, new__symbol(cause, "float")) ||
+      raw__eq(cause, expression, new__symbol(cause, "f2ptr"))) {
+    return boolean__true;
+  }
+  return boolean__false;
+}
+
 f2ptr f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body) {
+  assert_argument_type(symbol,   name);
+  assert_argument_type(conslist, variables);
+  assert_argument_type(conslist, body);
+  {
+    f2ptr iter = variables;
+    while (iter != nil) {
+      f2ptr variable = f2cons__car(iter, cause);
+      if ((! raw__conslist__is_type(cause, variable)) ||
+	  (raw__simple_length(cause, variable) != 2)) {
+	return new__error(f2list4__new(cause,
+				       new__symbol(cause, "bug_name"),            new__symbol(cause, "x86_funk-new-variable_definition_must_have_type_and_name"),
+				       new__symbol(cause, "variable_definition"), variable));
+      }
+      f2ptr variable_type =            f2cons__car(variable, cause);
+      f2ptr variable_name = f2cons__car(f2cons__cd(variable, cause), cause);
+      if (! raw__expression__is_x86_funk_variable_type(cause, variable_type)) {
+	return new__error(f2list4__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "x86_funk-new-invalid_variable_type"),
+				       new__symbol(cause, "variable_type"), variable_type));
+      }
+      if (! raw__symbol__is_type(cause, variable_name)) {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),           new__symbol(cause, "x86_funk-new-variable_name_must_be_symbol"),
+				       new__symbol(cause, "variable_name-type"), f2__object__type(cause, variable_name),
+				       new__symbol(cause, "variable_name"),      variable_name));
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
   return raw__x86_funk__new(cause, name, variables, body, nil, nil, nil, nil);
 }
 def_pcfunk3(x86_funk__new, name, variables, body,

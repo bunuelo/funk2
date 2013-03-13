@@ -354,6 +354,22 @@ u64 raw__x86_funk__apply(f2ptr cause, f2ptr this, u64* argument_array) {
   return raw__chunk__jump(cause, heap_machine_code_chunk, to_ptr(argument_array));
 }
 
+u64 raw__x86_funk_variable_type__byte_length(f2ptr cause, f2ptr expression) {
+  if      (raw__eq(cause, expression, new__symbol(cause, "u64")))    {return sizeof(u64);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "s64")))    {return sizeof(s64);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "u32")))    {return sizeof(u32);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "s32")))    {return sizeof(s32);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "u16")))    {return sizeof(u16);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "s16")))    {return sizeof(s16);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "u8")))     {return sizeof(u8);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "s8")))     {return sizeof(s8);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "double"))) {return sizeof(double);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "float")))  {return sizeof(float);}
+  else if (raw__eq(cause, expression, new__symbol(cause, "f2ptr")))  {return sizeof(f2ptr);}
+  f2__print(cause, expression);
+  error(nil, "raw__x86_funk_variable_type__byte_length fatal error: invalid type.");
+}
+
 int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2ptr x86_funk) {
   f2ptr return_reg = f2fiber__return_reg(fiber, cause);
   {
@@ -366,25 +382,232 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	iter = f2cons__cdr(iter, cause);
       }
     }
-    u64* argument_array = from_ptr(f2__malloc(sizeof(u64) * (args__length + 1)));
+    f2ptr x86_funk__arguments              = f2x86_funk__arguments(x86_funk, cause);
+    u64   x86_funk__arguments__length      = 0;
+    u64   x86_funk__arguments__byte_length = 0;
     {
-      u64   index = 0;
-      f2ptr iter  = args;
-      while ((iter != nil) && (index < args__length)) {
-	f2ptr arg        = f2cons__car(iter, cause);
-	u64   arg__value = 0;
-	if (raw__integer__is_type(cause, arg)) {
-	  arg__value = f2integer__i(arg, cause);
-	} else if (raw__pointer__is_type(cause, arg)) {
-	  arg__value = f2pointer__p(arg, cause);
-	} else {
-	  error(nil, "jump_funk-x86_funk with invalid argument type.");
+      f2ptr iter = x86_funk__arguments;
+      while (iter != nil) {
+	f2ptr argument = f2cons__car(iter, cause);
+	{
+	  f2ptr argument_type = f2cons__car(iter, cause);
+	  f2ptr argument_name = f2cons__car(f2cons__cdr(iter, cause), cause);
+	  x86_funk__arguments__length ++;
+	  x86_funk__arguments__byte_length += raw__x86_funk_variable_type__byte_length(cause, argument_type);
 	}
-	argument_array[index] = arg__value;
-	index ++;
 	iter = f2cons__cdr(iter, cause);
       }
-      argument_array[args__length] = 0;
+    }
+    u8* argument_array = from_ptr(f2__malloc(sizeof(u8) * x86_funk__arguments__byte_length));
+    {
+      u64   index    = 0;
+      f2ptr iter     = x86_funk__arguments;
+      f2ptr arg_iter = args;
+      while ((arg_iter != nil) &&
+	     (iter     != nil)) {
+	f2ptr argument = f2cons__car(iter, cause);
+	f2ptr arg      = f2cons__car(arg_iter, cause);
+	{
+	  f2ptr argument_type = f2cons__car(iter, cause);
+	  f2ptr argument_name = f2cons__car(f2cons__cdr(iter, cause), cause);
+	  if (raw__eq(cause, argument_type, new__symbol(cause, "u64"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((u64*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((u64*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((u64*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((u64*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_u64"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(u64);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "s64"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((s64*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((s64*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((s64*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((s64*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_s64"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(s64);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "u32"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((u32*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((u32*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((u32*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((u32*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_u32"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(u32);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "s32"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((s32*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((s32*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((s32*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((s32*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_s32"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(s32);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "u16"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((u16*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((u16*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((u16*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((u16*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_u16"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(u16);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "s16"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((s16*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((s16*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((s16*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((s16*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_s16"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(s16);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "u8"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((u8*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((u8*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((u8*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((u8*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_u8"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(u8);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "s8"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((s8*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((s8*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((s8*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((s8*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_s8"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(s8);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "double"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((double*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((double*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((double*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((double*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_double"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(double);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "float"))) {
+	    if (raw__integer__is_type(cause, arg)) {
+	      (*((float*)(argument_array + index))) = f2integer__i(arg, cause);
+	    } else if (raw__pointer__is_type(cause, arg)) {
+	      (*((float*)(argument_array + index))) = f2pointer__p(arg, cause);
+	    } else if (raw__double__is_type(cause, arg)) {
+	      (*((float*)(argument_array + index))) = f2double__d(arg, cause);
+	    } else if (raw__float__is_type(cause, arg)) {
+	      (*((float*)(argument_array + index))) = f2float__f(arg, cause);
+	    } else {
+	      f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+									new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-cannot_convert_argument_type_to_float"),
+									new__symbol(cause, "argument"), argument,
+									new__symbol(cause, "arg"),      arg,
+									new__symbol(cause, "arg-type"), f2__object__type(cause, arg))));
+	      return 1;
+	    }
+	    index += sizeof(float);
+	  } else if (raw__eq(cause, argument_type, new__symbol(cause, "f2ptr"))) {
+	    (*((f2ptr*)(argument_array + index))) = arg;
+	    index += sizeof(f2ptr);
+	  } else {
+	    f2__print(cause, argument_type);
+	    error(nil, "raw__x86_funk_variable_type__byte_length fatal error: invalid type.");
+	  }
+	}
+	iter     = f2cons__cdr(iter,     cause);
+	arg_iter = f2cons__cdr(arg_iter, cause);
+      }
+      if (iter != arg_iter) {
+	f2fiber__value__set(fiber, cause, new__error(f2list8__new(cause,
+								  new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-argument_number_mismatch"),
+								  new__symbol(cause, "arguments"), x86_funk__arguments,
+								  new__symbol(cause, "args"),      args)));
+	return 1;
+      }
     }
     s64   value__i = raw__x86_funk__apply(cause, x86_funk, argument_array);
     f2ptr value    = f2integer__new(cause, value__i);

@@ -4377,9 +4377,9 @@ f2ptr f2__x86_funk__new(f2ptr cause, f2ptr return_type, f2ptr name, f2ptr variab
   }
   return raw__x86_funk__new(cause, return_type, name, variables, body, nil, nil, nil, nil);
 }
-def_pcfunk3(x86_funk__new, name, variables, body,
+def_pcfunk4(x86_funk__new, return_type, name, variables, body,
 	    "Returns a new x86_funk object.",
-	    return f2__x86_funk__new(this_cause, name, variables, body));
+	    return f2__x86_funk__new(this_cause, return_type, name, variables, body));
 
 
 f2ptr raw__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

@@ -612,10 +612,10 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
 	arg_iter = f2cons__cdr(arg_iter, cause);
       }
       if (iter != arg_iter) {
-	f2ptr error_value = new__error(f2list8__new(cause,
+	f2ptr error_value = new__error(f2list6__new(cause,
 						    new__symbol(cause, "bug_name"), new__symbol(cause, "fiber-jump_funk-x86_funk-variable_number_mismatch"),
 						    new__symbol(cause, "variables"), x86_funk__variables,
-						    new__symbol(cause, "args"),      args));;
+						    new__symbol(cause, "args"),      args));
 	f2fiber__value__set(fiber, cause, error_value);
 	return 1;
       }

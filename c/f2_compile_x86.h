@@ -39,7 +39,8 @@ declare_object_type_2_slot(machine_code_chunk, chunk, index_label_ptypehash,
 // x86_funk
 
 typedef struct funk2_object_type__x86_funk__slot_s funk2_object_type__x86_funk__slot_t;
-declare_object_type_7_slot(x86_funk,
+declare_object_type_8_slot(x86_funk,
+			   return_type,
 			   name,
 			   variables,
 			   body,
@@ -93,7 +94,8 @@ f2ptr  f2__expression__compile_x86(f2ptr cause, f2ptr expression);
 
 // x86_funk
 
-declare_primobject_7_slot(x86_funk,
+declare_primobject_8_slot(x86_funk,
+			  return_type,
 			  name,
 			  variables,
 			  body,
@@ -102,8 +104,8 @@ declare_primobject_7_slot(x86_funk,
 			  stack_machine_code_chunk,
 			  heap_machine_code_chunk);
 
-f2ptr raw__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body, f2ptr stack_demetropolized_body, f2ptr heap_demetropolized_body, f2ptr stack_machine_code_chunk, f2ptr heap_machine_code_chunk);
-f2ptr  f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body);
+f2ptr raw__x86_funk__new(f2ptr cause, f2ptr return_type, f2ptr name, f2ptr variables, f2ptr body, f2ptr stack_demetropolized_body, f2ptr heap_demetropolized_body, f2ptr stack_machine_code_chunk, f2ptr heap_machine_code_chunk);
+f2ptr  f2__x86_funk__new(f2ptr cause, f2ptr return_type, f2ptr name, f2ptr variables, f2ptr body);
 
 f2ptr f2x86_funk__primobject_type__new_aux(f2ptr cause);
 

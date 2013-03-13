@@ -4351,8 +4351,8 @@ f2ptr f2__x86_funk__new(f2ptr cause, f2ptr name, f2ptr variables, f2ptr body) {
 				       new__symbol(cause, "bug_name"),            new__symbol(cause, "x86_funk-new-variable_definition_must_have_type_and_name"),
 				       new__symbol(cause, "variable_definition"), variable));
       }
-      f2ptr variable_type =            f2cons__car(variable, cause);
-      f2ptr variable_name = f2cons__car(f2cons__cd(variable, cause), cause);
+      f2ptr variable_type =             f2cons__car(variable, cause);
+      f2ptr variable_name = f2cons__car(f2cons__cdr(variable, cause), cause);
       if (! raw__expression__is_x86_funk_variable_type(cause, variable_type)) {
 	return new__error(f2list4__new(cause,
 				       new__symbol(cause, "bug_name"),      new__symbol(cause, "x86_funk-new-invalid_variable_type"),

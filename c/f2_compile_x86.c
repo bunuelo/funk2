@@ -4388,7 +4388,7 @@ f2ptr raw__x86_funk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr te
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list10__new(cause,
 						new__symbol(cause, "print_object_type"),       new__symbol(cause, "x86_funk"),
-						new__symbol(cause, "print_object_slot_order"), f2list3__new(cause,
+						new__symbol(cause, "print_object_slot_order"), f2list6__new(cause,
 													    new__symbol(cause, "return_type"),
 													    new__symbol(cause, "name"),
 													    new__symbol(cause, "variables")),

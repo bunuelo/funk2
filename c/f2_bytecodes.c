@@ -623,14 +623,14 @@ int raw__fiber__jump_funk__x86_funk(f2ptr fiber, f2ptr cause, f2ptr bytecode, f2
     u64   raw_return_value = raw__x86_funk__apply(cause, x86_funk, variable_array);
     f2ptr return_value     = nil;
     f2ptr return_type = f2x86_funk__return_type(x86_funk, cause);
-    if      (raw__eq(cause, return_type, new__symbol(cause, "u64")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "s64")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "u32")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "s32")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "u16")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "s16")))    {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause, raw_return_value);}
-    else if (raw__eq(cause, return_type, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause, raw_return_value);}
+    if      (raw__eq(cause, return_type, new__symbol(cause, "u64")))    {return_value = f2integer__new(cause, (u64)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s64")))    {return_value = f2integer__new(cause, (s64)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u32")))    {return_value = f2integer__new(cause, (u32)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s32")))    {return_value = f2integer__new(cause, (s32)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u16")))    {return_value = f2integer__new(cause, (u16)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s16")))    {return_value = f2integer__new(cause, (s16)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "u8")))     {return_value = f2integer__new(cause,  (u8)raw_return_value);}
+    else if (raw__eq(cause, return_type, new__symbol(cause, "s8")))     {return_value = f2integer__new(cause,  (s8)raw_return_value);}
     else if (raw__eq(cause, return_type, new__symbol(cause, "double"))) {
       double *d = (double*)&raw_return_value;
       return_value = f2double__new(cause, *d);

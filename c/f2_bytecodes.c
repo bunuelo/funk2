@@ -349,7 +349,7 @@ f2ptr f2__bytecode_funk_funk__call_with_event(f2ptr cause, f2ptr bytecode_funk_f
 
 int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr bytecode, f2ptr funktion);
 
-u64 raw__x86_funk__apply(f2ptr cause, f2ptr this, u64* argument_array) {
+u64 raw__x86_funk__apply(f2ptr cause, f2ptr this, void* argument_array) {
   f2ptr heap_machine_code_chunk = f2x86_funk__heap_machine_code_chunk(this, cause);
   return raw__chunk__jump(cause, heap_machine_code_chunk, to_ptr(argument_array));
 }

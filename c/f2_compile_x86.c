@@ -4318,7 +4318,7 @@ f2ptr raw__expression__funkall(f2ptr cause, f2ptr expression) {
   }
   f2ptr funktion_name = f2cons__car(f2cons__cdr(expression, cause), cause);
   f2ptr fiber         = f2__this__fiber(cause);
-  f2ptr funktion      = assert_value(f2__fiber__lookup_type_var_value(cause, fiber, new__symbol(cause, "funkvar"), funktion_name));
+  f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, new__symbol(cause, "funkvar"), funktion_name));
   if (raw__x86_funk__is_type(cause, funktion)) {
     f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
     if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {

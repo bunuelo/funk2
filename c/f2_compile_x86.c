@@ -4328,7 +4328,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "imul")))     {return raw__expression__compile_x86__imul(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "idivq")))    {return raw__expression__compile_x86__idivq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "sar")))      {return raw__expression__compile_x86__sar(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jumpq")))    {return raw__expression__compile_x86__jumpq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "callq")))    {return raw__expression__compile_x86__callq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode")))  {return raw__expression__compile_x86__rawcode( cause, expression);}
     else {
       return new__error(f2list6__new(cause,

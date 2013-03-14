@@ -383,7 +383,12 @@
 				    [have x86_variable_name_ptypehash add variable_name `[argument ,argument_number]]
 				    [= argument_number [bytecode:add 1 argument_number]]]]
 			    variables]
-		      [let [[demetropolized_body [cons [x86:demetropolize `[rawcode @body]] nil]]]
+		      [let [[demetropolized_body [cons [x86:demetropolize `[rawcode [push [register rbp]]
+										    [mov [register rsp] [register rbp]]
+										    [rawcode @body]
+										    [pop [register rbp]]
+										    [retq]]]
+						       nil]]]
 			[set this stack_demetropolized_body demetropolized_body]
 			[set this stack_machine_code_chunk [expression-compile_x86 `[rawcode @demetropolized_body]]]]]]]]
 

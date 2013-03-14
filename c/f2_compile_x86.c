@@ -4322,7 +4322,7 @@ f2ptr raw__expression__funkall(f2ptr cause, f2ptr expression) {
   if (raw__x86_funk__is_type(cause, funktion)) {
     f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
     if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
-      return new__error(f2list4__new(cause,
+      return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
 				     new__symbol(cause, "funktion"),   funktion,
 				     new__symbol(cause, "expression"), expression));
@@ -4334,7 +4334,7 @@ f2ptr raw__expression__funkall(f2ptr cause, f2ptr expression) {
 						     movabs__rax__jump_ptr__chunk,
 						     callq__rax__chunk));
   } else {
-    return new__error(f2list4__new(cause,
+    return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),
 				   new__symbol(cause, "funktion"),   funktion,
 				   new__symbol(cause, "expression"), expression));

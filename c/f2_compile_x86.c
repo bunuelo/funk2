@@ -4310,6 +4310,38 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
 }
 
+f2ptr raw__expression__funkall(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) < 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr funktion_name = f2cons__car(f2cons__cdr(expression, cause), cause);
+  f2ptr fiber         = f2__this__fiber(cause);
+  f2ptr funktion      = assert_value(f2__fiber__lookup_type_var_value(cause, fiber, new__symbol(cause, "funkvar"), funktion_name));
+  if (raw__x86_funk__is_type(cause, funktion)) {
+    f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
+    if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
+				     new__symbol(cause, "funktion"),   funktion,
+				     new__symbol(cause, "expression"), expression));
+    }
+    u64   jump_ptr                     = raw__chunk__bytes(cause, stack_machine_code_chunk);
+    f2ptr movabs__rax__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rax(cause, jump_ptr);
+    f2ptr callq__rax__chunk            = raw__expression__compile_x86__callq__rax(cause);
+    return f2__chunklist__concat(cause, f2list2__new(cause,
+						     movabs__rax__jump_ptr__chunk,
+						     callq__rax__chunk));
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),
+				   new__symbol(cause, "funktion"),   funktion,
+				   new__symbol(cause, "expression"), expression));
+  }
+  
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__integer__is_type(cause, expression)) {
     return raw__expression__compile_x86__integer(cause, expression);

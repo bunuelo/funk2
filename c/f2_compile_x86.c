@@ -4310,7 +4310,7 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
 }
 
-f2ptr raw__expression__funkall(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) < 2) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_expression_length"),

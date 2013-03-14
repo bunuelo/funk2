@@ -4290,6 +4290,17 @@ f2ptr raw__expression__compile_x86__callq(f2ptr cause, f2ptr expression) {
   }
 }
 
+f2ptr raw__expression__compile_x86__leaveq(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 1) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-leaveq-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC9);
+  return chunk;
+}
+
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
   f2ptr pointer = f2pointer__new(cause, f2integer__i(expression, cause));
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), pointer), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
@@ -4306,30 +4317,31 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     return raw__expression__compile_x86__pointer(cause, expression);
   } else if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
-    if      (raw__eq(cause, command, new__symbol(cause, "retq")))     {return raw__expression__compile_x86__retq(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "push")))     {return raw__expression__compile_x86__push(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "pop")))      {return raw__expression__compile_x86__pop(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "mov")))      {return raw__expression__compile_x86__mov(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movq")))     {return raw__expression__compile_x86__movq(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))   {return raw__expression__compile_x86__movzbl(  cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "add")))      {return raw__expression__compile_x86__add(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "subq")))     {return raw__expression__compile_x86__subq(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "addq")))     {return raw__expression__compile_x86__addq(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "addsd")))    {return raw__expression__compile_x86__addsd(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "cmpq")))     {return raw__expression__compile_x86__cmpq(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "cmp")))      {return raw__expression__compile_x86__cmp(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movabs")))   {return raw__expression__compile_x86__movabs(  cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jmp")))      {return raw__expression__compile_x86__jmp(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jb")))       {return raw__expression__compile_x86__jb(      cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jne")))      {return raw__expression__compile_x86__jne(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "shl")))      {return raw__expression__compile_x86__shl(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "shr")))      {return raw__expression__compile_x86__shr(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "sub")))      {return raw__expression__compile_x86__sub(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "imul")))     {return raw__expression__compile_x86__imul(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "idivq")))    {return raw__expression__compile_x86__idivq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "sar")))      {return raw__expression__compile_x86__sar(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "callq")))    {return raw__expression__compile_x86__callq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "rawcode")))  {return raw__expression__compile_x86__rawcode( cause, expression);}
+    if      (raw__eq(cause, command, new__symbol(cause, "retq")))    {return raw__expression__compile_x86__retq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "pop")))     {return raw__expression__compile_x86__pop(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movq")))    {return raw__expression__compile_x86__movq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))  {return raw__expression__compile_x86__movzbl( cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "add")))     {return raw__expression__compile_x86__add(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "subq")))    {return raw__expression__compile_x86__subq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "addq")))    {return raw__expression__compile_x86__addq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "addsd")))   {return raw__expression__compile_x86__addsd(  cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "cmpq")))    {return raw__expression__compile_x86__cmpq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "cmp")))     {return raw__expression__compile_x86__cmp(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movabs")))  {return raw__expression__compile_x86__movabs( cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jmp")))     {return raw__expression__compile_x86__jmp(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jb")))      {return raw__expression__compile_x86__jb(     cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "shl")))     {return raw__expression__compile_x86__shl(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "shr")))     {return raw__expression__compile_x86__shr(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "sub")))     {return raw__expression__compile_x86__sub(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "imul")))    {return raw__expression__compile_x86__imul(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "idivq")))   {return raw__expression__compile_x86__idivq(  cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "sar")))     {return raw__expression__compile_x86__sar(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "callq")))   {return raw__expression__compile_x86__callq(  cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "leaveq")))  {return raw__expression__compile_x86__leaveq( cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),

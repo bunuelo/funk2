@@ -4290,15 +4290,19 @@ f2ptr raw__expression__compile_x86__callq(f2ptr cause, f2ptr expression) {
   }
 }
 
-f2ptr raw__expression__compile_x86__leaveq(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__leaveq__chunk(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 1);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC9);
+  return chunk;
+}
+
+f2ptr raw__expression__compile_x86__leave(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 1) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-leaveq-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
   }
-  f2ptr chunk = raw__chunk__new(cause, 1);
-  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC9);
-  return chunk;
+  return raw__expression__compile_x86__leaveq__chunk(cause);
 }
 
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
@@ -4331,10 +4335,12 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
     f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rax(cause, jump_ptr);
     f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
     f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
-    return f2__chunklist__concat(cause, f2list3__new(cause,
+    f2ptr leaveq__chunk                = raw__expression__compile_x86__leaveq__chunk(cause);
+    return f2__chunklist__concat(cause, f2list4__new(cause,
 						     movabs__rdx__jump_ptr__chunk,
 						     movabs__rax__zero__chunk,
-						     callq__rdx__chunk));
+						     callq__rdx__chunk,
+						     leaveq__chunk));
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),

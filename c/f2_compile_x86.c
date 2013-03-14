@@ -4342,6 +4342,46 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
     f2ptr fiber         = f2__this__fiber(cause);
     f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
     if (raw__x86_funk__is_type(cause, funktion)) {
+      f2ptr variables                = f2x86_funk__variables(               funktion, cause);
+      u64   variables__length        = raw__simple_length(cause, variables);
+      f2ptr arguments                = f2cons__cdr(f2cons__cdr(expression, cause), cause);
+      u64   arguments__length        = raw__simple_length(cause, arguments);
+      if (variables__length != arguments__length) {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-wrong_number_of_arguments_to_x86_funk"),
+				       new__symbol(cause, "funktion"),   funktion,
+				       new__symbol(cause, "expression"), expression));
+      }
+      f2ptr compiled_argument_chunks = nil;
+      {
+	s64   argument_index = 0;
+	f2ptr argument_iter  = arguments;
+	while (argument_iter != nil) {
+	  f2ptr argument = f2cons__car(argument_iter, cause);
+	  {
+	    f2ptr register_name = nil;
+	    switch (argument_index) {
+	    case 0: register_name = new__symbol(cause, "rdi"); break;
+	    case 1: register_name = new__symbol(cause, "rsi"); break;
+	    case 2: register_name = new__symbol(cause, "rdx"); break;
+	    case 3: register_name = new__symbol(cause, "rcx"); break;
+	    case 4: register_name = new__symbol(cause, "r8");  break;
+	    case 5: register_name = new__symbol(cause, "r9");  break;
+	    default:
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-too_many_arguments_to_x86_funk"),
+					     new__symbol(cause, "funktion"),   funktion,
+					     new__symbol(cause, "expression"), expression));
+	    }
+	    f2ptr compiled_argument_chunk = raw__expression__compile_x86(cause, f2list3__new(cause,
+											     new__symbol(cause, "movq"),
+											     f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax")),
+											     f2list2__new(cause, new__symbol(cause, "register"), register_name)));
+	  }
+	  argument_index ++;
+	  argument_iter = f2cons__cdr(argument_iter, cause);
+	}
+      }
       f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
       if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
 	return new__error(f2list6__new(cause,

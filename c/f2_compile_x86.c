@@ -4296,7 +4296,7 @@ f2ptr raw__expression__compile_x86__leaveq__chunk(f2ptr cause) {
   return chunk;
 }
 
-f2ptr raw__expression__compile_x86__leave(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__leaveq(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 1) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-leaveq-invalid_expression_length"),

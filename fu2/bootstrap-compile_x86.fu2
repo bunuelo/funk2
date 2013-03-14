@@ -395,24 +395,24 @@
     [eval `[globalize-funk ,name ,this]]
     nil]]
 
-`[prog [defx86funk u64 x86:variable-test [[u64 a]]
+`[prog [defx86funk f2ptr x86:variable-test [[f2ptr a]]
 	 [mov [variable a] [register rax]]]
        
-       [defx86funk u64 x86:add [[u64 x] [u64 y]]
+       [defx86funk s64 x86:add [[s64 x] [s64 y]]
 	 [push [register rdx]]
 	 [mov [variable x] [register rax]]
 	 [mov [variable y] [register rdx]]
 	 [add [register rdx] [register rax]]
 	 [pop [register rdx]]]
        
-       [defx86funk u64 x86:subtract [[u64 x] [u64 y]]
+       [defx86funk s64 x86:subtract [[s64 x] [s64 y]]
 	 [push [register rdx]]
 	 [mov [variable x] [register rax]]
 	 [mov [variable y] [register rdx]]
 	 [sub [register rdx] [register rax]]
 	 [pop [register rdx]]]
        
-       [defx86funk u64 x86:triple-add [[u64 x] [u64 y] [u64 z]]
+       [defx86funk s64 x86:triple-add [[s64 x] [s64 y] [s64 z]]
 	 [apply-inline x86:add [variable x] [variable y]] 
 	 [apply-inline x86:add [register rax] [variable z]]]
        
@@ -430,14 +430,14 @@
 	 [shr [register cl] [register rax]]
 	 [pop [register rcx]]]
        
-       [defx86funk u64 x86:multiply [[u64 x] [u64 y]]
+       [defx86funk s64 x86:multiply [[s64 x] [s64 y]]
 	 [push [register rdx]]
 	 [mov [variable x] [register rax]]
 	 [mov [variable y] [register rdx]]
 	 [imul [register rdx] [register rax]]
 	 [pop [register rdx]]]
        
-       [defx86funk u64 x86:divide [[u64 x] [u64 y]]
+       [defx86funk s64 x86:divide [[s64 x] [s64 y]]
 	 [push [register rcx]]
 	 [push [register rdx]]
 	 [mov [variable x] [register rax]]
@@ -448,7 +448,7 @@
 	 [pop [register rdx]]
 	 [pop [register rcx]]]
        
-       [defx86funk u64 x86:modulo [[u64 x] [u64 y]]
+       [defx86funk s64 x86:modulo [[s64 x] [s64 y]]
 	 [push [register rcx]]
 	 [push [register rdx]]
 	 [mov [variable x] [register rax]]

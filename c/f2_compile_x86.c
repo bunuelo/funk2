@@ -4314,38 +4314,61 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
 }
 
+boolean_t raw__expression__is_funkvar_expression(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "funkvar"))) {
+      if (raw__simple_length(cause, expression) == 2) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr raw__funkvar_expression__funkvar_name(f2ptr cause, f2ptr expression) {
+  return f2cons__car(f2cons__cdr(expression, cause), cause);
+}
+
 f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) < 2) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
   }
-  f2ptr funktion_name = f2cons__car(f2cons__cdr(expression, cause), cause);
-  f2ptr fiber         = f2__this__fiber(cause);
-  f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
-  if (raw__x86_funk__is_type(cause, funktion)) {
-    f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
-    if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_funkvar_expression(cause, argument_0)) {
+    f2ptr funktion_name = raw__funkvar_expression__funkvar_name(cause, argument_0);
+    f2ptr fiber         = f2__this__fiber(cause);
+    f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
+    if (raw__x86_funk__is_type(cause, funktion)) {
+      f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
+      if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
+				       new__symbol(cause, "funktion"),   funktion,
+				       new__symbol(cause, "expression"), expression));
+      }
+      u64   jump_ptr                     = raw__chunk__bytes(cause, stack_machine_code_chunk);
+      f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
+      f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
+      f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
+      return f2__chunklist__concat(cause, f2list3__new(cause,
+						       movabs__rdx__jump_ptr__chunk,
+						       movabs__rax__zero__chunk,
+						       callq__rdx__chunk));
+    } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),
 				     new__symbol(cause, "funktion"),   funktion,
 				     new__symbol(cause, "expression"), expression));
     }
-    u64   jump_ptr                     = raw__chunk__bytes(cause, stack_machine_code_chunk);
-    f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
-    f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
-    f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
-    return f2__chunklist__concat(cause, f2list3__new(cause,
-						     movabs__rdx__jump_ptr__chunk,
-						     movabs__rax__zero__chunk,
-						     callq__rdx__chunk));
   } else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),
-				   new__symbol(cause, "funktion"),   funktion,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
 				   new__symbol(cause, "expression"), expression));
   }
-  
 }
 
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {

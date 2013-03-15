@@ -2171,7 +2171,8 @@ f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
     if (raw__expression__is_register_expression(cause, argument_1)) {
       f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
       if (raw__eq(cause, register_name_0, new__symbol(cause, "rax"))) {
-	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__mov__rax__rdi(cause);}
+	if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__chunk__new(cause, 0);}
+	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__mov__rax__rdi(cause);}
 	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__mov__rax__rsi(cause);}
 	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__mov__rax__rdx(cause);}
 	else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__mov__rax__rcx(cause);}

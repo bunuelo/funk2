@@ -10,6 +10,7 @@ phdthesis.pdf: \
   frontbackmatter/reader_signature_page_01.tex \
   frontbackmatter/reader_signature_page_02.tex \
   frontbackmatter/reader_signature_page_03.tex \
+  frontbackmatter/reader_signature_page_all.tex \
   frontbackmatter/abstract.tex \
   frontbackmatter/acknowledgments.tex \
   frontbackmatter/bibliography.tex \

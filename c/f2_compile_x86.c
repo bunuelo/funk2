@@ -4368,7 +4368,10 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 	  f2ptr argument = f2cons__car(argument_iter, cause);
 	  {
 	    {
-	      f2ptr compiled_argument_chunk = raw__expression__compile_x86(cause, argument);
+	      f2ptr compiled_argument_chunk = catch_value(raw__expression__compile_x86(cause, argument),
+							  f2list4__new(cause,
+								       new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-funkall-error_compiling_argument"),
+								       new__symbol(cause, "argument"), argument));
 	      f2ptr new_cons                = f2cons__new(cause, compiled_argument_chunk, nil);
 	      if (compiled_argument_chunks == nil) {
 		compiled_argument_chunks = new_cons;

@@ -4439,11 +4439,40 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
   }
 }
 
+f2ptr raw__expression__compile_x86__symbol(f2ptr cause, f2ptr expression) {
+  if (! raw__cause__is_type(cause, cause)) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-symbol-no_cause_object"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr x86_variable_name_ptypehash = f2__cause__lookup_type_variable_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "x86_variable_name_ptypehash"));
+  if (! raw__ptypehash__is_type(cause, x86_variable_name_ptypehash)) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-symbol-x86_variable_name_ptypehash_not_defined"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr variable_definition = raw__ptypehash__lookup(cause, x86_variable_name_ptypehash, expression);
+  if (variable_definition == nil) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-symbol-variable_not_defined"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr variable_command = f2list3__new(cause,
+					new__symbol(cause, "mov"),
+					variable_definition,
+					f2list2__new(cause,
+						     new__symbol(cause, "register"),
+						     new__symbol(cause, "rax")));
+  return raw__expression__compile_x86(cause, variable_command);
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__integer__is_type(cause, expression)) {
     return raw__expression__compile_x86__integer(cause, expression);
   } else if (raw__pointer__is_type(cause, expression)) {
     return raw__expression__compile_x86__pointer(cause, expression);
+  } else if (raw__symbol__is_type(cause, expression)) {
+    return raw__expression__compile_x86__symbol(cause, expression);
   } else if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
     if      (raw__eq(cause, command, new__symbol(cause, "retq")))    {return raw__expression__compile_x86__retq(   cause, expression);}

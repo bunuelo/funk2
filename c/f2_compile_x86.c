@@ -4445,7 +4445,7 @@ f2ptr raw__expression__compile_x86__symbol(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-symbol-no_cause_object"),
 				   new__symbol(cause, "expression"), expression));
   }
-  f2ptr x86_variable_name_ptypehash = f2__cause__lookup_type_variable_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "x86_variable_name_ptypehash"));
+  f2ptr x86_variable_name_ptypehash = f2__cause__lookup_type_var_value(cause, cause, new__symbol(cause, "variable"), new__symbol(cause, "x86_variable_name_ptypehash"));
   if (! raw__ptypehash__is_type(cause, x86_variable_name_ptypehash)) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-symbol-x86_variable_name_ptypehash_not_defined"),

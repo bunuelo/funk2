@@ -4416,7 +4416,7 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
       f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
       f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
       f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
-      return f2__chunklist__concat(cause, f2list3__new(cause,
+      return f2__chunklist__concat(cause, f2list4__new(cause,
 						       f2__chunklist__concat(cause, compiled_argument_chunks),
 						       movabs__rdx__jump_ptr__chunk,
 						       movabs__rax__zero__chunk,

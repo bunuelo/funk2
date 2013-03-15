@@ -4359,33 +4359,47 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 				       new__symbol(cause, "funktion"),   funktion,
 				       new__symbol(cause, "expression"), expression));
       }
-      f2ptr compiled_chunks = nil;
+      f2ptr compiled_argument_chunks = nil;
       {
-	s64   argument_index       = 0;
-	f2ptr argument_iter        = arguments;
-	f2ptr compiled_chunks_iter = nil;
+	s64   argument_index                = 0;
+	f2ptr argument_iter                 = arguments;
+	f2ptr compiled_argument_chunks_iter = nil;
 	while (argument_iter != nil) {
 	  f2ptr argument = f2cons__car(argument_iter, cause);
 	  {
-	    f2ptr new_chunk = nil;
-	    switch (argument_index) {
-	    case 0: register_name = new__symbol(cause, "rdi"); new_chunk = raw__expression__compile_x86__mov__rax__rdi(cause); break;
-	    case 1: register_name = new__symbol(cause, "rsi"); new_chunk = raw__expression__compile_x86__mov__rax__rsi(cause); break;
-	    case 2: register_name = new__symbol(cause, "rdx"); new_chunk = raw__expression__compile_x86__mov__rax__rdx(cause); break;
-	    case 3: register_name = new__symbol(cause, "rcx"); new_chunk = raw__expression__compile_x86__mov__rax__rcx(cause); break;
-	    case 4: register_name = new__symbol(cause, "r8");  new_chunk = raw__expression__compile_x86__mov__rax__r8(cause);  break;
-	    case 5: register_name = new__symbol(cause, "r9");  new_chunk = raw__expression__compile_x86__mov__rax__r9(cause);  break;
-	    default:
-	      return new__error(f2list6__new(cause,
-					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-too_many_arguments_to_x86_funk"),
-					     new__symbol(cause, "funktion"),   funktion,
-					     new__symbol(cause, "expression"), expression));
+	    {
+	      f2ptr compiled_argument_chunk = raw__expression__compile_x86(cause, argument);
+	      f2ptr new_cons                = f2cons__new(cause, compiled_argument_chunk, nil);
+	      if (compiled_argument_chunks == nil) {
+		compiled_argument_chunks = new_cons;
+	      } else {
+		f2cons__cdr__set(compiled_argument_chunks_iter, cause, new_cons);
+	      }
+	      compiled_argument_chunks_iter = new_cons;
 	    }
-	    
-	    f2ptr compiled_argument_chunk = raw__expression__compile_x86(cause, f2list3__new(cause,
-											     new__symbol(cause, "movq"),
-											     f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax")),
-											     f2list2__new(cause, new__symbol(cause, "register"), register_name)));
+	    {
+	      f2ptr new_chunk = nil;
+	      switch (argument_index) {
+	      case 0: register_name = new__symbol(cause, "rdi"); new_chunk = raw__expression__compile_x86__mov__rax__rdi(cause); break;
+	      case 1: register_name = new__symbol(cause, "rsi"); new_chunk = raw__expression__compile_x86__mov__rax__rsi(cause); break;
+	      case 2: register_name = new__symbol(cause, "rdx"); new_chunk = raw__expression__compile_x86__mov__rax__rdx(cause); break;
+	      case 3: register_name = new__symbol(cause, "rcx"); new_chunk = raw__expression__compile_x86__mov__rax__rcx(cause); break;
+	      case 4: register_name = new__symbol(cause, "r8");  new_chunk = raw__expression__compile_x86__mov__rax__r8(cause);  break;
+	      case 5: register_name = new__symbol(cause, "r9");  new_chunk = raw__expression__compile_x86__mov__rax__r9(cause);  break;
+	      default:
+		return new__error(f2list6__new(cause,
+					       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-too_many_arguments_to_x86_funk"),
+					       new__symbol(cause, "funktion"),   funktion,
+					       new__symbol(cause, "expression"), expression));
+	      }
+	      f2ptr new_cons = f2cons__new(cause, new_chunk, nil);
+	      if (compiled_argument_chunks == nil) {
+		compiled_argument_chunks = new_cons;
+	      } else {
+		f2cons__cdr__set(compiled_argument_chunks_iter, cause, new_cons);
+	      }
+	      compiled_argument_chunks_iter = new_cons;
+	    }
 	  }
 	  argument_index ++;
 	  argument_iter = f2cons__cdr(argument_iter, cause);
@@ -4403,6 +4417,7 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
       f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
       f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
       return f2__chunklist__concat(cause, f2list3__new(cause,
+						       f2__chunklist__concat(cause, compiled_argument_chunks),
 						       movabs__rdx__jump_ptr__chunk,
 						       movabs__rax__zero__chunk,
 						       callq__rdx__chunk));

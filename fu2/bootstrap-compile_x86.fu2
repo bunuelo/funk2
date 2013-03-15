@@ -387,7 +387,6 @@
 										    [mov [register rsp] [register rbp]]
 										    [rawcode @body]
 										    [pop [register rbp]]
-										    [leaveq]
 										    [retq]]]
 						       nil]]]
 			[set this stack_demetropolized_body demetropolized_body]

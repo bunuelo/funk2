@@ -4473,10 +4473,11 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "funkall"))) {return raw__expression__compile_x86__funkall(cause, expression);}
     else {
-      return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),
-				     new__symbol(cause, "command"),    command,
-				     new__symbol(cause, "expression"), expression));
+      f2ptr funkall_command = f2cons__new(cause,
+					  new__symbol(cause, "funkall"),
+					  f2cons__new(cause, f2list2__new(cause, new__symbol(cause, "funkvar"), command),
+						      f2cons__cdr(expression, cause)));
+      return raw__expression__compile_x86(cause, funkall_command);
     }
   } else {
     return new__error(f2list6__new(cause,

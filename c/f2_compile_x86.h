@@ -78,7 +78,7 @@ typedef enum x86_reg_e {
 
 declare_primobject_3_slot(machine_code_chunk, chunk, index_label_ptypehash, relative_jump_expressions);
 
-f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash);
+f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr relative_jump_expressions);
 f2ptr  f2__machine_code_chunk__new(f2ptr cause, f2ptr chunk);
 
 

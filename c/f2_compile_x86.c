@@ -3784,7 +3784,7 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
       f2ptr machine_code_jump__command = new__symbol(cause, "movabs");
       f2ptr machine_code_jump__label   = label_name;
       f2ptr machine_code_jump          = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label);
-      f2machine_code_chunk__jumps__set(cause, machine_code_chunk, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+      f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
       return machine_code_chunk;
     } else {
       return new__error(f2list4__new(cause,

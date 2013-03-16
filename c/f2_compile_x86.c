@@ -3765,20 +3765,27 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
     f2ptr label_name           = raw__label_expression__label_name(cause, argument_0);
     u64   label_constant_value = 0;
     if (raw__expression__is_register_expression(cause, argument_1)) {
-      f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
-      if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs__constant_rax(cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__movabs__constant_rdi(cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__movabs__constant_rsi(cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movabs__constant_rdx(cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8( cause, label_constant_value);}
-      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9( cause, label_constant_value);}
+      f2ptr register_name_1    = raw__register_expression__register_name(cause, argument_1);
+      f2ptr machine_code_chunk = nil;
+      if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rax(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rdi(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rsi(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rcx(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r8( cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r9( cause, label_constant_value);}
       else {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
 				       new__symbol(cause, "register_name"), register_name_1,
 				       new__symbol(cause, "expression"),    expression));
       }
+      f2ptr machine_code_jump__index   = f2integer__new(cause, 0);
+      f2ptr machine_code_jump__command = new__symbol(cause, "movabs");
+      f2ptr machine_code_jump__label   = label_name;
+      f2ptr machine_code_jump          = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label);
+      f2machine_code_chunk__jumps__set(cause, machine_code_chunk, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+      return machine_code_chunk;
     } else {
       return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),

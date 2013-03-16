@@ -31,7 +31,7 @@
 // machine_code_chunk
 
 typedef struct funk2_object_type__machine_code_chunk__slot_s funk2_object_type__machine_code_chunk__slot_t;
-declare_object_type_2_slot(machine_code_chunk, chunk, index_label_ptypehash,
+declare_object_type_3_slot(machine_code_chunk, chunk, index_label_ptypehash, relative_jump_expressions,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -76,7 +76,7 @@ typedef enum x86_reg_e {
 
 // machine_code_chunk
 
-declare_primobject_2_slot(machine_code_chunk, chunk, index_label_ptypehash);
+declare_primobject_3_slot(machine_code_chunk, chunk, index_label_ptypehash, relative_jump_expressions);
 
 f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash);
 f2ptr  f2__machine_code_chunk__new(f2ptr cause, f2ptr chunk);

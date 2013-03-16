@@ -3872,8 +3872,12 @@ f2ptr raw__chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr termi
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__simple_array__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }
-  {
+  if (chunk__length > 0) {
     chunk_string__length = funk2_character_string__snprintf(chunk_string, chunk_string__max_length, "chunk ");
+    raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
+    raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
+  } else {
+    chunk_string__length = funk2_character_string__snprintf(chunk_string, chunk_string__max_length, "chunk");
     raw__terminal_print_frame__write_color__thread_unsafe( cause, terminal_print_frame, print__ansi__symbol__type__foreground);
     raw__terminal_print_frame__write_string__thread_unsafe(cause, terminal_print_frame, chunk_string__length, chunk_string);
   }

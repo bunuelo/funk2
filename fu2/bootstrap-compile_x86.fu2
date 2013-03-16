@@ -278,8 +278,7 @@
   [let [[resultpair [x86:demetropolize_full expression]]]
     [cdr resultpair]]]
 
-
-[defx86metro argument [number]
+[defunk x86_variable-place_expression [number]
   [cond [[eq number 0] `[register rdi]]
 	[[eq number 1] `[register rsi]]
 	[[eq number 2] `[register rdx]]
@@ -287,7 +286,10 @@
 	[[eq number 4] `[register r8]]
 	[[eq number 5] `[register r9]]
 	[t             [error bug_name `defx86metro-argument-maximum_of_five_arguments_currently_supported
-			      number   number]]]]
+			      number   number]]]]  
+
+[defx86metro argument [number]
+  [x86_variable-place_expression number]]
 
 [defx86metro variable [name]
   [let [[x86_variable_name_ptypehash [have [this-cause] lookup `x86_variable_name_ptypehash]]]
@@ -380,7 +382,7 @@
 		      [mapc [funk [variable]
 				  [let [[variable_type [first  variable]]
 					[variable_name [second variable]]]
-				    [have x86_variable_name_ptypehash add variable_name `[argument ,argument_number]]
+				    [have x86_variable_name_ptypehash add variable_name [x86_variable-place_expression argument_number]]
 				    [= argument_number [bytecode:add 1 argument_number]]]]
 			    variables]
 		      [let [[demetropolized_body [cons [x86:demetropolize `[rawcode [push [register rbp]]

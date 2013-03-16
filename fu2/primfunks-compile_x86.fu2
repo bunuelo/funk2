@@ -23,4 +23,5 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk expression-compile_x86 &primfunk:expression__compile_x86]
+[globalize-funk machine_code_chunk_list-concat &primfunk:machine_code_chunk_list__concat]
+[globalize-funk expression-compile_x86         &primfunk:expression__compile_x86]

@@ -1274,6 +1274,70 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
 }
 
 
+boolean_t raw__machine_code_chunk_list__is_type(f2ptr cause, f2ptr object) {
+  if (! raw__cons__is_type(cause, object)) {
+    return boolean__false;
+  }
+  f2ptr iter = object;
+  while (iter != nil) {
+    if (! raw__cons__is_type(cause, iter)) {
+      return boolean__false;
+    }
+    f2ptr element = f2cons__car(iter, cause);
+    if (! raw__machine_code_chunk__is_type(cause, element)) {
+      return boolean__false;
+    }
+    iter = f2cons__cdr(iter, cause);
+  }
+  return boolean__false;
+}
+
+f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
+  f2ptr new_index_label_ptypehash = f2__ptypehash__new(cause);
+  f2ptr chunk_list                = nil;
+  {
+    s64   index_offset    = 0;
+    f2ptr chunk_list_iter = nil;
+    f2ptr iter            = these;
+    while (iter != nil) {
+      f2ptr machine_code_chunk = f2cons__car(iter, cause);
+      {
+	f2ptr chunk                 = f2machine_code_chunk__chunk(machine_code_chunk, cause);
+	f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(machine_code_chunk, cause);
+	{
+	  f2ptr new_cons = f2cons__new(cause, chunk, nil);
+	  if (chunk_list == nil) {
+	    chunk_list = new_cons;
+	  } else {
+	    f2cons__cdr__set(chunk_list_iter, cause, new_cons);
+	  }
+	  chunk_list_iter = new_cons;
+	}
+	ptypehash__iteration(cause, index_label_ptypehash, label, index,
+			     s64   index__i  = f2integer__i(index, cause);
+			     f2ptr new_index = f2integer__new(cause, index_offset + index__i);
+			     raw__ptypehash__add(cause, new_index_label_ptypehash, label, new_index);
+			     );
+	index_offset += raw__chunk__length(cause, chunk);
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+  f2ptr new_chunk              = raw__chunklist__concat(cause, chunk_list);
+  f2ptr new_machine_code_chunk = raw__machine_code_chunk__new(cause, new_chunk, new_index_label_ptypehash);
+  return new_machine_code_chunk;
+}
+
+f2ptr f2__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
+  assert_argument_type(machine_code_chunk_list, these);
+  return raw__machine_code_chunk_list__concat(cause, these);
+}
+def_pcfunk1(machine_code_chunk_list__concat, these,
+	    "",
+	    return f2__machine_code_chunk_list__concat(this_cause, this));
+
+
+
 f2ptr raw__expression__compile_x86__retq(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 1) {
     return new__error(f2list4__new(cause,
@@ -4660,6 +4724,10 @@ void f2__compile_x86__defragment__fix_pointers() {
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk);
   
   
+  // machine_code_chunk_list
+  
+  f2__primcfunk__init__defragment__fix_pointers(machine_code_chunk_list__concat);
+  
   // compile_x86 funks
   
   f2__primcfunk__init__defragment__fix_pointers(expression__compile_x86);
@@ -4695,7 +4763,10 @@ void f2__compile_x86__reinitialize_globalvars() {
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(machine_code_chunk__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_machine_code_chunk.terminal_print_with_frame__funk = never_gc(cfunk);}
   
+  // machine_code_chunk_list
   
+  f2__primcfunk__init__1(machine_code_chunk_list__concat, these);
+
   // compile_x86 funks
   
   f2__primcfunk__init__1(expression__compile_x86, expression);

@@ -1347,6 +1347,8 @@ boolean_t raw__machine_code_chunk_list__is_type(f2ptr cause, f2ptr object) {
 f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
   f2ptr new_index_label_ptypehash = f2__ptypehash__new(cause);
   f2ptr chunk_list                = nil;
+  f2ptr new_jumps                 = nil;
+  f2ptr new_jumps_iter            = nil;
   {
     s64   index_offset    = 0;
     f2ptr chunk_list_iter = nil;
@@ -1354,8 +1356,9 @@ f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
     while (iter != nil) {
       f2ptr machine_code_chunk = f2cons__car(iter, cause);
       {
-	f2ptr chunk                 = f2machine_code_chunk__chunk(machine_code_chunk, cause);
+	f2ptr chunk                 = f2machine_code_chunk__chunk(                machine_code_chunk, cause);
 	f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(machine_code_chunk, cause);
+	f2ptr jumps                 = f2machine_code_chunk__jumps(                machine_code_chunk, cause);
 	{
 	  f2ptr new_cons = f2cons__new(cause, chunk, nil);
 	  if (chunk_list == nil) {
@@ -1370,6 +1373,28 @@ f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
 			     f2ptr new_index = f2integer__new(cause, index_offset + index__i);
 			     raw__ptypehash__add(cause, new_index_label_ptypehash, label, new_index);
 			     );
+	{
+	  f2ptr jumps_iter = jumps;
+	  while (jumps_iter != nil) {
+	    f2ptr jump = f2cons__car(jumps_iter, cause);
+	    {
+	      f2ptr jump__index     = f2machine_code_jump__index(  jump, cause);
+	      f2ptr jump__command   = f2machine_code_jump__command(jump, cause);
+	      f2ptr jump__label     = f2machine_code_jump__label(  jump, cause);
+	      s64   jump__index__i  = f2integer__i(jump__index, cause);
+	      f2ptr new_jump__index = f2integer__new(cause, jump__index__i + index_offset);
+	      f2ptr new_jump        = raw__machine_code_jump__new(cause, new_jump__index, jump__command, jump__label);
+	      f2ptr new_cons        = f2cons__new(cause, new_jump, nil);
+	      if (new_jumps == nil) {
+		new_jumps = new_cons;
+	      } else {
+		f2cons__cdr__set(new_jumps_iter, cause, new_cons);
+	      }
+	      new_jumps_iter = new_cons;
+	    }
+	    jumps_iter = f2cons__cdr(jumps_iter, cause);
+	  }
+	}
 	index_offset += raw__chunk__length(cause, chunk);
       }
       iter = f2cons__cdr(iter, cause);

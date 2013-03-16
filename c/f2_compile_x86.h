@@ -94,9 +94,9 @@ f2ptr f2machine_code_jump__primobject_type__new_aux(f2ptr cause);
 
 // machine_code_chunk
 
-declare_primobject_3_slot(machine_code_chunk, chunk, index_label_ptypehash, relative_jump_expressions);
+declare_primobject_3_slot(machine_code_chunk, chunk, index_label_ptypehash, jumps);
 
-f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr relative_jump_expressions);
+f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr jumps);
 f2ptr  f2__machine_code_chunk__new(f2ptr cause, f2ptr chunk);
 
 f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause);

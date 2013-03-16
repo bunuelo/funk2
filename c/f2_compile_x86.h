@@ -31,7 +31,7 @@
 // machine_code_jump
 
 typedef struct funk2_object_type__machine_code_jump__slot_s funk2_object_type__machine_code_jump__slot_t;
-declare_object_type_3_slot(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions,
+declare_object_type_3_slot(machine_code_jump, index, command, label,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );
@@ -84,10 +84,10 @@ typedef enum x86_reg_e {
 
 // machine_code_jump
 
-declare_primobject_3_slot(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions);
+declare_primobject_3_slot(machine_code_jump, index, command, label);
 
-f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr relative_jump_expressions);
-f2ptr  f2__machine_code_jump__new(f2ptr cause, f2ptr chunk);
+f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label);
+f2ptr  f2__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label);
 
 f2ptr f2machine_code_jump__primobject_type__new_aux(f2ptr cause);
 

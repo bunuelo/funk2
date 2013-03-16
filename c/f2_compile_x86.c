@@ -1334,7 +1334,7 @@ f2ptr f2__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
 }
 def_pcfunk1(machine_code_chunk_list__concat, these,
 	    "",
-	    return f2__machine_code_chunk_list__concat(this_cause, this));
+	    return f2__machine_code_chunk_list__concat(this_cause, these));
 
 
 

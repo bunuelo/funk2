@@ -3698,6 +3698,26 @@ f2ptr raw__expression__compile_x86__movabs__constant_r9(f2ptr cause, u64 constan
   return f2__machine_code_chunk__new(cause, chunk);
 }
 
+boolean_t raw__expression__is_label_expression(f2ptr cause, f2ptr expression) {
+  if (! raw__cons__is_type(cause, expression)) {
+    return boolean__false;
+  }
+  f2ptr command = f2cons__car(expression, cause);
+  if (! raw__eq(cause, command, new__symbol(cause, "label"))) {
+    return boolean__false;
+  }
+  if (raw__simple_length(cause, expression) != 2) {
+    return boolean__false;
+  }
+  return boolean__true;
+}
+
+f2ptr raw__label_expression__label_name(f2ptr cause, f2ptr expression) {
+  f2ptr label_name = f2cons__car(f2cons__cdr(expression, cause), cause);
+  return label_name;
+}
+
+
 f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -3730,6 +3750,29 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
       else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, constant_value__p);}
       else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8( cause, constant_value__p);}
       else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9( cause, constant_value__p);}
+      else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name_1,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else if (raw__expression__is_label_expression(cause, expression)) {
+    f2ptr label_name           = raw__label_expression__label_name(cause, expression);
+    u64   label_constant_value = 0;
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+      if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__movabs__constant_rax(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__movabs__constant_rdi(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__movabs__constant_rsi(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__movabs__constant_rdx(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__movabs__constant_rcx(cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__movabs__constant_r8( cause, label_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9( cause, label_constant_value);}
       else {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
@@ -4454,6 +4497,59 @@ f2ptr raw__expression__compile_x86__leaveq(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86__leaveq__chunk(cause);
 }
 
+//  4000a2:	ff e0                	jmpq   *%rax
+
+f2ptr raw__expression__compile_x86__jmpq__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xE0);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a4:	ff e1                	jmpq   *%rcx
+
+f2ptr raw__expression__compile_x86__jmpq__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xE1);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a6:	ff e2                	jmpq   *%rdx
+
+f2ptr raw__expression__compile_x86__jmpq__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xE2);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+f2ptr raw__expression__compile_x86__jmpq(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jmpq-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_register_expression(cause, argument)) {
+    f2ptr register_name = raw__register_expression__register_name(cause, argument);
+    if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__jmpq__rax(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__jmpq__rcx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__jmpq__rdx(cause);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-jmpq-unknown_register_name"),
+				     new__symbol(cause, "register_name"), register_name,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jmpq-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+
 f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
   f2ptr pointer = f2pointer__new(cause, f2integer__i(expression, cause));
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), pointer), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
@@ -4659,6 +4755,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "idivq")))   {return raw__expression__compile_x86__idivq(  cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "sar")))     {return raw__expression__compile_x86__sar(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "callq")))   {return raw__expression__compile_x86__callq(  cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jmpq")))    {return raw__expression__compile_x86__jmpq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "leaveq")))  {return raw__expression__compile_x86__leaveq( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "funkall"))) {return raw__expression__compile_x86__funkall(cause, expression);}

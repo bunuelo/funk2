@@ -1401,7 +1401,7 @@ f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
     }
   }
   f2ptr new_chunk              = raw__chunklist__concat(cause, chunk_list);
-  f2ptr new_machine_code_chunk = raw__machine_code_chunk__new(cause, new_chunk, new_index_label_ptypehash, nil);
+  f2ptr new_machine_code_chunk = raw__machine_code_chunk__new(cause, new_chunk, new_index_label_ptypehash, new_jumps);
   return new_machine_code_chunk;
 }
 

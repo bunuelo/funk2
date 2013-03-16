@@ -1275,9 +1275,6 @@ f2ptr f2machine_code_chunk__primobject_type__new_aux(f2ptr cause) {
 
 
 boolean_t raw__machine_code_chunk_list__is_type(f2ptr cause, f2ptr object) {
-  if (! raw__cons__is_type(cause, object)) {
-    return boolean__false;
-  }
   f2ptr iter = object;
   while (iter != nil) {
     if (! raw__cons__is_type(cause, iter)) {
@@ -1289,7 +1286,7 @@ boolean_t raw__machine_code_chunk_list__is_type(f2ptr cause, f2ptr object) {
     }
     iter = f2cons__cdr(iter, cause);
   }
-  return boolean__false;
+  return boolean__true;
 }
 
 f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {

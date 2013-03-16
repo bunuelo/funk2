@@ -4471,13 +4471,14 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 	}
       }
       f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
-      if (! raw__chunk__is_type(cause, stack_machine_code_chunk)) {
+      if (! raw__machine_code_chunk__is_type(cause, stack_machine_code_chunk)) {
 	return new__error(f2list6__new(cause,
 				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
 				       new__symbol(cause, "funktion"),   funktion,
 				       new__symbol(cause, "expression"), expression));
       }
-      u64   jump_ptr                     = raw__chunk__bytes(cause, stack_machine_code_chunk);
+      f2ptr chunk                        = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
+      u64   jump_ptr                     = raw__chunk__bytes(cause, chunk);
       f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
       f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
       f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);

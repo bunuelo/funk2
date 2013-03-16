@@ -162,6 +162,7 @@ struct funk2_primobject_object_types_s {
   funk2_object_type__file_handle__slot_t                      primobject_type_file_handle;
   funk2_object_type__matrix__slot_t                           primobject_type_matrix;
   funk2_object_type__counter__slot_t                          primobject_type_counter;
+  funk2_object_type__machine_code_jump__slot_t                primobject_type_machine_code_jump;
   funk2_object_type__machine_code_chunk__slot_t               primobject_type_machine_code_chunk;
   funk2_object_type__x86_funk__slot_t                         primobject_type_x86_funk;
   // frame objects

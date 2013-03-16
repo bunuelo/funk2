@@ -1224,6 +1224,58 @@ f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro) {
 }
 
 
+// machine_code_jump
+
+def_primobject_3_slot(machine_code_jump,
+		      chunk,
+		      index_label_ptypehash,
+		      relative_jump_expressions);
+
+f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr relative_jump_expressions) {
+  return f2machine_code_jump__new(cause, chunk, index_label_ptypehash, relative_jump_expressions);
+}
+
+f2ptr f2__machine_code_jump__new(f2ptr cause, f2ptr chunk) {
+  assert_argument_type(chunk, chunk);
+  f2ptr index_label_ptypehash = f2__ptypehash__new(cause);
+  return raw__machine_code_jump__new(cause, chunk, index_label_ptypehash, nil);
+}
+def_pcfunk1(machine_code_jump__new, chunk,
+	    "",
+	    return f2__machine_code_jump__new(this_cause, chunk));
+
+
+f2ptr raw__machine_code_jump__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  f2ptr print_as_frame_hash = raw__terminal_print_frame__print_as_frame_hash(cause, terminal_print_frame);
+  f2ptr frame               = raw__ptypehash__lookup(cause, print_as_frame_hash, this);
+  if (frame == nil) {
+    frame = f2__frame__new(cause, f2list8__new(cause,
+					       new__symbol(cause, "print_object_type"),         new__symbol(cause, "machine_code_jump"),
+					       new__symbol(cause, "chunk"),                     f2__machine_code_jump__chunk(cause, this),
+					       new__symbol(cause, "index_label_ptypehash"),     f2__machine_code_jump__index_label_ptypehash(cause, this),
+					       new__symbol(cause, "relative_jump_expressions"), f2__machine_code_jump__relative_jump_expressions(cause, this)));
+    f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
+  }
+  return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
+}
+
+f2ptr f2__machine_code_jump__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+  assert_argument_type(machine_code_jump,            this);
+  assert_argument_type(terminal_print_frame, terminal_print_frame);
+  return raw__machine_code_jump__terminal_print_with_frame(cause, this, terminal_print_frame);
+}
+def_pcfunk2(machine_code_jump__terminal_print_with_frame, this, terminal_print_frame,
+	    "",
+	    return f2__machine_code_jump__terminal_print_with_frame(this_cause, this, terminal_print_frame));
+
+
+f2ptr f2machine_code_jump__primobject_type__new_aux(f2ptr cause) {
+  f2ptr this = f2machine_code_jump__primobject_type__new(cause);
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__funk);}
+  return this;
+}
+
+
 // machine_code_chunk
 
 def_primobject_3_slot(machine_code_chunk,
@@ -4735,6 +4787,15 @@ void f2__compile_x86__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
 
+  // machine_code_jump
+  
+  initialize_primobject_3_slot__defragment__fix_pointers(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions);
+  
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(machine_code_jump__terminal_print_with_frame);
+  defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__funk);
+  
+  
   // machine_code_chunk
   
   initialize_primobject_3_slot__defragment__fix_pointers(machine_code_chunk, chunk, index_label_ptypehash, relative_jump_expressions);
@@ -4775,6 +4836,13 @@ void f2__compile_x86__reinitialize_globalvars() {
   f2ptr cause = initial_cause();
   
   reinitialize_primobject(machine_code_chunk);
+  
+  // machine_code_jump
+  
+  initialize_primobject_3_slot(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions);
+  
+  {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(machine_code_jump__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__funk = never_gc(cfunk);}
   
   // machine_code_chunk
   

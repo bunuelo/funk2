@@ -28,6 +28,14 @@
 #ifndef F2__COMPILE_X86__TYPES__H
 #define F2__COMPILE_X86__TYPES__H
 
+// machine_code_jump
+
+typedef struct funk2_object_type__machine_code_jump__slot_s funk2_object_type__machine_code_jump__slot_t;
+declare_object_type_3_slot(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions,
+			   f2ptr terminal_print_with_frame__symbol;
+			   f2ptr terminal_print_with_frame__funk;
+			   );
+
 // machine_code_chunk
 
 typedef struct funk2_object_type__machine_code_chunk__slot_s funk2_object_type__machine_code_chunk__slot_t;
@@ -72,6 +80,14 @@ typedef enum x86_reg_e {
   x86_reg__esi,
   x86_reg__edi
 } x86_reg_t;
+
+
+// machine_code_jump
+
+declare_primobject_3_slot(machine_code_jump, chunk, index_label_ptypehash, relative_jump_expressions);
+
+f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr chunk, f2ptr index_label_ptypehash, f2ptr relative_jump_expressions);
+f2ptr  f2__machine_code_jump__new(f2ptr cause, f2ptr chunk);
 
 
 // machine_code_chunk

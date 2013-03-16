@@ -226,6 +226,7 @@ void funk2_primobject_type_handler__add_builtin_primobjects(funk2_primobject_typ
   {char* type_name = "file_handle";                      funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                      f2file_handle__primobject_type__new_aux(cause));}
   {char* type_name = "matrix";                           funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                           f2matrix__primobject_type__new_aux(cause));}
   {char* type_name = "counter";                          funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                          f2counter__primobject_type__new_aux(cause));}
+  {char* type_name = "machine_code_jump";                funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                f2machine_code_jump__primobject_type__new_aux(cause));}
   {char* type_name = "machine_code_chunk";               funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),               f2machine_code_chunk__primobject_type__new_aux(cause));}
   {char* type_name = "x86_funk";                         funk2_primobject_type_handler__add_type(this, cause, new__symbol(cause, type_name),                         f2x86_funk__primobject_type__new_aux(cause));}
 }

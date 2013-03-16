@@ -3761,8 +3761,8 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),
 				     new__symbol(cause, "expression"), expression));
     }
-  } else if (raw__expression__is_label_expression(cause, expression)) {
-    f2ptr label_name           = raw__label_expression__label_name(cause, expression);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name           = raw__label_expression__label_name(cause, argument_0);
     u64   label_constant_value = 0;
     if (raw__expression__is_register_expression(cause, argument_1)) {
       f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);

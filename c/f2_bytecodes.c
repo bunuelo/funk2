@@ -351,7 +351,8 @@ int raw__cause__call_all_endfunks(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr by
 
 u64 raw__x86_funk__apply(f2ptr cause, f2ptr this, void* argument_array) {
   f2ptr heap_machine_code_chunk = f2x86_funk__heap_machine_code_chunk(this, cause);
-  return raw__chunk__jump(cause, heap_machine_code_chunk, to_ptr(argument_array));
+  f2ptr chunk                   = f2machine_code_chunk__chunk(heap_machine_code_chunk, cause);
+  return raw__chunk__jump(cause, chunk, to_ptr(argument_array));
 }
 
 u64 raw__x86_funk_variable_type__byte_length(f2ptr cause, f2ptr expression) {

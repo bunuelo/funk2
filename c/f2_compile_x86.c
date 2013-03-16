@@ -4528,6 +4528,25 @@ f2ptr raw__expression__compile_x86__symbol(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, variable_command);
 }
 
+f2ptr raw__expression__compile_x86__label(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-label-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr label_name = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (! raw__symbol__is_type(cause, label_name)) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-label-label_name_must_be_symbol"),
+				   new__symbol(cause, "label_name"), label_name,
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr machine_code_chunk    = f2__machine_code_chunk__new(cause, raw__chunk__new(cause, 0));
+  f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(machine_code_chunk, cause);
+  raw__ptypehash__add(cause, index_label_ptypehash, label_name, f2integer__new(cause, 0));
+  return machine_code_chunk;
+}
+
 f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
   if (raw__integer__is_type(cause, expression)) {
     return raw__expression__compile_x86__integer(cause, expression);
@@ -4563,6 +4582,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "leaveq")))  {return raw__expression__compile_x86__leaveq( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "funkall"))) {return raw__expression__compile_x86__funkall(cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "label")))   {return raw__expression__compile_x86__label(  cause, expression);}
     else {
       f2ptr funkall_command = f2cons__new(cause,
 					  new__symbol(cause, "funkall"),

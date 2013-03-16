@@ -1234,14 +1234,14 @@ f2ptr raw__machine_code_chunk__new(f2ptr cause, f2ptr chunk, f2ptr index_label_p
   return f2machine_code_chunk__new(cause, chunk, index_label_ptypehash);
 }
 
-f2ptr f2__machine_code_chunk__new(f2ptr cause) {
-  f2ptr chunk                 = raw__chunk__new(cause, 0);
+f2ptr f2__machine_code_chunk__new(f2ptr cause, f2ptr chunk) {
+  assert_argument_type(chunk, chunk);
   f2ptr index_label_ptypehash = f2__ptypehash__new(cause);
   return raw__machine_code_chunk__new(cause, chunk, index_label_ptypehash);
 }
-def_pcfunk0(machine_code_chunk__new,
+def_pcfunk1(machine_code_chunk__new, chunk,
 	    "",
-	    return f2__machine_code_chunk__new(this_cause));
+	    return f2__machine_code_chunk__new(this_cause, chunk));
 
 
 f2ptr raw__machine_code_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -1343,7 +1343,7 @@ f2ptr raw__expression__compile_x86__retq(f2ptr cause, f2ptr expression) {
   }
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC3);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
@@ -1365,7 +1365,7 @@ f2ptr raw__expression__compile_x86__rawcode(f2ptr cause, f2ptr expression) {
       iter                       = f2cons__cdr(iter, cause);
     }
   }
-  return raw__chunklist__concat(cause, subexpression_chunks);
+  return raw__machine_code_chunk_list__concat(cause, subexpression_chunks);
 }
 
 //  4004b4:	55                   	push   %rbp
@@ -1417,7 +1417,7 @@ f2ptr raw__constant_expression__constant_value(f2ptr cause, f2ptr expression) {
 f2ptr raw__expression__compile_x86__push_rax(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x50);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a6:	51                   	push   %rcx
@@ -1425,7 +1425,7 @@ f2ptr raw__expression__compile_x86__push_rax(f2ptr cause) {
 f2ptr raw__expression__compile_x86__push_rcx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x51);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a5:	52                   	push   %rdx
@@ -1433,13 +1433,13 @@ f2ptr raw__expression__compile_x86__push_rcx(f2ptr cause) {
 f2ptr raw__expression__compile_x86__push_rdx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x52);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x55);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a4:	56                   	push   %rsi
@@ -1447,7 +1447,7 @@ f2ptr raw__expression__compile_x86__push_rbp(f2ptr cause) {
 f2ptr raw__expression__compile_x86__push_rsi(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x56);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a3:	57                   	push   %rdi
@@ -1455,7 +1455,7 @@ f2ptr raw__expression__compile_x86__push_rsi(f2ptr cause) {
 f2ptr raw__expression__compile_x86__push_rdi(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x57);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a7:	41 50                	push   %r8
@@ -1464,7 +1464,7 @@ f2ptr raw__expression__compile_x86__push_r8(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x50);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a9:	41 51                	push   %r9
@@ -1473,7 +1473,7 @@ f2ptr raw__expression__compile_x86__push_r9(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x51);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 
@@ -1521,7 +1521,7 @@ f2ptr raw__expression__compile_x86__push(f2ptr cause, f2ptr expression) {
 f2ptr raw__expression__compile_x86__pop_rax(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x58);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000af:	59                   	pop    %rcx
@@ -1529,7 +1529,7 @@ f2ptr raw__expression__compile_x86__pop_rax(f2ptr cause) {
 f2ptr raw__expression__compile_x86__pop_rcx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x59);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ae:	5a                   	pop    %rdx
@@ -1537,13 +1537,13 @@ f2ptr raw__expression__compile_x86__pop_rcx(f2ptr cause) {
 f2ptr raw__expression__compile_x86__pop_rdx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5A);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__pop_rbp(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5D);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ac:	5f                   	pop    %rdi
@@ -1551,7 +1551,7 @@ f2ptr raw__expression__compile_x86__pop_rbp(f2ptr cause) {
 f2ptr raw__expression__compile_x86__pop_rdi(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5F);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ad:	5e                   	pop    %rsi
@@ -1559,7 +1559,7 @@ f2ptr raw__expression__compile_x86__pop_rdi(f2ptr cause) {
 f2ptr raw__expression__compile_x86__pop_rsi(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x5E);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b0:	41 58                	pop    %r8
@@ -1568,7 +1568,7 @@ f2ptr raw__expression__compile_x86__pop_r8(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x58);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b2:	41 59                	pop    %r9
@@ -1577,7 +1577,7 @@ f2ptr raw__expression__compile_x86__pop_r9(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x41);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x59);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__pop(f2ptr cause, f2ptr expression) {
@@ -1618,7 +1618,7 @@ f2ptr raw__expression__compile_x86__mov__rsp__rbp(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xE5);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //   4004c8:	48 89 7d f8          	mov    %rdi,-0x8(%rbp)
@@ -1683,7 +1683,7 @@ f2ptr raw__expression__compile_x86__mov__rax__relative_rbp(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-rdi-relative_rbp-unknown_relative_offset_range"),
@@ -1699,7 +1699,7 @@ f2ptr raw__expression__compile_x86__mov__rdi__relative_rbp(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x7D);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-rdi-relative_rbp-unknown_relative_offset_range"),
@@ -1715,7 +1715,7 @@ f2ptr raw__expression__compile_x86__mov__rsi__relative_rbp(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x75);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-rdi-relative_rbp-unknown_relative_offset_range"),
@@ -1733,7 +1733,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rax(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rax-unknown_relative_offset_range"),
@@ -1751,7 +1751,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rdx(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x55);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1775,7 +1775,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rdi(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x7D);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1793,7 +1793,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rsi(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x75);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1811,7 +1811,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__rcx(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x4D);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1829,7 +1829,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__r8(f2ptr cause, s64 relat
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1847,7 +1847,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rbp__r9(f2ptr cause, s64 relat
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x4D);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rbp-rdx-unknown_relative_offset_range"),
@@ -1873,7 +1873,7 @@ f2ptr raw__expression__compile_x86__mov__relative_rax__rax(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x40);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-mov-relative_rax-rax-unknown_relative_offset_range"),
@@ -1889,7 +1889,7 @@ f2ptr raw__expression__compile_x86__add__relative_rbp__rax(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x03);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-add-relative_rpb-rax-unknown_relative_offset_range"),
@@ -1905,7 +1905,7 @@ f2ptr raw__expression__compile_x86__cmp__relative_rbp__rax(f2ptr cause, s64 rela
     raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
     raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
     raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmp-relative_rpb-rax-unknown_relative_offset_range"),
@@ -1925,7 +1925,7 @@ f2ptr raw__expression__compile_x86__subq__constant__relative_rbp(f2ptr cause, s6
       raw__chunk__bit8__elt__set(cause, chunk, 2, 0x6D);
       raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
       raw__chunk__bit8__elt__set(cause, chunk, 4, (u8)((signed char)constant_value));
-      return chunk;
+      return f2__machine_code_chunk__new(cause, chunk);
     } else {
       return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-subq-constant-relative_rbp-unknown_relative_offset_range"),
@@ -1949,7 +1949,7 @@ f2ptr raw__expression__compile_x86__addq__constant__relative_rbp(f2ptr cause, s6
       raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
       raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
       raw__chunk__bit8__elt__set(cause, chunk, 4, (u8)((signed char)constant_value));
-      return chunk;
+      return f2__machine_code_chunk__new(cause, chunk);
     } else {
       return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-addq-constant-relative_rbp-unknown_relative_offset_range"),
@@ -1973,7 +1973,7 @@ f2ptr raw__expression__compile_x86__cmpq__constant__relative_rbp(f2ptr cause, s6
       raw__chunk__bit8__elt__set(cause, chunk, 2, 0x7D);
       raw__chunk__bit8__elt__set(cause, chunk, 3, (u8)((signed char)relative_offset_value));
       raw__chunk__bit8__elt__set(cause, chunk, 4, (u8)((signed char)constant_value));
-      return chunk;
+      return f2__machine_code_chunk__new(cause, chunk);
     } else {
       return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-constant-relative_rbp-unknown_relative_offset_range"),
@@ -2000,7 +2000,7 @@ f2ptr raw__expression__compile_x86__movq__constant__relative_rbp(f2ptr cause, s6
       raw__chunk__bit8__elt__set(cause, chunk, 5, (constant_value >>  8) & 0xFF);
       raw__chunk__bit8__elt__set(cause, chunk, 6, (constant_value >> 16) & 0xFF);
       raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 24) & 0xFF);
-      return chunk;
+      return f2__machine_code_chunk__new(cause, chunk);
     } else {
       return new__error(f2list4__new(cause,
 				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-movq-constant-relative_rbp-unknown_relative_offset_range"),
@@ -2018,7 +2018,7 @@ f2ptr raw__expression__compile_x86__mov__deref_rax__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x8B);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x00);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__movzbl__deref_rax__eax(f2ptr cause) {
@@ -2026,7 +2026,7 @@ f2ptr raw__expression__compile_x86__movzbl__deref_rax__eax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB6);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x00);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__movzbl__al__eax(cause) {
@@ -2034,7 +2034,7 @@ f2ptr raw__expression__compile_x86__movzbl__al__eax(cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xB6);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 f8             	mov    %rdi,%rax
@@ -2044,7 +2044,7 @@ f2ptr raw__expression__compile_x86__mov__rdi__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 fa             	mov    %rdi,%rdx
@@ -2054,7 +2054,7 @@ f2ptr raw__expression__compile_x86__mov__rdi__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xFA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 ff             	mov    %rdi,%rdi
@@ -2064,7 +2064,7 @@ f2ptr raw__expression__compile_x86__mov__rdi__rdi(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a5:	48 89 f0             	mov    %rsi,%rax
@@ -2074,7 +2074,7 @@ f2ptr raw__expression__compile_x86__mov__rsi__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 f1             	mov    %rsi,%rcx
@@ -2084,7 +2084,7 @@ f2ptr raw__expression__compile_x86__mov__rsi__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 f2             	mov    %rsi,%rdx
@@ -2094,7 +2094,7 @@ f2ptr raw__expression__compile_x86__mov__rsi__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 f6             	mov    %rsi,%rsi
@@ -2104,7 +2104,7 @@ f2ptr raw__expression__compile_x86__mov__rsi__rsi(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF6);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a8:	48 89 d0             	mov    %rdx,%rax
@@ -2114,7 +2114,7 @@ f2ptr raw__expression__compile_x86__mov__rdx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 89 d6             	mov    %rdx,%rsi
@@ -2124,7 +2124,7 @@ f2ptr raw__expression__compile_x86__mov__rdx__rsi(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD6);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ab:	48 89 c8             	mov    %rcx,%rax
@@ -2134,7 +2134,7 @@ f2ptr raw__expression__compile_x86__mov__rcx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ae:	4c 89 c0             	mov    %r8,%rax
@@ -2144,7 +2144,7 @@ f2ptr raw__expression__compile_x86__mov__r8__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b1:	4c 89 c8             	mov    %r9,%rax
@@ -2154,7 +2154,7 @@ f2ptr raw__expression__compile_x86__mov__r9__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b4:	48 89 c7             	mov    %rax,%rdi
@@ -2164,7 +2164,7 @@ f2ptr raw__expression__compile_x86__mov__rax__rdi(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC7);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b7:	48 89 c6             	mov    %rax,%rsi
@@ -2174,7 +2174,7 @@ f2ptr raw__expression__compile_x86__mov__rax__rsi(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC6);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ba:	48 89 c2             	mov    %rax,%rdx
@@ -2184,7 +2184,7 @@ f2ptr raw__expression__compile_x86__mov__rax__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000bd:	48 89 c1             	mov    %rax,%rcx
@@ -2194,7 +2194,7 @@ f2ptr raw__expression__compile_x86__mov__rax__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000c0:	49 89 c0             	mov    %rax,%r8
@@ -2204,7 +2204,7 @@ f2ptr raw__expression__compile_x86__mov__rax__r8(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000c3:	49 89 c1             	mov    %rax,%r9
@@ -2214,7 +2214,7 @@ f2ptr raw__expression__compile_x86__mov__rax__r9(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x89);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__mov(f2ptr cause, f2ptr expression) {
@@ -2665,7 +2665,7 @@ f2ptr raw__expression__compile_x86__add__rdx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a2:	48 01 c2             	add    %rax,%rdx
@@ -2675,7 +2675,7 @@ f2ptr raw__expression__compile_x86__add__rax__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x01);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__add(f2ptr cause, f2ptr expression) {
@@ -3158,7 +3158,7 @@ f2ptr raw__expression__compile_x86__movq__rax__xmm0(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000bb:	66 48 0f 6e c1       	movq   %rcx,%xmm0
@@ -3170,7 +3170,7 @@ f2ptr raw__expression__compile_x86__movq__rcx__xmm0(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000c0:	66 48 0f 6e c2       	movq   %rdx,%xmm0
@@ -3182,7 +3182,7 @@ f2ptr raw__expression__compile_x86__movq__rdx__xmm0(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000c5:	66 48 0f 6e c8       	movq   %rax,%xmm1
@@ -3194,7 +3194,7 @@ f2ptr raw__expression__compile_x86__movq__rax__xmm1(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ca:	66 48 0f 6e c9       	movq   %rcx,%xmm1
@@ -3206,7 +3206,7 @@ f2ptr raw__expression__compile_x86__movq__rcx__xmm1(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC9);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000cf:	66 48 0f 6e ca       	movq   %rdx,%xmm1
@@ -3218,7 +3218,7 @@ f2ptr raw__expression__compile_x86__movq__rdx__xmm1(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x6E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xCA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000d4:	66 48 0f 7e c0       	movq   %xmm0,%rax
@@ -3230,7 +3230,7 @@ f2ptr raw__expression__compile_x86__movq__xmm0__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000d9:	66 48 0f 7e c1       	movq   %xmm0,%rcx
@@ -3242,7 +3242,7 @@ f2ptr raw__expression__compile_x86__movq__xmm0__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000de:	66 48 0f 7e c2       	movq   %xmm0,%rdx
@@ -3254,7 +3254,7 @@ f2ptr raw__expression__compile_x86__movq__xmm0__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000e3:	66 48 0f 7e c8       	movq   %xmm1,%rax
@@ -3266,7 +3266,7 @@ f2ptr raw__expression__compile_x86__movq__xmm1__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000e8:	66 48 0f 7e c9       	movq   %xmm1,%rcx
@@ -3278,7 +3278,7 @@ f2ptr raw__expression__compile_x86__movq__xmm1__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xC9);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ed:	66 48 0f 7e ca       	movq   %xmm1,%rdx
@@ -3290,7 +3290,7 @@ f2ptr raw__expression__compile_x86__movq__xmm1__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x7E);
   raw__chunk__bit8__elt__set(cause, chunk, 4, 0xCA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__movq(f2ptr cause, f2ptr expression) {
@@ -3456,7 +3456,7 @@ f2ptr raw__expression__compile_x86__jmp__relative(f2ptr cause, s64 relative_jump
     f2ptr chunk = raw__chunk__new(cause, 2);
     raw__chunk__bit8__elt__set(cause, chunk, 0, 0xEB);
     raw__chunk__bit8__elt__set(cause, chunk, 1, (u8)((signed char)relative_jump_distance));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jmp-relative_rax-rax-unknown_relative_offset_range"),
@@ -3470,7 +3470,7 @@ f2ptr raw__expression__compile_x86__jb__relative(f2ptr cause, s64 relative_jump_
     f2ptr chunk = raw__chunk__new(cause, 2);
     raw__chunk__bit8__elt__set(cause, chunk, 0, 0x72);
     raw__chunk__bit8__elt__set(cause, chunk, 1, (u8)((signed char)relative_jump_distance));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jb-relative_rax-rax-unknown_relative_offset_range"),
@@ -3484,7 +3484,7 @@ f2ptr raw__expression__compile_x86__jne__relative(f2ptr cause, s64 relative_jump
     f2ptr chunk = raw__chunk__new(cause, 2);
     raw__chunk__bit8__elt__set(cause, chunk, 0, 0x75);
     raw__chunk__bit8__elt__set(cause, chunk, 1, (u8)((signed char)relative_jump_distance));
-    return chunk;
+    return f2__machine_code_chunk__new(cause, chunk);
   } else {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jne-relative_rax-rax-unknown_relative_offset_range"),
@@ -3507,7 +3507,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_rax(f2ptr cause, u64 consta
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ac:	48 bf ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rdi
@@ -3525,7 +3525,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_rdi(f2ptr cause, u64 consta
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b6:	48 be ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rsi
@@ -3543,7 +3543,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_rsi(f2ptr cause, u64 consta
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000c0:	48 ba ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rdx
@@ -3561,7 +3561,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_rdx(f2ptr cause, u64 consta
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ca:	48 b9 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%rcx
@@ -3579,7 +3579,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_rcx(f2ptr cause, u64 consta
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000d4:	49 b8 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%r8
@@ -3597,7 +3597,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_r8(f2ptr cause, u64 constan
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000de:	49 b9 ef be ad de ef 	movabs $0xdeadbeefdeadbeef,%r9
@@ -3615,7 +3615,7 @@ f2ptr raw__expression__compile_x86__movabs__constant_r9(f2ptr cause, u64 constan
   raw__chunk__bit8__elt__set(cause, chunk, 7, (constant_value >> 40) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 8, (constant_value >> 48) & 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 9, (constant_value >> 56) & 0xFF);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
@@ -3771,7 +3771,7 @@ f2ptr raw__expression__compile_x86__shl__cl__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xD3);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xE0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__shl(f2ptr cause, f2ptr expression) {
@@ -3820,7 +3820,7 @@ f2ptr raw__expression__compile_x86__shr__cl__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xD3);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xE8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__shr(f2ptr cause, f2ptr expression) {
@@ -3869,7 +3869,7 @@ f2ptr raw__expression__compile_x86__sub__rax__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a5:	48 29 c2             	sub    %rax,%rdx
@@ -3879,7 +3879,7 @@ f2ptr raw__expression__compile_x86__sub__rax__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a8:	48 29 c8             	sub    %rcx,%rax
@@ -3889,7 +3889,7 @@ f2ptr raw__expression__compile_x86__sub__rcx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ab:	48 29 ca             	sub    %rcx,%rdx
@@ -3899,7 +3899,7 @@ f2ptr raw__expression__compile_x86__sub__rcx__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xCA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ae:	48 29 d0             	sub    %rdx,%rax
@@ -3909,7 +3909,7 @@ f2ptr raw__expression__compile_x86__sub__rdx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b1:	48 29 d1             	sub    %rdx,%rcx
@@ -3919,7 +3919,7 @@ f2ptr raw__expression__compile_x86__sub__rdx__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x29);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xD1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 
@@ -3989,7 +3989,7 @@ f2ptr raw__expression__compile_x86__imul__rax__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a6:	48 0f af d0          	imul   %rax,%rdx
@@ -4000,7 +4000,7 @@ f2ptr raw__expression__compile_x86__imul__rax__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xD0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000aa:	48 0f af c1          	imul   %rcx,%rax
@@ -4011,7 +4011,7 @@ f2ptr raw__expression__compile_x86__imul__rcx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000ae:	48 0f af d1          	imul   %rcx,%rdx
@@ -4022,7 +4022,7 @@ f2ptr raw__expression__compile_x86__imul__rcx__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0x41);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b2:	48 0f af c2          	imul   %rdx,%rax
@@ -4033,7 +4033,7 @@ f2ptr raw__expression__compile_x86__imul__rdx__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000b6:	48 0f af ca          	imul   %rdx,%rcx
@@ -4044,7 +4044,7 @@ f2ptr raw__expression__compile_x86__imul__rdx__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xAF);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xCA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__imul(f2ptr cause, f2ptr expression) {
@@ -4112,7 +4112,7 @@ f2ptr raw__expression__compile_x86__sar__constant__rax(f2ptr cause, u8 constant)
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF8);
   raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a6:	48 c1 f9 3f          	sar    $0x3f,%rcx
@@ -4123,7 +4123,7 @@ f2ptr raw__expression__compile_x86__sar__constant__rcx(f2ptr cause, u8 constant)
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF9);
   raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000aa:	48 c1 fa 3f          	sar    $0x3f,%rdx
@@ -4134,7 +4134,7 @@ f2ptr raw__expression__compile_x86__sar__constant__rdx(f2ptr cause, u8 constant)
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xC1);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xFA);
   raw__chunk__bit8__elt__set(cause, chunk, 3, constant);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__sar(f2ptr cause, f2ptr expression) {
@@ -4188,7 +4188,7 @@ f2ptr raw__expression__compile_x86__idivq__rax(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xF7);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a5:	48 f7 f9             	idiv   %rcx
@@ -4198,7 +4198,7 @@ f2ptr raw__expression__compile_x86__idivq__rcx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xF7);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xF9);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a8:	48 f7 fa             	idiv   %rdx
@@ -4208,7 +4208,7 @@ f2ptr raw__expression__compile_x86__idivq__rdx(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xF7);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0xFA);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__idivq(f2ptr cause, f2ptr expression) {
@@ -4244,7 +4244,7 @@ f2ptr raw__expression__compile_x86__addsd__xmm0__xmm1(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x58);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC8);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a6:	f2 0f 58 c1          	addsd  %xmm1,%xmm0
@@ -4255,7 +4255,7 @@ f2ptr raw__expression__compile_x86__addsd__xmm1__xmm0(f2ptr cause) {
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0x0F);
   raw__chunk__bit8__elt__set(cause, chunk, 2, 0x58);
   raw__chunk__bit8__elt__set(cause, chunk, 3, 0xC1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__addsd(f2ptr cause, f2ptr expression) {
@@ -4310,7 +4310,7 @@ f2ptr raw__expression__compile_x86__callq__rax(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xD0);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a4:	ff d1                	callq  *%rcx
@@ -4319,7 +4319,7 @@ f2ptr raw__expression__compile_x86__callq__rcx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xD1);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 //  4000a6:	ff d2                	callq  *%rdx
@@ -4328,7 +4328,7 @@ f2ptr raw__expression__compile_x86__callq__rdx(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 2);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xFF);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xD2);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__callq(f2ptr cause, f2ptr expression) {
@@ -4362,7 +4362,7 @@ f2ptr raw__expression__compile_x86__callq(f2ptr cause, f2ptr expression) {
 f2ptr raw__expression__compile_x86__leaveq__chunk(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC9);
-  return chunk;
+  return f2__machine_code_chunk__new(cause, chunk);
 }
 
 f2ptr raw__expression__compile_x86__leaveq(f2ptr cause, f2ptr expression) {
@@ -4481,11 +4481,11 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
       f2ptr movabs__rdx__jump_ptr__chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
       f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
       f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
-      return f2__chunklist__concat(cause, f2list4__new(cause,
-						       f2__chunklist__concat(cause, compiled_argument_chunks),
-						       movabs__rdx__jump_ptr__chunk,
-						       movabs__rax__zero__chunk,
-						       callq__rdx__chunk));
+      return f2__machine_code_chunk_list__concat(cause, f2list4__new(cause,
+								     f2__machine_code_chunk_list__concat(cause, compiled_argument_chunks),
+								     movabs__rdx__jump_ptr__chunk,
+								     movabs__rax__zero__chunk,
+								     callq__rdx__chunk));
     } else {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),

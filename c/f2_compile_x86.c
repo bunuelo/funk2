@@ -1312,6 +1312,40 @@ f2ptr raw__machine_code_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
 }
 
+f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
+  f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(this, cause);
+  f2ptr jumps                 = f2machine_code_chunk__jumps(                this, cause);
+  {
+    f2ptr iter = jumps;
+    while (iter != nil) {
+      f2ptr jump = f2cons__car(iter, cause);
+      {
+	f2ptr jump__index    = f2machine_code_jump__index(  jump, cause);
+	f2ptr jump__command  = f2machine_code_jump__command(jump, cause);
+	f2ptr jump__label    = f2machine_code_jump__label(  jump, cause);
+	s64   jump__index__i = f2integer__i(jump_index, cause);
+	f2ptr label__index   = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	if (label__index == nil) {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					 new__symbol(cause, "this"),       this,
+					 new__symbol(cause, "jump_label"), jump__label));
+	}
+	s64 label__index__i = f2integer__i(label__index, cause);
+	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
+	  // do something
+	} else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),
+					 new__symbol(cause, "this"),         this,
+					 new__symbol(cause, "jump_command"), jump__command));
+	}
+      }
+      iter = f2cons__cdr(iter, cause);
+    }
+  }
+}
+
 f2ptr f2__machine_code_chunk__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
   assert_argument_type(machine_code_chunk,            this);
   assert_argument_type(terminal_print_frame, terminal_print_frame);

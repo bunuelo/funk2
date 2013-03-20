@@ -1226,22 +1226,24 @@ f2ptr f2chunk__new_compiled_from_metro(f2ptr cause, f2ptr metro) {
 
 // machine_code_jump
 
-def_primobject_3_slot(machine_code_jump,
+def_primobject_4_slot(machine_code_jump,
 		      index,
 		      command,
-		      label);
+		      label,
+		      arguments);
 
-f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label) {
-  return f2machine_code_jump__new(cause, index, command, label);
+f2ptr raw__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label, f2ptr arguments) {
+  return f2machine_code_jump__new(cause, index, command, label, arguments);
 }
 
-f2ptr f2__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label) {
-  assert_argument_type(integer, index);
-  assert_argument_type(symbol,  command);
-  assert_argument_type(symbol,  label);
-  return raw__machine_code_jump__new(cause, index, command, label);
+f2ptr f2__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr label, f2ptr arguments) {
+  assert_argument_type(integer,  index);
+  assert_argument_type(symbol,   command);
+  assert_argument_type(symbol,   label);
+  assert_argument_type(conslist, arguments);
+  return raw__machine_code_jump__new(cause, index, command, label, arguments);
 }
-def_pcfunk3(machine_code_jump__new, index, command, label,
+def_pcfunk4(machine_code_jump__new, index, command, label, arguments,
 	    "",
 	    return f2__machine_code_jump__new(this_cause, index, command, label));
 
@@ -1252,9 +1254,10 @@ f2ptr raw__machine_code_jump__terminal_print_with_frame(f2ptr cause, f2ptr this,
   if (frame == nil) {
     frame = f2__frame__new(cause, f2list8__new(cause,
 					       new__symbol(cause, "print_object_type"), new__symbol(cause, "machine_code_jump"),
-					       new__symbol(cause, "index"),             f2__machine_code_jump__index(  cause, this),
-					       new__symbol(cause, "command"),           f2__machine_code_jump__command(cause, this),
-					       new__symbol(cause, "label"),             f2__machine_code_jump__label(  cause, this)));
+					       new__symbol(cause, "index"),             f2__machine_code_jump__index(    cause, this),
+					       new__symbol(cause, "command"),           f2__machine_code_jump__command(  cause, this),
+					       new__symbol(cause, "label"),             f2__machine_code_jump__label(    cause, this),
+					       new__symbol(cause, "arguments"),         f2__machine_code_jump__arguments(cause, this)));
     f2__ptypehash__add(cause, print_as_frame_hash, this, frame);
   }
   return raw__frame__terminal_print_with_frame(cause, frame, terminal_print_frame);
@@ -1334,6 +1337,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	s64 label__index__i = f2integer__i(label__index, cause);
 	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
 	  // do something
+	  return nil;
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),
@@ -1412,12 +1416,13 @@ f2ptr raw__machine_code_chunk_list__concat(f2ptr cause, f2ptr these) {
 	  while (jumps_iter != nil) {
 	    f2ptr jump = f2cons__car(jumps_iter, cause);
 	    {
-	      f2ptr jump__index     = f2machine_code_jump__index(  jump, cause);
-	      f2ptr jump__command   = f2machine_code_jump__command(jump, cause);
-	      f2ptr jump__label     = f2machine_code_jump__label(  jump, cause);
+	      f2ptr jump__index     = f2machine_code_jump__index(    jump, cause);
+	      f2ptr jump__command   = f2machine_code_jump__command(  jump, cause);
+	      f2ptr jump__label     = f2machine_code_jump__label(    jump, cause);
+	      f2ptr jump__arguments = f2machine_code_jump__arguments(jump, cause);
 	      s64   jump__index__i  = f2integer__i(jump__index, cause);
 	      f2ptr new_jump__index = f2integer__new(cause, jump__index__i + index_offset);
-	      f2ptr new_jump        = raw__machine_code_jump__new(cause, new_jump__index, jump__command, jump__label);
+	      f2ptr new_jump        = raw__machine_code_jump__new(cause, new_jump__index, jump__command, jump__label, jump__arguments);
 	      f2ptr new_cons        = f2cons__new(cause, new_jump, nil);
 	      if (new_jumps == nil) {
 		new_jumps = new_cons;
@@ -3814,10 +3819,11 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
 				       new__symbol(cause, "register_name"), register_name_1,
 				       new__symbol(cause, "expression"),    expression));
       }
-      f2ptr machine_code_jump__index   = f2integer__new(cause, 0);
-      f2ptr machine_code_jump__command = new__symbol(cause, "movabs");
-      f2ptr machine_code_jump__label   = label_name;
-      f2ptr machine_code_jump          = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label);
+      f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+      f2ptr machine_code_jump__command   = new__symbol(cause, "movabs");
+      f2ptr machine_code_jump__label     = label_name;
+      f2ptr machine_code_jump__arguments = f2list1__new(cause, register_name_1);
+      f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
       f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
       return machine_code_chunk;
     } else {
@@ -4953,7 +4959,7 @@ void f2__compile_x86__defragment__fix_pointers() {
 
   // machine_code_jump
   
-  initialize_primobject_3_slot__defragment__fix_pointers(machine_code_jump, index, command, label);
+  initialize_primobject_4_slot__defragment__fix_pointers(machine_code_jump, index, command, label, arguments);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(machine_code_jump__terminal_print_with_frame);
@@ -5003,7 +5009,7 @@ void f2__compile_x86__reinitialize_globalvars() {
   
   // machine_code_jump
   
-  initialize_primobject_3_slot(machine_code_jump, index, command, label);
+  initialize_primobject_4_slot(machine_code_jump, index, command, label, arguments);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(machine_code_jump__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.primobject.primobject_type_machine_code_jump.terminal_print_with_frame__funk = never_gc(cfunk);}

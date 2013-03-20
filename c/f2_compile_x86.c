@@ -1245,7 +1245,7 @@ f2ptr f2__machine_code_jump__new(f2ptr cause, f2ptr index, f2ptr command, f2ptr 
 }
 def_pcfunk4(machine_code_jump__new, index, command, label, arguments,
 	    "",
-	    return f2__machine_code_jump__new(this_cause, index, command, label));
+	    return f2__machine_code_jump__new(this_cause, index, command, label, arguments));
 
 
 f2ptr raw__machine_code_jump__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

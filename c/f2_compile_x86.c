@@ -1326,7 +1326,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	f2ptr jump__index    = f2machine_code_jump__index(  jump, cause);
 	f2ptr jump__command  = f2machine_code_jump__command(jump, cause);
 	f2ptr jump__label    = f2machine_code_jump__label(  jump, cause);
-	s64   jump__index__i = f2integer__i(jump_index, cause);
+	s64   jump__index__i = f2integer__i(jump__index, cause);
 	f2ptr label__index   = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
 	if (label__index == nil) {
 	  return new__error(f2list6__new(cause,

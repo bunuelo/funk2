@@ -4031,7 +4031,7 @@ f2ptr raw__expression__compile_x86__jb__relative(f2ptr cause, s64 relative_jump_
   }
 }
 
-f2ptr raw__expression__compile_x86__jne__relative(f2ptr cause, s64 relative_jump_distance) {
+f2ptr raw__expression__compile_x86__jne__constant(f2ptr cause, s64 relative_jump_distance) {
   if ((relative_jump_distance <   128) &&
       (relative_jump_distance >= -128)) {
     f2ptr chunk = raw__chunk__new(cause, 2);
@@ -4208,38 +4208,6 @@ f2ptr raw__expression__compile_x86__jb(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "expression"), expression));
   }
   return raw__expression__compile_x86__jb__relative(cause, relative_jump_distance);
-}
-
-f2ptr raw__expression__compile_x86__jne(f2ptr cause, f2ptr expression) {
-  if (raw__simple_length(cause, expression) != 2) {
-    return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jne-invalid_expression_length"),
-				   new__symbol(cause, "expression"), expression));
-  }
-  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
-  s64 relative_jump_distance = 0;
-  if (raw__pointer__is_type(cause, argument_0)) {
-    relative_jump_distance = (s64)f2pointer__p(argument_0, cause);
-  } else if (raw__integer__is_type(cause, argument_0)) {
-    relative_jump_distance = f2integer__i(argument_0, cause);
-  } else if (raw__expression__is_minus_expression(cause, argument_0)) {
-    f2ptr minus_expression__argument = raw__minus_expression__argument(cause, argument_0);
-    if (raw__pointer__is_type(cause, minus_expression__argument)) {
-      relative_jump_distance = -(s64)f2pointer__p(minus_expression__argument, cause);
-    } else if (raw__integer__is_type(cause, minus_expression__argument)) {
-      relative_jump_distance = -f2integer__i(minus_expression__argument, cause);
-    } else {
-      return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-jne-invalid_minus_expression_argument_expression_type"),
-				     new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
-				     new__symbol(cause, "expression"),                expression));
-    }
-  } else {
-    return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jne-invalid_argument_expression_type"),
-				   new__symbol(cause, "expression"), expression));
-  }
-  return raw__expression__compile_x86__jne__relative(cause, relative_jump_distance);
 }
 
 //  4000a2:	48 d3 e0             	shl    %cl,%rax
@@ -5079,7 +5047,21 @@ f2ptr raw__expression__compile_x86__jne(f2ptr cause, f2ptr expression) {
 				   new__symbol(cause, "expression"), expression));
   }
   f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
-  if (raw__expression__is_label_expression(cause, argument_0)) {
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-jne-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__jne__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
     f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
     f2ptr machine_code_chunk           = raw__expression__compile_x86__jne__constant(cause, 0);
     f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
@@ -5169,7 +5151,6 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "je")))      {return raw__expression__compile_x86__je(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jb")))      {return raw__expression__compile_x86__jb(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shl")))     {return raw__expression__compile_x86__shl(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shr")))     {return raw__expression__compile_x86__shr(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "sub")))     {return raw__expression__compile_x86__sub(    cause, expression);}

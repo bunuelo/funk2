@@ -40,6 +40,8 @@ declare_object_type_4_slot(machine_code_jump, index, command, label, arguments,
 
 typedef struct funk2_object_type__machine_code_chunk__slot_s funk2_object_type__machine_code_chunk__slot_t;
 declare_object_type_3_slot(machine_code_chunk, chunk, index_label_ptypehash, jumps,
+			   f2ptr finalize_jumps__symbol;
+			   f2ptr finalize_jumps__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

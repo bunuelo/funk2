@@ -4987,6 +4987,51 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
   }
 }
 
+//  4007e5:	74 07                	je     4007ee <test_if+0x16>
+
+f2ptr raw__expression__compile_x86__je__constant(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 2);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x74);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-je-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__je(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-je-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-je-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__je__constant(cause, constant_value__i);
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-je-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
 f2ptr raw__expression__compile_x86__symbol(f2ptr cause, f2ptr expression) {
   if (! raw__cause__is_type(cause, cause)) {
     return new__error(f2list4__new(cause,
@@ -5056,6 +5101,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "cmp")))     {return raw__expression__compile_x86__cmp(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "movabs")))  {return raw__expression__compile_x86__movabs( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jmp")))     {return raw__expression__compile_x86__jmp(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "je")))      {return raw__expression__compile_x86__je(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jb")))      {return raw__expression__compile_x86__jb(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shl")))     {return raw__expression__compile_x86__shl(    cause, expression);}

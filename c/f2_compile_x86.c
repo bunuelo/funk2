@@ -1490,7 +1490,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					 new__symbol(cause, "jump_label"), jump__label));
 	}
 	s64 label__index__i = f2integer__i(label__index, cause);
-	u64 jump_location   = ((u64)(f2chunk__bytes(chunk, cause))) + ((u64)(label__index__i));
+	u64 jump_location   = raw__chunk__bytes(cause, chunk) + ((u64)(label__index__i));
 	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
 	  f2ptr register_name = f2cons__car(jump__arguments, cause);
 	  if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, jump_location);}

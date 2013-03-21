@@ -1490,15 +1490,16 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					 new__symbol(cause, "jump_label"), jump__label));
 	}
 	s64 label__index__i = f2integer__i(label__index, cause);
+	u64 jump_location   = ((u64)(f2chunk__bytes(chunk, cause))) + ((u64)(label__index__i));
 	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
 	  f2ptr register_name = f2cons__car(jump__arguments, cause);
-	  if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdi(cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rsi(cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rcx(cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r8( cause, chunk, jump__index__i, label__index__i);}
-	  else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r9( cause, chunk, jump__index__i, label__index__i);}
+	  if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdi(cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rsi(cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rcx(cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r8( cause, chunk, jump__index__i, jump_location);}
+	  else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r9( cause, chunk, jump__index__i, jump_location);}
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_movabs_register"),

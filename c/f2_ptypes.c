@@ -1072,7 +1072,7 @@ u16 pfunk2__f2chunk__bit16__elt(f2ptr this, u64 index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u16 retval = __pure__f2chunk__bit16__elt(this, index);
+  u16 retval = (u16)(__pure__f2chunk__bit16__elt(this, index));
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
@@ -1085,7 +1085,7 @@ void pfunk2__f2chunk__bit16__elt__set(f2ptr this, u64 index, f2ptr cause, u16 va
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__f2chunk__bit16__elt__set(this, index, value);
+  __pure__f2chunk__bit16__elt__set(this, index, (u64)(value));
   container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 
@@ -1097,7 +1097,7 @@ u32 pfunk2__f2chunk__bit32__elt(f2ptr this, u64 index, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u32 retval = __pure__f2chunk__bit32__elt(this, index);
+  u32 retval = (u32)(__pure__f2chunk__bit32__elt(this, index));
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
@@ -1110,7 +1110,7 @@ void pfunk2__f2chunk__bit32__elt__set(f2ptr this, u64 index, f2ptr cause, u32 va
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  __pure__f2chunk__bit32__elt__set(this, index, value);
+  __pure__f2chunk__bit32__elt__set(this, index, (u64)(value));
   container__reflectively_know_of_writing_to(cause, this, nil, sizeof(value));
 }
 

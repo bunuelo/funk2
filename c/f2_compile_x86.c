@@ -5354,7 +5354,7 @@ f2ptr raw__expression__compile_x86__inc__r8(f2ptr cause) {
 
 //  4000b4:	49 ff c1             	inc    %r9
 
-f2ptr raw__expression__compile_x86__inc__r8(f2ptr cause) {
+f2ptr raw__expression__compile_x86__inc__r9(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 3);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
   raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);

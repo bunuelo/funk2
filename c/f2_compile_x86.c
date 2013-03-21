@@ -3907,7 +3907,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "rcx"))) {
@@ -3915,7 +3915,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "rdx"))) {
@@ -3923,7 +3923,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "rsi"))) {
@@ -3931,7 +3931,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "rdi"))) {
@@ -3939,7 +3939,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "r8"))) {
@@ -3947,7 +3947,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else if (raw__eq(cause, register_name_0, new__symbol(cause, "r9"))) {
@@ -3955,7 +3955,7 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
 	  else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
-					   new__symbol(cause, "register_name"), register_name,
+					   new__symbol(cause, "register_name"), register_name_1,
 					   new__symbol(cause, "expression"),    expression));
 	  }
 	} else {

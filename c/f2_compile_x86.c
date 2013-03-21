@@ -5450,6 +5450,163 @@ f2ptr raw__expression__compile_x86__incq(f2ptr cause, f2ptr expression) {
   }
 }
 
+//  4000a2:	48 ff c8             	dec    %rax
+
+f2ptr raw__expression__compile_x86__decq__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC8);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a5:	48 ff c9             	dec    %rcx
+
+f2ptr raw__expression__compile_x86__decq__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC9);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a8:	48 ff ca             	dec    %rdx
+
+f2ptr raw__expression__compile_x86__decq__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xCA);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000ab:	48 ff ce             	dec    %rsi
+
+f2ptr raw__expression__compile_x86__decq__rsi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xCE);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000ae:	48 ff cf             	dec    %rdi
+
+f2ptr raw__expression__compile_x86__decq__rdi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xCF);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000b1:	49 ff c8             	dec    %r8
+
+f2ptr raw__expression__compile_x86__decq__r8(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC8);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000b4:	49 ff c9             	dec    %r9
+
+f2ptr raw__expression__compile_x86__decq__r9(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC9);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000b7:	48 ff 4d e0          	decq   -0x20(%rbp)
+
+f2ptr raw__expression__compile_x86__decq__relative_rbp(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x4D);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-decq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__decq(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-decq-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_register_expression(cause, argument)) {
+    f2ptr register_name = raw__register_expression__register_name(cause, argument);
+    if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__decq__rax(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__decq__rcx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__decq__rdx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__decq__rsi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__decq__rdi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__decq__r8( cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__decq__r9( cause);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-decq-unknown_register_name"),
+				     new__symbol(cause, "register_name"), register_name,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else if (raw__expression__is_relative_expression(cause, argument)) {
+    f2ptr relative_offset               = raw__relative_expression__relative_offset(cause, argument);
+    f2ptr relative_expression__argument = raw__relative_expression__argument(       cause, argument);
+    s64   relative_offset_value = 0;
+    if (raw__pointer__is_type(cause, relative_offset)) {
+      relative_offset_value = (s64)f2pointer__p(relative_offset, cause);
+    } else if (raw__integer__is_type(cause, relative_offset)) {
+      relative_offset_value = f2integer__i(relative_offset, cause);
+    } else if (raw__expression__is_minus_expression(cause, relative_offset)) {
+      f2ptr minus_expression__argument = raw__minus_expression__argument(cause, relative_offset);
+      if (raw__pointer__is_type(cause, minus_expression__argument)) {
+	relative_offset_value = -((s64)f2pointer__p(minus_expression__argument, cause));
+      } else if (raw__integer__is_type(cause, minus_expression__argument)) {
+	relative_offset_value = -f2integer__i(minus_expression__argument, cause);
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-movq-invalid_minus_argument_type"),
+				       new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
+				       new__symbol(cause, "expression"),                expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-movq-invalid_relative_offset_type"),
+				     new__symbol(cause, "relative_offset"), relative_offset,
+				     new__symbol(cause, "expression"),      expression));
+    }
+    if (raw__expression__is_register_expression(cause, relative_expression__argument)) {
+      f2ptr register_name = raw__register_expression__register_name(cause, relative_expression__argument);
+      if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {return raw__expression__compile_x86__decq__relative_rbp(cause, relative_offset_value);}
+      else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movq-unknown_register"),
+				       new__symbol(cause, "register_name"), register_name,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movq-invalid_argument_expression_type"),
+				     new__symbol(cause, "argument"),   argument,
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-decq-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
 
 f2ptr raw__expression__compile_x86__leaveq__chunk(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
@@ -5943,6 +6100,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "movq")))    {return raw__expression__compile_x86__movq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))  {return raw__expression__compile_x86__movzbl( cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "incq")))    {return raw__expression__compile_x86__incq(   cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "decq")))    {return raw__expression__compile_x86__decq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "add")))     {return raw__expression__compile_x86__add(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "subq")))    {return raw__expression__compile_x86__subq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "addq")))    {return raw__expression__compile_x86__addq(   cause, expression);}

@@ -4031,20 +4031,6 @@ f2ptr raw__expression__compile_x86__jb__relative(f2ptr cause, s64 relative_jump_
   }
 }
 
-f2ptr raw__expression__compile_x86__jne__constant(f2ptr cause, s64 relative_jump_distance) {
-  if ((relative_jump_distance <   128) &&
-      (relative_jump_distance >= -128)) {
-    f2ptr chunk = raw__chunk__new(cause, 2);
-    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x75);
-    raw__chunk__bit8__elt__set(cause, chunk, 1, (u8)((signed char)relative_jump_distance));
-    return f2__machine_code_chunk__new(cause, chunk);
-  } else {
-    return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jne-relative_rax-rax-unknown_relative_offset_range"),
-				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_jump_distance)));
-  }
-}
-
 boolean_t raw__expression__is_label_expression(f2ptr cause, f2ptr expression) {
   if (! raw__cons__is_type(cause, expression)) {
     return boolean__false;

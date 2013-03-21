@@ -192,7 +192,7 @@
 		      [jmp    #x05]
 		      [subq   [constant #x01] [relative [- #x08] [register rbp]]]
 		      [cmpq   [constant #x00] [relative [- #x08] [register rbp]]]
-		      [jne    [- #x0C]]
+		      [jne    [constant -12]]
 		      [pop    [register rbp]]
 		      [retq]]]
 

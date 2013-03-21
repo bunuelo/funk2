@@ -1468,6 +1468,27 @@ f2ptr raw__expression__compile_x86__movabs__constant_r9(f2ptr cause, u64 constan
   return f2__machine_code_chunk__new(cause, chunk);
 }
 
+//  4007e5:	74 07                	je     4007ee <test_if+0x16>
+
+f2ptr raw__expression__compile_x86_to_chunk__je__constant(f2ptr cause, f2ptr chunk, s64 start_index, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 0, 0x74);
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 1, relative_offset);
+    return nil;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-je-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__je__constant(f2ptr cause, s64 relative_offset) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, 0, relative_offset));
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
 f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
   f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(this, cause);
   f2ptr chunk                 = f2machine_code_chunk__chunk(                this, cause);
@@ -1512,6 +1533,8 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					 new__symbol(cause, "this"),         this,
 					 new__symbol(cause, "jump_command"), jump__command));
 	}
+      } else if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
+	raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, jump_location - jump__index__i);
       }
       iter = f2cons__cdr(iter, cause);
     }
@@ -4987,22 +5010,6 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
   }
 }
 
-//  4007e5:	74 07                	je     4007ee <test_if+0x16>
-
-f2ptr raw__expression__compile_x86__je__constant(f2ptr cause, s64 relative_offset) {
-  if ((relative_offset >= -128) &&
-      (relative_offset <   128)) {
-    f2ptr chunk = raw__chunk__new(cause, 2);
-    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x74);
-    raw__chunk__bit8__elt__set(cause, chunk, 1, relative_offset);
-    return f2__machine_code_chunk__new(cause, chunk);
-  } else {
-    return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-je-unknown_relative_offset_range"),
-				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
-  }
-}
-
 f2ptr raw__expression__compile_x86__je(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 2) {
     return new__error(f2list4__new(cause,
@@ -5024,6 +5031,16 @@ f2ptr raw__expression__compile_x86__je(f2ptr cause, f2ptr expression) {
 				     new__symbol(cause, "expression"),     expression));
     }
     return raw__expression__compile_x86__je__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
+    f2ptr machine_code_chunk           = raw__expression__compile_x86__je__constant(cause, 0);
+    f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+    f2ptr machine_code_jump__command   = new__symbol(cause, "je");
+    f2ptr machine_code_jump__label     = label_name;
+    f2ptr machine_code_jump__arguments = nil;
+    f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+    f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+    return machine_code_chunk;
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-je-invalid_argument_expression_type"),

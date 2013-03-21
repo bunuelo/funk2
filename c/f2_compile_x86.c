@@ -1533,7 +1533,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					 new__symbol(cause, "this"),         this,
 					 new__symbol(cause, "jump_command"), jump__command));
 	}
-      } else if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
+      } else if (raw__eq(cause, jump__command, new__symbol(cause, "je"))) {
 	raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, jump_location - jump__index__i);
       }
       iter = f2cons__cdr(iter, cause);

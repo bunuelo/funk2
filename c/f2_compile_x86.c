@@ -1528,7 +1528,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "register_name"), register_name));
 	  }
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "je"))) {
-	  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, label__index__i - jump__index__i));
+	  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),

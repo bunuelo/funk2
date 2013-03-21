@@ -1510,6 +1510,90 @@ f2ptr raw__expression__compile_x86__jne__constant(f2ptr cause, s64 relative_offs
   return f2__machine_code_chunk__new(cause, chunk);
 }
 
+//  400851:	7e 07                	jle    40085a <test_if_greater_than+0x1d>
+
+f2ptr raw__expression__compile_x86_to_chunk__jle__constant(f2ptr cause, f2ptr chunk, s64 start_index, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 0, 0x7E);
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 1, relative_offset);
+    return nil;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jle-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jle__constant(f2ptr cause, s64 relative_offset) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  assert_value(raw__expression__compile_x86_to_chunk__jle__constant(cause, chunk, 0, relative_offset));
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  400875:	7c 07                	jl     40087e <test_if_greater_than_or_equal+0x1d>
+
+f2ptr raw__expression__compile_x86_to_chunk__jl__constant(f2ptr cause, f2ptr chunk, s64 start_index, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 0, 0x7C);
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 1, relative_offset);
+    return nil;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jl-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jl__constant(f2ptr cause, s64 relative_offset) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  assert_value(raw__expression__compile_x86_to_chunk__jl__constant(cause, chunk, 0, relative_offset));
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  400899:	7d 07                	jge    4008a2 <test_if_less_than+0x1d>
+
+f2ptr raw__expression__compile_x86_to_chunk__jge__constant(f2ptr cause, f2ptr chunk, s64 start_index, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 0, 0x7D);
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 1, relative_offset);
+    return nil;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jge-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jge__constant(f2ptr cause, s64 relative_offset) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  assert_value(raw__expression__compile_x86_to_chunk__jge__constant(cause, chunk, 0, relative_offset));
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4008bd:	7f 07                	jg     4008c6 <test_if_less_than_or_equal+0x1d>
+
+f2ptr raw__expression__compile_x86_to_chunk__jg__constant(f2ptr cause, f2ptr chunk, s64 start_index, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 0, 0x7F);
+    raw__chunk__bit8__elt__set(cause, chunk, start_index + 1, relative_offset);
+    return nil;
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-jg-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jg__constant(f2ptr cause, s64 relative_offset) {
+  f2ptr chunk = raw__chunk__new(cause, 2);
+  assert_value(raw__expression__compile_x86_to_chunk__jg__constant(cause, chunk, 0, relative_offset));
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
 f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
   f2ptr index_label_ptypehash = f2machine_code_chunk__index_label_ptypehash(this, cause);
   f2ptr chunk                 = f2machine_code_chunk__chunk(                this, cause);
@@ -1552,6 +1636,14 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jne"))) {
 	  assert_value(raw__expression__compile_x86_to_chunk__jne__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jle"))) {
+	  assert_value(raw__expression__compile_x86_to_chunk__jle__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jl"))) {
+	  assert_value(raw__expression__compile_x86_to_chunk__jl__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jge"))) {
+	  assert_value(raw__expression__compile_x86_to_chunk__jge__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jg"))) {
+	  assert_value(raw__expression__compile_x86_to_chunk__jg__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),
@@ -5065,6 +5157,162 @@ f2ptr raw__expression__compile_x86__jne(f2ptr cause, f2ptr expression) {
   }
 }
 
+f2ptr raw__expression__compile_x86__jle(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jle-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-jle-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__jle__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
+    f2ptr machine_code_chunk           = raw__expression__compile_x86__jle__constant(cause, 0);
+    f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+    f2ptr machine_code_jump__command   = new__symbol(cause, "jle");
+    f2ptr machine_code_jump__label     = label_name;
+    f2ptr machine_code_jump__arguments = nil;
+    f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+    f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+    return machine_code_chunk;
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jle-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jl(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jl-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-jl-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__jl__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
+    f2ptr machine_code_chunk           = raw__expression__compile_x86__jl__constant(cause, 0);
+    f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+    f2ptr machine_code_jump__command   = new__symbol(cause, "jl");
+    f2ptr machine_code_jump__label     = label_name;
+    f2ptr machine_code_jump__arguments = nil;
+    f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+    f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+    return machine_code_chunk;
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jl-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jge(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jge-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-jge-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__jge__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
+    f2ptr machine_code_chunk           = raw__expression__compile_x86__jge__constant(cause, 0);
+    f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+    f2ptr machine_code_jump__command   = new__symbol(cause, "jge");
+    f2ptr machine_code_jump__label     = label_name;
+    f2ptr machine_code_jump__arguments = nil;
+    f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+    f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+    return machine_code_chunk;
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jge-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+f2ptr raw__expression__compile_x86__jg(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jg-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_constant_expression(cause, argument_0)) {
+    f2ptr constant_value    = raw__constant_expression__constant_value(cause, argument_0);
+    s64   constant_value__i = 0;
+    if (raw__integer__is_type(cause, constant_value)) {
+      constant_value__i = f2integer__i(constant_value, cause);
+    } else if (raw__pointer__is_type(cause, constant_value)) {
+      constant_value__i = (s64)f2pointer__p(constant_value, cause);
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-jg-constant_number_must_be_integer_or_pointer"),
+				     new__symbol(cause, "constant_value"), constant_value,
+				     new__symbol(cause, "expression"),     expression));
+    }
+    return raw__expression__compile_x86__jg__constant(cause, constant_value__i);
+  } else if (raw__expression__is_label_expression(cause, argument_0)) {
+    f2ptr label_name                   = raw__label_expression__label_name(cause, argument_0);
+    f2ptr machine_code_chunk           = raw__expression__compile_x86__jg__constant(cause, 0);
+    f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+    f2ptr machine_code_jump__command   = new__symbol(cause, "jg");
+    f2ptr machine_code_jump__label     = label_name;
+    f2ptr machine_code_jump__arguments = nil;
+    f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+    f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+    return machine_code_chunk;
+  } else {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-jg-invalid_argument_expression_type"),
+				   new__symbol(cause, "argument"),   argument_0,
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
 f2ptr raw__expression__compile_x86__symbol(f2ptr cause, f2ptr expression) {
   if (! raw__cause__is_type(cause, cause)) {
     return new__error(f2list4__new(cause,
@@ -5136,6 +5384,10 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "jmp")))     {return raw__expression__compile_x86__jmp(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "je")))      {return raw__expression__compile_x86__je(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jle")))     {return raw__expression__compile_x86__jle(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jl")))      {return raw__expression__compile_x86__jl(     cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jge")))     {return raw__expression__compile_x86__jge(    cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jg")))      {return raw__expression__compile_x86__jg(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "jb")))      {return raw__expression__compile_x86__jb(     cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shl")))     {return raw__expression__compile_x86__shl(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "shr")))     {return raw__expression__compile_x86__shr(    cause, expression);}

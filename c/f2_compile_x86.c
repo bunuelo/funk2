@@ -5292,6 +5292,106 @@ f2ptr raw__expression__compile_x86__callq(f2ptr cause, f2ptr expression) {
   }
 }
 
+//  4000a2:	48 ff c0             	inc    %rax
+
+f2ptr raw__expression__compile_x86__inc__rax(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a5:	48 ff c1             	inc    %rcx
+
+f2ptr raw__expression__compile_x86__inc__rcx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC1);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000a8:	48 ff c2             	inc    %rdx
+
+f2ptr raw__expression__compile_x86__inc__rdx(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC2);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000ab:	48 ff c6             	inc    %rsi
+
+f2ptr raw__expression__compile_x86__inc__rsi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC6);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000ae:	48 ff c7             	inc    %rdi
+
+f2ptr raw__expression__compile_x86__inc__rdi(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC7);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000b1:	49 ff c0             	inc    %r8
+
+f2ptr raw__expression__compile_x86__inc__r8(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC0);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+//  4000b4:	49 ff c1             	inc    %r9
+
+f2ptr raw__expression__compile_x86__inc__r8(f2ptr cause) {
+  f2ptr chunk = raw__chunk__new(cause, 3);
+  raw__chunk__bit8__elt__set(cause, chunk, 0, 0x49);
+  raw__chunk__bit8__elt__set(cause, chunk, 1, 0xFF);
+  raw__chunk__bit8__elt__set(cause, chunk, 2, 0xC1);
+  return f2__machine_code_chunk__new(cause, chunk);
+}
+
+f2ptr raw__expression__compile_x86__inc(f2ptr cause, f2ptr expression) {
+  if (raw__simple_length(cause, expression) != 2) {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-inc-invalid_expression_length"),
+				   new__symbol(cause, "expression"), expression));
+  }
+  f2ptr argument = f2cons__car(f2cons__cdr(expression, cause), cause);
+  if (raw__expression__is_register_expression(cause, argument)) {
+    f2ptr register_name = raw__register_expression__register_name(cause, argument);
+    if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__inc__rax(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__inc__rcx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__inc__rdx(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__inc__rsi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__inc__rdi(cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__inc__r8( cause);}
+    else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__inc__r9( cause);}
+    else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-inc-unknown_register_name"),
+				     new__symbol(cause, "register_name"), register_name,
+				     new__symbol(cause, "expression"),    expression));
+    }
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-inc-invalid_argument_expression_type"),
+				   new__symbol(cause, "expression"), expression));
+  }
+}
+
+
 f2ptr raw__expression__compile_x86__leaveq__chunk(f2ptr cause) {
   f2ptr chunk = raw__chunk__new(cause, 1);
   raw__chunk__bit8__elt__set(cause, chunk, 0, 0xC9);
@@ -5783,6 +5883,7 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "movq")))    {return raw__expression__compile_x86__movq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))  {return raw__expression__compile_x86__movzbl( cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "inc")))     {return raw__expression__compile_x86__inc(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "add")))     {return raw__expression__compile_x86__add(    cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "subq")))    {return raw__expression__compile_x86__subq(   cause, expression);}
     else if (raw__eq(cause, command, new__symbol(cause, "addq")))    {return raw__expression__compile_x86__addq(   cause, expression);}

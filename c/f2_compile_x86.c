@@ -3542,6 +3542,131 @@ f2ptr raw__expression__compile_x86__cmpq__r9__rax(f2ptr cause) {
   return f2__machine_code_chunk__new(cause, chunk);
 }
 
+//  4000be:	48 3b 45 e0          	cmp    -0x20(%rbp),%rax
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__rax(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000c2:	48 3b 4d e0          	cmp    -0x20(%rbp),%rcx
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__rcx(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x4D);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000c6:	48 3b 55 e0          	cmp    -0x20(%rbp),%rdx
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__rdx(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x55);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000ca:	48 3b 75 e0          	cmp    -0x20(%rbp),%rsi
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__rsi(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x75);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000ce:	48 3b 7d e0          	cmp    -0x20(%rbp),%rdi
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__rdi(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x7D);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000d2:	4c 3b 45 e0          	cmp    -0x20(%rbp),%r8
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__r8(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x4C);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x45);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
+
+//  4000d6:	4c 3b 4d e0          	cmp    -0x20(%rbp),%r9
+
+f2ptr raw__expression__compile_x86__cmpq__relative_rbp__r9(f2ptr cause, s64 relative_offset) {
+  if ((relative_offset >= -128) &&
+      (relative_offset <   128)) {
+    f2ptr chunk = raw__chunk__new(cause, 4);
+    raw__chunk__bit8__elt__set(cause, chunk, 0, 0x4C);
+    raw__chunk__bit8__elt__set(cause, chunk, 1, 0x3B);
+    raw__chunk__bit8__elt__set(cause, chunk, 2, 0x4D);
+    raw__chunk__bit8__elt__set(cause, chunk, 3, relative_offset);
+    return f2__machine_code_chunk__new(cause, chunk);
+  } else {
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-unknown_relative_offset_range"),
+				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
+  }
+}
 
 f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
@@ -3702,6 +3827,68 @@ f2ptr raw__expression__compile_x86__cmpq(f2ptr cause, f2ptr expression) {
       return new__error(f2list6__new(cause,
 				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-cmpq-invalid_argument_expression_type"),
 				     new__symbol(cause, "argument"),   argument_1,
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else if (raw__expression__is_relative_expression(cause, argument_0)) {
+    f2ptr relative_offset               = raw__relative_expression__relative_offset(cause, argument_0);
+    f2ptr relative_expression__argument = raw__relative_expression__argument(       cause, argument_0);
+    s64   relative_offset_value = 0;
+    if (raw__pointer__is_type(cause, relative_offset)) {
+      relative_offset_value = (s64)f2pointer__p(relative_offset, cause);
+    } else if (raw__integer__is_type(cause, relative_offset)) {
+      relative_offset_value = f2integer__i(relative_offset, cause);
+    } else if (raw__expression__is_minus_expression(cause, relative_offset)) {
+      f2ptr minus_expression__argument = raw__minus_expression__argument(cause, relative_offset);
+      if (raw__pointer__is_type(cause, minus_expression__argument)) {
+	relative_offset_value = -((s64)f2pointer__p(minus_expression__argument, cause));
+      } else if (raw__integer__is_type(cause, minus_expression__argument)) {
+	relative_offset_value = -f2integer__i(minus_expression__argument, cause);
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),                  new__symbol(cause, "expression-compile_x86-cmpq-invalid_minus_argument_type"),
+				       new__symbol(cause, "minus_expression-argument"), minus_expression__argument,
+				       new__symbol(cause, "expression"),                expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-cmpq-invalid_relative_offset_type"),
+				     new__symbol(cause, "relative_offset"), relative_offset,
+				     new__symbol(cause, "expression"),      expression));
+    }
+    if (raw__expression__is_register_expression(cause, relative_expression__argument)) {
+      f2ptr register_name = raw__register_expression__register_name(cause, relative_expression__argument);
+      if (raw__eq(cause, register_name, new__symbol(cause, "rbp"))) {
+	if (raw__expression__is_register_expression(cause, argument_1)) {
+	  f2ptr register_name_1 = raw__register_expression__register_name(cause, argument_1);
+	  if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {return raw__expression__compile_x86__cmpq__relative_rbp__rax(cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {return raw__expression__compile_x86__cmpq__relative_rbp__rcx(cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {return raw__expression__compile_x86__cmpq__relative_rbp__rdx(cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {return raw__expression__compile_x86__cmpq__relative_rbp__rsi(cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {return raw__expression__compile_x86__cmpq__relative_rbp__rdi(cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {return raw__expression__compile_x86__cmpq__relative_rbp__r8( cause, relative_offset_value);}
+	  else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__cmpq__relative_rbp__r9( cause, relative_offset_value);}
+	  else {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
+					   new__symbol(cause, "register_name"), register_name_1,
+					   new__symbol(cause, "expression"),    expression));
+	  }
+	} else {
+	  return new__error(f2list6__new(cause,
+					 new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-cmpq-invalid_argument_expression_type"),
+					 new__symbol(cause, "argument"),   argument_1,
+					 new__symbol(cause, "expression"), expression));
+	}
+      } else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-cmpq-unknown_register"),
+				       new__symbol(cause, "register_name"), register_name,
+				       new__symbol(cause, "expression"),    expression));
+      }
+    } else {
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-cmpq-invalid_argument_expression_type"),
+				     new__symbol(cause, "argument"),   argument_0,
 				     new__symbol(cause, "expression"), expression));
     }
   } else {

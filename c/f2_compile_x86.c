@@ -5365,7 +5365,7 @@ f2ptr raw__expression__compile_x86__incq__r9(f2ptr cause) {
 //  4000a2:	48 ff 45 e0          	incq   -0x20(%rbp)
 
 f2ptr raw__expression__compile_x86__incq__relative_rbp(f2ptr cause, s64 relative_offset) {
-  if ((relative_offset >= -128)
+  if ((relative_offset >= -128) &&
       (relative_offset <   128)) {
     f2ptr chunk = raw__chunk__new(cause, 4);
     raw__chunk__bit8__elt__set(cause, chunk, 0, 0x48);

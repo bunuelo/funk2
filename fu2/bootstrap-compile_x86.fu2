@@ -370,7 +370,9 @@
 										    [retq]]]
 						       nil]]]
 			[set this heap_demetropolized_body demetropolized_body]
-			[set this heap_machine_code_chunk [expression-compile_x86 `[rawcode @demetropolized_body]]]]]]]]
+			[let [[heap_machine_code_chunk [expression-compile_x86 `[rawcode @demetropolized_body]]]]
+			  [have heap_machine_code_chunk finalize_jumps]
+			  [set this heap_machine_code_chunk heap_machine_code_chunk]]]]]]]
 
 [defunk x86_funk-stack_compile [this]
   [let [[name      [get this name]]
@@ -392,7 +394,9 @@
 										    [retq]]]
 						       nil]]]
 			[set this stack_demetropolized_body demetropolized_body]
-			[set this stack_machine_code_chunk [expression-compile_x86 `[rawcode @demetropolized_body]]]]]]]]
+			[let [[stack_machine_code_chunk [expression-compile_x86 `[rawcode @demetropolized_body]]]]
+			  [have stack_machine_code_chunk finalize_jumps]
+			  [set this stack_machine_code_chunk stack_machine_code_chunk]]]]]]]
 
 [defmetro defx86funk [return_type name variables :rest body]
   [terminal_format standard-terminal '\n' `[defx86funk ,return_type ,name ,variables]]

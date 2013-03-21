@@ -4997,7 +4997,7 @@ f2ptr raw__expression__compile_x86__je__constant(f2ptr cause, s64 relative_offse
     raw__chunk__bit8__elt__set(cause, chunk, 1, relative_offset);
     return f2__machine_code_chunk__new(cause, chunk);
   } else {
-    return new__error(f2list6__new(cause,
+    return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "expression-compile_x86-je-unknown_relative_offset_range"),
 				   new__symbol(cause, "relative_offset"), f2integer__new(cause, relative_offset)));
   }

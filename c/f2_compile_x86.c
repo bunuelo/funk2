@@ -1505,7 +1505,6 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "this"),          this,
 					   new__symbol(cause, "register_name"), register_name));
 	  }
-	  return nil;
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),
@@ -1516,6 +1515,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
       iter = f2cons__cdr(iter, cause);
     }
   }
+  return nil;
 }
 
 f2ptr f2__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {

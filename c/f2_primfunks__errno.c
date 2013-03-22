@@ -27,12 +27,12 @@
 
 #include "funk2.h"
 
-f2ptr f2__errno(f2ptr cause) {
+f2ptr f2__errnob(f2ptr cause) {
   return f2integer__new(cause, errno);
 }
-def_pcfunk0(errno, 
+def_pcfunk0(errnob, 
 	    "",
-	    return f2__errno(this_cause));
+	    return f2__errnob(this_cause));
 
 // E2BIG "Argument list too long."
 f2ptr f2__errno__e2big(f2ptr cause) {

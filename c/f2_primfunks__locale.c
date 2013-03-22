@@ -38,7 +38,7 @@ void funk2_locale__destroy(funk2_locale_t* this) {
 
 // char *setlocale(int category, const char *locale);
 
-f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
+f2ptr raw__locale__setlocale(f2ptr cause, int category, char* locale_str) {
   funk2_processor_mutex__user_lock(&(__funk2.locale.interface_mutex));
   char* old_locale_str = setlocale(f2integer__i(category, cause), locale_str);
   if (old_locale_str == NULL) {
@@ -50,7 +50,7 @@ f2ptr raw__setlocale(f2ptr cause, int category, char* locale_str) {
   return retval;
 }
 
-f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
+f2ptr f2__locale__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
   assert_argument_type(       integer, category);
   assert_argument_type_or_nil(string,  locale);
   u8* locale__utf8_str = NULL;
@@ -58,33 +58,60 @@ f2ptr f2__setlocale(f2ptr cause, f2ptr category, f2ptr locale) {
     u64 locale_str__utf8_length = raw__string__utf8_length(cause, locale);
     locale__utf8_str            = alloca(locale_str__utf8_length + 1); raw__string__utf8_str_copy(cause, locale, locale__utf8_str); locale__utf8_str[locale_str__utf8_length] = 0;
   }
-  return raw__setlocale(cause, f2integer__i(category, cause), (char*)locale__utf8_str);
+  return raw__locale__setlocale(cause, f2integer__i(category, cause), (char*)locale__utf8_str);
 } 
 def_pcfunk2(locale__setlocale, category, locale,
 	    "",
-	    return f2__setlocale(this_cause, category, locale));
+	    return f2__locale__setlocale(this_cause, category, locale));
 
+f2ptr f2__locale__lc_all(f2ptr cause) {
+  return f2integer__new(cause, LC_ALL);
+}
 def_pcfunk0(locale__lc_all,
 	    "",
-	    return f2integer__new(this_cause, LC_ALL));
+	    return f2__locale__lc_all(this_cause));
+
+f2ptr f2__locale__lc_collate(f2ptr cause) {
+  return f2integer__new(cause, LC_COLLATE);
+}
 def_pcfunk0(locale__lc_collate,
 	    "",
-	    return f2integer__new(this_cause, LC_COLLATE));
+	    return f2__locale__lc_collate(this_cause));
+
+f2ptr f2__locale__lc_ctype(f2ptr cause) {
+  return f2integer__new(cause, LC_CTYPE);
+}
 def_pcfunk0(locale__lc_ctype,
 	    "",
-	    return f2integer__new(this_cause, LC_CTYPE));
+	    return f2__locale__lc_ctype(this_cause));
+
+f2ptr f2__locale__lc_messages(f2ptr cause) {
+  return f2integer__new(cause, LC_MESSAGES);
+}
 def_pcfunk0(locale__lc_messages,
 	    "",
-	    return f2integer__new(this_cause, LC_MESSAGES));
+	    return f2__locale__lc_messages(this_cause));
+
+f2ptr f2__locale__lc_monetary(f2ptr cause) {
+  return f2integer__new(cause, LC_MONETARY);
+}
 def_pcfunk0(locale__lc_monetary,
 	    "",
-	    return f2integer__new(this_cause, LC_MONETARY));
+	    return f2__locale__lc_monetary(this_cause));
+
+f2ptr f2__locale__lc_numeric(f2ptr cause) {
+  return f2integer__new(cause, LC_NUMERIC);
+}
 def_pcfunk0(locale__lc_numeric,
 	    "",
-	    return f2integer__new(this_cause, LC_NUMERIC));
+	    return f2__locale__lc_numeric(this_cause));
+
+f2ptr f2__locale__lc_time(f2ptr cause) {
+  return f2integer__new(cause, LC_TIME);
+}
 def_pcfunk0(locale__lc_time,
 	    "",
-	    return f2integer__new(this_cause, LC_TIME));
+	    return f2__locale__lc_time(cause));
 
 
 // **

@@ -1131,7 +1131,7 @@ def_pcfunk1(float__type,    this,
 	    return f2__float__type(this_cause, this));
 
 f2ptr raw__float__new(f2ptr cause, f2ptr this) {
-  return f2float__new(this_cause, f2float__f(this_cause, this));
+  return f2float__new(cause, f2float__f(cause, this));
 }
 
 f2ptr f2__float__new(f2ptr cause, f2ptr this) {
@@ -1152,7 +1152,7 @@ f2ptr f2__float__f(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(float__f, this,
 	    "",
-	    return f2__float__f(cause, this));
+	    return f2__float__f(this_cause, this));
 
 boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2float__f(this, cause) == f2float__f(that, cause);

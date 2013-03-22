@@ -99,7 +99,6 @@
 
 [globalize-funk this-cause                                  &primfunk:this__cause]
 [globalize-funk this-env                                    &primfunk:this__env]
-[globalize-funk this-args                                   &primfunk:this__args]
 
 [globalize-funk random                                      &primfunk:random]
 

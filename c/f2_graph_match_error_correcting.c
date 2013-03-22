@@ -290,10 +290,12 @@ f2ptr raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms(f
   
   f2ptr value_cfunk = f2cfunk__new(cause, nil, 
 				   f2list1__new(cause, new__symbol(cause, "x")),
+				   nil,
 				   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost)), global_environment(), nil, nil);
   
   f2ptr value_compare_cfunk = f2cfunk__new(cause, nil, 
 					   f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
+					   nil,
 					   f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_decomposition_lattice__error_correcting_subgraph_isomorphisms__cost_compare)), global_environment(), nil, nil);
   
   f2ptr graph_set             = f2__graph_decomposition_lattice__graph_set            (cause, this);

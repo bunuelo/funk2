@@ -130,9 +130,11 @@ def_ceframe3(event_stream, event_stream, event_time_redblacktree, add_trigger, r
 f2ptr raw__event_stream__new(f2ptr cause) {
   f2ptr event_time_redblacktree__value_event_cfunk   = f2cfunk__new(cause, nil, 
 								    f2list1__new(cause, new__symbol(cause, "this")),
+								    nil,
 								    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__event_stream_event__time_value)), global_environment(), nil, nil);
   f2ptr event_time_redblacktree__compare_event_cfunk = f2cfunk__new(cause, nil, 
 								    f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+								    nil,
 								    f2pointer__new(cause, raw_executable__to__relative_ptr(raw__event_stream_event__compare_value)), global_environment(), nil, nil);
   f2ptr event_time_redblacktree = f2__redblacktree__new(cause, event_time_redblacktree__value_event_cfunk, event_time_redblacktree__compare_event_cfunk);
   f2ptr add_trigger             = f2__fiber_trigger__new(cause);

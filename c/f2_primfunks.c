@@ -1377,55 +1377,80 @@ def_pcfunk1(random, max_value,
 	    "generate a random integer between 0 and sup_integer - 1.",
 	    return f2__random(this_cause, max_value));
 
-f2ptr f2__chunk_copy(f2ptr cause, f2ptr init) {
-  assert_argument_type(chunk, init);
-  return f2chunk__new_copy(cause, init);
+f2ptr raw__chunk__new_copy(f2ptr cause, f2ptr this) {
+  return f2chunk__new_copy(cause, this);
 }
-def_pcfunk1(chunk__copy, init,
-	    "",
-	    return f2__chunk_copy(this_cause, init));
 
-f2ptr f2__chunk__read_bit8(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((u8)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));}
+f2ptr f2__chunk__new_copy(f2ptr cause, f2ptr this) {
+  assert_argument_type(chunk, this);
+  return raw__chunk__new_copy(cause, this);
+}
+def_pcfunk1(chunk__new_copy, this,
+	    "",
+	    return f2__chunk_copy(this_cause, this));
+
+f2ptr f2__chunk__read_bit8(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, ((u8)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));
+}
 def_pcfunk2(chunk__read_bit8, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit8(this_cause, chunk, offset));
 
-f2ptr f2__chunk__write_bit8_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit8__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
+f2ptr f2__chunk__write_bit8_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {
+  f2chunk__bit8__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause));
+  return nil;
+}
 def_pcfunk3(chunk__write_bit8_integer, chunk, offset, value,
 	    "",
 	    return f2__chunk__write_bit8_integer(this_cause, chunk, offset, value));
 
-f2ptr f2__chunk__read_bit8_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((char)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));}
+f2ptr f2__chunk__read_bit8_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, ((char)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));
+}
 def_pcfunk2(chunk__read_bit8_signed, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit8_signed(this_cause, chunk, offset));
 
-f2ptr f2__chunk__read_bit16(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause));}
+f2ptr f2__chunk__read_bit16(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause));
+}
 def_pcfunk2(chunk__read_bit16, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit16(this_cause, chunk, offset));
 
-f2ptr f2__chunk__write_bit16_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit16__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
+f2ptr f2__chunk__write_bit16_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {
+  f2chunk__bit16__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause));
+  return nil;
+}
 def_pcfunk3(chunk__write_bit16_integer, chunk, offset, value,
 	    "",
 	    return f2__chunk__write_bit16_integer(this_cause, chunk, offset, value));
 
-f2ptr f2__chunk__read_bit16_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((s16)f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause)));}
+f2ptr f2__chunk__read_bit16_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, ((s16)f2chunk__bit16__elt(chunk, f2integer__i(offset, cause), cause)));
+}
 def_pcfunk2(chunk__read_bit16_signed, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit16_signed(this_cause, chunk, offset));
 
-f2ptr f2__chunk__read_bit32(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((u32)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));}
+f2ptr f2__chunk__read_bit32(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, ((u32)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));
+}
 def_pcfunk2(chunk__read_bit32, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit32(this_cause, chunk, offset));
 
-f2ptr f2__chunk__write_bit32_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {f2chunk__bit32__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause)); return nil;}
+f2ptr f2__chunk__write_bit32_integer(f2ptr cause, f2ptr chunk, f2ptr offset, f2ptr value) {
+  f2chunk__bit32__elt__set(chunk, f2integer__i(offset, cause), cause, f2integer__i(value, cause));
+  return nil;
+}
 def_pcfunk3(chunk__write_bit32_integer, chunk, offset, value,
 	    "",
 	    return f2__chunk__write_bit32_integer(this_cause, chunk, offset, value));
 
-f2ptr f2__chunk__read_bit32_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {return f2integer__new(cause, ((short)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));}
+f2ptr f2__chunk__read_bit32_signed(f2ptr cause, f2ptr chunk, f2ptr offset) {
+  return f2integer__new(cause, ((short)f2chunk__bit32__elt(chunk, f2integer__i(offset, cause), cause)));
+}
 def_pcfunk2(chunk__read_bit32_signed, chunk, offset,
 	    "",
 	    return f2__chunk__read_bit32_signed(this_cause, chunk, offset));

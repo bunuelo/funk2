@@ -604,7 +604,7 @@ def_pcfunk1(double__new, this,
 	    return f2__double__new(this_cause, this));
 
 f2ptr raw__double__d(f2ptr cause, f2ptr this) {
-  return f2double__new(cause, f2double__d(this, this_cause));
+  return f2double__new(cause, f2double__d(this, cause));
 }
 
 f2ptr f2__double__d(f2ptr cause, f2ptr this) {

@@ -135,9 +135,12 @@ f2ptr raw__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr c
   return new_fiber;
 }
 
+f2ptr f2__fiber__new(f2ptr cause, f2ptr parent_fiber, f2ptr parent_env, f2ptr cfunkable, f2ptr cfunkable_args) {
+  return raw__fiber__new(cause, parent_fiber, parent_env, cfunkable, cfunkable_args);
+}
 def_pcfunk4(fiber__new, parent_fiber, parent_env, cfunkable, cfunkable_args,
 	    "",
-	    return raw__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
+	    return f2__fiber__new(this_cause, parent_fiber, parent_env, cfunkable, cfunkable_args));
 
 
 u64 raw__fiber__execution_nanoseconds(f2ptr cause, f2ptr this) {

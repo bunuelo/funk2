@@ -80,6 +80,8 @@ f2ptr     raw__set__new                 (f2ptr cause, s64 bin_num_power);
 f2ptr      f2__set__new                 (f2ptr cause, f2ptr elements);
 f2ptr     raw__set__add__debug          (f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name);
 f2ptr      f2__set__add__debug          (f2ptr cause, f2ptr this, f2ptr key, char* source_filename, int source_line_number, char* source_funktion_name);
+f2ptr     raw__set__add                 (f2ptr cause, f2ptr this, f2ptr key);
+f2ptr      f2__set__add                 (f2ptr cause, f2ptr this, f2ptr key);
 boolean_t raw__set__remove              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr      f2__set__remove              (f2ptr cause, f2ptr this, f2ptr key);
 f2ptr     raw__set__copy_from           (f2ptr cause, f2ptr this, f2ptr that);
@@ -110,8 +112,8 @@ f2ptr      f2__set__is_subset_of        (f2ptr cause, f2ptr this, f2ptr that);
 
 f2ptr f2set__primobject_type__new_aux(f2ptr cause);
 
-#define raw__set__add(cause, this, key)                     raw__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
-#define  f2__set__add(cause, this, key)                      f2__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+//#define raw__set__add(cause, this, key)                     raw__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
+//#define  f2__set__add(cause, this, key)                      f2__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
 #define raw__set__increase_size__thread_unsafe(cause, this) raw__set__increase_size__thread_unsafe__debug(cause, this, (char*)__FILE__, __LINE__, (char*)__FUNCTION__)
 
 #define set__iteration(cause, this, element, code) {			\

@@ -128,6 +128,14 @@ f2ptr f2__set__add__debug(f2ptr cause, f2ptr this, f2ptr key, char* source_filen
   assert_argument_type(set, this);
   return raw__set__add__debug(cause, this, key, source_filename, source_line_number, source_funktion_name);
 }
+
+f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
+  return raw__set__add__debug(cause, this, key, (char*)__FILE__, __LINE__, (char*)__FUNCTION__);
+}
+
+f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
+  return raw__set__add(cause, this, key);
+}
 def_pcfunk2(set__add, this, element,
 	    "",
 	    return f2__set__add(this_cause, this, element));

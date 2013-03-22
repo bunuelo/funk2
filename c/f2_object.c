@@ -522,7 +522,7 @@ def_pcfunk2_and_rest(object__get,        this, slot, args,
 		     return f2__object__get(this_cause, this, slot, args));
 
 f2ptr f2__object__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__get(this_cause, this, slot, args);
+  return f2__object__get(cause, this, slot, args);
 }
 def_pcfunk3(object__get__apply, this, slot, args,
 	    "",
@@ -553,7 +553,7 @@ def_pcfunk2_and_rest(object__set,        this, slot, args,
 		     return f2__object__set(this_cause, this, slot, args));
 
 f2ptr f2__object__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__set(this_cause, this, slot, args);
+  return f2__object__set(cause, this, slot, args);
 }
 def_pcfunk3(object__set__apply, this, slot, args,
 	    "",
@@ -579,12 +579,12 @@ f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   }
   return result;
 }
-def_pcfunk2_and_rest(object__execute,        this, slot, args,
+def_pcfunk2_and_rest(object__execute, this, slot, args,
 		     "",
 		     return f2__object__execute(this_cause, this, slot, args));
 
 f2ptr f2__object__execute__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
-  return f2__object__execute(this_cause, this, slot, args);
+  return f2__object__execute(cause, this, slot, args);
 }
 def_pcfunk3(object__execute__apply, this, slot, args,
 	    "",

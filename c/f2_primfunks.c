@@ -1101,9 +1101,14 @@ f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
+
+f2ptr f2__exp__format(f2ptr cause, f2ptr fptr, f2ptr x) {
+  f2ptr fiber = f2__this__fiber(cause);
+  return f2__format(cause, fiber, fptr, x));
+}
 def_pcfunk2(exp__format, fptr, x,
 	    "",
-	    return f2__format(this_cause, simple_fiber, fptr, x));
+	    return f2__exp__format(this_cause, fptr, x));
 
 f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   assert_argument_type(stream, stream);
@@ -1118,13 +1123,22 @@ f2ptr f2__format__html(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
   }
   return exp;
 }
+
+f2ptr f2__exp__format__html(f2ptr cause, f2ptr stream, f2ptr x) {
+  f2ptr fiber = f2__this__fiber(cause);
+  return f2__format__html(this_cause, fiber, stream, x);
+}
 def_pcfunk2(exp__format__html, stream, x,
 	    "",
-	    return f2__format__html(this_cause, simple_fiber, stream, x));
+	    return f2__exp__format__html(this_cause, stream, x));
 
+f2ptr f2__exp__fwrite_html(f2ptr cause, f2ptr stream, f2ptr exp) {
+  f2ptr fiber = f2__this__fiber(cause);
+  return f2__fwrite_html(this_cause, fiber, stream, exp);
+}
 def_pcfunk2(exp__fwrite_html, stream, exp,
 	    "",
-	    return f2__fwrite_html(this_cause, simple_fiber, stream, exp));
+	    return f2__exp__fwrite_html(this_cause, stream, exp));
 
 
 f2ptr raw__mkdir(f2ptr cause, f2ptr directory_name) {

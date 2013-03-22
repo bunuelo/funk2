@@ -503,9 +503,11 @@ f2ptr raw__graph__isomorphism(f2ptr cause, f2ptr this, f2ptr that, s64 beam_widt
   f2ptr that__edge_set           = f2__graph__edge_set(cause, that);
   f2ptr value_cfunk              = f2cfunk__new(cause, nil, 
 						f2list1__new(cause, new__symbol(cause, "x")),
+						nil,
 						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost)), global_environment(), nil, nil);
   f2ptr value_compare_cfunk      = f2cfunk__new(cause, nil, 
 						f2list2__new(cause, new__symbol(cause, "x"), new__symbol(cause, "y")),
+						nil,
 						f2pointer__new(cause, raw_executable__to__relative_ptr(raw__graph_isomorphism__isomorphism__cost_compare)), global_environment(), nil, nil);
   f2ptr search_beam_redblacktree = f2__redblacktree__new(cause, value_cfunk, value_compare_cfunk);
   

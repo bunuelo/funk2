@@ -555,13 +555,13 @@ f2ptr f2__conslist__new(f2ptr cause, f2ptr conslist) {
   assert_argument_type(conslist, conslist);
   return raw__conslist__new(cause, conslist);
 }
+
+f2ptr f2__conslist(f2ptr cause, f2ptr conslist) {
+  return f2__conslist__new(cause, conslist);
+}
 def_pcfunk0_and_rest(conslist, conslist,
 		     "returns a new conslist.",
-		     return f2__conslist__new(this_cause, conslist));
-
-def_pcfunk0_and_rest(immutable_conslist, seq,
-		     "returns a new conslist that we will agree to not mutate.",
-		     return f2__conslist__new(this_cause, seq));
+		     return f2__conslist(this_cause, conslist));
 
 f2ptr raw__conslist__as__array(f2ptr cause, f2ptr this) {
   u64 length = 0;
@@ -2081,8 +2081,6 @@ void f2__primcfunks__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(restn);
   f2__primcfunk__init__defragment__fix_pointers(conslistlist__append);
   
-  f2__primcfunk__init__defragment__fix_pointers(immutable_conslist);
-  
   // cause
   
   // fiber
@@ -2373,8 +2371,6 @@ void f2__primcfunks__reinitialize_globalvars() {
   f2__primcfunk__init__2(         firstn,               this, n);
   f2__primcfunk__init__2(         restn,                this, n);
   f2__primcfunk__init__1(         conslistlist__append, this);
-  
-  f2__primcfunk__init__0_and_rest(immutable_conslist, seq);
   
   // cause
   

@@ -198,10 +198,10 @@
 [defmetro type-execute-apply [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
 [defmetro type-have-apply    [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
 
-[defmetro type-get     [type_name this slot_name :rest args] `[type-get-apply     ,type_name ,this ,slot_name [immutable_conslist @args]]]
-[defmetro type-set     [type_name this slot_name :rest args] `[type-set-apply     ,type_name ,this ,slot_name [immutable_conslist @args]]]
-[defmetro type-execute [type_name this slot_name :rest args] `[type-execute-apply ,type_name ,this ,slot_name [immutable_conslist @args]]]
-[defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [immutable_conslist @args]]]
+[defmetro type-get     [type_name this slot_name :rest args] `[type-get-apply     ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-set     [type_name this slot_name :rest args] `[type-set-apply     ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-execute [type_name this slot_name :rest args] `[type-execute-apply ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [conslist @args]]]
 
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get ,slot_name]]
@@ -542,7 +542,7 @@
 	  [while-loop]]]
 
 [defmetro funkall [funk :rest args]
-  `[apply ,funk [immutable_conslist @args]]]
+  `[apply ,funk [conslist @args]]]
 
 [defunk find [exp seq key test]
   [if [null seq]

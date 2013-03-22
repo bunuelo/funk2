@@ -1411,7 +1411,7 @@ f2ptr f2__chunk__new_copy(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(chunk__new_copy, this,
 	    "",
-	    return f2__chunk_copy(this_cause, this));
+	    return f2__chunk__new_copy(this_cause, this));
 
 f2ptr f2__chunk__read_bit8(f2ptr cause, f2ptr chunk, f2ptr offset) {
   return f2integer__new(cause, ((u8)f2chunk__bit8__elt(chunk, f2integer__i(offset, cause), cause)));

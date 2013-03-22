@@ -1609,14 +1609,37 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	f2ptr jump__arguments = f2machine_code_jump__arguments(jump, cause);
 	s64   jump__index__i  = f2integer__i(jump__index, cause);
 	f2ptr label__index    = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	u64   jump_location   = 0;
 	if (label__index == nil) {
+	  f2ptr fiber    = f2__this__fiber(cause);
+	  f2ptr funkable = f2__fiber__lookup_type_variable_value(cause, fiber, new__symbol(cause, "funk_variable"), jump__label);
+	  if (raw__cfunk__is_type(cause, funkable)) {
+	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
+	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
+	      ptr relative_ptr = f2pointer__p(stack_machine_code_pointer, cause);
+	      jump_location    = relative_ptr__to__raw_executable(relative_ptr);
+	    } else {
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					     new__symbol(cause, "this"),       this,
+					     new__symbol(cause, "jump_label"), jump__label));
+	    }
+	  } else {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
+	} else {
+	  s64 label__index__i = f2integer__i(label__index, cause);
+	  jump_location = raw__chunk__bytes(cause, chunk) + label__index__i;
+	}
+	if (jump_location == 0) {
 	  return new__error(f2list6__new(cause,
-					 new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					 new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-jump_location_is_zero"),
 					 new__symbol(cause, "this"),       this,
 					 new__symbol(cause, "jump_label"), jump__label));
 	}
-	s64 label__index__i = f2integer__i(label__index, cause);
-	u64 jump_location   = raw__chunk__bytes(cause, chunk) + label__index__i;
 	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
 	  f2ptr register_name = f2cons__car(jump__arguments, cause);
 	  if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, jump_location);}

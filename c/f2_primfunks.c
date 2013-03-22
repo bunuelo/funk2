@@ -1588,7 +1588,7 @@ def_pcfunk1(coerce_to_int, exp,
 
 
 f2ptr f2__system__peer_command_server__port_num(f2ptr cause) {
-  return f2integer__new(this_cause, __funk2.command_line.peer_command_server__port_num);
+  return f2integer__new(cause, __funk2.command_line.peer_command_server__port_num);
 }
 def_pcfunk0(system__peer_command_server__port_num,
 	    "",
@@ -1599,7 +1599,7 @@ f2ptr f2__system__gethostname(f2ptr cause) {
   if (gethostname(hostname, 1023) != 0) {
     return nil;
   }
-  return new__string(this_cause, hostname);
+  return new__string(cause, hostname);
 }
 def_pcfunk0(system__gethostname,
 	    "",

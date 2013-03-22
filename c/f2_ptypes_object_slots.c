@@ -601,10 +601,10 @@ f2ptr f2__double__new(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(double__new, this,
 	    "",
-	    return f2__double__new(cause, this));
+	    return f2__double__new(this_cause, this));
 
 f2ptr raw__double__d(f2ptr cause, f2ptr this) {
-  return f2double__new(this_cause, f2double__d(this, this_cause));
+  return f2double__new(cause, f2double__d(this, this_cause));
 }
 
 f2ptr f2__double__d(f2ptr cause, f2ptr this) {
@@ -613,7 +613,7 @@ f2ptr f2__double__d(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(double__d, this,
 	    "",
-	    return f2__double__d(cause, this));
+	    return f2__double__d(this_cause, this));
 
 boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__double__is_type(cause, that)) {

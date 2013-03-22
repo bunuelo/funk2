@@ -202,8 +202,8 @@ ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint 
 struct ptype_chunk_block_s {
   ptype_block_t ptype;
   u64           length;
-  u8            bytes[0];
-} __attribute__((__packed__)) __attribute__((__may_alias__));
+  char          bytes[0];
+} __attribute__((__packed__));
 typedef struct ptype_chunk_block_s ptype_chunk_block_t;
 
 ptype_chunk_block_t* ptype_chunk_block__new(int pool_index, f2ptr cause, uint len, byte* bytes);

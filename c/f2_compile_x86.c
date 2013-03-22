@@ -1617,7 +1617,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
 	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
 	      ptr relative_ptr = f2pointer__p(stack_machine_code_pointer, cause);
-	      jump_location    = relative_ptr__to__raw_executable(relative_ptr);
+	      jump_location    = to_ptr(relative_ptr__to__raw_executable(relative_ptr));
 	    } else {
 	      return new__error(f2list6__new(cause,
 					     new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),

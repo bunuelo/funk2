@@ -3892,7 +3892,7 @@ def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args,
 	    return f2__chunk__cfunk_jump(this_cause, this, fiber, env, args));
 
 f2ptr raw__chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber) {
-  return f2integer__new(this_cause, f2chunk__bytecode_jump(this, cause, fiber));
+  return f2integer__new(cause, f2chunk__bytecode_jump(this, cause, fiber));
 }
 
 f2ptr f2__chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber) {
@@ -3902,7 +3902,7 @@ f2ptr f2__chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber) {
 }
 def_pcfunk2(chunk__bytecode_jump, this, fiber,
 	    "",
-	    return f2__chunk__bytecode_jump(cause, this, fiber));
+	    return f2__chunk__bytecode_jump(this_cause, this, fiber));
 
 u64 raw__chunk__jump(f2ptr cause, f2ptr this, u64 pointer) {
   return f2chunk__jump(this, cause, pointer);

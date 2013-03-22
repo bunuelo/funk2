@@ -202,11 +202,11 @@ ptype_symbol_block_t* ptype_symbol_block__new(int pool_index, f2ptr cause, uint 
 struct ptype_chunk_block_s {
   ptype_block_t ptype;
   u64           length;
-  char          bytes[0];
+  u8            bytes[0];
 } __attribute__((__packed__));
 typedef struct ptype_chunk_block_s ptype_chunk_block_t;
 
-ptype_chunk_block_t* ptype_chunk_block__new(int pool_index, f2ptr cause, uint len, byte* bytes);
+ptype_chunk_block_t* ptype_chunk_block__new(int pool_index, f2ptr cause, uint len, u8* bytes);
 u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 #define __pure__f2chunk__new(pool_index, cause, len, bytes)      ptype_chunk__new(pool_index, cause, len, bytes)
@@ -214,14 +214,63 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 #define __pure__f2chunk__length(this)                            (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
 #define __pure__f2chunk__bytes(this)                             (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes)
 
-#define __pure__f2chunk__bit8__elt(this, index)                          (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])
-#define __pure__f2chunk__bit8__elt__set(this, index, value)              (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index] = (u8)(value))
-#define __pure__f2chunk__bit16__elt(this, index)              (*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-#define __pure__f2chunk__bit16__elt__set(this, index, value) ((*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u16)(value))
-#define __pure__f2chunk__bit32__elt(this, index)              (*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-#define __pure__f2chunk__bit32__elt__set(this, index, value) ((*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u32)(value))
-#define __pure__f2chunk__bit64__elt(this, index)              (*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-#define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
+#define __pure__f2chunk__bit8__elt(this, index) \
+  ({									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u8*   temp_u8_ptr   = (u8*)temp_void_ptr;				\
+    *temp_u8_ptr;							\
+  })
+#define __pure__f2chunk__bit8__elt__set(this, index, value)		\
+  {									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u8*   temp_u8_ptr   = (u8*)temp_void_ptr;				\
+    *temp_u8_ptr = value;						\
+  }
+#define __pure__f2chunk__bit16__elt(this, index)			\
+  ({									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u16*  temp_u16_ptr  = (u16*)temp_void_ptr;				\
+    *temp_u16_ptr;							\
+  })
+#define __pure__f2chunk__bit16__elt__set(this, index, value)		\
+  {									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u16*  temp_u16_ptr  = (u16*)temp_void_ptr;				\
+    *temp_u16_ptr = value;						\
+  }
+#define __pure__f2chunk__bit32__elt(this, index)			\
+  ({									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u32*  temp_u32_ptr  = (u32*)temp_void_ptr;				\
+    *temp_u32_ptr;							\
+  })
+#define __pure__f2chunk__bit32__elt__set(this, index, value)		\
+  {									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u32*  temp_u32_ptr  = (u32*)temp_void_ptr;				\
+    *temp_u32_ptr = value;						\
+  }
+#define __pure__f2chunk__bit64__elt(this, index)			\
+  ({									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u64*  temp_u64_ptr  = (u64*)temp_void_ptr;				\
+    *temp_u64_ptr;							\
+  })
+#define __pure__f2chunk__bit64__elt__set(this, index, value)		\
+  {									\
+    void* temp_void_ptr = (void*)(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes + index); \
+    u64*  temp_u64_ptr  = (u64*)temp_void_ptr;				\
+    *temp_u64_ptr = value;						\
+  }
+
+//#define __pure__f2chunk__bit8__elt(this, index)                          (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])
+//#define __pure__f2chunk__bit8__elt__set(this, index, value)              (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index] = (u8)(value))
+//#define __pure__f2chunk__bit16__elt(this, index)              (*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
+//#define __pure__f2chunk__bit16__elt__set(this, index, value) ((*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u16)(value))
+//#define __pure__f2chunk__bit32__elt(this, index)              (*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
+//#define __pure__f2chunk__bit32__elt__set(this, index, value) ((*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u32)(value))
+//#define __pure__f2chunk__bit64__elt(this, index)              (*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
+//#define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
 
 
 // cons

@@ -817,7 +817,7 @@ int f2__fiber__bytecode_helper__jump_funk__no_increment_pc_reg(f2ptr fiber, f2pt
   } else if (raw__metrocfunk__is_type(cause, funktion)) {
 #ifdef DEBUG_BYTECODES
     {
-      f2ptr name = f2metrocfunk__name(funktion, cause);
+      f2ptr name = raw__metrocfunk__name(cause, funktion);
       u8*   name__utf8_str;
       if (raw__symbol__is_type(cause, name)) {
 	u64 name__utf8_length = raw__symbol__utf8_length(cause, name);

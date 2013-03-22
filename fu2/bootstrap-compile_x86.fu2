@@ -471,5 +471,21 @@
 	 [pop [register rdx]]
 	 [pop [register rcx]]]
        
+       [defx86funk s64 x86:loop_times [[s64 max-count]]
+	 [movabs [constant 0] [register rax]]
+	 [mov    [variable max-count] [register rdx]]
+	 [cmpq   [register rdx] [register rax]]
+	 [jge    [label done]]
+	 [label  loop]
+	 [push   [register rax]]
+	 [push   [register rdx]]
+	 
+	 [pop    [register rdx]]
+	 [pop    [register rax]]
+	 [incq   [register rax]]
+	 [cmpq   [register rdx] [register rax]]
+	 [jl     [label loop]]
+	 [label  done]]
+       
        ]
 

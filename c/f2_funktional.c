@@ -65,7 +65,7 @@ boolean_t raw__funkable__is_funktional(f2ptr cause, f2ptr this) {
     return (f2cfunk__is_funktional(this, cause) != nil);
   }
   if (raw__metrocfunk__is_type(cause, this)) {
-    return (f2metrocfunk__is_funktional(this, cause) != nil);
+    return (raw__metrocfunk__is_funktional(cause, this) != nil);
   }
   if (raw__funk__is_type(cause, this)) {
     return (f2funk__is_funktional(this, cause) != nil);

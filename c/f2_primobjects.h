@@ -1814,7 +1814,35 @@ f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause);
 
 // metrocfunk
 
-declare_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+declare_primobject_1_slot(metrocfunk,
+			  cfunk);
+
+f2ptr raw__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr  f2__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr raw__metrocfunk__name              (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__name              (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__name__set         (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__name__set         (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metrocfunk__args              (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__args              (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__args__set         (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__args__set         (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metrocfunk__cfunkptr          (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__cfunkptr          (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__cfunkptr__set     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__cfunkptr__set     (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metrocfunk__env               (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__env               (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__env__set          (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__env__set          (f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metrocfunk__is_funktional     (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__is_funktional     (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr raw__metrocfunk__documentation     (f2ptr cause, f2ptr this);
+f2ptr  f2__metrocfunk__documentation     (f2ptr cause, f2ptr this);
+f2ptr raw__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value);
+f2ptr  f2__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value);
 
 f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause);
 
@@ -2275,7 +2303,31 @@ declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, docu
 
 // metrocfunk
 
-declare_object_type_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation,
+declare_object_type_1_slot(metrocfunk, cfunk,
+			   f2ptr name__symbol;
+			   f2ptr name__funk;
+			   f2ptr name__set__symbol;
+			   f2ptr name__set__funk;
+			   f2ptr args__symbol;
+			   f2ptr args__funk;
+			   f2ptr args__set__symbol;
+			   f2ptr args__set__funk;
+			   f2ptr cfunkptr__symbol;
+			   f2ptr cfunkptr__funk;
+			   f2ptr cfunkptr__set__symbol;
+			   f2ptr cfunkptr__set__funk;
+			   f2ptr env__symbol;
+			   f2ptr env__funk;
+			   f2ptr env__set__symbol;
+			   f2ptr env__set__funk;
+			   f2ptr is_funktional__symbol;
+			   f2ptr is_funktional__funk;
+			   f2ptr is_funktional__set__symbol;
+			   f2ptr is_funktional__set__funk;
+			   f2ptr documentation__symbol;
+			   f2ptr documentation__funk;
+			   f2ptr documentation__set__symbol;
+			   f2ptr documentation__set__funk;
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

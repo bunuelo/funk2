@@ -478,12 +478,175 @@ f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause) {
 
 // metrocfunk
 
-def_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+def_primobject_1_slot(metrocfunk, cfunk);
 
-f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
+f2ptr raw__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr cfunk = f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+  return f2metrocfunk__new(cause, cfunk);
+}
+
+f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  return raw__metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+}
 def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation,
 	    "",
 	    return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
+
+f2ptr raw__metrocfunk__name(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__name(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__name(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__name(cause, this);
+}
+def_pcfunk1(metrocfunk__name, this,
+	    "",
+	    return f2__metrocfunk__name(this_cause, this));
+
+f2ptr raw__metrocfunk__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__name__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__name__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__name(cause, this, value);
+}
+def_pcfunk2(metrocfunk__name__set, this, value,
+	    "",
+	    return f2__metrocfunk__name__set(this_cause, this, value));
+
+f2ptr raw__metrocfunk__args(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__args(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__args(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__args(cause, this);
+}
+def_pcfunk1(metrocfunk__args, this,
+	    "",
+	    return f2__metrocfunk__args(this_cause, this));
+
+f2ptr raw__metrocfunk__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__args__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__args__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__args(cause, this, value);
+}
+def_pcfunk2(metrocfunk__args__set, this, value,
+	    "",
+	    return f2__metrocfunk__args__set(this_cause, this, value));
+
+f2ptr raw__metrocfunk__cfunkptr(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__cfunkptr(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__cfunkptr(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__cfunkptr(cause, this);
+}
+def_pcfunk1(metrocfunk__cfunkptr, this,
+	    "",
+	    return f2__metrocfunk__cfunkptr(this_cause, this));
+
+f2ptr raw__metrocfunk__cfunkptr__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__cfunkptr__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__cfunkptr__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__cfunkptr(cause, this, value);
+}
+def_pcfunk2(metrocfunk__cfunkptr__set, this, value,
+	    "",
+	    return f2__metrocfunk__cfunkptr__set(this_cause, this, value));
+
+f2ptr raw__metrocfunk__env(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__env(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__env(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__env(cause, this);
+}
+def_pcfunk1(metrocfunk__env, this,
+	    "",
+	    return f2__metrocfunk__env(this_cause, this));
+
+f2ptr raw__metrocfunk__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__env__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__env__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__env(cause, this, value);
+}
+def_pcfunk2(metrocfunk__env__set, this, value,
+	    "",
+	    return f2__metrocfunk__env__set(this_cause, this, value));
+
+f2ptr raw__metrocfunk__is_funktional(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__is_funktional(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__is_funktional(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__is_funktional(cause, this);
+}
+def_pcfunk1(metrocfunk__is_funktional, this,
+	    "",
+	    return f2__metrocfunk__is_funktional(this_cause, this));
+
+f2ptr raw__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__is_funktional__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__is_funktional(cause, this, value);
+}
+def_pcfunk2(metrocfunk__is_funktional__set, this, value,
+	    "",
+	    return f2__metrocfunk__is_funktional__set(this_cause, this, value));
+
+f2ptr raw__metrocfunk__documentation(f2ptr cause, f2ptr this) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__documentation(cfunk, cause);
+}
+
+f2ptr f2__metrocfunk__documentation(f2ptr cause, f2ptr this) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__documentation(cause, this);
+}
+def_pcfunk1(metrocfunk__documentation, this,
+	    "",
+	    return f2__metrocfunk__documentation(this_cause, this));
+
+f2ptr raw__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  f2ptr cfunk = f2metrocfunk__cfunk(this, cause);
+  return f2cfunk__documentation__set(cfunk, cause, value);
+}
+
+f2ptr f2__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
+  assert_argument_type(metrocfunk, this);
+  return raw__metrocfunk__documentation(cause, this, value);
+}
+def_pcfunk2(metrocfunk__documentation__set, this, value,
+	    "",
+	    return f2__metrocfunk__documentation__set(this_cause, this, value));
 
 f2ptr raw__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
   return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
@@ -527,7 +690,19 @@ def_pcfunk2(metrocfunk__terminal_print_with_frame, this, terminal_print_frame,
 
 f2ptr f2metrocfunk__primobject_type__new_aux(f2ptr cause) {
   f2ptr this = f2metrocfunk__primobject_type__new(cause);
-  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__funk);}
+  {char* slot_name = "name";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__funk);}
+  {char* slot_name = "name";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.name__set__funk);}
+  {char* slot_name = "args";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__funk);}
+  {char* slot_name = "args";                      f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.args__set__funk);}
+  {char* slot_name = "cfunkptr";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__funk);}
+  {char* slot_name = "cfunkptr";                  f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.cfunkptr__set__funk);}
+  {char* slot_name = "env";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__funk);}
+  {char* slot_name = "env";                       f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.env__set__funk);}
+  {char* slot_name = "is_funktional";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__funk);}
+  {char* slot_name = "is_funktional";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.is_funktional__set__funk);}
+  {char* slot_name = "documentation";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "get"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__funk);}
+  {char* slot_name = "documentation";             f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "set"),     new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.documentation__set__funk);}
+  {char* slot_name = "terminal_print_with_frame"; f2__primobject_type__add_slot_type(cause, this, new__symbol(cause, "execute"), new__symbol(cause, slot_name), __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -1324,8 +1499,20 @@ void f2__primobjects__defragment__fix_pointers() {
   
   // metrocfunk
   
-  initialize_primobject_6_slot__defragment__fix_pointers(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  initialize_primobject_1_slot__defragment__fix_pointers(metrocfunk, cfunk);
   
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__name);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__name__set);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__args);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__args__set);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__cfunkptr);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__cfunkptr__set);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__env);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__env__set);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__is_funktional);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__is_funktional__set);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__documentation);
+  f2__primcfunk__init__defragment__fix_pointers(metrocfunk__documentation__set);
   f2__primcfunk__init__defragment__fix_pointers(metrocfunk__apply);
   
   defragment__fix_pointer(__funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__symbol);
@@ -1568,8 +1755,20 @@ void f2__primobjects__reinitialize_globalvars() {
   
   // metrocfunk
   
-  initialize_primobject_6_slot(metrocfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  initialize_primobject_1_slot(metrocfunk, cfunk);
   
+  f2__primcfunk__init__1(metrocfunk__name,               this);
+  f2__primcfunk__init__2(metrocfunk__name__set,          this, value);
+  f2__primcfunk__init__1(metrocfunk__args,               this);
+  f2__primcfunk__init__2(metrocfunk__args__set,          this, value);
+  f2__primcfunk__init__1(metrocfunk__cfunkptr,           this);
+  f2__primcfunk__init__2(metrocfunk__cfunkptr__set,      this, value);
+  f2__primcfunk__init__1(metrocfunk__env,                this);
+  f2__primcfunk__init__2(metrocfunk__env__set,           this, value);
+  f2__primcfunk__init__1(metrocfunk__is_funktional,      this);
+  f2__primcfunk__init__2(metrocfunk__is_funktional__set, this, value);
+  f2__primcfunk__init__1(metrocfunk__documentation,      this);
+  f2__primcfunk__init__2(metrocfunk__documentation__set, this, value);
   f2__primcfunk__init__3(metrocfunk__apply, x, y, z);
   
   {char* symbol_str = "terminal_print_with_frame"; __funk2.globalenv.object_type.primobject.primobject_type_metrocfunk.terminal_print_with_frame__symbol = new__symbol(cause, symbol_str);}

@@ -1372,7 +1372,7 @@
 
 #define f2__primmetro__init(name) { \
   def_pcfunk__symbolvar__init(name); \
-  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), f2metrocfunk__new(initial_cause(), new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name)), f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__metrovar(name))), global_environment(), nil)); \
+  environment__add_funkvar_value(initial_cause(), global_environment(), def_pcfunk__symbolvar(name), raw__metrocfunk__new(initial_cause(), new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name)), f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__metrovar(name))), global_environment(), nil)); \
 }
 
 #include "f2_memory.h"

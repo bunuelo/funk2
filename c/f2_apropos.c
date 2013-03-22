@@ -31,7 +31,7 @@ f2ptr f2__exp__documentation(f2ptr cause, f2ptr exp) {
   if (raw__cfunk__is_type(cause, exp)) {
     return f2cfunk__documentation(exp, cause);
   } else if (raw__metrocfunk__is_type(cause, exp)) {
-    return f2metrocfunk__documentation(exp, cause);
+    return raw__metrocfunk__documentation(cause, exp);
   } else if (raw__funk__is_type(cause, exp)) {
     return f2funk__documentation(exp, cause);
   } else if (raw__metro__is_type(cause, exp)) {

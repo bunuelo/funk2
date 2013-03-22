@@ -29,13 +29,13 @@
 
 
 f2ptr raw__cfunk__as__metrocfunk(f2ptr cause, f2ptr this) {
-  return f2metrocfunk__new(cause,
-			   f2__cfunk__name(         cause, this),
-			   f2__cfunk__args(         cause, this),
-			   f2__cfunk__cfunkptr(     cause, this),
-			   f2__cfunk__env(          cause, this),
-			   f2__cfunk__is_funktional(cause, this),
-			   f2__cfunk__documentation(cause, this));
+  return raw__metrocfunk__new(cause,
+			      f2__cfunk__name(         cause, this),
+			      f2__cfunk__args(         cause, this),
+			      f2__cfunk__cfunkptr(     cause, this),
+			      f2__cfunk__env(          cause, this),
+			      f2__cfunk__is_funktional(cause, this),
+			      f2__cfunk__documentation(cause, this));
 }
 
 f2ptr f2__cfunk__as__metrocfunk(f2ptr cause, f2ptr this) {

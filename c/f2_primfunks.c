@@ -1104,7 +1104,7 @@ f2ptr f2__format(f2ptr cause, f2ptr fiber, f2ptr stream, f2ptr exp) {
 
 f2ptr f2__exp__format(f2ptr cause, f2ptr fptr, f2ptr x) {
   f2ptr fiber = f2__this__fiber(cause);
-  return f2__format(cause, fiber, fptr, x));
+  return f2__format(cause, fiber, fptr, x);
 }
 def_pcfunk2(exp__format, fptr, x,
 	    "",

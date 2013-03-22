@@ -415,7 +415,7 @@ void f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f
 
 // cfunk
 
-def_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+def_primobject_7_slot(cfunk, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
 
 f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
 def_pcfunk7(cfunk__new, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation,

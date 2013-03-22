@@ -588,7 +588,7 @@ def_pcfunk0(errno__eprototype,
 
 // ERANGE "Result too large."
 f2ptr f2__errno__erange(f2ptr cause) {
-  return f2integer__new(cause, ERANGE));
+  return f2integer__new(cause, ERANGE);
 }
 def_pcfunk0(errno__erange,
 	    "",

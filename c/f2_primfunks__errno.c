@@ -152,7 +152,7 @@ f2ptr f2__errno__econnreset(f2ptr cause) {
 }
 def_pcfunk0(errno__econnreset,
 	    "",
-	    return f2__errno__econnreset(cause));
+	    return f2__errno__econnreset(this_cause));
 
 // EDEADLK "Resource deadlock would occur."
 f2ptr f2__errno__edeadlk(f2ptr cause) {

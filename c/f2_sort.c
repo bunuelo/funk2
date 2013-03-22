@@ -128,7 +128,7 @@ f2ptr f2__sort_integer_array(f2ptr cause, f2ptr integers) {
 }
 
 def_pcfunk1(sort_integer_array, integers,
-	    "sort an array of integers in place., """,
+	    "sort an array of integers in place.",
 	    return f2__sort_integer_array(this_cause, integers));
 
 

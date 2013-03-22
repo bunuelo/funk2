@@ -1535,7 +1535,7 @@ def_pcfunk1(pointer__type,    this,
 	    return f2__pointer__type(this_cause, this));
 
 f2ptr raw__pointer__new(f2ptr cause, f2ptr this) {
-  return f2pointer__new(this_cause, f2pointer__p(this_cause, this));
+  return f2pointer__new(cause, f2pointer__p(this_cause, this));
 }
 
 f2ptr f2__pointer__new(f2ptr cause, f2ptr this) {
@@ -1544,7 +1544,7 @@ f2ptr f2__pointer__new(f2ptr cause, f2ptr this) {
 }
 def_pcfunk1(pointer__new, this,
 	    "",
-	    return f2__pointer__new(cause, this));
+	    return f2__pointer__new(this_cause, this));
 
 f2ptr raw__pointer__p(f2ptr cause, f2ptr this) {
   return this;

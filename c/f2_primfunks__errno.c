@@ -27,12 +27,12 @@
 
 #include "funk2.h"
 
-f2ptr f2__errnob(f2ptr cause) {
+f2ptr f2__errno__errno(f2ptr cause) {
   return f2integer__new(cause, errno);
 }
-def_pcfunk0(errnob, 
+def_pcfunk0(errno__errno, 
 	    "",
-	    return f2__errnob(this_cause));
+	    return f2__errno__errno(this_cause));
 
 // E2BIG "Argument list too long."
 f2ptr f2__errno__e2big(f2ptr cause) {
@@ -670,7 +670,7 @@ void f2__primfunks__errno__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
   
-  f2__primcfunk__init__defragment__fix_pointers(errno);
+  f2__primcfunk__init__defragment__fix_pointers(errno__errno);
   
   f2__primcfunk__init__defragment__fix_pointers(errno__e2big);
   f2__primcfunk__init__defragment__fix_pointers(errno__eacces);
@@ -754,7 +754,7 @@ void f2__primfunks__errno__defragment__fix_pointers() {
 }
 
 void f2__primfunks__errno__reinitialize_globalvars() {
-  f2__primcfunk__init(errno);
+  f2__primcfunk__init(errno__errno);
   
   f2__primcfunk__init(errno__e2big);
   f2__primcfunk__init(errno__eacces);

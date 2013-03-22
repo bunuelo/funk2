@@ -23,7 +23,7 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
-[globalize-funk errno:errno &primfunk:errno]
+[globalize-funk errno:errno &primfunk:errno__errno]
 
 [globalize errno:errno-e2big           [primfunk:errno__e2big]]
 [globalize errno:errno-eacces          [primfunk:errno__eacces]]

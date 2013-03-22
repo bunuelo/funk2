@@ -253,13 +253,14 @@ f2ptr raw__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
 			   new__symbol(cause, "this"),         this));
   assert_argument_type(pointer, args_pointer);
   
-  f2ptr name          = f2__core_extension_funk__args_cname(cause, this);
-  f2ptr args          = nil;
-  f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(args_pointer, cause)));
-  f2ptr env           = global_environment();
-  f2ptr is_funktional = f2bool__new(boolean__true);
-  f2ptr documentation = new__string(cause, "This cfunk returns the arguments for its core_extension_funk.");
-  return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+  f2ptr name                       = f2__core_extension_funk__args_cname(cause, this);
+  f2ptr args                       = nil;
+  f2ptr stack_machine_code_pointer = nil;
+  f2ptr cfunkptr                   = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(args_pointer, cause)));
+  f2ptr env                        = global_environment();
+  f2ptr is_funktional              = f2bool__new(boolean__true);
+  f2ptr documentation              = new__string(cause, "This cfunk returns the arguments for its core_extension_funk.");
+  return f2cfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
 }
 
 f2ptr f2__core_extension_funk__args_cfunk(f2ptr cause, f2ptr this) {
@@ -323,13 +324,14 @@ f2ptr raw__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
 			   new__symbol(cause, "this"),                  this));
   assert_argument_type(pointer, is_funktional_pointer);
   
-  f2ptr name          = f2__core_extension_funk__is_funktional_cname(cause, this);
-  f2ptr args          = nil;
-  f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(is_funktional_pointer, cause)));
-  f2ptr env           = global_environment();
-  f2ptr is_funktional = f2bool__new(boolean__true);
-  f2ptr documentation = new__string(cause, "This cfunk returns whether its core_extension_funk is funktional.");
-  return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+  f2ptr name                       = f2__core_extension_funk__is_funktional_cname(cause, this);
+  f2ptr args                       = nil;
+  f2ptr stack_machine_code_pointer = nil;
+  f2ptr cfunkptr                   = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(is_funktional_pointer, cause)));
+  f2ptr env                        = global_environment();
+  f2ptr is_funktional              = f2bool__new(boolean__true);
+  f2ptr documentation              = new__string(cause, "This cfunk returns whether its core_extension_funk is funktional.");
+  return f2cfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
 }
 
 f2ptr f2__core_extension_funk__is_funktional_cfunk(f2ptr cause, f2ptr this) {
@@ -393,13 +395,14 @@ f2ptr raw__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {
 			   new__symbol(cause, "this"),                  this));
   assert_argument_type(pointer, documentation_pointer);
   
-  f2ptr name          = f2__core_extension_funk__documentation_cname(cause, this);
-  f2ptr args          = nil;
-  f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(documentation_pointer, cause)));
-  f2ptr env           = global_environment();
-  f2ptr is_funktional = f2bool__new(boolean__true);
-  f2ptr documentation = new__string(cause, "This cfunk returns the documentation for its core_extension_funk.");
-  return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+  f2ptr name                       = f2__core_extension_funk__documentation_cname(cause, this);
+  f2ptr args                       = nil;
+  f2ptr stack_machine_code_pointer = nil;
+  f2ptr cfunkptr                   = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(documentation_pointer, cause)));
+  f2ptr env                        = global_environment();
+  f2ptr is_funktional              = f2bool__new(boolean__true);
+  f2ptr documentation              = new__string(cause, "This cfunk returns the documentation for its core_extension_funk.");
+  return f2cfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
 }
 
 f2ptr f2__core_extension_funk__documentation_cfunk(f2ptr cause, f2ptr this) {

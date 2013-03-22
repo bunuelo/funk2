@@ -551,9 +551,13 @@ f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk2_and_rest(object__set,        this, slot, args,
 		     "",
 		     return f2__object__set(this_cause, this, slot, args));
-def_pcfunk3(         object__set__apply, this, slot, args,
-		     "",
-		     return f2__object__set(this_cause, this, slot, args));
+
+f2ptr f2__object__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__set(this_cause, this, slot, args);
+}
+def_pcfunk3(object__set__apply, this, slot, args,
+	    "",
+	    return f2__object__set__apply(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -578,9 +582,13 @@ f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk2_and_rest(object__execute,        this, slot, args,
 		     "",
 		     return f2__object__execute(this_cause, this, slot, args));
-def_pcfunk3(         object__execute__apply, this, slot, args,
-		     "",
-		     return f2__object__execute(this_cause, this, slot, args));
+
+f2ptr f2__object__execute__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__execute(this_cause, this, slot, args);
+}
+def_pcfunk3(object__execute__apply, this, slot, args,
+	    "",
+	    return f2__object__execute__apply(this_cause, this, slot, args));
 
 f2ptr f2__object__get_0(f2ptr cause, f2ptr this, f2ptr slot) {
   f2ptr fiber = f2__this__fiber(cause);

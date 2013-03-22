@@ -4634,6 +4634,22 @@ f2ptr raw__label_expression__label_name(f2ptr cause, f2ptr expression) {
 }
 
 
+boolean_t raw__expression__is_funkvar_expression(f2ptr cause, f2ptr expression) {
+  if (raw__cons__is_type(cause, expression)) {
+    f2ptr command = f2cons__car(expression, cause);
+    if (raw__eq(cause, command, new__symbol(cause, "funkvar"))) {
+      if (raw__simple_length(cause, expression) == 2) {
+	return boolean__true;
+      }
+    }
+  }
+  return boolean__false;
+}
+
+f2ptr raw__funkvar_expression__funkvar_name(f2ptr cause, f2ptr expression) {
+  return f2cons__car(f2cons__cdr(expression, cause), cause);
+}
+
 f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) != 3) {
     return new__error(f2list4__new(cause,
@@ -5797,22 +5813,6 @@ f2ptr raw__expression__compile_x86__integer(f2ptr cause, f2ptr expression) {
 
 f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
-}
-
-boolean_t raw__expression__is_funkvar_expression(f2ptr cause, f2ptr expression) {
-  if (raw__cons__is_type(cause, expression)) {
-    f2ptr command = f2cons__car(expression, cause);
-    if (raw__eq(cause, command, new__symbol(cause, "funkvar"))) {
-      if (raw__simple_length(cause, expression) == 2) {
-	return boolean__true;
-      }
-    }
-  }
-  return boolean__false;
-}
-
-f2ptr raw__funkvar_expression__funkvar_name(f2ptr cause, f2ptr expression) {
-  return f2cons__car(f2cons__cdr(expression, cause), cause);
 }
 
 f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {

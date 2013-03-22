@@ -1818,8 +1818,8 @@ f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause);
 declare_primobject_1_slot(metrocfunk,
 			  cfunk);
 
-f2ptr raw__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
-f2ptr  f2__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr raw__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
+f2ptr  f2__metrocfunk__new               (f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation);
 f2ptr raw__metrocfunk__name              (f2ptr cause, f2ptr this);
 f2ptr  f2__metrocfunk__name              (f2ptr cause, f2ptr this);
 f2ptr raw__metrocfunk__name__set         (f2ptr cause, f2ptr this, f2ptr value);

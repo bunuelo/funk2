@@ -480,17 +480,17 @@ f2ptr f2cfunk__primobject_type__new_aux(f2ptr cause) {
 
 def_primobject_1_slot(metrocfunk, cfunk);
 
-f2ptr raw__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  f2ptr cfunk = f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+f2ptr raw__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  f2ptr cfunk = f2cfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
   return f2metrocfunk__new(cause, cfunk);
 }
 
-f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
-  return raw__metrocfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+f2ptr f2__metrocfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {
+  return raw__metrocfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
 }
-def_pcfunk6(metrocfunk__new, name, args, cfunkptr, env, is_funktional, documentation,
+def_pcfunk7(metrocfunk__new, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation,
 	    "",
-	    return f2__metrocfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
+	    return f2__metrocfunk__new(this_cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation));
 
 f2ptr raw__metrocfunk__name(f2ptr cause, f2ptr this) {
   f2ptr cfunk = f2metrocfunk__cfunk(this, cause);

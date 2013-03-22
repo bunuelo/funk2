@@ -29,25 +29,25 @@
 
 
 f2ptr raw__semantic_action_knowledge_base__know_of_add__after_callback(f2ptr cause, f2ptr this, f2ptr semantic_frame, f2ptr key_type, f2ptr key, f2ptr value) {
-  if (raw__semantic_action__is_type(cause, semantic_frame)) {
-    f2ptr semantic_action = semantic_frame;
-    if (raw__eq(cause, new__symbol(cause, "relationship"), key_type) && raw__eq(cause, new__symbol(cause, "example_event"), key)) {
-      f2ptr example_event = value;
-      {
-	f2ptr transframe_set = assert_value(f2__semantic_event__transframe__lookup_set(cause, example_event));
-	set__iteration(cause, transframe_set, transframe,
-		       //f2ptr removal_set  = assert_value(f2__semantic_event_transframe__removal__lookup_set(cause, transframe));
-		       //f2ptr addition_set = assert_value(f2__semantic_event_transframe__addition__lookup_set(cause, transframe));
-		       //set__iteration(cause, removal_set, removal,
-		       //		      
-		       //		      );
-		       //set__iteration(cause, addition_set, addition,
-		       //		      
-		       //		      );
-		       );
-      }
-    }
-  }
+  /* if (raw__semantic_action__is_type(cause, semantic_frame)) { */
+  /*   f2ptr semantic_action = semantic_frame; */
+  /*   if (raw__eq(cause, new__symbol(cause, "relationship"), key_type) && raw__eq(cause, new__symbol(cause, "example_event"), key)) { */
+  /*     f2ptr example_event = value; */
+  /*     { */
+  /* 	f2ptr transframe_set = assert_value(f2__semantic_event__transframe__lookup_set(cause, example_event)); */
+  /* 	set__iteration(cause, transframe_set, transframe, */
+  /* 		       //f2ptr removal_set  = assert_value(f2__semantic_event_transframe__removal__lookup_set(cause, transframe)); */
+  /* 		       //f2ptr addition_set = assert_value(f2__semantic_event_transframe__addition__lookup_set(cause, transframe)); */
+  /* 		       //set__iteration(cause, removal_set, removal, */
+  /* 		       //		       */
+  /* 		       //		      ); */
+  /* 		       //set__iteration(cause, addition_set, addition, */
+  /* 		       //		       */
+  /* 		       //		      ); */
+  /* 		       ); */
+  /*     } */
+  /*   } */
+  /* } */
   return nil;
 }
 

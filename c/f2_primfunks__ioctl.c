@@ -29,25 +29,36 @@
 
 // int ioctl(int d, int request, ...);
 
-f2ptr f2__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
+f2ptr raw__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
   int i;
   f2ptr rv = f2integer__new(cause, ioctl(f2integer__i(d, cause), f2integer__i(request, cause), &i));
   f2place__thing__set(value_place, cause, f2integer__new(cause, i));
   return rv;
 }
-def_pcfunk3(f2__ioctl__int, d, request, value_place,
+
+f2ptr f2__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
+  assert_argument_type(integer, d);
+  assert_argument_type(integer, request);
+  assert_argument_type(place,   value_place);
+  return raw__ioctl__int(cause, d, request, value_place);
+}
+def_pcfunk3(ioctl__int, d, request, value_place,
 	    "",
 	    return f2__ioctl__int(this_cause, d, request, value_place));
 
 
 #ifndef F2__CYGWIN
-f2ptr f2__ioctl__siocinq(f2ptr cause) {return f2integer__new(cause, SIOCINQ);}
-def_pcfunk0(f2__ioctl__siocinq,
+f2ptr f2__ioctl__siocinq(f2ptr cause) {
+  return f2integer__new(cause, SIOCINQ);
+}
+def_pcfunk0(ioctl__siocinq,
 	    "",
 	    return f2__ioctl__siocinq(this_cause));
 
-f2ptr f2__ioctl__siocoutq(f2ptr cause) {return f2integer__new(cause, SIOCOUTQ);}
-def_pcfunk0(f2__ioctl__siocoutq,
+f2ptr f2__ioctl__siocoutq(f2ptr cause) {
+  return f2integer__new(cause, SIOCOUTQ);
+}
+def_pcfunk0(ioctl__siocoutq,
 	    "",
 	    return f2__ioctl__siocoutq(this_cause));
 #endif
@@ -59,20 +70,20 @@ void f2__primfunks__ioctl__defragment__fix_pointers() {
   // -- reinitialize --
   // -- initialize --
   
-  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__int);
+  f2__primcfunk__init__defragment__fix_pointers(ioctl__int);
   
 #ifndef F2__CYGWIN
-  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__siocinq);
-  f2__primcfunk__init__defragment__fix_pointers(f2__ioctl__siocoutq);
+  f2__primcfunk__init__defragment__fix_pointers(ioctl__siocinq);
+  f2__primcfunk__init__defragment__fix_pointers(ioctl__siocoutq);
 #endif
 }
 
 void f2__primfunks__ioctl__reinitialize_globalvars() {
-  f2__primcfunk__init(f2__ioctl__int);
+  f2__primcfunk__init(ioctl__int);
   
 #ifndef F2__CYGWIN
-  f2__primcfunk__init(f2__ioctl__siocinq);
-  f2__primcfunk__init(f2__ioctl__siocoutq);
+  f2__primcfunk__init(ioctl__siocinq);
+  f2__primcfunk__init(ioctl__siocoutq);
 #endif
 }
 

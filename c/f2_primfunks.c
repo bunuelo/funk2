@@ -1507,7 +1507,7 @@ f2ptr f2__this__env(f2ptr cause) {
 }
 def_pcfunk0(this__env,
 	    "",
-	    return f2__this__env(cause));
+	    return f2__this__env(this_cause));
 
 f2ptr f2__exps_demetropolize_full(f2ptr cause, f2ptr fiber, f2ptr env, f2ptr exp) {
   assert_argument_type_or_nil(cons, exp);

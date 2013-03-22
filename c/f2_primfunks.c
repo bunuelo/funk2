@@ -1587,17 +1587,23 @@ def_pcfunk1(coerce_to_int, exp,
 	    return f2__coerce_to_int(this_cause, exp));
 
 
+f2ptr f2__system__peer_command_server__port_num(f2ptr cause) {
+  return f2integer__new(this_cause, __funk2.command_line.peer_command_server__port_num);
+}
 def_pcfunk0(system__peer_command_server__port_num,
 	    "",
-	    return f2integer__new(this_cause, __funk2.command_line.peer_command_server__port_num));
+	    return f2__system__peer_command_server__port_num(this_cause));
 
+f2ptr f2__system__gethostname(f2ptr cause) {
+  char hostname[1024];
+  if (gethostname(hostname, 1023) != 0) {
+    return nil;
+  }
+  return new__string(this_cause, hostname);
+}
 def_pcfunk0(system__gethostname,
 	    "",
-	    char hostname[1024];
-	    if (gethostname(hostname, 1023) != 0) {
-	      return nil;
-	    }
-	    return new__string(this_cause, hostname));
+	    return f2__system__gethostname(this_cause));
 
 // funk2_node_handler
 

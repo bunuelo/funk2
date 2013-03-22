@@ -751,15 +751,17 @@
 
 #define f2__primcfunk__init__with_c_cfunk_var__cfunk_args_code(name, c_cfunk_var, cfunk_args_code) \
   f2ptr c_cfunk_var = nil;						\
-  { \
-    f2ptr c_cfunk_args = cfunk_args_code;				\
-    c_cfunk_var        = f2cfunk__new(initial_cause(),			\
-				      new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name)), \
-				      c_cfunk_args,			\
-				      f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), \
-				      global_environment(),		\
-				      def_pcfunk__is_funktional_variable(name), \
-				      new__string(initial_cause(), (char*)def_pcfunk__documentation_variable(name))); \
+  {									\
+    f2ptr c_cfunk_args               = cfunk_args_code;			\
+    f2ptr stack_machine_code_pointer = nil;				\
+    c_cfunk_var                      = f2cfunk__new(initial_cause(),	\
+						    new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name)), \
+						    c_cfunk_args,	\
+						    stack_machine_code_pointer,	\
+						    f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__funkvar(name))), \
+						    global_environment(), \
+						    def_pcfunk__is_funktional_variable(name), \
+						    new__string(initial_cause(), (char*)def_pcfunk__documentation_variable(name))); \
     never_gc(c_cfunk_var);						\
     def_pcfunk__symbolvar__init(name);					\
     never_gc(def_pcfunk__symbolvar(name));				\

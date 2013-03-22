@@ -2090,6 +2090,8 @@ void f2__primcfunks__defragment__fix_pointers() {
   //f2__primcfunk__init(memory_image__save);
   //f2__primcfunk__init(memory_image__load);
   
+  f2__primcfunk__init__defragment__fix_pointers(system__memorypool__total_global_memory);
+  f2__primcfunk__init__defragment__fix_pointers(system__memorypool__total_free_memory);
   
   f2__primcfunk__init__defragment__fix_pointers(integer__to_float);
   f2__primcfunk__init__defragment__fix_pointers(integer__to_double);
@@ -2105,9 +2107,6 @@ void f2__primcfunks__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(double__divide_by_integer);
   f2__primcfunk__init__defragment__fix_pointers(float__to_integer);
   f2__primcfunk__init__defragment__fix_pointers(float__to_double);
-  
-  f2__primcfunk__init__defragment__fix_pointers(tensor__new_from_array_of_integer_dimensions);
-  f2__primcfunk__init__defragment__fix_pointers(tensor__elt_from_array_of_integer_indices);
   
   f2__primcfunk__init__defragment__fix_pointers(funk2_node_handler__know_of_node);
   f2__primcfunk__init__defragment__fix_pointers(send_request_register_peer);
@@ -2276,7 +2275,6 @@ void f2__primcfunks__reinitialize_globalvars() {
   
   //f2__primcfunk__init(memory_image__save);
   //f2__primcfunk__init(memory_image__load);
-  
   
   f2__primcfunk__init__1(system__memorypool__total_global_memory, index);
   f2__primcfunk__init__1(system__memorypool__total_free_memory,   index);

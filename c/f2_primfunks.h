@@ -753,7 +753,7 @@
   f2ptr c_cfunk_var = nil;						\
   {									\
     f2ptr c_cfunk_args               = cfunk_args_code;			\
-    f2ptr stack_machine_code_pointer = nil;				\
+    f2ptr stack_machine_code_pointer = f2pointer__new(initial_cause(), raw_executable__to__relative_ptr(def_pcfunk__f2_funkvar(name))); \
     c_cfunk_var                      = f2cfunk__new(initial_cause(),	\
 						    new__symbol(initial_cause(), def_pcfunk__symbolvar_string(name)), \
 						    c_cfunk_args,	\

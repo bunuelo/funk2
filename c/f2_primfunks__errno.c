@@ -334,7 +334,7 @@ def_pcfunk0(errno__enametoolong,
 f2ptr f2__errno__enetdown(f2ptr cause) {
   return f2integer__new(cause, ENETDOWN);
 }
-def_pcfunk0(f2__errno__enetdown,
+def_pcfunk0(errno__enetdown,
 	    "",
 	    return f2__errno__enetdown(this_cause));
 

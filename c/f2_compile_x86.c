@@ -1609,6 +1609,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	f2ptr jump__arguments = f2machine_code_jump__arguments(jump, cause);
 	s64   jump__index__i  = f2integer__i(jump__index, cause);
 	f2ptr label__index    = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	s64   label__index__i = 0;
 	u64   jump_location   = 0;
 	if (label__index == nil) {
 	  f2ptr fiber    = f2__this__fiber(cause);
@@ -1631,8 +1632,8 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
 	} else {
-	  s64 label__index__i = f2integer__i(label__index, cause);
-	  jump_location = raw__chunk__bytes(cause, chunk) + label__index__i;
+	  label__index__i = f2integer__i(label__index, cause);
+	  jump_location   = raw__chunk__bytes(cause, chunk) + label__index__i;
 	}
 	if (jump_location == 0) {
 	  return new__error(f2list6__new(cause,
@@ -1656,16 +1657,52 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "register_name"), register_name));
 	  }
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "je"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jne"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__jne__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jle"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__jle__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jl"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__jl__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jge"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__jge__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jg"))) {
+	  if (label__index__i == 0) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	  assert_value(raw__expression__compile_x86_to_chunk__jg__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else {
 	  return new__error(f2list6__new(cause,

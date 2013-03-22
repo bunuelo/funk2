@@ -51,7 +51,7 @@ def_pcfunk0(errno__eacces,
 	    return f2__errno__eacces(this_cause));
 
 // EADDRINUSE "Address in use."
-f2ptr f2__errno__eaddr(f2ptr cause) {
+f2ptr f2__errno__eaddrinuse(f2ptr cause) {
   return f2integer__new(cause, EADDRINUSE);
 }
 def_pcfunk0(errno__eaddrinuse,

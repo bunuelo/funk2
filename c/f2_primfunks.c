@@ -1239,15 +1239,25 @@ f2ptr f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value) {
 //	    printf("\ncreating user bytecode! "); fflush(stdout);
 //	    return f2bytecode__new(this_cause, command, arg0, arg1, arg2));
 
+f2ptr f2__debug(f2ptr cause, f2ptr value) {
+  f2ptr fiber = f2__this__fiber(cause);
+  printf("\ndebug: ");
+  f2__write(cause, fiber, value);
+  fflush(stdout);
+  return value;
+}
 def_pcfunk1(debug, value,
 	    "",
-	    printf("\ndebug: "); f2__write(this_cause, simple_fiber, value); fflush(stdout);
-	    return value);
+	    return f2__debug(this_cause, value));
 
+f2ptr f2__trace(f2ptr cause, f2ptr value) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2fiber__trace__set(fiber, cause, raw__cons__new(cause, value, f2fiber__trace(fiber, cause)));
+  return value;
+}
 def_pcfunk1(trace, value,
 	    "",
-	    f2fiber__trace__set(simple_fiber, this_cause, raw__cons__new(this_cause, value, f2fiber__trace(simple_fiber, this_cause)));
-	    return value);
+	    return f2__trace(this_cause, value));
 
 boolean_t raw__scheduler_eq(f2ptr cause, f2ptr x, f2ptr y) {
   return (x == y);

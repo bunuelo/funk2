@@ -3883,7 +3883,7 @@ f2ptr raw__chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2
 f2ptr f2__chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args) {
   assert_argument_type(chunk,       this);
   assert_argument_type(fiber,       fiber);
-  assert_argument_type(environment, environment);
+  assert_argument_type(environment, env);
   assert_argument_type(conslist,    args);
   return raw__chunk__cfunk_jump(cause, this, fiber, env, args);
 }

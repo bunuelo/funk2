@@ -649,7 +649,7 @@ def_pcfunk2(metrocfunk__documentation__set, this, value,
 	    return f2__metrocfunk__documentation__set(this_cause, this, value));
 
 f2ptr raw__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {
-  return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(f2metrocfunk__cfunkptr(metrocfunk, cause), cause)))(cause, fiber, f2metrocfunk__env(metrocfunk, cause), args);
+  return ((cfunkptr_t)relative_ptr__to__raw_executable(f2pointer__p(raw__metrocfunk__cfunkptr(cause, metrocfunk), cause)))(cause, fiber, raw__metrocfunk__env(cause, metrocfunk), args);
 }
 
 f2ptr f2__metrocfunk__apply(f2ptr cause, f2ptr metrocfunk, f2ptr fiber, f2ptr args) {

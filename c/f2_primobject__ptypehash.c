@@ -137,7 +137,7 @@ f2ptr f2__ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value,
 }
 
 f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
-  return raw__ptypehash__add__debug(cause, this, key, value, __FILE__, __LINE__, __FUNCTION__);
+  return raw__ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__);
 }
 
 f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {

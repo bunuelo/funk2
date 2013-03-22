@@ -512,7 +512,7 @@ f2ptr raw__metrocfunk__name__set(f2ptr cause, f2ptr this, f2ptr value) {
 
 f2ptr f2__metrocfunk__name__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__name(cause, this, value);
+  return raw__metrocfunk__name__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__name__set, this, value,
 	    "",
@@ -538,7 +538,7 @@ f2ptr raw__metrocfunk__args__set(f2ptr cause, f2ptr this, f2ptr value) {
 
 f2ptr f2__metrocfunk__args__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__args(cause, this, value);
+  return raw__metrocfunk__args__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__args__set, this, value,
 	    "",
@@ -564,7 +564,7 @@ f2ptr raw__metrocfunk__cfunkptr__set(f2ptr cause, f2ptr this, f2ptr value) {
 
 f2ptr f2__metrocfunk__cfunkptr__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__cfunkptr(cause, this, value);
+  return raw__metrocfunk__cfunkptr__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__cfunkptr__set, this, value,
 	    "",
@@ -590,7 +590,7 @@ f2ptr raw__metrocfunk__env__set(f2ptr cause, f2ptr this, f2ptr value) {
 
 f2ptr f2__metrocfunk__env__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__env(cause, this, value);
+  return raw__metrocfunk__env__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__env__set, this, value,
 	    "",
@@ -616,7 +616,7 @@ f2ptr raw__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) 
 
 f2ptr f2__metrocfunk__is_funktional__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__is_funktional(cause, this, value);
+  return raw__metrocfunk__is_funktional__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__is_funktional__set, this, value,
 	    "",
@@ -642,7 +642,7 @@ f2ptr raw__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) 
 
 f2ptr f2__metrocfunk__documentation__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(metrocfunk, this);
-  return raw__metrocfunk__documentation(cause, this, value);
+  return raw__metrocfunk__documentation__set(cause, this, value);
 }
 def_pcfunk2(metrocfunk__documentation__set, this, value,
 	    "",

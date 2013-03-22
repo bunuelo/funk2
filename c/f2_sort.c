@@ -123,9 +123,13 @@ f2ptr f2__integer_array__quicksort(f2ptr cause, f2ptr this) {
   return raw__integer_array__quicksort(cause, this);
 }
 
+f2ptr f2__sort_integer_array(f2ptr cause, f2ptr integers) {
+  return f2__integer_array__quicksort(cause, integers);
+}
+
 def_pcfunk1(sort_integer_array, integers,
 	    "sort an array of integers in place., """,
-	    return f2__integer_array__quicksort(this_cause, integers));
+	    return f2__sort_integer_array(this_cause, integers));
 
 
 f2ptr array__quicksort_helper(f2ptr cause, f2ptr fiber, f2ptr array, f2ptr comparison_funk, int first_element, int last_element) {

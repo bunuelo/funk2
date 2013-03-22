@@ -144,13 +144,14 @@ f2ptr raw__core_extension_funk__cfunk(f2ptr cause, f2ptr this) {
 			       new__symbol(cause, "this"),     this));
       assert_argument_type(pointer, pointer);
       
-      f2ptr name          = f2__core_extension_funk__name(cause, this);
-      f2ptr args          = f2__core_extension_funk__args(cause, this);
-      f2ptr cfunkptr      = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(pointer, cause)));
-      f2ptr env           = f2__core_extension_funk__env(cause, this);
-      f2ptr is_funktional = f2__core_extension_funk__is_funktional(cause, this);
-      f2ptr documentation = f2__core_extension_funk__documentation(cause, this);
-      cfunk = f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);
+      f2ptr name                       = f2__core_extension_funk__name(cause, this);
+      f2ptr args                       = f2__core_extension_funk__args(cause, this);
+      f2ptr stack_machine_code_pointer = nil;
+      f2ptr cfunkptr                   = f2pointer__new(cause, raw_executable__to__relative_ptr(f2pointer__p(pointer, cause)));
+      f2ptr env                        = f2__core_extension_funk__env(cause, this);
+      f2ptr is_funktional              = f2__core_extension_funk__is_funktional(cause, this);
+      f2ptr documentation              = f2__core_extension_funk__documentation(cause, this);
+      cfunk = f2cfunk__new(cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
     }
     f2ptr cfunk__cached       = cfunk;
     cfunk__cached__time_stamp = core_extension__initialized_time_stamp;

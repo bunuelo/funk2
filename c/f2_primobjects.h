@@ -1801,9 +1801,10 @@ void   f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause,
 
 // cfunk
 
-declare_primobject_6_slot(cfunk,
+declare_primobject_7_slot(cfunk,
 			  name,
 			  args,
+			  stack_machine_code_pointer,
 			  cfunkptr,
 			  env,
 			  is_funktional,
@@ -2296,7 +2297,7 @@ declare_object_type_5_slot(imagination_link, next, name, value, trace, imaginati
 
 // cfunk
 
-declare_object_type_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation,
+declare_object_type_7_slot(cfunk, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation,
 			   f2ptr terminal_print_with_frame__symbol;
 			   f2ptr terminal_print_with_frame__funk;
 			   );

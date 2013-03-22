@@ -417,10 +417,10 @@ void f2__imagination_link__set_value_from_name_stack__trace_depth(f2ptr cause, f
 
 def_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
 
-f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
-def_pcfunk6(cfunk__new, name, args, cfunkptr, env, is_funktional, documentation,
+f2ptr f2__cfunk__new(f2ptr cause, f2ptr name, f2ptr args, f2ptr stack_machine_code_pointer, f2ptr cfunkptr, f2ptr env, f2ptr is_funktional, f2ptr documentation) {return f2cfunk__new(cause, name, args, cfunkptr, env, is_funktional, documentation);}
+def_pcfunk7(cfunk__new, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation,
 	    "",
-	    return f2__cfunk__new(this_cause, name, args, cfunkptr, env, is_funktional, documentation));
+	    return f2__cfunk__new(this_cause, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation));
 
 f2ptr f2__cfunk__apply(f2ptr cause, f2ptr cfunk, f2ptr fiber, f2ptr args) {
   assert_argument_type(cfunk,    cfunk);
@@ -1489,7 +1489,7 @@ void f2__primobjects__defragment__fix_pointers() {
   
   // cfunk
   
-  initialize_primobject_6_slot__defragment__fix_pointers(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  initialize_primobject_7_slot__defragment__fix_pointers(cfunk, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
   
   f2__primcfunk__init__defragment__fix_pointers(cfunk__apply);
   
@@ -1746,7 +1746,7 @@ void f2__primobjects__reinitialize_globalvars() {
   
   // cfunk
   
-  initialize_primobject_6_slot(cfunk, name, args, cfunkptr, env, is_funktional, documentation);
+  initialize_primobject_7_slot(cfunk, name, args, stack_machine_code_pointer, cfunkptr, env, is_funktional, documentation);
   
   f2__primcfunk__init__3(cfunk__apply, x, y, z);
   

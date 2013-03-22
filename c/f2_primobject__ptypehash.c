@@ -135,6 +135,14 @@ f2ptr f2__ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2ptr value,
   assert_argument_type(ptypehash, this);
   return raw__ptypehash__add__debug(cause, this, key, value, source_filename, source_line_number, source_funktion_name);
 }
+
+f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  return raw__ptypehash__add__debug(cause, this, key, value, __FILE__, __LINE__, __FUNCTION__);
+}
+
+f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  return raw__ptypehash__add__debug(cause, this, key, value);
+}
 def_pcfunk3(ptypehash__add, this, slot_name, value,
 	    "",
 	    return f2__ptypehash__add(this_cause, this, slot_name, value));

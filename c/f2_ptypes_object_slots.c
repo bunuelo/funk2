@@ -1136,7 +1136,7 @@ f2ptr raw__float__new(f2ptr cause, f2ptr this) {
 
 f2ptr f2__float__new(f2ptr cause, f2ptr this) {
   assert_argument_type(float, this);
-  return raw__float__new(cause, this));
+  return raw__float__new(cause, this);
 }
 def_pcfunk1(float__new, this,
 	    "",

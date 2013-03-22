@@ -1608,40 +1608,16 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	f2ptr jump__label     = f2machine_code_jump__label(    jump, cause);
 	f2ptr jump__arguments = f2machine_code_jump__arguments(jump, cause);
 	s64   jump__index__i  = f2integer__i(jump__index, cause);
-	f2ptr label__index    = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
-	s64   label__index__i = 0;
-	u64   jump_location   = 0;
-	if (label__index == nil) {
-	  f2ptr fiber    = f2__this__fiber(cause);
-	  f2ptr funkable = f2__fiber__lookup_type_variable_value(cause, fiber, new__symbol(cause, "funk_variable"), jump__label);
-	  if (raw__cfunk__is_type(cause, funkable)) {
-	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
-	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
-	      ptr relative_ptr = f2pointer__p(stack_machine_code_pointer, cause);
-	      jump_location    = to_ptr(relative_ptr__to__raw_executable(relative_ptr));
-	    } else {
-	      return new__error(f2list6__new(cause,
-					     new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
-					     new__symbol(cause, "this"),       this,
-					     new__symbol(cause, "jump_label"), jump__label));
-	    }
-	  } else {
+	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs-label"))) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
-	} else {
-	  label__index__i = f2integer__i(label__index, cause);
-	  jump_location   = raw__chunk__bytes(cause, chunk) + label__index__i;
-	}
-	if (jump_location == 0) {
-	  return new__error(f2list6__new(cause,
-					 new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-jump_location_is_zero"),
-					 new__symbol(cause, "this"),       this,
-					 new__symbol(cause, "jump_label"), jump__label));
-	}
-	if (raw__eq(cause, jump__command, new__symbol(cause, "movabs"))) {
+	  s64 label__index__i = f2integer__i(label__index, cause);
+	  u64 jump_location   = raw__chunk__bytes(cause, chunk) + label__index__i;
 	  f2ptr register_name = f2cons__car(jump__arguments, cause);
 	  if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, jump_location);}
 	  else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdi(cause, chunk, jump__index__i, jump_location);}
@@ -1656,53 +1632,99 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "this"),          this,
 					   new__symbol(cause, "register_name"), register_name));
 	  }
-	} else if (raw__eq(cause, jump__command, new__symbol(cause, "je"))) {
-	  if (label__index__i == 0) {
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "movabs-funkvar"))) {
+	  f2ptr fiber    = f2__this__fiber(cause);
+	  f2ptr funkable = f2__fiber__lookup_type_variable_value(cause, fiber, new__symbol(cause, "funk_variable"), jump__label);
+	  if (raw__cfunk__is_type(cause, funkable)) {
+	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
+	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
+	      ptr   relative_ptr  = f2pointer__p(stack_machine_code_pointer, cause);
+	      u64   jump_location = to_ptr(relative_ptr__to__raw_executable(relative_ptr));
+	      f2ptr register_name = f2cons__car(jump__arguments, cause);
+	      if      (raw__eq(cause, register_name, new__symbol(cause, "rax"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "rdi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdi(cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "rsi"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rsi(cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "rdx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "rcx"))) {raw__expression__compile_x86_to_chunk__movabs__constant_rcx(cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "r8")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r8( cause, chunk, jump__index__i, jump_location);}
+	      else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {raw__expression__compile_x86_to_chunk__movabs__constant_r9( cause, chunk, jump__index__i, jump_location);}
+	      else {
+		return new__error(f2list6__new(cause,
+					       new__symbol(cause, "bug_name"),      new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_movabs_register"),
+					       new__symbol(cause, "this"),          this,
+					       new__symbol(cause, "register_name"), register_name));
+	      }
+	    } else {
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					     new__symbol(cause, "this"),       this,
+					     new__symbol(cause, "jump_label"), jump__label));
+	    }
+	  } else {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "je"))) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__je__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jne"))) {
-	  if (label__index__i == 0) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jne__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jle"))) {
-	  if (label__index__i == 0) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jle__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jl"))) {
-	  if (label__index__i == 0) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jl__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jge"))) {
-	  if (label__index__i == 0) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jge__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else if (raw__eq(cause, jump__command, new__symbol(cause, "jg"))) {
-	  if (label__index__i == 0) {
+	  f2ptr label__index = raw__ptypehash__lookup(cause, index_label_ptypehash, jump__label);
+	  if (label__index == nil) {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-label_index_must_be_local"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-undefined_label"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "jump_label"), jump__label));
 	  }
+	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jg__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
 	} else {
 	  return new__error(f2list6__new(cause,
@@ -4675,8 +4697,39 @@ f2ptr raw__expression__compile_x86__movabs(f2ptr cause, f2ptr expression) {
 				       new__symbol(cause, "expression"),    expression));
       }
       f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
-      f2ptr machine_code_jump__command   = new__symbol(cause, "movabs");
+      f2ptr machine_code_jump__command   = new__symbol(cause, "movabs-label");
       f2ptr machine_code_jump__label     = label_name;
+      f2ptr machine_code_jump__arguments = f2list1__new(cause, register_name_1);
+      f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
+      f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));
+      return machine_code_chunk;
+    } else {
+      return new__error(f2list4__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-movabs-invalid_argument_expression_type"),
+				     new__symbol(cause, "expression"), expression));
+    }
+  } else if (raw__expression__is_funkvar_expression(cause, argument_0)) {
+    f2ptr funkvar_name           = raw__funkvar_expression__funkvar_name(cause, argument_0);
+    u64   funkvar_constant_value = 0;
+    if (raw__expression__is_register_expression(cause, argument_1)) {
+      f2ptr register_name_1    = raw__register_expression__register_name(cause, argument_1);
+      f2ptr machine_code_chunk = nil;
+      if      (raw__eq(cause, register_name_1, new__symbol(cause, "rax"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rax(cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdi"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rdi(cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rsi"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rsi(cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rdx"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rdx(cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "rcx"))) {machine_code_chunk = raw__expression__compile_x86__movabs__constant_rcx(cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r8")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r8( cause, funkvar_constant_value);}
+      else if (raw__eq(cause, register_name_1, new__symbol(cause, "r9")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r9( cause, funkvar_constant_value);}
+      else {
+	return new__error(f2list6__new(cause,
+				       new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
+				       new__symbol(cause, "register_name"), register_name_1,
+				       new__symbol(cause, "expression"),    expression));
+      }
+      f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
+      f2ptr machine_code_jump__command   = new__symbol(cause, "movabs-funkvar");
+      f2ptr machine_code_jump__label     = funkvar_name;
       f2ptr machine_code_jump__arguments = f2list1__new(cause, register_name_1);
       f2ptr machine_code_jump            = raw__machine_code_jump__new(cause, machine_code_jump__index, machine_code_jump__command, machine_code_jump__label, machine_code_jump__arguments);
       f2machine_code_chunk__jumps__set(machine_code_chunk, cause, f2cons__new(cause, machine_code_jump, f2machine_code_chunk__jumps(machine_code_chunk, cause)));

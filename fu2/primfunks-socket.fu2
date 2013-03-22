@@ -61,7 +61,7 @@
 `[globalize-funk socket:socket-ioctl-siocinq   &primfunk:socket__ioctl__siocinq]
 `[globalize-funk socket:socket-ioctl-siocoutq  &primfunk:socket__ioctl__siocoutq]
 
-[globalize-funk socket:h_errno                &primfunk:h_errno]
+[globalize-funk socket:h_errno                &primfunk:socket__h_errno]
 [globalize-funk socket:h_errno-host_not_found &primfunk:h_errno__host_not_found]
 [globalize-funk socket:h_errno-no_address     &primfunk:h_errno__no_address]
 [globalize-funk socket:h_errno-no_recovery    &primfunk:h_errno__no_recovery]

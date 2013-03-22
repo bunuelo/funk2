@@ -380,12 +380,12 @@ def_pcfunk1(gethostbyname, name,
 	    "",
 	    return f2__gethostbyname(this_cause, name));
 
-f2ptr f2__h_errno(f2ptr cause) {
+f2ptr f2__socket__h_errno(f2ptr cause) {
   return f2integer__new(cause, h_errno);
 }
-def_pcfunk0(h_errno,
+def_pcfunk0(socket__h_errno,
 	    "",
-	    return f2__h_errno(this_cause));
+	    return f2__socket__h_errno(this_cause));
 
 f2ptr f2__h_errno__host_not_found(f2ptr cause) {
   return f2integer__new(cause, HOST_NOT_FOUND);
@@ -662,7 +662,7 @@ void f2__socket__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(gethostbyname);
   
-  f2__primcfunk__init__defragment__fix_pointers(h_errno);
+  f2__primcfunk__init__defragment__fix_pointers(socket__h_errno);
   
   f2__primcfunk__init__defragment__fix_pointers(h_errno__host_not_found);
   f2__primcfunk__init__defragment__fix_pointers(h_errno__no_address);
@@ -723,7 +723,7 @@ void f2__socket__reinitialize_globalvars() {
   
   f2__primcfunk__init(gethostbyname);
   
-  f2__primcfunk__init(h_errno);
+  f2__primcfunk__init(socket__h_errno);
   
   f2__primcfunk__init(h_errno__host_not_found);
   f2__primcfunk__init(h_errno__no_address);

@@ -2054,7 +2054,7 @@ void f2__primcfunks__defragment__fix_pointers() {
   
   // chunk
   
-  f2__primcfunk__init__defragment__fix_pointers(chunk__copy);
+  f2__primcfunk__init__defragment__fix_pointers(chunk__new_copy);
   f2__primcfunk__init__defragment__fix_pointers(chunk__read_bit8);
   f2__primcfunk__init__defragment__fix_pointers(chunk__write_bit8_integer);
   f2__primcfunk__init__defragment__fix_pointers(chunk__read_bit8_signed);
@@ -2347,7 +2347,7 @@ void f2__primcfunks__reinitialize_globalvars() {
   
   // chunk
   
-  f2__primcfunk__init(chunk__copy);
+  f2__primcfunk__init(chunk__new_copy);
   f2__primcfunk__init(chunk__read_bit8);
   f2__primcfunk__init(chunk__write_bit8_integer);
   f2__primcfunk__init(chunk__read_bit8_signed);

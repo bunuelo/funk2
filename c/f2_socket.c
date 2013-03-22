@@ -415,18 +415,18 @@ def_pcfunk0(h_errno__try_again,
 	    "",
 	    return f2__h_errno__try_again(this_cause));
 
-f2ptr raw__hostenv__h_name(f2ptr cause, f2ptr this) {
+f2ptr raw__hostent__h_name(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return new__string(cause, this_hostent->h_name);
 }
 
-f2ptr f2__hostenv__h_name(f2ptr cause, f2ptr this) {
+f2ptr f2__hostent__h_name(f2ptr cause, f2ptr this) {
   assert_argument_type(pointer, this);
-  return raw__hostenv__h_name(cause, this);
+  return raw__hostent__h_name(cause, this);
 }
 def_pcfunk1(hostent__h_name, this,
 	    "",
-	    return f2__hostenv__h_name(this_cause, this));
+	    return f2__hostent__h_name(this_cause, this));
 
 f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));

@@ -111,7 +111,7 @@ f2ptr f2__locale__lc_time(f2ptr cause) {
 }
 def_pcfunk0(locale__lc_time,
 	    "",
-	    return f2__locale__lc_time(cause));
+	    return f2__locale__lc_time(this_cause));
 
 
 // **

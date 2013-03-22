@@ -263,14 +263,6 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
     *temp_u64_ptr = value;						\
   }
 
-//#define __pure__f2chunk__bit8__elt(this, index)                          (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])
-//#define __pure__f2chunk__bit8__elt__set(this, index, value)              (((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index] = (u8)(value))
-//#define __pure__f2chunk__bit16__elt(this, index)              (*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-//#define __pure__f2chunk__bit16__elt__set(this, index, value) ((*((u16*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u16)(value))
-//#define __pure__f2chunk__bit32__elt(this, index)              (*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-//#define __pure__f2chunk__bit32__elt__set(this, index, value) ((*((u32*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u32)(value))
-//#define __pure__f2chunk__bit64__elt(this, index)              (*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index]))))
-//#define __pure__f2chunk__bit64__elt__set(this, index, value) ((*((u64*)(&(((ptype_chunk_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bytes[index])))) = (u64)(value))
 
 
 // cons

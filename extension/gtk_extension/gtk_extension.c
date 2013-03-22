@@ -640,7 +640,7 @@ void* funk2_gtk__thread__start_function__helper(void* ptr) {
 }
 
 void funk2_gtk__init(funk2_gtk_t* this, int* argv, char*** argc) {
-  g_thread_init(NULL);
+  //g_thread_init(NULL);  // (deprecated)
   gdk_threads_init();
   gdk_rgb_init();
   

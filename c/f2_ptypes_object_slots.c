@@ -140,12 +140,24 @@ def_pcfunk1(integer__type,    this,
 	    "",
 	    return f2__integer__type(this_cause, this));
 
-def_pcfunk1(integer__new,     this,
+f2ptr raw__integer__new(f2ptr cause, f2ptr this) {
+  return f2integer__new(this_cause, f2integer__i(this, this_cause));
+}
+
+f2ptr f2__integer__new(f2ptr cause, f2ptr this) {
+  assert_argument_type(integer, this);
+  return raw__integer__new(cause, this);
+}
+def_pcfunk1(integer__new, this,
 	    "",
-	    return f2integer__new(this_cause, f2integer__i(this, this_cause)));
-def_pcfunk1(integer__i,       this,
+	    return f2__integer__new(this_cause, this));
+
+f2ptr f2__integer__i(f2ptr cause, f2ptr this) {
+  return this;
+}
+def_pcfunk1(integer__i, this,
 	    "",
-	    return this);
+	    return f2__integer__i(this_cause, this));
 
 
 boolean_t raw__integer__eq(f2ptr cause, f2ptr this, f2ptr that) {
@@ -579,12 +591,29 @@ def_pcfunk1(double__type,    this,
 	    "",
 	    return f2__double__type(this_cause, this));
 
-def_pcfunk1(double__new,     this,
+f2ptr raw__double__new(f2ptr cause, f2ptr this) {
+  return f2double__new(cause, f2double__d(this, cause));
+}
+
+f2ptr f2__double__new(f2ptr cause, f2ptr this) {
+  assert_argument_type(double, this);
+  return raw__double__new(cause, this);
+}
+def_pcfunk1(double__new, this,
 	    "",
-	    return f2double__new(this_cause, f2double__d(this, this_cause)));
-def_pcfunk1(double__d,       this,
+	    return f2__double__new(cause, this));
+
+f2ptr raw__double__d(f2ptr cause, f2ptr this) {
+  return f2double__new(this_cause, f2double__d(this, this_cause));
+}
+
+f2ptr f2__double__d(f2ptr cause, f2ptr this) {
+  assert_argument_type(double, this);
+  return raw__double__d(cause, this);
+}
+def_pcfunk1(double__d, this,
 	    "",
-	    return f2double__new(this_cause, f2double__d(this, this_cause)));
+	    return f2__double__d(cause, this));
 
 boolean_t raw__double__eq(f2ptr cause, f2ptr this, f2ptr that) {
   if (! raw__double__is_type(cause, that)) {
@@ -1101,12 +1130,29 @@ def_pcfunk1(float__type,    this,
 	    "",
 	    return f2__float__type(this_cause, this));
 
-def_pcfunk1(float__new,     this,
+f2ptr raw__float__new(f2ptr cause, f2ptr this) {
+  return f2float__new(this_cause, f2float__f(this_cause, this));
+}
+
+f2ptr f2__float__new(f2ptr cause, f2ptr this) {
+  assert_argument_type(float, this);
+  return raw__float__new(cause, this));
+}
+def_pcfunk1(float__new, this,
 	    "",
-	    return f2float__new(this_cause, f2float__f(this_cause, this)));
-def_pcfunk1(float__f,       this,
+	    return f2__float__new(this_cause, this));
+
+f2ptr raw__float__f(f2ptr cause, f2ptr this) {
+  return this;
+}
+
+f2ptr f2__float__f(f2ptr cause, f2ptr this) {
+  assert_argument_type(float, this);
+  return raw__float__f(cause, this);
+}
+def_pcfunk1(float__f, this,
 	    "",
-	    return this);
+	    return f2__float__f(cause, this));
 
 boolean_t raw__float__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2float__f(this, cause) == f2float__f(that, cause);
@@ -1488,12 +1534,29 @@ def_pcfunk1(pointer__type,    this,
 	    "",
 	    return f2__pointer__type(this_cause, this));
 
-def_pcfunk1(pointer__new,     this,
+f2ptr raw__pointer__new(f2ptr cause, f2ptr this) {
+  return f2pointer__new(this_cause, f2pointer__p(this_cause, this));
+}
+
+f2ptr f2__pointer__new(f2ptr cause, f2ptr this) {
+  assert_argument_type(pointer, this);
+  return raw__pointer__new(cause, this);
+}
+def_pcfunk1(pointer__new, this,
 	    "",
-	    return f2pointer__new(this_cause, f2pointer__p(this_cause, this)));
-def_pcfunk1(pointer__p,       this,
+	    return f2__pointer__new(cause, this));
+
+f2ptr raw__pointer__p(f2ptr cause, f2ptr this) {
+  return this;
+}
+
+f2ptr f2__pointer__p(f2ptr cause, f2ptr this) {
+  assert_argument_type(pointer, this);
+  return raw__pointer__p(cause, this);
+}
+def_pcfunk1(pointer__p, this,
 	    "",
-	    return this);
+	    return f2__pointer__p(this_cause, this));
 
 boolean_t raw__pointer__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return f2pointer__p(this, cause) == f2pointer__p(that, cause);
@@ -3813,13 +3876,33 @@ def_pcfunk3(chunk__bit64__elt__set, this, index, value,
 //def_pcfunk3(chunk__bit64__elt__set, this, index, value, f2chunk__bit64__elt__set(this, this_cause, f2integer__i(index, this_cause), f2pointer__p(value, this_cause)); return nil);
 
 
+f2ptr raw__chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args) {
+  return f2chunk__cfunk_jump(this, cause, fiber, env, args);
+}
+
+f2ptr f2__chunk__cfunk_jump(f2ptr cause, f2ptr this, f2ptr fiber, f2ptr env, f2ptr args) {
+  assert_argument_type(chunk,       this);
+  assert_argument_type(fiber,       fiber);
+  assert_argument_type(environment, environment);
+  assert_argument_type(conslist,    args);
+  return raw__chunk__cfunk_jump(cause, this, fiber, env, args);
+}
 def_pcfunk4(chunk__cfunk_jump, this, fiber, env, args,
 	    "",
-	    return f2chunk__cfunk_jump(this, this_cause, fiber, env, args));
+	    return f2__chunk__cfunk_jump(cause, this, fiber, env, args));
 
+f2ptr raw__chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber) {
+  return f2integer__new(this_cause, f2chunk__bytecode_jump(this, cause, fiber));
+}
+
+f2ptr f2__chunk__bytecode_jump(f2ptr cause, f2ptr this, f2ptr fiber) {
+  assert_argument_type(chunk, this);
+  assert_argument_type(fiber, fiber);
+  return raw__chunk__bytecode_jump(cause, this, fiber);
+}
 def_pcfunk2(chunk__bytecode_jump, this, fiber,
 	    "",
-	    return f2integer__new(this_cause, f2chunk__bytecode_jump(this, this_cause, fiber)));
+	    return f2__chunk__bytecode_jump(cause, this, fiber));
 
 u64 raw__chunk__jump(f2ptr cause, f2ptr this, u64 pointer) {
   return f2chunk__jump(this, cause, pointer);

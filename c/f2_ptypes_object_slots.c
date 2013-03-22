@@ -141,7 +141,7 @@ def_pcfunk1(integer__type, this,
 	    return f2__integer__type(this_cause, this));
 
 f2ptr raw__integer__new(f2ptr cause, f2ptr this) {
-  return f2integer__new(cause, f2integer__i(this, this_cause));
+  return f2integer__new(cause, f2integer__i(this, cause));
 }
 
 f2ptr f2__integer__new(f2ptr cause, f2ptr this) {

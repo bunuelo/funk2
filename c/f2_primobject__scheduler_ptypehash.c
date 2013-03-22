@@ -137,6 +137,15 @@ f2ptr f2__scheduler_ptypehash__add__debug(f2ptr cause, f2ptr this, f2ptr key, f2
   assert_argument_type(scheduler_ptypehash, this);
   return raw__scheduler_ptypehash__add__debug(cause, this, key, value, source_filename, source_line_number, source_funktion_name);
 }
+
+f2ptr raw__scheduler_ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  return raw__scheduler_ptypehash__add__debug(cause, this, key, value, (char*)__FILE__, __LINE__, (char*)__FUNCTION__);
+}
+
+f2ptr f2__scheduler_ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  assert_argument_type(scheduler_ptypehash, this);
+  return raw__scheduler_ptypehash__add(cause, this, key, value);
+}
 def_pcfunk3(scheduler_ptypehash__add, this, slot_name, value,
 	    "",
 	    return f2__scheduler_ptypehash__add(this_cause, this, slot_name, value));

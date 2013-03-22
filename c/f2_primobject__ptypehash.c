@@ -141,6 +141,7 @@ f2ptr raw__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
 }
 
 f2ptr f2__ptypehash__add(f2ptr cause, f2ptr this, f2ptr key, f2ptr value) {
+  assert_argument_type(ptypehash, this);
   return raw__ptypehash__add(cause, this, key, value);
 }
 def_pcfunk3(ptypehash__add, this, slot_name, value,

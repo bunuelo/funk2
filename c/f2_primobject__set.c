@@ -134,6 +134,7 @@ f2ptr raw__set__add(f2ptr cause, f2ptr this, f2ptr key) {
 }
 
 f2ptr f2__set__add(f2ptr cause, f2ptr this, f2ptr key) {
+  assert_argument_type(set, this);
   return raw__set__add(cause, this, key);
 }
 def_pcfunk2(set__add, this, element,

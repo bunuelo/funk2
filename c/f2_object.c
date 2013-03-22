@@ -520,9 +520,13 @@ f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk2_and_rest(object__get,        this, slot, args,
 		     "",
 		     return f2__object__get(this_cause, this, slot, args));
-def_pcfunk3(         object__get__apply, this, slot, args,
-		     "",
-		     return f2__object__get(this_cause, this, slot, args));
+
+f2ptr f2__object__get__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__get(this_cause, this, slot, args);
+}
+def_pcfunk3(object__get__apply, this, slot, args,
+	    "",
+	    return f2__object__get__apply(this_cause, this, slot, args));
 
 f2ptr f2__object__set(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);

@@ -49,14 +49,18 @@ f2ptr raw__equals_hash__equals_cfunk(f2ptr cause, f2ptr fiber, f2ptr environment
 }
 
 f2ptr raw__equals_hash__hash_value_funk(f2ptr cause) {
+  f2ptr stack_machine_code_pointer = nil;
   return f2cfunk__new(cause, new__symbol(cause, "object-equals_hash_value"), 
 		      f2list1__new(cause, new__symbol(cause, "this")),
+		      stack_machine_code_pointer,
 		      f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_hash_value_cfunk)), global_environment(), nil, nil);
 }
 
 f2ptr raw__equals_hash__equals_funk(f2ptr cause) {
+  f2ptr stack_machine_code_pointer = nil;
   return f2cfunk__new(cause, new__symbol(cause, "object-equals"), 
 		      f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
+		      stack_machine_code_pointer,
 		      f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_cfunk)), global_environment(), nil, nil);
 }
 

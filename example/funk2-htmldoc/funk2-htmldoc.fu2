@@ -1295,7 +1295,10 @@
 	       '</td></tr></table>']]
 
 [defunk htmldoc_funk_documentation [funk]
-  [htmldoc_documentation_format [get funk documentation]]]
+  [let [[funk-documentation [shelter [get funk documentation]]]]
+    [if [is-type `bug funk-documentation]
+	[= funk-documentation 'ERROR']]
+    [htmldoc_documentation_format funk-documentation]]]
 
 [defunk htmldoc_object_documentation [context type_name]
   [terminal_format standard-terminal '\nhtmldoc: compiling ' type_name ' object documentation.']

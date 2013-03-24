@@ -1307,11 +1307,14 @@
 					    [stringlist-prog [mapcar [funk [key_name]
 									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `get key_name nil]]]
-									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											  '<p>'
-											  [htmldoc_funk_documentation funk]
-											  '</p><br>'
-											  '</li>']]]
+									     [let [[funk-args [shelter [get funk args]]]]
+									       [if [is-type `bug funk-args]
+										   [= funk-args 'ERROR']]
+									       [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string funk-args] '</tt><br>']
+											    '<p>'
+											    [htmldoc_funk_documentation funk]
+											    '</p><br>'
+											    '</li>']]]]
 								     [get type type_var-keys `get]]]
 					    '</ul>'
 					    ''
@@ -1320,11 +1323,14 @@
 					    [stringlist-prog [mapcar [funk [key_name]
 									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `set key_name nil]]]
-									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											  '<p>'
-											  [htmldoc_funk_documentation funk]
-											  '</p><br>'
-											  '</li>']]]
+									     [let [[funk-args [get funk args]]]
+									       [if [is-type `bug funk-args]
+										   [= funk-args 'ERROR']]
+									       [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string funk-args] '</tt><br>']
+											    '<p>'
+											    [htmldoc_funk_documentation funk]
+											    '</p><br>'
+											    '</li>']]]]
 								     [get type type_var-keys `set]]]
 					    '</ul>'
 					    ''
@@ -1333,11 +1339,14 @@
 					    [stringlist-prog [mapcar [funk [key_name]
 									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `execute key_name nil]]]
-									     [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string [get funk args]] '</tt><br>']
-											  '<p>'
-											  [htmldoc_funk_documentation funk]
-											  '</p><br>'
-											  '</li>']]]
+									     [let [[funk-args [shelter [get funk args]]]]
+									       [if [is-type `bug funk-args]
+										   [= funk-args 'ERROR']]
+									       [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string funk-args] '</tt><br>']
+											    '<p>'
+											    [htmldoc_funk_documentation funk]
+											    '</p><br>'
+											    '</li>']]]]
 								     [get type type_var-keys `execute]]]
 					    '</ul>'
 					    ]]

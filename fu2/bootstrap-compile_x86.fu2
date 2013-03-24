@@ -487,5 +487,17 @@
 	 [jl     [label loop]]
 	 [label  done]]
        
+       [defx86funk f2ptr x86:double_cons []
+	 [movabs [constant 0] [argument 0]]
+	 [movabs [constant 0] [argument 1]]
+	 [movabs [constant 0] [argument 2]]
+	 [movabs &cons [register rax]]
+	 [callq [register rax]]
+	 [mov [register rax] [argument 2]]
+	 [movabs [constant 0] [argument 0]]
+	 [movabs [constant 0] [argument 1]]
+	 [movabs &cons [register rax]]
+	 [callq [register rax]]]
+       
        ]
 

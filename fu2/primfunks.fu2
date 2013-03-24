@@ -152,6 +152,7 @@
 
 
 [globalize-funk system-gethostname                          &primfunk:system__gethostname]
+[globalize-funk exit                                        &primfunk:exit]
 [globalize-funk system-peer_command_server-port_num         &primfunk:system__peer_command_server__port_num]
 
 'unmentioned in f2_primfunks.c'

@@ -2133,6 +2133,7 @@ void f2__primcfunks__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(system__peer_command_server__port_num);
   f2__primcfunk__init__defragment__fix_pointers(system__gethostname);
+  f2__primcfunk__init__defragment__fix_pointers(exit);
   
   f2__primcfunk__init__defragment__fix_pointers(larva);
   
@@ -2319,6 +2320,7 @@ void f2__primcfunks__reinitialize_globalvars() {
   
   f2__primcfunk__init(system__peer_command_server__port_num);
   f2__primcfunk__init(system__gethostname);
+  f2__primcfunk__init__1(exit, value);
   
   f2__primcfunk__init__2(larva, larva_type, bug);
   

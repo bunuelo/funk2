@@ -1326,7 +1326,7 @@
 					    [stringlist-prog [mapcar [funk [key_name]
 									   `[print [string-concat '  key: ' [get key_name as-string]]]
 									   [let [[funk [get type type_var_value `set key_name nil]]]
-									     [let [[funk-args [get funk args]]]
+									     [let [[funk-args [shelter [get funk args]]]]
 									       [if [is-type `bug funk-args]
 										   [= funk-args 'ERROR']]
 									       [string-prog [string-concat '<li><tt>' [get key_name as-string] ' ' [exp-as-string funk-args] '</tt><br>']

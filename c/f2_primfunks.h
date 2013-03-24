@@ -1618,7 +1618,7 @@ f2ptr f2__prev__set(f2ptr cause, f2ptr exp, f2ptr value);
 f2ptr      f2__format(f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
 f2ptr      f2__format__html(f2ptr cause, f2ptr fiber, f2ptr fptr, f2ptr exp);
 f2ptr      f2__list(f2ptr cause, f2ptr seq);
-f2ptr     raw__exit(s64 value);
+f2ptr     raw__exit(f2ptr cause, s64 value) {
 f2ptr      f2__quit(f2ptr cause, f2ptr value);
 f2ptr      f2__seq_elt__set(f2ptr this, f2ptr index, f2ptr cause, f2ptr value);
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y);

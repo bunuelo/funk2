@@ -1605,6 +1605,20 @@ def_pcfunk0(system__gethostname,
 	    "",
 	    return f2__system__gethostname(this_cause));
 
+f2ptr raw__exit(f2ptr cause, f2ptr value) {
+  s64 value__i = f2integer__i(value, cause);
+  exit(value__i);
+  return nil;
+}
+
+f2ptr f2__exit(f2ptr cause, f2ptr value) {
+  assert_argument_type(integer, value);
+  return raw__exit(cause, value);
+}
+def_pcfunk1(exit, value,
+	    "Exits the Funk2 process immediately without cleaning up.",
+	    return f2__exit(this_cause, value));
+
 // funk2_node_handler
 
 f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr port_num) {

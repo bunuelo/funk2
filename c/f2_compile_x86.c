@@ -4709,9 +4709,9 @@ f2ptr raw__expression__compile_x86__movabs__constant__register(f2ptr cause, s64 
   else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {return raw__expression__compile_x86__movabs__constant_r9( cause, constant_value);}
   else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
-				   new__symbol(cause, "register_name"), register_name,
-				   new__symbol(cause, "expression"),    expression));
+				   new__symbol(cause, "bug_name"),       new__symbol(cause, "expression-compile_x86-movabs-constant-unknown_register_name"),
+				   new__symbol(cause, "constant_value"), f2integer__new(cause, constant_value),
+				   new__symbol(cause, "register_name"),  register_name));
   }
 }
 
@@ -4727,9 +4727,9 @@ f2ptr raw__expression__compile_x86__movabs__label__register(f2ptr cause, f2ptr l
   else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r9( cause, label_constant_value);}
   else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
-				   new__symbol(cause, "register_name"), register_name,
-				   new__symbol(cause, "expression"),    expression));
+				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-label-unknown_register_name"),
+				   new__symbol(cause, "label_name"),    label_name,
+				   new__symbol(cause, "register_name"), register_name));
   }
   f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
   f2ptr machine_code_jump__command   = new__symbol(cause, "movabs-label");
@@ -4752,9 +4752,9 @@ f2ptr raw__expression__compile_x86__movabs__funkvar__register(f2ptr cause, f2ptr
   else if (raw__eq(cause, register_name, new__symbol(cause, "r9")))  {machine_code_chunk = raw__expression__compile_x86__movabs__constant_r9( cause, funkvar_constant_value);}
   else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-unknown_register_name"),
-				   new__symbol(cause, "register_name"), register_name,
-				   new__symbol(cause, "expression"),    expression));
+				   new__symbol(cause, "bug_name"),      new__symbol(cause, "expression-compile_x86-movabs-funkvar-unknown_register_name"),
+				   new__symbol(cause, "funkvar_name"),  funkvar_name,
+				   new__symbol(cause, "register_name"), register_name));
   }
   f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
   f2ptr machine_code_jump__command   = new__symbol(cause, "movabs-funkvar");

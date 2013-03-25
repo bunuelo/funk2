@@ -5876,10 +5876,10 @@ f2ptr raw__expression__compile_x86__pointer(f2ptr cause, f2ptr expression) {
   return raw__expression__compile_x86(cause, f2list3__new(cause, new__symbol(cause, "movabs"), f2list2__new(cause, new__symbol(cause, "constant"), expression), f2list2__new(cause, new__symbol(cause, "register"), new__symbol(cause, "rax"))));
 }
 
-f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
+f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression) {
   if (raw__simple_length(cause, expression) < 2) {
     return new__error(f2list4__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_expression_length"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_expression_length"),
 				   new__symbol(cause, "expression"), expression));
   }
   f2ptr argument_0 = f2cons__car(f2cons__cdr(expression, cause), cause);
@@ -5888,13 +5888,13 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
     f2ptr fiber         = f2__this__fiber(cause);
     f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
     if (raw__x86_funk__is_type(cause, funktion)) {
-      f2ptr variables                = f2x86_funk__variables(               funktion, cause);
+      f2ptr variables                = f2x86_funk__variables(funktion, cause);
       u64   variables__length        = raw__simple_length(cause, variables);
       f2ptr arguments                = f2cons__cdr(f2cons__cdr(expression, cause), cause);
       u64   arguments__length        = raw__simple_length(cause, arguments);
       if (variables__length != arguments__length) {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-wrong_number_of_arguments_to_x86_funk"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
 				       new__symbol(cause, "funktion"),   funktion,
 				       new__symbol(cause, "expression"), expression));
       }
@@ -5909,7 +5909,7 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 	    {
 	      f2ptr compiled_argument_chunk = catch_value(raw__expression__compile_x86(cause, argument),
 							  f2list4__new(cause,
-								       new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-funkall-error_compiling_argument"),
+								       new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-stack_funkall-error_compiling_argument"),
 								       new__symbol(cause, "argument"), argument));
 	      f2ptr new_cons                = f2cons__new(cause, compiled_argument_chunk, nil);
 	      if (compiled_argument_chunks == nil) {
@@ -5930,7 +5930,7 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 	      case 5: new_chunk = raw__expression__compile_x86__mov__rax__r9(cause);  break;
 	      default:
 		return new__error(f2list6__new(cause,
-					       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-too_many_arguments_to_x86_funk"),
+					       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-too_many_arguments_to_x86_funk"),
 					       new__symbol(cause, "funktion"),   funktion,
 					       new__symbol(cause, "expression"), expression));
 	      }
@@ -5950,7 +5950,7 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
       f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
       if (! raw__machine_code_chunk__is_type(cause, stack_machine_code_chunk)) {
 	return new__error(f2list6__new(cause,
-				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-x86_funk_is_not_compiled"),
+				       new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-x86_funk_is_not_compiled"),
 				       new__symbol(cause, "funktion"),   funktion,
 				       new__symbol(cause, "expression"), expression));
       }
@@ -5966,13 +5966,13 @@ f2ptr raw__expression__compile_x86__funkall(f2ptr cause, f2ptr expression) {
 								     callq__rdx__chunk));
     } else {
       return new__error(f2list6__new(cause,
-				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_funktion_type"),
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),
 				     new__symbol(cause, "funktion"),   funktion,
 				     new__symbol(cause, "expression"), expression));
     }
   } else {
     return new__error(f2list6__new(cause,
-				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-funkall-invalid_argument_expression_type"),
+				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_argument_expression_type"),
 				   new__symbol(cause, "argument"),   argument_0,
 				   new__symbol(cause, "expression"), expression));
   }
@@ -6267,47 +6267,46 @@ f2ptr raw__expression__compile_x86(f2ptr cause, f2ptr expression) {
     return raw__expression__compile_x86__symbol(cause, expression);
   } else if (raw__cons__is_type(cause, expression)) {
     f2ptr command = f2cons__car(expression, cause);
-    if      (raw__eq(cause, command, new__symbol(cause, "retq")))    {return raw__expression__compile_x86__retq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "push")))    {return raw__expression__compile_x86__push(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "pop")))     {return raw__expression__compile_x86__pop(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "mov")))     {return raw__expression__compile_x86__mov(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movq")))    {return raw__expression__compile_x86__movq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))  {return raw__expression__compile_x86__movzbl( cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "incq")))    {return raw__expression__compile_x86__incq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "decq")))    {return raw__expression__compile_x86__decq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "add")))     {return raw__expression__compile_x86__add(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "subq")))    {return raw__expression__compile_x86__subq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "addq")))    {return raw__expression__compile_x86__addq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "addsd")))   {return raw__expression__compile_x86__addsd(  cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "cmpq")))    {return raw__expression__compile_x86__cmpq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "cmp")))     {return raw__expression__compile_x86__cmp(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "movabs")))  {return raw__expression__compile_x86__movabs( cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jmp")))     {return raw__expression__compile_x86__jmp(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "je")))      {return raw__expression__compile_x86__je(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jne")))     {return raw__expression__compile_x86__jne(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jle")))     {return raw__expression__compile_x86__jle(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jl")))      {return raw__expression__compile_x86__jl(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jge")))     {return raw__expression__compile_x86__jge(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jg")))      {return raw__expression__compile_x86__jg(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jb")))      {return raw__expression__compile_x86__jb(     cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "shl")))     {return raw__expression__compile_x86__shl(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "shr")))     {return raw__expression__compile_x86__shr(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "sub")))     {return raw__expression__compile_x86__sub(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "imul")))    {return raw__expression__compile_x86__imul(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "idivq")))   {return raw__expression__compile_x86__idivq(  cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "sar")))     {return raw__expression__compile_x86__sar(    cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "callq")))   {return raw__expression__compile_x86__callq(  cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "jmpq")))    {return raw__expression__compile_x86__jmpq(   cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "leaveq")))  {return raw__expression__compile_x86__leaveq( cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "rawcode"))) {return raw__expression__compile_x86__rawcode(cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "funkall"))) {return raw__expression__compile_x86__funkall(cause, expression);}
-    else if (raw__eq(cause, command, new__symbol(cause, "label")))   {return raw__expression__compile_x86__label(  cause, expression);}
+    if      (raw__eq(cause, command, new__symbol(cause, "retq")))          {return raw__expression__compile_x86__retq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "push")))          {return raw__expression__compile_x86__push(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "pop")))           {return raw__expression__compile_x86__pop(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "mov")))           {return raw__expression__compile_x86__mov(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movq")))          {return raw__expression__compile_x86__movq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movzbl")))        {return raw__expression__compile_x86__movzbl(       cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "incq")))          {return raw__expression__compile_x86__incq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "decq")))          {return raw__expression__compile_x86__decq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "add")))           {return raw__expression__compile_x86__add(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "subq")))          {return raw__expression__compile_x86__subq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "addq")))          {return raw__expression__compile_x86__addq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "addsd")))         {return raw__expression__compile_x86__addsd(        cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "cmpq")))          {return raw__expression__compile_x86__cmpq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "cmp")))           {return raw__expression__compile_x86__cmp(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "movabs")))        {return raw__expression__compile_x86__movabs(       cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jmp")))           {return raw__expression__compile_x86__jmp(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "je")))            {return raw__expression__compile_x86__je(           cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jne")))           {return raw__expression__compile_x86__jne(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jle")))           {return raw__expression__compile_x86__jle(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jl")))            {return raw__expression__compile_x86__jl(           cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jge")))           {return raw__expression__compile_x86__jge(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jg")))            {return raw__expression__compile_x86__jg(           cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jb")))            {return raw__expression__compile_x86__jb(           cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "shl")))           {return raw__expression__compile_x86__shl(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "shr")))           {return raw__expression__compile_x86__shr(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "sub")))           {return raw__expression__compile_x86__sub(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "imul")))          {return raw__expression__compile_x86__imul(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "idivq")))         {return raw__expression__compile_x86__idivq(        cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "sar")))           {return raw__expression__compile_x86__sar(          cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "callq")))         {return raw__expression__compile_x86__callq(        cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "jmpq")))          {return raw__expression__compile_x86__jmpq(         cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "leaveq")))        {return raw__expression__compile_x86__leaveq(       cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "rawcode")))       {return raw__expression__compile_x86__rawcode(      cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "stack_funkall"))) {return raw__expression__compile_x86__stack_funkall(cause, expression);}
+    else if (raw__eq(cause, command, new__symbol(cause, "label")))         {return raw__expression__compile_x86__label(        cause, expression);}
     else {
-      f2ptr funkall_command = f2cons__new(cause,
-					  new__symbol(cause, "funkall"),
-					  f2cons__new(cause, f2list2__new(cause, new__symbol(cause, "funkvar"), command),
-						      f2cons__cdr(expression, cause)));
-      return raw__expression__compile_x86(cause, funkall_command);
+      return new__error(f2list6__new(cause,
+				     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-unknown_command"),
+				     new__symbol(cause, "command"),    command,
+				     new__symbol(cause, "expression"), expression));
     }
   } else {
     return new__error(f2list6__new(cause,

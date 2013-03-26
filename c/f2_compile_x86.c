@@ -1736,16 +1736,16 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    u64   jump__arguments__length = raw__simple_length(cause, jump__arguments);
 	    if (variables__length != jump__arguments__length) {
 	      return new__error(f2list6__new(cause,
-					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
-					     new__symbol(cause, "funktion"),   funktion,
-					     new__symbol(cause, "expression"), expression));
+					     new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
+					     new__symbol(cause, "this"),     this,
+					     new__symbol(cause, "funktion"), funktion));
 	    }
 	    f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
 	    if (! raw__machine_code_chunk__is_type(cause, stack_machine_code_chunk)) {
 	      return new__error(f2list6__new(cause,
-					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-x86_funk_is_not_compiled"),
-					     new__symbol(cause, "funktion"),   funktion,
-					     new__symbol(cause, "expression"), expression));
+					     new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-x86_funk_is_not_compiled"),
+					     new__symbol(cause, "this"),     this,
+					     new__symbol(cause, "funktion"), funktion));
 	    }
 	    f2ptr chunk    = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
 	    u64   jump_ptr = raw__chunk__bytes(cause, chunk);
@@ -1753,8 +1753,8 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	  } else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),
-					   new__symbol(cause, "funktion"),   funktion,
-					   new__symbol(cause, "expression"), expression));
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "funktion"),   funktion));
 	  }
 	} else {
 	  return new__error(f2list6__new(cause,

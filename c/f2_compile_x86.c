@@ -1750,7 +1750,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    f2ptr funktion__chunk    = f2machine_code_chunk__chunk(funktion__stack_machine_code_chunk, cause);
 	    u64   funktion__jump_ptr = raw__chunk__bytes(cause, funktion__chunk);
 	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, funktion__jump_ptr);
-	  } else if (raw__cfunk__is_type(cause, funkable)) {
+	  } else if (raw__cfunk__is_type(cause, funktion)) {
 	    f2ptr funktion__variables         = f2cfunk__args(funktion, cause);
 	    u64   funktion__variables__length = raw__simple_length(cause, funktion__variables) + 1; // need to add one because of implicit cause object as first argument.
 	    u64   jump__arguments__length     = raw__simple_length(cause, jump__arguments);
@@ -1760,7 +1760,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					     new__symbol(cause, "this"),     this,
 					     new__symbol(cause, "funktion"), funktion));
 	    }
-	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
+	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funktion, cause);
 	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
 	      ptr   relative_ptr  = f2pointer__p(stack_machine_code_pointer, cause);
 	      u64   jump_location = to_ptr(relative_ptr__to__raw_executable(relative_ptr));

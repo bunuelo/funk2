@@ -1726,6 +1726,36 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	  }
 	  s64 label__index__i = f2integer__i(label__index, cause);
 	  assert_value(raw__expression__compile_x86_to_chunk__jg__constant(cause, chunk, jump__index__i, label__index__i - (jump__index__i + 2)));
+	} else if (raw__eq(cause, jump__command, new__symbol(cause, "stack_funkall-movabs"))) {
+	  f2ptr funktion_name = jump__label;
+	  f2ptr fiber         = f2__this__fiber(cause);
+	  f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
+	  if (raw__x86_funk__is_type(cause, funktion)) {
+	    f2ptr variables               = f2x86_funk__variables(funktion, cause);
+	    u64   variables__length       = raw__simple_length(cause, variables);
+	    u64   jump__arguments__length = raw__simple_length(cause, jump__arguments);
+	    if (variables__length != arguments__length) {
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
+					     new__symbol(cause, "funktion"),   funktion,
+					     new__symbol(cause, "expression"), expression));
+	    }
+	    f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
+	    if (! raw__machine_code_chunk__is_type(cause, stack_machine_code_chunk)) {
+	      return new__error(f2list6__new(cause,
+					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-x86_funk_is_not_compiled"),
+					     new__symbol(cause, "funktion"),   funktion,
+					     new__symbol(cause, "expression"), expression));
+	    }
+	    f2ptr chunk    = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
+	    u64   jump_ptr = raw__chunk__bytes(cause, chunk);
+	    assert_value(raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_ptr));
+	  } else {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),
+					   new__symbol(cause, "funktion"),   funktion,
+					   new__symbol(cause, "expression"), expression));
+	  }
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),
@@ -5955,8 +5985,8 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
 				       new__symbol(cause, "funktion"),   funktion,
 				       new__symbol(cause, "expression"), expression));
       }
-      f2ptr chunk                        = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
-      u64   jump_ptr                     = raw__chunk__bytes(cause, chunk);
+      f2ptr chunk    = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
+      u64   jump_ptr = raw__chunk__bytes(cause, chunk);
       
       f2ptr movabs__rdx__jump_ptr__chunk = nil;
       {

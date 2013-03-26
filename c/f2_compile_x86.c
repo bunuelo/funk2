@@ -5916,7 +5916,6 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
   if (raw__expression__is_funkvar_expression(cause, argument_0)) {
     f2ptr funktion_name            = raw__funkvar_expression__funkvar_name(cause, argument_0);
     f2ptr arguments                = f2cons__cdr(f2cons__cdr(expression, cause), cause);
-    u64   arguments__length        = raw__simple_length(cause, arguments);
     f2ptr compiled_argument_chunks = nil;
     {
       s64   argument_index                = 0;

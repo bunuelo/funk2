@@ -1749,7 +1749,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    }
 	    f2ptr funktion__chunk    = f2machine_code_chunk__chunk(funktion__stack_machine_code_chunk, cause);
 	    u64   funktion__jump_ptr = raw__chunk__bytes(cause, funktion__chunk);
-	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, funktion__jump_ptr);
+	    raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, funktion__jump_ptr);
 	  } else if (raw__cfunk__is_type(cause, funktion)) {
 	    f2ptr funktion__variables         = f2cfunk__args(funktion, cause);
 	    u64   funktion__variables__length = raw__simple_length(cause, funktion__variables) + 1; // need to add one because of implicit cause object as first argument.
@@ -1760,11 +1760,11 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					     new__symbol(cause, "this"),     this,
 					     new__symbol(cause, "funktion"), funktion));
 	    }
-	    f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funktion, cause);
-	    if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
-	      ptr   relative_ptr  = f2pointer__p(stack_machine_code_pointer, cause);
-	      u64   jump_location = to_ptr(relative_ptr__to__raw_executable(relative_ptr));
-	      raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_location);
+	    f2ptr funktion__stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funktion, cause);
+	    if (raw__pointer__is_type(cause, funktion__stack_machine_code_pointer)) {
+	      ptr   funktion__relative_ptr  = f2pointer__p(funktion__stack_machine_code_pointer, cause);
+	      u64   funktion__jump_location = to_ptr(relative_ptr__to__raw_executable(funktion__relative_ptr));
+	      raw__expression__compile_x86_to_chunk__movabs__constant_rax(cause, chunk, jump__index__i, funktion__jump_location);
 	    } else {
 	      return new__error(f2list6__new(cause,
 					     new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-no_stack_machine_code_pointer_for_cfunk"),
@@ -1773,7 +1773,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    }
 	  } else {
 	    return new__error(f2list6__new(cause,
-					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-invalid_funktion_type"),
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "funktion"),   funktion));
 	  }
@@ -5988,7 +5988,7 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
     u64   jump_ptr                     = 0;
     f2ptr movabs__rdx__jump_ptr__chunk = nil;
     {
-      f2ptr machine_code_chunk           = raw__expression__compile_x86__movabs__constant_rdx(cause, jump_ptr);
+      f2ptr machine_code_chunk           = raw__expression__compile_x86__movabs__constant_rax(cause, jump_ptr);
       f2ptr machine_code_jump__index     = f2integer__new(cause, 0);
       f2ptr machine_code_jump__command   = new__symbol(cause, "stack_funkall-movabs");
       f2ptr machine_code_jump__label     = funktion_name;
@@ -5998,14 +5998,12 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
       movabs__rdx__jump_ptr__chunk = machine_code_chunk;
     }      
     
-    f2ptr movabs__rax__zero__chunk = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
-    f2ptr callq__rdx__chunk        = raw__expression__compile_x86__callq__rdx(cause);
+    f2ptr callq__rax__chunk        = raw__expression__compile_x86__callq__rax(cause);
     
-    return f2__machine_code_chunk_list__concat(cause, f2list4__new(cause,
+    return f2__machine_code_chunk_list__concat(cause, f2list3__new(cause,
 								   f2__machine_code_chunk_list__concat(cause, compiled_argument_chunks),
 								   movabs__rdx__jump_ptr__chunk,
-								   movabs__rax__zero__chunk,
-								   callq__rdx__chunk));
+								   callq__rax__chunk));
   } else {
     return new__error(f2list6__new(cause,
 				   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_argument_expression_type"),

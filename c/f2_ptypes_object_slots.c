@@ -6428,7 +6428,7 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {char* str = "type"; __funk2.globalenv.object_type.ptype.ptype_cons.type__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__type, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cons.type__funk = never_gc(cfunk);}
   {char* str = "new"; __funk2.globalenv.object_type.ptype.ptype_cons.new__symbol = new__symbol(cause, str);}
-  {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__new, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cons.new__funk = never_gc(cfunk);}
+  {f2__primcfunk__init__with_c_cfunk_var__2_arg(cons__new, car, cdr, cfunk); __funk2.globalenv.object_type.ptype.ptype_cons.new__funk = never_gc(cfunk);}
   {char* str = "length"; __funk2.globalenv.object_type.ptype.ptype_cons.length__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(cons__length, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_cons.length__funk = never_gc(cfunk);}
   {char* str = "eq"; __funk2.globalenv.object_type.ptype.ptype_cons.eq__symbol = new__symbol(cause, str);}

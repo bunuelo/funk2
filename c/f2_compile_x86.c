@@ -1749,7 +1749,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    }
 	    f2ptr chunk    = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
 	    u64   jump_ptr = raw__chunk__bytes(cause, chunk);
-	    assert_value(raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_ptr));
+	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_ptr);
 	  } else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),

@@ -1734,7 +1734,7 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	    f2ptr variables               = f2x86_funk__variables(funktion, cause);
 	    u64   variables__length       = raw__simple_length(cause, variables);
 	    u64   jump__arguments__length = raw__simple_length(cause, jump__arguments);
-	    if (variables__length != arguments__length) {
+	    if (variables__length != jump__arguments__length) {
 	      return new__error(f2list6__new(cause,
 					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
 					     new__symbol(cause, "funktion"),   funktion,

@@ -5948,9 +5948,8 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
 	    case 4: new_chunk = raw__expression__compile_x86__mov__rax__r8(cause);  break;
 	    case 5: new_chunk = raw__expression__compile_x86__mov__rax__r9(cause);  break;
 	    default:
-	      return new__error(f2list6__new(cause,
+	      return new__error(f2list4__new(cause,
 					     new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-too_many_arguments_to_x86_funk"),
-					     new__symbol(cause, "funktion"),   funktion,
 					     new__symbol(cause, "expression"), expression));
 	    }
 	    f2ptr new_cons = f2cons__new(cause, new_chunk, nil);

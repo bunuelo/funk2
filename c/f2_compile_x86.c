@@ -1731,25 +1731,25 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 	  f2ptr fiber         = f2__this__fiber(cause);
 	  f2ptr funktion      = assert_value(f2__fiber__lookup_type_variable_value(cause, fiber, __funk2.primobject__frame.funk_variable__symbol, funktion_name));
 	  if (raw__x86_funk__is_type(cause, funktion)) {
-	    f2ptr variables               = f2x86_funk__variables(funktion, cause);
-	    u64   variables__length       = raw__simple_length(cause, variables);
-	    u64   jump__arguments__length = raw__simple_length(cause, jump__arguments);
-	    if (variables__length != jump__arguments__length) {
+	    f2ptr funktion__variables         = f2x86_funk__variables(funktion, cause);
+	    u64   funktion__variables__length = raw__simple_length(cause, funktion__variables);
+	    u64   jump__arguments__length     = raw__simple_length(cause, jump__arguments);
+	    if (funktion__variables__length != jump__arguments__length) {
 	      return new__error(f2list6__new(cause,
 					     new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_x86_funk"),
 					     new__symbol(cause, "this"),     this,
 					     new__symbol(cause, "funktion"), funktion));
 	    }
-	    f2ptr stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
-	    if (! raw__machine_code_chunk__is_type(cause, stack_machine_code_chunk)) {
+	    f2ptr funktion__stack_machine_code_chunk = f2x86_funk__stack_machine_code_chunk(funktion, cause);
+	    if (! raw__machine_code_chunk__is_type(cause, funktion__stack_machine_code_chunk)) {
 	      return new__error(f2list6__new(cause,
 					     new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-x86_funk_is_not_compiled"),
 					     new__symbol(cause, "this"),     this,
 					     new__symbol(cause, "funktion"), funktion));
 	    }
-	    f2ptr chunk    = f2machine_code_chunk__chunk(stack_machine_code_chunk, cause);
-	    u64   jump_ptr = raw__chunk__bytes(cause, chunk);
-	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_ptr);
+	    f2ptr funktion__chunk    = f2machine_code_chunk__chunk(funktion__stack_machine_code_chunk, cause);
+	    u64   funktion__jump_ptr = raw__chunk__bytes(cause, funktion__chunk);
+	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, funktion__jump_ptr);
 	  } else {
 	    return new__error(f2list6__new(cause,
 					   new__symbol(cause, "bug_name"),   new__symbol(cause, "expression-compile_x86-stack_funkall-invalid_funktion_type"),
@@ -6000,8 +6000,8 @@ f2ptr raw__expression__compile_x86__stack_funkall(f2ptr cause, f2ptr expression)
 	movabs__rdx__jump_ptr__chunk = machine_code_chunk;
       }      
       
-      f2ptr movabs__rax__zero__chunk     = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
-      f2ptr callq__rdx__chunk            = raw__expression__compile_x86__callq__rdx(cause);
+      f2ptr movabs__rax__zero__chunk = raw__expression__compile_x86__movabs__constant_rax(cause, 0x00);
+      f2ptr callq__rdx__chunk        = raw__expression__compile_x86__callq__rdx(cause);
       
       return f2__machine_code_chunk_list__concat(cause, f2list4__new(cause,
 								     f2__machine_code_chunk_list__concat(cause, compiled_argument_chunks),

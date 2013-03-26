@@ -1756,6 +1756,27 @@ f2ptr raw__machine_code_chunk__finalize_jumps(f2ptr cause, f2ptr this) {
 					   new__symbol(cause, "this"),       this,
 					   new__symbol(cause, "funktion"),   funktion));
 	  }
+	} else if (raw__cfunk__is_type(cause, funkable)) {
+	  f2ptr funktion__variables         = f2cfunk__args(funktion, cause);
+	  u64   funktion__variables__length = raw__simple_length(cause, funktion__variables) + 1; // need to add one because of implicit cause object as first argument.
+	  u64   jump__arguments__length     = raw__simple_length(cause, jump__arguments);
+	  if (funktion__variables__length != jump__arguments__length) {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"), new__symbol(cause, "expression-compile_x86-finalize_jumps-stack_funkall-wrong_number_of_arguments_to_cfunk"),
+					   new__symbol(cause, "this"),     this,
+					   new__symbol(cause, "funktion"), funktion));
+	  }
+	  f2ptr stack_machine_code_pointer = f2cfunk__stack_machine_code_pointer(funkable, cause);
+	  if (raw__pointer__is_type(cause, stack_machine_code_pointer)) {
+	    ptr   relative_ptr  = f2pointer__p(stack_machine_code_pointer, cause);
+	    u64   jump_location = to_ptr(relative_ptr__to__raw_executable(relative_ptr));
+	    raw__expression__compile_x86_to_chunk__movabs__constant_rdx(cause, chunk, jump__index__i, jump_location);
+	  } else {
+	    return new__error(f2list6__new(cause,
+					   new__symbol(cause, "bug_name"),   new__symbol(cause, "machine_code_chunk-finalize_jumps-no_stack_machine_code_pointer_for_cfunk"),
+					   new__symbol(cause, "this"),       this,
+					   new__symbol(cause, "jump_label"), jump__label));
+	  }
 	} else {
 	  return new__error(f2list6__new(cause,
 					 new__symbol(cause, "bug_name"),     new__symbol(cause, "machine_code_chunk-finalize_jumps-unknown_jump_command"),

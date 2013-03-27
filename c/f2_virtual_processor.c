@@ -449,3 +449,34 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   this->execute_bytecodes_current_virtual_processor_thread = yielding_virtual_processor_thread;
   raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);
 }
+
+void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
+  s64 working_virtual_processor_thread_count;
+  {
+    s64 assigned_virtual_processor_thread_count;
+    s64 spinning_virtual_processor_thread_count;
+    {
+      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
+      assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
+      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
+      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
+    }
+    working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;
+  }
+  if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
+    error(nil, "funk2_virtual_processor__exit_fiber error: execute_bytecodes_current_virtual_processor_thread is NULL.");
+  }
+  funk2_virtual_processor_thread_t* exiting_virtual_processor_thread = this->execute_bytecodes_current_virtual_processor_thread;
+  this->execute_bytecodes_current_virtual_processor_thread = NULL;
+  f2ptr exiting_fiber    = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
+  f2ptr reflective_cause = nil;
+  raw__fiber__handle_exit_virtual_processor(reflective_cause, exiting_fiber);
+  {
+    funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
+    //funk2_virtual_processor__add_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
+    funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
+    funk2_virtual_processor__unpause_next_spinning_thread(this);
+  }  
+  status("funk2_virtual_processor__exit_fiber calling pthread_exit(NULL).");
+  pthread_exit(NULL);
+}

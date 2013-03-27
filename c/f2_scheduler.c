@@ -591,6 +591,10 @@ void f2__this__fiber__yield(f2ptr cause) {
   funk2_virtual_processor_handler__yield(&(__funk2.virtual_processor_handler));
 }
 
+void f2__this__fiber__exit(f2ptr cause) {
+  funk2_virtual_processor_handler__exit_fiber(&(__funk2.virtual_processor_handler));
+}
+
 
 
 

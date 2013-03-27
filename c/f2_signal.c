@@ -44,10 +44,12 @@ void funk2_receive_signal(int sig) {
     __received_signal__sigint ++;
     break;
   case SIGSEGV:
-    status("\nfunk2 fatal: thread received segmentation fault (SIGSEGV).  calling pthread_exit.\n");
+    status("funk2 fatal: thread received segmentation fault (SIGSEGV).  calling f2__this__fiber__exit.");
     __received_segmentation_fault = 1;
-    pthread_exit(NULL);
-    //exit(-1);
+    f2__this__fiber__exit(nil);
+    status("funk2 fatal: thread received segmentation fault (SIGSEGV).  should not get here.  calling exit");
+    //pthread_exit(NULL);
+    exit(-1);
     break;
   default:
     printf ("\nfunk2 signal warning: received unknown signal (%d).  doing nothing.\n", sig);

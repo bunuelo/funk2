@@ -454,6 +454,9 @@ void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__exit_fiber error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
+  f2ptr cause = nil;
+  f2ptr fiber = f2__this__fiber(cause);
+  raw__fiber__quit(cause, fiber);
   this->execute_bytecodes_current_virtual_processor_thread = NULL;
   f2ptr exiting_fiber    = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
   f2ptr reflective_cause = nil;

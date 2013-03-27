@@ -451,18 +451,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 }
 
 void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
-  s64 working_virtual_processor_thread_count;
-  {
-    s64 assigned_virtual_processor_thread_count;
-    s64 spinning_virtual_processor_thread_count;
-    {
-      funk2_processor_mutex__lock(&(this->virtual_processor_thread_count_mutex));
-      assigned_virtual_processor_thread_count = this->assigned_virtual_processor_thread_count;
-      spinning_virtual_processor_thread_count = this->spinning_virtual_processor_thread_count;
-      funk2_processor_mutex__unlock(&(this->virtual_processor_thread_count_mutex));
-    }
-    working_virtual_processor_thread_count = assigned_virtual_processor_thread_count - spinning_virtual_processor_thread_count;
-  }
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__exit_fiber error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }

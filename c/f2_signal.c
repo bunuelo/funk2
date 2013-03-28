@@ -51,61 +51,65 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
   status("funk2_signal_segv_handler: Segmentation Fault!");
   status("funk2_signal_segv_handler: info.si_signo = %d", signum);
   status("funk2_signal_segv_handler: info.si_errno = %d", info->si_errno);
-  status("funk2_signal_segv_handler: info.si_code  = %d (%s)", info->si_code);
+  status("funk2_signal_segv_handler: info.si_code  = %d", info->si_code);
   status("funk2_signal_segv_handler: info.si_addr  = %p", info->si_addr);
-  for(i = 0; i < NGREG; i++)
+  for(i = 0; i < NGREG; i++) {
     status("funk2_signal_segv_handler: reg[%02d]       = 0x" REGFORMAT, i, ucontext->uc_mcontext.gregs[i]);
+  }
   
 #ifndef SIGSEGV_NOSTACK
-#if defined(SIGSEGV_STACK_IA64) || defined(SIGSEGV_STACK_X86)
-#if defined(SIGSEGV_STACK_IA64)
+#  if defined(SIGSEGV_STACK_IA64) || defined(SIGSEGV_STACK_X86)
+#    if defined(SIGSEGV_STACK_IA64)
   ip = (void*)ucontext->uc_mcontext.gregs[REG_RIP];
   bp = (void**)ucontext->uc_mcontext.gregs[REG_RBP];
-#elif defined(SIGSEGV_STACK_X86)
+#    elif defined(SIGSEGV_STACK_X86)
   ip = (void*)ucontext->uc_mcontext.gregs[REG_EIP];
   bp = (void**)ucontext->uc_mcontext.gregs[REG_EBP];
-#endif
+#    endif
   
   status("funk2_signal_segv_handler: Stack trace:");
   while(bp && ip) {
-    if(!dladdr(ip, &dlinfo))
-      break;
+    const char*   symname   = "unknown_symbol";
+    const char*   filename  = "unknown_filename";
+    unsigned long dli_saddr = 0;
+    if(dladdr(ip, &dlinfo)) {
+      symname   = dlinfo.dli_sname;
+      dli_saddr = dlinfo.dli_saddr;
+    }
     
-    const char *symname = dlinfo.dli_sname;
-    
-#ifndef NO_CPP_DEMANGLE
+#    ifndef NO_CPP_DEMANGLE
     int status_value;
     char * tmp = __cxa_demangle(symname, NULL, 0, &status_value);
     
     if (status_value == 0 && tmp)
       symname = tmp;
-#endif
+#    endif
     
     status("funk2_signal_segv_handler: % 2d: %p <%s+%lu> (%s)",
 	   ++f,
 	   ip,
 	   symname,
-	   (unsigned long)ip - (unsigned long)dlinfo.dli_saddr,
-	   dlinfo.dli_fname);
+	   (unsigned long)ip - (unsigned long)dli_saddr,
+	   filename);
     
-#ifndef NO_CPP_DEMANGLE
+#    ifndef NO_CPP_DEMANGLE
     if (tmp)
       free(tmp);
-#endif
+#    endif
     
-    if(dlinfo.dli_sname && !strcmp(dlinfo.dli_sname, "main"))
+    if(symname && !strcmp(symname, "main"))
       break;
     
     ip = bp[1];
     bp = (void**)bp[0];
   }
-#else
+#  else
   status("funk2_signal_segv_handler: Stack trace (non-dedicated):");
   sz = backtrace(bt, 20);
   strings = backtrace_symbols(bt, sz);
   for(i = 0; i < sz; ++i)
     status("funk2_signal_segv_handler: %s", strings[i]);
-#endif
+#  endif
   status("funk2_signal_segv_handler: End of stack trace.");
 #else
   status("funk2_signal_segv_handler: Not printing stack strace.");

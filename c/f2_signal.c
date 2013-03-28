@@ -104,8 +104,8 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
       break;
     }
     
-    ip = bp[2];
-    bp = (void**)bp[1];
+    ip = bp[1];
+    bp = (void**)bp[0];
     status("funk2_signal_segv_handler: end loop bp=%p, ip=%p", bp, ip);
   }
 #  else

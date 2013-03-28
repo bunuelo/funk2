@@ -30,7 +30,7 @@
 int __received_signal__sigint     = 0;
 int __received_segmentation_fault = 0;
 
-void funk2_receive_signal(int sig) {
+void funk2_receive_signal(int sig, siginfo_t *si, void *arg) {
   switch(sig) {
   case SIGINT:
     if (__received_signal__sigint == 0) {
@@ -44,10 +44,10 @@ void funk2_receive_signal(int sig) {
     __received_signal__sigint ++;
     break;
   case SIGSEGV:
-    status("funk2 fatal: thread received segmentation fault (SIGSEGV).  calling f2__this__fiber__exit.");
+    status("funk2 fatal: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", si->si_addr);
     __received_segmentation_fault = 1;
     f2__this__fiber__exit(nil);
-    status("funk2 fatal: thread received segmentation fault (SIGSEGV).  should not get here.  calling exit");
+    status("funk2 fatal: thread received segmentation fault (SIGSEGV) at address %p.  should not get here.  calling exit", si->si_addr);
     //pthread_exit(NULL);
     exit(-1);
     break;
@@ -101,7 +101,16 @@ void f2__signal__initialize() {
   
   f2__signal__reinitialize_globalvars();
   
-  signal(SIGINT,  funk2_receive_signal);
-  signal(SIGSEGV, funk2_receive_signal);
+  {
+    struct sigaction sa;
+    
+    memset(&sa, 0, sizeof(sigaction));
+    sigemptyset(&sa.sa_mask);
+    sa.sa_sigaction = funk2_receive_signal;
+    sa.sa_flags     = SA_SIGINFO;
+    
+    sigaction(SIGINT,  &sa, NULL);
+    sigaction(SIGSEGV, &sa, NULL);
+  }
 }
 

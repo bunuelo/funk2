@@ -74,15 +74,17 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
     unsigned long dli_saddr = 0;
     if(dladdr(ip, &dlinfo)) {
       symname   = dlinfo.dli_sname;
+      filename  = dlinfo.dli_fname;
       dli_saddr = (unsigned long)dlinfo.dli_saddr;
     }
     
 #    ifndef NO_CPP_DEMANGLE
-    int status_value;
-    char * tmp = __cxa_demangle(symname, NULL, 0, &status_value);
+    int   status_value;
+    char* tmp = __cxa_demangle(symname, NULL, 0, &status_value);
     
-    if (status_value == 0 && tmp)
+    if (status_value == 0 && tmp) {
       symname = tmp;
+    }
 #    endif
     
     status("funk2_signal_segv_handler: % 2d: %p <%s+%lu> (%s)",
@@ -93,15 +95,18 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
 	   filename);
     
 #    ifndef NO_CPP_DEMANGLE
-    if (tmp)
+    if (tmp) {
       free(tmp);
+    }
 #    endif
     
-    if(symname && !strcmp(symname, "main"))
+    if(symname && !strcmp(symname, "main")) {
       break;
+    }
     
     ip = bp[1];
     bp = (void**)bp[0];
+    status("funk2_signal_segv_handler: end loop bp=%p, ip=%p", bp, ip);
   }
 #  else
   status("funk2_signal_segv_handler: Stack trace (non-dedicated):");

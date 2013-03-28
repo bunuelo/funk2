@@ -30,6 +30,17 @@
 
 #include "f2_global.h"
 
+#if defined(REG_RIP)
+# define SIGSEGV_STACK_IA64
+# define REGFORMAT "%016lx"
+#elif defined(REG_EIP)
+# define SIGSEGV_STACK_X86
+# define REGFORMAT "%08x"
+#else
+# define SIGSEGV_STACK_GENERIC
+# define REGFORMAT "%x"
+#endif
+
 extern int __received_signal__sigint;
 
 void funk2_receive_signal(int sig, siginfo_t *si, void *arg);

@@ -32,6 +32,11 @@
 #  define _GNU_SOURCE
 #endif
 
+// Bug in gcc prevents from using CPP_DEMANGLE in pure "C"
+#if !defined(__cplusplus) && !defined(NO_CPP_DEMANGLE)
+#define NO_CPP_DEMANGLE
+#endif
+
 #include "f2_archconfig.h"
 
 #ifdef F2__APPLE
@@ -64,6 +69,12 @@
 
 #include <assert.h>
 #include <arpa/inet.h>
+#ifndef NO_CPP_DEMANGLE
+#  include <cxxabi.h>
+#  ifdef __cplusplus
+using __cxxabiv1::__cxa_demangle;
+#  endif
+#endif
 #include <dirent.h>
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
@@ -96,6 +107,7 @@
 #include <sys/wait.h>
 #include <termios.h>
 #include <time.h>
+#include <ucontext.h>
 #include <unistd.h>
 
 #if defined(HAVE_ZLIB_H)

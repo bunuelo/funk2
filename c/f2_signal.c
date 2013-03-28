@@ -74,7 +74,7 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
     unsigned long dli_saddr = 0;
     if(dladdr(ip, &dlinfo)) {
       symname   = dlinfo.dli_sname;
-      dli_saddr = dlinfo.dli_saddr;
+      dli_saddr = (unsigned long)dlinfo.dli_saddr;
     }
     
 #    ifndef NO_CPP_DEMANGLE

@@ -32,7 +32,7 @@
 
 extern int __received_signal__sigint;
 
-void funk2_receive_signal(int sig);
+void funk2_receive_signal(int sig, siginfo_t *si, void *arg);
 
 
 boolean_t raw__system__received_signal__sigint(f2ptr cause);

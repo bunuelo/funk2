@@ -42,11 +42,12 @@
 #include "funk2.h"
 
 void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
-  int i, f = 0;
-  ucontext_t *ucontext = (ucontext_t*)ptr;
-  Dl_info dlinfo;
-  void **bp = 0;
-  void *ip = 0;
+  int         i;
+  int         f = 0;
+  ucontext_t* ucontext = (ucontext_t*)ptr;
+  Dl_info     dlinfo;
+  void**      bp       = 0;
+  void*       ip       = 0;
   
   status("funk2_signal_segv_handler: Segmentation Fault!");
   status("funk2_signal_segv_handler: info.si_signo = %d", signum);
@@ -137,11 +138,12 @@ void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
     __received_signal__sigint ++;
     break;
   case SIGSEGV:
-    status("funk2 fatal: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", info->si_addr);
+    status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.", info->si_addr);
     __received_segmentation_fault = 1;
     funk2_signal_segv_handler(sig, info, arg);
+    status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", info->si_addr);
     f2__this__fiber__exit(nil);
-    status("funk2 fatal: thread received segmentation fault (SIGSEGV) at address %p.  should not get here.  calling exit", info->si_addr);
+    status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.  should not get here.  calling exit", info->si_addr);
     //pthread_exit(NULL);
     exit(-1);
     break;
@@ -201,7 +203,7 @@ void f2__signal__initialize() {
     memset(&sa, 0, sizeof(sigaction));
     sigemptyset(&sa.sa_mask);
     sa.sa_sigaction = funk2_receive_signal;
-    sa.sa_flags     = SA_SIGINFO;
+    sa.sa_flags     = SA_SIGINFO | SA_RESTART;
     
     sigaction(SIGINT,  &sa, NULL);
     sigaction(SIGSEGV, &sa, NULL);

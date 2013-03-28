@@ -463,7 +463,7 @@ void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
     f2ptr fiber = exiting_fiber;
     f2fiber__program_counter__set(fiber, cause, nil);
     raw__fiber__quit(cause, fiber);
-    f2ptr execute_cmutex = f2fiber__execute_cmutex(this, cause);
+    f2ptr execute_cmutex = f2fiber__execute_cmutex(fiber, cause);
     raw__cmutex__trylock(cause, execute_cmutex); // assure locked
     f2cmutex__unlock(execute_cmutex, cause);
   }

@@ -472,7 +472,7 @@ void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
     //funk2_virtual_processor__add_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
     funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
     funk2_virtual_processor__unpause_next_spinning_thread(this);
-  }  
+  }
   status("funk2_virtual_processor__exit_fiber calling pthread_exit(NULL).");
   // pthread_exit is not async safe, so we cannot call from within signal handler.
   while (boolean__true) {

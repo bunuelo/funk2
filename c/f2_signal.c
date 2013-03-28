@@ -140,6 +140,7 @@ void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
   case SIGSEGV:
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.", info->si_addr);
     __received_segmentation_fault = 1;
+    status_backtrace();
     funk2_signal_segv_handler(sig, info, arg);
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", info->si_addr);
     f2__this__fiber__exit(nil);

@@ -31,6 +31,7 @@ boolean_t __assert_failed__global_spin_variable = boolean__true;
 void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
+  status_backtrace();
   kill(getpid(), SIGSTOP);
   while (__assert_failed__global_spin_variable) {
     printf("\nsomebody stop me!"); fflush(stdout);

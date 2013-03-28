@@ -45,6 +45,8 @@ ssize_t raw__stream__writef(f2ptr cause, f2ptr stream, char* msg, ...);
 ssize_t funk2_character_string__snprintf(funk2_character_t* string, s64 max_length, char* utf8_msg, ...);
 ssize_t writef(int fd, char* msg, ...);
 
+void status_backtrace();
+
 void f2__status__reinitialize_globalvars();
 void f2__status__initialize();
 void f2__status__destroy();

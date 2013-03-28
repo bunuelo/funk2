@@ -133,6 +133,36 @@ ssize_t writef(int fd, char* msg, ...) {
   return write(fd, temp_msg, strlen(temp_msg));
 }
 
+#define status_backtrace__max_stack_size 1000
+
+void status_backtrace() {
+  status("status_backtrace begin.");
+  void* buffer[status_backtrace__max_stack_size];
+  s64   backtrace_size = backtrace(buffer, status_backtrace__max_stack_size);
+  {
+    s64 index;
+    for (index = 0; index < backtrace_size; index ++) {
+      void*       ptr       = buffer[index];
+      Dl_info     dlinfo;
+      const char* symname   = "unknown_symbol";
+      const char* filename  = "unknown_filename";
+      unsigned long dli_saddr = 0;
+      if(dladdr(ptr, &dlinfo)) {
+	symname   = dlinfo.dli_sname;
+	filename  = dlinfo.dli_fname;
+	dli_saddr = (unsigned long)dlinfo.dli_saddr;
+      }
+      status("status_backtrace: % 2d: %p <%s+%lu> (%s)",
+	     index,
+	     ptr,
+	     symname,
+	     (unsigned long)ptr - (unsigned long)dli_saddr,
+	     filename);
+    }
+  }
+  status("status_backtrace end.");
+}
+
 // **
 
 void f2__status__reinitialize_globalvars() {

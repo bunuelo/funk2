@@ -68,7 +68,7 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
 #    endif
   
   status("funk2_signal_segv_handler: Stack trace: bp=%p, ip=%p", bp, ip);
-  while(bp && ip) {
+  while(bp) {
     const char*   symname   = "unknown_symbol";
     const char*   filename  = "unknown_filename";
     unsigned long dli_saddr = 0;

@@ -1965,12 +1965,12 @@ f2ptr raw__exit_fiber(f2ptr cause) {
   return nil; // should not ever get here.
 }
 
-f2ptr f2__exit_fiber(f2ptr cause) {
-  return raw__exit_fiber(cause);
+f2ptr f2__exit_fiber(f2ptr cause, f2ptr exit_value) {
+  return raw__exit_fiber(cause, exit_value);
 }
-def_pcfunk0(exit_fiber,
+def_pcfunk1(exit_fiber, exit_value,
 	    "Exits currently executing fiber.",
-	    return f2__exit_fiber(this_cause));
+	    return f2__exit_fiber(this_cause, exit_value));
 
 
 // **
@@ -2350,7 +2350,7 @@ void f2__primcfunks__reinitialize_globalvars() {
   //f2__primcfunk__init__1(is_funktional, exp);
   
   f2__primcfunk__init__0(memory__test);
-  f2__primcfunk__init__0(exit_fiber);
+  f2__primcfunk__init__1(exit_fiber, exit_value);
   f2__primcfunk__init__0(memory__assert_valid);
 }
 

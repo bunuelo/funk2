@@ -1959,8 +1959,8 @@ def_pcfunk0(memory__assert_valid,
 	    "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.",
 	    return f2__memory__assert_valid(this_cause));
 
-f2ptr raw__exit_fiber(f2ptr cause) {
-  f2__this__fiber__exit(cause);
+f2ptr raw__exit_fiber(f2ptr cause, f2ptr exit_value) {
+  f2__this__fiber__exit(cause, exit_value);
   error(nil, "exit_fiber fatal error: did not actually exit fiber.");
   return nil; // should not ever get here.
 }

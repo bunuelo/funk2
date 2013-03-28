@@ -1654,8 +1654,8 @@ f2ptr      f2__memory_image__save(f2ptr cause, f2ptr filename);
 f2ptr      f2__memory_image__load(f2ptr cause, f2ptr filename);
 f2ptr      f2__string__read(f2ptr cause, f2ptr this);
 
-f2ptr raw__exit_fiber(f2ptr cause);
-f2ptr  f2__exit_fiber(f2ptr cause);
+f2ptr raw__exit_fiber(f2ptr cause, f2ptr exit_value);
+f2ptr  f2__exit_fiber(f2ptr cause, f2ptr exit_value);
 
 // **
 

@@ -67,7 +67,7 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
   bp = (void**)ucontext->uc_mcontext.gregs[REG_EBP];
 #    endif
   
-  status("funk2_signal_segv_handler: Stack trace:");
+  status("funk2_signal_segv_handler: Stack trace: bp=%p, ip=%p", bp, ip);
   while(bp && ip) {
     const char*   symname   = "unknown_symbol";
     const char*   filename  = "unknown_filename";

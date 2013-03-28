@@ -450,7 +450,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
   raw__fiber__handle_enter_virtual_processor(reflective_cause, yielding_fiber);
 }
 
-void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
+void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this, f2ptr exit_value) {
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__exit_fiber error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
@@ -462,6 +462,10 @@ void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
     f2ptr cause = nil;
     f2ptr fiber = exiting_fiber;
     f2fiber__program_counter__set(fiber, cause, nil);
+    f2fiber__value__set(fiber, cause, exit_value);
+    if (raw__larva__is_type(cause, exit_value)) {
+      execute_next_bytecodes__helper__found_larva_in_fiber(cause, fiber);
+    }
     raw__fiber__quit(cause, fiber);
     f2ptr execute_cmutex = f2fiber__execute_cmutex(fiber, cause);
     raw__cmutex__trylock(cause, execute_cmutex); // assure locked

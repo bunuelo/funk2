@@ -91,7 +91,7 @@ void                              funk2_virtual_processor__try_unpause_next_yiel
 void                              funk2_virtual_processor__unpause_next_yielding_virtual_processor_thread                               (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
 void                              funk2_virtual_processor__yield                                                                        (funk2_virtual_processor_t* this);
-void                              funk2_virtual_processor__exit_fiber                                                                   (funk2_virtual_processor_t* this);
+void                              funk2_virtual_processor__exit_fiber                                                                   (funk2_virtual_processor_t* this, f2ptr exit_value);
 
 #endif // F2__VIRTUAL_PROCESSOR__H
 

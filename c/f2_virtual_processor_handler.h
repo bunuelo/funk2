@@ -69,7 +69,7 @@ u64                               funk2_virtual_processor_handler__my_virtual_pr
 funk2_virtual_processor_t*        funk2_virtual_processor_handler__try_get_my_virtual_processor                                        (funk2_virtual_processor_handler_t* this);
 funk2_virtual_processor_t*        funk2_virtual_processor_handler__my_virtual_processor                                                (funk2_virtual_processor_handler_t* this);
 void                              funk2_virtual_processor_handler__yield                                                               (funk2_virtual_processor_handler_t* this);
-void                              funk2_virtual_processor_handler__exit_fiber                                                          (funk2_virtual_processor_handler_t* this);
+void                              funk2_virtual_processor_handler__exit_fiber                                                          (funk2_virtual_processor_handler_t* this, f2ptr exit_value);
 
 // **
 

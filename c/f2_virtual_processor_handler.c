@@ -279,9 +279,9 @@ void funk2_virtual_processor_handler__yield(funk2_virtual_processor_handler_t* t
   funk2_virtual_processor__yield(virtual_processor);
 }
 
-void funk2_virtual_processor_handler__exit_fiber(funk2_virtual_processor_handler_t* this) {
+void funk2_virtual_processor_handler__exit_fiber(funk2_virtual_processor_handler_t* this, f2ptr exit_value) {
   funk2_virtual_processor_t* virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(this);
-  funk2_virtual_processor__exit_fiber(virtual_processor);
+  funk2_virtual_processor__exit_fiber(virtual_processor, exit_value);
 }
 
 

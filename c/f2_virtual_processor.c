@@ -454,19 +454,19 @@ void funk2_virtual_processor__exit_fiber(funk2_virtual_processor_t* this) {
   if (! (this->execute_bytecodes_current_virtual_processor_thread)) {
     error(nil, "funk2_virtual_processor__exit_fiber error: execute_bytecodes_current_virtual_processor_thread is NULL.");
   }
+  this->execute_bytecodes_current_virtual_processor_thread = NULL;
+  f2ptr exiting_fiber    = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
+  f2ptr reflective_cause = nil;
+  raw__fiber__handle_exit_virtual_processor(reflective_cause, exiting_fiber);
   {
     f2ptr cause = nil;
-    f2ptr fiber = f2__this__fiber(cause);
+    f2ptr fiber = exiting_fiber;
     f2fiber__program_counter__set(fiber, cause, nil);
     raw__fiber__quit(cause, fiber);
     f2ptr execute_cmutex = f2fiber__execute_cmutex(this, cause);
     raw__cmutex__trylock(cause, execute_cmutex); // assure locked
     f2cmutex__unlock(execute_cmutex, cause);
   }
-  this->execute_bytecodes_current_virtual_processor_thread = NULL;
-  f2ptr exiting_fiber    = funk2_operating_system__pop_current_fiber(&(__funk2.operating_system), this->index);
-  f2ptr reflective_cause = nil;
-  raw__fiber__handle_exit_virtual_processor(reflective_cause, exiting_fiber);
   {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
     //funk2_virtual_processor__add_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);

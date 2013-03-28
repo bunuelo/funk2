@@ -183,4 +183,5 @@
 
 [globalize-funk memory-test                                 &primfunk:memory__test]
 [globalize-funk memory-assert_valid                         &primfunk:memory__assert_valid]
+[globalize-funk exit_fiber                                  &primfunk:exit_fiber]
 

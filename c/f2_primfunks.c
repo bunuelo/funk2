@@ -1959,6 +1959,19 @@ def_pcfunk0(memory__assert_valid,
 	    "Asserts that memory tests pass, otherwise returns a larva with low-level memory system debugging information.",
 	    return f2__memory__assert_valid(this_cause));
 
+f2ptr raw__exit_fiber(f2ptr cause) {
+  f2__this__fiber__exit(cause);
+  error(nil, "exit_fiber fatal error: did not actually exit fiber.");
+  return nil; // should not ever get here.
+}
+
+f2ptr f2__exit_fiber(f2ptr cause) {
+  return raw__exit_fiber(cause);
+}
+def_pcfunk0(exit_fiber,
+	    "Exits currently executing fiber.",
+	    return f2__exit_fiber(this_cause));
+
 
 // **
 
@@ -2149,6 +2162,7 @@ void f2__primcfunks__defragment__fix_pointers() {
   //f2__primcfunk__init__1(is_funktional, exp);
   
   f2__primcfunk__init__defragment__fix_pointers(memory__test);
+  f2__primcfunk__init__defragment__fix_pointers(exit_fiber);
   f2__primcfunk__init__defragment__fix_pointers(memory__assert_valid);
 }
 
@@ -2336,6 +2350,7 @@ void f2__primcfunks__reinitialize_globalvars() {
   //f2__primcfunk__init__1(is_funktional, exp);
   
   f2__primcfunk__init__0(memory__test);
+  f2__primcfunk__init__0(exit_fiber);
   f2__primcfunk__init__0(memory__assert_valid);
 }
 

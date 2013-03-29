@@ -483,9 +483,12 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, u6
   funk2_garbage_collector_protected_f2ptr_buffer__init(&(this->other_protected_f2ptr));
   funk2_protected_alloc_array_fiber_hash__init(&(this->protected_alloc_array_fiber_hash));
   this->should_run_gc = boolean__false;
+
+  this->other_grey_buffer = (funk2_garbage_collector_other_grey_buffer_t*)from_ptr(f2__malloc(sizeof(funk2_garbage_collector_other_grey_buffer_t) * __funk2.system_processor.processor_count));
+  
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
     }
   }
@@ -501,10 +504,12 @@ void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this)
   funk2_protected_alloc_array_fiber_hash__destroy(&(this->protected_alloc_array_fiber_hash));
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_garbage_collector_other_grey_buffer__destroy(&(this->other_grey_buffer[pool_index]));
     }
   }
+  
+  f2__free(to_ptr(this->other_grey_buffer));
 }
 
 void funk2_garbage_collector_pool__add_used_exp(funk2_garbage_collector_pool_t* this, f2ptr exp) {
@@ -774,7 +779,7 @@ void funk2_garbage_collector_pool__blacken_grey_nodes(funk2_garbage_collector_po
 void funk2_garbage_collector_pool__grey_from_other_nodes(funk2_garbage_collector_pool_t* this) {
   //status("funk2_garbage_collector_pool: grey_from_other_nodes.");
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__flush_other_greys(&(this->other_grey_buffer[pool_index]), this);
   }
 }
@@ -813,7 +818,7 @@ s64 funk2_garbage_collector_pool__calculate_save_size(funk2_garbage_collector_po
     save_size += funk2_garbage_collector_no_more_references_buffer__calculate_save_size(&(this->other_no_more_references));
     save_size += funk2_garbage_collector_protected_f2ptr_buffer__calculate_save_size(&(this->other_protected_f2ptr));
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       save_size += funk2_garbage_collector_other_grey_buffer__calculate_save_size(&(this->other_grey_buffer[pool_index]));
     }
   }
@@ -826,7 +831,7 @@ void funk2_garbage_collector_pool__save_to_stream(funk2_garbage_collector_pool_t
   funk2_garbage_collector_no_more_references_buffer__save_to_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__save_to_stream(&(this->other_protected_f2ptr), fd);
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__save_to_stream(&(this->other_grey_buffer[pool_index]), fd);
   }
 }
@@ -838,7 +843,7 @@ u64 funk2_garbage_collector_pool__save_to_buffer(funk2_garbage_collector_pool_t*
   buffer += funk2_garbage_collector_no_more_references_buffer__save_to_buffer(&(this->other_no_more_references), buffer);
   buffer += funk2_garbage_collector_protected_f2ptr_buffer__save_to_buffer(&(this->other_protected_f2ptr), buffer);
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     buffer += funk2_garbage_collector_other_grey_buffer__save_to_buffer(&(this->other_grey_buffer[pool_index]), buffer);
   }
   return (buffer - initial_buffer);
@@ -866,7 +871,7 @@ void funk2_garbage_collector_pool__load_from_stream(funk2_garbage_collector_pool
   funk2_garbage_collector_no_more_references_buffer__load_from_stream(&(this->other_no_more_references), fd);
   funk2_garbage_collector_protected_f2ptr_buffer__load_from_stream(&(this->other_protected_f2ptr), fd);
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_other_grey_buffer__load_from_stream(&(this->other_grey_buffer[pool_index]), fd);
   }
 }
@@ -880,7 +885,7 @@ s64 funk2_garbage_collector_pool__load_from_buffer(funk2_garbage_collector_pool_
     buffer_iter += funk2_garbage_collector_protected_f2ptr_buffer__load_from_buffer(   &(this->other_protected_f2ptr),    buffer_iter);
     {
       int pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	buffer_iter += funk2_garbage_collector_other_grey_buffer__load_from_buffer(&(this->other_grey_buffer[pool_index]), buffer_iter);
       }
     }
@@ -897,7 +902,7 @@ void funk2_garbage_collector_pool__defragment__fix_pointers(funk2_garbage_collec
   funk2_protected_alloc_array_fiber_hash__defragment__fix_pointers(           &(this->protected_alloc_array_fiber_hash));
   {
     u64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(&(this->other_grey_buffer[pool_index]));
     }
   }

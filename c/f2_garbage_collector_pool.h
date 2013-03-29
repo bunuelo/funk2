@@ -133,7 +133,7 @@ struct funk2_garbage_collector_pool_s {
   funk2_garbage_collector_protected_f2ptr_buffer_t    other_protected_f2ptr;
   funk2_protected_alloc_array_fiber_hash_t            protected_alloc_array_fiber_hash;
   boolean_t                                           should_run_gc;
-  funk2_garbage_collector_other_grey_buffer_t         other_grey_buffer[memory_pool_num];
+  funk2_garbage_collector_other_grey_buffer_t*        other_grey_buffer;
   u8*                                                 temporary_load_buffer;
   s64                                                 temporary_load_buffer_offset;
   s64                                                 temporary_load_buffer_size;

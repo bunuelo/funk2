@@ -392,6 +392,8 @@
   [have destination_processor add_fiber fibermon_fiber]
   [have [get fibermon_fiber widget] unref]]
 
+[defunk fibermon-processor_count []
+  [length [get scheduler:global_scheduler processors]]]
 
 'fibermon'
 
@@ -409,14 +411,14 @@
 			   [hbox-quit_bugs_button    [gtk-button-new_with_label 'Quit Bugs']]
 			   [scrolled_window          [gtk-scrolled_window-new]]
 			   [processor_hbox           [gtk-hbox-new 0]]
-			   [processor_array          [new array 8]]
+			   [processor_array          [new array [fibermon-processor_count]]]
 			   [done                     nil]
 			   [fiber                    nil]
-			   [processor_count          8]
+			   [processor_count          [fibermon-processor_count]]
 			   [index_fiber_hash         [new ptypehash]]
 			   [fibermon_fiber_hash      [new ptypehash]]]
   [new []
-       [set  win default_size 1900 800]
+       [set  win default_size [* [fibermon-processor_count] 200] 800]
        [set  win title 'fibermon']
        [have win connect_hide_on_delete]
        [have fibermon_menu append fibermon_exit_menu_item]

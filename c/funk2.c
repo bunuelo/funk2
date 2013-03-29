@@ -195,6 +195,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
     funk2_node_handler__add_node(&(this->node_handler), __funk2.node_id, &client_id);
   }
   
+  funk2_cpu__init(&(this->cpu));
   funk2_memory__init(&(this->memory));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
@@ -212,7 +213,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_openglu__init(&(this->openglu));
   funk2_xxf86vm__init(&(this->xxf86vm));
   funk2_xlib__init(&(this->xlib));
-  funk2_cpu__init(&(this->cpu));
   funk2_xmlrpc__init(&(this->xmlrpc));
   
   f2ptr cause = initial_cause();

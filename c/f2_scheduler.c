@@ -30,9 +30,11 @@
 // funk2_operating_system
 
 void funk2_operating_system__init(funk2_operating_system_t* this) {
+  this->current_fiber_stack__mutex =                   (funk2_processor_spinlock_t*)from_ptr(f2__malloc(sizeof(funk2_processor_spinlock_t)                   * __funk2.system_processor.processor_count));
+  this->current_fiber_stack        = (funk2_operating_system_current_fiber_cons_t**)from_ptr(f2__malloc(sizeof(funk2_operating_system_current_fiber_cons_t*) * __funk2.system_processor.processor_count));
   {
     int index;
-    for (index = 0; index < memory_pool_num; index++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index++) {
       funk2_processor_spinlock__init(&(this->current_fiber_stack__mutex[index]));
       this->current_fiber_stack[index] = NULL;
     }
@@ -42,7 +44,7 @@ void funk2_operating_system__init(funk2_operating_system_t* this) {
 void funk2_operating_system__destroy(funk2_operating_system_t* this) {
   {
     int index;
-    for (index = 0; index < memory_pool_num; index++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index++) {
       funk2_processor_spinlock__destroy(&(this->current_fiber_stack__mutex[index]));
       {
 	funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack[index];
@@ -54,6 +56,8 @@ void funk2_operating_system__destroy(funk2_operating_system_t* this) {
       }
     }
   }
+  f2__free(to_ptr(this->current_fiber_stack__mutex));
+  f2__free(to_ptr(this->current_fiber_stack));
 }
 
 void funk2_operating_system__defragment__fix_pointers(funk2_operating_system_t* this) {
@@ -61,7 +65,7 @@ void funk2_operating_system__defragment__fix_pointers(funk2_operating_system_t* 
   defragment__fix_pointer(this->scheduler);
   {
     int index;
-    for (index = 0; index < memory_pool_num; index++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index++) {
       {
 	funk2_operating_system_current_fiber_cons_t* iter = this->current_fiber_stack[index];
 	while (iter) {
@@ -146,14 +150,14 @@ def_pcfunk1(scheduler__active_fibers, this,
 
 
 void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* processor_load) {
-  u64   processors__length          = memory_pool_num;
-  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
-  f2ptr processors                  = f2scheduler__processors(this, cause);
-  f2ptr processor[memory_pool_num];
-  u64   processor__fiber_count[memory_pool_num];
+  u64    processors__length          = __funk2.system_processor.processor_count;
+  u64    processors__length__bit_num = u64__bit_num(processors__length - 1);
+  f2ptr  processors                  = f2scheduler__processors(this, cause);
+  f2ptr* processor                   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * __funk2.system_processor.processor_count));
+  u64*   processor__fiber_count      = (u64*)  from_ptr(f2__malloc(sizeof(u64)   * __funk2.system_processor.processor_count));
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       processor_load[index]         = 0;
       processor[index]              = raw__array__elt(cause, processors, index);
       processor__fiber_count[index] = raw__processor__active_fibers_count(cause, processor[index]);
@@ -161,7 +165,7 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
   }
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       s64 bit_index;
       for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
 	s64 bit_subindex;
@@ -172,17 +176,19 @@ void raw__scheduler__calculate_processor_load(f2ptr cause, f2ptr this, u64* proc
       }
     }
   }
+  f2__free(to_ptr(processor));
+  f2__free(to_ptr(processor__fiber_count));
 }
 
 void raw__scheduler__scheduler_calculate_processor_load(f2ptr cause, f2ptr this, u64* processor_load) {
-  u64   processors__length          = memory_pool_num;
-  u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
-  f2ptr processors                  = f2scheduler__processors(this, cause);
-  f2ptr processor[memory_pool_num];
-  u64   processor__fiber_count[memory_pool_num];
+  u64    processors__length          = __funk2.system_processor.processor_count;
+  u64    processors__length__bit_num = u64__bit_num(processors__length - 1);
+  f2ptr  processors                  = f2scheduler__processors(this, cause);
+  f2ptr* processor                   = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * __funk2.system_processor.processor_count));
+  u64*   processor__fiber_count      = (u64*)  from_ptr(f2__malloc(sizeof(u64)   * __funk2.system_processor.processor_count));
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       processor_load[index]         = 0;
       processor[index]              = raw__array__elt(cause, processors, index);
       processor__fiber_count[index] = raw__processor__scheduler_active_fibers_count(cause, processor[index]);
@@ -190,7 +196,7 @@ void raw__scheduler__scheduler_calculate_processor_load(f2ptr cause, f2ptr this,
   }
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       s64 bit_index;
       for (bit_index = 0; bit_index < processors__length__bit_num; bit_index ++) {
 	s64 bit_subindex;
@@ -201,13 +207,15 @@ void raw__scheduler__scheduler_calculate_processor_load(f2ptr cause, f2ptr this,
       }
     }
   }
+  f2__free(to_ptr(processor));
+  f2__free(to_ptr(processor__fiber_count));
 }
 
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
-  u64   processor__load[memory_pool_num];
+  u64   processor__load    = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
   raw__scheduler__calculate_processor_load(cause, this, processor__load);
   f2ptr processors         = f2scheduler__processors(this, cause);
-  u64   processors__length = memory_pool_num;
+  u64   processors__length = __funk2.system_processor.processor_count;
   u64   min_length         = 0xffffffffffffffffull;
   f2ptr min_processor      = nil;
   u64 i;
@@ -218,6 +226,7 @@ f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
       min_processor = processor;
     }
   }
+  f2__free(to_ptr(processor__load));
   return min_processor;
 }
 
@@ -271,9 +280,9 @@ def_pcfunk1(scheduler__clean, this,
 
 
 void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
-  u64   processor__load[memory_pool_num];
+  u64   processor__load             = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
   raw__scheduler__scheduler_calculate_processor_load(cause, this, processor__load);
-  //u64   processors__length          = memory_pool_num;
+  //u64   processors__length          = __funk2.system_processor.processor_count;
   //u64   processors__length__bit_num = u64__bit_num(processors__length - 1);
   f2ptr processors                  = f2scheduler__processors(this, cause);
   u64   min_processor_load          = 0xffffffffffffffffull;
@@ -282,7 +291,7 @@ void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f
   f2ptr max_processor               = nil;
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       u64 processor_load = processor__load[index];
       if (processor_load < min_processor_load) {
 	min_processor_load = processor_load;
@@ -303,6 +312,7 @@ void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f
       }
     }
   }
+  f2__free(to_ptr(processor__load));
 }
 
 void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
@@ -433,7 +443,7 @@ f2ptr raw__global_scheduler__remove_fiber(f2ptr cause, f2ptr fiber) {
     if (raw__integer__is_type(cause, processor_assignment_index)) {
       s64 processor_assignment_index__i = f2integer__i(processor_assignment_index, cause);
       if ((processor_assignment_index__i >= 0) &&
-	  (processor_assignment_index__i <  memory_pool_num)) {
+	  (processor_assignment_index__i <  __funk2.system_processor.processor_count)) {
 	f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), processor_assignment_index__i);
 	return raw__processor__remove_active_fiber(cause, processor, fiber);
       } else {
@@ -516,7 +526,7 @@ f2ptr raw__global_scheduler__processor_thread_current_fiber(int pool_index) {
 f2ptr f2__global_scheduler__processor_thread_current_fiber(f2ptr cause, f2ptr pool_index) {
   assert_argument_type(integer, pool_index);
   s64 pool_index__i = f2integer__i(pool_index, cause);
-  if ((pool_index__i < 0) || (pool_index >= memory_pool_num)) {
+  if ((pool_index__i < 0) || (pool_index >= __funk2.system_processor.processor_count)) {
     return f2larva__new(cause, 22, nil);
   }
   return raw__global_scheduler__processor_thread_current_fiber(pool_index__i);
@@ -540,7 +550,7 @@ def_pcfunk0(global_scheduler__current_fiber,
 
 boolean_t raw__global_scheduler__contains_active_fiber(f2ptr cause, f2ptr fiber) {
   s64 pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     f2ptr processor = raw__array__elt(cause, f2scheduler__processors(__funk2.operating_system.scheduler, cause), pool_index);
     if (raw__processor__active_fibers__contains(cause, processor, fiber)) {
       return boolean__true;

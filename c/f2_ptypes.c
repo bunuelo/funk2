@@ -1750,7 +1750,7 @@ void funk2_symbol_hash__defragment__fix_pointers(funk2_symbol_hash_t* this) {
   
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       {
 	funk2_memblock_t* iter          = funk2_memorypool__beginning_of_blocks(&(__funk2.memory.pool[pool_index]));
 	funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(__funk2.memory.pool[pool_index]));

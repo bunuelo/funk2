@@ -142,7 +142,7 @@ void funk2_memorypool__memory_test(funk2_memorypool_t* this) {
 }
 
 f2ptr raw__memorypool__assert_valid(f2ptr cause, s64 pool_index) {
-  if (pool_index < 0 || pool_index >= memory_pool_num) {
+  if (pool_index < 0 || pool_index >= __funk2.system_processor.processor_count) {
     return f2larva__new(cause, 2, nil);
   }
   

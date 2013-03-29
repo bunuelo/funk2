@@ -42,10 +42,10 @@ struct funk2_operating_system_current_fiber_cons_s {
 };
 
 typedef struct funk2_operating_system_s {
-  f2ptr                                        scheduler;
-  f2ptr                                        scheduler__symbol;
-  funk2_processor_spinlock_t                   current_fiber_stack__mutex[memory_pool_num];
-  funk2_operating_system_current_fiber_cons_t* current_fiber_stack[memory_pool_num];
+  f2ptr                                         scheduler;
+  f2ptr                                         scheduler__symbol;
+  funk2_processor_spinlock_t*                   current_fiber_stack__mutex;
+  funk2_operating_system_current_fiber_cons_t** current_fiber_stack;
 } funk2_operating_system_t;
 
 

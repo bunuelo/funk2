@@ -31,7 +31,6 @@
 
 void f2__initialize() {
   f2__module_registration__initialize();
-  f2__cpu__initialize();
   f2__redblacktree__initialize();
   f2__heap__initialize();
   f2__memory__preinitialize();
@@ -123,6 +122,7 @@ void f2__initialize() {
   f2__dlfcn__initialize();
   f2__cause__initialize();
   f2__zlib__initialize();
+  f2__cpu__initialize();
   f2__time__initialize();
   f2__primobject_largeinteger__initialize();
   f2__primes__initialize();

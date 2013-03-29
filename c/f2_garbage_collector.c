@@ -34,8 +34,10 @@ void funk2_garbage_collector__init(funk2_garbage_collector_t* this) {
   
   funk2_processor_mutex__init(&(this->do_collection_mutex));
   
+  this->gc_pool = (funk2_garbage_collector_pool_t*)from_ptr(f2__malloc(sizeof(funk2_garbage_collector_pool_t) * __funk2.system_processor.processor_count));
+  
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_pool__init(&(this->gc_pool[pool_index]), pool_index);
   }
   
@@ -53,10 +55,12 @@ void funk2_garbage_collector__destroy(funk2_garbage_collector_t* this) {
   funk2_processor_mutex__destroy(&(this->do_collection_mutex));
   
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_pool__destroy(&(this->gc_pool[pool_index]));
   }
-
+  
+  f2__free(to_ptr(this->gc_pool));
+  
   funk2_never_delete_list__destroy(&(this->never_delete_list));
   funk2_processor_mutex__destroy(&(this->total_garbage_collection_count__mutex));
 }
@@ -65,7 +69,7 @@ void funk2_garbage_collector__init_sets_from_memory(funk2_garbage_collector_t* t
   status("initializing garbage collector from memory.");
   
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_pool__init_sets_from_memorypool(&(this->gc_pool[pool_index]), &(memory->pool[pool_index]), pool_index);
   }
   
@@ -129,7 +133,7 @@ void funk2_garbage_collector__touch_all_roots(funk2_garbage_collector_t* this) {
 
 boolean_t funk2_garbage_collector__still_have_grey_nodes(funk2_garbage_collector_t* this) {
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     if (funk2_garbage_collector_pool__still_have_grey_nodes(&(this->gc_pool[pool_index]))) {
       return boolean__true;
     }
@@ -155,7 +159,7 @@ void funk2_garbage_collector__spread_all_blackness(funk2_garbage_collector_t* th
 void funk2_garbage_collector__collect_garbage(funk2_garbage_collector_t* this) {
   garbage_collector_status("funk2_garbage_collector: collect_garbage.");
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_garbage_collector_pool__flush_other_knowledge(&(this->gc_pool[pool_index]));
   }
   funk2_garbage_collector__touch_all_roots(this);
@@ -228,7 +232,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
     {
       boolean_t should_collect_garbage = boolean__false;
       int index;
-      for (index = 0; index < memory_pool_num; index ++) {
+      for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
 	if (this->gc_pool[index].should_run_gc) {
 	  should_collect_garbage = boolean__true;
 	}
@@ -251,7 +255,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       garbage_collector_status("");
       {
 	int index;
-	for (index = 0; index < memory_pool_num; index ++) {
+	for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
 	  garbage_collector_status("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
 	}
       }
@@ -263,7 +267,7 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
       garbage_collector_status("");
       {
 	int index;
-	for (index = 0; index < memory_pool_num; index ++) {
+	for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
 	  this->gc_pool[index].should_run_gc = boolean__false;
 	  __funk2.memory.pool[index].total_allocated_memory_since_last_gc = 0;
 	  garbage_collector_status("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
@@ -279,10 +283,10 @@ void funk2_garbage_collector__handle(funk2_garbage_collector_t* this) {
 
 s64 funk2_garbage_collector__calculate_save_size(funk2_garbage_collector_t* this) {
   s64 save_size = 0;
-  save_size += (sizeof(s64) * memory_pool_num);
+  save_size += (sizeof(s64) * __funk2.system_processor.processor_count);
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       save_size += funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
     }
   }
@@ -309,35 +313,36 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   }
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       s64 pool_save_size = funk2_garbage_collector_pool__calculate_save_size(&(this->gc_pool[pool_index]));
       safe_write(fd, to_ptr(&pool_save_size), sizeof(s64));
     }
   }
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     }
   }
   status("creating garbage collector save buffers.");
   {
-    pthread_t save_gc_pool_thread[memory_pool_num];
+    pthread_t* save_gc_pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processsor.processor_count));
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_create(&(save_gc_pool_thread[pool_index]), NULL, &funk2_garbage_collector__save_to_stream__start_thread_create_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
       }
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_join(save_gc_pool_thread[pool_index], NULL);
       }
     }
+    f2__free(to_ptr(save_gc_pool_thread));
   }
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       status("saving garbage collector pool %d buffer to stream %d.", pool_index, fd);
       funk2_garbage_collector_pool__save_buffer_to_stream(&(this->gc_pool[pool_index]), fd);
     }
@@ -366,7 +371,7 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     s64 offset = 0;
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	s64 pool_save_size;
 	memcpy(&pool_save_size, buffer_iter, sizeof(s64)); buffer_iter += sizeof(s64);
 	this->gc_pool[pool_index].temporary_load_buffer_size = pool_save_size;
@@ -377,28 +382,29 @@ s64 funk2_garbage_collector__load_from_buffer(funk2_garbage_collector_t* this, u
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	this->gc_pool[pool_index].temporary_load_buffer = buffer_iter;
       }
     }
     {
-      pthread_t load_gc_thread[memory_pool_num];
+      pthread_t* load_gc_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
       {
 	s64 pool_index;
-	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  pthread_create(&(load_gc_thread[pool_index]), NULL, &funk2_garbage_collector__load_from_buffer__start_thread_load_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
 	}
       }
       {
 	s64 pool_index;
-	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  pthread_join(load_gc_thread[pool_index], NULL);
 	}
       }
+      f2__free(to_ptr(load_gc_thread));
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	buffer_iter += (this->gc_pool[pool_index].temporary_load_buffer_size);
       }
     }
@@ -426,7 +432,7 @@ void funk2_garbage_collector__defragment__fix_pointers(funk2_garbage_collector_t
   status("funk2_garbage_collector defragment: fixing pointers.");
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_garbage_collector_pool__defragment__fix_pointers(&(this->gc_pool[pool_index]));
     }
   }

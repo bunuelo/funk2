@@ -28,26 +28,6 @@
 #include "funk2.h"
 
 void funk2_cpu__init(funk2_cpu_t* this) {
-  {
-    u64 processor_count = 0;
-    {
-      cpu_set_t cpu_set;
-      CPU_ZERO(&cpu_set);
-      sched_getaffinity(0, sizeof(cpu_set_t), &cpu_set);
-      {
-	u64 i;
-	for (i = 0; i < CPU_SETSIZE; i ++) {
-	  if (CPU_ISSET(i, &cpu_set)) {
-	    processor_count ++;
-	  }
-	}
-      }
-    }
-    if (processor_count == 0) {
-      processor_count = 1;
-    }
-    this->processor_core_count = processor_count;
-  }
   this->last_user_clock_ticks       = 0;
   this->last_system_clock_ticks     = 0;
   this->last_nanoseconds_since_1970 = 0;

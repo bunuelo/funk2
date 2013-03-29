@@ -325,7 +325,7 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
   }
   status("creating garbage collector save buffers.");
   {
-    pthread_t* save_gc_pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processsor.processor_count));
+    pthread_t* save_gc_pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {

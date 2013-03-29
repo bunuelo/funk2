@@ -193,6 +193,7 @@ struct f2ptr_s {
      
 //#define memory_pool_num scheduler_processor_num
 
+#define memory_pool_num (__funk2.system_processor.processor_count)
 
 
 

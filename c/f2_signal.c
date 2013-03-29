@@ -25,19 +25,23 @@
 // rights to redistribute these changes.
 // 
 
-// This source file is used to print out a stack-trace when your program
-// segfaults. It is relatively reliable and spot-on accurate.
+// Part of the segmentation fault handling code was adapted from code
+// initially written by Jaco Kroon.  His generous copyright notice appears
+// here:
 //
-// This code is in the public domain. Use it as you see fit, some credit
-// would be appreciated, but is not a prerequisite for usage. Feedback
-// on it's use would encourage further development and maintenance.
+//   This source file is used to print out a stack-trace when your program
+//   segfaults. It is relatively reliable and spot-on accurate.
 //
-// Due to a bug in gcc-4.x.x you currently have to compile as C++ if you want
-// demangling to work.
+//   This code is in the public domain. Use it as you see fit, some credit
+//   would be appreciated, but is not a prerequisite for usage. Feedback
+//   on it's use would encourage further development and maintenance.
 //
-// Author: Jaco Kroon <jaco@kroon.co.za>
+//   Due to a bug in gcc-4.x.x you currently have to compile as C++ if you want
+//   demangling to work.
 //
-// Copyright (C) 2005 - 2010 Jaco Kroon
+//   Author: Jaco Kroon <jaco@kroon.co.za>
+//
+//   Copyright (C) 2005 - 2010 Jaco Kroon
 
 #include "funk2.h"
 

@@ -280,7 +280,7 @@ def_pcfunk1(scheduler__clean, this,
 
 
 void raw__scheduler__scheduler_balance_processor_load(f2ptr cause, f2ptr this, f2ptr this_processor) {
-  u64   processor__load             = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
+  u64*  processor__load             = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
   raw__scheduler__scheduler_calculate_processor_load(cause, this, processor__load);
   //u64   processors__length          = __funk2.system_processor.processor_count;
   //u64   processors__length__bit_num = u64__bit_num(processors__length - 1);

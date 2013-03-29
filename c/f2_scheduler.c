@@ -212,7 +212,7 @@ void raw__scheduler__scheduler_calculate_processor_load(f2ptr cause, f2ptr this,
 }
 
 f2ptr raw__scheduler__processor_with_fewest_fibers(f2ptr cause, f2ptr this) {
-  u64   processor__load    = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
+  u64*  processor__load    = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
   raw__scheduler__calculate_processor_load(cause, this, processor__load);
   f2ptr processors         = f2scheduler__processors(this, cause);
   u64   processors__length = __funk2.system_processor.processor_count;

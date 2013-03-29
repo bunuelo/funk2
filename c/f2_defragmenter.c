@@ -28,11 +28,12 @@
 #include "funk2.h"
 
 void funk2_defragmenter__init(funk2_defragmenter_t* this) {
-  this->total_defragmentation_count = 0;
-  this->need_defragmentation        = boolean__false;
+  this->total_defragmentation_count  = 0;
+  this->need_defragmentation         = boolean__false;
+  this->new_old_memory_position_hash = (funk2_hash_t*)from_ptr(f2__malloc(sizeof(funk2_hash_t) * __funk2.system_processor.processor_count));
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_hash__init(&(this->new_old_memory_position_hash[pool_index]), position_hash__bit_num);
     }
   }
@@ -41,10 +42,11 @@ void funk2_defragmenter__init(funk2_defragmenter_t* this) {
 void funk2_defragmenter__destroy(funk2_defragmenter_t* this) {
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_hash__destroy(&(this->new_old_memory_position_hash[pool_index]));
     }
   }
+  f2__free(to_ptr(this->new_old_memory_position_hash));
 }
 
 void funk2_defragmenter__memory_pool__destroy_memblocks(funk2_defragmenter_t* this, u64 pool_index) {
@@ -287,36 +289,38 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: parallel phase one.");
   {
-    pthread_t pool_thread[memory_pool_num];
+    pthread_t* pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
       }
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_join(pool_thread[pool_index], NULL);
       }
     }
+    f2__free(to_ptr(pool_thread));
   }
   
   status("funk2_defragmenter__defragment: parallel phase two.");
   {
-    pthread_t pool_thread[memory_pool_num];
+    pthread_t* pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
       }
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_join(pool_thread[pool_index], NULL);
       }
     }
+    f2__free(to_ptr(pool_thread));
   }
   
   status("funk2_defragmenter__defragment: fixing all module pointers.");
@@ -328,7 +332,7 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
   
   // stop and reinitialize system (but don't restart)
   funk2_virtual_processor_handler__destroy(&(__funk2.virtual_processor_handler));
-  funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), memory_pool_num);
+  funk2_virtual_processor_handler__init(&(__funk2.virtual_processor_handler), __funk2.system_processor.processor_count);
   __funk2.memory.bootstrapping_mode = boolean__true;
   
   status("");
@@ -338,7 +342,7 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
   status("");
   {
     int index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
     }
   }
@@ -350,7 +354,7 @@ void funk2_defragmenter__stop_everything_and_defragment(funk2_defragmenter_t* th
   status("");
   {
     int index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       status ("__funk2.memory.pool[%d].total_global_memory = " f2size_t__fstr, index, (f2size_t)(__funk2.memory.pool[index].total_global_memory));
     }
   }

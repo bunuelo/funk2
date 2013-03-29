@@ -41,9 +41,9 @@ typedef struct funk2_defragmenter_s funk2_defragmenter_t;
 #define position_hash__bit_num (17ull)
 
 struct funk2_defragmenter_s {
-  u64          total_defragmentation_count;
-  boolean_t    need_defragmentation;
-  funk2_hash_t new_old_memory_position_hash[memory_pool_num];
+  u64           total_defragmentation_count;
+  boolean_t     need_defragmentation;
+  funk2_hash_t* new_old_memory_position_hash;
 };
 
 void  funk2_defragmenter__init                          (funk2_defragmenter_t* this);

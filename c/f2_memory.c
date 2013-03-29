@@ -30,6 +30,8 @@
 // funk2_memory
 
 void funk2_memory__init(funk2_memory_t* this) {
+  this->pool = (funk2_memorypool_t*)from_ptr(f2__malloc(sizeof(funk2_memorypool_t) * __funk2.system_processor.processor_count));
+  
   this->global_environment_ptr   = to_ptr(NULL);
   this->global_environment_f2ptr = nil;
   
@@ -38,12 +40,13 @@ void funk2_memory__init(funk2_memory_t* this) {
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {
+  f2__free(to_ptr(this->pool));
 }
 
 void funk2_memory__handle(funk2_memory_t* this) {
   boolean_t should_enlarge_memory_now = boolean__false;
   int index;
-  for (index = 0; index < memory_pool_num; index ++) {
+  for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
     if (this->pool[index].should_enlarge_memory_now) {
       should_enlarge_memory_now = boolean__true;
     }
@@ -51,7 +54,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
   if (should_enlarge_memory_now) {
     funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
     funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       if (this->pool[index].should_enlarge_memory_now) {
 	{
 	  f2size_t new_memory_pool_size = this->pool[index].total_global_memory + (this->pool[index].total_global_memory >> 1) + this->pool[index].should_enlarge_memory_now__need_at_least_byte_num;
@@ -68,7 +71,7 @@ void funk2_memory__handle(funk2_memory_t* this) {
 
 void funk2_memory__print_gc_stats(funk2_memory_t* this) {
   int pool_index;
-  for(pool_index = 0; pool_index < memory_pool_num; pool_index++) {
+  for(pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
     status("pool[%d].total_global_memory  = " f2size_t__fstr, pool_index, this->pool[pool_index].total_global_memory);
     status("pool[%d].total_free_memory()  = " f2size_t__fstr, pool_index, funk2_memorypool__total_free_memory(&(__funk2.memory.pool[pool_index])));
@@ -89,7 +92,7 @@ boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr(funk2_memory_t* t
   }
   boolean_t is_within_memory_pool_range = boolean__false;
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memblock_t* beginning_of_blocks = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
     funk2_memblock_t* end_of_blocks       = funk2_memorypool__end_of_blocks(&(this->pool[pool_index]));
     //funk2_memblock_t* end_of_blocks       = (funk2_memblock_t*)(((u8*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr))) + (this->pool[pool_index].total_global_memory));
@@ -127,7 +130,7 @@ boolean_t funk2_memory__is_valid_funk2_memblock_ptr(funk2_memory_t* this, ptr p)
     return boolean__false;
   }
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
     funk2_memblock_t* end_of_blocks = funk2_memorypool__end_of_blocks(&(this->pool[pool_index]));
     if (p >= to_ptr(iter) && p < to_ptr(end_of_blocks)) {
@@ -357,7 +360,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new_from_pool(funk2_memory_t* this, in
 f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byte_num) {
   int pool_index;
   while (1) {
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       f2ptr funk2_memblock_f2ptr = funk2_memory__funk2_memblock_f2ptr__try_new(this, pool_index, byte_num);
       if (funk2_memblock_f2ptr) {
 	return funk2_memblock_f2ptr;
@@ -368,7 +371,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__new(funk2_memory_t* this, f2size_t byt
 }
 
 u64 funk2_memory__pool__maximum_block__byte_num(funk2_memory_t* this, s64 pool_index) {
-  if (pool_index < 0 || pool_index > memory_pool_num) {
+  if (pool_index < 0 || pool_index > __funk2.system_processor.processor_count) {
     error(nil, "funk2_memory__pool__maximum_block__byte_num fatal error: pool_index is out of range.");
   }
   funk2_memorypool_t* memorypool = &(this->pool[pool_index]);
@@ -377,7 +380,7 @@ u64 funk2_memory__pool__maximum_block__byte_num(funk2_memory_t* this, s64 pool_i
 
 
 u64 raw__memory__pool__maximum_block__byte_num(f2ptr cause, s64 pool_index) {
-  if (pool_index < 0 || pool_index > memory_pool_num) {
+  if (pool_index < 0 || pool_index >= __funk2.system_processor.processor_count) {
     error(nil, "raw__memory__pool__maximum_block__byte_num fatal error: pool_index is out of range.");
   }
   return funk2_memory__pool__maximum_block__byte_num(&(__funk2.memory), pool_index);
@@ -386,7 +389,7 @@ u64 raw__memory__pool__maximum_block__byte_num(f2ptr cause, s64 pool_index) {
 f2ptr f2__memory__pool__maximum_block__byte_num(f2ptr cause, f2ptr pool_index) {
   assert_argument_type(integer, pool_index);
   s64 pool_index__i = f2integer__i(pool_index, cause);
-  if (pool_index__i < 0 || pool_index__i > memory_pool_num) {
+  if (pool_index__i < 0 || pool_index__i >= __funk2.system_processor.processor_count) {
     return f2larva__new(cause, 235242, nil);
   }
   return f2integer__new(cause, raw__memory__pool__maximum_block__byte_num(cause, pool_index__i));
@@ -397,7 +400,7 @@ def_pcfunk1(memory__pool__maximum_block__byte_num, pool_index,
 
 
 u64 raw__memory__pool__bytes_allocated_count(f2ptr cause, s64 pool_index) {
-  if (pool_index < 0 || pool_index > memory_pool_num) {
+  if (pool_index < 0 || pool_index >= __funk2.system_processor.processor_count) {
     error(nil, "raw__memory__pool__bytes_allocated_count fatal error: pool_index is out of range.");
   }
   return __funk2.memory.pool[pool_index].bytes_allocated_count;
@@ -406,7 +409,7 @@ u64 raw__memory__pool__bytes_allocated_count(f2ptr cause, s64 pool_index) {
 f2ptr f2__memory__pool__bytes_allocated_count(f2ptr cause, f2ptr pool_index) {
   assert_argument_type(integer, pool_index);
   s64 pool_index__i = f2integer__i(pool_index, cause);
-  if (pool_index__i < 0 || pool_index__i > memory_pool_num) {
+  if (pool_index__i < 0 || pool_index__i >= __funk2.system_processor.processor_count) {
     return f2larva__new(cause, 235242, nil);
   }
   return f2integer__new(cause, raw__memory__pool__bytes_allocated_count(cause, pool_index__i));
@@ -418,7 +421,7 @@ def_pcfunk1(memory__pool__bytes_allocated_count, pool_index,
 
 void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_environment) {
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
@@ -440,7 +443,7 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
     atomic_inc(&(global_env->reference_count));
   }
   
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
 }
@@ -448,11 +451,11 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
 f2ptr funk2_memory__global_environment(funk2_memory_t* this) {
   f2ptr retval;
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   retval = __funk2.memory.global_environment_f2ptr;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   return retval;
@@ -472,7 +475,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   funk2_memory__debug_memory_test(this, 0);
   funk2_memory__print_gc_stats(this);
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
@@ -497,22 +500,23 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   printf("\nfunk2_memory__save_image_to_file: compressing memory pools."); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: compressing memory pools.");
   {
-    pthread_t compress_memorypool_thread[memory_pool_num];
+    pthread_t* compress_memorypool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_create(&(compress_memorypool_thread[pool_index]), NULL, &funk2_memory__save_image_to_file__thread_start_compress_memorypool, (void*)(&(this->pool[pool_index])));
       }
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_join(compress_memorypool_thread[pool_index], NULL);
       }
     }
+    f2__free(to_ptr(compress_memorypool_thread));
   }
   
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     status(  "funk2_memory__write_compressed_to_stream: saving pool %d.", pool_index);
     funk2_memorypool__write_compressed_to_stream(&(this->pool[pool_index]), fd);
   }
@@ -523,7 +527,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
     funk2_garbage_collector__save_to_stream(&(__funk2.garbage_collector), fd);
   }
   close(fd);
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 0);
@@ -542,7 +546,7 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
 f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
   if (p == to_ptr(NULL)) {return nil;}
   int i;
-  for (i = 0; i < memory_pool_num; i ++) {
+  for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
     if (p >= this->pool[i].dynamic_memory.ptr &&
 	p <  this->pool[i].dynamic_memory.ptr + this->pool[i].total_global_memory) {
       u64 pool_address       = ((u8*)from_ptr(p)) - ((u8*)from_ptr(this->pool[i].global_f2ptr_offset));
@@ -555,7 +559,7 @@ f2ptr funk2_memory__ptr_to_f2ptr__slow(funk2_memory_t* this, ptr p) {
     }
   }
   status("funk2_memory__ptr_to_f2ptr__slow error: p is not in any memory pool.  p=" ptr__fstr, p);
-  for (i = 0; i < memory_pool_num; i ++) {
+  for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
     status("funk2_memory__ptr_to_f2ptr__slow: this->pool[%d].dynamic_memory.ptr =" ptr__fstr, i, this->pool[i].dynamic_memory.ptr);
     status("funk2_memory__ptr_to_f2ptr__slow: this->pool[%d].total_global_memory=" u64__fstr, i, (u64)this->pool[i].total_global_memory);
   }
@@ -578,19 +582,20 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   
   status("rebuilding memory pools' info from image.");
   {
-    pthread_t rebuild_trees_thread[memory_pool_num];
+    pthread_t* rebuild_trees_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory, (void*)(&(this->pool[pool_index])));
       }
     }
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	pthread_join(rebuild_trees_thread[pool_index], NULL);
       }
     }
+    f2__free(to_ptr(rebuild_trees_thread));
   }
   
   funk2_memory__debug_memory_test(this, 1);
@@ -598,7 +603,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // temporarily unlocks all memory cmutexes
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
     }
   }
@@ -608,7 +613,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
     
     {
       s64 pool_index;
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	// add all symbols to symbol_hash in ptypes.c	
 	{
 	  funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(this->pool[pool_index].dynamic_memory.ptr));
@@ -648,7 +653,7 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
   // end temporary unlocking of all memory cmutexes
   {
     s64 pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
     }
   }
@@ -673,7 +678,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   }
   
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__lock(&(this->pool[pool_index]));
   }
   
@@ -700,18 +705,19 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	break;
       }
       
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	funk2_memorypool__load_from_stream(&(this->pool[pool_index]), fd);
       }
       
       {
-	pthread_t decompress_thread[memory_pool_num];
-	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	pthread_t* decompress_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
+	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
 	}
-	for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  pthread_join(decompress_thread[pool_index], NULL);
 	}
+	f2__free(to_ptr(decompress_thread));
       }
       safe_read(fd, to_ptr(&f2_i), sizeof(f2ptr));
       f2ptr global_environment_f2ptr = f2_i;
@@ -722,7 +728,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
       
       status("done loading memory image."); fflush(stdout);
       
-      for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+      for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	this->pool[pool_index].global_f2ptr_offset = to_ptr(this->pool[pool_index].dynamic_memory.ptr) - 1;
 	status("funk2_memory__load_from_stream: this->pool[%d].global_f2ptr_offset=" u64__fstr ".", pool_index, this->pool[pool_index].global_f2ptr_offset);
       }
@@ -744,7 +750,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
     funk2_scheduler_thread_controller__let_scheduler_threads_continue(&(__funk2.scheduler_thread_controller));  
   }
   
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_mutex__unlock(&(this->pool[pool_index]));
   }
   funk2_memory__debug_memory_test(this, 1);
@@ -755,7 +761,7 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     status("scanning pool %d for invalid memory pointers.", pool_index);
     found_invalid |= funk2_memorypool__check_all_memory_pointers_valid_in_memory(&(this->pool[pool_index]), this);
   }
@@ -765,7 +771,7 @@ boolean_t funk2_memory__check_all_memory_pointers_valid(funk2_memory_t* this) {
 boolean_t funk2_memory__check_all_gc_colors_valid(funk2_memory_t* this) {
   boolean_t found_invalid = boolean__false;
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     status("scanning pool %d for invalid garbage collector colors.", pool_index);
     found_invalid |= funk2_memorypool__check_all_gc_colors_valid(&(this->pool[pool_index]), this, &(__funk2.garbage_collector.gc_pool[pool_index]));
   }
@@ -774,7 +780,7 @@ boolean_t funk2_memory__check_all_gc_colors_valid(funk2_memory_t* this) {
 
 void funk2_memory__memory_test(funk2_memory_t* this) {
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     funk2_memorypool__memory_test(&(this->pool[pool_index]));
   }
   funk2_memory__check_all_memory_pointers_valid(this);
@@ -787,7 +793,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
   funk2_memory__memory_test(&(__funk2.memory));
   /*
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
     f2ptr result = raw__memorypool__assert_valid(cause, pool_index);
     if (raw__larva__is_type(cause, result)) {
       return_result = result;
@@ -805,7 +811,7 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 
 void f2__memory__preinitialize() {
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index++) {
     funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
   }
   
@@ -842,7 +848,7 @@ void f2__memory__destroy() {
   funk2_memory__debug_memory_test(&(__funk2.memory), 1);
   
   int pool_index;
-  for (pool_index = 0; pool_index < memory_pool_num; pool_index++) {
+  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index++) {
     funk2_memorypool__destroy(&(__funk2.memory.pool[pool_index]));
   }
 }

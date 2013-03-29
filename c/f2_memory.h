@@ -43,11 +43,11 @@ typedef struct funk2_memory_s funk2_memory_t;
 //#define DEBUG_MEMORY 1
 
 struct funk2_memory_s {
-  funk2_memorypool_t pool[memory_pool_num];
-  ptr                global_environment_ptr;
-  f2ptr              global_environment_f2ptr;
-  pthread_t          memory_handling_thread;
-  boolean_t          bootstrapping_mode;
+  funk2_memorypool_t* pool;
+  ptr                 global_environment_ptr;
+  f2ptr               global_environment_f2ptr;
+  pthread_t           memory_handling_thread;
+  boolean_t           bootstrapping_mode;
 };
 
 #define nil ((f2ptr)0)

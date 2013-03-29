@@ -204,7 +204,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
-  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), memory_pool_num);
+  funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), __funk2.system_processor.processor_count);
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
   funk2_management_thread__init(&(this->management_thread));

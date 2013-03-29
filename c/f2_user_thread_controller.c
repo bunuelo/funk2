@@ -56,7 +56,7 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
   
@@ -108,7 +108,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
   
@@ -163,7 +163,7 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
   
@@ -214,7 +214,7 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
 
@@ -268,7 +268,7 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
   
@@ -322,7 +322,7 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
 
@@ -354,10 +354,13 @@ void funk2_user_thread_controller__defragment__move_memory__init(funk2_user_thre
   pthread_cond_init(&(this->done_count_cond), NULL);
   pthread_mutex_init(&(this->everyone_done_mutex), NULL);
   pthread_cond_init(&(this->everyone_done_cond), NULL);
-
+  
+  this->user_process_done                  = (boolean_t*)      from_ptr(f2__malloc(sizeof(boolean_t)       * __funk2.system_processor.processor_count));
+  this->user_process_already_waiting_mutex = (pthread_mutex_t*)from_ptr(f2__malloc(sizeof(pthread_mutex_t) * __funk2.system_processor.processor_count));
+  
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       this->user_process_done[index] = boolean__false;
       pthread_mutex_init(&(this->user_process_already_waiting_mutex[index]), NULL);
     }
@@ -372,10 +375,13 @@ void funk2_user_thread_controller__defragment__move_memory__destroy(funk2_user_t
   
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       pthread_mutex_destroy(&(this->user_process_already_waiting_mutex[index]));
     }
   }
+  
+  f2__free(to_ptr(this->user_process_done));
+  f2__free(to_ptr(this->user_process_already_waiting_mutex));
 }
 
 void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2_user_thread_controller__defragment__move_memory_t* this) {
@@ -390,7 +396,7 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   this->start = boolean__true;
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
 
@@ -401,7 +407,7 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       this->user_process_done[index] = boolean__false;
     }
   }
@@ -436,10 +442,13 @@ void funk2_user_thread_controller__defragment__fix_pointers__init(funk2_user_thr
   pthread_cond_init(&(this->done_count_cond), NULL);
   pthread_mutex_init(&(this->everyone_done_mutex), NULL);
   pthread_cond_init(&(this->everyone_done_cond), NULL);
-
+  
+  this->user_process_done                  = (boolean_t*)      from_ptr(f2__malloc(sizeof(boolean_t)       * __funk2.system_processor.processor_count));
+  this->user_process_already_waiting_mutex = (pthread_mutex_t*)from_ptr(f2__malloc(sizeof(pthread_mutex_t) * __funk2.system_processor.processor_count));
+  
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       this->user_process_done[index] = boolean__false;
       pthread_mutex_init(&(this->user_process_already_waiting_mutex[index]), NULL);
     }
@@ -454,10 +463,13 @@ void funk2_user_thread_controller__defragment__fix_pointers__destroy(funk2_user_
   
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       pthread_mutex_destroy(&(this->user_process_already_waiting_mutex[index]));
     }
   }
+
+  f2__free(to_ptr(this->user_process_done));
+  f2__free(to_ptr(this->user_process_already_waiting_mutex));
 }
 
 void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk2_user_thread_controller__defragment__fix_pointers_t* this) {
@@ -472,7 +484,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   this->start = boolean__true;
   funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   
-  pthread_cond_wait_while(this->done_count < memory_pool_num, &(this->done_count_cond), &(this->done_count_mutex));
+  pthread_cond_wait_while(this->done_count < __funk2.system_processor.processor_count, &(this->done_count_cond), &(this->done_count_mutex));
   
   this->start = boolean__false;
   
@@ -483,7 +495,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   
   {
     s64 index;
-    for (index = 0; index < memory_pool_num; index ++) {
+    for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
       this->user_process_done[index] = boolean__false;
     }
   }
@@ -519,9 +531,11 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
   pthread_cond_init(&(this->waiting_count_cond), NULL);
   this->waiting_count = 0;
   
+  this->total_nanoseconds_spent_waiting = (u64*)from_ptr(f2__malloc(sizeof(u64) * __funk2.system_processor.processor_count));
+  
   {
     int pool_index;
-    for (pool_index = 0; pool_index < memory_pool_num; pool_index ++) {
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
       this->total_nanoseconds_spent_waiting[pool_index] = 0;
     }
   }
@@ -554,10 +568,12 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__exit__destroy(&(this->exit));
   funk2_user_thread_controller__defragment__move_memory__destroy(&(this->defragment__move_memory));
   funk2_user_thread_controller__defragment__fix_pointers__destroy(&(this->defragment__fix_pointers));
+  
+  f2__free(to_ptr(this->total_nanoseconds_spent_waiting));
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
-  pthread_cond_wait_while(this->waiting_count < memory_pool_num, &(this->waiting_count_cond), &(this->waiting_count_mutex));
+  pthread_cond_wait_while(this->waiting_count < __funk2.system_processor.processor_count, &(this->waiting_count_cond), &(this->waiting_count_mutex));
 }
 
 void funk2_user_thread_controller__signal_user_waiting_politely(funk2_user_thread_controller_t* this) {
@@ -693,7 +709,7 @@ u64 raw__user_thread_controller__total_processor_time_used(f2ptr cause, s64 proc
 f2ptr f2__user_thread_controller__total_processor_time_used(f2ptr cause, f2ptr processor_index) {
   assert_argument_type(integer, processor_index);
   s64 processor_index__i = f2integer__i(processor_index, cause);
-  if ((processor_index__i < 0) || (processor_index__i >= memory_pool_num)) {
+  if ((processor_index__i < 0) || (processor_index__i >= __funk2.system_processor.processor_count)) {
     return new__error(f2list4__new(cause,
 				   new__symbol(cause, "bug_name"),        new__symbol(cause, "user_thread_controller-total_processor_time_used-processor_index_out_of_range"),
 				   new__symbol(cause, "processor_index"), processor_index));

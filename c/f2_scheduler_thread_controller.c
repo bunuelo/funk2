@@ -49,26 +49,26 @@ void funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait(funk2
   pthread_mutex_lock(&(this->waiting_count_mutex));
   {
     s64 waiting_count = this->waiting_count;
-    if (waiting_count < 0 || waiting_count > memory_pool_num) {
+    if (waiting_count < 0 || waiting_count >= __funk2.system_processor.processor_count) {
       error(nil, "funk2_scheduler_thread_controller__wait_for_scheduler_threads_to_wait error: waiting_count is out of range.");
     }
   }
   pthread_mutex_unlock(&(this->waiting_count_mutex));
-  status("management thread asking " u64__fstr " virtual_processors to wait politely.", ((u64)memory_pool_num));
+  status("management thread asking " u64__fstr " virtual_processors to wait politely.", ((u64)__funk2.system_processor.processor_count));
   
-  pthread_cond_wait_while(this->waiting_count < memory_pool_num, &(this->waiting_count_cond), &(this->waiting_count_mutex));
+  pthread_cond_wait_while(this->waiting_count < __funk2.system_processor.processor_count, &(this->waiting_count_cond), &(this->waiting_count_mutex));
   
-  status("there are " u64__fstr " virtual_processors waiting politely.", ((u64)memory_pool_num));
+  status("there are " u64__fstr " virtual_processors waiting politely.", ((u64)__funk2.system_processor.processor_count));
 }
 
 void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_scheduler_thread_controller_t* this) {
-  status("management thread waiting for " u64__fstr " virtual_processors to continue.", ((u64)memory_pool_num));
+  status("management thread waiting for " u64__fstr " virtual_processors to continue.", ((u64)__funk2.system_processor.processor_count));
   funk2_scheduler_thread_controller__need_wait__set(this, boolean__false);
   
   pthread_mutex_lock(&(this->waiting_count_mutex));
   {
     s64 waiting_count = this->waiting_count;
-    if (waiting_count < 0 || waiting_count > memory_pool_num) {
+    if (waiting_count < 0 || waiting_count >= __funk2.system_processor.processor_count) {
       error(nil, "funk2_scheduler_thread_controller__let_scheduler_threads_continue error: waiting_count is out of range.");
     }
   }
@@ -76,16 +76,16 @@ void funk2_scheduler_thread_controller__let_scheduler_threads_continue(funk2_sch
   
   pthread_cond_wait_while(this->waiting_count > 0, &(this->waiting_count_cond), &(this->waiting_count_mutex));
   
-  status("all " u64__fstr " virtual_processors have continued.", ((u64)memory_pool_num));
+  status("all " u64__fstr " virtual_processors have continued.", ((u64)__funk2.system_processor.processor_count));
 }
 
 void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_thread_controller_t* this) {
   status("virtual processor " u64__fstr " waiting politely.", this_processor_thread__pool_index());
   pthread_mutex_lock(&(this->waiting_count_mutex));
   this->waiting_count ++;
-  if (this->waiting_count > memory_pool_num) {
-    status(    "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > " u64__fstr ")", ((u64)memory_pool_num));
-    error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > memory_pool_num)");
+  if (this->waiting_count >= __funk2.system_processor.processor_count) {
+    status(    "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > " u64__fstr ")", ((u64)__funk2.system_processor.processor_count));
+    error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > __funk2.system_processor.processor_count)");
   }
   pthread_mutex_unlock(&(this->waiting_count_mutex));
   pthread_cond_broadcast(&(this->waiting_count_cond));

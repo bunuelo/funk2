@@ -254,7 +254,7 @@ void raw__scheduler__clean(f2ptr cause, f2ptr this) {
   f2ptr processors = f2scheduler__processors(this, cause);
   
   s64 i;
-  for (i = 0; i < scheduler_processor_num; i ++) {
+  for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     raw__processor__clean(cause, processor);
   }
@@ -309,7 +309,7 @@ void raw__scheduler__reinitialize(f2ptr cause, f2ptr this) {
   f2ptr processors = f2scheduler__processors(this, cause);
   
   s64 i;
-  for (i = 0; i < scheduler_processor_num; i ++) {
+  for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
     f2ptr processor = raw__array__elt(cause, processors, i);
     raw__processor__reinitialize(cause, processor);
   }
@@ -707,11 +707,11 @@ void f2__scheduler__initialize() {
   
   // allocate scheduler and processors
   
-  f2ptr processors = raw__array__new(cause, scheduler_processor_num);
+  f2ptr processors = raw__array__new(cause, __funk2.system_processor.processor_count);
   f2ptr scheduler  = f2__scheduler__new(cause, processors);
   
   int i;
-  for (i = 0; i < scheduler_processor_num; i ++) {
+  for (i = 0; i < __funk2.system_processor.processor_count; i ++) {
     f2ptr processor = f2__processor__new(cause,
 					 scheduler,
 					 f2integer__new(cause, i),

@@ -59,9 +59,6 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
 	}
       }
     }
-    
-    
-    
   }
 }
 

@@ -31,6 +31,7 @@
 typedef struct funk2_cpu_s funk2_cpu_t;
 
 struct funk2_cpu_s {
+  u64    processor_core_count;
   u64    last_user_clock_ticks;
   u64    last_system_clock_ticks;
   u64    last_nanoseconds_since_1970;

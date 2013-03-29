@@ -36,7 +36,6 @@ void print_usage() {
 	 "\n    pointer-bit_num"
 	 "\n    float-bit_num"
 	 "\n    double-bit_num"
-	 "\n    processor_num"
 	 "\n    deep_sleep_nanoseconds"
 	 "\n"
 	 );
@@ -113,25 +112,6 @@ int main(int argc, char** argv) {
     printf("%u\n", (unsigned int)sizeof(float) * 8);
   } else if (strcmp(command, "double-bit_num") == 0) {
     printf("%u\n", (unsigned int)sizeof(double) * 8);
-  } else if (strcmp(command, "processor_num") == 0) {
-    unsigned int processor_num = 0;
-    {
-      cpu_set_t cpu_set;
-      CPU_ZERO(&cpu_set);
-      sched_getaffinity(0, sizeof(cpu_set_t), &cpu_set);
-      {
-	unsigned int i;
-	for (i = 0; i < CPU_SETSIZE; i ++) {
-	  if (CPU_ISSET(i, &cpu_set)) {
-	    processor_num ++;
-	  }
-	}
-      }
-    }
-    if (processor_num == 0) {
-      processor_num = 1;
-    }
-    printf("%u\n", processor_num);
   } else if (strcmp(command, "deep_sleep_nanoseconds") == 0) {
     pthread_mutex_t mutex;
     pthread_mutex_init(&mutex, NULL);

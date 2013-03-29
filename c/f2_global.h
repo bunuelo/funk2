@@ -183,21 +183,6 @@ struct f2ptr_s {
   f2ptr data : f2ptr__bit_num;
 } __attribute__((__packed__));
 
-//#define ideal_scheduler_processor_num processor_num
-
-//#if (ideal_scheduler_processor_num > (1<<(pool_index__bit_num)))
-//#  define scheduler_processor_num (1<<(pool_index__bit_num))
-//#else
-//#  define scheduler_processor_num ideal_scheduler_processor_num
-//#endif
-     
-//#define memory_pool_num scheduler_processor_num
-
-//#define memory_pool_num (__funk2.system_processor.processor_count)
-
-
-
-
 typedef u64 event_id_t;
 #define event_id__fstr "#x" X64__fstr
 

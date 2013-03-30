@@ -32,7 +32,7 @@
 void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_processor_mutex__init(&(this->global_memory_allocate_mutex));
   this->pool_index                           = pool_index;
-  this->next_unique_id                       = (((u64)pool_index) << 24);
+  this->next_unique_id                       = (((u64)pool_index) << (64 - 10));
   this->should_enlarge_memory_now            = boolean__false;
   this->total_allocated_memory_since_last_gc = 0;
   this->bytes_allocated_count                = 0;

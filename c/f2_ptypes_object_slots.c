@@ -191,9 +191,13 @@ def_pcfunk2(integer__eq, this, that,
 	    return f2__integer__eq(this_cause, this, that));
 
 
-u64 raw__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__i(this, cause);}
+u64 raw__integer__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__i(this, cause);
+}
 
-f2ptr f2__integer__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__integer__eq_hash_value(cause, this));}
+f2ptr f2__integer__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__integer__eq_hash_value(cause, this));
+}
 def_pcfunk1(integer__eq_hash_value, this,
 	    "",
 	    return f2__integer__eq_hash_value(this_cause, this));
@@ -3623,8 +3627,13 @@ def_pcfunk2(chunk__eq, this, that,
 	    "",
 	    return f2__chunk__eq(this_cause, this, that));
 
-u64   raw__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2chunk__eq_hash_value(this, cause);}
-f2ptr  f2__chunk__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__chunk__eq_hash_value(this, cause));}
+u64 raw__chunk__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2chunk__eq_hash_value(this, cause);
+}
+
+f2ptr f2__chunk__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__chunk__eq_hash_value(this, cause));
+}
 def_pcfunk1(chunk__eq_hash_value, x,
 	    "",
 	    return f2__chunk__eq_hash_value(this_cause, x));
@@ -4217,7 +4226,7 @@ def_pcfunk2(cons__eq, this, that,
 	    return f2__cons__eq(this_cause, this, that));
 
 u64 raw__cons__eq_hash_value(f2ptr cause, f2ptr this) {
-  return (u64)this;
+  return raw__memblock__unique_id(cause, this);
 }
 
 f2ptr f2__cons__eq_hash_value(f2ptr cause, f2ptr this) {
@@ -4565,8 +4574,13 @@ def_pcfunk2(simple_array__eq, this, that,
 	    "",
 	    return f2__simple_array__eq(this_cause, this, that));
 
-u64   raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)this;}
-f2ptr  f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__simple_array__eq_hash_value(cause, this));}
+u64 raw__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {
+  return raw__memblock__unique_id(cause, this);
+}
+
+f2ptr f2__simple_array__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__simple_array__eq_hash_value(cause, this));
+}
 def_pcfunk1(simple_array__eq_hash_value, this,
 	    "",
 	    return f2__simple_array__eq_hash_value(this_cause, this));

@@ -245,7 +245,7 @@ void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
 u64 pfunk2__f2memblock__unique_id(f2ptr this, f2ptr cause) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
-  u64 retval = __pure__f2memblock__raw(this);
+  u64 retval = __pure__f2memblock__unique_id(this);
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
   return retval;
 }
@@ -1030,7 +1030,7 @@ u64 pfunk2__f2chunk__eq_hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u64 return_value = (u64)this;
+  u64 return_value = raw__memblock__unique_id(cause, this);
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }

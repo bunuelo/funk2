@@ -1268,7 +1268,7 @@ boolean_t raw__scheduler_eq(f2ptr cause, f2ptr x, f2ptr y) {
 }
 
 u64 raw__scheduler_eq_hash_value(f2ptr cause, f2ptr x) {
-  return (u64)(x);
+  return raw__memblock__unique_id(cause, x);
 }
 
 boolean_t raw__eq(f2ptr cause, f2ptr x, f2ptr y) {

@@ -133,7 +133,7 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
     }
     u64 last_free_block__byte_num = (u64)(((u8*)end_of_blocks) - ((u8*)new_iter));
     memset(new_iter, 0, last_free_block__byte_num); // zero free block entirely before init.
-    funk2_memblock__init(new_iter, last_free_block__byte_num, 0);
+    funk2_memblock__init(new_iter, last_free_block__byte_num, 0, 0);
     funk2_memblock__previous_byte_num(new_iter) = previous_new_iter__byte_num;
     memorypool->last_block_byte_num = last_free_block__byte_num;
     funk2_heap__insert(free_memory_heap, (funk2_heap_node_t*)new_iter);

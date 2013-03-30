@@ -70,4 +70,12 @@
 [deftypefunk frame execute gview       [] [have [get this as-graph] gview]]
 [deftypefunk frame get     as-dot_code [] [get  [get this as-graph] as-dot_code]]
 
+[defunk graphviz-test []
+  [let* [[graph  [new graph]]
+	 [node-1 [new graph_node `node-1]]
+	 [node-2 [new graph_node `node-2]]
+	 [edge-1 [new graph_edge `edge-1 node-1 node-2]]]
+    [have graph add_edge edge-1]
+    [have graph gview]]]
+
 

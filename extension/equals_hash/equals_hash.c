@@ -35,33 +35,22 @@ f2ptr raw__equals_hash__new(f2ptr cause, f2ptr hash) {
 					    new__symbol(cause, "hash"), hash));
 }
 
-f2ptr raw__equals_hash__equals_hash_value_cfunk(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
-  f2ptr args_iter = args;
-  f2ptr this = f2__cons__car(cause, args_iter);
-  return f2__object__equals_hash_value(cause, this);
+f2ptr f2__equals_hash__equals_hash_value(f2ptr cause, f2ptr thing) {
+  return f2__object__equals_hash_value(cause, thing);
 }
+export_cefunk1(equals_hash__equals_hash_value, thing, 0, "Returns abstract equals hash value for object.");
 
-f2ptr raw__equals_hash__equals_cfunk(f2ptr cause, f2ptr fiber, f2ptr environment, f2ptr args) {
-  f2ptr args_iter = args;
-  f2ptr this = f2__cons__car(cause, args_iter); args_iter = f2__cons__cdr(cause, args_iter);
-  f2ptr that = f2__cons__car(cause, args_iter);
-  return f2__object__equals(cause, this, that);
+f2ptr f2__equals_hash__equals(f2ptr cause, f2ptr x, f2ptr y) {
+  return f2__object__equals(cause, x, y);
 }
+export_cefunk2(equals_hash__equals, x, y, 0, "Compares two objects for abstract equality.");
 
 f2ptr raw__equals_hash__hash_value_funk(f2ptr cause) {
-  f2ptr stack_machine_code_pointer = nil;
-  return f2cfunk__new(cause, new__symbol(cause, "object-equals_hash_value"), 
-		      f2list1__new(cause, new__symbol(cause, "this")),
-		      stack_machine_code_pointer,
-		      f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_hash_value_cfunk)), global_environment(), nil, nil);
+  return f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__equals_hash_value"));
 }
 
 f2ptr raw__equals_hash__equals_funk(f2ptr cause) {
-  f2ptr stack_machine_code_pointer = nil;
-  return f2cfunk__new(cause, new__symbol(cause, "object-equals"), 
-		      f2list2__new(cause, new__symbol(cause, "this"), new__symbol(cause, "that")),
-		      stack_machine_code_pointer,
-		      f2pointer__new(cause, raw_executable__to__relative_ptr(raw__equals_hash__equals_cfunk)), global_environment(), nil, nil);
+  return f2__core_extension_funk__new(cause, new__symbol(cause, "equals_hash"), new__symbol(cause, "equals_hash__equals"));
 }
 
 f2ptr f2__equals_hash__new(f2ptr cause) {

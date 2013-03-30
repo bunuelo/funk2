@@ -95,6 +95,8 @@
 			[have natural_language_command execute_parse_tree parse_tree]]]]]]]]]]]]]
 
 
+'note: nl_command-test requires the english_language package.  [require english_language]'
+
 [defunk nl_command-test []
   [let [[natural_language_command_frame [new natural_language_command_frame]]]
     [have natural_language_command_frame add_command `[pick up] `[direct_object] nil

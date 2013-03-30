@@ -24,7 +24,9 @@
  rights to redistribute these changes.'
 
 
-[globalize debug_parse t]
+'Set debugging on to see every intermediate parsing decision printed to the terminal.'
+
+[globalize debug_parse nil]
 
 [defmetro parse_format [:rest exps]
   `[if debug_parse
@@ -1120,5 +1122,4 @@
 
 [defunk english_language-test []
   [english_language-test_parse `[how many blocks are supported by the cube which I wanted you to pick up]]]
-
 

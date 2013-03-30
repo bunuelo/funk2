@@ -4588,7 +4588,7 @@ f2ptr raw__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
 
 f2ptr f2__simple_array__equals_hash_value(f2ptr cause, f2ptr this) {
   assert_argument_type(simple_array, this);
-  return f2__simple_array__equals_hash_value(cause, this);
+  return raw__simple_array__equals_hash_value(cause, this);
 }
 def_pcfunk1(simple_array__equals_hash_value, this,
 	    "",

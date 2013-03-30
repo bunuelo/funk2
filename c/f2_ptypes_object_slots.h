@@ -28,6 +28,13 @@
 #ifndef F2__PTYPES_OBJECT_SLOTS__H
 #define F2__PTYPES_OBJECT_SLOTS__H
 
+
+// memblock
+
+u64   raw__memblock__unique_id(f2ptr cause, f2ptr x);
+f2ptr  f2__memblock__unique_id(f2ptr cause, f2ptr x);
+
+
 // ptype
 
 boolean_t raw__ptype__is_type            (f2ptr cause, f2ptr thing);

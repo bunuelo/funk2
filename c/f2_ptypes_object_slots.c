@@ -40,6 +40,20 @@ def_pcfunk1(ptypes__read_write_reflective_tracing_enabled__set, value,
 	    return f2__ptypes__read_write_reflective_tracing_enabled__set(this_cause, value));
 
 
+// memblock
+
+u64 raw__memblock__unique_id(f2ptr cause, f2ptr x) {
+  return f2memblock__unique_id(x, cause);
+}
+
+f2ptr f2__memblock__unique_id(f2ptr cause, f2ptr x) {
+  return f2integer__new(cause, raw__memblock__unique_id(cause, x));
+}
+def_pcfunk1(memblock__unique_id, x,
+	    "",
+	    return f2__memblock__unique_id(this_cause, x));
+
+
 // ptype
 
 boolean_t raw__ptype__is_type(f2ptr cause, f2ptr thing) {
@@ -59,7 +73,9 @@ def_pcfunk1(ptype__type, this,
 	    "",
 	    return f2__ptype__type(this_cause, this));
 
-f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {return f2integer__new(cause, f2ptype__raw(x, cause));}
+f2ptr f2__ptype__raw(f2ptr cause, f2ptr x) {
+  return f2integer__new(cause, f2ptype__raw(x, cause));
+}
 def_pcfunk1(ptype__raw, x,
 	    "",
 	    return f2__ptype__raw(this_cause, x));

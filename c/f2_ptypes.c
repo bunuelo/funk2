@@ -191,8 +191,6 @@ f2ptr pfunk2__system__environment(f2ptr cause) {
   return __funk2.memory.global_environment_f2ptr;
 }
 
-// memblock
-
 boolean_t raw__cause__is_traced__trace_depth(f2ptr cause, f2ptr this, int trace_depth) {
   if (! this) {
     return nil;
@@ -241,6 +239,17 @@ boolean_t raw__cause__is_imaginary(f2ptr cause, f2ptr this) {
 void ptype_error(f2ptr cause, f2ptr this, f2ptr expected_type) {
   error(nil, "ptype_error.");
 }
+
+// memblock
+
+u64 pfunk2__f2memblock__unique_id(f2ptr this, f2ptr cause) {
+  check_wait_politely();
+  //int pool_index = __f2ptr__pool_index(this);
+  u64 retval = __pure__f2memblock__raw(this);
+  container__reflectively_know_of_reading_from(cause, this, nil, sizeof(retval));
+  return retval;
+}
+
 
 // ptype
 

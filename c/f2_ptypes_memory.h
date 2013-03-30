@@ -43,6 +43,7 @@
 
 // memblock
 
+#define __pure__f2memblock__unique_id(this) (((funk2_memblock_t*)(from_ptr(f2ptr_to_ptr(this))))->unique_id)
 
 // ptype
 

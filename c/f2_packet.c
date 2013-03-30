@@ -289,6 +289,8 @@ void funk2_packet__receive(funk2_node_t* funk2_node, pcs_action_packet_t* packet
   switch(packet->action_payload_header.payload_header.type) {
   case funk2_packet_type__pcs_request__system__environment:                         recv_packet__request__system__environment(funk2_node, (pcs_request__system__environment_t*)packet);                                                 break;
   case funk2_packet_type__pcs_respond__system__environment:                         recv_packet__respond__system__environment(funk2_node, (pcs_respond__system__environment_t*)packet);                                                 break;
+  case funk2_packet_type__pcs_request__f2memblock__unique_id:                       recv_packet__request__f2memblock__unique_id(funk2_node, (pcs_request__f2memblock__unique_id_t*)packet);                                             break;
+  case funk2_packet_type__pcs_respond__f2memblock__unique_id:                       recv_packet__respond__f2memblock__unique_id(funk2_node, (pcs_respond__f2memblock__unique_id_t*)packet);                                             break;
   case funk2_packet_type__pcs_request__f2ptype__raw:                                recv_packet__request__f2ptype__raw(funk2_node, (pcs_request__f2ptype__raw_t*)packet);                                                               break;
   case funk2_packet_type__pcs_respond__f2ptype__raw:                                recv_packet__respond__f2ptype__raw(funk2_node, (pcs_respond__f2ptype__raw_t*)packet);                                                               break;
   case funk2_packet_type__pcs_request__f2ptype__cause:                              recv_packet__request__f2ptype__cause(funk2_node, (pcs_request__f2ptype__cause_t*)packet);                                                           break;
@@ -595,6 +597,67 @@ f2ptr f2system__environment(f2ptr cause, node_id_t node_id) {
     f2ptr         fiber      = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
     funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
     return funk2_node__system__environment(funk2_node, fiber, cause);
+  }
+}
+
+// ******************************************************
+// * 
+// * 
+
+void send_packet__request__f2memblock__unique_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  packet_status("send_packet__request__f2memblock__unique_id: executing.");
+  pcs_request__f2memblock__unique_id_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_request__f2memblock__unique_id;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.this                                      = this;
+  funk2_node__send_packet(cause, funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__request__f2memblock__unique_id(funk2_node_t* funk2_node, pcs_request__f2memblock__unique_id_t* packet) {
+  packet_status("recv_packet__request__f2memblock__unique_id: executing.");
+  f2ptr cause  = rf2_to_lf2(packet->payload.action_payload_header.cause);
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  f2ptr this   = rf2_to_lf2(packet->payload.this);
+  funk2_node_handler__add_remote_fiber_funk2_node(&(__funk2.node_handler), fiber, funk2_node);
+  u64 unique_id = pfunk2__f2memblock__unique_id(this, cause);
+  send_packet__respond__f2memblock__unique_id(funk2_node_handler__lookup_fiber_execution_node(&(__funk2.node_handler), fiber), fiber, cause, unique_id);
+}
+
+void send_packet__respond__f2memblock__unique_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, u64 unique_id) {
+  packet_status("send_packet__respond__f2memblock__unique_id: executing.");
+  pcs_respond__f2memblock__unique_id_t packet;
+  funk2_packet_header__init(&(packet.header), sizeof(packet.payload));
+  packet.payload.action_payload_header.payload_header.type = funk2_packet_type__pcs_respond__f2memblock__unique_id;
+  packet.payload.action_payload_header.cause               = cause;
+  packet.payload.action_payload_header.fiber              = this_fiber;
+  packet.payload.unique_id                                       = unique_id;
+  socket_rpc_layer__funk2_node__send_packet(funk2_node, (funk2_packet_t*)&packet);
+}
+
+void recv_packet__respond__f2memblock__unique_id(funk2_node_t* funk2_node, pcs_respond__f2memblock__unique_id_t* packet) {
+  packet_status("recv_packet__respond__f2memblock__unique_id: executing.");
+  f2ptr fiber = rf2_to_lf2(packet->payload.action_payload_header.fiber);
+  funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
+}
+
+u64 funk2_node__f2memblock__unique_id(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this) {
+  send_packet__request__f2memblock__unique_id(funk2_node, this_fiber, cause, this);
+  pcs_respond__f2memblock__unique_id_t* packet = (pcs_respond__f2memblock__unique_id_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
+  u64 unique_id = packet->payload.unique_id;
+  f2__free(to_ptr(packet));
+  return unique_id;
+}
+
+u64 f2memblock__unique_id(f2ptr this, f2ptr cause) {
+  computer_id_t computer_id = __f2ptr__computer_id(this);
+  if (computer_id == 0) {
+    return pfunk2__f2memblock__unique_id(this, cause);
+  } else {
+    f2ptr         fiber     = raw__global_scheduler__processor_thread_current_fiber(this_processor_thread__pool_index());
+    funk2_node_t* funk2_node = funk2_node_handler__lookup_node_by_computer_id(&(__funk2.node_handler), computer_id);
+    return funk2_node__f2memblock__unique_id(funk2_node, fiber, cause, this);
   }
 }
 

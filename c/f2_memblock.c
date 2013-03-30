@@ -29,11 +29,12 @@
 
 // funk2_memblock
 
-void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used) {
+void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used, u64 unique_id) {
   funk2_memblock__byte_num(block) = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
   atomic_set(&(block->reference_count), 0);
-  block->used                     = used;
+  block->used      = used;
+  block->unique_id = unique_id;
 }
 
 

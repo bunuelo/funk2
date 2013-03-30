@@ -46,6 +46,7 @@ typedef struct funk2_memorypool_s funk2_memorypool_t;
 
 struct funk2_memorypool_s {
   u64                     pool_index;
+  u64                     next_unique_id;
   funk2_processor_mutex_t global_memory_allocate_mutex;
   boolean_t               should_enlarge_memory_now;
   f2size_t                should_enlarge_memory_now__need_at_least_byte_num;

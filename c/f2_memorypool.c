@@ -32,6 +32,7 @@
 void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_processor_mutex__init(&(this->global_memory_allocate_mutex));
   this->pool_index                           = pool_index;
+  this->next_unique_id                       = (((u64)pool_index) << 24);
   this->should_enlarge_memory_now            = boolean__false;
   this->total_allocated_memory_since_last_gc = 0;
   this->bytes_allocated_count                = 0;
@@ -45,7 +46,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   
   this->global_f2ptr_offset = to_ptr(this->dynamic_memory.ptr - 1);
   funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(this->dynamic_memory.ptr);
-  funk2_memblock__init(block, this->total_global_memory, 0);
+  funk2_memblock__init(block, this->total_global_memory, 0, 0);
   funk2_memblock__previous_byte_num(block) = 0; // we shouldn't ever use this.
   
   this->last_block_byte_num = this->total_global_memory;

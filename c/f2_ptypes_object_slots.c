@@ -4193,6 +4193,7 @@ boolean_t raw__cons__eq(f2ptr cause, f2ptr this, f2ptr that) {
 }
 
 f2ptr f2__cons__eq(f2ptr cause, f2ptr this, f2ptr that) {
+  assert_argument_type(cons, this);
   return f2bool__new(raw__cons__eq(cause, this, that));
 }
 def_pcfunk2(cons__eq, this, that,
@@ -4204,6 +4205,7 @@ u64 raw__cons__eq_hash_value(f2ptr cause, f2ptr this) {
 }
 
 f2ptr f2__cons__eq_hash_value(f2ptr cause, f2ptr this) {
+  assert_argument_type(cons, this);
   return f2integer__new(cause, raw__cons__eq_hash_value(cause, this));
 }
 def_pcfunk1(cons__eq_hash_value, this,

@@ -26,29 +26,11 @@
 
 'dictionary_frame'
 
-[deframe dictionary_frame [frame] [[symbols_hash [hash]]]]
-
-[deftypefunk dictionary_frame get symbols_as_key [symbols]
-  [if [or [is-type `symbol  symbols]
-	  [is-type `integer symbols]
-	  [is-type `float   symbols]
-	  [is-type `double  symbols]]
-      symbols
-    [let [[symbols-as-conslist [cond [[is-type `cons    symbols] symbols]
-				     [[is-type `list    symbols] [get symbols cons_cells]]
-				     [t                          [error bug_type  `invalid_symbol_or_symbol_list_when_adding_word_to_dictionary_frame
-									word_type type
-									symbols   symbols]]]]]
-      [let [[value [have symbols_hash lookup symbols-as-conslist]]]
-	[if value
-	    value
-	  [prog [have symbols_hash add symbols-as-conslist symbols-as-conslist]
-		symbols-as-conslist]]]]]]
+[deframe dictionary_frame [frame] [[word_hash_type_ptypehash [new ptypehash]]]]
 
 [deftypefunk dictionary_frame execute add_word [type symbol features]
-  [let [[word [object_type-new type]]
-	[key  [get this symbols_as_key symbol]]]
-    [have word add `symbols key]
+  [let [[word [object_type-new type]]]
+    [have word add `symbols symbol]
     [mapc [funk [feature]
 		[if [not [get word contains feature]]
 		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
@@ -56,28 +38,33 @@
 			   feature   feature]
 		  [have word add feature t]]]
 	  features]
-    [have this add_type_var_value type key [cons word [get this type_var_value type key nil]]]]]
+    [let [[word_hash [have word_hash_type_ptypehash lookup type]]]
+      [if [null word_hash]
+	  [prog [= word_hash [hash]]
+		[have word_hash_type_ptypehash add type word_hash]]]
+      [have word_hash add symbol [cons word [have word_hash lookup symbol]]]]]]
 
 [defmetro dictionary-add_word [this type symbol features]
   `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]
 
 [deftypefunk dictionary_frame get definitions_by_type [type symbol]
   [let [[definitions nil]]
-    [let [[key [get this symbols_as_key symbol]]]
-      [= definitions [append [get this type_var_value type key nil] definitions]]
-      [if [and [eq type `number_word]
-	       [or [is-type `integer key]
-		   [is-type `float   key]
-		   [is-type `double  key]]]
-	  [if [== key 1]
-	      [let [[number_word [new number_word]]]
-		[set number_word symbols  key]
-		[set number_word singular t]
-		[= definitions [cons number_word definitions]]]
+    [let [[word_hash [have word_hash_type_ptypehash lookup type]]]
+      [if [not [null word_hash]]
+	  [= definitions [append [have word_hash lookup symbol] definitions]]]]
+    [if [and [eq type `number_word]
+	     [or [is-type `integer symbol]
+		 [is-type `float   symbol]
+		 [is-type `double  symbol]]]
+	[if [== symbol 1]
 	    [let [[number_word [new number_word]]]
-	      [set number_word symbols key]
-	      [set number_word plural  t]
-	      [= definitions [cons number_word definitions]]]]]]
+	      [set number_word symbols  symbol]
+	      [set number_word singular t]
+	      [= definitions [cons number_word definitions]]]
+	  [let [[number_word [new number_word]]]
+	    [set number_word symbols symbol]
+	    [set number_word plural  t]
+	    [= definitions [cons number_word definitions]]]]]
     definitions]]
 
 [deftypefunk dictionary_frame get definitions [symbol]

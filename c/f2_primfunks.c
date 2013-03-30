@@ -249,12 +249,16 @@ def_pcfunk1(system__memorypool__total_free_memory, index,
 
 // funk2 pointer (f2ptr)
 
-f2ptr f2__pointer(f2ptr cause, f2ptr x) {return f2pointer__new(cause, (ptr)(long)x);}
+f2ptr f2__pointer(f2ptr cause, f2ptr x) {
+  return f2pointer__new(cause, (ptr)(u64)x);
+}
 def_pcfunk1(pointer, x,
 	    "",
 	    return f2__pointer(this_cause, x));
 
-f2ptr f2__deref_pointer(f2ptr cause, f2ptr x) {return (f2ptr)(long)f2pointer__p(x, cause);}
+f2ptr f2__deref_pointer(f2ptr cause, f2ptr x) {
+  return (f2ptr)(u64)f2pointer__p(x, cause);
+}
 def_pcfunk1(deref_pointer, x,
 	    "",
 	    return f2__deref_pointer(this_cause, x));

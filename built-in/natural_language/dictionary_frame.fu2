@@ -46,8 +46,9 @@
 		symbols-as-conslist]]]]]]
 
 [deftypefunk dictionary_frame execute add_word [type symbol features]
-  [let [[word [object_type-new type]]] 
-    [have word add `symbols [get this symbols_as_key symbol]]
+  [let [[word [object_type-new type]]
+	[key  [get this symbols_as_key symbol]]]
+    [have word add `symbols key]
     [mapc [funk [feature]
 		[if [not [get word contains feature]]
 		    [error bug_type  `invalid_feature_when_adding_word_to_dictionary_frame
@@ -55,7 +56,7 @@
 			   feature   feature]
 		  [have word add feature t]]]
 	  features]
-    [have this add_type_var_value type symbol [cons word [get this type_var_value type symbol nil]]]]]
+    [have this add_type_var_value type key [cons word [get this type_var_value type key nil]]]]]
 
 [defmetro dictionary-add_word [this type symbol features]
   `[have ,this add_word [quote ,type] [quote ,symbol] [conslist @[mapcar [funk [feature] `[quote ,feature]] features]]]]

@@ -212,7 +212,7 @@ f2ptr raw__array__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr no
       if (! raw__integer__is_type(cause, subexp__hash_value)) {
 	return f2larva__new(cause, 4, nil);
       }
-      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      u64 subexp__hash_value__i = f2integer__i(subexp__hash_value, cause);
       hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
     }
   }

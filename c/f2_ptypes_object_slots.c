@@ -4199,8 +4199,13 @@ def_pcfunk2(cons__eq, this, that,
 	    "",
 	    return f2__cons__eq(this_cause, this, that));
 
-u64   raw__cons__eq_hash_value(f2ptr cause, f2ptr this) {return (u64)this;}
-f2ptr  f2__cons__eq_hash_value(f2ptr cause, f2ptr this) {return f2integer__new(cause, raw__cons__eq_hash_value(cause, this));}
+u64 raw__cons__eq_hash_value(f2ptr cause, f2ptr this) {
+  return (u64)this;
+}
+
+f2ptr f2__cons__eq_hash_value(f2ptr cause, f2ptr this) {
+  return f2integer__new(cause, raw__cons__eq_hash_value(cause, this));
+}
 def_pcfunk1(cons__eq_hash_value, this,
 	    "",
 	    return f2__cons__eq_hash_value(this_cause, this));
@@ -4260,7 +4265,7 @@ f2ptr raw__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
       if (! raw__integer__is_type(cause, subexp__hash_value)) {
 	return f2larva__new(cause, 4, nil);
       }
-      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      u64 subexp__hash_value__i = f2integer__i(subexp__hash_value, cause);
       hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
     }
   }
@@ -4275,7 +4280,7 @@ f2ptr raw__cons__equals_hash_value__loop_free(f2ptr cause, f2ptr this, f2ptr nod
       if (! raw__integer__is_type(cause, subexp__hash_value)) {
 	return f2larva__new(cause, 4, nil);
       }
-      u64 subexp__hash_value__i = f2integer__i(this__subexp, cause);
+      u64 subexp__hash_value__i = f2integer__i(subexp__hash_value, cause);
       hash_value *= ((subexp__hash_value__i == 0) ? 1 : subexp__hash_value__i);
     }
   }

@@ -834,7 +834,7 @@ u64 pfunk2__f2string__eq_hash_value(f2ptr this, f2ptr cause) {
     ptype_error(cause, this, __funk2.globalenv.ptype_string__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  u64 return_value = (u64)this;
+  u64 return_value = raw__memblock__unique_id(cause, this);
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(return_value));
   return return_value;
 }
@@ -1595,11 +1595,11 @@ void pfunk2__f2mutable_array_pointer__index__set(f2ptr this, f2ptr cause, u64 in
 
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
   funk2_processor_mutex__init(&(this->cmutex));
-  this->array               = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
+  this->array                  = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
   memset(this->array, 0, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
-  this->total_symbol_num    = 0;
+  this->total_symbol_num       = 0;
   this->eq_hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
-  this->array_length        = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
+  this->array_length           = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
 }
 
 void funk2_symbol_hash__destroy(funk2_symbol_hash_t* this) {

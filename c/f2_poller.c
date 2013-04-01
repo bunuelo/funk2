@@ -39,6 +39,7 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
   this->elapsed_execution_nanoseconds_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->average_count)));
   this->total_elapsed_real_nanoseconds      = 0;
   this->total_elapsed_execution_nanoseconds = 0;
+  this->average_cpu_usage                   = 0.0;
 }
 
 void funk2_poller__destroy(funk2_poller_t* this) {

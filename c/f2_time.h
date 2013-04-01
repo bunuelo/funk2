@@ -50,14 +50,14 @@ typedef struct funk2_date_s {
 #define nanoseconds_per_hour        (nanoseconds_per_minute      * 60)
 #define nanoseconds_per_day         (nanoseconds_per_hour        * 24)
 
-//void   f2__sleep(int microseconds);
-void   f2__nanosleep(u64 nanoseconds);
+void  raw__nanosleep(u64 nanoseconds);
 void  raw__spin_sleep_yield();
 void  raw__fast_spin_sleep_yield();
 void  raw__user_spin_sleep_yield();
 void  raw__user_fast_spin_sleep_yield();
 u64   raw__nanoseconds_since_1970();
 f2ptr  f2__nanoseconds_since_1970(f2ptr cause);
+u64   raw__processor_thread__execution_nanoseconds();
 void       nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_date_t* funk2_date);
 f2ptr raw__time__new_from_unix_time(f2ptr cause, time_t unix_time);
 

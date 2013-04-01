@@ -111,10 +111,10 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	if (! did_something) {
 	  s64 working_virtual_processor_thread_count = funk2_virtual_processor__working_virtual_processor_thread_count(virtual_processor);
 	  if (working_virtual_processor_thread_count == 0) {
-	    f2__nanosleep(deep_sleep_nanoseconds);
+	    raw__nanosleep(deep_sleep_nanoseconds);
 	  } else {
 	    funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(virtual_processor);
-	    f2__nanosleep(deep_sleep_nanoseconds);
+	    raw__nanosleep(deep_sleep_nanoseconds);
 	    // ****
 	    //funk2_virtual_processor_thread__pause_myself(this);
 	    // ****
@@ -140,7 +140,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor_thread__pause_myself(this);
 	  // ****
 	  
-	  //f2__nanosleep((line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
+	  //raw__nanosleep((line_length + 1) * (line_length + 1) * deep_sleep_nanoseconds);
 	}
 	//raw__spin_sleep_yield();
       }

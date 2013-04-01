@@ -439,6 +439,7 @@ boolean_t separate_thread__done_booting;
 
 // see funk2_main.c for actual main function.
 int funk2__main(funk2_t* this, int argc, char** argv) {
+  funk2_poller__test();
   // our main code position is our reference for where the funk core has been loaded in memory.
   __funk2.funk2_main_code_position = to_ptr(&funk2__main);
   funk2__init(this, argc, argv);

@@ -25,7 +25,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "f2_funk2.h"
+#include "funk2.h"
 
 void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count) {
   this->target_cpu_usage                    = target_cpu_usage;

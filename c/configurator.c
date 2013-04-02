@@ -36,7 +36,6 @@ void print_usage() {
 	 "\n    pointer-bit_num"
 	 "\n    float-bit_num"
 	 "\n    double-bit_num"
-	 "\n    deep_sleep_nanoseconds"
 	 "\n"
 	 );
 }
@@ -112,46 +111,6 @@ int main(int argc, char** argv) {
     printf("%u\n", (unsigned int)sizeof(float) * 8);
   } else if (strcmp(command, "double-bit_num") == 0) {
     printf("%u\n", (unsigned int)sizeof(double) * 8);
-  } else if (strcmp(command, "deep_sleep_nanoseconds") == 0) {
-    pthread_mutex_t mutex;
-    pthread_mutex_init(&mutex, NULL);
-    pthread_mutex_lock(&mutex);
-    {
-      u64    sleep_nanoseconds = 1;
-      double processor_usage   = 100.0;
-      double target_usage      = (3.0 / 100.0);
-      while (processor_usage > target_usage) {
-	s64 spin_nanoseconds = nanoseconds_per_second / 2;
-	{
-	  u64 begin__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-	  u64 begin__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	  {
-	    unsigned int task_counter = 0;
-	    while (pthread_mutex_trylock(&mutex) && (raw__nanoseconds_since_1970() - begin__nanoseconds_since_1970) < spin_nanoseconds) {
-	      {
-		unsigned int i;
-		for (i = 0; i < 100; i++) {
-		  if ((i & 1) == 0) {
-		    task_counter ++;
-		  }
-		}
-	      }
-	      raw__nanosleep(sleep_nanoseconds);
-	    }
-	    fprintf(stderr, "task_counter = %u\n", task_counter);
-	  }
-	  u64 end__nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-	  u64 end__execution_nanoseconds  = raw__processor_thread__execution_nanoseconds();
-	  processor_usage = ((double)(end__execution_nanoseconds - begin__execution_nanoseconds)) / ((double)(end__nanoseconds_since_1970 - begin__nanoseconds_since_1970));
-	  //printf("(%f at %lu)\n", processor_usage, sleep_nanoseconds);
-	  if (processor_usage > target_usage) {
-	    sleep_nanoseconds <<= 1;
-	  }
-	}
-      }
-      printf("%llu\n", sleep_nanoseconds);
-    }
-    pthread_mutex_destroy(&mutex);
   } else {
     printf("\n"
 	   "\nunknown configurator command, \"%s\"!"

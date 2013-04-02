@@ -138,20 +138,10 @@ void raw__nanosleep(u64 nanoseconds) {
   nanosleep(&sleepTime, &remainingSleepTime);
 }
 
-//void raw__spin_sleep_yield() {
-//  sched_yield();
-//  raw__nanosleep(deep_sleep_nanoseconds);
-//}
-
 void raw__fast_spin_sleep_yield() {
   sched_yield();
 }
 
-//void raw__user_spin_sleep_yield() {
-//  funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
-//  raw__spin_sleep_yield();
-//}
-    
 void raw__user_fast_spin_sleep_yield() {
   funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
   raw__fast_spin_sleep_yield();

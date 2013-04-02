@@ -121,6 +121,8 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	    //funk2_virtual_processor_thread__pause_myself(this);
 	    // ****
 	  }
+	} else {
+	  funk2_poller__reset(&(this->poller));
 	}
       } else {	
 	//

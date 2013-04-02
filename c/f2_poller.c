@@ -88,7 +88,6 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   } else {
     this->average_cpu_usage = 1.0;
   }
-  //printf("\n  real nanoseconds=" u64__fstr " execution nanoseconds=" u64__fstr, this->total_elapsed_real_nanoseconds, this->total_elapsed_execution_nanoseconds);
   raw__nanosleep(this->sleep_nanoseconds);
   this->last_real_nanoseconds      = real_nanoseconds;
   this->last_execution_nanoseconds = execution_nanoseconds;
@@ -105,7 +104,7 @@ void funk2_poller__test() {
     for (i = 0; i < 100; i ++) {
       {
 	s64 j;
-	for (j = 0; j < 100000000; j ++) {
+	for (j = 0; j < 10000000; j ++) {
 	  temp += temp;
 	  temp *= temp;
 	}

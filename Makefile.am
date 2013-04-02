@@ -142,7 +142,6 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num       `bin/configurator pointer-bit_num`"        >> config_bit_num.h
 	echo "#define float__bit_num         `bin/configurator float-bit_num`"          >> config_bit_num.h
 	echo "#define double__bit_num        `bin/configurator double-bit_num`"         >> config_bit_num.h
-	echo "#define deep_sleep_nanoseconds `bin/configurator deep_sleep_nanoseconds`" >> config_bit_num.h
 	echo ""
 	echo "#define char__bit_num          `bin/configurator char-bit_num`"
 	echo "#define short__bit_num         `bin/configurator short-bit_num`"
@@ -152,7 +151,6 @@ config_bit_num.h: bin/configurator
 	echo "#define pointer__bit_num       `bin/configurator pointer-bit_num`"
 	echo "#define float__bit_num         `bin/configurator float-bit_num`"
 	echo "#define double__bit_num        `bin/configurator double-bit_num`"
-	echo "#define deep_sleep_nanoseconds `bin/configurator deep_sleep_nanoseconds`"
 	echo ""
 
 extra_library_path="lib/.libs/:/opt/intel/Compiler/11.1/038/lib/intel64/"

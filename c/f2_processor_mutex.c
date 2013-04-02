@@ -98,9 +98,8 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 #endif
   {
-    s64             my_pool_index = this_processor_thread__pool_index();
-    funk2_poller_t* my_poller     = &(__funk2.virtual_processor_handler.virtual_processor[my_pool_index]->poller);
-    u64             lock_tries    = 0;
+    funk2_poller_t poller;
+    u64            lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
       if (lock_tries < 1000) {
 	// spin fast
@@ -109,11 +108,13 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 	raw__fast_spin_sleep_yield();
 	lock_tries ++;
       } else if (lock_tries == 2000) {
-	funk2_poller__reset(my_poller);
+	funk2_poller__init(&my_poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&my_poller);
       } else {
-	funk2_poller__sleep(my_poller);
+	funk2_poller__sleep(&my_poller);
       }
     }
+    funk2_poller__destroy(&my_poller, poller__deep_sleep_percentage, 10);
   }
 }
 

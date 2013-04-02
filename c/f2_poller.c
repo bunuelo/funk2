@@ -109,7 +109,7 @@ void funk2_poller__test() {
   double temp = 10.0;
   {
     s64 i;
-    for (i = 0; i < 100; i ++) {
+    for (i = 0; i < 1000; i ++) {
       {
 	s64 j;
 	for (j = 0; j < 1000000; j ++) {

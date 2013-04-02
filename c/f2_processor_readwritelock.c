@@ -29,12 +29,10 @@
 
 void funk2_processor_readwritelock__init(funk2_processor_readwritelock_t* this) {
   pthread_rwlock_init(&(this->pthread_rwlock), NULL);
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
 }
 
 void funk2_processor_readwritelock__destroy(funk2_processor_readwritelock_t* this) {
   pthread_rwlock_destroy(&(this->pthread_rwlock));
-  funk2_poller__destroy(&(this->poller));
 }
 
 boolean_t funk2_processor_readwritelock__is_writelocked(funk2_processor_readwritelock_t* this) {
@@ -68,35 +66,51 @@ funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__ra
 }
 
 void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
-  u64 writelock_tries = 0;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
+  u64            writelock_tries    = 0;
   while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     writelock_tries ++;
     if (writelock_tries < 1000) {
       raw__fast_spin_sleep_yield();
     } else if (writelock_tries == 1000) {
-      funk2_poller__reset(&(this->poller));
+      funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+      funk2_poller__reset(&poller);
+      poller_initialized = boolean__true;
     } else {
-      funk2_poller__sleep(&(this->poller));
+      funk2_poller__sleep(&poller);
     }
+  }
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
   }
 }
 
 void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num) {
-  u64 readlock_tries = 0;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
+  u64            readlock_tries     = 0;
   while (funk2_processor_readwritelock__raw_tryreadlock(this, readlock_source_file, readlock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     readlock_tries ++;
     if (readlock_tries < 1000) {
       raw__fast_spin_sleep_yield();
     } else if (readlock_tries == 1000) {
-      funk2_poller__reset(&(this->poller));
+      funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+      funk2_poller__reset(&poller);
+      poller_initialized = boolean__true;
     } else {
-      funk2_poller__sleep(&(this->poller));
+      funk2_poller__sleep(&poller);
     }
+  }
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
   }
 }
 
 void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
-  u64 writelock_tries = 0;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
+  u64            writelock_tries    = 0;
   while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     if (__funk2.user_thread_controller.need_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
@@ -106,16 +120,23 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
       if (writelock_tries < 1000) {
 	raw__fast_spin_sleep_yield();
       } else if (writelock_tries == 1000) {
-	funk2_poller__reset(&(this->poller));
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
       } else {
-	funk2_poller__sleep(&(this->poller));
+	funk2_poller__sleep(&poller);
       }
     }
+  }
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
   }
 }
 
 void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num) {
-  u64 readlock_tries = 0;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
+  u64            readlock_tries     = 0;
   while (funk2_processor_readwritelock__raw_tryreadlock(this, readlock_source_file, readlock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     if (__funk2.user_thread_controller.need_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
@@ -125,11 +146,16 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
       if (readlock_tries < 1000) {
 	raw__fast_spin_sleep_yield();
       } else if (readlock_tries == 1000) {
-	funk2_poller__reset(&(this->poller));
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
       } else {
-	funk2_poller__sleep(&(this->poller));
+	funk2_poller__sleep(&poller);
       }
     }
+  }
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
   }
 }
 

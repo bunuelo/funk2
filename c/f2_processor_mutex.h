@@ -42,7 +42,6 @@ typedef struct funk2_processor_mutex_s {
   pthread_t       lock_tid;
 #endif
   pthread_mutex_t pthread_mutex;
-  funk2_poller_t  poller;
 } funk2_processor_mutex_t;
 
 typedef enum funk2_processor_mutex_trylock_result_e {

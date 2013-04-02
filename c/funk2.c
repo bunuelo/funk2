@@ -446,13 +446,25 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   
   separate_thread__done_booting = boolean__true;
   
-  while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
-    boolean_t did_something = funk2__handle(this);
-    if (! did_something) {
-      raw__spin_sleep_yield();
+  {
+    funk2_poller_t poller;
+    boolean_t      poller_needs_reset = boolean__true;
+    funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+    while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
+      boolean_t did_something = funk2__handle(this);
+      if (! did_something) {
+	if (poller_needs_reset) {
+	  funk2_poller__reset(&poller);
+	  poller_needs_reset = boolean__false;
+	}
+	funk2_poller__sleep(&poller);
+      } else {
+	poller_needs_reset = boolean__true;
+      }
     }
+    funk2_poller__destroy(&poller);
+    status("funk2__main: exited main loop (exit_now=%s).", this->exit_now ? "true" : "false");
   }
-  status("funk2__main: exited main loop (exit_now=%s).", this->exit_now ? "true" : "false");
   
   f2__destroy();
   

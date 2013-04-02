@@ -99,6 +99,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 #endif
   {
     funk2_poller_t poller;
+    boolean_t      poller_initialized = boolean__false;
     u64            lock_tries = 0;
     while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
       if (lock_tries < 1000) {
@@ -110,11 +111,14 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
       } else if (lock_tries == 2000) {
 	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
 	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
       } else {
 	funk2_poller__sleep(&poller);
       }
     }
-    funk2_poller__destroy(&poller);
+    if (poller_initialized) {
+      funk2_poller__destroy(&poller);
+    }
   }
 }
 

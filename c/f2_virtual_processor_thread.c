@@ -162,7 +162,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   pthread_mutex_init(&(this->pause_cond_mutex), NULL);
   pthread_cond_init(&(this->pause_cond), NULL);
   this->paused = boolean__false;
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 100);
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {

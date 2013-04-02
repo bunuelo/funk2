@@ -110,6 +110,7 @@ void funk2_poller__test() {
 	  temp *= temp;
 	}
       }
+      funk2_poller__sleep(&poller);
       printf("\nfunk2_poller__test: i=" s64__fstr " poller.average_cpu_usage=%g temp=%g", i, poller.average_cpu_usage, temp);
     }
   }

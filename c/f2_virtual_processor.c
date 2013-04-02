@@ -52,6 +52,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
   }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
 }
 
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
@@ -422,10 +423,15 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	  }
 	  if (! locked_mutex) {
 	    lock_tries ++;
-	    if ((lock_tries > 1000) ||
+	    if ((lock_tries >= 1000) ||
 		__funk2.scheduler_thread_controller.need_wait ||
 		__funk2.user_thread_controller.need_wait) {
-	      raw__nanosleep(deep_sleep_nanoseconds);
+	      if (lock_tries == 1000) {
+		funk2_poller__reset(&(this->poller));
+	      } else {
+		funk2_poller__sleep(&(this->poller));
+	      }
+	      //raw__nanosleep(deep_sleep_nanoseconds);
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }

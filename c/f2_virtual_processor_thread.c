@@ -62,8 +62,14 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   this->tid = (pid_t)syscall(SYS_gettid);
-  while (__funk2.memory.bootstrapping_mode) {
-    raw__spin_sleep_yield();
+  {
+    funk2_poller_t poller;
+    funk2_poller__init(&poller, 0.01, 10);
+    funk2_poller__reset(&poller);
+    while (__funk2.memory.bootstrapping_mode) {
+      funk2_poller__sleep(&poller);
+    }
+    funk2_poller__destroy(&poller);
   }
   status("starting virtual_processor_thread.");
   while (! (this->exit)) {
@@ -142,7 +148,6 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor_thread__pause_myself(this);
 	  // ****
 	}
-	//raw__spin_sleep_yield();
       }
     }
   }
@@ -182,13 +187,17 @@ void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_
 
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
   status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
+  funk2_poller_t poller;
+  funk2_poller__init(&poller, 0.01, 10);
+  funk2_poller__reset(&poller);
   while (! (this->exited)) {
     this->exit = boolean__true;
     if (this->paused) {
       funk2_virtual_processor_thread__unpause(this);
     }
-    raw__spin_sleep_yield();
+    funk2_poller__sleep(&poller);
   }
+  funk2_poller__destroy(&poller);
   status("funk2_virtual_processor_thread__exit: virtual_processor_thread exited.");
 }
 
@@ -219,9 +228,11 @@ void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* t
 }
 
 void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtual_processor_thread_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
-  s64 wait_tries                            = 0;
-  int this__lock_failed                     = 1;
-  int virtual_processor_thread__lock_failed = 1;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized                    = boolean__false;
+  s64            wait_tries                            = 0;
+  int            this__lock_failed                     = 1;
+  int            virtual_processor_thread__lock_failed = 1;
   while ((this__lock_failed                     != 0) ||
 	 (virtual_processor_thread__lock_failed != 0)) {
     this__lock_failed = pthread_mutex_trylock(&(this->pause_cond_mutex));
@@ -235,12 +246,19 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       if (wait_tries < 1000) {
 	wait_tries ++;
 	raw__fast_spin_sleep_yield();
+      } else if (wait_tries == 1000) {
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
+	wait_tries ++;
       } else {
-	raw__spin_sleep_yield();
+	funk2_poller__sleep(&poller);
       }
     }
   }
-  
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
+  }
   virtual_processor_thread->paused = boolean__false;
   pthread_cond_signal(&(virtual_processor_thread->pause_cond));
   pthread_mutex_unlock(&(virtual_processor_thread->pause_cond_mutex));

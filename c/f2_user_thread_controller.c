@@ -428,7 +428,7 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
     }
     pthread_mutex_unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
-    raw__spin_sleep_yield();
+    raw__nanosleep(1000000);
   }
 }
 
@@ -516,7 +516,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
     }
     pthread_mutex_unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
-    raw__spin_sleep_yield();
+    raw__nanosleep(1000000);
   }
 }
 
@@ -596,7 +596,9 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   funk2_user_thread_controller__signal_user_waiting_politely(this);
   
   {
-    s64 wait_tries = 0;
+    funk2_poller_t poller;
+    boolean_t      poller_initialized = boolean__false;
+    s64            wait_tries         = 0;
     while (this->need_wait) {
       if (pthread_mutex_trylock(&(this->something_to_do_while_waiting_politely_mutex)) == 0) {
 	while (this->need_wait                                  &&
@@ -617,8 +619,13 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 	} else if (wait_tries < 2000) {
 	  wait_tries ++;
 	  raw__fast_spin_sleep_yield();
+	} else if (wait_tries == 2000) {
+	  funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	  funk2_poller__reset(&poller);
+	  poller_initialized = boolean__true;
+	  wait_tries ++;
 	} else {
-	  raw__spin_sleep_yield();
+	  funk2_poller__sleep(&poller);
 	}
       }
       
@@ -630,6 +637,9 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
       else if (this->exit.start)                             {funk2_user_thread_controller__exit__user_process(                            &(this->exit));}
       else if (this->defragment__move_memory.start)          {funk2_user_thread_controller__defragment__move_memory__user_process(         &(this->defragment__move_memory));}
       else if (this->defragment__fix_pointers.start)         {funk2_user_thread_controller__defragment__fix_pointers__user_process(        &(this->defragment__fix_pointers));}
+    }
+    if (poller_initialized) {
+      funk2_poller__destroy(&poller);
     }
   }
   

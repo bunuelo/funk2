@@ -114,7 +114,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 	funk2_poller__sleep(&poller);
       }
     }
-    funk2_poller__destroy(&my_poller, poller__deep_sleep_percentage, 10);
+    funk2_poller__destroy(&poller);
   }
 }
 

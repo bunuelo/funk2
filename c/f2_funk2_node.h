@@ -33,6 +33,7 @@ typedef struct funk2_node_s funk2_node_t;
 
 #include "f2_peer_command_server.h"
 #include "f2_socket_client.h"
+#include "f2_poller.h"
 
 #define node_id__fstr X64__fstr
 

@@ -406,12 +406,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     funk2_virtual_processor__unpause_next_spinning_thread(this);
     
     // let spinning processor execute some bytecodes before returning from yield...
-    if (__funk2.scheduler_thread_controller.need_wait ||
-	__funk2.user_thread_controller.need_wait) {
-      raw__nanosleep(working_virtual_processor_thread_count * deep_sleep_nanoseconds);
-    } else {
-      raw__fast_spin_sleep_yield();
-    }
+    raw__fast_spin_sleep_yield();
     {
       boolean_t locked_mutex = boolean__false;
       {

@@ -40,8 +40,11 @@ typedef struct funk2_poller_s funk2_poller_t;
 
 struct funk2_poller_s {
   double    target_cpu_usage;
+  double    target_cpu_usage_lower_boundary;
+  double    target_cpu_usage_upper_boundary;
   u64       average_count;
   double    sleep_nanoseconds;
+  double    sleep_nanoseconds_multiplier;
   u64       current_index;
   boolean_t buffer_full;
   u64       last_real_nanoseconds;

@@ -60,8 +60,8 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   u64 elapsed_real_nanoseconds       = raw__nanoseconds_since_1970()                  - this->last_real_nanoseconds;
   u64 elapsed_execution_nanoseconds  = raw__processor_thread__execution_nanoseconds() - this->last_execution_nanoseconds;
   if (! this->buffer_full) {
-    this->elapsed_real_nanoseconds_array[this->current_index] = elapsed_real_nanoseconds;
-    this->elapsed_real_nanoseconds_array[this->current_index] = elapsed_execution_nanoseconds;
+    this->elapsed_real_nanoseconds_array[this->current_index]      = elapsed_real_nanoseconds;
+    this->elapsed_execution_nanoseconds_array[this->current_index] = elapsed_execution_nanoseconds;
     this->total_elapsed_real_nanoseconds      += elapsed_real_nanoseconds;
     this->total_elapsed_execution_nanoseconds += elapsed_execution_nanoseconds;
     this->current_index ++;
@@ -71,9 +71,9 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     }
   } else {
     this->total_elapsed_real_nanoseconds      -= this->elapsed_real_nanoseconds_array[this->current_index];
-    this->total_elapsed_execution_nanoseconds -= this->elapsed_real_nanoseconds_array[this->current_index];
-    this->elapsed_real_nanoseconds_array[this->current_index] = elapsed_real_nanoseconds;
-    this->elapsed_real_nanoseconds_array[this->current_index] = elapsed_execution_nanoseconds;
+    this->total_elapsed_execution_nanoseconds -= this->elapsed_execution_nanoseconds_array[this->current_index];
+    this->elapsed_real_nanoseconds_array[this->current_index]      = elapsed_real_nanoseconds;
+    this->elapsed_execution_nanoseconds_array[this->current_index] = elapsed_execution_nanoseconds;
     this->total_elapsed_real_nanoseconds      += elapsed_real_nanoseconds;
     this->total_elapsed_execution_nanoseconds += elapsed_execution_nanoseconds;
     this->current_index ++;

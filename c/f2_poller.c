@@ -112,7 +112,7 @@ void funk2_poller__test() {
     for (i = 0; i < 1000; i ++) {
       {
 	s64 j;
-	for (j = 0; j < 1000000; j ++) {
+	for (j = 0; j < 100000; j ++) {
 	  temp += temp;
 	  temp *= temp;
 	}

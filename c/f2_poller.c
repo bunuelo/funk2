@@ -100,12 +100,12 @@ void funk2_poller__test() {
     for (i = 0; i < 100; i ++) {
       {
 	s64 j;
-	for (j = 0; j < 10000000000; j ++) {
+	for (j = 0; j < 100000000000; j ++) {
 	  temp += temp;
 	  temp *= temp;
 	}
       }
-      printf("\nfunk2_poller__test: i=" s64__fstr " poller.average_cpu_usage=%g", i, poller.average_cpu_usage);
+      printf("\nfunk2_poller__test: i=" s64__fstr " poller.average_cpu_usage=%g temp=%g", i, poller.average_cpu_usage, temp);
     }
   }
   printf("\nfunk2_poller__test: done.");

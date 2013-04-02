@@ -108,7 +108,9 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
   }
 #endif
   {
-    u64 lock_tries = 0;
+    funk2_poller_t poller;
+    boolean_t      poller_initialized = boolean__false;
+    u64            lock_tries         = 0;
     while (funk2_processor_spinlock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_spinlock_trylock_result__success) {
       if (__funk2.user_thread_controller.need_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
 	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
@@ -120,10 +122,18 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
 	} else if (lock_tries < 2000) {
 	  raw__fast_spin_sleep_yield();
 	  lock_tries ++;
+	} else if (lock_tries == 2000) {
+	  funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	  funk2_poller__reset(&poller);
+	  poller_initialized = boolean__true;
+	  lock_tries ++;
 	} else {
-	  raw__spin_sleep_yield();
+	  funk2_poller__sleep(&poller);
 	}
       }
+    }
+    if (poller_initialized) {
+      funk2_poller__destroy(&poller);
     }
   }
 }

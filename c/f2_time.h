@@ -51,9 +51,7 @@ typedef struct funk2_date_s {
 #define nanoseconds_per_day         (nanoseconds_per_hour        * 24)
 
 void  raw__nanosleep(u64 nanoseconds);
-void  raw__spin_sleep_yield();
 void  raw__fast_spin_sleep_yield();
-void  raw__user_spin_sleep_yield();
 void  raw__user_fast_spin_sleep_yield();
 u64   raw__nanoseconds_since_1970();
 f2ptr  f2__nanoseconds_since_1970(f2ptr cause);

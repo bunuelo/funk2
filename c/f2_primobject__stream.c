@@ -395,12 +395,20 @@ def_pcfunk1(stream__try_read_byte, stream,
 
 f2ptr f2__stream__getb(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getb error: stream isn't a stream.");}
-  f2ptr read_byte = nil;
+  f2ptr          read_byte = nil;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
   while (read_byte == nil) {
     read_byte = f2__stream__try_read_byte(cause, stream);
     if (read_byte == nil) {
       f2__this__fiber__yield(cause);
-      raw__spin_sleep_yield();
+      if (! poller_initialized) {
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
+      } else {
+	funk2_poller__sleep(&poller);
+      }
     }
   }
   if (raw__exception__is_type(cause, read_byte) && raw__eq(cause, f2exception__tag(read_byte, cause), __funk2.reader.end_of_file_exception__symbol)) {
@@ -584,12 +592,20 @@ def_pcfunk1(stream__try_read_character, stream,
 
 f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
   if (! raw__stream__is_type(cause, stream)) {error(nil, "raw__stream__getc error: stream isn't a stream.");}
-  f2ptr read_character = nil;
+  f2ptr          read_character = nil;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized = boolean__false;
   while (read_character == nil) {
     read_character = f2__stream__try_read_character(cause, stream);
     if (read_character == nil) {
       f2__this__fiber__yield(cause);
-      raw__spin_sleep_yield();
+      if (! poller_initialized) {
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
+	poller_initialized = boolean__true;
+      } else {
+	funk2_poller__sleep(&poller);
+      }
     }
   }
   if (raw__exception__is_type(cause, read_character) && raw__eq(cause, f2exception__tag(read_character, cause), __funk2.reader.end_of_file_exception__symbol)) {

@@ -129,7 +129,7 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
   boolean_t both_locked                       = boolean__false;
   s64 lock_tries = 0;
   while (! both_locked) {
-    both_locked                                                     = boolean__true;
+    both_locked                                           = boolean__true;
     boolean_t active_fibers_cmutex__failed_to_lock        = f2cmutex__trylock(active_fibers_cmutex,        cause);
     boolean_t processor_assignment_cmutex__failed_to_lock = f2cmutex__trylock(processor_assignment_cmutex, cause);
     if (active_fibers_cmutex__failed_to_lock) {

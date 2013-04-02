@@ -85,9 +85,9 @@ void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t
   u64 readlock_tries = 0;
   while (funk2_processor_readwritelock__raw_tryreadlock(this, readlock_source_file, readlock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     readlock_tries ++;
-    if (writelock_tries < 1000) {
+    if (readlock_tries < 1000) {
       raw__fast_spin_sleep_yield();
-    } else if (writelock_tries == 1000) {
+    } else if (readlock_tries == 1000) {
       funk2_poller__reset(&(this->poller));
     } else {
       funk2_poller__sleep(&(this->poller));
@@ -122,9 +122,9 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
     }
     {
       readlock_tries ++;
-      if (writelock_tries < 1000) {
+      if (readlock_tries < 1000) {
 	raw__fast_spin_sleep_yield();
-      } else if (writelock_tries == 1000) {
+      } else if (readlock_tries == 1000) {
 	funk2_poller__reset(&(this->poller));
       } else {
 	funk2_poller__sleep(&(this->poller));

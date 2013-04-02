@@ -60,6 +60,7 @@ struct funk2_virtual_processor_thread_s {
   pthread_mutex_t           pause_cond_mutex;
   pthread_cond_t            pause_cond;
   boolean_t                 paused;
+  funk2_poller_t            poller;
 };
 
 void* funk2_virtual_processor_thread__start_function                 (void* args);

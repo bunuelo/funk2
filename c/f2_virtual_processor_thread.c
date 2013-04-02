@@ -111,10 +111,12 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	if (! did_something) {
 	  s64 working_virtual_processor_thread_count = funk2_virtual_processor__working_virtual_processor_thread_count(virtual_processor);
 	  if (working_virtual_processor_thread_count == 0) {
-	    raw__nanosleep(deep_sleep_nanoseconds);
+	    funk2_poller__sleep(&(this->poller));
+	    //raw__nanosleep(deep_sleep_nanoseconds);
 	  } else {
 	    funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(virtual_processor);
-	    raw__nanosleep(deep_sleep_nanoseconds);
+	    funk2_poller__sleep(&(this->poller));
+	    //raw__nanosleep(deep_sleep_nanoseconds);
 	    // ****
 	    //funk2_virtual_processor_thread__pause_myself(this);
 	    // ****
@@ -162,6 +164,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   pthread_mutex_init(&(this->pause_cond_mutex), NULL);
   pthread_cond_init(&(this->pause_cond), NULL);
   this->paused = boolean__false;
+  funk2_poller__init(&(this->poller), 0.01, 100);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
@@ -169,6 +172,7 @@ void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* t
   funk2_processor_thread__destroy(this->processor_thread);
   pthread_mutex_destroy(&(this->pause_cond_mutex));
   pthread_cond_destroy(&(this->pause_cond));
+  funk2_poller__destroy(&(this->poller));
 }
 
 void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_t* this) {

@@ -103,7 +103,7 @@ void funk2_poller__sleep(funk2_poller_t* this) {
 
 void funk2_poller__test() {
   funk2_poller_t poller;
-  funk2_poller__init(&poller, 0.01, 10);
+  funk2_poller__init(&poller, 0.01, 1000);
   printf("\nfunk2_poller__test: poller.target_cpu_usage=%g", poller.target_cpu_usage);
   funk2_poller__reset(&poller);
   double temp = 10.0;
@@ -112,12 +112,17 @@ void funk2_poller__test() {
     for (i = 0; i < 1000; i ++) {
       {
 	s64 j;
-	for (j = 0; j < 100000; j ++) {
-	  temp += temp;
-	  temp *= temp;
+	for (j = 0; j < 100; j ++) {
+	  {
+	    s64 k;
+	    for (k = 0; k < 1000; k ++) {
+	      temp += temp;
+	      temp *= temp;
+	    }
+	  }
+	  funk2_poller__sleep(&poller);
 	}
       }
-      funk2_poller__sleep(&poller);
       printf("\nfunk2_poller__test: i=" s64__fstr " poller.average_cpu_usage=%g temp=%g", i, poller.average_cpu_usage, temp);
     }
   }

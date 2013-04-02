@@ -80,11 +80,11 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     if (this->current_index == this->average_count) {
       this->current_index = 0;
     }
-    if (this->total_elapsed_real_nanoseconds != 0) {
-      this->average_cpu_usage = ((double)this->total_elapsed_execution_nanoseconds) / ((double)this->total_elapsed_real_nanoseconds);
-    } else {
-      this->average_cpu_usage = 1.0;
-    }
+  }
+  if (this->total_elapsed_real_nanoseconds != 0) {
+    this->average_cpu_usage = ((double)this->total_elapsed_execution_nanoseconds) / ((double)this->total_elapsed_real_nanoseconds);
+  } else {
+    this->average_cpu_usage = 1.0;
   }
   raw__nanosleep(this->sleep_nanoseconds);
 }

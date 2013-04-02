@@ -108,10 +108,10 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 	raw__fast_spin_sleep_yield();
 	lock_tries ++;
       } else if (lock_tries == 2000) {
-	funk2_poller__init(&my_poller, poller__deep_sleep_percentage, 10);
-	funk2_poller__reset(&my_poller);
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__reset(&poller);
       } else {
-	funk2_poller__sleep(&my_poller);
+	funk2_poller__sleep(&poller);
       }
     }
     funk2_poller__destroy(&my_poller, poller__deep_sleep_percentage, 10);

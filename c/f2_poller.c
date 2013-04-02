@@ -30,7 +30,7 @@
 void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count) {
   this->target_cpu_usage                    = target_cpu_usage;
   this->average_count                       = average_count;
-  this->sleep_nanoseconds                   = 1;
+  this->sleep_nanoseconds                   = 1.0;
   this->current_index                       = 0;
   this->buffer_full                         = boolean__false;
   this->last_real_nanoseconds               = 0;
@@ -90,13 +90,13 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   }
   if (this->average_cpu_usage < (this->target_cpu_usage / 2)) {
     this->sleep_nanoseconds /= 1.1;
-    if (this->sleep_nanoseconds == 0) {
-      this->sleep_nanoseconds = 1;
+    if (this->sleep_nanoseconds == 0.0) {
+      this->sleep_nanoseconds = 1.0;
     }
   } else if (this->average_cpu_usage > (this->target_cpu_usage * 2)) {
     this->sleep_nanoseconds *= 1.1;
   }
-  raw__nanosleep(this->sleep_nanoseconds);
+  raw__nanosleep((u64)(this->sleep_nanoseconds));
   this->last_real_nanoseconds      = real_nanoseconds;
   this->last_execution_nanoseconds = execution_nanoseconds;
 }

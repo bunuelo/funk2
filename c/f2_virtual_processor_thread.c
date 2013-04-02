@@ -150,8 +150,6 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   return NULL;
 }
 
-#define poller__deep_sleep_percentage 0.05
-
 void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this) {
   funk2_processor_mutex__init(&(this->assignment_mutex));
   this->tid                                = (pid_t)0;

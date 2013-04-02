@@ -32,6 +32,7 @@
 
 typedef struct funk2_processor_readwritelock_s {
   pthread_rwlock_t pthread_rwlock;
+  funk2_poller_t   poller;
 } funk2_processor_readwritelock_t;
 
 typedef enum funk2_processor_readwritelock_trylock_result_e {

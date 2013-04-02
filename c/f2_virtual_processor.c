@@ -431,7 +431,6 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	      } else {
 		funk2_poller__sleep(&(this->poller));
 	      }
-	      //raw__nanosleep(deep_sleep_nanoseconds);
 	    } else {
 	      raw__fast_spin_sleep_yield();
 	    }

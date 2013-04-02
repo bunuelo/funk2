@@ -28,12 +28,13 @@
 #include "funk2.h"
 
 void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count) {
+  double range_factor = 1.1;
   this->target_cpu_usage                    = target_cpu_usage;
-  this->target_cpu_usage_lower_boundary     = target_cpu_usage / 2.0;
-  this->target_cpu_usage_upper_boundary     = target_cpu_usage * 2.0;
+  this->target_cpu_usage_lower_boundary     = target_cpu_usage / range_factor;
+  this->target_cpu_usage_upper_boundary     = target_cpu_usage * range_factor;
   this->average_count                       = average_count;
   this->sleep_nanoseconds                   = 1.0;
-  this->sleep_nanoseconds_multiplier        = pow(2.0, 1.0 / (double)average_count);
+  this->sleep_nanoseconds_multiplier        = pow(range_factor, 1.0 / (double)average_count);
   this->current_index                       = 0;
   this->buffer_full                         = boolean__false;
   this->last_real_nanoseconds               = 0;
@@ -60,10 +61,10 @@ void funk2_poller__reset(funk2_poller_t* this) {
 }
 
 void funk2_poller__sleep(funk2_poller_t* this) {
-  u64 real_nanoseconds               = raw__nanoseconds_since_1970();
-  u64 execution_nanoseconds          = raw__processor_thread__execution_nanoseconds();
-  u64 elapsed_real_nanoseconds       = real_nanoseconds      - this->last_real_nanoseconds;
-  u64 elapsed_execution_nanoseconds  = execution_nanoseconds - this->last_execution_nanoseconds;
+  u64 real_nanoseconds              = raw__nanoseconds_since_1970();
+  u64 execution_nanoseconds         = raw__processor_thread__execution_nanoseconds();
+  u64 elapsed_real_nanoseconds      = real_nanoseconds      - this->last_real_nanoseconds;
+  u64 elapsed_execution_nanoseconds = execution_nanoseconds - this->last_execution_nanoseconds;
   if (! this->buffer_full) {
     this->elapsed_real_nanoseconds_array[this->current_index]      = elapsed_real_nanoseconds;
     this->elapsed_execution_nanoseconds_array[this->current_index] = elapsed_execution_nanoseconds;

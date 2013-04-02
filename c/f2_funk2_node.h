@@ -91,6 +91,7 @@ typedef struct funk2_node_handler_s {
   funk2_node_t*           funk2_node_by_computer_id_array[f2ptr__computer_id__max_value + 1];
   u32                     new_node__send_buffer_byte_num;
   u32                     new_node__recv_buffer_byte_num;
+  funk2_poller_t          poller;
 } funk2_node_handler_t;
 
 void            fiber_hash__init(fiber_hash_t* this);

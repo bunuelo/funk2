@@ -263,6 +263,7 @@ void funk2_node_handler__init(funk2_node_handler_t* this, u32 new_node__send_buf
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
     this->funk2_node_by_computer_id_array[i] = NULL;
   }
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
 }
 
 void funk2_node_handler__destroy(funk2_node_handler_t* this) {
@@ -279,6 +280,7 @@ void funk2_node_handler__destroy(funk2_node_handler_t* this) {
   funk2_processor_mutex__destroy(&(this->local_fiber_hash_mutex));
   fiber_hash__destroy(&(this->local_fiber_hash));
   funk2_processor_mutex__destroy(&(this->next_computer_id_mutex));
+  funk2_poller__destroy(&(this->poller));
 }
 
 computer_id_t funk2_node_handler__add_node(funk2_node_handler_t* this, node_id_t node_id, client_id_t* client_id) {
@@ -406,6 +408,7 @@ funk2_packet_t* funk2_node_handler__wait_for_new_fiber_packet(funk2_node_handler
   //printf ("\nfunk2_node_handler__wait_for_new_fiber_packet: fiber=" f2ptr__fstr "\n", fiber); fflush(stdout);
   funk2_node_t*   funk2_node = funk2_node_handler__lookup_remote_fiber_funk2_node(this, fiber);;
   funk2_packet_t* response_packet = NULL;
+  funk2_poller__reset(&(this->poller));
   while (response_packet == NULL) {
     response_packet = funk2_node_handler__pop_local_fiber_funk2_packet(this, fiber);
     if ((funk2_node != NULL) &&
@@ -415,7 +418,7 @@ funk2_packet_t* funk2_node_handler__wait_for_new_fiber_packet(funk2_node_handler
       response_packet = NULL;
     }
     if (! response_packet) {
-      raw__spin_sleep_yield();
+      funk2_poller__sleep(&(this->poller));
     }
   }
   return response_packet;

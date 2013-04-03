@@ -35,10 +35,12 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
     funk2_proc_cpuinfo__init(&proc_cpuinfo);
     if (proc_cpuinfo.supported) {
       this->processor_count = proc_cpuinfo.processor_count;
+      status("proc_cpuinfo.processor_count = " s64__fstr, (s64)proc_cpuinfo.processor_count);
     }
   }
 #if defined(HAVE_SCHED_GETAFFINITY)
   {
+    status("using sched_getaffinity for processor count.");
     cpu_set_t initial_cpu_set;
     CPU_ZERO(&initial_cpu_set);
     {

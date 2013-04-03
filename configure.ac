@@ -217,7 +217,8 @@ AC_LINK_IFELSE(
 AC_MSG_CHECKING(for sched_getaffinity)
 AC_LINK_IFELSE(
   AC_LANG_SOURCE(
-    [[#include<sched.h>
+    [[#define _GNU_SOURCE
+      #include<sched.h>
       int main() {
         cpu_set_t initial_cpu_set;
         CPU_ZERO(&initial_cpu_set);

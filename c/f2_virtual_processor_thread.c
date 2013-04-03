@@ -30,6 +30,7 @@
 // funk2_virtual_processor_thread
 
 void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processor_thread_t* this) {
+#if defined(HAVE_PTHREAD_SETAFFINITY_NP)
   if (__funk2.system_processor.processor_affinity_index != NULL) {
     cpu_set_t cpu_set;
     CPU_ZERO(&cpu_set);
@@ -42,13 +43,15 @@ void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processo
     {
       int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
       if (result != 0) {
-	error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
+	error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: pthread_setaffinity_np");
       }
     }
   }
+#endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
 
 void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_thread_t* this, u64 cpu_index) {
+#if defined(HAVE_PTHREAD_SETAFFINITY_NP)
   if (__funk2.system_processor.processor_affinity_index != NULL) {
     s64 system_cpu_index = cpu_index % __funk2.system_processor.processor_count;
     cpu_set_t cpu_set;
@@ -57,10 +60,11 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
     {
       int result = pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpu_set);
       if (result != 0) {
-	error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: sched_setaffinity");
+	error(nil, "funk2_virtual_processor_thread__set_cpu_affinity_all error: pthread_setaffinity_np");
       }
     }
   }
+#endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
 
 void* funk2_virtual_processor_thread__start_function(void* args) {

@@ -79,6 +79,9 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
   if (this->processor_count == 0) {
     error(nil, "could not determine processor count with either /proc/cpuinfo or sched_getaffinity.");
   }
+  if (this->processor_affinity_index == NULL) {
+    status("system_processor warning affinities are disabled.");
+  }
 }
 
 void funk2_system_processor__destroy(funk2_system_processor_t* this) {

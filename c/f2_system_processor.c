@@ -38,7 +38,7 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
       status("proc_cpuinfo.processor_count = " s64__fstr, (s64)proc_cpuinfo.processor_count);
     }
   }
-#if defined(SCHED_GETAFFINITY_SUPPORT)
+#if (SCHED_GETAFFINITY_SUPPORT == 1)
   {
     status("using sched_getaffinity for processor count.");
     cpu_set_t initial_cpu_set;

@@ -14009,7 +14009,7 @@ fi
 done
 
 
-for ac_func in bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity pthread_setaffinity_np
+for ac_func in bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -14159,6 +14159,37 @@ $as_echo "#define GCC_ATOMIC_BUILTINS 0" >>confdefs.h
 
   { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Funk2 will be built thread-unsafe because atomic builtins are missing" >&5
 $as_echo "$as_me: WARNING: Funk2 will be built thread-unsafe because atomic builtins are missing" >&2;}
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_setaffinity_np" >&5
+$as_echo_n "checking for pthread_setaffinity_np... " >&6; }
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+#define _GNU_SOURCE
+      #include <pthread.h>
+      int main() {
+        cpu_set_t cpuset;
+        pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+        return 0;
+      }
+
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+$as_echo "#define HAVE_PTHREAD_SETAFFINITY_NP 1" >>confdefs.h
+
+else
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+$as_echo "#define HAVE_PTHREAD_SETAFFINITY_NP 0" >>confdefs.h
+
+  { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: Funk2 will be built without pthread_setaffinity_np" >&5
+$as_echo "$as_me: WARNING: Funk2 will be built without pthread_setaffinity_np" >&2;}
 fi
 rm -f core conftest.err conftest.$ac_objext \
     conftest$ac_exeext conftest.$ac_ext

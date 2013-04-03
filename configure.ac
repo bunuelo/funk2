@@ -160,7 +160,7 @@ AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity pthread_setaffinity_np])
+AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity])
 
 AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
 AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)
@@ -213,6 +213,23 @@ AC_LINK_IFELSE(
   AC_MSG_RESULT(no)
   AC_DEFINE(GCC_ATOMIC_BUILTINS, 0, Build multithreading support into Funk2)
   AC_MSG_WARN([Funk2 will be built thread-unsafe because atomic builtins are missing]))
+
+AC_MSG_CHECKING(for pthread_setaffinity_np)
+AC_LINK_IFELSE(
+  AC_LANG_SOURCE(
+    [[#define _GNU_SOURCE
+      #include <pthread.h>
+      int main() {
+        cpu_set_t cpuset;
+        pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
+        return 0;
+      }
+    ]]),
+  AC_MSG_RESULT(yes)
+  AC_DEFINE(HAVE_PTHREAD_SETAFFINITY_NP, 1, Build pthread_setaffinity_np support into Funk2),
+  AC_MSG_RESULT(no)
+  AC_DEFINE(HAVE_PTHREAD_SETAFFINITY_NP, 0, Build pthread_setaffinity_np support into Funk2)
+  AC_MSG_WARN([Funk2 will be built without pthread_setaffinity_np]))
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

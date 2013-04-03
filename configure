@@ -12041,6 +12041,20 @@ fi
 done
 
 
+# checking for sys/syscall.h
+for ac_header in sys/syscall.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "sys/syscall.h" "ac_cv_header_sys_syscall_h" "$ac_includes_default"
+if test "x$ac_cv_header_sys_syscall_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_SYS_SYSCALL_H 1
+_ACEOF
+
+fi
+
+done
+
+
 ## Checking for ncurses.
 #have_ncurses_requirements=1
 #AC_MSG_NOTICE([Checking for ncurses and its requirements.])

@@ -45,7 +45,8 @@
 
 #include "funk2.h"
 
-void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
+#if defined(HAVE_UCONTEXT_H)
+void funk2_signal_segv_ucontext_handler(int signum, siginfo_t* info, void* ptr) {
   int         i;
   int         f = 0;
   ucontext_t* ucontext = (ucontext_t*)ptr;
@@ -53,26 +54,26 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
   void**      bp       = 0;
   void*       ip       = 0;
   
-  status("funk2_signal_segv_handler: Segmentation Fault!");
-  status("funk2_signal_segv_handler: info.si_signo = %d", signum);
-  status("funk2_signal_segv_handler: info.si_errno = %d", info->si_errno);
-  status("funk2_signal_segv_handler: info.si_code  = %d", info->si_code);
-  status("funk2_signal_segv_handler: info.si_addr  = %p", info->si_addr);
+  status("funk2_signal_segv_ucontext_handler: Segmentation Fault!");
+  status("funk2_signal_segv_ucontext_handler: info.si_signo = %d", signum);
+  status("funk2_signal_segv_ucontext_handler: info.si_errno = %d", info->si_errno);
+  status("funk2_signal_segv_ucontext_handler: info.si_code  = %d", info->si_code);
+  status("funk2_signal_segv_ucontext_handler: info.si_addr  = %p", info->si_addr);
   for(i = 0; i < NGREG; i++) {
-    status("funk2_signal_segv_handler: reg[%02d]       = 0x" REGFORMAT, i, ucontext->uc_mcontext.gregs[i]);
+    status("funk2_signal_segv_ucontext_handler: reg[%02d]       = 0x" REGFORMAT, i, ucontext->uc_mcontext.gregs[i]);
   }
   
-#ifndef SIGSEGV_NOSTACK
-#  if defined(SIGSEGV_STACK_IA64) || defined(SIGSEGV_STACK_X86)
-#    if defined(SIGSEGV_STACK_IA64)
+#  ifndef SIGSEGV_NOSTACK
+#    if defined(SIGSEGV_STACK_IA64) || defined(SIGSEGV_STACK_X86)
+#      if defined(SIGSEGV_STACK_IA64)
   ip = (void*)ucontext->uc_mcontext.gregs[REG_RIP];
   bp = (void**)ucontext->uc_mcontext.gregs[REG_RBP];
-#    elif defined(SIGSEGV_STACK_X86)
+#      elif defined(SIGSEGV_STACK_X86)
   ip = (void*)ucontext->uc_mcontext.gregs[REG_EIP];
   bp = (void**)ucontext->uc_mcontext.gregs[REG_EBP];
-#    endif
+#      endif
   
-  status("funk2_signal_segv_handler: Stack trace: bp=%p, ip=%p", bp, ip);
+  status("funk2_signal_segv_ucontext_handler: Stack trace: bp=%p, ip=%p", bp, ip);
   while(bp) {
     const char*   symname   = "unknown_symbol";
     const char*   filename  = "unknown_filename";
@@ -83,27 +84,27 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
       dli_saddr = (unsigned long)dlinfo.dli_saddr;
     }
     
-#    ifndef NO_CPP_DEMANGLE
+#      ifndef NO_CPP_DEMANGLE
     int   status_value;
     char* tmp = __cxa_demangle(symname, NULL, 0, &status_value);
     
     if (status_value == 0 && tmp) {
       symname = tmp;
     }
-#    endif
+#      endif
     
-    status("funk2_signal_segv_handler: % 2d: %p <%s+%lu> (%s)",
+    status("funk2_signal_segv_ucontext_handler: % 2d: %p <%s+%lu> (%s)",
 	   ++f,
 	   ip,
 	   symname,
 	   (unsigned long)ip - (unsigned long)dli_saddr,
 	   filename);
     
-#    ifndef NO_CPP_DEMANGLE
+#      ifndef NO_CPP_DEMANGLE
     if (tmp) {
       free(tmp);
     }
-#    endif
+#      endif
     
     if(symname && !strcmp(symname, "main")) {
       break;
@@ -112,18 +113,19 @@ void funk2_signal_segv_handler(int signum, siginfo_t* info, void* ptr) {
     ip = bp[1];
     bp = (void**)bp[0];
   }
-#  else
-  status("funk2_signal_segv_handler: Stack trace (non-dedicated):");
+#    else
+  status("funk2_signal_segv_ucontext_handler: Stack trace (non-dedicated):");
   sz = backtrace(bt, 20);
   strings = backtrace_symbols(bt, sz);
   for(i = 0; i < sz; ++i)
-    status("funk2_signal_segv_handler: %s", strings[i]);
+    status("funk2_signal_segv_ucontext_handler: %s", strings[i]);
+#    endif
+  status("funk2_signal_segv_ucontext_handler: End of stack trace.");
+#  else
+  status("funk2_signal_segv_ucontext_handler: Not printing stack strace.");
 #  endif
-  status("funk2_signal_segv_handler: End of stack trace.");
-#else
-  status("funk2_signal_segv_handler: Not printing stack strace.");
-#endif
 }
+#endif // HAVE_UCONTEXT_H
 
 int __received_signal__sigint     = 0;
 int __received_segmentation_fault = 0;
@@ -145,7 +147,9 @@ void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.", info->si_addr);
     __received_segmentation_fault = 1;
     status_backtrace();
-    funk2_signal_segv_handler(sig, info, arg);
+#if defined(HAVE_UCONTEXT_H)
+    funk2_signal_segv_ucontext_handler(sig, info, arg);
+#endif // HAVE_UCONTEXT_H
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", info->si_addr);
     f2ptr cause = nil;
     f2ptr sigsegv_larva = new__error(f2list2__new(cause,

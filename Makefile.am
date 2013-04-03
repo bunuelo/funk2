@@ -617,7 +617,11 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) -Wl,--export-all-symbols \
+    -Wl,--enable-auto-import \
+    -Wl,--whole-archive $(lib_LTLIBRARIES) \
+    -Wl,--no-whole-archive
+
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)

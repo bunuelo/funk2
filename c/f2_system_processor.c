@@ -38,7 +38,7 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
       status("proc_cpuinfo.processor_count = " s64__fstr, (s64)proc_cpuinfo.processor_count);
     }
   }
-#if (SCHED_GETAFFINITY_SUPPORT == 1)
+#if defined (HAVE_SCHED_GETAFFINITY)
   {
     status("using sched_getaffinity for processor count.");
     cpu_set_t initial_cpu_set;
@@ -76,7 +76,7 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
   }
 #else
   status("system_processor sched_getaffinity disabled.");
-#endif // SCHED_GETAFFINITY_SUPPORT
+#endif // HAVE_SCHED_GETAFFINITY
   status("__funk2.system_processor.processor_count = " s64__fstr, (s64)this->processor_count);
   if (this->processor_count == 0) {
     error(nil, "could not determine processor count with either /proc/cpuinfo or sched_getaffinity.");

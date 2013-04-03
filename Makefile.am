@@ -644,7 +644,7 @@ extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la) $(lib_libfunk2_la_LDFLAGS)
 extension_blocks_world_libf2e_blocks_world_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)

@@ -78,6 +78,9 @@ fi
 # checking for execinfo.h used for glib backtrace
 AC_CHECK_HEADERS([execinfo.h],[],[])
 
+# checking for ucontext.h used for Linux specific machine-code backtrace
+AC_CHECK_HEADERS([ucontext.h],[],[])
+
 # checking for sys/syscall.h
 AC_CHECK_HEADERS([sys/syscall.h],[],[])
 

@@ -112,7 +112,9 @@ using __cxxabiv1::__cxa_demangle;
 #include <sys/wait.h>
 #include <termios.h>
 #include <time.h>
-#include <ucontext.h>
+#if defined(HAVE_UCONTEXT_H)
+#  include <ucontext.h>
+#endif // HAVE_UCONTEXT_H
 #include <unistd.h>
 
 #if defined(HAVE_ZLIB_H)

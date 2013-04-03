@@ -103,7 +103,9 @@ using __cxxabiv1::__cxa_demangle;
 #include <sys/mman.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <sys/syscall.h>
+#if defined(HAVE_SYS_SYSCALL_H)
+#  include <sys/syscall.h>
+#endif // HAVE_SYS_SYSCALL_H
 #include <sys/time.h>
 #include <sys/times.h>
 #include <sys/types.h>

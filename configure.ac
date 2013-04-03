@@ -78,6 +78,9 @@ fi
 # checking for execinfo.h used for glib backtrace
 AC_CHECK_HEADERS([execinfo.h],[],[])
 
+# checking for sys/syscall.h
+AC_CHECK_HEADERS([sys/syscall.h],[],[])
+
 ## Checking for ncurses.
 #have_ncurses_requirements=1
 #AC_MSG_NOTICE([Checking for ncurses and its requirements.])

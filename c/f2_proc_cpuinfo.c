@@ -47,6 +47,12 @@ void funk2_proc_cpuinfo__init(funk2_proc_cpuinfo_t* this) {
     while ((read_length = getline(&line, &length, fptr)) != -1) {
       status("funk2_proc_cpuinfo__init: Retrieved line of length %zu :\n", read_length);
       status("funk2_proc_cpuinfo__init: \"%s\"", line);
+      char* parameter_string = (char*)malloc(read_length + 1);
+      char* value_string     = (char*)malloc(read_length + 1);
+      sscanf(line, "%[^\t:] : %[^\t\n]", parameter_string, value_string);
+      status("funk2_proc_cpuinfo__init: parsed \"%s\" = \"%s\"", parameter_string, value_string);
+      free(parameter_string);
+      free(value_string);
     }
     status("funk2_proc_cpuinfo__init done.");
     

@@ -125,6 +125,12 @@
    and to 0 otherwise. */
 #undef HAVE_REALLOC
 
+/* Define to 1 if you have the `sched_getaffinity' function. */
+#undef HAVE_SCHED_GETAFFINITY
+
+/* Define to 1 if you have the `sched_setaffinity' function. */
+#undef HAVE_SCHED_SETAFFINITY
+
 /* Define to 1 if you have the `select' function. */
 #undef HAVE_SELECT
 

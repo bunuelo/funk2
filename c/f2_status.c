@@ -136,6 +136,7 @@ ssize_t writef(int fd, char* msg, ...) {
 #define status_backtrace__max_stack_size 1000
 
 void status_backtrace() {
+#if defined(HAVE_EXECINFO_H)
   status("status_backtrace begin.");
   void* buffer[status_backtrace__max_stack_size];
   s64   backtrace_size = backtrace(buffer, status_backtrace__max_stack_size);
@@ -161,6 +162,9 @@ void status_backtrace() {
     }
   }
   status("status_backtrace end.");
+#else // HAVE_EXECINFO_H
+  status("status_backtrace not supported in this funk2 binary.");
+#endif // HAVE_EXECINFO_H
 }
 
 // **

@@ -214,23 +214,5 @@ AC_LINK_IFELSE(
   AC_DEFINE(GCC_ATOMIC_BUILTINS, 0, Build multithreading support into Funk2)
   AC_MSG_WARN([Funk2 will be built thread-unsafe because atomic builtins are missing]))
 
-AC_MSG_CHECKING(for sched_getaffinity)
-AC_LINK_IFELSE(
-  AC_LANG_SOURCE(
-    [[#define _GNU_SOURCE
-       #include<sched.h>
-      int main() {
-        cpu_set_t initial_cpu_set;
-        CPU_ZERO(&initial_cpu_set);
-        int result = sched_getaffinity(0, sizeof(cpu_set_t), &initial_cpu_set);
-        return 0;
-      }
-    ]]),
-  AC_MSG_RESULT(yes)
-  AC_DEFINE(SCHED_GETAFFINITY_SUPPORT, 1, Build sched_getaffinity support into Funk2),
-  AC_MSG_RESULT(no)
-  AC_DEFINE(SCHED_GETAFFINITY_SUPPORT, 0, Build sched_getaffinity support into Funk2)
-  AC_MSG_WARN([Funk2 will be built without sched_getaffinity because sched_getaffinity is missing]))
-
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

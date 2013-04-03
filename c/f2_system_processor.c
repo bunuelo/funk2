@@ -28,40 +28,54 @@
 #include "funk2.h"
 
 void funk2_system_processor__init(funk2_system_processor_t* this) {
-  funk2_proc_cpuinfo_t proc_cpuinfo;
-  funk2_proc_cpuinfo__init(&proc_cpuinfo);
-  
-  cpu_set_t initial_cpu_set;
-  CPU_ZERO(&initial_cpu_set);
+  this->processor_affinity_index = NULL;
+  this->processor_count          = 0;
   {
-    int result = sched_getaffinity(0, sizeof(cpu_set_t), &initial_cpu_set);
-    if (result != 0) {
-      error(nil, "funk2_system_processor__init error: sched_getaffinity error.");
+    funk2_proc_cpuinfo_t proc_cpuinfo;
+    funk2_proc_cpuinfo__init(&proc_cpuinfo);
+    if (proc_cpuinfo.supported) {
+      this->processor_count = proc_cpuinfo.processor_count;
     }
   }
-  this->processor_count = 0;
+#if defined(HAVE_SCHED_GETAFFINITY)
   {
-    s64 i;
-    for (i = 0; i < CPU_SETSIZE; i ++) {
-      if (CPU_ISSET(i, &initial_cpu_set) != 0) {
-	this->processor_count ++;
+    cpu_set_t initial_cpu_set;
+    CPU_ZERO(&initial_cpu_set);
+    {
+      int result = sched_getaffinity(0, sizeof(cpu_set_t), &initial_cpu_set);
+      if (result != 0) {
+	error(nil, "funk2_system_processor__init error: sched_getaffinity error.");
       }
     }
-  }
-  if (this->processor_count == 0) {
-    this->processor_affinity_index = NULL;
-  } else {
-    this->processor_affinity_index = (u64*)from_ptr(f2__malloc(sizeof(u64) * this->processor_count));
+    this->processor_count = 0;
     {
-      s64 processor_index = 0;
       s64 i;
       for (i = 0; i < CPU_SETSIZE; i ++) {
 	if (CPU_ISSET(i, &initial_cpu_set) != 0) {
-	  this->processor_affinity_index[processor_index] = i;
-	  processor_index ++;
+	  this->processor_count ++;
 	}
       }
     }
+    if (this->processor_count == 0) {
+      this->processor_affinity_index = NULL;
+    } else {
+      this->processor_affinity_index = (u64*)from_ptr(f2__malloc(sizeof(u64) * this->processor_count));
+      {
+	s64 processor_index = 0;
+	s64 i;
+	for (i = 0; i < CPU_SETSIZE; i ++) {
+	  if (CPU_ISSET(i, &initial_cpu_set) != 0) {
+	    this->processor_affinity_index[processor_index] = i;
+	    processor_index ++;
+	  }
+	}
+      }
+    }
+  }
+#endif // HAVE_SCHED_GETAFFINITY
+  status("__funk2.system_processor.processor_count = " s64__fstr, (s64)this->processor_count);
+  if (this->processor_count == 0) {
+    error(nil, "could not determine processor count with either /proc/cpuinfo or sched_getaffinity.");
   }
 }
 

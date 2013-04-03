@@ -160,7 +160,7 @@ AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol])
+AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity])
 
 AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
 AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)

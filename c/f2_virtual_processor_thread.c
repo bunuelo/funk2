@@ -67,9 +67,17 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 #endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
 
+pid_t raw__get_tid() {
+#if (HAVE_SYSCALL_SYS_GETTID == 1)
+  return (pid_t)syscall(SYS_gettid);
+#else
+  return (pid_t)-1;
+#endif // (HAVE_SYSCALL_SYS_GETTID == 1)
+}
+
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
-  this->tid = (pid_t)syscall(SYS_gettid);
+  this->tid = raw__get_tid();
   {
     funk2_poller_t poller;
     funk2_poller__init(&poller, 0.01, 10);

@@ -164,6 +164,9 @@
 /* Define to 1 if you have the `strtol' function. */
 #undef HAVE_STRTOL
 
+/* Build syscall(SYS_gettid) support into Funk2 */
+#undef HAVE_SYSCALL_SYS_GETTID
+
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
 #undef HAVE_SYS_IOCTL_H
 

@@ -231,5 +231,23 @@ AC_LINK_IFELSE(
   AC_DEFINE(HAVE_PTHREAD_SETAFFINITY_NP, 0, Build pthread_setaffinity_np support into Funk2)
   AC_MSG_WARN([Funk2 will be built without pthread_setaffinity_np]))
 
+AC_MSG_CHECKING(for syscall(SYS_gettid))
+AC_LINK_IFELSE(
+  AC_LANG_SOURCE(
+    [[#define _GNU_SOURCE
+      #include <unistd.h>
+      #include <sys/syscall.h>
+      #include <sys/types.h>
+
+      int main() {
+        pid_t tid = syscall(SYS_gettid);
+      }
+    ]]),
+  AC_MSG_RESULT(yes)
+  AC_DEFINE(HAVE_SYSCALL_SYS_GETTID, 1, Build syscall(SYS_gettid) support into Funk2),
+  AC_MSG_RESULT(no)
+  AC_DEFINE(HAVE_SYSCALL_SYS_GETTID, 0, Build syscall(SYS_gettid) support into Funk2)
+  AC_MSG_WARN([Funk2 will be built without syscall(SYS_gettid)]))
+
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

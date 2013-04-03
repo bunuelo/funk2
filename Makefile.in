@@ -1930,7 +1930,11 @@ FUNK2_LIBRARY_VERSION = 0:0:0
 #              |        +- increment if source code has changed
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
-lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) 
+lib_libfunk2_la_LDFLAGS = -no-undefined -version-info $(FUNK2_LIBRARY_VERSION) -release $(FUNK2_RELEASE) $(dynamic_library_linker_flags) $(math_linker_flags) $(realtime_linker_flags) $(xmlrpc_ldflags) $(xmlrpc_ldadd) $(zlib_linker_flags) $(GTK_LIBS) $(GTHREAD_LIBS) $(LIBAVCODEC_LIBS) $(LIBSWSCALE_LIBS) $(CAIRO_LIBS) -Wl,--export-all-symbols \
+    -Wl,--enable-auto-import \
+    -Wl,--whole-archive $(lib_LTLIBRARIES) \
+    -Wl,--no-whole-archive
+
 lib_libfunk2_la_CFLAGS = $(cc_flags)
 bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 bin_funk2_static_CFLAGS = $(lib_libfunk2_la_CFLAGS)
@@ -1948,7 +1952,7 @@ extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_movie_libf2e_movie_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_cairo_libf2e_cairo_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
-extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la) $(lib_libfunk2_la_LDFLAGS)
 extension_blocks_world_libf2e_blocks_world_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)
 extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_concept_version_space_libf2e_concept_version_space_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)

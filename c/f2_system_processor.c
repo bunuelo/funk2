@@ -77,10 +77,11 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
 #else
   status("system_processor sched_getaffinity disabled.");
 #endif // HAVE_SCHED_GETAFFINITY
-  status("__funk2.system_processor.processor_count = " s64__fstr, (s64)this->processor_count);
   if (this->processor_count == 0) {
-    error(nil, "could not determine processor count with either /proc/cpuinfo or sched_getaffinity.");
+    status("assuming 1 processor.");
+    this->processor_count = 1;
   }
+  status("__funk2.system_processor.processor_count = " s64__fstr, (s64)this->processor_count);
   if (this->processor_affinity_index == NULL) {
     status("system_processor warning affinities are disabled.");
   }

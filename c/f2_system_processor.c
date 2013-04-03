@@ -86,7 +86,7 @@ void funk2_system_processor__destroy(funk2_system_processor_t* this) {
 
 void funk2_system_processor__print_status(funk2_system_processor_t* this) {
   status("* funk2.system_processor.processor_count = " u64__fstr, this->processor_count);
-  {
+  if (this->processor_affinity_index != NULL) {
     s64 i;
     for (i = 0; i < this->processor_count; i ++) {
       status("* funk2.system_processor.processor_assignment_index[" s64__fstr "] = " u64__fstr, i, this->processor_affinity_index[i]);

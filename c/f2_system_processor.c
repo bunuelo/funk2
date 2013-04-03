@@ -28,6 +28,9 @@
 #include "funk2.h"
 
 void funk2_system_processor__init(funk2_system_processor_t* this) {
+  funk2_proc_cpuinfo_t proc_cpuinfo;
+  funk2_proc_cpuinfo__init(&proc_cpuinfo);
+  
   cpu_set_t initial_cpu_set;
   CPU_ZERO(&initial_cpu_set);
   {

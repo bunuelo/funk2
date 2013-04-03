@@ -74,6 +74,8 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
       }
     }
   }
+#else
+  status("system_processor sched_getaffinity disabled.");
 #endif // HAVE_SCHED_GETAFFINITY
   status("__funk2.system_processor.processor_count = " s64__fstr, (s64)this->processor_count);
   if (this->processor_count == 0) {

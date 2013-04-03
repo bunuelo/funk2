@@ -75,6 +75,9 @@ else
 *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
 fi
 
+# checking for execinfo.h used for glib backtrace
+AC_CHECK_HEADERS([execinfo.h],[],[])
+
 ## Checking for ncurses.
 #have_ncurses_requirements=1
 #AC_MSG_NOTICE([Checking for ncurses and its requirements.])

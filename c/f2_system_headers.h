@@ -80,7 +80,9 @@ using __cxxabiv1::__cxa_demangle;
 #  include <dlfcn.h>
 #endif
 #include <errno.h>
-#include <execinfo.h>
+#if defined(HAVE_EXECINFO_H)
+#  include <execinfo.h>
+#endif // HAVE_EXECINFO_H
 #include <fcntl.h>
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>

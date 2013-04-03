@@ -51,12 +51,18 @@ void funk2_proc_cpuinfo__init(funk2_proc_cpuinfo_t* this) {
       char* value_string     = (char*)malloc(read_length + 1);
       sscanf(line, "%[^\t:] : %[^\t\n]", parameter_string, value_string);
       status("funk2_proc_cpuinfo__init: parsed \"%s\" = \"%s\"", parameter_string, value_string);
+      if (strncmp(parameter_string, "processor", read_length) == 0) {
+	status("funk2_proc_cpuinfo__init: found processor.");
+	this->processor_count ++;
+      }
       free(parameter_string);
       free(value_string);
     }
     status("funk2_proc_cpuinfo__init done.");
-    
     free(line);
+  }
+  if (this->processor_count > 0) {
+    this->supported = boolean__true;
   }
 }
 

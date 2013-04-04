@@ -6641,7 +6641,9 @@ f2ptr f2__gtk_extension__core_extension__initialize(f2ptr cause) {
     printf("\nTried to initialize gtk while gtk is already initialized."); fflush(stdout);
     status(  "Tried to initialize gtk while gtk is already initialized.");
   } else {
+#if defined(F2__GTK__SUPPORTED)
     funk2_gtk_no_delete_list__reset(cause);
+#endif // !F2__GTK__SUPPORTED
     __funk2__gtk = (funk2_gtk_t*)from_ptr(f2__malloc(sizeof(funk2_gtk_t)));
     __funk2__gtk->initialized_successfully = boolean__false;
     {

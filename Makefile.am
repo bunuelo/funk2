@@ -786,7 +786,7 @@ extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la build_extension_lick_libf2e_lick_la
 	$(MAKE) extension/event_stream/libf2e_event_stream.la
-extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la extension/event_stream/libf2e_event_stream.la -Wl,--no-whole-archive
 extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la build_extension_event_stream_libf2e_event_stream_la
@@ -951,7 +951,13 @@ build_extension_semantic_frame_libf2e_semantic_frame_la: lib/libfunk2.la
 extension_semantic_frame_libf2e_semantic_frame_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_frame_libf2e_semantic_frame_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la: lib/libfunk2.la
+build_extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la: \
+  lib/libfunk2.la \
+  build_extension_semantic_event_libf2e_semantic_event_la \
+  build_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la \
+  build_extension_semantic_event_tree_libf2e_semantic_event_tree_la \
+  build_extension_semantic_time_libf2e_semantic_time_la \
+  build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la
 	$(MAKE) extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la
 extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

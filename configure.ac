@@ -52,7 +52,7 @@ AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 #  include <GL/glx.h>
 #endif
 ]])
-AC_CHECK_LIB(clock_gettime)
+#AC_CHECK_LIB(clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
@@ -198,7 +198,7 @@ AC_LINK_IFELSE(
 # atomic builtins are required for threading support.
 AC_MSG_CHECKING(for GCC atomic builtins)
 AC_LINK_IFELSE(
-  AC_LANG_SOURCE(
+  [AC_LANG_SOURCE(
     [[int main() {
         volatile unsigned long val = 1;
         __sync_synchronize();
@@ -207,7 +207,7 @@ AC_LINK_IFELSE(
         __sync_sub_and_fetch(&val, 1);
         return 0;
       }
-    ]]),
+    ]])],
   AC_MSG_RESULT(yes)
   AC_DEFINE(GCC_ATOMIC_BUILTINS, 1, Build multithreading support into Funk2),
   AC_MSG_RESULT(no)
@@ -216,7 +216,7 @@ AC_LINK_IFELSE(
 
 AC_MSG_CHECKING(for pthread_setaffinity_np)
 AC_LINK_IFELSE(
-  AC_LANG_SOURCE(
+  [AC_LANG_SOURCE(
     [[#define _GNU_SOURCE
       #include <pthread.h>
       int main() {
@@ -224,7 +224,7 @@ AC_LINK_IFELSE(
         pthread_setaffinity_np(pthread_self(), sizeof(cpu_set_t), &cpuset);
         return 0;
       }
-    ]]),
+    ]])],
   AC_MSG_RESULT(yes)
   AC_DEFINE(HAVE_PTHREAD_SETAFFINITY_NP, 1, Build pthread_setaffinity_np support into Funk2),
   AC_MSG_RESULT(no)
@@ -233,7 +233,7 @@ AC_LINK_IFELSE(
 
 AC_MSG_CHECKING(for syscall(SYS_gettid))
 AC_LINK_IFELSE(
-  AC_LANG_SOURCE(
+  [AC_LANG_SOURCE(
     [[#define _GNU_SOURCE
       #include <unistd.h>
       #include <sys/syscall.h>
@@ -242,7 +242,7 @@ AC_LINK_IFELSE(
       int main() {
         pid_t tid = syscall(SYS_gettid);
       }
-    ]]),
+    ]])],
   AC_MSG_RESULT(yes)
   AC_DEFINE(HAVE_SYSCALL_SYS_GETTID, 1, Build syscall(SYS_gettid) support into Funk2),
   AC_MSG_RESULT(no)

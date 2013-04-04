@@ -97,11 +97,11 @@ if NEED_REALTIME_LINK
 realtime_linker_flags = -lrt
 endif
 
-if XMLRPC_SUPPORTED
-xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
-xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
-xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
-endif
+#if XMLRPC_SUPPORTED
+#xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
+#xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
+#xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
+#endif
 
 debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 #-DF2__PROCESSOR_MUTEX__DEBUG -DF2__DEBUG__OBJECT__TYPE -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 
@@ -617,8 +617,6 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-#  -no-undefined
-
 FUNK2_GCC_LINKER_FLAGS = \
   $(dynamic_library_linker_flags) \
   $(math_linker_flags) \
@@ -635,6 +633,7 @@ FUNK2_GCC_LINKER_FLAGS = \
 lib_libfunk2_la_LDFLAGS = \
   -version-info $(FUNK2_LIBRARY_VERSION) \
   -release $(FUNK2_RELEASE) \
+  -no-undefined \
   $(FUNK2_GCC_LINKER_FLAGS)
 
 #  -Wl,--export-all-symbols
@@ -644,8 +643,8 @@ lib_libfunk2_la_LDFLAGS = \
 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 
-bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
-bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
+#bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
+#bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

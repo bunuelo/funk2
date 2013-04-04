@@ -6670,13 +6670,13 @@ build_extension_image_libf2e_image_la: lib/libfunk2.la
 build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la build_extension_image_libf2e_image_la
 	$(MAKE) extension/image_sequence/libf2e_image_sequence.la
 
-build_extension_movie_libf2e_movie_la: lib/libfunk2.la
+build_extension_movie_libf2e_movie_la: lib/libfunk2.la build_extension_image_sequence_libf2e_image_sequence_la
 	$(MAKE) extension/movie/libf2e_movie.la
 
 build_extension_cairo_libf2e_cairo_la: lib/libfunk2.la
 	$(MAKE) extension/cairo/libf2e_cairo.la
 
-build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la
+build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la build_extension_cairo_libf2e_cairo_la
 	$(MAKE) extension/blocks_world/libf2e_blocks_world.la
 
 build_extension_concept_version_space_libf2e_concept_version_space_la: lib/libfunk2.la

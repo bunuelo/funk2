@@ -759,7 +759,7 @@ build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la build_e
 extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_movie_libf2e_movie_la: lib/libfunk2.la
+build_extension_movie_libf2e_movie_la: lib/libfunk2.la build_extension_image_sequence_libf2e_image_sequence_la
 	$(MAKE) extension/movie/libf2e_movie.la
 extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -769,7 +769,7 @@ build_extension_cairo_libf2e_cairo_la: lib/libfunk2.la
 extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la
+build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la build_extension_cairo_libf2e_cairo_la
 	$(MAKE) extension/blocks_world/libf2e_blocks_world.la
 extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la) $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_blocks_world_libf2e_blocks_world_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

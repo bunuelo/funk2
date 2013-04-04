@@ -180,7 +180,100 @@ ACLOCAL_AMFLAGS = -I m4
 
 
 
-all_core_extensions = \
+all_static_core_extensions = \
+  extension/blocks_world/libf2e_blocks_world.a \
+  extension/cairo/libf2e_cairo.a \
+  extension/concept_version_space/libf2e_concept_version_space.a \
+  extension/conceptnet/libf2e_conceptnet.a \
+  extension/event_stream/libf2e_event_stream.a \
+  extension/equals_hash/libf2e_equals_hash.a \
+  extension/fibermon/libf2e_fibermon.a \
+  extension/forgetful_event_stream/libf2e_forgetful_event_stream.a \
+  extension/forgetful_semantic_event_knowledge_base/libf2e_forgetful_semantic_event_knowledge_base.a \
+  extension/forgetful_semantic_resource_event_knowledge_base/libf2e_forgetful_semantic_resource_event_knowledge_base.a \
+  extension/forward_planner/libf2e_forward_planner.a \
+  extension/frame_ball/libf2e_frame_ball.a \
+  extension/graph_isomorphism/libf2e_graph_isomorphism.a \
+  extension/gtk_extension/libf2e_gtk_extension.a \
+  extension/image/libf2e_image.a \
+  extension/image_sequence/libf2e_image_sequence.a \
+  extension/interval_tree/libf2e_interval_tree.a \
+  extension/lick/libf2e_lick.a \
+  extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.a \
+  extension/movie/libf2e_movie.a \
+  extension/keyboard/libf2e_keyboard.a \
+  extension/pattern_match/libf2e_pattern_match.a \
+  extension/propogator/libf2e_propogator.a \
+  extension/semantic_action/libf2e_semantic_action.a \
+  extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.a \
+  extension/semantic_action_event/libf2e_semantic_action_event.a \
+  extension/semantic_agent/libf2e_semantic_agent.a \
+  extension/semantic_causal_event/libf2e_semantic_causal_event.a \
+  extension/semantic_dependency/libf2e_semantic_dependency.a \
+  extension/semantic_event_sequence/libf2e_semantic_event_sequence.a \
+  extension/semantic_causal_object/libf2e_semantic_causal_object.a \
+  extension/semantic_category/libf2e_semantic_category.a \
+  extension/semantic_causal_concept/libf2e_semantic_causal_concept.a \
+  extension/semantic_cons/libf2e_semantic_cons.a \
+  extension/semantic_containment_object/libf2e_semantic_containment_object.a \
+  extension/semantic_counterfactual_transframe/libf2e_semantic_counterfactual_transframe.a \
+  extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.a \
+  extension/semantic_environment/libf2e_semantic_environment.a \
+  extension/semantic_event/libf2e_semantic_event.a \
+  extension/semantic_event_transframe/libf2e_semantic_event_transframe.a \
+  extension/semantic_event_tree/libf2e_semantic_event_tree.a \
+  extension/semantic_expectation_failure/libf2e_semantic_expectation_failure.a \
+  extension/semantic_frame/libf2e_semantic_frame.a \
+  extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.a \
+  extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.a \
+  extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.a \
+  extension/semantic_object_type_event/libf2e_semantic_object_type_event.a \
+  extension/semantic_ordered_object/libf2e_semantic_ordered_object.a \
+  extension/semantic_object/libf2e_semantic_object.a \
+  extension/semantic_packable_object/libf2e_semantic_packable_object.a \
+  extension/semantic_partial_state/libf2e_semantic_partial_state.a \
+  extension/semantic_partial_state_property/libf2e_semantic_partial_state_property.a \
+  extension/semantic_partial_state_property_relation/libf2e_semantic_partial_state_property_relation.a \
+  extension/semantic_plan_execution_node/libf2e_semantic_plan_execution_node.a \
+  extension/semantic_plan_object/libf2e_semantic_plan_object.a \
+  extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.a \
+  extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.a \
+  extension/semantic_plan_operator_activation/libf2e_semantic_plan_operator_activation.a \
+  extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.a \
+  extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.a \
+  extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.a \
+  extension/semantic_reflective_object/libf2e_semantic_reflective_object.a \
+  extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.a \
+  extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.a \
+  extension/semantic_reflective_object_type_relation_event/libf2e_semantic_reflective_object_type_relation_event.a \
+  extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.a \
+  extension/semantic_goal/libf2e_semantic_goal.a \
+  extension/semantic_goal_event/libf2e_semantic_goal_event.a \
+  extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.a \
+  extension/semantic_planner/libf2e_semantic_planner.a \
+  extension/semantic_proprioception/libf2e_semantic_proprioception.a \
+  extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.a \
+  extension/semantic_proprioceptual_orientation/libf2e_semantic_proprioceptual_orientation.a \
+  extension/semantic_proprioceptual_position/libf2e_semantic_proprioceptual_position.a \
+  extension/semantic_realm/libf2e_semantic_realm.a \
+  extension/semantic_relationship_key/libf2e_semantic_relationship_key.a \
+  extension/semantic_resource/libf2e_semantic_resource.a \
+  extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.a \
+  extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.a \
+  extension/semantic_self/libf2e_semantic_self.a \
+  extension/semantic_situation/libf2e_semantic_situation.a \
+  extension/semantic_situation_category/libf2e_semantic_situation_category.a \
+  extension/semantic_situation_transition/libf2e_semantic_situation_transition.a \
+  extension/semantic_somatosensation/libf2e_semantic_somatosensation.a \
+  extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.a \
+  extension/semantic_temporal_object/libf2e_semantic_temporal_object.a \
+  extension/semantic_thought/libf2e_semantic_thought.a \
+  extension/semantic_time/libf2e_semantic_time.a \
+  extension/semantic_visual_object/libf2e_semantic_visual_object.a \
+  extension/timeline/libf2e_timeline.a \
+  extension/transframe/libf2e_transframe.a
+
+all_dynamic_core_extensions = \
   extension/blocks_world/libf2e_blocks_world.la \
   extension/cairo/libf2e_cairo.la \
   extension/concept_version_space/libf2e_concept_version_space.la \
@@ -273,7 +366,7 @@ all_core_extensions = \
   extension/timeline/libf2e_timeline.la \
   extension/transframe/libf2e_transframe.la
 
-finish_compiling_all_core_extensions: \
+finish_compiling_all_dynamic_core_extensions: \
   build_extension_equals_hash_libf2e_equals_hash_la \
   build_extension_fibermon_libf2e_fibermon_la \
   build_extension_gtk_extension_libf2e_gtk_extension_la \
@@ -457,7 +550,7 @@ finish_compiling_all_core_extensions: \
 	cp -fa extension/timeline/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
 	cp -fa extension/transframe/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 
-lib_LTLIBRARIES = lib/libfunk2.la $(all_core_extensions)
+lib_LTLIBRARIES = lib/libfunk2.la $(all_dynamic_core_extensions)
 
 #bin_PROGRAMS    = bin/funk2-static
 
@@ -598,98 +691,189 @@ lib_libfunk2_la_SOURCES = \
   c/funk2.c \
   config_bit_num.h
 
-extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                                               = extension/blocks_world/blocks_world.c
-extension_cairo_libf2e_cairo_la_SOURCES                                                                                             = extension/cairo/cairo.c
-extension_concept_version_space_libf2e_concept_version_space_la_SOURCES                                                             = extension/concept_version_space/concept_version_space.c
-extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                                                   = extension/conceptnet/conceptnet.c
-extension_event_stream_libf2e_event_stream_la_SOURCES                                                                               = extension/event_stream/event_stream.c
-extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                                                 = extension/equals_hash/equals_hash.c
-extension_fibermon_libf2e_fibermon_a_SOURCES                                                                                        = extension/fibermon/fibermon.c
-extension_fibermon_libf2e_fibermon_la_LDADD                                                                                         = extension/fibermon/libf2e_fibermon.a
-extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                                           = extension/forgetful_event_stream/forgetful_event_stream.c
-extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_SOURCES                         = extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.c
-extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                                         = extension/forward_planner/forward_planner.c
-extension_frame_ball_libf2e_frame_ball_la_SOURCES                                                                                   = extension/frame_ball/frame_ball.c
-extension_graph_isomorphism_libf2e_graph_isomorphism_la_SOURCES                                                                     = extension/graph_isomorphism/graph_isomorphism.c
-extension_gtk_extension_libf2e_gtk_extension_la_SOURCES                                                                             = extension/gtk_extension/gtk_extension.c
-extension_image_libf2e_image_la_SOURCES                                                                                             = extension/image/image.c
-extension_image_sequence_libf2e_image_sequence_la_SOURCES                                                                           = extension/image_sequence/image_sequence.c
-extension_interval_tree_libf2e_interval_tree_la_SOURCES                                                                             = extension/interval_tree/interval_tree.c
-extension_lick_libf2e_lick_la_SOURCES                                                                                               = extension/lick/lick.c
-extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_SOURCES                                               = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
-extension_movie_libf2e_movie_la_SOURCES                                                                                             = extension/movie/movie.c
-extension_keyboard_libf2e_keyboard_la_SOURCES                                                                                       = extension/keyboard/keyboard.c
-extension_pattern_match_libf2e_pattern_match_la_SOURCES                                                                             = extension/pattern_match/pattern_match.c
-extension_propogator_libf2e_propogator_la_SOURCES                                                                                   = extension/propogator/propogator.c
-extension_semantic_action_libf2e_semantic_action_la_SOURCES                                                                         = extension/semantic_action/semantic_action.c
-extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_SOURCES                                           = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
-extension_semantic_action_event_libf2e_semantic_action_event_la_SOURCES                                                             = extension/semantic_action_event/semantic_action_event.c
-extension_semantic_agent_libf2e_semantic_agent_la_SOURCES                                                                           = extension/semantic_agent/semantic_agent.c
-extension_semantic_causal_event_libf2e_semantic_causal_event_la_SOURCES                                                             = extension/semantic_causal_event/semantic_causal_event.c
-extension_semantic_dependency_libf2e_semantic_dependency_la_SOURCES                                                                 = extension/semantic_dependency/semantic_dependency.c
-extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_SOURCES                                                         = extension/semantic_event_sequence/semantic_event_sequence.c
-extension_semantic_causal_object_libf2e_semantic_causal_object_la_SOURCES                                                           = extension/semantic_causal_object/semantic_causal_object.c
-extension_semantic_category_libf2e_semantic_category_la_SOURCES                                                                     = extension/semantic_category/semantic_category.c
-extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_SOURCES                                                         = extension/semantic_causal_concept/semantic_causal_concept.c
-extension_semantic_cons_libf2e_semantic_cons_la_SOURCES                                                                             = extension/semantic_cons/semantic_cons.c
-extension_semantic_containment_object_libf2e_semantic_containment_object_la_SOURCES                                                 = extension/semantic_containment_object/semantic_containment_object.c
-extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_SOURCES                                   = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
-extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_SOURCES                                           = extension/semantic_directed_action_event/semantic_directed_action_event.c
-extension_semantic_environment_libf2e_semantic_environment_la_SOURCES                                                               = extension/semantic_environment/semantic_environment.c
-extension_semantic_event_libf2e_semantic_event_la_SOURCES                                                                           = extension/semantic_event/semantic_event.c
-extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_SOURCES                                                     = extension/semantic_event_transframe/semantic_event_transframe.c
-extension_semantic_event_tree_libf2e_semantic_event_tree_la_SOURCES                                                                 = extension/semantic_event_tree/semantic_event_tree.c
-extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_SOURCES                                               = extension/semantic_expectation_failure/semantic_expectation_failure.c
-extension_semantic_frame_libf2e_semantic_frame_la_SOURCES                                                                           = extension/semantic_frame/semantic_frame.c
-extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_SOURCES                                             = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
-extension_semantic_goal_libf2e_semantic_goal_la_SOURCES                                                                             = extension/semantic_goal/semantic_goal.c
-extension_semantic_goal_event_libf2e_semantic_goal_event_la_SOURCES                                                                 = extension/semantic_goal_event/semantic_goal_event.c
-extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_SOURCES                           = extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
-extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_SOURCES                                       = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
-extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_SOURCES                                 = extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_SOURCES                                                         = extension/semantic_knowledge_base/semantic_knowledge_base.c
-extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_SOURCES                                                         = extension/semantic_ordered_object/semantic_ordered_object.c
-extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_SOURCES                                                   = extension/semantic_object_type_event/semantic_object_type_event.c
-extension_semantic_object_libf2e_semantic_object_la_SOURCES                                                                         = extension/semantic_object/semantic_object.c
-extension_semantic_packable_object_libf2e_semantic_packable_object_la_SOURCES                                                       = extension/semantic_packable_object/semantic_packable_object.c
-extension_semantic_partial_state_libf2e_semantic_partial_state_la_SOURCES                                                           = extension/semantic_partial_state/semantic_partial_state.c
-extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_SOURCES                                         = extension/semantic_partial_state_property/semantic_partial_state_property.c
-extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_SOURCES                       = extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.c
-extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_SOURCES                                               = extension/semantic_plan_execution_node/semantic_plan_execution_node.c
-extension_semantic_plan_object_libf2e_semantic_plan_object_la_SOURCES                                                               = extension/semantic_plan_object/semantic_plan_object.c
-extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_SOURCES                                         = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
-extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_SOURCES                       = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
-extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_SOURCES                                     = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
-extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_SOURCES                                         = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
-extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_SOURCES                                         = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
-extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_SOURCES                                   = extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
-extension_semantic_planner_libf2e_semantic_planner_la_SOURCES                                                                       = extension/semantic_planner/semantic_planner.c
-extension_semantic_proprioception_libf2e_semantic_proprioception_la_SOURCES                                                         = extension/semantic_proprioception/semantic_proprioception.c
-extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_SOURCES                                           = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
-extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_SOURCES                                 = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
-extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_SOURCES                                       = extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
-extension_semantic_realm_libf2e_semantic_realm_la_SOURCES                                                                           = extension/semantic_realm/semantic_realm.c
-extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_SOURCES                                                   = extension/semantic_reflective_object/semantic_reflective_object.c
-extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_SOURCES                             = extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.c
-extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_SOURCES           = extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.c
-extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_SOURCES           = extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.c
-extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_SOURCES                                                     = extension/semantic_relationship_key/semantic_relationship_key.c
-extension_semantic_resource_libf2e_semantic_resource_la_SOURCES                                                                     = extension/semantic_resource/semantic_resource.c
-extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_SOURCES                                           = extension/semantic_resource_action_event/semantic_resource_action_event.c
-extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_SOURCES                                     = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
-extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_SOURCES       = extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.c
-extension_semantic_self_libf2e_semantic_self_la_SOURCES                                                                             = extension/semantic_self/semantic_self.c
-extension_semantic_situation_libf2e_semantic_situation_la_SOURCES                                                                   = extension/semantic_situation/semantic_situation.c
-extension_semantic_situation_category_libf2e_semantic_situation_category_la_SOURCES                                                 = extension/semantic_situation_category/semantic_situation_category.c
-extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_SOURCES                                             = extension/semantic_situation_transition/semantic_situation_transition.c
-extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_SOURCES                                                       = extension/semantic_somatosensation/semantic_somatosensation.c
-extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_SOURCES                                             = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
-extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_SOURCES                                                       = extension/semantic_temporal_object/semantic_temporal_object.c
-extension_semantic_thought_libf2e_semantic_thought_la_SOURCES                                                                       = extension/semantic_thought/semantic_thought.c
-extension_semantic_time_libf2e_semantic_time_la_SOURCES                                                                             = extension/semantic_time/semantic_time.c
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_SOURCES                                                           = extension/semantic_visual_object/semantic_visual_object.c
-extension_timeline_libf2e_timeline_la_SOURCES                                                                                       = extension/timeline/timeline.c
-extension_transframe_libf2e_transframe_la_SOURCES                                                                                   = extension/transframe/transframe.c
+extension_blocks_world_libf2e_blocks_world_a_SOURCES                                                                               = extension/blocks_world/blocks_world.c
+extension_cairo_libf2e_cairo_a_SOURCES                                                                                             = extension/cairo/cairo.c
+extension_concept_version_space_libf2e_concept_version_space_a_SOURCES                                                             = extension/concept_version_space/concept_version_space.c
+extension_conceptnet_libf2e_conceptnet_a_SOURCES                                                                                   = extension/conceptnet/conceptnet.c
+extension_event_stream_libf2e_event_stream_a_SOURCES                                                                               = extension/event_stream/event_stream.c
+extension_equals_hash_libf2e_equals_hash_a_SOURCES                                                                                 = extension/equals_hash/equals_hash.c
+extension_fibermon_libf2e_fibermon_a_SOURCES                                                                                       = extension/fibermon/fibermon.c
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_a_SOURCES                                                           = extension/forgetful_event_stream/forgetful_event_stream.c
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_a_SOURCES                         = extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.c
+extension_forward_planner_libf2e_forward_planner_a_SOURCES                                                                         = extension/forward_planner/forward_planner.c
+extension_frame_ball_libf2e_frame_ball_a_SOURCES                                                                                   = extension/frame_ball/frame_ball.c
+extension_graph_isomorphism_libf2e_graph_isomorphism_a_SOURCES                                                                     = extension/graph_isomorphism/graph_isomorphism.c
+extension_gtk_extension_libf2e_gtk_extension_a_SOURCES                                                                             = extension/gtk_extension/gtk_extension.c
+extension_image_libf2e_image_a_SOURCES                                                                                             = extension/image/image.c
+extension_image_sequence_libf2e_image_sequence_a_SOURCES                                                                           = extension/image_sequence/image_sequence.c
+extension_interval_tree_libf2e_interval_tree_a_SOURCES                                                                             = extension/interval_tree/interval_tree.c
+extension_lick_libf2e_lick_a_SOURCES                                                                                               = extension/lick/lick.c
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_a_SOURCES                                               = extension/meta_semantic_knowledge_base/meta_semantic_knowledge_base.c
+extension_movie_libf2e_movie_a_SOURCES                                                                                             = extension/movie/movie.c
+extension_keyboard_libf2e_keyboard_a_SOURCES                                                                                       = extension/keyboard/keyboard.c
+extension_pattern_match_libf2e_pattern_match_a_SOURCES                                                                             = extension/pattern_match/pattern_match.c
+extension_propogator_libf2e_propogator_a_SOURCES                                                                                   = extension/propogator/propogator.c
+extension_semantic_action_libf2e_semantic_action_a_SOURCES                                                                         = extension/semantic_action/semantic_action.c
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_a_SOURCES                                           = extension/semantic_action_knowledge_base/semantic_action_knowledge_base.c
+extension_semantic_action_event_libf2e_semantic_action_event_a_SOURCES                                                             = extension/semantic_action_event/semantic_action_event.c
+extension_semantic_agent_libf2e_semantic_agent_a_SOURCES                                                                           = extension/semantic_agent/semantic_agent.c
+extension_semantic_causal_event_libf2e_semantic_causal_event_a_SOURCES                                                             = extension/semantic_causal_event/semantic_causal_event.c
+extension_semantic_dependency_libf2e_semantic_dependency_a_SOURCES                                                                 = extension/semantic_dependency/semantic_dependency.c
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_a_SOURCES                                                         = extension/semantic_event_sequence/semantic_event_sequence.c
+extension_semantic_causal_object_libf2e_semantic_causal_object_a_SOURCES                                                           = extension/semantic_causal_object/semantic_causal_object.c
+extension_semantic_category_libf2e_semantic_category_a_SOURCES                                                                     = extension/semantic_category/semantic_category.c
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_a_SOURCES                                                         = extension/semantic_causal_concept/semantic_causal_concept.c
+extension_semantic_cons_libf2e_semantic_cons_a_SOURCES                                                                             = extension/semantic_cons/semantic_cons.c
+extension_semantic_containment_object_libf2e_semantic_containment_object_a_SOURCES                                                 = extension/semantic_containment_object/semantic_containment_object.c
+extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_a_SOURCES                                   = extension/semantic_counterfactual_transframe/semantic_counterfactual_transframe.c
+extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_a_SOURCES                                           = extension/semantic_directed_action_event/semantic_directed_action_event.c
+extension_semantic_environment_libf2e_semantic_environment_a_SOURCES                                                               = extension/semantic_environment/semantic_environment.c
+extension_semantic_event_libf2e_semantic_event_a_SOURCES                                                                           = extension/semantic_event/semantic_event.c
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_a_SOURCES                                                     = extension/semantic_event_transframe/semantic_event_transframe.c
+extension_semantic_event_tree_libf2e_semantic_event_tree_a_SOURCES                                                                 = extension/semantic_event_tree/semantic_event_tree.c
+extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_a_SOURCES                                               = extension/semantic_expectation_failure/semantic_expectation_failure.c
+extension_semantic_frame_libf2e_semantic_frame_a_SOURCES                                                                           = extension/semantic_frame/semantic_frame.c
+extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_a_SOURCES                                             = extension/semantic_event_knowledge_base/semantic_event_knowledge_base.c
+extension_semantic_goal_libf2e_semantic_goal_a_SOURCES                                                                             = extension/semantic_goal/semantic_goal.c
+extension_semantic_goal_event_libf2e_semantic_goal_event_a_SOURCES                                                                 = extension/semantic_goal_event/semantic_goal_event.c
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_a_SOURCES                           = extension/semantic_goal_action_causal_hypothesis/semantic_goal_action_causal_hypothesis.c
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_a_SOURCES                                       = extension/semantic_know_of_existence_event/semantic_know_of_existence_event.c
+extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_a_SOURCES                                 = extension/semantic_know_of_relationship_event/semantic_know_of_relationship_event.c
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_a_SOURCES                                                         = extension/semantic_knowledge_base/semantic_knowledge_base.c
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_a_SOURCES                                                         = extension/semantic_ordered_object/semantic_ordered_object.c
+extension_semantic_object_type_event_libf2e_semantic_object_type_event_a_SOURCES                                                   = extension/semantic_object_type_event/semantic_object_type_event.c
+extension_semantic_object_libf2e_semantic_object_a_SOURCES                                                                         = extension/semantic_object/semantic_object.c
+extension_semantic_packable_object_libf2e_semantic_packable_object_a_SOURCES                                                       = extension/semantic_packable_object/semantic_packable_object.c
+extension_semantic_partial_state_libf2e_semantic_partial_state_a_SOURCES                                                           = extension/semantic_partial_state/semantic_partial_state.c
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_a_SOURCES                                         = extension/semantic_partial_state_property/semantic_partial_state_property.c
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_a_SOURCES                       = extension/semantic_partial_state_property_relation/semantic_partial_state_property_relation.c
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_a_SOURCES                                               = extension/semantic_plan_execution_node/semantic_plan_execution_node.c
+extension_semantic_plan_object_libf2e_semantic_plan_object_a_SOURCES                                                               = extension/semantic_plan_object/semantic_plan_object.c
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_a_SOURCES                                         = extension/semantic_plan_object_type_event/semantic_plan_object_type_event.c
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_a_SOURCES                       = extension/semantic_plan_object_type_relation_event/semantic_plan_object_type_relation_event.c
+extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_a_SOURCES                                     = extension/semantic_plan_operator_activation/semantic_plan_operator_activation.c
+extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_a_SOURCES                                         = extension/semantic_plan_operator_parallel/semantic_plan_operator_parallel.c
+extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_a_SOURCES                                         = extension/semantic_plan_operator_sequence/semantic_plan_operator_sequence.c
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_a_SOURCES                                   = extension/semantic_plan_operator_suppression/semantic_plan_operator_suppression.c
+extension_semantic_planner_libf2e_semantic_planner_a_SOURCES                                                                       = extension/semantic_planner/semantic_planner.c
+extension_semantic_proprioception_libf2e_semantic_proprioception_a_SOURCES                                                         = extension/semantic_proprioception/semantic_proprioception.c
+extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_a_SOURCES                                           = extension/semantic_proprioceptual_object/semantic_proprioceptual_object.c
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_a_SOURCES                                 = extension/semantic_proprioceptual_orientation/semantic_proprioceptual_orientation.c
+extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_a_SOURCES                                       = extension/semantic_proprioceptual_position/semantic_proprioceptual_position.c
+extension_semantic_realm_libf2e_semantic_realm_a_SOURCES                                                                           = extension/semantic_realm/semantic_realm.c
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_a_SOURCES                                                   = extension/semantic_reflective_object/semantic_reflective_object.c
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_a_SOURCES                             = extension/semantic_reflective_object_type_event/semantic_reflective_object_type_event.c
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_a_SOURCES           = extension/semantic_reflective_object_type_property_event/semantic_reflective_object_type_property_event.c
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_a_SOURCES           = extension/semantic_reflective_object_type_relation_event/semantic_reflective_object_type_relation_event.c
+extension_semantic_relationship_key_libf2e_semantic_relationship_key_a_SOURCES                                                     = extension/semantic_relationship_key/semantic_relationship_key.c
+extension_semantic_resource_libf2e_semantic_resource_a_SOURCES                                                                     = extension/semantic_resource/semantic_resource.c
+extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_a_SOURCES                                           = extension/semantic_resource_action_event/semantic_resource_action_event.c
+extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_a_SOURCES                                     = extension/semantic_resource_action_sequence/semantic_resource_action_sequence.c
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_a_SOURCES       = extension/forgetful_semantic_resource_event_knowledge_base/forgetful_semantic_resource_event_knowledge_base.c
+extension_semantic_self_libf2e_semantic_self_a_SOURCES                                                                             = extension/semantic_self/semantic_self.c
+extension_semantic_situation_libf2e_semantic_situation_a_SOURCES                                                                   = extension/semantic_situation/semantic_situation.c
+extension_semantic_situation_category_libf2e_semantic_situation_category_a_SOURCES                                                 = extension/semantic_situation_category/semantic_situation_category.c
+extension_semantic_situation_transition_libf2e_semantic_situation_transition_a_SOURCES                                             = extension/semantic_situation_transition/semantic_situation_transition.c
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_a_SOURCES                                                       = extension/semantic_somatosensation/semantic_somatosensation.c
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_a_SOURCES                                             = extension/semantic_somatosensory_object/semantic_somatosensory_object.c
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_a_SOURCES                                                       = extension/semantic_temporal_object/semantic_temporal_object.c
+extension_semantic_thought_libf2e_semantic_thought_a_SOURCES                                                                       = extension/semantic_thought/semantic_thought.c
+extension_semantic_time_libf2e_semantic_time_a_SOURCES                                                                             = extension/semantic_time/semantic_time.c
+extension_semantic_visual_object_libf2e_semantic_visual_object_a_SOURCES                                                           = extension/semantic_visual_object/semantic_visual_object.c
+extension_timeline_libf2e_timeline_a_SOURCES                                                                                       = extension/timeline/timeline.c
+extension_transframe_libf2e_transframe_a_SOURCES                                                                                   = extension/transframe/transframe.c
+
+extension_blocks_world_libf2e_blocks_world_la_LDADD                                                                               = extension/blocks_world/libf2e_blocks_world.a
+extension_cairo_libf2e_cairo_la_LDADD                                                                                             = extension/cairo/libf2e_cairo.a
+extension_concept_version_space_libf2e_concept_version_space_la_LDADD                                                             = extension/concept_version_space/libf2e_concept_version_space.a
+extension_conceptnet_libf2e_conceptnet_la_LDADD                                                                                   = extension/conceptnet/libf2e_conceptnet.a
+extension_event_stream_libf2e_event_stream_la_LDADD                                                                               = extension/event_stream/libf2e_event_stream.a
+extension_equals_hash_libf2e_equals_hash_la_LDADD                                                                                 = extension/equals_hash/libf2e_equals_hash.a
+extension_fibermon_libf2e_fibermon_la_LDADD                                                                                       = extension/fibermon/libf2e_fibermon.a
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDADD                                                           = extension/forgetful_event_stream/libf2e_forgetful_event_stream.a
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_LDADD                         = extension/forgetful_semantic_event_knowledge_base/libf2e_forgetful_semantic_event_knowledge_base.a
+extension_forward_planner_libf2e_forward_planner_la_LDADD                                                                         = extension/forward_planner/libf2e_forward_planner.a
+extension_frame_ball_libf2e_frame_ball_la_LDADD                                                                                   = extension/frame_ball/libf2e_frame_ball.a
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDADD                                                                     = extension/graph_isomorphism/libf2e_graph_isomorphism.a
+extension_gtk_extension_libf2e_gtk_extension_la_LDADD                                                                             = extension/gtk_extension/libf2e_gtk_extension.a
+extension_image_libf2e_image_la_LDADD                                                                                             = extension/image/libf2e_image.a
+extension_image_sequence_libf2e_image_sequence_la_LDADD                                                                           = extension/image_sequence/libf2e_image_sequence.a
+extension_interval_tree_libf2e_interval_tree_la_LDADD                                                                             = extension/interval_tree/libf2e_interval_tree.a
+extension_lick_libf2e_lick_la_LDADD                                                                                               = extension/lick/libf2e_lick.a
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDADD                                               = extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.a
+extension_movie_libf2e_movie_la_LDADD                                                                                             = extension/movie/libf2e_movie.a
+extension_keyboard_libf2e_keyboard_la_LDADD                                                                                       = extension/keyboard/libf2e_keyboard.a
+extension_pattern_match_libf2e_pattern_match_la_LDADD                                                                             = extension/pattern_match/libf2e_pattern_match.a
+extension_propogator_libf2e_propogator_la_LDADD                                                                                   = extension/propogator/libf2e_propogator.a
+extension_semantic_action_libf2e_semantic_action_la_LDADD                                                                         = extension/semantic_action/libf2e_semantic_action.a
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_LDADD                                           = extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.a
+extension_semantic_action_event_libf2e_semantic_action_event_la_LDADD                                                             = extension/semantic_action_event/libf2e_semantic_action_event.a
+extension_semantic_agent_libf2e_semantic_agent_la_LDADD                                                                           = extension/semantic_agent/libf2e_semantic_agent.a
+extension_semantic_causal_event_libf2e_semantic_causal_event_la_LDADD                                                             = extension/semantic_causal_event/libf2e_semantic_causal_event.a
+extension_semantic_dependency_libf2e_semantic_dependency_la_LDADD                                                                 = extension/semantic_dependency/libf2e_semantic_dependency.a
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDADD                                                         = extension/semantic_event_sequence/libf2e_semantic_event_sequence.a
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDADD                                                           = extension/semantic_causal_object/libf2e_semantic_causal_object.a
+extension_semantic_category_libf2e_semantic_category_la_LDADD                                                                     = extension/semantic_category/libf2e_semantic_category.a
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDADD                                                         = extension/semantic_causal_concept/libf2e_semantic_causal_concept.a
+extension_semantic_cons_libf2e_semantic_cons_la_LDADD                                                                             = extension/semantic_cons/libf2e_semantic_cons.a
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDADD                                                 = extension/semantic_containment_object/libf2e_semantic_containment_object.a
+extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_LDADD                                   = extension/semantic_counterfactual_transframe/libf2e_semantic_counterfactual_transframe.a
+extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDADD                                           = extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.a
+extension_semantic_environment_libf2e_semantic_environment_la_LDADD                                                               = extension/semantic_environment/libf2e_semantic_environment.a
+extension_semantic_event_libf2e_semantic_event_la_LDADD                                                                           = extension/semantic_event/libf2e_semantic_event.a
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_LDADD                                                     = extension/semantic_event_transframe/libf2e_semantic_event_transframe.a
+extension_semantic_event_tree_libf2e_semantic_event_tree_la_LDADD                                                                 = extension/semantic_event_tree/libf2e_semantic_event_tree.a
+extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_LDADD                                               = extension/semantic_expectation_failure/libf2e_semantic_expectation_failure.a
+extension_semantic_frame_libf2e_semantic_frame_la_LDADD                                                                           = extension/semantic_frame/libf2e_semantic_frame.a
+extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_LDADD                                             = extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.a
+extension_semantic_goal_libf2e_semantic_goal_la_LDADD                                                                             = extension/semantic_goal/libf2e_semantic_goal.a
+extension_semantic_goal_event_libf2e_semantic_goal_event_la_LDADD                                                                 = extension/semantic_goal_event/libf2e_semantic_goal_event.a
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_LDADD                           = extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.a
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_LDADD                                       = extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.a
+extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_LDADD                                 = extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.a
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDADD                                                         = extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.a
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDADD                                                         = extension/semantic_ordered_object/libf2e_semantic_ordered_object.a
+extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_LDADD                                                   = extension/semantic_object_type_event/libf2e_semantic_object_type_event.a
+extension_semantic_object_libf2e_semantic_object_la_LDADD                                                                         = extension/semantic_object/libf2e_semantic_object.a
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDADD                                                       = extension/semantic_packable_object/libf2e_semantic_packable_object.a
+extension_semantic_partial_state_libf2e_semantic_partial_state_la_LDADD                                                           = extension/semantic_partial_state/libf2e_semantic_partial_state.a
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_LDADD                                         = extension/semantic_partial_state_property/libf2e_semantic_partial_state_property.a
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_LDADD                       = extension/semantic_partial_state_property_relation/libf2e_semantic_partial_state_property_relation.a
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_LDADD                                               = extension/semantic_plan_execution_node/libf2e_semantic_plan_execution_node.a
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDADD                                                               = extension/semantic_plan_object/libf2e_semantic_plan_object.a
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_LDADD                                         = extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.a
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_LDADD                       = extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.a
+extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_LDADD                                     = extension/semantic_plan_operator_activation/libf2e_semantic_plan_operator_activation.a
+extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_LDADD                                         = extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.a
+extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_LDADD                                         = extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.a
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_LDADD                                   = extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.a
+extension_semantic_planner_libf2e_semantic_planner_la_LDADD                                                                       = extension/semantic_planner/libf2e_semantic_planner.a
+extension_semantic_proprioception_libf2e_semantic_proprioception_la_LDADD                                                         = extension/semantic_proprioception/libf2e_semantic_proprioception.a
+extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_LDADD                                           = extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.a
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_LDADD                                 = extension/semantic_proprioceptual_orientation/libf2e_semantic_proprioceptual_orientation.a
+extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_LDADD                                       = extension/semantic_proprioceptual_position/libf2e_semantic_proprioceptual_position.a
+extension_semantic_realm_libf2e_semantic_realm_la_LDADD                                                                           = extension/semantic_realm/libf2e_semantic_realm.a
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_LDADD                                                   = extension/semantic_reflective_object/libf2e_semantic_reflective_object.a
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_LDADD                             = extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.a
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_LDADD           = extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.a
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_LDADD           = extension/semantic_reflective_object_type_relation_event/libf2e_semantic_reflective_object_type_relation_event.a
+extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_LDADD                                                     = extension/semantic_relationship_key/libf2e_semantic_relationship_key.a
+extension_semantic_resource_libf2e_semantic_resource_la_LDADD                                                                     = extension/semantic_resource/libf2e_semantic_resource.a
+extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDADD                                           = extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.a
+extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDADD                                     = extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.a
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_LDADD       = extension/forgetful_semantic_resource_event_knowledge_base/libf2e_forgetful_semantic_resource_event_knowledge_base.a
+extension_semantic_self_libf2e_semantic_self_la_LDADD                                                                             = extension/semantic_self/libf2e_semantic_self.a
+extension_semantic_situation_libf2e_semantic_situation_la_LDADD                                                                   = extension/semantic_situation/libf2e_semantic_situation.a
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_LDADD                                                 = extension/semantic_situation_category/libf2e_semantic_situation_category.a
+extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LDADD                                             = extension/semantic_situation_transition/libf2e_semantic_situation_transition.a
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LDADD                                                       = extension/semantic_somatosensation/libf2e_semantic_somatosensation.a
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LDADD                                             = extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.a
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDADD                                                       = extension/semantic_temporal_object/libf2e_semantic_temporal_object.a
+extension_semantic_thought_libf2e_semantic_thought_la_LDADD                                                                       = extension/semantic_thought/libf2e_semantic_thought.a
+extension_semantic_time_libf2e_semantic_time_la_LDADD                                                                             = extension/semantic_time/libf2e_semantic_time.a
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDADD                                                           = extension/semantic_visual_object/libf2e_semantic_visual_object.a
+extension_timeline_libf2e_timeline_la_LDADD                                                                                       = extension/timeline/libf2e_timeline.a
+extension_transframe_libf2e_transframe_la_LDADD                                                                                   = extension/transframe/libf2e_transframe.a
 
 #bin_funk2_static_SOURCES = c/funk2_main.c $(lib_libfunk2_la_SOURCES)
 
@@ -736,459 +920,459 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 #bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 #bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la
+build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/equals_hash/libf2e_equals_hash.la 
-extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la
+build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/fibermon/libf2e_fibermon.la 
-extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_fibermon_libf2e_fibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_gtk_extension_libf2e_gtk_extension_la: lib/libfunk2.la
+build_extension_gtk_extension_libf2e_gtk_extension_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/gtk_extension/libf2e_gtk_extension.la
-extension_gtk_extension_libf2e_gtk_extension_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_gtk_extension_libf2e_gtk_extension_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_gtk_extension_libf2e_gtk_extension_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_image_libf2e_image_la: lib/libfunk2.la
+build_extension_image_libf2e_image_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/image/libf2e_image.la
-extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_image_libf2e_image_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la
+build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/image_sequence/libf2e_image_sequence.la
-extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_movie_libf2e_movie_la: lib/libfunk2.la
+build_extension_movie_libf2e_movie_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/movie/libf2e_movie.la
-extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_movie_libf2e_movie_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_movie_libf2e_movie_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_cairo_libf2e_cairo_la: lib/libfunk2.la
+build_extension_cairo_libf2e_cairo_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/cairo/libf2e_cairo.la
-extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_cairo_libf2e_cairo_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_cairo_libf2e_cairo_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la
+build_extension_blocks_world_libf2e_blocks_world_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/blocks_world/libf2e_blocks_world.la
-extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la) $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_blocks_world_libf2e_blocks_world_la_LDFLAGS = $(lib_libfunk2_la) $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_blocks_world_libf2e_blocks_world_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_concept_version_space_libf2e_concept_version_space_la: lib/libfunk2.la
+build_extension_concept_version_space_libf2e_concept_version_space_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/concept_version_space/libf2e_concept_version_space.la
-extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_concept_version_space_libf2e_concept_version_space_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_concept_version_space_libf2e_concept_version_space_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_conceptnet_libf2e_conceptnet_la: lib/libfunk2.la
+build_extension_conceptnet_libf2e_conceptnet_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/conceptnet/libf2e_conceptnet.la
-extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la
+build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/event_stream/libf2e_event_stream.la
-extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la
+build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/forgetful_event_stream/libf2e_forgetful_event_stream.la
-extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la: lib/libfunk2.la
+build_extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/forgetful_semantic_event_knowledge_base/libf2e_forgetful_semantic_event_knowledge_base.la
-extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_forward_planner_libf2e_forward_planner_la: lib/libfunk2.la
+build_extension_forward_planner_libf2e_forward_planner_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/forward_planner/libf2e_forward_planner.la
-extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_forward_planner_libf2e_forward_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_forward_planner_libf2e_forward_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_frame_ball_libf2e_frame_ball_la: lib/libfunk2.la
+build_extension_frame_ball_libf2e_frame_ball_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/frame_ball/libf2e_frame_ball.la
-extension_frame_ball_libf2e_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_frame_ball_libf2e_frame_ball_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_frame_ball_libf2e_frame_ball_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_graph_isomorphism_libf2e_graph_isomorphism_la: lib/libfunk2.la
+build_extension_graph_isomorphism_libf2e_graph_isomorphism_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/graph_isomorphism/libf2e_graph_isomorphism.la
-extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_graph_isomorphism_libf2e_graph_isomorphism_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_graph_isomorphism_libf2e_graph_isomorphism_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_keyboard_libf2e_keyboard_la: lib/libfunk2.la
+build_extension_keyboard_libf2e_keyboard_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/keyboard/libf2e_keyboard.la
-extension_keyboard_libf2e_keyboard_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_keyboard_libf2e_keyboard_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_keyboard_libf2e_keyboard_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_pattern_match_libf2e_pattern_match_la: lib/libfunk2.la
+build_extension_pattern_match_libf2e_pattern_match_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/pattern_match/libf2e_pattern_match.la
-extension_pattern_match_libf2e_pattern_match_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_pattern_match_libf2e_pattern_match_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_pattern_match_libf2e_pattern_match_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_propogator_libf2e_propogator_la: lib/libfunk2.la
+build_extension_propogator_libf2e_propogator_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/propogator/libf2e_propogator.la
-extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_propogator_libf2e_propogator_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_propogator_libf2e_propogator_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_interval_tree_libf2e_interval_tree_la: lib/libfunk2.la
+build_extension_interval_tree_libf2e_interval_tree_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/interval_tree/libf2e_interval_tree.la
-extension_interval_tree_libf2e_interval_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_interval_tree_libf2e_interval_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_interval_tree_libf2e_interval_tree_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_lick_libf2e_lick_la: lib/libfunk2.la
+build_extension_lick_libf2e_lick_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/lick/libf2e_lick.la
-extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_lick_libf2e_lick_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_lick_libf2e_lick_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la: lib/libfunk2.la
+build_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/meta_semantic_knowledge_base/libf2e_meta_semantic_knowledge_base.la
-extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_action_libf2e_semantic_action_la: lib/libfunk2.la
+build_extension_semantic_action_libf2e_semantic_action_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_action/libf2e_semantic_action.la
-extension_semantic_action_libf2e_semantic_action_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_action_libf2e_semantic_action_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_action_libf2e_semantic_action_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la: lib/libfunk2.la
+build_extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_action_knowledge_base/libf2e_semantic_action_knowledge_base.la
-extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_action_knowledge_base_libf2e_semantic_action_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_action_event_libf2e_semantic_action_event_la: lib/libfunk2.la
+build_extension_semantic_action_event_libf2e_semantic_action_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_action_event/libf2e_semantic_action_event.la
-extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_action_event_libf2e_semantic_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_action_event_libf2e_semantic_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_agent_libf2e_semantic_agent_la: lib/libfunk2.la
+build_extension_semantic_agent_libf2e_semantic_agent_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_agent/libf2e_semantic_agent.la
-extension_semantic_agent_libf2e_semantic_agent_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_agent_libf2e_semantic_agent_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_agent_libf2e_semantic_agent_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_causal_event_libf2e_semantic_causal_event_la: lib/libfunk2.la
+build_extension_semantic_causal_event_libf2e_semantic_causal_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_causal_event/libf2e_semantic_causal_event.la
-extension_semantic_causal_event_libf2e_semantic_causal_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_causal_event_libf2e_semantic_causal_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_causal_event_libf2e_semantic_causal_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_dependency_libf2e_semantic_dependency_la: lib/libfunk2.la
+build_extension_semantic_dependency_libf2e_semantic_dependency_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_dependency/libf2e_semantic_dependency.la
-extension_semantic_dependency_libf2e_semantic_dependency_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_dependency_libf2e_semantic_dependency_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_dependency_libf2e_semantic_dependency_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_sequence_libf2e_semantic_event_sequence_la: lib/libfunk2.la
+build_extension_semantic_event_sequence_libf2e_semantic_event_sequence_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_event_sequence/libf2e_semantic_event_sequence.la
-extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_event_sequence_libf2e_semantic_event_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_causal_object_libf2e_semantic_causal_object_la: lib/libfunk2.la
+build_extension_semantic_causal_object_libf2e_semantic_causal_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_causal_object/libf2e_semantic_causal_object.la
-extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_causal_object_libf2e_semantic_causal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_causal_object_libf2e_semantic_causal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_category_libf2e_semantic_category_la: lib/libfunk2.la
+build_extension_semantic_category_libf2e_semantic_category_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_category/libf2e_semantic_category.la
-extension_semantic_category_libf2e_semantic_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_category_libf2e_semantic_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_category_libf2e_semantic_category_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_causal_concept_libf2e_semantic_causal_concept_la: lib/libfunk2.la
+build_extension_semantic_causal_concept_libf2e_semantic_causal_concept_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_causal_concept/libf2e_semantic_causal_concept.la
-extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_causal_concept_libf2e_semantic_causal_concept_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_cons_libf2e_semantic_cons_la: lib/libfunk2.la
+build_extension_semantic_cons_libf2e_semantic_cons_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_cons/libf2e_semantic_cons.la
-extension_semantic_cons_libf2e_semantic_cons_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_cons_libf2e_semantic_cons_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_cons_libf2e_semantic_cons_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_containment_object_libf2e_semantic_containment_object_la: lib/libfunk2.la
+build_extension_semantic_containment_object_libf2e_semantic_containment_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_containment_object/libf2e_semantic_containment_object.la
-extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_containment_object_libf2e_semantic_containment_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_containment_object_libf2e_semantic_containment_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la: lib/libfunk2.la
+build_extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_counterfactual_transframe/libf2e_semantic_counterfactual_transframe.la
-extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_counterfactual_transframe_libf2e_semantic_counterfactual_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la: lib/libfunk2.la
+build_extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_directed_action_event/libf2e_semantic_directed_action_event.la
-extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_directed_action_event_libf2e_semantic_directed_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_environment_libf2e_semantic_environment_la: lib/libfunk2.la
+build_extension_semantic_environment_libf2e_semantic_environment_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_environment/libf2e_semantic_environment.la
-extension_semantic_environment_libf2e_semantic_environment_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_environment_libf2e_semantic_environment_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_environment_libf2e_semantic_environment_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_libf2e_semantic_event_la: lib/libfunk2.la
+build_extension_semantic_event_libf2e_semantic_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_event/libf2e_semantic_event.la
-extension_semantic_event_libf2e_semantic_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_event_libf2e_semantic_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_event_libf2e_semantic_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la: lib/libfunk2.la
+build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_event_transframe/libf2e_semantic_event_transframe.la
-extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_event_transframe_libf2e_semantic_event_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_tree_libf2e_semantic_event_tree_la: lib/libfunk2.la
+build_extension_semantic_event_tree_libf2e_semantic_event_tree_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_event_tree/libf2e_semantic_event_tree.la
-extension_semantic_event_tree_libf2e_semantic_event_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_event_tree_libf2e_semantic_event_tree_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_event_tree_libf2e_semantic_event_tree_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la: lib/libfunk2.la
+build_extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_expectation_failure/libf2e_semantic_expectation_failure.la
-extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_expectation_failure_libf2e_semantic_expectation_failure_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_frame_libf2e_semantic_frame_la: lib/libfunk2.la
+build_extension_semantic_frame_libf2e_semantic_frame_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_frame/libf2e_semantic_frame.la
-extension_semantic_frame_libf2e_semantic_frame_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_frame_libf2e_semantic_frame_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_frame_libf2e_semantic_frame_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la: lib/libfunk2.la
+build_extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_event_knowledge_base/libf2e_semantic_event_knowledge_base.la
-extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_event_knowledge_base_libf2e_semantic_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_goal_libf2e_semantic_goal_la: lib/libfunk2.la
+build_extension_semantic_goal_libf2e_semantic_goal_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_goal/libf2e_semantic_goal.la
-extension_semantic_goal_libf2e_semantic_goal_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_goal_libf2e_semantic_goal_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_goal_libf2e_semantic_goal_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_goal_event_libf2e_semantic_goal_event_la: lib/libfunk2.la
+build_extension_semantic_goal_event_libf2e_semantic_goal_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_goal_event/libf2e_semantic_goal_event.la
-extension_semantic_goal_event_libf2e_semantic_goal_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_goal_event_libf2e_semantic_goal_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_goal_event_libf2e_semantic_goal_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la: lib/libfunk2.la
+build_extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_goal_action_causal_hypothesis/libf2e_semantic_goal_action_causal_hypothesis.la
-extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_goal_action_causal_hypothesis_libf2e_semantic_goal_action_causal_hypothesis_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la: lib/libfunk2.la
+build_extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_know_of_existence_event/libf2e_semantic_know_of_existence_event.la
-extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_know_of_existence_event_libf2e_semantic_know_of_existence_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la: lib/libfunk2.la
+build_extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_know_of_relationship_event/libf2e_semantic_know_of_relationship_event.la
-extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_know_of_relationship_event_libf2e_semantic_know_of_relationship_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la: lib/libfunk2.la
+build_extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_knowledge_base/libf2e_semantic_knowledge_base.la
-extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_ordered_object_libf2e_semantic_ordered_object_la: lib/libfunk2.la
+build_extension_semantic_ordered_object_libf2e_semantic_ordered_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_ordered_object/libf2e_semantic_ordered_object.la
-extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_ordered_object_libf2e_semantic_ordered_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_object_type_event_libf2e_semantic_object_type_event_la: lib/libfunk2.la
+build_extension_semantic_object_type_event_libf2e_semantic_object_type_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_object_type_event/libf2e_semantic_object_type_event.la
-extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_object_type_event_libf2e_semantic_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_object_libf2e_semantic_object_la: lib/libfunk2.la
+build_extension_semantic_object_libf2e_semantic_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_object/libf2e_semantic_object.la
-extension_semantic_object_libf2e_semantic_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_object_libf2e_semantic_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_object_libf2e_semantic_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_packable_object_libf2e_semantic_packable_object_la: lib/libfunk2.la
+build_extension_semantic_packable_object_libf2e_semantic_packable_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_packable_object/libf2e_semantic_packable_object.la
-extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_packable_object_libf2e_semantic_packable_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_packable_object_libf2e_semantic_packable_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_partial_state_libf2e_semantic_partial_state_la: lib/libfunk2.la
+build_extension_semantic_partial_state_libf2e_semantic_partial_state_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_partial_state/libf2e_semantic_partial_state.la
-extension_semantic_partial_state_libf2e_semantic_partial_state_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_partial_state_libf2e_semantic_partial_state_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_partial_state_libf2e_semantic_partial_state_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la: lib/libfunk2.la
+build_extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_partial_state_property/libf2e_semantic_partial_state_property.la
-extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_partial_state_property_libf2e_semantic_partial_state_property_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la: lib/libfunk2.la
+build_extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_partial_state_property_relation/libf2e_semantic_partial_state_property_relation.la
-extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_partial_state_property_relation_libf2e_semantic_partial_state_property_relation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la: lib/libfunk2.la
+build_extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_execution_node/libf2e_semantic_plan_execution_node.la
-extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_execution_node_libf2e_semantic_plan_execution_node_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_object_libf2e_semantic_plan_object_la: lib/libfunk2.la
+build_extension_semantic_plan_object_libf2e_semantic_plan_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_object/libf2e_semantic_plan_object.la
-extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_object_libf2e_semantic_plan_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_object_libf2e_semantic_plan_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la: lib/libfunk2.la
+build_extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_object_type_event/libf2e_semantic_plan_object_type_event.la
-extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_object_type_event_libf2e_semantic_plan_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la: lib/libfunk2.la
+build_extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_object_type_relation_event/libf2e_semantic_plan_object_type_relation_event.la
-extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_object_type_relation_event_libf2e_semantic_plan_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la: lib/libfunk2.la
+build_extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_operator_activation/libf2e_semantic_plan_operator_activation.la
-extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_operator_activation_libf2e_semantic_plan_operator_activation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la: lib/libfunk2.la
+build_extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_operator_parallel/libf2e_semantic_plan_operator_parallel.la
-extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_operator_parallel_libf2e_semantic_plan_operator_parallel_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la: lib/libfunk2.la
+build_extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_operator_sequence/libf2e_semantic_plan_operator_sequence.la
-extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_operator_sequence_libf2e_semantic_plan_operator_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la: lib/libfunk2.la
+build_extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_plan_operator_suppression/libf2e_semantic_plan_operator_suppression.la
-extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_plan_operator_suppression_libf2e_semantic_plan_operator_suppression_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_planner_libf2e_semantic_planner_la: lib/libfunk2.la
+build_extension_semantic_planner_libf2e_semantic_planner_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_planner/libf2e_semantic_planner.la
-extension_semantic_planner_libf2e_semantic_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_planner_libf2e_semantic_planner_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_planner_libf2e_semantic_planner_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_proprioception_libf2e_semantic_proprioception_la: lib/libfunk2.la
+build_extension_semantic_proprioception_libf2e_semantic_proprioception_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_proprioception/libf2e_semantic_proprioception.la
-extension_semantic_proprioception_libf2e_semantic_proprioception_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_proprioception_libf2e_semantic_proprioception_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_proprioception_libf2e_semantic_proprioception_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la: lib/libfunk2.la
+build_extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_proprioceptual_object/libf2e_semantic_proprioceptual_object.la
-extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_proprioceptual_object_libf2e_semantic_proprioceptual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la: lib/libfunk2.la
+build_extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_proprioceptual_orientation/libf2e_semantic_proprioceptual_orientation.la
-extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptual_orientation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la: lib/libfunk2.la
+build_extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_proprioceptual_position/libf2e_semantic_proprioceptual_position.la
-extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_realm_libf2e_semantic_realm_la: lib/libfunk2.la
+build_extension_semantic_realm_libf2e_semantic_realm_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_realm/libf2e_semantic_realm.la
-extension_semantic_realm_libf2e_semantic_realm_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_realm_libf2e_semantic_realm_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_realm_libf2e_semantic_realm_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_reflective_object_libf2e_semantic_reflective_object_la: lib/libfunk2.la
+build_extension_semantic_reflective_object_libf2e_semantic_reflective_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_reflective_object/libf2e_semantic_reflective_object.la
-extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_reflective_object_libf2e_semantic_reflective_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la: lib/libfunk2.la
+build_extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_reflective_object_type_event/libf2e_semantic_reflective_object_type_event.la
-extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_reflective_object_type_event_libf2e_semantic_reflective_object_type_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la: lib/libfunk2.la
+build_extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_reflective_object_type_property_event/libf2e_semantic_reflective_object_type_property_event.la
-extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_reflective_object_type_property_event_libf2e_semantic_reflective_object_type_property_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la: lib/libfunk2.la
+build_extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_reflective_object_type_relation_event/libf2e_semantic_reflective_object_type_relation_event.la
-extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_reflective_object_type_relation_event_libf2e_semantic_reflective_object_type_relation_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_relationship_key_libf2e_semantic_relationship_key_la: lib/libfunk2.la
+build_extension_semantic_relationship_key_libf2e_semantic_relationship_key_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_relationship_key/libf2e_semantic_relationship_key.la
-extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_relationship_key_libf2e_semantic_relationship_key_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_resource_libf2e_semantic_resource_la: lib/libfunk2.la
+build_extension_semantic_resource_libf2e_semantic_resource_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_resource/libf2e_semantic_resource.la
-extension_semantic_resource_libf2e_semantic_resource_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_resource_libf2e_semantic_resource_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_resource_libf2e_semantic_resource_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la: lib/libfunk2.la
+build_extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_resource_action_event/libf2e_semantic_resource_action_event.la
-extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_resource_action_event_libf2e_semantic_resource_action_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la: lib/libfunk2.la
+build_extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_resource_action_sequence/libf2e_semantic_resource_action_sequence.la
-extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_resource_action_sequence_libf2e_semantic_resource_action_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la: lib/libfunk2.la
+build_extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/forgetful_semantic_resource_event_knowledge_base/libf2e_forgetful_semantic_resource_event_knowledge_base.la
-extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_forgetful_semantic_resource_event_knowledge_base_libf2e_forgetful_semantic_resource_event_knowledge_base_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_self_libf2e_semantic_self_la: lib/libfunk2.la
+build_extension_semantic_self_libf2e_semantic_self_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_self/libf2e_semantic_self.la
-extension_semantic_self_libf2e_semantic_self_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_self_libf2e_semantic_self_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_self_libf2e_semantic_self_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_situation_libf2e_semantic_situation_la: lib/libfunk2.la
+build_extension_semantic_situation_libf2e_semantic_situation_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_situation/libf2e_semantic_situation.la
-extension_semantic_situation_libf2e_semantic_situation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_situation_libf2e_semantic_situation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_situation_libf2e_semantic_situation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_situation_category_libf2e_semantic_situation_category_la: lib/libfunk2.la
+build_extension_semantic_situation_category_libf2e_semantic_situation_category_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_situation_category/libf2e_semantic_situation_category.la
-extension_semantic_situation_category_libf2e_semantic_situation_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_situation_category_libf2e_semantic_situation_category_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_situation_category_libf2e_semantic_situation_category_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_situation_transition_libf2e_semantic_situation_transition_la: lib/libfunk2.la
+build_extension_semantic_situation_transition_libf2e_semantic_situation_transition_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_situation_transition/libf2e_semantic_situation_transition.la
-extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_situation_transition_libf2e_semantic_situation_transition_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_somatosensation_libf2e_semantic_somatosensation_la: lib/libfunk2.la
+build_extension_semantic_somatosensation_libf2e_semantic_somatosensation_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_somatosensation/libf2e_semantic_somatosensation.la
-extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_somatosensation_libf2e_semantic_somatosensation_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la: lib/libfunk2.la
+build_extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_somatosensory_object/libf2e_semantic_somatosensory_object.la
-extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_somatosensory_object_libf2e_semantic_somatosensory_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la: lib/libfunk2.la
+build_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_temporal_object/libf2e_semantic_temporal_object.la
-extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_temporal_object_libf2e_semantic_temporal_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_thought_libf2e_semantic_thought_la: lib/libfunk2.la
+build_extension_semantic_thought_libf2e_semantic_thought_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_thought/libf2e_semantic_thought.la
-extension_semantic_thought_libf2e_semantic_thought_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_thought_libf2e_semantic_thought_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_thought_libf2e_semantic_thought_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_time_libf2e_semantic_time_la: lib/libfunk2.la
+build_extension_semantic_time_libf2e_semantic_time_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_time/libf2e_semantic_time.la
-extension_semantic_time_libf2e_semantic_time_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_time_libf2e_semantic_time_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_time_libf2e_semantic_time_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_visual_object_libf2e_semantic_visual_object_la: lib/libfunk2.la
+build_extension_semantic_visual_object_libf2e_semantic_visual_object_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/semantic_visual_object/libf2e_semantic_visual_object.la
-extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_semantic_visual_object_libf2e_semantic_visual_object_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_semantic_visual_object_libf2e_semantic_visual_object_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_timeline_libf2e_timeline_la: lib/libfunk2.la
+build_extension_timeline_libf2e_timeline_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/timeline/libf2e_timeline.la
-extension_timeline_libf2e_timeline_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_timeline_libf2e_timeline_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_timeline_libf2e_timeline_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_transframe_libf2e_transframe_la: lib/libfunk2.la
+build_extension_transframe_libf2e_transframe_la: lib/libfunk2.la $(all_static_core_extensions)
 	$(MAKE) extension/transframe/libf2e_transframe.la
-extension_transframe_libf2e_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
+extension_transframe_libf2e_transframe_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_transframe_libf2e_transframe_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 
@@ -1536,9 +1720,9 @@ make-install-full-sh: make-install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
 	chmod a+x install-full-sh
 
-extensions: finish_compiling_all_core_extensions
+extensions: finish_compiling_all_dynamic_core_extensions
 
-bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
+bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_dynamic_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_GCC_LINKER_FLAGS) -Llib/.libs -lfunk2
 
 install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)

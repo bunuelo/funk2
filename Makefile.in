@@ -6685,10 +6685,10 @@ build_extension_concept_version_space_libf2e_concept_version_space_la: lib/libfu
 build_extension_conceptnet_libf2e_conceptnet_la: lib/libfunk2.la
 	$(MAKE) extension/conceptnet/libf2e_conceptnet.la
 
-build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la
+build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la build_extension_lick_libf2e_lick_la
 	$(MAKE) extension/event_stream/libf2e_event_stream.la
 
-build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la
+build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la build_extension_event_stream_libf2e_event_stream_la
 	$(MAKE) extension/forgetful_event_stream/libf2e_forgetful_event_stream.la
 
 build_extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la: lib/libfunk2.la

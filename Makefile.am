@@ -784,12 +784,12 @@ build_extension_conceptnet_libf2e_conceptnet_la: lib/libfunk2.la
 extension_conceptnet_libf2e_conceptnet_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_conceptnet_libf2e_conceptnet_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la
+build_extension_event_stream_libf2e_event_stream_la: lib/libfunk2.la build_extension_lick_libf2e_lick_la
 	$(MAKE) extension/event_stream/libf2e_event_stream.la
 extension_event_stream_libf2e_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_event_stream_libf2e_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la
+build_extension_forgetful_event_stream_libf2e_forgetful_event_stream_la: lib/libfunk2.la build_extension_event_stream_libf2e_event_stream_la
 	$(MAKE) extension/forgetful_event_stream/libf2e_forgetful_event_stream.la
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

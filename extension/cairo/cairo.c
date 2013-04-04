@@ -1159,7 +1159,6 @@ f2ptr f2__cairo_context_type__new(f2ptr cause) {
 
 
 
-#if defined(F2__CAIRO_SUPPORTED)
 // cairo_format
 
 boolean_t raw__cairo_format__is_type(f2ptr cause, f2ptr object) {
@@ -1169,6 +1168,8 @@ boolean_t raw__cairo_format__is_type(f2ptr cause, f2ptr object) {
 	  raw__eq(cause, object, new__symbol(cause, "A1")) ||
 	  raw__eq(cause, object, new__symbol(cause, "RGB16_565")));
 }
+
+#if defined(F2__CAIRO_SUPPORTED)
 
 cairo_format_t raw__cairo_format__as__cairo_format_t(f2ptr cause, f2ptr this) {
   if        (raw__eq(cause, this, new__symbol(cause, "ARGB32"))) {

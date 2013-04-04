@@ -619,9 +619,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 
 #  -no-undefined
 
-lib_libfunk2_la_LDFLAGS = \
-  -version-info $(FUNK2_LIBRARY_VERSION) \
-  -release $(FUNK2_RELEASE) \
+FUNK2_GCC_LINKER_FLAGS = \
   $(dynamic_library_linker_flags) \
   $(math_linker_flags) \
   $(realtime_linker_flags) \
@@ -632,7 +630,12 @@ lib_libfunk2_la_LDFLAGS = \
   $(GTHREAD_LIBS) \
   $(LIBAVCODEC_LIBS) \
   $(LIBSWSCALE_LIBS) \
-  $(CAIRO_LIBS)
+  $(CAIRO_LIBS)  
+
+lib_libfunk2_la_LDFLAGS = \
+  -version-info $(FUNK2_LIBRARY_VERSION) \
+  -release $(FUNK2_RELEASE) \
+  $(FUNK2_GCC_LINKER_FLAGS)
 
 #  -Wl,--export-all-symbols
 #  -Wl,--enable-auto-import
@@ -1265,7 +1268,7 @@ make-install-full-sh: make-install-sh
 extensions: finish_compiling_all_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_core_extensions
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(lib_libfunk2_la_LDFLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_GCC_LINKER_FLAGS) -Llib/.libs -lfunk2
 
 install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh

@@ -273,6 +273,8 @@ all_static_core_extensions = \
   extension/timeline/libf2e_timeline.a \
   extension/transframe/libf2e_transframe.a
 
+noinst_LIBRARIES = $(all_static_core_extensions)
+
 all_dynamic_core_extensions = \
   extension/blocks_world/libf2e_blocks_world.la \
   extension/cairo/libf2e_cairo.la \
@@ -1720,7 +1722,7 @@ make-install-full-sh: make-install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
 	chmod a+x install-full-sh
 
-extensions: $(all_static_core_extensions) finish_compiling_all_dynamic_core_extensions
+extensions: finish_compiling_all_dynamic_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_dynamic_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_GCC_LINKER_FLAGS) -Llib/.libs -lfunk2

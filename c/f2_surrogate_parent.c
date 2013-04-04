@@ -276,8 +276,10 @@ def_pcfunk1(surrogate_parent__start_system_command, command,
 	    return f2__surrogate_parent__start_system_command(this_cause, command));
 
 f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
-  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr                 fiber = f2__this__fiber(cause);
   funk2_return_result_t result;
+  result.fiber        = nil;
+  result.return_value = 0;
   boolean_t return_value_available = funk2_surrogate_parent__user_check_return_value(&(__funk2.surrogate_parent), fiber, &result);
   if (return_value_available) {
     return f2integer__new(cause, result.return_value);

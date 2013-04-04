@@ -2907,10 +2907,11 @@ lib_libfunk2_la_LDFLAGS = \
   -version-info $(FUNK2_LIBRARY_VERSION) \
   -release $(FUNK2_RELEASE) \
   -no-undefined \
-  -Wl,--export-all-symbols \
-  -Wl,--enable-auto-import \
   $(FUNK2_GCC_LINKER_FLAGS)
 
+
+#  -Wl,--export-all-symbols
+#  -Wl,--enable-auto-import
 lib_libfunk2_la_CFLAGS = $(cc_flags)
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la $(all_static_core_extensions) -Wl,--no-whole-archive
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS = $(lib_libfunk2_la_CFLAGS)

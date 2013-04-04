@@ -1005,9 +1005,10 @@ lib_libfunk2_la_LDFLAGS = \
   -version-info $(FUNK2_LIBRARY_VERSION) \
   -release $(FUNK2_RELEASE) \
   -no-undefined \
-  -Wl,--export-all-symbols \
-  -Wl,--enable-auto-import \
   $(FUNK2_GCC_LINKER_FLAGS)
+
+#  -Wl,--export-all-symbols
+#  -Wl,--enable-auto-import
 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 

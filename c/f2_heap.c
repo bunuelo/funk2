@@ -155,7 +155,7 @@ u64 funk2_heap__size(funk2_heap_t* this) {
 
 
 void funk2_heap__print(funk2_heap_t* this) {
-  printf("<funk2_heap " ptr__fstr "> = [", (ptr)(this)); fflush(stdout);
+  printf("<funk2_heap " ptr__fstr "> = [", (ptr)to_ptr(this)); fflush(stdout);
   {
     s64 index = 0;
     funk2_heap__iteration(this, node,

@@ -97,11 +97,11 @@ if NEED_REALTIME_LINK
 realtime_linker_flags = -lrt
 endif
 
-#if XMLRPC_SUPPORTED
-#xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
-#xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
-#xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
-#endif
+if XMLRPC_SUPPORTED
+xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
+xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
+xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
+endif
 
 debug_flags    = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 #-DF2__PROCESSOR_MUTEX__DEBUG -DF2__DEBUG__OBJECT__TYPE -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 

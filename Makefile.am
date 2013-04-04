@@ -632,11 +632,12 @@ lib_libfunk2_la_LDFLAGS = \
   $(GTHREAD_LIBS) \
   $(LIBAVCODEC_LIBS) \
   $(LIBSWSCALE_LIBS) \
-  $(CAIRO_LIBS) \
-  -Wl,--export-all-symbols \
-  -Wl,--enable-auto-import \
-  -Wl,--whole-archive lib/libfunk2.la \
-  -Wl,--no-whole-archive
+  $(CAIRO_LIBS)
+
+#  -Wl,--export-all-symbols
+#  -Wl,--enable-auto-import
+#  -Wl,--whole-archive lib/libfunk2.la
+#  -Wl,--no-whole-archive
 
 lib_libfunk2_la_CFLAGS  = $(cc_flags)
 

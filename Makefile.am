@@ -1720,7 +1720,7 @@ make-install-full-sh: make-install-sh
 	echo "install -m644 $(compile__bootstrap__img) $(chroot__install__bootstrap__img)"                                                                                              >> install-full-sh
 	chmod a+x install-full-sh
 
-extensions: finish_compiling_all_dynamic_core_extensions
+extensions: $(all_static_core_extensions) finish_compiling_all_dynamic_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_dynamic_core_extensions
 	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_GCC_LINKER_FLAGS) -Llib/.libs -lfunk2

@@ -91,7 +91,16 @@ f2ptr f2__keyboard__enable_noncanonical_mode(f2ptr cause) {
   if (res != 0) {
     return f2larva__new(cause, 22351, nil);
   }
-  opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
+  opts.c_lflag &= ~(ICANON  |
+		    ECHO    |
+		    ECHOE   |
+		    ECHOK   |
+		    ECHONL  |
+#ifndef F2__CYGWIN
+		    ECHOPRT |
+#endif // !F2__CYGWIN
+		    ECHOKE  |
+		    ICRNL);
   tcsetattr(STDIN_FILENO, TCSANOW, &opts);
   return nil;
 }

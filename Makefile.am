@@ -926,7 +926,12 @@ build_extension_semantic_environment_libf2e_semantic_environment_la: lib/libfunk
 extension_semantic_environment_libf2e_semantic_environment_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_environment_libf2e_semantic_environment_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_event_libf2e_semantic_event_la: lib/libfunk2.la
+build_extension_semantic_event_libf2e_semantic_event_la: \
+  lib/libfunk2.la \
+  build_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la \
+  build_extension_semantic_frame_libf2e_semantic_frame_la \
+  build_extension_semantic_time_libf2e_semantic_time_la \
+  build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la
 	$(MAKE) extension/semantic_event/libf2e_semantic_event.la
 extension_semantic_event_libf2e_semantic_event_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_event_libf2e_semantic_event_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -1092,7 +1097,12 @@ build_extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_semantic_realm_libf2e_semantic_realm_la: lib/libfunk2.la
+build_extension_semantic_realm_libf2e_semantic_realm_la: \
+  lib/libfunk2.la \
+  build_extension_equals_hash_libf2e_equals_hash_la \
+  build_extension_semantic_frame_libf2e_semantic_frame_la \
+  build_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la \
+  build_extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la
 	$(MAKE) extension/semantic_realm/libf2e_semantic_realm.la
 extension_semantic_realm_libf2e_semantic_realm_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_semantic_realm_libf2e_semantic_realm_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

@@ -6773,7 +6773,12 @@ build_extension_semantic_directed_action_event_libf2e_semantic_directed_action_e
 build_extension_semantic_environment_libf2e_semantic_environment_la: lib/libfunk2.la
 	$(MAKE) extension/semantic_environment/libf2e_semantic_environment.la
 
-build_extension_semantic_event_libf2e_semantic_event_la: lib/libfunk2.la
+build_extension_semantic_event_libf2e_semantic_event_la: \
+  lib/libfunk2.la \
+  build_extension_semantic_temporal_object_libf2e_semantic_temporal_object_la \
+  build_extension_semantic_frame_libf2e_semantic_frame_la \
+  build_extension_semantic_time_libf2e_semantic_time_la \
+  build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la
 	$(MAKE) extension/semantic_event/libf2e_semantic_event.la
 
 build_extension_semantic_event_transframe_libf2e_semantic_event_transframe_la: lib/libfunk2.la
@@ -6875,7 +6880,12 @@ build_extension_semantic_proprioceptual_orientation_libf2e_semantic_proprioceptu
 build_extension_semantic_proprioceptual_position_libf2e_semantic_proprioceptual_position_la: lib/libfunk2.la
 	$(MAKE) extension/semantic_proprioceptual_position/libf2e_semantic_proprioceptual_position.la
 
-build_extension_semantic_realm_libf2e_semantic_realm_la: lib/libfunk2.la
+build_extension_semantic_realm_libf2e_semantic_realm_la: \
+  lib/libfunk2.la \
+  build_extension_equals_hash_libf2e_equals_hash_la \
+  build_extension_semantic_frame_libf2e_semantic_frame_la \
+  build_extension_meta_semantic_knowledge_base_libf2e_meta_semantic_knowledge_base_la \
+  build_extension_semantic_knowledge_base_libf2e_semantic_knowledge_base_la
 	$(MAKE) extension/semantic_realm/libf2e_semantic_realm.la
 
 build_extension_semantic_reflective_object_libf2e_semantic_reflective_object_la: lib/libfunk2.la

@@ -734,7 +734,7 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 #bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 #bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la extension/lick/libf2e_lick.la
+build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la build_extension_lick_libf2e_lick_la
 	$(MAKE) extension/equals_hash/libf2e_equals_hash.la 
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

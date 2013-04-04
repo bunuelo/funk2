@@ -6658,7 +6658,7 @@ finish_compiling_all_core_extensions: \
 build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la build_extension_lick_libf2e_lick_la
 	$(MAKE) extension/equals_hash/libf2e_equals_hash.la 
 
-build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la
+build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la build_extension_gtk_extension_libf2e_gtk_extension_la
 	$(MAKE) extension/fibermon/libf2e_fibermon.la 
 
 build_extension_gtk_extension_libf2e_gtk_extension_la: lib/libfunk2.la
@@ -6667,7 +6667,7 @@ build_extension_gtk_extension_libf2e_gtk_extension_la: lib/libfunk2.la
 build_extension_image_libf2e_image_la: lib/libfunk2.la
 	$(MAKE) extension/image/libf2e_image.la
 
-build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la
+build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la build_extension_image_libf2e_image_la
 	$(MAKE) extension/image_sequence/libf2e_image_sequence.la
 
 build_extension_movie_libf2e_movie_la: lib/libfunk2.la

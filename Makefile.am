@@ -739,7 +739,7 @@ build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la build_extensi
 extension_equals_hash_libf2e_equals_hash_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_equals_hash_libf2e_equals_hash_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la
+build_extension_fibermon_libf2e_fibermon_la: lib/libfunk2.la build_extension_gtk_extension_libf2e_gtk_extension_la
 	$(MAKE) extension/fibermon/libf2e_fibermon.la 
 extension_fibermon_libf2e_fibermon_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_fibermon_libf2e_fibermon_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
@@ -754,7 +754,7 @@ build_extension_image_libf2e_image_la: lib/libfunk2.la
 extension_image_libf2e_image_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_image_libf2e_image_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
-build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la
+build_extension_image_sequence_libf2e_image_sequence_la: lib/libfunk2.la build_extension_image_libf2e_image_la
 	$(MAKE) extension/image_sequence/libf2e_image_sequence.la
 extension_image_sequence_libf2e_image_sequence_la_LDFLAGS = $(lib_libfunk2_la_LDFLAGS) -Wl,--whole-archive lib/libfunk2.la -Wl,--no-whole-archive
 extension_image_sequence_libf2e_image_sequence_la_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

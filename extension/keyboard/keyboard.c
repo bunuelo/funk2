@@ -120,7 +120,16 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   }
   //---- set new terminal parms --------
   memcpy(&new_opts, &org_opts, sizeof(new_opts));
-  new_opts.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHOK | ECHONL | ECHOPRT | ECHOKE | ICRNL);
+  new_opts.c_lflag &= ~(ICANON  |
+			ECHO    |
+			ECHOE   |
+			ECHOK   |
+			ECHONL  |
+#ifndef F2__CYGWIN
+			ECHOPRT |
+#endif // !F2__CYGWIN
+			ECHOKE  |
+			ICRNL);
   tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
   u32 bytes_read = 0;
   u8  ch;

@@ -604,7 +604,8 @@ extension_concept_version_space_libf2e_concept_version_space_la_SOURCES         
 extension_conceptnet_libf2e_conceptnet_la_SOURCES                                                                                   = extension/conceptnet/conceptnet.c
 extension_event_stream_libf2e_event_stream_la_SOURCES                                                                               = extension/event_stream/event_stream.c
 extension_equals_hash_libf2e_equals_hash_la_SOURCES                                                                                 = extension/equals_hash/equals_hash.c
-extension_fibermon_libf2e_fibermon_la_SOURCES                                                                                       = extension/fibermon/fibermon.c
+extension_fibermon_libf2e_fibermon_a_SOURCES                                                                                        = extension/fibermon/fibermon.c
+extension_fibermon_libf2e_fibermon_la_LDADD                                                                                         = extension/fibermon/libf2e_fibermon.a
 extension_forgetful_event_stream_libf2e_forgetful_event_stream_la_SOURCES                                                           = extension/forgetful_event_stream/forgetful_event_stream.c
 extension_forgetful_semantic_event_knowledge_base_libf2e_forgetful_semantic_event_knowledge_base_la_SOURCES                         = extension/forgetful_semantic_event_knowledge_base/forgetful_semantic_event_knowledge_base.c
 extension_forward_planner_libf2e_forward_planner_la_SOURCES                                                                         = extension/forward_planner/forward_planner.c

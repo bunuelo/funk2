@@ -34,7 +34,7 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status_backtrace();
   kill(getpid(), SIGSTOP);
   while (__assert_failed__global_spin_variable) {
-    printf("\nsomebody stop me!"); fflush(stdout);
+    printf("somebody stop me!\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"); fflush(stdout);
   }
   //exit(-1);
 }

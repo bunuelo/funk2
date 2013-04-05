@@ -1017,7 +1017,7 @@ lib_libfunk2_la_CFLAGS  = $(cc_flags)
 #bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)
 
 all_exported_symbols.def: $(all_static_core_extensions)
-	nm lib/.libs/libfunk2.a $(all_static_core_extensions) | grep ' T _' | sed 's/.* T //' > all_exported_symbols.def
+	nm lib/.libs/libfunk2.a $(all_static_core_extensions) | grep ' T _' | sed 's/.* T _//' > all_exported_symbols.def
 
 build_extension_equals_hash_libf2e_equals_hash_la: lib/libfunk2.la all_exported_symbols.def
 	$(MAKE) extension/equals_hash/libf2e_equals_hash.la

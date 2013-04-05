@@ -9845,8 +9845,8 @@ finish_compiling_all_dynamic_core_extensions: \
 	cp -fa extension/timeline/.libs/libf2e_*.*                                                                         $(compile__lib__dir)
 	cp -fa extension/transframe/.libs/libf2e_*.*                                                                     $(compile__lib__dir)
 
-%.lib: $<.a
-	dlltool --output-lib $@ $<.a
+%.lib: %.a
+	dlltool --output-lib $@ $<
 
 #bin_funk2_static_LDFLAGS = $(lib_libfunk2_la_LDFLAGS)
 #bin_funk2_static_CFLAGS  = $(lib_libfunk2_la_CFLAGS)

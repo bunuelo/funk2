@@ -1005,6 +1005,7 @@ lib_libfunk2_la_LDFLAGS = \
   -version-info $(FUNK2_LIBRARY_VERSION) \
   -release $(FUNK2_RELEASE) \
   -no-undefined \
+  -Wl,--export-symbols all_exported_symbols.def \
   $(FUNK2_GCC_LINKER_FLAGS)
 
 #  -Wl,--export-all-symbols

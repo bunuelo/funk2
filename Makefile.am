@@ -1578,6 +1578,7 @@ clean-img:
 clean: clean-am clean-img
 	rm -f config_compile_time_id.h
 	rm -f config_bit_num.h
+	rm -f all_exported_symbols.def
 	rm -f bin/funk2$(EXEEXT)
 	rm -f install.sh gprof.txt libtool Makefile
 	rm -rf c/.deps c/.dirstamp

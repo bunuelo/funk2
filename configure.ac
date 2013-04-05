@@ -15,7 +15,8 @@ AC_PROG_CC
 AM_PROG_CC_C_O
 AC_PROG_INSTALL
 AC_PROG_MAKE_SET
-AC_PROG_LIBTOOL
+LT_INIT
+#AC_PROG_LIBTOOL
 
 # Check if rpath is disabled
 AC_MSG_CHECKING(whether to use rpath)
@@ -74,6 +75,43 @@ else
 *** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
 *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
 fi
+
+
+
+## Check for xmlrpc-c
+#
+#OLD_LIBS=[$LIBS]
+#AC_CHECK_HEADERS([xmlrpc-c/base.h xmlrpc-c/server.h], [want_xmlrpc=yes], [want_xmlrpc=no])
+#AC_CHECK_LIB([xmlrpc_util], [xmlrpc_millisecond_sleep], [LIB_XMLRPC_UTIL='-lxmlrpc_util'])
+#LIBS="$LIB_XMLRPC_UTIL $LIBS"
+#
+#AC_MSG_CHECKING([for xmlrpc-c-config])
+#XMLRPC_CONFIG=`which xmlrpc-c-config 2>/dev/null`
+#if [ test ! -x "${XMLRPC_CONFIG}" ]
+#then
+#want_xmlrpc=no
+#fi
+#AC_MSG_RESULT($want_xmlrpc)
+#
+#if test "x$want_xmlrpc" = "xno"
+#then
+#AC_MSG_ERROR([xmlrpc-c is required to build this program])
+#fi
+#
+#if test "x$want_xmlrpc" = "xyes"
+#then
+#AC_CHECK_LIB([xmlrpc_server], [xmlrpc_registry_process_call2], [AC_DEFINE(HAVE_XMLRPC_REGISTRY_PROCESS_CALL2, , [Has the new xmlrpc API])])
+#xmlrpc_LIBS="-lxmlrpc_server -lxmlrpc -lxmlrpc_util -lm"
+#xmlrpc_LIBS="${xmlrpc_LIBS} `xmlrpc-c-config server-util --libs`"
+#AC_DEFINE(USE_XMLRPC, , [Compile XML-RPC interface])
+#fi
+#LIBS="$OLD_LIBS"
+#
+#AC_SUBST(xmlrpc_SRC)
+#AC_SUBST(xmlrpc_LIBS)
+#
+## end check for xmlrpc-c
+
 
 # checking for execinfo.h used for glib backtrace
 AC_CHECK_HEADERS([execinfo.h],[],[])

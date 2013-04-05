@@ -134,23 +134,23 @@ bin/speed_test: c/speed_test.c
 config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h
 	echo "" > config_bit_num.h
-	echo "#define char__bit_num          `bin/configurator char-bit_num`"           >> config_bit_num.h
-	echo "#define short__bit_num         `bin/configurator short-bit_num`"          >> config_bit_num.h
-	echo "#define int__bit_num           `bin/configurator int-bit_num`"            >> config_bit_num.h
-	echo "#define long__bit_num          `bin/configurator long-bit_num`"           >> config_bit_num.h
-	echo "#define long_long__bit_num     `bin/configurator long_long-bit_num`"      >> config_bit_num.h
-	echo "#define pointer__bit_num       `bin/configurator pointer-bit_num`"        >> config_bit_num.h
-	echo "#define float__bit_num         `bin/configurator float-bit_num`"          >> config_bit_num.h
-	echo "#define double__bit_num        `bin/configurator double-bit_num`"         >> config_bit_num.h
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"      >> config_bit_num.h
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"     >> config_bit_num.h
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"       >> config_bit_num.h
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"      >> config_bit_num.h
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`" >> config_bit_num.h
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"   >> config_bit_num.h
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"     >> config_bit_num.h
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"    >> config_bit_num.h
 	echo ""
-	echo "#define char__bit_num          `bin/configurator char-bit_num`"
-	echo "#define short__bit_num         `bin/configurator short-bit_num`"
-	echo "#define int__bit_num           `bin/configurator int-bit_num`"
-	echo "#define long__bit_num          `bin/configurator long-bit_num`"
-	echo "#define long_long__bit_num     `bin/configurator long_long-bit_num`"
-	echo "#define pointer__bit_num       `bin/configurator pointer-bit_num`"
-	echo "#define float__bit_num         `bin/configurator float-bit_num`"
-	echo "#define double__bit_num        `bin/configurator double-bit_num`"
+	echo "#define char__bit_num      `bin/configurator char-bit_num`"
+	echo "#define short__bit_num     `bin/configurator short-bit_num`"
+	echo "#define int__bit_num       `bin/configurator int-bit_num`"
+	echo "#define long__bit_num      `bin/configurator long-bit_num`"
+	echo "#define long_long__bit_num `bin/configurator long_long-bit_num`"
+	echo "#define pointer__bit_num   `bin/configurator pointer-bit_num`"
+	echo "#define float__bit_num     `bin/configurator float-bit_num`"
+	echo "#define double__bit_num    `bin/configurator double-bit_num`"
 	echo ""
 
 extra_library_path="lib/.libs/:/opt/intel/Compiler/11.1/038/lib/intel64/"

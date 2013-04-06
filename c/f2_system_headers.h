@@ -101,7 +101,11 @@ using __cxxabiv1::__cxa_demangle;
 #include <limits.h>
 #include <locale.h>
 #include <math.h>
-#include <net/if.h>
+
+#if defined(HAVE_NET_IF_H)
+#  include <net/if.h>
+#endif // HAVE_NET_IF_H
+
 #include <netdb.h>
 #include <netinet/in.h>
 #include <netinet/tcp.h>

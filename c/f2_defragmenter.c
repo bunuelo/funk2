@@ -141,7 +141,7 @@ void funk2_defragmenter__memory_pool__move_memory(funk2_defragmenter_t* this, u6
   
   funk2_memorypool__shrink_last_free_block(memorypool, F2__INITIAL_MEMORY);
   
-  printf("\nfunk2_memory__save_image_to_file: done moving memory in pool " u64__fstr ".", pool_index);
+  printf("\nfunk2_memory__save_image_to_file: done moving memory in pool " u64__fstr ".", pool_index); fflush(stdout);
   status(  "funk2_memory__save_image_to_file: done moving memory in pool " u64__fstr ".", pool_index);
 }
 
@@ -293,13 +293,17 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
+	status("funk2_defragmenter__defragment: starting parallel phase one for pool " s64__fstr ".", pool_index);
 	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
+	status("funk2_defragmenter__defragment: done starting parallel phase one for pool " s64__fstr ".", pool_index);
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
+	status("funk2_defragmenter__defragment: joining parallel phase one for pool " s64__fstr ".", pool_index);
 	pthread_join(pool_thread[pool_index], NULL);
+	status("funk2_defragmenter__defragment: joined parallel phase one for pool " s64__fstr ".", pool_index);
       }
     }
     f2__free(to_ptr(pool_thread));

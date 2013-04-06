@@ -603,6 +603,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_memblock.c \
   c/f2_memory.c \
   c/f2_memorypool.c \
+  c/f2_microsoft_windows.c \
   c/f2_module_registration.c \
   c/f2_natural_language.c \
   c/f2_never_delete_list.c \

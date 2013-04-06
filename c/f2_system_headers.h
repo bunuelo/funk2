@@ -68,25 +68,36 @@
 #endif
 
 #include <assert.h>
+
+#if defined(HAVE_ARPA_INET_H)
 #include <arpa/inet.h>
+#endif // HAVE_ARPA_INET_H
+
 #ifndef NO_CPP_DEMANGLE
 #  include <cxxabi.h>
 #  ifdef __cplusplus
 using __cxxabiv1::__cxa_demangle;
 #  endif
 #endif
+
 #include <dirent.h>
+
 #ifdef F2__DLFCN__SUPPORTED
 #  include <dlfcn.h>
 #endif
+
 #include <errno.h>
+
 #if defined(HAVE_EXECINFO_H)
 #  include <execinfo.h>
 #endif // HAVE_EXECINFO_H
+
 #include <fcntl.h>
+
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>
 #endif
+
 #include <limits.h>
 #include <locale.h>
 #include <math.h>
@@ -103,18 +114,22 @@ using __cxxabiv1::__cxa_demangle;
 #include <sys/mman.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+
 #if defined(HAVE_SYS_SYSCALL_H)
 #  include <sys/syscall.h>
 #endif // HAVE_SYS_SYSCALL_H
+
 #include <sys/time.h>
 #include <sys/times.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <termios.h>
 #include <time.h>
+
 #if defined(HAVE_UCONTEXT_H)
 #  include <ucontext.h>
 #endif // HAVE_UCONTEXT_H
+
 #include <unistd.h>
 
 #if defined(HAVE_ZLIB_H)

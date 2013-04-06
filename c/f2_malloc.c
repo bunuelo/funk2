@@ -27,14 +27,17 @@
 
 #include "funk2.h"
 
+char* __funk2__empty_string_for_craziness = "";
+
 boolean_t __assert_failed__global_spin_variable = boolean__true;
 void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
   status_backtrace();
   kill(getpid(), SIGSTOP);
+  printf("somebody stop me!"); fflush(stdout);
   while (__assert_failed__global_spin_variable) {
-    printf("somebody stop me!\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"); fflush(stdout);
+    printf("%s", __funk2__empty_string_for_craziness); fflush(stdout);
   }
   //exit(-1);
 }

@@ -124,12 +124,12 @@ mkdir_p = ${INSTALL} -d
 bin/configurator: c/configurator.c
 	mkdir -p bin
 	mkdir -p lib/.libs
-	$(CC) $(cc_flags) c/configurator.c -lrt -o $@
+	$(CC) $(cc_flags) c/configurator.c -o $@
 
 bin/speed_test: c/speed_test.c
 	mkdir -p bin
 	mkdir -p lib/.libs
-	$(CC) $(cc_flags) c/speed_test.c -lrt -o $@
+	$(CC) $(cc_flags) c/speed_test.c -o $@
 
 config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h

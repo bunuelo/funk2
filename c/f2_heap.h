@@ -28,7 +28,12 @@
 #ifndef F2__HEAP__H
 #define F2__HEAP__H
 
-#define heap_index__bit_num (7 + 10 + 10)
+#if (pointer__bit_num >= 64)
+#  define heap_index__bit_num (7 + 10 + 10)
+#else
+#  define heap_index__bit_num (10 + 10)
+#endif
+
 #define heap_index__max     ((1ull << heap_index__bit_num) - 1)
 
 typedef struct funk2_heap_node_s funk2_heap_node_t;

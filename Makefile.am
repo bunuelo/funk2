@@ -124,12 +124,12 @@ mkdir_p = ${INSTALL} -d
 bin/configurator: c/configurator.c
 	mkdir -p bin
 	mkdir -p lib/.libs
-	gcc $(cc_flags) c/configurator.c -lrt -o $@
+	$(CC) $(cc_flags) c/configurator.c -lrt -o $@
 
 bin/speed_test: c/speed_test.c
 	mkdir -p bin
 	mkdir -p lib/.libs
-	gcc $(cc_flags) c/speed_test.c -lrt -o $@
+	$(CC) $(cc_flags) c/speed_test.c -lrt -o $@
 
 config_bit_num.h: bin/configurator
 	rm -f config_bit_num.h
@@ -1086,7 +1086,7 @@ FUNK2_LIBRARY_VERSION=0:0:0
 #              |           set to zero if current is incremented
 #              +- increment if interfaces have been added, removed or changed
 
-FUNK2_GCC_LINKER_FLAGS = \
+FUNK2_CC_LINKER_FLAGS = \
   $(dynamic_library_linker_flags) \
   $(math_linker_flags) \
   $(realtime_linker_flags) \
@@ -1105,14 +1105,14 @@ no_undefined_ldflags = \
   -no-undefined \
   -Wl,--export-all-symbols \
   -Wl,--enable-auto-import \
-  $(FUNK2_GCC_LINKER_FLAGS)
+  $(FUNK2_CC_LINKER_FLAGS)
 
 undefined_okay_ldflags = \
   -version-info $(FUNK2_LIBRARY_VERSION) \
   -release $(FUNK2_RELEASE) \
   -Wl,--export-all-symbols \
   -Wl,--enable-auto-import \
-  $(FUNK2_GCC_LINKER_FLAGS)
+  $(FUNK2_CC_LINKER_FLAGS)
 
 lib_libfunk2_la_LDFLAGS = $(no_undefined_ldflags)
 
@@ -2022,7 +2022,7 @@ make-install-full-sh: make-install-sh
 extensions: finish_compiling_all_dynamic_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_dynamic_core_extensions
-	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_GCC_LINKER_FLAGS) -Llib/.libs -lfunk2
+	$(COMPILE) -o $@ c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(FUNK2_CC_LINKER_FLAGS) -Llib/.libs -lfunk2
 
 install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh

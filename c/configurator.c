@@ -9,7 +9,10 @@
 
 #include "f2_os.h"
 
+typedef unsigned long long u64;
+typedef   signed long long s64;
 
+/*
 #ifdef F2__APPLE
 #  include <mach/clock.h>
 #  include <mach/mach.h>
@@ -21,27 +24,6 @@
 #  define CPU_ZERO(new_mask)      *new_mask.affinity_tag = THREAD_AFFINITY_TAG_NULL
 #  define CLOCK_THREAD_CPUTIME_ID NULL
 #endif
-
-void print_usage() {
-  printf("\n"
-	 "\nusage: configurator <command>"
-	 "\n"
-	 "\n  <command> can be one of the following symbols:"
-	 "\n"
-	 "\n    char-bit_num"
-	 "\n    short-bit_num"
-	 "\n    int-bit_num"
-	 "\n    long-bit_num"
-	 "\n    long_long-bit_num"
-	 "\n    pointer-bit_num"
-	 "\n    float-bit_num"
-	 "\n    double-bit_num"
-	 "\n"
-	 );
-}
-
-typedef unsigned long long u64;
-typedef   signed long long s64;
 
 #define nanoseconds_per_second ((u64)1000000000ull)
 
@@ -87,6 +69,25 @@ u64 raw__processor_thread__execution_nanoseconds() {
   clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 #endif
+}
+*/
+
+void print_usage() {
+  printf("\n"
+	 "\nusage: configurator <command>"
+	 "\n"
+	 "\n  <command> can be one of the following symbols:"
+	 "\n"
+	 "\n    char-bit_num"
+	 "\n    short-bit_num"
+	 "\n    int-bit_num"
+	 "\n    long-bit_num"
+	 "\n    long_long-bit_num"
+	 "\n    pointer-bit_num"
+	 "\n    float-bit_num"
+	 "\n    double-bit_num"
+	 "\n"
+	 );
 }
 
 int main(int argc, char** argv) {

@@ -14007,11 +14007,7 @@ fi
 done
 
 
-
-# before cygwin adaptations
-#AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity])
-
-for ac_func in bzero gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
+for ac_func in bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -14066,7 +14062,6 @@ else
   need_realtime_link_in_makefile=0
 fi
 
-
  if test $need_realtime_link_in_makefile == 1; then
   NEED_REALTIME_LINK_TRUE=
   NEED_REALTIME_LINK_FALSE='#'
@@ -14083,7 +14078,9 @@ $as_echo "$as_me: Need to Link to RealTime Library to use clock_gettime." >&6;}
 $as_echo "#define F2__HAVE_CLOCK_GETTIME 1" >>confdefs.h
 
 else
-  as_fn_error $? "*** Funk2 requires the clock_gettime function in order to measure process and thread execution times." "$LINENO" 5
+  { $as_echo "$as_me:${as_lineno-$LINENO}: *** Funk2 requires the clock_gettime function in order to measure process and thread execution times." >&5
+$as_echo "$as_me: *** Funk2 requires the clock_gettime function in order to measure process and thread execution times." >&6;}
+#  AC_MSG_ERROR([*** Funk2 requires the clock_gettime function in order to measure process and thread execution times.])
 fi
 
 # checks for opengl

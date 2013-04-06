@@ -106,7 +106,10 @@ using __cxxabiv1::__cxa_demangle;
 #  include <net/if.h>
 #endif // HAVE_NET_IF_H
 
-#include <netdb.h>
+#if defined(HAVE_NETDB_H)
+#  include <netdb.h>
+#endif // HAVE_NETDB_H
+
 #include <netinet/in.h>
 #include <netinet/tcp.h>
 #include <pthread.h>

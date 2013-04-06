@@ -82,7 +82,7 @@ using __cxxabiv1::__cxa_demangle;
 
 #include <dirent.h>
 
-#ifdef F2__DLFCN__SUPPORTED
+#ifdef HAVE_DLFCN_H
 #  include <dlfcn.h>
 #endif
 

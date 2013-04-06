@@ -55,6 +55,14 @@ void f2__print_usage() {
 	 "\n"
 	 "\n        The localhost peer-command-server port number."
 	 "\n"
+	 "\n    --no-sigint-handler"
+	 "\n"
+	 "\n        Disables SIGINT (CTRL-C) signal handler."
+	 "\n"
+	 "\n    --no-sigsegv-handler"
+	 "\n"
+	 "\n        Disables SIGSEGV (segmentation fault) signal handler."
+	 "\n"
 	 "\n\n");
 }
 
@@ -121,6 +129,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->user_command                    = NULL;
   this->peer_command_server__port_num   = 22222;
   this->bootstrap_image_filename        = NULL;
+  this->no_sigint_handler               = boolean__false;
   this->no_repl                         = boolean__false;
   this->no_boot                         = boolean__false;
   
@@ -151,6 +160,10 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	break;
       }
       this->bootstrap_image_filename = argv[index];
+    } else if (strcmp(argv[index], "--no-sigint-handler") == 0) {
+      this->no_sigint_handler = boolean__true;
+    } else if (strcmp(argv[index], "--no-sigsegv-handler") == 0) {
+      this->no_sigsegv_handler = boolean__true;
     } else if (strcmp(argv[index], "--no-repl") == 0) {
       this->no_repl = boolean__true;
     } else if (strcmp(argv[index], "--no-boot") == 0) {

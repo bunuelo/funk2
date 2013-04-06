@@ -35,6 +35,8 @@ typedef struct funk2_command_line_s {
   char*     user_command;
   char*     bootstrap_image_filename;
   int       peer_command_server__port_num;
+  boolean_t no_sigint_handler;
+  boolean_t no_sigsegv_handler;
   boolean_t no_repl;
   boolean_t no_boot;
 } funk2_command_line_t;

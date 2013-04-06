@@ -217,8 +217,18 @@ void f2__signal__initialize() {
     sa.sa_sigaction = funk2_receive_signal;
     sa.sa_flags     = SA_SIGINFO | SA_RESTART;
     
-    sigaction(SIGINT,  &sa, NULL);
-    sigaction(SIGSEGV, &sa, NULL);
+    if (! __funk2.command_line.no_sigint_handler) {
+      status("SIGINT signal handler enabled.");
+      sigaction(SIGINT,  &sa, NULL);
+    } else {
+      status("SIGINT signal handler disabled.");
+    }
+    if (! __funk2.command_line.no_sigsegv_handler) {
+      status("SIGSEGV signal handler enabled.");
+      sigaction(SIGSEGV, &sa, NULL);
+    } else {
+      status("SIGSEGV signal handler disabled.");
+    }
   }
 }
 

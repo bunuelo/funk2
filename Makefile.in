@@ -10162,6 +10162,7 @@ clean: clean-am clean-img
 	rm -f config_bit_num.h
 	rm -f $(all_extension_import_libraries)
 	rm -f bin/funk2$(EXEEXT)
+	rm -f bin/configurator$(EXEEXT)
 	rm -f install.sh gprof.txt libtool Makefile
 	rm -rf c/.deps c/.dirstamp
 	rm -f config.h config.log config.status

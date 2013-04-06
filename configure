@@ -14007,7 +14007,11 @@ fi
 done
 
 
-for ac_func in bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
+
+# before cygwin adaptations
+#AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity])
+
+for ac_func in bzero gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -14061,6 +14065,7 @@ if test "x$ac_cv_lib_rt_clock_gettime" = xyes; then :
 else
   need_realtime_link_in_makefile=0
 fi
+
 
  if test $need_realtime_link_in_makefile == 1; then
   NEED_REALTIME_LINK_TRUE=

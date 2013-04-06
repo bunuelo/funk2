@@ -879,7 +879,7 @@ all_extension_import_libraries = \
   extension/transframe/libf2e_transframe.lib
 
 %.lib: %.a
-	dlltool --output-lib $@ $<
+	dlltool --export-all-symbols --output-lib $@ $<
 
 
 extension_blocks_world_libf2e_blocks_world_la_SOURCES                                                                               = extension/blocks_world/blocks_world.c

@@ -82,14 +82,16 @@ libs = -lpthread
 
 funk2_objs   = $(funk2_server_objs)
 
-dlfcn_linker_flags   = -ldl
+dlfcn_linker_flags = -ldl
 
 math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
+if HAVE_DLFCN_H
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags)
+endif
 
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 

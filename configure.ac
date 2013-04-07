@@ -265,6 +265,10 @@ AC_CHECK_FUNCS([clock_gettime \
                 strtol \
                 sysconf])
 
+AC_CHECK_MEMBERS([struct stat.st_rdev, \
+                  struct stat.st_blocks, \
+                  struct stat.st_blksize])
+
 AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
 AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)
 if test $need_realtime_link_in_makefile == 1

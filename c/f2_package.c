@@ -690,10 +690,16 @@ f2ptr raw__pathname__stat(f2ptr cause, f2ptr this) {
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_hard_links"),                f2integer__new(cause, (s64)buf.st_nlink));
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "user_id_of_owner"),                    f2integer__new(cause, (s64)buf.st_uid));
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "group_id_of_owner"),                   f2integer__new(cause, (s64)buf.st_gid));
+#if defined(HAVE_STRUCT_STAT_ST_RDEV)
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "device_id"),                           f2integer__new(cause, (s64)buf.st_rdev));
+#endif // HAVE_STRUCT_STAT_ST_RDEV
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "total_size_in_bytes"),                 f2integer__new(cause, (s64)buf.st_size));
+#if defined(HAVE_STRUCT_STAT_ST_BLKSIZE)
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "blocksize_for_file_system_io"),        f2integer__new(cause, (s64)buf.st_blksize));
+#endif // HAVE_STRUCT_STAT_ST_BLKSIZE
+#if defined(HAVE_STRUCT_STAT_ST_BLOCKS)
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "number_of_512_byte_blocks_allocated"), f2integer__new(cause, (s64)buf.st_blocks));
+#endif // HAVE_STRUCT_STAT_ST_BLOCKS
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_access"),                 raw__time__new_from_unix_time(cause, buf.st_atime));
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_modification"),           raw__time__new_from_unix_time(cause, buf.st_mtime));
     f2__frame__add_var_value(cause, stat_frame, new__symbol(cause, "time_of_last_status_change"),          raw__time__new_from_unix_time(cause, buf.st_ctime));
@@ -730,7 +736,9 @@ f2ptr raw__pathname__exists(f2ptr cause, u8* filename) {
   case EINVAL:       error_string = "mode was incorrectly specified."; break;
   case EIO:          error_string = "An I/O error occurred."; break;
   case ENOMEM:       error_string = "Insufficient kernel memory was available."; break;
+#if defined(ETXTBSY)
   case ETXTBSY:      error_string = "Write access was requested to an executable which is being executed."; break;
+#endif // ETXTBSY
   default:           error_string = "undocumented access failure."; break;
   }
   return f2larva__new(cause, 1233, f2__bug__new(cause, f2integer__new(cause, 1233), f2__frame__new(cause, f2list8__new(cause,

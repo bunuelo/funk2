@@ -169,26 +169,69 @@ using __cxxabiv1::__cxa_demangle;
 #  include <netinet/tcp.h>
 #endif // HAVE_NETINET_TCP_H
 
-#include <pthread.h>
-#include <sched.h>
-#include <signal.h>
-#include <stdarg.h>
-#include <string.h>
-#include <sys/ioctl.h>
-#include <sys/mman.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
+#if defined(HAVE_PTHREAD_H)
+#  include <pthread.h>
+#endif // HAVE_PTHREAD_H
+
+#if defined(HAVE_SCHED_H)
+#  include <sched.h>
+#endif // HAVE_SCHED_H
+
+#if defined(HAVE_SIGNAL_H)
+#  include <signal.h>
+#endif // HAVE_SIGNAL_H
+
+#if defined(HAVE_STDARG_H)
+#  include <stdarg.h>
+#endif // HAVE_STDARG_H
+
+#if defined(HAVE_STRING_H)
+#  include <string.h>
+#endif // HAVE_STRING_H
+
+#if defined(HAVE_SYS_IOCTL_H)
+#  include <sys/ioctl.h>
+#endif // HAVE_SYS_IOCTL_H
+
+#if defined(HAVE_SYS_MMAN_H)
+#  include <sys/mman.h>
+#endif // HAVE_SYS_MMAN_H
+
+#if defined(HAVE_SYS_SOCKET_H)
+#  include <sys/socket.h>
+#endif // HAVE_SYS_SOCKET_H
+
+#if defined(HAVE_SYS_STAT_H)
+#  include <sys/stat.h>
+#endif // HAVE_SYS_STAT_H
 
 #if defined(HAVE_SYS_SYSCALL_H)
 #  include <sys/syscall.h>
 #endif // HAVE_SYS_SYSCALL_H
 
-#include <sys/time.h>
-#include <sys/times.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <termios.h>
-#include <time.h>
+#if defined(HAVE_SYS_TIME_H)
+#  include <sys/time.h>
+#endif // HAVE_SYS_TIME_H
+
+#if defined(HAVE_SYS_TIMES_H)
+#  include <sys/times.h>
+#endif // HAVE_SYS_TIMES_H
+
+#if defined(HAVE_SYS_TYPES_H)
+#  include <sys/types.h>
+#endif // HAVE_SYS_TYPES_H
+
+#if defined(HAVE_SYS_WAIT_H)
+#  include <sys/wait.h>
+#endif // HAVE_SYS_WAIT_H
+
+#if defined(HAVE_TERMIOS_H)
+#  include <termios.h>
+#endif // HAVE_TERMIOS_H
+
+#if defined(HAVE_TIME_H)
+#  include <time.h>
+#endif // HAVE_TIME_H
 
 #if defined(HAVE_UCONTEXT_H)
 #  include <ucontext.h>

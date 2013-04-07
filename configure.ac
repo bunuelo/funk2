@@ -41,6 +41,7 @@ fi],
 AM_INIT_AUTOMAKE([subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
+
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
@@ -61,13 +62,23 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   netdb.h \
 		  netinet/in.h \
                   netinet/tcp.h \
+                  pthread.h \
+                  sched.h \
+                  signal.h \
+                  stdarg.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \
+                  sys/mman.h \
                   sys/resource.h \
                   sys/socket.h \
                   sys/sockio.h \
+                  sys/stat.h \
                   sys/time.h \
+                  sys/times.h \
+                  sys/types.h \
+                  sys/wait.h \
+                  time.h \
                   termios.h \
                   unistd.h \
                   xmlrpc-c/base.h \

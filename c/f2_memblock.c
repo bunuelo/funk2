@@ -130,7 +130,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
     case ptype_mutable_array_pointer:
       break;
     default: {
-      status("unknown type (%ld) of block (%ld) in debugging funk2_memorypool memory test.", (long)(ptype_block->block.ptype), (long)ptype_block);
+      status("unknown type (" u64__fstr ") of block (" u64__fstr ") in debugging funk2_memorypool memory test.", (u64)(ptype_block->block.ptype), (u64)to_ptr(ptype_block));
       return boolean__false;
     } break;
     }

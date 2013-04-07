@@ -50,6 +50,7 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   cxxabi.h \
                   dirent.h \
                   errno.h \
+                  execinfo.h \
                   fcntl.h \
                   limits.h \
                   linux/sockios.h \
@@ -74,13 +75,17 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   sys/socket.h \
                   sys/sockio.h \
                   sys/stat.h \
+                  sys/syscall.h \
                   sys/time.h \
                   sys/times.h \
                   sys/types.h \
                   sys/wait.h \
                   time.h \
                   termios.h \
+                  ucontext.h \
                   unistd.h \
+                  X11/keysym.h \
+                  X11/Xlib.h \
                   xmlrpc-c/base.h \
                   xmlrpc-c/abyss.h \
                   xmlrpc-c/client.h \
@@ -95,9 +100,9 @@ AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 #AC_CHECK_LIB(clock_gettime)
 AC_CHECK_LIB(gmon,_mcount)
 
-AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
 AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([*** Funk2 requires the zlib library in order to compress and decompress disk images.])])
 
+# check for dlfcn dynamic library loading support
 AC_CHECK_HEADERS([dlfcn.h],
                  [configure_dlfcn_supported=1],
                  [configure_dlfcn_supported=0])
@@ -156,15 +161,6 @@ fi
 #
 ## end check for xmlrpc-c
 
-
-# checking for execinfo.h used for glib backtrace
-AC_CHECK_HEADERS([execinfo.h],[],[])
-
-# checking for ucontext.h used for Linux specific machine-code backtrace
-AC_CHECK_HEADERS([ucontext.h],[],[])
-
-# checking for sys/syscall.h
-AC_CHECK_HEADERS([sys/syscall.h],[],[])
 
 ## Checking for ncurses.
 #have_ncurses_requirements=1
@@ -242,7 +238,21 @@ AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity])
+AC_CHECK_FUNCS([bzero \
+                clock_gettime \
+                gethostbyname \
+                gethostname \
+                getpagesize \
+                inet_ntoa \
+                memset \
+                munmap \
+                select \
+                setlocale \
+                socket \
+                strerror \
+                strtol \
+                sched_getaffinity \
+                sched_setaffinity])
 
 AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
 AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)

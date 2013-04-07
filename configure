@@ -11796,6 +11796,7 @@ for ac_header in arpa/inet.h \
                   cxxabi.h \
                   dirent.h \
                   errno.h \
+                  execinfo.h \
                   fcntl.h \
                   limits.h \
                   linux/sockios.h \
@@ -11820,13 +11821,17 @@ for ac_header in arpa/inet.h \
                   sys/socket.h \
                   sys/sockio.h \
                   sys/stat.h \
+                  sys/syscall.h \
                   sys/time.h \
                   sys/times.h \
                   sys/types.h \
                   sys/wait.h \
                   time.h \
                   termios.h \
+                  ucontext.h \
                   unistd.h \
+                  X11/keysym.h \
+                  X11/Xlib.h \
                   xmlrpc-c/base.h \
                   xmlrpc-c/abyss.h \
                   xmlrpc-c/client.h \
@@ -11909,19 +11914,6 @@ _ACEOF
 fi
 
 
-for ac_header in X11/Xlib.h X11/keysym.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-fi
-
-done
-
 for ac_header in zlib.h
 do :
   ac_fn_c_check_header_mongrel "$LINENO" "zlib.h" "ac_cv_header_zlib_h" "$ac_includes_default"
@@ -11937,6 +11929,7 @@ fi
 done
 
 
+# check for dlfcn dynamic library loading support
 for ac_header in dlfcn.h
 do :
   ac_fn_c_check_header_mongrel "$LINENO" "dlfcn.h" "ac_cv_header_dlfcn_h" "$ac_includes_default"
@@ -12087,48 +12080,6 @@ fi
 #AC_SUBST(xmlrpc_LIBS)
 #
 ## end check for xmlrpc-c
-
-
-# checking for execinfo.h used for glib backtrace
-for ac_header in execinfo.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "execinfo.h" "ac_cv_header_execinfo_h" "$ac_includes_default"
-if test "x$ac_cv_header_execinfo_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_EXECINFO_H 1
-_ACEOF
-
-fi
-
-done
-
-
-# checking for ucontext.h used for Linux specific machine-code backtrace
-for ac_header in ucontext.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "ucontext.h" "ac_cv_header_ucontext_h" "$ac_includes_default"
-if test "x$ac_cv_header_ucontext_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_UCONTEXT_H 1
-_ACEOF
-
-fi
-
-done
-
-
-# checking for sys/syscall.h
-for ac_header in sys/syscall.h
-do :
-  ac_fn_c_check_header_mongrel "$LINENO" "sys/syscall.h" "ac_cv_header_sys_syscall_h" "$ac_includes_default"
-if test "x$ac_cv_header_sys_syscall_h" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_SYS_SYSCALL_H 1
-_ACEOF
-
-fi
-
-done
 
 
 ## Checking for ncurses.
@@ -14071,7 +14022,21 @@ fi
 done
 
 
-for ac_func in bzero clock_gettime gethostbyname gethostname getpagesize inet_ntoa memset munmap select setlocale socket strerror strtol sched_getaffinity sched_setaffinity
+for ac_func in bzero \
+                clock_gettime \
+                gethostbyname \
+                gethostname \
+                getpagesize \
+                inet_ntoa \
+                memset \
+                munmap \
+                select \
+                setlocale \
+                socket \
+                strerror \
+                strtol \
+                sched_getaffinity \
+                sched_setaffinity
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"

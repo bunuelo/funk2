@@ -787,7 +787,9 @@ f2ptr raw__pathname__rename(f2ptr cause, u8* old_filename, u8* new_filename) {
   case ENOTDIR:      error_string = "A component of either path prefix is not a directory; or the old argument names a directory and new argument names a non-directory file."; break;
   case EROFS:        error_string = "The requested operation requires writing in a directory on a read-only file system."; break;
   case EXDEV:        error_string = "The links named by new and old are on different file systems and the implementation does not support links between file systems."; break;
+#if defined(ETXTBSY)
   case ETXTBSY:      error_string = "The file to be renamed is a pure procedure (shared text) file that is being executed."; break;
+#endif // ETXTBSY
   default:           error_string = "undocumented rename failure."; break;
   }
   return f2larva__new(cause, 1235, f2__bug__new(cause, f2integer__new(cause, 1235), f2__frame__new(cause, f2list10__new(cause,

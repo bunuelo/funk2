@@ -14025,8 +14025,7 @@ fi
 done
 
 
-for ac_func in bzero \
-                clock_gettime \
+for ac_func in clock_gettime \
 		dlclose \
 		dlerror \
 		dlopen \

@@ -252,6 +252,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 inet_ntoa \
 		kill \
                 memset \
+		mmap \
                 munmap \
 		recv, \
                 sched_getaffinity \

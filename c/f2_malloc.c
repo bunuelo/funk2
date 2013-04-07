@@ -45,7 +45,13 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   //exit(-1);
 }
 
+#if defined(HAVE_GETPAGESIZE) && defined(HAVE_MMAP) && defined(HAVE_MUNMAP)
+#  define HAVE_MMAPPED_EXECUTABLE_MEMORY
+#endif // HAVE_GETPAGESIZE && HAVE_MMAP
+
+
 ptr malloc_executable(size_t required_bytes) {
+#if defined(HAVE_MMAPPED_EXECUTABLE_MEMORY)
   size_t page_size   = getpagesize();
   size_t alloc_bytes = (((required_bytes - 1) / page_size) + 1) * page_size;
   void* p = mmap(NULL,
@@ -59,10 +65,18 @@ ptr malloc_executable(size_t required_bytes) {
     error(nil, "malloc_executable malloc failed.");
   }
   return to_ptr(p);
+#else
+  system("malloc_executable warning: mmap not available, so cannot make memory executable.");
+  return to_ptr(malloc(required_bytes));
+#endif // HAVE_MMAPPED_EXECUTABLE_MEMORY
 }
 
 void free_executable(ptr p) {
+#if defined(HAVE_MMAPPED_EXECUTABLE_MEMORY)
   munmap(from_ptr(p), 1);
+#else
+  free(from_ptr(p));
+#endif // HAVE_MMAPPED_EXECUTABLE_MEMORY
 }
 
 ptr f2__malloc(f2size_t byte_num) {

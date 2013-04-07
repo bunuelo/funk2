@@ -14036,6 +14036,7 @@ for ac_func in clock_gettime \
                 inet_ntoa \
 		kill \
                 memset \
+		mmap \
                 munmap \
 		recv, \
                 sched_getaffinity \

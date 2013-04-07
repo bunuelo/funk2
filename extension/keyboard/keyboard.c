@@ -57,9 +57,11 @@ f2ptr f2__termios__new(f2ptr cause, f2ptr chunk) {
 export_cefunk1(termios__new, chunk, 0, "Return a new termios object.");
 
 
+#if defined(F2__KEYBOARD__SUPPORTED)
 f2ptr raw__termios__new_from_c_struct(f2ptr cause, struct termios* opts) {
   return raw__termios__new(cause, f2chunk__new(cause, sizeof(*opts), (u8*)opts));
 }
+#endif // F2__KEYBOARD__SUPPORTED
 
 #if defined(F2__KEYBOARD__SUPPORTED)
 void raw__termios__c_struct_copy(f2ptr cause, f2ptr this, struct termios* dest) {

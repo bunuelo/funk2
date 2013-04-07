@@ -29,7 +29,7 @@
 
 void fiber_hash__init(fiber_hash_t* this) {
   this->array               = (fiber_hash_node_t**)from_ptr(f2__malloc(sizeof(fiber_hash_node_t*) * FIBER_HASH__INITIAL_ARRAY_LENGTH));
-  bzero(this->array, sizeof(fiber_hash_node_t*) * FIBER_HASH__INITIAL_ARRAY_LENGTH);
+  memset(this->array, 0, sizeof(fiber_hash_node_t*) * FIBER_HASH__INITIAL_ARRAY_LENGTH);
   this->hash_value_bit_mask = FIBER_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes FIBER_HASH__INITIAL_ARRAY_LENGTH is power of 2
   this->array_length        = FIBER_HASH__INITIAL_ARRAY_LENGTH;
 }

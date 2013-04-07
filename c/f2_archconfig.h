@@ -38,7 +38,7 @@
 #  include <stdint.h>
 #endif // HAVE_STDINT_H
 
-#if defined(HAVE_INTTYPES_H>
+#if defined(HAVE_INTTYPES_H)
 #  include <inttypes.h>
 #endif // HAVE_INTTYPES_H
 

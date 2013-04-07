@@ -11792,21 +11792,21 @@ $as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
 
 fi
 
-for ac_header in arpa/inet.h
-                  net/if.h
-                  netdb.h
-                  fcntl.h
-                  linux/sockios.h
-                  locale.h
-                  math.h
-                  netdb.h
-                  netinet/in.h
-                  stdlib.h
-                  string.h
-                  sys/ioctl.h
-                  sys/socket.h
-                  sys/time.h
-                  termios.h
+for ac_header in arpa/inet.h \
+                  net/if.h \
+                  netdb.h \
+                  fcntl.h \
+                  linux/sockios.h \
+                  locale.h \
+                  math.h \
+                  netdb.h \
+                  netinet/in.h \
+                  stdlib.h \
+                  string.h \
+                  sys/ioctl.h \
+                  sys/socket.h \
+                  sys/time.h \
+                  termios.h \
                   unistd.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`

@@ -46,21 +46,21 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([arpa/inet.h
-                  net/if.h
-                  netdb.h
-                  fcntl.h
-                  linux/sockios.h
-                  locale.h
-                  math.h
-                  netdb.h
-                  netinet/in.h
-                  stdlib.h
-                  string.h
-                  sys/ioctl.h
-                  sys/socket.h
-                  sys/time.h
-                  termios.h
+AC_CHECK_HEADERS([arpa/inet.h \
+                  net/if.h \
+                  netdb.h \
+                  fcntl.h \
+                  linux/sockios.h \
+                  locale.h \
+                  math.h \
+                  netdb.h \
+                  netinet/in.h \
+                  stdlib.h \
+                  string.h \
+                  sys/ioctl.h \
+                  sys/socket.h \
+                  sys/time.h \
+                  termios.h \
                   unistd.h])
 AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 [[

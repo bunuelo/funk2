@@ -11793,14 +11793,14 @@ $as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
 fi
 
 for ac_header in arpa/inet.h \
-                  net/if.h \
-                  netdb.h \
                   fcntl.h \
                   linux/sockios.h \
                   locale.h \
                   math.h \
+                  net/if.h \
                   netdb.h \
-                  netinet/in.h \
+		  netinet/in.h \
+                  netinet/tcp.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \

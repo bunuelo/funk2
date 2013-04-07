@@ -110,8 +110,14 @@ using __cxxabiv1::__cxa_demangle;
 #  include <netdb.h>
 #endif // HAVE_NETDB_H
 
-#include <netinet/in.h>
+#if defined(HAVE_NETINET_IN_H)
+#  include <netinet/in.h>
+#endif // HAVE_NETINET_IN_H
+
+#if defined(HAVE_NETINET_TCP_H)
 #include <netinet/tcp.h>
+#endif // 
+
 #include <pthread.h>
 #include <sched.h>
 #include <signal.h>

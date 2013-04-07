@@ -47,14 +47,14 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([arpa/inet.h \
-                  net/if.h \
-                  netdb.h \
                   fcntl.h \
                   linux/sockios.h \
                   locale.h \
                   math.h \
+                  net/if.h \
                   netdb.h \
-                  netinet/in.h \
+		  netinet/in.h \
+                  netinet/tcp.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \

@@ -34,7 +34,10 @@ void assert_failed(f2ptr fiber, char* filename, int line_num, char* str) {
   status("*** %s:%d> assertion failed, '%s' ***", filename, line_num, str);
   fprintf(stderr, "\n*** %s:%d> assertion failed, '%s' ***\n", filename, line_num, str);
   status_backtrace();
+#if defined(HAVE_KILL)
   kill(getpid(), SIGSTOP);
+#endif // HAVE_KILL
+  // loop forever as a debugging trick, so that process can seubsequently be debugged with an attached gdb
   printf("somebody stop me!"); fflush(stdout);
   while (__assert_failed__global_spin_variable) {
     printf("%s", __funk2__empty_string_for_craziness); fflush(stdout);

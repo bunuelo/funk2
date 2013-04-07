@@ -250,6 +250,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 gethostname \
                 getpagesize \
                 inet_ntoa \
+		kill \
                 memset \
                 munmap \
 		recv, \

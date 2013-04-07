@@ -14087,6 +14087,7 @@ for ac_func in clock_gettime \
 		dlerror \
 		dlopen \
 		dlsym \
+		fcntl \
                 gethostbyname \
                 gethostname \
                 getpagesize \

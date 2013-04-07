@@ -246,6 +246,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		dlerror \
 		dlopen \
 		dlsym \
+		fcntl \
                 gethostbyname \
                 gethostname \
                 getpagesize \

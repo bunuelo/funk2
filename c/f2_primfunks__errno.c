@@ -100,7 +100,11 @@ def_pcfunk0(errno__ebadf,
 
 // EBADMSG "Bad message."
 f2ptr f2__errno__ebadmsg(f2ptr cause) {
+#if defined(EBADMSG)
   return f2integer__new(cause, EBADMSG);
+#else
+  return f2integer__new(cause, 0);
+#endif // EBADMSG
 }
 def_pcfunk0(errno__ebadmsg,
 	    "",
@@ -180,7 +184,11 @@ def_pcfunk0(errno__edom,
 
 // EDQUOT "Reserved."
 f2ptr f2__errno__edquot(f2ptr cause) {
+#if defined(EDQUOT)
   return f2integer__new(cause, EDQUOT);
+#else
+  return f2integer__new(cause, 0);
+#endif // EDQUOT
 }
 def_pcfunk0(errno__edquot,
 	    "",
@@ -220,7 +228,11 @@ def_pcfunk0(errno__ehostunreach,
 
 // EIDRM  "Identifier removed."
 f2ptr f2__errno__eidrm(f2ptr cause) {
+#if defined(EIDRM)
   return f2integer__new(cause, EIDRM);
+#else
+  return f2integer__new(cause, 0);
+#endif // EIDRM
 }
 def_pcfunk0(errno__eidrm,
 	    "",
@@ -316,7 +328,11 @@ def_pcfunk0(errno__emsgsize,
 
 // EMULTIHOP "Reserved."
 f2ptr f2__errno__emultihop(f2ptr cause) {
+#if defined(EMULTIHOP)
   return f2integer__new(cause, EMULTIHOP);
+#else
+  return f2integer__new(cause, 0);
+#endif // EMULTIHOP
 }
 def_pcfunk0(errno__emultihop,
 	    "",
@@ -372,7 +388,11 @@ def_pcfunk0(errno__enobufs,
 
 // ENODATA "No message is available on the STREAM head read queue."
 f2ptr f2__errno__enodata(f2ptr cause) {
+#if defined(ENODATA)
   return f2integer__new(cause, ENODATA);
+#else
+  return f2integer__new(cause, 0);
+#endif // ENODATA
 }
 def_pcfunk0(errno__enodata,
 	    "",
@@ -412,7 +432,11 @@ def_pcfunk0(errno__enolock,
 
 // ENOLINK "Reserved."
 f2ptr f2__errno__enolink(f2ptr cause) {
+#if defined(ENOLINK)
   return f2integer__new(cause, ENOLINK);
+#else
+  return f2integer__new(cause, 0);
+#endif // ENOLINK
 }
 def_pcfunk0(errno__enolink,
 	    "",
@@ -428,7 +452,11 @@ def_pcfunk0(errno__enomem,
 
 // ENOMSG "No message of the desired type."
 f2ptr f2__errno__enomsg(f2ptr cause) {
+#if defined(ENOMSG)
   return f2integer__new(cause, ENOMSG);
+#else
+  return f2integer__new(cause, 0);
+#endif // ENOMSG
 }
 def_pcfunk0(errno__enomsg,
 	    "",
@@ -452,7 +480,11 @@ def_pcfunk0(errno__enospc,
 
 // ENOSR  "No STREAM resources."
 f2ptr f2__errno__enosr(f2ptr cause) {
+#if defined(ENOSR)
   return f2integer__new(cause, ENOSR);
+#else
+  return f2integer__new(cause, 0);
+#endif // ENOSR
 }
 def_pcfunk0(errno__enosr,
 	    "",
@@ -460,7 +492,11 @@ def_pcfunk0(errno__enosr,
 
 // ENOSTR "Not a STREAM."
 f2ptr f2__errno__enostr(f2ptr cause) {
+#if defined(ENOSTR)
   return f2integer__new(cause, ENOSTR);
+#else
+  return f2integer__new(cause, 0);
+#endif // ENOSTR
 }
 def_pcfunk0(errno__enostr,
 	    "",
@@ -620,7 +656,11 @@ def_pcfunk0(errno__esrch,
 
 // ESTALE "Reserved."
 f2ptr f2__errno__estale(f2ptr cause) {
+#if defined(ESTALE)
   return f2integer__new(cause, ESTALE);
+#else
+  return f2integer__new(cause, 0);
+#endif // ESTALE
 }
 def_pcfunk0(errno__estale,
 	    "",
@@ -628,7 +668,11 @@ def_pcfunk0(errno__estale,
 
 // ETIME  "Stream ioctl() timeout."
 f2ptr f2__errno__etime(f2ptr cause) {
+#if defined(ETIME)
   return f2integer__new(cause, ETIME);
+#else
+  return f2integer__new(cause, 0);
+#endif // ETIME
 }
 def_pcfunk0(errno__etime,
 	    "",
@@ -644,7 +688,11 @@ def_pcfunk0(errno__etimeout,
 
 // ETXTBSY "Text file busy."
 f2ptr f2__errno__etxtbsy(f2ptr cause) {
+#if defined(ETXTBSY)
   return f2integer__new(cause, ETXTBSY);
+#else
+  return f2integer__new(cause, 0);
+#endif // ETXTBSY
 }
 def_pcfunk0(errno__etxtbsy,
 	    "",

@@ -1603,11 +1603,16 @@ def_pcfunk0(system__peer_command_server__port_num,
 	    return f2__system__peer_command_server__port_num(this_cause));
 
 f2ptr f2__system__gethostname(f2ptr cause) {
+#if defined(HAVE_GETHOSTNAME)
   char hostname[1024];
   if (gethostname(hostname, 1023) != 0) {
     return nil;
   }
   return new__string(cause, hostname);
+#else
+  return new__error(list2__new(cause,
+			       new__symbol(cause, "bug_name"), new__symbol(cause, "system-gethostname-not_compile_into_this_funk2_build")));
+#endif // HAVE_GETHOSTNAME
 }
 def_pcfunk0(system__gethostname,
 	    "",
@@ -1630,6 +1635,7 @@ def_pcfunk1(exit, value,
 // funk2_node_handler
 
 f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr port_num) {
+#if defined(HAVE_GETHOSTBYNAME)
   // note that this is not cmutexed!
   if (! raw__string__is_type(cause, hostname)) {
     status("funk2_node_handler__know_of_node error: hostname must be a string.");
@@ -1661,6 +1667,10 @@ f2ptr f2__funk2_node_handler__know_of_node(f2ptr cause, f2ptr hostname, f2ptr po
   computer_id_t computer_id = funk2_node_handler__add_node(&(__funk2.node_handler), 0, &client_id);
   status("added knowledge of funk2 node: '%s' %d.%d.%d.%d:%d", hostname__utf8_str, ip_addr[0], ip_addr[1], ip_addr[2], ip_addr[3], port_num__i);
   return f2integer__new(cause, computer_id);
+#else
+  return new__error(list2__new(cause,
+			       new__symbol(cause, "bug_name"), new__symbol(cause, "funk2_node_handler-know_of_node-gethostbyname_not_compile_into_this_funk2_build")));
+#endif // HAVE_GETHOSTBYNAME
 }
 
 def_pcfunk2(funk2_node_handler__know_of_node, hostname, port_num,

@@ -28,7 +28,12 @@
 #include "funk2.h"
 
 f2ptr raw__fcntl(f2ptr cause, f2ptr fd, f2ptr cmd, f2ptr value) {
+#if defined(HAVE_FCNTL)
   return f2integer__new(cause, fcntl(f2integer__i(fd, cause), f2integer__i(cmd, cause), f2integer__i(value, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "fcntl-not_compiled_into_this_funk2_build")));
+#endif // HAVE_FCNTL
 }
 
 f2ptr f2__fcntl(f2ptr cause, f2ptr fd, f2ptr cmd, f2ptr value) {
@@ -42,7 +47,12 @@ def_pcfunk3(fcntl, fd, cmd, value,
 	    return f2__fcntl(this_cause, fd, cmd, value));
 
 f2ptr raw__fcntl__getfd(f2ptr cause, f2ptr fd, f2ptr value) {
+#if defined(HAVE_FCNTL)
   return f2integer__new(cause, fcntl(f2integer__i(fd, cause), F_GETFD, f2integer__i(value, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "fcntl-getfd-not_compiled_into_this_funk2_build")));
+#endif // HAVE_FCNTL
 }
 
 f2ptr f2__fcntl__getfd(f2ptr cause, f2ptr fd, f2ptr value) {
@@ -55,7 +65,12 @@ def_pcfunk2(fcntl__getfd, fd, value,
 	    return f2__fcntl__getfd(this_cause, fd, value));
 
 f2ptr raw__fcntl__setfd(f2ptr cause, f2ptr fd, f2ptr value) {
+#if defined(HAVE_FCNTL)
   return f2integer__new(cause, fcntl(f2integer__i(fd, cause), F_SETFD, f2integer__i(value, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "fcntl-setfd-not_compiled_into_this_funk2_build")));
+#endif // HAVE_FCNTL
 }
 
 f2ptr f2__fcntl__setfd(f2ptr cause, f2ptr fd, f2ptr value) {
@@ -68,7 +83,12 @@ def_pcfunk2(fcntl__setfd, fd, value,
 	    return f2__fcntl__setfd(this_cause, fd, value));
 
 f2ptr raw__fcntl__getfl(f2ptr cause, f2ptr fd, f2ptr value) {
+#if defined(HAVE_FCNTL)
   return f2integer__new(cause, fcntl(f2integer__i(fd, cause), F_GETFL, f2integer__i(value, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "fcntl-getfl-not_compiled_into_this_funk2_build")));
+#endif // HAVE_FCNTL
 }
 
 f2ptr f2__fcntl__getfl(f2ptr cause, f2ptr fd, f2ptr value) {
@@ -81,7 +101,12 @@ def_pcfunk2(fcntl__getfl, fd, value,
 	    return f2__fcntl__getfl(this_cause, fd, value));
 
 f2ptr raw__fcntl__setfl(f2ptr cause, f2ptr fd, f2ptr value) {
+#if defined(HAVE_FCNTL)
   return f2integer__new(cause, fcntl(f2integer__i(fd, cause), F_SETFL, f2integer__i(value, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "fcntl-setfl-not_compiled_into_this_funk2_build")));
+#endif // HAVE_FCNTL
 }
 
 f2ptr f2__fcntl__setfl(f2ptr cause, f2ptr fd, f2ptr value) {

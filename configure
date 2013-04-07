@@ -656,6 +656,8 @@ GTK_CFLAGS
 PKG_CONFIG
 XMLRPC_SUPPORTED_FALSE
 XMLRPC_SUPPORTED_TRUE
+DLFCN_SUPPORTED_FALSE
+DLFCN_SUPPORTED_TRUE
 AM_BACKSLASH
 AM_DEFAULT_VERBOSITY
 AM_DEFAULT_V
@@ -11793,7 +11795,6 @@ fi
 for ac_header in arpa/inet.h
                   net/if.h
                   netdb.h
-                  dlfcn.h
                   fcntl.h
                   linux/sockios.h
                   locale.h
@@ -11910,6 +11911,29 @@ else
 fi
 
 done
+
+
+for ac_header in dlfcn.h
+do :
+  ac_fn_c_check_header_mongrel "$LINENO" "dlfcn.h" "ac_cv_header_dlfcn_h" "$ac_includes_default"
+if test "x$ac_cv_header_dlfcn_h" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_DLFCN_H 1
+_ACEOF
+ configure_dlfcn_supported=1
+else
+  configure_dlfcn_supported=0
+fi
+
+done
+
+ if test $configure_dlfcn_supported == 1; then
+  DLFCN_SUPPORTED_TRUE=
+  DLFCN_SUPPORTED_FALSE='#'
+else
+  DLFCN_SUPPORTED_TRUE='#'
+  DLFCN_SUPPORTED_FALSE=
+fi
 
 
 # Checking for xmlrpc-c and its requirements.
@@ -14742,6 +14766,10 @@ else
   am__EXEEXT_FALSE=
 fi
 
+if test -z "${DLFCN_SUPPORTED_TRUE}" && test -z "${DLFCN_SUPPORTED_FALSE}"; then
+  as_fn_error $? "conditional \"DLFCN_SUPPORTED\" was never defined.
+Usually this means the macro was only invoked conditionally." "$LINENO" 5
+fi
 if test -z "${XMLRPC_SUPPORTED_TRUE}" && test -z "${XMLRPC_SUPPORTED_FALSE}"; then
   as_fn_error $? "conditional \"XMLRPC_SUPPORTED\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5

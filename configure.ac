@@ -49,7 +49,6 @@ AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([arpa/inet.h
                   net/if.h
                   netdb.h
-                  dlfcn.h
                   fcntl.h
                   linux/sockios.h
                   locale.h
@@ -74,6 +73,11 @@ AC_CHECK_LIB(gmon,_mcount)
 
 AC_CHECK_HEADERS([X11/Xlib.h X11/keysym.h])
 AC_CHECK_HEADERS([zlib.h], [], [AC_MSG_ERROR([*** Funk2 requires the zlib library in order to compress and decompress disk images.])])
+
+AC_CHECK_HEADERS([dlfcn.h],
+                 [configure_dlfcn_supported=1],
+                 [configure_dlfcn_supported=0])
+AM_CONDITIONAL(DLFCN_SUPPORTED, test $configure_dlfcn_supported == 1)
 
 # Checking for xmlrpc-c and its requirements.
 have_xmlrpc_requirements=1

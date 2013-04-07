@@ -88,7 +88,7 @@ math_linker_flags = -lm
 
 zlib_linker_flags = -lz
 
-if HAVE_DLFCN_H
+if DLFCN_SUPPORTED
 dynamic_library_flags        = -DF2__DLFCN__SUPPORTED 
 dynamic_library_linker_flags = $(dlfcn_linker_flags)
 endif

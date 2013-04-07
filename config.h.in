@@ -164,6 +164,9 @@
    and to 0 otherwise. */
 #undef HAVE_REALLOC
 
+/* Define to 1 if you have the `recv,' function. */
+#undef HAVE_RECV_
+
 /* Define to 1 if you have the `sched_getaffinity' function. */
 #undef HAVE_SCHED_GETAFFINITY
 
@@ -175,6 +178,9 @@
 
 /* Define to 1 if you have the `select' function. */
 #undef HAVE_SELECT
+
+/* Define to 1 if you have the `send' function. */
+#undef HAVE_SEND
 
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE

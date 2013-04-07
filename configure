@@ -14033,7 +14033,9 @@ for ac_func in bzero \
                 inet_ntoa \
                 memset \
                 munmap \
+		recv, \
                 select \
+		send \
                 setlocale \
                 socket \
                 strerror \

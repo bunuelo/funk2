@@ -249,7 +249,9 @@ AC_CHECK_FUNCS([bzero \
                 inet_ntoa \
                 memset \
                 munmap \
+		recv, \
                 select \
+		send \
                 setlocale \
                 socket \
                 strerror \

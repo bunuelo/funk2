@@ -201,6 +201,7 @@ select_read_result_t select_write(int fd) {
 }
 
 recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_read) {
+#if defined(HAVE_RECV)
   select_read_result_t select_read_result = select_read(socket_fd);
   switch(select_read_result) {
   case select_read_result__data_available: {
@@ -237,6 +238,9 @@ recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_n
   }
   //status("recv reports success.");
   return recv_nonblocking_result__success;
+#else
+  return recv_nonblocking_result__unknown_failure;
+#endif // HAVE_RECV
 }
 
 void whoa_time() {
@@ -244,6 +248,7 @@ void whoa_time() {
 }
 
 send_nonblocking_result_t send_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_sent) {
+#if defined(HAVE_SEND)
   select_write_result_t select_write_result = select_write(socket_fd);
   switch(select_write_result) {
   case select_write_result__space_available: {
@@ -282,6 +287,9 @@ send_nonblocking_result_t send_nonblocking(int socket_fd, void* data, u32 byte_n
   }
   //status("send reports success.");
   return send_nonblocking_result__success;
+#else
+  return send_nonblocking_result__unknown_failure;
+#endif // HAVE_SEND
 }
 
 read_nonblocking_result_t read_nonblocking(int fd, void* data, u32 byte_num, u32* bytes_read) {

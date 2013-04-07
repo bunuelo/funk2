@@ -30,6 +30,11 @@
 
 #include "../../c/funk2.h"
 
+#if defined(HAVE_TERMIOS_H)
+#  define F2__KEYBOARD__SUPPORTED
+#endif
+
+boolean_t raw__keyboard__supported();
 
 // **
 

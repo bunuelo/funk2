@@ -28,6 +28,14 @@
 #include "keyboard.h"
 
 
+boolean_t raw__keyboard__supported() {
+#if defined(F2__KEYBOARD__SUPPORTED)
+  return boolean__true;
+#else
+  return boolean__false;
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
 def_ceframe1(keyboard, termios, chunk);
 
 f2ptr raw__termios__new(f2ptr cause, f2ptr chunk) {
@@ -45,10 +53,12 @@ f2ptr raw__termios__new_from_c_struct(f2ptr cause, struct termios* opts) {
   return raw__termios__new(cause, f2chunk__new(cause, sizeof(*opts), (u8*)opts));
 }
 
+#if defined(F2__KEYBOARD__SUPPORTED)
 void raw__termios__c_struct_copy(f2ptr cause, f2ptr this, struct termios* dest) {
   f2ptr chunk = raw__termios__chunk(cause, this);
   raw__chunk__str_copy(cause, chunk, (u8*)dest);
 }
+#endif // F2__KEYBOARD__SUPPORTED
 
 f2ptr f2__termios_type__new_aux(f2ptr cause) {
   f2ptr this = f2__termios_type__new(cause);
@@ -57,18 +67,28 @@ f2ptr f2__termios_type__new_aux(f2ptr cause) {
 
 
 
-f2ptr f2__keyboard__current_mode(f2ptr cause) {
+f2ptr raw__keyboard__current_mode(f2ptr cause) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   struct termios opts;
   int res = tcgetattr(STDIN_FILENO, &opts);
   if (res != 0) {
     return f2larva__new(cause, 12351, nil);
   }
   return raw__termios__new_from_c_struct(cause, &opts);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
+f2ptr f2__keyboard__current_mode(f2ptr cause) {
+  return raw__keyboard__current_mode(cause);
 }
 export_cefunk0(keyboard__current_mode, 0, "Return a termios struct containing the current standard input device attributes.");
 
 
 f2ptr raw__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   struct termios opts;
   raw__termios__c_struct_copy(cause, termios, &opts);
   int res = tcsetattr(STDIN_FILENO, TCSANOW, &opts);
@@ -76,6 +96,10 @@ f2ptr raw__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
     return f2larva__new(cause, 12353, nil);
   }
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
 }
 
 f2ptr f2__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
@@ -85,7 +109,8 @@ f2ptr f2__keyboard__current_mode__set(f2ptr cause, f2ptr termios) {
 export_cefunk1(keyboard__current_mode__set, termios, 0, "Sets the current standard input device attributes to those given by the termios struct.");
 
 
-f2ptr f2__keyboard__enable_noncanonical_mode(f2ptr cause) {
+f2ptr raw__keyboard__enable_noncanonical_mode(f2ptr cause) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   struct termios opts;
   int res = tcgetattr(STDIN_FILENO, &opts);
   if (res != 0) {
@@ -96,18 +121,27 @@ f2ptr f2__keyboard__enable_noncanonical_mode(f2ptr cause) {
 		    ECHOE   |
 		    ECHOK   |
 		    ECHONL  |
-#ifndef F2__CYGWIN
+#  ifndef F2__CYGWIN
 		    ECHOPRT |
-#endif // !F2__CYGWIN
+#  endif // !F2__CYGWIN
 		    ECHOKE  |
 		    ICRNL);
   tcsetattr(STDIN_FILENO, TCSANOW, &opts);
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
+f2ptr f2__keyboard__enable_noncanonical_mode(f2ptr cause) {
+  return raw__keyboard__enable_noncanonical_mode(cause);
 }
 export_cefunk0(keyboard__enable_noncanonical_mode, 0, "Enables noncanonical mode device attributes for the standard input.");
 
 
-f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
+f2ptr raw__keyboard__try_read_byte(f2ptr cause) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   if (raw__system__received_signal__sigint(cause)) {
     f2__system__clear_signal__sigint(cause);
     return f2larva__new(cause, 777, nil);
@@ -125,9 +159,9 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
 			ECHOE   |
 			ECHOK   |
 			ECHONL  |
-#ifndef F2__CYGWIN
+#  ifndef F2__CYGWIN
 			ECHOPRT |
-#endif // !F2__CYGWIN
+#  endif // !F2__CYGWIN
 			ECHOKE  |
 			ICRNL);
   tcsetattr(STDIN_FILENO, TCSANOW, &new_opts);
@@ -144,6 +178,14 @@ f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
   } else {
     return f2integer__new(cause, ch);
   }
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
+f2ptr f2__keyboard__try_read_byte(f2ptr cause) {
+  return raw__keyboard__try_read_byte(cause);
 }
 export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
 
@@ -159,7 +201,8 @@ export_cefunk0(keyboard__try_read_byte, 0, "Wait for next byte from keyboard.");
       temp_value;						\
     })
 
-f2ptr f2__keyboard__try_read_character(f2ptr cause) {
+f2ptr raw__keyboard__try_read_character(f2ptr cause) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   f2ptr b0 = assert_value_with_ctrl_c(f2__keyboard__try_read_byte(cause));
   if (b0 == nil) {
     return nil;
@@ -214,11 +257,20 @@ f2ptr f2__keyboard__try_read_character(f2ptr cause) {
     // invalid character.
     return f2char__new(cause, (funk2_character_t)0xFFFD);
   }
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
+f2ptr f2__keyboard__try_read_character(f2ptr cause) {
+  return raw__keyboard__try_read_character(cause);
 }
 export_cefunk0(keyboard__try_read_character, 0, "Wait for next character from keyboard.");
 
 
-f2ptr f2__keyboard__check_keypress(f2ptr cause) {
+f2ptr raw__keyboard__check_keypress(f2ptr cause) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   f2ptr old_opts = assert_value(f2__keyboard__current_mode(cause));
   assert_value(f2__keyboard__enable_noncanonical_mode(cause));
   f2ptr ch     = assert_value_with_ctrl_c(f2__keyboard__try_read_character(cause));
@@ -352,11 +404,20 @@ f2ptr f2__keyboard__check_keypress(f2ptr cause) {
   }
   f2__keyboard__current_mode__set(cause, old_opts);
   return result;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
+}
+
+f2ptr f2__keyboard__check_keypress(f2ptr cause) {
+  return raw__keyboard__check_keypress(cause);
 }
 export_cefunk0(keyboard__check_keypress, 0, "Check for next keypress.");
 
 
 f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   s64   ch__ch     = f2char__ch(ch, cause);
   f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
   assert_argument_type(array, line_array);
@@ -373,6 +434,10 @@ f2ptr raw__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_inde
   f2ptr new_line    = assert_value(f2__stringlist__concat(cause, f2list3__new(cause, first_part, middle_part, last_part)));
   assert_value(f2__array__elt__set(cause, line_array, line_index, new_line));
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
 }
 
 f2ptr f2__keyboard_editor__insert_char(f2ptr cause, f2ptr this, f2ptr line_index, f2ptr char_index, f2ptr ch) {
@@ -386,9 +451,14 @@ export_cefunk4(keyboard_editor__insert_char, this, line_index, char_index, ch, 0
 
 
 f2ptr raw__keyboard_editor__current_line(f2ptr cause, f2ptr this) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   f2ptr line_array = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "line_array"), nil));
   f2ptr cursor_y   = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"),   nil));
   return assert_value(f2__array__elt(cause, line_array, cursor_y));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
 }
 
 f2ptr f2__keyboard_editor__current_line(f2ptr cause, f2ptr this) {
@@ -399,6 +469,7 @@ export_cefunk1(keyboard_editor__current_line, this, 0, "Returns the current line
 
 
 f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   f2ptr cursor_x = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_x"), nil));
   assert_argument_type(integer, cursor_x);
   f2ptr cursor_y = assert_value(f2__frame__lookup_var_value(cause, this, new__symbol(cause, "cursor_y"), nil));
@@ -433,6 +504,10 @@ f2ptr raw__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause
     assert_value(f2__frame__add_var_value(cause, this, new__symbol(cause, "buffer_max_x"), f2integer__new(cause, current_line__length)));
   }
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
 }
 
 f2ptr f2__keyboard_editor__press_and_insert_char_key__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame, f2ptr key) {
@@ -445,6 +520,7 @@ export_cefunk3(keyboard_editor__press_and_insert_char_key__thread_unsafe, this, 
 
 
 f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
+#if defined(F2__KEYBOARD__SUPPORTED)
   f2ptr     key         = nil;
   boolean_t is_text_key = boolean__true;
   while (is_text_key) {
@@ -457,6 +533,10 @@ f2ptr raw__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr t
     }
   }
   return key;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "keyboard_not_supported_in_this_funk2_build")));
+#endif // F2__KEYBOARD__SUPPORTED
 }
 
 f2ptr f2__keyboard_editor__handle_text_keys__thread_unsafe(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {

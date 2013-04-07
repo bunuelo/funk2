@@ -341,20 +341,5 @@ using __cxxabiv1::__cxa_demangle;
 #endif
 
 
-// define dlfcn constants in case they are not defined
-
-#ifndef RTLD_LAZY
-#  define RTLD_LAZY 1 // lazy function call binding
-#endif
-
-#ifndef RTLD_NOW
-#  define RTLD_NOW 2 // immediate function call binding
-#endif
-
-#ifndef RTLD_GLOBAL
-#  define RTLD_GLOBAL 4 // symbols in this dlopen'ed obj are visible to other dlopen'ed objs
-#endif
-
-
 #endif // F2__SYSTEM_HEADERS__H
 

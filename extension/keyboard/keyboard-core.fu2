@@ -23,6 +23,8 @@
  improvements or extensions that they make and grant Bo Morgan the
  rights to redistribute these changes.'
 
+[defcorefunk keyboard-supported keyboard keyboard__supported]
+
 [defcorefunk keyboard-current_mode             keyboard keyboard__current_mode]
 [defcorefunk keyboard-current_mode-set         keyboard keyboard__current_mode__set]
 [defcorefunk keyboard-enable_noncanonical_mode keyboard keyboard__enable_noncanonical_mode]

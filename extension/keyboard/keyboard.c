@@ -36,6 +36,14 @@ boolean_t raw__keyboard__supported() {
 #endif // F2__KEYBOARD__SUPPORTED
 }
 
+f2ptr f2__keyboard__supported(f2ptr cause) {
+  return f2bool__new(raw__keyboard__supported());
+}
+export_cefunk0(keyboard__supported, 0, "Returns whether or not the keyboard package is supported in this Funk2 build.");
+
+
+// termios
+
 def_ceframe1(keyboard, termios, chunk);
 
 f2ptr raw__termios__new(f2ptr cause, f2ptr chunk) {

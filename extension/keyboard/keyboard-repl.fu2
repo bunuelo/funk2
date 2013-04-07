@@ -522,5 +522,9 @@
 		 ]]]]]
 
 [defunk repl []
-  [keyboard-repl]]
+  [if [keyboard-supported]
+      [keyboard-repl]
+    [terminal_repl]]]
+
+
 

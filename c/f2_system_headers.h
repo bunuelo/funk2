@@ -322,6 +322,8 @@ using __cxxabiv1::__cxa_demangle;
 #endif // F2__CAIRO_SUPPORTED
 
 
+// define fake file permissions in case they are not defined.
+
 #ifndef S_IRGRP
 #  define S_IRGRP 0
 #endif
@@ -336,6 +338,21 @@ using __cxxabiv1::__cxa_demangle;
 
 #ifndef S_IWOTH
 #  define S_IWOTH 0
+#endif
+
+
+// define dlfcn constants in case they are not defined
+
+#ifndef RTLD_LAZY
+#  define RTLD_LAZY 1 // lazy function call binding
+#endif
+
+#ifndef RTLD_NOW
+#  define RTLD_NOW 2 // immediate function call binding
+#endif
+
+#ifndef RTLD_GLOBAL
+#  define RTLD_GLOBAL 4 // symbols in this dlopen'ed obj are visible to other dlopen'ed objs
 #endif
 
 

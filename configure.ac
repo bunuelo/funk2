@@ -243,6 +243,10 @@ AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero \
                 clock_gettime \
+		dlclose \
+		dlerror \
+		dlopen \
+		dlsym \
                 gethostbyname \
                 gethostname \
                 getpagesize \

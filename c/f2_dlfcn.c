@@ -44,16 +44,15 @@ def_pcfunk0(dlfcn__supported,
 	    "",
 	    return f2__dlfcn__supported(this_cause));
 
-ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
 #ifdef F2__DLFCN__SUPPORTED
+ptr raw__dlfcn__dlopen_ex(u8* filename, int flag) {
   return to_ptr(dlopen((char*)filename, flag));
-#else
-  return to_ptr(NULL);
-#endif
 }
+#endif
 
 
 f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
+#if defined(F2__DLFCN__SUPPORTED)
   int filename__utf8_length = raw__string__utf8_length(cause, filename);
   u8* filename__utf8_str    = (u8*)from_ptr(f2__malloc(filename__utf8_length + 1));
   raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
@@ -74,6 +73,10 @@ f2ptr raw__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
   f2ptr dynamic_library_pointer = f2pointer__new(cause, result);
   f2__free(to_ptr(filename__utf8_str));
   return dynamic_library_pointer;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 
 f2ptr f2__dlfcn__dlopen(f2ptr cause, f2ptr filename, f2ptr flag) {
@@ -86,34 +89,36 @@ def_pcfunk2(dlfcn__dlopen, filename, flag,
 	    return f2__dlfcn__dlopen(this_cause, filename, flag));
 
 
-u8* raw__dlfcn__dlerror() {
 #ifdef F2__DLFCN__SUPPORTED
+u8* raw__dlfcn__dlerror() {
   return (u8*)dlerror();
-#else
-  return (u8*)NULL;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__dlerror(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   u8* str = raw__dlfcn__dlerror();
   if (str == NULL) {
     return nil;
   }
   return new__string(cause, (char*)str);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__dlerror,
 	    "",
 	    return f2__dlfcn__dlerror(this_cause));
 
-ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
 #ifdef F2__DLFCN__SUPPORTED
+ptr raw__dlfcn__dlsym(ptr handle, u8* symbol) {
   return to_ptr(dlsym(from_ptr(handle), (char*)symbol));
-#else
-  return to_ptr(NULL);
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
+#if defined(F2__DLFCN__SUPPORTED)
   assert_argument_type(pointer, handle);
   assert_argument_type(symbol,  symbol);
   ptr raw_handle = f2pointer__p(handle, cause);
@@ -126,114 +131,139 @@ f2ptr f2__dlfcn__dlsym(f2ptr cause, f2ptr handle, f2ptr symbol) {
     return nil;
   }
   return f2pointer__new(cause, result);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk2(dlfcn__dlsym, handle, symbol,
 	    "",
 	    return f2__dlfcn__dlsym(this_cause, handle, symbol));
 
 
-int raw__dlfcn__dlclose(ptr handle) {
 #ifdef F2__DLFCN__SUPPORTED
+int raw__dlfcn__dlclose(ptr handle) {
   return dlclose(from_ptr(handle));
-#else
-  return -1;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__dlclose(f2ptr cause, f2ptr handle) {
+#if defined(F2__DLFCN__SUPPORTED)
   assert_argument_type(pointer, handle);
   ptr raw_handle = f2pointer__p(handle, cause);
   return f2integer__new(cause, raw__dlfcn__dlclose(raw_handle));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk1(dlfcn__dlclose, handle,
 	    "",
 	    return f2__dlfcn__dlclose(this_cause, handle));
 
-u64 raw__dlfcn__rtld_lazy() {
 #ifdef F2__DLFCN__SUPPORTED
+u64 raw__dlfcn__rtld_lazy() {
   return (u64)RTLD_LAZY;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_lazy(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_lazy());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_lazy,
 	    "",
 	    return f2__dlfcn__rtld_lazy(this_cause));
 
-u64 raw__dlfcn__rtld_now() {
 #ifdef F2__DLFCN__SUPPORTED
+u64 raw__dlfcn__rtld_now() {
   return (u64)RTLD_NOW;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_now(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_now());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_now,
 	    "",
 	    return f2__dlfcn__rtld_now(this_cause));
 
-u64 raw__dlfcn__rtld_global() {
 #ifdef F2__DLFCN__SUPPORTED
+u64 raw__dlfcn__rtld_global() {
   return (u64)RTLD_GLOBAL;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_global(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_global());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_global,
 	    "",
 	    return f2__dlfcn__rtld_global(this_cause));
 
+#if defined(F2__DLFCN__SUPPORTED)
 u64 raw__dlfcn__rtld_local() {
-#if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
   return (u64)RTLD_LOCAL;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_local(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_local());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_local,
 	    "",
 	    return f2__dlfcn__rtld_local(this_cause));
 
+#if defined(F2__DLFCN__SUPPORTED)
 u64 raw__dlfcn__rtld_nodelete() {
-#if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
   return (u64)RTLD_NODELETE;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_nodelete(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_nodelete());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_nodelete,
 	    "",
 	    return f2__dlfcn__rtld_nodelete(this_cause));
 
+#if defined(F2__DLFCN__SUPPORTED)
 u64 raw__dlfcn__rtld_noload() {
-#if defined(F2__DLFCN__SUPPORTED) && (! defined(F2__CYGWIN))
   return (u64)RTLD_NOLOAD;
-#else
-  return 0;
-#endif
 }
+#endif
 
 f2ptr f2__dlfcn__rtld_noload(f2ptr cause) {
+#if defined(F2__DLFCN__SUPPORTED)
   return f2integer__new(cause, raw__dlfcn__rtld_noload());
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "dlfcn_not_supported_in_this_funk2_build")));
+#endif // F2__DLFCN__SUPPORTED
 }
 def_pcfunk0(dlfcn__rtld_noload,
 	    "",

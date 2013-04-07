@@ -340,6 +340,18 @@ using __cxxabiv1::__cxa_demangle;
 #  define S_IWOTH 0
 #endif
 
+#ifndef S_IRWXU
+# define S_IRWXU (S_IRUSR | S_IWUSR | S_IXUSR)
+#endif
+
+#ifndef S_IRWXG
+# define S_IRWXG (S_IRGRP | S_IWGRP | S_IXGRP)
+#endif
+
+#ifndef S_IRWXO
+# define S_IRWXO (S_IROTH | S_IWOTH | S_IXOTH)
+#endif
+
 
 #endif // F2__SYSTEM_HEADERS__H
 

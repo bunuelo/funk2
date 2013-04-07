@@ -321,5 +321,23 @@ using __cxxabiv1::__cxa_demangle;
 #  include <cairo-ps.h>
 #endif // F2__CAIRO_SUPPORTED
 
+
+#ifndef S_IRGRP
+#  define S_IRGRP 0
+#endif
+
+#ifndef S_IWGRP
+#  define S_IWGRP 0
+#endif
+
+#ifndef S_IROTH
+#  define S_IROTH 0
+#endif
+
+#ifndef S_IWOTH
+#  define S_IWOTH 0
+#endif
+
+
 #endif // F2__SYSTEM_HEADERS__H
 

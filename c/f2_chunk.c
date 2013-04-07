@@ -35,7 +35,14 @@ f2ptr raw__chunk__save(f2ptr cause, f2ptr this, f2ptr filename) {
     raw__string__utf8_str_copy(cause, filename, filename__utf8_str);
     filename__utf8_str[filename__utf8_length] = 0;
     
-    fd = open((char*)filename__utf8_str, O_CREAT | O_TRUNC | O_WRONLY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+    fd = open((char*)filename__utf8_str,
+	      O_CREAT |
+	      O_TRUNC |
+	      O_WRONLY,
+	      S_IRUSR |
+	      S_IWUSR |
+	      S_IRGRP |
+	      S_IROTH);
     
     f2__free(to_ptr(filename__utf8_str));
   }

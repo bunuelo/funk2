@@ -251,6 +251,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 gethostname \
                 getpagesize \
                 inet_ntoa \
+		ioctl \
 		kill \
                 memset \
 		mmap \

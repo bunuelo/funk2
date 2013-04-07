@@ -30,10 +30,15 @@
 // int ioctl(int d, int request, ...);
 
 f2ptr raw__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
+#if defined(HAVE_IOCTL)
   int i;
   f2ptr rv = f2integer__new(cause, ioctl(f2integer__i(d, cause), f2integer__i(request, cause), &i));
   f2place__thing__set(value_place, cause, f2integer__new(cause, i));
   return rv;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "ioctl-int-not_compiled_into_this_funk2_build")));
+#endif // HAVE_IOCTL
 }
 
 f2ptr f2__ioctl__int(f2ptr cause, f2ptr d, f2ptr request, f2ptr value_place) {
@@ -47,16 +52,25 @@ def_pcfunk3(ioctl__int, d, request, value_place,
 	    return f2__ioctl__int(this_cause, d, request, value_place));
 
 
-#ifndef F2__CYGWIN
 f2ptr f2__ioctl__siocinq(f2ptr cause) {
+#if defined(SIOCINQ)
   return f2integer__new(cause, SIOCINQ);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "ioctl-siocinq-constant_value_not_compiled_into_this_funk2_build")));
+#endif // SIOCINQ
 }
 def_pcfunk0(ioctl__siocinq,
 	    "",
 	    return f2__ioctl__siocinq(this_cause));
 
 f2ptr f2__ioctl__siocoutq(f2ptr cause) {
+#if defined(SIOCOUTQ)
   return f2integer__new(cause, SIOCOUTQ);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "ioctl-siocoutq-constant_value_not_compiled_into_this_funk2_build")));
+#endif // SIOCOUTQ
 }
 def_pcfunk0(ioctl__siocoutq,
 	    "",
@@ -72,19 +86,15 @@ void f2__primfunks__ioctl__defragment__fix_pointers() {
   
   f2__primcfunk__init__defragment__fix_pointers(ioctl__int);
   
-#ifndef F2__CYGWIN
   f2__primcfunk__init__defragment__fix_pointers(ioctl__siocinq);
   f2__primcfunk__init__defragment__fix_pointers(ioctl__siocoutq);
-#endif
 }
 
 void f2__primfunks__ioctl__reinitialize_globalvars() {
   f2__primcfunk__init(ioctl__int);
   
-#ifndef F2__CYGWIN
   f2__primcfunk__init(ioctl__siocinq);
   f2__primcfunk__init(ioctl__siocoutq);
-#endif
 }
 
 void f2__primfunks__ioctl__initialize() {

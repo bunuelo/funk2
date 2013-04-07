@@ -14092,6 +14092,7 @@ for ac_func in clock_gettime \
                 gethostname \
                 getpagesize \
                 inet_ntoa \
+		ioctl \
 		kill \
                 memset \
 		mmap \

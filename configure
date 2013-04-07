@@ -11637,6 +11637,7 @@ AM_BACKSLASH='\'
 
 
 
+
 # Checks for header files.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ANSI C header files" >&5
 $as_echo_n "checking for ANSI C header files... " >&6; }
@@ -11798,6 +11799,7 @@ for ac_header in arpa/inet.h \
                   errno.h \
                   execinfo.h \
                   fcntl.h \
+                  inttypes.h \
                   limits.h \
                   linux/sockios.h \
                   locale.h \
@@ -11813,6 +11815,7 @@ for ac_header in arpa/inet.h \
                   sched.h \
                   signal.h \
                   stdarg.h \
+                  stdint.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \

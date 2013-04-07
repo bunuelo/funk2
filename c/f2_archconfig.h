@@ -30,8 +30,17 @@
 
 #include "f2_os.h"
 
-#include <sys/types.h>
-#include <stdint.h>
+#if defined(HAVE_SYS_TYPES_H)
+#  include <sys/types.h>
+#endif // HAVE_SYS_TYPES_H
+
+#if defined(HAVE_STDINT_H)
+#  include <stdint.h>
+#endif // HAVE_STDINT_H
+
+#if defined(HAVE_INTTYPES_H>
+#  include <inttypes.h>
+#endif // HAVE_INTTYPES_H
 
 #include "../config.h"
 #include "../config_bit_num.h"
@@ -66,96 +75,128 @@ typedef u8 byte;
 
 typedef u64 f2size_t;
 
-#ifdef F2__APPLE
-#  if long_long__bit_num == 64
-#    define s64__fstr                   "%lld"
-#    define u64__fstr_without_percent    "llu"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr_without_percent   "llx"
-#    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr_without_percent   "llX"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09lld"
-#  elif long__bit_num == 64
-#    define s64__fstr                   "%ld"
-#    define u64__fstr_without_percent    "lu"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr_without_percent   "lx"
-#    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr_without_percent   "lX"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09ld"
-#  elif int__bit_num == 64
-#    define s64__fstr                   "%d"
-#    define u64__fstr_without_percent    "u"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr                   "%X"
-#    define X64__fstr_without_percent   "x"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09d"
+#if defined(HAVE_INTTYPES_H)
+#  define s64__fstr_without_percent   PRId64
+#  define s64__fstr                   "%" s64__fstr_without_percent
+#  define u64__fstr_without_percent   PRIu64
+#  define u64__fstr                   "%" u64__fstr_without_percent
+#  define x64__fstr_without_percent   PRIx64
+#  define x64__fstr                   "%" x64__fstr_without_percent
+#  define X64__fstr_without_percent   PRIX64
+#  define X64__fstr                   "%" X64__fstr_without_percent
+#  define nano_decimal_fraction__fstr "%09" s64__fstr_without_percent
+#else // !defined(HAVE_INTTYPES_H)
+#  ifdef F2__APPLE
+#    if long_long__bit_num == 64
+#      define s64__fstr                   "%lld"
+#      define u64__fstr_without_percent    "llu"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr_without_percent   "llx"
+#      define x64__fstr                   "%" x64__fstr_without_percent
+#      define X64__fstr_without_percent   "llX"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09lld"
+#    elif long__bit_num == 64
+#      define s64__fstr                   "%ld"
+#      define u64__fstr_without_percent    "lu"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr_without_percent   "lx"
+#      define x64__fstr                   "%" x64__fstr_without_percent
+#      define X64__fstr_without_percent   "lX"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09ld"
+#    elif int__bit_num == 64
+#      define s64__fstr                   "%d"
+#      define u64__fstr_without_percent    "u"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr                   "%X"
+#      define X64__fstr_without_percent   "x"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09d"
+#    else
+#      error configuration not defined.  try: make clean; make configure; make
+#    endif
 #  else
-#    error configuration not defined.  try: make clean; make configure; make
-#  endif
-#else
-#  if int__bit_num == 64
-#    define s64__fstr                   "%d"
-#    define u64__fstr_without_percent    "u"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr_without_percent   "X"
-#    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr_without_percent   "x"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09d"
-#  elif long__bit_num == 64
-#    define s64__fstr                   "%ld"
-#    define u64__fstr_without_percent    "lu"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr_without_percent   "lx"
-#    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr_without_percent   "lX"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09ld"
-#  elif long_long__bit_num == 64
-#    define s64__fstr                   "%lld"
-#    define u64__fstr_without_percent    "llu"
-#    define u64__fstr                   "%" u64__fstr_without_percent
-#    define x64__fstr_without_percent   "llx"
-#    define x64__fstr                   "%" x64__fstr_without_percent
-#    define X64__fstr_without_percent   "llX"
-#    define X64__fstr                   "%" X64__fstr_without_percent
-#    define nano_decimal_fraction__fstr "%09lld"
-#  else
-#    error configuration not defined.  try: make clean; make configure; make
-#  endif
-#endif // F2__APPLE
+#    if int__bit_num == 64
+#      define s64__fstr                   "%d"
+#      define u64__fstr_without_percent    "u"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr_without_percent   "X"
+#      define x64__fstr                   "%" x64__fstr_without_percent
+#      define X64__fstr_without_percent   "x"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09d"
+#    elif long__bit_num == 64
+#      define s64__fstr                   "%ld"
+#      define u64__fstr_without_percent    "lu"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr_without_percent   "lx"
+#      define x64__fstr                   "%" x64__fstr_without_percent
+#      define X64__fstr_without_percent   "lX"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09ld"
+#    elif long_long__bit_num == 64
+#      define s64__fstr                   "%lld"
+#      define u64__fstr_without_percent    "llu"
+#      define u64__fstr                   "%" u64__fstr_without_percent
+#      define x64__fstr_without_percent   "llx"
+#      define x64__fstr                   "%" x64__fstr_without_percent
+#      define X64__fstr_without_percent   "llX"
+#      define X64__fstr                   "%" X64__fstr_without_percent
+#      define nano_decimal_fraction__fstr "%09lld"
+#    else
+#      error configuration not defined.  try: make clean; make configure; make
+#    endif
+#  endif // F2__APPLE
+#endif // HAVE_INTTYPES_H
 
-#if int__bit_num == 32
-#  define s32__fstr "%d"
-#  define u32__fstr "%u"
-#  define x32__fstr "%x"
-#  define X32__fstr "%X"
-#elif long__bit_num == 32
-#  define s32__fstr "%ld"
-#  define u32__fstr "%lu"
-#  define x32__fstr "%lx"
-#  define X32__fstr "%lX"
-#elif long_long__bit_num == 32
-#  define s32__fstr "%lld"
-#  define u32__fstr "%llu"
-#  define x32__fstr "%llx"
-#  define X32__fstr "%llX"
-#else
-#  error configuration not defined.  try: make clean; make configure; make
-#endif
+#if defined(HAVE_INTTYPES_H)
+#  define s32__fstr_without_percent PRId32
+#  define s32__fstr                 "%" s32__fstr_without_percent
+#  define u32__fstr_without_percent PRIu32
+#  define u32__fstr                 "%" u32__fstr_without_percent
+#  define x32__fstr_without_percent PRIx32
+#  define x32__fstr                 "%" x32__fstr_without_percent
+#  define X32__fstr_without_percent PRIX32
+#  define X32__fstr                 "%" X32__fstr_without_percent
+#else !defined(HAVE_INTTYPES_H)
+#  if int__bit_num == 32
+#    define s32__fstr "%d"
+#    define u32__fstr "%u"
+#    define x32__fstr "%x"
+#    define X32__fstr "%X"
+#  elif long__bit_num == 32
+#    define s32__fstr "%ld"
+#    define u32__fstr "%lu"
+#    define x32__fstr "%lx"
+#    define X32__fstr "%lX"
+#  elif long_long__bit_num == 32
+#    define s32__fstr "%lld"
+#    define u32__fstr "%llu"
+#    define x32__fstr "%llx"
+#    define X32__fstr "%llX"
+#  else
+#    error configuration not defined.  try: make clean; make configure; make
+#  endif
+#endif // HAVE_INTTYPES_H
 
 #define ptr__fstr X64__fstr
 
-#define s16__fstr s32__fstr
-#define u16__fstr u32__fstr
-#define X16__fstr X32__fstr
-#define s8__fstr  s16__fstr
-#define u8__fstr  u16__fstr
-#define X8__fstr  X16__fstr
+#if defined(HAVE_INTTYPES_H)
+#  define s16__fstr "%" PRId16
+#  define u16__fstr "%" PRIu16
+#  define X16__fstr "%" PRIX16
+#  define s8__fstr  "%" PRId8
+#  define u8__fstr  "%" PRIu8
+#  define X8__fstr  "%" PRIX8
+#else !defined(HAVE_INTTYPES_H)
+#  define s16__fstr s32__fstr
+#  define u16__fstr u32__fstr
+#  define X16__fstr X32__fstr
+#  define s8__fstr  s16__fstr
+#  define u8__fstr  u16__fstr
+#  define X8__fstr  X16__fstr
+#endif // HAVE_INTTYPES_H
 
 #define f2size_t__fstr u64__fstr
 

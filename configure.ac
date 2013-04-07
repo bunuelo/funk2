@@ -42,6 +42,7 @@ AM_INIT_AUTOMAKE([subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 
+
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
@@ -52,6 +53,7 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   errno.h \
                   execinfo.h \
                   fcntl.h \
+                  inttypes.h \
                   limits.h \
                   linux/sockios.h \
                   locale.h \
@@ -67,6 +69,7 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   sched.h \
                   signal.h \
                   stdarg.h \
+                  stdint.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \

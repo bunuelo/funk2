@@ -218,6 +218,9 @@
 /* Build syscall(SYS_gettid) support into Funk2 */
 #undef HAVE_SYSCALL_SYS_GETTID
 
+/* Define to 1 if you have the `sysconf' function. */
+#undef HAVE_SYSCONF
+
 /* Define to 1 if you have the <sys/ioctl.h> header file. */
 #undef HAVE_SYS_IOCTL_H
 

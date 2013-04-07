@@ -39,6 +39,7 @@ void funk2_cpu__destroy(funk2_cpu_t* this) {
 }
 
 void funk2_cpu__handle(funk2_cpu_t* this) {
+#if defined(HAVE_SYSCONF)
   u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   if (nanoseconds_since_1970 > this->last_nanoseconds_since_1970 + nanoseconds_per_second) {
     u64 elapsed_nanoseconds = nanoseconds_since_1970 - this->last_nanoseconds_since_1970;
@@ -62,6 +63,7 @@ void funk2_cpu__handle(funk2_cpu_t* this) {
     this->system_cpu_usage            = system_cpu_usage;
     this->total_cpu_usage             = total_cpu_usage;
   }
+#endif // HAVE_SYSCONF
 }
 
 double raw__cpu__user_cpu_usage(f2ptr cause) {

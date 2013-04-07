@@ -250,14 +250,15 @@ AC_CHECK_FUNCS([bzero \
                 memset \
                 munmap \
 		recv, \
-                select \
+                sched_getaffinity \
+                sched_setaffinity \
+		select \
 		send \
                 setlocale \
                 socket \
                 strerror \
                 strtol \
-                sched_getaffinity \
-                sched_setaffinity])
+                sysconf])
 
 AC_CHECK_LIB(rt,clock_gettime, [need_realtime_link_in_makefile=1], [need_realtime_link_in_makefile=0])
 AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)

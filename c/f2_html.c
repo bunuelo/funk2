@@ -25,8 +25,7 @@
 // rights to redistribute these changes.
 // 
 
-#include "f2_html.h"
-#include <string.h>
+#include "funk2.h"
 
 void html__stream__protected_string(f2ptr cause, f2ptr stream, char* str) {
   raw__stream__writef(cause, stream, "\"");

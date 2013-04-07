@@ -159,7 +159,7 @@ typedef u64 f2size_t;
 #  define x32__fstr                 "%" x32__fstr_without_percent
 #  define X32__fstr_without_percent PRIX32
 #  define X32__fstr                 "%" X32__fstr_without_percent
-#else !defined(HAVE_INTTYPES_H)
+#else // !defined(HAVE_INTTYPES_H)
 #  if int__bit_num == 32
 #    define s32__fstr "%d"
 #    define u32__fstr "%u"
@@ -189,7 +189,7 @@ typedef u64 f2size_t;
 #  define s8__fstr  "%" PRId8
 #  define u8__fstr  "%" PRIu8
 #  define X8__fstr  "%" PRIX8
-#else !defined(HAVE_INTTYPES_H)
+#else // !defined(HAVE_INTTYPES_H)
 #  define s16__fstr s32__fstr
 #  define u16__fstr u32__fstr
 #  define X16__fstr X32__fstr

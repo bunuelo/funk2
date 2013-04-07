@@ -108,6 +108,7 @@ typedef enum select_read_result_e {
 } select_read_result_t;
 
 select_read_result_t select_read(int fd) {
+#if defined(HAVE_SELECT)
   fd_set         rfds;
   struct timeval tv;
   int            retval;
@@ -144,6 +145,9 @@ select_read_result_t select_read(int fd) {
     return select_read_result__data_available;
   }
   return select_read_result__no_data;
+#else
+  return select_read_result__select_failure;
+#endif // HAVE_SELECT
 }
 
 typedef enum select_write_result_e {
@@ -154,6 +158,7 @@ typedef enum select_write_result_e {
 } select_write_result_t;
 
 select_read_result_t select_write(int fd) {
+#if defined(HAVE_SELECT)
   fd_set         wfds;
   struct timeval tv;
   int            retval;
@@ -190,6 +195,9 @@ select_read_result_t select_write(int fd) {
     return select_write_result__space_available;
   }
   return select_write_result__no_space;
+#else
+  return select_write_result__select_failure;
+#endif // HAVE_SELECT
 }
 
 recv_nonblocking_result_t recv_nonblocking(int socket_fd, void* data, u32 byte_num, u32* bytes_read) {

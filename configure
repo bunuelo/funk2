@@ -11636,8 +11636,6 @@ fi
 AM_BACKSLASH='\'
 
 
-# Checks for libraries.
-
 # Checks for header files.
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for ANSI C header files" >&5
 $as_echo_n "checking for ANSI C header files... " >&6; }
@@ -11793,9 +11791,17 @@ $as_echo "#define HAVE_SYS_WAIT_H 1" >>confdefs.h
 fi
 
 for ac_header in arpa/inet.h \
+                  assert.h \
+                  cxxabi.h \
+                  dirent.h \
+                  errno.h \
                   fcntl.h \
+                  limits.h \
                   linux/sockios.h \
                   locale.h \
+                  mach/clock.h \
+                  mach/mach.h \
+                  mach/mach_time.h \
                   math.h \
                   net/if.h \
                   netdb.h \
@@ -11804,10 +11810,17 @@ for ac_header in arpa/inet.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \
+                  sys/resource.h \
                   sys/socket.h \
+                  sys/sockio.h \
                   sys/time.h \
                   termios.h \
-                  unistd.h
+                  unistd.h \
+                  xmlrpc-c/base.h \
+                  xmlrpc-c/abyss.h \
+                  xmlrpc-c/client.h \
+                  xmlrpc-c/server.h \
+                  xmlrpc-c/server_abyss.h
 do :
   as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
 ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"

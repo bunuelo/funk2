@@ -28,6 +28,8 @@
 #ifndef F2__SYSTEM_HEADERS__H
 #define F2__SYSTEM_HEADERS__H
 
+// architecture specific defines
+
 #ifndef _GNU_SOURCE
 #  define _GNU_SOURCE
 #endif
@@ -37,70 +39,119 @@
 #define NO_CPP_DEMANGLE
 #endif
 
-#include "f2_archconfig.h"
-
 #ifdef F2__APPLE
 #  define MAP_ANONYMOUS MAP_ANON
 // see: http://www.osxfaq.com/man/4/tty.ws
 #  define SIOCOUTQ TIOCOUTQ
 #  define SIOCINQ  TIOCSTI
-
-#  include <mach/mach.h>
-#  include <mach/clock.h>
-#  include <mach/mach_time.h>
-#  include <sys/resource.h>
-#  include <sys/sockio.h>
 #endif // F2__APPLE
-
-#if defined(HAVE_LINUX_SOCKIOS_H)
-#  include <linux/sockios.h>
-#endif
 
 #if defined(F2__XMLRPC_SUPPORTED)
 #  ifndef _XOPEN_SOURCE
 #    define _XOPEN_SOURCE 600
 #  endif
-#  include <xmlrpc-c/base.h>
-#  include <xmlrpc-c/abyss.h>
-#  include <xmlrpc-c/client.h>
-#  include <xmlrpc-c/server.h>
-#  include <xmlrpc-c/server_abyss.h>
 #endif
 
-#include <assert.h>
+#include "f2_archconfig.h"
+
+// architecture specific includes
+
+#if defined(HAVE_MACH_MACH_H)
+#  include <mach/mach.h>
+#endif // HAVE_MACH_MACH_H
+
+#if defined(HAVE_MACH_CLOCK_H)
+#  include <mach/clock.h>
+#endif // HAVE_MACH_CLOCK_H
+
+#if defined(HAVE_MACH_MACH_TIME_h)
+#  include <mach/mach_time.h>
+#endif // HAVE_MACH_MACH_TIME_h
+
+#if defined(HAVE_SYS_RESOURCE_H)
+#  include <sys/resource.h>
+#endif // HAVE_SYS_RESOURCE_H
+
+#if defined(HAVE_SYS_SOCKIO_H)
+#  include <sys/sockio.h>
+#endif // HAVE_SYS_SOCKIO_H
+
+#if defined(HAVE_LINUX_SOCKIOS_H)
+#  include <linux/sockios.h>
+#endif
+
+#if defined(HAVE_XMLRPC_C_BASE_H)
+#  include <xmlrpc-c/base.h>
+#endif // HAVE_XMLRPC_C_BASE_H
+
+#if defined(HAVE_XMLRPC_C_ABYSS_H)
+#  include <xmlrpc-c/abyss.h>
+#endif // HAVE_XMLRPC_C_ABYSS_H
+
+#if defined(HAVE_XMLRPC_C_CLIENT_H)
+#  include <xmlrpc-c/client.h>
+#endif // HAVE_XMLRPC_C_CLIENT_H
+
+#if defined(HAVE_XMLRPC_C_SERVER_H)
+#  include <xmlrpc-c/server.h>
+#endif // HAVE_XMLRPC_C_SERVER_H
+
+#if defined(HAVE_XMLRPC_C_SERVER_ABYSS_H)
+#  include <xmlrpc-c/server_abyss.h>
+#endif // HAVE_XMLRPC_C_SERVER_ABYSS_H
+
+#if defined(HAVE_ASSERT_H)
+#  include <assert.h>
+#endif // HAVE_ASSERT_H
 
 #if defined(HAVE_ARPA_INET_H)
 #include <arpa/inet.h>
 #endif // HAVE_ARPA_INET_H
 
-#ifndef NO_CPP_DEMANGLE
-#  include <cxxabi.h>
-#  ifdef __cplusplus
+#if defined(HAVE_CXXABI_H)
+#  ifndef NO_CPP_DEMANGLE
+#    include <cxxabi.h>
+#    ifdef __cplusplus
 using __cxxabiv1::__cxa_demangle;
+#    endif
 #  endif
-#endif
+#endif // HAVE_CXXABI_H
 
-#include <dirent.h>
+#if defined(HAVE_DIRENT_H)
+#  include <dirent.h>
+#endif // HAVE_DIRENT_H
 
-#ifdef HAVE_DLFCN_H
+#if defined(HAVE_DLFCN_H)
 #  include <dlfcn.h>
-#endif
+#endif // HAVE_DLFCN_H
 
-#include <errno.h>
+#if defined(HAVE_ERRNO_H)
+#  include <errno.h>
+#endif // HAVE_ERRNO_H
 
 #if defined(HAVE_EXECINFO_H)
 #  include <execinfo.h>
 #endif // HAVE_EXECINFO_H
 
-#include <fcntl.h>
+#if defined(HAVE_FCNTL_H)
+#  include <fcntl.h>
+#endif // HAVE_FCNTL_H
 
 #ifdef F2__GMODULE__SUPPORTED
 #  include <gmodule.h>
 #endif
 
-#include <limits.h>
-#include <locale.h>
-#include <math.h>
+#if defined(HAVE_LIMITS_H)
+#  include <limits.h>
+#endif // HAVE_LIMITS_H
+
+#if defined(HAVE_LOCALE_H)
+#  include <locale.h>
+#endif // HAVE_LOCALE_H
+
+#if defined(HAVE_MATH_H)
+#  include <math.h>
+#endif // HAVE_MATH_H
 
 #if defined(HAVE_NET_IF_H)
 #  include <net/if.h>
@@ -115,8 +166,8 @@ using __cxxabiv1::__cxa_demangle;
 #endif // HAVE_NETINET_IN_H
 
 #if defined(HAVE_NETINET_TCP_H)
-#include <netinet/tcp.h>
-#endif // 
+#  include <netinet/tcp.h>
+#endif // HAVE_NETINET_TCP_H
 
 #include <pthread.h>
 #include <sched.h>

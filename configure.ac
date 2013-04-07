@@ -41,15 +41,21 @@ fi],
 AM_INIT_AUTOMAKE([subdir-objects])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
-# Checks for libraries.
-
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([arpa/inet.h \
+                  assert.h \
+                  cxxabi.h \
+                  dirent.h \
+                  errno.h \
                   fcntl.h \
+                  limits.h \
                   linux/sockios.h \
                   locale.h \
+                  mach/clock.h \
+                  mach/mach.h \
+                  mach/mach_time.h \
                   math.h \
                   net/if.h \
                   netdb.h \
@@ -58,10 +64,17 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   stdlib.h \
                   string.h \
                   sys/ioctl.h \
+                  sys/resource.h \
                   sys/socket.h \
+                  sys/sockio.h \
                   sys/time.h \
                   termios.h \
-                  unistd.h])
+                  unistd.h \
+                  xmlrpc-c/base.h \
+                  xmlrpc-c/abyss.h \
+                  xmlrpc-c/client.h \
+                  xmlrpc-c/server.h \
+                  xmlrpc-c/server_abyss.h])
 AC_CHECK_HEADERS([GL/glx.h X11/extensions/xf86vmode.h], [], [],
 [[
 #ifdef HAVE_GL_GLX_H

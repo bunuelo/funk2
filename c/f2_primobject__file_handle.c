@@ -182,6 +182,7 @@ def_pcfunk2(file_handle__write, this, string,
 	    return f2__file_handle__write(this_cause, this, string));
 
 
+#if defined(HAVE_SEND)
 ssize_t raw__file_handle__send(f2ptr cause, f2ptr this, s64 data__length, u8* data) {
   if (! raw__file_handle__is_type(cause, this)) {
     error(nil, "file_handle-writef error: this is not file_handle.");
@@ -197,10 +198,12 @@ ssize_t raw__file_handle__send(f2ptr cause, f2ptr this, s64 data__length, u8* da
   }
   return bytes_written;
 }
+#endif // HAVE_SEND
 
 f2ptr f2__file_handle__send(f2ptr cause, f2ptr this, f2ptr string) {
   assert_argument_type(file_handle, this);
   assert_argument_type(string,      string);
+#if defined(HAVE_SEND)
   s64 string__utf8_length = raw__string__utf8_length(cause, string);
   u8* string__utf8_str    = (u8*)from_ptr(f2__malloc(string__utf8_length + 1));
   raw__string__utf8_str_copy(cause, string, string__utf8_str);
@@ -208,6 +211,10 @@ f2ptr f2__file_handle__send(f2ptr cause, f2ptr this, f2ptr string) {
   f2ptr bytes_written = f2integer__new(cause, raw__file_handle__send(cause, this, string__utf8_length, string__utf8_str));
   f2__free(to_ptr(string__utf8_str));
   return bytes_written;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "file_handle-send-error_send_not_supported_in_this_funk2_build")));
+#endif // HAVE_SEND
 }
 def_pcfunk2(file_handle__send, this, string,
 	    "Sends the given string to this file_handle.",

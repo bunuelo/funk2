@@ -263,14 +263,16 @@ AC_CHECK_FUNCS([clock_gettime \
 		nanosleep \
 		pipe \
 		putenv \
-		setenv \
-		shutdown \
+		QueryPerformanceCounter \
+		QueryPerformanceFreqency \
 		recv \
                 sched_getaffinity \
                 sched_setaffinity \
 		select \
 		send \
+		setenv \
                 setlocale \
+		shutdown \
 		sigaction \
 		sleep \
 		Sleep \

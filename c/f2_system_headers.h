@@ -332,12 +332,20 @@ using __cxxabiv1::__cxa_demangle;
 #  define S_IWGRP 0
 #endif
 
+#ifndef S_IXGRP
+#  define S_IXGRP 0
+#endif
+
 #ifndef S_IROTH
 #  define S_IROTH 0
 #endif
 
 #ifndef S_IWOTH
 #  define S_IWOTH 0
+#endif
+
+#ifndef S_IXOTH
+#  define S_IXOTH 0
 #endif
 
 #ifndef S_IRWXU

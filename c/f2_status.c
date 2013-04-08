@@ -44,7 +44,9 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_end(args);
   funk2_processor_spinlock__lock(&(__funk2.status.trace_mutex));
   {
-    int trace_fd = open("funk2_debug.log", O_CREAT | O_APPEND | O_WRONLY, S_IRWXU | S_IRWXG | S_IRWXO);
+    int trace_fd = open("funk2_debug.log",
+			O_CREAT | O_APPEND | O_WRONLY,
+			S_IRWXU | S_IRWXG | S_IRWXO);
     if (trace_fd == -1) {
       __funk2_status_disabled = boolean__true;
       //printf("[WARNING] funk2_status couldn't open funk2_trace.log");

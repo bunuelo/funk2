@@ -45,7 +45,7 @@
 
 #include "funk2.h"
 
-#if defined(HAVE_UCONTEXT_H)
+#if defined(HAVE_UCONTEXT_H) && defined(HAVE_SIGACTION)
 void funk2_signal_segv_ucontext_handler(int signum, siginfo_t* info, void* ptr) {
   int         i;
   int         f = 0;
@@ -147,9 +147,9 @@ void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.", info->si_addr);
     __received_segmentation_fault = 1;
     status_backtrace();
-#if defined(HAVE_UCONTEXT_H)
+#if defined(HAVE_UCONTEXT_H) && defined(HAVE_SIGACTION)
     funk2_signal_segv_ucontext_handler(sig, info, arg);
-#endif // HAVE_UCONTEXT_H
+#endif // HAVE_UCONTEXT_H && HAVE_SIGACTION
     status("funk2 warning: thread received segmentation fault (SIGSEGV) at address %p.  calling f2__this__fiber__exit.", info->si_addr);
     f2ptr cause = nil;
     f2ptr sigsegv_larva = new__error(f2list2__new(cause,
@@ -209,6 +209,7 @@ void f2__signal__initialize() {
   
   f2__signal__reinitialize_globalvars();
   
+#if defined(HAVE_SIGACTION)
   {
     struct sigaction sa;
     
@@ -230,5 +231,8 @@ void f2__signal__initialize() {
       status("SIGSEGV signal handler disabled.");
     }
   }
+#else
+  status("warning: signal handlers not compiled into this funk2 build.  (need sigaction)");
+#endif // HAVE_SIGACTION
 }
 

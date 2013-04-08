@@ -14106,6 +14106,7 @@ for ac_func in clock_gettime \
 		select \
 		send \
                 setlocale \
+		sigaction \
                 socket \
                 strerror \
                 strtol \

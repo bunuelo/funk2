@@ -265,6 +265,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		select \
 		send \
                 setlocale \
+		sigaction \
                 socket \
                 strerror \
                 strtol \

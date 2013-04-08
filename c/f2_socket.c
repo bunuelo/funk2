@@ -28,123 +28,204 @@
 #include "funk2.h"
 
 f2ptr f2__socket__pf_unix(f2ptr cause) {
+#if defined(PF_UNIX)
   return f2integer__new(cause, PF_UNIX);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_UNIX
 }
 def_pcfunk0(socket__pf_unix,     
 	    "",
 	    return f2__socket__pf_unix(this_cause));
 
 f2ptr f2__socket__pf_local(f2ptr cause) {
+#if defined(PF_LOCAL)
   return f2integer__new(cause, PF_LOCAL);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_LOCAL
 }
 def_pcfunk0(socket__pf_local,    
 	    "",
 	    return f2__socket__pf_local(this_cause));
 
 f2ptr f2__socket__pf_inet(f2ptr cause) {
+#if defined(PF_INET)
   return f2integer__new(cause, PF_INET);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_INET
 }
 def_pcfunk0(socket__pf_inet,     
 	    "",
 	    return f2__socket__pf_inet(this_cause));
 
 f2ptr f2__socket__pf_inet6(f2ptr cause) {
+#if defined(PF_INET6)
   return f2integer__new(cause, PF_INET6);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_INET6
 }
 def_pcfunk0(socket__pf_inet6,    
 	    "",
 	    return f2__socket__pf_inet6(this_cause));
 
-#ifndef F2__CYGWIN
 f2ptr f2__socket__pf_ipx(f2ptr cause) {
+#if defined(PF_IPX)
   return f2integer__new(cause, PF_IPX);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_IPX
 }
 def_pcfunk0(socket__pf_ipx,
 	    "",
 	    return f2__socket__pf_ipx(this_cause));
-#endif
 
-#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
 f2ptr f2__socket__pf_netlink(f2ptr cause) {
+#if defined(PF_NETLINK)
   return f2integer__new(cause, PF_NETLINK);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_NETLINK
 }
 def_pcfunk0(socket__pf_netlink,  
 	    "",
 	    return f2__socket__pf_netlink(this_cause));
 
 f2ptr f2__socket__pf_x25(f2ptr cause) {
+#if defined(PF_X25)
   return f2integer__new(cause, PF_X25);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_X25
 }
 def_pcfunk0(socket__pf_x25,      
 	    "",
 	    return f2__socket__pf_x25(this_cause));
 
 f2ptr f2__socket__pf_ax25(f2ptr cause) {
+#if defined(PF_AX25)
   return f2integer__new(cause, PF_AX25);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_AX25
 }
 def_pcfunk0(socket__pf_ax25,     
 	    "",
 	    return f2__socket__pf_ax25(this_cause));
 
 f2ptr f2__socket__pf_atmpvc(f2ptr cause) {
+#if defined(PF_ATMPVC)
   return f2integer__new(cause, PF_ATMPVC);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_ATMPVC
 }
 def_pcfunk0(socket__pf_atmpvc,   
 	    "",
 	    return f2__socket__pf_atmpvc(this_cause));
 
 f2ptr f2__socket__pf_packet(f2ptr cause) {
+#if defined(PF_PACKET)
   return f2integer__new(cause, PF_PACKET);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_PACKET
 }
 def_pcfunk0(socket__pf_packet,   
 	    "",
 	    return f2__socket__pf_packet(this_cause));
 
 f2ptr f2__socket__sock_packet(f2ptr cause) {
+#if defined(SOCK_PACKET)
   return f2integer__new(cause, SOCK_PACKET);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_PACKET
 }
 def_pcfunk0(socket__sock_packet,   
 	    "",
 	    return f2__socket__sock_packet(this_cause));
-#endif
 
 f2ptr f2__socket__pf_appletalk(f2ptr cause) {
+#if defined(PF_APPLETALK)
   return f2integer__new(cause, PF_APPLETALK);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // PF_APPLETALK
 }
 def_pcfunk0(socket__pf_appletalk,
 	    "",
 	    return f2__socket__pf_appletalk(this_cause));
 
 f2ptr f2__socket__sock_stream(f2ptr cause) {
+#if defined(SOCK_STREAM)
   return f2integer__new(cause, SOCK_STREAM);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_STREAM
 }
 def_pcfunk0(socket__sock_stream,   
 	    "",
 	    return f2__socket__sock_stream(this_cause));
 
 f2ptr f2__socket__sock_dgram(f2ptr cause) {
+#if defined(SOCK_DGRAM)
   return f2integer__new(cause, SOCK_DGRAM);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_DGRAM
 }
 def_pcfunk0(socket__sock_dgram,    
 	    "",
 	    return f2__socket__sock_dgram(this_cause));
 
 f2ptr f2__socket__sock_seqpacket(f2ptr cause) {
+#if defined(SOCK_SEQPACKET)
   return f2integer__new(cause, SOCK_SEQPACKET);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_SEQPACKET
 }
 def_pcfunk0(socket__sock_seqpacket,
 	    "",
 	    return f2__socket__sock_seqpacket(this_cause));
 
 f2ptr f2__socket__sock_raw(f2ptr cause) {
+#if defined(SOCK_RAW)
   return f2integer__new(cause, SOCK_RAW);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_RAW
 }
 def_pcfunk0(socket__sock_raw,      
 	    "",
 	    return f2__socket__sock_raw(this_cause));
 
 f2ptr f2__socket__sock_rdm(f2ptr cause) {
+#if defined(SOCK_RDM)
   return f2integer__new(cause, SOCK_RDM);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // SOCK_RDM
 }
 def_pcfunk0(socket__sock_rdm,      
 	    "",
@@ -641,18 +722,14 @@ void f2__socket__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_inet);
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_inet6);
 
-#ifndef F2__CYGWIN
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_ipx);
-#endif
 
-#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_netlink);
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_x25);
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_ax25);
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_atmpvc);
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_packet);
   f2__primcfunk__init__defragment__fix_pointers(socket__sock_packet);
-#endif
 
   f2__primcfunk__init__defragment__fix_pointers(socket__pf_appletalk);
   f2__primcfunk__init__defragment__fix_pointers(socket__sock_dgram);
@@ -702,18 +779,14 @@ void f2__socket__reinitialize_globalvars() {
   f2__primcfunk__init(socket__pf_inet);
   f2__primcfunk__init(socket__pf_inet6);
 
-#ifndef F2__CYGWIN
   f2__primcfunk__init(socket__pf_ipx);
-#endif
 
-#if (! defined(F2__CYGWIN)) && (! defined(F2__APPLE))
   f2__primcfunk__init(socket__pf_netlink);
   f2__primcfunk__init(socket__pf_x25);
   f2__primcfunk__init(socket__pf_ax25);
   f2__primcfunk__init(socket__pf_atmpvc);
   f2__primcfunk__init(socket__pf_packet);
   f2__primcfunk__init(socket__sock_packet);
-#endif
 
   f2__primcfunk__init(socket__pf_appletalk);
   f2__primcfunk__init(socket__sock_dgram);

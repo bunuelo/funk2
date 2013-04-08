@@ -250,6 +250,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		getenv \
                 gethostbyname \
                 gethostname \
+                getline \
                 getpagesize \
                 inet_ntoa \
 		ioctl \

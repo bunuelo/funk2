@@ -125,11 +125,12 @@ void funk2_signal_segv_ucontext_handler(int signum, siginfo_t* info, void* ptr) 
   status("funk2_signal_segv_ucontext_handler: Not printing stack strace.");
 #  endif
 }
-#endif // HAVE_UCONTEXT_H
+#endif // HAVE_UCONTEXT_H && HAVE_SIGACTION
 
 int __received_signal__sigint     = 0;
 int __received_segmentation_fault = 0;
 
+#if defined(HAVE_SIGACTION)
 void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
   switch(sig) {
   case SIGINT:
@@ -165,7 +166,7 @@ void funk2_receive_signal(int sig, siginfo_t *info, void *arg) {
     break;
   }
 }
-
+#endif // HAVE_SIGACTION
 
 boolean_t raw__system__received_signal__sigint(f2ptr cause) {
   return (__received_signal__sigint != 0);

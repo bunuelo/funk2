@@ -14091,6 +14091,7 @@ for ac_func in clock_gettime \
 		getenv \
                 gethostbyname \
                 gethostname \
+                getline \
                 getpagesize \
                 inet_ntoa \
 		ioctl \

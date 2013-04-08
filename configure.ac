@@ -255,6 +255,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 getline \
                 getpagesize \
 		getppid \
+		GetThreadTimes \
                 inet_ntoa \
 		ioctl \
 		kill \
@@ -263,6 +264,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 munmap \
 		nanosleep \
 		pipe \
+		pthread_getw32threadhandle_np \
 		putenv \
 		QueryPerformanceCounter \
 		QueryPerformanceFrequency \

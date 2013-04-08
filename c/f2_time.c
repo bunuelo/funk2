@@ -204,9 +204,31 @@ def_pcfunk0(nanoseconds_since_1970,
 	    return f2__nanoseconds_since_1970(this_cause));
 
 u64 raw__processor_thread__execution_nanoseconds() {
+#if defined(HAVE_CLOCK_GETTIME)
   struct timespec ts;
   clock_gettime(CLOCK_THREAD_CPUTIME_ID, &ts);
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
+#else
+#  if defined(HAVE_PTHREAD_GETW32THREADHANDLE_NP) && defined(HAVE_GETTHREADTIMES)
+  HANDLE   my_thread = pthread_getw32threadhandle_np(pthread_self());
+  FILETIME creation_time;
+  FILETIME exit_time;
+  FILETIME kernel_time;
+  FILETIME user_time;
+  if (GetThreadTimes(my_thread, &creation_time, &exit_time, &kernel_time, &user_time) == 0) {
+    error(nil, "GetThreadTimes failed.");
+  }
+  ULARGE_INTEGER total_kernel_time;
+  ULARGE_INTEGER total_user_time;
+  total_kernel_time.LowPart  = kernel_time.dwLowDateTime;
+  total_kernel_time.HighPart = kernel_time.dwHighDateTime;
+  total_user_time.LowPart    = user_time.dwLowDateTime;
+  total_user_time.HighPart   = user_time.dwHighDateTime;
+  return (((u64)total_kernel_time.QuadPart) + ((u64)total_user_time.QuadPart)) * 100;
+#  else
+#    error No implementation of raw__processor_thread__execution_nanoseconds available for this Funk2 build.
+#  endif // HAVE_PTHREAD_GETW32THREADHANDLE_NP
+#endif // HAVE_CLOCK_GETTIME
 }
 
 f2ptr f2__processor_thread__execution_nanoseconds(f2ptr cause) {

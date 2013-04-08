@@ -783,7 +783,12 @@ def_pcfunk5(chunk__recv, chunk, start, length, fd, flags,
 	    return f2__chunk__recv(this_cause, chunk, start, length, fd, flags));
 
 f2ptr raw__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+#if defined(HAVE_SEND)
   return f2integer__new(cause, send(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "send-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SEND
 }
 
 f2ptr f2__send(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
@@ -798,7 +803,12 @@ def_pcfunk4(send, fd, pointer, byte_num, flags,
 	    return f2__send(this_cause, fd, pointer, byte_num, flags));
 
 f2ptr raw__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {
+#if defined(HAVE_RECV)
   return f2integer__new(cause, recv(f2integer__i(fd, cause), (void*)from_ptr(f2pointer__p(pointer, cause)), f2integer__i(byte_num, cause), f2integer__i(flags, cause)));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "recv-not_compiled_into_this_funk2_build")));
+#endif // HAVE_RECV
 }
 
 f2ptr f2__recv(f2ptr cause, f2ptr fd, f2ptr pointer, f2ptr byte_num, f2ptr flags) {

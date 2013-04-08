@@ -262,6 +262,12 @@ void nanoseconds_since_1970__to_funk2_date(u64 nanoseconds_since_1970, funk2_dat
   u64    nanoseconds            = nanoseconds_since_1970 - (seconds_since_1970 * nanoseconds_per_second);
   time_t unix_time              = nanoseconds_since_1970__to_unix_time(nanoseconds_since_1970);
   struct tm unix_tm;
+  unix_tm.tm_year = 0;
+  unix_tm.tm_mon  = 0;
+  unix_tm.tm_mday = 0;
+  unix_tm.tm_hour = 0;
+  unix_tm.tm_min  = 0;
+  unix_tm.tm_sec  = 0;
   gmtime_r(&unix_time, &unix_tm);
   funk2_date->years       = unix_tm.tm_year + 1900;
   funk2_date->months      = unix_tm.tm_mon + 1;

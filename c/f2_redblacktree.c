@@ -387,7 +387,7 @@ void rbt_node__print(rbt_node_t* node) {
   if (node == NULL) {
     printf("nil");
   } else {
-    printf("[%lx " f2size_t__fstr " %s ", (unsigned long)node, node->key, (node->color == rbt_color__red) ? "red" : ((node->color == rbt_color__black) ? "black" : "unknown"));
+    printf("[" X64__fstr " " f2size_t__fstr " %s ", (u64)to_ptr(node), node->key, (node->color == rbt_color__red) ? "red" : ((node->color == rbt_color__black) ? "black" : "unknown"));
     rbt_node__print(node->left);
     printf(" . ");
     rbt_node__print(node->right);
@@ -920,7 +920,7 @@ void redblacktree__test__insert_randoms(rbt_tree_t* tree, int count) {
     node->parent = NULL;
     node->left   = NULL;
     node->right  = NULL;
-    node->key = random() & 0x7;
+    node->key = rand() & 0x7;
     //printf("\n  insert key: %d", node->key);
     rbt_tree__insert(tree, node);
     
@@ -1092,7 +1092,7 @@ void redblacktree__test__remove_all_with_iterators() {
     
     printf("\nbefore remove: size=%d", rbt_tree__size(&tree)); fflush(stdout);
     printf("\n  removing iter key: ");
-    printf(f2size_t__fstr " %lx", iter->key, (unsigned long)iter); fflush(stdout);
+    printf(f2size_t__fstr " " X64__fstr, iter->key, (u64)to_ptr(iter)); fflush(stdout);
     
     rbt_tree__remove(&tree, iter);
     printf("\nafter remove: size=%d", rbt_tree__size(&tree)); fflush(stdout);
@@ -1127,7 +1127,7 @@ void redblacktree__test__remove_with_iterators() {
       
       printf("\nbefore remove: size=%d", rbt_tree__size(&tree)); fflush(stdout);
       printf("\n  removing iter key: ");
-      printf(f2size_t__fstr " %lx", iter->key, (unsigned long)iter); fflush(stdout);
+      printf(f2size_t__fstr " " X64__fstr, iter->key, (u64)to_ptr(iter)); fflush(stdout);
       
       rbt_tree__remove(&tree, iter);
       printf("\nafter remove: size=%d", rbt_tree__size(&tree)); fflush(stdout);

@@ -264,7 +264,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		pipe \
 		putenv \
 		QueryPerformanceCounter \
-		QueryPerformanceFreqency \
+		QueryPerformanceFrequency \
 		recv \
                 sched_getaffinity \
                 sched_setaffinity \

@@ -202,8 +202,8 @@
 /* Define to 1 if you have the `QueryPerformanceCounter' function. */
 #undef HAVE_QUERYPERFORMANCECOUNTER
 
-/* Define to 1 if you have the `QueryPerformanceFreqency' function. */
-#undef HAVE_QUERYPERFORMANCEFREQENCY
+/* Define to 1 if you have the `QueryPerformanceFrequency' function. */
+#undef HAVE_QUERYPERFORMANCEFREQUENCY
 
 /* Define to 1 if your system has a GNU libc compatible `realloc' function,
    and to 0 otherwise. */

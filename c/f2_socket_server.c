@@ -38,9 +38,9 @@ boolean_t client_id__equals(client_id_t* this, client_id_t* client_id) {
 }
 
 int file_descriptor__set_nonblocking(int fd, boolean_t value) {
-  int flags;
   // If they have O_NONBLOCK, use the Posix way to do it
 #if defined(O_NONBLOCK)
+  int flags;
   // Fixme: O_NONBLOCK is defined but broken on SunOS 4.1.x and AIX 3.2.5.
   if (-1 == (flags = fcntl(fd, F_GETFL, 0))) {
     flags = 0;
@@ -52,8 +52,9 @@ int file_descriptor__set_nonblocking(int fd, boolean_t value) {
   }
   return fcntl(fd, F_SETFL, flags);
 #else
-#  if defined(HAVE_IOCTL)
   // Otherwise, use the old way of doing it
+#  if defined(HAVE_IOCTL)
+  int flags;
   flags = value ? 1 : 0;
   return ioctl(fd, FIOBIO, &flags);
 #  else

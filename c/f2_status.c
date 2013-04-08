@@ -63,9 +63,19 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
     u64       minutes                    = minutes_since_1970      - (hours_since_1970           * 60);
     u64       seconds                    = seconds_since_1970      - (minutes_since_1970         * 60);
     u64       nanoseconds                = nanoseconds_since_1970  - (seconds_since_1970         * nanoseconds_per_second);
+    
+    u64   thread_id_number = 0;
+    char* pthread_array = (char*)&self_thread;
+    {
+      s64 index;
+      for (index = 0; index < (sizeof(pthread_t) / sizeof(char)); index ++) {
+        u64 value = (u8)pthread_array[index];
+	thread_id_number += (value << (index << 3));
+      }
+    }
     {
       char temp_msg2[2048];
-      sprintf(temp_msg2, "\n[%-40s %5d] tid=0x" "%-16" x64__fstr_without_percent " 0x%X_%02d_%02d_%02d." nano_decimal_fraction__fstr " funk2 status: %s", filename, line_num, (u64)to_ptr(self_thread), (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (u64)nanoseconds, temp_msg);
+      sprintf(temp_msg2, "\n[%-40s %5d] tid=0x" "%-16" x64__fstr_without_percent " 0x%X_%02d_%02d_%02d." nano_decimal_fraction__fstr " funk2 status: %s", filename, line_num, (u64)thread_id_number, (int)earth_rotations_since_1970, (int)hours, (int)minutes, (int)seconds, (u64)nanoseconds, temp_msg);
       size_t size_to_write = strlen(temp_msg2) + 1;
       size_t size_written  = write(trace_fd, temp_msg2, size_to_write);
       if (size_written != size_to_write) {

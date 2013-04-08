@@ -14101,6 +14101,7 @@ for ac_func in clock_gettime \
                 memset \
 		mmap \
                 munmap \
+		nanosleep \
 		pipe \
 		putenv \
 		setenv \
@@ -14112,10 +14113,13 @@ for ac_func in clock_gettime \
 		send \
                 setlocale \
 		sigaction \
+		sleep \
+		Sleep \
                 socket \
                 strerror \
                 strtol \
-                sysconf
+                sysconf \
+                usleep
 do :
   as_ac_var=`$as_echo "ac_cv_func_$ac_func" | $as_tr_sh`
 ac_fn_c_check_func "$LINENO" "$ac_func" "$as_ac_var"
@@ -14127,6 +14131,12 @@ _ACEOF
 fi
 done
 
+
+if test "x-$ac_cv_func_Sleep" = "x-yes" ; then
+
+$as_echo "#define HAVE_CAPITAL_SLEEP 1" >>confdefs.h
+
+fi
 
 ac_fn_c_check_member "$LINENO" "struct stat" "st_rdev" "ac_cv_member_struct_stat_st_rdev" "$ac_includes_default"
 if test "x$ac_cv_member_struct_stat_st_rdev" = xyes; then :

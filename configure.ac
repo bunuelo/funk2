@@ -260,6 +260,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 memset \
 		mmap \
                 munmap \
+		nanosleep \
 		pipe \
 		putenv \
 		setenv \
@@ -271,10 +272,17 @@ AC_CHECK_FUNCS([clock_gettime \
 		send \
                 setlocale \
 		sigaction \
+		sleep \
+		Sleep \
                 socket \
                 strerror \
                 strtol \
-                sysconf])
+                sysconf \
+                usleep])
+
+if test "x-$ac_cv_func_Sleep" = "x-yes" ; then
+  AC_DEFINE(HAVE_CAPITAL_SLEEP, 1, Have Sleep function)
+fi
 
 AC_CHECK_MEMBERS([struct stat.st_rdev, struct stat.st_blocks, struct stat.st_blksize])
 

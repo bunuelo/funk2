@@ -86,7 +86,12 @@ def_pcfunk0(locale__lc_ctype,
 	    return f2__locale__lc_ctype(this_cause));
 
 f2ptr f2__locale__lc_messages(f2ptr cause) {
+#if defined(LC_MESSAGES)
   return f2integer__new(cause, LC_MESSAGES);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "locale-lc_messages-constant_not_compiled_into_this_funk2_build")));
+#endif // LC_MESSAGES
 }
 def_pcfunk0(locale__lc_messages,
 	    "",

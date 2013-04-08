@@ -170,7 +170,7 @@ u64 raw__nanoseconds_since_1970() {
   clock_gettime(CLOCK_REALTIME, &ts);
   return (((u64)ts.tv_sec) * nanoseconds_per_second) + ((u64)ts.tv_nsec);
 #else
-#  if defined(HAVE_QUERY_PERFORMANCE_COUNTER) && defined(HAVE_QUERY_PERFORMANCE_FREQUENCY)
+#  if defined(HAVE_QUERYPERFORMANCECOUNTER) && defined(HAVE_QUERYPERFORMANCEFREQUENCY)
   // warning: monotonic but not since 1970
   LARGE_INTEGER performance_count;
   LARGE_INTEGER performance_frequency;
@@ -189,7 +189,7 @@ u64 raw__nanoseconds_since_1970() {
   return (seconds * nanoseconds_per_second) + nanoseconds;
 #  else
 #    error no high resolution counter available.
-#  endif // HAVE_QUERY_PERFORMANCE_COUNTER && HAVE_QUERY_PERFORMANCE_FREQUENCY
+#  endif // HAVE_QUERYPERFORMANCECOUNTER && HAVE_QUERYPERFORMANCEFREQUENCY
 #endif // HAVE_CLOCK_GETTIME
 }
 

@@ -45,7 +45,7 @@ f2ptr raw__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
 #else
 #  if defined(HAVE_PUTENV)
 #    if defined(HAVE_GETENV)
-  if ((overwrite != nil) ||
+  if ((overwrite__i != 0) ||
       (getenv((char*)name__utf8_str) == NULL)) {
 #    endif // HAVE_GETENV
     u8* new_environment_string = (u8*)from_ptr(f2__malloc(sizeof(u8) * (name__utf8_length + 1 + value__utf8_length + 1)));

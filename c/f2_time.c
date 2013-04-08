@@ -172,14 +172,16 @@ u64 raw__nanoseconds_since_1970() {
 #else
 #  if defined(HAVE_QUERYPERFORMANCECOUNTER) && defined(HAVE_QUERYPERFORMANCEFREQUENCY)
   // warning: monotonic but not since 1970
-  LARGE_INTEGER performance_count;
-  LARGE_INTEGER performance_frequency;
-  if (! QueryPerformanceCounter(&performance_count)) {
+  LARGE_INTEGER struct_performance_count;
+  LARGE_INTEGER struct_performance_frequency;
+  if (! QueryPerformanceCounter(&struct_performance_count)) {
     error(nil, "QueryPerformanceCounter failed.");
   }
-  if (! QueryPerformanceFrequency(&performance_frequency)) {
+  u64 performance_count = struct_performance_count.QuadPart;
+  if (! QueryPerformanceFrequency(&struct_performance_frequency)) {
     error(nil, "QueryPerformanceFrequency failed.");
   }
+  u64 performance_frequency = struct_performance_frequency.QuadPart;
   if (performance_frequency == 0) {
     error(nil, "high-performance counter unsupported.");
   }

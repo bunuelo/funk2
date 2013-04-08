@@ -19,7 +19,9 @@ void socket_client__init(socket_client_t* this, char* bind_device, char* hostnam
 void socket_client__destroy(socket_client_t* this) {
   f2__free(to_ptr(this->bind_device));
   f2__free(to_ptr(this->hostname));
+#if defined(SHUTDOWN)
   shutdown(this->socket.socket_fd, SHUT_RDWR);
+#endif // SHUTDOWN
   close(this->socket.socket_fd);
   buffered_socket__destroy(&(this->socket));
 }
@@ -32,6 +34,7 @@ void socket_client__close_connection(socket_client_t* this) {
 }
 
 socket_client_connect_result_t socket_client__try_reconnect(socket_client_t* this) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in server_address;
   struct hostent*    host_info;
   
@@ -86,5 +89,8 @@ socket_client_connect_result_t socket_client__try_reconnect(socket_client_t* thi
   this->socket.disconnected = boolean__false;
   
   return socket_client_connect_result__success;
+#else
+  return socket_client_connect_result__connect_failure;
+#endif // HAVE_SOCKET_H
 }
 

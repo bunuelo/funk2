@@ -191,8 +191,8 @@
    and to 0 otherwise. */
 #undef HAVE_REALLOC
 
-/* Define to 1 if you have the `recv,' function. */
-#undef HAVE_RECV_
+/* Define to 1 if you have the `recv' function. */
+#undef HAVE_RECV
 
 /* Define to 1 if you have the `sched_getaffinity' function. */
 #undef HAVE_SCHED_GETAFFINITY
@@ -214,6 +214,9 @@
 
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE
+
+/* Define to 1 if you have the `shutdown' function. */
+#undef HAVE_SHUTDOWN
 
 /* Define to 1 if you have the `sigaction' function. */
 #undef HAVE_SIGACTION

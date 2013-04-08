@@ -260,7 +260,8 @@ AC_CHECK_FUNCS([clock_gettime \
                 munmap \
 		putenv \
 		setenv \
-		recv, \
+		shutdown \
+		recv \
                 sched_getaffinity \
                 sched_setaffinity \
 		select \

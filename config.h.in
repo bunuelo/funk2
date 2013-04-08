@@ -190,7 +190,7 @@
 /* Define if you have POSIX threads libraries and header files. */
 #undef HAVE_PTHREAD
 
-/* Define to 1 if you have the `pthread_getw32threadhandle_np' function. */
+/* Have pthread_getw32threadhandle_np function. */
 #undef HAVE_PTHREAD_GETW32THREADHANDLE_NP
 
 /* Define to 1 if you have the <pthread.h> header file. */

@@ -14105,7 +14105,6 @@ for ac_func in clock_gettime \
                 munmap \
 		nanosleep \
 		pipe \
-		pthread_getw32threadhandle_np \
 		putenv \
 		QueryPerformanceCounter \
 		QueryPerformanceFrequency \
@@ -14142,6 +14141,50 @@ if test "x-$ac_cv_func_Sleep" = "x-yes" ; then
 $as_echo "#define HAVE_CAPITAL_SLEEP 1" >>confdefs.h
 
 fi
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for pthread_getw32threadhandle_np in -lpthread" >&5
+$as_echo_n "checking for pthread_getw32threadhandle_np in -lpthread... " >&6; }
+if ${ac_cv_lib_pthread_pthread_getw32threadhandle_np+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpthread  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+/* Override any GCC internal prototype to avoid an error.
+   Use char because int might match the return type of a GCC
+   builtin and then its argument prototype would still apply.  */
+#ifdef __cplusplus
+extern "C"
+#endif
+char pthread_getw32threadhandle_np ();
+int
+main ()
+{
+return pthread_getw32threadhandle_np ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_pthread_pthread_getw32threadhandle_np=yes
+else
+  ac_cv_lib_pthread_pthread_getw32threadhandle_np=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_pthread_pthread_getw32threadhandle_np" >&5
+$as_echo "$ac_cv_lib_pthread_pthread_getw32threadhandle_np" >&6; }
+if test "x$ac_cv_lib_pthread_pthread_getw32threadhandle_np" = xyes; then :
+
+$as_echo "#define HAVE_PTHREAD_GETW32THREADHANDLE_NP 1" >>confdefs.h
+
+fi
+
+
 
 ac_fn_c_check_member "$LINENO" "struct stat" "st_rdev" "ac_cv_member_struct_stat_st_rdev" "$ac_includes_default"
 if test "x$ac_cv_member_struct_stat_st_rdev" = xyes; then :

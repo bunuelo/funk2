@@ -264,7 +264,6 @@ AC_CHECK_FUNCS([clock_gettime \
                 munmap \
 		nanosleep \
 		pipe \
-		pthread_getw32threadhandle_np \
 		putenv \
 		QueryPerformanceCounter \
 		QueryPerformanceFrequency \
@@ -288,6 +287,9 @@ AC_CHECK_FUNCS([clock_gettime \
 if test "x-$ac_cv_func_Sleep" = "x-yes" ; then
   AC_DEFINE(HAVE_CAPITAL_SLEEP, 1, Have Sleep function)
 fi
+
+AC_CHECK_LIB(pthread,pthread_getw32threadhandle_np,[AC_DEFINE(HAVE_PTHREAD_GETW32THREADHANDLE_NP, 1, Have pthread_getw32threadhandle_np function.)], [])
+
 
 AC_CHECK_MEMBERS([struct stat.st_rdev, struct stat.st_blocks, struct stat.st_blksize])
 

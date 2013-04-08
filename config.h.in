@@ -102,6 +102,9 @@
 /* Define to 1 if you have the `getpagesize' function. */
 #undef HAVE_GETPAGESIZE
 
+/* Define to 1 if you have the `getppid' function. */
+#undef HAVE_GETPPID
+
 /* Define to 1 if you have the <GL/glx.h> header file. */
 #undef HAVE_GL_GLX_H
 
@@ -171,6 +174,9 @@
 
 /* Define to 1 if you have the <net/if.h> header file. */
 #undef HAVE_NET_IF_H
+
+/* Define to 1 if you have the `pipe' function. */
+#undef HAVE_PIPE
 
 /* Define if you have POSIX threads libraries and header files. */
 #undef HAVE_PTHREAD

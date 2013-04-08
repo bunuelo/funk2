@@ -247,17 +247,20 @@ AC_CHECK_FUNCS([clock_gettime \
 		dlopen \
 		dlsym \
 		fcntl \
+ 		fork \
 		getenv \
                 gethostbyname \
                 gethostname \
                 getline \
                 getpagesize \
+		getppid \
                 inet_ntoa \
 		ioctl \
 		kill \
                 memset \
 		mmap \
                 munmap \
+		pipe \
 		putenv \
 		setenv \
 		shutdown \

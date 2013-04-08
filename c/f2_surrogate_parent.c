@@ -28,6 +28,7 @@
 #include "funk2.h"
 
 void waitpid_reap_children() {
+#if defined(WNOHANG)
   waitpid(-1, NULL, WNOHANG);
   //int status;
   //pid_t wait_pid = waitpid(-1, &status, WNOHANG);
@@ -35,11 +36,15 @@ void waitpid_reap_children() {
   //pid_t this_pid = getpid();
   //printf("\nfunk2 pid = %d: wait_pid = %d, status = %d\n", (int)this_pid, (int)wait_pid, (int)status);
   //}
+#else
+  status("warning: waitpid_reap_children not compiled into this funk2 build.");
+#endif // WNOHANG
 }
 
 // funk2_pipe
 
 void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t nonblocking_write) {
+#if defined(HAVE_PIPE)
   int file_descriptors[2];
   if (pipe(file_descriptors) == -1) {
     perror("pipe");
@@ -49,11 +54,19 @@ void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t 
   this->write_file_descriptor = file_descriptors[1];
   file_descriptor__set_nonblocking(this->read_file_descriptor,  nonblocking_read);
   file_descriptor__set_nonblocking(this->write_file_descriptor, nonblocking_write);
+#else
+  this->read_file_descriptor  = -1;
+  this->write_file_descriptor = -1;
+#endif // HAVE_PIPE
 }
 
 void funk2_pipe__destroy(funk2_pipe_t* this) {
-  close(this->read_file_descriptor);
-  close(this->write_file_descriptor);
+  if (this->read_file_descriptor != -1) {
+    close(this->read_file_descriptor);
+  }
+  if (this->write_file_descriptor != -1) {
+    close(this->write_file_descriptor);
+  }
 }
 
 void funk2_pipe__write(funk2_pipe_t* this, void* data, f2size_t byte_count) {
@@ -87,9 +100,14 @@ void funk2_pipe__read(funk2_pipe_t* this, void* data, f2size_t byte_count) {
   }
 }
 
+#if defined(HAVE_FORK) && defined(HAVE_GETPPID) && defined(HAVE_PIPE)
+#  define F2__SURROGATE_PARENT_SUPPORTED
+#endif // HAVE_FORK && HAVE_GETPPID && HAVE_PIPE
+
 // funk2_surrogate_parent
 
 void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   funk2_processor_mutex__init(&(this->write_to_child__mutex));
   funk2_pipe__init(&(this->parent_to_child_pipe), boolean__true, boolean__false);
   funk2_pipe__init(&(this->child_to_parent_pipe), boolean__true, boolean__false);
@@ -170,33 +188,47 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
   }
   funk2_processor_mutex__init(&(this->return_values__mutex));
   this->return_values = NULL;
+#else
+  status("warning: surrogate parent not compiled into this funk2 build.");
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void funk2_surrogate_parent__destroy(funk2_surrogate_parent_t* this) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   funk2_processor_mutex__destroy(&(this->write_to_child__mutex));
   funk2_pipe__destroy(&(this->parent_to_child_pipe));
   funk2_pipe__destroy(&(this->child_to_parent_pipe));
   funk2_processor_mutex__destroy(&(this->return_values__mutex));
+#else
+  status("warning: surrogate parent not compiled into this funk2 build.");
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void funk2_surrogate_parent__unsafe_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   funk2_pipe__write(&(this->parent_to_child_pipe), &fiber, sizeof(f2ptr));
   funk2_pipe__write(&(this->parent_to_child_pipe), command, strlen((char*)command) + 1);
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void funk2_surrogate_parent__management_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   funk2_processor_mutex__lock(&(this->write_to_child__mutex));
   funk2_surrogate_parent__unsafe_start_system_command(this, fiber, command);
   funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void funk2_surrogate_parent__user_start_system_command(funk2_surrogate_parent_t* this, f2ptr fiber, u8* command) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   funk2_processor_mutex__user_lock(&(this->write_to_child__mutex));
   funk2_surrogate_parent__unsafe_start_system_command(this, fiber, command);
   funk2_processor_mutex__unlock(&(this->write_to_child__mutex));
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   waitpid_reap_children();
   u64 read_byte_num = 0;
   do {
@@ -216,9 +248,11 @@ void funk2_surrogate_parent__handle(funk2_surrogate_parent_t* this) {
       funk2_processor_mutex__unlock(&(this->return_values__mutex));
     }
   } while ((read_byte_num > 0) && (read_byte_num < sizeof(u64)));
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   boolean_t return_value_available = boolean__false;
   funk2_return_value_node_t* prev = NULL;
   funk2_return_value_node_t* iter = this->return_values;
@@ -239,43 +273,60 @@ boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_pare
     iter = next;
   }
   return return_value_available;
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 boolean_t funk2_surrogate_parent__management_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   boolean_t return_value_available = boolean__false;
   funk2_processor_mutex__lock(&(this->return_values__mutex));
   return_value_available = funk2_surrogate_parent__unsafe_check_return_value(this, fiber, result);
   funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
+#else
+  return boolean__false;
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 boolean_t funk2_surrogate_parent__user_check_return_value(funk2_surrogate_parent_t* this, f2ptr fiber, funk2_return_result_t* result) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   boolean_t return_value_available = boolean__false;
   funk2_processor_mutex__user_lock(&(this->return_values__mutex));
   return_value_available = funk2_surrogate_parent__unsafe_check_return_value(this, fiber, result);
   funk2_processor_mutex__unlock(&(this->return_values__mutex));
   return return_value_available;
+#else
+  return boolean__false;
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 void raw__surrogate_parent__start_system_command(f2ptr cause, u8* command) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   f2ptr fiber = f2__this__fiber(cause);
   funk2_surrogate_parent__user_start_system_command(&(__funk2.surrogate_parent), fiber, command);
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 
 f2ptr f2__surrogate_parent__start_system_command(f2ptr cause, f2ptr command) {
   assert_argument_type(string, command);
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   u64 command__utf8_length = raw__string__utf8_length(cause, command);
   u8* command__utf8_str    = alloca(command__utf8_length + 1);
   raw__string__utf8_str_copy(cause, command, command__utf8_str);
   command__utf8_str[command__utf8_length] = 0;
   raw__surrogate_parent__start_system_command(cause, command__utf8_str);
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "surrogate_parent-start_system_command-not_compiled_into_this_funk2_build")));
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 def_pcfunk1(surrogate_parent__start_system_command, command,
 	    "executes a system command as a new process.returns a new conslist that is this conslist sorted by user-provided comparison_funk.",
 	    return f2__surrogate_parent__start_system_command(this_cause, command));
 
 f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
+#if defined(F2__SURROGATE_PARENT_SUPPORTED)
   f2ptr                 fiber = f2__this__fiber(cause);
   funk2_return_result_t result;
   result.fiber        = nil;
@@ -285,6 +336,10 @@ f2ptr f2__surrogate_parent__check_return_value(f2ptr cause) {
     return f2integer__new(cause, result.return_value);
   }
   return nil;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "surrogate_parent-check_return_value-not_compiled_into_this_funk2_build")));
+#endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 def_pcfunk0(surrogate_parent__check_return_value,
 	    "checks for the return value for a finished system command started by this fiber.",

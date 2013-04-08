@@ -247,6 +247,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		dlopen \
 		dlsym \
 		fcntl \
+		getenv \
                 gethostbyname \
                 gethostname \
                 getpagesize \
@@ -256,6 +257,7 @@ AC_CHECK_FUNCS([clock_gettime \
                 memset \
 		mmap \
                 munmap \
+		putenv \
 		recv, \
                 sched_getaffinity \
                 sched_setaffinity \

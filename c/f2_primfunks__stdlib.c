@@ -37,10 +37,22 @@ f2ptr raw__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {
   u8* value__utf8_str    = (u8*)from_ptr(f2__malloc((value__utf8_length + 1) * sizeof(u8)));
   raw__string__utf8_str_copy(cause, value, value__utf8_str);
   int overwrite__i = f2integer__i(overwrite, cause);
-  int result = setenv((char*)name__utf8_str, (char*)value__utf8_str, overwrite__i);
+  f2ptr result = nil;
+#if defined(HAVE_SETENV)
+  result = f2integer__new(cause, setenv((char*)name__utf8_str, (char*)value__utf8_str, overwrite__i));
+#else
+#  if defined(HAVE_PUTENV)
+  u8* new_environment_string = (u8*)from_ptr(f2__malloc(sizeof(u8) * (name__utf8_length + 1 + value__utf8_length + 1)));
+  snprintf(new_environment_string, name__utf8_length + 1 + value__utf8_length + 1, "%s=%s", name__utf8_str, value__utf8_str);
+  result = f2integer__new(cause, putenv((char*)new_environment_string));
+#  else
+  result = new__error(f2list2__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "setenv-not_compiled_into_this_funk2_build")));
+#  endif // HAVE_PUTENV
+#endif // HAVE_SETENV
   f2__free(to_ptr(name__utf8_str));
   f2__free(to_ptr(value__utf8_str));
-  return f2integer__new(cause, result);
+  return result;
 }
 
 f2ptr f2__setenv(f2ptr cause, f2ptr name, f2ptr value, f2ptr overwrite) {

@@ -321,6 +321,9 @@ using __cxxabiv1::__cxa_demangle;
 #  include <cairo-ps.h>
 #endif // F2__CAIRO_SUPPORTED
 
+#if defined(HAVE_WINDOWS_H)
+#  include <Windows.h>
+#endif // HAVE_WINDOWS_H
 
 // define fake file permissions in case they are not defined.
 

@@ -350,6 +350,9 @@
 /* Define to 1 if you have the `vprintf' function. */
 #undef HAVE_VPRINTF
 
+/* Define to 1 if you have the <Windows.h> header file. */
+#undef HAVE_WINDOWS_H
+
 /* Define to 1 if `fork' works. */
 #undef HAVE_WORKING_FORK
 

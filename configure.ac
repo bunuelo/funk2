@@ -87,6 +87,7 @@ AC_CHECK_HEADERS([arpa/inet.h \
                   termios.h \
                   ucontext.h \
                   unistd.h \
+		  Windows.h \
                   X11/keysym.h \
                   X11/Xlib.h \
                   xmlrpc-c/base.h \

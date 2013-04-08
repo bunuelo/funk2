@@ -232,7 +232,8 @@ def_pcfunk0(socket__sock_rdm,
 	    return f2__socket__sock_rdm(this_cause));
 
 
-f2ptr f2__inaddr_any(f2ptr cause) {
+f2ptr raw__inaddr_any(f2ptr cause) {
+#if defined(HAVE_SOCKET_H)
   int sockaddr_len = sizeof(struct sockaddr);
   f2ptr this = raw__array__new(cause, sockaddr_len);
   struct sockaddr_in addr_in;
@@ -243,6 +244,14 @@ f2ptr f2__inaddr_any(f2ptr cause) {
     raw__array__elt__set(cause, this, i, f2integer__new(cause, (unsigned char)(bytes[i])));
   }
   return this;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "inaddr_any-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
+}
+
+f2ptr f2__inaddr_any(f2ptr cause) {
+  return raw__inaddr_any(cause);
 }
 def_pcfunk0(inaddr_any,
 	    "",
@@ -250,6 +259,7 @@ def_pcfunk0(inaddr_any,
 
 // int socket(int domain, int type, int protocol);
 f2ptr raw__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
+#if defined(HAVE_SOCKET_H)
   s64 socket_fd = socket(f2integer__i(domain, cause), f2integer__i(type, cause), f2integer__i(protocol, cause));
   if (socket_fd == -1) {
     s64 error_number = errno;
@@ -262,6 +272,10 @@ f2ptr raw__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
 															new__symbol(cause, "strerror"), new__string(cause, strerror(error_number))))));
   }
   return f2integer__new(cause, socket_fd);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__socket(f2ptr cause, f2ptr domain, f2ptr type, f2ptr protocol) {
@@ -277,6 +291,7 @@ def_pcfunk3(socket, domain, type, protocol,
 
 // int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen);
 f2ptr raw__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in addr_in;
   socklen_t          addr_len = sizeof(addr_in.sin_addr.s_addr);
   s64 result = accept(f2integer__i(sockfd, cause), (struct sockaddr*)&addr_in, &addr_len);
@@ -311,6 +326,10 @@ f2ptr raw__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
     }
   }
   return rv;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "accept-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__accept(f2ptr cause, f2ptr sockfd, f2ptr addr_array) {
@@ -325,6 +344,7 @@ def_pcfunk2(accept, sockfd, addr_array,
 
 // int connect(int sockfd, const struct sockaddr *serv_addr, socklen_t addrlen);
 f2ptr raw__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in addr_in;
   addr_in.sin_family = f2integer__i(sin_family, cause);
   addr_in.sin_port   = htons(f2integer__i(sin_port, cause));
@@ -350,6 +370,10 @@ f2ptr raw__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, 
 															new__symbol(cause, "strerror"),   new__string(cause, strerror(error_number))))));
   }
   return f2integer__new(cause, result);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "connect-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__connect(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
@@ -365,6 +389,7 @@ def_pcfunk4(connect, sockfd, sin_family, sin_port, sin_addr,
 
 // int bind(int sockfd, const struct sockaddr *my_addr, socklen_t addrlen);
 f2ptr raw__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in addr_in;
   addr_in.sin_family = f2integer__i(sin_family, cause);
   addr_in.sin_port   = htons(f2integer__i(sin_port, cause));
@@ -389,6 +414,10 @@ f2ptr raw__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2p
 															new__symbol(cause, "strerror"),   new__string(cause, strerror(error_number))))));
   }
   return f2integer__new(cause, result);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "bind-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__bind(f2ptr cause, f2ptr sockfd, f2ptr sin_family, f2ptr sin_port, f2ptr sin_addr) {
@@ -404,7 +433,12 @@ def_pcfunk4(bind, sockfd, sin_family, sin_port, sin_addr,
 
 // int getsockname(int s, struct sockaddr *name, socklen_t *namelen);
 f2ptr raw__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
+#if defined(HAVE_SOCKET_H)
   return f2integer__new(cause, getsockname(f2integer__i(s, cause), (struct sockaddr*)from_ptr(f2pointer__p(name, cause)), (socklen_t*)from_ptr(f2pointer__p(namelen, cause))));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "getsockname-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__getsockname(f2ptr cause, f2ptr s, f2ptr name, f2ptr namelen) {
@@ -419,6 +453,7 @@ def_pcfunk3(getsockname, s, name, namelen,
 
 // int listen(int sockfd, int backlog);
 f2ptr raw__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
+#if defined(HAVE_SOCKET_H)
   s64 result = listen(f2integer__i(sockfd, cause), f2integer__i(backlog, cause));
   if (result == -1) {
     s64 error_number = errno;
@@ -430,6 +465,10 @@ f2ptr raw__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
 															new__symbol(cause, "strerror"), new__string(cause, strerror(error_number))))));
   }
   return f2integer__new(cause, result);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "listen-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__listen(f2ptr cause, f2ptr sockfd, f2ptr backlog) {
@@ -443,6 +482,7 @@ def_pcfunk2(listen, sockfd, backlog,
 
 // struct hostent *gethostbyname(const char *name);
 f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
+#if defined(HAVE_GETHOSTBYNAME)
   u64 name__utf8_length = raw__string__utf8_length(cause, name);
   u8* name__utf8_str    = (u8*)from_ptr(f2__malloc(name__utf8_length + 1));
   raw__string__utf8_str_copy(cause, name, name__utf8_str);
@@ -451,6 +491,10 @@ f2ptr raw__gethostbyname(f2ptr cause, f2ptr name) {
   f2ptr rv = f2pointer__new(cause, to_ptr(gethostbyname((char*)name__utf8_str)));
   f2__free(to_ptr(name__utf8_str));
   return rv;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "gethostbyname-not_compiled_into_this_funk2_build")));
+#endif // HAVE_GETHOSTBYNAME
 }
 
 f2ptr f2__gethostbyname(f2ptr cause, f2ptr name) {
@@ -462,44 +506,74 @@ def_pcfunk1(gethostbyname, name,
 	    return f2__gethostbyname(this_cause, name));
 
 f2ptr f2__socket__h_errno(f2ptr cause) {
+#if defined(HAVE_SOCKET_H)
   return f2integer__new(cause, h_errno);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-h_errno-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 def_pcfunk0(socket__h_errno,
 	    "",
 	    return f2__socket__h_errno(this_cause));
 
 f2ptr f2__h_errno__host_not_found(f2ptr cause) {
+#if defined(HOST_NOT_FOUND)
   return f2integer__new(cause, HOST_NOT_FOUND);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // HOST_NOT_FOUND
 }
 def_pcfunk0(h_errno__host_not_found,
 	    "",
 	    return f2__h_errno__host_not_found(this_cause));
 
 f2ptr f2__h_errno__no_address(f2ptr cause) {
+#if defined(NO_ADDRESS)
   return f2integer__new(cause, NO_ADDRESS);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // NO_ADDRESS
 }
 def_pcfunk0(h_errno__no_address,
 	    "",
 	    return f2__h_errno__no_address(this_cause));
 
 f2ptr f2__h_errno__no_recovery(f2ptr cause) {
+#if defined(NO_RECOVERY)
   return f2integer__new(cause, NO_RECOVERY);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // NO_RECOVERY
 }
 def_pcfunk0(h_errno__no_recovery,
 	    "",
 	    return f2__h_errno__no_recovery(this_cause));
 
 f2ptr f2__h_errno__try_again(f2ptr cause) {
+#if defined(TRY_AGAIN)
   return f2integer__new(cause, TRY_AGAIN);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "socket-constant_not_compiled_into_this_funk2_build")));
+#endif // TRY_AGAIN
 }
 def_pcfunk0(h_errno__try_again,
 	    "",
 	    return f2__h_errno__try_again(this_cause));
 
 f2ptr raw__hostent__h_name(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   char*           h_name       = (char*)(this_hostent->h_name);
   return new__string(cause, h_name);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "hostent-h_name-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__hostent__h_name(f2ptr cause, f2ptr this) {
@@ -511,6 +585,7 @@ def_pcfunk1(hostent__h_name, this,
 	    return f2__hostent__h_name(this_cause, this));
 
 f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   f2ptr seq  = nil;
   f2ptr iter = nil;
@@ -529,6 +604,10 @@ f2ptr raw__hostent__h_aliases(f2ptr cause, f2ptr this) {
     aliases_iter ++;
   }
   return seq;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "hostent-h_aliases-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__hostent__h_aliases(f2ptr cause, f2ptr this) {
@@ -541,8 +620,13 @@ def_pcfunk1(hostent__h_aliases, this,
 
 
 f2ptr raw__hostent__h_addrtype(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this_hostent->h_addrtype);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "hostent-h_addrtype-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__hostent__h_addrtype(f2ptr cause, f2ptr this) {
@@ -555,8 +639,13 @@ def_pcfunk1(hostent__h_addrtype, this,
 
 
 f2ptr raw__hostent__h_length(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this_hostent->h_length);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "hostent-h_length-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__hostent__h_length(f2ptr cause, f2ptr this) {
@@ -568,6 +657,7 @@ def_pcfunk1(hostent__h_length, this,
 	    return f2__hostent__h_length(this_cause, this));
 
 f2ptr raw__hostent__h_addr_list(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct hostent* this_hostent = (struct hostent*)from_ptr(f2pointer__p(this, cause));
   int h_length = this_hostent->h_length;
   f2ptr seq  = nil;
@@ -591,6 +681,10 @@ f2ptr raw__hostent__h_addr_list(f2ptr cause, f2ptr this) {
     addr_list_iter ++;
   }
   return seq;
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "hostent-h_addr_list-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__hostent__h_addr_list(f2ptr cause, f2ptr this) {
@@ -602,8 +696,13 @@ def_pcfunk1(hostent__h_addr_list, this,
 	    return f2__hostent__h_addr_list(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this__sockaddr_in->sin_family);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "sockaddr_in-sin_family-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__sockaddr_in__sin_family(f2ptr cause, f2ptr this) {
@@ -615,8 +714,13 @@ def_pcfunk1(sockaddr_in__sin_family, this,
 	    return f2__sockaddr_in__sin_family(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
   return f2integer__new(cause, this__sockaddr_in->sin_port);
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "sockaddr_in-sin_port-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__sockaddr_in__sin_port(f2ptr cause, f2ptr this) {
@@ -628,9 +732,14 @@ def_pcfunk1(sockaddr_in__sin_port, this,
 	    return f2__sockaddr_in__sin_port(this_cause, this));
 
 f2ptr raw__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in* this__sockaddr_in = (struct sockaddr_in*)from_ptr(f2pointer__p(this, cause));
   struct in_addr*     this__sin_addr    = &(this__sockaddr_in->sin_addr);
   return f2integer__new(cause, *((unsigned long*)this__sin_addr));
+#else
+  return new__error(f2list2__new(cause,
+				 new__symbol(cause, "bug_name"), new__symbol(cause, "sockaddr_in-sin_addr-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SOCKET_H
 }
 
 f2ptr f2__sockaddr_in__sin_addr(f2ptr cause, f2ptr this) {

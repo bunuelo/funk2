@@ -1158,7 +1158,7 @@ f2ptr pfunk2__f2chunk__cfunk_jump(f2ptr this, f2ptr cause, f2ptr fiber, f2ptr en
 #endif // F2__PTYPE__TYPE_CHECK
   cfunkptr_t jump = (cfunkptr_t)(((ptype_chunk_block_t*)from_ptr(f2ptr_to_ptr(this)))->bytes);
   container__reflectively_know_of_reading_from(cause, this, nil, sizeof(jump));
-  printf("\nchunk-cfunk_jump: jumping to 0x%08lx", (long)jump); fflush(stdout);
+  printf("\nchunk-cfunk_jump: jumping to 0x" X64__fstr, (u64)to_ptr(jump)); fflush(stdout);
   return jump(cause, fiber, env, args);
 }
 
@@ -1201,8 +1201,14 @@ f2ptr pfunk2__f2chunk__send(f2ptr this, f2ptr cause, int start, int length, int 
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  f2ptr rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
+  f2ptr rv = nil;
+#if defined(HAVE_SEND)
+  rv = f2integer__new(cause, send(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
   container__reflectively_know_of_reading_from(cause, this, nil, length);
+#else
+  rv = new__error(f2list2__new(cause,
+			       new__symbol(cause, "bug_name"), new__symbol(cause, "chunk-send-not_compiled_into_this_funk2_build")));
+#endif // HAVE_SEND
   return rv;
 }
 
@@ -1214,8 +1220,14 @@ f2ptr pfunk2__f2chunk__recv(f2ptr this, f2ptr cause, int start, int length, int 
     ptype_error(cause, this, __funk2.globalenv.ptype_chunk__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  f2ptr rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
+  f2ptr rv = nil;
+#if defined(HAVE_RECV)
+  rv = f2integer__new(cause, recv(fd, ((u8*)(__pure__f2chunk__bytes(this))) + start, length, flags));
   container__reflectively_know_of_writing_to(cause, this, nil, length);
+#else
+  rv = new__error(f2list2__new(cause,
+			       new__symbol(cause, "bug_name"), new__symbol(cause, "chunk-recv-not_compiled_into_this_funk2_build")));
+#endif // HAVE_RECV
   return rv;
 }
 
@@ -1715,7 +1727,7 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_
   do {
     int index;
     for (index = 0; index < gensym__length - 1; index ++) {
-      int random_num = random() % (10 + 26);
+      int random_num = rand() % (10 + 26);
       if (random_num < 10) {
 	gensym__name[initial_string_length + index + 1] = ((funk2_character_t)'0') + random_num;
       } else {

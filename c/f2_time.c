@@ -185,10 +185,10 @@ u64 raw__nanoseconds_since_1970() {
   if (performance_frequency == 0) {
     error(nil, "high-performance counter unsupported.");
   }
-  u64 seconds              = performance_count / performance_frequency;
-  u64 remainder_count      = performance_count % performance_frequency;
-  u64 remained_nanoseconds = (nanoseconds_per_second * remainder_count) / performance_frequency;
-  return (seconds * nanoseconds_per_second) + nanoseconds;
+  u64 seconds               = performance_count / performance_frequency;
+  u64 remainder_count       = performance_count % performance_frequency;
+  u64 remainder_nanoseconds = (nanoseconds_per_second * remainder_count) / performance_frequency;
+  return (seconds * nanoseconds_per_second) + remainder_nanoseconds;
 #  else
 #    error no high resolution counter available.
 #  endif // HAVE_QUERYPERFORMANCECOUNTER && HAVE_QUERYPERFORMANCEFREQUENCY

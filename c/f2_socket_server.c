@@ -52,9 +52,14 @@ int file_descriptor__set_nonblocking(int fd, boolean_t value) {
   }
   return fcntl(fd, F_SETFL, flags);
 #else
+#  if defined(HAVE_IOCTL)
   // Otherwise, use the old way of doing it
   flags = value ? 1 : 0;
   return ioctl(fd, FIOBIO, &flags);
+#  else
+  status("warning: file_descriptor__set_nonblocking not compiled into this funk2 build.");
+  return 0;
+#  endif // HAVE_IOCTL
 #endif
 }
 
@@ -102,18 +107,23 @@ int socket_file_descriptor__get_bind_device(int fd, char* device_name, int max_l
   return 0;
 #else
   // Fixme: implement binding on OS X
-	status("socket_file_descriptor__get_bind_device() not supported on this platform.");
-	return -1;
+  status("socket_file_descriptor__get_bind_device() not supported on this platform.");
+  return -1;
 #endif
 }
 
 void socket_file_descriptor__set_rebindable(int fd) {
+#if defined(HAVE_SOCKET_H)
   int reuse_addr = 1;
   // So that we can re-bind to it without TIME_WAIT problems
   setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &reuse_addr, sizeof(reuse_addr));
+#else
+  status("warning: socket_file_descriptor__set_rebindable not compiled into this funk2 build.");
+#endif // HAVE_SOCKET_H
 }
 
 int socket_file_descriptor__get_keepalive(int fd) {
+#if defined(HAVE_SOCKET_H)
   int       optval;
   socklen_t optlen = sizeof(optval);
   /* Check the status for the keepalive option */
@@ -122,9 +132,14 @@ int socket_file_descriptor__get_keepalive(int fd) {
     return -1;
   }
   return optval;
+#else
+  status("warning: socket_file_descriptor__get_keepalive not compiled into this funk2 build.");
+  return 0;
+#endif // HAVE_SOCKET_H
 }
 
 int socket_file_descriptor__set_keepalive(int fd, boolean_t keepalive) {
+#if defined(HAVE_SOCKET_H)
   int       optval;
   socklen_t optlen = sizeof(optval);
   /* Set the option active */
@@ -134,9 +149,14 @@ int socket_file_descriptor__set_keepalive(int fd, boolean_t keepalive) {
     return -1;
   }
   return 0;
+#else
+  status("warning: socket_file_descriptor__set_keepalive not compiled into this funk2 build.");
+  return 0;
+#endif // HAVE_SOCKET_H
 }
 
 socket_server_init_result_t socket_server__init(socket_server_t* this, char* bind_device, u8* ip_addr, u16 port_num, u32 client__recv_buffer__byte_num, u32 client__send_buffer__byte_num) {
+#if defined(HAVE_SOCKET_H)
   struct sockaddr_in server_address;
   
   this->socket_fd = socket(AF_INET, SOCK_STREAM, 0);
@@ -188,6 +208,9 @@ socket_server_init_result_t socket_server__init(socket_server_t* this, char* bin
   this->clients                       = NULL;
   
   return socket_server_init_result__success;
+#else
+  return socket_server_init_result__socket_failure;
+#endif // HAVE_SOCKET_H
 }
 
 void socket_server__destroy(socket_server_t* this) {
@@ -205,6 +228,7 @@ void socket_server__destroy(socket_server_t* this) {
 }
 
 int socket_server__accept(socket_server_t* this, client_id_t* client_id) {
+#if defined(HAVE_SOCKET_H)
   socklen_t          client_address_length;
   struct sockaddr_in client_address;
   int                connect_socket_fd;
@@ -237,6 +261,10 @@ int socket_server__accept(socket_server_t* this, client_id_t* client_id) {
     client_id__init(client_id, (u8*)bind_device, ip_addr, port_num);
   }
   return connect_socket_fd;
+#else
+  status("warning: socket_server__accept not compiled into this funk2 build.");
+  return -1;
+#endif // HAVE_SOCKET_H
 }
 
 void socket_server_client__init(socket_server_client_t* this, int socket_fd, u32 recv_buffer__byte_num, u32 send_buffer__byte_num, client_id_t* client_id) {

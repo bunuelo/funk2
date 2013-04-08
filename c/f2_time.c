@@ -633,6 +633,7 @@ f2ptr raw__time__day_of_week(f2ptr cause, f2ptr this) {
   struct tm local_time_info;
   s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
   time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  local_time_info.tm_wday = 0;
   localtime_r(&seconds_since_1970, &local_time_info);
   return f2integer__new(cause, local_time_info.tm_wday);
 }
@@ -650,6 +651,7 @@ f2ptr raw__time__day_of_year(f2ptr cause, f2ptr this) {
   struct tm local_time_info;
   s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
   time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  local_time_info.tm_yday = 0;
   localtime_r(&seconds_since_1970, &local_time_info);
   return f2integer__new(cause, local_time_info.tm_yday);
 }
@@ -667,6 +669,7 @@ f2ptr raw__time__is_daylight_savings_time(f2ptr cause, f2ptr this) {
   struct tm local_time_info;
   s64       nanoseconds_since_1970 = f2integer__i(f2time__nanoseconds_since_1970(this, cause), cause);
   time_t    seconds_since_1970     = nanoseconds_since_1970 / nanoseconds_per_second;
+  local_time_info.tm_isdst = 0;
   localtime_r(&seconds_since_1970, &local_time_info);
   return f2bool__new(local_time_info.tm_isdst);
 }

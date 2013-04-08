@@ -258,6 +258,7 @@ AC_CHECK_FUNCS([clock_gettime \
 		mmap \
                 munmap \
 		putenv \
+		setenv \
 		recv, \
                 sched_getaffinity \
                 sched_setaffinity \

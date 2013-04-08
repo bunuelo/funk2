@@ -206,6 +206,9 @@
 /* Define to 1 if you have the `send' function. */
 #undef HAVE_SEND
 
+/* Define to 1 if you have the `setenv' function. */
+#undef HAVE_SETENV
+
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE
 

@@ -14099,6 +14099,7 @@ for ac_func in clock_gettime \
 		mmap \
                 munmap \
 		putenv \
+		setenv \
 		recv, \
                 sched_getaffinity \
                 sched_setaffinity \

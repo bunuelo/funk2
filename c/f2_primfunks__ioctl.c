@@ -75,7 +75,6 @@ f2ptr f2__ioctl__siocoutq(f2ptr cause) {
 def_pcfunk0(ioctl__siocoutq,
 	    "",
 	    return f2__ioctl__siocoutq(this_cause));
-#endif
 
 
 // **

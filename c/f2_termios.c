@@ -28,9 +28,16 @@
 #include "funk2.h"
 
 int raw__termios__height() {
+#if defined(HAVE_TERMIOS_H)
   struct winsize winsize_arg;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize_arg);
-  return winsize_arg.ws_row;
+  if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize_arg) == 0) {
+    return winsize_arg.ws_row;
+  } else {
+    return 25;
+  }
+#else
+  return 25;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__height(f2ptr cause) {
@@ -41,9 +48,16 @@ def_pcfunk0(termios__height,
 	    return f2__termios__height(this_cause));
 
 int raw__termios__width() {
+#if defined(HAVE_TERMIOS_H)
   struct winsize winsize_arg;
-  ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize_arg);
-  return winsize_arg.ws_col;
+  if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &winsize_arg) == 0) {
+    return winsize_arg.ws_col;
+  } else {
+    return 80;
+  }
+#else
+  return 80;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__width(f2ptr cause) {
@@ -54,10 +68,14 @@ def_pcfunk0(termios__width,
 	    return f2__termios__width(this_cause));
 
 int raw__termios__noecho() {
+#if defined(HAVE_TERMIOS_H)
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag &= ~ECHO;
   return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#else
+  return -1;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__noecho(f2ptr cause) {
@@ -68,10 +86,14 @@ def_pcfunk0(termios__noecho,
 	    return f2__termios__noecho(this_cause));
 
 int raw__termios__echo() {
+#if defined(HAVE_TERMIOS_H)
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag |= ECHO;
   return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#else
+  return -1;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__echo(f2ptr cause) {
@@ -83,10 +105,14 @@ def_pcfunk0(termios__echo,
 
 
 int raw__termios__nocanon() {
+#if defined(HAVE_TERMIOS_H)
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag &= ~ICANON;
   return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#else
+  return -1;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__nocanon(f2ptr cause) {
@@ -98,10 +124,14 @@ def_pcfunk0(termios__nocanon,
 
 
 int raw__termios__canon() {
+#if defined(HAVE_TERMIOS_H)
   struct termios t;
   tcgetattr(STDIN_FILENO, &t);
   t.c_lflag |= ICANON;
   return tcsetattr(STDIN_FILENO, TCSANOW, &t);
+#else
+  return -1;
+#endif // HAVE_TERMIOS_H
 }
 
 f2ptr f2__termios__canon(f2ptr cause) {

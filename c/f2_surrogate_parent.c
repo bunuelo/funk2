@@ -273,6 +273,8 @@ boolean_t funk2_surrogate_parent__unsafe_check_return_value(funk2_surrogate_pare
     iter = next;
   }
   return return_value_available;
+#else
+  return boolean__false;
 #endif // F2__SURROGATE_PARENT_SUPPORTED
 }
 

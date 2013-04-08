@@ -1121,7 +1121,7 @@ void redblacktree__test__remove_with_iterators() {
   rbt_node_t* iter = rbt_tree__minimum(&tree);
   while (iter) {
     rbt_node_t* next = rbt_node__next(iter);
-    if ((random() % 2) == 0) {
+    if ((rand() % 2) == 0) {
       printf("\ntree: ");
       rbt_tree__print(&tree);
       

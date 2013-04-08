@@ -112,7 +112,8 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
   boolean_t      poller_initialized = boolean__false;
   u64            writelock_tries    = 0;
   while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
-    if (__funk2.user_thread_controller.need_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
+    pthread_t my_pthread = pthread_self();
+    if (__funk2.user_thread_controller.need_wait && memcmp(&my_pthread, &__funk2.memory.memory_handling_thread, sizeof(pthread_t)) != 0) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }
     {
@@ -138,7 +139,8 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
   boolean_t      poller_initialized = boolean__false;
   u64            readlock_tries     = 0;
   while (funk2_processor_readwritelock__raw_tryreadlock(this, readlock_source_file, readlock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
-    if (__funk2.user_thread_controller.need_wait && pthread_self() != __funk2.memory.memory_handling_thread) {
+    pthread_t my_pthread = pthread_self();
+    if (__funk2.user_thread_controller.need_wait && memcmp(&my_pthread, &__funk2.memory.memory_handling_thread, sizeof(pthread_t)) != 0) {
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
     }
     {

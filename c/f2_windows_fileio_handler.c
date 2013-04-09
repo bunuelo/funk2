@@ -228,5 +228,5 @@ boolean_t raw__windows_fileio_handler__read(s64 file_descriptor, void* buffer, u
   if (windows_file == NULL) {
     return boolean__true; // failure
   }
-  return funk2_windows_fileio_handler__read(&(__funk2.windows_fileio_handler), windows_file, buffer, byte_num, read_byte_num);
+  return funk2_windows_fileio_handler__read_file(&(__funk2.windows_fileio_handler), windows_file, buffer, byte_num, read_byte_num);
 }

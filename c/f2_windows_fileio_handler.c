@@ -155,7 +155,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
 			    &number_of_bytes_transferred,
 			    TRUE)) {
       *read_byte_num = number_of_bytes_transferred;
-      status("funk2_windows_file__read \"%s\" success 1!  byte_num=" u64__fstr " read_byte_num=" u64__fstr, this->filename, byte_num, *read_byte_num);
+      //status("funk2_windows_file__read \"%s\" success 1!  byte_num=" u64__fstr " read_byte_num=" u64__fstr, this->filename, byte_num, *read_byte_num);
       return boolean__false; // success
     } else {
       status("funk2_windows_file__read \"%s\" error 2", this->filename);
@@ -163,7 +163,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
     }
   } else {
     *read_byte_num = number_of_bytes_read;
-    status("funk2_windows_file__read \"%s\" success 2!", this->filename);
+    //status("funk2_windows_file__read \"%s\" success 2!", this->filename);
     return boolean__false; // success
   }
 #else

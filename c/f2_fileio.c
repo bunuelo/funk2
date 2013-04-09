@@ -45,6 +45,7 @@ void safe_write(int fd, ptr p, f2size_t object_size) {
 void safe_read(int fd, ptr p, f2size_t object_size) {
   f2size_t result = raw_read(fd, p, object_size);
   if (result != object_size) {
+    status("safe_read failure: object_size=" f2size__fstr, object_size);
     error(nil, "safe_read error.");
   }
 }

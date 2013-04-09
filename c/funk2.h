@@ -161,6 +161,7 @@
 #include "f2_virtual_processor_handler.h"
 #include "f2_virtual_processor_thread.h"
 #include "f2_xmlrpc.h"
+#include "f2_windows_fileio_handler.h"
 #include "f2_zlib.h"
 
 void f2__destroy();
@@ -177,6 +178,7 @@ typedef struct funk2_s {
   // global variables in other source files
   funk2_system_processor_t            system_processor;
   funk2_system_file_handler_t         system_file_handler;
+  funk2_windows_fileio_handler_t      windows_fileio_handler;
   funk2_module_registration_t         module_registration;
   funk2_command_line_t                command_line;
   funk2_memory_t                      memory;

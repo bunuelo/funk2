@@ -692,6 +692,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_virtual_processor_handler.c \
   c/f2_virtual_processor_thread.c \
   c/f2_xmlrpc.c \
+  c/f2_windows_fileio_handler.c \
   c/f2_zlib.c \
   c/funk2.c \
   config_bit_num.h

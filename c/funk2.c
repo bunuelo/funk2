@@ -197,6 +197,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   funk2_cpu__init(&(this->cpu));
   funk2_memory__init(&(this->memory));
+  funk2_windows_fileio_handler__init(&(this->windows_fileio_handler));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));
   funk2_defragmenter__init(&(this->defragmenter));

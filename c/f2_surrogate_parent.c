@@ -52,8 +52,14 @@ void funk2_pipe__init(funk2_pipe_t* this, boolean_t nonblocking_read, boolean_t 
   }
   this->read_file_descriptor  = file_descriptors[0];
   this->write_file_descriptor = file_descriptors[1];
-  file_descriptor__set_nonblocking(this->read_file_descriptor,  nonblocking_read);
-  file_descriptor__set_nonblocking(this->write_file_descriptor, nonblocking_write);
+  if (file_descriptor__set_nonblocking(this->read_file_descriptor,  nonblocking_read) != 0) {
+    status("funk2_pipe__init error: could not set read_file_descriptor to nonblocking.");
+    return;
+  }
+  if (file_descriptor__set_nonblocking(this->write_file_descriptor, nonblocking_write) != 0) {
+    status("funk2_pipe__init error: could not set write_file_descriptor to nonblocking.");
+    return;
+  }
 #else
   this->read_file_descriptor  = -1;
   this->write_file_descriptor = -1;

@@ -80,7 +80,13 @@ int raw__file_handle__nonblocking__set(f2ptr cause, f2ptr this, boolean_t value)
 
 f2ptr f2__file_handle__nonblocking__set(f2ptr cause, f2ptr this, f2ptr value) {
   assert_argument_type(file_handle, this);
-  return f2integer__new(cause, raw__file_handle__nonblocking__set(cause, this, (value != nil)));
+  if (raw__file_handle__nonblocking__set(cause, this, (value != nil)) != 0) {
+    return new__error(f2list6__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "file_handle-nonblocking-set-error"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "value"),    value));
+  }
+  return nil;
 }
 def_pcfunk2(file_handle__nonblocking__set, this, value,
 	    "Sets the nonblocking status of this file_handle.",

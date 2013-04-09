@@ -52,7 +52,9 @@ socket_client_connect_result_t socket_client__try_reconnect(socket_client_t* thi
     return socket_client_connect_result__socket_failure;
   }
   
-  file_descriptor__set_nonblocking(socket_fd, boolean__true);
+  if (file_descriptor__set_nonblocking(socket_fd, boolean__true) != 0) {
+    return socket_client_connect_result__socket_failure;
+  }
   
   if (socket_file_descriptor__set_keepalive(socket_fd, boolean__true) < 0) {
     printf("\nsocket_server__accept error: cannot create set keepalive on socket");

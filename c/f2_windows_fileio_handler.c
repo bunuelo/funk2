@@ -132,7 +132,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
   {
     LARGE_INTEGER movement_distance;
     LARGE_INTEGER current_file_position;
-    movement_distance.QuadWord = 0;
+    movement_distance.QuadPart = 0;
     if (SetFilePointerEx(hFile, movement_distance, &current_file_position, FILE_CURRENT) == 0) {
       status("funk2_windows_file__read \"%s\" SetFilePointer error.", this->filename);
       return boolean__true; // failure

@@ -129,6 +129,15 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
   DWORD      number_of_bytes_read = 0;
   OVERLAPPED overlapped_info;
   memset(&overlapped_info, 0, sizeof(overlapped_info));
+  {
+    LARGE_INTEGER current_file_position;
+    if (SetFilePointer(hFile, 0, &current_file_position, FILE_CURRENT) == 0) {
+      status("funk2_windows_file__read \"%s\" SetFilePointer error.", this->filename);
+      return boolean__true; // failure
+    }
+    overlapped_info.Offset     = current_file_position.LowPart;
+    overlapped_info.OffsetHigh = current_file_position.HighPart;
+  }
   if (! ReadFile(hFile,
 		 buffer,
 		 byte_num,

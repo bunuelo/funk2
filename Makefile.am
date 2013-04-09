@@ -2025,7 +2025,7 @@ make-install-full-sh: make-install-sh
 extensions: finish_compiling_all_dynamic_core_extensions
 
 bin/funk2$(EXEEXT): lib/libfunk2.la finish_compiling_all_dynamic_core_extensions
-	$(COMPILE) -o $@ -Llib/.libs -lfunk2 c/funk2_main.c $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(PTHREAD_CFLAGS) $(PTHREAD_LIBS) $(FUNK2_CC_LINKER_FLAGS)
+	$(COMPILE) -o $@ c/funk2_main.c -Llib/.libs -lfunk2 $(GL_CFLAGS) $(GLU_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(PTHREAD_CFLAGS) $(PTHREAD_LIBS) $(FUNK2_CC_LINKER_FLAGS)
 
 install-minimal: install-am make-install-sh bin/funk2$(EXEEXT)
 	./install-sh

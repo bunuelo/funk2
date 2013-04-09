@@ -63,5 +63,7 @@ struct funk2_windows_fileio_handler_s {
 void funk2_windows_fileio_handler__init(funk2_windows_fileio_handler_t* this);
 void funk2_windows_fileio_handler__destroy(funk2_windows_fileio_handler_t* this);
 
+s64       raw__windows_fileio_handler__open(char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking);
+boolean_t raw__windows_fileio_handler__close(s64 file_descriptor);
 
 #endif // F2__WINDOWS_FILEIO_HANDLER__H

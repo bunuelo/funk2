@@ -50,9 +50,6 @@ struct funk2_windows_file_s {
   boolean_t nonblocking;
 };
 
-void funk2_windows_file__init(funk2_windows_file_t* this, s64 file_descriptor, char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking);
-void funk2_windows_file__destroy(funk2_windows_file_t *this);
-
 
 // funk2_windows_fileio_handler
 

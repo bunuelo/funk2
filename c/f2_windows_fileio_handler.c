@@ -134,8 +134,8 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
       return NULL; // failure
     }
   }
-  funk2_hash__add(&(this->file_descriptor_hash), file_descriptor, (u64)to_ptr(windows_file));
-  return window_file;
+  funk2_hash__add(&(this->file_descriptor_hash), windows_file->file_descriptor, (u64)to_ptr(windows_file));
+  return windows_file;
 }
 
 s64 raw__windows_fileio_handler__open(char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
@@ -161,10 +161,6 @@ boolean_t funk2_windows_fileio_handler__close_and_destroy_file(funk2_windows_fil
   funk2_hash__remove(&(this->file_descriptor_hash), windows_file->file_descriptor);
   funk2_windows_file__destroy(windows_file);
   return boolean__true; // success
-#else
-  status("funk2_windows_fileio_handler__close_file warning: functionality not compiled into this Funk2 build.");
-  return boolean__true; // failure
-#endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
 }
 
 boolean_t raw__windows_fileio_handler__close(s64 file_descriptor) {

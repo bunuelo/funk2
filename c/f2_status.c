@@ -31,7 +31,7 @@ void error_writing_status_message() {
   // a debugging breakpoint
 }
 
-boolean_t __funk2_status_disabled = boolean__false;
+boolean_t __funk2_status_disabled = boolean__true;
 
 void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_list args;
@@ -182,6 +182,8 @@ void f2__status__initialize() {
   //f2ptr cause = f2_status_c__cause__new(initial_cause(), nil, nil);
   
   funk2_processor_spinlock__init(&(__funk2.status.trace_mutex));
+  
+  __funk2_status_disabled = boolean__false;
 }
 
 void f2__status__destroy() {

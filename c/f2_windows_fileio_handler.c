@@ -62,7 +62,7 @@ void funk2_windows_fileio_handler__destroy(funk2_windows_fileio_handler_t* this)
 }
 
 funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_fileio_handler_t* this, char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
-#if defined(HAVE_WINDOWS_H)
+#if defined(HAVE_WINDOWS_H) && defined(HAVE__OPEN_OSFHANDLE)
   HANDLE hFile;
   
   {
@@ -73,12 +73,12 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
     if (write_access) {
       desired_access |= GENERIC_WRITE;
     }
-    hFile = CreateFile(szFileName,
+    hFile = CreateFile(filename,
 		       desired_access,
 		       0,
 		       NULL,
 		       OPEN_EXISTING,
-		       FILE_FLAG_NORMAL | FILE_FLAG_OVERLAPPED,
+		       FILE_FLAG_OVERLAPPED,
 		       NULL);
     
     if (hFile == INVALID_HANDLE_VALUE) {
@@ -108,7 +108,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
 #else
   status("funk2_windows_fileio_handler__open_file warning: functionality not compiled into this Funk2 build.");
   return NULL;
-#endif // HAVE_WINDOWS_H
+#endif // HAVE_WINDOWS_H && HAVE__OPEN_OSFHANDLE
 }
 
 s64 raw__windows_fileio_handler__open(char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
@@ -124,7 +124,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__lookup_file_by_descriptor(fu
 
 
 boolean_t funk2_windows_fileio_handler__close_file(funk2_windows_fileio_handler_t* this, funk2_windows_file_t* windows_file) {
-#if defined(HAVE_WINDOWS_H)
+#if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
   HANDLE hFile = _get_osfhandle(windows_file->file_descriptor);
   if (CloseHandle(hFile) == 0) {
     status("funk2_windows_fileio_handler__close_file warning: failed to close file handle for filename \"%s\".", windows_file->filename);
@@ -136,7 +136,7 @@ boolean_t funk2_windows_fileio_handler__close_file(funk2_windows_fileio_handler_
 #else
   status("funk2_windows_fileio_handler__close_file warning: functionality not compiled into this Funk2 build.");
   return boolean__true; // failure
-#endif // HAVE_WINDOWS_H
+#endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
 }
 
 boolean_t raw__windows_fileio_handler__close(s64 file_descriptor) {

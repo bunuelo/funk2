@@ -99,7 +99,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
   }
   
   funk2_windows_file_t* windows_file = (funk2_windows_file_t*)from_ptr(f2__malloc(sizeof(funk2_windows_file_t)));
-  funk2_windows_file__init(windows_file, file_descriptor, filename, nonblocking);
+  funk2_windows_file__init(windows_file, file_descriptor, filename, read_access, write_access, nonblocking);
   
   funk2_hash__add(&(this->file_descriptor_hash), file_descriptor, (u64)to_ptr(windows_file));
   return windows_file;
@@ -110,7 +110,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
 }
 
 s64 raw__windows_fileio_handler__open(char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
-  funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__open_file(&(__funks.windows_fileio_handler), filename, read_access, write_access, nonblocking);
+  funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__open_file(&(__funk2.windows_fileio_handler), filename, read_access, write_access, nonblocking);
   return windows_file->file_descriptor;
 }
 
@@ -123,7 +123,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__lookup_file_by_descriptor(fu
 
 boolean_t funk2_windows_fileio_handler__close_file(funk2_windows_fileio_handler_t* this, funk2_windows_file_t* windows_file) {
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
-  HANDLE hFile = _get_osfhandle(windows_file->file_descriptor);
+  HANDLE hFile = (HANDLE)_get_osfhandle(windows_file->file_descriptor);
   if (CloseHandle(hFile) == 0) {
     status("funk2_windows_fileio_handler__close_file warning: failed to close file handle for filename \"%s\".", windows_file->filename);
     return boolean__true; // failure

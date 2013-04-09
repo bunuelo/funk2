@@ -128,6 +128,20 @@ f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
   boolean_t read_access  = boolean__true;
   boolean_t write_access = boolean__true;
   boolean_t nonblocking  = boolean__true;
+  switch(mode) {
+  case O_RDONLY:
+    read_access  = boolean__true;
+    write_access = boolean__false;
+    break;
+  case O_RDWR:
+    read_access  = boolean__true;
+    write_access = boolean__true;
+    break;
+  case O_CREAT:
+    read_access  = boolean__true;
+    write_access = boolean__true;
+    break;
+  }
   int fd = raw__windows_fileio_handler__open(filename, read_access, write_access, nonblocking);
   if (fd == -1) {
     return nil;

@@ -25,11 +25,11 @@
 
 [globalize-funk locale:setlocale &primfunk:locale__setlocale]
 
-[globalize locale:lc_all      [primfunk:locale__lc_all]]
-[globalize locale:lc_collate  [primfunk:locale__lc_collate]]
-[globalize locale:lc_ctype    [primfunk:locale__lc_ctype]]
-[globalize locale:lc_messages [primfunk:locale__lc_messages]]
-[globalize locale:lc_monetary [primfunk:locale__lc_monetary]]
-[globalize locale:lc_numeric  [primfunk:locale__lc_numeric]]
-[globalize locale:lc_time     [primfunk:locale__lc_time]]
+[globalize-funk locale:lc_all      &primfunk:locale__lc_all]
+[globalize-funk locale:lc_collate  &primfunk:locale__lc_collate]
+[globalize-funk locale:lc_ctype    &primfunk:locale__lc_ctype]
+[globalize-funk locale:lc_messages &primfunk:locale__lc_messages]
+[globalize-funk locale:lc_monetary &primfunk:locale__lc_monetary]
+[globalize-funk locale:lc_numeric  &primfunk:locale__lc_numeric]
+[globalize-funk locale:lc_time     &primfunk:locale__lc_time]
 

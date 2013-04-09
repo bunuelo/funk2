@@ -297,7 +297,16 @@ read_nonblocking_result_t read_nonblocking(int fd, void* data, u32 byte_num, u32
     if (bytes_read) {*bytes_read = 0;}
     return read_nonblocking_result__success;
   }
-#if defined(HAVE_SELECT)
+#if defined(HAVE_WINDOWS_H)
+  u64       read_byte_num = 0;
+  boolean_t failure       = raw__windows_fileio_handler__read(fd, data, byte_num, &read_byte_num);
+  if (! failure) {
+    *bytes_read = read_byte_num;
+    return read_nonblocking_result__success;
+  }
+  return read_nonblocking_result__read_failure;
+#else
+#  if defined(HAVE_SELECT)
   select_read_result_t select_read_result = select_read(fd);
   switch(select_read_result) {
   case select_read_result__data_available: {
@@ -333,10 +342,11 @@ read_nonblocking_result_t read_nonblocking(int fd, void* data, u32 byte_num, u32
     return read_nonblocking_result__unknown_failure;
   }
   return read_nonblocking_result__success;
-#else
+#  else
   status("warning: nonblocking read not compiled into this Funk2 build.");
   return read_nonblocking_result__unknown_failure;
-#endif // HAVE_SELECT
+#  endif // HAVE_SELECT
+#endif // HAVE_WINDOWS
 }
 
 write_nonblocking_result_t write_nonblocking(int fd, void* data, u32 byte_num, u32* bytes_sent) {

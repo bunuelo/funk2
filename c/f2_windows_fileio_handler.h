@@ -43,19 +43,21 @@ typedef struct funk2_windows_fileio_handler_s funk2_windows_fileio_handler_t;
 // funk2_windows_file
 
 struct funk2_windows_file_s {
-  s64       file_descriptor;
-  char*     filename;
-  boolean_t read_access;
-  boolean_t write_access;
-  boolean_t nonblocking;
-  boolean_t end_of_file;
+  funk2_processor_mutex_t access_mutex;
+  s64                     file_descriptor;
+  char*                   filename;
+  boolean_t               read_access;
+  boolean_t               write_access;
+  boolean_t               nonblocking;
+  boolean_t               end_of_file;
 };
 
 
 // funk2_windows_fileio_handler
 
 struct funk2_windows_fileio_handler_s {
-  funk2_hash_t file_descriptor_hash;
+  funk2_processor_mutex_t access_mutex;
+  funk2_hash_t            file_descriptor_hash;
 };
 
 void funk2_windows_fileio_handler__init(funk2_windows_fileio_handler_t* this);

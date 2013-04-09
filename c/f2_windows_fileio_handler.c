@@ -30,6 +30,7 @@
 // funk2_windows_file
 
 void funk2_windows_file__init(funk2_windows_file_t* this) {
+  funk2_processor_mutex__init(&(this->access_mutex));
   this->file_descriptor = -1;
   this->filename        = NULL;
   this->read_access     = boolean__false;
@@ -42,9 +43,11 @@ void funk2_windows_file__destroy(funk2_windows_file_t* this) {
   if (this->filename != NULL) {
     f2__free(to_ptr(this->filename));
   }
+  funk2_processor_mutex__destroy(&(this->access_mutex));
 }
 
 boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__OPEN_OSFHANDLE)
   status("funk2_windows_file__open \"%s\"", filename);
   HANDLE hFile;
@@ -66,6 +69,7 @@ boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, b
     
     if (hFile == INVALID_HANDLE_VALUE) {
       status("funk2_windows_fileio_handler__open_file warning: error opening filename \"%s\".");
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return boolean__true; // failure
     }
   }
@@ -78,6 +82,7 @@ boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, b
   if (file_descriptor == -1) {
     CloseHandle(hFile);
     status("funk2_windows_fileio_handler__open_file warning: error getting file descriptor for filename \"%s\".");
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return boolean__true; // failure
   }
   
@@ -94,34 +99,42 @@ boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, b
   this->write_access = write_access;
   this->nonblocking  = nonblocking;
   status("funk2_windows_file__open \"%s\" success!", filename);
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__false; // success
 #else
   status("funk2_windows_fileio_handler__open_file warning: functionality not compiled into this Funk2 build.");
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__true; // failure
 #endif // HAVE_WINDOWS_H && HAVE__OPEN_OSFHANDLE
 }
 
 boolean_t funk2_windows_file__close(funk2_windows_file_t* this) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
   status("funk2_windows_file__close \"%s\"", this->filename);
   HANDLE hFile = (HANDLE)_get_osfhandle(this->file_descriptor);
   if (hFile == (HANDLE)-1) {
     status("funk2_windows_file__close warning: failed to get file handle for filename \"%s\".", this->filename);
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return boolean__true; // failure
   }
   if (CloseHandle(hFile) == 0) {
     status("funk2_windows_file__close warning: failed to close file handle for filename \"%s\".", this->filename);
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return boolean__true; // failure
   }
   status("funk2_windows_file__close \"%s\" success!", this->filename);
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__true; // success
 #else
   status("funk2_windows_file__close warning: functionality not compiled into this Funk2 build.");
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__true; // failure
 #endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
 }
 
 boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64 byte_num, u64* read_byte_num) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
   //status("funk2_windows_file__read \"%s\"", this->filename);
   HANDLE     hFile                = (HANDLE)_get_osfhandle(this->file_descriptor);
@@ -135,6 +148,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
     movement_distance.QuadPart = 0;
     if (SetFilePointerEx(hFile, movement_distance, &current_file_position, FILE_CURRENT) == 0) {
       status("funk2_windows_file__read \"%s\" SetFilePointer error.", this->filename);
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return boolean__true; // failure
     }
     overlapped_info.Offset     = current_file_position.LowPart;
@@ -148,6 +162,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
     if (GetLastError() != ERROR_IO_PENDING) {
       // Some other error occurred while reading the file.
       status("funk2_windows_file__read \"%s\" error 1.", this->filename);
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return boolean__true; // failure
     } else {
       // Operation has been queued and will complete in the future.
@@ -172,28 +187,34 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
 	movement_distance.QuadPart = number_of_bytes_transferred;
 	if (SetFilePointerEx(hFile, movement_distance, NULL, FILE_CURRENT) == 0) {
 	  status("funk2_windows_file__read \"%s\" SetFilePointer error.", this->filename);
+	  funk2_processor_mutex__unlock(&(this->access_mutex));
 	  return boolean__true; // failure
 	}
       }
       //status("funk2_windows_file__read \"%s\" success 1!  byte_num=" u64__fstr " read_byte_num=" u64__fstr, this->filename, byte_num, *read_byte_num);
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return boolean__false; // success
     } else {
       if (GetLastError() == ERROR_HANDLE_EOF) {
 	this->end_of_file = boolean__true;
 	status("funk2_windows_file__read \"%s\" end of file.", this->filename);
+	funk2_processor_mutex__unlock(&(this->access_mutex));
 	return boolean__true;
       } else {
 	status("funk2_windows_file__read \"%s\" error 2", this->filename);
+	funk2_processor_mutex__unlock(&(this->access_mutex));
 	return boolean__true; // failure
       }
     }
   } else {
     *read_byte_num = number_of_bytes_read;
     //status("funk2_windows_file__read \"%s\" success 2!", this->filename);
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return boolean__false; // success
   }
 #else
   status("funk2_windows_file__read warning: functionality not compiled into this Funk2 build.");
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__true; // failure
 #endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
 }
@@ -202,14 +223,17 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
 // funk2_windows_fileio_handler
 
 void funk2_windows_fileio_handler__init(funk2_windows_fileio_handler_t* this) {
+  funk2_processor_mutex__init(&(this->access_mutex));
   funk2_hash__init(&(this->file_descriptor_hash), 10);
 }
 
 void funk2_windows_fileio_handler__destroy(funk2_windows_fileio_handler_t* this) {
   funk2_hash__destroy(&(this->file_descriptor_hash));
+  funk2_processor_mutex__destroy(&(this->access_mutex));
 }
 
 funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_fileio_handler_t* this, char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
   funk2_windows_file_t* windows_file = (funk2_windows_file_t*)from_ptr(f2__malloc(sizeof(funk2_windows_file_t)));
   funk2_windows_file__init(windows_file);
   {  
@@ -218,10 +242,12 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
       funk2_windows_file__destroy(windows_file);
       f2__free(to_ptr(windows_file));
       status("funk2_windows_fileio_handler__open_file \"%s\" failure", filename);
+      funk2_processor_mutex__unlock(&(this->access_mutex));
       return NULL; // failure
     }
   }
   funk2_hash__add(&(this->file_descriptor_hash), windows_file->file_descriptor, (u64)to_ptr(windows_file));
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return windows_file;
 }
 
@@ -235,19 +261,24 @@ s64 raw__windows_fileio_handler__open(char* filename, boolean_t read_access, boo
 
 
 funk2_windows_file_t* funk2_windows_fileio_handler__lookup_file_by_descriptor(funk2_windows_fileio_handler_t* this, s64 file_descriptor) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
   funk2_windows_file_t* windows_file = (funk2_windows_file_t*)funk2_hash__try_lookup(&(this->file_descriptor_hash), file_descriptor, (u64)NULL);
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return windows_file;
 }
 
 
 boolean_t funk2_windows_fileio_handler__close_and_destroy_file(funk2_windows_fileio_handler_t* this, funk2_windows_file_t* windows_file) {
+  funk2_processor_mutex__user_lock(&(this->access_mutex));
   boolean_t failure = funk2_windows_file__close(windows_file);
   if (failure) {
     status("funk2_windows_fileio_handler__close_and_destroy_file \"%s\" failure", windows_file->filename);
+    funk2_processor_mutex__unlock(&(this->access_mutex));
     return boolean__true; // failure
   }
   funk2_hash__remove(&(this->file_descriptor_hash), windows_file->file_descriptor);
   funk2_windows_file__destroy(windows_file);
+  funk2_processor_mutex__unlock(&(this->access_mutex));
   return boolean__true; // success
 }
 

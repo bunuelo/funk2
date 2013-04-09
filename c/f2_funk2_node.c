@@ -180,7 +180,7 @@ void funk2_node__handle_node(funk2_node_t* this, funk2_node_handler_t* node_hand
   //	 this->node_id, this->socket_client.client_id.ip_addr[0], this->socket_client.client_id.ip_addr[1], this->socket_client.client_id.ip_addr[2], this->socket_client.client_id.ip_addr[3], this->socket_client.client_id.port_num);
   if (this->socket_client.socket.disconnected) {
     u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
-    if (nanoseconds_since_1970 - this->last_try_reconnect__nanoseconds_since_1970 > 10 * 1000000) {
+    if (nanoseconds_since_1970 - this->last_try_reconnect__nanoseconds_since_1970 > 10 * nanoseconds_per_second) {
       this->last_try_reconnect__nanoseconds_since_1970 = nanoseconds_since_1970;
       socket_client_connect_result_t result = socket_client__try_reconnect(&(this->socket_client));
       if (result != socket_client_connect_result__success) {

@@ -87,17 +87,15 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
     }
   }
   
-  {
-    int file_descriptor_flags = 0;
-    if ((! write_access) && read_access) {
-      file_descriptor_flags |= _O_RDONLY;
-    }
-    s64 file_descriptor = _open_osfhandle(hFile, file_descriptor_flags);
-    if (file_descriptor == -1) {
-      CloseFile(hFile);
-      status("funk2_windows_fileio_handler__open_file warning: error getting file descriptor for filename \"%s\".");
-      return NULL;
-    }
+  int file_descriptor_flags = 0;
+  if ((! write_access) && read_access) {
+    file_descriptor_flags |= _O_RDONLY;
+  }
+  s64 file_descriptor = _open_osfhandle((intptr_t)hFile, file_descriptor_flags);
+  if (file_descriptor == -1) {
+    CloseHandle(hFile);
+    status("funk2_windows_fileio_handler__open_file warning: error getting file descriptor for filename \"%s\".");
+    return NULL;
   }
   
   funk2_windows_file_t* windows_file = (funk2_windows_file_t*)from_ptr(f2__malloc(sizeof(funk2_windows_file_t)));

@@ -395,6 +395,9 @@
 /* Define to 1 if the system has the type `_Bool'. */
 #undef HAVE__BOOL
 
+/* Define to 1 if you have the `_get_osfhandle' function. */
+#undef HAVE__GET_OSFHANDLE
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR

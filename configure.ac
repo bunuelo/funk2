@@ -242,7 +242,8 @@ AC_FUNC_REALLOC
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS([clock_gettime \
+AC_CHECK_FUNCS([_get_osfhandle \
+                clock_gettime \
 		dlclose \
 		dlerror \
 		dlopen \

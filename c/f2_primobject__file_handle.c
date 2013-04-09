@@ -107,7 +107,9 @@ f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
     }
     break;
   case read_nonblocking_result__end_of_file:
-    return f2larva__new(cause, 23515, nil);
+    return new__error(f2list4__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "file_handle-try_read_byte-end_of_file"),
+				   new__symbol(cause, "this"),     this));
   case read_nonblocking_result__read_failure:
   case read_nonblocking_result__select_failure:
   case read_nonblocking_result__unknown_failure:

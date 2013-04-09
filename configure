@@ -14083,7 +14083,8 @@ fi
 done
 
 
-for ac_func in clock_gettime \
+for ac_func in _get_osfhandle \
+                clock_gettime \
 		dlclose \
 		dlerror \
 		dlopen \

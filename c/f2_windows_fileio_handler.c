@@ -45,6 +45,7 @@ void funk2_windows_file__destroy(funk2_windows_file_t* this) {
 
 boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, boolean_t read_access, boolean_t write_access, boolean_t nonblocking) {
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__OPEN_OSFHANDLE)
+  status("funk2_windows_file__open \"%s\"", filename);
   HANDLE hFile;
   {
     DWORD desired_access = 0;
@@ -91,6 +92,7 @@ boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, b
   this->read_access  = read_access;
   this->write_access = write_access;
   this->nonblocking  = nonblocking;
+  status("funk2_windows_file__open \"%s\" success!", filename);
   return boolean__false; // success
 #else
   status("funk2_windows_fileio_handler__open_file warning: functionality not compiled into this Funk2 build.");
@@ -100,11 +102,17 @@ boolean_t funk2_windows_file__open(funk2_windows_file_t* this, char* filename, b
 
 boolean_t funk2_windows_file__close(funk2_windows_file_t* this) {
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
+  status("funk2_windows_file__close \"%s\"", this->filename);
   HANDLE hFile = (HANDLE)_get_osfhandle(this->file_descriptor);
+  if (hFile == (HANDLE)-1) {
+    status("funk2_windows_file__close warning: failed to get file handle for filename \"%s\".", this->filename);
+    return boolean__true; // failure
+  }
   if (CloseHandle(hFile) == 0) {
     status("funk2_windows_file__close warning: failed to close file handle for filename \"%s\".", this->filename);
     return boolean__true; // failure
   }
+  status("funk2_windows_file__close \"%s\" success!", this->filename);
   return boolean__true; // success
 #else
   status("funk2_windows_file__close warning: functionality not compiled into this Funk2 build.");
@@ -114,6 +122,7 @@ boolean_t funk2_windows_file__close(funk2_windows_file_t* this) {
 
 boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64 byte_num, u64* read_byte_num) {
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
+  status("funk2_windows_file__read \"%s\"", this->filename);
   HANDLE     hFile                = (HANDLE)_get_osfhandle(this->file_descriptor);
   boolean_t  read_has_overlapped  = boolean__false;
   DWORD      number_of_bytes_read = 0;
@@ -126,6 +135,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
 		 &overlapped_info)) {
     if (GetLastError() != ERROR_IO_PENDING) {
       // Some other error occurred while reading the file.
+      status("funk2_windows_file__read \"%s\" error 1.", this->filename);
       return boolean__true; // failure
     } else {
       // Operation has been queued and will complete in the future.
@@ -145,12 +155,15 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
 			    &number_of_bytes_transferred,
 			    TRUE)) {
       *read_byte_num = number_of_bytes_transferred;
+      status("funk2_windows_file__read \"%s\" success 1!", this->filename);
       return boolean__false; // success
     } else {
+      status("funk2_windows_file__read \"%s\" error 2", this->filename);
       return boolean__true; // failure
     }
   } else {
     *read_byte_num = number_of_bytes_read;
+    status("funk2_windows_file__read \"%s\" success 2!", this->filename);
     return boolean__false; // success
   }
 #else
@@ -178,6 +191,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__open_file(funk2_windows_file
     if (failure) {
       funk2_windows_file__destroy(windows_file);
       f2__free(to_ptr(windows_file));
+      status("funk2_windows_fileio_handler__open_file \"%s\" failure", filename);
       return NULL; // failure
     }
   }
@@ -203,6 +217,7 @@ funk2_windows_file_t* funk2_windows_fileio_handler__lookup_file_by_descriptor(fu
 boolean_t funk2_windows_fileio_handler__close_and_destroy_file(funk2_windows_fileio_handler_t* this, funk2_windows_file_t* windows_file) {
   boolean_t failure = funk2_windows_file__close(windows_file);
   if (failure) {
+    status("funk2_windows_fileio_handler__close_and_destroy_file \"%s\" failure", windows_file->filename);
     return boolean__true; // failure
   }
   funk2_hash__remove(&(this->file_descriptor_hash), windows_file->file_descriptor);
@@ -213,6 +228,7 @@ boolean_t funk2_windows_fileio_handler__close_and_destroy_file(funk2_windows_fil
 boolean_t raw__windows_fileio_handler__close(s64 file_descriptor) {
   funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__lookup_file_by_descriptor(&(__funk2.windows_fileio_handler), file_descriptor);
   if (windows_file == NULL) {
+    status("raw__windows_fileio_handler__close file_descriptor=" s64__fstr " failure", file_descriptor);
     return boolean__true; // failure
   }
   return funk2_windows_fileio_handler__close_and_destroy_file(&(__funk2.windows_fileio_handler), windows_file);
@@ -226,6 +242,7 @@ boolean_t funk2_windows_fileio_handler__read_file(funk2_windows_fileio_handler_t
 boolean_t raw__windows_fileio_handler__read(s64 file_descriptor, void* buffer, u64 byte_num, u64* read_byte_num) {
   funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__lookup_file_by_descriptor(&(__funk2.windows_fileio_handler), file_descriptor);
   if (windows_file == NULL) {
+    status("raw__windows_fileio_handler__read file_descriptor=" s64__fstr " failure", file_descriptor);
     return boolean__true; // failure
   }
   return funk2_windows_fileio_handler__read_file(&(__funk2.windows_fileio_handler), windows_file, buffer, byte_num, read_byte_num);

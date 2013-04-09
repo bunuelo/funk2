@@ -112,6 +112,53 @@ boolean_t funk2_windows_file__close(funk2_windows_file_t* this) {
 #endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
 }
 
+boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64 byte_num, u64* read_byte_num) {
+#if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
+  HANDLE     hFile                = (HANDLE)_get_osfhandle(this->file_descriptor);
+  boolean_t  read_has_overlapped  = boolean__false;
+  DWORD      number_of_bytes_read = 0;
+  OVERLAPPED overlapped_info;
+  memset(&overlapped_info, 0, sizeof(overlapped_info));
+  if (! ReadFile(hFile,
+		 buffer,
+		 byte_num,
+		 &number_of_bytes_read,
+		 &overlapped_info)) {
+    if (GetLastError() != ERROR_IO_PENDING) {
+      // Some other error occurred while reading the file.
+      return boolean__true; // failure
+    } else {
+      // Operation has been queued and will complete in the future.
+      read_has_overlapped = boolean__true;
+    }
+  } else {
+    // Operation has completed immediately.
+    read_has_overlapped = boolean__false;
+  }
+  
+  if (read_has_overlapped) {
+    // Wait for the operation to complete before continuing.
+    // You could do some background work if you wanted to.
+    DWORD number_of_bytes_transferred = 0;
+    if (GetOverlappedResult(hFile,
+			    &overlapped_info,
+			    &number_of_bytes_transferred,
+			    TRUE)) {
+      *read_byte_num = number_of_bytes_transferred;
+      return boolean__false; // success
+    } else {
+      return boolean__true; // failure
+    }
+  } else {
+    *read_byte_num = number_of_bytes_read;
+    return boolean__false; // success
+  }
+#else
+  status("funk2_windows_file__read warning: functionality not compiled into this Funk2 build.");
+  return boolean__true; // failure
+#endif // HAVE_WINDOWS_H && HAVE__GET_OSFHANDLE
+}
+
 
 // funk2_windows_fileio_handler
 
@@ -171,3 +218,15 @@ boolean_t raw__windows_fileio_handler__close(s64 file_descriptor) {
   return funk2_windows_fileio_handler__close_and_destroy_file(&(__funk2.windows_fileio_handler), windows_file);
 }
 
+
+boolean_t funk2_windows_fileio_handler__read_file(funk2_windows_fileio_handler_t* this, funk2_windows_file_t* windows_file, void* buffer, u64 byte_num, u64* read_byte_num) {
+  return funk2_windows_file__read(windows_file, buffer, byte_num, read_byte_num);
+}
+
+boolean_t raw__windows_fileio_handler__read(s64 file_descriptor, void* buffer, u64 byte_num, u64* read_byte_num) {
+  funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__lookup_file_by_descriptor(&(__funk2.windows_fileio_handler), file_descriptor);
+  if (windows_file == NULL) {
+    return boolean__true; // failure
+  }
+  return funk2_windows_fileio_handler__read(&(__funk2.windows_fileio_handler), windows_file, buffer, byte_num, read_byte_num);
+}

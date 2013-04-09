@@ -124,11 +124,22 @@ def_pcfunk1(string_stream, string,
 	    return f2__string_stream(this_cause, string));
 
 f2ptr raw__stream__new_open_file(f2ptr cause, char* filename, int mode) {
+#if defined(HAVE_WINDOWS_H)
+  boolean_t read_access  = boolean__true;
+  boolean_t write_access = boolean__true;
+  boolean_t nonblocking  = boolean__true;
+  int fd = raw__windows_fileio_handler__open(filename, read_access, write_access, nonblocking);
+  if (fd == -1) {
+    return nil;
+  }
+  return f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, fd)));
+#else
   int fd = open(filename, mode);
   if (fd == -1) {
     return nil;
   }
   return f2__file_stream__new(cause, f2__file_handle__new(cause, f2integer__new(cause, fd)));
+#endif // HAVE_WINDOWS_H
 }
 
 f2ptr f2__stream__new_open_file(f2ptr cause, f2ptr filename, f2ptr mode) {
@@ -186,17 +197,23 @@ def_pcfunk1(stream__close, this,
 	    "If this stream is a closable_stream, closes this stream.",
 	    return f2__stream__close(this_cause, this));
 
-f2ptr f2__stream__file_mode__rdonly(f2ptr cause) {return f2integer__new(cause, O_RDONLY);}
+f2ptr f2__stream__file_mode__rdonly(f2ptr cause) {
+  return f2integer__new(cause, O_RDONLY);
+}
 def_pcfunk0(stream__file_mode__rdonly,
 	    "",
 	    return f2__stream__file_mode__rdonly(this_cause));
 
-f2ptr f2__stream__file_mode__creat(f2ptr cause)  {return f2integer__new(cause, O_CREAT);}
+f2ptr f2__stream__file_mode__creat(f2ptr cause)  {
+  return f2integer__new(cause, O_CREAT);
+}
 def_pcfunk0(stream__file_mode__creat,
 	    "",
 	    return f2__stream__file_mode__creat(this_cause));
 
-f2ptr f2__stream__file_mode__rdwr(f2ptr cause)   {return f2integer__new(cause, O_RDWR);}
+f2ptr f2__stream__file_mode__rdwr(f2ptr cause)   {
+  return f2integer__new(cause, O_RDWR);
+}
 def_pcfunk0(stream__file_mode__rdwr,
 	    "",
 	    return f2__stream__file_mode__rdwr(this_cause));

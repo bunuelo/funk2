@@ -35,6 +35,7 @@ void funk2_windows_file__init(funk2_windows_file_t* this) {
   this->read_access     = boolean__false;
   this->write_access    = boolean__false;
   this->nonblocking     = boolean__false;
+  this->end_of_file     = boolean__false;
 }
 
 void funk2_windows_file__destroy(funk2_windows_file_t* this) {
@@ -158,8 +159,14 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
       //status("funk2_windows_file__read \"%s\" success 1!  byte_num=" u64__fstr " read_byte_num=" u64__fstr, this->filename, byte_num, *read_byte_num);
       return boolean__false; // success
     } else {
-      status("funk2_windows_file__read \"%s\" error 2", this->filename);
-      return boolean__true; // failure
+      if (GetLastError() == ERROR_HANDLE_EOF) {
+	this->end_of_file = boolean__true;
+	status("funk2_windows_file__read \"%s\" end of file.", this->filename);
+	return boolean__true;
+      } else {
+	status("funk2_windows_file__read \"%s\" error 2", this->filename);
+	return boolean__true; // failure
+      }
     }
   } else {
     *read_byte_num = number_of_bytes_read;
@@ -246,4 +253,13 @@ boolean_t raw__windows_fileio_handler__read(s64 file_descriptor, void* buffer, u
     return boolean__true; // failure
   }
   return funk2_windows_fileio_handler__read_file(&(__funk2.windows_fileio_handler), windows_file, buffer, byte_num, read_byte_num);
+}
+
+boolean_t raw__windows_fileio_handler__end_of_file(s64 file_descriptor) {
+  funk2_windows_file_t* windows_file = funk2_windows_fileio_handler__lookup_file_by_descriptor(&(__funk2.windows_fileio_handler), file_descriptor);
+  if (windows_file == NULL) {
+    status("raw__windows_fileio_handler__end_of_file file_descriptor=" s64__fstr " failure", file_descriptor);
+    return boolean__false;
+  }
+  return windows_file->end_of_file;
 }

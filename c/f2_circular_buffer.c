@@ -305,6 +305,10 @@ read_nonblocking_result_t read_nonblocking(int fd, void* data, u32 byte_num, u32
     status("read_nonblocking success!");
     return read_nonblocking_result__success;
   }
+  if (raw__windows_fileio_handler__end_of_file(fd)) {
+    status("read_nonblocking end of file.");
+    return read_nonblocking_result__end_of_file;
+  }
   return read_nonblocking_result__read_failure;
 #else
 #  if defined(HAVE_SELECT)

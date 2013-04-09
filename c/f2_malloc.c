@@ -66,7 +66,7 @@ ptr malloc_executable(size_t required_bytes) {
   }
   return to_ptr(p);
 #else
-  system("malloc_executable warning: mmap not available, so cannot make memory executable.");
+  status("malloc_executable warning: mmap not available, so cannot make memory executable.");
   return to_ptr(malloc(required_bytes));
 #endif // HAVE_MMAPPED_EXECUTABLE_MEMORY
 }

@@ -398,6 +398,9 @@
 /* Define to 1 if you have the `_get_osfhandle' function. */
 #undef HAVE__GET_OSFHANDLE
 
+/* Define to 1 if you have the `_open_osfhandle' function. */
+#undef HAVE__OPEN_OSFHANDLE
+
 /* Define to the sub-directory in which libtool stores uninstalled libraries.
    */
 #undef LT_OBJDIR

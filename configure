@@ -14084,6 +14084,7 @@ done
 
 
 for ac_func in _get_osfhandle \
+                _open_osfhandle \
                 clock_gettime \
 		dlclose \
 		dlerror \

@@ -95,13 +95,16 @@ def_pcfunk2(file_handle__nonblocking__set, this, value,
 
 f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
   f2ptr file_descriptor = f2file_handle__file_descriptor(this, cause);
-  if (! raw__integer__is_type(cause, file_descriptor)) {return f2larva__new(cause, 172462, nil);}
+  if (! raw__integer__is_type(cause, file_descriptor)) {
+    return f2larva__new(cause, 172462, nil);
+  }
   u64 fd = f2integer__i(file_descriptor, cause);
   u8  data[2] = {0, 0};
   u32 bytes_read = 0;
   read_nonblocking_result_t result = read_nonblocking(fd, data, 1, &bytes_read);
   switch (result) {
   case read_nonblocking_result__success:
+    status("raw__file_handler__try_read_byte success!");
     if (bytes_read == 1) {
       return f2integer__new(cause, data[0]);
     }

@@ -123,7 +123,7 @@ boolean_t funk2_windows_file__close(funk2_windows_file_t* this) {
 
 boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64 byte_num, u64* read_byte_num) {
 #if defined(HAVE_WINDOWS_H) && defined(HAVE__GET_OSFHANDLE)
-  status("funk2_windows_file__read \"%s\"", this->filename);
+  //status("funk2_windows_file__read \"%s\"", this->filename);
   HANDLE     hFile                = (HANDLE)_get_osfhandle(this->file_descriptor);
   boolean_t  read_has_overlapped  = boolean__false;
   DWORD      number_of_bytes_read = 0;

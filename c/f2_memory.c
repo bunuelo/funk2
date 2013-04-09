@@ -493,7 +493,9 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
   //funk2_memory__print_gc_stats(this);
   
   // note: we do not collect garbage here.
-  int fd = open(filename, O_CREAT | O_WRONLY | O_BINARY, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+  int fd = open(filename,
+		O_CREAT | O_WRONLY | O_BINARY,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
   if (fd == -1) {
     printf("\nsave_image_to_disk error: couldn't open file \"%s\".", filename);
     return boolean__true;
@@ -689,7 +691,8 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
   }
   
   
-  int fd = open(filename, O_RDONLY | O_BINARY);
+  int fd = open(filename,
+		O_RDONLY | O_BINARY);
   if (fd == -1) {
     status("load_image_from_disk failure: could not open file \"%s\".", filename);
     retval = boolean__true;

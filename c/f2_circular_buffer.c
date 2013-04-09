@@ -302,7 +302,7 @@ read_nonblocking_result_t read_nonblocking(int fd, void* data, u32 byte_num, u32
   boolean_t failure       = raw__windows_fileio_handler__read(fd, data, byte_num, &read_byte_num);
   if (! failure) {
     *bytes_read = read_byte_num;
-    status("read_nonblocking success!");
+    //status("read_nonblocking success!");
     return read_nonblocking_result__success;
   }
   if (raw__windows_fileio_handler__end_of_file(fd)) {

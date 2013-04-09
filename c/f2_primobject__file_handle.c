@@ -104,7 +104,7 @@ f2ptr raw__file_handle__try_read_byte(f2ptr cause, f2ptr this) {
   read_nonblocking_result_t result = read_nonblocking(fd, data, 1, &bytes_read);
   switch (result) {
   case read_nonblocking_result__success:
-    status("raw__file_handler__try_read_byte success!  \"%c\"", data[0]);
+    //status("raw__file_handler__try_read_byte success!  \"%c\"", data[0]);
     if (bytes_read == 1) {
       return f2integer__new(cause, data[0]);
     }

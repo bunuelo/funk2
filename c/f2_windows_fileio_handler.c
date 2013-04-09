@@ -131,7 +131,7 @@ boolean_t funk2_windows_file__read(funk2_windows_file_t* this, void* buffer, u64
   memset(&overlapped_info, 0, sizeof(overlapped_info));
   {
     LARGE_INTEGER current_file_position;
-    if (SetFilePointer(hFile, 0, &current_file_position, FILE_CURRENT) == 0) {
+    if (SetFilePointerEx(hFile, 0, &current_file_position, FILE_CURRENT) == 0) {
       status("funk2_windows_file__read \"%s\" SetFilePointer error.", this->filename);
       return boolean__true; // failure
     }

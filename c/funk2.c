@@ -30,6 +30,10 @@
 // funk2
 
 void f2__initialize() {
+  f2__module_registration__initialize();
+  f2__redblacktree__initialize();
+  f2__heap__initialize();
+  //  f2__memory__preinitialize();
   f2__ptypes__initialize();
   f2__system_processor__initialize();
   f2__system_file_handler__initialize();
@@ -193,10 +197,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   funk2_cpu__init(&(this->cpu));
   funk2_memory__init(&(this->memory));
-  f2__module_registration__initialize();
-  f2__redblacktree__initialize();
-  f2__heap__initialize();
-  f2__memory__preinitialize();
   funk2_windows_fileio_handler__init(&(this->windows_fileio_handler));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));

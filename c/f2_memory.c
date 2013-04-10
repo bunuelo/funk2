@@ -38,6 +38,14 @@ void funk2_memory__init(funk2_memory_t* this) {
   
   this->memory_handling_thread = pthread_self();
   this->bootstrapping_mode     = boolean__true;
+
+  {
+    int pool_index;
+    for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index++) {
+      funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
+    }
+  }
+  
   status("done initializing memory.");
 }
 
@@ -819,15 +827,6 @@ f2ptr f2__memory__assert_valid(f2ptr cause) {
 
 
 // **
-
-void f2__memory__preinitialize() {
-  int pool_index;
-  for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index++) {
-    funk2_memorypool__init((&__funk2.memory.pool[pool_index]), pool_index);
-  }
-  
-  funk2_memory__debug_memory_test(&(__funk2.memory), 1);
-}
 
 void f2__memory__reinitialize_globalvars() {
   //f2ptr cause = f2_memory_c__cause__new(initial_cause());

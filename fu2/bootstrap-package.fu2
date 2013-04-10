@@ -419,17 +419,12 @@
 	      [or loaded_a_dependency
 		  package_was_loaded]]]]]
 
-[globalize packages-should_load_in_serial t]
-
 [defunk packages-load_if_modified_before [names before_time checked_package_hash dependencies_are_sticky]
   [if [null checked_package_hash]
       [= checked_package_hash [new ptypehash]]]
-  [let* [[serial_load_mutex   [new mutex]]
-	 [loaded_a_dependency nil]
+  [let* [[loaded_a_dependency nil]
 	 [load_fibers         [mapcar [funk [name]
 					    [fiber [funk []
-							 [if packages-should_load_in_serial
-							     [have serial_load_mutex lock]]
 							 [let [[package [lookup-package name]]]
 							   [let [[dependency_graph [get package dependency_graph]]]
 							     [let [[contains_cycle [get dependency_graph contains_cycle]]]
@@ -451,8 +446,6 @@
 								       [have [get package load_cmutex] unlock]]
 							       [prog [have [get package load_cmutex] unlock]
 								     [join load_fiber]]]]
-							   [if packages-should_load_in_serial
-							       [have serial_load_mutex unlock]]
 							   ]]
 						   nil]]
 				      names]]]

@@ -138,21 +138,41 @@ void raw__nanosleep(u64 nanoseconds) {
   sleepTime.tv_nsec = nanoseconds - ((nanoseconds / nanoseconds_per_second) * nanoseconds_per_second);
   nanosleep(&sleepTime, &remainingSleepTime);
 #else
-#  if defined(HAVE_USLEEP)
-  usleep((nanoseconds / 1000) + 1);
-#  else
-#    if defined(HAVE_CAPITAL_SLEEP)
+#  if defined(HAVE_CAPITAL_SLEEP)
   Sleep((nanoseconds / 1000000) + 1);
-#    else
-#      if defined(HAVE_SLEEP)
+#  else
+#    if defined(HAVE_SLEEP)
   sleep((nanoseconds / 1000000000) + 1);
-#      else
-#        error No sleep function could be compiled into the Funk2 build.
-#      endif // HAVE_SLEEP
-#    endif // HAVE_CAPITAL_SLEEP
-#  endif // HAVE_USLEEP
+#    else
+#      error No sleep function could be compiled into the Funk2 build.
+#    endif // HAVE_SLEEP
+#  endif // HAVE_CAPITAL_SLEEP
 #endif // NANOSLEEP
 }
+
+/* void raw__nanosleep(u64 nanoseconds) { */
+/* #if defined(HAVE_NANOSLEEP) */
+/*   struct timespec sleepTime; */
+/*   struct timespec remainingSleepTime; */
+/*   sleepTime.tv_sec  = nanoseconds / nanoseconds_per_second; */
+/*   sleepTime.tv_nsec = nanoseconds - ((nanoseconds / nanoseconds_per_second) * nanoseconds_per_second); */
+/*   nanosleep(&sleepTime, &remainingSleepTime); */
+/* #else */
+/* #  if defined(HAVE_USLEEP) */
+/*   usleep((nanoseconds / 1000) + 1); */
+/* #  else */
+/* #    if defined(HAVE_CAPITAL_SLEEP) */
+/*   Sleep((nanoseconds / 1000000) + 1); */
+/* #    else */
+/* #      if defined(HAVE_SLEEP) */
+/*   sleep((nanoseconds / 1000000000) + 1); */
+/* #      else */
+/* #        error No sleep function could be compiled into the Funk2 build. */
+/* #      endif // HAVE_SLEEP */
+/* #    endif // HAVE_CAPITAL_SLEEP */
+/* #  endif // HAVE_USLEEP */
+/* #endif // NANOSLEEP */
+/* } */
 
 void raw__fast_spin_sleep_yield() {
   sched_yield();

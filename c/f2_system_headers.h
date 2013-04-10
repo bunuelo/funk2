@@ -327,6 +327,10 @@ using __cxxabiv1::__cxa_demangle;
 
 // define fake file permissions in case they are not defined.
 
+#ifndef O_BINARY
+#define O_BINARY 0
+#endif
+
 #ifndef S_IRGRP
 #  define S_IRGRP 0
 #endif

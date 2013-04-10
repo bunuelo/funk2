@@ -284,6 +284,8 @@ AC_CHECK_FUNCS([_get_osfhandle \
                 strerror \
                 strtol \
                 sysconf \
+		timeBeginPeriod \
+		timeEndPeriod \
                 usleep])
 
 if test "x-$ac_cv_func_Sleep" = "x-yes" ; then

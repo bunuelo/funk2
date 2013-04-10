@@ -335,6 +335,12 @@
 /* Define to 1 if you have the <termios.h> header file. */
 #undef HAVE_TERMIOS_H
 
+/* Define to 1 if you have the `timeBeginPeriod' function. */
+#undef HAVE_TIMEBEGINPERIOD
+
+/* Define to 1 if you have the `timeEndPeriod' function. */
+#undef HAVE_TIMEENDPERIOD
+
 /* Define to 1 if you have the <time.h> header file. */
 #undef HAVE_TIME_H
 

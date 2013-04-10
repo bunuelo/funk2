@@ -1093,14 +1093,15 @@ FUNK2_CC_LINKER_FLAGS = \
   $(dynamic_library_linker_flags) \
   $(math_linker_flags) \
   $(realtime_linker_flags) \
-  $(xmlrpc_ldflags) \
-  $(xmlrpc_ldadd) \
   $(zlib_linker_flags) \
   $(GTK_LIBS) \
   $(GTHREAD_LIBS) \
   $(LIBAVCODEC_LIBS) \
   $(LIBSWSCALE_LIBS) \
   $(CAIRO_LIBS)  
+
+#  $(xmlrpc_ldflags)
+#  $(xmlrpc_ldadd)
 
 no_undefined_ldflags = \
   -version-info $(FUNK2_LIBRARY_VERSION) \

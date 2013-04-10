@@ -82,6 +82,7 @@ void                              funk2_virtual_processor__know_of_one_more_spin
 void                              funk2_virtual_processor__push_spinning_virtual_processor_thread                                       (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);
 funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_spinning_virtual_processor_thread                                       (funk2_virtual_processor_t* this);
 funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_processor_thread                                        (funk2_virtual_processor_t* this);
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal                      (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* test_virtual_processor_thread);
 funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_virtual_processor_thread                                   (funk2_virtual_processor_t* this);
 funk2_virtual_processor_thread_t* funk2_virtual_processor__end_pop_spinning_virtual_processor_thread                                    (funk2_virtual_processor_t* this);
 void                              funk2_virtual_processor__add_yielding_virtual_processor_thread                                        (funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread);

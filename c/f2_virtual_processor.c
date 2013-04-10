@@ -125,12 +125,8 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
     }
   }
   if (! (virtual_processor_thread->exit)) {
-    funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_spinning_virtual_processor_thread(this);
-    if (virtual_processor_thread == first_spinning_virtual_processor_thread) {
-      funk2_virtual_processor_thread_t* old_spinning_virtual_processor_thread = funk2_virtual_processor__pop_spinning_virtual_processor_thread(this);
-      if (virtual_processor_thread != old_spinning_virtual_processor_thread) {
-	error(nil, "(virtual_processor_thread != old_spinning_virtual_processor_thread): executing bytecodes must be done by next spinning processor thread.");
-      }
+    funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(this, virtual_processor_thread);
+    if (first_spinning_virtual_processor_thread != NULL) {
       funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
       this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
       f2ptr cause      = nil;
@@ -255,6 +251,28 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__pop_spinning_virtual_
   virtual_processor_thread = doublelink->virtual_processor_thread;
   f2__free(to_ptr(doublelink));
   return virtual_processor_thread;
+}
+
+funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* test_virtual_processor_thread) {
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_virtual_processor_thread_t* return_value = NULL;
+  funk2_processor_mutex__lock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  funk2_virtual_processor_thread_doublelink_t* doublelink = this->spinning_virtual_processor_thread_stack;
+  virtual_processor_thread                                = doublelink->virtual_processor_thread;
+  if (virtual_processor_thread == test_virtual_processor_thread) {
+    this->spinning_virtual_processor_thread_stack = doublelink->next;
+    if (this->spinning_virtual_processor_thread_stack != NULL) {
+      this->spinning_virtual_processor_thread_stack->prev = NULL;
+    } else {
+      this->spinning_virtual_processor_thread_stack_end = NULL;
+    }
+    return_value = virtual_processor_thread;
+  }
+  funk2_processor_mutex__unlock(&(this->spinning_virtual_processor_thread_stack_mutex));
+  if (virtual_processor_thread == test_virtual_processor_thread) {
+    f2__free(to_ptr(doublelink));
+  }
+  return return_value;
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor__end_peek_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {

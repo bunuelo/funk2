@@ -36,17 +36,19 @@ void funk2_processor_mutex__error() {
 
 void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  this->is_initialized   = boolean__true;
-  this->is_locked        = boolean__false;
-  this->lock_source_file = NULL;
-  this->lock_line_num    = 0;
+  this->is_initialized    = boolean__true;
+  this->initialized_magic = PROCESSOR_MUTEX__INITIALIZED_MAGIC;
+  this->is_locked         = boolean__false;
+  this->lock_source_file  = NULL;
+  this->lock_line_num     = 0;
 #endif
   pthread_mutex_init(&(this->pthread_mutex), NULL);
 }
 
 void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__destroy error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -59,7 +61,8 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
 
 boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__is_locked error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -73,7 +76,8 @@ boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
 
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__raw_trylock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -92,7 +96,8 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
 
 void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -125,7 +130,8 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -165,7 +171,8 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  if (! this->is_initialized) {
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
     printf("\nfunk2_processor_mutex__raw_unlock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
@@ -175,10 +182,24 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
 }
 
 u64 funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
+    printf("\nfunk2_processor_mutex__eq_hash_value error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+#endif
   return (u64)to_ptr(this);
 }
 
 u64 funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
+    printf("\nfunk2_processor_mutex__equals_hash_value error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+#endif
   boolean_t is_locked = funk2_processor_mutex__is_locked(this);
   return is_locked ? 1 : 0;
 }

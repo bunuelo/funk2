@@ -33,9 +33,12 @@
 
 #define F2__PROCESSOR_MUTEX__DEBUG
 
+#define PROCESSOR_MUTEX__INITIALIZED_MAGIC ((u64)0xDEADBEEFDEADBEEF)
+
 typedef struct funk2_processor_mutex_s {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   boolean_t       is_initialized;
+  u64             initialized_magic;
   boolean_t       is_locked;
   char*           lock_source_file;
   int             lock_line_num;

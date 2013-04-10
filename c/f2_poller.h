@@ -37,7 +37,7 @@ typedef struct funk2_poller_s funk2_poller_t;
 #define F2__POLLER__H
 
 #define poller__deep_sleep_percentage     0.02
-#define poller__deep_sleep_average_length 1000
+#define poller__deep_sleep_average_length 10
 
 struct funk2_poller_s {
   double    target_cpu_usage;

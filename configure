@@ -784,7 +784,6 @@ enable_fast_install
 with_gnu_ld
 with_sysroot
 enable_libtool_lock
-enable_rpath
 enable_dependency_tracking
 enable_silent_rules
 '
@@ -1432,8 +1431,6 @@ Optional Features:
   --enable-fast-install[=PKGS]
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
-  --disable-rpath         Patches libtool to not use rpath in the libraries
-                          produced.
   --disable-dependency-tracking  speeds up one-time build
   --enable-dependency-tracking   do not reject slow dependency extractors
   --enable-silent-rules          less verbose build output (undo: `make V=1')
@@ -11134,22 +11131,6 @@ CC="$lt_save_CC"
 
 #AC_PROG_LIBTOOL
 
-# Check if rpath is disabled
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether to use rpath" >&5
-$as_echo_n "checking whether to use rpath... " >&6; }
-# Check whether --enable-rpath was given.
-if test "${enable_rpath+set}" = set; then :
-  enableval=$enable_rpath; funk2_cv_rpath="$enable_rpath"
-else
-  funk2_cv_rpath="yes"
-fi
-
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $funk2_cv_rpath" >&5
-$as_echo "$funk2_cv_rpath" >&6; }
-
-# Patch libtool to not use rpath if requested.
-#
-ac_config_commands="$ac_config_commands libtool-rpath-patch"
 
 
 # initialize automake
@@ -15794,7 +15775,6 @@ fi
 
 
 
-libtool_patch_use_rpath=$funk2_cv_rpath
 AMDEP_TRUE="$AMDEP_TRUE" ac_aux_dir="$ac_aux_dir"
 
 _ACEOF
@@ -15807,7 +15787,6 @@ do
   case $ac_config_target in
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
-    "libtool-rpath-patch") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool-rpath-patch" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
 
@@ -17035,12 +17014,6 @@ fi
   chmod +x "$ofile"
 
  ;;
-    "libtool-rpath-patch":C) if test "$libtool_patch_use_rpath" = "no"; then
-   echo config.status: patching libtool to not use rpath
-   sed < libtool > libtool-2 's/^hardcode_libdir_flag_spec.*$'/'hardcode_libdir_flag_spec=" -D__LIBTOOL_NO_RPATH__ "/'
-   mv libtool-2 libtool
-   chmod 755 libtool
-fi ;;
     "depfiles":C) test x"$AMDEP_TRUE" != x"" || {
   # Autoconf 2.62 quotes --file arguments for eval, but not when files
   # are listed without --file.  Let's play safe and only enable the eval

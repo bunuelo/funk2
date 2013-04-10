@@ -18,24 +18,24 @@ AC_PROG_MAKE_SET
 LT_INIT
 #AC_PROG_LIBTOOL
 
-# Check if rpath is disabled
-AC_MSG_CHECKING(whether to use rpath)
-AC_ARG_ENABLE(rpath,
-	[AC_HELP_STRING([--disable-rpath],
-			[Patches libtool to not use rpath in the libraries produced.])],
-	[funk2_cv_rpath="$enable_rpath"], [funk2_cv_rpath="yes"])
-AC_MSG_RESULT($funk2_cv_rpath)
+dnl # Check if rpath is disabled
+dnl AC_MSG_CHECKING(whether to use rpath)
+dnl AC_ARG_ENABLE(rpath,
+dnl 	[AC_HELP_STRING([--disable-rpath],
+dnl 			[Patches libtool to not use rpath in the libraries produced.])],
+dnl 	[funk2_cv_rpath="$enable_rpath"], [funk2_cv_rpath="yes"])
+dnl AC_MSG_RESULT($funk2_cv_rpath)
 
-# Patch libtool to not use rpath if requested.
-#
-AC_CONFIG_COMMANDS([libtool-rpath-patch],
-[if test "$libtool_patch_use_rpath" = "no"; then
-   echo config.status: patching libtool to not use rpath
-   sed < libtool > libtool-2 's/^hardcode_libdir_flag_spec.*$'/'hardcode_libdir_flag_spec=" -D__LIBTOOL_NO_RPATH__ "/'
-   mv libtool-2 libtool
-   chmod 755 libtool
-fi],
-[libtool_patch_use_rpath=$funk2_cv_rpath])
+dnl # Patch libtool to not use rpath if requested.
+dnl #
+dnl AC_CONFIG_COMMANDS([libtool-rpath-patch],
+dnl [if test "$libtool_patch_use_rpath" = "no"; then
+dnl    echo config.status: patching libtool to not use rpath
+dnl    sed < libtool > libtool-2 's/^hardcode_libdir_flag_spec.*$'/'hardcode_libdir_flag_spec=" -D__LIBTOOL_NO_RPATH__ "/'
+dnl    mv libtool-2 libtool
+dnl    chmod 755 libtool
+dnl fi],
+dnl [libtool_patch_use_rpath=$funk2_cv_rpath])
 
 # initialize automake
 AM_INIT_AUTOMAKE([subdir-objects])

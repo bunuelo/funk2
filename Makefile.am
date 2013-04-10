@@ -1115,8 +1115,8 @@ undefined_okay_ldflags = \
   -release $(FUNK2_RELEASE) \
   $(FUNK2_CC_LINKER_FLAGS)
 
-#  -Wl,--export-all-symbols \
-#  -Wl,--enable-auto-import \
+#  -Wl,--export-all-symbols
+#  -Wl,--enable-auto-import
 
 lib_libfunk2_la_LDFLAGS = $(no_undefined_ldflags)
 

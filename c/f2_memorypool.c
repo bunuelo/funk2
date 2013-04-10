@@ -30,6 +30,7 @@
 // funk2_memorypool
 
 void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
+  status("memorypool " u64__fstr " initializing.", pool_index);
   funk2_processor_mutex__init(&(this->global_memory_allocate_mutex));
   this->pool_index                           = pool_index;
   this->next_unique_id                       = (((u64)pool_index) << (64 - 10));
@@ -60,6 +61,7 @@ void funk2_memorypool__init(funk2_memorypool_t* this, u64 pool_index) {
   funk2_hash__init(&(this->temporary_bytes_freed_count_fiber_hash), 16);
   
   funk2_memorypool__debug_memory_test(this, 1);
+  status("memorypool " u64__fstr " done initializing.", pool_index);
 }
 
 void funk2_memorypool__destroy(funk2_memorypool_t* this) {

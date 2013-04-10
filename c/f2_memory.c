@@ -30,6 +30,7 @@
 // funk2_memory
 
 void funk2_memory__init(funk2_memory_t* this) {
+  status("initializing memory.");
   this->pool = (funk2_memorypool_t*)from_ptr(f2__malloc(sizeof(funk2_memorypool_t) * __funk2.system_processor.processor_count));
   
   this->global_environment_ptr   = to_ptr(NULL);
@@ -37,6 +38,7 @@ void funk2_memory__init(funk2_memory_t* this) {
   
   this->memory_handling_thread = pthread_self();
   this->bootstrapping_mode     = boolean__true;
+  status("done initializing memory.");
 }
 
 void funk2_memory__destroy(funk2_memory_t* this) {

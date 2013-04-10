@@ -1406,10 +1406,6 @@ void f2__time__reinitialize_globalvars() {
 void f2__time__initialize() {
   funk2_module_registration__add_module(&(__funk2.module_registration), "time", "", &f2__time__reinitialize_globalvars, &f2__time__defragment__fix_pointers);
   
-#if defined(HAVE_TIMEBEGINPERIOD) && defined(HAVE_TIMEENDPERIOD)
-  timeBeginPeriod(1);
-#endif // HAVE_TIMEBEGINPERIOD && HAVE_TIMEENDPERIOD
-
   f2__time__reinitialize_globalvars();
 }
 

@@ -139,10 +139,10 @@ void raw__nanosleep(u64 nanoseconds) {
   nanosleep(&sleepTime, &remainingSleepTime);
 #else
 #  if defined(HAVE_CAPITAL_SLEEP)
-  Sleep((nanoseconds / 1000000) + 1);
+  Sleep((nanoseconds + 500000) / 1000000);
 #  else
 #    if defined(HAVE_SLEEP)
-  sleep((nanoseconds / 1000000000) + 1);
+  sleep((nanoseconds + 500000000) / 1000000000);
 #    else
 #      error No sleep function could be compiled into the Funk2 build.
 #    endif // HAVE_SLEEP

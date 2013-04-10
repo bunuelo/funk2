@@ -30,10 +30,6 @@
 // funk2
 
 void f2__initialize() {
-  f2__module_registration__initialize();
-  f2__redblacktree__initialize();
-  f2__heap__initialize();
-  f2__memory__preinitialize();
   f2__ptypes__initialize();
   f2__system_processor__initialize();
   f2__system_file_handler__initialize();
@@ -155,6 +151,12 @@ void f2__initialize() {
 void funk2__init(funk2_t* this, int argc, char** argv) {
   f2__status__initialize();
   
+  status("");
+  status("****************************************************************");
+  status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
+  status("****************************************************************");
+  status("");
+  
   this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
@@ -163,12 +165,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_system_processor__init(&(this->system_processor));
   funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));
-  
-  status("");
-  status("****************************************************************");
-  status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
-  status("****************************************************************");
-  status("");
   
   status("  sizeof(f2ptr_t)                    = " u64__fstr, (u64)(sizeof(f2ptr_t)));
   status("  sizeof(ptype_block_t)              = " u64__fstr, (u64)(sizeof(ptype_block_t)));
@@ -197,6 +193,10 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   
   funk2_cpu__init(&(this->cpu));
   funk2_memory__init(&(this->memory));
+  f2__module_registration__initialize();
+  f2__redblacktree__initialize();
+  f2__heap__initialize();
+  f2__memory__preinitialize();
   funk2_windows_fileio_handler__init(&(this->windows_fileio_handler));
   funk2_garbage_collector__init(&(this->garbage_collector));
   funk2_garbage_collector__init_sets_from_memory(&(this->garbage_collector), &(this->memory));

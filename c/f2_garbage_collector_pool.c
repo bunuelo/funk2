@@ -474,7 +474,7 @@ void funk2_garbage_collector_other_grey_buffer__defragment__fix_pointers(funk2_g
 // garbage_collector_pool
 
 void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, u64 this__pool_index) {
-  status("initializing garbage collector pool.");
+  status("initializing garbage collector pool " u64__fstr ".", this__pool_index);
   
   this->pool_index = this__pool_index;
   funk2_tricolor_set__init(&(this->tricolor_set));
@@ -492,6 +492,8 @@ void funk2_garbage_collector_pool__init(funk2_garbage_collector_pool_t* this, u6
       funk2_garbage_collector_other_grey_buffer__init(&(this->other_grey_buffer[pool_index]));
     }
   }
+  
+  status("done initializing garbage collector pool " u64__fstr ".", this__pool_index);
 }
 
 void funk2_garbage_collector_pool__destroy(funk2_garbage_collector_pool_t* this) {

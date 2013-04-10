@@ -125,7 +125,7 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
 	  raw__fast_spin_sleep_yield();
 	  lock_tries ++;
 	} else if (lock_tries == 2000) {
-	  funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	  lock_tries ++;

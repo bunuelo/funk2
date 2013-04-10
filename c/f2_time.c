@@ -225,7 +225,7 @@ u64 raw__processor_thread__execution_nanoseconds() {
   total_user_time.LowPart    = user_time.dwLowDateTime;
   total_user_time.HighPart   = user_time.dwHighDateTime;
   u64 execution_nanoseconds = (((u64)total_kernel_time.QuadPart) + ((u64)total_user_time.QuadPart)) * 100;
-  status("raw__processor_thread__execution_nanoseconds execution_nanoseconds=" u64__fstr, execution_nanoseconds);
+  //status("raw__processor_thread__execution_nanoseconds execution_nanoseconds=" u64__fstr, execution_nanoseconds);
   return execution_nanoseconds;
 #  else
 #    error No implementation of raw__processor_thread__execution_nanoseconds available for this Funk2 build.

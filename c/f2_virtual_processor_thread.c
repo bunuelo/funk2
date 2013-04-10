@@ -80,7 +80,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
   this->tid = raw__get_tid();
   {
     funk2_poller_t poller;
-    funk2_poller__init(&poller, 0.01, 10);
+    funk2_poller__init(&poller, 0.01, poller__deep_sleep_average_length);
     funk2_poller__reset(&poller);
     while (__funk2.memory.bootstrapping_mode) {
       funk2_poller__sleep(&poller);
@@ -183,7 +183,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   pthread_mutex_init(&(this->pause_cond_mutex), NULL);
   pthread_cond_init(&(this->pause_cond), NULL);
   this->paused = boolean__false;
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
@@ -204,7 +204,7 @@ void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
   status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
   funk2_poller_t poller;
-  funk2_poller__init(&poller, 0.01, 10);
+  funk2_poller__init(&poller, 0.01, poller__deep_sleep_average_length);
   funk2_poller__reset(&poller);
   while (! (this->exited)) {
     this->exit = boolean__true;
@@ -263,7 +263,7 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
 	wait_tries ++;
 	raw__fast_spin_sleep_yield();
       } else if (wait_tries == 1000) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 	funk2_poller__reset(&poller);
 	poller_initialized = boolean__true;
 	wait_tries ++;

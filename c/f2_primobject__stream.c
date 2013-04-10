@@ -434,7 +434,7 @@ f2ptr f2__stream__getb(f2ptr cause, f2ptr stream) {
     if (read_byte == nil) {
       f2__this__fiber__yield(cause);
       if (! poller_initialized) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 	funk2_poller__reset(&poller);
 	poller_initialized = boolean__true;
       } else {
@@ -631,7 +631,7 @@ f2ptr f2__stream__getc(f2ptr cause, f2ptr stream) {
     if (read_character == nil) {
       f2__this__fiber__yield(cause);
       if (! poller_initialized) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 	funk2_poller__reset(&poller);
 	poller_initialized = boolean__true;
       } else {

@@ -263,7 +263,7 @@ void funk2_node_handler__init(funk2_node_handler_t* this, u32 new_node__send_buf
   for (i = 0; i < f2ptr__computer_id__max_value + 1; i ++) {
     this->funk2_node_by_computer_id_array[i] = NULL;
   }
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 }
 
 void funk2_node_handler__destroy(funk2_node_handler_t* this) {

@@ -52,7 +52,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
   }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, 10);
+  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 }
 
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
@@ -109,7 +109,7 @@ boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processo
 	    __funk2.scheduler_thread_controller.need_wait ||
 	    __funk2.user_thread_controller.need_wait) {
 	  if (! poller_initialized) {
-	    funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+	    funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 	    funk2_poller__reset(&poller);
 	    poller_initialized = boolean__true;
 	  } else {

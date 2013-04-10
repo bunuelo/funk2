@@ -537,6 +537,7 @@ void funk2_garbage_collector_pool__change_used_exp_color(funk2_garbage_collector
 }
 
 void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_collector_pool_t* this, funk2_memorypool_t* pool, u64 pool_index) {
+  status("garbage collector pool " u64__fstr " initializing sets from memorypool.", pool_index);
   funk2_memblock_t* iter          = (funk2_memblock_t*)(from_ptr(pool->dynamic_memory.ptr));
   funk2_memblock_t* end_of_blocks = (funk2_memblock_t*)(((u8*)from_ptr(pool->dynamic_memory.ptr)) + pool->total_global_memory);
   while(iter < end_of_blocks) {
@@ -546,6 +547,7 @@ void funk2_garbage_collector_pool__init_sets_from_memorypool(funk2_garbage_colle
     }
     iter = (funk2_memblock_t*)(((u8*)iter) + funk2_memblock__byte_num(iter));
   }
+  status("garbage collector pool " u64__fstr " done initializing sets from memorypool.", pool_index);
 }
 
 boolean_t funk2_garbage_collector_pool__still_have_grey_nodes(funk2_garbage_collector_pool_t* this) {

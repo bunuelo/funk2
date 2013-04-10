@@ -14272,7 +14272,7 @@ then
   { $as_echo "$as_me:${as_lineno-$LINENO}: Need to Link to RealTime Library to use clock_gettime." >&5
 $as_echo "$as_me: Need to Link to RealTime Library to use clock_gettime." >&6;}
 
-$as_echo "#define F2__HAVE_CLOCK_GETTIME 1" >>confdefs.h
+$as_echo "#define HAVE_CLOCK_GETTIME 1" >>confdefs.h
 
 else
   { $as_echo "$as_me:${as_lineno-$LINENO}: *** Funk2 requires the clock_gettime function in order to measure process and thread execution times." >&5

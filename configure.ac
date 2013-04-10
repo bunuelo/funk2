@@ -300,7 +300,7 @@ AM_CONDITIONAL(NEED_REALTIME_LINK, test $need_realtime_link_in_makefile == 1)
 if test $need_realtime_link_in_makefile == 1
 then
   AC_MSG_NOTICE([Need to Link to RealTime Library to use clock_gettime.])
-  AC_DEFINE(F2__HAVE_CLOCK_GETTIME, 1, Have clock_gettime support)
+  AC_DEFINE(HAVE_CLOCK_GETTIME, 1, Have clock_gettime support)
 else
   AC_MSG_NOTICE([*** Funk2 requires the clock_gettime function in order to measure process and thread execution times.])
 #  AC_MSG_ERROR([*** Funk2 requires the clock_gettime function in order to measure process and thread execution times.])

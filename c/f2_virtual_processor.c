@@ -93,7 +93,6 @@ boolean_t funk2_virtual_processor__already_executing_next_bytecodes(funk2_virtua
 boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   boolean_t did_something = boolean__false;
   if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-    locked_mutex = boolean__true;
     if (! (virtual_processor_thread->exit)) {
       funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(this, virtual_processor_thread);
       if (first_spinning_virtual_processor_thread != NULL) {

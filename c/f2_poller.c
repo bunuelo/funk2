@@ -115,9 +115,9 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   this->last_execution_nanoseconds = execution_nanoseconds;
   // debug code
   this->total_sleep_cycle_count ++;
-  if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 10 * nanoseconds_per_second) {
+  if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {
     this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;
-    if (this->average_cpu_usage > (10 * this->target_cpu_usage)) {
+    if (this->average_cpu_usage > (3 * this->target_cpu_usage)) {
       status("funk2_poller vvv *** debug info *** vvv  WARNING CPU USAGE IS OVER 10 TIMES HIGHER THAN TARGET");
       status("funk2_poller total_sleep_cycle_count=" u64__fstr, this->total_sleep_cycle_count);
       status("funk2_poller last_reset_seconds     =%g", ((double)(real_nanoseconds - this->last_reset_nanoseconds_since_1970)) / (double)nanoseconds_per_second);

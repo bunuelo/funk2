@@ -102,3 +102,8 @@ u64 this_processor_thread__pool_index() {
   return funk2_virtual_processor_handler__my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }
 
+void raw__processor_thread_handler__nanosleep(u64 nanoseconds) {
+  funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  funk2_processor_thread__nanosleep(my_processor_thread, nanoseconds);
+}
+

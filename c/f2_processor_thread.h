@@ -37,6 +37,7 @@ typedef struct funk2_processor_thread_s {
   funk2_processor_thread_function_pointer_t start_function;
   void*                                     args;
   pthread_t                                 pthread;
+  u64                                       execution_nanoseconds;
 } funk2_processor_thread_t;
 
 typedef struct funk2_processor_thread_list_s {
@@ -46,7 +47,7 @@ typedef struct funk2_processor_thread_list_s {
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args);
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this);
-
+void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds);
 
 #endif // F2__PROCESSOR_THREAD__H
 

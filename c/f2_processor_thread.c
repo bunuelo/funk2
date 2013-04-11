@@ -79,3 +79,23 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   //pthread_detach(this->pthread);
 }
 
+void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
+#if defined(HAVE_NANOSLEEP)
+  struct timespec sleepTime;
+  struct timespec remainingSleepTime;
+  sleepTime.tv_sec  = nanoseconds / nanoseconds_per_second;
+  sleepTime.tv_nsec = nanoseconds - ((nanoseconds / nanoseconds_per_second) * nanoseconds_per_second);
+  nanosleep(&sleepTime, &remainingSleepTime);
+#else
+#  if defined(HAVE_CAPITAL_SLEEP)
+  Sleep((nanoseconds + 500000) / 1000000);
+#  else
+#    if defined(HAVE_SLEEP)
+  sleep((nanoseconds + 500000000) / 1000000000);
+#    else
+#      error No sleep function could be compiled into the Funk2 build.
+#    endif // HAVE_SLEEP
+#  endif // HAVE_CAPITAL_SLEEP
+#endif // NANOSLEEP
+}
+

@@ -43,5 +43,7 @@ void                      funk2_processor_thread_handler__remove_pthread(       
 s64 this_processor_thread__try_get_pool_index();
 u64 this_processor_thread__pool_index();
 
+void raw__processor_thread_handler__nanosleep(u64 nanoseconds);
+
 #endif // F2__PROCESSOR_THREAD_HANDLER__H
 

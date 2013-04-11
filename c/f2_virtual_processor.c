@@ -454,6 +454,9 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
 	  }
 	}
+	if (poller_initialized) {
+	  funk2_poller__destroy(&poller);
+	}
       }
       if (yielding_virtual_processor_thread->exit) {
 	yielding_virtual_processor_thread->exited = boolean__true;

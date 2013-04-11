@@ -164,6 +164,9 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
       }
     }
   }
+  if (poller_initialized) {
+    funk2_poller__destroy(&poller);
+  }
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
   f2cmutex__unlock(active_fibers_cmutex,        cause);
   f2cmutex__unlock(processor_assignment_cmutex, cause);

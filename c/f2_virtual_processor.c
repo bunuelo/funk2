@@ -52,7 +52,6 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
   }
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 }
 
 void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {

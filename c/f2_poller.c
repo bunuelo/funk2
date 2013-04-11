@@ -123,6 +123,7 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     status("funk2_poller sleep_nanoseconds      =%g", (double)(this->sleep_nanoseconds));
     status("funk2_poller average_cpu_usage      =%g", (double)(this->average_cpu_usage));
     status("funk2_poller ^^^ *** debug info *** ^^^");
+    status_backtrace();
   }
 }
 

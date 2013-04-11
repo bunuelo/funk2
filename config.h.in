@@ -23,9 +23,6 @@
 /* Define if we have support for LIBSWSCALE */
 #undef F2__LIBSWSCALE_SUPPORTED
 
-/* Build XML-RPC support into Funk2 */
-#undef F2__XMLRPC_SUPPORTED
-
 /* Build multithreading support into Funk2 */
 #undef GCC_ATOMIC_BUILTINS
 
@@ -122,9 +119,6 @@
 
 /* Define to 1 if you have the `kill' function. */
 #undef HAVE_KILL
-
-/* Define to 1 if you have the `curl' library (-lcurl). */
-#undef HAVE_LIBCURL
 
 /* Define to 1 if you have the `gmon' library (-lgmon). */
 #undef HAVE_LIBGMON

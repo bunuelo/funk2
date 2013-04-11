@@ -112,22 +112,22 @@ AC_CHECK_HEADERS([dlfcn.h],
                  [configure_dlfcn_supported=0])
 AM_CONDITIONAL(DLFCN_SUPPORTED, test $configure_dlfcn_supported == 1)
 
-# Checking for xmlrpc-c and its requirements.
-have_xmlrpc_requirements=1
-AC_MSG_NOTICE([Checking for xmlrpc-c and its requirements.])
-AC_CHECK_LIB(curl,curl_easy_init, [],[have_xmlrpc_requirements=0])
-AC_CHECK_HEADERS([xmlrpc-c/base.h xmlrpc-c/abyss.h xmlrpc-c/client.h xmlrpc-c/server.h xmlrpc-c/server_abyss.h],[],[have_xmlrpc_requirements=0])
-AM_CONDITIONAL(XMLRPC_SUPPORTED, test $have_xmlrpc_requirements == 1)
-if test $have_xmlrpc_requirements == 1
-then
-  AC_MSG_NOTICE([Feature xmlrpc-c is fully supported.])
-  AC_DEFINE(F2__XMLRPC_SUPPORTED, 1, Build XML-RPC support into Funk2)
-else
-  AC_MSG_NOTICE([
-*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
-*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
-*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
-fi
+dnl # Checking for xmlrpc-c and its requirements.
+dnl have_xmlrpc_requirements=1
+dnl AC_MSG_NOTICE([Checking for xmlrpc-c and its requirements.])
+dnl AC_CHECK_LIB(curl,curl_easy_init, [],[have_xmlrpc_requirements=0])
+dnl AC_CHECK_HEADERS([xmlrpc-c/base.h xmlrpc-c/abyss.h xmlrpc-c/client.h xmlrpc-c/server.h xmlrpc-c/server_abyss.h],[],[have_xmlrpc_requirements=0])
+dnl AM_CONDITIONAL(XMLRPC_SUPPORTED, test $have_xmlrpc_requirements == 1)
+dnl if test $have_xmlrpc_requirements == 1
+dnl then
+dnl   AC_MSG_NOTICE([Feature xmlrpc-c is fully supported.])
+dnl   AC_DEFINE(F2__XMLRPC_SUPPORTED, 1, Build XML-RPC support into Funk2)
+dnl else
+dnl   AC_MSG_NOTICE([
+dnl *** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
+dnl *** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
+dnl *** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net])
+dnl fi
 
 
 

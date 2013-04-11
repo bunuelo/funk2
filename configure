@@ -654,8 +654,6 @@ GTHREAD_CFLAGS
 GTK_LIBS
 GTK_CFLAGS
 PKG_CONFIG
-XMLRPC_SUPPORTED_FALSE
-XMLRPC_SUPPORTED_TRUE
 DLFCN_SUPPORTED_FALSE
 DLFCN_SUPPORTED_TRUE
 AM_BACKSLASH
@@ -11995,97 +11993,6 @@ else
 fi
 
 
-# Checking for xmlrpc-c and its requirements.
-have_xmlrpc_requirements=1
-{ $as_echo "$as_me:${as_lineno-$LINENO}: Checking for xmlrpc-c and its requirements." >&5
-$as_echo "$as_me: Checking for xmlrpc-c and its requirements." >&6;}
-{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for curl_easy_init in -lcurl" >&5
-$as_echo_n "checking for curl_easy_init in -lcurl... " >&6; }
-if ${ac_cv_lib_curl_curl_easy_init+:} false; then :
-  $as_echo_n "(cached) " >&6
-else
-  ac_check_lib_save_LIBS=$LIBS
-LIBS="-lcurl  $LIBS"
-cat confdefs.h - <<_ACEOF >conftest.$ac_ext
-/* end confdefs.h.  */
-
-/* Override any GCC internal prototype to avoid an error.
-   Use char because int might match the return type of a GCC
-   builtin and then its argument prototype would still apply.  */
-#ifdef __cplusplus
-extern "C"
-#endif
-char curl_easy_init ();
-int
-main ()
-{
-return curl_easy_init ();
-  ;
-  return 0;
-}
-_ACEOF
-if ac_fn_c_try_link "$LINENO"; then :
-  ac_cv_lib_curl_curl_easy_init=yes
-else
-  ac_cv_lib_curl_curl_easy_init=no
-fi
-rm -f core conftest.err conftest.$ac_objext \
-    conftest$ac_exeext conftest.$ac_ext
-LIBS=$ac_check_lib_save_LIBS
-fi
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_curl_curl_easy_init" >&5
-$as_echo "$ac_cv_lib_curl_curl_easy_init" >&6; }
-if test "x$ac_cv_lib_curl_curl_easy_init" = xyes; then :
-  cat >>confdefs.h <<_ACEOF
-#define HAVE_LIBCURL 1
-_ACEOF
-
-  LIBS="-lcurl $LIBS"
-
-else
-  have_xmlrpc_requirements=0
-fi
-
-for ac_header in xmlrpc-c/base.h xmlrpc-c/abyss.h xmlrpc-c/client.h xmlrpc-c/server.h xmlrpc-c/server_abyss.h
-do :
-  as_ac_Header=`$as_echo "ac_cv_header_$ac_header" | $as_tr_sh`
-ac_fn_c_check_header_mongrel "$LINENO" "$ac_header" "$as_ac_Header" "$ac_includes_default"
-if eval test \"x\$"$as_ac_Header"\" = x"yes"; then :
-  cat >>confdefs.h <<_ACEOF
-#define `$as_echo "HAVE_$ac_header" | $as_tr_cpp` 1
-_ACEOF
-
-else
-  have_xmlrpc_requirements=0
-fi
-
-done
-
- if test $have_xmlrpc_requirements == 1; then
-  XMLRPC_SUPPORTED_TRUE=
-  XMLRPC_SUPPORTED_FALSE='#'
-else
-  XMLRPC_SUPPORTED_TRUE='#'
-  XMLRPC_SUPPORTED_FALSE=
-fi
-
-if test $have_xmlrpc_requirements == 1
-then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: Feature xmlrpc-c is fully supported." >&5
-$as_echo "$as_me: Feature xmlrpc-c is fully supported." >&6;}
-
-$as_echo "#define F2__XMLRPC_SUPPORTED 1" >>confdefs.h
-
-else
-  { $as_echo "$as_me:${as_lineno-$LINENO}:
-*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
-*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
-*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&5
-$as_echo "$as_me:
-*** XMLRPC-C is not required to build Funk2, but the xmlrpc-c development headers
-*** are not installed, so XMLRPC-C support will not be compiled into Funk2.  The
-*** latest version of xmlrpc-c is always available at http://xmlrpc-c.sourceforge.net" >&6;}
-fi
 
 
 
@@ -14906,10 +14813,6 @@ fi
 
 if test -z "${DLFCN_SUPPORTED_TRUE}" && test -z "${DLFCN_SUPPORTED_FALSE}"; then
   as_fn_error $? "conditional \"DLFCN_SUPPORTED\" was never defined.
-Usually this means the macro was only invoked conditionally." "$LINENO" 5
-fi
-if test -z "${XMLRPC_SUPPORTED_TRUE}" && test -z "${XMLRPC_SUPPORTED_FALSE}"; then
-  as_fn_error $? "conditional \"XMLRPC_SUPPORTED\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 if test -z "${NEED_REALTIME_LINK_TRUE}" && test -z "${NEED_REALTIME_LINK_FALSE}"; then

@@ -219,6 +219,8 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
     }
   }
   
+  funk2_command_line__print(this);
+  
   if (parse_error) {
     f2__print_usage();
     exit(-1);
@@ -228,8 +230,6 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
     f2__print_usage();
     exit(0);
   }
-  
-  funk2_command_line__print(this);
 }
 
 void funk2_command_line__destroy(funk2_command_line_t* this) {

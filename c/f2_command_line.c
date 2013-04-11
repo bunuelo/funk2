@@ -225,6 +225,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   funk2_command_line__print(this);
   
   if (parse_error) {
+    printf("\n\n");
     f2__print_usage();
     exit(-1);
   }

@@ -79,7 +79,7 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   //pthread_detach(this->pthread);
 }
 
-void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
+void __funk2__nanosleep(u64 nanoseconds) {
 #if defined(HAVE_NANOSLEEP)
   struct timespec sleepTime;
   struct timespec remainingSleepTime;
@@ -97,5 +97,9 @@ void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanos
 #    endif // HAVE_SLEEP
 #  endif // HAVE_CAPITAL_SLEEP
 #endif // NANOSLEEP
+}
+
+void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
+  __funk2__nanosleep(nanoseconds);
 }
 

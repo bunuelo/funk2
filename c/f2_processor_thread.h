@@ -45,6 +45,8 @@ typedef struct funk2_processor_thread_list_s {
   struct funk2_processor_thread_list_s* next;
 } funk2_processor_thread_list_t;
 
+void __funk2__nanosleep(u64 nanoseconds); // do not use from within a processor thread.
+
 void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args);
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this);
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds);

@@ -170,6 +170,9 @@ void f2__destroy();
 #define raw_executable__to__relative_ptr(x) (to_ptr(x) - __funk2.funk2_main_code_position)
 
 typedef struct funk2_s {
+  int                                 argc;
+  char**                              argv;
+  funk2_processor_thread_t*           management_thread;
   ptr                                 funk2_main_code_position;
   boolean_t                           exit_now;
   node_id_t                           node_id;

@@ -481,7 +481,7 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   
   funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   
-  __funk2.management_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_start_management_thread, &__funk2);
+  __funk2.management_processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_start_management_thread, &__funk2);
   
   // sleep forever.
   while (boolean__true) {

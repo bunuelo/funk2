@@ -172,7 +172,7 @@ void f2__destroy();
 typedef struct funk2_s {
   int                                 argc;
   char**                              argv;
-  funk2_processor_thread_t*           management_thread;
+  funk2_processor_thread_t*           management_processor_thread;
   ptr                                 funk2_main_code_position;
   boolean_t                           exit_now;
   node_id_t                           node_id;

@@ -66,7 +66,6 @@ struct funk2_virtual_processor_s {
   funk2_virtual_processor_thread_doublelink_t* spinning_virtual_processor_thread_stack_end;
   funk2_processor_mutex_t                      yielding_virtual_processor_thread_circle_mutex;
   funk2_virtual_processor_thread_doublelink_t* yielding_virtual_processor_thread_circle;
-  funk2_poller_t                               poller;
 };
 
 void                              funk2_virtual_processor__init                                                                         (funk2_virtual_processor_t* this, u64 index);

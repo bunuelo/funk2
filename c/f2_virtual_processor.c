@@ -427,7 +427,9 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
     {
       boolean_t locked_mutex = boolean__false;
       {
-	u64 lock_tries = 0;
+	funk2_poller_t poller;
+	boolean_t      poller_initialized = boolean__false;
+	u64            lock_tries = 0;
 	while ((! locked_mutex) &&
 	       (! (yielding_virtual_processor_thread->exit))) {
 	  if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
@@ -438,10 +440,12 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    if ((lock_tries >= 1000) ||
 		__funk2.scheduler_thread_controller.need_wait ||
 		__funk2.user_thread_controller.need_wait) {
-	      if (lock_tries == 1000) {
-		funk2_poller__reset(&(this->poller));
+	      if (poller_initialized == boolean__false) {
+		funk2_poller__init(&poller);
+		funk2_poller__reset(&poller);
+		poller_initialized = boolean__true;
 	      } else {
-		funk2_poller__sleep(&(this->poller));
+		funk2_poller__sleep(&poller);
 	      }
 	    } else {
 	      raw__fast_spin_sleep_yield();

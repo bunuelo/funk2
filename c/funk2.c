@@ -161,6 +161,8 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("****************************************************************");
   status("");
   
+  funk2_command_line__init(&(this->command_line), argc, argv);
+  
   this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
@@ -176,7 +178,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("");
   
   funk2_system_processor__print_status(&(__funk2.system_processor));
-  funk2_command_line__init(&(this->command_line), argc, argv);
   
   {
     int buffer__byte_num = 32768;

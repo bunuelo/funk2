@@ -102,13 +102,15 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   } else {
     this->average_cpu_usage = 1.0;
   }
-  if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
-    this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
-    if (this->sleep_nanoseconds == 0.0) {
-      this->sleep_nanoseconds = 1.0;
+  if (this->buffer_full) {
+    if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
+      this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
+      if (this->sleep_nanoseconds == 0.0) {
+	this->sleep_nanoseconds = 1.0;
+      }
+    } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {
+      this->sleep_nanoseconds *= this->sleep_nanoseconds_multiplier;
     }
-  } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {
-    this->sleep_nanoseconds *= this->sleep_nanoseconds_multiplier;
   }
   raw__nanosleep((u64)(this->sleep_nanoseconds));
   this->last_real_nanoseconds      = real_nanoseconds;

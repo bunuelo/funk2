@@ -31,9 +31,14 @@ void f2__print_usage() {
   printf("\n\nfunk2: causally reflective parallel programming language"
 	 "\n"
 	 "\n  funk2"
+	 "\n  funk2 -h"
 	 "\n  funk2 <source.fu2>"
 	 "\n  funk2 -x <command>"
 	 "\n  funk2 -i <bootstrap-image>"
+	 "\n"
+	 "\n    -h"
+	 "\n"
+	 "\n        Print this help message."
 	 "\n"
 	 "\n    <source.fu2>"
 	 "\n"
@@ -139,10 +144,14 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->no_repl                         = boolean__false;
   this->no_boot                         = boolean__false;
   
-  int index;
-  boolean_t parse_error = boolean__false;
+  int       index;
+  boolean_t parse_error         = boolean__false;
+  boolean_t print_help_and_exit = boolean__false;
   for (index = 1; index < argc; index ++) {
-    if (strcmp(argv[index], "-x") == 0) {
+    if ((strcmp(argv[index], "-h")     == 0) ||
+	(strcmp(argv[index], "--help") == 0)) {
+      print_help_and_exit = boolean__true;
+    } else if (strcmp(argv[index], "-x") == 0) {
       index ++;
       if (index >= argc) {
 	parse_error = boolean__true;
@@ -213,6 +222,11 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   if (parse_error) {
     f2__print_usage();
     exit(-1);
+  }
+  
+  if (print_help_and_exit) {
+    f2__print_usage();
+    exit(0);
   }
   
   funk2_command_line__print(this);

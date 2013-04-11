@@ -2221,9 +2221,12 @@ zlib_linker_flags = -lz
 @DLFCN_SUPPORTED_TRUE@dynamic_library_linker_flags = $(dlfcn_linker_flags)
 compiled_image__flags = -DF2__INSTALL__BOOTSTRAP_IMG__FILENAME=\"$(plain__install__bootstrap__img)\" -DF2__COMPILE__BOOTSTRAP_REPL_IMG__FILENAME=\"$(compile__bootstrap__repl__img)\" -DF2__COMPILE__BOOTSTRAP_IMG__FILENAME=\"$(compile__bootstrap__img)\"
 @NEED_REALTIME_LINK_TRUE@realtime_linker_flags = -lrt
-@XMLRPC_SUPPORTED_TRUE@xmlrpc_ldadd = $(shell xmlrpc-c-config abyss-server client --ldadd)
-@XMLRPC_SUPPORTED_TRUE@xmlrpc_cflags = $(shell xmlrpc-c-config abyss-server client --cflags)
-@XMLRPC_SUPPORTED_TRUE@xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
+
+# if XMLRPC_SUPPORTED
+# xmlrpc_ldadd   = $(shell xmlrpc-c-config abyss-server client --ldadd)
+# xmlrpc_cflags  = $(shell xmlrpc-c-config abyss-server client --cflags)
+# xmlrpc_ldflags = $(shell xmlrpc-c-config abyss-server client --ldflags)
+# endif
 debug_flags = -g -pg -fstack-check -DDEBUG -DDEBUG_MEMORY=1 #-DF2__PROCESSOR_MUTEX__DEBUG -DF2__DEBUG__OBJECT__TYPE -DF2__PTYPE__TYPE_CHECK -DF2__ASSERTIONS__DEBUG -DF2__DEBUG__PROTECTED_ALLOC_ARRAY -DDEBUG_MEMORY_POINTERS -DDEBUG_LOAD -DDEBUG_COMPILE -DDEBUG_BYTECODES #-DDEBUG_REDBLACKTREE -DDEBUG_MEMORY_VALID_PTRS 
 optimize_flags = 
 debug__cc_flags = -Wall $(memory_flags) $(processor_flags) $(dynamic_library_flags) $(compiled_image__flags) $(GLU_CFLAGS) $(GL_CFLAGS) $(xmlrpc_cflags) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(LIBAVCODEC_CFLAGS) $(LIBSWSCALE_CFLAGS) $(CAIRO_CFLAGS) $(debug_flags)

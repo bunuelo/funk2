@@ -103,6 +103,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	if (not_assigned_to_virtual_processor) {
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);
+	  funk2_poller__reset(&(this->poller));
 	  // ****
 	}
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
@@ -142,6 +143,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	    funk2_poller__sleep(&(this->poller));
 	    // ****
 	    //funk2_virtual_processor_thread__pause_myself(this);
+	    //funk2_poller__reset(&(this->poller));
 	    // ****
 	  }
 	}
@@ -163,6 +165,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	  funk2_virtual_processor__try_unpause_next_yielding_virtual_processor_thread(virtual_processor);
 	  // ****
 	  funk2_virtual_processor_thread__pause_myself(this);
+	  funk2_poller__reset(&(this->poller));
 	  // ****
 	}
       }
@@ -263,13 +266,14 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       if (wait_tries < 1000) {
 	wait_tries ++;
 	raw__fast_spin_sleep_yield();
-      } else if (wait_tries == 1000) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
-	funk2_poller__reset(&poller);
-	poller_initialized = boolean__true;
-	wait_tries ++;
       } else {
-	funk2_poller__sleep(&poller);
+	if (! poller_initialized) {
+	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	  funk2_poller__reset(&poller);
+	  poller_initialized = boolean__true;
+	} else {
+	  funk2_poller__sleep(&poller);
+	}
       }
     }
   }

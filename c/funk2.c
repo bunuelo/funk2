@@ -153,16 +153,6 @@ void f2__initialize() {
 #define u64_large_prime ((u64)12764787846358441471ull)
 
 void funk2__init(funk2_t* this, int argc, char** argv) {
-  f2__status__initialize();
-  
-  status("");
-  status("****************************************************************");
-  status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
-  status("****************************************************************");
-  status("");
-  
-  funk2_command_line__init(&(this->command_line), argc, argv);
-  
   this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;
   this->event_id = 0;
@@ -205,7 +195,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   funk2_bytecode__init(&(this->bytecode));
   funk2_operating_system__init(&(this->operating_system));
   funk2_locale__init(&(this->locale));
-  funk2_processor_thread_handler__init(&(this->processor_thread_handler));
   funk2_virtual_processor_handler__init(&(this->virtual_processor_handler), __funk2.system_processor.processor_count);
   funk2_primobject_type_handler__init(&(this->primobject_type_handler));
   funk2_scheduler_thread_controller__init(&(this->scheduler_thread_controller));
@@ -444,6 +433,18 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
   //funk2_poller__test();
   // our main code position is our reference for where the funk core has been loaded in memory.
   __funk2.funk2_main_code_position = to_ptr(&funk2__main);
+
+  f2__status__initialize();
+  
+  status("");
+  status("****************************************************************");
+  status("**** booting up funk2 p2p node (node_id=#x%016" X64__fstr_without_percent ") ****", this->node_id);
+  status("****************************************************************");
+  status("");
+  
+  funk2_command_line__init(&(this->command_line), argc, argv);
+  funk2_processor_thread_handler__init(&(this->processor_thread_handler));
+  
   funk2__init(this, argc, argv);
   
   separate_thread__done_booting = boolean__true;

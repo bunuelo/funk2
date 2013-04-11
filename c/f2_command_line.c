@@ -55,6 +55,11 @@ void f2__print_usage() {
 	 "\n"
 	 "\n        The localhost peer-command-server port number."
 	 "\n"
+	 "\n    --force-processor-count <force-processor-count>"
+	 "\n"
+	 "\n        Override low-level processor count detection.  Must be set to"
+	 "\n        an integer, 1 or greater."
+	 "\n"
 	 "\n    --no-sigint-handler"
 	 "\n"
 	 "\n        Disables SIGINT (CTRL-C) signal handler."
@@ -128,6 +133,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->load_source_filename            = NULL;
   this->user_command                    = NULL;
   this->peer_command_server__port_num   = 22222;
+  this->force_processor_count           = 0;
   this->bootstrap_image_filename        = NULL;
   this->no_sigint_handler               = boolean__false;
   this->no_repl                         = boolean__false;
@@ -160,6 +166,31 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	break;
       }
       this->bootstrap_image_filename = argv[index];
+    } else if (strcmp(argv[index], "--force-processor-count") == 0) {
+      index ++;
+      if (index >= argc) {
+	parse_error = boolean__true;
+	break;
+      }
+      char* end_ptr = NULL;
+      errno = 0;
+      s64 force_processor_count = strtol(argv[index], &end_ptr, 10);
+      if (errno != 0) {
+	printf("\n  error parsing <processor-count>: \"%s\".", argv[index]);
+	parse_error = boolean__true;
+	break;
+      }
+      if (*end_ptr != '\0') {
+	printf("\n  junk after argument <processor-count>: \"%s\".", argv[index]);
+	parse_error = boolean__true;
+	break;
+      }
+      if (force_processor_count < 1) {
+	printf("\n  argument out of range <processor-count>: \"%s\".", argv[index]);
+	parse_error = boolean__true;
+	break;
+      }
+      this->force_processor_count = force_processor_count;
     } else if (strcmp(argv[index], "--no-sigint-handler") == 0) {
       this->no_sigint_handler = boolean__true;
     } else if (strcmp(argv[index], "--no-sigsegv-handler") == 0) {

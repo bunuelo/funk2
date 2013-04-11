@@ -77,6 +77,10 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
 #else
   status("system_processor sched_getaffinity disabled.");
 #endif // HAVE_SCHED_GETAFFINITY
+  if (__funk2.command_line.force_processor_count != 0) {
+    status("command-line forcing processor count to " s64__fstr ".", __funk2.command_line.force_processor_count);
+    this->processor_count = __funk2.command_line.force_processor_count;
+  }
   if (this->processor_count == 0) {
     status("assuming 1 processor.");
     this->processor_count = 1;

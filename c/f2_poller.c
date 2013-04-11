@@ -105,7 +105,7 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   if (this->buffer_full) {
     if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
       this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
-      if (this->sleep_nanoseconds == 0.0) {
+      if (this->sleep_nanoseconds < 1.0) {
 	this->sleep_nanoseconds = 1.0;
       }
     } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {

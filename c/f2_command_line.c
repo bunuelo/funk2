@@ -28,7 +28,7 @@
 #include "funk2.h"
 
 void f2__print_usage() {
-  printf("\n\nfunk2: causally reflective parallel programming language"
+  printf("funk2: causally reflective parallel programming language"
 	 "\n"
 	 "\n  funk2"
 	 "\n  funk2 -h"

@@ -31,7 +31,7 @@
 #include "f2_global.h"
 #include "f2_poller.h"
 
-#define F2__PROCESSOR_MUTEX__DEBUG
+//#define F2__PROCESSOR_MUTEX__DEBUG
 
 #define PROCESSOR_MUTEX__INITIALIZED_MAGIC ((u64)0xDEADBEEFDEADBEEF)
 

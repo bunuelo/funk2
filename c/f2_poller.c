@@ -29,21 +29,25 @@
 
 void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count) {
   double range_factor = 1.1;
-  this->target_cpu_usage                    = target_cpu_usage;
-  this->target_cpu_usage_lower_boundary     = target_cpu_usage / range_factor;
-  this->target_cpu_usage_upper_boundary     = target_cpu_usage * range_factor;
-  this->average_count                       = average_count;
-  this->sleep_nanoseconds                   = 1.0;
-  this->sleep_nanoseconds_multiplier        = pow(range_factor, 1.0 / (double)average_count);
-  this->current_index                       = 0;
-  this->buffer_full                         = boolean__false;
-  this->last_real_nanoseconds               = 0;
-  this->last_execution_nanoseconds          = 0;
-  this->elapsed_real_nanoseconds_array      = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->average_count)));
-  this->elapsed_execution_nanoseconds_array = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->average_count)));
-  this->total_elapsed_real_nanoseconds      = 0;
-  this->total_elapsed_execution_nanoseconds = 0;
-  this->average_cpu_usage                   = 0.0;
+  this->target_cpu_usage                        = target_cpu_usage;
+  this->target_cpu_usage_lower_boundary         = target_cpu_usage / range_factor;
+  this->target_cpu_usage_upper_boundary         = target_cpu_usage * range_factor;
+  this->average_count                           = average_count;
+  this->sleep_nanoseconds                       = 1.0;
+  this->sleep_nanoseconds_multiplier            = pow(range_factor, 1.0 / (double)average_count);
+  this->current_index                           = 0;
+  this->buffer_full                             = boolean__false;
+  this->last_real_nanoseconds                   = 0;
+  this->last_execution_nanoseconds              = 0;
+  this->elapsed_real_nanoseconds_array          = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->average_count)));
+  this->elapsed_execution_nanoseconds_array     = (u64*)from_ptr(f2__malloc(sizeof(u64) * (this->average_count)));
+  this->total_elapsed_real_nanoseconds          = 0;
+  this->total_elapsed_execution_nanoseconds     = 0;
+  this->average_cpu_usage                       = 0.0;
+  // debug variables
+  this->last_reset_nanoseconds_since_1970       = raw__nanoseconds_since_1970();
+  this->last_print_debug_nanoseconds_since_1970 = 0;
+  this->total_sleep_cycle_count                 = 0;
 }
 
 void funk2_poller__destroy(funk2_poller_t* this) {
@@ -52,12 +56,16 @@ void funk2_poller__destroy(funk2_poller_t* this) {
 }
 
 void funk2_poller__reset(funk2_poller_t* this) {
-  this->current_index                       = 0;
-  this->buffer_full                         = boolean__false;
-  this->total_elapsed_real_nanoseconds      = 0;
-  this->total_elapsed_execution_nanoseconds = 0;
-  this->last_real_nanoseconds               = raw__nanoseconds_since_1970();
-  this->last_execution_nanoseconds          = raw__processor_thread__execution_nanoseconds();
+  this->current_index                           = 0;
+  this->buffer_full                             = boolean__false;
+  this->total_elapsed_real_nanoseconds          = 0;
+  this->total_elapsed_execution_nanoseconds     = 0;
+  this->last_real_nanoseconds                   = raw__nanoseconds_since_1970();
+  this->last_execution_nanoseconds              = raw__processor_thread__execution_nanoseconds();
+  // debug variables
+  this->last_reset_nanoseconds_since_1970       = raw__nanoseconds_since_1970();
+  this->last_print_debug_nanoseconds_since_1970 = 0;
+  this->total_sleep_cycle_count                 = 0;
 }
 
 void funk2_poller__sleep(funk2_poller_t* this) {
@@ -103,6 +111,17 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   raw__nanosleep((u64)(this->sleep_nanoseconds));
   this->last_real_nanoseconds      = real_nanoseconds;
   this->last_execution_nanoseconds = execution_nanoseconds;
+  // debug code
+  this->total_sleep_cycle_count ++;
+  if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 10 * nanoseconds_per_second) {
+    this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;
+    status("funk2_poller vvv *** debug info *** vvv");
+    status("funk2_poller total_sleep_cycle_count=" u64__fstr, this->total_sleep_cycle_count);
+    status("funk2_poller last_reset_seconds     =%g", ((double)(nanoseconds - this->last_reset_nanoseconds_since_1970)) / (double)nanoseconds_per_second);
+    status("funk2_poller sleep_nanoseconds      =%g", (double)(this->sleep_nanoseconds));
+    status("funk2_poller average_cpu_usage      =%g", (double)(this->average_cpu_usage));
+    status("funk2_poller ^^^ *** debug info *** ^^^");
+  }
 }
 
 void funk2_poller__test() {

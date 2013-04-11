@@ -55,6 +55,10 @@ struct funk2_poller_s {
   u64       total_elapsed_real_nanoseconds;
   u64       total_elapsed_execution_nanoseconds;
   double    average_cpu_usage;
+  // debugging variables
+  u64       last_reset_nanoseconds_since_1970;
+  u64       last_print_debug_nanoseconds_since_1970;
+  u64       total_sleep_cycle_count;
 };
 
 void funk2_poller__init   (funk2_poller_t* this, double target_cpu_usage, u64 average_count);

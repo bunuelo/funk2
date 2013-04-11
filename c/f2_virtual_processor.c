@@ -90,69 +90,39 @@ boolean_t funk2_virtual_processor__already_executing_next_bytecodes(funk2_virtua
   return funk2_processor_mutex__is_locked(&(this->execute_bytecodes_mutex));
 }
 
-boolean_t funk2_virtual_processor__execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
+boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
   boolean_t did_something = boolean__false;
-  boolean_t locked_mutex  = boolean__false;
-  {
-    funk2_poller_t poller;
-    boolean_t      poller_initialized = boolean__false;
-    u64            lock_tries         = 0;
-    while ((! locked_mutex) &&
-	   (! (virtual_processor_thread->exit))) {
-      if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
-	locked_mutex = boolean__true;
-      }
-      if (! locked_mutex) {
-	lock_tries ++;
-	if ((lock_tries > 1000) ||
-	    __funk2.scheduler_thread_controller.need_wait ||
-	    __funk2.user_thread_controller.need_wait) {
-	  if (! poller_initialized) {
-	    funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
-	    funk2_poller__reset(&poller);
-	    poller_initialized = boolean__true;
-	  } else {
-	    funk2_poller__sleep(&poller);
+  if (funk2_processor_mutex__trylock(&(this->execute_bytecodes_mutex)) == 0) {
+    locked_mutex = boolean__true;
+    if (! (virtual_processor_thread->exit)) {
+      funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(this, virtual_processor_thread);
+      if (first_spinning_virtual_processor_thread != NULL) {
+	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
+	this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
+	f2ptr cause      = nil;
+	f2ptr processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
+	f2ptr processor  = raw__array__elt(cause, processors, this->index);
+	{ // assert processor has correct index.
+	  int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
+	  if (pool_index != this->index) {
+	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match processor position in scheduler array.");
 	  }
-	} else {
-	  raw__fast_spin_sleep_yield();
 	}
+	{
+	  // assert our virtual_processor_thread is known to have the correct index.
+	  int pool_index = this_processor_thread__pool_index();
+	  if (pool_index != this->index) {
+	    status("funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().  pool_index=%d  this->index=%d", (int)pool_index, (int)(this->index));
+	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
+	  }
+	}
+	did_something = f2processor__execute_next_bytecodes(processor, cause);
+	funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
+	this->execute_bytecodes_current_virtual_processor_thread = NULL;
+	funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);
+	funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
       }
     }
-    if (poller_initialized) {
-      funk2_poller__destroy(&poller);
-    }
-  }
-  if (! (virtual_processor_thread->exit)) {
-    funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(this, virtual_processor_thread);
-    if (first_spinning_virtual_processor_thread != NULL) {
-      funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
-      this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
-      f2ptr cause      = nil;
-      f2ptr processors = f2scheduler__processors(__funk2.operating_system.scheduler, cause);
-      f2ptr processor  = raw__array__elt(cause, processors, this->index);
-      { // assert processor has correct index.
-	int pool_index = f2integer__i(f2processor__pool_index(processor, cause), cause);
-	if (pool_index != this->index) {
-	  error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match processor position in scheduler array.");
-	}
-      }
-      {
-	// assert our virtual_processor_thread is known to have the correct index.
-	int pool_index = this_processor_thread__pool_index();
-	if (pool_index != this->index) {
-	  status("funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().  pool_index=%d  this->index=%d", (int)pool_index, (int)(this->index));
-	  error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
-	}
-      }
-      did_something = f2processor__execute_next_bytecodes(processor, cause);
-      funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
-      this->execute_bytecodes_current_virtual_processor_thread = NULL;
-      funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);
-      funk2_virtual_processor__know_of_one_more_spinning_virtual_processor_thread(this);
-    }
-  }
-  if (locked_mutex) {
     funk2_processor_mutex__unlock(&(this->execute_bytecodes_mutex));
   }
   return did_something;

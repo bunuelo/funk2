@@ -129,7 +129,7 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
       if (this == next_spinning_virtual_processor_thread) {
 	boolean_t did_something = boolean__true;
 	while (did_something) {
-	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
+	  did_something = funk2_virtual_processor__try_execute_next_bytecodes(virtual_processor, this);
 	  if (did_something) {
 	    funk2_poller__reset(&(this->poller));
 	  }

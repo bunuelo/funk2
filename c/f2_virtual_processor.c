@@ -96,6 +96,7 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
     if (! (virtual_processor_thread->exit)) {
       funk2_virtual_processor_thread_t* first_spinning_virtual_processor_thread = funk2_virtual_processor__peek_and_pop_spinning_virtual_processor_thread_if_equal(this, virtual_processor_thread);
       if (first_spinning_virtual_processor_thread != NULL) {
+	did_something = boolean__true;
 	funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this);
 	this->execute_bytecodes_current_virtual_processor_thread = virtual_processor_thread;
 	f2ptr cause      = nil;
@@ -115,7 +116,8 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
 	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
 	  }
 	}
-	did_something = f2processor__execute_next_bytecodes(processor, cause);
+	// could check whether bytecode was executed here.
+	f2processor__execute_next_bytecodes(processor, cause);
 	funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
 	this->execute_bytecodes_current_virtual_processor_thread = NULL;
 	funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);

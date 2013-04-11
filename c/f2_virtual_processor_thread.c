@@ -129,6 +129,9 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	boolean_t did_something = boolean__true;
 	while (did_something) {
 	  did_something = funk2_virtual_processor__execute_next_bytecodes(virtual_processor, this);
+	  if (did_something) {
+	    funk2_poller__reset(&(this->poller));
+	  }
 	}
 	if (! did_something) {
 	  s64 working_virtual_processor_thread_count = funk2_virtual_processor__working_virtual_processor_thread_count(virtual_processor);
@@ -141,8 +144,6 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	    //funk2_virtual_processor_thread__pause_myself(this);
 	    // ****
 	  }
-	} else {
-	  funk2_poller__reset(&(this->poller));
 	}
       } else {	
 	//

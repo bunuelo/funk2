@@ -64,8 +64,9 @@ void funk2_poller__reset(funk2_poller_t* this) {
   this->last_real_nanoseconds                   = raw__nanoseconds_since_1970();
   this->last_execution_nanoseconds              = raw__processor_thread__execution_nanoseconds();
   // debug variables
-  this->last_reset_nanoseconds_since_1970       = raw__nanoseconds_since_1970();
-  this->last_print_debug_nanoseconds_since_1970 = 0;
+  u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+  this->last_reset_nanoseconds_since_1970       = nanoseconds_since_1970;
+  this->last_print_debug_nanoseconds_since_1970 = nanoseconds_since_1970; // don't want to print immediately
   this->total_sleep_cycle_count                 = 0;
 }
 

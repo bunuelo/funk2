@@ -124,12 +124,13 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
   if (! raw__processor__is_type(cause, this)) {
     error(nil, "attempted to add fiber to object that is not a processor.");
   }
-  s64             my_pool_index               = this_processor_thread__pool_index();
-  funk2_poller_t* my_poller                   = &(__funk2.virtual_processor_handler.virtual_processor[my_pool_index]->poller);
-  f2ptr           active_fibers_cmutex        = f2processor__active_fibers_cmutex(   this,  cause);
-  f2ptr           processor_assignment_cmutex = f2fiber__processor_assignment_cmutex(fiber, cause);
-  boolean_t       both_locked                 = boolean__false;
-  s64 lock_tries = 0;
+  s64            my_pool_index               = this_processor_thread__pool_index();
+  f2ptr          active_fibers_cmutex        = f2processor__active_fibers_cmutex(   this,  cause);
+  f2ptr          processor_assignment_cmutex = f2fiber__processor_assignment_cmutex(fiber, cause);
+  boolean_t      both_locked                 = boolean__false;
+  funk2_poller_t poller;
+  boolean_t      poller_initialized          = boolean__false;
+  s64            lock_tries                  = 0;
   while (! both_locked) {
     both_locked                                           = boolean__true;
     boolean_t active_fibers_cmutex__failed_to_lock        = f2cmutex__trylock(active_fibers_cmutex,        cause);
@@ -153,10 +154,14 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
 	// spin fast
       } else if (lock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
-      } else if (lock_tries == 2000) {
-	funk2_poller__reset(my_poller);
       } else {
-	funk2_poller__sleep(my_poller);
+	if (! poller_initialized) {
+	  funk2_poller__init(&poller);
+	  funk2_poller__reset(&poller);
+	  poller_initialized = boolean__true;
+	} else {
+	  funk2_poller__sleep(&poller);
+	}
       }
     }
   }

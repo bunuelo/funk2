@@ -464,6 +464,7 @@ int funk2__run(funk2_t* this) {
   }
   
   f2__destroy();
+  return 0;
 }
 
 void* funk2_start_management_thread(void* data) {

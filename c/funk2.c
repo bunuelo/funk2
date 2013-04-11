@@ -469,7 +469,7 @@ int funk2__run(funk2_t* this) {
 
 void* funk2_start_management_thread(void* data) {
   funk2_t* this = (funk2_t*)data;
-  return (void*)funk2__run(this);
+  return (void*)from_ptr(funk2__run(this));
 }
 
 // see funk2_main.c for actual main function.

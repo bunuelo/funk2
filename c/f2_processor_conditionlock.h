@@ -45,6 +45,9 @@ struct funk2_processor_conditionlock_s {
 
 void funk2_processor_conditionlock__init     (funk2_processor_conditionlock_t* this);
 void funk2_processor_conditionlock__destroy  (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__trylock  (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__lock     (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__unlock   (funk2_processor_conditionlock_t* this);
 s64  funk2_processor_conditionlock__wait     (funk2_processor_conditionlock_t* this);
 s64  funk2_processor_conditionlock__signal   (funk2_processor_conditionlock_t* this);
 s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* this);

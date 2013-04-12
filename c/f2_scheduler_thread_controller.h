@@ -29,12 +29,10 @@
 #define F2__SCHEDULER_THREAD_CONTROLLER__H
 
 typedef struct funk2_scheduler_thread_controller_s {
-  pthread_mutex_t need_wait_mutex;
-  pthread_cond_t  need_wait_cond;
-  boolean_t       need_wait;
-  pthread_mutex_t waiting_count_mutex;
-  pthread_cond_t  waiting_count_cond;
-  s64             waiting_count;
+  funk2_processor_conditionlock_t need_wait_conditionlock;
+  boolean_t                       need_wait;
+  funk2_processor_conditionlock_t waiting_count_conditionlock;
+  s64                             waiting_count;
 } funk2_scheduler_thread_controller_t;
 
 void funk2_scheduler_thread_controller__init                              (funk2_scheduler_thread_controller_t* this);

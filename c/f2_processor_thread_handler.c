@@ -60,7 +60,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
-  funk2_processor_mutex__lock(&(this->access_mutex));
+  //funk2_processor_mutex__lock(&(this->access_mutex));
   pthread_t                      tid  = pthread_self();
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
@@ -70,7 +70,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
     }
     iter = iter->next;
   }
-  funk2_processor_mutex__unlock(&(this->access_mutex));
+  //funk2_processor_mutex__unlock(&(this->access_mutex));
   return NULL;
 }
 

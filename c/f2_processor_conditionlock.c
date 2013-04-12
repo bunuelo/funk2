@@ -37,6 +37,18 @@ void funk2_processor_conditionlock__destroy(funk2_processor_conditionlock_t* thi
   pthread_cond_destroy(&(this->cond));
 }
 
+s64 funk2_processor_conditionlock__trylock(funk2_processor_conditionlock_t* this) {
+  return pthread_mutex_trylock(&(this->mutex));
+}
+
+s64 funk2_processor_conditionlock__lock(funk2_processor_conditionlock_t* this) {
+  return pthread_mutex_lock(&(this->mutex));
+}
+
+s64 funk2_processor_conditionlock__unlock(funk2_processor_conditionlock_t* this) {
+  return pthread_mutex_unlock(&(this->mutex));
+}
+
 s64 funk2_processor_conditionlock__wait(funk2_processor_conditionlock_t* this) {
   return pthread_cond_wait(&(this->cond), &(this->mutex));
 }

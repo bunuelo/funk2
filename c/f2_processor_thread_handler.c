@@ -79,7 +79,7 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     funk2_processor_thread_list_t* next = iter->next;
-    if (iter->processor_thread == processor_thread) {
+    if (&(iter->processor_thread) == processor_thread) {
       success = boolean__true;
       if (prev) {
 	prev->next = next;

@@ -65,7 +65,8 @@ int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, voi
 void* start_processor_thread_wrapper(void* data) {
   funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
   pthread_mutex_lock(&(this->initialized_cond_mutex));
-  this->tid = raw__gettid();
+  this->tid         = raw__gettid();
+  this->initialized = boolean__true;
   pthread_mutex_unlock(&(this->initialized_cond_mutex));
   pthread_cond_signal(&(this->initialized_cond));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));

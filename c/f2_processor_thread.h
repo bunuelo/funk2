@@ -38,6 +38,7 @@ typedef struct funk2_processor_thread_s {
   void*                                     args;
   pthread_t                                 pthread;
   u64                                       execution_nanoseconds;
+  u64                                       sleep_nanoseconds;
 } funk2_processor_thread_t;
 
 typedef struct funk2_processor_thread_list_s {

@@ -79,6 +79,7 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   //pthread_detach(this->pthread);
 }
 
+// never call this function directly from within a processor thread.
 void __funk2__nanosleep(u64 nanoseconds) {
 #if defined(HAVE_NANOSLEEP)
   struct timespec sleepTime;
@@ -99,7 +100,11 @@ void __funk2__nanosleep(u64 nanoseconds) {
 #endif // NANOSLEEP
 }
 
+// must only be called by owner
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
+  u64 start_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   __funk2__nanosleep(nanoseconds);
+  u64 end_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+  this->sleep_nanoseconds += (end_nanoseconds_since_1970 - start_nanoseconds_since_1970);
 }
 

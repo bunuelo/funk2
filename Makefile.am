@@ -657,6 +657,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_primmetros.c \
   c/f2_proc_cpuinfo.c \
   c/f2_processor.c \
+  c/f2_processor_conditionlock.c \
   c/f2_processor_mutex.c \
   c/f2_processor_readwritelock.c \
   c/f2_processor_spinlock.c \

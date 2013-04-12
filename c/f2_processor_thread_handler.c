@@ -104,6 +104,9 @@ u64 this_processor_thread__pool_index() {
 
 void raw__processor_thread_handler__nanosleep(u64 nanoseconds) {
   funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  if (my_processor_thread == NULL) {
+    error(nil, "raw__processor_thread_handler__nanosleep my_processor_thread==NULL.");
+  }
   funk2_processor_thread__nanosleep(my_processor_thread, nanoseconds);
 }
 

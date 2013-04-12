@@ -28,7 +28,7 @@
 #include "funk2.h"
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
-  pthread_spin_init(&(this->access_spinlock), NULL);
+  pthread_spin_init(&(this->access_spinlock), PTHREAD_PROCESS_PRIVATE);
   this->processor_thread_next_index = 0;
   this->processor_thread_list       = NULL;
 }

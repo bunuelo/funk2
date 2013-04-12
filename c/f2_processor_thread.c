@@ -72,11 +72,6 @@ void* start_processor_thread_wrapper(void* data) {
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   void* return_value = (*(this->start_function))(this->args);
   this->result = return_value;
-  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), this);
-  if (! success) {
-    error(nil, "start_processor_thread_wrapper error: failed to remove processor_thread from processor_thread_handler.");
-  }
-  status("start_processor_thread_wrapper successfully removed processor_thread from processor_thread_handler.");
   return return_value;
 }
 

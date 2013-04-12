@@ -155,6 +155,7 @@
 #include "f2_system_file_handler.h"
 #include "f2_terminal_print.h"
 #include "f2_termios.h"
+#include "f2_thread_safe_hash.h"
 #include "f2_time.h"
 #include "f2_trace.h"
 #include "f2_user_thread_controller.h"

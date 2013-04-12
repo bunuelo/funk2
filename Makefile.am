@@ -686,6 +686,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_terminal_print.c \
   c/f2_termios.c \
   c/f2_tricolor_set.c \
+  c/f2_thread_safe_hash.c \
   c/f2_time.c \
   c/f2_trace.c \
   c/f2_user_thread_controller.c \

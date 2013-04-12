@@ -80,7 +80,7 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
   funk2_processor_thread_list_t* prev = NULL;
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  while (iter) {
+  while (iter != NULL) {
     funk2_processor_thread_list_t* next = iter->next;
     if (&(iter->processor_thread) == processor_thread) {
       success = boolean__true;
@@ -91,6 +91,7 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
       }
       funk2_processor_thread__destroy(&(iter->processor_thread));
       f2__free(to_ptr(iter));
+      break;
     }
     prev = iter;
     iter = next;
@@ -132,13 +133,16 @@ f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, vo
   return processor_thread->tid;
 }
 
-void raw__join(f2tid_t tid) {
+void* raw__join(f2tid_t tid) {
   funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__lookup_tid(&(__funk2.processor_thread_handler), tid);
-  if (processor_thread == NULL) {
-    status("raw__join invalid tid=" s64__fstr, (s64)tid);
-    error(nil, "raw__join invalid tid.");
+  void* result = funk2_processor_thread__join(processor_thread);
+  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), processor_thread);
+  if (! success) {
+    status("raw__join failed to remove processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);
+    error(nil, "raw__join failed to remove processor_thread from processor_thread_handler.");
   }
-  pthread_join(processor_thread->pthread, NULL);
+  status("raw__join successful.  tid=" u64__fstr, (u64)tid);
+  return result;
 }
 
 void raw__nanosleep(u64 nanoseconds) {

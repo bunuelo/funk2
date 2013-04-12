@@ -47,7 +47,7 @@ u64 this_processor_thread__pool_index();
 // use these functions outside of the processor_thread_handler and friends:
 
 f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, void* args);
-void    raw__join(f2tid_t tid);
+void*   raw__join(f2tid_t tid);
 void    raw__nanosleep(u64 nanoseconds);
 
 #endif // F2__PROCESSOR_THREAD_HANDLER__H

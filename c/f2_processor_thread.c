@@ -71,6 +71,11 @@ void* start_processor_thread_wrapper(void* data) {
   pthread_cond_signal(&(this->initialized_cond));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   void* return_value = (*(this->start_function))(this->args);
+  pthread_mutex_lock(&(this->complete_cond_mutex));
+  this->result   = return_value;
+  this->complete = boolean__true;
+  pthread_mutex_unlock(&(this->complete_cond_mutex));
+  pthread_cond_signal(&(this->complete_cond));
   boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), this);
   if (! success) {
     error(nil, "start_processor_thread_wrapper error: failed to remove processor_thread from processor_thread_handler.");
@@ -85,6 +90,16 @@ void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processo
   this->initialized    = boolean__false;
   this->start_function = start_function;
   this->args           = args;
+  pthread_mutex_init(&(this->complete_cond_mutex), NULL);
+  pthread_cond_init(&(this->complete_cond), NULL);
+  this->complete = boolean__false;
+}
+
+void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
+  pthread_mutex_destroy(&(this->initialized_cond_mutex));
+  pthread_cond_destroy(&(this->initialized_cond));
+  pthread_mutex_destroy(&(this->complete_cond_mutex));
+  pthread_cond_destroy(&(this->complete_cond));
 }
 
 void funk2_processor_thread__start(funk2_processor_thread_t* this) {
@@ -101,9 +116,13 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
   pthread_mutex_unlock(&(this->initialized_cond_mutex));
 }
 
-void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
-  pthread_mutex_destroy(&(this->initialized_cond_mutex));
-  pthread_cond_destroy(&(this->initialized_cond));
+void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
+  pthread_mutex_lock(&(this->complete_cond_mutex));
+  while (! (this->complete)) {
+    pthread_cond_wait(&(this->complete_cond), &(this->complete_cond_mutex));
+  }
+  pthread_mutex_unlock(&(this->complete_cond_mutex));
+  return this->result;
 }
 
 // never call this function directly from within a processor thread.

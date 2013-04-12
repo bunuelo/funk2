@@ -76,6 +76,7 @@ void* start_processor_thread_wrapper(void* data) {
 }
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
+  pthread_spin_init(&(this->start_spinlock), PTHREAD_PROCESS_PRIVATE);
   this->start_function = start_function;
   this->args           = args;
 }
@@ -93,6 +94,7 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
+  pthread_spin_destroy(&(this->start_spinlock));
 }
 
 // never call this function directly from within a processor thread.

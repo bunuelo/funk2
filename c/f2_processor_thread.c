@@ -75,6 +75,7 @@ void* start_processor_thread_wrapper(void* data) {
   if (! success) {
     error(nil, "start_processor_thread_wrapper error: failed to remove processor_thread from processor_thread_handler.");
   }
+  status("start_processor_thread_wrapper successfully removed processor_thread from processor_thread_handler.");
   return return_value;
 }
 

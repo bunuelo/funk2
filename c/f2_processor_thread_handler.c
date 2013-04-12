@@ -96,11 +96,11 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
-  pthread_t                      tid  = pthread_self();
+  f2tid_t tid = raw__gettid();
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
-    if (pthread_equal(iter->processor_thread.pthread, tid)) {
+    if (iter->processor_thread.tid == tid) {
       funk2_processor_thread_t* return_value = &(iter->processor_thread);
       pthread_spin_unlock(&(this->access_spinlock));
       return return_value;

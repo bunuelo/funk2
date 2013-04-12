@@ -29,7 +29,7 @@
 #define F2__PROCESSOR_THREAD_HANDLER__H
 
 typedef struct funk2_processor_thread_handler_s {
-  funk2_processor_mutex_t        access_mutex;
+  pthread_spinlock_t             access_spinlock;
   u64                            processor_thread_next_index;
   funk2_processor_thread_list_t* processor_thread_list;
 } funk2_processor_thread_handler_t;

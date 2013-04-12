@@ -126,6 +126,7 @@
 #include "f2_print.h"
 #include "f2_proc_cpuinfo.h"
 #include "f2_processor.h"
+#include "f2_processor_conditionlock.h"
 #include "f2_processor_mutex.h"
 #include "f2_processor_readwritelock.h"
 #include "f2_processor_spinlock.h"

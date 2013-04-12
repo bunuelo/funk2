@@ -92,6 +92,7 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
       funk2_processor_thread__destroy(&(iter->processor_thread));
       f2__free(to_ptr(iter));
     }
+    prev = iter;
     iter = next;
   }
   pthread_spin_unlock(&(this->access_spinlock));

@@ -108,7 +108,24 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
 }
 
 void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
-  pthread_join(this->pthread); // necessary for freeing pthread resources.
+  int join_result = pthread_join(this->pthread);
+  if (join_result != 0) {
+    switch(join_result) {
+    case EDEADLK:
+      status("funk2_processor_thread__join error: A deadlock was detected (e.g., two threads tried to join with each other); or thread specifies the calling thread.");
+      break;
+    case EINVAL:
+      status("funk2_processor_thread__join error: thread is not a joinable thread.");
+      break;
+    case EINVAL:
+      status("funk2_processor_thread__join error: Another thread is already waiting to join with this thread.");
+      break;
+    case ESRCH:
+      status("funk2_processor_thread__join error: No thread with the ID thread could be found.");
+      break;
+    }
+    error(nil, "funk2_processor_thread__join error.");
+  }
   return this->result;
 }
 

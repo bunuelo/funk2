@@ -76,15 +76,15 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
 }
 
 boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_t* processor_thread) {
-  boolean_t success = boolean__false;
-  funk2_processor_thread_list_t* prev = NULL;
+  boolean_t                      success = boolean__false;
+  funk2_processor_thread_list_t* prev    = NULL;
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter != NULL) {
     funk2_processor_thread_list_t* next = iter->next;
     if (&(iter->processor_thread) == processor_thread) {
       success = boolean__true;
-      if (prev) {
+      if (prev != NULL) {
 	prev->next = next;
       } else {
 	this->processor_thread_list = next;
@@ -135,8 +135,12 @@ f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, vo
 
 void* raw__join(f2tid_t tid) {
   funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__lookup_tid(&(__funk2.processor_thread_handler), tid);
-  void*                     result           = funk2_processor_thread__join(processor_thread);
-  boolean_t                 success          = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), processor_thread);
+  if (processor_thread == NULL) {
+    status("raw__join failed to lookup processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);
+    error(nil, "raw__join failed to lookup processor_thread from processor_thread_handler.");
+  }
+  void*     result  = funk2_processor_thread__join(processor_thread);
+  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), processor_thread);
   if (! success) {
     status("raw__join failed to remove processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);
     error(nil, "raw__join failed to remove processor_thread from processor_thread_handler.");

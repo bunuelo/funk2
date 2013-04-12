@@ -70,7 +70,6 @@ void* start_processor_thread_wrapper(void* data) {
 }
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args) {
-  this->index          = index;
   this->start_function = start_function;
   this->args           = args;
   int result = create_thread_with_large_stack(&(this->pthread), start_processor_thread_wrapper, this);

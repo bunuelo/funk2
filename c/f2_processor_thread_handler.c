@@ -132,7 +132,11 @@ f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, vo
 }
 
 void raw__join(f2tid_t tid) {
-  funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__lookup_tid(&(__funk2.processor_thread_handler), tid);
+  if (processor_thread == NULL) {
+    status("raw__join invalid tid=" s64__fstr, (s64)tid);
+    error(nil, "raw__join invalid tid.");
+  }
   pthread_join(processor_thread->pthread, NULL);
 }
 

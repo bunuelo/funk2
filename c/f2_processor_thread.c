@@ -64,8 +64,10 @@ int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, voi
 
 void* start_processor_thread_wrapper(void* data) {
   funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
+  pthread_mutex_lock(&(this->initialized_cond_mutex));
   this->tid = raw__gettid();
-  pthread_spin_unlock(&(this->start_spinlock));
+  pthread_mutex_unlock(&(this->initialized_cond_mutex));
+  pthread_cond_signal(&(this->initialized_cond));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   void* return_value = (*(this->start_function))(this->args);
   boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), this);
@@ -76,25 +78,30 @@ void* start_processor_thread_wrapper(void* data) {
 }
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
-  pthread_spin_init(&(this->start_spinlock), PTHREAD_PROCESS_PRIVATE);
+  pthread_mutex_init(&(this->initialized_cond_mutex), NULL);
+  pthread_cond_init(&(this->initialized_cond), NULL);
+  this->initialized    = boolean__false;
   this->start_function = start_function;
   this->args           = args;
 }
 
 void funk2_processor_thread__start(funk2_processor_thread_t* this) {
-  pthread_spin_lock(&(this->start_spinlock));
   int result = create_thread_with_large_stack(&(this->pthread), start_processor_thread_wrapper, this);
   if (result != 0) {
     printf("\nfunk2_processor_thread__init: error creating new pthread.\n");
     perror("pthread_create");
     exit(-1);
   }
-  pthread_spin_lock(&(this->start_spinlock));
-  pthread_spin_unlock(&(this->start_spinlock));
+  pthread_mutex_lock(&(this->initialized_cond_mutex));
+  while (! (this->initialized)) {
+    pthread_cond_wait(&(this->initialized_cond), &(this->initialized_cond_mutex));
+  }
+  pthread_mutex_unlock(&(this->initialized_cond_mutex));
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
-  pthread_spin_destroy(&(this->start_spinlock));
+  pthread_mutex_destroy(&(this->initialized_cond_mutex));
+  pthread_cond_destroy(&(this->initialized_cond));
 }
 
 // never call this function directly from within a processor thread.

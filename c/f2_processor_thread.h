@@ -35,7 +35,9 @@ typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 typedef u64 f2tid_t;
 
 typedef struct funk2_processor_thread_s {
-  pthread_spinlock_t                        start_spinlock;
+  pthread_mutex_t                           initialized_cond_mutex;
+  pthread_cond_t                            initialized_cond;
+  boolean_t                                 initialized;
   f2tid_t                                   tid;
   funk2_processor_thread_function_pointer_t start_function;
   void*                                     args;

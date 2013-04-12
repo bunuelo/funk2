@@ -62,12 +62,18 @@ int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, voi
   return err;
 }
 
+void* start_processor_thread_wrapper(void* data) {
+  funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
+  this->tid = raw__gettid();
+  status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
+  return (*(this->start_function))(this->args);
+}
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args) {
   this->index          = index;
   this->start_function = start_function;
   this->args           = args;
-  int result = create_thread_with_large_stack(&(this->pthread), this->start_function, args);
+  int result = create_thread_with_large_stack(&(this->pthread), start_processor_thread_wrapper, this);
   if (result != 0) {
     printf("\nfunk2_processor_thread__init: error creating new pthread.\n");
     perror("pthread_create");

@@ -27,9 +27,23 @@
 
 #include "funk2.h"
 
+f2tid_t raw__gettid() {
+#if (HAVE_SYSCALL_SYS_GETTID == 1)
+  return (pid_t)syscall(SYS_gettid);
+#else
+#  if defined(HAVE_PTHREAD_GETW32THREADHANDLE_NP)
+  HANDLE my_thread = pthread_getw32threadhandle_np(pthread_self());
+  return (f2tid_t)to_ptr(my_thread);
+#  else
+#    error No definition of raw__gettid()
+#  endif
+#endif // (HAVE_SYSCALL_SYS_GETTID == 1)
+}
+
+// funk2_processor_thread_handler
+
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
   pthread_spin_init(&(this->access_spinlock), PTHREAD_PROCESS_PRIVATE);
-  this->processor_thread_next_index = 0;
   this->processor_thread_list       = NULL;
 }
 
@@ -52,7 +66,6 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   funk2_processor_thread__init(processor_thread, -1, start_function, args);
   
   pthread_spin_lock(&(this->access_spinlock));
-  this->processor_thread_next_index ++;
   new_processor_thread_node->next = this->processor_thread_list;
   this->processor_thread_list = new_processor_thread_node;
   pthread_spin_unlock(&(this->access_spinlock));

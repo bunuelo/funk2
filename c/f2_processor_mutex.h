@@ -67,41 +67,5 @@ u64                                    funk2_processor_mutex__equals_hash_value(
 #define funk2_processor_mutex__user_lock(this) funk2_processor_mutex__raw_user_lock(this, __FILE__, __LINE__)
 #define funk2_processor_mutex__unlock(   this) funk2_processor_mutex__raw_unlock(   this, __FILE__, __LINE__)
 
-
-#define pthread_cond_wait_while(condition, pthread_cond, pthread_mutex) { \
-    funk2_poller_t pthread_cond_wait_helper__poller;			\
-    boolean_t      pthread_cond_wait_helper__poller_initialized = boolean__false; \
-    s64            pthread_cond_wait_helper__wait_tries         = 0;	\
-    while (condition) {							\
-      if (pthread_mutex_trylock(pthread_mutex) == 0) {			\
-	while (condition) {						\
-	  pthread_cond_wait(pthread_cond, pthread_mutex);		\
-	}								\
-	pthread_mutex_unlock(pthread_mutex);				\
-      }	else {								\
-	if (pthread_cond_wait_helper__wait_tries < 1000) {		\
-	  /* spin super fast waiting for pure concurrent thread */	\
-	  pthread_cond_wait_helper__wait_tries ++;			\
-	} else if (pthread_cond_wait_helper__wait_tries < 2000) {	\
-	  /* spin fast but yield to parallel threads */			\
-	  raw__fast_spin_sleep_yield();					\
-	  pthread_cond_wait_helper__wait_tries ++;			\
-	} else if (pthread_cond_wait_helper__wait_tries == 2000) {	\
-	  funk2_poller__init(&pthread_cond_wait_helper__poller, poller__deep_sleep_percentage, 10); \
-	  funk2_poller__reset(&pthread_cond_wait_helper__poller);	\
-	  pthread_cond_wait_helper__poller_initialized = boolean__true;	\
-	  pthread_cond_wait_helper__wait_tries ++;			\
-	} else {							\
-	  /* spin but go into deep sleep (about 1% of CPU usage) */	\
-	  funk2_poller__sleep(&pthread_cond_wait_helper__poller);	\
-	}								\
-      }									\
-    }									\
-    if (pthread_cond_wait_helper__poller_initialized) {			\
-      funk2_poller__destroy(&pthread_cond_wait_helper__poller);		\
-    }									\
-  }
-
-
 #endif // F2__PROCESSOR_MUTEX__H
 

@@ -57,11 +57,11 @@ s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* t
     boolean_t      funk2_processor_conditionlock_helper__poller_initialized = boolean__false; \
     s64            funk2_processor_conditionlock_helper__wait_tries         = 0; \
     while (condition) {							\
-      if (pthread_mutex_trylock(&(this->mutex)) == 0) {			\
+      if (pthread_mutex_trylock(&((this)->mutex)) == 0) {		\
 	while (condition) {						\
-	  pthread_cond_wait(&(this->cond), &(this->mutex));		\
+	  pthread_cond_wait(&((this)->cond), &((this)->mutex));		\
 	}								\
-	pthread_mutex_unlock(&(this->mutex));				\
+	pthread_mutex_unlock(&((this)->mutex));				\
       }	else {								\
 	if (funk2_processor_conditionlock_helper__wait_tries < 1000) {	\
 	  /* spin super fast waiting for pure concurrent thread */	\

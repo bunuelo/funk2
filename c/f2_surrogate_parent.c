@@ -140,7 +140,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 	    exit(0);
 	  }
 	  if (bytes_in_buffer == 0) {
-	    __funk2__nanosleep(1000000);
+	    __funk2__nanosleep(10000000);
 	  }
 	}
 	memcpy(&fiber, f2ptr_buffer, sizeof(f2ptr));
@@ -160,7 +160,7 @@ void funk2_surrogate_parent__init(funk2_surrogate_parent_t* this) {
 		exit(0);
 	      }
 	      if (bytes_in_buffer == 0) {
-		__funk2__nanosleep(1000000);
+		__funk2__nanosleep(10000000);
 	      }
 	    }
 	    memcpy(&ch, ch_buffer, sizeof(u8));

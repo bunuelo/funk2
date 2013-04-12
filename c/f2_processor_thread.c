@@ -120,6 +120,9 @@ void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
     case ESRCH:
       status("funk2_processor_thread__join error: No thread with the ID thread could be found.");
       break;
+    default:
+      status("funk2_processor_thread__join error: Unknown error.");
+      break;
     }
     error(nil, "funk2_processor_thread__join error.");
   }

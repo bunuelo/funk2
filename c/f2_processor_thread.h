@@ -44,9 +44,6 @@ typedef struct funk2_processor_thread_s {
   pthread_t                                 pthread;
   u64                                       execution_nanoseconds;
   u64                                       sleep_nanoseconds;
-  pthread_mutex_t                           complete_cond_mutex;
-  pthread_cond_t                            complete_cond;
-  boolean_t                                 complete;
   void*                                     result;
 } funk2_processor_thread_t;
 

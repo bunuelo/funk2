@@ -98,8 +98,7 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
   return success;
 }
 
-funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
-  f2tid_t tid = raw__gettid();
+funk2_processor_thread_t* funk2_processor_thread_handler__lookup_tid(funk2_processor_thread_handler_t* this, f2tid_t tid) {
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
@@ -114,6 +113,11 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   return NULL;
 }
 
+funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
+  f2tid_t tid = raw__gettid();
+  return funk2_processor_thread_handler__lookup_tid(this, tid);
+}
+
 s64 this_processor_thread__try_get_pool_index() {
   return funk2_virtual_processor_handler__try_get_my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }
@@ -122,7 +126,17 @@ u64 this_processor_thread__pool_index() {
   return funk2_virtual_processor_handler__my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }
 
-void raw__processor_thread_handler__nanosleep(u64 nanoseconds) {
+f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, void* args) {
+  funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), start_function, args);
+  return processor_thread->tid;
+}
+
+void raw__join(f2tid_t tid) {
+  funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  pthread_join(processor_thread->pthread, NULL);
+}
+
+void raw__nanosleep(u64 nanoseconds) {
   funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   if (my_processor_thread == NULL) {
     error(nil, "raw__processor_thread_handler__nanosleep my_processor_thread==NULL.");

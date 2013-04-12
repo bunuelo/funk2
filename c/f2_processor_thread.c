@@ -65,6 +65,7 @@ int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, voi
 void* start_processor_thread_wrapper(void* data) {
   funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
   this->tid = raw__gettid();
+  pthread_spin_unlock(&(this->start_spinlock));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   void* return_value = (*(this->start_function))(this->args);
   boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), this);
@@ -80,12 +81,15 @@ void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processo
 }
 
 void funk2_processor_thread__start(funk2_processor_thread_t* this) {
+  pthread_spin_lock(&(this->start_spinlock));
   int result = create_thread_with_large_stack(&(this->pthread), start_processor_thread_wrapper, this);
   if (result != 0) {
     printf("\nfunk2_processor_thread__init: error creating new pthread.\n");
     perror("pthread_create");
     exit(-1);
   }
+  pthread_spin_lock(&(this->start_spinlock));
+  pthread_spin_unlock(&(this->start_spinlock));
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {

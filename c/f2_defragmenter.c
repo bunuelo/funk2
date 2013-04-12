@@ -289,12 +289,13 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: parallel phase one.");
   {
-    pthread_t* pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
+    f2tid_t* pool_thread = (f2tid_t*)from_ptr(f2__malloc(sizeof(f2tid_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	status("funk2_defragmenter__defragment: starting parallel phase one for pool " s64__fstr ".", pool_index);
-	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
+	pool_thread[pool_index] = raw__thread(&funk2_defragmenter__defragment__parallel_phase_one, (void*)(&(__funk2.memory.pool[pool_index])));
+	//pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_one, );
 	status("funk2_defragmenter__defragment: done starting parallel phase one for pool " s64__fstr ".", pool_index);
       }
     }
@@ -302,7 +303,8 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	status("funk2_defragmenter__defragment: joining parallel phase one for pool " s64__fstr ".", pool_index);
-	pthread_join(pool_thread[pool_index], NULL);
+	raw__join(pool_thread[pool_index]);
+	//pthread_join(pool_thread[pool_index], NULL);
 	status("funk2_defragmenter__defragment: joined parallel phase one for pool " s64__fstr ".", pool_index);
       }
     }
@@ -311,17 +313,19 @@ void funk2_defragmenter__defragment(funk2_defragmenter_t* this) {
   
   status("funk2_defragmenter__defragment: parallel phase two.");
   {
-    pthread_t* pool_thread = (pthread_t*)from_ptr(f2__malloc(sizeof(pthread_t) * __funk2.system_processor.processor_count));
+    f2tid_t* pool_thread = (f2tid_t*)from_ptr(f2__malloc(sizeof(f2tid_t) * __funk2.system_processor.processor_count));
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
-	pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
+	pool_thread[pool_index] = raw__thread(&funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
+	//pthread_create(&(pool_thread[pool_index]), NULL, &funk2_defragmenter__defragment__parallel_phase_two, (void*)(&(__funk2.memory.pool[pool_index])));
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
-	pthread_join(pool_thread[pool_index], NULL);
+	raw__join(pool_thread[pool_index]);
+	//pthread_join(pool_thread[pool_index], NULL);
       }
     }
     f2__free(to_ptr(pool_thread));

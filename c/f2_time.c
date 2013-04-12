@@ -130,10 +130,6 @@ int clock_gettime(clockid_t clk_id, struct timespec *tp) {
 
 
 
-void raw__nanosleep(u64 nanoseconds) {
-  raw__processor_thread_handler__nanosleep(nanoseconds);
-}
-
 void raw__fast_spin_sleep_yield() {
   sched_yield();
 }

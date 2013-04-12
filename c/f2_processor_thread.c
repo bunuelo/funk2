@@ -115,10 +115,7 @@ void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
       status("funk2_processor_thread__join error: A deadlock was detected (e.g., two threads tried to join with each other); or thread specifies the calling thread.");
       break;
     case EINVAL:
-      status("funk2_processor_thread__join error: thread is not a joinable thread.");
-      break;
-    case EINVAL:
-      status("funk2_processor_thread__join error: Another thread is already waiting to join with this thread.");
+      status("funk2_processor_thread__join error: Thread is not a joinable thread OR Another thread is already waiting to join with this thread.");
       break;
     case ESRCH:
       status("funk2_processor_thread__join error: No thread with the ID thread could be found.");

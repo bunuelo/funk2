@@ -44,7 +44,7 @@ f2tid_t raw__gettid() {
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
   pthread_mutex_init(&(this->access_mutex), NULL);
-  this->processor_thread_list = NULL;
+  this->processor_thread_list_bin = NULL;
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {

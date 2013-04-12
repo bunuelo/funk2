@@ -63,12 +63,15 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_list_t)));
   funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
   
-  funk2_processor_thread__init(processor_thread, -1, start_function, args);
+  funk2_processor_thread__init(processor_thread, start_function, args);
   
   pthread_spin_lock(&(this->access_spinlock));
   new_processor_thread_node->next = this->processor_thread_list;
   this->processor_thread_list = new_processor_thread_node;
   pthread_spin_unlock(&(this->access_spinlock));
+  
+  funk2_processor_thread__start(processor_thread);
+  
   return processor_thread;
 }
 

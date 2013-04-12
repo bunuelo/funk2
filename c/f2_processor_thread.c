@@ -67,13 +67,19 @@ void* start_processor_thread_wrapper(void* data) {
   this->tid = raw__gettid();
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   void* return_value = (*(this->start_function))(this->args);
-  
+  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), this);
+  if (! success) {
+    error(nil, "start_processor_thread_wrapper error: failed to remove processor_thread from processor_thread_handler.");
+  }
   return return_value;
 }
 
-void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args) {
+void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
   this->start_function = start_function;
   this->args           = args;
+}
+
+void funk2_processor_thread__start(funk2_processor_thread_t* this) {
   int result = create_thread_with_large_stack(&(this->pthread), start_processor_thread_wrapper, this);
   if (result != 0) {
     printf("\nfunk2_processor_thread__init: error creating new pthread.\n");
@@ -83,7 +89,6 @@ void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, fun
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
-  //pthread_detach(this->pthread);
 }
 
 // never call this function directly from within a processor thread.

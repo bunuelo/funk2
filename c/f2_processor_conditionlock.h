@@ -25,11 +25,28 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PROCESSOR_TYPES__H
+#define F2__PROCESSOR_TYPES__H
+
+typedef struct funk2_processor_conditionlock_s funk2_processor_conditionlock_t;
+
+#endif // F2__PROCESSOR_CONDITIONLOCK__H
+
+
 #ifndef F2__PROCESSOR_CONDITIONLOCK__H
 #define F2__PROCESSOR_CONDITIONLOCK__H
 
 #include "f2_global.h"
 
+struct funk2_processor_conditionlock_s {
+  pthread_mutex_t mutex;
+  pthread_cond_t  cond;
+};
 
+void funk2_processor_conditionlock__init     (funk2_processor_conditionlock_t* this);
+void funk2_processor_conditionlock__destroy  (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__wait     (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__signal   (funk2_processor_conditionlock_t* this);
+s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* this);
 
 #endif // F2__PROCESSOR_CONDITIONLOCK__H

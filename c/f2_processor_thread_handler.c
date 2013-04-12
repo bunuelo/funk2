@@ -64,7 +64,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   pthread_t                      tid  = pthread_self();
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
-    if (memcmp(&(iter->processor_thread.pthread), &tid, sizeof(pthread_t)) == 0) {
+    if (pthread_equal(iter->processor_thread.pthread, tid)) {
       funk2_processor_mutex__unlock(&(this->access_mutex));
       return &(iter->processor_thread);
     }
@@ -80,7 +80,7 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     funk2_processor_thread_list_t* next = iter->next;
-    if (memcmp(&(iter->processor_thread.pthread), &tid, sizeof(pthread_t)) == 0) {
+    if (pthread_equal(iter->processor_thread.pthread, tid)) {
       if (prev) {
 	prev->next = next;
       } else {

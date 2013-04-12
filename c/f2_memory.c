@@ -238,7 +238,7 @@ ptr funk2_memory__find_or_create_free_splittable_funk2_memblock_and_unfree(funk2
     this->pool[pool_index].should_enlarge_memory_now                         = boolean__true;
     funk2_user_thread_controller__need_wait__set(&(__funk2.user_thread_controller), boolean__true);
     pthread_t my_pthread = pthread_self();
-    if (memcmp(&my_pthread, &(this->memory_handling_thread), sizeof(pthread_t)) == 0) {
+    if (pthread_equal(my_pthread, this->memory_handling_thread)) {
       if (! this->bootstrapping_mode) {
 	funk2_user_thread_controller__wait_for_all_user_threads_to_wait(&(__funk2.user_thread_controller));
       }

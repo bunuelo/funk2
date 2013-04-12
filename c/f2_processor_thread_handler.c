@@ -43,8 +43,8 @@ f2tid_t raw__gettid() {
 // funk2_processor_thread_handler
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
-  pthread_spin_init(&(this->access_spinlock), PTHREAD_PROCESS_PRIVATE);
-  this->processor_thread_list       = NULL;
+  pthread_mutex_init(&(this->access_mutex), NULL);
+  this->processor_thread_list = NULL;
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {
@@ -55,7 +55,7 @@ void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* t
     f2__free(to_ptr(iter));
     iter = next;
   }
-  pthread_spin_destroy(&(this->access_spinlock));
+  pthread_mutex_destroy(&(this->access_mutex));
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
@@ -65,10 +65,10 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   
   funk2_processor_thread__init(processor_thread, start_function, args);
   
-  pthread_spin_lock(&(this->access_spinlock));
+  pthread_mutex_lock(&(this->access_mutex));
   new_processor_thread_node->next = this->processor_thread_list;
   this->processor_thread_list = new_processor_thread_node;
-  pthread_spin_unlock(&(this->access_spinlock));
+  pthread_mutex_unlock(&(this->access_mutex));
   
   funk2_processor_thread__start(processor_thread);
   
@@ -78,7 +78,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
 boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_t* processor_thread) {
   boolean_t                      success = boolean__false;
   funk2_processor_thread_list_t* prev    = NULL;
-  pthread_spin_lock(&(this->access_spinlock));
+  pthread_mutex_lock(&(this->access_mutex));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter != NULL) {
     funk2_processor_thread_list_t* next = iter->next;
@@ -96,22 +96,22 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
     prev = iter;
     iter = next;
   }
-  pthread_spin_unlock(&(this->access_spinlock));
+  pthread_mutex_unlock(&(this->access_mutex));
   return success;
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__lookup_tid(funk2_processor_thread_handler_t* this, f2tid_t tid) {
-  pthread_spin_lock(&(this->access_spinlock));
+  pthread_mutex_lock(&(this->access_mutex));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter) {
     if (iter->processor_thread.tid == tid) {
       funk2_processor_thread_t* return_value = &(iter->processor_thread);
-      pthread_spin_unlock(&(this->access_spinlock));
+      pthread_mutex_unlock(&(this->access_mutex));
       return return_value;
     }
     iter = iter->next;
   }
-  pthread_spin_unlock(&(this->access_spinlock));
+  pthread_mutex_unlock(&(this->access_mutex));
   return NULL;
 }
 

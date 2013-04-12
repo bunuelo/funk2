@@ -108,7 +108,7 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
 }
 
 void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
-  int join_result = pthread_join(this->pthread);
+  int join_result = pthread_join(this->pthread, NULL);
   if (join_result != 0) {
     switch(join_result) {
     case EDEADLK:

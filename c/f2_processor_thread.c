@@ -66,7 +66,9 @@ void* start_processor_thread_wrapper(void* data) {
   funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
   this->tid = raw__gettid();
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
-  return (*(this->start_function))(this->args);
+  void* return_value = (*(this->start_function))(this->args);
+  
+  return return_value;
 }
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, u64 index, funk2_processor_thread_function_pointer_t start_function, void* args) {
@@ -105,7 +107,7 @@ void __funk2__nanosleep(u64 nanoseconds) {
 #endif // NANOSLEEP
 }
 
-// must only be called by owner
+// must only be called by owner (use raw__nanosleep from f2_time.c)
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
   u64 start_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   __funk2__nanosleep(nanoseconds);

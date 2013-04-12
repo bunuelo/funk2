@@ -72,6 +72,29 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   return processor_thread;
 }
 
+boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_t* processor_thread) {
+  boolean_t success = boolean__false;
+  funk2_processor_thread_list_t* prev = NULL;
+  pthread_spin_lock(&(this->access_spinlock));
+  funk2_processor_thread_list_t* iter = this->processor_thread_list;
+  while (iter) {
+    funk2_processor_thread_list_t* next = iter->next;
+    if (iter->processor_thread == processor_thread) {
+      success = boolean__true;
+      if (prev) {
+	prev->next = next;
+      } else {
+	this->processor_thread_list = next;
+      }
+      funk2_processor_thread__destroy(&(iter->processor_thread));
+      f2__free(to_ptr(iter));
+    }
+    iter = next;
+  }
+  pthread_spin_unlock(&(this->access_spinlock));
+  return success;
+}
+
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
   pthread_t                      tid  = pthread_self();
   pthread_spin_lock(&(this->access_spinlock));
@@ -86,26 +109,6 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   }
   pthread_spin_unlock(&(this->access_spinlock));
   return NULL;
-}
-
-void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handler_t* this, pthread_t tid) {
-  funk2_processor_thread_list_t* prev = NULL;
-  pthread_spin_lock(&(this->access_spinlock));
-  funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  while (iter) {
-    funk2_processor_thread_list_t* next = iter->next;
-    if (pthread_equal(iter->processor_thread.pthread, tid)) {
-      if (prev) {
-	prev->next = next;
-      } else {
-	this->processor_thread_list = next;
-      }
-      funk2_processor_thread__destroy(&(iter->processor_thread));
-      f2__free(to_ptr(iter));
-    }
-    iter = next;
-  }
-  pthread_spin_unlock(&(this->access_spinlock));
 }
 
 s64 this_processor_thread__try_get_pool_index() {

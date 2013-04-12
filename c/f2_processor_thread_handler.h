@@ -35,11 +35,11 @@ typedef struct funk2_processor_thread_handler_s {
   funk2_processor_thread_list_t* processor_thread_list;
 } funk2_processor_thread_handler_t;
 
-void                      funk2_processor_thread_handler__init(                    funk2_processor_thread_handler_t* this);
-void                      funk2_processor_thread_handler__destroy(                 funk2_processor_thread_handler_t* this);
+void                      funk2_processor_thread_handler__init                    (funk2_processor_thread_handler_t* this);
+void                      funk2_processor_thread_handler__destroy                 (funk2_processor_thread_handler_t* this);
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
-funk2_processor_thread_t* funk2_processor_thread_handler__myself(                  funk2_processor_thread_handler_t* this);
-void                      funk2_processor_thread_handler__remove_pthread(          funk2_processor_thread_handler_t* this, pthread_t tid);
+boolean_t                 funk2_processor_thread_handler__remove_processor_thread (funk2_processor_thread_handler_t* this, funk2_processor_thread_t* processor_thread);
+funk2_processor_thread_t* funk2_processor_thread_handler__myself                  (funk2_processor_thread_handler_t* this);
 
 s64 this_processor_thread__try_get_pool_index();
 u64 this_processor_thread__pool_index();

@@ -51,8 +51,8 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   
   funk2_processor_thread__init(processor_thread, -1, start_function, args);
   
-  this->processor_thread_next_index ++;
   pthread_spin_lock(&(this->access_spinlock));
+  this->processor_thread_next_index ++;
   new_processor_thread_node->next = this->processor_thread_list;
   this->processor_thread_list = new_processor_thread_node;
   pthread_spin_unlock(&(this->access_spinlock));
@@ -63,18 +63,15 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   pthread_t                      tid  = pthread_self();
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  pthread_spin_unlock(&(this->access_spinlock));
   while (iter) {
     if (pthread_equal(iter->processor_thread.pthread, tid)) {
-      pthread_spin_lock(&(this->access_spinlock));
       funk2_processor_thread_t* return_value = &(iter->processor_thread);
       pthread_spin_unlock(&(this->access_spinlock));
       return return_value;
     }
-    pthread_spin_lock(&(this->access_spinlock));
     iter = iter->next;
-    pthread_spin_unlock(&(this->access_spinlock));
   }
+  pthread_spin_unlock(&(this->access_spinlock));
   return NULL;
 }
 
@@ -82,26 +79,20 @@ void funk2_processor_thread_handler__remove_pthread(funk2_processor_thread_handl
   funk2_processor_thread_list_t* prev = NULL;
   pthread_spin_lock(&(this->access_spinlock));
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  pthread_spin_unlock(&(this->access_spinlock));
   while (iter) {
-    pthread_spin_lock(&(this->access_spinlock));
     funk2_processor_thread_list_t* next = iter->next;
-    pthread_spin_unlock(&(this->access_spinlock));
     if (pthread_equal(iter->processor_thread.pthread, tid)) {
       if (prev) {
-	pthread_spin_lock(&(this->access_spinlock));
 	prev->next = next;
-	pthread_spin_unlock(&(this->access_spinlock));
       } else {
-	pthread_spin_lock(&(this->access_spinlock));
 	this->processor_thread_list = next;
-	pthread_spin_unlock(&(this->access_spinlock));
       }
       funk2_processor_thread__destroy(&(iter->processor_thread));
       f2__free(to_ptr(iter));
     }
     iter = next;
   }
+  pthread_spin_unlock(&(this->access_spinlock));
 }
 
 s64 this_processor_thread__try_get_pool_index() {

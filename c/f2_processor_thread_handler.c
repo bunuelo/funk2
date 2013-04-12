@@ -82,7 +82,9 @@ boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processo
   funk2_processor_thread_list_t* iter = this->processor_thread_list;
   while (iter != NULL) {
     funk2_processor_thread_list_t* next = iter->next;
+    status("remove_processor_thread checking tid=" u64__fstr, (u64)(iter->processor_thread.tid));
     if (&(iter->processor_thread) == processor_thread) {
+      status("remove_processor_thread found tid=" u64__fstr, (u64)(iter->processor_thread.tid));
       success = boolean__true;
       if (prev != NULL) {
 	prev->next = next;

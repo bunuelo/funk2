@@ -43,10 +43,10 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__destroy(fun
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_execute(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
   this->done_count = 0;
   
-  funk2_processor_conditionlock__lock(&(this->everyone_done_mutex));
+  funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_mutex));
-  funk2_processor_conditionlock__broadcast(&(this->everyone_done_mutex));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;

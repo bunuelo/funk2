@@ -273,7 +273,7 @@ void funk2_user_thread_controller__remove_freed_fibers__user_process(funk2_user_
 
 void funk2_user_thread_controller__exit__init(funk2_user_thread_controller__exit_t* this) {
   this->start = boolean__false;
-  funk2_processor_conditionlock__init(&(this->done_count_mutex));
+  funk2_processor_conditionlock__init(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__init(&(this->everyone_done_conditionlock));
 }
 

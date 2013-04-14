@@ -25,12 +25,12 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__PROCESSOR_TYPES__H
-#define F2__PROCESSOR_TYPES__H
+#ifndef F2__PROCESSOR_CONDITIONLOCK__TYPES__H
+#define F2__PROCESSOR_CONDITIONLOCK__TYPES__H
 
 typedef struct funk2_processor_conditionlock_s funk2_processor_conditionlock_t;
 
-#endif // F2__PROCESSOR_CONDITIONLOCK__H
+#endif // F2__PROCESSOR_CONDITIONLOCK__TYPES__H
 
 
 #ifndef F2__PROCESSOR_CONDITIONLOCK__H

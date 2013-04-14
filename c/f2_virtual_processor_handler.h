@@ -49,13 +49,14 @@ struct funk2_virtual_processor_handler_s {
   u64                                    free_virtual_processor_thread_count;
   funk2_processor_mutex_t                virtual_processor_thread_processor_thread_hash_mutex;
   funk2_hash_t                           virtual_processor_thread_processor_thread_hash;
-  funk2_processor_mutex_t                virtual_processor_index_pthread_hash_mutex;
-  funk2_hash_t                           virtual_processor_index_pthread_hash;
+  funk2_processor_mutex_t                virtual_processor_index_tid_hash_mutex;
+  funk2_hash_t                           virtual_processor_index_tid_hash;
   u64                                    virtual_processor_count;
   funk2_virtual_processor_t**            virtual_processor;
   boolean_t                              hardware_affinities_enabled;
 };
 
+// do not use.  breaks pthread opacity contract.
 u64 pthread_as_u64(pthread_t pthread);
 
 void                              funk2_virtual_processor_handler__init                                                                (funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);

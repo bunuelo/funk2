@@ -27,11 +27,7 @@
 
 #include "funk2.h"
 
-// int pthread_num_processors_np(void);
-// int pthread_processor_bind_np(int request, pthread_spu_t *answer, pthread_spu_t spu, pthread_t tid);
-// int pthread_processor_id_np(int request, pthread_spu_t *answer, pthread_spu_t spu);
-
-
+// do not use.  breaks pthread opacity contract.
 u64 pthread_as_u64(pthread_t pthread) {
   u64   thread_id_number = 0;
   char* pthread_array = (char*)&pthread;
@@ -68,8 +64,8 @@ void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* th
     funk2_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 16);
   }
   {
-    funk2_processor_mutex__init(&(this->virtual_processor_index_pthread_hash_mutex));
-    funk2_hash__init(&(this->virtual_processor_index_pthread_hash), 16);
+    funk2_processor_mutex__init(&(this->virtual_processor_index_tid_hash_mutex));
+    funk2_hash__init(&(this->virtual_processor_index_tid_hash), 16);
   }
   this->virtual_processor_count     = virtual_processor_count;
   this->virtual_processor           = NULL;
@@ -113,8 +109,8 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
     funk2_hash__destroy(&(this->virtual_processor_thread_processor_thread_hash));
   }
   {
-    funk2_processor_mutex__destroy(&(this->virtual_processor_index_pthread_hash_mutex));
-    funk2_hash__destroy(&(this->virtual_processor_index_pthread_hash));
+    funk2_processor_mutex__destroy(&(this->virtual_processor_index_tid_hash_mutex));
+    funk2_hash__destroy(&(this->virtual_processor_index_tid_hash));
   }
 }
 
@@ -208,9 +204,9 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_assignmen
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_processor_thread_hash_mutex));
   }
   {
-    funk2_processor_mutex__lock(&(this->virtual_processor_index_pthread_hash_mutex));
-    funk2_hash__add(&(this->virtual_processor_index_pthread_hash), pthread_as_u64(virtual_processor_thread->processor_thread->pthread), (u64)virtual_processor_index);
-    funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
+    funk2_processor_mutex__lock(&(this->virtual_processor_index_tid_hash_mutex));
+    funk2_hash__add(&(this->virtual_processor_index_tid_hash), virtual_processor_thread->processor_thread->tid, (u64)virtual_processor_index);
+    funk2_processor_mutex__unlock(&(this->virtual_processor_index_tid_hash_mutex));
   }
   funk2_virtual_processor__know_of_one_more_assigned_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
 }
@@ -224,9 +220,9 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
     funk2_processor_mutex__unlock(&(this->virtual_processor_index_processor_thread_hash_mutex));
   }
   {
-    funk2_processor_mutex__lock(&(this->virtual_processor_index_pthread_hash_mutex));
-    funk2_hash__remove(&(this->virtual_processor_index_pthread_hash), pthread_as_u64(virtual_processor_thread->processor_thread->pthread));
-    funk2_processor_mutex__unlock(&(this->virtual_processor_index_pthread_hash_mutex));
+    funk2_processor_mutex__lock(&(this->virtual_processor_index_tid_hash_mutex));
+    funk2_hash__remove(&(this->virtual_processor_index_tid_hash), virtual_processor_thread->processor_thread->tid);
+    funk2_processor_mutex__unlock(&(this->virtual_processor_index_tid_hash_mutex));
   }
   funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
   { // add to free processor thread list if we don't already have too many free threads
@@ -254,8 +250,8 @@ s64 funk2_virtual_processor_handler__try_get_my_virtual_processor_index(funk2_vi
   if (__funk2.memory.bootstrapping_mode) {
     return 0;
   }
-  pthread_t pthread = pthread_self();
-  return funk2_hash__try_lookup(&(this->virtual_processor_index_pthread_hash), pthread_as_u64(pthread), (u64)-1);
+  f2tid_t tid = raw__gettid();
+  return funk2_hash__try_lookup(&(this->virtual_processor_index_tid_hash), tid, (u64)-1);
 }
 
 u64 funk2_virtual_processor_handler__my_virtual_processor_index(funk2_virtual_processor_handler_t* this) {

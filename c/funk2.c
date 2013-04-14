@@ -435,9 +435,6 @@ boolean_t funk2__handle(funk2_t* this) {
   return boolean__false; // should return true if we did something.
 }
 
-pthread_t separate_thread__thread;
-boolean_t separate_thread__done_booting;
-
 int funk2__run(funk2_t* this) {
   funk2__init(this, __funk2.argc, __funk2.argv);
   
@@ -489,24 +486,6 @@ int funk2__main(funk2_t* this, int argc, char** argv) {
     __funk2__nanosleep(10 * nanoseconds_per_second);
   }
   return 0;
-}
-
-void* funk2__separate_thread_bootup(void* param) {
-  int   argc = 2;
-  char* argv[3] = {"libfunk2.la", "--no-boot", (char*)NULL};
-  int result = funk2__main(&__funk2, argc, argv);
-  printf("funk2__separate_thread_bootup note: funk2__main exited with result=%d.", result);
-  return NULL;
-}
-
-void funk2__start_main_in_separate_thread() {
-  separate_thread__done_booting = boolean__false;
-  printf("\nfunk2: booting up funk2 in a separate thread.");
-  pthread_create(&separate_thread__thread, NULL, funk2__separate_thread_bootup, NULL);
-  while (! separate_thread__done_booting) {
-    usleep(1);
-  }
-  printf("\nfunk2: done booting up.\n");
 }
 
 // this should be the only global variable in funk2.

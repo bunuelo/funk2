@@ -30,6 +30,7 @@
 
 #include "f2_global.h"
 #include "f2_poller.h"
+#include "f2_processor_thread_handler.h"
 
 //#define F2__PROCESSOR_MUTEX__DEBUG
 
@@ -42,7 +43,7 @@ typedef struct funk2_processor_mutex_s {
   boolean_t       is_locked;
   char*           lock_source_file;
   int             lock_line_num;
-  pthread_t       lock_tid;
+  f2tid_t         lock_tid;
 #endif
   pthread_mutex_t pthread_mutex;
 } funk2_processor_mutex_t;

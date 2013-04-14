@@ -29,6 +29,7 @@
 #define F2__PROCESSOR_SPINLOCK__H
 
 #include "f2_global.h"
+#include "f2_processor_thread_handler.h"
 
 //#define F2__PROCESSOR_SPINLOCK__DEBUG
 
@@ -38,7 +39,7 @@ typedef struct funk2_processor_spinlock_s {
   boolean_t          is_locked;
   char*              lock_source_file;
   int                lock_line_num;
-  pthread_t          lock_tid;
+  f2tid_t            lock_tid;
 #endif
   pthread_spinlock_t pthread_spin;
 } funk2_processor_spinlock_t;

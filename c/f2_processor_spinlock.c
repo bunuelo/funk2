@@ -83,7 +83,7 @@ funk2_processor_spinlock_trylock_result_t funk2_processor_spinlock__raw_trylock(
     this->is_locked        = boolean__true;
     this->lock_source_file = (char*)lock_source_file;
     this->lock_line_num    = (int)lock_line_num;
-    this->lock_tid         = pthread_self();
+    this->lock_tid         = raw__gettid();
 #endif
     return funk2_processor_spinlock_trylock_result__success;
   }

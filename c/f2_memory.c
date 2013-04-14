@@ -523,14 +523,12 @@ boolean_t funk2_memory__save_image_to_file(funk2_memory_t* this, char* filename)
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	compress_memorypool_thread[pool_index] = raw__thread(&funk2_memory__save_image_to_file__thread_start_compress_memorypool, (void*)(&(this->pool[pool_index])));
-	//pthread_create(&(compress_memorypool_thread[pool_index]), NULL, &funk2_memory__save_image_to_file__thread_start_compress_memorypool, (void*)(&(this->pool[pool_index])));
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	raw__join(compress_memorypool_thread[pool_index]);
-	//pthread_join(compress_memorypool_thread[pool_index], NULL);
       }
     }
     f2__free(to_ptr(compress_memorypool_thread));
@@ -607,14 +605,12 @@ void funk2_memory__rebuild_memory_info_from_image(funk2_memory_t* this) {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	rebuild_trees_thread[pool_index] = raw__thread(&funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory, (void*)(&(this->pool[pool_index])));
-	//pthread_create(&(rebuild_trees_thread[pool_index]), NULL, &funk2_memory__rebuild_memory_info_from_image__thread_start_rebuild_memory, (void*)(&(this->pool[pool_index])));
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	raw__join(rebuild_trees_thread[pool_index]);
-	//pthread_join(rebuild_trees_thread[pool_index], NULL);
       }
     }
     f2__free(to_ptr(rebuild_trees_thread));
@@ -736,11 +732,9 @@ boolean_t funk2_memory__load_image_from_file(funk2_memory_t* this, char* filenam
 	f2tid_t* decompress_thread = (f2tid_t*)from_ptr(f2__malloc(sizeof(f2tid_t) * __funk2.system_processor.processor_count));
 	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  decompress_thread[pool_index] = raw__thread(&funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
-	  //pthread_create(&(decompress_thread[pool_index]), NULL, &funk2_memory__load_image_from_file__decompress_thread_start, (void*)(&(this->pool[pool_index])));
 	}
 	for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	  raw__join(decompress_thread[pool_index]);
-	  //pthread_join(decompress_thread[pool_index], NULL);
 	}
 	f2__free(to_ptr(decompress_thread));
       }

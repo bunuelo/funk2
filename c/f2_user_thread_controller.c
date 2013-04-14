@@ -570,7 +570,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 		   this->exit.start                             ||
 		   this->defragment__move_memory.start          ||
 		   this->defragment__fix_pointers.start))) {
-	  funk2_processor_conditionlock__wait(&(this->something_to_do_while_waiting_politely_cond), &(this->something_to_do_while_waiting_politely_conditionlock));
+	  funk2_processor_conditionlock__wait(&(this->something_to_do_while_waiting_politely_conditionlock));
 	}
 	funk2_processor_conditionlock__unlock(&(this->something_to_do_while_waiting_politely_conditionlock));
       } else {

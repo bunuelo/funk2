@@ -117,7 +117,7 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
   funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
   
-  funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_cond), &(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
   
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count --;

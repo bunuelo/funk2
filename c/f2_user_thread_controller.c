@@ -344,7 +344,7 @@ void funk2_user_thread_controller__defragment__move_memory__destroy(funk2_user_t
   {
     s64 index;
     for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
-      funk2_processor_mutex_destroy(&(this->user_process_already_waiting_mutex[index]));
+      funk2_processor_mutex__destroy(&(this->user_process_already_waiting_mutex[index]));
     }
   }
   

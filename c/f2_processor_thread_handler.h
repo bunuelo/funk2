@@ -28,6 +28,8 @@
 #ifndef F2__PROCESSOR_THREAD_HANDLER__H
 #define F2__PROCESSOR_THREAD_HANDLER__H
 
+#include "f2_processor_thread.h"
+
 f2tid_t raw__gettid();
 
 typedef struct funk2_processor_thread_handler_s {

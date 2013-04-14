@@ -39,6 +39,7 @@ typedef struct funk2_memory_s funk2_memory_t;
 #include "f2_processor_mutex.h"
 #include "f2_user_thread_controller.h"
 #include "f2_never_delete_list.h"
+#include "f2_processor_thread_handler.h"
 
 //#define DEBUG_MEMORY 1
 

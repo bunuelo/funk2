@@ -330,14 +330,12 @@ void funk2_garbage_collector__save_to_stream(funk2_garbage_collector_t* this, in
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	save_gc_pool_thread[pool_index] = raw__thread(&funk2_garbage_collector__save_to_stream__start_thread_create_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
-	//pthread_create(&(save_gc_pool_thread[pool_index]), NULL, &funk2_garbage_collector__save_to_stream__start_thread_create_garbage_collector_pool_buffer, (void*)(&(this->gc_pool[pool_index])));
       }
     }
     {
       s64 pool_index;
       for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {
 	raw__join(save_gc_pool_thread[pool_index]);
-	//pthread_join(save_gc_pool_thread[pool_index], NULL);
       }
     }
     f2__free(to_ptr(save_gc_pool_thread));

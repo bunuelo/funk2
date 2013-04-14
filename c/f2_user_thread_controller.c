@@ -213,7 +213,7 @@ void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thre
     funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
     this->done_count ++;
     funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
-    funk2_processor_conditionlock__broadcast(&(this->done_count_cond));
+    funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
     
     funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
   }

@@ -38,7 +38,7 @@ typedef struct funk2_user_thread_controller__touch_all_protected_alloc_arrays_s 
   boolean_t                       start;
   funk2_processor_conditionlock_t done_count_conditionlock;
   s64                             done_count;
-  funk2_procsssor_conditionlock_t everyone_done_conditionlock;
+  funk2_processor_conditionlock_t everyone_done_conditionlock;
   boolean_t                       everyone_done;
 } funk2_user_thread_controller__touch_all_protected_alloc_arrays_t;
 

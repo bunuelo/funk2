@@ -438,8 +438,6 @@ boolean_t funk2__handle(funk2_t* this) {
 int funk2__run(funk2_t* this) {
   funk2__init(this, __funk2.argc, __funk2.argv);
   
-  separate_thread__done_booting = boolean__true;
-  
   {
     funk2_poller_t poller;
     boolean_t      poller_needs_reset = boolean__true;

@@ -46,7 +46,7 @@ struct funk2_memory_s {
   funk2_memorypool_t* pool;
   ptr                 global_environment_ptr;
   f2ptr               global_environment_f2ptr;
-  pthread_t           memory_handling_thread;
+  f2tid_t             memory_handling_tid;
   boolean_t           bootstrapping_mode;
 };
 

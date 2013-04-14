@@ -25,6 +25,14 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PROCESSOR_MUTEX__TYPES__H
+#define F2__PROCESSOR_MUTEX__TYPES__H
+
+typedef struct funk2_processor_mutex_s funk2_processor_mutex_t;
+
+#endif // F2__PROCESSOR_MUTEX__TYPES__H
+
+
 #ifndef F2__PROCESSOR_MUTEX__H
 #define F2__PROCESSOR_MUTEX__H
 
@@ -36,7 +44,7 @@
 
 #define PROCESSOR_MUTEX__INITIALIZED_MAGIC ((u64)0xDEADBEEFDEADBEEF)
 
-typedef struct funk2_processor_mutex_s {
+struct funk2_processor_mutex_s {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   boolean_t       is_initialized;
   u64             initialized_magic;
@@ -46,7 +54,7 @@ typedef struct funk2_processor_mutex_s {
   f2tid_t         lock_tid;
 #endif
   pthread_mutex_t pthread_mutex;
-} funk2_processor_mutex_t;
+};
 
 typedef enum funk2_processor_mutex_trylock_result_e {
   funk2_processor_mutex_trylock_result__success = 0,

@@ -168,8 +168,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->virtual_processor_stack_index      = 0;
   this->processor_affinity_index           = -1;
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
-  pthread_mutex_init(&(this->pause_cond_mutex), NULL);
-  pthread_cond_init(&(this->pause_cond), NULL);
+  funk2_processor_conditionlock__init(&(this->paused_conditionlock));
   this->paused = boolean__false;
   funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
 }
@@ -177,8 +176,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {
   funk2_virtual_processor_thread__exit(this);
   funk2_processor_thread__destroy(this->processor_thread);
-  pthread_mutex_destroy(&(this->pause_cond_mutex));
-  pthread_cond_destroy(&(this->pause_cond));
+  funk2_processor_conditionlock__destroy(&(this->paused_conditionlock));
   funk2_poller__destroy(&(this->poller));
 }
 
@@ -211,24 +209,18 @@ void funk2_virtual_processor_thread__exit(funk2_virtual_processor_thread_t* this
 }
 
 void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread_t* this) {
-  pthread_mutex_lock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__lock(&(this->paused_conditionlock));
   this->paused = boolean__true;
-  pthread_mutex_unlock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
   
-  pthread_cond_wait_while(this->paused, &(this->pause_cond), &(this->pause_cond_mutex));
-  
-  //pthread_mutex_lock(&(this->pause_cond_mutex));
-  //while (this->paused) {
-  //pthread_cond_wait(&(this->pause_cond), &(this->pause_cond_mutex));
-  //}
-  //pthread_mutex_unlock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__wait_while(this->paused, &(this->paused_conditionlock));
 }
 
 void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* this) {
-  pthread_mutex_lock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__lock(&(this->paused_conditionlock));
   this->paused = boolean__false;
-  pthread_cond_signal(&(this->pause_cond));
-  pthread_mutex_unlock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
+  funk2_processor_conditionlock__signal(&(this->paused_conditionlock));
 }
 
 void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtual_processor_thread_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
@@ -239,11 +231,11 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
   int            virtual_processor_thread__lock_failed = 1;
   while ((this__lock_failed                     != 0) ||
 	 (virtual_processor_thread__lock_failed != 0)) {
-    this__lock_failed = pthread_mutex_trylock(&(this->pause_cond_mutex));
+    this__lock_failed = funk2_processor_conditionlock__trylock(&(this->paused_conditionlock));
     if (this__lock_failed == 0) {
-      virtual_processor_thread__lock_failed = pthread_mutex_trylock(&(virtual_processor_thread->pause_cond_mutex));
+      virtual_processor_thread__lock_failed = funk2_processor_conditionlock__trylock(&(virtual_processor_thread->paused_conditionlock));
       if (virtual_processor_thread__lock_failed != 0) {
-	pthread_mutex_unlock(&(this->pause_cond_mutex));
+	funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
 	raw__fast_spin_sleep_yield();
       }
     } else {
@@ -265,14 +257,14 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
     funk2_poller__destroy(&poller);
   }
   virtual_processor_thread->paused = boolean__false;
-  pthread_cond_signal(&(virtual_processor_thread->pause_cond));
-  pthread_mutex_unlock(&(virtual_processor_thread->pause_cond_mutex));
+  funk2_processor_conditionlock__unlock(&(virtual_processor_thread->paused_conditionlock));
+  funk2_processor_conditionlock__signal(&(virtual_processor_thread->paused_conditionlock));
   
   this->paused = boolean__true;
   while (this->paused) {
-    pthread_cond_wait(&(this->pause_cond), &(this->pause_cond_mutex));
+    funk2_processor_conditionlock__wait(&(this->paused_conditionlock));
   }
-  pthread_mutex_unlock(&(this->pause_cond_mutex));
+  funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
 }
 
 void funk2_virtual_processor_thread__assign_to_virtual_processor(funk2_virtual_processor_thread_t* this, u64 virtual_processor_assignment_index) {

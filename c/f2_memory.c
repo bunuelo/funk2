@@ -37,7 +37,10 @@ void funk2_memory__init(funk2_memory_t* this) {
   this->global_environment_f2ptr = nil;
   
   this->memory_handling_tid = raw__gettid();
-  this->bootstrapping_mode  = boolean__true;
+
+  funk2_processor_conditionlock__init(&(this->bootstrapping_mode_conditionlock));
+  
+  this->bootstrapping_mode = boolean__true;
   
   {
     int pool_index;
@@ -51,6 +54,22 @@ void funk2_memory__init(funk2_memory_t* this) {
 
 void funk2_memory__destroy(funk2_memory_t* this) {
   f2__free(to_ptr(this->pool));
+  funk2_processor_conditionlock__destroy(&(this->bootstrapping_mode_conditionlock));
+}
+
+void funk2_memory__end_bootstrapping(funk2_memory_t* this) {
+  funk2_processor_conditionlock__lock(&(this->bootstrapping_mode_conditionlock));
+  this->bootstrapping_mode = boolean__false;
+  funk2_processor_conditionlock__unlock(&(this->bootstrapping_mode_conditionlock));
+  funk2_processor_conditionlock__broadcast(&(this->bootstrapping_mode_conditionlock));
+}
+
+void funk2_memory__wait_until_after_bootstrapping(funk2_memory_t* this) {
+  funk2_processor_conditionlock__lock(&(this->bootstrapping_mode_conditionlock));
+  while (this->bootstrapping_mode) {
+    funk2_processor_conditionlock__wait(&(this->bootstrapping_mode_conditionlock));
+  }
+  funk2_processor_conditionlock__unlock(&(this->bootstrapping_mode_conditionlock));
 }
 
 void funk2_memory__handle(funk2_memory_t* this) {

@@ -350,7 +350,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   resume_gc();
   
   status("bootstrapping complete.");
-  this->memory.bootstrapping_mode = boolean__false;
+  funk2_memory__end_bootstrapping(&(__funk2.memory));
 }
 
 void f2__destroy() {

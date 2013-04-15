@@ -44,11 +44,12 @@ typedef struct funk2_memory_s funk2_memory_t;
 //#define DEBUG_MEMORY 1
 
 struct funk2_memory_s {
-  funk2_memorypool_t* pool;
-  ptr                 global_environment_ptr;
-  f2ptr               global_environment_f2ptr;
-  f2tid_t             memory_handling_tid;
-  boolean_t           bootstrapping_mode;
+  funk2_memorypool_t*             pool;
+  ptr                             global_environment_ptr;
+  f2ptr                           global_environment_f2ptr;
+  f2tid_t                         memory_handling_tid;
+  funk2_processor_conditionlock_t bootstrapping_mode_conditionlock;
+  boolean_t                       bootstrapping_mode;
 };
 
 #define nil ((f2ptr)0)
@@ -133,6 +134,8 @@ void safe_read(int fd, ptr p, f2size_t object_size);
 
 void      funk2_memory__init                                                    (funk2_memory_t* this);
 void      funk2_memory__destroy                                                 (funk2_memory_t* this);
+void      funk2_memory__end_bootstrapping                                       (funk2_memory_t* this);
+void      funk2_memory__wait_until_after_bootstrapping                          (funk2_memory_t* this);
 void      funk2_memory__handle                                                  (funk2_memory_t* this);
 void      funk2_memory__print_gc_stats                                          (funk2_memory_t* this);
 boolean_t funk2_memory__is_reasonably_valid_funk2_memblock_ptr                  (funk2_memory_t* this, ptr p);

@@ -70,9 +70,7 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   this->tid = raw__gettid();
-  while (__funk2.memory.bootstrapping_mode) {
-    __funk2__nanosleep(1000000);
-  }
+  funk2_memory__wait_until_after_bootstrapping(&(__funk2.memory));
   status("starting virtual_processor_thread.");
   while (! (this->exit)) {
     u64 virtual_processor_assignment_index = -1;

@@ -56,9 +56,6 @@ struct funk2_virtual_processor_handler_s {
   boolean_t                              hardware_affinities_enabled;
 };
 
-// do not use.  breaks pthread opacity contract.
-u64 pthread_as_u64(pthread_t pthread);
-
 void                              funk2_virtual_processor_handler__init                                                                (funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);
 void                              funk2_virtual_processor_handler__destroy                                                             (funk2_virtual_processor_handler_t* this);
 void                              funk2_virtual_processor_handler__destroy_all_virtual_processor_threads                               (funk2_virtual_processor_handler_t* this);

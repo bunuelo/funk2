@@ -43,7 +43,7 @@ f2tid_t raw__gettid() {
 // funk2_processor_thread_handler
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
-  funk2_thread_safe_hash__init(&(this->processor_thread_tid_hash), 10);
+  funk2_thread_safe_hash__init(&(this->processor_thread_tid_hash), 16);
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {

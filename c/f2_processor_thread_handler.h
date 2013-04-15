@@ -29,6 +29,7 @@
 #define F2__PROCESSOR_THREAD_HANDLER__H
 
 #include "f2_processor_thread.h"
+#include "f2_thread_safe_hash.h"
 
 f2tid_t raw__gettid();
 

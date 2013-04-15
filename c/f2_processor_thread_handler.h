@@ -33,8 +33,7 @@
 f2tid_t raw__gettid();
 
 typedef struct funk2_processor_thread_handler_s {
-  pthread_mutex_t                access_mutex;
-  funk2_processor_thread_list_t* processor_thread_list;
+  funk2_thread_safe_hash_t processor_thread_tid_hash;
 } funk2_processor_thread_handler_t;
 
 void                      funk2_processor_thread_handler__init                    (funk2_processor_thread_handler_t* this);

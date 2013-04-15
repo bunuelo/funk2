@@ -43,83 +43,44 @@ f2tid_t raw__gettid() {
 // funk2_processor_thread_handler
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
-  pthread_mutex_init(&(this->access_mutex), NULL);
-  this->processor_thread_list = NULL;
+  funk2_thread_safe_hash__init(&(this->processor_thread_tid_hash), 10);
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {
-  funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  while (iter) {
-    funk2_processor_thread_list_t* next = iter->next;
-    funk2_processor_thread__destroy(&(iter->processor_thread));
-    f2__free(to_ptr(iter));
-    iter = next;
-  }
-  pthread_mutex_destroy(&(this->access_mutex));
+  funk2_thread_safe_hash__value__iteration(&(this->processor_thread_tid_hash), processor_thread_ptr,
+					   funk2_processor_thread_t* processor_thread = (funk2_processor_thread_t*)from_ptr(processor_thread_ptr);
+					   funk2_processor_thread__destroy(processor_thread);
+					   f2__free(to_ptr(processor_thread));
+					   );
+  funk2_thread_safe_hash__destroy(&(this->processor_thread_tid_hash));
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
   status("processor_thread_handler starting new processor thread.");
-  funk2_processor_thread_list_t* new_processor_thread_node = (funk2_processor_thread_list_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_list_t)));
-  funk2_processor_thread_t*      processor_thread          = &(new_processor_thread_node->processor_thread);
+  funk2_processor_thread_t* processor_thread = (funk2_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_t)));
   
   funk2_processor_thread__init(processor_thread, start_function, args);
   
-  pthread_mutex_lock(&(this->access_mutex));
-  new_processor_thread_node->next = this->processor_thread_list;
-  this->processor_thread_list = new_processor_thread_node;
-  pthread_mutex_unlock(&(this->access_mutex));
-  
   funk2_processor_thread__start(processor_thread);
+  
+  funk2_thread_safe_hash__add(&(this->processor_thread_tid_hash), processor_thread->tid, processor_thread);
   
   return processor_thread;
 }
 
-boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processor_thread_handler_t* this, funk2_processor_thread_t* processor_thread) {
-  boolean_t                      success = boolean__false;
-  funk2_processor_thread_list_t* prev    = NULL;
-  pthread_mutex_lock(&(this->access_mutex));
-  funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  while (iter != NULL) {
-    funk2_processor_thread_list_t* next = iter->next;
-    status("remove_processor_thread checking tid=" u64__fstr, (u64)(iter->processor_thread.tid));
-    if (&(iter->processor_thread) == processor_thread) {
-      status("remove_processor_thread found tid=" u64__fstr, (u64)(iter->processor_thread.tid));
-      success = boolean__true;
-      if (prev != NULL) {
-	prev->next = next;
-      } else {
-	this->processor_thread_list = next;
-      }
-      funk2_processor_thread__destroy(&(iter->processor_thread));
-      f2__free(to_ptr(iter));
-      break;
-    }
-    prev = iter;
-    iter = next;
-  }
-  pthread_mutex_unlock(&(this->access_mutex));
+boolean_t funk2_processor_thread_handler__remove_processor_thread(funk2_processor_thread_handler_t* this, f2tid_t tid) {
+  boolean_t success = funk2_thread_safe_hash__remove(&(this->processor_thread_tid_hash), tid);
   return success;
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__lookup_tid(funk2_processor_thread_handler_t* this, f2tid_t tid) {
-  pthread_mutex_lock(&(this->access_mutex));
-  funk2_processor_thread_list_t* iter = this->processor_thread_list;
-  while (iter) {
-    if (iter->processor_thread.tid == tid) {
-      funk2_processor_thread_t* return_value = &(iter->processor_thread);
-      pthread_mutex_unlock(&(this->access_mutex));
-      return return_value;
-    }
-    iter = iter->next;
-  }
-  pthread_mutex_unlock(&(this->access_mutex));
-  return NULL;
+  u64 result = funk2_thread_safe_hash__try_lookup(&(this->processor_thread_tid_hash), tid, (u64)to_ptr(NULL));
+  return (funk2_processor_thread_t*)from_ptr(result);
 }
 
 funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor_thread_handler_t* this) {
-  f2tid_t tid = raw__gettid();
-  return funk2_processor_thread_handler__lookup_tid(this, tid);
+  f2tid_t my_tid = raw__gettid();
+  return funk2_processor_thread_handler__lookup_tid(this, my_tid);
 }
 
 s64 this_processor_thread__try_get_pool_index() {

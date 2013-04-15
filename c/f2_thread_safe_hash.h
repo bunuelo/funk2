@@ -42,21 +42,22 @@ struct funk2_thread_safe_hash_bin_node_s {
 
 typedef struct funk2_thread_safe_hash_s funk2_thread_safe_hash_t;
 struct funk2_thread_safe_hash_s {
-  u64                     key_count;
-  u64                     bin_num_power;
+  u64                                 key_count;
+  u64                                 bin_num_power;
   funk2_thread_safe_hash_bin_node_t** bin_array;
+  funk2_processor_spinlock_t*         bin_spinlock;
 };
 
-u64                         funk2_thread_safe_hash__bin_count           (funk2_thread_safe_hash_t* this);
-void                        funk2_thread_safe_hash__init                (funk2_thread_safe_hash_t* this, u64 bin_num_power);
-void                        funk2_thread_safe_hash__destroy             (funk2_thread_safe_hash_t* this);
-void                        funk2_thread_safe_hash__remove_all          (funk2_thread_safe_hash_t* this);
-void                        funk2_thread_safe_hash__add                 (funk2_thread_safe_hash_t* this, u64 key, u64 value);
-boolean_t                   funk2_thread_safe_hash__remove              (funk2_thread_safe_hash_t* this, u64 key);
+u64                                     funk2_thread_safe_hash__bin_count           (funk2_thread_safe_hash_t* this);
+void                                    funk2_thread_safe_hash__init                (funk2_thread_safe_hash_t* this, u64 bin_num_power);
+void                                    funk2_thread_safe_hash__destroy             (funk2_thread_safe_hash_t* this);
+void                                    funk2_thread_safe_hash__remove_all          (funk2_thread_safe_hash_t* this);
+void                                    funk2_thread_safe_hash__add                 (funk2_thread_safe_hash_t* this, u64 key, u64 value);
+boolean_t                               funk2_thread_safe_hash__remove              (funk2_thread_safe_hash_t* this, u64 key);
 funk2_thread_safe_hash_keyvalue_pair_t* funk2_thread_safe_hash__lookup_keyvalue_pair(funk2_thread_safe_hash_t* this, u64 key);
-u64                         funk2_thread_safe_hash__lookup              (funk2_thread_safe_hash_t* this, u64 key);
-u64                         funk2_thread_safe_hash__try_lookup          (funk2_thread_safe_hash_t* this, u64 key, u64 fail_value);
-boolean_t                   funk2_thread_safe_hash__contains            (funk2_thread_safe_hash_t* this, u64 key);
+u64                                     funk2_thread_safe_hash__lookup              (funk2_thread_safe_hash_t* this, u64 key);
+u64                                     funk2_thread_safe_hash__try_lookup          (funk2_thread_safe_hash_t* this, u64 key, u64 fail_value);
+boolean_t                               funk2_thread_safe_hash__contains            (funk2_thread_safe_hash_t* this, u64 key);
 
 #define funk2_thread_safe_hash__iteration(this, funk2_thread_safe_hash__iteration__user_key, funk2_thread_safe_hash__iteration__user_value, code) {			\
     funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this  = (this);		\

@@ -103,7 +103,7 @@ void* raw__join(f2tid_t tid) {
     error(nil, "raw__join failed to lookup processor_thread from processor_thread_handler.");
   }
   void*     result  = funk2_processor_thread__join(processor_thread);
-  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), processor_thread);
+  boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), tid);
   if (! success) {
     status("raw__join failed to remove processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);
     error(nil, "raw__join failed to remove processor_thread from processor_thread_handler.");

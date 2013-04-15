@@ -70,14 +70,8 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 void* funk2_virtual_processor_thread__start_function(void* args) {
   funk2_virtual_processor_thread_t* this = (funk2_virtual_processor_thread_t*)args;
   this->tid = raw__gettid();
-  {
-    funk2_poller_t poller;
-    funk2_poller__init(&poller, 0.01, poller__deep_sleep_average_length);
-    funk2_poller__reset(&poller);
-    while (__funk2.memory.bootstrapping_mode) {
-      funk2_poller__sleep(&poller);
-    }
-    funk2_poller__destroy(&poller);
+  while (__funk2.memory.bootstrapping_mode) {
+    __funk2__nanosleep(1000000);
   }
   status("starting virtual_processor_thread.");
   while (! (this->exit)) {

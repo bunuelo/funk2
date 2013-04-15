@@ -28,36 +28,59 @@
 #include "funk2.h"
 
 void funk2_processor_conditionlock__init(funk2_processor_conditionlock_t* this) {
+  this->initialized_magic = PROCESSOR_CONDTIONLOCK_MAGIC;
   pthread_mutex_init(&(this->mutex), NULL);
   pthread_cond_init(&(this->cond), NULL);
 }
 
 void funk2_processor_conditionlock__destroy(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to destroy uninitialized.");
+  }
+  this->initialized_magic = 0;
   pthread_mutex_destroy(&(this->mutex));
   pthread_cond_destroy(&(this->cond));
 }
 
 s64 funk2_processor_conditionlock__trylock(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to trylock uninitialized.");
+  }
   return pthread_mutex_trylock(&(this->mutex));
 }
 
 s64 funk2_processor_conditionlock__lock(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to lock uninitialized.");
+  }
   return pthread_mutex_lock(&(this->mutex));
 }
 
 s64 funk2_processor_conditionlock__unlock(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to unlock uninitialized.");
+  }
   return pthread_mutex_unlock(&(this->mutex));
 }
 
 s64 funk2_processor_conditionlock__wait(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to wait uninitialized.");
+  }
   return pthread_cond_wait(&(this->cond), &(this->mutex));
 }
 
 s64 funk2_processor_conditionlock__signal(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to signal uninitialized.");
+  }
   return pthread_cond_signal(&(this->cond));
 }
 
 s64 funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* this) {
+  if (this->initialized_magic != PROCESSOR_CONDTIONLOCK_MAGIC) {
+    error(nil, "funk2_processor_conditionlock attempt to broadcast uninitialized.");
+  }
   return pthread_cond_broadcast(&(this->cond));
 }
 

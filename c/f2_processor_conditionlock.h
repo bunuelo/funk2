@@ -38,7 +38,10 @@ typedef struct funk2_processor_conditionlock_s funk2_processor_conditionlock_t;
 
 #include "f2_global.h"
 
+#define PROCESSOR_CONDTIONLOCK_MAGIC ((u64)0xFEEDDEADFEEDDEAD)
+
 struct funk2_processor_conditionlock_s {
+  u64             initialized_magic;
   pthread_mutex_t mutex;
   pthread_cond_t  cond;
 };

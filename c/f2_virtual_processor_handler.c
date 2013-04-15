@@ -27,21 +27,6 @@
 
 #include "funk2.h"
 
-// do not use.  breaks pthread opacity contract.
-u64 pthread_as_u64(pthread_t pthread) {
-  u64   thread_id_number = 0;
-  char* pthread_array = (char*)&pthread;
-  {
-    s64 index;
-    for (index = 0; index < (sizeof(pthread_t) / sizeof(char)); index ++) {
-      u64 value = (u8)pthread_array[index];
-      thread_id_number += (value << (index << 3));
-    }
-  }
-  return thread_id_number;
-}
-
-
 // funk2_virtual_processor_handler
 
 void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_count) {

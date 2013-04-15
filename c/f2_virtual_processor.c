@@ -116,8 +116,11 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
 	  }
 	}
 	do {
-	  did_something = f2processor__execute_next_bytecodes(processor, cause);
-	} while (did_something);
+	  boolean_t did_something_this_loop = f2processor__execute_next_bytecodes(processor, cause);
+	  if (did_something_this_loop) {
+	    did_something = boolean__true;
+	  }
+	} while (did_something_this_loop);
 	funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
 	this->execute_bytecodes_current_virtual_processor_thread = NULL;
 	funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);

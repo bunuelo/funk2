@@ -63,7 +63,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   
   funk2_processor_thread__start(processor_thread);
   
-  funk2_thread_safe_hash__add(&(this->processor_thread_tid_hash), processor_thread->tid, processor_thread);
+  funk2_thread_safe_hash__add(&(this->processor_thread_tid_hash), processor_thread->tid, (u64)to_ptr(processor_thread));
   
   return processor_thread;
 }

@@ -115,7 +115,9 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
 	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
 	  }
 	}
-	did_something = f2processor__execute_next_bytecodes(processor, cause);
+	do {
+	  did_something = f2processor__execute_next_bytecodes(processor, cause);
+	} while (did_something);
 	funk2_scheduler_thread_controller__check_user_wait_politely(&(__funk2.scheduler_thread_controller));
 	this->execute_bytecodes_current_virtual_processor_thread = NULL;
 	funk2_virtual_processor__push_spinning_virtual_processor_thread(this, virtual_processor_thread);

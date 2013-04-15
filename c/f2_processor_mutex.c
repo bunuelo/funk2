@@ -102,6 +102,8 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     funk2_processor_mutex__error();
   }
 #endif
+  pthread_mutex_lock(&(this->pthread_mutex));
+  /*
   {
     funk2_poller_t poller;
     boolean_t      poller_initialized = boolean__false;
@@ -127,6 +129,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
       funk2_poller__destroy(&poller);
     }
   }
+  */
 }
 
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {

@@ -28,7 +28,7 @@
 #ifndef F2__THREAD_SAFE_HASH__H
 #define F2__THREAD_SAFE_HASH__H
 
-#include "f2_processor_spinlock.h"
+#include "f2_processor_mutex.h"
 
 typedef struct funk2_thread_safe_hash_keyvalue_pair_s funk2_thread_safe_hash_keyvalue_pair_t;
 struct funk2_thread_safe_hash_keyvalue_pair_s {
@@ -47,7 +47,7 @@ struct funk2_thread_safe_hash_s {
   u64                                 key_count;
   u64                                 bin_num_power;
   funk2_thread_safe_hash_bin_node_t** bin_array;
-  funk2_processor_spinlock_t*         bin_spinlock;
+  funk2_processor_mutex_t*            bin_mutex;
 };
 
 u64                                     funk2_thread_safe_hash__bin_count           (funk2_thread_safe_hash_t* this);

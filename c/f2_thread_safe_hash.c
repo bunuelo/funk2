@@ -40,10 +40,10 @@ void funk2_thread_safe_hash__init(funk2_thread_safe_hash_t* this, u64 bin_num_po
     memset(this->bin_array, 0, sizeof(funk2_thread_safe_hash_bin_node_t*) * bin_count);
   }
   {
-    this->bin_spinlock = (funk2_processor_spinlock_t*)from_ptr(f2__malloc(sizeof(funk2_processor_spinlock_t) * bin_count));
+    this->bin_mutex = (funk2_processor_mutex_t*)from_ptr(f2__malloc(sizeof(funk2_processor_mutex_t) * bin_count));
     s64 index;
     for (index = 0; index < bin_count; index ++) {
-      funk2_processor_spinlock__init(&(this->bin_spinlock[index]));
+      funk2_processor_mutex__init(&(this->bin_mutex[index]));
     }
   }
 }
@@ -55,10 +55,10 @@ void funk2_thread_safe_hash__destroy(funk2_thread_safe_hash_t* this) {
   {
     s64 index;
     for (index = 0; index < bin_count; index ++) {
-      funk2_processor_spinlock__destroy(&(this->bin_spinlock[index]));
+      funk2_processor_mutex__destroy(&(this->bin_mutex[index]));
     }
   }
-  f2__free(to_ptr(this->bin_spinlock));
+  f2__free(to_ptr(this->bin_mutex));
 }
 
 void funk2_thread_safe_hash__remove_all(funk2_thread_safe_hash_t* this) {
@@ -82,8 +82,8 @@ void funk2_thread_safe_hash__add(funk2_thread_safe_hash_t* this, u64 key, u64 va
   u64                         hash_value      = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64                         hash_value_mask = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
   u64                         index           = hash_value & hash_value_mask;
-  funk2_processor_spinlock_t* bin_spinlock    = &(this->bin_spinlock[index]);
-  funk2_processor_spinlock__lock(bin_spinlock);
+  funk2_processor_mutex_t* bin_mutex    = &(this->bin_mutex[index]);
+  funk2_processor_mutex__lock(bin_mutex);
   {
     funk2_thread_safe_hash_keyvalue_pair_t* keyvalue_pair   = NULL;
     {
@@ -113,7 +113,7 @@ void funk2_thread_safe_hash__add(funk2_thread_safe_hash_t* this, u64 key, u64 va
       keyvalue_pair->value = value;
     }
   }
-  funk2_processor_spinlock__unlock(bin_spinlock);
+  funk2_processor_mutex__unlock(bin_mutex);
 }
 
 boolean_t funk2_thread_safe_hash__remove(funk2_thread_safe_hash_t* this, u64 key) {
@@ -123,8 +123,8 @@ boolean_t funk2_thread_safe_hash__remove(funk2_thread_safe_hash_t* this, u64 key
     u64                         hash_value      = (key__hash_value * PRIME_NUMBER__16_BIT);
     u64                         hash_value_mask = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
     u64                         index           = hash_value & hash_value_mask;
-    funk2_processor_spinlock_t* bin_spinlock    = &(this->bin_spinlock[index]);
-    funk2_processor_spinlock__lock(bin_spinlock);
+    funk2_processor_mutex_t* bin_mutex    = &(this->bin_mutex[index]);
+    funk2_processor_mutex__lock(bin_mutex);
     {
       funk2_thread_safe_hash_bin_node_t* prev = NULL;
       funk2_thread_safe_hash_bin_node_t* iter = this->bin_array[index];
@@ -147,7 +147,7 @@ boolean_t funk2_thread_safe_hash__remove(funk2_thread_safe_hash_t* this, u64 key
 	iter = next;
       }
     }
-    funk2_processor_spinlock__unlock(bin_spinlock);
+    funk2_processor_mutex__unlock(bin_mutex);
   }
   return key_was_removed;
 }
@@ -157,21 +157,21 @@ funk2_thread_safe_hash_keyvalue_pair_t* funk2_thread_safe_hash__lookup_keyvalue_
   u64                         hash_value      = (key__hash_value * PRIME_NUMBER__16_BIT);
   u64                         hash_value_mask = (0xffffffffffffffffll >> (64 - (this->bin_num_power)));
   u64                         index           = hash_value & hash_value_mask;
-  funk2_processor_spinlock_t* bin_spinlock    = &(this->bin_spinlock[index]);
-  funk2_processor_spinlock__lock(bin_spinlock);
+  funk2_processor_mutex_t* bin_mutex    = &(this->bin_mutex[index]);
+  funk2_processor_mutex__lock(bin_mutex);
   {
     funk2_thread_safe_hash_bin_node_t* keyvalue_pair_iter = this->bin_array[index];
     while(keyvalue_pair_iter) {
       funk2_thread_safe_hash_keyvalue_pair_t* keyvalue_pair      = &(keyvalue_pair_iter->keyvalue_pair);
       u64                         keyvalue_pair__key = keyvalue_pair->key;
       if (key == keyvalue_pair__key) {
-	funk2_processor_spinlock__unlock(bin_spinlock);
+	funk2_processor_mutex__unlock(bin_mutex);
 	return keyvalue_pair;
       }
       keyvalue_pair_iter = keyvalue_pair_iter->next;
     }
   }
-  funk2_processor_spinlock__unlock(bin_spinlock);
+  funk2_processor_mutex__unlock(bin_mutex);
   return nil;
 }
 

@@ -150,8 +150,6 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
       //f2__this__fiber__yield(cause);
       lock_tries ++;
       if (lock_tries < 1000) {
-	// spin fast
-      } else if (lock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {

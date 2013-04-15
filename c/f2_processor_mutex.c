@@ -103,33 +103,6 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 #endif
   pthread_mutex_lock(&(this->pthread_mutex));
-  /*
-  {
-    funk2_poller_t poller;
-    boolean_t      poller_initialized = boolean__false;
-    u64            lock_tries         = 0;
-    while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-      if (lock_tries < 1000) {
-	// spin fast
-	lock_tries ++;
-      } else if (lock_tries < 2000) {
-	raw__fast_spin_sleep_yield();
-	lock_tries ++;
-      } else {
-	if (! poller_initialized) {
-	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
-	  funk2_poller__reset(&poller);
-	  poller_initialized = boolean__true;
-	} else {
-	  funk2_poller__sleep(&poller);
-	}
-      }
-    }
-    if (poller_initialized) {
-      funk2_poller__destroy(&poller);
-    }
-  }
-  */
 }
 
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
@@ -152,9 +125,6 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
       }
       {
 	if (lock_tries < 1000) {
-	  // spin fast
-	  lock_tries ++;
-	} else if (lock_tries < 2000) {
 	  raw__fast_spin_sleep_yield();
 	  lock_tries ++;
 	} else {

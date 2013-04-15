@@ -69,20 +69,18 @@ s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* t
 	pthread_mutex_unlock(&((this)->mutex));				\
       }	else {								\
 	if (funk2_processor_conditionlock_helper__wait_tries < 1000) {	\
-	  /* spin super fast waiting for pure concurrent thread */	\
-	  funk2_processor_conditionlock_helper__wait_tries ++;		\
-	} else if (funk2_processor_conditionlock_helper__wait_tries < 2000) { \
 	  /* spin fast but yield to parallel threads */			\
 	  raw__fast_spin_sleep_yield();					\
 	  funk2_processor_conditionlock_helper__wait_tries ++;		\
-	} else if (funk2_processor_conditionlock_helper__wait_tries == 2000) { \
-	  funk2_poller__init(&funk2_processor_conditionlock_helper__poller, poller__deep_sleep_percentage, 10); \
-	  funk2_poller__reset(&funk2_processor_conditionlock_helper__poller); \
-	  funk2_processor_conditionlock_helper__poller_initialized = boolean__true; \
-	  funk2_processor_conditionlock_helper__wait_tries ++;		\
 	} else {							\
-	  /* spin but go into deep sleep (about 1% of CPU usage) */	\
-	  funk2_poller__sleep(&funk2_processor_conditionlock_helper__poller); \
+	  if (! funk2_processor_conditionlock_helper__poller_initialized) { \
+	    funk2_poller__init(&funk2_processor_conditionlock_helper__poller, poller__deep_sleep_percentage, 10); \
+	    funk2_poller__reset(&funk2_processor_conditionlock_helper__poller); \
+	    funk2_processor_conditionlock_helper__poller_initialized = boolean__true; \
+	  } else {							\
+	    /* spin but go into deep sleep (about 1% of CPU usage) */	\
+	    funk2_poller__sleep(&funk2_processor_conditionlock_helper__poller); \
+	  }								\
 	}								\
       }									\
     }									\
@@ -103,20 +101,18 @@ s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* t
 	pthread_mutex_unlock(pthread_mutex);				\
       }	else {								\
 	if (pthread_cond_wait_helper__wait_tries < 1000) {		\
-	  /* spin super fast waiting for pure concurrent thread */	\
-	  pthread_cond_wait_helper__wait_tries ++;			\
-	} else if (pthread_cond_wait_helper__wait_tries < 2000) {	\
 	  /* spin fast but yield to parallel threads */			\
 	  raw__fast_spin_sleep_yield();					\
 	  pthread_cond_wait_helper__wait_tries ++;			\
-	} else if (pthread_cond_wait_helper__wait_tries == 2000) {	\
-	  funk2_poller__init(&pthread_cond_wait_helper__poller, poller__deep_sleep_percentage, 10); \
-	  funk2_poller__reset(&pthread_cond_wait_helper__poller);	\
-	  pthread_cond_wait_helper__poller_initialized = boolean__true;	\
-	  pthread_cond_wait_helper__wait_tries ++;			\
 	} else {							\
-	  /* spin but go into deep sleep (about 1% of CPU usage) */	\
-	  funk2_poller__sleep(&pthread_cond_wait_helper__poller);	\
+	  if (! pthread_cond_wait_helper__poller_initialized) {		\
+	    funk2_poller__init(&pthread_cond_wait_helper__poller, poller__deep_sleep_percentage, 10); \
+	    funk2_poller__reset(&pthread_cond_wait_helper__poller);	\
+	    pthread_cond_wait_helper__poller_initialized = boolean__true; \
+	  } else {							\
+	    /* spin but go into deep sleep (about 1% of CPU usage) */	\
+	    funk2_poller__sleep(&pthread_cond_wait_helper__poller);	\
+	  }								\
 	}								\
       }									\
     }									\

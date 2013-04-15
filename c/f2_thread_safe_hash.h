@@ -28,6 +28,8 @@
 #ifndef F2__THREAD_SAFE_HASH__H
 #define F2__THREAD_SAFE_HASH__H
 
+#include "f2_processor_spinlock.h"
+
 typedef struct funk2_thread_safe_hash_keyvalue_pair_s funk2_thread_safe_hash_keyvalue_pair_t;
 struct funk2_thread_safe_hash_keyvalue_pair_s {
   u64 key;

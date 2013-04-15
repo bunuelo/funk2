@@ -165,6 +165,7 @@ funk2_thread_safe_hash_keyvalue_pair_t* funk2_thread_safe_hash__lookup_keyvalue_
       funk2_thread_safe_hash_keyvalue_pair_t* keyvalue_pair      = &(keyvalue_pair_iter->keyvalue_pair);
       u64                         keyvalue_pair__key = keyvalue_pair->key;
       if (key == keyvalue_pair__key) {
+	funk2_processor_spinlock__unlock(bin_spinlock);
 	return keyvalue_pair;
       }
       keyvalue_pair_iter = keyvalue_pair_iter->next;

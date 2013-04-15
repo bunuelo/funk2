@@ -107,6 +107,7 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
 	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match processor position in scheduler array.");
 	  }
 	}
+#if defined(DEBUG)
 	{
 	  // assert our virtual_processor_thread is known to have the correct index.
 	  int pool_index = this_processor_thread__pool_index();
@@ -115,6 +116,7 @@ boolean_t funk2_virtual_processor__try_execute_next_bytecodes(funk2_virtual_proc
 	    error(nil, "funk2_virtual_processor__execute_next_bytecodes error: virtual processor pool_index does not match this_processor_thread__pool_index().");
 	  }
 	}
+#endif // DEBUG
 	boolean_t did_something_this_loop = boolean__false;
 	do {
 	  did_something_this_loop = f2processor__execute_next_bytecodes(processor, cause);

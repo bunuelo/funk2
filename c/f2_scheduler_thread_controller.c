@@ -83,8 +83,8 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
     status(    "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > " u64__fstr ")", ((u64)__funk2.system_processor.processor_count));
     error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count > __funk2.system_processor.processor_count)");
   }
-  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->waiting_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   
   funk2_processor_conditionlock__wait_while(this->need_wait, &(this->need_wait_conditionlock));
   
@@ -95,8 +95,8 @@ void funk2_scheduler_thread_controller__user_wait_politely(funk2_scheduler_threa
   if (this->waiting_count < 0) {
     error(nil, "funk2_scheduler_thread_controller__user_wait_politely error: (waiting_count < 0)");
   }
-  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->waiting_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
 }
 
 void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler_thread_controller_t* this) {
@@ -108,7 +108,7 @@ void funk2_scheduler_thread_controller__check_user_wait_politely(funk2_scheduler
 void funk2_scheduler_thread_controller__need_wait__set(funk2_scheduler_thread_controller_t* this, boolean_t need_wait) {
   funk2_processor_conditionlock__lock(&(this->need_wait_conditionlock));
   this->need_wait = need_wait;
-  funk2_processor_conditionlock__unlock(&(this->need_wait_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->need_wait_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->need_wait_conditionlock));
 }
 

@@ -220,8 +220,8 @@ void funk2_virtual_processor_thread__pause_myself(funk2_virtual_processor_thread
 void funk2_virtual_processor_thread__unpause(funk2_virtual_processor_thread_t* this) {
   funk2_processor_conditionlock__lock(&(this->paused_conditionlock));
   this->paused = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
   funk2_processor_conditionlock__signal(&(this->paused_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
 }
 
 void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtual_processor_thread_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
@@ -258,8 +258,8 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
     funk2_poller__destroy(&poller);
   }
   virtual_processor_thread->paused = boolean__false;
-  funk2_processor_conditionlock__unlock(&(virtual_processor_thread->paused_conditionlock));
   funk2_processor_conditionlock__signal(&(virtual_processor_thread->paused_conditionlock));
+  funk2_processor_conditionlock__unlock(&(virtual_processor_thread->paused_conditionlock));
   
   this->paused = boolean__true;
   while (this->paused) {

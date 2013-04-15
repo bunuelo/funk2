@@ -45,8 +45,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -58,8 +58,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__signal_exec
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_process(funk2_user_thread_controller__touch_all_protected_alloc_arrays_t* this) {
@@ -67,8 +67,8 @@ void funk2_user_thread_controller__touch_all_protected_alloc_arrays__user_proces
   funk2_garbage_collector_pool__touch_all_protected_alloc_arrays(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count ++;
-  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   
   funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
 }
@@ -92,8 +92,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -105,8 +105,8 @@ void funk2_user_thread_controller__blacken_grey_nodes__signal_execute(funk2_user
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_thread_controller__blacken_grey_nodes_t* this) {
@@ -114,15 +114,15 @@ void funk2_user_thread_controller__blacken_grey_nodes__user_process(funk2_user_t
   funk2_garbage_collector_pool__blacken_grey_nodes(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count ++;
-  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   
   funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
   
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count --;
-  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
 }
 
 // funk2_user_thread_controller__grey_from_other_nodes
@@ -143,8 +143,8 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done  = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -156,8 +156,8 @@ void funk2_user_thread_controller__grey_from_other_nodes__signal_execute(funk2_u
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_user_thread_controller__grey_from_other_nodes_t* this) {
@@ -165,8 +165,8 @@ void funk2_user_thread_controller__grey_from_other_nodes__user_process(funk2_use
   funk2_garbage_collector_pool__grey_from_other_nodes(&(__funk2.garbage_collector.gc_pool[pool_index]));
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count ++;
-  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   
   funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
 }
@@ -189,8 +189,8 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done  = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -202,8 +202,8 @@ void funk2_user_thread_controller__free_white_exps__signal_execute(funk2_user_th
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thread_controller__free_white_exps_t* this) {
@@ -212,8 +212,8 @@ void funk2_user_thread_controller__free_white_exps__user_process(funk2_user_thre
   {
     funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
     this->done_count ++;
-    funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+    funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     
     funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
   }
@@ -238,8 +238,8 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -251,8 +251,8 @@ void funk2_user_thread_controller__remove_freed_fibers__signal_execute(funk2_use
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__remove_freed_fibers__user_process(funk2_user_thread_controller__remove_freed_fibers_t* this) {
@@ -261,8 +261,8 @@ void funk2_user_thread_controller__remove_freed_fibers__user_process(funk2_user_
   {
     funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
     this->done_count ++;
-    funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+    funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     
     funk2_processor_conditionlock__wait_while(! (this->everyone_done), &(this->everyone_done_conditionlock));
   }
@@ -287,8 +287,8 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -300,16 +300,16 @@ void funk2_user_thread_controller__exit__signal_execute(funk2_user_thread_contro
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
 }
 
 void funk2_user_thread_controller__exit__user_process(funk2_user_thread_controller__exit_t* this) {
   status("funk2_user_thread_controller__exit__user_process: user exiting.");
   funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
   this->done_count ++;
-  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
   funk2_virtual_processor_thread_t* virtual_processor_thread = funk2_virtual_processor_handler__my_virtual_processor_thread(&(__funk2.virtual_processor_handler));
   virtual_processor_thread->exit   = boolean__true;
   virtual_processor_thread->exited = boolean__true;
@@ -357,8 +357,8 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
 
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -370,8 +370,8 @@ void funk2_user_thread_controller__defragment__move_memory__signal_execute(funk2
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   {
     s64 index;
@@ -391,8 +391,8 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
       this->user_process_done[pool_index] = boolean__true;
       funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
       this->done_count ++;
-      funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
       funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+      funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     }
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
@@ -441,8 +441,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done  = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(&(__funk2.user_thread_controller));
   this->start = boolean__true;
@@ -454,8 +454,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__signal_execute(funk
   
   funk2_processor_conditionlock__lock(&(this->everyone_done_conditionlock));
   this->everyone_done = boolean__true;
-  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->everyone_done_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->everyone_done_conditionlock));
   
   {
     s64 index;
@@ -475,8 +475,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
       this->user_process_done[pool_index] = boolean__true;
       funk2_processor_conditionlock__lock(&(this->done_count_conditionlock));
       this->done_count ++;
-      funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
       funk2_processor_conditionlock__broadcast(&(this->done_count_conditionlock));
+      funk2_processor_conditionlock__unlock(&(this->done_count_conditionlock));
     }
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
@@ -539,15 +539,15 @@ void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_
 void funk2_user_thread_controller__signal_user_waiting_politely(funk2_user_thread_controller_t* this) {
   funk2_processor_conditionlock__lock(&(this->waiting_count_conditionlock));
   this->waiting_count ++;
-  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->waiting_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
 }
 
 void funk2_user_thread_controller__signal_user_done_waiting_politely(funk2_user_thread_controller_t* this) {
   funk2_processor_conditionlock__lock(&(this->waiting_count_conditionlock));
   this->waiting_count --;
-  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->waiting_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
 }
 
 void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controller_t* this) {
@@ -605,8 +605,8 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
   
   funk2_processor_conditionlock__lock(&(this->waiting_count_conditionlock));
   this->waiting_count --;
-  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->waiting_count_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->waiting_count_conditionlock));
   this->total_nanoseconds_spent_waiting[pool_index] += (raw__nanoseconds_since_1970() - start_waiting_nanoseconds_since_1970);
 }
 
@@ -653,8 +653,8 @@ void funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_po
 }
 
 void funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this) {
-  funk2_processor_conditionlock__unlock(&(this->something_to_do_while_waiting_politely_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->something_to_do_while_waiting_politely_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->something_to_do_while_waiting_politely_conditionlock));
 }
 
 void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {

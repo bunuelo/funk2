@@ -60,8 +60,8 @@ void funk2_memory__destroy(funk2_memory_t* this) {
 void funk2_memory__end_bootstrapping(funk2_memory_t* this) {
   funk2_processor_conditionlock__lock(&(this->bootstrapping_mode_conditionlock));
   this->bootstrapping_mode = boolean__false;
-  funk2_processor_conditionlock__unlock(&(this->bootstrapping_mode_conditionlock));
   funk2_processor_conditionlock__broadcast(&(this->bootstrapping_mode_conditionlock));
+  funk2_processor_conditionlock__unlock(&(this->bootstrapping_mode_conditionlock));
 }
 
 void funk2_memory__wait_until_after_bootstrapping(funk2_memory_t* this) {

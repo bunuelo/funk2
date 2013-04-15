@@ -30,7 +30,7 @@
 
 typedef struct funk2_processor_conditionlock_s funk2_processor_conditionlock_t;
 
-#define F2__DEBUG__PROCESSOR_CONDITIONLOCK
+//#define F2__DEBUG__PROCESSOR_CONDITIONLOCK
 
 #endif // F2__PROCESSOR_CONDITIONLOCK__TYPES__H
 

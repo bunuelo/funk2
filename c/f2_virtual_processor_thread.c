@@ -167,10 +167,11 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->exited                             = boolean__false;
   this->virtual_processor_stack_index      = 0;
   this->processor_affinity_index           = -1;
-  this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
   funk2_processor_conditionlock__init(&(this->paused_conditionlock));
-  this->paused = boolean__false;
+  this->paused                             = boolean__false;
   funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+  // after initializing, start the processor_thread.
+  this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
 }
 
 void funk2_virtual_processor_thread__destroy(funk2_virtual_processor_thread_t* this) {

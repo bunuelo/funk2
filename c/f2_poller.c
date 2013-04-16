@@ -27,13 +27,32 @@
 
 #include "funk2.h"
 
-void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count) {
+// funk2_poller_global_helper
+
+void funk2_poller_global_helper__init(funk2_poller_global_helper_t* this,
+				      double                        target_cpu_usage,
+				      u64                           average_count,
+				      u64                           optimal_sleep_nanoseconds) {
+  this->target_cpu_usage = target_cpu_usage;
+  this->average_count    = average_count;
+  funk2_atomic_u64__init(&(this->optimal_sleep_nanoseconds), optimal_sleep_nanoseconds);
+  this->initialized_magic = POLLER_GLOBAL_HELPER_MAGIC;
+}
+
+void funk2_poller_global_helper__destroy(funk2_poller_global_helper_t* this) {
+  funk2_atomic_u64__destroy(&(this->optimal_sleep_nanoseconds));
+}
+
+
+// funk2_poller
+
+void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count, u64 initial_sleep_nanoseconds) {
   double range_factor = 1.1;
   this->target_cpu_usage                        = target_cpu_usage;
   this->target_cpu_usage_lower_boundary         = target_cpu_usage / range_factor;
   this->target_cpu_usage_upper_boundary         = target_cpu_usage * range_factor;
   this->average_count                           = average_count;
-  this->sleep_nanoseconds                       = 1.0;
+  this->sleep_nanoseconds                       = (double)initial_sleep_nanoseconds;
   this->sleep_nanoseconds_multiplier            = pow(range_factor, 1.0 / (double)average_count);
   this->current_index                           = 0;
   this->buffer_full                             = boolean__false;
@@ -49,6 +68,13 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
   this->last_reset_nanoseconds_since_1970       = nanoseconds_since_1970;
   this->last_print_debug_nanoseconds_since_1970 = nanoseconds_since_1970; // don't want to print immediately
   this->total_sleep_cycle_count                 = 0;
+}
+
+void funk2_poller__init_from_global_helper(funk2_poller_t* this, funk2_poller_global_helper_t* global_helper) {
+  double target_cpu_usage          = global_helper->target_cpu_usage;
+  u64    average_count             = global_helper->average_count;
+  u64    initial_sleep_nanoseconds = funk2_atomic_u64__value(&(global_helper->optimal_sleep_nanoseconds));
+  funk2_poller__init(this, target_cpu_usage, average_count, initial_sleep_nanoseconds);
 }
 
 void funk2_poller__destroy(funk2_poller_t* this) {

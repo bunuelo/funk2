@@ -175,7 +175,7 @@ void funk2_virtual_processor_thread__init(funk2_virtual_processor_thread_t* this
   this->processor_affinity_index           = -1;
   funk2_processor_conditionlock__init(&(this->paused_conditionlock));
   this->paused                             = boolean__false;
-  funk2_poller__init(&(this->poller), poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+  funk2_poller__init_deep_sleep(&(this->poller));
   // after initializing, start the processor_thread.
   this->processor_thread = funk2_processor_thread_handler__add_new_processor_thread(&(__funk2.processor_thread_handler), funk2_virtual_processor_thread__start_function, this);
 }
@@ -251,7 +251,7 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {
-	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	  funk2_poller__init_deep_sleep(&poller);
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	} else {

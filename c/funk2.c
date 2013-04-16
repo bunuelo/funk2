@@ -446,7 +446,7 @@ int funk2__run(funk2_t* this) {
   {
     funk2_poller_t poller;
     boolean_t      poller_needs_reset = boolean__true;
-    funk2_poller__init(&poller, poller__deep_sleep_percentage, 10);
+    funk2_poller__init_deep_sleep(&poller);
     while ((! (this->exit_now)) || (! funk2_management_thread__command_list__is_empty(&(this->management_thread)))) {
       boolean_t did_something = funk2__handle(this);
       if (! did_something) {

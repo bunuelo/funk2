@@ -75,7 +75,7 @@ void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_
       raw__fast_spin_sleep_yield();
     } else {
       if (! poller_initialized) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	funk2_poller__init_deep_sleep(&poller);
 	funk2_poller__reset(&poller);
 	poller_initialized = boolean__true;
       } else {
@@ -98,7 +98,7 @@ void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t
       raw__fast_spin_sleep_yield();
     } else {
       if (! poller_initialized) {
-	funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	funk2_poller__init_deep_sleep(&poller);
 	funk2_poller__reset(&poller);
 	poller_initialized = boolean__true;
       } else {
@@ -127,7 +127,7 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {
-	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	  funk2_poller__init_deep_sleep(&poller);
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	} else {
@@ -157,7 +157,7 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {
-	  funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	  funk2_poller__init_deep_sleep(&poller);
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	} else {

@@ -123,7 +123,7 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
 	  lock_tries ++;
 	} else {
 	  if (! poller_initialized) {
-	    funk2_poller__init(&poller, poller__deep_sleep_percentage, poller__deep_sleep_average_length);
+	    funk2_poller__init_deep_sleep(&poller);
 	    funk2_poller__reset(&poller);
 	    poller_initialized = boolean__true;
 	  } else {

@@ -36,7 +36,7 @@ void f2__print_usage() {
 	 "\n  funk2 -x <command>"
 	 "\n  funk2 -i <bootstrap-image>"
 	 "\n"
-	 "\n    -h"
+	 "\n    -h/--help"
 	 "\n"
 	 "\n        Print this help message."
 	 "\n"

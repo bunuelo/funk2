@@ -36,7 +36,6 @@ typedef struct f2ptr_s f2ptr_t;
 #ifndef F2__GLOBAL__H
 #define F2__GLOBAL__H
 
-#include "f2_global.h"
 #include "f2_atomic_u64.h"
 
 // f2ptr

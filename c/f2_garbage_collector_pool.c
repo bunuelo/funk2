@@ -708,13 +708,13 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   case ptype_chunk:                    return;
   case ptype_cons: {
     {
-      f2ptr car = funk2_atomic_u64__value(&(((ptype_cons_block_t*)block)->car));
+      f2ptr car = f2ptr__value(&(((ptype_cons_block_t*)block)->car));
       if (car != nil) {
 	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, car);
       }
     }
     {
-      f2ptr cdr = funk2_atomic_u64__value(&(((ptype_cons_block_t*)block)->cdr));
+      f2ptr cdr = f2ptr__value(&(((ptype_cons_block_t*)block)->cdr));
       if (cdr != nil) {
 	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cdr);
       }
@@ -724,7 +724,7 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
     s64 i;
     f2ptr_t* iter = ((ptype_simple_array_block_t*)block)->slot;
     for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
-      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, iter->data);
+      funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, f2ptr__value(iter));
       iter ++;
     }
   } return;

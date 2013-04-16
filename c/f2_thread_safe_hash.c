@@ -27,15 +27,6 @@
 
 #include "funk2.h"
 
-boolean_t raw__u64__compare_and_swap(u64* this, u64 old_value, u64 new_value) {
-  return (__sync_bool_compare_and_swap(this, old_value, new_value) ? boolean__true : boolean__false);
-}
-
-boolean_t raw__voidptr__compare_and_swap(void** this, void* old_value, void* new_value) {
-  return (__sync_bool_compare_and_swap(this, old_value, new_value) ? boolean__true : boolean__false);
-}
-
-
 u64 funk2_thread_safe_hash__bin_count(funk2_thread_safe_hash_t* this) {
   return (((u64)1) << (this->bin_num_power));
 }

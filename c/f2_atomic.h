@@ -11,7 +11,7 @@
 //     copied and adapted this code from this webpage:
 //     http://golubenco.org/blog/atomic-operations/
 // 
-//   Bo Morgan (2007-2013): Initial implementation.
+//   Bo Morgan (2007-2013): Adaptation into Funk2 project.
 //
 // This program is distributed under the terms of the GNU General
 // Public License.  See the COPYING file that is distributed with this

@@ -1497,6 +1497,7 @@ extension_transframe_libf2e_transframe_la_LINK = $(LIBTOOL) $(AM_V_lt) \
 lib_libfunk2_la_LIBADD =
 am_lib_libfunk2_la_OBJECTS = c/lib_libfunk2_la-f2_array.lo \
 	c/lib_libfunk2_la-f2_ansi.lo c/lib_libfunk2_la-f2_apropos.lo \
+	c/lib_libfunk2_la-f2_atomic_u64.lo \
 	c/lib_libfunk2_la-f2_buffered_file.lo \
 	c/lib_libfunk2_la-f2_buffered_socket.lo \
 	c/lib_libfunk2_la-f2_bug.lo c/lib_libfunk2_la-f2_bytecodes.lo \
@@ -2435,6 +2436,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_array.c \
   c/f2_ansi.c \
   c/f2_apropos.c \
+  c/f2_atomic_u64.c \
   c/f2_buffered_file.c \
   c/f2_buffered_socket.c \
   c/f2_bug.c \
@@ -4896,6 +4898,8 @@ c/lib_libfunk2_la-f2_ansi.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_apropos.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
+c/lib_libfunk2_la-f2_atomic_u64.lo: c/$(am__dirstamp) \
+	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_buffered_file.lo: c/$(am__dirstamp) \
 	c/$(DEPDIR)/$(am__dirstamp)
 c/lib_libfunk2_la-f2_buffered_socket.lo: c/$(am__dirstamp) \
@@ -5180,6 +5184,8 @@ mostlyclean-compile:
 	-rm -f c/lib_libfunk2_la-f2_apropos.lo
 	-rm -f c/lib_libfunk2_la-f2_array.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_array.lo
+	-rm -f c/lib_libfunk2_la-f2_atomic_u64.$(OBJEXT)
+	-rm -f c/lib_libfunk2_la-f2_atomic_u64.lo
 	-rm -f c/lib_libfunk2_la-f2_buffered_file.$(OBJEXT)
 	-rm -f c/lib_libfunk2_la-f2_buffered_file.lo
 	-rm -f c/lib_libfunk2_la-f2_buffered_socket.$(OBJEXT)
@@ -5730,6 +5736,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_ansi.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_apropos.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_array.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_atomic_u64.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_buffered_file.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_buffered_socket.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@c/$(DEPDIR)/lib_libfunk2_la-f2_bug.Plo@am__quote@
@@ -8003,6 +8010,13 @@ c/lib_libfunk2_la-f2_apropos.lo: c/f2_apropos.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='c/f2_apropos.c' object='c/lib_libfunk2_la-f2_apropos.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_apropos.lo `test -f 'c/f2_apropos.c' || echo '$(srcdir)/'`c/f2_apropos.c
+
+c/lib_libfunk2_la-f2_atomic_u64.lo: c/f2_atomic_u64.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_atomic_u64.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_atomic_u64.Tpo -c -o c/lib_libfunk2_la-f2_atomic_u64.lo `test -f 'c/f2_atomic_u64.c' || echo '$(srcdir)/'`c/f2_atomic_u64.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) c/$(DEPDIR)/lib_libfunk2_la-f2_atomic_u64.Tpo c/$(DEPDIR)/lib_libfunk2_la-f2_atomic_u64.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='c/f2_atomic_u64.c' object='c/lib_libfunk2_la-f2_atomic_u64.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -c -o c/lib_libfunk2_la-f2_atomic_u64.lo `test -f 'c/f2_atomic_u64.c' || echo '$(srcdir)/'`c/f2_atomic_u64.c
 
 c/lib_libfunk2_la-f2_buffered_file.lo: c/f2_buffered_file.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(lib_libfunk2_la_CFLAGS) $(CFLAGS) -MT c/lib_libfunk2_la-f2_buffered_file.lo -MD -MP -MF c/$(DEPDIR)/lib_libfunk2_la-f2_buffered_file.Tpo -c -o c/lib_libfunk2_la-f2_buffered_file.lo `test -f 'c/f2_buffered_file.c' || echo '$(srcdir)/'`c/f2_buffered_file.c

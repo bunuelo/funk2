@@ -39,13 +39,6 @@ typedef struct funk2_poller_s               funk2_poller_t;
 
 #include "f2_atomic_u64.h"
 
-#define poller__deep_sleep_percentage        0.01
-#define poller__deep_sleep_average_length    10
-#define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second >> 6)
-
-#define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDDEAD)
-
-
 // funk2_poller_global_helper
 
 struct funk2_poller_global_helper_s {
@@ -91,12 +84,11 @@ void funk2_poller__init                   (funk2_poller_t* this,
 					   double          target_cpu_usage,
 					   u64             average_count,
 					   u64             initial_sleep_nanoseconds);
+void funk2_poller__init_deep_sleep        (funk2_poller_t* this);
 void funk2_poller__init_from_global_helper(funk2_poller_t* this, funk2_poller_global_helper_t* global_helper);
 void funk2_poller__destroy                (funk2_poller_t* this);
 void funk2_poller__reset                  (funk2_poller_t* this);
 void funk2_poller__sleep                  (funk2_poller_t* this);
 void funk2_poller__test                   ();
-
-#define funk2_poller__init_deep_sleep(this) funk2_poller__init(this, poller__deep_sleep_percentage, poller__deep_sleep_average_length, poller__deep_sleep_sleep_nanoseconds)
 
 #endif // F2__POLLER__H

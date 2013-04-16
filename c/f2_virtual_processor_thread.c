@@ -197,7 +197,7 @@ void funk2_virtual_processor_thread__signal_exit(funk2_virtual_processor_thread_
 void funk2_virtual_processor_thread__finalize_exit(funk2_virtual_processor_thread_t* this) {
   status("funk2_virtual_processor_thread__exit: waiting for virtual_processor_thread to exit.");
   funk2_poller_t poller;
-  funk2_poller__init(&poller, 0.01, poller__deep_sleep_average_length);
+  funk2_poller__init_deep_sleep(&poller);
   funk2_poller__reset(&poller);
   while (! (this->exited)) {
     this->exit = boolean__true;

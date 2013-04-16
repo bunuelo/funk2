@@ -468,7 +468,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
       for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
 	funk2_memblock_t* subblock = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(f2ptr__value(iter)));
-	funk2_memblock__decrement_reference_count(subblock, iter->data, &(__funk2.garbage_collector));
+	funk2_memblock__decrement_reference_count(subblock, f2ptr__value(iter), &(__funk2.garbage_collector));
 	iter ++;
       }
     } break;

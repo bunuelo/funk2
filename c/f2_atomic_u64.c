@@ -39,6 +39,16 @@ boolean_t funk2_atomic_u64__compare_and_swap(funk2_atomic_u64_t* this, u64 old_v
   return success;
 }
 
+u64 funk2_atomic_u64__set_value(funk2_atomic_u64_t* this, u64 new_value) {
+  u64       old_value;
+  boolean_t success = boolean__false;;
+  while (! success) {
+    old_value = funk2_atomic_u64__value(this);
+    success   = funk2_atomic_u64__compare_and_swap(this, old_value, new_value);
+  }
+  return old_value;
+}
+
 u64 funk2_atomic_u64__increment(funk2_atomic_u64_t* this) {
   u64 old_value;
   u64 new_value;

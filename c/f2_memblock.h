@@ -38,7 +38,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 #include "f2_heap.h"
 #include "f2_ptype.h"
 #include "f2_garbage_collector_block_header.h"
-#include "f2_atomic.h"
+#include "f2_atomic_u64.h"
 
 #define memblock__minimum_size ((((sizeof(funk2_memblock_t) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num)
 

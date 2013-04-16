@@ -708,14 +708,14 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   case ptype_chunk:                    return;
   case ptype_cons: {
     {
-      f2ptr car = ((ptype_cons_block_t*)block)->car.data;
-      if (car) {
+      f2ptr car = funk2_atomic_u64__value(&(((ptype_cons_block_t*)block)->car));
+      if (car != nil) {
 	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, car);
       }
     }
     {
-      f2ptr cdr = ((ptype_cons_block_t*)block)->cdr.data;
-      if (cdr) {
+      f2ptr cdr = funk2_atomic_u64__value(&(((ptype_cons_block_t*)block)->cdr));
+      if (cdr != nil) {
 	funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cdr);
       }
     }

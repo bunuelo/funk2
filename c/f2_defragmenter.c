@@ -199,15 +199,17 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_chunk:                    return;
   case ptype_cons: {
     {
-      f2ptr car = ((ptype_cons_block_t*)ptype_block)->car.data;
-      if (car) {
-	((ptype_cons_block_t*)ptype_block)->car.data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, car);
+      f2ptr old_value = funk2_atomic_u64__value(&(((ptype_cons_block_t*)ptype_block)->car.data));
+      if (old_value != nil) {
+	f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
+	funk2_atomic_u64__set_value(&(((ptype_cons_block_t*)ptype_block)->car.data), new_value);
       }
     }
     {
-      f2ptr cdr = ((ptype_cons_block_t*)ptype_block)->cdr.data;
-      if (cdr) {
-	((ptype_cons_block_t*)ptype_block)->cdr.data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cdr);
+      f2ptr old_value = funk2_atomic_u64__value(&(((ptype_cons_block_t*)ptype_block)->cdr.data));
+      if (old_value != nil) {
+	f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
+	funk2_atomic_u64__set_value(&(((ptype_cons_block_t*)ptype_block)->cdr.data), new_value);
       }
     }
   } return;
@@ -216,7 +218,11 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
     f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
     for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
       if (iter->data) {
-	iter->data = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, iter->data);
+	f2ptr old_value = funk2_atomic_u64__value(&(iter->atomic_data));
+	if (old_value != nil) {
+	  f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
+	  funk2_atomic_u64__set_value(&(iter->data), new_value);
+	}
       }
       iter ++;
     }

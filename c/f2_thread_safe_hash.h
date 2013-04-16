@@ -28,7 +28,7 @@
 #ifndef F2__THREAD_SAFE_HASH__H
 #define F2__THREAD_SAFE_HASH__H
 
-#include "f2_processor_mutex.h"
+#include "f2_atomic_u64.h"
 
 // funk2_thread_safe_hash_keyvalue_pair
 

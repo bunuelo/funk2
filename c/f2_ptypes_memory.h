@@ -40,6 +40,7 @@
 #include "f2_processor_mutex.h"
 #include "f2_processor_readwritelock.h"
 #include "f2_processor_spinlock.h"
+#include "f2_f2ptr.h"
 
 // memblock
 

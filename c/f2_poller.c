@@ -46,10 +46,16 @@ void funk2_poller_global_helper__init(funk2_poller_global_helper_t* this,
   this->initialized_magic = POLLER_GLOBAL_HELPER_MAGIC;
 }
 
+void funk2_poller_global_helper__init_deep_sleep(funk2_poller_global_helper_t* this) {
+  funk2_poller_global_helper__init(this,
+				   poller__deep_sleep_percentage,
+				   poller__deep_sleep_average_length,
+				   poller__deep_sleep_sleep_nanoseconds);
+}
+
 void funk2_poller_global_helper__destroy(funk2_poller_global_helper_t* this) {
   funk2_atomic_u64__destroy(&(this->optimal_sleep_nanoseconds));
 }
-
 
 // funk2_poller
 

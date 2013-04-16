@@ -168,10 +168,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
-  funk2_poller_global_helper__init(&(this->processor_conditionlock_poller_helper),
-				   poller__deep_sleep_percentage,
-				   poller__deep_sleep_average_length,
-				   1);
+  funk2_poller_global_helper__init_deep_sleep(&(this->processor_conditionlock_poller_helper));
   funk2_system_processor__init(&(this->system_processor));
   funk2_system_file_handler__init(&(this->system_file_handler));
   funk2_surrogate_parent__init(&(this->surrogate_parent));

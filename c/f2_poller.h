@@ -48,11 +48,12 @@ struct funk2_poller_global_helper_s {
   funk2_atomic_u64_t optimal_sleep_nanoseconds;
 };
 
-void funk2_poller_global_helper__init   (funk2_poller_global_helper_t* this,
-					 double                        target_cpu_usage,
-					 u64                           average_count,
-					 u64                           optimal_sleep_nanoseconds);
-void funk2_poller_global_helper__destroy(funk2_poller_global_helper_t* this);
+void funk2_poller_global_helper__init           (funk2_poller_global_helper_t* this,
+						 double                        target_cpu_usage,
+						 u64                           average_count,
+						 u64                           optimal_sleep_nanoseconds);
+void funk2_poller_global_helper__init_deep_sleep(funk2_poller_global_helper_t* this);
+void funk2_poller_global_helper__destroy        (funk2_poller_global_helper_t* this);
 
 
 // funk2_poller

@@ -141,7 +141,7 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
 void funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector) {
   if (this_f2ptr != nil) {
     u64 new_reference_count = funk2_atomic_u64__decrement(&(this->reference_count));
-    if (new_reference_coun == 0) {
+    if (new_reference_count == 0) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
       funk2_garbage_collector__know_of_no_more_references(garbage_collector, this_f2ptr);
     }

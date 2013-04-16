@@ -48,7 +48,7 @@ struct funk2_memblock_s {
   funk2_garbage_collector_block_header_t gc;
   ptype_t                                ptype : ptype__min_bits;
   u8                                     used  : 1;
-  atomic_t                               reference_count;
+  funk2_atomic_u64_t                     reference_count;
   u64                                    unique_id;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));

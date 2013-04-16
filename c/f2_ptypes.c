@@ -41,7 +41,7 @@ void print_cmutex_error(int retval) {
 void raw__exp__increment_reference_count(f2ptr this) {
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
-    atomic_inc(&(block->reference_count));
+    funk2_atomic_64__increment(&(block->reference_count));
   }
 }
 
@@ -54,12 +54,10 @@ boolean_t raw__exp__decrement_reference_count(f2ptr this) {
   boolean_t no_more_references = boolean__false;
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
-    no_more_references      = atomic_dec_and_test(&(block->reference_count));
-    //if (no_more_references) {
-    //if (atomic_read(&(block->reference_count)) != 0) { // double check...
-    //debug__contradictory_atomic_dec_and_test();
-    //}
-    //}
+    u64 new_reference_count = funk2_atomic_u64__decrement(&(block->reference_count));
+    if (new_reference_count == 0) {
+      no_more_references = boolean__true;
+    }
   }
   return no_more_references;
 }

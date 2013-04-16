@@ -461,9 +461,9 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   }
   
   if (__funk2.memory.global_environment_f2ptr) {
-    funk2_memblock_t* old_global_env = (funk2_memblock_t*)from_ptr(__funk2.memory.global_environment_ptr);
-    boolean_t no_more_references = atomic_dec_and_test(&(old_global_env->reference_count));
-    if (no_more_references) {
+    funk2_memblock_t* old_global_env      = (funk2_memblock_t*)from_ptr(__funk2.memory.global_environment_ptr);
+    u64               new_reference_count = funk2_atomic_u64__decrement(&(old_global_env->reference_count));
+    if (new_reference_count == 0) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
       funk2_garbage_collector__know_of_no_more_references(&(__funk2.garbage_collector), __funk2.memory.global_environment_f2ptr);
     }
@@ -475,7 +475,7 @@ void funk2_memory__global_environment__set(funk2_memory_t* this, f2ptr global_en
   if (__funk2.memory.global_environment_f2ptr) {
     funk2_memblock_t* global_env = (funk2_memblock_t*)from_ptr(__funk2.memory.global_environment_ptr);
     // increment the reference count of the new global environment
-    atomic_inc(&(global_env->reference_count));
+    funk2_atomic_u64__increment(&(global_env->reference_count));
   }
   
   for (pool_index = 0; pool_index < __funk2.system_processor.processor_count; pool_index ++) {

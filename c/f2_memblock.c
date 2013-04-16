@@ -32,7 +32,7 @@
 void funk2_memblock__init(funk2_memblock_t* block, f2size_t byte_num, boolean_t used, u64 unique_id) {
   funk2_memblock__byte_num(block) = byte_num;
   funk2_garbage_collector_block_header__init(&(block->gc));
-  atomic_set(&(block->reference_count), 0);
+  funk2_atomic_u64__init(&(block->reference_count), 0);
   block->used      = used;
   block->unique_id = unique_id;
 }
@@ -140,8 +140,8 @@ boolean_t funk2_memblock__is_self_consistently_valid(funk2_memblock_t* this) {
 
 void funk2_memblock__decrement_reference_count(funk2_memblock_t* this, f2ptr this_f2ptr, funk2_garbage_collector_t* garbage_collector) {
   if (this_f2ptr != nil) {
-    boolean_t no_more_references = atomic_dec_and_test(&(this->reference_count));
-    if (no_more_references) {
+    u64 new_reference_count = funk2_atomic_u64__decrement(&(this->reference_count));
+    if (new_reference_coun == 0) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the no black references white invariant).
       funk2_garbage_collector__know_of_no_more_references(garbage_collector, this_f2ptr);
     }

@@ -36,14 +36,17 @@ typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 #define F2__ATOMIC_U64__H
 
 // If a platform does not support atomic builtins, we could add a spinlock to this struct.
+// First, we would need to require memblocks to call destroy on each reference count, when it is no longer needed.
 
 struct funk2_atomic_u64_s {
   u64 value;
 } __attribute__((aligned(8)));
 
 void      funk2_atomic_u64__init            (funk2_atomic_u64_t* this, u64 value);
-void      funk2_atomic_u64__destroy         (funk2_atomic_u64_t* this);
+void      funk2_atomic_u64__destroy         (funk2_atomic_u64_t* this); // not currently called for memblocks.
 boolean_t funk2_atomic_u64__compare_and_swap(funk2_atomic_u64_t* this, u64 old_value, u64 new_value);
+
+#define funk2_atomic_u64__value(this) ((this)->value)
 
 #endif // F2__ATOMIC_U64__H
 

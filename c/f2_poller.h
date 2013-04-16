@@ -39,7 +39,7 @@ typedef struct funk2_poller_s               funk2_poller_t;
 
 #include "f2_atomic_u64.h"
 
-#define poller__deep_sleep_percentage        0.03
+#define poller__deep_sleep_percentage        0.01
 #define poller__deep_sleep_average_length    10
 #define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second >> 6)
 

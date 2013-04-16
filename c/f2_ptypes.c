@@ -41,7 +41,7 @@ void print_cmutex_error(int retval) {
 void raw__exp__increment_reference_count(f2ptr this) {
   if (this) {
     funk2_memblock_t* block = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(this));
-    funk2_atomic_64__increment(&(block->reference_count));
+    funk2_atomic_u64__increment(&(block->reference_count));
   }
 }
 

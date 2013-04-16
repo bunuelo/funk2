@@ -32,6 +32,7 @@ typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 
 #endif // F2__ATOMIC_U64__TYPES__H
 
+
 #ifndef F2__ATOMIC_U64__H
 #define F2__ATOMIC_U64__H
 

@@ -25,16 +25,16 @@
 // rights to redistribute these changes.
 // 
 
-#ifndef F2__GLOBAL__TYPES__H
-#define F2__GLOBAL__TYPES__H
+#ifndef F2__F2PTR__TYPES__H
+#define F2__F2PTR__TYPES__H
 
 typedef struct f2ptr_s f2ptr_t;
 
-#endif // F2__GLOBAL__TYPES__H
+#endif // F2__F2PTR__TYPES__H
 
 
-#ifndef F2__GLOBAL__H
-#define F2__GLOBAL__H
+#ifndef F2__F2PTR__H
+#define F2__F2PTR__H
 
 #include "f2_atomic_u64.h"
 
@@ -47,4 +47,4 @@ struct f2ptr_s {
 void f2ptr__init   (f2ptr_t* this, f2ptr value);
 void f2ptr__destroy(f2ptr_t* this);
 
-#endif // F2__GLOBAL__H
+#endif // F2__F2PTR__H

@@ -221,7 +221,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
 	f2ptr old_value = funk2_atomic_u64__value(&(iter->atomic_data));
 	if (old_value != nil) {
 	  f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
-	  funk2_atomic_u64__set_value(&(iter->data), new_value);
+	  funk2_atomic_u64__set_value(&(iter->atomic_data), new_value);
 	}
       }
       iter ++;

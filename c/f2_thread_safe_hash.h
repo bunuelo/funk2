@@ -38,7 +38,7 @@ struct funk2_thread_safe_hash_keyvalue_pair_s {
   funk2_atomic_u64_t value;
 };
 
-void funk2_thread_safe_hash_keyvalue_pair__init   (funk2_thread_safe_hash_keyvalue_pair_t* this);
+void funk2_thread_safe_hash_keyvalue_pair__init   (funk2_thread_safe_hash_keyvalue_pair_t* this, u64 key, u64 value);
 void funk2_thread_safe_hash_keyvalue_pair__destroy(funk2_thread_safe_hash_keyvalue_pair_t* this);
 
 #define funk2_thread_safe_hash_keyvalue_pair__key(this)   funk2_atomic_u64__value(&((this)->key))
@@ -53,7 +53,7 @@ struct funk2_thread_safe_hash_bin_node_s {
   funk2_atomic_u64_t                     next; // (struct funk2_thread_safe_hash_bin_node_s*)
 };
 
-void funk2_thread_safe_hash_bin_node__init   (funk2_thread_safe_hash_bin_node_t* this);
+void funk2_thread_safe_hash_bin_node__init   (funk2_thread_safe_hash_bin_node_t* this, u64 key, u64 value);
 void funk2_thread_safe_hash_bin_node__destroy(funk2_thread_safe_hash_bin_node_t* this);
 
 #define funk2_thread_safe_hash_bin_node__next(this) ((funk2_thread_safe_hash_bin_node_t*)from_ptr(funk2_atomic_u64__value(&((this)->next))))

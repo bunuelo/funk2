@@ -29,9 +29,9 @@
 
 // funk2_thread_safe_hash_keyvalue_pair
 
-void funk2_thread_safe_hash_keyvalue_pair__init(funk2_thread_safe_hash_keyvalue_pair_t* this) {
-  funk2_atomic_u64__init(&(this->key));
-  funk2_atomic_u64__init(&(this->value));
+void funk2_thread_safe_hash_keyvalue_pair__init(funk2_thread_safe_hash_keyvalue_pair_t* this, u64 key, u64 value) {
+  funk2_atomic_u64__init(&(this->key),   key);
+  funk2_atomic_u64__init(&(this->value), value);
 }
 
 void funk2_thread_safe_hash_keyvalue_pair__destroy(funk2_thread_safe_hash_keyvalue_pair_t* this) {
@@ -42,9 +42,9 @@ void funk2_thread_safe_hash_keyvalue_pair__destroy(funk2_thread_safe_hash_keyval
 
 // funk2_thread_safe_hash_bin_node
 
-void funk2_thread_safe_hash_bin_node__init(funk2_thread_safe_hash_bin_node_t* this) {
-  funk2_thread_safe_hash_keyvalue_pair__init(&(this->keyvalue_pair));
-  funk2_atomic_u64__init(&(this->next));
+void funk2_thread_safe_hash_bin_node__init(funk2_thread_safe_hash_bin_node_t* this, u64 key, u64 value) {
+  funk2_thread_safe_hash_keyvalue_pair__init(&(this->keyvalue_pair), key, value);
+  funk2_atomic_u64__init(&(this->next), (u64)to_ptr(NULL));
 }
 
 void funk2_thread_safe_hash_bin_node__destroy(funk2_thread_safe_hash_bin_node_t* this) {
@@ -120,10 +120,8 @@ void funk2_thread_safe_hash__add(funk2_thread_safe_hash_t* this, u64 key, u64 va
     }
     if (! keyvalue_pair) {
       funk2_thread_safe_hash_bin_node_t* new_bin_node = (funk2_thread_safe_hash_bin_node_t*)from_ptr(f2__malloc(sizeof(funk2_thread_safe_hash_bin_node_t)));
-      funk2_thread_safe_hash_bin_node__init(new_bin_node);
+      funk2_thread_safe_hash_bin_node__init(new_bin_node, key, value);
       keyvalue_pair = &(new_bin_node->keyvalue_pair);
-      funk2_atomic_u64__set_value(&(keyvalue_pair->key),   key);
-      funk2_atomic_u64__set_value(&(keyvalue_pair->value), value);
       {
 	boolean_t success = boolean__false;
 	{

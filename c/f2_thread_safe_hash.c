@@ -126,7 +126,7 @@ void funk2_thread_safe_hash__add(funk2_thread_safe_hash_t* this, u64 key, u64 va
 	boolean_t success = boolean__false;
 	{
 	  while (! success) {
-	    u64 bin_array_value = funk2_thread_safe_hash__bin_array(this, index);
+	    u64 bin_array_value = (u64)to_ptr(funk2_thread_safe_hash__bin_array(this, index));
 	    funk2_atomic_u64__set_value(&(new_bin_node->next), bin_array_value);
 	    success = funk2_atomic_u64__compare_and_swap(&(this->bin_array[index]), bin_array_value, (u64)to_ptr(new_bin_node));
 	  }
@@ -165,7 +165,7 @@ boolean_t funk2_thread_safe_hash__remove(funk2_thread_safe_hash_t* this, u64 key
 	      keep_trying = boolean__true;
 	      if (prev) {
 		u64 old_prev_next = funk2_atomic_u64__value(&(prev->next));
-		if (old_prev_next == iter) {
+		if (old_prev_next == (u64)to_ptr(iter)) {
 		  success = funk2_atomic_u64__compare_and_swap(&(prev->next), old_prev_next, (u64)to_ptr(next));
 		}
 	      } else {

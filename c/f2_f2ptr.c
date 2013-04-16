@@ -28,10 +28,10 @@
 #include "funk2.h"
 
 void f2ptr__init(f2ptr_t* this, f2ptr value) {
-  funk2_atomic_u64__init(&(this->atomic_value), value);
+  funk2_atomic_u64__init(&(this->atomic_data), value);
 }
 
 void f2ptr__destroy(f2ptr_t* this) {
-  funk2_atomic_u64__destroy(&(this->atomic_value));
+  funk2_atomic_u64__destroy(&(this->atomic_data));
 }
 

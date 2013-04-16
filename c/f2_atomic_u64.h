@@ -41,7 +41,7 @@ struct funk2_atomic_u64_s {
   u64 value;
 } __attribute__((aligned(8)));
 
-void      funk2_atomic_u64__init            (funk2_atomic_u64_t* this);
+void      funk2_atomic_u64__init            (funk2_atomic_u64_t* this, u64 value);
 void      funk2_atomic_u64__destroy         (funk2_atomic_u64_t* this);
 boolean_t funk2_atomic_u64__compare_and_swap(funk2_atomic_u64_t* this, u64 old_value, u64 new_value);
 

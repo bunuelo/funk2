@@ -168,7 +168,7 @@ void funk2_poller__sleep(funk2_poller_t* this) {
 
 void funk2_poller__test() {
   funk2_poller_t poller;
-  funk2_poller__init(&poller, 0.01, 1000);
+  funk2_poller__init(&poller, 0.01, 1000, 1);
   printf("\nfunk2_poller__test: poller.target_cpu_usage=%g", poller.target_cpu_usage);
   funk2_poller__reset(&poller);
   double temp = 10.0;

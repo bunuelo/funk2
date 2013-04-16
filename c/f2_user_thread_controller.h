@@ -31,7 +31,6 @@
 #include "f2_processor_spinlock.h"
 #include "f2_processor_mutex.h"
 #include "f2_processor_conditionlock.h"
-#include "f2_atomic.h"
 
 // funk2_user_thread_controller__touch_all_protected_alloc_arrays
 
@@ -54,7 +53,6 @@ typedef struct funk2_user_thread_controller__blacken_grey_nodes_s {
   boolean_t                       start;
   funk2_processor_conditionlock_t done_count_conditionlock;
   s64                             done_count;
-  atomic_t                        not_exited_count;
   funk2_processor_conditionlock_t everyone_done_conditionlock;
   boolean_t                       everyone_done;
 } funk2_user_thread_controller__blacken_grey_nodes_t;

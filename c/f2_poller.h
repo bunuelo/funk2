@@ -64,25 +64,26 @@ void funk2_poller_global_helper__destroy(funk2_poller_global_helper_t* this);
 // funk2_poller
 
 struct funk2_poller_s {
-  double    target_cpu_usage;
-  double    target_cpu_usage_lower_boundary;
-  double    target_cpu_usage_upper_boundary;
-  u64       average_count;
-  double    sleep_nanoseconds;
-  double    sleep_nanoseconds_multiplier;
-  u64       current_index;
-  boolean_t buffer_full;
-  u64       last_real_nanoseconds;
-  u64       last_execution_nanoseconds;
-  u64*      elapsed_real_nanoseconds_array;
-  u64*      elapsed_execution_nanoseconds_array;
-  u64       total_elapsed_real_nanoseconds;
-  u64       total_elapsed_execution_nanoseconds;
-  double    average_cpu_usage;
+  funk2_poller_global_helper_t* global_helper;
+  double                        target_cpu_usage;
+  double                        target_cpu_usage_lower_boundary;
+  double                        target_cpu_usage_upper_boundary;
+  u64                           average_count;
+  double                        sleep_nanoseconds;
+  double                        sleep_nanoseconds_multiplier;
+  u64                           current_index;
+  boolean_t                     buffer_full;
+  u64                           last_real_nanoseconds;
+  u64                           last_execution_nanoseconds;
+  u64*                          elapsed_real_nanoseconds_array;
+  u64*                          elapsed_execution_nanoseconds_array;
+  u64                           total_elapsed_real_nanoseconds;
+  u64                           total_elapsed_execution_nanoseconds;
+  double                        average_cpu_usage;
   // debugging variables
-  u64       last_reset_nanoseconds_since_1970;
-  u64       last_print_debug_nanoseconds_since_1970;
-  u64       total_sleep_cycle_count;
+  u64                           last_reset_nanoseconds_since_1970;
+  u64                           last_print_debug_nanoseconds_since_1970;
+  u64                           total_sleep_cycle_count;
 };
 
 void funk2_poller__init                   (funk2_poller_t* this,

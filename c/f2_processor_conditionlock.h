@@ -74,7 +74,7 @@ s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* t
 	  funk2_processor_conditionlock_helper__wait_tries ++;		\
 	} else {							\
 	  if (! funk2_processor_conditionlock_helper__poller_initialized) { \
-	    funk2_poller__init(&funk2_processor_conditionlock_helper__poller, poller__deep_sleep_percentage, 10); \
+	    funk2_poller__init_from_global_helper(&funk2_processor_conditionlock_helper__poller, &(__funk2.processor_conditionlock_poller_helper)); \
 	    funk2_poller__reset(&funk2_processor_conditionlock_helper__poller); \
 	    funk2_processor_conditionlock_helper__poller_initialized = boolean__true; \
 	  } else {							\
@@ -106,7 +106,7 @@ s64  funk2_processor_conditionlock__broadcast(funk2_processor_conditionlock_t* t
 	  pthread_cond_wait_helper__wait_tries ++;			\
 	} else {							\
 	  if (! pthread_cond_wait_helper__poller_initialized) {		\
-	    funk2_poller__init(&pthread_cond_wait_helper__poller, poller__deep_sleep_percentage, 10); \
+	    funk2_poller__init_from_global_helper(&funk2_processor_conditionlock_helper__poller, &(__funk2.processor_conditionlock_poller_helper)); \
 	    funk2_poller__reset(&pthread_cond_wait_helper__poller);	\
 	    pthread_cond_wait_helper__poller_initialized = boolean__true; \
 	  } else {							\

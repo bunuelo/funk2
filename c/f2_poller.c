@@ -48,6 +48,7 @@ void funk2_poller_global_helper__destroy(funk2_poller_global_helper_t* this) {
 
 void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 average_count, u64 initial_sleep_nanoseconds) {
   double range_factor = 1.1;
+  this->global_helper                           = NULL;
   this->target_cpu_usage                        = target_cpu_usage;
   this->target_cpu_usage_lower_boundary         = target_cpu_usage / range_factor;
   this->target_cpu_usage_upper_boundary         = target_cpu_usage * range_factor;
@@ -71,6 +72,10 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
 }
 
 void funk2_poller__init_from_global_helper(funk2_poller_t* this, funk2_poller_global_helper_t* global_helper) {
+  if (global_helper->initialized_magic != POLLER_GLOBAL_HELPER_MAGIC) {
+    error(nil, "funk2_poller__init_from_global_helper error: (global_helper->initialized_magic != POLLER_GLOBAL_HELPER_MAGIC)");
+  }
+  this->global_helper              = global_helper;
   double target_cpu_usage          = global_helper->target_cpu_usage;
   u64    average_count             = global_helper->average_count;
   u64    initial_sleep_nanoseconds = funk2_atomic_u64__value(&(global_helper->optimal_sleep_nanoseconds));
@@ -141,6 +146,9 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   raw__nanosleep((u64)(this->sleep_nanoseconds));
   this->last_real_nanoseconds      = real_nanoseconds;
   this->last_execution_nanoseconds = execution_nanoseconds;
+  if (this->global_helper != NULL) {
+    funk2_atomic_u64__set_value(&(this->global_helper->optimal_sleep_nanoseconds), (u64)(this->sleep_nanoseconds));
+  }
   // debug code
   this->total_sleep_cycle_count ++;
   if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {

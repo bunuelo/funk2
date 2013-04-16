@@ -93,15 +93,21 @@ void* funk2_virtual_processor_thread__start_function(void* args) {
 	if (__funk2.virtual_processor_handler.hardware_affinities_enabled) {
 	  if (this->processor_affinity_index != virtual_processor_assignment_index) {
 	    if (virtual_processor_assignment_index == -1) {
-	      funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	      if (! __funk2.command_line.no_processor_affinity) {
+		funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	      }
 	    } else {
-	      funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
+	      if (! __funk2.command_line.no_processor_affinity) {
+		funk2_virtual_processor_thread__set_cpu_affinity(this, virtual_processor_assignment_index);
+	      }
 	    }
 	  }
 	  this->processor_affinity_index = virtual_processor_assignment_index;
 	} else {
 	  if (this->processor_affinity_index != -1) {
-	    funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	    if (! __funk2.command_line.no_processor_affinity) {
+	      funk2_virtual_processor_thread__set_cpu_affinity_all(this);
+	    }
 	    this->processor_affinity_index = -1;
 	  }
 	}

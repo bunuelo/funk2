@@ -68,6 +68,10 @@ void f2__print_usage() {
 	 "\n        in undefined behavior if used with bootstrap images that"
 	 "\n        assume a different number of processors."
 	 "\n"
+	 "\n    --no-processor-affinity"
+	 "\n"
+	 "\n        Disables processor affinity assignments for threads."
+	 "\n"
 	 "\n    --no-sigint-handler"
 	 "\n"
 	 "\n        Disables SIGINT (CTRL-C) signal handler."
@@ -203,6 +207,8 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
 	break;
       }
       this->force_processor_count = force_processor_count;
+    } else if (strcmp(argv[index], "--no-processor-affinity") == 0) {
+      this->no_processor_affinity = boolean__true;
     } else if (strcmp(argv[index], "--no-sigint-handler") == 0) {
       this->no_sigint_handler = boolean__true;
     } else if (strcmp(argv[index], "--no-sigsegv-handler") == 0) {

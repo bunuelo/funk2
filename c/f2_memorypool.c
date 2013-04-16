@@ -451,13 +451,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     case ptype_chunk:                    break;
     case ptype_cons: {
       {
-	f2ptr             car       = ((ptype_cons_block_t*)ptype_block)->car.data;
+	f2ptr             car       = f2ptr__value(&(((ptype_cons_block_t*)ptype_block)->car));
 	ptr               car_ptr   = __f2ptr_to_ptr(car);
 	funk2_memblock_t* car_block = (funk2_memblock_t*)from_ptr(car_ptr);
 	funk2_memblock__decrement_reference_count(car_block, car, &(__funk2.garbage_collector));
       }
       {
-	f2ptr             cdr       = ((ptype_cons_block_t*)ptype_block)->cdr.data;
+	f2ptr             cdr       = f2ptr__value(&(((ptype_cons_block_t*)ptype_block)->cdr));
 	ptr               cdr_ptr   = __f2ptr_to_ptr(cdr);
 	funk2_memblock_t* cdr_block = (funk2_memblock_t*)from_ptr(cdr_ptr);
 	funk2_memblock__decrement_reference_count(cdr_block, cdr, &(__funk2.garbage_collector));
@@ -467,7 +467,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       s64 i;
       f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
       for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
-	funk2_memblock_t* subblock = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(iter->data));
+	funk2_memblock_t* subblock = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(f2ptr__value(iter)));
 	funk2_memblock__decrement_reference_count(subblock, iter->data, &(__funk2.garbage_collector));
 	iter ++;
       }

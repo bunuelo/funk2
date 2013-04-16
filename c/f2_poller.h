@@ -43,7 +43,7 @@ typedef struct funk2_poller_s               funk2_poller_t;
 #define poller__deep_sleep_average_length    10
 #define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second >> 6)
 
-#define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDADEADHEAD)
+#define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDDEAD)
 
 
 // funk2_poller_global_helper

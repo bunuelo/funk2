@@ -213,7 +213,7 @@ funk2_thread_safe_hash_keyvalue_pair_t* funk2_thread_safe_hash__lookup_keyvalue_
 u64 funk2_thread_safe_hash__lookup(funk2_thread_safe_hash_t* this, u64 key) {
   funk2_thread_safe_hash_keyvalue_pair_t* keyvalue_pair = funk2_thread_safe_hash__lookup_keyvalue_pair(this, key);
   if (keyvalue_pair) {
-    return keyvalue_pair->value;
+    return funk2_atomic_u64__value(&(keyvalue_pair->value));
   }
   error(nil, "funk2_thread_safe_hash__lookup error: attempted to lookup key that is not in funk2_thread_safe_hash.");
 }
@@ -221,7 +221,7 @@ u64 funk2_thread_safe_hash__lookup(funk2_thread_safe_hash_t* this, u64 key) {
 u64 funk2_thread_safe_hash__try_lookup(funk2_thread_safe_hash_t* this, u64 key, u64 fail_value) {
   funk2_thread_safe_hash_keyvalue_pair_t* keyvalue_pair = funk2_thread_safe_hash__lookup_keyvalue_pair(this, key);
   if (keyvalue_pair) {
-    return keyvalue_pair->value;
+    return funk2_atomic_u64__value(&(keyvalue_pair->value));
   }
   return fail_value;
 }

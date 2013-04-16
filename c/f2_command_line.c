@@ -36,9 +36,14 @@ void f2__print_usage() {
 	 "\n  funk2 -x <command>"
 	 "\n  funk2 -i <bootstrap-image>"
 	 "\n"
-	 "\n    -h/--help"
+	 "\n    -h"
 	 "\n"
-	 "\n        Print this help message."
+	 "\n        Print short help message.  (includes this text)"
+	 "\n"
+	 "\n    --help"
+	 "\n"
+	 "\n        Print extended help message.  (includes this text plus use"
+	 "\n        cases)"
 	 "\n"
 	 "\n    <source.fu2>"
 	 "\n"
@@ -79,6 +84,28 @@ void f2__print_usage() {
 	 "\n    --no-sigsegv-handler"
 	 "\n"
 	 "\n        Disables SIGSEGV (segmentation fault) signal handler."
+	 "\n"
+	 "\n\n");
+}
+
+void f2__print_extended_usage() {
+  f2__print_usage();
+  printf("\n  EXAMPLES"
+	 "\n"
+	 "\n    funk2 -x \"[require fibermon] [save_memory_image 'fibermon.img']\""
+	 "\n"
+	 "\n        Load the FiberMon package and save a new memory image to the"
+	 "\n        file, \"fibermon.img\"."
+	 "\n"
+	 "\n    funk2 -i fibermon.img -x \"[fibermon] [repl]\""
+	 "\n"
+	 "\n        Load the fibermon.img image file, and execute the FiberMon"
+	 "\n        application with a Read-Eval-Print-Loop to interpret user"
+	 "\n        commands."
+	 "\n"
+	 "\n  LICENSE"
+	 "\n"
+	 "\n    GPL v3"
 	 "\n"
 	 "\n\n");
 }
@@ -152,12 +179,14 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->no_boot                         = boolean__false;
   
   int       index;
-  boolean_t parse_error         = boolean__false;
-  boolean_t print_help_and_exit = boolean__false;
+  boolean_t parse_error                  = boolean__false;
+  boolean_t print_help_and_exit          = boolean__false;
+  boolean_t print_extended_help_and_exit = boolean__false;
   for (index = 1; index < argc; index ++) {
-    if ((strcmp(argv[index], "-h")     == 0) ||
-	(strcmp(argv[index], "--help") == 0)) {
+    if (strcmp(argv[index], "-h") == 0) {
       print_help_and_exit = boolean__true;
+    } else if (strcmp(argv[index], "--help") == 0) {
+      print_extended_help_and_exit = boolean__true;
     } else if (strcmp(argv[index], "-x") == 0) {
       index ++;
       if (index >= argc) {
@@ -237,6 +266,11 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   }
   
   if (print_help_and_exit) {
+    f2__print_usage();
+    exit(0);
+  }
+
+  if (print_extended_help_and_exit) {
     f2__print_usage();
     exit(0);
   }

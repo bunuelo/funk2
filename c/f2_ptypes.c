@@ -1256,11 +1256,11 @@ f2ptr ptype_cons__new(int pool_index, f2ptr cause, f2ptr car, f2ptr cdr) {
   }
   {
     if (car != nil) {raw__exp__increment_reference_count(car);}
-    cons_block->car.data = car;
+    f2ptr__init(&(cons_block->car), car);
   }
   {
     if (cdr != nil) {raw__exp__increment_reference_count(cdr);}
-    cons_block->cdr.data = cdr;
+    f2ptr__init(&(cons_block->cdr), cdr);
   }
   return cons_f2ptr;
 }
@@ -1352,9 +1352,23 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   } else {
     simple_array_block->ptype.creation_fiber = nil;
   }
-  simple_array_block->length               = length;
-  if (f2ptr_ptr) {memcpy(simple_array_block->slot, from_ptr(f2ptr_ptr), data_byte_num);}
-  else           {memset(simple_array_block->slot, 0,                   data_byte_num);}
+  simple_array_block->length = length;
+  if (f2ptr_ptr == nil) {
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr__init(&(simple_array_block->slot[index]), nil);
+    }
+  } else {
+    s64 index;
+    for (index = 0; index < length; index ++) {
+      f2ptr initial_value = nil;
+      if (f2ptr_ptr) {
+	f2ptr* initial_value_array = from_ptr(f2ptr_ptr);
+	initial_value = initial_value_array[index];
+      }
+      f2ptr__init(&(simple_array_block->slot[index]), initial_value);
+    }
+  }
   return simple_array_f2ptr;
 }
 

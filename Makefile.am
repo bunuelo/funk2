@@ -580,6 +580,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_dlfcn.c \
   c/f2_dptr.c \
   c/f2_dynamic_memory.c \
+  c/f2_f2ptr.c \
   c/f2_f2ptr_set.c \
   c/f2_fiber.c \
   c/f2_fileio.c \

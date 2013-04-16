@@ -62,10 +62,10 @@ void funk2_protected_alloc_array_event_array__reset(funk2_protected_alloc_array_
 void funk2_protected_alloc_array__init(funk2_protected_alloc_array_t* this) {
   this->used_num = 0;
   this->length   = 2ull * 1024;
-  this->data = (f2ptr_t*)from_ptr(f2__malloc(sizeof(f2ptr_t) * this->length));
+  this->data = (f2ptr*)from_ptr(f2__malloc(sizeof(f2ptr) * this->length));
   u64 i;
   for (i = 0; i < this->length; i ++) {
-    this->data[i].data = nil;
+    this->data[i] = nil;
   }
   this->reentrance_count     = 0;
   this->max_reentrance_count = 0;
@@ -85,7 +85,7 @@ void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_allo
   if (this->reentrance_count == 0) {
     return;
   }
-  this->data[this->used_num].data = exp;
+  this->data[this->used_num] = exp;
   this->used_num ++;
   if (this->used_num >= this->length) {
     u64 old_length          = this->length;
@@ -93,7 +93,7 @@ void funk2_protected_alloc_array__add_protected_alloc_f2ptr(funk2_protected_allo
     u64 new_length__bit_num = ((old_length__bit_num * 9) >> 3) + 1;
     this->length = (1ll << new_length__bit_num);
     status("funk2_protected_alloc_array__add_protected_alloc_f2ptr: increasing size of protected_alloc_array from " u64__fstr " to " u64__fstr " f2ptrs.", old_length, this->length);
-    this->data = (f2ptr_t*)from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(f2ptr_t) * old_length, sizeof(f2ptr_t) * this->length));
+    this->data = (f2ptr*)from_ptr(f2__new_alloc(to_ptr(this->data), sizeof(f2ptr) * old_length, sizeof(f2ptr) * this->length));
   }
 }
 
@@ -143,14 +143,14 @@ boolean_t funk2_protected_alloc_array__in_protected_region(funk2_protected_alloc
 void funk2_protected_alloc_array__touch_all(funk2_protected_alloc_array_t* this, funk2_garbage_collector_pool_t* garbage_collector_pool) {
   u64 i;
   for (i = 0; i < this->used_num; i ++) {
-    funk2_garbage_collector_pool__touch_f2ptr(garbage_collector_pool, this->data[i].data);
+    funk2_garbage_collector_pool__touch_f2ptr(garbage_collector_pool, this->data[i]);
   }
 }
 
 void funk2_protected_alloc_array__defragment__fix_pointers(funk2_protected_alloc_array_t* this) {
   u64 index;
   for (index = 0; index < this->used_num; index ++) {
-    defragment__fix_pointer(this->data[index].data);
+    defragment__fix_pointer(this->data[index]);
   }
 }
 

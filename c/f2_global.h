@@ -177,12 +177,6 @@ typedef                             u64       pool_block_address_t;
 #define f2ptr_block__size      (1ull << f2ptr_block__bit_num)
 #define f2ptr_block__max_value ((1ull << f2ptr_block__bit_num) - 1)
 
-
-typedef struct f2ptr_s f2ptr_t;
-struct f2ptr_s {
-  f2ptr data : f2ptr__bit_num;
-} __attribute__((__packed__));
-
 typedef u64 event_id_t;
 #define event_id__fstr "#x" X64__fstr
 

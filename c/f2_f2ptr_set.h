@@ -42,7 +42,7 @@ typedef struct funk2_f2ptr_set_node_s funk2_f2ptr_set_node_t;
 #include "f2_defragmenter.h"
 
 struct funk2_f2ptr_set_node_s {
-  f2ptr_t                 element;
+  f2ptr                   element;
   funk2_f2ptr_set_node_t* next;
 } __attribute__((__packed__));
 

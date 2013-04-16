@@ -167,7 +167,7 @@ s64 funk2_f2ptr_set__calculate_save_size(funk2_f2ptr_set_t* this) {
     for (i = 0; i < bin_num; i ++) {
       funk2_f2ptr_set_node_t* iter = this->bin[i];
       while (iter) {
-	save_size += sizeof(f2ptr_t);
+	save_size += sizeof(f2ptr);
 	iter = iter->next;
       }
     }
@@ -183,7 +183,7 @@ void funk2_f2ptr_set__save_to_stream(funk2_f2ptr_set_t* this, int fd) {
   for (i = 0; i < bin_num; i ++) {
     funk2_f2ptr_set_node_t* iter = this->bin[i];
     while (iter) {
-      f2ptr_t element; element.data = iter->element.data;
+      f2ptr element = iter->element;
       safe_write(fd, to_ptr(&element), sizeof(element));
       iter = iter->next;
     }
@@ -201,7 +201,7 @@ u64 funk2_f2ptr_set__save_to_buffer(funk2_f2ptr_set_t* this, u8* initial_buffer)
     for (i = 0; i < bin_num; i ++) {
       funk2_f2ptr_set_node_t* iter = this->bin[i];
       while (iter) {
-	f2ptr_t element; element.data = iter->element.data;
+	f2ptr element = iter->element;
 	//safe_write(fd, to_ptr(&element), sizeof(element));
 	memcpy(buffer, &element, sizeof(element)); buffer += sizeof(element);
 	iter = iter->next;
@@ -216,7 +216,7 @@ void funk2_f2ptr_set__load_from_stream(funk2_f2ptr_set_t* this, int fd) {
   safe_read(fd, to_ptr(&element_count), sizeof(element_count));
   u64 index;
   for (index = 0; index < element_count; index ++) {
-    f2ptr_t element;
+    f2ptr element;
     safe_read(fd, to_ptr(&element), sizeof(element));
     funk2_f2ptr_set__add(this, element.data);
   }
@@ -229,7 +229,7 @@ s64 funk2_f2ptr_set__load_from_buffer(funk2_f2ptr_set_t* this, u8* buffer) {
     memcpy(&element_count, buffer_iter, sizeof(element_count)); buffer_iter += sizeof(element_count);
     u64 index;
     for (index = 0; index < element_count; index ++) {
-      f2ptr_t element;
+      f2ptr element;
       memcpy(&element, buffer_iter, sizeof(element)); buffer_iter += sizeof(element);
       funk2_f2ptr_set__add(this, element.data);
     }

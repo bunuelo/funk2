@@ -31,6 +31,7 @@
 #include "f2_processor_spinlock.h"
 #include "f2_processor_mutex.h"
 #include "f2_processor_conditionlock.h"
+#include "f2_atomic.h"
 
 // funk2_user_thread_controller__touch_all_protected_alloc_arrays
 

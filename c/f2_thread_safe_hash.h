@@ -83,54 +83,54 @@ boolean_t                               funk2_thread_safe_hash__contains        
 #define funk2_thread_safe_hash__bin_array(this, index) ((funk2_thread_safe_hash_bin_node_t*)from_ptr(funk2_atomic_u64__value(&((this)->bin_array[index]))))
 
 #define funk2_thread_safe_hash__iteration(this, funk2_thread_safe_hash__iteration__user_key, funk2_thread_safe_hash__iteration__user_value, code) { \
-    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this  = (this);		\
-    u64           funk2_thread_safe_hash__iteration__index = 0;			\
-    u64           funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
+    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this          = (this); \
+    u64                       funk2_thread_safe_hash__iteration__index         = 0; \
+    u64                       funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
     while (funk2_thread_safe_hash__iteration__index < funk2_thread_safe_hash__iteration__this__bin_num) { \
-      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__this->bin_array[funk2_thread_safe_hash__iteration__index]; \
-      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {			\
-	u64 funk2_thread_safe_hash__iteration__user_key   = funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair.key;	\
-	u64 funk2_thread_safe_hash__iteration__user_value = funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair.value; \
+      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__bin_array(funk2_thread_safe_hash__iteration__this, funk2_thread_safe_hash__iteration__index); \
+      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {	\
+	u64 funk2_thread_safe_hash__iteration__user_key   = funk2_thread_safe_hash_keyvalue_pair__key(&(funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair)); \
+	u64 funk2_thread_safe_hash__iteration__user_value = funk2_thread_safe_hash_keyvalue_pair__value(&(funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair)); \
 	{								\
 	  code;								\
 	}								\
-	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__bin_node->next; \
+	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash_bin_node__next(funk2_thread_safe_hash__iteration__bin_node); \
       }									\
-      funk2_thread_safe_hash__iteration__index ++;					\
+      funk2_thread_safe_hash__iteration__index ++;			\
     }									\
   }
 
-#define funk2_thread_safe_hash__key__iteration(this, funk2_thread_safe_hash__iteration__user_key, code) {			\
-    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this  = (this);		\
-    u64           funk2_thread_safe_hash__iteration__index = 0;			\
-    u64           funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
+#define funk2_thread_safe_hash__key__iteration(this, funk2_thread_safe_hash__iteration__user_key, code) { \
+    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this          = (this); \
+    u64                       funk2_thread_safe_hash__iteration__index         = 0; \
+    u64                       funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
     while (funk2_thread_safe_hash__iteration__index < funk2_thread_safe_hash__iteration__this__bin_num) { \
-      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__this->bin_array[funk2_thread_safe_hash__iteration__index]; \
-      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {			\
-	u64 funk2_thread_safe_hash__iteration__user_key = funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair.key; \
+      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__bin_array(funk2_thread_safe_hash__iteration__this, funk2_thread_safe_hash__iteration__index); \
+      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {	\
+	u64 funk2_thread_safe_hash__iteration__user_key = funk2_thread_safe_hash_keyvalue_pair__key(&(funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair)); \
 	{								\
 	  code;								\
 	}								\
-	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__bin_node->next; \
+	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash_bin_node__next(funk2_thread_safe_hash__iteration__bin_node); \
       }									\
-      funk2_thread_safe_hash__iteration__index ++;					\
+      funk2_thread_safe_hash__iteration__index ++;			\
     }									\
   }
 
-#define funk2_thread_safe_hash__value__iteration(this, funk2_thread_safe_hash__iteration__user_value, code) {			\
-    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this  = (this);		\
-    u64           funk2_thread_safe_hash__iteration__index = 0;			\
-    u64           funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
+#define funk2_thread_safe_hash__value__iteration(this, funk2_thread_safe_hash__iteration__user_value, code) { \
+    funk2_thread_safe_hash_t* funk2_thread_safe_hash__iteration__this          = (this); \
+    u64                       funk2_thread_safe_hash__iteration__index         = 0; \
+    u64                       funk2_thread_safe_hash__iteration__this__bin_num = 1ull << (funk2_thread_safe_hash__iteration__this->bin_num_power); \
     while (funk2_thread_safe_hash__iteration__index < funk2_thread_safe_hash__iteration__this__bin_num) { \
-      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__this->bin_array[funk2_thread_safe_hash__iteration__index]; \
-      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {			\
-	u64 funk2_thread_safe_hash__iteration__user_value = funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair.value; \
+      funk2_thread_safe_hash_bin_node_t* funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__bin_array(funk2_thread_safe_hash__iteration__this, funk2_thread_safe_hash__iteration__index); \
+      while (funk2_thread_safe_hash__iteration__bin_node != NULL) {	\
+	u64 funk2_thread_safe_hash__iteration__user_value = funk2_thread_safe_hash_keyvalue_pair__value(&(funk2_thread_safe_hash__iteration__bin_node->keyvalue_pair)); \
 	{								\
 	  code;								\
 	}								\
-	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash__iteration__bin_node->next; \
+	funk2_thread_safe_hash__iteration__bin_node = funk2_thread_safe_hash_bin_node__next(funk2_thread_safe_hash__iteration__bin_node); \
       }									\
-      funk2_thread_safe_hash__iteration__index ++;					\
+      funk2_thread_safe_hash__iteration__index ++;			\
     }									\
   }
 

@@ -168,6 +168,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   this->event_id = 0;
   funk2_processor_mutex__init(&(this->event_id_cmutex));
   
+  funk2_poller_global_helper__init_deep_sleep(&(this->global_poller_helper));
   funk2_poller_global_helper__init_deep_sleep(&(this->processor_conditionlock_poller_helper));
   funk2_system_processor__init(&(this->system_processor));
   funk2_system_file_handler__init(&(this->system_file_handler));
@@ -420,6 +421,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_system_file_handler__destroy(&(this->system_file_handler));
   funk2_system_processor__destroy(&(this->system_processor));
   funk2_poller_global_helper__destroy(&(this->processor_conditionlock_poller_helper));
+  funk2_poller_global_helper__destroy(&(this->global_poller_helper));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

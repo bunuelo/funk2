@@ -219,6 +219,7 @@ typedef struct funk2_s {
   funk2_xmlrpc_t                      xmlrpc;
   funk2_trace_t                       trace;
   funk2_virtual_processor_handler_t   virtual_processor_handler;
+  funk2_poller_global_helper_t        global_poller_helper;
   funk2_poller_global_helper_t        processor_conditionlock_poller_helper;
 } funk2_t;
 

@@ -84,19 +84,19 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
   this->total_sleep_cycle_count                 = 0;
 }
 
-void funk2_poller__init_deep_sleep(funk2_poller_t* this) {
-  funk2_poller__init(this, poller__deep_sleep_percentage, poller__deep_sleep_average_length, poller__deep_sleep_sleep_nanoseconds);
-}
-
 void funk2_poller__init_from_global_helper(funk2_poller_t* this, funk2_poller_global_helper_t* global_helper) {
   if (global_helper->initialized_magic != POLLER_GLOBAL_HELPER_MAGIC) {
     error(nil, "funk2_poller__init_from_global_helper error: (global_helper->initialized_magic != POLLER_GLOBAL_HELPER_MAGIC)");
   }
-  this->global_helper              = global_helper;
   double target_cpu_usage          = global_helper->target_cpu_usage;
   u64    average_count             = global_helper->average_count;
   u64    initial_sleep_nanoseconds = funk2_atomic_u64__value(&(global_helper->optimal_sleep_nanoseconds));
   funk2_poller__init(this, target_cpu_usage, average_count, initial_sleep_nanoseconds);
+  this->global_helper = global_helper;
+}
+
+void funk2_poller__init_deep_sleep(funk2_poller_t* this) {
+  funk2_poller__init_from_global_helper(this, &(__funk2.global_poller_helper));
 }
 
 void funk2_poller__destroy(funk2_poller_t* this) {

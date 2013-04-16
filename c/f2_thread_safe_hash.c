@@ -169,8 +169,8 @@ boolean_t funk2_thread_safe_hash__remove(funk2_thread_safe_hash_t* this, u64 key
 		  success = funk2_atomic_u64__compare_and_swap(&(prev->next), old_prev_next, (u64)to_ptr(next));
 		}
 	      } else {
-		u64 old_bin_array_value = funk2_thread_safe_hash__bin_array(this, index);
-		if (old_bin_array_value == iter) {
+		u64 old_bin_array_value = (u64)to_ptr(funk2_thread_safe_hash__bin_array(this, index));
+		if (old_bin_array_value == (u64)to_ptr(iter)) {
 		  success = funk2_atomic_u64__compare_and_swap(&(this->bin_array[index]), old_bin_array_value, (u64)to_ptr(next));
 		}
 	      }

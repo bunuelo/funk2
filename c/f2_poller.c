@@ -27,9 +27,9 @@
 
 #include "funk2.h"
 
-#define poller__deep_sleep_percentage        0.01
+#define poller__deep_sleep_percentage        0.02
 #define poller__deep_sleep_average_length    10
-#define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second >> 6)
+#define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second / 1000)
 
 #define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDDEAD)
 

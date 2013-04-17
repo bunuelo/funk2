@@ -41,7 +41,7 @@ typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 // If a platform does not support atomic builtins, we could add a spinlock to this struct.
 // First, we would need to require memblocks to call destroy on each reference count, when it is no longer needed.
 
-#define ATOMIC_U64_MAGIC 0xBEADBEADHEADBEAD
+#define ATOMIC_U64_MAGIC 0xBEADBEADBEADBEAD
 
 struct funk2_atomic_u64_s {
   u64 magic;

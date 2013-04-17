@@ -28,18 +28,56 @@
 #include "funk2.h"
 
 void funk2_atomic_u64__init(funk2_atomic_u64_t* this, u64 value) {
+#if defined(ATOMIC_U64_DEBUG)
+  this->magic = ATOMIC_U64_MAGIC;
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__init not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__init not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__init not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
   this->value = value;
 }
 
 void funk2_atomic_u64__destroy(funk2_atomic_u64_t* this) {
+#if defined(ATOMIC_U64_DEBUG)
+  if (this->magic != ATOMIC_U64_MAGIC) {
+    error(nil, "funk2_atomic_u64__destroy no magic.");
+  }
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__destroy not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__destroy not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__destroy not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
 }
 
 boolean_t funk2_atomic_u64__compare_and_swap(funk2_atomic_u64_t* this, u64 old_value, u64 new_value) {
+#if defined(ATOMIC_U64_DEBUG)
+  if (this->magic != ATOMIC_U64_MAGIC) {
+    error(nil, "funk2_atomic_u64__compare_and_swap no magic.");
+  }
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__compare_and_swap not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__compare_and_swap not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__compare_and_swap not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
   boolean_t success = __sync_bool_compare_and_swap(&(this->value), old_value, new_value);
   return success;
 }
 
 u64 funk2_atomic_u64__set_value(funk2_atomic_u64_t* this, u64 new_value) {
+#if defined(ATOMIC_U64_DEBUG)
+  if (this->magic != ATOMIC_U64_MAGIC) {
+    error(nil, "funk2_atomic_u64__set_value no magic.");
+  }
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__set_value not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__set_value not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__set_value not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
   u64       old_value;
   boolean_t success = boolean__false;;
   while (! success) {
@@ -50,6 +88,16 @@ u64 funk2_atomic_u64__set_value(funk2_atomic_u64_t* this, u64 new_value) {
 }
 
 u64 funk2_atomic_u64__increment(funk2_atomic_u64_t* this) {
+#if defined(ATOMIC_U64_DEBUG)
+  if (this->magic != ATOMIC_U64_MAGIC) {
+    error(nil, "funk2_atomic_u64__increment no magic.");
+  }
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__increment not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__increment not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__increment not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
   u64 old_value;
   u64 new_value;
   {
@@ -64,6 +112,16 @@ u64 funk2_atomic_u64__increment(funk2_atomic_u64_t* this) {
 }
 
 u64 funk2_atomic_u64__decrement(funk2_atomic_u64_t* this) {
+#if defined(ATOMIC_U64_DEBUG)
+  if (this->magic != ATOMIC_U64_MAGIC) {
+    error(nil, "funk2_atomic_u64__decrement no magic.");
+  }
+  if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {
+    status("funk2_atomic_u64__decrement not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    status("funk2_atomic_u64__decrement not aligned.  this=" u64__fstr, (u64)to_ptr(this));
+    error(nil, "funk2_atomic_u64__decrement not aligned.");
+  }
+#endif // ATOMIC_U64_DEBUG
   u64 old_value;
   u64 new_value;
   {

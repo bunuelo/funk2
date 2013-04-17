@@ -50,16 +50,18 @@
 
 struct ptype_block_s {
   funk2_memblock_t block;
-  f2ptr            cause          : f2ptr__bit_num;
-  f2ptr            creation_fiber : f2ptr__bit_num;
+  f2ptr_t          atomic_cause;
+  f2ptr_t          atomic_creation_fiber;
 } __attribute__((__packed__));
 typedef struct ptype_block_s ptype_block_t;
 
+void ptype_block__init(ptype_block_t* this, f2ptr cause, f2ptr creation_fiber);
+
 #define __pure__f2ptype__raw(this)                        (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype)
-#define __pure__f2ptype__cause(this)                      (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause)
-#define __pure__f2ptype__cause__set(this, value)          (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->cause = (value))
-#define __pure__f2ptype__creation_fiber(this)             (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_fiber)
-#define __pure__f2ptype__creation_fiber__set(this, value) (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->creation_fiber = (value))
+#define __pure__f2ptype__cause(this)                      ((f2ptr)funk2_atomic_u64__value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause))
+#define __pure__f2ptype__cause__set(this, value)          ((f2ptr)funk2_atomic_u64__set_value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause, value))
+#define __pure__f2ptype__creation_fiber(this)             ((f2ptr)funk2_atomic_u64__value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber))
+#define __pure__f2ptype__creation_fiber__set(this, value) ((f2ptr)funk2_atomic_u64__set_value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber, value))
 
 
 // integer

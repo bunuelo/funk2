@@ -174,15 +174,15 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_dptr(funk2_defragmenter_t*
 void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmenter_t* this, funk2_memblock_t* memblock) {
   ptype_block_t* ptype_block = (ptype_block_t*)memblock;
   {
-    f2ptr cause = ptype_block->cause;
+    f2ptr cause = funk2_atomic_u64__value(&(ptype_block->atomic_cause));
     if (cause != nil) {
-      ptype_block->cause = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause);
+      funk2_atomic_u64__set_value(&(ptype_block->atomic_cause), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause));
     }
   }
   {
-    f2ptr creation_fiber = ptype_block->creation_fiber;
+    f2ptr creation_fiber = funk2_atomic_u64__value(&(ptype_block->atomic_creation_fiber));
     if (creation_fiber != nil) {
-      ptype_block->creation_fiber = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, creation_fiber);
+      funk2_atomic_u64__set_value(&(ptype_block->atomic_creation_fiber), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, creation_fiber));
     }
   }
   switch(ptype_block->block.ptype) {

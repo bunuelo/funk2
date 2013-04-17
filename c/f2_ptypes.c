@@ -32,8 +32,8 @@
 // ptype_block
 
 void ptype_block__init(ptype_block_t* this, f2ptr cause, f2ptr creation_fiber) {
-  funk2_atomic_u64__init(&(this->atomic_cause),          cause);
-  funk2_atomic_u64__init(&(this->atomic_creation_fiber), creation_fiber);
+  f2ptr__init(&(this->atomic_cause),          cause);
+  f2ptr__init(&(this->atomic_creation_fiber), creation_fiber);
 }
 
 

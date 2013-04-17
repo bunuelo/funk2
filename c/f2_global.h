@@ -156,7 +156,7 @@ typedef unsigned char boolean_t;
 
 typedef                             u64       pool_address_t;
 #define pool_address__fstr          X64__fstr
-#define pool_address__bit_num        38
+#define pool_address__bit_num        41
 #define pool_address__max_byte_num     ((1ull << pool_address__bit_num) - 1)
 
 typedef                             u64       f2ptr;

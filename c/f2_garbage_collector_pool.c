@@ -683,13 +683,13 @@ void funk2_garbage_collector_pool__grey_referenced_elements_from_dptr(funk2_garb
 void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collector_pool_t* this, int pool_index, f2ptr exp) {
   ptype_block_t* block = (ptype_block_t*)from_ptr(__f2ptr_to_ptr(exp));
   {
-    f2ptr cause = block->cause;
+    f2ptr cause = f2ptr__value(&block->atomic_cause);
     if (cause != nil) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, cause);
     }
   }
   {
-    f2ptr creation_fiber = block->creation_fiber;
+    f2ptr creation_fiber = f2ptr__value(&(block->atomic_creation_fiber));
     if (creation_fiber != nil) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, creation_fiber);
     }

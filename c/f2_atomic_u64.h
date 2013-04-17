@@ -28,6 +28,8 @@
 #ifndef F2__ATOMIC_U64__TYPES__H
 #define F2__ATOMIC_U64__TYPES__H
 
+#define ATOMIC_U64_DEBUG
+
 typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 
 #endif // F2__ATOMIC_U64__TYPES__H
@@ -50,7 +52,17 @@ u64       funk2_atomic_u64__set_value       (funk2_atomic_u64_t* this, u64 new_v
 u64       funk2_atomic_u64__increment       (funk2_atomic_u64_t* this);
 u64       funk2_atomic_u64__decrement       (funk2_atomic_u64_t* this);
 
-#define funk2_atomic_u64__value(this) ((this)->value)
+#if defined(ATOMIC_U64_DEBUG)
+#  define funk2_atomic_u64__value(this) ({				\
+      if ((to_ptr(this)) != (((to_ptr(this)) >> 3) << 3)) {		\
+	status("funk2_atomic_u64__value not aligned.  this=" u64__fstr, (u64)to_ptr(this)); \
+	error(nil, "funk2_atomic_u64__value not aligned.");		\
+      }									\
+      ((this)->value);							\
+    })
+#else
+#  define funk2_atomic_u64__value(this) ((this)->value)
+#endif // ATOMIC_U64_DEBUG
 
 #endif // F2__ATOMIC_U64__H
 

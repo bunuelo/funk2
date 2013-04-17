@@ -57,11 +57,11 @@ typedef struct ptype_block_s ptype_block_t;
 
 void ptype_block__init(ptype_block_t* this, f2ptr cause, f2ptr creation_fiber);
 
-#define __pure__f2ptype__raw(this)                        (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype)
-#define __pure__f2ptype__cause(this)                      ((f2ptr)f2ptr__value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause))
-#define __pure__f2ptype__cause__set(this, value)          ((f2ptr)f2ptr__value__set(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause, value))
-#define __pure__f2ptype__creation_fiber(this)             ((f2ptr)f2ptr__value(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber))
-#define __pure__f2ptype__creation_fiber__set(this, value) ((f2ptr)f2ptr__value__set(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber, value))
+#define __pure__f2ptype__raw(this)                        (((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->block.ptype))
+#define __pure__f2ptype__cause(this)                      ((f2ptr)f2ptr__value(&(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause)))
+#define __pure__f2ptype__cause__set(this, value)          ((f2ptr)f2ptr__value__set(&(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_cause), value))
+#define __pure__f2ptype__creation_fiber(this)             ((f2ptr)f2ptr__value(&(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber)))
+#define __pure__f2ptype__creation_fiber__set(this, value) ((f2ptr)f2ptr__value__set(&(((ptype_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_creation_fiber), value))
 
 
 // integer

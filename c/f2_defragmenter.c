@@ -174,15 +174,15 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_dptr(funk2_defragmenter_t*
 void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmenter_t* this, funk2_memblock_t* memblock) {
   ptype_block_t* ptype_block = (ptype_block_t*)memblock;
   {
-    f2ptr cause = funk2_atomic_u64__value(&(ptype_block->atomic_cause));
+    f2ptr cause = f2ptr__value(&(ptype_block->atomic_cause));
     if (cause != nil) {
-      funk2_atomic_u64__set_value(&(ptype_block->atomic_cause), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause));
+      f2ptr__value__set(&(ptype_block->atomic_cause), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, cause));
     }
   }
   {
-    f2ptr creation_fiber = funk2_atomic_u64__value(&(ptype_block->atomic_creation_fiber));
+    f2ptr creation_fiber = f2ptr__value(&(ptype_block->atomic_creation_fiber));
     if (creation_fiber != nil) {
-      funk2_atomic_u64__set_value(&(ptype_block->atomic_creation_fiber), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, creation_fiber));
+      f2ptr__value__set(&(ptype_block->atomic_creation_fiber), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, creation_fiber));
     }
   }
   switch(ptype_block->block.ptype) {
@@ -199,17 +199,17 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_chunk:                    return;
   case ptype_cons: {
     {
-      f2ptr old_value = funk2_atomic_u64__value(&(((ptype_cons_block_t*)ptype_block)->car.atomic_data));
+      f2ptr old_value = f2ptr__value(&(((ptype_cons_block_t*)ptype_block)->car));
       if (old_value != nil) {
 	f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
-	funk2_atomic_u64__set_value(&(((ptype_cons_block_t*)ptype_block)->car.atomic_data), new_value);
+	f2ptr__value__set(&(((ptype_cons_block_t*)ptype_block)->car), new_value);
       }
     }
     {
-      f2ptr old_value = funk2_atomic_u64__value(&(((ptype_cons_block_t*)ptype_block)->cdr.atomic_data));
+      f2ptr old_value = f2ptr__value(&(((ptype_cons_block_t*)ptype_block)->cdr));
       if (old_value != nil) {
 	f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
-	funk2_atomic_u64__set_value(&(((ptype_cons_block_t*)ptype_block)->cdr.atomic_data), new_value);
+	f2ptr__value__set(&(((ptype_cons_block_t*)ptype_block)->cdr), new_value);
       }
     }
   } return;
@@ -218,10 +218,10 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
     f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
     for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
       {
-	f2ptr old_value = funk2_atomic_u64__value(&(iter->atomic_data));
+	f2ptr old_value = f2ptr__value(iter);
 	if (old_value != nil) {
 	  f2ptr new_value = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, old_value);
-	  funk2_atomic_u64__set_value(&(iter->atomic_data), new_value);
+	  f2ptr__value__set(iter, new_value);
 	}
       }
       iter ++;

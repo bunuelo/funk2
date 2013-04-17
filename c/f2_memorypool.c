@@ -414,7 +414,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   block->used = 0;
   this->total_free_memory += funk2_memblock__byte_num(block);
   {
-    f2ptr creation_fiber = ((ptype_block_t*)block)->creation_fiber;
+    f2ptr creation_fiber = f2ptr__value(&(((ptype_block_t*)block)->atomic_creation_fiber));
     if (creation_fiber != nil) {
       u64 old_value = funk2_hash__try_lookup(&(this->temporary_bytes_freed_count_fiber_hash), creation_fiber, 0);
       u64 new_value = old_value + funk2_memblock__byte_num(block);
@@ -426,13 +426,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
   {
     ptype_block_t* ptype_block = (ptype_block_t*)block;
     {
-      f2ptr             cause       = ptype_block->cause;
+      f2ptr             cause       = f2ptr__value(&(ptype_block->atomic_cause));
       ptr               cause_ptr   = __f2ptr_to_ptr(cause);
       funk2_memblock_t* cause_block = (funk2_memblock_t*)from_ptr(cause_ptr);
       funk2_memblock__decrement_reference_count(cause_block, cause, &(__funk2.garbage_collector));
     }
     {
-      f2ptr             creation_fiber       = ptype_block->creation_fiber;
+      f2ptr             creation_fiber       = f2ptr__value(&(ptype_block->atomic_creation_fiber));
       ptr               creation_fiber_ptr   = __f2ptr_to_ptr(creation_fiber);
       funk2_memblock_t* creation_fiber_block = (funk2_memblock_t*)from_ptr(creation_fiber_ptr);
       funk2_memblock__decrement_reference_count(creation_fiber_block, creation_fiber, &(__funk2.garbage_collector));

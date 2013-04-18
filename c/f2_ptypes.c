@@ -1396,7 +1396,7 @@ f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array
   }
 #endif // F2__PTYPE__TYPE_CHECK
   container__reflectively_know_of_reading_from(cause, init_array, nil, sizeof(f2ptr) * length);
-  return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->slot));
+  return pfunk2__f2simple_array__new(cause, length, to_ptr(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(init_array))))->atomic_slot));
 }
 
 u64 pfunk2__f2simple_array__length(f2ptr this, f2ptr cause) {

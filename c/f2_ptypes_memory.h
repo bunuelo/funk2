@@ -48,8 +48,11 @@
 
 // ptype
 
+#define PTYPE_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_memblock_t) + 7) / 8) * 8) - sizeof(funk2_memblock_t))
+
 struct ptype_block_s {
   funk2_memblock_t block;
+  u8               unused_alignment_padding[PTYPE_ALIGNMENT_PADDING_SIZE];
   f2ptr_t          atomic_cause;
   f2ptr_t          atomic_creation_fiber;
 } __attribute__((__packed__));

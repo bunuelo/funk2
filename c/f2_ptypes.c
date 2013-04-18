@@ -282,7 +282,7 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
   f2ptr old_value = __pure__f2ptype__cause(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  __pure__f2ptype__cause(this) = value;
+  __pure__f2ptype__cause__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -298,7 +298,7 @@ f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value)
   check_wait_politely();
   f2ptr old_value = __pure__f2ptype__creation_fiber(this);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  __pure__f2ptype__creation_fiber(this) = value;
+  __pure__f2ptype__creation_fiber__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }

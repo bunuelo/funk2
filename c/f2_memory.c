@@ -322,6 +322,8 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     }
     
     funk2_memblock__byte_num(block) = blocked_byte_num;
+  } else {
+    funk2_memblock__init(block, funk2_memblock__byte_num(block), 0, 0);
   }
   
   this->pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);

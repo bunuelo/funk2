@@ -72,14 +72,14 @@ boolean_t raw__exp__decrement_reference_count(f2ptr this) {
 
 // notify garbage collector of changed references and mutated memory.
 void funk2_garbage_collector__know_of_changed_references(funk2_garbage_collector_t* this, f2ptr exp, f2ptr old_value, f2ptr value) {
-  if (old_value) {
+  if (old_value != nil) {
     boolean_t no_more_references = raw__exp__decrement_reference_count(old_value);
     if (no_more_references) {
       // notify garbage collector to whiten old value if it is not already because it has no references (because of no references it doesn't upset the "no black references white" invariant).
       funk2_garbage_collector__know_of_no_more_references(this, old_value);
     }
   }
-  if (value) {
+  if (value != nil) {
     raw__exp__increment_reference_count(value);
   }
   
@@ -367,7 +367,7 @@ f2ptr ptype_double__new(int pool_index, f2ptr cause, double d) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   } else {
     initial__cause = nil;
@@ -418,7 +418,7 @@ f2ptr ptype_float__new(int pool_index, f2ptr cause, float f) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   } else {
     initial__cause = nil;
@@ -470,7 +470,7 @@ f2ptr ptype_pointer__new(int pool_index, f2ptr cause, ptr p) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -518,7 +518,7 @@ f2ptr ptype_cmutex__new(int pool_index, f2ptr cause) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -606,7 +606,7 @@ f2ptr ptype_creadwritelock__new(int pool_index, f2ptr cause) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -718,7 +718,7 @@ f2ptr ptype_char__new(int pool_index, f2ptr cause, funk2_character_t ch) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -765,7 +765,7 @@ f2ptr ptype_string__new(int pool_index, f2ptr cause, u64 length, funk2_character
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -939,7 +939,7 @@ f2ptr ptype_chunk__new(int pool_index, f2ptr cause, u64 length, byte* bytes) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -964,7 +964,7 @@ f2ptr ptype_chunk__new_copy(int pool_index, f2ptr cause, f2ptr init_chunk) {
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -1352,7 +1352,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {

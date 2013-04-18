@@ -315,9 +315,12 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 
 // larva
 
+#define PTYPE_LARVA_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t) + sizeof(u32)) + 7) / 8) * 8) - (sizeof(ptype_block_t) + sizeof(u32)))
+
 struct ptype_larva_block_s {
   ptype_block_t ptype;
   u32           larva_type;
+  u8            unused_alignment_padding[PTYPE_LARVA_ALIGNMENT_PADDING_SIZE];
   f2ptr_t       atomic_bug;
 } __attribute__((__packed__));
 typedef struct ptype_larva_block_s ptype_larva_block_t;
@@ -332,8 +335,11 @@ ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 lar
 
 // mutable_array_pointer
 
+#define PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 7) / 8) * 8) - (sizeof(ptype_block_t)))
+
 struct ptype_mutable_array_pointer_block_s {
   ptype_block_t      ptype;
+  u8                 unused_alignment_padding[PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE];
   f2ptr_t            atomic_array;
   funk2_atomic_u64_t index;
 } __attribute__((__packed__));

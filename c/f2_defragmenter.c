@@ -228,15 +228,15 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
     }
   } return;
   case ptype_larva: {
-    f2ptr bug = ((ptype_larva_block_t*)ptype_block)->bug;
+    f2ptr bug = f2ptr__value(&(((ptype_larva_block_t*)ptype_block)->atomic_bug));
     if (bug) {
-      ((ptype_larva_block_t*)ptype_block)->bug = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, bug);
+      f2ptr__value__set(&(((ptype_larva_block_t*)ptype_block)->atomic_bug), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, bug));
     }
   } return;
   case ptype_mutable_array_pointer: {
-    f2ptr array = ((ptype_mutable_array_pointer_block_t*)ptype_block)->array;
+    f2ptr array = f2ptr__value(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->atomic_array));
     if (array) {
-      ((ptype_mutable_array_pointer_block_t*)ptype_block)->array = funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, array);
+      f2ptr__value__set(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->array), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, array));
     }
   } return;
   default:

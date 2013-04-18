@@ -722,21 +722,21 @@ void funk2_garbage_collector_pool__grey_referenced_elements(funk2_garbage_collec
   } return;
   case ptype_simple_array: {
     s64 i;
-    f2ptr_t* iter = ((ptype_simple_array_block_t*)block)->slot;
+    f2ptr_t* iter = ((ptype_simple_array_block_t*)block)->atomic_slot;
     for (i = ((ptype_simple_array_block_t*)block)->length; i > 0; i --) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, f2ptr__value(iter));
       iter ++;
     }
   } return;
   case ptype_larva: {
-    f2ptr bug = ((ptype_larva_block_t*)block)->bug;
-    if (bug) {
+    f2ptr bug = f2ptr__value(&(((ptype_larva_block_t*)block)->atomic_bug));
+    if (bug != nil) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, bug);
     }
   } return;
   case ptype_mutable_array_pointer: {
-    f2ptr array = ((ptype_mutable_array_pointer_block_t*)block)->array;
-    if (array) {
+    f2ptr array = f2ptr__value(&(((ptype_mutable_array_pointer_block_t*)block)->atomic_array));
+    if (array != nil) {
       funk2_garbage_collector_pool__grey_maybe_other_element(this, pool_index, array);
     }
   } return;

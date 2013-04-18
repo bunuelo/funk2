@@ -42,7 +42,7 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 #define memblock__minimum_size ((((sizeof(funk2_memblock_t) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num)
 
-#define MEMBLOCK_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_heap_node_t) + 8) / 8) * 8) - sizeof(funk2_heap_node_t))
+#define MEMBLOCK_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_heap_node_t) + 7) / 8) * 8) - sizeof(funk2_heap_node_t))
 
 struct funk2_memblock_s {
   funk2_heap_node_t                      heap_node;

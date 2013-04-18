@@ -48,7 +48,7 @@
 
 // ptype
 
-#define PTYPE_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_memblock_t) + 8) / 8) * 8) - sizeof(funk2_memblock_t))
+#define PTYPE_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_memblock_t) + 7) / 8) * 8) - sizeof(funk2_memblock_t))
 
 struct ptype_block_s {
   funk2_memblock_t block;
@@ -274,7 +274,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 // cons
 
-#define PTYPE_CONS_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 8) / 8) * 8) - (sizeof(ptype_block_t)))
+#define PTYPE_CONS_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 7) / 8) * 8) - (sizeof(ptype_block_t)))
 
 struct ptype_cons_block_s {
   ptype_block_t ptype;
@@ -295,7 +295,7 @@ ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, 
 
 // simple_array
 
-#define PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE ((((sizeof(ptype_block_t) + 8) / 8) * 8) - sizeof(ptype_block_t))
+#define PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE ((((sizeof(ptype_block_t) + 7) / 8) * 8) - sizeof(ptype_block_t))
 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
@@ -315,7 +315,7 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 
 // larva
 
-#define PTYPE_LARVA_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t) + sizeof(u32)) + 8) / 8) * 8) - (sizeof(ptype_block_t) + sizeof(u32)))
+#define PTYPE_LARVA_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t) + sizeof(u32)) + 7) / 8) * 8) - (sizeof(ptype_block_t) + sizeof(u32)))
 
 struct ptype_larva_block_s {
   ptype_block_t ptype;
@@ -335,7 +335,7 @@ ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 lar
 
 // mutable_array_pointer
 
-#define PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 8) / 8) * 8) - (sizeof(ptype_block_t)))
+#define PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 7) / 8) * 8) - (sizeof(ptype_block_t)))
 
 struct ptype_mutable_array_pointer_block_s {
   ptype_block_t      ptype;

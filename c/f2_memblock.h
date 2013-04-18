@@ -42,12 +42,15 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 #define memblock__minimum_size ((((sizeof(funk2_memblock_t) - 1) >> f2ptr_block__bit_num) + 1) << f2ptr_block__bit_num)
 
+#define MEMBLOCK_ALIGNMENT_PADDING_SIZE ((((sizeof(funk2_heap_node_t) + 7) / 8) * 8) - sizeof(funk2_heap_node_t))
+
 struct funk2_memblock_s {
   funk2_heap_node_t                      heap_node;
-  u64                                    previous_byte_num : pool_address__bit_num;
-  funk2_garbage_collector_block_header_t gc;
-  ptype_t                                ptype : ptype__min_bits;
+  u8                                     unused_padding[MEMBLOCK_ALIGNMENT_PADDING_SIZE];
   funk2_atomic_u64_t                     reference_count;
+  funk2_garbage_collector_block_header_t gc;
+  u64                                    previous_byte_num : pool_address__bit_num;
+  ptype_t                                ptype : ptype__min_bits;
   u8                                     used  : 1;
   u64                                    unique_id;
   u8                                     raw_mem[0];

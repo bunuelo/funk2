@@ -274,8 +274,11 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 // cons
 
+#define PTYPE_CONS_ALIGNMENT_PADDING_SIZE ((((sizeof(ptype_block_t) + 7) / 8) * 8) - sizeof(ptype_block_t))
+
 struct ptype_cons_block_s {
   ptype_block_t ptype;
+  u8            unused_alignment_padding[PTYPE_CONS_ALIGNMENT_PADDING_SIZE];
   f2ptr_t       car;
   f2ptr_t       cdr;
 } __attribute__((__packed__));
@@ -292,10 +295,13 @@ ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, 
 
 // simple_array
 
+#define PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE ((((sizeof(ptype_block_t) + 7) / 8) * 8) - sizeof(ptype_block_t))
+
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
   u64           length : (f2ptr__bit_num - 2);
-  f2ptr_t       slot[0];
+  u8            unused_alignment_padding[PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE];
+  f2ptr_t       atomic_slot[0];
 } __attribute__((__packed__));
 typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
 
@@ -303,8 +309,8 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 
 #define __pure__f2simple_array__new(pool_index, cause, len, f2ptr_ptr) ptype_simple_array__new(pool_index, cause, len, f2ptr_ptr)
 #define __pure__f2simple_array__length(this)                           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2simple_array__elt(this, index)                       f2ptr__value(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index]))
-#define __pure__f2simple_array__elt__set(this, index, value)           f2ptr__value__set(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->slot[index]), value)
+#define __pure__f2simple_array__elt(this, index)                       f2ptr__value(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]))
+#define __pure__f2simple_array__elt__set(this, index, value)           f2ptr__value__set(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]), value)
 
 
 // larva
@@ -312,7 +318,7 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 struct ptype_larva_block_s {
   ptype_block_t ptype;
   u32           larva_type;
-  f2ptr         bug : f2ptr__bit_num;
+  f2ptr_t       atomic_bug;
 } __attribute__((__packed__));
 typedef struct ptype_larva_block_s ptype_larva_block_t;
 
@@ -320,25 +326,26 @@ ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 lar
 
 #define __pure__f2larva__new(pool_index, cause, larva_type, bug) ptype_larva__new(pool_index, cause, larva_type, bug)
 #define __pure__f2larva__larva_type(this)                        (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->larva_type)
-#define __pure__f2larva__bug(this)                               (((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->bug)
+#define __pure__f2larva__bug(this)                               f2ptr__value(&(((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_bug))
+#define __pure__f2larva__bug__set(this, value)                   f2ptr__value__set(&(((ptype_larva_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_bug), value)
 
 
 // mutable_array_pointer
 
 struct ptype_mutable_array_pointer_block_s {
-  ptype_block_t ptype;
-  f2ptr         array : f2ptr__bit_num;
-  u64           index;
+  ptype_block_t      ptype;
+  f2ptr_t            atomic_array;
+  funk2_atomic_u64_t index;
 } __attribute__((__packed__));
 typedef struct ptype_mutable_array_pointer_block_s ptype_mutable_array_pointer_block_t;
 
 ptype_mutable_array_pointer_block_t* ptype_mutable_array_pointer_block__new(int pool_index, f2ptr cause, u64 index, f2ptr array);
 
 #define __pure__f2mutable_array_pointer__new(pool_index, cause, array, index) ptype_mutable_array_pointer__new(pool_index, cause, array, index)
-#define __pure__f2mutable_array_pointer__array(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array)
-#define __pure__f2mutable_array_pointer__array__set(this, value)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->array = (value))
-#define __pure__f2mutable_array_pointer__index(this)                          (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index)
-#define __pure__f2mutable_array_pointer__index__set(this, value)              (((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index = (value))
+#define __pure__f2mutable_array_pointer__array(this)                          f2ptr__value(&(((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_array))
+#define __pure__f2mutable_array_pointer__array__set(this, value)              f2ptr__value__set(&(((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_array), value)
+#define __pure__f2mutable_array_pointer__index(this)                          funk2_atomic_u64__value(&(((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index))
+#define __pure__f2mutable_array_pointer__index__set(this, value)              funk2_atomic_u64__set_value(&(((ptype_mutable_array_pointer_block_t*)(from_ptr(f2ptr_to_ptr(this))))->index), value)
 
 #endif // F2__PTYPES__MEMORY__H
 

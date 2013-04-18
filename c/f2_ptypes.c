@@ -1488,7 +1488,7 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug) {
   larva_block->larva_type = larva_type;
   {
     if (bug) {raw__exp__increment_reference_count(bug);}
-    f2ptr__value__set(&(larva_block->atomic_bug), bug);
+    f2ptr__init(&(larva_block->atomic_bug), bug);
   }
   return larva_f2ptr;
 }
@@ -1550,9 +1550,9 @@ f2ptr ptype_mutable_array_pointer__new(int pool_index, f2ptr cause, f2ptr array,
   ptype_block__init(&(mutable_array_pointer_block->ptype), initial__cause, initial__creation_fiber);
   {
     if (array) {raw__exp__increment_reference_count(array);}
-    f2ptr__value__set(&(mutable_array_pointer_block->atomic_array), array);
+    f2ptr__init(&(mutable_array_pointer_block->atomic_array), array);
   }
-  funk2_atomic_u64__set_value(&(mutable_array_pointer_block->index), index);
+  funk2_atomic_u64__init(&(mutable_array_pointer_block->index), index);
   return mutable_array_pointer_f2ptr;
 }
 

@@ -1550,7 +1550,7 @@ f2ptr ptype_mutable_array_pointer__new(int pool_index, f2ptr cause, f2ptr array,
   ptype_block__init(&(mutable_array_pointer_block->ptype), initial__cause, initial__creation_fiber);
   {
     if (array) {raw__exp__increment_reference_count(array);}
-    mutable_array_pointer_block->array = array;
+    f2ptr__value__set(&(mutable_array_pointer_block->atomic_array), array);
   }
   mutable_array_pointer_block->index = index;
   return mutable_array_pointer_f2ptr;

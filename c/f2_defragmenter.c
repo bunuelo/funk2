@@ -215,7 +215,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   } return;
   case ptype_simple_array: {
     s64 i;
-    f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
+    f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->atomic_slot;
     for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
       {
 	f2ptr old_value = f2ptr__value(iter);

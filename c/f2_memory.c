@@ -308,7 +308,7 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
       funk2_memblock_t*   end_of_blocks       = memorypool->end_of_blocks;
       funk2_memblock_t*   new_block           = (funk2_memblock_t*)(((u8*)(block)) + blocked_byte_num);
       int                 new_block__byte_num = funk2_memblock__byte_num(block) - blocked_byte_num;
-      funk2_memblock__init(new_block, new_block__byte_num, 0, 0);
+      funk2_memblock__init(new_block, new_block__byte_num, boolean__false, 0);
       funk2_memblock__previous_byte_num(new_block) = blocked_byte_num;
       funk2_memorypool__free_memory_heap__insert(memorypool, new_block);
       {
@@ -322,8 +322,6 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
     }
     
     funk2_memblock__byte_num(block) = blocked_byte_num;
-  } else {
-    funk2_memblock__init(block, funk2_memblock__byte_num(block), 0, 0);
   }
   
   this->pool[pool_index].total_free_memory                    -= funk2_memblock__byte_num(block);
@@ -331,13 +329,17 @@ f2ptr funk2_memory__funk2_memblock_f2ptr__try_new(funk2_memory_t* this, int pool
   if (__funk2.memory.pool[pool_index].total_allocated_memory_since_last_gc >= (__funk2.memory.pool[pool_index].total_free_memory >> 1)) {
     __funk2.garbage_collector.gc_pool[pool_index].should_run_gc = boolean__true;
   }
-  block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
-  block->used      = 1;
   {
-    funk2_memorypool_t* memorypool = &(this->pool[pool_index]);
-    block->unique_id = memorypool->next_unique_id;
-    memorypool->next_unique_id ++;
+    boolean_t block__initial_used      = boolean__true;
+    u64       block__initial_unique_id = 0;
+    {
+      funk2_memorypool_t* memorypool = &(this->pool[pool_index]);
+      block__initial_unique_id = memorypool->next_unique_id;
+      memorypool->next_unique_id ++;
+    }
+    funk2_memblock__init(block, funk2_memblock__byte_num(block), block__initial_used, block__initial_unique_id);
   }
+  block->gc.tricolor = funk2_tricolor__white; // we can change the gc.tricolor of block as long as it is unused, otherwise we need to go through garbage_collector_pool functions for changing color.
   ((ptype_block_t*)block)->block.ptype = ptype_newly_allocated;
   funk2_memory__debug_memory_test(this, 3);
 #ifdef DEBUG_MEMORY

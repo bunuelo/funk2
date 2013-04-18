@@ -47,8 +47,8 @@ struct funk2_memblock_s {
   u64                                    previous_byte_num : pool_address__bit_num;
   funk2_garbage_collector_block_header_t gc;
   ptype_t                                ptype : ptype__min_bits;
-  u8                                     used  : 1;
   funk2_atomic_u64_t                     reference_count;
+  u8                                     used  : 1;
   u64                                    unique_id;
   u8                                     raw_mem[0];
 } __attribute__((__packed__));

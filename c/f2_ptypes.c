@@ -1488,7 +1488,7 @@ f2ptr ptype_larva__new(int pool_index, f2ptr cause, u32 larva_type, f2ptr bug) {
   larva_block->larva_type = larva_type;
   {
     if (bug) {raw__exp__increment_reference_count(bug);}
-    larva_block->bug = bug;
+    f2ptr__value__set(&(larva_block->atomic_bug), bug);
   }
   return larva_f2ptr;
 }

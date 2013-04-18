@@ -300,7 +300,7 @@ ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
   u8            unused_alignment_padding[PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE];
-  u64           length : (f2ptr__bit_num - 2);
+  u64           length;
   f2ptr_t       atomic_slot[0];
 } __attribute__((__packed__));
 typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;

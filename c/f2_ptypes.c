@@ -280,9 +280,9 @@ f2ptr pfunk2__f2ptype__cause__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
   //int pool_index = __f2ptr__pool_index(this);
   debug__assert((! value) || raw__cause__is_type(cause, value), nil, "debug error: value is not cause.");
-  f2ptr old_value = __pure__f2ptype__cause(this);
+  //f2ptr old_value = __pure__f2ptype__cause(this);
+  f2ptr old_value = __pure__f2ptype__cause__set(this, value);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  __pure__f2ptype__cause__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -296,9 +296,9 @@ f2ptr pfunk2__f2ptype__creation_fiber(f2ptr this, f2ptr cause) {
 
 f2ptr pfunk2__f2ptype__creation_fiber__set(f2ptr this, f2ptr cause, f2ptr value) {
   check_wait_politely();
-  f2ptr old_value = __pure__f2ptype__creation_fiber(this);
+  //f2ptr old_value = __pure__f2ptype__creation_fiber(this);
+  f2ptr old_value = __pure__f2ptype__creation_fiber__set(this, value);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-  __pure__f2ptype__creation_fiber__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -1301,10 +1301,10 @@ f2ptr pfunk2__f2cons__car__set(f2ptr this, f2ptr cause, f2ptr value) {
     ptype_error(cause, this, __funk2.globalenv.ptype_cons__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  f2ptr old_value = __pure__f2cons__car(this);
+  //f2ptr old_value = __pure__f2cons__car(this);
+  f2ptr old_value = __pure__f2cons__car__set(this, value);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
-  __pure__f2cons__car__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -1328,10 +1328,10 @@ f2ptr pfunk2__f2cons__cdr__set(f2ptr this, f2ptr cause, f2ptr value) {
     ptype_error(cause, this, __funk2.globalenv.ptype_cons__symbol);
   }
 #endif // F2__PTYPE__TYPE_CHECK
-  f2ptr old_value = __pure__f2cons__cdr(this);
+  //f2ptr old_value = __pure__f2cons__cdr(this);
+  f2ptr old_value = __pure__f2cons__cdr__set(this, value);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
-  __pure__f2cons__cdr__set(this, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -1454,10 +1454,10 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
     //error(nil, "f2array__elt__set__trace_depth error: index out of range.");
   }
   
-  f2ptr old_value = __pure__f2simple_array__elt(this, index);
+  //f2ptr old_value = __pure__f2simple_array__elt(this, index);
+  f2ptr old_value = __pure__f2simple_array__elt__set(this, index, value);
   funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
   
-  __pure__f2simple_array__elt__set(this, index, value);
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));
   return nil;
 }
@@ -1586,9 +1586,9 @@ void pfunk2__f2mutable_array_pointer__array__set(f2ptr this, f2ptr cause, f2ptr 
 #endif // F2__PTYPE__TYPE_CHECK
   
   {
-    f2ptr old_value = __pure__f2mutable_array_pointer__array(this);
+    //f2ptr old_value = __pure__f2mutable_array_pointer__array(this);
+    f2ptr old_value = __pure__f2mutable_array_pointer__array__set(this, value);
     funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, value);
-    __pure__f2mutable_array_pointer__array__set(this, value);
   }  
   
   container__reflectively_know_of_writing_to(cause, this, value, sizeof(value));

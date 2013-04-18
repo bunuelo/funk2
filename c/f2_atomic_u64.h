@@ -28,7 +28,7 @@
 #ifndef F2__ATOMIC_U64__TYPES__H
 #define F2__ATOMIC_U64__TYPES__H
 
-#define ATOMIC_U64_DEBUG
+//#define ATOMIC_U64_DEBUG
 
 typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 
@@ -44,7 +44,9 @@ typedef struct funk2_atomic_u64_s funk2_atomic_u64_t;
 #define ATOMIC_U64_MAGIC 0xBEADBEADBEADBEAD
 
 struct funk2_atomic_u64_s {
+#if defined(ATOMIC_U64_DEBUG)
   u64 magic;
+#endif // ATOMIC_U64_DEBUG
   u64 value;
 } __attribute__((aligned(8)));
 

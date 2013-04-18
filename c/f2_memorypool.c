@@ -465,7 +465,7 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
     } break;
     case ptype_simple_array: {
       s64 i;
-      f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->slot;
+      f2ptr_t* iter = ((ptype_simple_array_block_t*)ptype_block)->atomic_slot;
       for (i = ((ptype_simple_array_block_t*)ptype_block)->length; i > 0; i --) {
 	funk2_memblock_t* subblock = (funk2_memblock_t*)from_ptr(__f2ptr_to_ptr(f2ptr__value(iter)));
 	funk2_memblock__decrement_reference_count(subblock, f2ptr__value(iter), &(__funk2.garbage_collector));
@@ -473,13 +473,13 @@ void funk2_memorypool__free_used_block(funk2_memorypool_t* this, funk2_memblock_
       }
     } break;
     case ptype_larva: {
-      f2ptr             bug       = ((ptype_larva_block_t*)ptype_block)->bug;
+      f2ptr             bug       = f2ptr__value(&(((ptype_larva_block_t*)ptype_block)->atomic_bug));
       ptr               bug_ptr   = __f2ptr_to_ptr(bug);
       funk2_memblock_t* bug_block = (funk2_memblock_t*)from_ptr(bug_ptr);
       funk2_memblock__decrement_reference_count(bug_block, bug, &(__funk2.garbage_collector));
     } break;
     case ptype_mutable_array_pointer: {
-      f2ptr             array       = ((ptype_mutable_array_pointer_block_t*)ptype_block)->array;
+      f2ptr             array       = f2ptr__value(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->atomic_array));
       ptr               array_ptr   = __f2ptr_to_ptr(array);
       funk2_memblock_t* array_block = (funk2_memblock_t*)from_ptr(array_ptr);
       funk2_memblock__decrement_reference_count(array_block, array, &(__funk2.garbage_collector));

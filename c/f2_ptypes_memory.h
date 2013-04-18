@@ -52,7 +52,9 @@
 
 struct ptype_block_s {
   funk2_memblock_t block;
+#if (PTYPE_ALIGNMENT_PADDING_SIZE != 0)
   u8               unused_alignment_padding[PTYPE_ALIGNMENT_PADDING_SIZE];
+#endif // (PTYPE_ALIGNMENT_PADDING_SIZE != 0)
   f2ptr_t          atomic_cause;
   f2ptr_t          atomic_creation_fiber;
 } __attribute__((__packed__));
@@ -278,7 +280,9 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 struct ptype_cons_block_s {
   ptype_block_t ptype;
+#if (PTYPE_CONS_ALIGNMENT_PADDING_SIZE != 0)
   u8            unused_alignment_padding[PTYPE_CONS_ALIGNMENT_PADDING_SIZE];
+#endif // (PTYPE_CONS_ALIGNMENT_PADDING_SIZE != 0)
   f2ptr_t       car;
   f2ptr_t       cdr;
 } __attribute__((__packed__));
@@ -299,7 +303,9 @@ ptype_cons_block_t* ptype_cons_block__new(int pool_index, f2ptr cause, u64 len, 
 
 struct ptype_simple_array_block_s {
   ptype_block_t ptype;
+#if (PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE != 0)
   u8            unused_alignment_padding[PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE];
+#endif // (PTYPE_SIMPLE_ARRAY_ALIGNMENT_PADDING_SIZE != 0)
   u64           length : (f2ptr__bit_num - 2);
   f2ptr_t       atomic_slot[0];
 } __attribute__((__packed__));
@@ -320,7 +326,9 @@ ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr 
 struct ptype_larva_block_s {
   ptype_block_t ptype;
   u32           larva_type;
+#if (PTYPE_LARVA_ALIGNMENT_PADDING_SIZE != 0)
   u8            unused_alignment_padding[PTYPE_LARVA_ALIGNMENT_PADDING_SIZE];
+#endif // (PTYPE_LARVA_ALIGNMENT_PADDING_SIZE != 0)
   f2ptr_t       atomic_bug;
 } __attribute__((__packed__));
 typedef struct ptype_larva_block_s ptype_larva_block_t;
@@ -339,7 +347,9 @@ ptype_larva_block_t* ptype_larva_block__new(int pool_index, f2ptr cause, u32 lar
 
 struct ptype_mutable_array_pointer_block_s {
   ptype_block_t      ptype;
+#if (PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE != 0)
   u8                 unused_alignment_padding[PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE];
+#endif // (PTYPE_MUTABLE_ARRAY_POINTER_ALIGHMENT_PADDING_SIZE != 0)
   f2ptr_t            atomic_array;
   funk2_atomic_u64_t index;
 } __attribute__((__packed__));

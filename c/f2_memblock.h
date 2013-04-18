@@ -46,7 +46,9 @@ typedef struct funk2_memblock_s funk2_memblock_t;
 
 struct funk2_memblock_s {
   funk2_heap_node_t                      heap_node;
+#if (MEMBLOCK_ALIGNMENT_PADDING_SIZE != 0)
   u8                                     unused_alignment_padding[MEMBLOCK_ALIGNMENT_PADDING_SIZE];
+#endif // (MEMBLOCK_ALIGNMENT_PADDING_SIZE != 0)
   funk2_atomic_u64_t                     reference_count;
   funk2_garbage_collector_block_header_t gc;
   u64                                    previous_byte_num : pool_address__bit_num;

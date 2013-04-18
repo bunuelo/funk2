@@ -276,7 +276,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 // cons
 
-#define PTYPE_CONS_ALIGNMENT_PADDING_SIZE ((((sizeof(ptype_block_t) + 7) / 8) * 8) - sizeof(ptype_block_t))
+#define PTYPE_CONS_ALIGNMENT_PADDING_SIZE (((((sizeof(ptype_block_t)) + 7) / 8) * 8) - (sizeof(ptype_block_t)))
 
 struct ptype_cons_block_s {
   ptype_block_t ptype;

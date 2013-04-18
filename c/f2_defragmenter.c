@@ -236,7 +236,7 @@ void funk2_defragmenter__memory_pool__fix_pointers_in_memblock(funk2_defragmente
   case ptype_mutable_array_pointer: {
     f2ptr array = f2ptr__value(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->atomic_array));
     if (array) {
-      f2ptr__value__set(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->array), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, array));
+      f2ptr__value__set(&(((ptype_mutable_array_pointer_block_t*)ptype_block)->atomic_array), funk2_defragmenter__memory_pool__lookup_new_f2ptr(this, array));
     }
   } return;
   default:

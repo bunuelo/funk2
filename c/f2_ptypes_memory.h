@@ -280,7 +280,7 @@ u8*                  ptype_chunk__bytes(f2ptr this, f2ptr cause);
 
 struct ptype_cons_block_s {
   ptype_block_t ptype;
-#if (PTYPE_CONS_ALIGNMENT_PADDING_SIZE != 0)
+#if PTYPE_CONS_ALIGNMENT_PADDING_SIZE != 0
   u8            unused_alignment_padding[PTYPE_CONS_ALIGNMENT_PADDING_SIZE];
 #endif // (PTYPE_CONS_ALIGNMENT_PADDING_SIZE != 0)
   f2ptr_t       car;

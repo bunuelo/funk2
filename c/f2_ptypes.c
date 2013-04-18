@@ -1365,7 +1365,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
   if (f2ptr_ptr == nil) {
     s64 index;
     for (index = 0; index < length; index ++) {
-      f2ptr__init(&(simple_array_block->slot[index]), nil);
+      f2ptr__init(&(simple_array_block->atomic_slot[index]), nil);
     }
   } else {
     s64 index;
@@ -1375,7 +1375,7 @@ f2ptr ptype_simple_array__new(int pool_index, f2ptr cause, u64 length, ptr f2ptr
 	f2ptr* initial_value_array = from_ptr(f2ptr_ptr);
 	initial_value = initial_value_array[index];
       }
-      f2ptr__init(&(simple_array_block->slot[index]), initial_value);
+      f2ptr__init(&(simple_array_block->atomic_slot[index]), initial_value);
     }
   }
   return simple_array_f2ptr;

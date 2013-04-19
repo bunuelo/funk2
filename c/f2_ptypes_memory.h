@@ -307,10 +307,11 @@ typedef struct ptype_simple_array_block_s ptype_simple_array_block_t;
 
 ptype_simple_array_block_t* ptype_simple_array_block__new(int pool_index, f2ptr cause, u64 len, ptr f2ptr_ptr);
 
-#define __pure__f2simple_array__new(pool_index, cause, len, f2ptr_ptr) ptype_simple_array__new(pool_index, cause, len, f2ptr_ptr)
-#define __pure__f2simple_array__length(this)                           (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
-#define __pure__f2simple_array__elt(this, index)                       f2ptr__value(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]))
-#define __pure__f2simple_array__elt__set(this, index, value)           f2ptr__value__set(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]), value)
+#define __pure__f2simple_array__new(pool_index, cause, len, f2ptr_ptr)                   ptype_simple_array__new(pool_index, cause, len, f2ptr_ptr)
+#define __pure__f2simple_array__length(this)                                             (((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->length)
+#define __pure__f2simple_array__elt(this, index)                                         f2ptr__value(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]))
+#define __pure__f2simple_array__elt__set(this, index, value)                             f2ptr__value__set(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]), value)
+#define __pure__f2simple_array__elt__compare_and_swap(this, index, old_value, new_value) f2ptr__compare_and_swap(&(((ptype_simple_array_block_t*)(from_ptr(f2ptr_to_ptr(this))))->atomic_slot[index]), old_value, new_value)
 
 
 // larva

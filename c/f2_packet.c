@@ -4622,9 +4622,9 @@ void recv_packet__respond__f2simple_array__elt__compare_and_swap(funk2_node_t* f
   funk2_node_handler__report_fiber_response_packet(&(__funk2.node_handler), fiber, (funk2_packet_t*)packet);
 }
 
-boolean_t funk2_node__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value) {
+boolean_t funk2_node__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value) {
   packet_status("funk2_node__f2simple_array__elt__compare_and_swap: executing.");
-  send_packet__request__f2simple_array__elt__compare_and_swap(funk2_node, this_fiber, cause, this, index, value);
+  send_packet__request__f2simple_array__elt__compare_and_swap(funk2_node, this_fiber, cause, this, index, old_value, new_value);
   pcs_respond__f2simple_array__elt__compare_and_swap_t* packet = (pcs_respond__f2simple_array__elt__compare_and_swap_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
   boolean_t success = packet->success;
   f2__free(to_ptr(packet));

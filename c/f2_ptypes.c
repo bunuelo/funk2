@@ -1625,9 +1625,13 @@ void pfunk2__f2mutable_array_pointer__index__set(f2ptr this, f2ptr cause, u64 in
 // symbol_hash
 
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
-  funk2_processor_mutex__init(&(this->cmutex));
-  this->array                  = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
-  memset(this->array, 0, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);
+  this->array = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
+  {
+    s64 index;
+    for (index = 0; index < SYMBOL_HASH__INITIAL_ARRAY_LENGTH; index ++) {
+      funk2_atomic_u64__init(&(this->array[index]), (u64)to_ptr(NULL));
+    }
+  }
   this->total_symbol_num       = 0;
   this->eq_hash_value_bit_mask = SYMBOL_HASH__INITIAL_ARRAY_LENGTH - 1; // assumes SYMBOL_HASH__INITIAL_ARRAY_LENGTH is power of 2
   this->array_length           = SYMBOL_HASH__INITIAL_ARRAY_LENGTH;
@@ -1661,38 +1665,37 @@ void funk2_symbol_hash__add_symbol(funk2_symbol_hash_t* this, f2ptr symbol_f2ptr
   u64                       bin_index    = symbol_block->eq_hash_value & (this->eq_hash_value_bit_mask);
   funk2_symbol_hash_node_t* new_node     = (funk2_symbol_hash_node_t*)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t)));
   new_node->symbol = symbol_f2ptr;
-  new_node->next = this->array[bin_index];
-  this->array[bin_index] = new_node;
+  funk2_atomic_u64__init(&(new_node->next), 0);
+  {
+    boolean_t success = boolean__false;
+    while (! success) {
+      u64 old_value = funk2_atomic_u64__value(&(this->array[bin_index]));
+      funk2_atomic_u64__set_value(&(new_node->next), old_value);
+      success = funk2_atomic_u64__compare_and_swap(&(this->array[bin_index]), old_value, (u64)to_ptr(new_node));
+    }
+  }
 }
 
-f2ptr funk2_symbol_hash__lookup_symbol__thread_unsafe(funk2_symbol_hash_t* this, u64 length, funk2_character_t* str) {
-  ptype_symbol_block_t* symbol_block = NULL;
+f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, u64 length, funk2_character_t* str) {
   // search for chararray in hashed symbols
-  u64 bin_index = (u64)((u64)character_array__hash_value(length, str) & (u64)(this->eq_hash_value_bit_mask));
-  funk2_symbol_hash_node_t* node = (this->array[bin_index]);
-  while (node) {
+  ptype_symbol_block_t*     symbol_block = NULL;
+  u64                       bin_index    = (u64)((u64)character_array__hash_value(length, str) & (u64)(this->eq_hash_value_bit_mask));
+  funk2_symbol_hash_node_t* node         = (funk2_symbol_hash_node_t*)from_ptr(funk2_atomic_u64__value(&(this->array[bin_index])));
+  while (node != NULL) {
     symbol_block = (ptype_symbol_block_t*)from_ptr(f2ptr_to_ptr(node->symbol));
     //if we find a symbol that matches chararray, return it.
     debug__assert(symbol_block->ptype.block.used, nil, "funk2_symbol_hash__lookup_symbol error: found unused symbol.");
     if (symbol_block->length == length && (! memcmp(symbol_block->str, str, length * sizeof(funk2_character_t)))) {
-      funk2_processor_mutex__unlock(&(this->cmutex));
       return node->symbol;
     }
-    node = node->next;
+    node = (funk2_symbol_hash_node_t*)from_ptr(funk2_atomic_u64__value(&(node->next)));
   }
   return nil;
 }
 
-f2ptr funk2_symbol_hash__lookup_symbol(funk2_symbol_hash_t* this, u64 length, funk2_character_t* str) {
-  funk2_processor_mutex__user_lock(&this->cmutex);
-  f2ptr result = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, length, str);
-  funk2_processor_mutex__unlock(&(this->cmutex));
-  return result;
-}
-
-f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, funk2_character_t* str) {
-  f2ptr symbol_f2ptr = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, length, str);
-  if (symbol_f2ptr) {
+f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, funk2_character_t* str) {
+  f2ptr symbol_f2ptr = funk2_symbol_hash__lookup_symbol(this, length, str);
+  if (symbol_f2ptr != nil) {
     return symbol_f2ptr;
   }
   
@@ -1704,7 +1707,7 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   f2ptr initial__cause          = nil;
   f2ptr initial__creation_fiber = nil;
   if (__ptypes__creation_cause_enabled) {
-    if (cause) {raw__exp__increment_reference_count(cause);}
+    if (cause != nil) {raw__exp__increment_reference_count(cause);}
     initial__cause = cause;
   }
   if (__ptypes__creation_fiber_enabled) {
@@ -1723,15 +1726,8 @@ f2ptr funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(funk2_symbol_has
   return symbol_f2ptr;
 }
 
-f2ptr funk2_symbol_hash__lookup_or_create_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, u64 length, funk2_character_t* str) {
-  funk2_processor_mutex__user_lock(&this->cmutex);
-  f2ptr result = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, length, str);
-  funk2_processor_mutex__unlock(&(this->cmutex));
-  return result;
-}
-
 #define gensym__length 11
-f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string) {
+f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string) {
   s64 total_gensym_length = initial_string_length + gensym__length;
   funk2_character_t* gensym__name = (funk2_character_t*)from_ptr(f2__malloc((total_gensym_length + 1) * sizeof(funk2_character_t)));
   {
@@ -1752,18 +1748,12 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(funk2_symbol_
 	gensym__name[initial_string_length + index + 1] = ((funk2_character_t)'a') + (random_num - 10);
       }
     }
-    symbol_exists = funk2_symbol_hash__lookup_symbol__thread_unsafe(this, total_gensym_length, gensym__name);
+    symbol_exists = funk2_symbol_hash__lookup_symbol(this, total_gensym_length, gensym__name);
   } while (symbol_exists);
-  f2ptr new_symbol = funk2_symbol_hash__lookup_or_create_symbol__thread_unsafe(this, pool_index, cause, total_gensym_length, gensym__name);
+  f2ptr new_symbol = funk2_symbol_hash__lookup_or_create_symbol(this, pool_index, cause, total_gensym_length, gensym__name);
   return new_symbol;
 }
 
-f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, int pool_index, f2ptr cause, s64 initial_string_length, funk2_character_t* initial_string) {
-  funk2_processor_mutex__user_lock(&this->cmutex);
-  f2ptr new_symbol = funk2_symbol_hash__generate_new_random_symbol__thread_unsafe(this, pool_index, cause, initial_string_length, initial_string);
-  funk2_processor_mutex__unlock(&(this->cmutex));
-  return new_symbol;
-}
 
 
 

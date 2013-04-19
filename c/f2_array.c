@@ -290,7 +290,7 @@ boolean_t raw__array__elt__compare_and_swap(f2ptr cause, f2ptr this, u64 index, 
 f2ptr f2__array__elt__compare_and_swap(f2ptr cause, f2ptr this, f2ptr index, f2ptr old_value, f2ptr new_value) {
   assert_argument_type(array,   this);
   assert_argument_type(integer, index);
-  return f2bool__new(raw__array__elt__compare_and_swap(cause, this, f2integer__i(index, cause), value, old_value, new_value));
+  return f2bool__new(raw__array__elt__compare_and_swap(cause, this, f2integer__i(index, cause), old_value, new_value));
 }
 def_pcfunk4(array__elt__compare_and_swap, this, index, old_value, new_value,
 	    "",

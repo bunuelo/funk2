@@ -396,6 +396,7 @@ void funk2_user_thread_controller__defragment__move_memory__user_process(funk2_u
     }
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
+    status("warning: user process already waiting.");
     raw__nanosleep(1000000);
   }
 }
@@ -480,6 +481,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
     }
     funk2_processor_mutex__unlock(&(this->user_process_already_waiting_mutex[pool_index]));
   } else {
+    status("warning: user process already waiting.");
     raw__nanosleep(1000000);
   }
 }

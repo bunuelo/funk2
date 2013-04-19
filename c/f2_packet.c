@@ -4626,7 +4626,7 @@ boolean_t funk2_node__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_
   packet_status("funk2_node__f2simple_array__elt__compare_and_swap: executing.");
   send_packet__request__f2simple_array__elt__compare_and_swap(funk2_node, this_fiber, cause, this, index, old_value, new_value);
   pcs_respond__f2simple_array__elt__compare_and_swap_t* packet = (pcs_respond__f2simple_array__elt__compare_and_swap_t*)funk2_node_handler__wait_for_new_fiber_packet(&(__funk2.node_handler), this_fiber);
-  boolean_t success = packet->success;
+  boolean_t success = packet->payload.success;
   f2__free(to_ptr(packet));
   return success;
 }

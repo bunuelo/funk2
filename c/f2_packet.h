@@ -2999,7 +2999,7 @@ struct pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_s {
 typedef struct pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_s pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_t;
 
 struct pcs_respond__f2simple_array__elt__compare_and_swap_s {
-  funk2_packet_header_t                                  header;
+  funk2_packet_header_t                                               header;
   pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_t payload;
 } __attribute__((__packed__));
 typedef struct pcs_respond__f2simple_array__elt__compare_and_swap_s pcs_respond__f2simple_array__elt__compare_and_swap_t;

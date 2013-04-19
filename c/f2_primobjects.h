@@ -28,8 +28,6 @@
 #ifndef F2__PRIMOBJECTS__TYPE__H
 #define F2__PRIMOBJECTS__TYPE__H
 
-#include "f2_array.h"
-
 typedef struct funk2_object_type__compound_object__slot_s  funk2_object_type__compound_object__slot_t;
 typedef struct funk2_object_type__place__slot_s            funk2_object_type__place__slot_t;
 typedef struct funk2_object_type__doublelink__slot_s       funk2_object_type__doublelink__slot_t;
@@ -110,14 +108,15 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #include "f2_ptypes.h"
 #include "f2_malloc.h"
 
-/* boolean_t raw__eq                           (f2ptr cause, f2ptr x, f2ptr y);                                    // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__trace_depth      (f2ptr cause, f2ptr this, u64 index, int trace_depth);              // from f2_primfunks.h */
-/* f2ptr     raw__array__elt                   (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__set              (f2ptr cause, f2ptr this, u64 index, f2ptr value);                  // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__set__trace_depth (f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth); // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__tracing_on       (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__trace            (f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h */
-/* f2ptr     raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);                               // from f2_primfunks.h */
+boolean_t raw__eq                           (f2ptr cause, f2ptr x, f2ptr y);                                        // from f2_primfunks.h
+f2ptr     raw__array__elt__trace_depth      (f2ptr cause, f2ptr this, u64 index, int trace_depth);                  // from f2_array.h
+f2ptr     raw__array__elt                   (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
+f2ptr     raw__array__elt__set              (f2ptr cause, f2ptr this, u64 index, f2ptr value);                      // from f2_array.h
+f2ptr     raw__array__elt__compare_and_swap (f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value); // from f2_array.h
+f2ptr     raw__array__elt__set__trace_depth (f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);     // from f2_array.h
+f2ptr     raw__array__elt__tracing_on       (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
+f2ptr     raw__array__elt__trace            (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
+f2ptr     raw__array__elt__imagination_frame(f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
 
 // primobject
 

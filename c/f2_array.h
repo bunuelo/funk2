@@ -28,6 +28,8 @@
 #ifndef F2__ARRAY__H
 #define F2__ARRAY__H
 
+#include "f2_global.h"
+
 // array
 
 boolean_t raw__cause_is_traced                   (f2ptr cause);

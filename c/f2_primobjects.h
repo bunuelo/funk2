@@ -28,6 +28,8 @@
 #ifndef F2__PRIMOBJECTS__TYPE__H
 #define F2__PRIMOBJECTS__TYPE__H
 
+#include "f2_array.h"
+
 typedef struct funk2_object_type__compound_object__slot_s  funk2_object_type__compound_object__slot_t;
 typedef struct funk2_object_type__place__slot_s            funk2_object_type__place__slot_t;
 typedef struct funk2_object_type__doublelink__slot_s       funk2_object_type__doublelink__slot_t;
@@ -107,7 +109,6 @@ defarray_slot__prototype(primobject__dynamic_slots);
 #include "f2_memory.h"
 #include "f2_ptypes.h"
 #include "f2_malloc.h"
-#include "f2_array.h"
 
 /* boolean_t raw__eq                           (f2ptr cause, f2ptr x, f2ptr y);                                    // from f2_primfunks.h */
 /* f2ptr     raw__array__elt__trace_depth      (f2ptr cause, f2ptr this, u64 index, int trace_depth);              // from f2_primfunks.h */

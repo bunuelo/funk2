@@ -1625,6 +1625,7 @@ void pfunk2__f2mutable_array_pointer__index__set(f2ptr this, f2ptr cause, u64 in
 // symbol_hash
 
 void funk2_symbol_hash__init(funk2_symbol_hash_t* this) {
+  funk2_thread_safe_hash__init(&(this->thread_safe_hash), 16);
   funk2_processor_mutex__init(&(this->cmutex));
   this->array                  = (funk2_symbol_hash_node_t**)from_ptr(f2__malloc(sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH));
   memset(this->array, 0, sizeof(funk2_symbol_hash_node_t*) * SYMBOL_HASH__INITIAL_ARRAY_LENGTH);

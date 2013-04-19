@@ -47,8 +47,8 @@ struct f2ptr_s {
 void f2ptr__init   (f2ptr_t* this, f2ptr value);
 void f2ptr__destroy(f2ptr_t* this);
 
-#define f2ptr__value(this)                                         ((f2ptr)funk2_atomic_u64__value(&((this)->atomic_data)))
-#define f2ptr__value__set(this, value)                             funk2_atomic_u64__set_value(&((this)->atomic_data), value)
-#define f2ptr__value__compare_and_swap(this, old_value, new_value) funk2_atomic_u64__compare_and_swap(&((this)->atomic_data), old_value, new_value)
+#define f2ptr__value(this)                                  ((f2ptr)funk2_atomic_u64__value(&((this)->atomic_data)))
+#define f2ptr__value__set(this, value)                      funk2_atomic_u64__set_value(&((this)->atomic_data), value)
+#define f2ptr__compare_and_swap(this, old_value, new_value) funk2_atomic_u64__compare_and_swap(&((this)->atomic_data), old_value, new_value)
 
 #endif // F2__F2PTR__H

@@ -180,6 +180,8 @@ typedef enum funk2_packet_type_e {
   funk2_packet_type__pcs_respond__f2simple_array__elt                        ,
   funk2_packet_type__pcs_request__f2simple_array__elt__set                   , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
   funk2_packet_type__pcs_respond__f2simple_array__elt__set                   ,
+  funk2_packet_type__pcs_request__f2simple_array__elt__compare_and_swap                   , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr value);
+  funk2_packet_type__pcs_respond__f2simple_array__elt__compare_and_swap                   ,
   funk2_packet_type__pcs_request__f2larva__new                               , //f2ptr            (f2ptr cause, u32 type);
   funk2_packet_type__pcs_respond__f2larva__new                               ,
   funk2_packet_type__pcs_request__f2larva__larva_type                        , //u32              (f2ptr cause, f2ptr this);
@@ -2967,6 +2969,48 @@ void recv_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, pc
 
 void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+
+
+//  funk2_packet_type__pcs_request__f2simple_array__elt__compare_and_swap                          = , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value);
+
+// request f2simple_array__elt__compare_and_swap
+
+struct pcs_packet_payload_request__f2simple_array__elt__compare_and_swap_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              this;
+  u64                                                index;
+  f2ptr                                              old_value;
+  f2ptr                                              new_value;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_request__f2simple_array__elt__compare_and_swap_s pcs_packet_payload_request__f2simple_array__elt__compare_and_swap_t;
+
+struct pcs_request__f2simple_array__elt__compare_and_swap_s {
+  funk2_packet_header_t                                               header;
+  pcs_packet_payload_request__f2simple_array__elt__compare_and_swap_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_request__f2simple_array__elt__compare_and_swap_s pcs_request__f2simple_array__elt__compare_and_swap_t;
+
+// respond f2simple_array__elt__compare_and_swap
+
+struct pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_s {
+  pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  boolean_t                                          success;
+} __attribute__((__packed__));
+typedef struct pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_s pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_t;
+
+struct pcs_respond__f2simple_array__elt__compare_and_swap_s {
+  funk2_packet_header_t                                  header;
+  pcs_packet_payload_respond__f2simple_array__elt__compare_and_swap_t payload;
+} __attribute__((__packed__));
+typedef struct pcs_respond__f2simple_array__elt__compare_and_swap_s pcs_respond__f2simple_array__elt__compare_and_swap_t;
+
+void send_packet__request__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value);
+void recv_packet__request__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt__compare_and_swap_t* packet);
+void send_packet__respond__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, boolean_t success);
+void recv_packet__respond__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt__compare_and_swap_t* packet);
+
+boolean_t funk2_node__f2simple_array__elt__compare_and_swap(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value);
+boolean_t f2simple_array__elt__compare_and_swap(f2ptr this, u64 index, f2ptr cause, f2ptr old_value, f2ptr new_value);
 
 
 //  funk2_packet_type__pcs_request__f2larva__new                               = 0x44, //f2ptr            (f2ptr cause, u32 type, f2ptr bug);

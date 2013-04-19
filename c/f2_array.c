@@ -282,6 +282,21 @@ def_pcfunk3(array__elt__set, x, y, z,
 	    "",
 	    return f2__array__elt__set(this_cause, x, y, z));
 
+
+boolean_t raw__array__elt__compare_and_swap(f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value) {
+  return f2simple_array__elt__compare_and_swap(this, index, cause, old_value, new_value);
+}
+
+f2ptr f2__array__elt__compare_and_swap(f2ptr cause, f2ptr this, f2ptr index, f2ptr old_value, f2ptr new_value) {
+  assert_argument_type(array,   this);
+  assert_argument_type(integer, index);
+  return f2bool__new(raw__array__elt__compare_and_swap(cause, this, f2integer__i(index, cause), value, old_value, new_value));
+}
+def_pcfunk4(array__elt__compare_and_swap, this, index, old_value, new_value,
+	    "",
+	    return f2__array__elt__compare_and_swap(this_cause, this, index, old_value, new_value));
+
+
 f2ptr raw__array__elt__set__trace_depth(f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth) {
   f2simple_array__elt__set(this, index, cause, value);
   return nil;
@@ -652,6 +667,10 @@ void f2__array__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(array__elt__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__set__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__compare_and_swap__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(array__elt__compare_and_swap);
+  defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__compare_and_swap__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__symbol);
   f2__primcfunk__init__defragment__fix_pointers(array__elt__tracing_on);
   defragment__fix_pointer(__funk2.globalenv.object_type.array.elt__tracing_on__funk);
@@ -709,46 +728,70 @@ void f2__array__reinitialize_globalvars() {
   
   {char* str = "is_type"; __funk2.globalenv.object_type.array.is_type__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__is_type, this, cfunk); __funk2.globalenv.object_type.array.is_type__funk = never_gc(cfunk);}
+  
   {char* str = "type"; __funk2.globalenv.object_type.array.type__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__type, this, cfunk); __funk2.globalenv.object_type.array.type__funk = never_gc(cfunk);}
+  
   {char* str = "new"; __funk2.globalenv.object_type.array.new__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__0_arg_and_rest(array__new, lengths, cfunk); __funk2.globalenv.object_type.array.new__funk = never_gc(cfunk);}
+  
   {char* str = "length"; __funk2.globalenv.object_type.array.length__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__length, this, cfunk); __funk2.globalenv.object_type.array.length__funk = never_gc(cfunk);}
+  
   {char* str = "eq"; __funk2.globalenv.object_type.array.eq__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__eq, this, cfunk); __funk2.globalenv.object_type.array.eq__funk = never_gc(cfunk);}
+  
   {char* str = "eq_hash_value"; __funk2.globalenv.object_type.array.eq_hash_value__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__eq_hash_value, this, cfunk); __funk2.globalenv.object_type.array.eq_hash_value__funk = never_gc(cfunk);}
+  
   {char* str = "equals"; __funk2.globalenv.object_type.array.equals__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__equals, this, cfunk); __funk2.globalenv.object_type.array.equals__funk = never_gc(cfunk);}
+  
   {char* str = "equals_hash_value"; __funk2.globalenv.object_type.array.equals_hash_value__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__equals_hash_value, this, cfunk); __funk2.globalenv.object_type.array.equals_hash_value__funk = never_gc(cfunk);}
+  
   {char* str = "equals_hash_value-loop_free"; __funk2.globalenv.object_type.array.equals_hash_value__loop_free__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(array__equals_hash_value__loop_free, this, cfunk); __funk2.globalenv.object_type.array.equals_hash_value__loop_free__funk = never_gc(cfunk);}
+  
   {char* str = "elt"; __funk2.globalenv.object_type.array.elt__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt, this, index, cfunk); __funk2.globalenv.object_type.array.elt__funk = never_gc(cfunk);}
+  
   {char* str = "elt-set"; __funk2.globalenv.object_type.array.elt__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__set__funk = never_gc(cfunk);}
+  
+  {char* str = "elt-set"; __funk2.globalenv.object_type.array.elt__compare_and_swap__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__compare_and_swap, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__compare_and_swap__funk = never_gc(cfunk);}
+  
   {char* str = "elt-tracing_on"; __funk2.globalenv.object_type.array.elt__tracing_on__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__tracing_on, this, index, cfunk); __funk2.globalenv.object_type.array.elt__tracing_on__funk = never_gc(cfunk);}
+  
   {char* str = "elt-tracing_on-set"; __funk2.globalenv.object_type.array.elt__tracing_on__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__tracing_on__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__tracing_on__set__funk = never_gc(cfunk);}
+  
   {char* str = "elt-trace"; __funk2.globalenv.object_type.array.elt__trace__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__trace, this, index, cfunk); __funk2.globalenv.object_type.array.elt__trace__funk = never_gc(cfunk);}
+  
   {char* str = "elt-trace-set"; __funk2.globalenv.object_type.array.elt__trace__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__trace__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__trace__set__funk = never_gc(cfunk);}
+  
   {char* str = "elt-imagination_frame"; __funk2.globalenv.object_type.array.elt__imagination_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__imagination_frame, this, index, cfunk); __funk2.globalenv.object_type.array.elt__imagination_frame__funk = never_gc(cfunk);}
+  
   {char* str = "elt-imagination_frame-set"; __funk2.globalenv.object_type.array.elt__imagination_frame__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__imagination_frame__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__imagination_frame__set__funk = never_gc(cfunk);}
+  
   {char* str = "elt-mutate_funks"; __funk2.globalenv.object_type.array.elt__mutate_funks__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__mutate_funks, this, index, cfunk); __funk2.globalenv.object_type.array.elt__mutate_funks__funk = never_gc(cfunk);}
+  
   {char* str = "elt-mutate_funks-set"; __funk2.globalenv.object_type.array.elt__mutate_funks__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__mutate_funks__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__mutate_funks__set__funk = never_gc(cfunk);}
+  
   {char* str = "elt-read_funks"; __funk2.globalenv.object_type.array.elt__read_funks__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__elt__read_funks, this, index, cfunk); __funk2.globalenv.object_type.array.elt__read_funks__funk = never_gc(cfunk);}
+  
   {char* str = "elt-read_funks-set"; __funk2.globalenv.object_type.array.elt__read_funks__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(array__elt__read_funks__set, this, index, value, cfunk); __funk2.globalenv.object_type.array.elt__read_funks__set__funk = never_gc(cfunk);}
+  
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.array.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(array__terminal_print_with_frame, this, terminal_print_frame, cfunk); __funk2.globalenv.object_type.array.terminal_print_with_frame__funk = never_gc(cfunk);}
 }

@@ -198,11 +198,12 @@ f2ptr pfunk2__f2cons__cdr__set(f2ptr this, f2ptr cause, f2ptr value);
 
 // simple_array
 
-f2ptr pfunk2__f2simple_array__new(f2ptr cause, u64 length, ptr f2ptr_ptr);
-f2ptr pfunk2__f2simple_array__new_copy(f2ptr cause, u64 length, f2ptr init_array);
-u64   pfunk2__f2simple_array__length(f2ptr this, f2ptr cause);
-f2ptr pfunk2__f2simple_array__elt(f2ptr this, u64 index, f2ptr cause);
-f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+f2ptr     pfunk2__f2simple_array__new                  (f2ptr cause, u64 length, ptr f2ptr_ptr);
+f2ptr     pfunk2__f2simple_array__new_copy             (f2ptr cause, u64 length, f2ptr init_array);
+u64       pfunk2__f2simple_array__length               (f2ptr this, f2ptr cause);
+f2ptr     pfunk2__f2simple_array__elt                  (f2ptr this, u64 index, f2ptr cause);
+f2ptr     pfunk2__f2simple_array__elt__set             (f2ptr this, u64 index, f2ptr cause, f2ptr value);
+boolean_t pfunk2__f2simple_array__elt__compare_and_swap(f2ptr this, u64 index, f2ptr cause, f2ptr old_value, f2ptr new_value);
 
 // larva
 

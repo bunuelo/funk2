@@ -1462,6 +1462,30 @@ f2ptr pfunk2__f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr
   return nil;
 }
 
+boolean_t pfunk2__f2simple_array__elt__compare_and_swap(f2ptr this, u64 index, f2ptr cause, f2ptr old_value, f2ptr new_value) {
+  check_wait_politely();
+  //release__assert((! cause) || raw__causep(cause, nil), nil, "f2array_elt failed debug assertion: cause is non-null and not a cause.");
+  
+  //int pool_index = __f2ptr__pool_index(this);
+  
+#ifdef F2__PTYPE__TYPE_CHECK
+  if (__pure__f2ptype__raw(this) != ptype_simple_array) {
+    ptype_error(cause, this, __funk2.globalenv.ptype_simple_array__symbol);
+  }
+#endif // F2__PTYPE__TYPE_CHECK
+  u64 length     = __pure__f2simple_array__length(this);
+  if (index < 0 || index >= length) {
+    return pfunk2__f2larva__new(cause, larva_type__array_index_out_of_bounds, nil);
+  }
+  
+  boolean_t success = __pure__f2simple_array__elt__compare_and_swap(this, index, old_value, new_value);
+  if (success) {
+    funk2_garbage_collector__know_of_changed_references(&(__funk2.garbage_collector), this, old_value, new_value);
+    container__reflectively_know_of_writing_to(cause, this, new_value, sizeof(new_value));
+  }
+  return success;
+}
+
 
 
 

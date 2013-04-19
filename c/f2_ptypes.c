@@ -1759,11 +1759,11 @@ f2ptr funk2_symbol_hash__generate_new_random_symbol(funk2_symbol_hash_t* this, i
 
 void funk2_symbol_hash__touch_all_symbols(funk2_symbol_hash_t* this, funk2_garbage_collector_t* garbage_collector) {
   garbage_collector_status("funk2_garbage_collector: touch_all_symbols.");
-  funk2_symbol_hash_node_t** array_iter = this->array;
-  funk2_symbol_hash_node_t*  node_iter;
+  funk2_atomic_u64_t*       array_iter = this->array;
+  funk2_symbol_hash_node_t* node_iter;
   int i;
   for (i = this->array_length; i > 0; i --) {
-    for (node_iter = array_iter[0]; node_iter; node_iter = node_iter->next) {
+    for (node_iter = (funk2_symbol_hash_node_t*)from_ptr(funk2_atomic_u64__value(array_iter)); node_iter != NULL; node_iter = (funk2_symbol_hash_node_t*)from_ptr(funk2_atomic_u64__value(&(node_iter->next)))) {
       funk2_garbage_collector__touch_f2ptr(garbage_collector, node_iter->symbol);
     }
     array_iter ++;

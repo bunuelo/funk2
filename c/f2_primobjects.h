@@ -112,7 +112,7 @@ boolean_t raw__eq                           (f2ptr cause, f2ptr x, f2ptr y);    
 f2ptr     raw__array__elt__trace_depth      (f2ptr cause, f2ptr this, u64 index, int trace_depth);                  // from f2_array.h
 f2ptr     raw__array__elt                   (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
 f2ptr     raw__array__elt__set              (f2ptr cause, f2ptr this, u64 index, f2ptr value);                      // from f2_array.h
-f2ptr     raw__array__elt__compare_and_swap (f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value); // from f2_array.h
+boolean_t raw__array__elt__compare_and_swap (f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value); // from f2_array.h
 f2ptr     raw__array__elt__set__trace_depth (f2ptr cause, f2ptr this, u64 index, f2ptr value, int trace_depth);     // from f2_array.h
 f2ptr     raw__array__elt__tracing_on       (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h
 f2ptr     raw__array__elt__trace            (f2ptr cause, f2ptr this, u64 index);                                   // from f2_array.h

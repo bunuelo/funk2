@@ -78,13 +78,14 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
 #  if defined(HAVE_GETPROCESSAFFINITYMASK)
   {
     HANDLE current_process       = GetCurrentProcess();
-    DWORD  process_affinity_mask = 0;
-    DWORD  system_affinity_mask  = 0;
+    u64    process_affinity_mask = 0;
+    u64    system_affinity_mask  = 0;
     if (GetProcessAffinityMask(current_process,
 			       (PDWORD_PTR)&process_affinity_mask,
 			       (PDWORD_PTR)&system_affinity_mask) == 0) {
       status("warning GetProcessAffinityMask failed.");
     } else {
+      status("GetProcessAffinityMask info: process_affinity_mask=" X64__fstr " system_affinity_mask=" X64__fstr, process_affinity_mask, system_affinity_mask);
       this->processor_count = 0;
       {
 	s64 i;
@@ -96,6 +97,7 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
       }
       if (this->processor_count == 0) {
 	this->processor_affinity_index = NULL;
+	status("warning GetProcessAffinityMask returned zero processors.");
       } else {
 	this->processor_affinity_index = (u64*)from_ptr(f2__malloc(sizeof(u64) * this->processor_count));
 	{

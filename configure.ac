@@ -257,6 +257,7 @@ AC_CHECK_FUNCS([_get_osfhandle \
                 getline \
                 getpagesize \
 		getppid \
+                GetProcessAffinityMask \
 		GetThreadTimes \
                 inet_ntoa \
 		ioctl \

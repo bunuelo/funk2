@@ -75,7 +75,45 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
     }
   }
 #else
+#  if defined(HAVE_GETPROCESSAFFINITYMASK
+  {
+    HANDLE current_process       = GetCurrentProcess();
+    DWORD  process_affinity_mask = 0;
+    DWORD  system_affinity_mask  = 0;
+    if (GetProcessAffinityMask(current_process,
+			       &process_affinity_mask,
+			       &system_affinity_mask) == 0) {
+      status("warning GetProcessAffinityMask failed.");
+    } else {
+      this->processor_count = 0;
+      {
+	s64 i;
+	for (i = 0; i < 64; i ++) {
+	  if ((process_affinity_mask & (((u64)1) << i)) != 0) {
+	    this->processor_count ++;
+	  }
+	}
+      }
+      if (this->processor_count == 0) {
+	this->processor_affinity_index = NULL;
+      } else {
+	this->processor_affinity_index = (u64*)from_ptr(f2__malloc(sizeof(u64) * this->processor_count));
+	{
+	  s64 processor_index = 0;
+	  s64 i;
+	  for (i = 0; i < 64; i ++) {
+	    if ((process_affinity_mask & (((u64)1) << i)) != 0) {
+	      this->processor_affinity_index[processor_index] = i;
+	      processor_index ++;
+	    }
+	  }
+	}
+      }
+    }
+  }
+#  else
   status("system_processor sched_getaffinity disabled.");
+#  endif
 #endif // HAVE_SCHED_GETAFFINITY
   if (__funk2.command_line.force_processor_count != 0) {
     status("command-line forcing processor count to " s64__fstr ".", __funk2.command_line.force_processor_count);

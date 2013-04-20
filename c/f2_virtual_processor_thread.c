@@ -86,7 +86,8 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
 #  if defined(HAVE_SETTHREADAFFINITYMASK)
   if (__funk2.system_processor.processor_affinity_index != NULL) {
     HANDLE my_thread            = pthread_getw32threadhandle_np(pthread_self());
-    u64    thread_affinity_mask = (((u64)1) << ((u64)(__funk2.system_processor.processor_affinity_index[i])));
+    s64    system_cpu_index     = cpu_index % __funk2.system_processor.processor_count;
+    u64    thread_affinity_mask = (((u64)1) << ((u64)(__funk2.system_processor.processor_affinity_index[system_cpu_index])));
     if (SetThreadAffinityMask(my_thread, (DWORD_PTR)thread_affinity_mask) == 0) {
       status("warning funk2_virtual_processor_thread__set_cpu_affinity failure setting thread affinity.");
     }

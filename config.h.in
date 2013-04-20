@@ -102,6 +102,9 @@
 /* Define to 1 if you have the `getppid' function. */
 #undef HAVE_GETPPID
 
+/* Define to 1 if you have the `GetProcessAffinityMask' function. */
+#undef HAVE_GETPROCESSAFFINITYMASK
+
 /* Define to 1 if you have the `GetThreadTimes' function. */
 #undef HAVE_GETTHREADTIMES
 

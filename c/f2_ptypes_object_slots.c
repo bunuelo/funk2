@@ -4720,16 +4720,16 @@ f2ptr raw__simple_array__elt__set(f2ptr cause, f2ptr this, s64 index, f2ptr valu
 f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
   assert_argument_type(simple_array, this);
   assert_argument_type(integer,      index);
-  s64 index = f2integer__i(y, cause);
-  s64 length = f2simple_array__length(this, cause);
-  if (index < 0 || index >= length) {
+  s64 index__i = f2integer__i(index, cause);
+  s64 length   = f2simple_array__length(this, cause);
+  if (index__i < 0 || index__i >= length) {
     return new__error(f2list8__new(cause,
 				   new__symbol(cause, "bug_name"), new__symbol(cause, "simple_array-elt-set-index_out_of_range"),
 				   new__symbol(cause, "this"),     this,
 				   new__symbol(cause, "index"),    index,
 				   new__symbol(cause, "value"),    value));
   }
-  return raw__simple_array__elt__set(cause, this, index, value);
+  return raw__simple_array__elt__set(cause, this, index__i, value);
 }
 def_pcfunk3(simple_array__elt__set, this, index, value,
 	    "",

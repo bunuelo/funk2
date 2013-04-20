@@ -14006,6 +14006,7 @@ for ac_func in _get_osfhandle \
 		send \
 		setenv \
                 setlocale \
+		SetThreadAffinityMask \
 		shutdown \
 		sigaction \
 		sleep \

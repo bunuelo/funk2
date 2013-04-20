@@ -233,6 +233,9 @@
 /* Define to 1 if you have the `setlocale' function. */
 #undef HAVE_SETLOCALE
 
+/* Define to 1 if you have the `SetThreadAffinityMask' function. */
+#undef HAVE_SETTHREADAFFINITYMASK
+
 /* Define to 1 if you have the `shutdown' function. */
 #undef HAVE_SHUTDOWN
 

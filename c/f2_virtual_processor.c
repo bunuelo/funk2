@@ -68,6 +68,7 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
     {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
       cons->virtual_processor_thread = virtual_processor_thread;
+      funk2_atomic_u64__init(&(cons->next), (u64)to_ptr(NULL));
       {
 	boolean_t success = boolean__false;
 	while (! success) {

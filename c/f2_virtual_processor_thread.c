@@ -47,6 +47,22 @@ void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processo
       }
     }
   }
+#else
+#  if defined(HAVE_SETTHREADAFFINITYMASK)
+  if (__funk2.system_processor.processor_affinity_index != NULL) {
+    HANDLE my_thread            = pthread_getw32threadhandle_np(pthread_self());
+    u64    thread_affinity_mask = 0;
+    {
+      s64 index;
+      for (index = 0; index < __funk2.system_processor.processor_count; index ++) {
+	thread_affinity_mask |= (((u64)1) << ((u64)(__funk2.system_processor.processor_affinity_index[index])));
+      }
+    }
+    if (SetThreadAffinityMask(my_thread, (DWORD_PTR)thread_affinity_mask) == 0) {
+      status("warning funk2_virtual_processor_thread__set_cpu_affinity_all failure setting thread affinity.");
+    }
+  }
+#  endif
 #endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
 
@@ -64,6 +80,16 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
       }
     }
   }
+#else
+#  if defined(HAVE_SETTHREADAFFINITYMASK)
+  if (__funk2.system_processor.processor_affinity_index != NULL) {
+    HANDLE my_thread            = pthread_getw32threadhandle_np(pthread_self());
+    u64    thread_affinity_mask = (((u64)1) << ((u64)(__funk2.system_processor.processor_affinity_index[i])));
+    if (SetThreadAffinityMask(my_thread, (DWORD_PTR)thread_affinity_mask) == 0) {
+      status("warning funk2_virtual_processor_thread__set_cpu_affinity failure setting thread affinity.");
+    }
+  }
+#  endif
 #endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
 

@@ -277,6 +277,7 @@ AC_CHECK_FUNCS([_get_osfhandle \
 		send \
 		setenv \
                 setlocale \
+		SetThreadAffinityMask \
 		shutdown \
 		sigaction \
 		sleep \

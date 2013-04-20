@@ -135,6 +135,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virt
 	{
 	  funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
 	  cons->virtual_processor_thread              = virtual_processor_thread;
+	  funk2_atomic_u64__init(&(cons->next), (u64)to_ptr(NULL));
 	  {
 	    boolean_t add_used_success = boolean__false;
 	    while (! add_used_success) {

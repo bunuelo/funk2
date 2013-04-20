@@ -80,7 +80,7 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
 	  }
 	  cons->virtual_processor_thread->virtual_processor_stack_index = current_virtual_processor_stack_index + 1;
 	  funk2_atomic_u64__set_value(&(cons->next), (u64)to_ptr(old_top_of_stack));
-	  success = funk2_atomic_u64__compare_and_swap(&(this->virtual_processor_thread_stack), old_top_of_stack, cons);
+	  success = funk2_atomic_u64__compare_and_swap(&(this->virtual_processor_thread_stack), (u64)to_ptr(old_top_of_stack), (u64)to_ptr(cons));
 	}
       }
     }

@@ -185,7 +185,7 @@ u64 raw__monotonic_nanoseconds() {
 }
 
 u64 raw__nanoseconds_since_1970() {
-  return __funk2.monotonic_start_nanoseconds_since_1970 + raw__monotonic_nanoseconds();
+  return __funk2.process_time.monotonic_start_nanoseconds_since_1970 + raw__monotonic_nanoseconds();
 }
 
 

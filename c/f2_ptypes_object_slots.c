@@ -4633,8 +4633,6 @@ f2ptr f2__simple_array__length(f2ptr cause, f2ptr this) {return f2integer__new(c
 f2ptr raw__simple_array__elt(f2ptr cause, f2ptr this, u64 index) {return f2simple_array__elt(this, index, cause);}
 f2ptr f2__simple_array__elt(f2ptr cause, f2ptr this, f2ptr index) {return raw__simple_array__elt(cause, this, f2integer__i(index, cause));}
 
-f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr x, f2ptr y, f2ptr z) {f2simple_array__elt__set(x, f2integer__i(y, cause), cause, z); return nil;}
-
 boolean_t raw__simple_array__eq(f2ptr cause, f2ptr this, f2ptr that) {
   return this == that;
 }
@@ -4714,9 +4712,52 @@ def_pcfunk1(simple_array__length, x,
 def_pcfunk2(simple_array__elt, x, y,
 	    "",
 	    return f2__simple_array__elt(this_cause, x, y));
-def_pcfunk3(simple_array__elt__set, x, y, z,
+
+f2ptr raw__simple_array__elt__set(f2ptr cause, f2ptr this, s64 index, f2ptr value) {
+  return f2simple_array__elt__set(this, index, cause, value);
+}
+
+f2ptr f2__simple_array__elt__set(f2ptr cause, f2ptr this, f2ptr index, f2ptr value) {
+  assert_argument_type(simple_array, this);
+  assert_argument_type(integer,      index);
+  s64 index = f2integer__i(y, cause);
+  s64 length = f2simple_array__length(this, cause);
+  if (index < 0 || index >= length) {
+    return new__error(f2list8__new(cause,
+				   new__symbol(cause, "bug_name"), new__symbol(cause, "simple_array-elt-set-index_out_of_range"),
+				   new__symbol(cause, "this"),     this,
+				   new__symbol(cause, "index"),    index,
+				   new__symbol(cause, "value"),    value));
+  }
+  return raw__simple_array__elt__set(cause, this, index, value);
+}
+def_pcfunk3(simple_array__elt__set, this, index, value,
 	    "",
-	    return f2__simple_array__elt__set(this_cause, x, y, z));
+	    return f2__simple_array__elt__set(this_cause, this, index, value));
+
+
+boolean_t raw__simple_array__elt__compare_and_swap(f2ptr cause, f2ptr this, s64 index, f2ptr old_value, f2ptr new_value) {
+  return f2simple_array__elt__compare_and_swap(this, index, cause, old_value, new_value);
+}
+
+f2ptr f2__simple_array__elt__compare_and_swap(f2ptr cause, f2ptr this, f2ptr index, f2ptr old_value, f2ptr new_value) {
+  assert_argument_type(simple_array, this);
+  assert_argument_type(integer,      index);
+  s64 index = f2integer__i(y, cause);
+  s64 length = f2simple_array__length(this, cause);
+  if (index < 0 || index >= length) {
+    return new__error(f2list10__new(cause,
+				    new__symbol(cause, "bug_name"),  new__symbol(cause, "simple_array-elt-compare_and_swap-index_out_of_range"),
+				    new__symbol(cause, "this"),      this,
+				    new__symbol(cause, "index"),     index,
+				    new__symbol(cause, "old_value"), old_value,
+				    new__symbol(cause, "new_value"), new_value));
+  }
+  return f2bool__new(raw__simple_array__elt__compare_and_swap(cause, this, index, old_value, new_value));
+}
+def_pcfunk4(simple_array__elt__compare_and_swap, this, index, old_value, new_value,
+	    "",
+	    return f2__simple_array__elt__compare_and_swap(this_cause, this, index, old_value, new_value));
 
 
 f2ptr f2__simple_array__terminal_print_with_frame(f2ptr cause, f2ptr this, f2ptr terminal_print_frame) {
@@ -4750,6 +4791,10 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
     if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk;
     }
+  } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.compare_and_swap__symbol)) {
+    if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__symbol)) {
+      return __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__funk;
+    }
   } else if (raw__symbol__eq(cause, slot_type, __funk2.globalenv.execute__symbol)) {
     if (raw__symbol__eq(cause, slot_name, __funk2.globalenv.object_type.ptype.ptype_simple_array.new__symbol)) {
       return __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk;
@@ -4760,19 +4805,20 @@ f2ptr f2__simple_array__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type
 
 f2ptr f2simple_array__primobject_type__new(f2ptr cause) {
   f2ptr this = f2__primobject_type__new(cause, raw__cons__new(cause, new__symbol(cause, "ptype"), nil));
-  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk);}
-  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.type__funk);}
-  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk);}
-  {char* slot_name = "new_copy";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.new_copy__funk);}
-  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk);}
-  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk);}
-  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__funk);}
-  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk);}
-  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__funk);}
-  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk);}
-  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk);}
-  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,     new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk);}
-  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__funk);}
+  {char* slot_name = "is_type";                     f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,          new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.is_type__funk);}
+  {char* slot_name = "type";                        f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.type__funk);}
+  {char* slot_name = "new";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,          new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.new__funk);}
+  {char* slot_name = "new_copy";                    f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,          new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.new_copy__funk);}
+  {char* slot_name = "length";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.length__funk);}
+  {char* slot_name = "eq";                          f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.eq__funk);}
+  {char* slot_name = "eq_hash_value";               f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.eq_hash_value__funk);}
+  {char* slot_name = "equals";                      f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals__funk);}
+  {char* slot_name = "equals_hash_value-loop_free"; f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__loop_free__funk);}
+  {char* slot_name = "equals_hash_value";           f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.equals_hash_value__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.get__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.set__symbol,              new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk);}
+  {char* slot_name = "elt";                         f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.compare_and_swap__symbol, new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__funk);}
+  {char* slot_name = "terminal_print_with_frame";   f2__primobject_type__add_slot_type(cause, this, __funk2.globalenv.execute__symbol,          new__symbol(cause, slot_name), __funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__funk);}
   return this;
 }
 
@@ -6036,6 +6082,10 @@ void f2__ptypes_object_slots__defragment__fix_pointers() {
   f2__primcfunk__init__defragment__fix_pointers(simple_array__elt__set);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk);
   
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__symbol);
+  f2__primcfunk__init__defragment__fix_pointers(simple_array__elt__compare_and_swap);
+  defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__funk);
+  
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__symbol);
   f2__primcfunk__init__defragment__fix_pointers(simple_array__terminal_print_with_frame);
   defragment__fix_pointer(__funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__funk);
@@ -6585,6 +6635,8 @@ void f2__ptypes_object_slots__reinitialize_globalvars() {
   {f2__primcfunk__init__with_c_cfunk_var__2_arg(simple_array__elt, this, index, cfunk); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__funk = never_gc(cfunk);}
   {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__3_arg(simple_array__elt__set, this, index, value, cfunk); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__set__funk = never_gc(cfunk);}
+  {char* str = "elt-set"; __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__symbol = new__symbol(cause, str);}
+  {f2__primcfunk__init__with_c_cfunk_var__3_arg(simple_array__elt__compare_and_swap, this, index, value, cfunk); __funk2.globalenv.object_type.ptype.ptype_simple_array.elt__compare_and_swap__funk = never_gc(cfunk);}
   {char* str = "terminal_print_with_frame"; __funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__symbol = new__symbol(cause, str);}
   {f2__primcfunk__init__with_c_cfunk_var__1_arg(simple_array__terminal_print_with_frame, this, cfunk); __funk2.globalenv.object_type.ptype.ptype_simple_array.terminal_print_with_frame__funk = never_gc(cfunk);}
   

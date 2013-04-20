@@ -162,6 +162,7 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("****************************************************************");
   status("");
   
+  funk2_process_time__report_status(&(__funk2.process_time)); // process_time is initialized before status, so report process_time status here.
   funk2_command_line__init(&(this->command_line), argc, argv);
   
   this->exit_now = boolean__false;

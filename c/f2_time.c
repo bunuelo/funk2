@@ -32,14 +32,27 @@ void funk2_process_time__init(funk2_process_time_t* this) {
   u64 seconds_since_1970                       = (u64)time(NULL);
   u64 monotonic_nanoseconds                    = raw__monotonic_nanoseconds();
   u64 nanoseconds_since_1970                   = seconds_since_1970 * nanoseconds_per_second;
-  u64 monotonic_start_nanoseconds_since_1970   = nanoseconds_since_1970 - monotonic_nanoseconds;
-  this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
+  s64 monotonic_start_nanoseconds_since_1970   = nanoseconds_since_1970 - monotonic_nanoseconds;
+  if ((monotonic_start_nanoseconds_since_1970 > -((s64)(2 * nanoseconds_per_second))) &&
+      (monotonic_start_nanoseconds_since_1970 <  ((s64)(2 * nanoseconds_per_second)))) {
+    this->assuming_monotonic_clock_is_absolute   = boolean__true;
+    this->monotonic_start_nanoseconds_since_1970 = 0;
+  } else {
+    this->assuming_monotonic_clock_is_absolute   = boolean__false;
+    this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
+  }
 }
 
 void funk2_process_time__destroy(funk2_process_time_t* this) {
 }
 
-
+void funk2_process_time__report_status(funk2_process_time_t* this) {
+  if (this->assuming_monotonic_clock_is_absolute) {
+    status("__funk2.process_time assuming monotonic clock is absolute.");
+  } else {
+    status("__funk2.process_time.monotonic_start_nanoseconds_since_1970=" u64__fstr, this->monotonic_start_nanoseconds_since_1970);
+  }
+}
 
 #ifdef F2__APPLE
 

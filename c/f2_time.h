@@ -62,11 +62,13 @@ struct funk2_date_s {
 // funk2_process_time
 
 struct funk2_process_time_s {
-  u64 monotonic_start_nanoseconds_since_1970;
+  boolean_t assuming_monotonic_clock_is_absolute;
+  u64       monotonic_start_nanoseconds_since_1970;
 };
 
-void funk2_process_time__init   (funk2_process_time_t* this);
-void funk2_process_time__destroy(funk2_process_time_t* this);
+void funk2_process_time__init         (funk2_process_time_t* this);
+void funk2_process_time__destroy      (funk2_process_time_t* this);
+void funk2_process_time__report_status(funk2_process_time_t* this);
 
 
 

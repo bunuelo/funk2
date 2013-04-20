@@ -65,8 +65,8 @@ struct funk2_process_time_s {
   u64 monotonic_start_nanoseconds_since_1970;
 };
 
-void funk2_process_time__init  (funk2_process_time_t* this);
-void funk2_process_time__destry(funk2_process_time_t* this);
+void funk2_process_time__init   (funk2_process_time_t* this);
+void funk2_process_time__destroy(funk2_process_time_t* this);
 
 
 

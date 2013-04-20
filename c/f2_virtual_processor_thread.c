@@ -62,6 +62,8 @@ void funk2_virtual_processor_thread__set_cpu_affinity_all(funk2_virtual_processo
       status("warning funk2_virtual_processor_thread__set_cpu_affinity_all failure setting thread affinity.");
     }
   }
+#  else
+#    warning funk2_virtual_processor_thread__set_cpu_affinity_all has no method for setting thread processor affinities.
 #  endif
 #endif // HAVE_PTHREAD_SETAFFINITY_NP
 }
@@ -89,6 +91,8 @@ void funk2_virtual_processor_thread__set_cpu_affinity(funk2_virtual_processor_th
       status("warning funk2_virtual_processor_thread__set_cpu_affinity failure setting thread affinity.");
     }
   }
+#  else
+#    warning funk2_virtual_processor_thread__set_cpu_affinity has no method for setting thread processor affinities.
 #  endif
 #endif // HAVE_PTHREAD_SETAFFINITY_NP
 }

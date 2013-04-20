@@ -4743,9 +4743,9 @@ boolean_t raw__simple_array__elt__compare_and_swap(f2ptr cause, f2ptr this, s64 
 f2ptr f2__simple_array__elt__compare_and_swap(f2ptr cause, f2ptr this, f2ptr index, f2ptr old_value, f2ptr new_value) {
   assert_argument_type(simple_array, this);
   assert_argument_type(integer,      index);
-  s64 index = f2integer__i(y, cause);
-  s64 length = f2simple_array__length(this, cause);
-  if (index < 0 || index >= length) {
+  s64 index__i = f2integer__i(index, cause);
+  s64 length   = f2simple_array__length(this, cause);
+  if (index__i < 0 || index__i >= length) {
     return new__error(f2list10__new(cause,
 				    new__symbol(cause, "bug_name"),  new__symbol(cause, "simple_array-elt-compare_and_swap-index_out_of_range"),
 				    new__symbol(cause, "this"),      this,
@@ -4753,7 +4753,7 @@ f2ptr f2__simple_array__elt__compare_and_swap(f2ptr cause, f2ptr this, f2ptr ind
 				    new__symbol(cause, "old_value"), old_value,
 				    new__symbol(cause, "new_value"), new_value));
   }
-  return f2bool__new(raw__simple_array__elt__compare_and_swap(cause, this, index, old_value, new_value));
+  return f2bool__new(raw__simple_array__elt__compare_and_swap(cause, this, index__i, old_value, new_value));
 }
 def_pcfunk4(simple_array__elt__compare_and_swap, this, index, old_value, new_value,
 	    "",

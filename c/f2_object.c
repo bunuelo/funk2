@@ -466,7 +466,7 @@ f2ptr f2__object__slot__type_funk(f2ptr cause, f2ptr this, f2ptr slot_type, f2pt
   return f2larva__new(cause, 1, nil);
 }
 def_pcfunk3(object__slot__type_funk, this, slot_type, slot_name,
-	    "Returns the slot type funk for the object (e.g. types: get, set, execute).",
+	    "Returns the slot type funk for the object (e.g. types: get, set, compare_and_swap, execute).",
 	    return f2__object__slot__type_funk(this_cause, this, slot_type, slot_name));
 
 
@@ -493,9 +493,10 @@ def_pcfunk2(object__inherits_from, this, type_name,
 	    return f2__object__inherits_from(this_cause, this, type_name));
 
 
-#define object__get__no_such_slot     789
-#define object__set__no_such_slot     790
-#define object__execute__no_such_slot 791
+#define object__get__no_such_slot              789
+#define object__set__no_such_slot              790
+#define object__compare_and_swap__no_such_slot 791
+#define object__execute__no_such_slot          792
 
 f2ptr f2__object__get(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);
@@ -558,6 +559,37 @@ f2ptr f2__object__set__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
 def_pcfunk3(object__set__apply, this, slot, args,
 	    "",
 	    return f2__object__set__apply(this_cause, this, slot, args));
+
+f2ptr f2__object__compare_and_swap(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  f2ptr fiber = f2__this__fiber(cause);
+  f2ptr funk  = f2__object__slot__type_funk(cause, this, __funk2.globalenv.compare_and_swap__symbol, slot);
+  if (! raw__funkable__is_type(cause, funk)) {
+    if (raw__larva__is_type(cause, funk)) {
+      return funk;
+    }
+    return f2larva__new(cause, object__compare_and_swap__no_such_slot, f2__bug__new(cause, f2integer__new(cause, object__compare_and_swap__no_such_slot), f2__frame__new(cause, f2list10__new(cause,
+																							      new__symbol(cause, "bug_type"), new__symbol(cause, "object_does_not_have_compare_and_swap_funk"),
+																							      new__symbol(cause, "funkname"), new__symbol(cause, "object-compare_and_swap"),
+																							      new__symbol(cause, "this"),     this,
+																							      new__symbol(cause, "slot"),     slot,
+																							      new__symbol(cause, "args"),     args))));
+  }
+  f2ptr result = f2__force_funk_apply(cause, fiber, funk, raw__cons__new(cause, this, args));
+  if (raw__larva__is_type(cause, result)) {
+    f2__terminal_print(cause, result);
+  }
+  return result;
+}
+def_pcfunk2_and_rest(object__compare_and_swap,        this, slot, args,
+		     "",
+		     return f2__object__compare_and_swap(this_cause, this, slot, args));
+
+f2ptr f2__object__compare_and_swap__apply(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
+  return f2__object__compare_and_swap(cause, this, slot, args);
+}
+def_pcfunk3(object__compare_and_swap__apply, this, slot, args,
+	    "",
+	    return f2__object__compare_and_swap__apply(this_cause, this, slot, args));
 
 f2ptr f2__object__execute(f2ptr cause, f2ptr this, f2ptr slot, f2ptr args) {
   f2ptr fiber = f2__this__fiber(cause);

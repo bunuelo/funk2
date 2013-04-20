@@ -136,6 +136,7 @@ typedef struct funk2_globalenv_s {
   
   f2ptr get__symbol;
   f2ptr set__symbol;
+  f2ptr compare_and_swap__symbol;
   f2ptr execute__symbol;
   f2ptr get_rewindable__symbol;
   f2ptr set_rewindable__symbol;

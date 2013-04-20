@@ -188,26 +188,32 @@
 [defmetro chunk-write_16bit [x y z] `[chunk-write_16bit_integer ,x ,y [coerce-to-int ,z]]]
 [defmetro chunk-write_32bit [x y z] `[chunk-write_32bit_integer ,x ,y [coerce-to-int ,z]]]
 
-[defmetro object_type-type-funk    [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name ,slot_name]]
-[defmetro object_type-get-funk     [name slot_name]                `[object_type-type-funk                              ,name  `get            ,slot_name]]
-[defmetro object_type-set-funk     [name slot_name]                `[object_type-type-funk                              ,name  `set            ,slot_name]]
-[defmetro object_type-execute-funk [name slot_name]                `[object_type-type-funk                              ,name  `execute        ,slot_name]]
+[defmetro object_type-type-funk             [name slot_type_name slot_name] `[primobject_type-lookup_slot_type_funk [lookup_type ,name] ,slot_type_name   ,slot_name]]
+[defmetro object_type-get-funk              [name slot_name]                `[object_type-type-funk                              ,name  `get              ,slot_name]]
+[defmetro object_type-set-funk              [name slot_name]                `[object_type-type-funk                              ,name  `set              ,slot_name]]
+[defmetro object_type-compare_and_swap-funk [name slot_name]                `[object_type-type-funk                              ,name  `compare_and_swap ,slot_name]]
+[defmetro object_type-execute-funk          [name slot_name]                `[object_type-type-funk                              ,name  `execute          ,slot_name]]
 
-[defmetro type-get-apply     [type_name this slot_name args] `[apply [object_type-get-funk     [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
-[defmetro type-set-apply     [type_name this slot_name args] `[apply [object_type-set-funk     [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
-[defmetro type-execute-apply [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
-[defmetro type-have-apply    [type_name this slot_name args] `[apply [object_type-execute-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
+[defmetro type-get-apply              [type_name this slot_name args] `[apply [object_type-get-funk              [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
+[defmetro type-set-apply              [type_name this slot_name args] `[apply [object_type-set-funk              [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
+[defmetro type-compare_and_swap-apply [type_name this slot_name args] `[apply [object_type-compare_and_swap-funk [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
+[defmetro type-execute-apply          [type_name this slot_name args] `[apply [object_type-execute-funk          [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
+[defmetro type-have-apply             [type_name this slot_name args] `[apply [object_type-execute-funk          [quote ,type_name] [quote ,slot_name]] [cons ,this ,args]]]
 
-[defmetro type-get     [type_name this slot_name :rest args] `[type-get-apply     ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-set     [type_name this slot_name :rest args] `[type-set-apply     ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-execute [type_name this slot_name :rest args] `[type-execute-apply ,type_name ,this ,slot_name [conslist @args]]]
-[defmetro type-have    [type_name this slot_name :rest args] `[type-have-apply    ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-get              [type_name this slot_name :rest args] `[type-get-apply              ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-set              [type_name this slot_name :rest args] `[type-set-apply              ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-compare_and_swap [type_name this slot_name :rest args] `[type-compare_and_swap-apply ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-execute          [type_name this slot_name :rest args] `[type-execute-apply          ,type_name ,this ,slot_name [conslist @args]]]
+[defmetro type-have             [type_name this slot_name :rest args] `[type-have-apply             ,type_name ,this ,slot_name [conslist @args]]]
 
 [defmetro object-get-funk [this slot_name]
   `[object-slot-type_funk ,this `get ,slot_name]]
 
 [defmetro object-set-funk [this slot_name]
   `[object-slot-type_funk ,this `set ,slot_name]]
+
+[defmetro object-compare_and_swap-funk [this slot_name]
+  `[object-slot-type_funk ,this `compare_and_swap ,slot_name]]
 
 [defmetro object-execute-funk [this slot_name]
   `[object-slot-type_funk ,this `execute ,slot_name]]
@@ -216,12 +222,14 @@
   `[primobject_type-lookup_slot_type_funk [lookup_type ,name] `execute `new]]
 
 
-[defmetro object-get           [this slot_name :rest args] [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
-[defmetro object-get-apply     [this slot_name args]       [define this_gensym [gensym 'get-this']]     `[prog [define ,this_gensym ,this] [apply [object-get-funk     ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
-[defmetro object-set           [this slot_name :rest args] [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
-[defmetro object-set-apply     [this slot_name args]       [define this_gensym [gensym 'set-this']]     `[prog [define ,this_gensym ,this] [apply [object-set-funk     ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
-[defmetro object-execute       [this slot_name :rest args] [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
-[defmetro object-execute-apply [this slot_name args]       [define this_gensym [gensym 'execute-this']] `[prog [define ,this_gensym ,this] [apply [object-execute-funk ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-get                    [this slot_name :rest args] [define this_gensym [gensym 'get-this']]              `[prog [define ,this_gensym ,this] [apply [object-get-funk              ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-get-apply              [this slot_name args]       [define this_gensym [gensym 'get-this']]              `[prog [define ,this_gensym ,this] [apply [object-get-funk              ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-set                    [this slot_name :rest args] [define this_gensym [gensym 'set-this']]              `[prog [define ,this_gensym ,this] [apply [object-set-funk              ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-set-apply              [this slot_name args]       [define this_gensym [gensym 'set-this']]              `[prog [define ,this_gensym ,this] [apply [object-set-funk              ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-compare_and_swap       [this slot_name :rest args] [define this_gensym [gensym 'compare_and_swap-this']] `[prog [define ,this_gensym ,this] [apply [object-compare_and_swap-funk ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-compare_and_swap-apply [this slot_name args]       [define this_gensym [gensym 'compare_and_swap-this']] `[prog [define ,this_gensym ,this] [apply [object-compare_and_swap-funk ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
+[defmetro object-execute                [this slot_name :rest args] [define this_gensym [gensym 'execute-this']]          `[prog [define ,this_gensym ,this] [apply [object-execute-funk          ,this_gensym ,slot_name] [conslist ,this_gensym @args]]]]
+[defmetro object-execute-apply          [this slot_name args]       [define this_gensym [gensym 'execute-this']]          `[prog [define ,this_gensym ,this] [apply [object-execute-funk          ,this_gensym ,slot_name] [cons     ,this_gensym ,args]]]]
 
 
 
@@ -249,6 +257,12 @@
 [defmetro set-apply [this slot_name value_args]
   `[object-set-apply ,this [quote ,slot_name] ,value_args]]
 
+[defmetro compare_and_swap [this slot_name :rest value_args]
+  `[object-compare_and_swap ,this [quote ,slot_name] @value_args]]
+
+[defmetro compare_and_swap-apply [this slot_name value_args]
+  `[object-compare_and_swap-apply ,this [quote ,slot_name] ,value_args]]
+
 [defmetro execute [this slot_name :rest args]
   `[object-execute ,this [quote ,slot_name] @args]]
 
@@ -264,10 +278,12 @@
 
 [globalize-funk type &object-type]
 
-[defmetro car     [x]   `[object-get ,x `car]]
-[defmetro cdr     [x]   `[object-get ,x `cdr]]
-[defmetro car-set [x y] `[object-set ,x `car ,y]]
-[defmetro cdr-set [x y] `[object-set ,x `cdr ,y]]
+[defmetro car                  [x]     `[object-get              ,x `car]]
+[defmetro cdr                  [x]     `[object-get              ,x `cdr]]
+[defmetro car-set              [x y]   `[object-set              ,x `car ,y]]
+[defmetro cdr-set              [x y]   `[object-set              ,x `cdr ,y]]
+[defmetro car-compare_and_swap [x y z] `[object-compare_and_swap ,x `car ,y ,z]]
+[defmetro cdr-compare_and_swap [x y z] `[object-compare_and_swap ,x `cdr ,y ,z]]
 
 [defunk wrong_argument_number [] [error-new `bug_type `wrong_number_of_arguments] nil]
 [wrong_argument_number-bcs-set [get &wrong_argument_number body_bytecodes]]

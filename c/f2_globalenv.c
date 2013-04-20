@@ -151,9 +151,10 @@ void funk2_globalenv__reinit(funk2_globalenv_t* this) {
   this->ptype_larva__symbol                    = new__symbol(cause, "ptype_larva");
   this->ptype_mutable_array_pointer__symbol    = new__symbol(cause, "ptype_mutable_array_pointer");
   
-  this->get__symbol     = new__symbol(cause, "get");
-  this->set__symbol     = new__symbol(cause, "set");
-  this->execute__symbol = new__symbol(cause, "execute");
+  this->get__symbol              = new__symbol(cause, "get");
+  this->set__symbol              = new__symbol(cause, "set");
+  this->compare_and_swap__symbol = new__symbol(cause, "compare_and_swap");
+  this->execute__symbol          = new__symbol(cause, "execute");
   
   this->eq__symbol                           = new__symbol(cause, "eq");
   this->eq_hash_value__symbol                = new__symbol(cause, "eq_hash_value");
@@ -275,6 +276,7 @@ void funk2_globalenv__defragment__fix_pointers(funk2_globalenv_t* this) {
   
   defragment__fix_pointer(this->get__symbol);
   defragment__fix_pointer(this->set__symbol);
+  defragment__fix_pointer(this->compare_and_swap__symbol);
   defragment__fix_pointer(this->execute__symbol);
   
   defragment__fix_pointer(this->eq__symbol);

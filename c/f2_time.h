@@ -72,6 +72,7 @@ void funk2_process_time__destry(funk2_process_time_t* this);
 
 void  raw__fast_spin_sleep_yield();
 void  raw__user_fast_spin_sleep_yield();
+u64   raw__monotonic_nanoseconds();
 u64   raw__nanoseconds_since_1970();
 f2ptr  f2__nanoseconds_since_1970(f2ptr cause);
 u64   raw__processor_thread__execution_nanoseconds();

@@ -37,9 +37,11 @@ typedef struct funk2_virtual_processor_thread_s            funk2_virtual_process
 #ifndef F2__VIRTUAL_PROCESSOR_THREAD__H
 #define F2__VIRTUAL_PROCESSOR_THREAD__H
 
+#include "f2_atomic_u64.h"
+
 struct funk2_virtual_processor_thread_cons_s {
-  funk2_virtual_processor_thread_t*             virtual_processor_thread;
-  struct funk2_virtual_processor_thread_cons_s* next;
+  funk2_virtual_processor_thread_t* virtual_processor_thread;
+  funk2_atomic_u64_t                next; // (struct funk2_virtual_processor_thread_cons_s*);
 };
 
 struct funk2_virtual_processor_thread_doublelink_s {

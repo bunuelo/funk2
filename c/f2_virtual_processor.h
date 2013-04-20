@@ -59,8 +59,7 @@ struct funk2_virtual_processor_s {
   funk2_processor_spinlock_t                   virtual_processor_thread_count_spinlock;
   s64                                          assigned_virtual_processor_thread_count;
   s64                                          spinning_virtual_processor_thread_count;
-  funk2_processor_mutex_t                      virtual_processor_thread_stack_mutex;
-  funk2_virtual_processor_thread_cons_t*       virtual_processor_thread_stack;
+  funk2_atomic_u64_t                           virtual_processor_thread_stack; // (funk2_virtual_processor_thread_cons_t*)
   funk2_processor_mutex_t                      spinning_virtual_processor_thread_stack_mutex;
   funk2_virtual_processor_thread_doublelink_t* spinning_virtual_processor_thread_stack;
   funk2_virtual_processor_thread_doublelink_t* spinning_virtual_processor_thread_stack_end;

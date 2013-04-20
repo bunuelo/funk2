@@ -37,10 +37,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
     this->assigned_virtual_processor_thread_count = 0;
     this->spinning_virtual_processor_thread_count = 0;
   }
-  {
-    funk2_processor_mutex__init(&(this->virtual_processor_thread_stack_mutex));
-    this->virtual_processor_thread_stack = NULL;
-  }
+  funk2_atomic_u64__init(&(this->virtual_processor_thread_stack), (u64)to_ptr(NULL));
   {
     funk2_processor_mutex__init(&(this->spinning_virtual_processor_thread_stack_mutex));
     this->spinning_virtual_processor_thread_stack     = NULL;
@@ -71,17 +68,21 @@ void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thr
     {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
       cons->virtual_processor_thread = virtual_processor_thread;
-      u64 current_virtual_processor_stack_index = 0;
       {
-	funk2_processor_mutex__lock(&(this->virtual_processor_thread_stack_mutex));
-	if (this->virtual_processor_thread_stack) {
-	  current_virtual_processor_stack_index = this->virtual_processor_thread_stack->virtual_processor_thread->virtual_processor_stack_index;
+	boolean_t success = boolean__false;
+	while (! success) {
+	  funk2_virtual_processor_thread_cons_t* old_top_of_stack                      = (funk2_virtual_processor_thread_cons_t*)funk2_atomic_u64__value(&(this->virtual_processor_thread_stack));
+	  u64                                    current_virtual_processor_stack_index;
+	  if (old_top_of_stack == NULL) {
+	    current_virtual_processor_stack_index = 0;
+	  } else {
+	    current_virtual_processor_stack_index = old_top_of_stack->virtual_processor_thread->virtual_processor_stack_index;
+	  }
+	  cons->virtual_processor_thread->virtual_processor_stack_index = current_virtual_processor_stack_index + 1;
+	  funk2_atomic_u64__set_value(&(cons->next), (u64)to_ptr(old_top_of_stack));
+	  success = funk2_atomic_u64__compare_and_swap(&(this->virtual_processor_thread_stack), old_top_of_stack, cons);
 	}
-	cons->next                           = this->virtual_processor_thread_stack;
-	this->virtual_processor_thread_stack = cons;
-	funk2_processor_mutex__unlock(&(this->virtual_processor_thread_stack_mutex));
       }
-      virtual_processor_thread->virtual_processor_stack_index = current_virtual_processor_stack_index + 1;
     }
   }
 }

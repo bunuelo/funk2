@@ -40,17 +40,15 @@ typedef struct funk2_virtual_processor_handler_s funk2_virtual_processor_handler
 #include "f2_virtual_processor_thread.h"
 
 struct funk2_virtual_processor_handler_s {
-  funk2_thread_safe_hash_t               virtual_processor_index_processor_thread_hash;
-  funk2_processor_mutex_t                all_virtual_processor_threads_mutex;
-  funk2_virtual_processor_thread_cons_t* all_virtual_processor_threads;
-  funk2_processor_mutex_t                free_virtual_processor_threads_mutex;
-  funk2_virtual_processor_thread_cons_t* free_virtual_processor_threads;
-  u64                                    free_virtual_processor_thread_count;
-  funk2_thread_safe_hash_t               virtual_processor_thread_processor_thread_hash;
-  funk2_thread_safe_hash_t               virtual_processor_index_tid_hash;
-  u64                                    virtual_processor_count;
-  funk2_virtual_processor_t**            virtual_processor;
-  boolean_t                              hardware_affinities_enabled;
+  funk2_thread_safe_hash_t    virtual_processor_index_processor_thread_hash;
+  funk2_atomic_u64_t          all_virtual_processor_threads; // (funk2_virtual_processor_thread_cons_t*)
+  funk2_atomic_u64_t          free_virtual_processor_threads; // (funk2_virtual_processor_thread_cons_t*)
+  funk2_atomic_u64_t          free_virtual_processor_thread_count;
+  funk2_thread_safe_hash_t    virtual_processor_thread_processor_thread_hash;
+  funk2_thread_safe_hash_t    virtual_processor_index_tid_hash;
+  u64                         virtual_processor_count;
+  funk2_virtual_processor_t** virtual_processor;
+  boolean_t                   hardware_affinities_enabled;
 };
 
 void                              funk2_virtual_processor_handler__init                                                                (funk2_virtual_processor_handler_t* this, u64 virtual_processor_count);

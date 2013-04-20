@@ -32,15 +32,9 @@
 void funk2_virtual_processor_handler__init(funk2_virtual_processor_handler_t* this, u64 virtual_processor_count) {
   status("initializing virtual_processor_handler with " u64__fstr " virtual processor threads.", virtual_processor_count);
   funk2_thread_safe_hash__init(&(this->virtual_processor_index_processor_thread_hash), 16);
-  {
-    funk2_processor_mutex__init(&(this->all_virtual_processor_threads_mutex));
-    this->all_virtual_processor_threads = NULL;
-  }
-  {
-    funk2_processor_mutex__init(&(this->free_virtual_processor_threads_mutex));
-    this->free_virtual_processor_threads = NULL;
-  }
-  this->free_virtual_processor_thread_count = 0;
+  funk2_atomic_u64__init(&(this->all_virtual_processor_threads),  (u64)to_ptr(NULL));
+  funk2_atomic_u64__init(&(this->free_virtual_processor_threads), (u64)to_ptr(NULL));
+  funk2_atomic_u64__init(&(this->free_virtual_processor_thread_count), 0);
   funk2_thread_safe_hash__init(&(this->virtual_processor_thread_processor_thread_hash), 16);
   funk2_thread_safe_hash__init(&(this->virtual_processor_index_tid_hash), 16);
   this->virtual_processor_count     = virtual_processor_count;
@@ -60,19 +54,17 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
   f2__free(to_ptr(this->virtual_processor));
   funk2_thread_safe_hash__destroy(&(this->virtual_processor_index_processor_thread_hash));
   {
-    funk2_processor_mutex__destroy(&(this->all_virtual_processor_threads_mutex));
-    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    funk2_virtual_processor_thread_cons_t* iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->all_virtual_processor_threads)));
     while (iter) {
-      funk2_virtual_processor_thread_cons_t* next = iter->next;
+      funk2_virtual_processor_thread_cons_t* next = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
       f2__free(to_ptr(iter));
       iter = next;
     }
   }
   {
-    funk2_processor_mutex__destroy(&(this->free_virtual_processor_threads_mutex));
-    funk2_virtual_processor_thread_cons_t* iter = this->free_virtual_processor_threads;
+    funk2_virtual_processor_thread_cons_t* iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->free_virtual_processor_threads)));
     while (iter) {
-      funk2_virtual_processor_thread_cons_t* next = iter->next;
+      funk2_virtual_processor_thread_cons_t* next = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
       f2__free(to_ptr(iter));
       iter = next;
     }
@@ -82,33 +74,31 @@ void funk2_virtual_processor_handler__destroy(funk2_virtual_processor_handler_t*
 }
 
 void funk2_virtual_processor_handler__destroy_all_virtual_processor_threads(funk2_virtual_processor_handler_t* this) {
-  funk2_processor_mutex__lock(&(this->all_virtual_processor_threads_mutex));
   {
-    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    funk2_virtual_processor_thread_cons_t* iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->all_virtual_processor_threads)));
     while (iter) {
       funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
       funk2_virtual_processor_thread__signal_exit(virtual_processor_thread);
-      iter = iter->next;
+      iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
     }
   }
   {
-    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    funk2_virtual_processor_thread_cons_t* iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->all_virtual_processor_threads)));
     while (iter) {
       funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
       funk2_virtual_processor_thread__finalize_exit(virtual_processor_thread);
-      iter = iter->next;
+      iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
     }
   }
   {
-    funk2_virtual_processor_thread_cons_t* iter = this->all_virtual_processor_threads;
+    funk2_virtual_processor_thread_cons_t* iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->all_virtual_processor_threads)));
     while (iter) {
       funk2_virtual_processor_thread_t* virtual_processor_thread = iter->virtual_processor_thread;
       funk2_virtual_processor_thread__destroy(virtual_processor_thread);
       f2__free(to_ptr(virtual_processor_thread));
-      iter = iter->next;
+      iter = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
     }
   }
-  funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
 }
 
 void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_processor_handler_t* this) {
@@ -131,31 +121,37 @@ void funk2_virtual_processor_handler__start_virtual_processors(funk2_virtual_pro
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor_handler__get_free_virtual_processor_thread(funk2_virtual_processor_handler_t* this) {
-  funk2_virtual_processor_thread_t* virtual_processor_thread = NULL;
-  funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
-  if (! (this->free_virtual_processor_threads)) {
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
-    virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t)));
-    funk2_virtual_processor_thread__init(virtual_processor_thread);
-    funk2_thread_safe_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)to_ptr(virtual_processor_thread->processor_thread), (u64)to_ptr(virtual_processor_thread));
-    {
-      funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
-      cons->virtual_processor_thread              = virtual_processor_thread;
-      {
-	funk2_processor_mutex__lock(&(this->all_virtual_processor_threads_mutex));
-	cons->next                          = this->all_virtual_processor_threads;
-	this->all_virtual_processor_threads = cons;
-	funk2_processor_mutex__unlock(&(this->all_virtual_processor_threads_mutex));
+  funk2_virtual_processor_thread_t*      virtual_processor_thread = NULL;
+  funk2_virtual_processor_thread_cons_t* cons                     = NULL;
+  {
+    boolean_t remove_free_success = boolean__false;
+    while (! remove_free_success) {
+      cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(funk2_atomic_u64__value(&(this->free_virtual_processor_threads)));
+      if (cons == NULL) {
+	// no free threads exist, so just ignore free list and return newly allocated thread.
+	virtual_processor_thread = (funk2_virtual_processor_thread_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_t)));
+	funk2_virtual_processor_thread__init(virtual_processor_thread);
+	funk2_thread_safe_hash__add(&(this->virtual_processor_thread_processor_thread_hash), (u64)to_ptr(virtual_processor_thread->processor_thread), (u64)to_ptr(virtual_processor_thread));
+	{
+	  funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
+	  cons->virtual_processor_thread              = virtual_processor_thread;
+	  {
+	    boolean_t add_used_success = boolean__false;
+	    while (! add_used_success) {
+	      u64 old_value = funk2_atomic_u64__value(&(this->all_virtual_processor_threads));
+	      funk2_atomic_u64__set_value(&(cons->next), old_value);
+	      add_used_success = funk2_atomic_u64__compare_and_swap(&(this->all_virtual_processor_threads), old_value, (u64)to_ptr(cons));
+	    }
+	  }
+	}
+	return virtual_processor_thread;
       }
+      remove_free_success = funk2_atomic_u64__compare_and_swap(&(this->free_virtual_processor_threads), (u64)to_ptr(cons), funk2_atomic_u64__value(&(cons->next)));
     }
-  } else {
-    funk2_virtual_processor_thread_cons_t* cons = this->free_virtual_processor_threads;
-    this->free_virtual_processor_threads        = cons->next;
-    virtual_processor_thread                    = cons->virtual_processor_thread;
-    f2__free(to_ptr(cons));
-    this->free_virtual_processor_thread_count --;
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }
+  virtual_processor_thread = cons->virtual_processor_thread;
+  f2__free(to_ptr(cons));
+  funk2_atomic_u64__decrement(&(this->free_virtual_processor_thread_count));
   return virtual_processor_thread;
 }
 
@@ -173,17 +169,21 @@ void funk2_virtual_processor_handler__know_of_virtual_processor_thread_unassignm
   funk2_thread_safe_hash__remove(&(this->virtual_processor_index_tid_hash), virtual_processor_thread->processor_thread->tid);
   funk2_virtual_processor__know_of_one_less_spinning_virtual_processor_thread(this->virtual_processor[virtual_processor_index]);
   { // add to free processor thread list if we don't already have too many free threads
-    funk2_processor_mutex__lock(&(this->free_virtual_processor_threads_mutex));
-    if (this->free_virtual_processor_thread_count < 100) {
+    if (funk2_atomic_u64__value(&(this->free_virtual_processor_thread_count)) < 100) {
       funk2_virtual_processor_thread_cons_t* cons = (funk2_virtual_processor_thread_cons_t*)from_ptr(f2__malloc(sizeof(funk2_virtual_processor_thread_cons_t)));
-      cons->next                                  = this->free_virtual_processor_threads;
       cons->virtual_processor_thread              = virtual_processor_thread;
-      this->free_virtual_processor_threads        = cons;
-      this->free_virtual_processor_thread_count ++;
+      {
+	boolean_t success = boolean__false;
+	while (! success) {
+	  u64 old_value = funk2_atomic_u64__value(&(this->free_virtual_processor_threads));
+	  funk2_atomic_u64__set_value(&(cons->next), old_value);
+	  success = funk2_atomic_u64__compare_and_swap(&(this->free_virtual_processor_threads), old_value, (u64)to_ptr(cons));
+	}
+      }
+      funk2_atomic_u64__increment(&(this->free_virtual_processor_thread_count));
     } else {
       funk2_virtual_processor_thread__signal_exit(virtual_processor_thread);
     }
-    funk2_processor_mutex__unlock(&(this->free_virtual_processor_threads_mutex));
   }
 }
 

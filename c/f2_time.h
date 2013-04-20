@@ -25,6 +25,15 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__TIME__TYPES__H
+#define F2__TIME__TYPES__H
+
+typedef struct funk2_date_s         funk2_date_t;
+typedef struct funk2_process_time_s funk2_process_time_t;
+
+#endif // F2__TIME__TYPES__H
+
+
 #ifndef F2__TIME__H
 #define F2__TIME__H
 
@@ -33,7 +42,7 @@
 #include "f2_ptypes.h"
 #include "f2_primfunks.h"
 
-typedef struct funk2_date_s {
+struct funk2_date_s {
   u64 years;
   u64 months;
   u64 days;
@@ -41,7 +50,7 @@ typedef struct funk2_date_s {
   u64 minutes;
   u64 seconds;
   u64 nanoseconds;
-} funk2_date_t;
+};
 
 #define nanoseconds_per_microsecond ((s64)1000)
 #define nanoseconds_per_millisecond (nanoseconds_per_microsecond * 1000)
@@ -49,6 +58,17 @@ typedef struct funk2_date_s {
 #define nanoseconds_per_minute      (nanoseconds_per_second      * 60)
 #define nanoseconds_per_hour        (nanoseconds_per_minute      * 60)
 #define nanoseconds_per_day         (nanoseconds_per_hour        * 24)
+
+// funk2_process_time
+
+struct funk2_process_time_s {
+  u64 monotonic_start_nanoseconds_since_1970;
+};
+
+void funk2_process_time__init  (funk2_process_time_t* this);
+void funk2_process_time__destry(funk2_process_time_t* this);
+
+
 
 void  raw__fast_spin_sleep_yield();
 void  raw__user_fast_spin_sleep_yield();
@@ -211,7 +231,6 @@ s64       raw__relative_time__microseconds     (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__microseconds     (f2ptr cause, f2ptr this);
 s64       raw__relative_time__nanoseconds      (f2ptr cause, f2ptr this);
 f2ptr      f2__relative_time__nanoseconds      (f2ptr cause, f2ptr this);
-
 
 // **
 

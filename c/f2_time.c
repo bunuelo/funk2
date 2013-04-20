@@ -28,6 +28,19 @@
 #include "funk2.h"
 
 
+void funk2_process_time__init(funk2_process_time_t* this) {
+  u64 seconds_since_1970                       = (u64)time(NULL);
+  u64 monotonic_nanoseconds                    = raw__monotonic_nanoseconds();
+  u64 nanoseconds_since_1970                   = seconds_since_1970 * nanoseconds_per_second;
+  u64 monotonic_start_nanoseconds_since_1970   = nanoseconds_since_1970 - monotonic_nanoseconds;
+  this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
+}
+
+void funk2_process_time__destry(funk2_process_time_t* this) {
+}
+
+
+
 #ifdef F2__APPLE
 
 // **
@@ -140,7 +153,7 @@ void raw__user_fast_spin_sleep_yield() {
 }
     
 
-u64 raw__nanoseconds_since_1970() {
+u64 raw__monotonic_nanoseconds() {
 #if defined(HAVE_CLOCK_GETTIME)
   struct timespec ts;
   clock_gettime(CLOCK_REALTIME, &ts);
@@ -169,6 +182,10 @@ u64 raw__nanoseconds_since_1970() {
 #    error no high resolution counter available.
 #  endif // HAVE_QUERYPERFORMANCECOUNTER && HAVE_QUERYPERFORMANCEFREQUENCY
 #endif // HAVE_CLOCK_GETTIME
+}
+
+u64 raw__nanoseconds_since_1970() {
+  return __funk2.monotonic_start_nanoseconds_since_1970 + raw__monotonic_nanoseconds();
 }
 
 
@@ -260,7 +277,6 @@ f2ptr raw__time__new_from_unix_time(f2ptr cause, time_t unix_time) {
   u64 nanoseconds_since_1970 = unix_time__to_nanoseconds_since_1970(unix_time);
   return f2__time__new(cause, f2integer__new(cause, nanoseconds_since_1970));
 }
-
 
 
 // time

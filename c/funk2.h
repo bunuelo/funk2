@@ -178,6 +178,7 @@ typedef struct funk2_s {
   char**                              argv;
   funk2_processor_thread_t*           management_processor_thread;
   ptr                                 funk2_main_code_position;
+  funk2_process_time_t                process_time;
   boolean_t                           exit_now;
   node_id_t                           node_id;
   event_id_t                          event_id;

@@ -29,6 +29,7 @@
 #define F2__SYSTEM_PROCESSOR__H
 
 #include "f2_system_headers.h"
+#include "f2_time.h"
 
 typedef struct funk2_system_processor_s funk2_system_processor_t;
 struct funk2_system_processor_s {

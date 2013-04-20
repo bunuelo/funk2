@@ -153,6 +153,7 @@ void f2__initialize() {
 #define u64_large_prime ((u64)12764787846358441471ull)
 
 void funk2__init(funk2_t* this, int argc, char** argv) {
+  funk2_process_time__init(&(this->process_time));
   f2__status__initialize();
   
   status("");
@@ -422,6 +423,7 @@ void funk2__destroy(funk2_t* this) {
   funk2_system_processor__destroy(&(this->system_processor));
   funk2_poller_global_helper__destroy(&(this->processor_conditionlock_poller_helper));
   funk2_poller_global_helper__destroy(&(this->global_poller_helper));
+  funk2_process_time__destroy(&(this->process_time));
 }
 
 boolean_t funk2__handle(funk2_t* this) {

@@ -2953,6 +2953,7 @@ typedef struct pcs_request__f2simple_array__elt__set_s pcs_request__f2simple_arr
 
 struct pcs_packet_payload_respond__f2simple_array__elt__set_s {
   pcs_packet_payload_header__action_payload_header_t action_payload_header;
+  f2ptr                                              old_value;
 } __attribute__((__packed__));
 typedef struct pcs_packet_payload_respond__f2simple_array__elt__set_s pcs_packet_payload_respond__f2simple_array__elt__set_t;
 
@@ -2964,11 +2965,11 @@ typedef struct pcs_respond__f2simple_array__elt__set_s pcs_respond__f2simple_arr
 
 void send_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
 void recv_packet__request__f2simple_array__elt__set(funk2_node_t* funk2_node, pcs_request__f2simple_array__elt__set_t* packet);
-void send_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause);
+void send_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr old_value);
 void recv_packet__respond__f2simple_array__elt__set(funk2_node_t* funk2_node, pcs_respond__f2simple_array__elt__set_t* packet);
 
-void funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
-void f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
+f2ptr funk2_node__f2simple_array__elt__set(funk2_node_t* funk2_node, f2ptr this_fiber, f2ptr cause, f2ptr this, u64 index, f2ptr value);
+f2ptr f2simple_array__elt__set(f2ptr this, u64 index, f2ptr cause, f2ptr value);
 
 
 //  funk2_packet_type__pcs_request__f2simple_array__elt__compare_and_swap                          = , //f2ptr            (f2ptr cause, f2ptr this, u64 index, f2ptr old_value, f2ptr new_value);

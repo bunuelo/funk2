@@ -75,7 +75,7 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
     }
   }
 #else
-#  if defined(HAVE_GETPROCESSAFFINITYMASK
+#  if defined(HAVE_GETPROCESSAFFINITYMASK)
   {
     HANDLE current_process       = GetCurrentProcess();
     DWORD  process_affinity_mask = 0;

@@ -81,8 +81,8 @@ void funk2_system_processor__init(funk2_system_processor_t* this) {
     DWORD  process_affinity_mask = 0;
     DWORD  system_affinity_mask  = 0;
     if (GetProcessAffinityMask(current_process,
-			       &process_affinity_mask,
-			       &system_affinity_mask) == 0) {
+			       (PDWORD_PTR)&process_affinity_mask,
+			       (PDWORD_PTR)&system_affinity_mask) == 0) {
       status("warning GetProcessAffinityMask failed.");
     } else {
       this->processor_count = 0;

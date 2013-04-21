@@ -34,12 +34,8 @@ void error_writing_status_message() {
 
 void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_list args;
-  if (__funk2.status.initialized_magic != STATUS_INITIALIZED_MAGIC) {
-    printf("\nfatal error: status is not initialized.  use gdb with breakpoint on error_writing_status_message.\n");
-    error_writing_status_message();
-    exit(-1);
-  }
-  if (__funk2.status.disabled) {
+  if (__funk2.status.disabled ||
+      (__funk2.status.initialized_magic != STATUS_INITIALIZED_MAGIC)) {
     return;
   }
   char temp_msg[2048];

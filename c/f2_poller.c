@@ -167,6 +167,11 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     funk2_atomic_u64__set_value(&(this->global_helper->optimal_sleep_nanoseconds), (u64)(this->sleep_nanoseconds));
   }
   // debug code
+  if ((this->average_cpu_usage > 1.0) ||
+      (this->average_cpu_usage < 0.0)) {
+    status("poller__sleep fatal error: this->average_cpu_usage=%g", this->average_cpu_usage);
+    error(nil, "poller__sleep fatal error: this->average_cpu_usage out of range.");
+  }
   this->total_sleep_cycle_count ++;
   if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {
     this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;

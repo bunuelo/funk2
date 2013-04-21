@@ -162,19 +162,19 @@ img/bootstrap-repl.img: bin/funk2$(EXEEXT)
 	mkdir -p img
 	rm -f img/bootstrap-repl.img
 	rm -f img/bootstrap.img
-	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 fu2/bootstrap-repl.fu2
+	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 --debug fu2/bootstrap-repl.fu2
 
 # bootstrap the funk2 processor from a basic repl-prompt.
 img/bootstrap.img: img/bootstrap-repl.img
 	mkdir -p img
 	rm -f img/bootstrap.img
-	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 fu2/bootstrap.fu2
+	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 --debug fu2/bootstrap.fu2
 
 # compile the MindMon reflective mind experiment platform (run with command: "bin/funk2 -i img/mindmon.img")
 img/mindmon.img: img/bootstrap.img
 	mkdir -p img
 	rm -f img/mindmon.img
-	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 -x "[require fibermon mindmon-blocks_world] [save_memory_image 'img/mindmon.img']"
+	export LD_LIBRARY_PATH=$(extra_library_path); export DYLD_LIBRARY_PATH=$(extra_library_path); export PATH="$(extra_library_path):$$PATH"; bin/funk2 --debug -x "[require fibermon mindmon-blocks_world] [save_memory_image 'img/mindmon.img']"
 
 ###### Makefile.am specifics below here ######
 

@@ -35,6 +35,7 @@
 
 typedef struct funk2_status_s {
   u64                        initialized_magic;
+  boolean_t                  disabled;
   funk2_processor_spinlock_t trace_mutex;
 } funk2_status_t;
 

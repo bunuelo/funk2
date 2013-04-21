@@ -39,6 +39,9 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
     error_writing_status_message();
     exit(-1);
   }
+  if (__funk2.status.disabled) {
+    return;
+  }
   char temp_msg[2048];
   va_start(args, msg);
   vsprintf(temp_msg, msg, args);
@@ -49,7 +52,7 @@ void funk2_status(char* filename, int line_num, char* msg, ...) {
 			O_CREAT | O_APPEND | O_WRONLY,
 			S_IRWXU | S_IRWXG | S_IRWXO);
     if (trace_fd == -1) {
-      __funk2_status_disabled = boolean__true;
+      __funk2.status.disabled = boolean__true;
       //printf("[WARNING] funk2_status couldn't open funk2_trace.log");
       funk2_processor_spinlock__unlock(&(__funk2.status.trace_mutex));
       return;
@@ -184,6 +187,7 @@ void f2__status__initialize() {
   
   funk2_processor_spinlock__init(&(__funk2.status.trace_mutex));
   
+  __funk2.status.disabled          = boolean__false;
   __funk2.status.initialized_magic = STATUS_INITIALIZED_MAGIC;
 }
 

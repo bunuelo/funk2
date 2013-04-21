@@ -44,6 +44,10 @@ void f2__print_usage() {
 	 "\n"
 	 "\n        Print extended help message with examples."
 	 "\n"
+	 "\n    --debug"
+	 "\n"
+	 "\n        Enable writing status messages to funk2_debug.log."
+	 "\n"
 	 "\n    <source.fu2>"
 	 "\n"
 	 "\n        A user supplied filename of file from which to read and"
@@ -168,6 +172,7 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
   this->argc = argc;
   this->argv = argv;
   
+  this->debug                           = boolean__false;
   this->load_source_filename            = NULL;
   this->user_command                    = NULL;
   this->peer_command_server__port_num   = 22222;
@@ -186,6 +191,8 @@ void funk2_command_line__init(funk2_command_line_t* this, int argc, char** argv)
       print_help_and_exit = boolean__true;
     } else if (strcmp(argv[index], "--help") == 0) {
       print_extended_help_and_exit = boolean__true;
+    } else if (strcmp(argv[index], "--debug") == 0) {
+      this->debug = boolean__true;
     } else if (strcmp(argv[index], "-x") == 0) {
       index ++;
       if (index >= argc) {

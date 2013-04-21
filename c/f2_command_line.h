@@ -31,6 +31,7 @@
 typedef struct funk2_command_line_s {
   int       argc;
   char**    argv;
+  boolean_t debug;
   char*     load_source_filename;
   char*     user_command;
   char*     bootstrap_image_filename;

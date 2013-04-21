@@ -183,7 +183,11 @@ void f2__status__initialize() {
   
   funk2_processor_spinlock__init(&(__funk2.status.trace_mutex));
   
-  __funk2.status.disabled          = boolean__false;
+  if (__funk2.command_line.debug) {
+    __funk2.status.disabled = boolean__false;
+  } else {
+    __funk2.status.disabled = boolean__true;
+  }
   __funk2.status.initialized_magic = STATUS_INITIALIZED_MAGIC;
 }
 

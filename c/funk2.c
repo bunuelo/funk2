@@ -153,6 +153,7 @@ void f2__initialize() {
 #define u64_large_prime ((u64)12764787846358441471ull)
 
 void funk2__init(funk2_t* this, int argc, char** argv) {
+  funk2_command_line__init(&(this->command_line), argc, argv);
   funk2_process_time__init(&(this->process_time));
   f2__status__initialize();
   
@@ -163,7 +164,6 @@ void funk2__init(funk2_t* this, int argc, char** argv) {
   status("");
   
   funk2_process_time__report_status(&(__funk2.process_time)); // process_time is initialized before status, so report process_time status here.
-  funk2_command_line__init(&(this->command_line), argc, argv);
   
   this->exit_now = boolean__false;
   this->node_id  = raw__nanoseconds_since_1970() * u64_large_prime;

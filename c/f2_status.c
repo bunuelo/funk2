@@ -29,14 +29,15 @@
 
 void error_writing_status_message() {
   // a debugging breakpoint
+  printf("\nerror_writing_status_message\n");
 }
-
-boolean_t __funk2_status_disabled = boolean__true;
 
 void funk2_status(char* filename, int line_num, char* msg, ...) {
   va_list args;
-  if (__funk2_status_disabled) {
-    return;
+  if (__funk2.status.initialized_magic != STATUS_INITIALIZED_MAGIC) {
+    printf("\nfatal error: status is not initialized.  use gdb with breakpoint on error_writing_status_message.\n");
+    error_writing_status_message();
+    exit(-1);
   }
   char temp_msg[2048];
   va_start(args, msg);
@@ -183,10 +184,11 @@ void f2__status__initialize() {
   
   funk2_processor_spinlock__init(&(__funk2.status.trace_mutex));
   
-  __funk2_status_disabled = boolean__false;
+  __funk2.status.initialized_magic = STATUS_INITIALIZED_MAGIC;
 }
 
 void f2__status__destroy() {
+  __funk2.status.initialized_magic = 0;
   funk2_processor_spinlock__destroy(&(__funk2.status.trace_mutex));
 }
 

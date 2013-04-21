@@ -31,7 +31,10 @@
 #include "f2_global.h"
 #include "f2_processor_spinlock.h"
 
+#define STATUS_INITIALIZED_MAGIC ((u64)0xABABCDCDEFEFABCD)
+
 typedef struct funk2_status_s {
+  u64                        initialized_magic;
   funk2_processor_spinlock_t trace_mutex;
 } funk2_status_t;
 

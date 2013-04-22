@@ -48,13 +48,13 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     while (start_clock_ticks == current_clock_ticks) {
       current_clock_ticks = clock();
     }
-    u64 start_nanoseconds   = raw__nanoseconds_since_1970();
+    u64 start_nanoseconds = raw__nanoseconds_since_1970();
     start_clock_ticks = current_clock_ticks;
     // wait for beginning of next clock tick
     while (start_clock_ticks == current_clock_ticks) {
       current_clock_ticks = clock();
     }
-    u64 end_nanoseconds            = start_nanoseconds;
+    u64 end_nanoseconds            = raw__nanoseconds_since_1970();
     u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
     this->nanoseconds_per_clock_tick = nanoseconds_per_clock_tick;
   }

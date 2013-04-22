@@ -42,7 +42,7 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
   }
   {
-    u64 average_loop_count             = 100;
+    u64 average_loop_count             = 1000;
     u64 sum_nanoseconds_per_clock_tick = 0;
     s64 index;
     for (index = 0; index < average_loop_count; index ++) {

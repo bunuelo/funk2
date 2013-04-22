@@ -170,29 +170,31 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {
       this->sleep_nanoseconds *= this->sleep_nanoseconds_multiplier;
     }
+    if (this->global_helper != NULL) {
+      funk2_atomic_u64__set_value(&(this->global_helper->optimal_sleep_nanoseconds), (u64)(this->sleep_nanoseconds));
+    }
+#if defined(FUNK2_POLLER_DEBUG)
+    if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {
+      this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;
+      if (this->average_cpu_usage > (3 * this->target_cpu_usage)) {
+	status("funk2_poller vvv *** debug info *** vvv  WARNING CPU USAGE IS OVER 3 TIMES HIGHER THAN TARGET");
+	status("funk2_poller total_sleep_cycle_count=" u64__fstr, this->total_sleep_cycle_count);
+	status("funk2_poller last_reset_seconds     =%g", ((double)(real_nanoseconds - this->last_reset_nanoseconds_since_1970)) / (double)nanoseconds_per_second);
+	status("funk2_poller sleep_seconds          =%g", (double)(this->sleep_nanoseconds) / (double)nanoseconds_per_second);
+	status("funk2_poller target_cpu_usage       =%g", (double)(this->target_cpu_usage));
+	status("funk2_poller average_cpu_usage      =%g", (double)(this->average_cpu_usage));
+	status_backtrace();
+	status("funk2_poller ^^^ *** debug info *** ^^^");
+      }
+    }
+#endif // FUNK2_POLLER_DEBUG
   }
   raw__nanosleep((u64)(this->sleep_nanoseconds));
   this->last_real_nanoseconds      = real_nanoseconds;
   this->last_execution_nanoseconds = execution_nanoseconds;
-  if (this->global_helper != NULL) {
-    funk2_atomic_u64__set_value(&(this->global_helper->optimal_sleep_nanoseconds), (u64)(this->sleep_nanoseconds));
-  }
 #if defined(FUNK2_POLLER_DEBUG)
   // debug code
   this->total_sleep_cycle_count ++;
-  if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {
-    this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;
-    if (this->average_cpu_usage > (3 * this->target_cpu_usage)) {
-      status("funk2_poller vvv *** debug info *** vvv  WARNING CPU USAGE IS OVER 3 TIMES HIGHER THAN TARGET");
-      status("funk2_poller total_sleep_cycle_count=" u64__fstr, this->total_sleep_cycle_count);
-      status("funk2_poller last_reset_seconds     =%g", ((double)(real_nanoseconds - this->last_reset_nanoseconds_since_1970)) / (double)nanoseconds_per_second);
-      status("funk2_poller sleep_seconds          =%g", (double)(this->sleep_nanoseconds) / (double)nanoseconds_per_second);
-      status("funk2_poller target_cpu_usage       =%g", (double)(this->target_cpu_usage));
-      status("funk2_poller average_cpu_usage      =%g", (double)(this->average_cpu_usage));
-      status_backtrace();
-      status("funk2_poller ^^^ *** debug info *** ^^^");
-    }
-  }
 #endif // FUNK2_POLLER_DEBUG
 }
 

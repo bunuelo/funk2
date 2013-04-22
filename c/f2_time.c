@@ -56,12 +56,7 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     }
     u64 end_nanoseconds            = start_nanoseconds;
     u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
-    status("funk2_process_time__init: nanoseconds_per_clock_tick=" u64__fstr, nanoseconds_per_clock_tick);
-    if (nanoseconds_per_clock_tick != 0) {
-      status("funk2_process_time__init: clock ticks per second = %g", (double)nanoseconds_per_second / (double)nanoseconds_per_clock_tick);
-    } else {
-      status("funk2_process_time__init: error calculating clock ticks per second because nanoseconds_per_clock_tick is zero.");
-    }
+    this->nanoseconds_per_clock_tick = nanoseconds_per_clock_tick;
   }
 }
 
@@ -73,6 +68,12 @@ void funk2_process_time__report_status(funk2_process_time_t* this) {
     status("__funk2.process_time assuming monotonic clock is absolute.");
   } else {
     status("__funk2.process_time.monotonic_start_nanoseconds_since_1970=" u64__fstr, this->monotonic_start_nanoseconds_since_1970);
+  }
+  status("funk2_process_time__init: nanoseconds_per_clock_tick=" u64__fstr, this->nanoseconds_per_clock_tick);
+  if (this->nanoseconds_per_clock_tick != 0) {
+    status("funk2_process_time__init: clock ticks per second = %g", (double)nanoseconds_per_second / (double)(this->nanoseconds_per_clock_tick));
+  } else {
+    status("funk2_process_time__init: error calculating clock ticks per second because nanoseconds_per_clock_tick is zero.");
   }
 }
 

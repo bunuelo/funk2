@@ -64,6 +64,7 @@ struct funk2_date_s {
 struct funk2_process_time_s {
   boolean_t assuming_monotonic_clock_is_absolute;
   u64       monotonic_start_nanoseconds_since_1970;
+  u64       nanoseconds_per_clock_tick;
 };
 
 void funk2_process_time__init         (funk2_process_time_t* this);

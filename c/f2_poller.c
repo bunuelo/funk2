@@ -168,8 +168,8 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
       this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
       double minimum_sleep_nanoseconds = ((double)nanoseconds_per_second) / 64.0;
-      if (this->sleep_nanoseconds < funk2_poller__minimum_sleep_nanoseconds) {
-	this->sleep_nanoseconds = funk2_poller__minimum_sleep_nanoseconds;
+      if (this->sleep_nanoseconds < poller__minimum_sleep_nanoseconds) {
+	this->sleep_nanoseconds = poller__minimum_sleep_nanoseconds;
       }
     } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {
       this->sleep_nanoseconds *= this->sleep_nanoseconds_multiplier;

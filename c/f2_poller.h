@@ -28,6 +28,8 @@
 #ifndef F2__POLLER__TYPES__H
 #define F2__POLLER__TYPES__H
 
+#define FUNK2_POLLER_DEBUG
+
 typedef struct funk2_poller_global_helper_s funk2_poller_global_helper_t;
 typedef struct funk2_poller_s               funk2_poller_t;
 
@@ -75,10 +77,12 @@ struct funk2_poller_s {
   u64                           total_elapsed_real_nanoseconds;
   u64                           total_elapsed_execution_nanoseconds;
   double                        average_cpu_usage;
+#if defined(FUNK2_POLLER_DEBUG)
   // debugging variables
   u64                           last_reset_nanoseconds_since_1970;
   u64                           last_print_debug_nanoseconds_since_1970;
   u64                           total_sleep_cycle_count;
+#endif // FUNK2_POLLER_DEBUG
 };
 
 void funk2_poller__init                   (funk2_poller_t* this,

@@ -111,11 +111,13 @@ void funk2_poller__reset(funk2_poller_t* this) {
   this->total_elapsed_execution_nanoseconds     = 0;
   this->last_real_nanoseconds                   = raw__nanoseconds_since_1970();
   this->last_execution_nanoseconds              = raw__processor_thread__execution_nanoseconds();
+#if defined(FUNK2_POLLER_DEBUG)
   // debug variables
   u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   this->last_reset_nanoseconds_since_1970       = nanoseconds_since_1970;
   this->last_print_debug_nanoseconds_since_1970 = nanoseconds_since_1970; // don't want to print immediately
   this->total_sleep_cycle_count                 = 0;
+#endif // FUNK2_POLLER_DEBUG
 }
 
 void funk2_poller__sleep(funk2_poller_t* this) {
@@ -166,12 +168,8 @@ void funk2_poller__sleep(funk2_poller_t* this) {
   if (this->global_helper != NULL) {
     funk2_atomic_u64__set_value(&(this->global_helper->optimal_sleep_nanoseconds), (u64)(this->sleep_nanoseconds));
   }
+#if defined(FUNK2_POLLER_DEBUG)
   // debug code
-  if ((this->average_cpu_usage > 1.0) ||
-      (this->average_cpu_usage < 0.0)) {
-    status("poller__sleep fatal error: this->average_cpu_usage=%g", this->average_cpu_usage);
-    error(nil, "poller__sleep fatal error: this->average_cpu_usage out of range.");
-  }
   this->total_sleep_cycle_count ++;
   if ((real_nanoseconds - this->last_print_debug_nanoseconds_since_1970) >= 3 * nanoseconds_per_second) {
     this->last_print_debug_nanoseconds_since_1970 = real_nanoseconds;
@@ -186,6 +184,7 @@ void funk2_poller__sleep(funk2_poller_t* this) {
       status("funk2_poller ^^^ *** debug info *** ^^^");
     }
   }
+#endif // FUNK2_POLLER_DEBUG
 }
 
 void funk2_poller__test() {

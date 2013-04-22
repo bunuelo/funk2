@@ -28,7 +28,7 @@
 #ifndef F2__POLLER__TYPES__H
 #define F2__POLLER__TYPES__H
 
-#define FUNK2_POLLER_DEBUG
+//#define FUNK2_POLLER_DEBUG
 
 typedef struct funk2_poller_global_helper_s funk2_poller_global_helper_t;
 typedef struct funk2_poller_s               funk2_poller_t;

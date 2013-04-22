@@ -31,7 +31,7 @@
 #define poller__deep_sleep_average_length    1000
 #define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second / 1000)
 
-#define poller__minimum_sleep_nanoseconds 1.0
+#define poller__minimum_sleep_nanoseconds ((double)(__funk2.process_time.nanoseconds_per_clock_tick))
 
 
 #define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDDEAD)

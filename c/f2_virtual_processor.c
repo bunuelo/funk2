@@ -422,7 +422,7 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    lock_tries ++;
 	    if ((lock_tries >= 1000) ||
 		__funk2.scheduler_thread_controller.need_wait ||
-		__funk2.user_thread_controller.need_wait) {
+		funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
 	      if (! poller_initialized) {
 		funk2_poller__init_deep_sleep(&poller);
 		funk2_poller__reset(&poller);

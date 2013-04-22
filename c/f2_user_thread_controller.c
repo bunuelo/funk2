@@ -491,7 +491,8 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 // funk2_user_thread_controller
 
 void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
-  this->need_wait   = boolean__false;
+  this->need_wait = boolean__false;
+  funk2_processor_conditionlock__init(&(this->need_wait_conditionlock));
   
   funk2_processor_conditionlock__init(&(this->waiting_count_conditionlock));
   this->waiting_count = 0;
@@ -532,6 +533,20 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
   funk2_user_thread_controller__defragment__fix_pointers__destroy(&(this->defragment__fix_pointers));
   
   f2__free(to_ptr(this->total_nanoseconds_spent_waiting));
+}
+
+void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {
+  funk2_processor_conditionlock__lock(&(this->need_wait_conditionlock));
+  if (this->need_wait != need_wait) {
+    this->need_wait = need_wait;
+    funk2_processor_conditionlock__broadcast(&(this->need_wait_conditionlock));
+    funk2_processor_conditionlock__broadcast(&(this->something_to_do_while_waiting_politely_conditionlock));
+  }
+  funk2_processor_conditionlock__unlock(&(this->need_wait_conditionlock));
+}
+
+boolean_t funk2_user_thread_controller__need_wait(funk2_user_thread_controller_t* this) {
+  return this->need_wait;
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -657,17 +672,6 @@ void funk2_user_thread_controller__end_signal_something_to_do_while_waiting_poli
   funk2_processor_conditionlock__broadcast(&(this->something_to_do_while_waiting_politely_conditionlock));
   funk2_processor_conditionlock__unlock(&(this->something_to_do_while_waiting_politely_conditionlock));
 }
-
-void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {
-  if (! need_wait) {
-    funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(this);
-    this->need_wait = boolean__false;
-    funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely(this);
-  } else {
-    this->need_wait = boolean__true;
-  }
-}
-
 
 s64 funk2_user_thread_controller__total_processor_time_used(funk2_user_thread_controller_t* this, s64 processor_index) {
   return this->total_nanoseconds_spent_waiting[processor_index];

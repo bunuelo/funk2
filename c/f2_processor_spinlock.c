@@ -113,7 +113,7 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
     u64            lock_tries         = 0;
     while (funk2_processor_spinlock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_spinlock_trylock_result__success) {
       f2tid_t my_tid = raw__gettid();
-      if (__funk2.user_thread_controller.need_wait &&
+      if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) &&
 	  (my_tid != __funk2.memory.memory_handling_tid)) {
 	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
       }

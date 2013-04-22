@@ -161,6 +161,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 // funk2_user_thread_controller
 
 typedef struct funk2_user_thread_controller_s {
+  funk2_processor_conditionlock_t                                  need_wait_conditionlock;
   boolean_t                                                        need_wait;
   funk2_processor_conditionlock_t                                  something_to_do_while_waiting_politely_conditionlock;
   funk2_processor_conditionlock_t                                  waiting_count_conditionlock;
@@ -176,30 +177,32 @@ typedef struct funk2_user_thread_controller_s {
   funk2_user_thread_controller__defragment__fix_pointers_t         defragment__fix_pointers;
 } funk2_user_thread_controller_t;
 
-void  funk2_user_thread_controller__init                                               (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__destroy                                            (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__wait_for_all_user_threads_to_wait                  (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__signal_user_waiting_politely                       (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__signal_user_done_waiting_politely                  (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__user_wait_politely                                 (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__user_check_wait_politely                           (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__touch_all_protected_alloc_arrays                   (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__blacken_grey_nodes                                 (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__grey_from_other_nodes                              (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__free_white_exps                                    (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__remove_freed_fibers                                (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__exit                                               (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__defragment__move_memory                            (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__defragment__fix_pointers                           (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__need_start_count__increment                        (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__need_start_count__decrement                        (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__need_start_count__wait_until_nonzero               (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely  (funk2_user_thread_controller_t* this);
-void  funk2_user_thread_controller__need_wait__set                                     (funk2_user_thread_controller_t* this, boolean_t need_wait);
-s64   funk2_user_thread_controller__total_processor_time_used                          (funk2_user_thread_controller_t* this, s64 processor_index);
-u64    raw__user_thread_controller__total_processor_time_used                          (f2ptr cause, s64 processor_index);
-f2ptr   f2__user_thread_controller__total_processor_time_used                          (f2ptr cause, f2ptr processor_index);
+void      funk2_user_thread_controller__init                                               (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__destroy                                            (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__need_wait__set                                     (funk2_user_thread_controller_t* this, boolean_t need_wait);
+boolean_t funk2_user_thread_controller__need_wait                                          (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__wait_for_all_user_threads_to_wait                  (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__signal_user_waiting_politely                       (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__signal_user_done_waiting_politely                  (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__user_wait_politely                                 (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__user_check_wait_politely                           (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__touch_all_protected_alloc_arrays                   (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__blacken_grey_nodes                                 (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__grey_from_other_nodes                              (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__free_white_exps                                    (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__remove_freed_fibers                                (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__exit                                               (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__defragment__move_memory                            (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__defragment__fix_pointers                           (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__need_start_count__increment                        (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__need_start_count__decrement                        (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__need_start_count__wait_until_nonzero               (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__begin_signal_something_to_do_while_waiting_politely(funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__end_signal_something_to_do_while_waiting_politely  (funk2_user_thread_controller_t* this);
+void      funk2_user_thread_controller__need_wait__set                                     (funk2_user_thread_controller_t* this, boolean_t need_wait);
+s64       funk2_user_thread_controller__total_processor_time_used                          (funk2_user_thread_controller_t* this, s64 processor_index);
+u64        raw__user_thread_controller__total_processor_time_used                          (f2ptr cause, s64 processor_index);
+f2ptr       f2__user_thread_controller__total_processor_time_used                          (f2ptr cause, f2ptr processor_index);
 
 #define check_wait_politely() { \
     if (__funk2.user_thread_controller.need_wait) {		\

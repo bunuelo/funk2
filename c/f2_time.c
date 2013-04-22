@@ -46,17 +46,17 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     u64 sum_nanoseconds_per_clock_tick = 0;
     s64 index;
     for (index = 0; index < average_loop_count; index ++) {
-      u64 start_clock_ticks   = raw__processor_thread__execution_nanoseconds()();
+      u64 start_clock_ticks   = raw__processor_thread__execution_nanoseconds();
       u64 current_clock_ticks = start_clock_ticks;
       // wait for beginning of next clock tick
       while (start_clock_ticks == current_clock_ticks) {
-	current_clock_ticks = raw__processor_thread__execution_nanoseconds()();
+	current_clock_ticks = raw__processor_thread__execution_nanoseconds();
       }
       u64 start_nanoseconds = raw__nanoseconds_since_1970();
       start_clock_ticks = current_clock_ticks;
       // wait for beginning of next clock tick
       while (start_clock_ticks == current_clock_ticks) {
-	current_clock_ticks = raw__processor_thread__execution_nanoseconds()();
+	current_clock_ticks = raw__processor_thread__execution_nanoseconds();
       }
       u64 end_nanoseconds            = raw__nanoseconds_since_1970();
       u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);

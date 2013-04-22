@@ -62,7 +62,7 @@ void funk2_process_time__init(funk2_process_time_t* this) {
       u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
       sum_nanoseconds_per_clock_tick += nanoseconds_per_clock_tick;
     }
-    this->nanoseconds_per_clock_tick = (nanoseconds_per_clock_tick / average_loop_count);
+    this->nanoseconds_per_clock_tick = (sum_nanoseconds_per_clock_tick / average_loop_count);
   }
 }
 

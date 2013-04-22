@@ -31,6 +31,9 @@
 #define poller__deep_sleep_average_length    10
 #define poller__deep_sleep_sleep_nanoseconds (nanoseconds_per_second / 1000)
 
+#define poller__minimum_sleep_nanoseconds (((double)nanoseconds_per_second) / 64.0)
+
+
 #define POLLER_GLOBAL_HELPER_MAGIC ((u64)0xFEEDDEAD)
 
 
@@ -66,7 +69,7 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
   this->target_cpu_usage_lower_boundary         = target_cpu_usage / range_factor;
   this->target_cpu_usage_upper_boundary         = target_cpu_usage * range_factor;
   this->average_count                           = average_count;
-  this->sleep_nanoseconds                       = (double)initial_sleep_nanoseconds;
+  this->sleep_nanoseconds                       = (((double)initial_sleep_nanoseconds) >= poller__minimum_sleep_nanoseconds) ? ((double)initial_sleep_nanoseconds) : poller__minimum_sleep_nanoseconds;
   this->sleep_nanoseconds_multiplier            = pow(range_factor, 1.0 / (double)average_count);
   this->current_index                           = 0;
   this->buffer_full                             = boolean__false;
@@ -165,8 +168,8 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
       this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
       double minimum_sleep_nanoseconds = ((double)nanoseconds_per_second) / 64.0;
-      if (this->sleep_nanoseconds < minimum_sleep_nanoseconds) {
-	this->sleep_nanoseconds = minimum_sleep_nanoseconds;
+      if (this->sleep_nanoseconds < funk2_poller__minimum_sleep_nanoseconds) {
+	this->sleep_nanoseconds = funk2_poller__minimum_sleep_nanoseconds;
       }
     } else if (this->average_cpu_usage > this->target_cpu_usage_upper_boundary) {
       this->sleep_nanoseconds *= this->sleep_nanoseconds_multiplier;

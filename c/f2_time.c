@@ -41,6 +41,28 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     this->assuming_monotonic_clock_is_absolute   = boolean__false;
     this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
   }
+  {
+    u64 start_clock_ticks   = clock();
+    u64 current_clock_ticks = start_clock_ticks;
+    // wait for beginning of next clock tick
+    while (start_clock_ticks == current_clock_ticks) {
+      current_clock_ticks = clock();
+    }
+    u64 start_nanoseconds   = raw__nanoseconds_since_1970();
+    start_clock_ticks = current_clock_ticks;
+    // wait for beginning of next clock tick
+    while (start_clock_ticks == current_clock_ticks) {
+      current_clock_ticks = clock();
+    }
+    u64 end_nanoseconds            = start_nanoseconds;
+    u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
+    status("funk2_process_time__init: nanoseconds_per_clock_tick=" u64__fstr, nanoseconds_per_clock_tick);
+    if (nanoseconds_per_clock_tick != 0) {
+      status("funk2_process_time__init: clock ticks per second = %g", (double)nanoseconds_per_second / (double)nanoseconds_per_clock_tick);
+    } else {
+      status("funk2_process_time__init: error calculating clock ticks per second because nanoseconds_per_clock_tick is zero.");
+    }
+  }
 }
 
 void funk2_process_time__destroy(funk2_process_time_t* this) {

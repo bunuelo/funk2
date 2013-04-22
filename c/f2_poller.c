@@ -77,11 +77,13 @@ void funk2_poller__init(funk2_poller_t* this, double target_cpu_usage, u64 avera
   this->total_elapsed_real_nanoseconds          = 0;
   this->total_elapsed_execution_nanoseconds     = 0;
   this->average_cpu_usage                       = 0.0;
+#if defined(FUNK2_POLLER_DEBUG)
   // debug variables
   u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   this->last_reset_nanoseconds_since_1970       = nanoseconds_since_1970;
   this->last_print_debug_nanoseconds_since_1970 = nanoseconds_since_1970; // don't want to print immediately
   this->total_sleep_cycle_count                 = 0;
+#endif // FUNK2_POLLER_DEBUG
 }
 
 void funk2_poller__init_from_global_helper(funk2_poller_t* this, funk2_poller_global_helper_t* global_helper) {

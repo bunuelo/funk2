@@ -42,21 +42,27 @@ void funk2_process_time__init(funk2_process_time_t* this) {
     this->monotonic_start_nanoseconds_since_1970 = monotonic_start_nanoseconds_since_1970;
   }
   {
-    u64 start_clock_ticks   = clock();
-    u64 current_clock_ticks = start_clock_ticks;
-    // wait for beginning of next clock tick
-    while (start_clock_ticks == current_clock_ticks) {
-      current_clock_ticks = clock();
+    u64 average_loop_count             = 100;
+    u64 sum_nanoseconds_per_clock_tick = 0;
+    s64 index;
+    for (index = 0; index < average_loop_count; index ++) {
+      u64 start_clock_ticks   = clock();
+      u64 current_clock_ticks = start_clock_ticks;
+      // wait for beginning of next clock tick
+      while (start_clock_ticks == current_clock_ticks) {
+	current_clock_ticks = clock();
+      }
+      u64 start_nanoseconds = raw__nanoseconds_since_1970();
+      start_clock_ticks = current_clock_ticks;
+      // wait for beginning of next clock tick
+      while (start_clock_ticks == current_clock_ticks) {
+	current_clock_ticks = clock();
+      }
+      u64 end_nanoseconds            = raw__nanoseconds_since_1970();
+      u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
+      sum_nanoseconds_per_clock_tick += nanoseconds_per_clock_tick;
     }
-    u64 start_nanoseconds = raw__nanoseconds_since_1970();
-    start_clock_ticks = current_clock_ticks;
-    // wait for beginning of next clock tick
-    while (start_clock_ticks == current_clock_ticks) {
-      current_clock_ticks = clock();
-    }
-    u64 end_nanoseconds            = raw__nanoseconds_since_1970();
-    u64 nanoseconds_per_clock_tick = (end_nanoseconds - start_nanoseconds);
-    this->nanoseconds_per_clock_tick = nanoseconds_per_clock_tick;
+    this->nanoseconds_per_clock_tick = (nanoseconds_per_clock_tick / average_loop_count);
   }
 }
 

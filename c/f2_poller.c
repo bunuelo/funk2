@@ -155,6 +155,13 @@ void funk2_poller__sleep(funk2_poller_t* this) {
     this->average_cpu_usage = 1.0;
   }
   if (this->buffer_full) {
+#if defined(FUNK2_POLLER_DEBUG)
+    if ((this->average_cpu_usage > 1.0) ||
+	(this->average_cpu_usage < 0.0)) {
+      status("funk2_poller average CPU usage out of range.  this->average_cpu_usage=%g", this->average_cpu_usage);
+      error(nil, "funk2_poller average CPU usage out of range.");
+    }
+#endif // FUNK2_POLLER_DEBUG
     if (this->average_cpu_usage < this->target_cpu_usage_lower_boundary) {
       this->sleep_nanoseconds /= this->sleep_nanoseconds_multiplier;
       if (this->sleep_nanoseconds < 1.0) {

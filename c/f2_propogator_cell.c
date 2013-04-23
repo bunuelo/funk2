@@ -61,7 +61,7 @@ u64 funk2_propogator_cell__value__set(funk2_propogator_cell_t* this, u64 new_val
   pthread_mutex_lock(&(this->atomic_value_mutex));
   u64 old_value = funk2_atomic_u64__set_value(&(this->atomic_value), new_value);
   if (new_value != old_value) {
-    pthread_cond_broadcast(&(this->atomic_value_cond), &(this->atomic_value_mutex));
+    pthread_cond_broadcast(&(this->atomic_value_cond));
     pthread_mutex_unlock(&(this->atomic_value_mutex));
     funk2_propogator_cell__recalculate_dependents(this);
   } else {
@@ -140,7 +140,7 @@ void funk2_propogator_cell__recalculate(funk2_propogator_cell_t* this) {
   pthread_mutex_lock(&(this->atomic_value_mutex));
   u64 old_value = funk2_atomic_u64__set_value(&(this->atomic_value), new_value);
   if (new_value != old_value) {
-    pthread_cond_broadcast(&(this->atomic_value_cond), &(this->atomic_value_mutex));
+    pthread_cond_broadcast(&(this->atomic_value_cond));
     pthread_mutex_unlock(&(this->atomic_value_mutex));
     funk2_propogator_cell__recalculate_dependents(this);
   } else {
@@ -153,7 +153,7 @@ void funk2_propogator_cell__lock(funk2_propogator_cell_t* this) {
 }
 
 void funk2_propogator_cell__wait(funk2_propogator_cell_t* this) {
-  pthread_cond_wait(&(this->atomic_value_cond));
+  pthread_cond_wait(&(this->atomic_value_cond), &(this->atomic_value_mutex));
 }
 
 void funk2_propogator_cell__unlock(funk2_propogator_cell_t* this) {

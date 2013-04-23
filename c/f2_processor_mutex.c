@@ -42,7 +42,8 @@ void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
   this->lock_source_file  = NULL;
   this->lock_line_num     = 0;
 #endif
-  pthread_mutex_init(&(this->pthread_mutex), NULL);
+  //pthread_mutex_init(&(this->pthread_mutex), NULL);
+  funk2_propogator_cell__init_input(&(this->is_locked_cell), 0);
 }
 
 void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
@@ -56,7 +57,8 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
   this->lock_source_file = "destroyed";
   this->lock_line_num    = 0;
 #endif
-  pthread_mutex_destroy(&(this->pthread_mutex));
+  //pthread_mutex_destroy(&(this->pthread_mutex));
+  funk2_propogator_cell__destroy(&(this->is_locked_cell));
 }
 
 boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
@@ -67,11 +69,12 @@ boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
     funk2_processor_mutex__error();
   }
 #endif
-  if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
-    pthread_mutex_unlock(&(this->pthread_mutex));
-    return boolean__false;
-  }
-  return boolean__true;
+  //if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
+  //pthread_mutex_unlock(&(this->pthread_mutex));
+  //return boolean__false;
+  //}
+  //return boolean__true;
+  return (funk2_propogator_cell__value(&(this->is_locked_cell)) != 0);
 }
 
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
@@ -82,7 +85,11 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
     funk2_processor_mutex__error();
   }
 #endif
-  if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
+  //if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
+  u64       old_value = 0;
+  u64       new_value = 1;
+  boolean_t success   = funk2_propogator_cell__compare_and_swap(&(this->is_locked_cell), old_value, new_value);
+  if (success) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
     this->is_locked        = boolean__true;
     this->lock_source_file = (char*)lock_source_file;
@@ -102,7 +109,19 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     funk2_processor_mutex__error();
   }
 #endif
-  pthread_mutex_lock(&(this->pthread_mutex));
+  //pthread_mutex_lock(&(this->pthread_mutex));
+  boolean_t success = boolean__false;
+  while (! success) {
+    funk2_processor_mutex_trylock_result_t result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
+    if (result == funk2_processor_mutex_trylock_result__success) {
+      return;
+    }
+    funk2_propogator_cell__lock(&(this->is_locked_cell));
+    while (funk2_propogator_cell__value(&(this->is_locked_cell)) != 0) {
+      funk2_propogator_cell__wait(&(this->is_locked_cell));
+    }
+    funk2_propogator_cell__unlock(&(this->is_locked_cell));
+  }
 }
 
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
@@ -153,7 +172,13 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
   }
   this->is_locked = boolean__false;
 #endif
-  pthread_mutex_unlock(&(this->pthread_mutex));
+  //pthread_mutex_unlock(&(this->pthread_mutex));
+  u64       old_value = 1;
+  u64       new_value = 0;
+  boolean_t success   = funk2_propogator_cell__compare_and_swap(&(this->is_locked_cell), old_value, new_value);
+  if (! success) {
+    error(nil, "funk2_processor_mutex__raw_unlock: attempt to unlock mutex that is not locked.");
+  }
 }
 
 u64 funk2_processor_mutex__eq_hash_value(funk2_processor_mutex_t* this) {

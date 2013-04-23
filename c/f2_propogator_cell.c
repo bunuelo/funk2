@@ -36,11 +36,11 @@ void funk2_propogator_cell__init(funk2_propogator_cell_t* this, u64 initial_valu
   funk2_atomic_u64__init(&(this->dependents), (u64)to_ptr(NULL));
 }
 
-void funk2_propogator_cell__init_input_cell(funk2_propogator_cell_t* this, u64 initial_value) {
+void funk2_propogator_cell__init_input(funk2_propogator_cell_t* this, u64 initial_value) {
   funk2_propogator_cell__init(this, initial_value, NULL, NULL);
 }
 
-void funk2_propogator_cell__init_hidden_cell(funk2_propogator_cell_t* this, funk2_propogator_cell_recalculate_funktion_t recalculate_funktion, void* user_data) {
+void funk2_propogator_cell__init_hidden(funk2_propogator_cell_t* this, funk2_propogator_cell_recalculate_funktion_t recalculate_funktion, void* user_data) {
   funk2_propogator_cell__init(this, 0, recalculate_funktion, user_data);
 }
 
@@ -68,6 +68,25 @@ u64 funk2_propogator_cell__value__set(funk2_propogator_cell_t* this, u64 new_val
     pthread_mutex_unlock(&(this->atomic_value_mutex));
   }
   return old_value;
+}
+
+boolean_t funk2_propogator_cell__compare_and_swap(funk2_propogator_cell_t* this, u64 old_value, u64 new_value) {
+  if (this->recalculate_funktion != NULL) {
+    error(nil, "funk2_propogator_cell__compare_and_swap recalculate_funktion != NULL: (we tried to mistakenly set the value of a hidden cell)");
+  }
+  if (new_value == old_value) {
+    return boolean__true;
+  }
+  pthread_mutex_lock(&(this->atomic_value_mutex));
+  boolean_t success = funk2_atomic_u64__compare_and_swap(&(this->atomic_value), old_value, new_value);
+  if (success) {
+    pthread_cond_broadcast(&(this->atomic_value_cond));
+    pthread_mutex_unlock(&(this->atomic_value_mutex));
+    funk2_propogator_cell__recalculate_dependents(this);
+  } else {
+    pthread_mutex_unlock(&(this->atomic_value_mutex));
+  }
+  return success;
 }
 
 void funk2_propogator_cell__add_dependent(funk2_propogator_cell_t* this, funk2_propogator_cell_t* propogator_cell) {

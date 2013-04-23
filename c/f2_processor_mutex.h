@@ -39,6 +39,7 @@ typedef struct funk2_processor_mutex_s funk2_processor_mutex_t;
 #include "f2_global.h"
 #include "f2_poller.h"
 #include "f2_processor_thread_handler.h"
+#include "f2_propogator_cell.h"
 
 //#define F2__PROCESSOR_MUTEX__DEBUG
 
@@ -46,14 +47,15 @@ typedef struct funk2_processor_mutex_s funk2_processor_mutex_t;
 
 struct funk2_processor_mutex_s {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
-  boolean_t       is_initialized;
-  u64             initialized_magic;
-  boolean_t       is_locked;
-  char*           lock_source_file;
-  int             lock_line_num;
-  f2tid_t         lock_tid;
+  boolean_t               is_initialized;
+  u64                     initialized_magic;
+  boolean_t               is_locked;
+  char*                   lock_source_file;
+  int                     lock_line_num;
+  f2tid_t                 lock_tid;
 #endif
-  pthread_mutex_t pthread_mutex;
+  //pthread_mutex_t         pthread_mutex;
+  funk2_propogator_cell_t is_locked_cell;
 };
 
 typedef enum funk2_processor_mutex_trylock_result_e {

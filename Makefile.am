@@ -665,6 +665,7 @@ lib_libfunk2_la_SOURCES = \
   c/f2_processor_spinlock.c \
   c/f2_processor_thread.c \
   c/f2_processor_thread_handler.c \
+  c/f2_propogator_cell.c \
   c/f2_protected_alloc_array.c \
   c/f2_ptype.c \
   c/f2_ptypes.c \

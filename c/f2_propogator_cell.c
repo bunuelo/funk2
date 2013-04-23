@@ -115,7 +115,7 @@ void funk2_propogator_cell__remove_dependent(funk2_propogator_cell_t* this, funk
       iter = (funk2_propogator_cell_cons_t*)from_ptr(funk2_atomic_u64__value(&(iter->next)));
     }
     if (iter == NULL) {
-      keep_trying = boolean__false;
+      dependent_exists = boolean__false;
     }
   }
   if (! successfully_removed) {

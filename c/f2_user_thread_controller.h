@@ -204,10 +204,10 @@ s64       funk2_user_thread_controller__total_processor_time_used               
 u64        raw__user_thread_controller__total_processor_time_used                          (f2ptr cause, s64 processor_index);
 f2ptr       f2__user_thread_controller__total_processor_time_used                          (f2ptr cause, f2ptr processor_index);
 
-#define check_wait_politely() { \
-    if (__funk2.user_thread_controller.need_wait) {		\
+#define check_wait_politely() {						\
+    if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) { \
       funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller)); \
-    }								\
+    }									\
   }
 
 // **

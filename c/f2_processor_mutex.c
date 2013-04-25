@@ -42,7 +42,6 @@ void funk2_processor_mutex__init(funk2_processor_mutex_t* this) {
   this->lock_source_file  = NULL;
   this->lock_line_num     = 0;
 #endif
-  //pthread_mutex_init(&(this->pthread_mutex), NULL);
   funk2_propogator_cell__init_input(&(this->is_locked_cell), 0);
 }
 
@@ -57,7 +56,6 @@ void funk2_processor_mutex__destroy(funk2_processor_mutex_t* this) {
   this->lock_source_file = "destroyed";
   this->lock_line_num    = 0;
 #endif
-  //pthread_mutex_destroy(&(this->pthread_mutex));
   funk2_propogator_cell__destroy(&(this->is_locked_cell));
 }
 
@@ -69,11 +67,6 @@ boolean_t funk2_processor_mutex__is_locked(funk2_processor_mutex_t* this) {
     funk2_processor_mutex__error();
   }
 #endif
-  //if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
-  //pthread_mutex_unlock(&(this->pthread_mutex));
-  //return boolean__false;
-  //}
-  //return boolean__true;
   return (funk2_propogator_cell__value(&(this->is_locked_cell)) != 0);
 }
 
@@ -85,7 +78,6 @@ funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock(funk2_
     funk2_processor_mutex__error();
   }
 #endif
-  //if (pthread_mutex_trylock(&(this->pthread_mutex)) == 0) {
   u64       old_value = 0;
   u64       new_value = 1;
   boolean_t success   = funk2_propogator_cell__compare_and_swap(&(this->is_locked_cell), old_value, new_value);
@@ -109,7 +101,6 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     funk2_processor_mutex__error();
   }
 #endif
-  //pthread_mutex_lock(&(this->pthread_mutex));
   boolean_t success = boolean__false;
   while (! success) {
     funk2_processor_mutex_trylock_result_t result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
@@ -124,6 +115,16 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 }
 
+u64 funk2_processor_mutex__raw_user_lock__helper(void* user_data) {
+  funk2_processor_mutex_t* this = (funk2_processor_mutex_t*)user_data;
+  if ((! funk2_processor_mutex__is_locked(this)) ||
+      funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   if ((! this->is_initialized) ||
@@ -132,35 +133,53 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     funk2_processor_mutex__error();
   }
 #endif
-  {
-    funk2_poller_t poller;
-    boolean_t      poller_initialized = boolean__false;
-    u64            lock_tries         = 0;
-    while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-      f2tid_t my_tid = raw__gettid();
-      if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) &&
-	  (my_tid != __funk2.memory.memory_handling_tid)) {
-	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
-      }
-      {
-	if (lock_tries < 1000) {
-	  raw__fast_spin_sleep_yield();
-	  lock_tries ++;
-	} else {
-	  if (! poller_initialized) {
-	    funk2_poller__init_deep_sleep(&poller);
-	    funk2_poller__reset(&poller);
-	    poller_initialized = boolean__true;
-	  } else {
-	    funk2_poller__sleep(&poller);
-	  }
+  if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+    funk2_propogator_cell_t hidden_cell;
+    funk2_propogator_cell__init_hidden(&hidden_cell, &funk2_processor_mutex__raw_user_lock__helper, this);
+    {
+      boolean_t success = boolean__false;
+      while (! success) {
+	funk2_propogator_cell__lock(&hidden_cell);
+	while (funk2_propogator_cell__value(&hidden_cell) == 0) {
+	  funk2_propogator_cell__wait(&hidden_cell);
+	}
+	funk2_propogator_cell__unlock(&hidden_cell);
+	if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) == funk2_processor_mutex_trylock_result__success) {
+	  success = boolean__true;
 	}
       }
     }
-    if (poller_initialized) {
-      funk2_poller__destroy(&poller);
-    }
   }
+  /* { */
+  /*   funk2_poller_t poller; */
+  /*   boolean_t      poller_initialized = boolean__false; */
+  /*   u64            lock_tries         = 0; */
+  /*   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) { */
+  /*     if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) { */
+  /* 	f2tid_t my_tid = raw__gettid(); */
+  /* 	if (my_tid != __funk2.memory.memory_handling_tid) { */
+  /* 	  funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller)); */
+  /* 	} */
+  /*     } */
+  /*     { */
+  /* 	if (lock_tries < 1000) { */
+  /* 	  raw__fast_spin_sleep_yield(); */
+  /* 	  lock_tries ++; */
+  /* 	} else { */
+  /* 	  if (! poller_initialized) { */
+  /* 	    funk2_poller__init_deep_sleep(&poller); */
+  /* 	    funk2_poller__reset(&poller); */
+  /* 	    poller_initialized = boolean__true; */
+  /* 	  } else { */
+  /* 	    funk2_poller__sleep(&poller); */
+  /* 	  } */
+  /* 	} */
+  /*     } */
+  /*   } */
+  /*   if (poller_initialized) { */
+  /*     funk2_poller__destroy(&poller); */
+  /*   } */
+  /* } */
 }
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {
@@ -172,7 +191,6 @@ void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char
   }
   this->is_locked = boolean__false;
 #endif
-  //pthread_mutex_unlock(&(this->pthread_mutex));
   u64       old_value = 1;
   u64       new_value = 0;
   boolean_t success   = funk2_propogator_cell__compare_and_swap(&(this->is_locked_cell), old_value, new_value);

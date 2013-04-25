@@ -146,6 +146,12 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
 	  funk2_propogator_cell__wait(&hidden_cell);
 	}
 	funk2_propogator_cell__unlock(&hidden_cell);
+	if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
+	  f2tid_t my_tid = raw__gettid();
+	  if (my_tid != __funk2.memory.memory_handling_tid) {
+	    funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
+	  }
+	}
 	if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) == funk2_processor_mutex_trylock_result__success) {
 	  success = boolean__true;
 	}
@@ -154,36 +160,6 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     funk2_propogator_cell__remove_dependent(&(this->is_locked_cell),                          &hidden_cell);
     funk2_propogator_cell__remove_dependent(&(__funk2.user_thread_controller.need_wait_cell), &hidden_cell);
   }
-  /* { */
-  /*   funk2_poller_t poller; */
-  /*   boolean_t      poller_initialized = boolean__false; */
-  /*   u64            lock_tries         = 0; */
-  /*   while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) { */
-  /*     if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) { */
-  /* 	f2tid_t my_tid = raw__gettid(); */
-  /* 	if (my_tid != __funk2.memory.memory_handling_tid) { */
-  /* 	  funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller)); */
-  /* 	} */
-  /*     } */
-  /*     { */
-  /* 	if (lock_tries < 1000) { */
-  /* 	  raw__fast_spin_sleep_yield(); */
-  /* 	  lock_tries ++; */
-  /* 	} else { */
-  /* 	  if (! poller_initialized) { */
-  /* 	    funk2_poller__init_deep_sleep(&poller); */
-  /* 	    funk2_poller__reset(&poller); */
-  /* 	    poller_initialized = boolean__true; */
-  /* 	  } else { */
-  /* 	    funk2_poller__sleep(&poller); */
-  /* 	  } */
-  /* 	} */
-  /*     } */
-  /*   } */
-  /*   if (poller_initialized) { */
-  /*     funk2_poller__destroy(&poller); */
-  /*   } */
-  /* } */
 }
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {

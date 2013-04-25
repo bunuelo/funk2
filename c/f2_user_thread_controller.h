@@ -31,6 +31,7 @@
 #include "f2_processor_spinlock.h"
 #include "f2_processor_mutex.h"
 #include "f2_processor_conditionlock.h"
+#include "f2_propogator_cell.h"
 
 // funk2_user_thread_controller__touch_all_protected_alloc_arrays
 
@@ -161,8 +162,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 // funk2_user_thread_controller
 
 typedef struct funk2_user_thread_controller_s {
-  funk2_processor_conditionlock_t                                  need_wait_conditionlock;
-  boolean_t                                                        need_wait;
+  funk2_propogator_cell_t                                          need_wait_cell;
   funk2_processor_conditionlock_t                                  something_to_do_while_waiting_politely_conditionlock;
   funk2_processor_conditionlock_t                                  waiting_count_conditionlock;
   s64                                                              waiting_count;

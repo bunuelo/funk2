@@ -491,8 +491,7 @@ void funk2_user_thread_controller__defragment__fix_pointers__user_process(funk2_
 // funk2_user_thread_controller
 
 void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
-  this->need_wait = boolean__false;
-  funk2_processor_conditionlock__init(&(this->need_wait_conditionlock));
+  funk2_propogator_cell__init_input(&(this->need_wait_cell), 0);
   
   funk2_processor_conditionlock__init(&(this->waiting_count_conditionlock));
   this->waiting_count = 0;
@@ -519,6 +518,8 @@ void funk2_user_thread_controller__init(funk2_user_thread_controller_t* this) {
 }
 
 void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this) {
+  funk2_propogator_cell__destroy(&(this->need_wait_cell));
+  
   funk2_processor_conditionlock__destroy(&(this->waiting_count_conditionlock));
   
   funk2_processor_conditionlock__destroy(&(this->something_to_do_while_waiting_politely_conditionlock));
@@ -536,17 +537,12 @@ void funk2_user_thread_controller__destroy(funk2_user_thread_controller_t* this)
 }
 
 void funk2_user_thread_controller__need_wait__set(funk2_user_thread_controller_t* this, boolean_t need_wait) {
-  funk2_processor_conditionlock__lock(&(this->need_wait_conditionlock));
-  if (this->need_wait != need_wait) {
-    this->need_wait = need_wait;
-    funk2_processor_conditionlock__broadcast(&(this->need_wait_conditionlock));
-    funk2_processor_conditionlock__broadcast(&(this->something_to_do_while_waiting_politely_conditionlock));
-  }
-  funk2_processor_conditionlock__unlock(&(this->need_wait_conditionlock));
+  funk2_propogator_cell__value__set(&(this->need_wait_cell), need_wait ? 1 : 0);
+  funk2_processor_conditionlock__broadcast(&(this->something_to_do_while_waiting_politely_conditionlock));
 }
 
 boolean_t funk2_user_thread_controller__need_wait(funk2_user_thread_controller_t* this) {
-  return this->need_wait;
+  return (funk2_propogator_cell__value(&(this->need_wait_cell)) != 0);
 }
 
 void funk2_user_thread_controller__wait_for_all_user_threads_to_wait(funk2_user_thread_controller_t* this) {
@@ -576,9 +572,9 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
     funk2_poller_t poller;
     boolean_t      poller_initialized = boolean__false;
     s64            wait_tries         = 0;
-    while (this->need_wait) {
+    while (funk2_user_thread_controller__need_wait(this)) {
       if (funk2_processor_conditionlock__trylock(&(this->something_to_do_while_waiting_politely_conditionlock)) == 0) {
-	while (this->need_wait                                  &&
+	while (funk2_user_thread_controller__need_wait(this) &&
 	       (! (this->touch_all_protected_alloc_arrays.start ||
 		   this->blacken_grey_nodes.start               ||
 		   this->grey_from_other_nodes.start            ||
@@ -627,7 +623,7 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 }
 
 void funk2_user_thread_controller__user_check_wait_politely(funk2_user_thread_controller_t* this) {
-  if (this->need_wait) {
+  if (funk2_user_thread_controller__need_wait(this)) {
     funk2_user_thread_controller__user_wait_politely(this);
   }
 }

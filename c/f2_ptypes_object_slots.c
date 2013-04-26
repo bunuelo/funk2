@@ -1832,14 +1832,9 @@ void raw__cmutex__scheduler_lock(f2ptr cause, f2ptr this) {
   funk2_processor_mutex__lock(processor_mutex);
 }
 
-void raw__cmutex__user_lock(f2ptr cause, f2ptr this) {
-  funk2_processor_mutex_t* processor_mutex = ptype_cmutex__m(this, cause);
-  funk2_processor_mutex__user_lock(processor_mutex);
-}
-
 void raw__cmutex__lock(f2ptr cause, f2ptr this) {
   funk2_processor_mutex_t* processor_mutex = ptype_cmutex__m(this, cause);
-  funk2_processor_mutex__lock(processor_mutex);
+  funk2_processor_mutex__user_lock(processor_mutex);
 }
 
 f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this) {

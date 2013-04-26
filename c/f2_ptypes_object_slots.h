@@ -206,7 +206,6 @@ f2ptr      f2__cmutex__new                         (f2ptr cause);
 boolean_t raw__cmutex__is_locked                   (f2ptr cause, f2ptr this);
 f2ptr      f2__cmutex__is_locked                   (f2ptr cause, f2ptr this);
 void      raw__cmutex__scheduler_lock              (f2ptr cause, f2ptr this);
-void      raw__cmutex__user_lock                   (f2ptr cause, f2ptr this);
 void      raw__cmutex__lock                        (f2ptr cause, f2ptr this);
 f2ptr      f2__cmutex__lock                        (f2ptr cause, f2ptr this);
 void      raw__cmutex__unlock                      (f2ptr cause, f2ptr this);

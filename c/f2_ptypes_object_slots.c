@@ -1851,51 +1851,55 @@ void raw__cmutex__scheduler_lock(f2ptr cause, f2ptr this) {
 }
 
 void raw__cmutex__user_lock(f2ptr cause, f2ptr this) {
-  funk2_poller_t poller;
-  boolean_t      poller_initialized = boolean__false;
-  u64            lock_tries         = 0;
-  while (raw__cmutex__trylock(cause, this)) {
-    funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
-    if (lock_tries < 1000) {
-      raw__fast_spin_sleep_yield();
-      lock_tries ++;
-    } else {
-      if (! poller_initialized) {
-	funk2_poller__init_deep_sleep(&poller);
-	funk2_poller__reset(&poller);
-	poller_initialized = boolean__true;
-      } else {
-	funk2_poller__sleep(&poller);
-      }
-    }
-  }
-  if (poller_initialized) {
-    funk2_poller__destroy(&poller);
-  }
+  funk2_processor_mutex_t* processor_mutex = ptype_cmutex__m(this, cause);
+  funk2_processor_mutex__user_lock(processor_mutex);
+  /* funk2_poller_t poller; */
+  /* boolean_t      poller_initialized = boolean__false; */
+  /* u64            lock_tries         = 0; */
+  /* while (raw__cmutex__trylock(cause, this)) { */
+  /*   funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller)); */
+  /*   if (lock_tries < 1000) { */
+  /*     raw__fast_spin_sleep_yield(); */
+  /*     lock_tries ++; */
+  /*   } else { */
+  /*     if (! poller_initialized) { */
+  /* 	funk2_poller__init_deep_sleep(&poller); */
+  /* 	funk2_poller__reset(&poller); */
+  /* 	poller_initialized = boolean__true; */
+  /*     } else { */
+  /* 	funk2_poller__sleep(&poller); */
+  /*     } */
+  /*   } */
+  /* } */
+  /* if (poller_initialized) { */
+  /*   funk2_poller__destroy(&poller); */
+  /* } */
 }
 
 void raw__cmutex__lock(f2ptr cause, f2ptr this) {
-  funk2_poller_t poller;
-  boolean_t      poller_initialized = boolean__false;
-  u64            lock_tries         = 0;
-  while (raw__cmutex__trylock(cause, this)) {
-    f2__this__fiber__yield(cause);
-    if (lock_tries < 1000) {
-      raw__fast_spin_sleep_yield();
-      lock_tries ++;
-    } else {
-      if (! poller_initialized) {
-	funk2_poller__init_deep_sleep(&poller);
-	funk2_poller__reset(&poller);
-	poller_initialized = boolean__true;
-      } else {
-	funk2_poller__sleep(&poller);
-      }
-    }
-  }
-  if (poller_initialized) {
-    funk2_poller__destroy(&poller);
-  }
+  funk2_processor_mutex_t* processor_mutex = ptype_cmutex__m(this, cause);
+  funk2_processor_mutex__lock(processor_mutex);
+  /* funk2_poller_t poller; */
+  /* boolean_t      poller_initialized = boolean__false; */
+  /* u64            lock_tries         = 0; */
+  /* while (raw__cmutex__trylock(cause, this)) { */
+  /*   f2__this__fiber__yield(cause); */
+  /*   if (lock_tries < 1000) { */
+  /*     raw__fast_spin_sleep_yield(); */
+  /*     lock_tries ++; */
+  /*   } else { */
+  /*     if (! poller_initialized) { */
+  /* 	funk2_poller__init_deep_sleep(&poller); */
+  /* 	funk2_poller__reset(&poller); */
+  /* 	poller_initialized = boolean__true; */
+  /*     } else { */
+  /* 	funk2_poller__sleep(&poller); */
+  /*     } */
+  /*   } */
+  /* } */
+  /* if (poller_initialized) { */
+  /*   funk2_poller__destroy(&poller); */
+  /* } */
 }
 
 f2ptr f2__cmutex__lock(f2ptr cause, f2ptr this) {

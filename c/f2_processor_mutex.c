@@ -116,9 +116,11 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
 }
 
 u64 funk2_processor_mutex__raw_user_lock__helper(void* user_data) {
-  funk2_processor_mutex_t* this = (funk2_processor_mutex_t*)user_data;
+  funk2_processor_mutex_t*   this                 = (funk2_processor_mutex_t*)user_data;
+  funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
   if ((! funk2_processor_mutex__is_locked(this)) ||
-      funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
+      funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) ||
+      (funk2_propogator_cell__value(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell)) > 0)) {
     return 1;
   } else {
     return 0;
@@ -134,10 +136,12 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
   }
 #endif
   if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-    funk2_propogator_cell_t hidden_cell;
+    funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
+    funk2_propogator_cell_t    hidden_cell;
     funk2_propogator_cell__init_hidden(&hidden_cell, &funk2_processor_mutex__raw_user_lock__helper, this);
-    funk2_propogator_cell__add_dependent(&(this->is_locked_cell),                          &hidden_cell);
-    funk2_propogator_cell__add_dependent(&(__funk2.user_thread_controller.need_wait_cell), &hidden_cell);
+    funk2_propogator_cell__add_dependent(&(this->is_locked_cell),                                               &hidden_cell);
+    funk2_propogator_cell__add_dependent(&(__funk2.user_thread_controller.need_wait_cell),                      &hidden_cell);
+    funk2_propogator_cell__add_dependent(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell), &hidden_cell);
     funk2_propogator_cell__recalculate(&hidden_cell);
     {
       boolean_t success = boolean__false;
@@ -147,6 +151,9 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
 	  funk2_propogator_cell__wait(&hidden_cell);
 	}
 	funk2_propogator_cell__unlock(&hidden_cell);
+	if (funk2_propogator_cell__value(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell)) > 0) {
+	  funk2_virtual_processor__yield(my_virtual_processor);
+	}
 	if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
 	  f2tid_t my_tid = raw__gettid();
 	  if (my_tid != __funk2.memory.memory_handling_tid) {

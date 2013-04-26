@@ -70,6 +70,30 @@ u64 funk2_propogator_cell__value__set(funk2_propogator_cell_t* this, u64 new_val
   return old_value;
 }
 
+u64 funk2_propogator_cell__increment(funk2_propogator_cell_t* this) {
+  if (this->recalculate_funktion != NULL) {
+    error(nil, "funk2_propogator_cell__increment recalculate_funktion != NULL: (we tried to mistakenly set the value of a hidden cell)");
+  }
+  pthread_mutex_lock(&(this->atomic_value_mutex));
+  u64 new_value = funk2_atomic_u64__increment(&(this->atomic_value));
+  pthread_cond_broadcast(&(this->atomic_value_cond));
+  pthread_mutex_unlock(&(this->atomic_value_mutex));
+  funk2_propogator_cell__recalculate_dependents(this);
+  return new_value;
+}
+
+u64 funk2_propogator_cell__decrement(funk2_propogator_cell_t* this) {
+  if (this->recalculate_funktion != NULL) {
+    error(nil, "funk2_propogator_cell__increment recalculate_funktion != NULL: (we tried to mistakenly set the value of a hidden cell)");
+  }
+  pthread_mutex_lock(&(this->atomic_value_mutex));
+  u64 new_value = funk2_atomic_u64__decrement(&(this->atomic_value));
+  pthread_cond_broadcast(&(this->atomic_value_cond));
+  pthread_mutex_unlock(&(this->atomic_value_mutex));
+  funk2_propogator_cell__recalculate_dependents(this);
+  return new_value;
+}
+
 boolean_t funk2_propogator_cell__compare_and_swap(funk2_propogator_cell_t* this, u64 old_value, u64 new_value) {
   if (this->recalculate_funktion != NULL) {
     error(nil, "funk2_propogator_cell__compare_and_swap recalculate_funktion != NULL: (we tried to mistakenly set the value of a hidden cell)");

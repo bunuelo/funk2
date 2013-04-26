@@ -60,11 +60,13 @@ void      funk2_propogator_cell__init_hidden           (funk2_propogator_cell_t*
 void      funk2_propogator_cell__destroy               (funk2_propogator_cell_t* this);
 u64       funk2_propogator_cell__value                 (funk2_propogator_cell_t* this);
 u64       funk2_propogator_cell__value__set            (funk2_propogator_cell_t* this, u64 new_value);                // only used for input cells
+u64       funk2_propogator_cell__increment             (funk2_propogator_cell_t* this);                               // only used for input cells
+u64       funk2_propogator_cell__decrement             (funk2_propogator_cell_t* this);                               // only used for input cells
 boolean_t funk2_propogator_cell__compare_and_swap      (funk2_propogator_cell_t* this, u64 old_value, u64 new_value); // only used for input cells
 void      funk2_propogator_cell__add_dependent         (funk2_propogator_cell_t* this, funk2_propogator_cell_t* propogator_cell);
 void      funk2_propogator_cell__remove_dependent      (funk2_propogator_cell_t* this, funk2_propogator_cell_t* propogator_cell);
 void      funk2_propogator_cell__recalculate_dependents(funk2_propogator_cell_t* this);
-void      funk2_propogator_cell__recalculate           (funk2_propogator_cell_t* this); // only used (internally) for hidden cells
+void      funk2_propogator_cell__recalculate           (funk2_propogator_cell_t* this); // only used for hidden cells
 void      funk2_propogator_cell__lock                  (funk2_propogator_cell_t* this);
 void      funk2_propogator_cell__wait                  (funk2_propogator_cell_t* this);
 void      funk2_propogator_cell__unlock                (funk2_propogator_cell_t* this);

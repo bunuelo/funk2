@@ -47,6 +47,7 @@ void funk2_virtual_processor__init(funk2_virtual_processor_t* this, u64 index) {
     funk2_processor_mutex__init(&(this->yielding_virtual_processor_thread_circle_mutex));
     this->yielding_virtual_processor_thread_circle = NULL;
   }
+  funk2_propogator_cell__init_input(&(this->yielding_virtual_processor_thread_count_cell), 0);
   // start running at least one thread.
   funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
 }
@@ -56,6 +57,7 @@ void funk2_virtual_processor__destroy(funk2_virtual_processor_t* this) {
   funk2_processor_spinlock__destroy(&(this->virtual_processor_thread_count_spinlock));
   funk2_processor_mutex__destroy(&(this->spinning_virtual_processor_thread_stack_mutex));
   funk2_processor_mutex__destroy(&(this->yielding_virtual_processor_thread_circle_mutex));
+  funk2_propogator_cell__destroy(&(this->yielding_virtual_processor_thread_count_cell));
 }
 
 void funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(funk2_virtual_processor_t* this) {
@@ -300,6 +302,7 @@ void funk2_virtual_processor__add_yielding_virtual_processor_thread(funk2_virtua
   }
   this->yielding_virtual_processor_thread_circle = doublelink;
   funk2_processor_mutex__unlock(&(this->yielding_virtual_processor_thread_circle_mutex));
+  funk2_propogator_cell__increment(&(this->yielding_virtual_processor_thread_count_cell));
 }
 
 funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual_processor_thread(funk2_virtual_processor_t* this) {
@@ -315,6 +318,7 @@ funk2_virtual_processor_thread_t* funk2_virtual_processor__peek_yielding_virtual
 }
 
 void funk2_virtual_processor__remove_yielding_virtual_processor_thread(funk2_virtual_processor_t* this, funk2_virtual_processor_thread_t* virtual_processor_thread) {
+  funk2_propogator_cell__decrement(&(this->yielding_virtual_processor_thread_count_cell));
   funk2_processor_mutex__lock(&(this->yielding_virtual_processor_thread_circle_mutex));
   funk2_virtual_processor_thread_doublelink_t* doublelink = this->yielding_virtual_processor_thread_circle;
   if (doublelink == NULL) {

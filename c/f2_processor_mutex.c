@@ -138,6 +138,7 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     funk2_propogator_cell__init_hidden(&hidden_cell, &funk2_processor_mutex__raw_user_lock__helper, this);
     funk2_propogator_cell__add_dependent(&(this->is_locked_cell),                          &hidden_cell);
     funk2_propogator_cell__add_dependent(&(__funk2.user_thread_controller.need_wait_cell), &hidden_cell);
+    funk2_propogator_cell__recalculate(&hidden_cell);
     {
       boolean_t success = boolean__false;
       while (! success) {

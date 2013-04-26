@@ -41,7 +41,7 @@ typedef struct funk2_processor_mutex_s funk2_processor_mutex_t;
 #include "f2_processor_thread_handler.h"
 #include "f2_propogator_cell.h"
 
-//#define F2__PROCESSOR_MUTEX__DEBUG
+#define F2__PROCESSOR_MUTEX__DEBUG
 
 #define PROCESSOR_MUTEX__INITIALIZED_MAGIC ((u64)0xDEADBEEFDEADBEEF)
 

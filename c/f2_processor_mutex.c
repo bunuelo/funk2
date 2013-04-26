@@ -165,8 +165,9 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
 	}
       }
     }
-    funk2_propogator_cell__remove_dependent(&(this->is_locked_cell),                          &hidden_cell);
-    funk2_propogator_cell__remove_dependent(&(__funk2.user_thread_controller.need_wait_cell), &hidden_cell);
+    funk2_propogator_cell__remove_dependent(&(this->is_locked_cell),                                               &hidden_cell);
+    funk2_propogator_cell__remove_dependent(&(__funk2.user_thread_controller.need_wait_cell),                      &hidden_cell);
+    funk2_propogator_cell__remove_dependent(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell), &hidden_cell);
   }
 }
 

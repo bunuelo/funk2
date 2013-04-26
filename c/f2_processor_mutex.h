@@ -54,7 +54,6 @@ struct funk2_processor_mutex_s {
   int                     lock_line_num;
   f2tid_t                 lock_tid;
 #endif
-  //pthread_mutex_t         pthread_mutex;
   funk2_propogator_cell_t is_locked_cell;
 };
 
@@ -68,15 +67,17 @@ void                                   funk2_processor_mutex__destroy          (
 boolean_t                              funk2_processor_mutex__is_locked        (funk2_processor_mutex_t* this);
 funk2_processor_mutex_trylock_result_t funk2_processor_mutex__raw_trylock      (funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_lock         (funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
+void                                   funk2_processor_mutex__raw_lock_two     (funk2_processor_mutex_t* this, funk2_processor_mutex_t* that, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_user_lock    (funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num);
 void                                   funk2_processor_mutex__raw_unlock       (funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num);
 u64                                    funk2_processor_mutex__eq_hash_value    (funk2_processor_mutex_t* this);
 u64                                    funk2_processor_mutex__equals_hash_value(funk2_processor_mutex_t* this);
 
-#define funk2_processor_mutex__trylock(  this) funk2_processor_mutex__raw_trylock(  this, __FILE__, __LINE__)
-#define funk2_processor_mutex__lock(     this) funk2_processor_mutex__raw_lock(     this, __FILE__, __LINE__)
-#define funk2_processor_mutex__user_lock(this) funk2_processor_mutex__raw_user_lock(this, __FILE__, __LINE__)
-#define funk2_processor_mutex__unlock(   this) funk2_processor_mutex__raw_unlock(   this, __FILE__, __LINE__)
+#define funk2_processor_mutex__trylock(  this)       funk2_processor_mutex__raw_trylock(  this,       __FILE__, __LINE__)
+#define funk2_processor_mutex__lock(     this)       funk2_processor_mutex__raw_lock(     this,       __FILE__, __LINE__)
+#define funk2_processor_mutex__lock_two( this, that) funk2_processor_mutex__raw_lock_two( this, that, __FILE__, __LINE__)
+#define funk2_processor_mutex__user_lock(this)       funk2_processor_mutex__raw_user_lock(this,       __FILE__, __LINE__)
+#define funk2_processor_mutex__unlock(   this)       funk2_processor_mutex__raw_unlock(   this,       __FILE__, __LINE__)
 
 #endif // F2__PROCESSOR_MUTEX__H
 

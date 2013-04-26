@@ -115,6 +115,38 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 }
 
+void funk2_processor_mutex__raw_lock_two(funk2_processor_mutex_t* this, funk2_processor_mutex_t* that, const char* lock_source_file, const int lock_line_num) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
+  if ((! this->is_initialized) ||
+      (this->initialized_magic != PROCESSOR_MUTEX__INITIALIZED_MAGIC)) {
+    printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
+    funk2_processor_mutex__error();
+  }
+#endif
+  boolean_t success = boolean__false;
+  while (! success) {
+    funk2_processor_mutex_trylock_result_t this__result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
+    if (this__result == funk2_processor_mutex_trylock_result__success) {
+      funk2_processor_mutex_trylock_result_t that__result = funk2_processor_mutex__raw_trylock(that, lock_source_file, lock_line_num);
+      if (that__result == funk2_processor_mutex_trylock_result__success) {
+	return;
+      }
+      funk2_processor_mutex__raw_unlock(this, lock_source_file, lock_line_num);
+      funk2_propogator_cell__lock(&(that->is_locked_cell));
+      while (funk2_propogator_cell__value(&(that->is_locked_cell)) != 0) {
+	funk2_propogator_cell__wait(&(that->is_locked_cell));
+      }
+      funk2_propogator_cell__unlock(&(that->is_locked_cell));
+    } else {
+      funk2_propogator_cell__lock(&(this->is_locked_cell));
+      while (funk2_propogator_cell__value(&(this->is_locked_cell)) != 0) {
+	funk2_propogator_cell__wait(&(this->is_locked_cell));
+      }
+      funk2_propogator_cell__unlock(&(this->is_locked_cell));
+    }
+  }
+}
+
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   if ((! this->is_initialized) ||
@@ -153,40 +185,6 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
   if (poller_initialized) {
     funk2_poller__destroy(&poller);
   }
-  /* if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) { */
-  /*   funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler)); */
-  /*   funk2_propogator_cell_t    hidden_cell; */
-  /*   funk2_propogator_cell__init_hidden(&hidden_cell, &funk2_processor_mutex__raw_user_lock__helper, this); */
-  /*   funk2_propogator_cell__add_dependent(&(this->is_locked_cell),                                               &hidden_cell); */
-  /*   funk2_propogator_cell__add_dependent(&(__funk2.user_thread_controller.need_wait_cell),                      &hidden_cell); */
-  /*   funk2_propogator_cell__add_dependent(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell), &hidden_cell); */
-  /*   funk2_propogator_cell__recalculate(&hidden_cell); */
-  /*   { */
-  /*     boolean_t success = boolean__false; */
-  /*     while (! success) { */
-  /* 	funk2_propogator_cell__lock(&hidden_cell); */
-  /* 	while (funk2_propogator_cell__value(&hidden_cell) == 0) { */
-  /* 	  funk2_propogator_cell__wait(&hidden_cell); */
-  /* 	} */
-  /* 	funk2_propogator_cell__unlock(&hidden_cell); */
-  /* 	if (funk2_propogator_cell__value(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell)) > 0) { */
-  /* 	  funk2_virtual_processor__yield(my_virtual_processor); */
-  /* 	} */
-  /* 	if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) { */
-  /* 	  f2tid_t my_tid = raw__gettid(); */
-  /* 	  if (my_tid != __funk2.memory.memory_handling_tid) { */
-  /* 	    funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller)); */
-  /* 	  } */
-  /* 	} */
-  /* 	if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) == funk2_processor_mutex_trylock_result__success) { */
-  /* 	  success = boolean__true; */
-  /* 	} */
-  /*     } */
-  /*   } */
-  /*   funk2_propogator_cell__remove_dependent(&(this->is_locked_cell),                                               &hidden_cell); */
-  /*   funk2_propogator_cell__remove_dependent(&(__funk2.user_thread_controller.need_wait_cell),                      &hidden_cell); */
-  /*   funk2_propogator_cell__remove_dependent(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell), &hidden_cell); */
-  /* } */
 }
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {

@@ -115,18 +115,6 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
   }
 }
 
-u64 funk2_processor_mutex__raw_user_lock__helper(void* user_data) {
-  funk2_processor_mutex_t*   this                 = (funk2_processor_mutex_t*)user_data;
-  funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
-  if ((! funk2_processor_mutex__is_locked(this)) ||
-      funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) ||
-      (funk2_propogator_cell__value(&(my_virtual_processor->yielding_virtual_processor_thread_count_cell)) > 0)) {
-    return 1;
-  } else {
-    return 0;
-  }
-}
-
 void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const char* lock_source_file, const int lock_line_num) {
 #if defined(F2__PROCESSOR_MUTEX__DEBUG)
   if ((! this->is_initialized) ||

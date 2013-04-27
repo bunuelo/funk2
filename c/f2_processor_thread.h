@@ -29,6 +29,7 @@
 #define F2__PROCESSOR_THREAD__H
 
 #include <pthread.h>
+#include "f2_processor_thread_event.h"
 
 typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 
@@ -45,6 +46,7 @@ typedef struct funk2_processor_thread_s {
   u64                                       execution_nanoseconds;
   u64                                       sleep_nanoseconds;
   void*                                     result;
+  funk2_thread_safe_hash_t                  event_hash;
 } funk2_processor_thread_t;
 
 typedef struct funk2_processor_thread_list_s {
@@ -54,11 +56,14 @@ typedef struct funk2_processor_thread_list_s {
 
 void __funk2__nanosleep(u64 nanoseconds); // do not use from within a processor thread.
 
-void  funk2_processor_thread__init     (funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
-void  funk2_processor_thread__destroy  (funk2_processor_thread_t* this);
-void  funk2_processor_thread__start    (funk2_processor_thread_t* this);
-void* funk2_processor_thread__join     (funk2_processor_thread_t* this);
-void  funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds);
+void                            funk2_processor_thread__init        (funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args);
+void                            funk2_processor_thread__destroy     (funk2_processor_thread_t* this);
+funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_processor_thread_t* this, char* message);
+void                            funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event);
+void                            funk2_processor_thread__start       (funk2_processor_thread_t* this);
+void*                           funk2_processor_thread__join        (funk2_processor_thread_t* this);
+void                            funk2_processor_thread__nanosleep   (funk2_processor_thread_t* this, u64 nanoseconds);
+
 
 #endif // F2__PROCESSOR_THREAD__H
 

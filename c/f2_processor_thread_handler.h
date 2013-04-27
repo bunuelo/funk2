@@ -29,6 +29,7 @@
 #define F2__PROCESSOR_THREAD_HANDLER__H
 
 #include "f2_processor_thread.h"
+#include "f2_processor_thread_event.h"
 #include "f2_thread_safe_hash.h"
 
 f2tid_t raw__gettid();
@@ -48,9 +49,11 @@ u64 this_processor_thread__pool_index();
 
 // use these functions outside of the processor_thread_handler and friends:
 
-f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, void* args);
-void*   raw__join(f2tid_t tid);
-void    raw__nanosleep(u64 nanoseconds);
+f2tid_t                         raw__thread     (funk2_processor_thread_function_pointer_t start_function, void* args);
+void*                           raw__join       (f2tid_t tid);
+void                            raw__nanosleep  (u64 nanoseconds);
+funk2_processor_thread_event_t* raw__begin_event(char* message);
+void                            raw__end_event  (funk2_processor_thread_event_t* event);
 
 #endif // F2__PROCESSOR_THREAD_HANDLER__H
 

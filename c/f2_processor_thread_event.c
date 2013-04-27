@@ -27,7 +27,8 @@
 
 #include "funk2.h"
 
-void funk2_processor_thread_event__init(funk2_processor_thread_event_t* this, char* message, u64 start_time__nanoseconds_since_1970) {
+void funk2_processor_thread_event__init(funk2_processor_thread_event_t* this, u64 start_time__nanoseconds_since_1970, char* message) {
+  this->start_time__nanoseconds_since_1970 = start_time__nanoseconds_since_1970;
   u64 message__length;
   for (message__length = 0; message[message__length] != 0; message__length ++);
   {
@@ -40,7 +41,6 @@ void funk2_processor_thread_event__init(funk2_processor_thread_event_t* this, ch
     }
     this->message[message__length] = 0;
   }
-  this->start_time__nanoseconds_since_1970 = start_time__nanoseconds_since_1970;
 }
 
 void funk2_processor_thread_event__destroy(funk2_processor_thread_event_t* this) {

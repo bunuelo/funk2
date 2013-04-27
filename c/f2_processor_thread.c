@@ -81,11 +81,25 @@ void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processo
   this->initialized    = boolean__false;
   this->start_function = start_function;
   this->args           = args;
+  funk2_thread_safe_hash__init(&(this->event_hash), 10);
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   pthread_mutex_destroy(&(this->initialized_cond_mutex));
   pthread_cond_destroy(&(this->initialized_cond));
+  funk2_thread_safe_hash__destroy(&(this->event_hash));
+}
+
+funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_processor_thread_t* this, char* message) {
+  u64                             nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+  funk2_processor_thread_event_t* event                  = (funk2_processor_thread_event_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_event_t)));
+  funk2_processor_thread_event__init(event, nanoseconds_since_1970, message);
+  funk2_thread_safe_hash__add(&(this->event_hash), (u64)to_ptr(event), (u64)to_ptr(event));
+  return event;
+}
+
+void funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event) {
+  funk2_thread_safe_hash__remove(&(this->event_hash), (u64)to_ptr(event));
 }
 
 void funk2_processor_thread__start(funk2_processor_thread_t* this) {

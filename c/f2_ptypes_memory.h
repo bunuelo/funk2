@@ -127,8 +127,8 @@ ptype_pointer_block_t* ptype_pointer_block__new(int pool_index, f2ptr cause, ptr
 
 struct ptype_cmutex_block_s {
   ptype_block_t           ptype;
-  boolean_t               locked_state; // this state is persistent between boots.
   funk2_processor_mutex_t m[1];         // this state is reinitialized at each boot.
+  boolean_t               locked_state; // this state is persistent between boots.
 } __attribute__((__packed__));
 typedef struct ptype_cmutex_block_s ptype_cmutex_block_t;
 
@@ -136,9 +136,9 @@ ptype_cmutex_block_t*    ptype_cmutex_block__new(int pool_index, f2ptr cause);
 funk2_processor_mutex_t* ptype_cmutex__m(f2ptr this, f2ptr cause);
 
 #define __pure__f2cmutex__new(pool_index, cause)         ptype_cmutex__new(pool_index, cause)
+#define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 #define __pure__f2cmutex__locked_state(this)             (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state)
 #define __pure__f2cmutex__locked_state__set(this, value) (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->locked_state = (value))
-#define __pure__f2cmutex__m(this)                        (((ptype_cmutex_block_t*)(from_ptr(f2ptr_to_ptr(this))))->m)
 
 
 // creadwritelock

@@ -30,6 +30,7 @@
 
 #include <pthread.h>
 #include "f2_processor_thread_event.h"
+#include "f2_thread_safe_hash.h"
 
 typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 

@@ -85,7 +85,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
 
 void funk2_processor_thread_handler__print_status(funk2_processor_thread_handler_t* this) {
   status("vvv processor_thread_handler vvv");
-  funk2_thread_safe_hash__value__iteration(this, value,
+  funk2_thread_safe_hash__value__iteration(&(this->processor_thread_tid_hash), value,
 					   funk2_processor_thread_t* processor_thread = (funk2_processor_thread_t*)from_ptr(value);
 					   funk2_processor_thread__print_status(processor_thread);
 					   );

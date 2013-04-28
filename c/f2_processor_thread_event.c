@@ -47,3 +47,6 @@ void funk2_processor_thread_event__destroy(funk2_processor_thread_event_t* this)
   f2__free(to_ptr(this->message));
 }
 
+void funk2_processor_thread_event__print_status(funk2_processor_thread_event_t* this) {
+  status("    event=\"%s\"", this->message);
+}

@@ -41,7 +41,8 @@ struct funk2_processor_thread_event_s {
   char* message;
 };
 
-void funk2_processor_thread_event__init   (funk2_processor_thread_event_t* this, u64 start_time__nanoseconds_since_1970, char* message);
-void funk2_processor_thread_event__destroy(funk2_processor_thread_event_t* this);
+void funk2_processor_thread_event__init        (funk2_processor_thread_event_t* this, u64 start_time__nanoseconds_since_1970, char* message);
+void funk2_processor_thread_event__destroy     (funk2_processor_thread_event_t* this);
+void funk2_processor_thread_event__print_status(funk2_processor_thread_event_t* this);
 
 #endif // F2__PROCESSOR_THREAD_EVENT__H

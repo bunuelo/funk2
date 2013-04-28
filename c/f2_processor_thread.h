@@ -64,6 +64,7 @@ void                            funk2_processor_thread__remove_event(funk2_proce
 void                            funk2_processor_thread__start       (funk2_processor_thread_t* this);
 void*                           funk2_processor_thread__join        (funk2_processor_thread_t* this);
 void                            funk2_processor_thread__nanosleep   (funk2_processor_thread_t* this, u64 nanoseconds);
+void                            funk2_processor_thread__print_status(funk2_processor_thread_t* this);
 
 
 #endif // F2__PROCESSOR_THREAD__H

@@ -83,6 +83,15 @@ funk2_processor_thread_t* funk2_processor_thread_handler__myself(funk2_processor
   return funk2_processor_thread_handler__lookup_tid(this, my_tid);
 }
 
+void funk2_processor_thread_handler__print_status(funk2_processor_thread_handler_t* this) {
+  status("vvv processor_thread_handler vvv");
+  funk2_thread_safe_hash__value__iteration(this, value,
+					   funk2_processor_thread_t* processor_thread = (funk2_processor_thread_t*)from_ptr(value);
+					   funk2_processor_thread__print_status(processor_thread);
+					   );
+  status("^^^ processor_thread_handler ^^^");
+}
+
 s64 this_processor_thread__try_get_pool_index() {
   return funk2_virtual_processor_handler__try_get_my_virtual_processor_index(&(__funk2.virtual_processor_handler));
 }
@@ -129,4 +138,8 @@ funk2_processor_thread_event_t* raw__begin_event(char* message) {
 void raw__end_event(funk2_processor_thread_event_t* event) {
   funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
   funk2_processor_thread__remove_event(my_processor_thread, event);
+}
+
+void raw__thread_status() {
+  funk2_processor_thread_handler__print_status(&(__funk2.processor_thread_handler));
 }

@@ -167,3 +167,10 @@ void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanos
   this->sleep_nanoseconds += (end_nanoseconds_since_1970 - start_nanoseconds_since_1970);
 }
 
+void funk2_processor_thread__print_status(funk2_processor_thread_t* this) {
+  status("  processor_thread tid=" u64__fstr, this->tid);
+  funk2_thread_safe_hash__key__iteration(this, key,
+					 funk2_processor_thread_event_t* event = (funk2_processor_thread_event_t*)from_ptr(key);
+					 funk2_processor_thread_event__print_status(event);
+					 );
+}

@@ -70,7 +70,9 @@ void* start_processor_thread_wrapper(void* data) {
   pthread_cond_signal(&(this->initialized_cond));
   pthread_mutex_unlock(&(this->initialized_cond_mutex));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
+  funk2_processor_thread_event_t* event = raw__begin_event("start_processor_thread_wrapper");
   void* return_value = (*(this->start_function))(this->args);
+  raw__end_event(event);
   this->result = return_value;
   return return_value;
 }

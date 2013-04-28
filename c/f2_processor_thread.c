@@ -107,6 +107,7 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
 }
 
 funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_processor_thread_t* this, char* message) {
+  funk2_processor_thread__check_in(this);
   u64                             nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   funk2_processor_thread_event_t* event                  = (funk2_processor_thread_event_t*)from_ptr(f2__malloc(sizeof(funk2_processor_thread_event_t)));
   funk2_processor_thread_event__init(event, nanoseconds_since_1970, message);
@@ -116,6 +117,7 @@ funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_proce
 
 void funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event) {
   funk2_thread_safe_hash__remove(&(this->event_hash), (u64)to_ptr(event));
+  funk2_processor_thread__check_in(this);
 }
 
 void funk2_processor_thread__start(funk2_processor_thread_t* this) {
@@ -134,11 +136,9 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
 
 // must only be called by owner (use raw__join from f2_processor_thread_handler.[ch])
 void* funk2_processor_thread__join(funk2_processor_thread_t* this, funk2_processor_thread_t* thread_to_join) {
-  funk2_processor_thread__check_in(this);
   funk2_processor_thread_event_t* event = funk2_processor_thread__create_event(this, "funk2_processor_thread__join");
   int join_result = pthread_join(thread_to_join->pthread, NULL);
   funk2_processor_thread__remove_event(this, event);
-  funk2_processor_thread__check_in(this);
   if (join_result != 0) {
     switch(join_result) {
     case EDEADLK:
@@ -182,14 +182,12 @@ void __funk2__nanosleep(u64 nanoseconds) {
 
 // must only be called by owner (use raw__nanosleep from f2_processor_thread_handler.[ch])
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
-  funk2_processor_thread__check_in(this);
   funk2_processor_thread_event_t* event = funk2_processor_thread__create_event(this, "funk2_processor_thread__nanosleep");
   u64 start_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   __funk2__nanosleep(nanoseconds);
   u64 end_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   this->sleep_nanoseconds += (end_nanoseconds_since_1970 - start_nanoseconds_since_1970);
   funk2_processor_thread__remove_event(this, event);
-  funk2_processor_thread__check_in(this);
 }
 
 void funk2_processor_thread__print_status(funk2_processor_thread_t* this) {

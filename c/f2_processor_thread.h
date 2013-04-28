@@ -37,7 +37,7 @@ typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 typedef u64 f2tid_t;
 
 typedef struct funk2_processor_thread_s      funk2_processor_thread_t;
-typedef struct funk2_processor_thread_list_s funk2_processor_thread_list_t
+typedef struct funk2_processor_thread_list_s funk2_processor_thread_list_t;
 
 #endif // F2__PROCESSOR_THREAD__TYPES__H
 

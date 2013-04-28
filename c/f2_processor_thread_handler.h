@@ -25,6 +25,14 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PROCESSOR_THREAD_HANDLER__TYPES__H
+#define F2__PROCESSOR_THREAD_HANDLER__TYPES__H
+
+#define DEBUG_PROCESSOR_THREAD_HANDLER
+
+#endif // F2__PROCESSOR_THREAD_HANDLER__TYPES__H
+
+
 #ifndef F2__PROCESSOR_THREAD_HANDLER__H
 #define F2__PROCESSOR_THREAD_HANDLER__H
 
@@ -36,6 +44,7 @@ f2tid_t raw__gettid();
 
 typedef struct funk2_processor_thread_handler_s {
   funk2_thread_safe_hash_t processor_thread_tid_hash;
+  u64                      last_print_status__nanoseconds_since_1970;
 } funk2_processor_thread_handler_t;
 
 void                      funk2_processor_thread_handler__init                    (funk2_processor_thread_handler_t* this);
@@ -44,6 +53,7 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
 boolean_t                 funk2_processor_thread_handler__remove_processor_thread (funk2_processor_thread_handler_t* this, f2tid_t tid);
 funk2_processor_thread_t* funk2_processor_thread_handler__myself                  (funk2_processor_thread_handler_t* this);
 void                      funk2_processor_thread_handler__print_status            (funk2_processor_thread_handler_t* this);
+void                      funk2_processor_thread_handler__handle                  (funk2_processor_thread_handler_t* this);
 
 s64 this_processor_thread__try_get_pool_index();
 u64 this_processor_thread__pool_index();

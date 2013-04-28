@@ -437,6 +437,7 @@ boolean_t funk2__handle(funk2_t* this) {
   funk2_management_thread__handle_user_threads(         &(this->management_thread));
   funk2_cpu__handle(                                    &(this->cpu));
   funk2_surrogate_parent__handle(                       &(this->surrogate_parent));
+  funk2_processor_thread_handler__handle(               &(this->processor_thread_handler));
   
   raw__fast_spin_sleep_yield();
   return boolean__false; // should return true if we did something.

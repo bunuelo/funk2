@@ -44,6 +44,7 @@ f2tid_t raw__gettid() {
 
 void funk2_processor_thread_handler__init(funk2_processor_thread_handler_t* this) {
   funk2_thread_safe_hash__init(&(this->processor_thread_tid_hash), 16);
+  this->last_print_status__nanoseconds_since_1970 = 0;
 }
 
 void funk2_processor_thread_handler__destroy(funk2_processor_thread_handler_t* this) {
@@ -95,6 +96,16 @@ void funk2_processor_thread_handler__print_status(funk2_processor_thread_handler
 					   funk2_processor_thread__print_status(processor_thread);
 					   );
   status("^^^ processor_thread_handler ^^^");
+}
+
+void funk2_processor_thread_handler__handle(funk2_processor_thread_handler_t* this) {
+#if defined(DEBUG_PROCESSOR_THREAD_HANDLER)
+  u64 nanoseconds_since_1970 = raw__nanoseconds_since_1970();
+  if ((nanoseconds_since_1970 - this->last_print_status__nanoseconds_since_1970) > 60 * nanoseconds_per_second) {
+    funk2_processor_thread_handler__print_status(this);
+    this->last_print_status__nanoseconds_since_1970 = nanoseconds_since_1970;
+  }
+#endif // DEBUG_PROCESSOR_THREAD_HANDLER
 }
 
 s64 this_processor_thread__try_get_pool_index() {
@@ -149,3 +160,4 @@ void raw__end_event(funk2_processor_thread_event_t* event) {
 void raw__thread_status() {
   funk2_processor_thread_handler__print_status(&(__funk2.processor_thread_handler));
 }
+

@@ -106,6 +106,7 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   funk2_thread_safe_hash__destroy(&(this->event_hash));
 }
 
+// must only be called by owner (use raw__begin_event from f2_processor_thread_handler.[ch])
 funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_processor_thread_t* this, char* message) {
   funk2_processor_thread__check_in(this);
   u64                             nanoseconds_since_1970 = raw__nanoseconds_since_1970();
@@ -115,6 +116,7 @@ funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_proce
   return event;
 }
 
+// must only be called by owner (use raw__end_event from f2_processor_thread_handler.[ch])
 void funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event) {
   funk2_thread_safe_hash__remove(&(this->event_hash), (u64)to_ptr(event));
   funk2_processor_thread__check_in(this);

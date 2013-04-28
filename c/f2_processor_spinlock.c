@@ -127,6 +127,7 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
 	    funk2_poller__reset(&poller);
 	    poller_initialized = boolean__true;
 	  } else {
+	    f2__this__fiber__yield(nil);
 	    funk2_poller__sleep(&poller);
 	  }
 	}

@@ -131,6 +131,7 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	} else {
+	  f2__this__fiber__yield(nil);
 	  funk2_poller__sleep(&poller);
 	}
       }
@@ -161,6 +162,7 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
 	  funk2_poller__reset(&poller);
 	  poller_initialized = boolean__true;
 	} else {
+	  f2__this__fiber__yield(nil);
 	  funk2_poller__sleep(&poller);
 	}
       }

@@ -101,10 +101,11 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     funk2_processor_mutex__error();
   }
 #endif
-  boolean_t success = boolean__false;
-  while (! success) {
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_lock");
+  while (boolean__true) {
     funk2_processor_mutex_trylock_result_t result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
     if (result == funk2_processor_mutex_trylock_result__success) {
+      raw__end_event(event);
       return;
     }
     funk2_propogator_cell__lock(&(this->is_locked_cell));
@@ -113,6 +114,7 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     }
     funk2_propogator_cell__unlock(&(this->is_locked_cell));
   }
+  error(nil, "never should get here.");
 }
 
 void funk2_processor_mutex__raw_lock_two(funk2_processor_mutex_t* this, funk2_processor_mutex_t* that, const char* lock_source_file, const int lock_line_num) {
@@ -123,12 +125,14 @@ void funk2_processor_mutex__raw_lock_two(funk2_processor_mutex_t* this, funk2_pr
     funk2_processor_mutex__error();
   }
 #endif
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_lock_two");
   boolean_t success = boolean__false;
   while (! success) {
     funk2_processor_mutex_trylock_result_t this__result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
     if (this__result == funk2_processor_mutex_trylock_result__success) {
       funk2_processor_mutex_trylock_result_t that__result = funk2_processor_mutex__raw_trylock(that, lock_source_file, lock_line_num);
       if (that__result == funk2_processor_mutex_trylock_result__success) {
+	raw__end_event(event);
 	return;
       }
       funk2_processor_mutex__raw_unlock(this, lock_source_file, lock_line_num);
@@ -155,36 +159,41 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     funk2_processor_mutex__error();
   }
 #endif
-  funk2_poller_t poller;
-  boolean_t      poller_initialized = boolean__false;
-  s64            lock_tries         = 0;
-  if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-    f2tid_t                    my_tid               = raw__gettid();
-    funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
-    while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
-      if (lock_tries < 1000) {
-	raw__fast_spin_sleep_yield();
-	lock_tries ++;
-      } else {
-  	if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
-  	  if (my_tid != __funk2.memory.memory_handling_tid) {
-  	    funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
-  	  }
-  	}
-	funk2_virtual_processor__yield(my_virtual_processor);
-	if (! poller_initialized) {
-	  funk2_poller__init_deep_sleep(&poller);
-	  funk2_poller__reset(&poller);
-	  poller_initialized = boolean__true;
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_user_lock");
+  {
+    funk2_poller_t poller;
+    boolean_t      poller_initialized = boolean__false;
+    s64            lock_tries         = 0;
+    if (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+      f2tid_t                    my_tid               = raw__gettid();
+      funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
+      while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
+	if (lock_tries < 1000) {
+	  raw__fast_spin_sleep_yield();
+	  lock_tries ++;
 	} else {
-	  funk2_poller__sleep(&poller);
+	  if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
+	    if (my_tid != __funk2.memory.memory_handling_tid) {
+	      funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
+	    }
+	  }
+	  funk2_virtual_processor__yield(my_virtual_processor);
+	  if (! poller_initialized) {
+	    funk2_poller__init_deep_sleep(&poller);
+	    funk2_poller__reset(&poller);
+	    poller_initialized = boolean__true;
+	  } else {
+	    f2__this__fiber__yield(nil);
+	    funk2_poller__sleep(&poller);
+	  }
 	}
       }
     }
+    if (poller_initialized) {
+      funk2_poller__destroy(&poller);
+    }
   }
-  if (poller_initialized) {
-    funk2_poller__destroy(&poller);
-  }
+  raw__end_event(event);
 }
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {

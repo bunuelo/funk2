@@ -36,6 +36,8 @@ typedef struct funk2_processor_thread_event_s funk2_processor_thread_event_t;
 #ifndef F2__PROCESSOR_THREAD_EVENT__H
 #define F2__PROCESSOR_THREAD_EVENT__H
 
+#include "f2_archconfig.h"
+
 struct funk2_processor_thread_event_s {
   u64   start_time__nanoseconds_since_1970;
   char* message;

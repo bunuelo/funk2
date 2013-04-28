@@ -98,6 +98,11 @@ void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
   pthread_cond_destroy(&(this->tid_initialized_cond));
   pthread_mutex_destroy(&(this->added_to_handler_cond_mutex));
   pthread_cond_destroy(&(this->added_to_handler_cond));
+  funk2_thread_safe_hash__key__iteration(&(this->event_hash), key,
+					 funk2_processor_thread_event_t* event = (funk2_processor_thread_event_t*)from_ptr(key);
+					 funk2_processor_thread_event__destroy(event);
+					 f2__free(to_ptr(event));
+					 );
   funk2_thread_safe_hash__destroy(&(this->event_hash));
 }
 

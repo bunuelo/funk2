@@ -30,7 +30,7 @@
 
 #include "f2_archconfig.h"
 
-#define DEBUG_PROCESSOR_THREAD
+//#define DEBUG_PROCESSOR_THREAD
 
 typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
 

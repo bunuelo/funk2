@@ -100,12 +100,14 @@ void funk2_processor_mutex__raw_lock(funk2_processor_mutex_t* this, const char* 
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
-#endif
   funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_lock");
+#endif
   while (boolean__true) {
     funk2_processor_mutex_trylock_result_t result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
     if (result == funk2_processor_mutex_trylock_result__success) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
       raw__end_event(event);
+#endif
       return;
     }
     funk2_propogator_cell__lock(&(this->is_locked_cell));
@@ -124,15 +126,17 @@ void funk2_processor_mutex__raw_lock_two(funk2_processor_mutex_t* this, funk2_pr
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
-#endif
   funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_lock_two");
+#endif
   boolean_t success = boolean__false;
   while (! success) {
     funk2_processor_mutex_trylock_result_t this__result = funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num);
     if (this__result == funk2_processor_mutex_trylock_result__success) {
       funk2_processor_mutex_trylock_result_t that__result = funk2_processor_mutex__raw_trylock(that, lock_source_file, lock_line_num);
       if (that__result == funk2_processor_mutex_trylock_result__success) {
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
 	raw__end_event(event);
+#endif
 	return;
       }
       funk2_processor_mutex__raw_unlock(this, lock_source_file, lock_line_num);
@@ -158,8 +162,8 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
     printf("\nfunk2_processor_mutex__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_mutex__error();
   }
-#endif
   funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_mutex__raw_user_lock");
+#endif // F2__PROCESSOR_MUTEX__DEBUG
   {
     funk2_poller_t poller;
     boolean_t      poller_initialized = boolean__false;
@@ -193,7 +197,9 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
       funk2_poller__destroy(&poller);
     }
   }
+#if defined(F2__PROCESSOR_MUTEX__DEBUG)
   raw__end_event(event);
+#endif // F2__PROCESSOR_MUTEX__DEBUG
 }
 
 void funk2_processor_mutex__raw_unlock(funk2_processor_mutex_t* this, const char* unlock_source_file, const int unlock_line_num) {

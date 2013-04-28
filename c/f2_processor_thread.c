@@ -182,10 +182,14 @@ void __funk2__nanosleep(u64 nanoseconds) {
 
 // must only be called by owner (use raw__nanosleep from f2_processor_thread_handler.[ch])
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
+  funk2_processor_thread__check_in(this);
+  funk2_processor_thread_event_t* event = funk2_processor_thread__create_event(this, "funk2_processor_thread__nanosleep");
   u64 start_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   __funk2__nanosleep(nanoseconds);
   u64 end_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   this->sleep_nanoseconds += (end_nanoseconds_since_1970 - start_nanoseconds_since_1970);
+  funk2_processor_thread__remove_event(this, event);
+  funk2_processor_thread__check_in(this);
 }
 
 void funk2_processor_thread__print_status(funk2_processor_thread_t* this) {

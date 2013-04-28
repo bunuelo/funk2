@@ -25,6 +25,23 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PROCESSOR_THREAD__TYPES__H
+#define F2__PROCESSOR_THREAD__TYPES__H
+
+#include "f2_archconfig.h"
+
+#define DEBUG_PROCESSOR_THREAD
+
+typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
+
+typedef u64 f2tid_t;
+
+typedef struct funk2_processor_thread_s      funk2_processor_thread_t;
+typedef struct funk2_processor_thread_list_s funk2_processor_thread_list_t
+
+#endif // F2__PROCESSOR_THREAD__TYPES__H
+
+
 #ifndef F2__PROCESSOR_THREAD__H
 #define F2__PROCESSOR_THREAD__H
 
@@ -32,11 +49,7 @@
 #include "f2_processor_thread_event.h"
 #include "f2_thread_safe_hash.h"
 
-typedef void* (*funk2_processor_thread_function_pointer_t)(void*);
-
-typedef u64 f2tid_t;
-
-typedef struct funk2_processor_thread_s {
+struct funk2_processor_thread_s {
   pthread_mutex_t                           tid_initialized_cond_mutex;
   pthread_cond_t                            tid_initialized_cond;
   boolean_t                                 tid_initialized;
@@ -51,12 +64,13 @@ typedef struct funk2_processor_thread_s {
   u64                                       sleep_nanoseconds;
   void*                                     result;
   funk2_thread_safe_hash_t                  event_hash;
-} funk2_processor_thread_t;
+  u64                                       last_checked_in_nanoseconds_since_1970;
+};
 
-typedef struct funk2_processor_thread_list_s {
+struct funk2_processor_thread_list_s {
   funk2_processor_thread_t              processor_thread;
   struct funk2_processor_thread_list_s* next;
-} funk2_processor_thread_list_t;
+};
 
 void __funk2__nanosleep(u64 nanoseconds); // do not use from within a processor thread.
 
@@ -65,7 +79,7 @@ void                            funk2_processor_thread__destroy     (funk2_proce
 funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_processor_thread_t* this, char* message);
 void                            funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event);
 void                            funk2_processor_thread__start       (funk2_processor_thread_t* this);
-void*                           funk2_processor_thread__join        (funk2_processor_thread_t* this);
+void*                           funk2_processor_thread__join        (funk2_processor_thread_t* this, funk2_processor_thread_t* thread_to_join);
 void                            funk2_processor_thread__nanosleep   (funk2_processor_thread_t* this, u64 nanoseconds);
 void                            funk2_processor_thread__print_status(funk2_processor_thread_t* this);
 

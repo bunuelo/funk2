@@ -111,12 +111,13 @@ f2tid_t raw__thread(funk2_processor_thread_function_pointer_t start_function, vo
 }
 
 void* raw__join(f2tid_t tid) {
-  funk2_processor_thread_t* processor_thread = funk2_processor_thread_handler__lookup_tid(&(__funk2.processor_thread_handler), tid);
+  funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
+  funk2_processor_thread_t* processor_thread    = funk2_processor_thread_handler__lookup_tid(&(__funk2.processor_thread_handler), tid);
   if (processor_thread == NULL) {
     status("raw__join failed to lookup processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);
     error(nil, "raw__join failed to lookup processor_thread from processor_thread_handler.");
   }
-  void*     result  = funk2_processor_thread__join(processor_thread);
+  void*     result  = funk2_processor_thread__join(my_processor_thread, processor_thread);
   boolean_t success = funk2_processor_thread_handler__remove_processor_thread(&(__funk2.processor_thread_handler), tid);
   if (! success) {
     status("raw__join failed to remove processor_thread from processor_thread_handler.  tid=" u64__fstr, (u64)tid);

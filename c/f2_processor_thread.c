@@ -132,15 +132,20 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
   pthread_mutex_unlock(&(this->tid_initialized_cond_mutex));
 }
 
-void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
-  int join_result = pthread_join(this->pthread, NULL);
+// must only be called by owner (use raw__join from f2_processor_thread_handler.[ch])
+void* funk2_processor_thread__join(funk2_processor_thread_t* this, funk2_processor_thread_t* thread_to_join) {
+  funk2_processor_thread__check_in(this);
+  funk2_processor_thread_event_t* event = funk2_processor_thread__create_event(this, "funk2_processor_thread__join");
+  int join_result = pthread_join(thread_to_join->pthread, NULL);
+  funk2_processor_thread__remove_event(this, event);
+  funk2_processor_thread__check_in(this);
   if (join_result != 0) {
     switch(join_result) {
     case EDEADLK:
       status("funk2_processor_thread__join error: A deadlock was detected (e.g., two threads tried to join with each other); or thread specifies the calling thread.");
       break;
     case EINVAL:
-      status("funk2_processor_thread__join error: Thread is not a joinable thread OR Another thread is already waiting to join with this thread.");
+      status("funk2_processor_thread__join error: Thread is not a joinable thread OR Another thread is already waiting to join with thread.");
       break;
     case ESRCH:
       status("funk2_processor_thread__join error: No thread with the ID thread could be found.");
@@ -151,10 +156,10 @@ void* funk2_processor_thread__join(funk2_processor_thread_t* this) {
     }
     error(nil, "funk2_processor_thread__join error.");
   }
-  return this->result;
+  return thread_to_join->result;
 }
 
-// never call this function directly from within a processor thread.
+// calling this funktion directly from within a processor thread does not perform accounting.
 void __funk2__nanosleep(u64 nanoseconds) {
 #if defined(HAVE_NANOSLEEP)
   struct timespec sleepTime;
@@ -175,7 +180,7 @@ void __funk2__nanosleep(u64 nanoseconds) {
 #endif // NANOSLEEP
 }
 
-// must only be called by owner (use raw__nanosleep from f2_time.c)
+// must only be called by owner (use raw__nanosleep from f2_processor_thread_handler.[ch])
 void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanoseconds) {
   u64 start_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   __funk2__nanosleep(nanoseconds);
@@ -189,4 +194,16 @@ void funk2_processor_thread__print_status(funk2_processor_thread_t* this) {
 					 funk2_processor_thread_event_t* event = (funk2_processor_thread_event_t*)from_ptr(key);
 					 funk2_processor_thread_event__print_status(event);
 					 );
+}
+
+void funk2_processor_thread__check_in(funk2_processor_thread_t* this) {
+#if defined(DEBUG_PROCESSOR_THREAD)
+  {
+    f2tid_t tid = raw__gettid();
+    if (tid != this->tid) {
+      error(nil, "funk2_processor_thread__check_in debug fatal error: tid != this->tid");
+    }
+  }
+#endif // DEBUG_PROCESSOR_THREAD
+  this->last_checked_in_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
 }

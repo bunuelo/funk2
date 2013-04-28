@@ -64,12 +64,16 @@ int create_thread_with_large_stack(pthread_t *out_thread, void *thread_func, voi
 
 void* start_processor_thread_wrapper(void* data) {
   funk2_processor_thread_t* this = (funk2_processor_thread_t*)data;
-  pthread_mutex_lock(&(this->initialized_cond_mutex));
-  this->tid         = raw__gettid();
-  this->initialized = boolean__true;
-  pthread_cond_signal(&(this->initialized_cond));
-  pthread_mutex_unlock(&(this->initialized_cond_mutex));
+  pthread_mutex_lock(&(this->tid_initialized_cond_mutex));
+  this->tid             = raw__gettid();
+  this->tid_initialized = boolean__true;
+  pthread_cond_signal(&(this->tid_initialized_cond));
+  pthread_mutex_unlock(&(this->tid_initialized_cond_mutex));
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
+  pthread_mutex_lock(&(this->added_to_handler_cond_mutex));
+  while (! (this->added_to_handler)) {
+    pthread_cond_wait(&(this->added_to_handler_cond), &(this->added_to_handler_cond_mutex));
+  }
   funk2_processor_thread_event_t* event = raw__begin_event("start_processor_thread_wrapper");
   void* return_value = (*(this->start_function))(this->args);
   raw__end_event(event);
@@ -78,17 +82,22 @@ void* start_processor_thread_wrapper(void* data) {
 }
 
 void funk2_processor_thread__init(funk2_processor_thread_t* this, funk2_processor_thread_function_pointer_t start_function, void* args) {
-  pthread_mutex_init(&(this->initialized_cond_mutex), NULL);
-  pthread_cond_init(&(this->initialized_cond), NULL);
-  this->initialized    = boolean__false;
-  this->start_function = start_function;
-  this->args           = args;
+  pthread_mutex_init(&(this->tid_initialized_cond_mutex), NULL);
+  pthread_cond_init(&(this->tid_initialized_cond), NULL);
+  this->tid_initialized = boolean__false;
+  pthread_mutex_init(&(this->added_to_handler_cond_mutex), NULL);
+  pthread_cond_init(&(this->added_to_handler_cond), NULL);
+  this->added_to_handler = boolean__false;
+  this->start_function  = start_function;
+  this->args            = args;
   funk2_thread_safe_hash__init(&(this->event_hash), 10);
 }
 
 void funk2_processor_thread__destroy(funk2_processor_thread_t* this) {
-  pthread_mutex_destroy(&(this->initialized_cond_mutex));
-  pthread_cond_destroy(&(this->initialized_cond));
+  pthread_mutex_destroy(&(this->tid_initialized_cond_mutex));
+  pthread_cond_destroy(&(this->tid_initialized_cond));
+  pthread_mutex_destroy(&(this->added_to_handler_cond_mutex));
+  pthread_cond_destroy(&(this->added_to_handler_cond));
   funk2_thread_safe_hash__destroy(&(this->event_hash));
 }
 
@@ -111,11 +120,11 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
     perror("pthread_create");
     exit(-1);
   }
-  pthread_mutex_lock(&(this->initialized_cond_mutex));
-  while (! (this->initialized)) {
-    pthread_cond_wait(&(this->initialized_cond), &(this->initialized_cond_mutex));
+  pthread_mutex_lock(&(this->tid_initialized_cond_mutex));
+  while (! (this->tid_initialized)) {
+    pthread_cond_wait(&(this->tid_initialized_cond), &(this->tid_initialized_cond_mutex));
   }
-  pthread_mutex_unlock(&(this->initialized_cond_mutex));
+  pthread_mutex_unlock(&(this->tid_initialized_cond_mutex));
 }
 
 void* funk2_processor_thread__join(funk2_processor_thread_t* this) {

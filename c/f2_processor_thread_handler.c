@@ -65,6 +65,11 @@ funk2_processor_thread_t* funk2_processor_thread_handler__add_new_processor_thre
   
   funk2_thread_safe_hash__add(&(this->processor_thread_tid_hash), processor_thread->tid, (u64)to_ptr(processor_thread));
   
+  pthread_mutex_lock(&(processor_thread->added_to_handler_cond_mutex));
+  processor_thread->added_to_handler = boolean__true;
+  pthread_cond_signal(&(processor_thread->added_to_handler_cond));
+  pthread_mutex_unlock(&(processor_thread->added_to_handler_cond_mutex));
+  
   return processor_thread;
 }
 

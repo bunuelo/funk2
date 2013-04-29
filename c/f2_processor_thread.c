@@ -73,6 +73,7 @@ void* start_processor_thread_wrapper(void* data) {
   while (! (this->added_to_handler)) {
     pthread_cond_wait(&(this->added_to_handler_cond), &(this->added_to_handler_cond_mutex));
   }
+  pthread_mutex_unlock(&(this->added_to_handler_cond_mutex));
   // thread initialized.  can use status and event funktions now.
   status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   funk2_processor_thread_event_t* event = raw__begin_event("start_processor_thread_wrapper");

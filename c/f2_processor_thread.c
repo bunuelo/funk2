@@ -69,11 +69,11 @@ void* start_processor_thread_wrapper(void* data) {
   this->tid_initialized = boolean__true;
   pthread_cond_signal(&(this->tid_initialized_cond));
   pthread_mutex_unlock(&(this->tid_initialized_cond_mutex));
-  status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   pthread_mutex_lock(&(this->added_to_handler_cond_mutex));
   while (! (this->added_to_handler)) {
     pthread_cond_wait(&(this->added_to_handler_cond), &(this->added_to_handler_cond_mutex));
   }
+  status("start_processor_thread_wrapper tid=" u64__fstr, (u64)(this->tid));
   funk2_processor_thread_event_t* event = raw__begin_event("start_processor_thread_wrapper");
   void* return_value = (*(this->start_function))(this->args);
   raw__end_event(event);

@@ -66,6 +66,9 @@ funk2_processor_readwritelock_trylock_result_t funk2_processor_readwritelock__ra
 }
 
 void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_readwritelock__raw_writelock");
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            writelock_tries    = 0;
@@ -86,9 +89,15 @@ void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_
   if (poller_initialized) {
     funk2_poller__destroy(&poller);
   }
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  raw__end_event(event);
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
 }
 
 void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num) {
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_readwritelock__raw_readlock");
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            readlock_tries     = 0;
@@ -109,9 +118,15 @@ void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t
   if (poller_initialized) {
     funk2_poller__destroy(&poller);
   }
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  raw__end_event(event);
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
 }
 
 void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwritelock_t* this, const char* writelock_source_file, const int writelock_line_num) {
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_readwritelock__raw_user_writelock");
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            writelock_tries    = 0;
@@ -140,9 +155,15 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
   if (poller_initialized) {
     funk2_poller__destroy(&poller);
   }
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  raw__end_event(event);
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
 }
 
 void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritelock_t* this, const char* readlock_source_file, const int readlock_line_num) {
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_readwritelock__raw_user_readlock");
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            readlock_tries     = 0;
@@ -171,6 +192,9 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
   if (poller_initialized) {
     funk2_poller__destroy(&poller);
   }
+#if defined(F2__PROCESSOR_READWRITELOCK__DEBUG)
+  raw__end_event(event);
+#endif // F2__PROCESSOR_READWRITELOCK__DEBUG
 }
 
 void funk2_processor_readwritelock__raw_unlock(funk2_processor_readwritelock_t* this, const char* unwritelock_source_file, const int unwritelock_line_num) {

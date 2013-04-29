@@ -96,8 +96,12 @@ void funk2_processor_spinlock__raw_lock(funk2_processor_spinlock_t* this, const 
     printf("\nfunk2_processor_spinlock__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_spinlock__error();
   }
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_spinlock__raw_lock");
 #endif
   pthread_spin_lock(&(this->pthread_spin));
+#if defined(F2__PROCESSOR_SPINLOCK__DEBUG)
+  raw__end_event(event);
+#endif
 }
 
 void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, const char* lock_source_file, const int lock_line_num) {
@@ -106,6 +110,7 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
     printf("\nfunk2_processor_spinlock__raw_lock error: attempted to use uninitialized mutex.\n"); fflush(stdout);
     funk2_processor_spinlock__error();
   }
+  funk2_processor_thread_event_t* event = raw__begin_event("funk2_processor_spinlock__raw_lock");
 #endif
   {
     funk2_poller_t poller;
@@ -137,6 +142,9 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
       funk2_poller__destroy(&poller);
     }
   }
+#if defined(F2__PROCESSOR_SPINLOCK__DEBUG)
+  raw__end_event(event);
+#endif
 }
 
 void funk2_processor_spinlock__raw_unlock(funk2_processor_spinlock_t* this, const char* unlock_source_file, const int unlock_line_num) {

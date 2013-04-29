@@ -25,19 +25,30 @@
 // rights to redistribute these changes.
 // 
 
+#ifndef F2__PROCESSOR_READWRITELOCK__TYPES__H
+#define F2__PROCESSOR_READWRITELOCK__TYPES__H
+
+#define F2__PROCESSOR_READWRITELOCK__DEBUG
+
+typedef struct funk2_processor_readwritelock_s                funk2_processor_readwritelock_t;
+typedef enum   funk2_processor_readwritelock_trylock_result_e funk2_processor_readwritelock_trylock_result_t;
+
+#endif // F2__PROCESSOR_READWRITELOCK__TYPES__H
+
+
 #ifndef F2__PROCESSOR_READWRITELOCK__H
 #define F2__PROCESSOR_READWRITELOCK__H
 
 #include "f2_global.h"
 
-typedef struct funk2_processor_readwritelock_s {
+struct funk2_processor_readwritelock_s {
   pthread_rwlock_t pthread_rwlock;
-} funk2_processor_readwritelock_t;
+};
 
-typedef enum funk2_processor_readwritelock_trylock_result_e {
+enum funk2_processor_readwritelock_trylock_result_e {
   funk2_processor_readwritelock_trylock_result__success,
   funk2_processor_readwritelock_trylock_result__failure
-} funk2_processor_readwritelock_trylock_result_t;
+};
 
 void                                           funk2_processor_readwritelock__init              (funk2_processor_readwritelock_t* this);
 void                                           funk2_processor_readwritelock__destroy           (funk2_processor_readwritelock_t* this);
@@ -60,7 +71,6 @@ u64                                            funk2_processor_readwritelock__eq
 #define funk2_processor_readwritelock__user_writelock(this) funk2_processor_readwritelock__raw_user_writelock(this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__user_readlock( this) funk2_processor_readwritelock__raw_user_readlock( this, __FILE__, __LINE__)
 #define funk2_processor_readwritelock__unlock(        this) funk2_processor_readwritelock__raw_unlock(        this, __FILE__, __LINE__)
-
 
 #endif // F2__PROCESSOR_READWRITELOCK__H
 

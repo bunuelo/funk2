@@ -31,7 +31,7 @@
 #include "f2_global.h"
 #include "f2_processor_thread_handler.h"
 
-//#define F2__PROCESSOR_SPINLOCK__DEBUG
+#define F2__PROCESSOR_SPINLOCK__DEBUG
 
 typedef struct funk2_processor_spinlock_s {
 #if defined(F2__PROCESSOR_SPINLOCK__DEBUG)

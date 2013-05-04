@@ -154,7 +154,7 @@ funk2_processor_thread_event_t* raw__begin_event(char* message) {
 
 void raw__end_event(funk2_processor_thread_event_t* event) {
   funk2_processor_thread_t* my_processor_thread = funk2_processor_thread_handler__myself(&(__funk2.processor_thread_handler));
-  funk2_processor_thread__remove_event(my_processor_thread, event);
+  funk2_processor_thread__destroy_event(my_processor_thread, event);
 }
 
 void raw__thread_status() {

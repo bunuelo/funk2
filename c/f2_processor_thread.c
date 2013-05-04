@@ -119,8 +119,10 @@ funk2_processor_thread_event_t* funk2_processor_thread__create_event(funk2_proce
 }
 
 // must only be called by owner (use raw__end_event from f2_processor_thread_handler.[ch])
-void funk2_processor_thread__remove_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event) {
+void funk2_processor_thread__destroy_event(funk2_processor_thread_t* this, funk2_processor_thread_event_t* event) {
   funk2_thread_safe_hash__remove(&(this->event_hash), (u64)to_ptr(event));
+  funk2_processor_thread_event__destroy(event);
+  f2__free(to_ptr(event));
   funk2_processor_thread__check_in(this);
 }
 
@@ -142,7 +144,7 @@ void funk2_processor_thread__start(funk2_processor_thread_t* this) {
 void* funk2_processor_thread__join(funk2_processor_thread_t* this, funk2_processor_thread_t* thread_to_join) {
   funk2_processor_thread_event_t* event = funk2_processor_thread__create_event(this, "funk2_processor_thread__join");
   int join_result = pthread_join(thread_to_join->pthread, NULL);
-  funk2_processor_thread__remove_event(this, event);
+  funk2_processor_thread__destroy_event(this, event);
   if (join_result != 0) {
     switch(join_result) {
     case EDEADLK:
@@ -191,7 +193,7 @@ void funk2_processor_thread__nanosleep(funk2_processor_thread_t* this, u64 nanos
   __funk2__nanosleep(nanoseconds);
   u64 end_nanoseconds_since_1970 = raw__nanoseconds_since_1970();
   this->sleep_nanoseconds += (end_nanoseconds_since_1970 - start_nanoseconds_since_1970);
-  funk2_processor_thread__remove_event(this, event);
+  funk2_processor_thread__destroy_event(this, event);
 }
 
 void funk2_processor_thread__print_status(funk2_processor_thread_t* this) {

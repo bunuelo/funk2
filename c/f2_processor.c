@@ -127,45 +127,6 @@ f2ptr raw__processor__scheduler_add_active_fiber(f2ptr cause, f2ptr this, f2ptr 
   f2ptr active_fibers_cmutex        = f2processor__active_fibers_cmutex(   this,  cause);
   f2ptr processor_assignment_cmutex = f2fiber__processor_assignment_cmutex(fiber, cause);
   raw__cmutex__scheduler_lock_two(cause, active_fibers_cmutex, processor_assignment_cmutex);
-  /* boolean_t      both_locked                 = boolean__false; */
-  /* funk2_poller_t poller; */
-  /* boolean_t      poller_initialized          = boolean__false; */
-  /* s64            lock_tries                  = 0; */
-  /* while (! both_locked) { */
-  /*   both_locked                                           = boolean__true; */
-  /*   boolean_t active_fibers_cmutex__failed_to_lock        = f2cmutex__trylock(active_fibers_cmutex,        cause); */
-  /*   boolean_t processor_assignment_cmutex__failed_to_lock = f2cmutex__trylock(processor_assignment_cmutex, cause); */
-  /*   if (active_fibers_cmutex__failed_to_lock) { */
-  /*     both_locked = boolean__false; */
-  /*   } */
-  /*   if (processor_assignment_cmutex__failed_to_lock) { */
-  /*     both_locked = boolean__false; */
-  /*   } */
-  /*   if (! both_locked) { */
-  /*     if (! active_fibers_cmutex__failed_to_lock) { */
-  /* 	f2cmutex__unlock(active_fibers_cmutex, cause); */
-  /*     } */
-  /*     if (! processor_assignment_cmutex__failed_to_lock) { */
-  /* 	f2cmutex__unlock(processor_assignment_cmutex, cause); */
-  /*     } */
-  /*     //f2__this__fiber__yield(cause); */
-  /*     lock_tries ++; */
-  /*     if (lock_tries < 1000) { */
-  /* 	raw__fast_spin_sleep_yield(); */
-  /*     } else { */
-  /* 	if (! poller_initialized) { */
-  /* 	  funk2_poller__init_deep_sleep(&poller); */
-  /* 	  funk2_poller__reset(&poller); */
-  /* 	  poller_initialized = boolean__true; */
-  /* 	} else { */
-  /* 	  funk2_poller__sleep(&poller); */
-  /* 	} */
-  /*     } */
-  /*   } */
-  /* } */
-  /* if (poller_initialized) { */
-  /*   funk2_poller__destroy(&poller); */
-  /* } */
   boolean_t success = raw__processor__add_active_fiber__thread_unsafe(cause, this, fiber);
   f2cmutex__unlock(active_fibers_cmutex,        cause);
   f2cmutex__unlock(processor_assignment_cmutex, cause);

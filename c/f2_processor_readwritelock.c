@@ -75,6 +75,8 @@ void funk2_processor_readwritelock__raw_writelock(funk2_processor_readwritelock_
   while (funk2_processor_readwritelock__raw_trywritelock(this, writelock_source_file, writelock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     writelock_tries ++;
     if (writelock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+    } else if (writelock_tries < 2000) {
       raw__fast_spin_sleep_yield();
     } else {
       if (! poller_initialized) {
@@ -104,6 +106,8 @@ void funk2_processor_readwritelock__raw_readlock(funk2_processor_readwritelock_t
   while (funk2_processor_readwritelock__raw_tryreadlock(this, readlock_source_file, readlock_line_num) != funk2_processor_readwritelock_trylock_result__success) {
     readlock_tries ++;
     if (readlock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+    } else if (readlock_tries < 2000) {
       raw__fast_spin_sleep_yield();
     } else {
       if (! poller_initialized) {
@@ -139,6 +143,8 @@ void funk2_processor_readwritelock__raw_user_writelock(funk2_processor_readwrite
     {
       writelock_tries ++;
       if (writelock_tries < 1000) {
+	// spin without yielding in case concurrent process releases lock
+      } else if (writelock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {
@@ -176,6 +182,8 @@ void funk2_processor_readwritelock__raw_user_readlock(funk2_processor_readwritel
     {
       readlock_tries ++;
       if (readlock_tries < 1000) {
+	// spin without yielding in case concurrent process releases lock
+      } else if (readlock_tries < 2000) {
 	raw__fast_spin_sleep_yield();
       } else {
 	if (! poller_initialized) {

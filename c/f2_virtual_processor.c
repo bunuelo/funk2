@@ -423,25 +423,31 @@ void funk2_virtual_processor__yield(funk2_virtual_processor_t* this) {
 	    locked_mutex = boolean__true;
 	  }
 	  if (! locked_mutex) {
-	    lock_tries ++;
-	    if ((lock_tries >= 1000) ||
-		__funk2.scheduler_thread_controller.need_wait ||
-		funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
-	      if (! poller_initialized) {
-		funk2_poller__init_deep_sleep(&poller);
-		funk2_poller__reset(&poller);
-		poller_initialized = boolean__true;
-	      } else {
-		funk2_poller__sleep(&poller);
-	      }
-	    } else {
+	    if (lock_tries < 1000) {
+	      // spin without yielding in case concurrent process releases lock
+	      lock_tries ++;
+	    } else if (lock_tries < 2000) {
 	      raw__fast_spin_sleep_yield();
-	    }
-	    funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
-	    funk2_virtual_processor__unpause_next_spinning_thread(this);
-	    boolean_t cycle_successful = funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
-	    if (cycle_successful) {
-	      funk2_poller__reset(&poller);
+	      lock_tries ++;
+	    } else {
+	      if (__funk2.scheduler_thread_controller.need_wait ||
+		  funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller))) {
+		if (! poller_initialized) {
+		  funk2_poller__init_deep_sleep(&poller);
+		  funk2_poller__reset(&poller);
+		  poller_initialized = boolean__true;
+		} else {
+		  funk2_poller__sleep(&poller);
+		}
+	      }
+	      funk2_virtual_processor__assure_at_least_one_spinning_virtual_processor_thread(this);
+	      funk2_virtual_processor__unpause_next_spinning_thread(this);
+	      boolean_t cycle_successful = funk2_virtual_processor__try_cycle_and_pause_myself_and_unpause_next_yielding_virtual_processor_thread(this, yielding_virtual_processor_thread);
+	      if (cycle_successful) {
+		if (poller_initialized) {
+		  funk2_poller__reset(&poller);
+		}
+	      }
 	    }
 	  }
 	}

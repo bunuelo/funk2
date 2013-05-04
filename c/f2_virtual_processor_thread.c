@@ -278,8 +278,11 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       }
     } else {
       if (wait_tries < 1000) {
+	// spin without yielding in case concurrent process releases lock
 	wait_tries ++;
+      } else if (wait_tries < 2000) {
 	raw__fast_spin_sleep_yield();
+	wait_tries ++;
       } else {
 	if (! poller_initialized) {
 	  funk2_poller__init_deep_sleep(&poller);

@@ -588,6 +588,9 @@ void funk2_user_thread_controller__user_wait_politely(funk2_user_thread_controll
 	funk2_processor_conditionlock__unlock(&(this->something_to_do_while_waiting_politely_conditionlock));
       } else {
 	if (wait_tries < 1000) {
+	  // spin without yielding in case concurrent process releases lock
+	  wait_tries ++;
+	} else if (wait_tries < 2000) {
 	  wait_tries ++;
 	  raw__fast_spin_sleep_yield();
 	} else {

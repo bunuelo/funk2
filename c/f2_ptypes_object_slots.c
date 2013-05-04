@@ -2062,12 +2062,16 @@ def_pcfunk1(creadwritelock__is_readlocked, this,
 	    "",
 	    return f2__creadwritelock__is_readlocked(this_cause, this));
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__scheduler_writelock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            lock_tries         = 0;
   while (raw__creadwritelock__trywritelock(cause, this)) {
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {
@@ -2085,6 +2089,7 @@ void raw__creadwritelock__scheduler_writelock(f2ptr cause, f2ptr this) {
   }
 }
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__user_writelock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
@@ -2092,6 +2097,9 @@ void raw__creadwritelock__user_writelock(f2ptr cause, f2ptr this) {
   while (raw__creadwritelock__trywritelock(cause, this)) {
     funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {
@@ -2109,6 +2117,7 @@ void raw__creadwritelock__user_writelock(f2ptr cause, f2ptr this) {
   }
 }
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__writelock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
@@ -2116,6 +2125,9 @@ void raw__creadwritelock__writelock(f2ptr cause, f2ptr this) {
   while (raw__creadwritelock__trywritelock(cause, this)) {
     f2__this__fiber__yield(cause);
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {
@@ -2139,12 +2151,16 @@ f2ptr f2__creadwritelock__writelock(f2ptr cause, f2ptr this) {
   return nil;
 }
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__scheduler_readlock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
   u64            lock_tries         = 0;
   while (raw__creadwritelock__tryreadlock(cause, this)) {
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {
@@ -2162,6 +2178,7 @@ void raw__creadwritelock__scheduler_readlock(f2ptr cause, f2ptr this) {
   }
 }
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__user_readlock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
@@ -2169,6 +2186,9 @@ void raw__creadwritelock__user_readlock(f2ptr cause, f2ptr this) {
   while (raw__creadwritelock__tryreadlock(cause, this)) {
     funk2_user_thread_controller__user_check_wait_politely(&(__funk2.user_thread_controller));
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {
@@ -2186,6 +2206,7 @@ void raw__creadwritelock__user_readlock(f2ptr cause, f2ptr this) {
   }
 }
 
+// should use funk2_processes_readwritelock funktions
 void raw__creadwritelock__readlock(f2ptr cause, f2ptr this) {
   funk2_poller_t poller;
   boolean_t      poller_initialized = boolean__false;
@@ -2193,6 +2214,9 @@ void raw__creadwritelock__readlock(f2ptr cause, f2ptr this) {
   while (raw__creadwritelock__tryreadlock(cause, this)) {
     f2__this__fiber__yield(cause);
     if (lock_tries < 1000) {
+      // spin without yielding in case concurrent process releases lock
+      lock_tries ++;
+    } else if (lock_tries < 2000) {
       raw__fast_spin_sleep_yield();
       lock_tries ++;
     } else {

@@ -117,24 +117,25 @@ void funk2_processor_spinlock__raw_user_lock(funk2_processor_spinlock_t* this, c
     boolean_t      poller_initialized = boolean__false;
     u64            lock_tries         = 0;
     while (funk2_processor_spinlock__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_spinlock_trylock_result__success) {
-      f2tid_t my_tid = raw__gettid();
-      if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) &&
-	  (my_tid != __funk2.memory.memory_handling_tid)) {
-	funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
-      }
-      {
-	if (lock_tries < 1000) {
-	  raw__fast_spin_sleep_yield();
-	  lock_tries ++;
+      if (lock_tries < 1000) {
+	// spin without yielding in case concurrent process releases lock
+	lock_tries ++;
+      } else if (lock_tries < 2000) {
+	raw__fast_spin_sleep_yield();
+	lock_tries ++;
+      } else {
+	f2tid_t my_tid = raw__gettid();
+	if (funk2_user_thread_controller__need_wait(&(__funk2.user_thread_controller)) &&
+	    (my_tid != __funk2.memory.memory_handling_tid)) {
+	  funk2_user_thread_controller__user_wait_politely(&(__funk2.user_thread_controller));
+	}
+	if (! poller_initialized) {
+	  funk2_poller__init_deep_sleep(&poller);
+	  funk2_poller__reset(&poller);
+	  poller_initialized = boolean__true;
 	} else {
-	  if (! poller_initialized) {
-	    funk2_poller__init_deep_sleep(&poller);
-	    funk2_poller__reset(&poller);
-	    poller_initialized = boolean__true;
-	  } else {
-	    f2__this__fiber__yield(nil);
-	    funk2_poller__sleep(&poller);
-	  }
+	  f2__this__fiber__yield(nil);
+	  funk2_poller__sleep(&poller);
 	}
       }
     }

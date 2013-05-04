@@ -173,6 +173,9 @@ void funk2_processor_mutex__raw_user_lock(funk2_processor_mutex_t* this, const c
       funk2_virtual_processor_t* my_virtual_processor = funk2_virtual_processor_handler__my_virtual_processor(&(__funk2.virtual_processor_handler));
       while (funk2_processor_mutex__raw_trylock(this, lock_source_file, lock_line_num) != funk2_processor_mutex_trylock_result__success) {
 	if (lock_tries < 1000) {
+	  // spin without yielding to wait in case concurrent process releases mutex
+	  lock_tries ++;
+	} else if (lock_tries < 2000) {
 	  raw__fast_spin_sleep_yield();
 	  lock_tries ++;
 	} else {

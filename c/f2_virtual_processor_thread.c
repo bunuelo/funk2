@@ -274,9 +274,10 @@ void funk2_virtual_processor_thread__pause_myself_and_unpause_other(funk2_virtua
       virtual_processor_thread__lock_failed = funk2_processor_conditionlock__trylock(&(virtual_processor_thread->paused_conditionlock));
       if (virtual_processor_thread__lock_failed != 0) {
 	funk2_processor_conditionlock__unlock(&(this->paused_conditionlock));
-	raw__fast_spin_sleep_yield();
       }
-    } else {
+    }
+    if ((this__lock_failed                     != 0) ||
+	(virtual_processor_thread__lock_failed != 0)) {
       if (wait_tries < 1000) {
 	// spin without yielding in case concurrent process releases lock
 	wait_tries ++;

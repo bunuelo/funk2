@@ -21,17 +21,16 @@ being told as well as learning from experience.
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{gfx/learning_from_being_told_in_layers}
-\caption[Learning from ``being told'' and learning from ``experience''
-  both occur in each SALS planning layer.]{Learning from ``being
-  told'' and learning from ``experience'' both occur in each SALS
-  planning layer.  When a layer of the AI learns from being told, a
-  natural language plan is communicated to that layer from a source
-  external to the AI, such as a human user.  When a layer of the AI
-  learns from experience, two streams of trace events are received
-  from the layer below that are asynchronously woven into hypothetical
-  causal models of the effects of actions.  This chapter focuses on
-  the details of how the SALS AI learns asynchronously from
-  experience.}
+\caption[Learning from being told and learning from experience both
+  occur in each SALS planning layer.]{Learning from being told and
+  learning from experience both occur in each SALS planning layer.
+  When a layer of the AI learns from being told, a natural language
+  plan is communicated to that layer from a source external to the AI,
+  such as a human user.  When a layer of the AI learns from
+  experience, two streams of trace events are received from the layer
+  below that are asynchronously woven into hypothetical causal models
+  of the effects of actions.  This chapter focuses on the details of
+  how the SALS AI learns asynchronously from experience.}
 \label{figure:learning_from_being_told_in_layers_2}
 \end{figure}
 In this chapter, I will focus on how the SALS AI learns from the
@@ -52,8 +51,8 @@ resources that the planning layer has activated through the execution
 of natural language plans.  I will refer to these two asynchronous
 information processing pathways as:
 \begin{packed_enumerate}
-\item{``partial state event abstraction,'' and}
-\item{``resource execution event causal rule-learning.''}
+\item{{\emph{partial state event abstraction}}, and}
+\item{{\emph{resource execution event causal rule-learning}}.}
 \end{packed_enumerate}
 For the deliberative planning layer, these two streams of events come
 from (1) the changes in the physical knowledge base in the learned
@@ -161,6 +160,7 @@ super-reflective planning layer from the reflective planning layer.
 \end{figure}
 
 \section{Partial State Event Abstraction}
+\label{section:partial_state_event_abstraction}
 
 Partial state event abstraction is the first stage of asynchronous
 information processing of an experiential event stream that any given
@@ -168,25 +168,26 @@ planning layer receives from the changes in the knowledge base that it
 is trying to control.  A change event object has the following six
 properties:
 \begin{packed_enumerate}
-\item{time}
-\item{change-type}
-\item{source}
-\item{key-type}
-\item{key}
-\item{target}
+\item{{\tt{time}}}
+\item{{\tt{change-type}}}
+\item{{\tt{source}}}
+\item{{\tt{key-type}}}
+\item{{\tt{key}}}
+\item{{\tt{target}}}
 \end{packed_enumerate}
-The ``time'' of the change event object is the clock time at which the
-change occurred.  The ``change-type'' property of the change event
-object is one of two symbolic values: (1) ``add'' or (2) ``remove.''
-The ``source'' property of the change event object is the frame-based
-object in the knowledge base that has had a slot value added or
-removed.  The ``key-type'' and ``key'' properties of the change event
-object are both symbolic values that together refer to the name of the
-slot of the frame-based object in the knowledge base that has been
-added or removed.  The ``target'' property of the change event object
-is the slot value of the frame-based object in the knowledge base that
-has been added or removed.  The ``target'' property can either be a
-symbolic property or another frame-based object.
+The ``{\tt{time}}'' of the change event object is the clock time at
+which the change occurred.  The ``{\tt{change-type}}'' property of the
+change event object is one of two symbolic values: (1) ``{\tt{add}}''
+or (2) ``{\tt{remove}}.''  The ``{\tt{source}}'' property of the
+change event object is the frame-based object in the knowledge base
+that has had a slot value added or removed.  The ``{\tt{key-type}}''
+and ``{\tt{key}}'' properties of the change event object are both
+symbolic values that together refer to the name of the slot of the
+frame-based object in the knowledge base that has been added or
+removed.  The ``{\tt{target}}'' property of the change event object is
+the slot value of the frame-based object in the knowledge base that
+has been added or removed.  The ``{\tt{target}}'' property can either
+be a symbolic property or another frame-based object.
 
 Every single change that occurs within the knowledge base that a
 planning layer is trying to control results in a change event object
@@ -208,133 +209,137 @@ results in adding or removing from the knowledge base reconstruction
 is computed and stored as events in the partial state event knowledge
 base.  The SALS AI does not abstract all partial states that occur in
 the reconstructed knowledge base, but instead only focuses on two
-specific types of partial states: (1) ``relationship'' partial states
-and (2) ``property'' partial states.
+specific types of partial states: (1) ``{\tt{relationship}}'' partial
+states and (2) ``{\tt{property}}'' partial states.
 
-The SALS ``relationship'' and ``property'' types of partial states are
-the same as those described in
-{\mbox{\autoref{chapter:learning_from_being_told}}}
-as the return values of the ``relationship'' and ``property''
+The SALS ``{\tt{relationship}}'' and ``{\tt{property}}'' types of
+partial states are the same as those described in
+{\mbox{\autoref{chapter:learning_from_being_told}}} as the return
+values of the ``{\tt{relationship}}'' and ``{\tt{property}}''
 expressions of the SALS natural programming language.  To briefly
-review, the following are the ten arguments to the ``relationship''
-expression, which define a SALS ``relationship'' partial state:
+review, the following are the ten arguments to the
+``{\tt{relationship}}'' expression, which define a SALS
+``{\tt{relationship}}'' partial state:
 \begin{packed_enumerate}
-\item{source-type}
-\item{source-key-type}
-\item{source-key}
-\item{source-value}
-\item{key-type}
-\item{key}
-\item{target-type}
-\item{target-key-type}
-\item{target-key}
-\item{target-value}
+\item{{\tt{source-type}}}
+\item{{\tt{source-key-type}}}
+\item{{\tt{source-key}}}
+\item{{\tt{source-value}}}
+\item{{\tt{key-type}}}
+\item{{\tt{key}}}
+\item{{\tt{target-type}}}
+\item{{\tt{target-key-type}}}
+\item{{\tt{target-key}}}
+\item{{\tt{target-value}}}
 \end{packed_enumerate}
 {\mbox{\autoref{figure:relationship_partial_state_graph_2}}} shows how
-the arguments to the SALS ``relationship'' partial state map to the
-frame types, slot values, and properties of a frame-based knowledge
-base as it is represented as a graph.
+the arguments to the SALS ``{\tt{relationship}}'' partial state map to
+the frame types, slot values, and properties of a frame-based
+knowledge base as it is represented as a graph.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/relationship_partial_state_graph}
-\caption[A SALS ``relationship'' partial state.]{A SALS
-  ``relationship'' partial state.  The graph on the left shows the ten
-  argument names for the ``relationship'' expression, while the graph
-  on the right shows a potential partial state of the physical
-  knowledge base that literally means, ``a cube shaped block to be to
-  the left of a gripper that is me.''}
+\caption[A SALS ``{\tt{relationship}}'' partial state.]{A SALS
+  ``{\tt{relationship}}'' partial state.  The graph on the left shows
+  the ten argument names for the ``{\tt{relationship}}'' expression,
+  while the graph on the right shows a potential partial state of the
+  physical knowledge base that literally means, ``{\tt{a cube shaped
+      block to be to the left of a gripper that is me}}.''}
 \label{figure:relationship_partial_state_graph_2}
 \end{figure}
-The SALS ``property'' partial state represents the conjunction of two
-different properties of a frame-based object and takes the following
-seven arguments:
+The SALS ``{\tt{property}}'' partial state represents the conjunction
+of two different properties of a frame-based object and takes the
+following seven arguments:
 \begin{packed_enumerate}
-\item{source-type}
-\item{source-key-type}
-\item{source-key}
-\item{source-value}
-\item{key-type}
-\item{key}
-\item{value}
+\item{{\tt{source-type}}}
+\item{{\tt{source-key-type}}}
+\item{{\tt{source-key}}}
+\item{{\tt{source-value}}}
+\item{{\tt{key-type}}}
+\item{{\tt{key}}}
+\item{{\tt{value}}}
 \end{packed_enumerate}
 {\mbox{\autoref{figure:relationship_partial_state_graph_2}}} shows how
-the arguments to the ``property'' expression map to the frame types,
-slot values, and properties of a frame-based knowledge base that is
-represented as a graph.
+the arguments to the ``{\tt{property}}'' expression map to the frame
+types, slot values, and properties of a frame-based knowledge base
+that is represented as a graph.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/property_partial_state_graph}
-\caption[The SALS ``property'' partial state object.]{The SALS
-  ``property'' partial state object.  The graph on the right shows the
-  seven argument names for the ``property'' expression, while the
-  graph on the left shows a potential partial state of the physical
-  knowledge base that literally means, ``a gripper to be me and have a
-  stop movement command.''}
+\caption[The SALS ``{\tt{property}}'' partial state object.]{The SALS
+  ``{\tt{property}}'' partial state object.  The graph on the right
+  shows the seven argument names for the ``{\tt{property}}''
+  expression, while the graph on the left shows a potential partial
+  state of the physical knowledge base that literally means, ``{\tt{a
+      gripper to be me and have a stop movement command}}.''}
 \label{figure:property_partial_state_graph_2}
 \end{figure}
-While the reception of a single ``add'' or ``remove'' change event
-object only adds or removes a single edge from the knowledge base,
-this results in potentially adding or removing many ``relationship''
-and ``property'' type partial states to or from that knowledge base.
+While the reception of a single ``{\tt{add}}'' or ``{\tt{remove}}''
+change event object only adds or removes a single edge from the
+knowledge base, this results in potentially adding or removing many
+``{\tt{relationship}}'' and ``{\tt{property}}'' type partial states to
+or from that knowledge base.
 {\mbox{\autoref{figure:relationship_partial_state_abstraction_remove}}}
-shows how a ``remove'' change event object is integrated into the
-reconstructed physical knowledge base.
+shows how a ``{\tt{remove}}'' change event object is integrated into
+the reconstructed physical knowledge base.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/relationship_partial_state_abstraction_remove}
-\caption[A ``remove'' change event object is integrated into the
-  reconstructed physical knowledge base.]{A ``remove'' change event
-  object is integrated into the reconstructed physical knowledge base.
-  In this case, a pyramid shaped block is no longer related by the
-  ``on'' relationship to a white colored table object.  While the
-  reception of a single ``remove'' change event object only removes a
-  single edge from the knowledge base, this results in potentially
-  removing many partial states from that knowledge base.  (A) The
-  reconstructed physical knowledge base in the deliberative layer
-  \emph{before} a ``remove'' change event object is received by the
-  deliberative physical knowledge agency.  (B) The reconstructed
-  physical knowledge base in the deliberative layer \emph{after} a
-  ``remove'' change event object is received by the deliberative
-  physical knowledge agency.}
+\caption[A ``{\tt{remove}}'' change event object is integrated into
+  the reconstructed physical knowledge base.]{A ``{\tt{remove}}''
+  change event object is integrated into the reconstructed physical
+  knowledge base.  In this case, a pyramid shaped block is no longer
+  related by the ``{\tt{on}}'' relationship to a white colored table
+  object.  While the reception of a single ``{\tt{remove}}'' change
+  event object only removes a single edge from the knowledge base,
+  this results in potentially removing many partial states from that
+  knowledge base.  (A) The reconstructed physical knowledge base in
+  the deliberative layer \emph{before} a ``{\tt{remove}}'' change
+  event object is received by the deliberative physical knowledge
+  agency.  (B) The reconstructed physical knowledge base in the
+  deliberative layer \emph{after} a ``{\tt{remove}}'' change event
+  object is received by the deliberative physical knowledge agency.}
 \label{figure:relationship_partial_state_abstraction_remove}
 \end{figure}
 {\mbox{\autoref{figure:relationship_partial_state_abstraction_add}}}
-shows how an ``add'' change event object is integrated into the
+shows how an ``{\tt{add}}'' change event object is integrated into the
 reconstructed physical knowledge base.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/relationship_partial_state_abstraction_add}
-\caption[An ``add'' change event object is integrated into the
-  reconstructed physical knowledge base.]{An ``add'' change event
-  object is integrated into the reconstructed physical knowledge base.
-  In this case, a pyramid shaped block is now related by the ``on''
-  relationship to a cube shaped block object.  While the reception of
-  a single ``add'' change event object only adds a single edge to the
-  knowledge base, this results in potentially adding many partial
-  states to that knowledge base.  (A) The reconstructed physical
-  knowledge base in the deliberative layer \emph{before} an ``add''
-  change event object is received by the deliberative physical
-  knowledge agency.  (B) The reconstructed physical knowledge base in
-  the deliberative layer \emph{after} an ``add'' change event object
-  is received by the deliberative physical knowledge agency.}
+\caption[An ``{\tt{add}}'' change event object is integrated into the
+  reconstructed physical knowledge base.]{An ``{\tt{add}}'' change
+  event object is integrated into the reconstructed physical knowledge
+  base.  In this case, a pyramid shaped block is now related by the
+  ``{\tt{on}}'' relationship to a cube shaped block object.  While the
+  reception of a single ``{\tt{add}}'' change event object only adds a
+  single edge to the knowledge base, this results in potentially
+  adding many partial states to that knowledge base.  (A) The
+  reconstructed physical knowledge base in the deliberative layer
+  \emph{before} an ``{\tt{add}}'' change event object is received by
+  the deliberative physical knowledge agency.  (B) The reconstructed
+  physical knowledge base in the deliberative layer \emph{after} an
+  ``{\tt{add}}'' change event object is received by the deliberative
+  physical knowledge agency.}
 \label{figure:relationship_partial_state_abstraction_add}
 \end{figure}
 
 The fact that the SALS cognitive architecture only has two types of
-partial state objects, the ``relationship'' and ``property'' partial
-state objects, is a current limitation of the SALS cognitive
-architecture.  This means that the architecture cannot pursue goals or
-make judgments about other potentially more complex types of partial
-states in the knowledge bases that planning layers are attempting to
-control.  For example, the ``property'' partial state object is only
-able to describe partial states of a knowledge base that involve two
-properties of a single frame-based object, while the ``relationship''
-partial state object is only able to describe partial states of a
-knowledge base that involve one relationship between two frame-based
-objects with one symbolic property each.  While these two types of
-partial state objects can sometimes be combined in clever ways to
-describe some more complex partial states, generally, if a goal
-condition requires a partial state object description of three or more
+partial state objects, the ``{\tt{relationship}}'' and
+``{\tt{property}}'' partial state objects, is a current limitation of
+the SALS cognitive architecture.  This means that the architecture
+cannot pursue goals or make judgments about other potentially more
+complex types of partial states in the knowledge bases that planning
+layers are attempting to control.  For example, the
+``{\tt{property}}'' partial state object is only able to describe
+partial states of a knowledge base that involve two properties of a
+single frame-based object, while the ``{\tt{relationship}}'' partial
+state object is only able to describe partial states of a knowledge
+base that involve one relationship between two frame-based objects
+with one symbolic property each.  While these two types of partial
+state objects can sometimes be combined in clever ways to describe
+some more complex partial states, generally, if a goal condition
+requires a partial state object description of three or more
 frame-based objects that are related with three or more properties
 each, there are not currently SALS partial state objects that directly
 describe these more complex types of partial states.  In
@@ -342,10 +347,10 @@ describe these more complex types of partial states.  In
 types of partial states in the SALS cognitive architecture could be
 abstracted in future research to include any specific type of subgraph
 in a frame-based knowledge base, but for now, the abstraction of the
-``relationship'' and ``property'' types in SALS are each specially
-implemented in order to efficiently abstract each of these types of
-partial state objects from a frame-based knowledge base, avoiding the
-NP-complete subgraph isomorphism decision problem
+``{\tt{relationship}}'' and ``{\tt{property}}'' types in SALS are each
+specially implemented in order to efficiently abstract each of these
+types of partial state objects from a frame-based knowledge base,
+avoiding the NP-complete subgraph isomorphism decision problem
 \cite[]{messmer:1995,messmer:2000} implied by a careless
 implementation of this more specific problem, which gains in
 efficiency by taking advantage of specially implemented locally
@@ -354,38 +359,39 @@ After a change event from the physical knowledge base is received by
 the deliberative physical knowledge agency, the same change event is
 passed to the deliberative physical partial state agency in order to
 focus a local search around this change in the reconstructed physical
-knowledge base that searches for ``property'' and ``relationship''
-partial state objects.  If the change event object is a ``remove''
-event object, the local search in the reconstructed physical knowledge
-base is performed \emph{before} the reconstructed physical knowledge
-base is updated, while if the change event object is an ``add'' event
-object, the local search in the reconstructed physical knowledge base
-is performed \emph{after} the reconstructed physical knowledge base is
-updated.
+knowledge base that searches for ``{\tt{property}}'' and
+``{\tt{relationship}}'' partial state objects.  If the change event
+object is a ``{\tt{remove}}'' event object, the local search in the
+reconstructed physical knowledge base is performed \emph{before} the
+reconstructed physical knowledge base is updated, while if the change
+event object is an ``{\tt{add}}'' event object, the local search in
+the reconstructed physical knowledge base is performed \emph{after}
+the reconstructed physical knowledge base is updated.
 
 When a partial state object is found to be added by the deliberative
-physical partial state agency, a ``partial state event'' object is
-added to the physical partial state event knowledge base in the
+physical partial state agency, a {\emph{partial state event}} object
+is added to the physical partial state event knowledge base in the
 deliberative layer.  A partial state event object consists of the
 following three properties:
 \begin{packed_enumerate}
-\item{start-time}
-\item{end-time}
-\item{partial-state}
+\item{{\tt{start-time}}}
+\item{{\tt{end-time}}}
+\item{{\tt{partial-state}}}
 \end{packed_enumerate}
 A partial state event object that has just been created has an
-absolute ``start-time'' value, which is a copy of the ``time'' slot
-value of the change event object from the physical knowledge base in
-the learned reactive layer.  The ``end-time'' value for the partial
-state event object is initially unknown, so the symbol ``after'' is
-used to indicate that the partial state event object has not yet
-ended.  The ``partial-state'' slot of the partial state event object
-is a reference to the partial state object that has been found in the
+absolute ``{\tt{start-time}}'' value, which is a copy of the
+``{\tt{time}}'' slot value of the change event object from the
+physical knowledge base in the learned reactive layer.  The
+``{\tt{end-time}}'' value for the partial state event object is
+initially unknown, so the symbol ``{\tt{after}}'' is used to indicate
+that the partial state event object has not yet ended.  The
+``{\tt{partial-state}}'' slot of the partial state event object is a
+reference to the partial state object that has been found in the
 reconstructed physical knowledge base in the deliberative layer.  When
 a partial state object is found to be removed by the deliberative
-physical partial state agency, an absolute ``end-time'' slot value is
-added to the partial state event object that was previously added to
-the physical partial state event knowledge base.
+physical partial state agency, an absolute ``{\tt{end-time}}'' slot
+value is added to the partial state event object that was previously
+added to the physical partial state event knowledge base.
 
 Although I have described this process of partial state event
 abstraction in terms of the deliberative layer abstracting partial
@@ -408,7 +414,7 @@ reflective plan partial state event knowledge base.
 
 The second asynchronous stage of information processing involved in
 asynchronously learning from experience in the SALS AI is the
-``resource execution event causal rule-learning'' stage.  I will
+{\emph{resource execution event causal rule-learning}} stage.  I will
 first focus on how this stage works when the deliberative layer
 receives a stream of procedurally reflective events from the learned
 reactive layer with the understanding that an analogous asynchronous
@@ -417,69 +423,71 @@ reactive resource knowledge agency in the deliberative layer receives
 a stream of activation and completion event objects from the resources
 in the learned reactive physical agency of the learned reactive layer.
 When an activation event object is received by the reactive resource
-knowledge agency in the deliberative layer, a ``resource execution
-event'' object is added to the reactive resource event knowledge base.
-A resource execution event object consists of the following three
-properties:
+knowledge agency in the deliberative layer, a {\emph{resource
+    execution event}} object is added to the reactive resource event
+knowledge base.  A resource execution event object consists of the
+following three properties:
 \begin{packed_enumerate}
-\item{start-time}
-\item{end-time}
-\item{resource}
+\item{{\tt{start-time}}}
+\item{{\tt{end-time}}}
+\item{{\tt{resource}}}
 \end{packed_enumerate}
 When a new resource execution event object is created, its
-``start-time'' slot value is copied from the ``time'' slot of the
-activation event object that the reactive resource knowledge agency in
-the deliberative layer has received from the learned reactive physical
-agency in the learned reactive layer.  When a completion event object
-is received from the learned reactive layer, the ``end-time'' slot
-value of the appropriate resource execution event object is copied
-from the ``time'' slot of the completion event object.  When a
-resource execution event has completed, a transframe
-\cite[]{minsky:1975} is created that keeps track of the added or
-removed partial states in the physical partial state event knowledge
-base between the ``start-time'' and ``end-time'' slot values of the
-resource execution event.  Creating this transframe requires
-retrieving all of the partial state events that intersect with the
-``start-time'' slot value as well as all of the partial state events
-that intersect with the ``end-time'' slot value.
+``{\tt{start-time}}'' slot value is copied from the ``{\tt{time}}''
+slot of the activation event object that the reactive resource
+knowledge agency in the deliberative layer has received from the
+learned reactive physical agency in the learned reactive layer.  When
+a completion event object is received from the learned reactive layer,
+the ``{\tt{end-time}}'' slot value of the appropriate resource
+execution event object is copied from the ``{\tt{time}}'' slot of the
+completion event object.  When a resource execution event has
+completed, a transframe \cite[]{minsky:1975} is created that keeps
+track of the added or removed partial states in the physical partial
+state event knowledge base between the ``{\tt{start-time}}'' and
+``{\tt{end-time}}'' slot values of the resource execution event.
+Creating this transframe requires retrieving all of the partial state
+events that intersect with the ``{\tt{start-time}}'' slot value as
+well as all of the partial state events that intersect with the
+``{\tt{end-time}}'' slot value.
 
 Every knowledge base that contains event objects in the SALS AI is
 organized for indexing by time by using an interval tree that stores
 all events that have been added to that knowledge base.  These types
-of knowledge bases in the SALS AI are called ``event knowledge
-bases,'' and they have a $O(\log{(n)})$ time complexity for retrieving
-events by time, given that $n$ is the number of events in the event
-knowledge base.  In order to maintain consistency within the interval
-tree within the event knowledge base, some precautions must be taken
-when changing the values of the ``start-time'' and ``end-time'' slots
-of any event object, which could potentially invalidate the entire
-interval tree.  In order to make this bookkeeping transparent to the
-programmer, reflectively traced callbacks are called whenever a slot
-value is added to or removed from the event knowledge base.  If the
-slot value refers to the ``start-time'' or the ``end-time'' of an
-event object, the event object is first removed from the interval tree
-with its old slot value, the slot value is changed, then the event
-object is inserted into the interval tree once the slot value change
-is complete.  This means that the programmer simply adds event objects
-to an event knowledge base, freely changing their ``start-time'' and
-``end-time'' slot values, while reflective callbacks take care of the
-interval tree organization.
+of knowledge bases in the SALS AI are called {\emph{event knowledge
+    bases}}, and they have a $O(\log{(n)})$ time complexity for
+retrieving events by time, given that $n$ is the number of events in
+the event knowledge base.  In order to maintain consistency within the
+interval tree within the event knowledge base, some precautions must
+be taken when changing the values of the ``{\tt{start-time}}'' and
+``{\tt{end-time}}'' slots of any event object, which could potentially
+invalidate the entire interval tree.  In order to make this
+bookkeeping transparent to the programmer, reflectively traced
+callbacks are called whenever a slot value is added to or removed from
+the event knowledge base.  If the slot value refers to the
+``{\tt{start-time}}'' or the ``{\tt{end-time}}'' of an event object,
+the event object is first removed from the interval tree with its old
+slot value, the slot value is changed, then the event object is
+inserted into the interval tree once the slot value change is
+complete.  This means that the programmer simply adds event objects to
+an event knowledge base, freely changing their ``{\tt{start-time}}''
+and ``{\tt{end-time}}'' slot values, while reflective callbacks take
+care of the interval tree organization.
 
 \begin{table}
 \centering
 \begin{tabular}{|p{1.5cm}|p{9.5cm}|}
 \hline
-remove &``a gripper that is me to be above a cube shaped block'' \\
+{\tt{remove}} &``{\tt{a gripper that is me to be above a cube shaped block}}'' \\
 \hline
-remove &``a gripper that is me to be above a red colored block'' \\
+{\tt{remove}} &``{\tt{a gripper that is me to be above a red colored block}}'' \\
 \hline
-remove &``a cube shaped block to be on a white colored table'' \\
+{\tt{remove}} &``{\tt{a cube shaped block to be on a white colored table}}'' \\
 \hline
-remove &``a red colored block to be on a white colored table'' \\
+{\tt{remove}} &``{\tt{a red colored block to be on a white colored table}}'' \\
 \hline
-add    &``a gripper that is me to be holding a cube shaped block'' \\
+{\tt{add}}    &``{\tt{a gripper that is me to be holding a cube shaped block}}'' \\
 \hline
-add    &``a gripper that is me to be holding a red colored block'' \\
+{\tt{add}}    &``{\tt{a gripper that is me to be holding a red colored block}}'' \\
 \hline
 \end{tabular}
 \caption[An example execution event transframe.]{An example execution
@@ -488,63 +496,65 @@ add    &``a gripper that is me to be holding a red colored block'' \\
   table shows whether the partial state has been added or removed from
   the knowledge base.  This transframe could be a description of the
   difference between the beginning and the ending of an execution
-  event of the ``reach and grab'' learned reactive resource.  Each of
-  the six partial states shown are ``relationship'' type partial
-  states, but execution event transframes can in general contain any
-  type of SALS partial state, including ``property'' types.}
+  event of the ``{\tt{reach and grab}}'' learned reactive resource.
+  Each of the six partial states shown are ``{\tt{relationship}}''
+  type partial states, but execution event transframes can in general
+  contain any type of SALS partial state, including
+  ``{\tt{property}}'' types.}
 \label{table:example_transframe}
 \end{table}
 {\mbox{\autoref{table:example_transframe}}} shows an example execution
 event transframe.  The partial states in an execution event transframe
 can in general be any type of SALS partial state, including the
-``relationship'' and ``property'' types.  Once the partial state
-transframe has been computed for a given resource execution event,
-this transframe is used to train a rule-learning algorithm that
-attempts to categorize the partial state preconditions for different
-sets of the possible ``add'' and ``remove'' changes.  A rule-learning
-algorithm is used in the SALS AI in order to predict the transframe
-that will result from executing a resource in given preconditions.
-This rule-learning algorithm is based on ``version spaces''
-\cite[]{mitchell:1997}.  These version spaces are an efficient
-representation for all possible conjunctive functions that map a set
-of binary inputs to a single binary output.  These functions are also
-called ``hypotheses.''  When these hypotheses turn out to be wrong
-given new data, the hypothesis version space is refined.  In the case
-of a false positive, the most general functions of the version space
-are specialized.  In the case of a false negative, the most specific
-hypotheses of the version space are generalized.  In this case, the
-binary inputs to the rule-learning algorithm represent whether or not
-a partial state exists in the preconditions of the resource execution
-event.  The single binary output from the rule-learning algorithm
-represents whether or not a set of partial state transframe changes
-will be the result of executing the resource in the given partial
-state preconditions.  These hypothesis version spaces are used to
-predict the effects of natural language plans in the counterfactual
-knowledge base of each planning layer during the interpretation and
-imagination process described in
+``{\tt{relationship}}'' and ``{\tt{property}}'' types.  Once the
+partial state transframe has been computed for a given resource
+execution event, this transframe is used to train a rule-learning
+algorithm that attempts to categorize the partial state preconditions
+for different sets of the possible ``{\tt{add}}'' and
+``{\tt{remove}}'' changes.  A rule-learning algorithm is used in the
+SALS AI in order to predict the transframe that will result from
+executing a resource in given preconditions.  This rule-learning
+algorithm is based on {\emph{version spaces}} \cite[]{mitchell:1997}.
+These version spaces are an efficient representation for all possible
+conjunctive functions that map a set of binary inputs to a single
+binary output.  These functions are also called {\emph{hypotheses}}.
+When these hypotheses turn out to be wrong given new data, the
+hypothesis version space is refined.  In the case of a false positive,
+the most general functions of the version space are specialized.  In
+the case of a false negative, the most specific hypotheses of the
+version space are generalized.  In this case, the binary inputs to the
+rule-learning algorithm represent whether or not a partial state
+exists in the preconditions of the resource execution event.  The
+single binary output from the rule-learning algorithm represents
+whether or not a set of partial state transframe changes will be the
+result of executing the resource in the given partial state
+preconditions.  These hypothesis version spaces are used to predict
+the effects of natural language plans in the counterfactual knowledge
+base of each planning layer during the interpretation and imagination
+process described in
 {\mbox{\autoref{chapter:learning_from_being_told}}}.
 
 It would be inefficient to allocate a new hypothesis version space
-object for each type of ``add'' or ``remove'' change in a partial
-state transframe for a given resource because sets of partial state
-changes often occur together and multiple hypothesis version space
-rule-learning algorithms would contain redundant information for these
-sets of partial state changes.  In order to reduce the number of
-hypothesis version spaces that are allocated to each resource in order
-to predict the partial state changes that it may cause when executed,
-each co-occurring set of partial state changes for each resource is
-calculated.  For example, consider that the observed transframes
-during each execution event for a given resource are composed of a
-total of six partial states.  Let us refer to this set of states as
-$\{A, B, C, D, E, F\}$.  The symbol ``$A$'' may refer to the partial
-state change: remove ``a gripper that is me to be above a cube shaped
-block'' from {\mbox{\autoref{table:example_transframe}}}.  The
-remaining five symbols could refer to the other five partial state
-changes in that same table.  Consider that the same resource is
-executed three times and for each of these executions a different
-transframe results.  Let the following three sets of partial state
-changes represent the three computed transframes for the three
-resource execution events:
+object for each type of ``{\tt{add}}'' or ``{\tt{remove}}'' change in
+a partial state transframe for a given resource because sets of
+partial state changes often occur together and multiple hypothesis
+version space rule-learning algorithms would contain redundant
+information for these sets of partial state changes.  In order to
+reduce the number of hypothesis version spaces that are allocated to
+each resource in order to predict the partial state changes that it
+may cause when executed, each co-occurring set of partial state
+changes for each resource is calculated.  For example, consider that
+the observed transframes during each execution event for a given
+resource are composed of a total of six partial states.  Let us refer
+to this set of states as $\{A, B, C, D, E, F\}$.  The symbol ``$A$''
+may refer to the partial state change: remove ``{\tt{a gripper that is
+    me to be above a cube shaped block}}'' from
+{\mbox{\autoref{table:example_transframe}}}.  The remaining five
+symbols could refer to the other five partial state changes in that
+same table.  Consider that the same resource is executed three times
+and for each of these executions a different transframe results.  Let
+the following three sets of partial state changes represent the three
+computed transframes for the three resource execution events:
 \begin{packed_enumerate}
 \item{$\{A, B, C\}$}
 \item{$\{A, B, C, D, E, F\}$}

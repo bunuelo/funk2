@@ -32,9 +32,9 @@ an automatic procedure to read, edit, and write programs as they are
 debugged.  Large concurrent and parallel systems are often difficult
 to build and debug because of the complex causal interactions between
 all of the different processes.  For this reason, every parallel task
-in SALS has an associated ``cause'' object.  If any task creates a new
-parallel task, then a new cause object is created for the child task
-with a parent cause object reference.  Cause objects represent
+in SALS has an associated {\emph{cause}} object.  If any task creates
+a new parallel task, then a new cause object is created for the child
+task with a parent cause object reference.  Cause objects represent
 meta-information about a task, such as in what way a compiled
 procedure should be executed, which can be used for causally
 organizing the effects of groups of parallel tasks, controlling and
@@ -48,25 +48,25 @@ generation of multithreaded and multicore CPUs, so that new reflective
 algorithms will more easily be designed to exhibit ``strong'' scaling
 properties \cite[]{sodan:2010}.  In order to allow the development of
 these new types of algorithms, the SALS virtual machine includes an
-explicit representation, called a ``virtual processor'' object, that
-represents each hyperthread in each core of each CPU in the target
-hardware platform.  Each of the SALS virtual processors is used in
-order to organize the scheduling of SALS ``fiber'' objects, which are
-the bytecode threads that execute in the SALS virtual machine.  In
-this way, each SALS fiber can be assigned to a specific hyperthread in
-the target hardware platform.  In order to prevent local cache misses
-for on-chip caches, the SALS virtual machine has a separate memory
-pool allocated for each of the SALS virtual processors.  So, for CPUs
-that has 4 cores and 2 hyperthreads per core, 8 memory pools are
-allocated when the SALS virtual machine is created.  Also, a major
-bottleneck in systems with large numbers of processors and cores are
-mutual exclusion or ``mutex'' locks that protect shared resources.
-The SALS virtual machine avoids all mutexes in the memory layer by
-using these separate dedicated memory pools for each hyperthread in
-each CPU core for memory allocation and concurrent garbage collection.
-Mutexes are provided in the SALS architecture but low-level memory
-allocation and collection can operate at full-speed without any mutex
-locks for low-level memory operations.
+explicit representation, called a {\emph{virtual processor}} object,
+that represents each hyperthread in each core of each CPU in the
+target hardware platform.  Each of the SALS virtual processors is used
+in order to organize the scheduling of SALS {\emph{fiber}} objects,
+which are the bytecode threads that execute in the SALS virtual
+machine.  In this way, each SALS fiber can be assigned to a specific
+hyperthread in the target hardware platform.  In order to prevent
+local cache misses for on-chip caches, the SALS virtual machine has a
+separate memory pool allocated for each of the SALS virtual
+processors.  So, for CPUs that has 4 cores and 2 hyperthreads per
+core, 8 memory pools are allocated when the SALS virtual machine is
+created.  Also, a major bottleneck in systems with large numbers of
+processors and cores are mutual exclusion or {\emph{mutex}} locks that
+protect shared resources.  The SALS virtual machine avoids all mutexes
+in the memory layer by using these separate dedicated memory pools for
+each hyperthread in each CPU core for memory allocation and concurrent
+garbage collection.  Mutexes are provided in the SALS architecture but
+low-level memory allocation and collection can operate at full-speed
+without any mutex locks for low-level memory operations.
 {\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
 example of how SALS allocates virtual processors for a hardware
 configuration with two processors, each having four cores and each
@@ -101,7 +101,8 @@ The SALS virtual machine has a tricolor garbage collection algorithm
 that takes advantage of parallelizing work in concurrent processors.
 Memory pointers in the SALS memory system are 64-bit integers that
 have space reserved for three hierarchical memory tiers: (1)
-``computer identity,'' (2) ``pool index,'' (3) and ``block address.''
+``{\tt{computer identity}},'' (2) ``{\tt{pool index}},'' (3) and
+``{\tt{block address}}.''
 {\mbox{\autoref{table:sals_memory_pointer}}} shows the bit allocation
 within the 64-bit SALS memory pointer.
 \begin{table}
@@ -110,11 +111,11 @@ within the 64-bit SALS memory pointer.
 \hline
 \emph{bit range} &\emph{\# of values} &\emph{memory tier name} \\
 \hline
-~1 -- 17 &$131,072$         &computer identity \\ % 17
+~1 -- 17 &$131,072$         &{\tt{computer identity}} \\ % 17
 \hline
-18 -- 27 &$1,024$           &pool index        \\ % 10
+18 -- 27 &$1,024$           &{\tt{pool index}}        \\ % 10
 \hline
-28 -- 64 &$137,438,953,472$ &block address     \\ % 37
+28 -- 64 &$137,438,953,472$ &{\tt{block address}}     \\ % 37
 \hline
 \end{tabular}
 \caption[Bit allocation within the SALS memory pointer.]{Bit
@@ -169,19 +170,20 @@ different types of dependencies within the SALS codebase:
     :dynamic_libraries ['libf2e_semantic_knowledge_base.so']]
 \end{Verbatim}
 \end{samepage}
-The ``defpackage'' expression in the SALS programming language means
-``define package.''  The first argument to the defpackage expression
-is the name of the package to be defined, ``semantic knowledge base''
-in this case.  The remaining arguments to the defpackage expression
-are optional and three such arguments are shown in this example: (1)
-``packages,'' (2) ``sources,'' and (3) ``dynamic libraries.''  The
-``packages'' optional argument specifies a list of other packages that
-must be loaded before this package is loaded.  The ``sources''
-optional argument specifies a list of SALS low-level Lisp-like
-programming language files that are to be loaded when this package is
-loaded.  The ``dynamic libraries'' optional argument specifies a list
-of files that contain machine code extensions that should be loaded
-into the SALS virtual machine when this package is loaded.
+The ``{\tt{defpackage}}'' expression in the SALS programming language
+means ``define package.''  The first argument to the defpackage
+expression is the name of the package to be defined, ``{\tt{semantic
+    knowledge base}}'' in this case.  The remaining arguments to the
+defpackage expression are optional and three such arguments are shown
+in this example: (1) ``{\tt{packages}},'' (2) ``{\tt{sources}},'' and
+(3) ``{\tt{dynamic libraries}}.''  The ``{\tt{packages}}'' optional
+argument specifies a list of other packages that must be loaded before
+this package is loaded.  The ``{\tt{sources}}'' optional argument
+specifies a list of SALS low-level Lisp-like programming language
+files that are to be loaded when this package is loaded.  The
+``{\tt{dynamic libraries}}'' optional argument specifies a list of
+files that contain machine code extensions that should be loaded into
+the SALS virtual machine when this package is loaded.
 
 Every package and machine code extension to the SALS virtual machine
 and programming language performs ``causal reflective tracing'' on
@@ -196,19 +198,19 @@ to the asynchronous experiential learning presented in
 
 \section{Causal Reflective Tracing}
 
-Parallel tasks in the virtual machine are called ``fibers'' in order
-to distinguish them from the ``threads'' in the underlying operating
-system kernel.  The parallel fibers create, mutate, and read from
-memory as they execute sequences of compiled bytecodes.  At any point
-between bytecode executions, the memory system is static and can be
-saved or loaded from non-volatile memory, such as a harddisk.  The
+Parallel tasks in the virtual machine are called {\emph{fibers}} in
+order to distinguish them from the {\emph{threads}} in the underlying
+operating system kernel.  The parallel fibers create, mutate, and read
+from memory as they execute sequences of compiled bytecodes.  At any
+point between bytecode executions, the memory system is static and can
+be saved or loaded from non-volatile memory, such as a harddisk.  The
 current execution state of every fiber is represented in the global
 environment.  To be fully reflective on all of the procedural effects
-of any given fiber, I introduce a technique called ``causal reflective
-tracing.''  Causal reflective tracing is a way of defining variables
-that are specific to each fiber that can be used to control the
-low-level memory access, mutation, and creation functions.  This
-allows one fiber to subscribe to the procedural trace events of
+of any given fiber, I introduce a technique called {\emph{causal
+    reflective tracing}}.  Causal reflective tracing is a way of
+defining variables that are specific to each fiber that can be used to
+control the low-level memory access, mutation, and creation functions.
+This allows one fiber to subscribe to the procedural trace events of
 another fiber without receiving procedural trace events of its own
 execution, which would lead to an infinite regress, halting the
 system.  Further, because the virtual machine is inherently a parallel
@@ -231,18 +233,18 @@ to memory interactions of specific groups of fibers, this still
 results in millions of events to consider every real-time second of
 execution.  In order to further focus on specific objects within the
 memory system, specific pieces of memory can be created called
-``semantic memory.''  Semantic memory objects are created, mutated,
-and accessed in roughly the same way as all of the frame-based objects
-in the memory system with a few extra reflective tracing features.
-For example, semantic objects provide event streams that can be
-subscribed to by a number of different parallel listeners in different
-fibers.  Also semantic object pointers are bidirectional in order to
-ease traversal by reflective pattern matching algorithms.
+{\emph{semantic memory}}.  Semantic memory objects are created,
+mutated, and accessed in roughly the same way as all of the
+frame-based objects in the memory system with a few extra reflective
+tracing features.  For example, semantic objects provide event streams
+that can be subscribed to by a number of different parallel listeners
+in different fibers.  Also semantic object pointers are bidirectional
+in order to ease traversal by reflective pattern matching algorithms.
 
 Because it becomes awkward to subscribe to each and every frame-based
 object that may be interesting to the reflective focus, semantic
 frames that are created by specific fibers can be added to collections
-of semantic frames that are called ``semantic knowledge bases.''
+of semantic frames that are called {\emph{semantic knowledge bases}}.
 Semantic knowledge bases are good for organizing entire layers or
 subsets of reflective layers that contain different types of semantic
 frame objects.  Semantic knowledge bases allow the same forgetful
@@ -254,8 +256,8 @@ While knowledge base reconstructions are extremely fast to reference,
 $O(1)$, they require a duplication of the memory requirements of the
 focus knowledge base for every different point in time that is
 required.  In order to allow efficient access of the state of
-knowledge bases at arbitrary points in the past, ``semantic event
-knowledge bases'' are another type of representation that is
+knowledge bases at arbitrary points in the past, {\emph{semantic event
+    knowledge bases}} are another type of representation that is
 reflectively and asynchronously maintained in order to not slow down
 the primary procedure under reflective focus.
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}
@@ -264,23 +266,23 @@ knowledge base object to calculate partial state transframes.  I will
 briefly review the features of the event knowledge base as well as a
 few details about how this object is initialized and used in the SALS
 low-level Lisp-like programming language.  The semantic event
-knowledge base stores a type of semantic frame called a ``semantic
-event.''  A semantic event is a type of semantic frame object that
-represents an interval in time, which may include partial knowledge if
-the start or end times do not exist, making the interval potentially
-open-ended.  Semantic event knowledge bases are reflectively traced
-and the knowledge is always stored in two different representations,
-the basic semantic event frames as well as a balanced interval tree
-that always represents the current state of the semantic event
-knowledge base.  The balanced interval tree allows accessing the state
-of the focus knowledge base in $O(\log{(n)})$ time, where $n$ is the
-number of events stored in the semantic event knowledge base.
-Although the time complexity is not as efficient as the constant,
-$O(1)$, access time of the reflectively reconstructed semantic
-knowledge base, the semantic event interval tree knowledge base only
-requires $O(n)$ memory complexity in order to allow access to the
-structure of the knowledge base at any point in the past, where $n$ is
-the number of semantic events.
+knowledge base stores a type of semantic frame called a
+{\emph{semantic event}}.  A semantic event is a type of semantic frame
+object that represents an interval in time, which may include partial
+knowledge if the start or end times do not exist, making the interval
+potentially open-ended.  Semantic event knowledge bases are
+reflectively traced and the knowledge is always stored in two
+different representations, the basic semantic event frames as well as
+a balanced interval tree that always represents the current state of
+the semantic event knowledge base.  The balanced interval tree allows
+accessing the state of the focus knowledge base in $O(\log{(n)})$
+time, where $n$ is the number of events stored in the semantic event
+knowledge base.  Although the time complexity is not as efficient as
+the constant, $O(1)$, access time of the reflectively reconstructed
+semantic knowledge base, the semantic event interval tree knowledge
+base only requires $O(n)$ memory complexity in order to allow access
+to the structure of the knowledge base at any point in the past, where
+$n$ is the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
 create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
 in the SALS low-level Lisp-like interactive programming language.
@@ -321,11 +323,11 @@ parallel listeners are subscribed to a given event stream, only those
 events that have not already been seen by all of the subscribers are
 remembered.  Once all subscribers have processed an event, all events
 before this event are forgotten.  This type of memory conserving event
-stream is referred to as a ``forgetful event stream.''  In this way
-semantic frames report the addition and removal of slot values to
+stream is referred to as a {\emph{forgetful event stream}}.  In this
+way semantic frames report the addition and removal of slot values to
 reflective forgetful event stream subscribers.  Once a knowledge base
-is created and we have an ``important event stream iterator,'' we can
-define a concurrent reflective fiber that processes the events
+is created and we have an {\emph{important event stream iterator}}, we
+can define a concurrent reflective fiber that processes the events
 reflectively, after the real-time execution of the processes that
 modify this knowledge base.
 {\mbox{\autoref{figure:reflective_fiber}}} shows an example of how a
@@ -442,8 +444,8 @@ that provides a representation of the reflective tracing features for
 that fiber, sometimes it is useful to collect events from overlapping
 sets or different hierarchies of many fiber objects.  A convenient
 solution to causally organizing very dynamic sets of fibers is
-provided by a ``cause group'' object.  Cause groups are added to cause
-objects and inherited from parent to child when new causes are
+provided by a {\emph{cause group}} object.  Cause groups are added to
+cause objects and inherited from parent to child when new causes are
 created.  Because cause objects and cause group objects exist at the
 locus of every memory creation and mutation event in the SALS virtual
 machine, they provide a means of tracing any event that modifies any
@@ -635,24 +637,24 @@ event-in-causal-focus
 
 \section{Conjunctive Hypothesis Version Space Rule-Learning}
 
-The SALS architecture includes a ``version space''
+The SALS architecture includes a {\emph{version space}}
 \cite[]{mitchell:1997} hypothesis rule-learning algorithm.  A use of
 this hypothesis version space rule-learning algorithm was described in
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}} as
 part of a larger asynchronous learning algorithm that learns to
-predict the partial state ``transframe'' \cite[]{minsky:1975} effects
-of resource executions given the partial state preconditions of the
-execution.  The hypothesis version space rule-learning algorithm
-included in the SALS architecture predicts one binary output feature
-given a number of binary input features.  The benefit of the version
-space rule-learning algorithm is that it provides a relatively compact
-representation of an entire conjunctive hypothesis space by only
-representing the most general and most specific boundaries in the
+predict the partial state {\emph{transframe}} \cite[]{minsky:1975}
+effects of resource executions given the partial state preconditions
+of the execution.  The hypothesis version space rule-learning
+algorithm included in the SALS architecture predicts one binary output
+feature given a number of binary input features.  The benefit of the
+version space rule-learning algorithm is that it provides a relatively
+compact representation of an entire conjunctive hypothesis space by
+only representing the most general and most specific boundaries in the
 overall lattice of potential hypotheses.  The included rule-learning
 algorithm is incremental, meaning that it refines its space of
 hypotheses as new examples of training data become known.  The SALS AI
-hypothesis version space learning algorithm also includes ``removal
-callbacks'' for most general and most specific hypotheses, so that if
+hypothesis version space learning algorithm also includes removal
+callbacks for most general and most specific hypotheses, so that if
 these hypotheses are no longer supported given new training data,
 these hooks allow tracing dependencies for correcting hypothetically
 supported counterfactual knowledge in the counterfactual knowledge

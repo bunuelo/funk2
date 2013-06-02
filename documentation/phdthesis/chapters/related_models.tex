@@ -15,11 +15,11 @@ reflection that Maes describes, i.e. procedural reflection, type
 reflection, and frame reflection.
 
 The SALS AI has been inspired by a previous implementation of an
-Emotion Machine cognitive architecture, called ``EM-ONE''
+Emotion Machine cognitive architecture, called {\emph{EM-ONE}}
 \cite[]{singh:2005b}.  EM-ONE implements reflective thinking using a
 commonsense narrative representation based on an Allegro Prolog
 extension of Allegro Lisp.  The EM-ONE architecture is a
-``critic-selector'' model of problem solving
+{\emph{critic-selector}} model of problem solving
 \cite[]{sussman:1973,singh:2002a,singh:2004,singh:2005a,singh:2005b,minsky:2006,morgan:2009}.
 Knowledge in the EM-ONE architecture is divided into three domains:
 (1) physical, (2) social, and (3) mental.  The EM-ONE AI controls a
@@ -33,12 +33,12 @@ was limited in a number of ways:
 \item{Critics are specified in a declarative logical form, which does
   not allow for learning to optimize the procedural aspects of
   Prolog's implicit declarative search.}
-\item{The implemented ``Critic-L'' language allows for inserted
+\item{The implemented {\emph{Critic-L}} language allows for inserted
   procedural Lisp code, but any procedural code inserted in this way
   is not reflectively traced.}
-\item{Only learns from ``being told'' commonsense narratives and does
-  not learn from its ``experience'' in order to better predict the
-  effects of executing its physical or mental actions.}
+\item{Only learns from being told commonsense narratives and does not
+  learn from its experience in order to better predict the effects of
+  executing its physical or mental actions.}
 \item{Commonsense narratives cannot be specified in natural language.}
 \item{All activities execute in serial, so no critics or selectors can
   execute in parallel.  Reasoning activities in each layer also occur
@@ -66,17 +66,18 @@ The EM-ONE architecture includes a separate knowledge base for storing
 self-reflective social knowledge, the knowledge in the minds of other
 AIs, such as their beliefs and goals.  The ability of an AI to learn
 abstract models of its own mind and use these models to hypothesize
-the state of mind in other AIs is referred to as ``self-reflective''
-thinking in the Emotion Machine theory.  This type of self-reflective
-thinking is also referred to as ``theory of mind'' in the cognitive
-science literature and has been found to exist in different neural
-circuits in the brain when compared to deliberative or ``executive''
-functions \cite[]{saxe:2006}.  Because the EM-ONE architecture is
-based on a Prolog substrate, it has the ability to refer to arbitrary
-partial states of a problem domain, while the SALS AI is currently
-limited to the two simple ``relationship'' and ``property'' types of
-partial states.  {\mbox{\autoref{chapter:future}}} describes a plan
-for defining general subgraphs as partial states in the SALS AI.  The
+the state of mind in other AIs is referred to as
+{\emph{self-reflective}} thinking in the Emotion Machine theory.  This
+type of self-reflective thinking is also referred to as ``theory of
+mind'' in the cognitive science literature and has been found to exist
+in different neural circuits in the brain when compared to
+deliberative or ``executive'' functions \cite[]{saxe:2006}.  Because
+the EM-ONE architecture is based on a Prolog substrate, it has the
+ability to refer to arbitrary partial states of a problem domain,
+while the SALS AI is currently limited to the two simple
+``{\tt{relationship}}'' and ``{\tt{property}}'' types of partial
+states.  {\mbox{Chapter~\ref{chapter:future}}} describes a plan for
+defining general subgraphs as partial states in the SALS AI.  The
 EM-ONE architecture can easily define critics that recognize
 arbitrarily complex declarative patterns in the problem domain.  The
 disadvantage of relying on a declarative substrate, such as Prolog, is
@@ -94,24 +95,25 @@ described as a future extension for the SALS architecture in
 \section{Computational Metacognition}
 
 The type of reflection implemented in this thesis is a form of
-``computational metacognition'' \cite[]{cox_and_raja:2008,cox:2010}:
-the ability to think about accomplishing thinking goals in addition to
-thinking about accomplishing physical goals.  Computational
-metacognition as described by Cox and Raja begins with a ``ground
-level,'' which is the problem domain for the AI to control.  The
-computational metacognition ground level is analogous to the physical
-knowledge base and physical agency of the learned reactive layer in
-the SALS Emotion Machine cognitive architecture.  The ``object level''
-of computational metacognition is a control loop that receives inputs
+{\emph{computational metacognition}}
+\cite[]{cox_and_raja:2008,cox:2010}: the ability to think about
+accomplishing thinking goals in addition to thinking about
+accomplishing physical goals.  Computational metacognition as
+described by Cox and Raja begins with a {\emph{ground level}}, which
+is the problem domain for the AI to control.  The computational
+metacognition ground level is analogous to the physical knowledge base
+and physical agency of the learned reactive layer in the SALS Emotion
+Machine cognitive architecture.  The {\emph{object level}} of
+computational metacognition is a control loop that receives inputs
 from the ground level, processes these, and sends commands back to the
 ground level.  The object level of computational metacognition is
 analogous to the deliberative planning layer in the SALS Emotion
-Machine cognitive architecture.  The ``meta-level'' of computational
-metacognition completes two cascaded control loops: the object level
-controlling the ground level and the meta-level controlling the object
-level.  The meta-level of computational metacognition is analogous to
-the reflective planning layer of the SALS Emotion Machine cognitive
-architecture.
+Machine cognitive architecture.  The {\emph{meta-level}} of
+computational metacognition completes two cascaded control loops: the
+object level controlling the ground level and the meta-level
+controlling the object level.  The meta-level of computational
+metacognition is analogous to the reflective planning layer of the
+SALS Emotion Machine cognitive architecture.
 \begin{table}
 \begin{tabular}{|rll|}
 \hline
@@ -132,24 +134,24 @@ Machine cognitive architecture presented in this dissertation.
 \section{Meta-Planning and Meta-Plan Recognition}
 \label{section:meta_planning_and_meta_plan_recognition}
 
-\cite{wilensky:1981} describes ``meta-planning'' as representing and
-using knowledge about planning in problem solving and natural language
-understanding domains.  He describes ``PAM,'' a story understanding
-system, and ``PANDORA,'' a story understanding and problem solving
-system, that both use higher-level goals and plans that he calls
-``meta-goals'' and ``meta-plans.''  The basic goals and plans in
-PANDORA are analogous to the goals and plans in the SALS deliberative
-planning layer, while the meta-goals and meta-plans are analogous to
-the goals and plans in the SALS reflective planning layer.  Wilensky
-describes story understanding as a form of inverse planning or plan
-recognition.  In this sense, a planning system is given a set of goals
-that are used to generate a sequence of actions that accomplish the
-goals, while a story understanding system is given a sequence of
-actions that are used to generate a set of goals that explain those
-actions.  Wilensky emphasizes that both story understanding and
-planning require representations of meta-goals and meta-plans in order
-to reason about common types of human thinking.  Wilensky gives the
-following two example story understanding problems:
+\cite{wilensky:1981} describes {\emph{meta-planning}} as representing
+and using knowledge about planning in problem solving and natural
+language understanding domains.  He describes {\emph{PAM}}, a story
+understanding system, and {\emph{PANDORA}}, a story understanding and
+problem solving system, that both use higher-level goals and plans
+that he calls {\emph{meta-goals}} and {\emph{meta-plans}}.  The basic
+goals and plans in PANDORA are analogous to the goals and plans in the
+SALS deliberative planning layer, while the meta-goals and meta-plans
+are analogous to the goals and plans in the SALS reflective planning
+layer.  Wilensky describes story understanding as a form of inverse
+planning or plan recognition.  In this sense, a planning system is
+given a set of goals that are used to generate a sequence of actions
+that accomplish the goals, while a story understanding system is given
+a sequence of actions that are used to generate a set of goals that
+explain those actions.  Wilensky emphasizes that both story
+understanding and planning require representations of meta-goals and
+meta-plans in order to reason about common types of human thinking.
+Wilensky gives the following two example story understanding problems:
 \begin{packed_enumerate}
 \item{John was in a hurry to get to Las Vegas, but he noticed that
   there were a lot of cops around so he stuck to the speed limit.}
@@ -184,12 +186,12 @@ SALS architecture and PANDORA:
   the SALS AI is capable of responding to the various types of plan
   failures that result from executing plans, such as physical
   expectation failures.}
-\item{PANDORA only learns from ``being told'' knowledge, while the
-  SALS AI learns from both ``being told'' natural language plans as
-  well as from the ``experience'' of executing these plans.}
+\item{PANDORA only learns from being told knowledge, while the SALS AI
+  learns from both being told natural language plans as well as from
+  the experience of executing these plans.}
 \end{packed_enumerate}
 
-\cite{winston:2011} describes ``Genesis,'' an AI that performs
+\cite{winston:2011} describes {\emph{Genesis}}, an AI that performs
 reflective story understanding on English language stories.  The
 Genesis AI has a ground level problem domain that consists of the
 knowledge that is directly stated in the story.  The ground level
@@ -200,31 +202,31 @@ intentions and emotional states of social agents, which I see as
 self-reflective knowledge, requiring the AI to have self-models, a
 future extension of the SALS AI.  The Genesis AI has a deliberative
 reasoning layer that uses analogies to English stories that the AI has
-``been told'' in the past in order to infer causal connections between
-the ground level story elements.  The knowledge that causally connects
-the ground level of the Genesis AI is referred to as an ``elaboration
-graph,'' which I will refer to as the deliberative elaboration graph.
-The deliberative elaboration graph in the Genesis AI is analogous to
-the deliberative plans and transframes in the SALS AI, which provide
-causal explanations for changes between physical partial states.  The
-construction of the deliberative elaboration graph in the Genesis AI
-is analogous to the deliberative interpretation and compiling of
-natural language plans in the SALS AI.  Above the deliberative
-reasoning layer in the Genesis AI is a reflective reasoning layer that
-has a separate collection of reflective English stories that it has
-been told in the past.  Reflective English stories in the Genesis AI
-are used in order to find analogical causal explanations that are
-combined to create a reflective elaboration graph that explains the
-deliberative elaboration graph.  Winston describes two of the primary
-motivating hypotheses that have guided the development of the Genesis
-AI:
+been told in the past in order to infer causal connections between the
+ground level story elements.  The knowledge that causally connects the
+ground level of the Genesis AI is referred to as an {\emph{elaboration
+    graph}}, which I will refer to as the deliberative elaboration
+graph.  The deliberative elaboration graph in the Genesis AI is
+analogous to the deliberative plans and transframes in the SALS AI,
+which provide causal explanations for changes between physical partial
+states.  The construction of the deliberative elaboration graph in the
+Genesis AI is analogous to the deliberative interpretation and
+compiling of natural language plans in the SALS AI.  Above the
+deliberative reasoning layer in the Genesis AI is a reflective
+reasoning layer that has a separate collection of reflective English
+stories that it has been told in the past.  Reflective English stories
+in the Genesis AI are used in order to find analogical causal
+explanations that are combined to create a reflective elaboration
+graph that explains the deliberative elaboration graph.  Winston
+describes two of the primary motivating hypotheses that have guided
+the development of the Genesis AI:
 \begin{packed_enumerate}
-\item{The Strong Story Hypothesis: The mechanisms that enable humans
-  to tell, understand, and recombine stories separate human
+\item{{\emph{The Strong Story Hypothesis}}: The mechanisms that enable
+  humans to tell, understand, and recombine stories separate human
   intelligence from that of other primates.}
-\item{The Directed Perception Hypothesis: The mechanisms that enable
-  humans to direct the resources of their perceptual systems to answer
-  questions about real and imagined events account for much of
+\item{{\emph{The Directed Perception Hypothesis}}: The mechanisms that
+  enable humans to direct the resources of their perceptual systems to
+  answer questions about real and imagined events account for much of
   commonsense knowledge.}
 \end{packed_enumerate}
 Winston sees the current Genesis AI to be mostly a demonstration of
@@ -234,7 +236,7 @@ implemented the Architecture for Visual Routines (AVR).  Preliminary
 success at combining the Genesis AI with Rao's AVR AI have been
 demonstrated \cite[]{winston:2011}.  The AVR AI uses a visual
 processing plan language that is based on an idea originally proposed
-by \cite{ullman:1984}, ``visual routines.''  Ullman proposes that
+by \cite{ullman:1984}, {\emph{visual routines}}.  Ullman proposes that
 there are two stages to visual processing: (1) a uniform low-level
 calculation over the entire visual scene, such as calculating the
 $2\frac{1}{2}$D sketch, and (2) visual routines that extract abstract
@@ -256,7 +258,7 @@ following primitive visual operations:
   that it can either be ignored or returned to in the future.}
 \end{packed_enumerate}
 These primitive visual operations are used to construct visual
-routines that become ``plans to perceive''
+routines that become plans to perceive
 \cite[]{pryor:1992,pryorcollins:1995,velez:2011} in the low-level
 visual system.
 
@@ -319,14 +321,14 @@ computations to be performed, and approximate or ``satisficing''
 solutions to problems become necessary \cite[]{simon:1957,simon:1982}.
 \cite{good:1971} describes a decision making problem that includes
 costs for acting as well as costs for decision making that he calls
-``type II rationality,'' a type of metacognition.
-\cite{zilberstein:2008} describes ``optimal metareasoning'' as an
+{\emph{type II rationality}}, a type of metacognition.
+\cite{zilberstein:2008} describes {\emph{optimal metareasoning}} as an
 approach to developing a formalism for evaluating the performance of a
 problem solver that is performing type II rationality.  Optimal
 metacognition does not imply that the object level problem solver is
 optimal but instead that the meta-level problem solver is optimal.  In
-``bounded optimality'' the object level problem solver has certain
-trade-offs, such as solution quality versus time, that can be
+{\emph{bounded optimality}} the object level problem solver has
+certain trade-offs, such as solution quality versus time, that can be
 optimally manipulated by the meta-level problem solver
 \cite[]{russell:1991}.  \cite{zilberstein:2008} describes bounded
 optimality:
@@ -346,9 +348,9 @@ performance for all problem solving algorithms when viewed through the
 lens of optimality.  There are a few key differences between most
 optimal meta-planning algorithms and the SALS AI:
 \begin{packed_enumerate}
-\item{Optimal metacognitive algorithms only learn from ``experience,''
-  while the SALS AI learns both from ``being told'' natural language
-  plans as well as from the ``experience'' of executing these plans.}
+\item{Optimal metacognitive algorithms only learn from experience,
+  while the SALS AI learns both from being told natural language plans
+  as well as from the experience of executing these plans.}
 \item{Optimal metacognitive algorithms tend to only consider simple
   control parameters of an object-level algorithm, such as the
   allocated execution time for a contract or anytime algorithm, while
@@ -357,9 +359,9 @@ optimal meta-planning algorithms and the SALS AI:
 \end{packed_enumerate}
 While the SALS AI does not currently have an objective performance
 metric, it is interesting to consider how the field of bounded
-rationality could benefit from ``being told'' deliberative and
-reflective natural language plans as a method of more quickly
-searching the space of all possible planning programs.
+rationality could benefit from being told deliberative and reflective
+natural language plans as a method of more quickly searching the space
+of all possible planning programs.
 
 %% \cite{horvitz:1988} describes bounded rationality as 
 %% The bounded optimality approach to metacognition is primarily focused
@@ -403,8 +405,8 @@ for high-performance scientific modeling applications.
 \cite{sodan:2010} describes two types of performance scaling in
 parallel algorithms:
 \begin{packed_enumerate}
-\item{``strong scaling,'' and}
-\item{``weak scaling.''}
+\item{{\emph{strong scaling}}, and}
+\item{{\emph{weak scaling}}.}
 \end{packed_enumerate}
 In strong scaling, more processors linearly decrease the overall
 execution time for a given algorithm, regardless of problem size.  In
@@ -443,16 +445,17 @@ resources result in performance gains, regardless of problem size.
 
 \section{Nautilus}
 
-The SALS virtual machine has been compiled and tested on ``Nautilus,''
-an SGI Altix UV 1000 system, the centerpiece of National Institute for
-Computational Sciences (NICS) Remote Data Analysis and Visualization
-Center (RDAV) (\url{www.nics.tennessee.edu}).  Nautilus is a SMP
-architecture with 1024 cores (Intel Nehalem EX CPUs), 4 terabytes of
-global shared memory and 8 GPUs in a single system image.  Nautilus
-has a 427 terabyte Lustre file system, a CPU speed of 2.0 gigahertz
-and a peak performance of 8.2 teraflops.  The SALS AI has been tested
-on Nautilus with an allocation of 32 processors and 128 gigabytes of
-RAM.  The evaluations of the SALS virtual machine in
+The SALS virtual machine has been compiled and tested on
+{\emph{Nautilus}}, an SGI Altix UV 1000 system, the centerpiece of
+National Institute for Computational Sciences (NICS) Remote Data
+Analysis and Visualization Center (RDAV)
+(\url{www.nics.tennessee.edu}).  Nautilus is a SMP architecture with
+1024 cores (Intel Nehalem EX CPUs), 4 terabytes of global shared
+memory and 8 GPUs in a single system image.  Nautilus has a 427
+terabyte Lustre file system, a CPU speed of 2.0 gigahertz and a peak
+performance of 8.2 teraflops.  The SALS AI has been tested on Nautilus
+with an allocation of 32 processors and 128 gigabytes of RAM.  The
+evaluations of the SALS virtual machine in
 {\mbox{\autoref{chapter:evaluation}}} focus on a desktop personal
 computer with an Intel Core i7 CPU with 4 cores each with 2 hardware
 hyperthreads.

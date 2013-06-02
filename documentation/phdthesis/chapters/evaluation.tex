@@ -54,11 +54,11 @@ control.  The important thing to realize about both of these different
 methods of accessing and referring to the knowledge base in the layer
 below is that both of these methods work exclusively through a small
 subset of possible partial state abstractions.
-{\mbox{\autoref{chapter:learning_from_being_told}}}
-describes two specific types of these partial state abstractions that
-can be perceived by the planning layer: (1) the ``relationship''
-expression, and (2) the ``property'' expression.  The fact that all
-perceptual input to a planning layer is limited to these specific
+{\mbox{\autoref{chapter:learning_from_being_told}}} describes two
+specific types of these partial state abstractions that can be
+perceived by the planning layer: (1) the ``{\tt{relationship}}''
+expression, and (2) the ``{\tt{property}}'' expression.  The fact that
+all perceptual input to a planning layer is limited to these specific
 types of partial state abstractions limits the complexity of the
 control problem that the planning layer confronts.  For example,
 because of the simplicity of the included partial states, the SALS AI
@@ -66,13 +66,13 @@ cannot directly pursue a single goal to create a stack of three
 blocks.  Instead, the deliberative layer of the SALS AI must be
 instructed, by either a user or the reflective layer, to pursue two
 goals composed of these simpler partial states to make a plan to stack
-three blocks: (1) ``Block-1 to be on Block-2'' and (2) ``Block-2 to be
-on Block-3.''  The important point is not that the abstracted partial
-states are currently simple but instead that the planning layer is
-\emph{limited} to perceiving its problem domain through partial state
-abstractions that reduce the complexity of the problem domain to a set
-of symbolic reifications that either exist or do not exist in the
-control domain.
+three blocks: (1) ``{\tt{Block-1 to be on Block-2}}'' and (2)
+``{\tt{Block-2 to be on Block-3}}.''  The important point is not that
+the abstracted partial states are currently simple but instead that
+the planning layer is \emph{limited} to perceiving its problem domain
+through partial state abstractions that reduce the complexity of the
+problem domain to a set of symbolic reifications that either exist or
+do not exist in the control domain.
 
 Knowledge in a SALS planning layer includes plans, goals, a planner,
 and other knowledge used in the planning process.  In addition to the
@@ -98,12 +98,12 @@ partial state is symbolically reified in the deliberative layer.
   A visualization of the idea that a deliberative goal object can
   refer to a potential partial state of the physical knowledge base.
   (B) The actual representation of a deliberative goal object that has
-  a symbolic ``partial-state'' property, the symbolic phrase, ``A cube
-  is on a pyramid,'' being a reference to the potential physical
-  partial state visualized in (A).  Each planning layer is limited to
-  reflecting upon reified symbols that refer to partial states in the
-  layer below and not the complexity of the partial states
-  themselves.}
+  a symbolic ``{\tt{partial-state}}'' property, the symbolic phrase,
+  ``{\tt{a cube is on a pyramid}},'' being a reference to the
+  potential physical partial state visualized in (A).  Each planning
+  layer is limited to reflecting upon reified symbols that refer to
+  partial states in the layer below and not the complexity of the
+  partial states themselves.}
 \label{figure:deliberative_physical_partial_state_reification}
 \end{figure}
 Because deliberative knowledge only contains symbols that refer to
@@ -224,21 +224,21 @@ number of ambiguously specified analogies to previously known natural
 language plans, this process can potentially have a considerable
 time-complexity as natural language phrases become longer and more
 complex at higher level reflective layers.  There is a distinction
-between the time-complexity of learning from ``being told'' and
-learning from ``experience.''  When a planning layer in the SALS AI
-learns from experience, a stream of procedurally reflective trace
-events are received from changes in the layer below and these are
-abstracted into partial states that are symbolically reified before
-being stored in the causal hypotheses of the planning layer.  When
-these hypotheses are used to hypothesize the effects of a plan, only
-the reified symbol that refers to the partial state in the layer below
-is stored as related to the plan in the planning layer.  When a
-reflective layer above the planning layer learns from experience, it
-receives a stream of events that includes the new relationship between
-the plan and the symbolized partial state in the planning layer.  The
-reflective layer itself symbolically reifies this partial state of the
-planning layer.  As this process continues up through each additional
-reflective planning layer, each reflective layer performs one symbolic
+between the time-complexity of learning from being told and learning
+from experience.  When a planning layer in the SALS AI learns from
+experience, a stream of procedurally reflective trace events are
+received from changes in the layer below and these are abstracted into
+partial states that are symbolically reified before being stored in
+the causal hypotheses of the planning layer.  When these hypotheses
+are used to hypothesize the effects of a plan, only the reified symbol
+that refers to the partial state in the layer below is stored as
+related to the plan in the planning layer.  When a reflective layer
+above the planning layer learns from experience, it receives a stream
+of events that includes the new relationship between the plan and the
+symbolized partial state in the planning layer.  The reflective layer
+itself symbolically reifies this partial state of the planning layer.
+As this process continues up through each additional reflective
+planning layer, each reflective layer performs one symbolic
 reification that is again symbolically reified by the next layer as
 part of a higher-level partial state that ultimately may refer,
 through symbolic reference, to the original physical knowledge, the
@@ -270,14 +270,14 @@ the SALS AI, where the first piece of knowledge is symbolically
 referred to by the second, and the second is symbolically referred to
 by the third:
 \begin{packed_enumerate}
-\item{Physical Knowledge: ``A pyramid is on a cube.''}
-\item{Deliberative Knowledge: ``A deliberative planner is focusing on
-  a plan that has failed to achieve the goal for a cube to be on a
-  pyramid.''}
-\item{Reflective Knowledge: ``A reflective planner is focusing on a
-  plan that has failed to avoid the negative goal for a deliberative
-  planner to be focusing on a plan that has failed to achieve the goal
-  for a cube to be on a pyramid.''}
+\item{Physical Knowledge: ``{\tt{a pyramid is on a cube}}.''}
+\item{Deliberative Knowledge: ``{\tt{a deliberative planner is
+      focusing on a plan that has failed to achieve the goal for a
+      cube to be on a pyramid}}.''}
+\item{Reflective Knowledge: ``{\tt{a reflective planner is focusing on
+      a plan that has failed to avoid the negative goal for a
+      deliberative planner to be focusing on a plan that has failed to
+      achieve the goal for a cube to be on a pyramid}}.''}
 \end{packed_enumerate}
 In order to continue to reference physical knowledge in higher layers,
 the natural language phrases become longer, more complex, and take
@@ -336,10 +336,10 @@ the SALS AI are the goals in the immediate layer below the planning
 layer that the planning layer should try to accomplish or avoid.
 Examples of these goals are as follows:
 \begin{packed_enumerate}
-\item{Reflective Plan: ``Want a cube to be on a pyramid.''}
-\item{Reflective Plan: ``Want a pyramid to be on a cube.''}
-\item{Super-Reflective Plan: ``Avoid a deliberative planner being
-  focused on a plan that has failed.''}
+\item{Reflective Plan: ``{\tt{want a cube to be on a pyramid}}.''}
+\item{Reflective Plan: ``{\tt{want a pyramid to be on a cube}}.''}
+\item{Super-Reflective Plan: ``{\tt{Avoid a deliberative planner being
+      focused on a plan that has failed}}.''}
 \end{packed_enumerate}
 {\mbox{\autoref{table:time_complexity_of_interpreting_goals}}} shows
 the time-complexities of interpreting these natural language phrases
@@ -387,11 +387,11 @@ algorithms are simply composed of resource activations in the
 immediate layer below.  The following are plans of action in each of
 the three planning layers of the SALS AI:
 \begin{packed_enumerate}
-\item{Deliberative: ``Stack a cube on a pyramid.''}
-\item{Reflective: ``Find recent plan to accomplish my positive
-  goals.''}
-\item{Super-Reflective: ``Find recent plan to avoid my negative
-  goals.''}
+\item{Deliberative: ``{\tt{stack a cube on a pyramid}}.''}
+\item{Reflective: ``{\tt{find recent plan to accomplish my positive
+      goals}}.''}
+\item{Super-Reflective: ``{\tt{find recent plan to avoid my negative
+      goals}}.''}
 \end{packed_enumerate}
 {\mbox{\autoref{table:time_complexity_of_plans_for_action_in_each_layer}}}
 shows the time-complexity of interpreting these plans for action in
@@ -414,7 +414,7 @@ the each of the three planning layers of the SALS AI.
   interpreting plans for action in the three planning layers of the
   SALS AI.  (A) The deliberative physical plans take much more
   time-complexity to interpret because they are idiosyncratic to the
-  ``Blocks World'' planning domain, including specific references to
+  Blocks World planning domain, including specific references to
   shapes, colors, and prepositional relationships.  Each different
   problem domain will have a different set of deliberative plans in
   order to manipulate that domain.  (B) The reflective planning plans
@@ -751,9 +751,9 @@ hyperthread in the target hardware platform.  Each of these memory
 pools is allocated a virtual processor object in the SALS virtual
 machine.  Each concurrent virtual processor has a separate scheduler
 that simulates parallelism for a number of parallel processes, called
-``fibers'' in order to distinguish them from the low-level operating
-system thread objects.  The SALS garbage collector is a concurrent
-implementation of a tricolor garbage collection algorithm.
+{\emph{fibers}} in order to distinguish them from the low-level
+operating system thread objects.  The SALS garbage collector is a
+concurrent implementation of a tricolor garbage collection algorithm.
 {\mbox{\autoref{figure:parallel_processing_speedup}}} compares the
 speedup gained by executing multiple processes in parallel on the SALS
 virtual machine to the optimal speedup that could be expected.  These
@@ -791,25 +791,25 @@ grid style={dashed, gray!30},
   concurrently in the SALS virtual machine.]{The speedup gained by
   executing multiple processes concurrently in the SALS virtual
   machine.  The solid line plot represents the speedup experienced by
-  the SALS AI as more ``fiber'' processes are executed in parallel.
-  The dashed line plot represents the optimal speedup that can be
-  expected on this specific hardware.  Each parallel process in this
-  experiment is performing the same numerical processing task on
-  memory that is independent of other tasks.  The number of
-  computations performed by a single parallel process is used as the
-  unity standard for the speedup comparisons.  These tests were run on
-  an Intel Core i7 processor with 4 cores, each with 2 hardware
-  hyperthreads.  In these tests, 8 virtual processors and 8 memory
-  pools were allocated, one for each hyperthread in the target
-  hardware platform.  Each test was performed 100 times in order to
-  average out variations caused by intermittent garbage collections.
-  The optimal speedup is calculated by a short C program that uses
-  POSIX thread primitives, optimized C arithmetic, and no memory
-  allocation or garbage collection.  The SALS AI has a small overhead
-  for each additional parallel process, which is seen by the downward
-  slope of the solid plot.  The SALS virtual machine performs most
-  efficiently on this hardware with 7 parallel fibers executing.
-  These tests were executed on a GNU/Linux system.}
+  the SALS AI as more fiber processes are executed in parallel.  The
+  dashed line plot represents the optimal speedup that can be expected
+  on this specific hardware.  Each parallel process in this experiment
+  is performing the same numerical processing task on memory that is
+  independent of other tasks.  The number of computations performed by
+  a single parallel process is used as the unity standard for the
+  speedup comparisons.  These tests were run on an Intel Core i7
+  processor with 4 cores, each with 2 hardware hyperthreads.  In these
+  tests, 8 virtual processors and 8 memory pools were allocated, one
+  for each hyperthread in the target hardware platform.  Each test was
+  performed 100 times in order to average out variations caused by
+  intermittent garbage collections.  The optimal speedup is calculated
+  by a short C program that uses POSIX thread primitives, optimized C
+  arithmetic, and no memory allocation or garbage collection.  The
+  SALS AI has a small overhead for each additional parallel process,
+  which is seen by the downward slope of the solid plot.  The SALS
+  virtual machine performs most efficiently on this hardware with 7
+  parallel fibers executing.  These tests were executed on a GNU/Linux
+  system.}
 \label{figure:parallel_processing_speedup}
 \end{figure}
 \begin{figure}

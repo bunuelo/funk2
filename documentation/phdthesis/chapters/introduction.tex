@@ -13,16 +13,10 @@ referred to as ``thinking about thinking'' or ``metacognition.''  A
 reflective intelligence can learn to select between different types of
 thinking that are appropriate for generating plans toward different
 types of goals.  In this thesis, I present the Substrate for
-Accountable Layered Systems (SALS), an open-source
-\begin{wrapfigure}{r}{6.125cm}
-  \includegraphics[width=6cm]{gfx/blocks_world_large-01}
-  \caption[An example ``Blocks World'' problem domain.]{An example
-    ``Blocks World'' problem domain.}
-  \label{figure:introduction_example_problem_domain}
-\end{wrapfigure}
-software platform for the development of experimental reflective
-Artificial Intelligences (AI).  A deliberative AI system consists of
-three processes: {\mbox{(1)~perceptual}} data are generalized and
+Accountable Layered Systems (SALS), an open-source software platform
+for the development of experimental reflective Artificial
+Intelligences (AI).  A deliberative AI system consists of three
+processes: {\mbox{(1)~perceptual}} data are generalized and
 categorized to learn abstract models, {\mbox{(2)~abstract}} models are
 used to infer hypothetical states, i.e. states of future, past, or
 otherwise ``hidden'' variables, and {\mbox{(3)~actions}} are chosen
@@ -48,15 +42,15 @@ reflective control.
 The four contributions of this thesis are:
 \begin{enumerate}
 \item \emph{Emotion Machine Cognitive Architecture}: A computational
-  implementation of the bottom four layers of the ``Emotion Machine''
-  six-layered theory of mind \cite[]{minsky:2006}.  The implementation
-  contains a physical simulation that is controlled by a deliberative
-  physical object-level reasoning layer with another reflective
-  meta-level reasoning layer that learns to control the deliberative
-  problem solving resources.  The architectural primitives include
-  resources that are organized into agencies that are organized into
-  layers.  The implementation includes five layers that are described
-  in
+  implementation of the bottom four layers of the \emph{Emotion
+    Machine} six-layered theory of mind \cite[]{minsky:2006}.  The
+  implementation contains a physical simulation that is controlled by
+  a deliberative physical object-level reasoning layer with another
+  reflective meta-level reasoning layer that learns to control the
+  deliberative problem solving resources.  The architectural
+  primitives include resources that are organized into agencies that
+  are organized into layers.  The implementation includes five layers
+  that are described in
   {\mbox{\autoref{chapter:emotion_machine_cognitive_architecture}}}:
   (1) built-in reactive thinking, (2) learned reacting thinking, (3)
   deliberative thinking, (4) reflective thinking, and (5)
@@ -116,8 +110,15 @@ Before getting into abstract generalizations of reflective thinking,
 let us consider the advice of Seymour Papert: ``You can't think about
 thinking without thinking about thinking about something.''  Following
 this advice, consider the simple physical block stacking world,
-depicted in {\autoref{figure:introduction_example_problem_domain}},
-which is similar to the ``Blocks World'' planning domain
+depicted in
+\begin{wrapfigure}{r}{6.125cm}
+\includegraphics[width=6cm]{gfx/blocks_world_large-01}
+  \caption[An example {\emph{Blocks World}} problem domain.]{An
+    example {\emph{Blocks World}} problem domain.}
+  \label{figure:introduction_example_problem_domain}
+\end{wrapfigure}
+{\autoref{figure:introduction_example_problem_domain}}, which is
+similar to the {\emph{Blocks World}} planning domain
 {\cite[]{winograd:1970}}.  Imagine that the robot arm in this simple
 scenario is an entirely deliberative (non-reflective) AI that wants to
 accomplish the deliberative goal of a block being on a block.  This AI
@@ -187,15 +188,17 @@ first story, except rather than deciding on a plan of physical action,
 the reflective planner is deciding on a plan for deliberative action.
 In this case, the ``find and execute a recently learned plan to
 accomplish my goals'' plan is an implementation of a planning
-algorithm within the natural planning language itself.  The fact that
-the deliberative planning algorithm is written in the reflective
-planning language is one key aspect to the recursive nature of this
-approach to reflective learning and control.  The reflective AI has a
-number of reflective plans for how to deliberatively plan, the method
-that the AI chose in this case tries to find a plan that it has been
-told most recently.  So, the AI begins executing this reflective plan,
-which becomes the deliberative planning process that tries to find a
-plan for acting in the physical problem domain:
+algorithm within the natural planning language itself.  This
+reflective plan is a sequence of mental actions rather than physical
+actions.  The fact that the deliberative planning algorithm is written
+in the reflective planning language is one key aspect to the recursive
+nature of this approach to reflective learning and control.  The
+reflective AI has a number of reflective plans for how to
+deliberatively plan, the method that the AI chose in this case tries
+to find a plan that it has been told most recently.  So, the AI begins
+executing this reflective plan, which becomes the deliberative
+planning process that tries to find a plan for acting in the physical
+problem domain:
 \begin{quote}
   I will try interpreting and imagining the physical effects of my
   most recently learned plan for physical action, ``stack a cube on a
@@ -367,17 +370,20 @@ cube to be on a pyramid.''  Reflective knowledge is analogous to
 deliberative knowledge, but instead of being about accomplishing goals
 in physical knowledge, reflective knowledge is about accomplishing
 goals in deliberative knowledge.
-{\autoref{figure:four_knowledge_layers}} shows the hierarchical
-relationship between the world, physical, deliberative and reflective
-knowledge layers in SALS.  In general, one can imagine that the
-recursive nature of SALS allows for any number of reflective layers to
-be added to the top of the reflective AI, resulting in
-``super-reflective'' layers of learning planned control.
+{\autoref{figure:three_knowledge_layers}} shows the hierarchical
+relationship between the physical, deliberative and reflective
+knowledge layers in the Substrate for Accountable Layered Systems
+(SALS), the open-source software platform for the development of
+experimental reflective Artificial Intelligences (AI) that I present
+in this thesis.  In general, one can imagine that the recursive nature
+of SALS allows for any number of reflective layers to be added to the
+top of the reflective AI, resulting in \emph{super-reflective} layers
+of learning planned control.
 \begin{figure}
   \center
-  \includegraphics[width=4cm]{gfx/four_knowledge_layers}
-  \caption{Four knowledge layers.}
-  \label{figure:four_knowledge_layers}
+  \includegraphics[width=4cm]{gfx/three_knowledge_layers}
+  \caption{Three knowledge layers.}
+  \label{figure:three_knowledge_layers}
 \end{figure}
 
 \section{Natural Language Plans}
@@ -385,20 +391,22 @@ be added to the top of the reflective AI, resulting in
 SALS includes a simple but powerful planning language that is based on
 the interpretation of natural language plans.  Plans are sequences of
 commands that can be created, mutated, and executed by a planner in
-order to accomplish goals.  The following is an example of a
-definition of one of the deliberative plans that the AI in the story
-could consider executing:
+order to accomplish goals.  Deliberative plans are sequences of
+physical actions, while reflective plans are sequences of mental
+actions.  The following is an example of a definition of one of the
+deliberative plans that the AI in the story could consider executing:
 \begin{samepage}
 \begin{Verbatim}
-[defplan 'move slowly until over a cube'
-  [plan-call [plan 'if a cube is to my left, move slowly
-                    left until over a cube, otherwise if a
-                    cube is to my right, move slowly right
-                    until over a cube']]
-  [plan-call [plan 'assert that a cube is below me']]]
+  [defplan 'move slowly until over a cube'
+    [plan-call [plan 'if a cube is to my left, move slowly
+                      left until over a cube, otherwise if a
+                      cube is to my right, move slowly right
+                      until over a cube']]
+    [plan-call [plan 'assert that a cube is below
+                      me']]]
 \end{Verbatim}
 \end{samepage}
-This expression defines a new deliberative plan.  The ``defplan''
+This expression defines a new deliberative plan.  The {\tt{defplan}}
 command is shorthand for ``define plan.''  The first argument to the
 defplan expression is the name of the plan: ``move slowly until over a
 cube.''  The body of the plan is the remaining sequence of
@@ -406,16 +414,17 @@ expressions.  The first expression in the body of this plan is to
 interpret and execute the natural language phrase beginning with ``if
 a cube...''  The second expression in the body of this plan is to
 interpret and execute the natural language phrase beginning with
-``assert that...''  This plan positions the AI over a cube and fails
-if a cube is not finally below the AI.  If the planner wanted to find
-a plan to position the AI over a pyramid, this plan would not help
-unless it was slightly modified, replacing all mentions of ``cube''
-with ``pyramid.''  In order to help the planner to know what parts of
-plans might be analogously replaceable in this way, the SALS planning
-language includes optional natural language pattern matching templates
-and default frame variable bindings that can be specified for each
-plan definition.  The following example shows how this simple plan can
-be generalized to allow positioning the AI over a range of shapes:
+``assert that...''  This plan attempts to position the AI over a cube
+and fails if a cube is not finally below the AI.  If the planner
+wanted to find a plan to position the AI over a pyramid, this plan
+would not help unless it was slightly modified, replacing all mentions
+of ``cube'' with ``pyramid.''  To help the planner to know what parts
+of plans might be analogously replaceable in this way, the SALS
+planning language includes optional natural language pattern matching
+templates and default frame variable bindings that can be specified
+for each plan definition.  The following example shows how this simple
+plan can be generalized to allow positioning the AI over a range of
+shapes:
 \begin{samepage}
 \begin{Verbatim}
 [defplan 'move slowly until over a cube'
@@ -430,24 +439,25 @@ be generalized to allow positioning the AI over a range of shapes:
 \end{Verbatim}
 \end{samepage}
 This generalized form of the original plan uses natural language
-variables that are specified with a question mark expression, ``?''
-Note that there are two optional arguments to the defplan expression
-in this example: (1) ``:matches'' and (2) ``:frame.''  The optional
-``:matches'' argument specifies a list of potential patterns that this
-plan may match as it is being interpreted.  In this case, the variable
-expression ``[? shape]'' is allowed to replace the word ``cube'' from
-the original name of the plan.  The optional ``:frame'' argument
+variables that are specified with a question mark expression,
+``{\tt{?}}''  Note that there are two optional arguments to the
+defplan expression in this example: (1) ``{\tt{:matches}}'' and (2)
+``{\tt{:frame}}.''  The optional ``{\tt{:matches}}'' argument
+specifies a list of potential patterns that this plan may match as it
+is being interpreted.  In this case, the variable expression ``{\tt{[?
+      shape]}}'' is allowed to replace the word ``cube'' from the
+original name of the plan.  The optional ``{\tt{:frame}}'' argument
 specifies the default natural language variable bindings.  In this
 case, the ``shape'' variable is assigned the natural language phrase
 ``cube'' by default.  In the body of the generalized form of the plan,
 all occurrences of cube have been replaced with the variable
-expression ``[? shape]''.  Given this generalized form of the original
-plan, the planner can create a new analogous plan as an interpretation
-of the natural language phrase ``move slowly until over a pyramid.''
-In this way, plans can be communicated to the AI in a natural language
-form.  The AI has ``been told'' a total of approximately seventy
-simple natural language plans, which can be adapted by analogy to
-provide interpretations for a variety of complex possible natural
+expression ``{\tt{[? shape]}}''.  Given this generalized form of the
+original plan, the planner can create a new analogous plan as an
+interpretation of the natural language phrase ``move slowly until over
+a pyramid.''  In this way, plans can be communicated to the AI in a
+natural language form.  The AI has been told a total of approximately
+seventy simple natural language plans, which can be adapted by analogy
+to provide interpretations for a variety of complex possible natural
 language plans, including recursive interpretations.  The details of
 the planning language will be discussed in
 {\mbox{\autoref{chapter:learning_from_being_told}}}.
@@ -468,19 +478,18 @@ time to work more slowly, while the plan execution can be performed in
 bursts at near full speed.
 
 The deliberative layer makes deliberative plans composed of physical
-actions in order to accomplish deliberative goals, while the
-reflective layer makes reflective plans composed of deliberative
-actions in order to accomplish reflective goals.  Deliberative
-learning allows the AI to better predict the physical effects of
-deliberative plans for physical action, while reflective learning
-allows the AI to better predict the deliberative effects of reflective
-plans for deliberative action.  The AI is learning at a reflective
-level when it thinks to itself, ``I also have new support for the
-hypothesis that executing plans that try to accomplish the goal of a
-cube being on a pyramid may lead to an expectation failure when
-executed.''  This newly supported hypothesis is a reflective
-hypothesis about deliberative actions and objects.  The AI
-hierarchically assigns credit to the responsible parts of the
+actions to accomplish deliberative goals, while the reflective layer
+makes reflective plans composed of deliberative actions to accomplish
+reflective goals.  Deliberative learning allows the AI to better
+predict the physical effects of deliberative plans for physical
+action, while reflective learning allows the AI to better predict the
+deliberative effects of reflective plans for deliberative action.  The
+AI is learning at a reflective level when it thinks to itself, ``I
+also have new support for the hypothesis that executing plans that try
+to accomplish the goal of a cube being on a pyramid may lead to an
+expectation failure when executed.''  This newly supported hypothesis
+is a reflective hypothesis about deliberative actions and objects.
+The AI hierarchically assigns credit to the responsible parts of the
 executing plan, ``find and execute a recently learned plan to
 accomplish my goals,'' that was currently executing at the time of the
 unexpected failure.  This precondition for the execution of the plan
@@ -502,17 +511,17 @@ layers of an Emotion Machine cognitive architecture is discussed next
 in {\mbox{\autoref{chapter:emotion_machine_cognitive_architecture}}}.
 In {\mbox{\autoref{chapter:learning_from_being_told}}}, I will
 describe the natural language planning language that allows natural
-language plans to ``be told'' to the AI.  This chapter will also
-discuss how the planning process interprets natural language plans by
-finding analogies to plans that the AI already knows.  In
+language plans to be told to the AI.  This chapter will also discuss
+how the planning process interprets natural language plans by finding
+analogies to plans that the AI already knows.  In
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}, I
 will describe how the AI learns from the experience it gains from
 actually executing its plans.  This chapter will describe the
 necessary procedurally reflective components that have been used to
 attach complex time-intensive learning algorithms to quickly executing
-plans of action.  In order to describe my last contribution, I will
-describe the SALS virtual machine and reflectively traced programming
-language in
+plans of action.  To describe my last contribution, I will describe
+the SALS virtual machine and reflectively traced programming language
+in
 {\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}.
 
 {\mbox{\autoref{chapter:related_models}}} relates my AI to other

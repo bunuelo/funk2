@@ -16,7 +16,7 @@ areas of research that would improve every layer in the SALS AI:
 \begin{packed_enumerate}
 \item{General partial state abstraction.  The ability to abstract more
   general partial states from a control domain would allow the
-  addition of ``Critics'' that recognize relatively specific and
+  addition of {\emph{critics}} that recognize relatively specific and
   intricate problematic partial states in the control domain, as is
   done in the EM-ONE architecture \cite[]{singh:2005b}, the precedent
   for this work.}
@@ -72,18 +72,18 @@ SALS AI are as follows:
 The SALS AI is currently restricted in the types of partial states
 that it can abstract from the knowledge base that it is trying to
 control.  The two types of partial states that are included in the
-current implementation are the ``relationship'' and ``property'' types
-that have been described in
-{\mbox{\autoref{chapter:learning_from_being_told}}}.
-Implementing more general types of partial state abstraction in the
-SALS AI must be done carefully in order to keep the architecture
-tractable at higher layers.  One goal for implementing perceptual
-partial state abstractions of greater complexity would be to allow for
-implementing ``Critics'' from EM-ONE \cite[]{singh:2005b}.  Putting
-efficiency aside for the moment, implementing new types of partial
-state abstractions for the SALS AI is a straightforward task.  There
-are two places in each planning layer where partial state abstraction
-processes are executed:
+current implementation are the ``{\tt{relationship}}'' and
+``{\tt{property}}'' types that have been described in
+{\mbox{\autoref{chapter:learning_from_being_told}}}.  Implementing
+more general types of partial state abstraction in the SALS AI must be
+done carefully in order to keep the architecture tractable at higher
+layers.  One goal for implementing perceptual partial state
+abstractions of greater complexity would be to allow for implementing
+critics from EM-ONE \cite[]{singh:2005b}.  Putting efficiency aside
+for the moment, implementing new types of partial state abstractions
+for the SALS AI is a straightforward task.  There are two places in
+each planning layer where partial state abstraction processes are
+executed:
 \begin{packed_enumerate}
 \item{\emph{Asynchronous Procedural Event Stream Abstraction}: The
   asynchronous learning algorithm that exists in each reflective layer
@@ -215,10 +215,10 @@ re-imagined whenever the asynchronous learning algorithms have learned
 new information through the experiential event streams.
 
 \cite{radul:2009} explain a type of Truth Maintenance System (TMS)
-\cite[]{doyle:1978} called a ``Propagator.''  A propagator network is
-composed of ``cells'' that represent variables in a computational
-process that can have multiple ambiguous values.  The propagator
-network also has the ability to track the provenance of the
+\cite[]{doyle:1978} called a {\emph{propagator}}.  A propagator
+network is composed of {\emph{cells}} that represent variables in a
+computational process that can have multiple ambiguous values.  The
+propagator network also has the ability to track the provenance of the
 derivations for the values stored in these cells.  The advantage of
 TMSs and propagator networks is the ability to perform dependency
 directed backtracking in order to find new justifications for beliefs
@@ -233,9 +233,9 @@ different sources of information.  The ability to maintain multiple,
 possibly conflicting belief structures in a propagator network would
 allow the SALS AI to consider the source of the knowledge and develop
 ways of reasoning that determine when one source is more reliable than
-another.  For example, when the SALS AI learns new plans from ``being
-told,'' the source of this knowledge could be associated with
-different users or other specific AIs that are the source of these new
+another.  For example, when the SALS AI learns new plans from being
+told, the source of this knowledge could be associated with different
+users or other specific AIs that are the source of these new
 assertions.  When one source is found to be valid for one domain but
 invalid for another, the SALS AI could use the features of a
 propagator network to easily switch between reasoning using different
@@ -329,21 +329,21 @@ natural language in the SALS AI.
 
 \section{Self-Reflective Thinking}
 
-The ``self-reflective'' and ``self-conscious'' layers are the top two
-layers of the Emotion Machine theory of human commonsense thinking
-\cite[]{minsky:2006}.  These two layers are not included in the
-current version of the SALS AI.  The self-reflective layer includes
-plans that control the planning resources in the lower reflective
-layers.  The self-reflective layer contains ``self-models'' which
-represent large-scale reconfigurations of the thinking resources in
-the lower reflective layers of the AI.  These global changes to the
-way an AI is thinking are sometimes referred to as ``emotions'' or
-``personalities'' depending on the time-scale.  My usage of these
-terms is analogous to the usage of the terms ``weather'' and
-``climate.''  A personality is a longer-term plan involving
-shorter-term emotion actions.  The following is a list of some simple
-emotion and personality plan definitions that could be added to a
-self-reflective layer of the SALS AI:
+The {\emph{self-reflective}} and {\emph{self-conscious}} layers are
+the top two layers of the Emotion Machine theory of human commonsense
+thinking \cite[]{minsky:2006}.  These two layers are not included in
+the current version of the SALS AI.  The self-reflective layer
+includes plans that control the planning resources in the lower
+reflective layers.  The self-reflective layer contains
+{\emph{self-models}} which represent large-scale reconfigurations of
+the thinking resources in the lower reflective layers of the AI.
+These global changes to the way an AI is thinking are sometimes
+referred to as ``emotions'' or ``personalities'' depending on the
+time-scale.  My usage of these terms is analogous to the usage of the
+terms ``weather'' and ``climate.''  A personality is a longer-term
+plan involving shorter-term emotion actions.  The following is a list
+of some simple emotion and personality plan definitions that could be
+added to a self-reflective layer of the SALS AI:
 
 \begin{packed_itemize}
 \item{Be happy: Do nothing.}
@@ -372,8 +372,8 @@ the above plans being executed:
 \end{packed_itemize}
 
 \noindent One distinguishing factor of the self-reflective layer is
-that it not only includes ``self-models'' but also analogous
-``other-models.''  The following is a list of ``other-model''
+that it not only includes self-models but also analogous
+{\emph{other-models}}.  The following is a list of other-model
 knowledge:
 
 \begin{packed_itemize}
@@ -397,21 +397,21 @@ adding an ontology to the SALS AI's knowledge bases.  Currently the
 SALS AI can only abstract and simulate symbolically reified partial
 states that represent the problem domain.  These collections of
 symbols that are the input to each planning layer of the SALS AI are
-not ``object-oriented.''  Meaning that they are not organized into
-frame-based object representations.  Learning an ontology of object
-types is future research for the SALS AI.  The ability to abstract and
-simulate object types may be related to learning object binding
-affordances \cite[]{stoytchev:2005}.  Also, learning these object
-types may lead to an object model that could naturally be extended for
-learning self-models and other-models.
+not {\emph{object-oriented}}.  Meaning that they are not organized
+into frame-based object representations.  Learning an ontology of
+object types is future research for the SALS AI.  The ability to
+abstract and simulate object types may be related to learning object
+binding affordances \cite[]{stoytchev:2005}.  Also, learning these
+object types may lead to an object model that could naturally be
+extended for learning self-models and other-models.
 
 \section{Self-Conscious Thinking}
 
-The ``self-conscious'' layer is the top layer of the Emotion Machine
-theory of human commonsense thinking.  The self-conscious layer is a
-planning layer that controls the self-reflective layer below.
-Self-conscious thinking involves thinking about what one person is
-thinking about another person.  The representations in the
+The {\emph{self-conscious}} layer is the top layer of the Emotion
+Machine theory of human commonsense thinking.  The self-conscious
+layer is a planning layer that controls the self-reflective layer
+below.  Self-conscious thinking involves thinking about what one
+person is thinking about another person.  The representations in the
 self-conscious thinking layer include relationships between
 self-models and other-models from the self-reflective layer.  The
 following are examples of self-conscious knowledge:
@@ -427,34 +427,35 @@ Emotion Machine theory to include reasoning about the roles of
 individuals in the context of social groups.  \cite{minsky:2006}
 explains one of these types of relationships that allows the direct
 inheritance of high-level goals from one agent to another agent that
-he calls the ``Imprimer'' relationship.  An imprimer functions in a
-developmental situation where a learner inherits high-level goals from
-their imprimer.  A parent or caregiver in the context of raising a
-child might be seen as imprimers to the developing child that teach
+he calls the {\emph{imprimer}} relationship.  An imprimer functions in
+a developmental situation where a learner inherits high-level goals
+from their imprimer.  A parent or caregiver in the context of raising
+a child might be seen as imprimers to the developing child that teach
 the child what kinds of social roles, personality traits, and other
 ways of thinking should be practiced or ignored.
 
 \section{Planning to Perceive}
 
-{\mbox{\autoref{section:meta_planning_and_meta_plan_recognition}}}
-describes the Architecture for Visual Routines (AVR) \cite[]{rao:1998}
-that is based on an idea originally proposed by \cite{ullman:1984}.
-To briefly review, ``visual routines'' define objects and parts by
-having a visual plan interpreter that is focused on a specific part of
-the low-level visual input at any given point in time.  Although the
-first planning layer in the SALS AI is the deliberative layer, one can
-imagine that a solution to including a perceptual planning layer would
-be to extend the SALS planning layers into the learned reactive layer
-of the SALS AI, so that the translation of visual knowledge from the
-built-in reactive visual knowledge base to the physical knowledge base
-in the learned reactive layer would be performed by a planning layer
-below the deliberative layer.  Thus, the technique of extending the
-SALS AI's planning layers to higher layers of super-reflective control
-could be just as easily reversed by extending the SALS AI's planning
-layers to lower layers of planned control, so that reflective control
-could be applied to the types of planning-to-perceive problems as a
-coherent integration of Ullman's visual routines into deliberative
-reasoning layers of reflective control.
+{\mbox{Section~\ref{section:meta_planning_and_meta_plan_recognition}}}
+describes the {\emph{Architecture for Visual Routines (AVR)}}
+\cite[]{rao:1998} that is based on an idea originally proposed by
+\cite{ullman:1984}.  To briefly review, {\emph{visual routines}}
+define objects and parts by having a visual plan interpreter that is
+focused on a specific part of the low-level visual input at any given
+point in time.  Although the first planning layer in the SALS AI is
+the deliberative layer, one can imagine that a solution to including a
+perceptual planning layer would be to extend the SALS planning layers
+into the learned reactive layer of the SALS AI, so that the
+translation of visual knowledge from the built-in reactive visual
+knowledge base to the physical knowledge base in the learned reactive
+layer would be performed by a planning layer below the deliberative
+layer.  Thus, the technique of extending the SALS AI's planning layers
+to higher layers of super-reflective control could be just as easily
+reversed by extending the SALS AI's planning layers to lower layers of
+planned control, so that reflective control could be applied to the
+types of planning-to-perceive problems as a coherent integration of
+Ullman's visual routines into deliberative reasoning layers of
+reflective control.
 
 \section{Plan Recognition and Story Understanding}
 

@@ -26,6 +26,13 @@ funk2: causally reflective parallel programming language
         The localhost peer-command-server port number.
 
 
+TO INSTALL BUILD DEPENDENCIES
+
+  for Ubuntu/Debian
+
+    sudo apt-get install debhelper zlib1g-dev libx11-dev libxmlrpc-c3-dev libcurl4-openssl-dev libgtk2.0-dev libavcodec-dev libswscale-dev
+
+
 TO PERFORM LOCAL BUILD:
 
   ./configure
@@ -65,4 +72,4 @@ LICENSE:
   GNU General Public License v3
 
 
-Last Modified: 2013.02.26
+Last Modified: 2013.07.14

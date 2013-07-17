@@ -55,10 +55,10 @@ could consider executing:
 \end{samepage}
 This expression defines a new deliberative plan.  The
 ``{\tt{defplan}}'' command is shorthand for ``define plan.''  The
-first argument to the defplan expression is the name of the plan:
-``{\tt{move left}}.''  The body of the plan is the remaining sequence
-of expressions.  The only expression in the body of this plan is the
-``{\tt{call-below}}'' expression with the ``{\tt{move left}}''
+first argument to the ``{\tt{defplan}}'' expression is the name of the
+plan: ``{\tt{move left}}.''  The body of the plan is the remaining
+sequence of expressions.  The only expression in the body of this plan
+is the ``{\tt{call-below}}'' expression with the ``{\tt{move left}}''
 argument.  This expression activates a resource in the layer below, in
 this case, the ``{\tt{move left}}'' resource, which is in the built-in
 reactive layer of the AI.  The ``{\tt{call-below}}'' expression not
@@ -92,21 +92,21 @@ syntax:
 This generalized form of the original ``{\tt{move left}}'' and
 ``{\tt{move right}}'' plans uses a natural language variable,
 ``{\tt{direction}}.''  Note that there are two optional arguments to
-the defplan expression in this example: (1) ``{\tt{:matches}}'' and
-(2) ``{\tt{:frame}}.''  The optional ``{\tt{:matches}}'' argument
-specifies a list of potential natural language patterns that this plan
-may match as it is being interpreted.  In this case, the variable
-expression ``{\tt{[?  direction]}}'' is allowed to replace the word
-``{\tt{left}}'' from the original name of the plan.  The optional
-``{\tt{:frame}}'' argument specifies the default natural language
-variable bindings.  In this case, the ``{\tt{direction}}'' variable is
-assigned the natural language phrase ``{\tt{left}}'' by default.  In
-the body of the generalized form of the plan, all occurrences of
-``{\tt{left}}'' have been replaced with the variable expression
-``{\tt{[?  direction]}}''.  Given this generalized form of the
-original plan, the planner can create a new analogous plan as an
-interpretation of either of the natural language phrases: ``{\tt{move
-    left}}'' or ``{\tt{move right}}.''
+the ``{\tt{defplan}}'' expression in this example: (1)
+``{\tt{:matches}}'' and (2) ``{\tt{:frame}}.''  The optional
+``{\tt{:matches}}'' argument specifies a list of potential natural
+language patterns that this plan may match as it is being interpreted.
+In this case, the variable expression ``{\tt{[?  direction]}}'' is
+allowed to replace the word ``{\tt{left}}'' from the original name of
+the plan.  The optional ``{\tt{:frame}}'' argument specifies the
+default natural language variable bindings.  In this case, the
+``{\tt{direction}}'' variable is assigned the natural language phrase
+``{\tt{left}}'' by default.  In the body of the generalized form of
+the plan, all occurrences of ``{\tt{left}}'' have been replaced with
+the variable expression ``{\tt{[?  direction]}}''.  Given this
+generalized form of the original plan, the planner can create a new
+analogous plan as an interpretation of either of the natural language
+phrases: ``{\tt{move left}}'' or ``{\tt{move right}}.''
 
 \section{Conditionals and Partial States}
 
@@ -153,15 +153,17 @@ Unlike most lisp-like languages, the SALS ``{\tt{if}}'' expression's
 conditional value must be a Boolean type object and will fail with any
 other value.  The ``{\tt{fail}}'' expression is a simple way for a
 plan to stop executing and mark the plan with the knowledge of a
-failure object.  The ``{\tt{exists}}'' expression accepts a partial
-state as its only argument and checks to see if this partial state
-exists in the knowledge base that the planning layer is trying to
-control.  When the effects of a plan are being imagined, the return
-value of the ``{\tt{exists}}'' expression are not known, so multiple
-possible ambiguous values are returned: (1) the result based on
-current hypothetical models of the effects of previous actions or the
-current state of the knowledge base that this planning layer is trying
-to control if no previous actions have been imagined, (2) a true value
+failure object.
+
+The ``{\tt{exists}}'' expression accepts a partial state as its only
+argument and checks to see if this partial state exists in the
+knowledge base that the planning layer is trying to control.  When the
+effects of a plan are being imagined, the return value of the
+``{\tt{exists}}'' expression are not known, so multiple possible
+ambiguous values are returned: (1) the result based on current
+hypothetical models of the effects of previous actions or the current
+state of the knowledge base that this planning layer is trying to
+control if no previous actions have been imagined, (2) a true value
 based on the possibility that learned models are incorrect, and (3) a
 false value based on the possibility that learned models are
 incorrect.  The ``{\tt{relationship}}'' expression is one of two
@@ -241,8 +243,8 @@ following seven arguments:
 \item{{\tt{key}}}
 \item{{\tt{value}}}
 \end{packed_enumerate}
-{\mbox{\autoref{figure:relationship_partial_state_graph}}} shows how
-the arguments to the ``{\tt{property}}'' expression map to the frame
+{\mbox{\autoref{figure:property_partial_state_graph}}} shows how the
+above arguments to the ``{\tt{property}}'' expression map to the frame
 types, slot values, and properties of a frame-based knowledge base
 that is represented as a graph.
 \begin{figure}
@@ -349,20 +351,59 @@ expressions are introduced in the last plan:
 \item{``{\tt{plan-call}}''}
 \item{``{\tt{plan}}''}
 \end{packed_enumerate}
-The ``{\tt{plan}}'' expression takes one argument, a natural language
-phrase.  The ``{\tt{plan}}'' expression returns a plan from the
-current planning layer that matches the given natural language phrase.
-If there is no matching natural language plan, SALS will attempt to
-find an plan that has an analogous match to the given natural language
-phrase.  In most cases, there are multiple possible matches for any
-given natural language phrase.  In these cases, the SALS natural
-language plan compiler is responsible for imagining the effects of
-different interpretations on the knowledge base that the planning
-layer is trying to control, while avoiding natural language plan
-interpretation failures.  The ``{\tt{plan-call}}'' expression accepts
-one argument, a natural language subplan to compile into this location
-of the current plan that is being defined by the ``{\tt{defplan}}''
-expression.
+The ``{\tt{plan}}'' expression can be thought of as taking one
+argument, a natural language phrase, and creating and returning one
+plan object that is analogous to a plan in the current planning layer.
+The returned plan is a procedural interpretation of the natural
+language expression.  While this is the correct run-time functionality
+of the ``{\tt{plan}}'' expression, the plan compiling process can
+often completely eliminate most plan expressions.  Further, the
+``{\tt{plan}}'' expression is further complicated because of the
+common occurrence that multiple analogous plans may match and be
+returned from the ``{\tt{plan}}'' expression.  In most cases, there
+are multiple possible matches for any given natural language phrase.
+In these cases, the SALS natural language plan compiler is responsible
+for imagining the effects of different interpretations on the
+knowledge base that the planning layer is trying to control, while
+avoiding natural language plan interpretation failures.  The compiling
+stage in the SALS AI is responsible for removing all ambiguity from
+natural language phrases, so that there is only one procedural
+interpretation once a plan is in its final compiled form, ready to be
+executed.  During the compiling stage, the ``{\tt{plan}}'' expression
+returns an {\emph{ambiguous value}} object.  An ambiguous value object
+contains multiple possible values that each depend on different
+analogous natural language plan matches.  To handle ambiguous value
+objects, each expression in the SALS natural planning language must
+separately consider each combination of ambiguous values that are used
+as arguments to those expressions.  For example, the
+``{\tt{plan-call}}'' expression often takes as its first argument an
+ambiguous value object returned by a ``{\tt{plan}}'' expression and
+must consider each of the possible ambiguous values during the
+compiling stage.\footnote{The simulation of each of multiple ambiguous
+  values during the compiling stage for interpreting natural language
+  plans is performed in parallel on concurrent hardware by the SALS
+  AI.}
+
+The ``{\tt{plan-call}}'' expression accepts one argument, a plan
+object, such as that returned by a previous ``{\tt{plan}}''
+expression.  The purpose of the ``{\tt{plan-call}}'' expression is to
+compile a plan object into the current location in the current plan
+that is being defined by the ``{\tt{defplan}}'' expression.  The
+``{\tt{plan-call}}'' expression is similar to a macro expansion
+operator in Lisp, which allows compiling plans into its own current
+location in another plan.\footnote{If the plan object is not knowable
+  at compile-time, the SALS AI will delay this macro expansion process
+  until run-time, but all plans in the example story presented in
+  {\mbox{\autoref{chapter:introduction}}} have been implemented to
+  allow compile-time macro expansion of the ``{\tt{plan-call}}''
+  expressions.}  When the first argument is an ambiguous value object,
+the ``{\tt{plan-call}}'' expression must choose one of the set of
+ambiguous values to compile into the current location.  Plans are
+eliminated by simulating, or ``imagining,'' their execution and
+eliminating those plans that encounter failures that can be detected
+at compile-time, such as type mismatch failures.  If multiple possible
+plans still exist after this elimination process, the first
+successfully simulated plan is chosen.
 
 Now, consider the following redefinition of the previous ``{\tt{move
     toward a cube}}'' plan that I defined previously:
@@ -412,7 +453,7 @@ be rewritten as follows:
 Note that this last plan uses two ``{\tt{if}}'' statements, the second
 is in the false branch of the first.
 
-Before getting to the details of how ambiguity in searched through and
+Before getting to the details of how ambiguity is searched through and
 eliminated in the SALS natural language plan compiler, consider the
 following definitions that include the SALS ``{\tt{not}}'' expression:
 \begin{samepage}
@@ -443,14 +484,23 @@ This plan allows many negative expressions to analogously have a
 correct interpretation, such as ``{\tt{if a pyramid is not to my
     right, move left, otherwise fail}}.''
 
+\section{Plans with Recursive Interpretations}
+
 Another powerful component of the SALS natural programming language is
 the ability to compile natural language plans that include recursive
 references, which enable plans to describe looping functionality.
 SALS also has a primitive capability to imagine the possible effects
-of loops by imaginatively unrolling the loop only once.  The following
-example is a definition of a reflective natural language plan that
-searches for a deliberative plan whose effects have not yet been
-imagined:
+of loops by imaginatively unrolling the loop only once.  Plan objects
+have a slot-value Boolean property that keeps track of whether or not
+the plan ``has been imagined.''  This property is false when a plan is
+first learned or created and becomes true once the effects of a plan
+are imagined in the current context, given the currect goals.  A
+planning process must search through possible plans to find a plan
+whose effects accomplish positive goals and avoid negative goals.
+Part of this planning process must find plans whose effects have not
+yet been imagined.  The following example is a definition of a
+reflective natural language plan that searches for a deliberative plan
+whose effects have not yet been imagined:
 \begin{samepage}
 \begin{Verbatim}
   [defplan 'find next unimagined plan'
@@ -468,10 +518,14 @@ planner has been imagined.  If the plan in deliberative focus has been
 imagined, this plan calls itself recursively until the deliberative
 planner is focusing on a plan that has not been imagined.
 
+\section{Plans Reify Hierarchical Partial States}
+
 As a final example of a natural language plan interpreting a natural
 language plan, consider again the following hierarchical partial state
 construction from a reflective natural language plan from earlier in
-this chapter:
+this chapter in
+{\mbox{\autoref{figure:hierarchical_partial_state_graph}}} on
+{\mbox{page~\pageref{figure:hierarchical_partial_state_graph}}}:
 \begin{samepage}
 \begin{Verbatim}
   [defplan 'a deliberative planner to have a positive goal
@@ -500,10 +554,12 @@ following example:
 \end{samepage}
 In this way, analogous reflective plans can be created to allow the
 interpretation of any natural language physical partial state being a
-positive goal of the deliberative planning layer.  A similar technique
-can be used to create analogous reflective natural language plans that
-work for negative goals as well as plans that are hypothesized to
-cause partial states to exist.
+positive goal of the deliberative planning layer.  While the above
+plan provides interpretations for partial states that involve a
+planner pursuing a positive goal, the same technique can be used to
+create reflective natural language plans that provide interpretations
+of partial states that include a planner that is avoiding negative
+goals.
 
 \section{Analogous Plan Interpretation}
 
@@ -648,12 +704,12 @@ current expression being imaginatively executed.
   simple plan with multiple ambiguous interpretations is being
   imaginatively interpreted and evaluated.  The deliberative
   {\emph{planner}} object is focusing on a {\emph{plan}} object that
-  has been partially evaluated.  The first execution node object of
+  has been partially evaluated.  The first execution-node object of
   this plan object represents the partial interpretation of a
   ``{\tt{not}}'' expression that has a ``{\tt{plan-call}}''
   sub-expression.  The ``{\tt{plan}}'' expression returns two possible
-  values, which are interpreted separately under argument decision
-  node objects.}
+  values, which are interpreted separately under
+  ``{\tt{argument-decision-node}}'' expressions.}
 \label{figure:plan_execution_node_graph}
 \end{figure}
 {\mbox{\autoref{figure:plan_execution_node_graph}}} shows a graph

@@ -348,17 +348,17 @@ types of partial states in the SALS cognitive architecture could be
 abstracted in future research to include any specific type of subgraph
 in a frame-based knowledge base, but for now, the abstraction of the
 ``{\tt{relationship}}'' and ``{\tt{property}}'' types in SALS are each
-specially implemented in order to efficiently abstract each of these
-types of partial state objects from a frame-based knowledge base,
-avoiding the NP-complete subgraph isomorphism decision problem
+specially implemented to efficiently abstract each of these types of
+partial state objects from a frame-based knowledge base, avoiding the
+NP-complete subgraph isomorphism decision problem
 \cite[]{messmer:1995,messmer:2000} implied by a careless
 implementation of this more specific problem, which gains in
 efficiency by taking advantage of specially implemented locally
 directed searches for each different type of partial state object.
 After a change event from the physical knowledge base is received by
 the deliberative physical knowledge agency, the same change event is
-passed to the deliberative physical partial state agency in order to
-focus a local search around this change in the reconstructed physical
+passed to the deliberative physical partial state agency to focus a
+local search around this change in the reconstructed physical
 knowledge base that searches for ``{\tt{property}}'' and
 ``{\tt{relationship}}'' partial state objects.  If the change event
 object is a ``{\tt{remove}}'' event object, the local search in the
@@ -411,6 +411,7 @@ knowledge base and adds new partial state event objects to the
 reflective plan partial state event knowledge base.
 
 \section{Resource Execution Event Causal Rule-Learning}
+\label{section:resource_execution_event_causal_rule_learning}
 
 The second asynchronous stage of information processing involved in
 asynchronously learning from experience in the SALS AI is the
@@ -456,22 +457,22 @@ all events that have been added to that knowledge base.  These types
 of knowledge bases in the SALS AI are called {\emph{event knowledge
     bases}}, and they have a $O(\log{(n)})$ time complexity for
 retrieving events by time, given that $n$ is the number of events in
-the event knowledge base.  In order to maintain consistency within the
-interval tree within the event knowledge base, some precautions must
-be taken when changing the values of the ``{\tt{start-time}}'' and
+the event knowledge base.  To maintain consistency within the interval
+tree within the event knowledge base, some precautions must be taken
+when changing the values of the ``{\tt{start-time}}'' and
 ``{\tt{end-time}}'' slots of any event object, which could potentially
-invalidate the entire interval tree.  In order to make this
-bookkeeping transparent to the programmer, reflectively traced
-callbacks are called whenever a slot value is added to or removed from
-the event knowledge base.  If the slot value refers to the
-``{\tt{start-time}}'' or the ``{\tt{end-time}}'' of an event object,
-the event object is first removed from the interval tree with its old
-slot value, the slot value is changed, then the event object is
-inserted into the interval tree once the slot value change is
-complete.  This means that the programmer simply adds event objects to
-an event knowledge base, freely changing their ``{\tt{start-time}}''
-and ``{\tt{end-time}}'' slot values, while reflective callbacks take
-care of the interval tree organization.
+invalidate the entire interval tree.  To make this bookkeeping
+transparent to the programmer, reflectively traced callbacks are
+called whenever a slot value is added to or removed from the event
+knowledge base.  If the slot value refers to the ``{\tt{start-time}}''
+or the ``{\tt{end-time}}'' of an event object, the event object is
+first removed from the interval tree with its old slot value, the slot
+value is changed, then the event object is inserted into the interval
+tree once the slot value change is complete.  This means that the
+programmer simply adds event objects to an event knowledge base,
+freely changing their ``{\tt{start-time}}'' and ``{\tt{end-time}}''
+slot values, while reflective callbacks take care of the interval tree
+organization.
 
 \begin{table}
 \centering
@@ -512,10 +513,10 @@ execution event, this transframe is used to train a rule-learning
 algorithm that attempts to categorize the partial state preconditions
 for different sets of the possible ``{\tt{add}}'' and
 ``{\tt{remove}}'' changes.  A rule-learning algorithm is used in the
-SALS AI in order to predict the transframe that will result from
-executing a resource in given preconditions.  This rule-learning
-algorithm is based on {\emph{version spaces}} \cite[]{mitchell:1997}.
-These version spaces are an efficient representation for all possible
+SALS AI to predict the transframe that will result from executing a
+resource in given preconditions.  This rule-learning algorithm is
+based on {\emph{version spaces}} \cite[]{mitchell:1997}.  These
+version spaces are an efficient representation for all possible
 conjunctive functions that map a set of binary inputs to a single
 binary output.  These functions are also called {\emph{hypotheses}}.
 When these hypotheses turn out to be wrong given new data, the
@@ -539,16 +540,16 @@ object for each type of ``{\tt{add}}'' or ``{\tt{remove}}'' change in
 a partial state transframe for a given resource because sets of
 partial state changes often occur together and multiple hypothesis
 version space rule-learning algorithms would contain redundant
-information for these sets of partial state changes.  In order to
-reduce the number of hypothesis version spaces that are allocated to
-each resource in order to predict the partial state changes that it
-may cause when executed, each co-occurring set of partial state
-changes for each resource is calculated.  For example, consider that
-the observed transframes during each execution event for a given
-resource are composed of a total of six partial states.  Let us refer
-to this set of states as $\{A, B, C, D, E, F\}$.  The symbol ``$A$''
-may refer to the partial state change: remove ``{\tt{a gripper that is
-    me to be above a cube shaped block}}'' from
+information for these sets of partial state changes.  To reduce the
+number of hypothesis version spaces that are allocated to each
+resource to predict the partial state changes that it may cause when
+executed, each co-occurring set of partial state changes for each
+resource is calculated.  For example, consider that the observed
+transframes during each execution event for a given resource are
+composed of a total of six partial states.  Let us refer to this set
+of states as $\{A, B, C, D, E, F\}$.  The symbol ``$A$'' may refer to
+the partial state change: remove ``{\tt{a gripper that is me to be
+    above a cube shaped block}}'' from
 {\mbox{\autoref{table:example_transframe}}}.  The remaining five
 symbols could refer to the other five partial state changes in that
 same table.  Consider that the same resource is executed three times
@@ -591,8 +592,8 @@ for the third of these three partial state change sets, $\{D, E, F\}$,
 is a copy of the second allocated partial state hypothesis version
 space, which is also refined with the information in the third
 computed transframe.  Finally, three hypothesis version space objects
-have been allocated in order to predict the maximal disjoint sets of
-partial state changes.
+have been allocated to predict the maximal disjoint sets of partial
+state changes.
 {\mbox{\autoref{figure:hypothesis_version_space_set_divisions}}} shows
 the inheritance structure of hypothesis version space rule-learning
 algorithms in this simple example.
@@ -605,8 +606,8 @@ algorithms in this simple example.
   been computed for three resource execution events that occur in time
   from top to bottom.  On the right is a tree that shows the
   inheritance of hypothesis version space rule-learning algorithms
-  that are allocated in order to predict maximal disjoint partial
-  state change sets for the given resource executions.}
+  that are allocated to predict maximal disjoint partial state change
+  sets for the given resource executions.}
 \label{figure:hypothesis_version_space_set_divisions}
 \end{figure}
 

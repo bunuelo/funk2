@@ -44,7 +44,7 @@ imaginative compiler, and the ability to use analogical patterns
 between collections of these plans to interpret natural language
 sentences and phrases.  SALS natural language plans are sequences of
 commands that can be created, mutated, and executed by a planning
-layer in order to accomplish goals.  The following is an example of a
+layer to accomplish goals.  The following is an example of a
 definition of one of the deliberative plans that the AI in the story
 could consider executing:
 \begin{samepage}
@@ -278,13 +278,13 @@ that includes this form of hierarchical partial state reference:
 In this reflective plan, the ``{\tt{property}}'' expression describes
 a partial state of the deliberative plan knowledge base, while the
 ``{\tt{relationship}}'' expression describes a partial state of the
-physical knowledge base.  In order for SALS to convert this expression
-to a purely deliberative form of knowledge, hierarchical partial
-states are reified in SALS so that they become a simple partial state
-that is purely of one layer's type of knowledge.  When a partial state
-object is passed as an argument to another partial state object, the
-first partial state is converted to a symbolic form, so that the
-entire structure can continue to exist as a simple frame-based graph
+physical knowledge base.  For SALS to convert this expression to a
+purely deliberative form of knowledge, hierarchical partial states are
+reified in SALS so that they become a simple partial state that is
+purely of one layer's type of knowledge.  When a partial state object
+is passed as an argument to another partial state object, the first
+partial state is converted to a symbolic form, so that the entire
+structure can continue to exist as a simple frame-based graph
 structure.  {\mbox{\autoref{figure:hierarchical_partial_state_graph}}}
 shows an example of a hierarchical embedding of
 ``{\tt{relationship}}'' and ``{\tt{property}}'' partial states that
@@ -298,8 +298,8 @@ may occur in any planning layer above the deliberative layer.
   ``{\tt{property}}'' expressions can be hierarchically combined in
   planning layers above the deliberative.  Note that any partial
   states that are sub-expressions of other partial states become
-  symbolically reified in order to maintain a frame-based graph
-  structure for all knowledge.}
+  symbolically reified to maintain a frame-based graph structure for
+  all knowledge.}
 \label{figure:hierarchical_partial_state_graph}
 \end{figure}
 
@@ -498,12 +498,12 @@ following example:
                 [plan-call [plan [? partial-state]]]]]
 \end{Verbatim}
 \end{samepage}
-In this way, analogous reflective plans can be created in order to
-allow the interpretation of any natural language physical partial
-state being a positive goal of the deliberative planning layer.  A
-similar technique can be used to create analogous reflective natural
-language plans that work for negative goals as well as plans that are
-hypothesized to cause partial states to exist.
+In this way, analogous reflective plans can be created to allow the
+interpretation of any natural language physical partial state being a
+positive goal of the deliberative planning layer.  A similar technique
+can be used to create analogous reflective natural language plans that
+work for negative goals as well as plans that are hypothesized to
+cause partial states to exist.
 
 \section{Analogous Plan Interpretation}
 

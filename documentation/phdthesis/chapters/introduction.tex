@@ -134,15 +134,15 @@ block stacking domain:
   block.  I must choose how to physically act.  I have a number of
   plans that I have been told, but I don't know what they will do.  I
   am focused on my most recently learned plan for how to physically
-  act, which is called, ``stack a cube on a pyramid.''  I have been
-  told this plan in natural language, so I must interpret what it
+  act, which is called, ``{\tt{stack a cube on a pyramid}}.''  I have
+  been told this plan in natural language, so I must interpret what it
   means if I am going to imagine executing it.  If I can imagine a way
   that this plan could accomplish my deliberative goals, I will
   execute it.  I will try interpreting and imagining the physical
   effects of my most recently learned plan for physical action,
-  ``stack a cube on a pyramid.''  I imagine that executing this plan
-  will accomplish my goal of a block being on a block.  I will stop
-  imagining the rest of my plans and try executing this plan for
+  ``{\tt{stack a cube on a pyramid}}.''  I imagine that executing this
+  plan will accomplish my goal of a block being on a block.  I will
+  stop imagining the rest of my plans and try executing this plan for
   physical action.  I am picking up a cube and dropping it on a
   pyramid.  The cube is falling off of the pyramid and onto the table.
   Oh no!  A block is not on a block.  My expectations have failed!  A
@@ -172,22 +172,22 @@ about plans for physical action:
   been told a number of reflective plans for deliberative action, but
   I don't know what they will do.  I must choose a reflective plan for
   deliberative action.  I am focused on my most recently learned
-  reflective plan, which is called, ``Find and execute a recently
-  learned plan to accomplish my goals.''  I choose to imagine the
-  effects of the various possible interpretations of this
+  reflective plan, which is called, ``{\tt{find and execute a recently
+      learned plan to accomplish my goals}}.''  I choose to imagine
+  the effects of the various possible interpretations of this
   underspecified natural language plan on my deliberative knowledge.
   I can adapt other analogous plans to interpret this one, and I
   imagine that at least one interpretation will not lead to any
   deliberative plans having any execution failures, so I choose to
-  execute this reflective plan to ``find and execute a recently
-  learned plan to accomplish my goals.''
+  execute this reflective plan to ``{\tt{find and execute a recently
+      learned plan to accomplish my goals}}.''
 \end{quote}
 At this point in the story, the AI has decided on a plan of
 deliberative action.  Notice that this story is very similar to the
 first story, except rather than deciding on a plan of physical action,
 the reflective planner is deciding on a plan for deliberative action.
-In this case, the ``find and execute a recently learned plan to
-accomplish my goals'' plan is an implementation of a planning
+In this case, the ``{\tt{find and execute a recently learned plan to
+    accomplish my goals}}'' plan is an implementation of a planning
 algorithm within the natural planning language itself.  This
 reflective plan is a sequence of mental actions rather than physical
 actions.  The fact that the deliberative planning algorithm is written
@@ -201,16 +201,16 @@ planning process that tries to find a plan for acting in the physical
 problem domain:
 \begin{quote}
   I will try interpreting and imagining the physical effects of my
-  most recently learned plan for physical action, ``stack a cube on a
-  pyramid.''  I imagine that executing this plan will accomplish my
-  goal of a block being on a block.  I will stop imagining the rest of
-  my plans and try executing this plan for physical action.  I am
-  picking up a cube and dropping it on a pyramid.  The cube is falling
-  off of the pyramid and onto the table.  A block is not on a block.
-  Oh no!  My deliberative expectations have failed!  A deliberative
-  plan has failed.  Oh no, I was reflectively trying to avoid
-  deliberative plan failures!  My reflective expectations have failed!
-  A reflective plan has failed.
+  most recently learned plan for physical action, ``{\tt{stack a cube
+      on a pyramid}}.''  I imagine that executing this plan will
+  accomplish my goal of a block being on a block.  I will stop
+  imagining the rest of my plans and try executing this plan for
+  physical action.  I am picking up a cube and dropping it on a
+  pyramid.  The cube is falling off of the pyramid and onto the table.
+  A block is not on a block.  Oh no!  My deliberative expectations
+  have failed!  A deliberative plan has failed.  Oh no, I was
+  reflectively trying to avoid deliberative plan failures!  My
+  reflective expectations have failed!  A reflective plan has failed.
 \end{quote}
 At this point in the story, the AI has encountered two failures that
 will lead to two opportunities for learning the effects of both its
@@ -238,17 +238,18 @@ this initial experience:
   keeping the deliberative layer from having plans that have failed.
   I must choose another reflective plan for deliberative action.  I am
   focused on my most recently learned reflective plan, which is
-  called, ``Find and execute a recently learned plan to accomplish my
-  goals.''  When I imagine executing this plan, I use my learned
-  hypothesis that predicts that executing this reflective plan will
-  lead to a failure in the deliberative knowledge.  I choose to not
-  execute this plan because it does not avoid my negative reflective
-  goal.  I focus on my next plan, ``find and execute an old plan to
-  accomplish my goals.''  I can adapt other analogous plans to
-  interpret this reflective plan, and I have no hypotheses that
-  predict that this plan will lead to any deliberative failures, so I
-  choose to execute this reflective plan to ``find and execute an old
-  plan to accomplish my goals.''
+  called, ``{\tt{find and execute a recently learned plan to
+      accomplish my goals}}.''  When I imagine executing this plan, I
+  use my learned hypothesis that predicts that executing this
+  reflective plan will lead to a failure in the deliberative
+  knowledge.  I choose to not execute this plan because it does not
+  avoid my negative reflective goal.  I focus on my next plan,
+  ``{\tt{find and execute an old plan to accomplish my goals}}.''  I
+  can adapt other analogous plans to interpret this reflective plan,
+  and I have no hypotheses that predict that this plan will lead to
+  any deliberative failures, so I choose to execute this reflective
+  plan to ``{\tt{find and execute an old plan to accomplish my
+      goals}}.''
 \end{quote}
 After this second round of reflective reasoning, the first reflective
 plan is considered and again imagined, but this time the reflective
@@ -274,15 +275,15 @@ executes this reflective plan, which becomes the deliberative
 reasoning process:
 \begin{quote}
   I will try interpreting and imagining the physical effects of my
-  oldest plan for physical action, ``stack a pyramid on a cube.''  I
-  imagine that executing this plan will accomplish my goal of a block
-  being on a block.  I will stop imagining the rest of my plans and
-  try executing this plan for physical action.  I am picking up a
-  pyramid and dropping it on a cube.  The pyramid is now sitting on
-  the cube.  A block is on a block.  Yay!  Executing my oldest plan
-  for physical action has accomplished my deliberative goal!  Yay!  I
-  have also avoided my negative reflective goal to avoid deliberative
-  plan failures!
+  oldest plan for physical action, ``{\tt{stack a pyramid on a
+      cube}}.''  I imagine that executing this plan will accomplish my
+  goal of a block being on a block.  I will stop imagining the rest of
+  my plans and try executing this plan for physical action.  I am
+  picking up a pyramid and dropping it on a cube.  The pyramid is now
+  sitting on the cube.  A block is on a block.  Yay!  Executing my
+  oldest plan for physical action has accomplished my deliberative
+  goal!  Yay!  I have also avoided my negative reflective goal to
+  avoid deliberative plan failures!
 \end{quote}
 So, finally, the reflective AI is happy to accomplish its deliberative
 goal.  Note that the deliberative algorithm would have eventually
@@ -305,19 +306,19 @@ shows a few examples of physical, deliberative and reflective
 knowledge.
 \begin{table}
 \centering
-\begin{tabular}{|p{2cm}|p{8cm}|}
+\begin{tabular}{|p{2cm}|p{10cm}|}
 \hline \emph{Physical Knowledge} & \begin{packed_itemize}
-\item{A cube is on a pyramid.}
+\item{A pyramid is on a cube.}
 \item{A gripper is moving left.}
 \item{A gripper is above a cube.}
 \item{A cube is to the left of a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Deliberative Knowledge} & \begin{packed_itemize}
-\item{Goal 1 is for a cube to be on a pyramid.}
-\item{Plan 1 is to stack a pyramid on a cube.}
-\item{Plan 1 fails for Goal 1.}
-\item{Goal 2 is for a pyramid to be on a cube.}
-\item{Plan 1 succeeds for Goal 2.}
+\item{Deliberative-Goal-1 is for a cube to be on a pyramid.}
+\item{Deliberative-Plan-1 is to stack a pyramid on a cube.}
+\item{Deliberative-Plan-1 fails for Deliberative-Goal-1.}
+\item{Deliberative-Goal-2 is for a pyramid to be on a cube.}
+\item{Deliberative-Plan-1 succeeds for Deliberative-Goal-2.}
 %% \item{A deliberative planner has the goal for a cube to be on a
 %%   pyramid.}
 %% \item{A deliberative planner is focusing on a deliberative plan that
@@ -327,14 +328,14 @@ knowledge.
 %%   is hypothesized to cause a cube to be on a pyramid.}
 \end{packed_itemize} \\
 \hline \emph{Reflective Knowledge}   & \begin{packed_itemize}
-\item{Goal 3 is to avoid a deliberative planner being focused on a
-  deliberative plan that has failed in execution.}
-\item{Plan 2 is to find a recent plan to acheive one of my positive
-  goals.}
-\item{Plan 2 fails for Goal 3.}
-\item{Plan 3 is to find an old plan to acheive one of my positive
-  goals.}
-\item{Plan 3 did not fail for Goal 3.}
+\item{Reflective-Goal-1 is to avoid a deliberative planner being
+  focused on a deliberative plan that has failed in execution.}
+\item{Reflective-Plan-1 is to find a {\emph{recent}} deliberative plan
+  to acheive one of my positive deliberative goals.}
+\item{Reflective-Plan-1 fails for Reflective-Goal-1.}
+\item{Reflective-Plan-2 is to find an {\emph{old}} deliberative plan
+  to acheive one of my positive deliberative goals.}
+\item{Reflective-Plan-2 did not fail for Reflective-Goal-1.}
 %% \item{A reflective planner is focusing on a reflective plan that has
 %%   failed in execution.}
 %% \item{A reflective planner has the negative goal to avoid a
@@ -352,21 +353,25 @@ knowledge.
 \end{table}
 Note that there is a strict hierarchy in the knowledge references
 between these layers.  Physical knowledge cannot reference knowledge
-in other layers.  An example of physical knowledge is: ``a pyramid is
-on a cube.''  Physical knowledge is the representation of the problem
-domain.  Deliberative knowledge cannot reference reflective knowledge
-but can reference physical knowledge.  An example of deliberative
-knowledge is: ``a deliberative planner has the goal for a cube to be
-on a pyramid.''  Deliberative knowledge includes positive and negative
-goals that specify which partial states of the physical knowledge
-should be sought or avoided.  In addition to goals, deliberative
-knowledge includes plans, a planner, and potentially failures as well.
-Reflective knowledge can reference deliberative knowledge, which
-allows indirect reference to some deliberatively referenced physical
-knowledge as well.  An example of reflective knowledge is: ``A
-reflective planner has the reflective goal for a deliberative planner
-to be focusing on a deliberative plan that is hypothesized to cause a
-cube to be on a pyramid.''  Reflective knowledge is analogous to
+in other layers.  An example of physical knowledge is: ``{\tt{a
+    pyramid is on a cube}}.''  Physical knowledge is the
+representation of the problem domain.  Deliberative knowledge cannot
+reference reflective knowledge but can reference physical knowledge.
+An example of deliberative knowledge is: ``{\tt{a deliberative planner
+    has the goal for a cube to be on a pyramid}}.''  Deliberative
+knowledge includes positive and negative goals that specify which
+partial states of the physical knowledge should be sought or avoided.
+In addition to goals, deliberative knowledge includes plans, a
+planner, and potentially failures as well.  Reflective knowledge can
+reference deliberative knowledge, which allows indirect reference to
+some deliberatively referenced physical knowledge as well.  An example
+of reflective knowledge is: ``{\tt{a}} {\tt{reflective}}
+{\tt{planner}} {\tt{has}} {\tt{the}} {\tt{reflective}} {\tt{goal}}
+{\tt{for}} {\tt{a}} {\tt{deliberative}} {\tt{planner}} {\tt{to}}
+{\tt{be}} {\tt{focusing}} {\tt{on}} {\tt{a}} {\tt{deliberative}}
+{\tt{plan}} {\tt{that}} {\tt{is}} {\tt{hypothesized}} {\tt{to}}
+{\tt{cause}} {\tt{a}} {\tt{cube}} {\tt{to}} {\tt{be}} {\tt{on}}
+{\tt{a}} {\tt{pyramid}}.''  Reflective knowledge is analogous to
 deliberative knowledge, but instead of being about accomplishing goals
 in physical knowledge, reflective knowledge is about accomplishing
 goals in deliberative knowledge.
@@ -408,34 +413,35 @@ deliberative plans that the AI in the story could consider executing:
 \end{samepage}
 This expression defines a new deliberative plan.  The {\tt{defplan}}
 command is shorthand for ``define plan.''  The first argument to the
-defplan expression is the name of the plan: ``move slowly until over a
-cube.''  The body of the plan is the remaining sequence of
-expressions.  The first expression in the body of this plan is to
-interpret and execute the natural language phrase beginning with ``if
-a cube...''  The second expression in the body of this plan is to
+defplan expression is the name of the plan: ``{\tt{move slowly until
+    over a cube}}.''  The body of the plan is the remaining sequence
+of expressions.  The first expression in the body of this plan is to
 interpret and execute the natural language phrase beginning with
-``assert that...''  This plan attempts to position the AI over a cube
-and fails if a cube is not finally below the AI.  If the planner
-wanted to find a plan to position the AI over a pyramid, this plan
-would not help unless it was slightly modified, replacing all mentions
-of ``cube'' with ``pyramid.''  To help the planner to know what parts
-of plans might be analogously replaceable in this way, the SALS
-planning language includes optional natural language pattern matching
-templates and default frame variable bindings that can be specified
-for each plan definition.  The following example shows how this simple
-plan can be generalized to allow positioning the AI over a range of
-shapes:
+``{\tt{if a cube}}...''  The second expression in the body of this
+plan is to interpret and execute the natural language phrase beginning
+with ``{\tt{assert that}}...''  This plan attempts to position the AI
+over a cube and fails if a cube is not finally below the AI.  If the
+planner wanted to find a plan to position the AI over a pyramid, this
+plan would not help unless it was slightly modified, replacing all
+mentions of ``{\tt{cube}}'' with ``{\tt{pyramid}}.''  To help the
+planner to know what parts of plans might be analogously replaceable
+in this way, the SALS planning language includes optional natural
+language pattern matching templates and default frame variable
+bindings that can be specified for each plan definition.  The
+following example shows how this simple plan can be generalized to
+allow positioning the AI over a range of shapes:
 \begin{samepage}
 \begin{Verbatim}
-[defplan 'move slowly until over a cube'
-  :matches ['move slowly until over a [? shape]']
-   :frame [[shape 'cube']]
-    [plan-call [plan 'if a [? shape] is to my left, move
-                      slowly left until over a [? shape],
-                      otherwise if a [? shape] is to my
-                      right, move slowly right until over
-                      a [? shape]']]
-    [plan-call [plan 'assert that a [? shape] is below me']]]
+  [defplan 'move slowly until over a cube'
+    :matches ['move slowly until over a [? shape]']
+     :frame [[shape 'cube']]
+      [plan-call [plan 'if a [? shape] is to my left, move
+                        slowly left until over a [? shape],
+                        otherwise if a [? shape] is to my
+                        right, move slowly right until over
+                        a [? shape]']]
+      [plan-call [plan 'assert that a [? shape] is below
+                        me']]]
 \end{Verbatim}
 \end{samepage}
 This generalized form of the original plan uses natural language
@@ -445,22 +451,22 @@ defplan expression in this example: (1) ``{\tt{:matches}}'' and (2)
 ``{\tt{:frame}}.''  The optional ``{\tt{:matches}}'' argument
 specifies a list of potential patterns that this plan may match as it
 is being interpreted.  In this case, the variable expression ``{\tt{[?
-      shape]}}'' is allowed to replace the word ``cube'' from the
-original name of the plan.  The optional ``{\tt{:frame}}'' argument
-specifies the default natural language variable bindings.  In this
-case, the ``shape'' variable is assigned the natural language phrase
-``cube'' by default.  In the body of the generalized form of the plan,
-all occurrences of cube have been replaced with the variable
-expression ``{\tt{[? shape]}}''.  Given this generalized form of the
-original plan, the planner can create a new analogous plan as an
-interpretation of the natural language phrase ``move slowly until over
-a pyramid.''  In this way, plans can be communicated to the AI in a
-natural language form.  The AI has been told a total of approximately
-seventy simple natural language plans, which can be adapted by analogy
-to provide interpretations for a variety of complex possible natural
-language plans, including recursive interpretations.  The details of
-the planning language will be discussed in
-{\mbox{\autoref{chapter:learning_from_being_told}}}.
+      shape]}}'' is allowed to replace the word ``{\tt{cube}}'' from
+the original name of the plan.  The optional ``{\tt{:frame}}''
+argument specifies the default natural language variable bindings.  In
+this case, the ``{\tt{shape}}'' variable is assigned the natural
+language phrase ``{\tt{cube}}'' by default.  In the body of the
+generalized form of the plan, all occurrences of cube have been
+replaced with the variable expression ``{\tt{[? shape]}}''.  Given
+this generalized form of the original plan, the planner can create a
+new analogous plan as an interpretation of the natural language phrase
+``{\tt{move slowly until over a pyramid}}.''  In this way, plans can
+be communicated to the AI in a natural language form.  The AI has been
+told a total of approximately one-hundred simple natural language
+plans, which can be adapted by analogy to provide interpretations for
+a variety of complex possible natural language plans, including
+recursive interpretations.  The details of the planning language will
+be described in {\mbox{\autoref{chapter:learning_from_being_told}}}.
 
 \section{Layers of Learning}
 
@@ -490,17 +496,17 @@ to accomplish the goal of a cube being on a pyramid may lead to an
 expectation failure when executed.''  This newly supported hypothesis
 is a reflective hypothesis about deliberative actions and objects.
 The AI hierarchically assigns credit to the responsible parts of the
-executing plan, ``find and execute a recently learned plan to
-accomplish my goals,'' that was currently executing at the time of the
-unexpected failure.  This precondition for the execution of the plan
-is hypothesized to lead to the effects of this action in deliberative
-knowledge, ``a deliberative planner is focused on a plan that has
-failed.''  The next time that the reflective layer is deciding whether
-or not the deliberative planner should execute a given plan, it can
-consider this new knowledge and predict whether or not executing the
-current plan will put the deliberative planner into a negative or
-positive deliberative goal state.  I will discuss the details of SALS'
-parallel relational learning algorithm in
+executing plan, ``{\tt{find and execute a recently learned plan to
+    accomplish my goals}},'' that was currently executing at the time
+of the unexpected failure.  This precondition for the execution of the
+plan is hypothesized to lead to the effects of this action in
+deliberative knowledge, ``{\tt{a deliberative planner is focused on a
+    plan that has failed}}.''  The next time that the reflective layer
+is deciding whether or not the deliberative planner should execute a
+given plan, it can consider this new knowledge and predict whether or
+not executing the current plan will put the deliberative planner into
+a negative or positive deliberative goal state.  I will discuss the
+details of SALS' parallel relational learning algorithm in
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
 
 \section{Document Overview}
@@ -524,17 +530,16 @@ the SALS virtual machine and reflectively traced programming language
 in
 {\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}.
 
-{\mbox{\autoref{chapter:related_models}}} relates my AI to other
+{\mbox{Chapter~\ref{chapter:related_models}}} relates my AI to other
 contemporary cognitive architectures, approaches to reflective
 thinking, metacognition, and learning to plan, as well as other
 massively multithreaded computer systems.
-{\mbox{\autoref{chapter:evaluation}}} evaluates the run-time
+{\mbox{Chapter~\ref{chapter:evaluation}}} evaluates the run-time
 performance of the SALS AI and shows a sub-linear increase in
 time-complexity for each additional reflective layer.  In
 {\mbox{\autoref{chapter:future}}}, I discuss promising directions of
 future research for extending this architecture to learn at the top
 two layers of the Emotion Machine theory, the self-reflective and
-self-conscious layers.  Also, in this chapter I discuss approaches to
-overcoming some of the current limitations in the SALS cognitive
-architecture.
+self-conscious layers.  Finally, I discuss approaches to overcoming
+some of the current limitations in the SALS cognitive architecture.
 

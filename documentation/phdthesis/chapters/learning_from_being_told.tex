@@ -11,19 +11,18 @@ language plans that are programmed into the different layers of the AI
 by the user or potentially another AI.
 {\mbox{\autoref{figure:learning_from_being_told_in_layers}}} shows the
 information pathways in SALS that are involved in learning from being
-told as well as learning from experience.
+told as well as learning from experience.  When a layer of the AI
+learns from being told, a natural language plan is communicated to
+that layer from a source external to the AI, such as a human user.
+When a layer of the AI learns from experience, two streams of trace
+events are received from the layer below that are asynchronously woven
+into hypothetical causal models of the effects of actions.
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{gfx/learning_from_being_told_in_layers}
 \caption[Learning from being told and learning from experience both
   occur in each SALS planning layer.]{Learning from being told and
-  learning from experience both occur in each SALS planning layer.
-  When a layer of the AI learns from being told, a natural language
-  plan is communicated to that layer from a source external to the AI,
-  such as a human user.  When a layer of the AI learns from
-  experience, two streams of trace events are received from the layer
-  below that are asynchronously woven into hypothetical causal models
-  of the effects of actions.}
+  learning from experience both occur in each SALS planning layer.}
 \label{figure:learning_from_being_told_in_layers}
 \end{figure}
 In this chapter, I will focus on learning from being told natural
@@ -293,7 +292,7 @@ shows an example of a hierarchical embedding of
 may occur in any planning layer above the deliberative layer.
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{gfx/hierarchical_partial_state_graph}
+\includegraphics[width=6cm]{gfx/hierarchical_partial_state_graph-handdrawn}
 \caption[The SALS ``{\tt{relationship}}'' and ``{\tt{property}}''
   expressions can be hierarchically combined in planning layers above
   the deliberative.]{The SALS ``{\tt{relationship}}'' and
@@ -700,9 +699,10 @@ current expression being imaginatively executed.
 \caption[A graph representation of the deliberative plan knowledge
   base while a simple plan with multiple ambiguous interpretations is
   being imaginatively interpreted and evaluated.]{A graph
-  representation of the deliberative plan knowledge base while a
-  simple plan with multiple ambiguous interpretations is being
-  imaginatively interpreted and evaluated.  The deliberative
+  representation of the deliberative plan knowledge base where nodes
+  are represented by ellipses and edge labels are represented by
+  rectangles.  A simple plan with multiple ambiguous interpretations
+  is being imaginatively interpreted and evaluated.  The deliberative
   {\emph{planner}} object is focusing on a {\emph{plan}} object that
   has been partially evaluated.  The first execution-node object of
   this plan object represents the partial interpretation of a

@@ -4,33 +4,39 @@
 %************************************************
 
 In the previous chapter,
-{\mbox{\autoref{chapter:learning_from_being_told}}},
-I have described the details of one of two main types of learning in
-the SALS cognitive architecture.  To briefly review, every planning
-layer in the SALS cognitive architecture, including the deliberative,
-reflective and super-reflective layers, is capable of learning in two
-different ways: (1) from ``being told'' and (2) from ``experience.''
-Learning from being told occurs in terms of natural language plans
-that are programmed into the different planning layers of the AI by
-the user or potentially another AI.  When plans are told to a planning
-layer in the AI, the planning layer reasons about different
-interpretations and imagined effects of the natural language plans.
-{\mbox{\autoref{figure:learning_from_being_told_in_layers_2}}} shows
-the information pathways in SALS that are involved in learning from
-being told as well as learning from experience.
+{\mbox{\autoref{chapter:learning_from_being_told}}}, I have described
+the details of one of two main types of learning in the SALS cognitive
+architecture.  To briefly review, every planning layer in the SALS
+cognitive architecture, including the deliberative, reflective and
+super-reflective layers, is capable of learning in two different ways:
+(1) from ``being told'' and (2) from ``experience.''  Learning from
+being told occurs in terms of natural language plans that are
+programmed into the different planning layers of the AI by the user or
+potentially another AI.  When plans are told to a planning layer in
+the AI, the planning layer reasons about different interpretations and
+imagined effects of the natural language plans.  In
+{\mbox{\autoref{figure:learning_from_being_told_in_layers}}}, which is
+reproduced in
+{\mbox{\autoref{figure:learning_from_being_told_in_layers_2}}} for
+convenience, shows the information pathways in SALS that are involved
+in learning from being told as well as learning from experience.  When
+a layer of the AI learns from being told, a natural language plan is
+communicated to that layer from a source external to the AI, such as a
+human user.  When a layer of the AI learns from experience, two
+streams of trace events are received from the layer below that are
+asynchronously woven into hypothetical causal models of the effects of
+actions.
 \begin{figure}
 \centering
 \includegraphics[width=6cm]{gfx/learning_from_being_told_in_layers}
 \caption[Learning from being told and learning from experience both
-  occur in each SALS planning layer.]{Learning from being told and
-  learning from experience both occur in each SALS planning layer.
-  When a layer of the AI learns from being told, a natural language
-  plan is communicated to that layer from a source external to the AI,
-  such as a human user.  When a layer of the AI learns from
-  experience, two streams of trace events are received from the layer
-  below that are asynchronously woven into hypothetical causal models
-  of the effects of actions.  This chapter focuses on the details of
-  how the SALS AI learns asynchronously from experience.}
+  occur in each SALS planning layer.  (Reproduced from
+  {\mbox{\autoref{figure:learning_from_being_told_in_layers}}})]{Learning
+  from being told and learning from experience both occur in each SALS
+  planning layer.  This figure is reproduced from
+  {\mbox{\autoref{figure:learning_from_being_told_in_layers}}} on
+  {\mbox{page~\pageref{figure:learning_from_being_told_in_layers}}} of
+  the previous chapter.}
 \label{figure:learning_from_being_told_in_layers_2}
 \end{figure}
 In this chapter, I will focus on how the SALS AI learns from the
@@ -46,13 +52,12 @@ in the layers below that a given planning layer is trying to control.
 Each planning layer in the SALS AI receives two event streams from the
 layer below that it is trying to control: (1) a stream of all changes
 in the knowledge base that the planning layer is trying to control and
-(2) a stream of all activations and completions for the execution of
-resources that the planning layer has activated through the execution
-of natural language plans.  I will refer to these two asynchronous
-information processing pathways as:
+(2) a stream of all activations and completions of resource
+executions.  I will refer to these two asynchronous information
+processing pathways as:
 \begin{packed_enumerate}
-\item{{\emph{partial state event abstraction}}, and}
-\item{{\emph{resource execution event causal rule-learning}}.}
+\item{{\emph{partial state event reification}}, and}
+\item{{\emph{resource causal rule-learning}}.}
 \end{packed_enumerate}
 For the deliberative planning layer, these two streams of events come
 from (1) the changes in the physical knowledge base in the learned
@@ -83,19 +88,37 @@ planning layer from the learned reactive layer.
   involving multiple planning layer agencies and knowledge bases
   before being woven into hypothetical models of the effects of
   resource executions of the learned reactive layer.  (A) Partial
-  state event abstraction is performed in the first stage of
+  state event reification is performed in the first stage of
   asynchronous information processing.  Changes in the physical
   knowledge base are streamed to the deliberative planning layer where
-  they are abstracted into the physical partial state event knowledge
-  base.  (B) Resource execution event causal rule-learning is
-  performed in the second stage of asynchronous information
-  processing.  Activation and completion events of resources in the
-  learned reactive physical agency are streamed to the deliberative
-  planning layer where they are correlated with the physical partial
-  state event knowledge base where rule learning is used to develop
-  hypothetical models of the effects of actions.}
+  they are reified into the physical partial state event knowledge
+  base.  (B) Resource causal rule-learning is performed in the second
+  stage of asynchronous information processing.  Activation and
+  completion events of resources in the learned reactive physical
+  agency are streamed to the deliberative planning layer where they
+  are correlated with the physical partial state event knowledge base
+  where rule learning is used to develop hypothetical models of the
+  effects of actions.}
 \label{figure:deliberative_two_experiential_event_streams}
 \end{figure}
+Analogous event streams flow from the deliberative planning layer to
+the reflective planning layer and from the reflective planning layer
+to the super-reflective planning layer.  Each of these two event
+streams are processed by separate information processing pathways each
+involving multiple planning layer agencies and knowledge bases before
+being woven into hypothetical models of the effects of resource
+executions of the learned reactive layer.  Partial state event
+reification is performed in the first stage of asynchronous
+information processing.  Changes in the physical knowledge base are
+streamed to the deliberative planning layer where they are reified
+into the physical partial state event knowledge base.  Resource causal
+rule-learning is performed in the second stage of asynchronous
+information processing.  Activation and completion events of resources
+in the learned reactive physical agency are streamed to the
+deliberative planning layer where they are correlated with the
+physical partial state event knowledge base where rule learning is
+used to develop hypothetical models of the effects of actions.
+
 {\mbox{\autoref{figure:reflective_two_experiential_event_streams}}}
 shows the two experiential event streams that flow into the reflective
 planning layer from the deliberative planning layer.
@@ -112,21 +135,39 @@ planning layer from the deliberative planning layer.
   streams are processed by separate information processing pathways
   each involving multiple planning layer agencies and knowledge bases
   before being woven into hypothetical models of the effects of
-  resource executions of the deliberative planning layer.  (A)
-  Partial state event abstraction is performed in the first stage of
+  resource executions of the deliberative planning layer.  (A) Partial
+  state event reification is performed in the first stage of
   asynchronous information processing.  Changes in the deliberative
   plan knowledge base are streamed to the reflective planning layer
-  where they are abstracted into the deliberative plan partial state
-  event knowledge base.  (B) Resource execution event causal
-  rule-learning is performed in the second stage of asynchronous
-  information processing.  Activation and completion events of
-  resources in the deliberative planning agency are streamed to the
-  reflective planning layer where they are correlated with the
-  deliberative plan partial state event knowledge base where rule
-  learning is used to develop hypothetical models of the effects of
-  actions.}
+  where they are reified into the deliberative plan partial state
+  event knowledge base.  (B) Resource causal rule-learning is
+  performed in the second stage of asynchronous information
+  processing.  Activation and completion events of resources in the
+  deliberative planning agency are streamed to the reflective planning
+  layer where they are correlated with the deliberative plan partial
+  state event knowledge base where rule learning is used to develop
+  hypothetical models of the effects of actions.}
 \label{figure:reflective_two_experiential_event_streams}
 \end{figure}
+Analogous event streams flow from the learned reactive layer to the
+deliberative planning layer and from the reflective planning layer to
+the super-reflective planning layer.  Each of these two event streams
+are processed by separate information processing pathways each
+involving multiple planning layer agencies and knowledge bases before
+being woven into hypothetical models of the effects of resource
+executions of the deliberative planning layer.  Partial state event
+reification is performed in the first stage of asynchronous
+information processing.  Changes in the deliberative plan knowledge
+base are streamed to the reflective planning layer where they are
+reified into the deliberative plan partial state event knowledge base.
+Resource causal rule-learning is performed in the second stage of
+asynchronous information processing.  Activation and completion events
+of resources in the deliberative planning agency are streamed to the
+reflective planning layer where they are correlated with the
+deliberative plan partial state event knowledge base where rule
+learning is used to develop hypothetical models of the effects of
+actions.
+
 {\mbox{\autoref{figure:super_reflective_two_experiential_event_streams}}}
 shows the two experiential event streams that flow into the
 super-reflective planning layer from the reflective planning layer.
@@ -144,29 +185,46 @@ super-reflective planning layer from the reflective planning layer.
   each involving multiple planning layer agencies and knowledge bases
   before being woven into hypothetical models of the effects of
   resource executions of the reflective planning layer.  (A) Partial
-  state event abstraction is performed in the first stage of
+  state event reification is performed in the first stage of
   asynchronous information processing.  Changes in the reflective plan
   knowledge base are streamed to the super-reflective planning layer
-  where they are abstracted into the reflective plan partial state
-  event knowledge base.  (B) Resource execution event causal
-  rule-learning is performed in the second stage of asynchronous
-  information processing.  Activation and completion events of
-  resources in the reflective planning agency are streamed to the
-  super-reflective planning layer where they are correlated with the
-  reflective plan partial state event knowledge base where rule
-  learning is used to develop hypothetical models of the effects of
-  actions.}
+  where they are reified into the reflective plan partial state event
+  knowledge base.  (B) Resource causal rule-learning is performed in
+  the second stage of asynchronous information processing.  Activation
+  and completion events of resources in the reflective planning agency
+  are streamed to the super-reflective planning layer where they are
+  correlated with the reflective plan partial state event knowledge
+  base where rule learning is used to develop hypothetical models of
+  the effects of actions.}
 \label{figure:super_reflective_two_experiential_event_streams}
 \end{figure}
+Analogous event streams flow from the learned reactive layer to the
+deliberative planning layer and from the deliberative planning layer
+to the reflective planning layer.  Each of these two event streams are
+processed by separate information processing pathways each involving
+multiple planning layer agencies and knowledge bases before being
+woven into hypothetical models of the effects of resource executions
+of the reflective planning layer.  Partial state event reification is
+performed in the first stage of asynchronous information processing.
+Changes in the reflective plan knowledge base are streamed to the
+super-reflective planning layer where they are reified into the
+reflective plan partial state event knowledge base.  Resource causal
+rule-learning is performed in the second stage of asynchronous
+information processing.  Activation and completion events of resources
+in the reflective planning agency are streamed to the super-reflective
+planning layer where they are correlated with the reflective plan
+partial state event knowledge base where rule learning is used to
+develop hypothetical models of the effects of actions.
 
-\section{Partial State Event Abstraction}
+\section{Partial State Event Reification}
 \label{section:partial_state_event_abstraction}
 
-Partial state event abstraction is the first stage of asynchronous
+Partial state event reification is the first stage of asynchronous
 information processing of an experiential event stream that any given
 planning layer receives from the changes in the knowledge base that it
-is trying to control.  A change event object has the following six
-properties:
+is trying to control.  {\emph{Reification}} is the process that allows
+a subgraph in the layer below to be replaced by a symbol in the layer
+above.  A change event object has the following six properties:
 \begin{packed_enumerate}
 \item{{\tt{time}}}
 \item{{\tt{change-type}}}
@@ -199,18 +257,20 @@ buffered, this reconstructed knowledge base can move forward in time
 more slowly than the knowledge base that the planning layer is trying
 to control.  Creating a reconstruction of the knowledge base under
 control is important because this allows the partial state event
-abstraction to occur asynchronously with the process that is making
+reification to occur asynchronously with the process that is making
 changes to the knowledge base under control.  In practice, because
 sets of changes to knowledge bases often occur in bursts, the
 buffering of event streams usually does not lead to arbitrarily long
 buffer lengths.  Once an event has been integrated into the knowledge
-base reconstruction, a subset of the partial states that this change
-results in adding or removing from the knowledge base reconstruction
-is computed and stored as events in the partial state event knowledge
-base.  The SALS AI does not abstract all partial states that occur in
-the reconstructed knowledge base, but instead only focuses on two
-specific types of partial states: (1) ``{\tt{relationship}}'' partial
-states and (2) ``{\tt{property}}'' partial states.
+base reconstruction, this change results in adding or removing a
+subset of partial states from the knowledge base reconstruction.  This
+subset of partial state changes is computed and each change in this
+subset is integrated into the partial state event knowledge base.
+Computing all possible partial states would be an intractable problem,
+so the SALS AI does not reify all partial states that occur in the
+reconstructed knowledge base, but instead only focuses on two specific
+types of partial states: (1) ``{\tt{relationship}}'' partial states
+and (2) ``{\tt{property}}'' partial states.
 
 The SALS ``{\tt{relationship}}'' and ``{\tt{property}}'' types of
 partial states are the same as those described in
@@ -238,13 +298,18 @@ the frame types, slot values, and properties of a frame-based
 knowledge base as it is represented as a graph.
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{gfx/relationship_partial_state_graph}
-\caption[A SALS ``{\tt{relationship}}'' partial state.]{A SALS
-  ``{\tt{relationship}}'' partial state.  The graph on the left shows
-  the ten argument names for the ``{\tt{relationship}}'' expression,
-  while the graph on the right shows a potential partial state of the
-  physical knowledge base that literally means, ``{\tt{a cube shaped
-      block to be to the left of a gripper that is me}}.''}
+\includegraphics[width=6cm]{gfx/relationship_partial_state_graph-handdrawn}
+\caption[A SALS ``{\tt{relationship}}'' partial state.  (Reproduced
+  from {\mbox{\autoref{figure:relationship_partial_state_graph}}})]{A
+  SALS ``{\tt{relationship}}'' partial state.  This figure is
+  reproduced from
+  {\mbox{\autoref{figure:relationship_partial_state_graph}}} on
+  {\mbox{page~\pageref{figure:relationship_partial_state_graph}}} for
+  convenience.  The (A) top graph shows the ten argument names for the
+  ``{\tt{relationship}}'' expression.  The (B) bottom graph shows a
+  potential partial state of the physical knowledge base that
+  literally means, ``{\tt{a cube shaped block to be to the left of a
+      gripper that is me}}.''}
 \label{figure:relationship_partial_state_graph_2}
 \end{figure}
 The SALS ``{\tt{property}}'' partial state represents the conjunction
@@ -265,13 +330,18 @@ types, slot values, and properties of a frame-based knowledge base
 that is represented as a graph.
 \begin{figure}
 \centering
-\includegraphics[width=12cm]{gfx/property_partial_state_graph}
-\caption[The SALS ``{\tt{property}}'' partial state object.]{The SALS
-  ``{\tt{property}}'' partial state object.  The graph on the right
-  shows the seven argument names for the ``{\tt{property}}''
-  expression, while the graph on the left shows a potential partial
-  state of the physical knowledge base that literally means, ``{\tt{a
-      gripper to be me and have a stop movement command}}.''}
+\includegraphics[width=6cm]{gfx/property_partial_state_graph-handdrawn}
+\caption[The SALS ``{\tt{property}}'' partial state object.
+  (Reproduced from
+  {\mbox{\autoref{figure:property_partial_state_graph}}})]{The SALS
+  ``{\tt{property}}'' partial state object.  This figure is reproduced
+  from {\mbox{\autoref{figure:property_partial_state_graph}}} on
+  {\mbox{page~\pageref{figure:property_partial_state_graph}}} for
+  convenience.  The (A) top graph shows the seven argument names for
+  the ``{\tt{property}}'' expression.  The (B) bottom graph shows a
+  potential partial state of the physical knowledge base that
+  literally means, ``{\tt{a gripper to be me and have a stop movement
+      command}}.''}
 \label{figure:property_partial_state_graph_2}
 \end{figure}
 While the reception of a single ``{\tt{add}}'' or ``{\tt{remove}}''
@@ -345,10 +415,10 @@ each, there are not currently SALS partial state objects that directly
 describe these more complex types of partial states.  In
 {\mbox{\autoref{chapter:future}}}, I will describe an idea for how
 types of partial states in the SALS cognitive architecture could be
-abstracted in future research to include any specific type of subgraph
-in a frame-based knowledge base, but for now, the abstraction of the
+reified in future research to include any specific type of subgraph in
+a frame-based knowledge base, but for now, the reification of the
 ``{\tt{relationship}}'' and ``{\tt{property}}'' types in SALS are each
-specially implemented to efficiently abstract each of these types of
+specially implemented to efficiently reify each of these types of
 partial state objects from a frame-based knowledge base, avoiding the
 NP-complete subgraph isomorphism decision problem
 \cite[]{messmer:1995,messmer:2000} implied by a careless
@@ -394,40 +464,40 @@ value is added to the partial state event object that was previously
 added to the physical partial state event knowledge base.
 
 Although I have described this process of partial state event
-abstraction in terms of the deliberative layer abstracting partial
-state event objects from a stream of change event objects derived from
+reification in terms of the deliberative layer reifying partial state
+event objects from a stream of change event objects derived from
 changes in the physical knowledge base in the learned reactive layer,
 an analogous process exists between each planning layer and the
 knowledge base in the layer below that it is trying to control.  The
 reflective deliberative plan knowledge agency receives a stream of
 change event objects from the deliberative plan knowledge base in the
 deliberative layer, and the reflective deliberative plan partial state
-knowledge agency in the reflective layer abstracts the partial states
-in the reconstructed deliberative plan knowledge base into partial
-state event objects that are added to the deliberative plan partial
-state event knowledge base in the reflective layer.  Similarly, the
-super-reflective layer abstracts partial states of the reflective plan
+knowledge agency in the reflective layer reifies the partial states in
+the reconstructed deliberative plan knowledge base into partial state
+event objects that are added to the deliberative plan partial state
+event knowledge base in the reflective layer.  Similarly, the
+super-reflective layer reifies partial states of the reflective plan
 knowledge base and adds new partial state event objects to the
 reflective plan partial state event knowledge base.
 
-\section{Resource Execution Event Causal Rule-Learning}
+\section{Resource Causal Rule-Learning}
 \label{section:resource_execution_event_causal_rule_learning}
 
 The second asynchronous stage of information processing involved in
 asynchronously learning from experience in the SALS AI is the
-{\emph{resource execution event causal rule-learning}} stage.  I will
-first focus on how this stage works when the deliberative layer
-receives a stream of procedurally reflective events from the learned
-reactive layer with the understanding that an analogous asynchronous
-information process exists in each planning layer in the SALS AI.  The
-reactive resource knowledge agency in the deliberative layer receives
-a stream of activation and completion event objects from the resources
-in the learned reactive physical agency of the learned reactive layer.
-When an activation event object is received by the reactive resource
+{\emph{resource causal rule-learning}} stage.  I will first focus on
+how this stage works when the deliberative layer receives a stream of
+procedurally reflective events from the learned reactive layer with
+the understanding that an analogous asynchronous information process
+exists in each planning layer in the SALS AI.  The reactive resource
+knowledge agency in the deliberative layer receives a stream of
+activation and completion event objects from the resources in the
+learned reactive physical agency of the learned reactive layer.  When
+an activation event object is received by the reactive resource
 knowledge agency in the deliberative layer, a {\emph{resource
     execution event}} object is added to the reactive resource event
-knowledge base.  A resource execution event object consists of the
-following three properties:
+knowledge base.  Like the partial state event object, a resource
+execution event object consists of the following three properties:
 \begin{packed_enumerate}
 \item{{\tt{start-time}}}
 \item{{\tt{end-time}}}
@@ -441,15 +511,15 @@ learned reactive physical agency in the learned reactive layer.  When
 a completion event object is received from the learned reactive layer,
 the ``{\tt{end-time}}'' slot value of the appropriate resource
 execution event object is copied from the ``{\tt{time}}'' slot of the
-completion event object.  When a resource execution event has
-completed, a transframe \cite[]{minsky:1975} is created that keeps
-track of the added or removed partial states in the physical partial
-state event knowledge base between the ``{\tt{start-time}}'' and
-``{\tt{end-time}}'' slot values of the resource execution event.
-Creating this transframe requires retrieving all of the partial state
-events that intersect with the ``{\tt{start-time}}'' slot value as
-well as all of the partial state events that intersect with the
-``{\tt{end-time}}'' slot value.
+completion event object.  Transframes \cite[]{minsky:1975} represent
+change.  When a resource execution event has completed, a transframe
+is created that keeps track of the added or removed information in
+the physical partial state event knowledge base between the
+``{\tt{start-time}}'' and ``{\tt{end-time}}'' slot values of the
+resource execution event.  Creating this transframe requires
+retrieving all of the partial state events that intersect with the
+``{\tt{start-time}}'' slot value as well as all of the partial state
+events that intersect with the ``{\tt{end-time}}'' slot value.
 
 Every knowledge base that contains event objects in the SALS AI is
 organized for indexing by time by using an interval tree that stores
@@ -462,78 +532,216 @@ tree within the event knowledge base, some precautions must be taken
 when changing the values of the ``{\tt{start-time}}'' and
 ``{\tt{end-time}}'' slots of any event object, which could potentially
 invalidate the entire interval tree.  To make this bookkeeping
-transparent to the programmer, reflectively traced callbacks are
+transparent to the plan execution, reflectively traced callbacks are
 called whenever a slot value is added to or removed from the event
 knowledge base.  If the slot value refers to the ``{\tt{start-time}}''
 or the ``{\tt{end-time}}'' of an event object, the event object is
 first removed from the interval tree with its old slot value, the slot
 value is changed, then the event object is inserted into the interval
-tree once the slot value change is complete.  This means that the
-programmer simply adds event objects to an event knowledge base,
+tree once the slot value change is complete.  This means that the plan
+simply executes normally, which reflectively causes the addition and
+removal of event objects to the reconstructed event knowledge base,
 freely changing their ``{\tt{start-time}}'' and ``{\tt{end-time}}''
-slot values, while reflective callbacks take care of the interval tree
-organization.
+slot values as callbacks take care of the interval tree organization.
+
+\section{A Physical Learning Example}
 
 \begin{table}
 \centering
-\begin{tabular}{|p{1.5cm}|p{9.5cm}|}
+\begin{tabular}{p{0.5cm}p{7cm}}
+A. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a pyramid shaped block to be sitting on a white colored table}}'' \\
+       \hline
+     \end{tabular} \\
+B. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a gripper that is me to be above a pyramid shaped block}}'' \\
+       \hline
+     \end{tabular} \\
+C. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a gripper that is me to be holding a cube shaped block}}'' \\
+       \hline
+     \end{tabular} \\
+D. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a cube shaped block to be sitting on a pyramid shaped block}}'' \\
+       \hline
+     \end{tabular} \\
+E. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a cube shaped block to be sitting on a white colored table}}'' \\
+       \hline
+     \end{tabular} \\
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|}
+{\emph{Partial State}} &{\emph{Precond.}} &{\emph{Expected Trans.}}  &{\emph{Expected Postcond.}}  &{\emph{Actual Trans.}}  &{\emph{Actual Postcond.}}  \\
 \hline
-{\tt{remove}} &``{\tt{a gripper that is me to be above a cube shaped block}}'' \\
-\hline
-{\tt{remove}} &``{\tt{a gripper that is me to be above a red colored block}}'' \\
-\hline
-{\tt{remove}} &``{\tt{a cube shaped block to be on a white colored table}}'' \\
-\hline
-{\tt{remove}} &``{\tt{a red colored block to be on a white colored table}}'' \\
-\hline
-{\tt{add}}    &``{\tt{a gripper that is me to be holding a cube shaped block}}'' \\
-\hline
-{\tt{add}}    &``{\tt{a gripper that is me to be holding a red colored block}}'' \\
+A                      & $1$            &                       & $1$                   &                       & $1$                   \\
+B                      & $1$            &                       & $1$                   &                       & $1$                   \\
+C                      & $1$            & $-$                   & $0$                   & $-$                   & $0$                   \\
+D                      & $0$            & \cellcolor{red!10}$+$ & \cellcolor{red!10}$1$ & \cellcolor{red!10}    & \cellcolor{red!10}$0$ \\
+E                      & $0$            & \cellcolor{red!10}    & \cellcolor{red!10}$0$ & \cellcolor{red!10}$+$ & \cellcolor{red!10}$1$ \\
 \hline
 \end{tabular}
-\caption[An example execution event transframe.]{An example execution
-  event transframe.  The right column of the table shows the partial
-  state represented as an English sentence.  The left column of the
-  table shows whether the partial state has been added or removed from
-  the knowledge base.  This transframe could be a description of the
-  difference between the beginning and the ending of an execution
-  event of the ``{\tt{reach and grab}}'' learned reactive resource.
-  Each of the six partial states shown are ``{\tt{relationship}}''
-  type partial states, but execution event transframes can in general
-  contain any type of SALS partial state, including
-  ``{\tt{property}}'' types.}
-\label{table:example_transframe}
+\caption[An example expectation failure when the deliberative layer
+  incorrectly hypothesizes physical partial states.]{An example
+  expectation failure when the deliberative layer incorrectly
+  hypothesizes physical partial states.  The top table shows a number
+  of physical partial states.  The bottom table shows the imagined and
+  actual transitions for executing the action of dropping a cube on a
+  pyramid.  The fact that the expected transframe does not match the
+  actual transframe presents the AI with a learning opportunity.  The
+  shaded area highlights the expectation failure.  The symbol ``$1$''
+  represents that the partial state exists.  The symbol ``$0$''
+  represents that the partial state does not exist.  The symbol
+  ``$+$'' represents that the partial state is added.  The symbol
+  ``$-$'' represents that the partial state is removed.}
+\label{table:example_physical_expectation_failure}
 \end{table}
-{\mbox{\autoref{table:example_transframe}}} shows an example execution
-event transframe.  The partial states in an execution event transframe
-can in general be any type of SALS partial state, including the
-``{\tt{relationship}}'' and ``{\tt{property}}'' types.  Once the
-partial state transframe has been computed for a given resource
-execution event, this transframe is used to train a rule-learning
-algorithm that attempts to categorize the partial state preconditions
-for different sets of the possible ``{\tt{add}}'' and
-``{\tt{remove}}'' changes.  A rule-learning algorithm is used in the
-SALS AI to predict the transframe that will result from executing a
-resource in given preconditions.  This rule-learning algorithm is
-based on {\emph{version spaces}} \cite[]{mitchell:1997}.  These
-version spaces are an efficient representation for all possible
+{\mbox{\autoref{table:example_physical_expectation_failure}}} shows an
+example of a physical learning opportunity that results from an
+expectation failure that occurs when the SALS AI imagines and then
+actually executes the action of dropping a cube on a pyramid.  Once
+the partial state transframe has been computed for a given action
+resource execution event, this transframe is used to train a
+rule-learning algorithm that attempts to categorize the partial state
+preconditions for different sets of the possible ``{\tt{add}}'' ($+$)
+and ``{\tt{remove}}'' ($-$) changes.  A rule-learning algorithm is
+used in the SALS AI to predict the transframe that will result from
+executing a resource in given preconditions.  This rule-learning
+algorithm is based on {\emph{version spaces}} \cite[]{mitchell:1997}.
+
+Version spaces are an efficient representation for all possible
 conjunctive functions that map a set of binary inputs to a single
 binary output.  These functions are also called {\emph{hypotheses}}.
 When these hypotheses turn out to be wrong given new data, the
 hypothesis version space is refined.  In the case of a false positive,
 the most general functions of the version space are specialized.  In
 the case of a false negative, the most specific hypotheses of the
-version space are generalized.  In this case, the binary inputs to the
-rule-learning algorithm represent whether or not a partial state
-exists in the preconditions of the resource execution event.  The
-single binary output from the rule-learning algorithm represents
-whether or not a set of partial state transframe changes will be the
-result of executing the resource in the given partial state
-preconditions.  These hypothesis version spaces are used to predict
-the effects of natural language plans in the counterfactual knowledge
-base of each planning layer during the interpretation and imagination
-process described in
+version space are generalized.
+\begin{table}
+\centering
+\begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}|}
+{\emph{change}}        & {\emph{positive example}}      & {\emph{negative example}}      \\
+                       & {\tt{ABCDE}}                   & {\tt{ABCDE}}                   \\
+\hline
+$-$A                   &                                & {\tt{11100}}                   \\
+$+$A                   &                                & {\tt{11100}}                   \\
+$-$B                   &                                & {\tt{11100}}                   \\
+$+$B                   &                                & {\tt{11100}}                   \\
+$-$C                   & {\tt{11100}}                   &                                \\
+$+$C                   &                                & {\tt{11100}}                   \\
+$-$D                   &                                & {\tt{11100}}                   \\
+\cellcolor{red!10}$+$D & \cellcolor{red!10}             & \cellcolor{red!10}{\tt{11100}} \\
+$-$E                   &                                & {\tt{11100}}                   \\
+\cellcolor{red!10}$+$E & \cellcolor{red!10}{\tt{11100}} & \cellcolor{red!10}             \\
+\hline
+\end{tabular}
+\caption[Positive and negative training preconditions from the
+  physical learning example presented previously in
+  {\mbox{\autoref{table:example_physical_expectation_failure}}}.]{Positive
+  and negative training preconditions from the physical learning
+  example presented previously in
+  {\mbox{\autoref{table:example_physical_expectation_failure}}}.  This
+  learning situation involves two changes that led to incorrect
+  predictions: ``$+$D'' and ``$+$E.''  The addition of partial state
+  ``D'' is incorrectly expected, while the addition of partial state
+  ``E'' is incorrectly {\emph{not}} expected.  The shaded areas
+  represent this failure to predict the correct state changes, the
+  expectation failure.  The precondition state, ``{\tt{11100}},'' can
+  be used as a positive or negative training example for the
+  appropriate version hypothesis spaces for learning new rules for
+  predicting these changes correctly in the future.}
+\label{table:example_transframe_rule_learning}
+\end{table}
+{\mbox{\autoref{table:example_transframe_rule_learning}}} shows an
+example of preconditions being used as positive and negative training
+examples for the version hypothesis spaces that lead to an expectation
+failure in the example previously presented in
+{\mbox{\autoref{table:example_physical_expectation_failure}}}.  In the
+SALS AI, the binary inputs to the rule-learning algorithm represent
+whether or not a partial state exists in the preconditions of the
+resource execution event.  The single binary output from the
+rule-learning algorithm represents whether or not a set of partial
+state transframe changes will be the result of executing the resource
+in the given partial state preconditions.  These hypothesis version
+spaces are used to predict the effects of natural language plans in
+the counterfactual knowledge base of each planning layer during the
+interpretation and imagination process described in
 {\mbox{\autoref{chapter:learning_from_being_told}}}.
+
+\section{A Deliberative Learning Example}
+
+\begin{table}
+\centering
+\begin{tabular}{p{0.5cm}p{7cm}}
+A. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a deliberative planner to be focusing on a plan that has been imagined}}'' \\
+       \hline
+     \end{tabular} \\
+B. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a deliberative planner to be focused on a plan that is hypothesized to cause a cube to be on a pyramid}}'' \\
+       \hline
+     \end{tabular} \\
+C. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a deliberative planner to be focused on a plan that is hypothesized to cause a pyramid to be on a cube}}'' \\
+       \hline
+     \end{tabular} \\
+D. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a deliberative planner to be focusing on a plan that has been executed}}'' \\
+       \hline
+     \end{tabular} \\
+E. & \begin{tabular}{|p{7cm}|}
+       \hline
+       ``{\tt{a deliberative planner to be focused on a plan that has failed in execution}}'' \\
+       \hline
+     \end{tabular} \\
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|}
+{\emph{Partial State}} &{\emph{Precond.}} &{\emph{Expected Trans.}} &{\emph{Expected Postcond.}} &{\emph{Actual Trans.}} &{\emph{Actual Postcond.}} \\
+\hline
+A                      & $1$              &                         & $1$                        &                       & $1$                      \\
+B                      & $1$              &                         & $1$                        &                       & $1$                      \\
+C                      & $0$              &                         & $0$                        &                       & $0$                      \\
+D                      & $0$              & $+$                     & $1$                        & $+$                   & $1$                      \\
+E                      & $0$              & \cellcolor{red!10}      & \cellcolor{red!10}$0$      & \cellcolor{red!10}$+$ & \cellcolor{red!10}$1$    \\
+\hline
+\end{tabular}
+\caption[An example expectation failure when the reflective layer
+  incorrectly hypothesizes deliberative plan partial states.]{An
+  example expectation failure when the reflective layer incorrectly
+  hypothesizes deliberative plan partial states.  The top table shows
+  a number of deliberative plan partial states.  The bottom table
+  shows the imagined and actual transitions for executing the action
+  of executing a plan to ``{\tt{stack a cube on a pyramid}}.''  The
+  fact that the expected transframe does not match the actual
+  transframe presents the AI with a learning opportunity.  The shaded
+  area highlights the expectation failure.  The symbol ``$1$''
+  represents that the partial state exists.  The symbol ``$0$''
+  represents that the partial state does not exist.  The symbol
+  ``$+$'' represents that the partial state is added.  The symbol
+  ``$-$'' represents that the partial state is removed.}
+\label{table:example_deliberative_plan_expectation_failure}
+\end{table}
+{\mbox{\autoref{table:example_deliberative_plan_expectation_failure}}}
+shows an example of a deliberative plan learning opportunity that
+results from an expectation failure that occurs when the SALS AI
+imagines and then actually executes the action of executing a plan to
+``{\tt{stack a cube on a pyramid}}.''
+
+\section{Lazy Allocation of Hypothesis Spaces}
 
 It would be inefficient to allocate a new hypothesis version space
 object for each type of ``{\tt{add}}'' or ``{\tt{remove}}'' change in
@@ -552,32 +760,31 @@ the partial state change: remove ``{\tt{a gripper that is me to be
     above a cube shaped block}}'' from
 {\mbox{\autoref{table:example_transframe}}}.  The remaining five
 symbols could refer to the other five partial state changes in that
-same table.  Consider that the same resource is executed three times
-and for each of these executions a different transframe results.  Let
-the following three sets of partial state changes represent the three
-computed transframes for the three resource execution events:
+same table.  Consider that the same action resource is executed three
+times and for each of these executions a different transframe results.
+Let the following three sets of partial state changes represent the
+three computed transframes for the three resource execution events:
 \begin{packed_enumerate}
 \item{$\{A, B, C\}$}
 \item{$\{A, B, C, D, E, F\}$}
 \item{$\{C, D, E, F\}$}
 \end{packed_enumerate}
 When the partial state transframe is computed for the first resource
-execution event, a single hypothesis version space is allocated for
-the given resource that predicts the initial set of partial state
-changes, $\{A, B, C\}$.  When the partial state transframe is computed
-for the second resource execution event, $\{A, B, C, D, E, F\}$, the
-partial state change sets are compared and divided into the largest
-disjoint sets possible.  In this case, two disjoint sets of partial
-state changes are computed: $\{A, B, C\}$ and $\{D, E, F\}$.  The
-hypothesis version space object for the first of these two partial
-state change sets, $\{A, B, C\}$, is the original hypothesis version
-space refined with the information from the second computed
-transframe.  The hypothesis version space object for the second of
-these two partial state change sets, $\{D, E, F\}$, is initialized as
-a new empty hypothesis version space object that is also refined with
-the information from the second computed transframe.  When the partial
-state transframe is computed for the third resource execution event,
-$\{C, D, E, F\}$, the partial state change sets are again compared and
+execution event, a single hypothesis version space is allocated that
+can predict the initial set of partial state changes, $\{A, B, C\}$.
+When the transframe is computed for the second execution event, $\{A,
+B, C, D, E, F\}$, the partial state change sets are compared and
+divided into the largest disjoint sets possible.  In this case, two
+disjoint sets of partial state changes are computed: $\{A, B, C\}$ and
+$\{D, E, F\}$.  The hypothesis version space object for the first of
+these two partial state change sets, $\{A, B, C\}$, is the original
+hypothesis version space refined with the information from the second
+computed transframe.  The hypothesis version space object for the
+second of these two partial state change sets, $\{D, E, F\}$, is
+initialized as a new empty hypothesis version space object that is
+also refined with the information from the second computed transframe.
+When the transframe is computed for the third execution event, $\{C,
+D, E, F\}$, the partial state change sets are again compared and
 divided into the largest disjoint sets possible.  In this case, three
 disjoint sets of partial state changes are computed: $\{A, B\}$,
 $\{C\}$ and $\{D, E, F\}$.  The hypothesis version space object for
@@ -603,11 +810,11 @@ algorithms in this simple example.
 \caption[Inheritance of hypothesis version space rule-learning
   algorithms.]{Inheritance of hypothesis version space rule-learning
   algorithms.  On the left are the transframe change sets that have
-  been computed for three resource execution events that occur in time
-  from top to bottom.  On the right is a tree that shows the
-  inheritance of hypothesis version space rule-learning algorithms
-  that are allocated to predict maximal disjoint partial state change
-  sets for the given resource executions.}
+  been computed for three execution events that occur in time from top
+  to bottom.  On the right is a tree that shows the inheritance of
+  hypothesis version space rule-learning algorithms that are allocated
+  to predict maximal disjoint partial state change sets for the given
+  resource executions.}
 \label{figure:hypothesis_version_space_set_divisions}
 \end{figure}
 

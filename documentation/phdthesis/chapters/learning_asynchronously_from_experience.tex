@@ -544,7 +544,7 @@ removal of event objects to the reconstructed event knowledge base,
 freely changing their ``{\tt{start-time}}'' and ``{\tt{end-time}}''
 slot values as callbacks take care of the interval tree organization.
 
-\section{A Physical Learning Example}
+\section{Deliberatively Learning about Physical Actions}
 
 \begin{table}
 \centering
@@ -575,9 +575,15 @@ E. & \begin{tabular}{|p{7cm}|}
        \hline
      \end{tabular} \\
 \end{tabular}
-
-\vspace{0.5cm}
-
+\caption[A selection of physical partial states that occur during the
+  example learning story presented in
+  {\mbox{\autoref{chapter:introduction}}}.]{A selection of physical
+  partial states that occur during the example learning story
+  presented in {\mbox{\autoref{chapter:introduction}}}.}
+\label{table:example_physical_partial_states_during_learning}
+\end{table}
+\begin{table}
+\centering
 \begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|}
 {\emph{Partial State}} &{\emph{Precond.}} &{\emph{Expected Trans.}}  &{\emph{Expected Postcond.}}  &{\emph{Actual Trans.}}  &{\emph{Actual Postcond.}}  \\
 \hline
@@ -591,8 +597,9 @@ E                      & $0$            & \cellcolor{red!10}    & \cellcolor{red
 \caption[An example expectation failure when the deliberative layer
   incorrectly hypothesizes physical partial states.]{An example
   expectation failure when the deliberative layer incorrectly
-  hypothesizes physical partial states.  The top table shows a number
-  of physical partial states.  The bottom table shows the imagined and
+  hypothesizes physical partial states.  Refer to
+  {\mbox{\autoref{table:example_physical_partial_states_during_learning}}}
+  for definitions of partial states, A--E.  Shown are the imagined and
   actual transitions for executing the action of dropping a cube on a
   pyramid.  The fact that the expected transframe does not match the
   actual transframe presents the AI with a learning opportunity.  The
@@ -603,8 +610,11 @@ E                      & $0$            & \cellcolor{red!10}    & \cellcolor{red
   ``$-$'' represents that the partial state is removed.}
 \label{table:example_physical_expectation_failure}
 \end{table}
-{\mbox{\autoref{table:example_physical_expectation_failure}}} shows an
-example of a physical learning opportunity that results from an
+{\mbox{\autoref{table:example_physical_partial_states_during_learning}}}
+and {\mbox{\autoref{table:example_physical_expectation_failure}}}
+present an example of a learning opportunity in the deliberative layer
+because of a failure to predict the effects of physical actions during
+deliberative planning.  This learning opportunity results from an
 expectation failure that occurs when the SALS AI imagines and then
 actually executes the action of dropping a cube on a pyramid.  Once
 the partial state transframe has been computed for a given action
@@ -652,17 +662,17 @@ $-$E                   &                                & {\tt{11100}}          
   predictions: ``$+$D'' and ``$+$E.''  The addition of partial state
   ``D'' is incorrectly expected, while the addition of partial state
   ``E'' is incorrectly {\emph{not}} expected.  The shaded areas
-  represent this failure to predict the correct state changes, the
-  expectation failure.  The precondition state, ``{\tt{11100}},'' can
-  be used as a positive or negative training example for the
+  represent the expectation failure, the failure to predict the
+  correct state changes.  The precondition state, ``{\tt{11100}},''
+  can be used as a positive or negative training example for the
   appropriate version hypothesis spaces for learning new rules for
   predicting these changes correctly in the future.}
-\label{table:example_transframe_rule_learning}
+\label{table:example_physical_transframe_rule_learning}
 \end{table}
-{\mbox{\autoref{table:example_transframe_rule_learning}}} shows an
-example of preconditions being used as positive and negative training
-examples for the version hypothesis spaces that lead to an expectation
-failure in the example previously presented in
+{\mbox{\autoref{table:example_physical_transframe_rule_learning}}}
+shows an example of preconditions being used as positive and negative
+training examples for the version hypothesis spaces that lead to an
+expectation failure in the example previously presented in
 {\mbox{\autoref{table:example_physical_expectation_failure}}}.  In the
 SALS AI, the binary inputs to the rule-learning algorithm represent
 whether or not a partial state exists in the preconditions of the
@@ -675,7 +685,7 @@ the counterfactual knowledge base of each planning layer during the
 interpretation and imagination process described in
 {\mbox{\autoref{chapter:learning_from_being_told}}}.
 
-\section{A Deliberative Learning Example}
+\section{Reflectively Learning about Deliberative Actions}
 
 \begin{table}
 \centering
@@ -706,9 +716,16 @@ E. & \begin{tabular}{|p{7cm}|}
        \hline
      \end{tabular} \\
 \end{tabular}
-
-\vspace{0.5cm}
-
+\caption[A selection of deliberative plan partial states that occur
+  during the example learning story presented in
+  {\mbox{\autoref{chapter:introduction}}}.]{A selection of
+  deliberative plan partial states that occur during the example
+  learning story presented in
+  {\mbox{\autoref{chapter:introduction}}}.}
+\label{table:example_deliberative_plan_partial_states_during_learning}
+\end{table}
+\begin{table}
+\centering
 \begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}p{1.5cm}|p{1.5cm}p{1.5cm}|}
 {\emph{Partial State}} &{\emph{Precond.}} &{\emph{Expected Trans.}} &{\emph{Expected Postcond.}} &{\emph{Actual Trans.}} &{\emph{Actual Postcond.}} \\
 \hline
@@ -722,104 +739,163 @@ E                      & $0$              & \cellcolor{red!10}      & \cellcolor
 \caption[An example expectation failure when the reflective layer
   incorrectly hypothesizes deliberative plan partial states.]{An
   example expectation failure when the reflective layer incorrectly
-  hypothesizes deliberative plan partial states.  The top table shows
-  a number of deliberative plan partial states.  The bottom table
-  shows the imagined and actual transitions for executing the action
-  of executing a plan to ``{\tt{stack a cube on a pyramid}}.''  The
-  fact that the expected transframe does not match the actual
-  transframe presents the AI with a learning opportunity.  The shaded
-  area highlights the expectation failure.  The symbol ``$1$''
-  represents that the partial state exists.  The symbol ``$0$''
-  represents that the partial state does not exist.  The symbol
-  ``$+$'' represents that the partial state is added.  The symbol
-  ``$-$'' represents that the partial state is removed.}
+  hypothesizes deliberative plan partial states.  Refer to
+  {\mbox{\autoref{table:example_deliberative_plan_partial_states_during_learning}}}
+  for definitions of partial states, A--E.  Shown are the imagined and
+  actual transitions for executing the action of executing a plan to
+  ``{\tt{stack a cube on a pyramid}}.''  The fact that the expected
+  transframe does not match the actual transframe presents the AI with
+  a learning opportunity.  The shaded area highlights the expectation
+  failure.  The symbol ``$1$'' represents that the partial state
+  exists.  The symbol ``$0$'' represents that the partial state does
+  not exist.  The symbol ``$+$'' represents that the partial state is
+  added.  The symbol ``$-$'' represents that the partial state is
+  removed.}
 \label{table:example_deliberative_plan_expectation_failure}
 \end{table}
+{\mbox{\autoref{table:example_deliberative_plan_partial_states_during_learning}}}
+and
 {\mbox{\autoref{table:example_deliberative_plan_expectation_failure}}}
-shows an example of a deliberative plan learning opportunity that
-results from an expectation failure that occurs when the SALS AI
-imagines and then actually executes the action of executing a plan to
-``{\tt{stack a cube on a pyramid}}.''
+present an example of a learning opportunity in the reflective layer
+because of a failure to predict the effects of deliberative planning
+actions during reflective planning.  This learning opportunity results
+from an expectation failure that occurs when the SALS AI imagines and
+then actually executes the action of executing a plan to ``{\tt{stack
+    a cube on a pyramid}}.''  In the example story presented in
+{\mbox{\autoref{chapter:introduction}}}, the reflective layer predicts
+that executing the plan to ``{\tt{stack a cube on a pyramid}}'' will
+not result in any deliberative plans having physical execution
+failures, a negative goal state that the reflective planner is trying
+to avoid in the deliberative plan knowledge base.  When the reflective
+plan decides to execute this deliberative plan, based on the
+prediction that it will not lead to failure, there is an expectation
+failure at the reflective layer when the deliberative plan actually
+does fail during its execution.  This expectation failure in the
+reflective layer is shown as highlighted areas of
+{\mbox{\autoref{table:example_deliberative_plan_partial_states_during_learning}}}
+and
+{\mbox{\autoref{table:example_deliberative_plan_expectation_failure}}}.
+This failure of the reflective layer to predict the effects of
+deliberative actions on the deliberative plan knowledge base presents
+the SALS AI with a learning opportunity at the reflective layer.
+\begin{table}
+\centering
+\begin{tabular}{p{1cm}|p{1.5cm}|p{1.5cm}|}
+{\emph{change}}        & {\emph{positive example}}      & {\emph{negative example}}      \\
+                       & {\tt{ABCDE}}                   & {\tt{ABCDE}}                   \\
+\hline
+$-$A                   &                                & {\tt{11000}}                   \\
+$+$A                   &                                & {\tt{11000}}                   \\
+$-$B                   &                                & {\tt{11000}}                   \\
+$+$B                   &                                & {\tt{11000}}                   \\
+$-$C                   &                                & {\tt{11000}}                   \\
+$+$C                   &                                & {\tt{11000}}                   \\
+$-$D                   &                                & {\tt{11000}}                   \\
+$+$D                   & {\tt{11000}}                   &                                \\
+$-$E                   &                                & {\tt{11000}}                   \\
+\cellcolor{red!10}$+$E & \cellcolor{red!10}{\tt{11000}} & \cellcolor{red!10}             \\
+\hline
+\end{tabular}
+\caption[Positive and negative training preconditions from the
+  deliberative plan learning example presented previously in
+  {\mbox{\autoref{table:example_physical_expectation_failure}}}.]{Positive
+  and negative training preconditions from the deliberative plan
+  learning example presented previously in
+  {\mbox{\autoref{table:example_deliberative_plan_expectation_failure}}}.
+  This learning situation involves one change that led to an incorrect
+  prediction: ``$+$E.''  The addition of partial state ``E'' is
+  incorrectly {\emph{not}} expected.  The shaded areas represent the
+  expectation failure, the failure to predict the correct state
+  changes.  The precondition state, ``{\tt{11000}},'' can be used as a
+  positive training example for the appropriate version hypothesis
+  spaces for learning new rules for predicting this change correctly
+  in the future.}
+\label{table:example_deliberative_plan_transframe_rule_learning}
+\end{table}
+{\mbox{\autoref{table:example_deliberative_plan_transframe_rule_learning}}}
+shows an example of preconditions being used as positive and negative
+training examples for the version hypothesis spaces that lead to an
+expectation failure in the example previously presented in
+{\mbox{\autoref{table:example_physical_expectation_failure}}}.
 
 \section{Lazy Allocation of Hypothesis Spaces}
 
 It would be inefficient to allocate a new hypothesis version space
 object for each type of ``{\tt{add}}'' or ``{\tt{remove}}'' change in
-a partial state transframe for a given resource because sets of
+a partial state transframe for a given action resource because sets of
 partial state changes often occur together and multiple hypothesis
 version space rule-learning algorithms would contain redundant
 information for these sets of partial state changes.  To reduce the
-number of hypothesis version spaces that are allocated to each
+number of hypothesis version spaces that are allocated to each action
 resource to predict the partial state changes that it may cause when
 executed, each co-occurring set of partial state changes for each
-resource is calculated.  For example, consider that the observed
-transframes during each execution event for a given resource are
-composed of a total of six partial states.  Let us refer to this set
-of states as $\{A, B, C, D, E, F\}$.  The symbol ``$A$'' may refer to
-the partial state change: remove ``{\tt{a gripper that is me to be
-    above a cube shaped block}}'' from
-{\mbox{\autoref{table:example_transframe}}}.  The remaining five
-symbols could refer to the other five partial state changes in that
-same table.  Consider that the same action resource is executed three
-times and for each of these executions a different transframe results.
-Let the following three sets of partial state changes represent the
-three computed transframes for the three resource execution events:
-\begin{packed_enumerate}
-\item{$\{A, B, C\}$}
-\item{$\{A, B, C, D, E, F\}$}
-\item{$\{C, D, E, F\}$}
-\end{packed_enumerate}
-When the partial state transframe is computed for the first resource
-execution event, a single hypothesis version space is allocated that
-can predict the initial set of partial state changes, $\{A, B, C\}$.
-When the transframe is computed for the second execution event, $\{A,
-B, C, D, E, F\}$, the partial state change sets are compared and
-divided into the largest disjoint sets possible.  In this case, two
-disjoint sets of partial state changes are computed: $\{A, B, C\}$ and
-$\{D, E, F\}$.  The hypothesis version space object for the first of
-these two partial state change sets, $\{A, B, C\}$, is the original
-hypothesis version space refined with the information from the second
-computed transframe.  The hypothesis version space object for the
-second of these two partial state change sets, $\{D, E, F\}$, is
-initialized as a new empty hypothesis version space object that is
-also refined with the information from the second computed transframe.
-When the transframe is computed for the third execution event, $\{C,
-D, E, F\}$, the partial state change sets are again compared and
-divided into the largest disjoint sets possible.  In this case, three
-disjoint sets of partial state changes are computed: $\{A, B\}$,
-$\{C\}$ and $\{D, E, F\}$.  The hypothesis version space object for
-the first of these three partial state change sets, $\{A, B\}$, is the
-original partial state hypothesis version space refined with the
-information from the third computed transframe.  The hypothesis
-version space object for the second of these three partial state
-change sets, $\{C\}$, is another copy of the original partial state
-hypothesis version space that is also refined with the information in
-the third computed transframe.  The hypothesis version space object
-for the third of these three partial state change sets, $\{D, E, F\}$,
-is a copy of the second allocated partial state hypothesis version
-space, which is also refined with the information in the third
-computed transframe.  Finally, three hypothesis version space objects
-have been allocated to predict the maximal disjoint sets of partial
-state changes.
-{\mbox{\autoref{figure:hypothesis_version_space_set_divisions}}} shows
-the inheritance structure of hypothesis version space rule-learning
-algorithms in this simple example.
-\begin{figure}
+action resource is calculated.
+
+For example, consider the physical partial state changes presented in
+{\mbox{\autoref{table:example_physical_transframe_rule_learning}}}.
+For the moment, imagine that the AI has had no previous experience and
+that the information in this table is the only experience available to
+the deliberative layer's hypothesis version space rule-learning
+algorithm.  In this case, notice that many of the partial state
+changes have exactly the same positive and negative training examples
+thus far.
+\begin{table}
 \centering
-\includegraphics[width=8cm]{gfx/hypothesis_version_space_set_divisions}
-\caption[Inheritance of hypothesis version space rule-learning
-  algorithms.]{Inheritance of hypothesis version space rule-learning
-  algorithms.  On the left are the transframe change sets that have
-  been computed for three execution events that occur in time from top
-  to bottom.  On the right is a tree that shows the inheritance of
-  hypothesis version space rule-learning algorithms that are allocated
-  to predict maximal disjoint partial state change sets for the given
-  resource executions.}
-\label{figure:hypothesis_version_space_set_divisions}
-\end{figure}
+\begin{tabular}{p{2cm}|p{1cm}|p{1.5cm}|p{1.5cm}|}
+hypothesis version space change set & {\emph{change}}        & {\emph{positive example}}      & {\emph{negative example}}      \\
+                                    &                        & {\tt{ABCDE}}                   & {\tt{ABCDE}}                   \\
+\hline
+\#1                                 & $-$A                   &                                & {\tt{11100}}                   \\
+                                    & $+$A                   &                                & {\tt{11100}}                   \\
+                                    & $-$B                   &                                & {\tt{11100}}                   \\
+                                    & $+$B                   &                                & {\tt{11100}}                   \\
+                                    & $+$C                   &                                & {\tt{11100}}                   \\
+                                    & $-$D                   &                                & {\tt{11100}}                   \\
+                                    & $+$D                   &                                & {\tt{11100}}                   \\
+                                    & $-$E                   &                                & {\tt{11100}}                   \\
+\hline
+\#2                                 & $-$C                   & {\tt{11100}}                   &                                \\
+                                    & $+$E                   & {\tt{11100}}                   &                                \\
+\hline
+\end{tabular}
+\caption[.]{.}
+\label{table:example_lazy_hypothesis_space_allocation}
+\end{table}
+{\mbox{\autoref{table:example_lazy_hypothesis_space_allocation}}}
+shows how hypothesis version spaces are not allocated in order to
+predict every partial state change.  Given only the information in
+{\mbox{\autoref{table:example_physical_transframe_rule_learning}}},
+{\mbox{\autoref{table:example_lazy_hypothesis_space_allocation}}}
+shows that only two hypothesis version spaces are allocated in order
+to predict $10$ different partial state changes.  As more learning
+experience is added to each layer of the SALS AI, these sets of
+partial state changes are subdivided and new hypothesis version spaces
+are allocated in this conservative manner.  I refer to this
+conservative method of hypothesis version space allocation as
+``lazy,'' which avoids allocating what would be redundant hypotheses
+in multiple version spaces.
 
+\section{Summary}
 
-
+In this chapter, I have described how a planning layer reifies a
+select subset of partial states from the layer below that it uses as
+an efficient representation for learning, imagination, and goal
+recognition.  Also, I have discussed two examples of learning: (1) one
+focused on the deliberative planning layer learning from expectation
+failures in physical knowledge, and (2) one focused on the reflective
+planning layer learning from expectation failures in deliberative plan
+knowledge.  Finally, I have described a method of ``lazy'' hypothesis
+version space allocation that avoids redundant hypotheses from being
+stored in multiple version spaces, allowing learning to predict entire
+sets of partial state changes from the layer below by using fewer
+non-redundant hypothesis version spaces.  In the next chapter, I will
+describe how the examples in this thesis are programmed in the
+low-level lisp-like programming language and virtual machine.  I hope
+that the open-source nature of the SALS AI implementation will allow
+this Substrate for Accountable Layered Systems to enable other
+researchers to apply these techniques to their own research problem
+domains, given the practical programming knowledge presented in the
+next chapter.
 
 %% \section{Representing Hypotheses for the Effects of Natural Langauge Plans}
 

@@ -39,7 +39,12 @@ meta-information about a task, such as in what way a compiled
 procedure should be executed, which can be used for causally
 organizing the effects of groups of parallel tasks, controlling and
 monitoring the occurrence of any type of event through any of the
-procedural abstraction barriers of the SALS virtual machine.
+procedural abstraction barriers of the SALS virtual machine.  Every
+parallel process in the SALS virtual machine has a trace that we can
+compute from, that we can reason about.  The built-in processes for
+reasoning about reflective traces in the SALS virtual machine are
+critical to the asynchronous learning examples presented in the
+previous two chapters.
 
 \section{Virtual Machine}
 
@@ -151,9 +156,11 @@ ability to load packages that contain optimized routines that are
 composed of compiled machine code.  Machine code extensions to the
 SALS virtual machine are written in the C programming language.  The C
 codebase that compiles to this machine code totals over 150,000 lines
-of C code.  The following is a declaration of a package definition in
-the SALS low-level Lisp-like language that helps to organize these
-different types of dependencies within the SALS codebase:
+of C code.  The virtual machine compiles and runs on any POSIX
+compliant operating system.  The following is a declaration of a
+package definition in the SALS low-level Lisp-like language that helps
+to organize these different types of dependencies within the SALS
+codebase:
 \begin{samepage}
 \begin{Verbatim}
   [defpackage semantic_knowledge_base
@@ -178,21 +185,21 @@ in this example: (1) ``{\tt{packages}},'' (2) ``{\tt{sources}},'' and
 (3) ``{\tt{dynamic libraries}}.''  The ``{\tt{packages}}'' optional
 argument specifies a list of other packages that must be loaded before
 this package is loaded.  The ``{\tt{sources}}'' optional argument
-specifies a list of SALS low-level Lisp-like programming language
-files that are to be loaded when this package is loaded.  The
-``{\tt{dynamic libraries}}'' optional argument specifies a list of
-files that contain machine code extensions that should be loaded into
-the SALS virtual machine when this package is loaded.
+specifies a list of SALS files that are to be loaded when this package
+is loaded.  The ``{\tt{dynamic libraries}}'' optional argument
+specifies a list of files that contain machine code extensions that
+should be loaded into the SALS virtual machine when this package is
+loaded.
 
 Every package and machine code extension to the SALS virtual machine
 and programming language performs ``causal reflective tracing'' on
 each concurrently executing process.  The following sections describe
 examples of different uses of the causal reflective tracing features
 that have been implemented throughout the SALS virtual machine and its
-extensions.  At the end of this chapter I will describe one high-level
-package in the SALS programming language that performs the conjunctive
-hypothesis space version space rule-learning algorithm, which is key
-to the asynchronous experiential learning presented in
+extensions.  At the end of this chapter, I will describe one
+high-level package in the SALS programming language that performs the
+conjunctive hypothesis space version space rule-learning algorithm,
+which is key to the asynchronous experiential learning presented in
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
 
 \section{Causal Reflective Tracing}
@@ -202,25 +209,25 @@ order to distinguish them from the {\emph{threads}} in the underlying
 operating system kernel.  The parallel fibers create, mutate, and read
 from memory as they execute sequences of compiled bytecodes.  At any
 point between bytecode executions, the memory system is static and can
-be saved or loaded from non-volatile memory, such as a harddisk.  The
-current execution state of every fiber is represented in the global
-environment.  To be fully reflective on all of the procedural effects
-of any given fiber, I introduce a technique called {\emph{causal
-    reflective tracing}}.  Causal reflective tracing is a way of
-defining variables that are specific to each fiber that can be used to
-control the low-level memory access, mutation, and creation functions.
-This allows one fiber to subscribe to the procedural trace events of
-another fiber without receiving procedural trace events of its own
-execution, which would lead to an infinite regress, halting the
-system.  Further, because the virtual machine is inherently a parallel
-processing system, a given fiber will often start a number of child
-fibers that handle part of the processing for the parent fiber.  When
-a new fiber is created, the child fiber inherits the causal variable
-bindings of its parent fiber, enabling the same procedural tracing
-options for the child as well.  So, causal reflective tracing is one
-of the basic tools for keeping track of which pieces of memory were
-created, mutated, or read by which other fibers.  When evaluating the
-theoretical time complexity of concurrent procedurally reflective
+be saved to or loaded from non-volatile memory, such as a harddisk.
+The current execution state of every fiber is represented in the
+global environment.  To be fully reflective on all of the procedural
+effects of any given fiber, I introduce a technique called
+{\emph{causal reflective tracing}}.  Causal reflective tracing is a
+way of defining variables that are specific to each fiber that can be
+used to control the low-level memory access, mutation, and creation
+functions.  This allows one fiber to subscribe to the procedural trace
+events of another fiber without receiving procedural trace events of
+its own execution, which would lead to an infinite regress, halting
+the system.  Further, because the virtual machine is inherently a
+parallel processing system, a given fiber will often start a number of
+child fibers that handle part of the processing for the parent fiber.
+When a new fiber is created, the child fiber inherits the causal
+variable bindings of its parent fiber, enabling the same procedural
+tracing options for the child as well.  So, causal reflective tracing
+is one of the basic tools for keeping track of which pieces of memory
+were created, mutated, or read by which other fibers.  When evaluating
+the theoretical time complexity of concurrent procedurally reflective
 control algorithms, it should be noted that creating procedural trace
 events for the execution of a given fiber slows the fiber down only by
 a constant factor, not affecting the algorithm's ``big-O'' time
@@ -264,24 +271,25 @@ describes how the SALS asynchronous learning algorithm uses the event
 knowledge base object to calculate partial state transframes.  I will
 briefly review the features of the event knowledge base as well as a
 few details about how this object is initialized and used in the SALS
-low-level Lisp-like programming language.  The semantic event
-knowledge base stores a type of semantic frame called a
-{\emph{semantic event}}.  A semantic event is a type of semantic frame
-object that represents an interval in time, which may include partial
-knowledge if the start or end times do not exist, making the interval
-potentially open-ended.  Semantic event knowledge bases are
-reflectively traced and the knowledge is always stored in two
-different representations, the basic semantic event frames as well as
-a balanced interval tree that always represents the current state of
-the semantic event knowledge base.  The balanced interval tree allows
-accessing the state of the focus knowledge base in $O(\log{(n)})$
-time, where $n$ is the number of events stored in the semantic event
-knowledge base.  Although the time complexity is not as efficient as
-the constant, $O(1)$, access time of the reflectively reconstructed
-semantic knowledge base, the semantic event interval tree knowledge
-base only requires $O(n)$ memory complexity to allow access to the
-structure of the knowledge base at any point in the past, where $n$ is
-the number of semantic events.
+low-level Lisp-like programming language.
+
+The semantic event knowledge base stores a type of semantic frame
+called a {\emph{semantic event}}.  A semantic event is a type of
+semantic frame object that represents an interval in time, which may
+include partial knowledge if the start or end times do not exist,
+making the interval potentially open-ended.  Semantic event knowledge
+bases are reflectively traced and the knowledge is always stored in
+two different representations, the basic semantic event frames as well
+as a balanced interval tree that always represents the current state
+of the semantic event knowledge base.  The balanced interval tree
+allows accessing the state of the focus knowledge base in
+$O(\log{(n)})$ time, where $n$ is the number of events stored in the
+semantic event knowledge base.  Although the time complexity is not as
+efficient as the constant, $O(1)$, access time of the reflectively
+reconstructed semantic knowledge base, the semantic event interval
+tree knowledge base only requires $O(n)$ memory complexity to allow
+access to the structure of the knowledge base at any point in the
+past, where $n$ is the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
 create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
 in the SALS low-level Lisp-like interactive programming language.
@@ -327,13 +335,22 @@ way semantic frames report the addition and removal of slot values to
 reflective forgetful event stream subscribers.  Once a knowledge base
 is created and we have an {\emph{important event stream iterator}}, we
 can define a concurrent reflective fiber that processes the events
-reflectively, after the real-time execution of the processes that
+reflectively after the real-time execution of the processes that
 modify this knowledge base.
 {\mbox{\autoref{figure:reflective_fiber}}} shows an example of how a
 reflective fiber can be created to process a
 {\tt{forgetful\_event\_stream}} generated by a
-{\tt{semantic\_knowledge\_base}}, which includes a traced
-{\tt{semantic\_planner}}.
+{\tt{semantic\_knowledge\_base}}, which includes the state of a
+planning machine, represented by a {\tt{semantic\_planner}} object.
+Note that this example runs at a constant factor slower than full
+speed because of the creation of mutation events for the
+{\tt{semantic\_planner}} object, but this factor has been kept
+relatively small, so this example completes almost immediately.  The
+reflective process runs slower because it must consider how to print
+these events to the terminal in a readable form.
+{\mbox{\autoref{figure:remove_add_set_events}}} shows the last two
+events created by the last line of this example that mutates the
+{\tt{imagine\_time}} slot value for the planner.
 \begin{figure}[h]
 \centering
 {\scriptsize
@@ -366,15 +383,7 @@ out-> []
   {\tt{forgetful\_event\_stream}}.]{A reflective fiber can be created
   to process a {\tt{forgetful\_event\_stream}} generated by a
   {\tt{semantic\_knowledge\_base}}, which includes a traced
-  {\tt{semantic\_planner}}.  Note that this example runs at a constant
-  factor slower than full speed because of the creation of mutation
-  events for the {\tt{semantic\_planner}} object, but this factor has
-  been kept relatively small, so this example completes almost
-  immediately.  The reflective process runs slower because it must
-  consider how to print these events to the terminal in a readable
-  form.  {\mbox{\autoref{figure:remove_add_set_events}}} shows the
-  last two events created by the last line of this example that
-  mutates the {\tt{imagine\_time}} slot value for the planner.}
+  {\tt{semantic\_planner}}.}
 \label{figure:reflective_fiber}
 \end{figure}
 
@@ -795,4 +804,5 @@ out-> []
 \label{figure:concept_version_space_hypothetical_support}
 \end{figure}
 
+\section{Compiling, Imagining and Executing a Natural Language Plan}
 

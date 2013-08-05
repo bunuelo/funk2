@@ -166,7 +166,8 @@ phdthesis.pdf: \
   gfx/meta_meta_knowledge.pdf \
   gfx/deliberative_physical_partial_state_reification.pdf \
   gfx/multiple_layers_of_symbolic_reification.pdf \
-  gfx/inference_of_physical_knowledge.pdf
+  gfx/inference_of_physical_knowledge.pdf \
+  gfx/compile_natural_language.pdf
 	pdflatex phdthesis
 	bibtex   phdthesis
 	pdflatex phdthesis

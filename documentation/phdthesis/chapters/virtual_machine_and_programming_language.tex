@@ -61,16 +61,16 @@ are the bytecode threads that execute in the SALS virtual machine.  In
 this way, each SALS fiber can be assigned to a specific hyperthread in
 the target hardware platform.  To prevent local cache misses for
 on-chip caches, the SALS virtual machine has a separate memory pool
-allocated for each of the SALS virtual processors.  So, for CPUs that
-has 4 cores and 2 hyperthreads per core, 8 memory pools are allocated
-when the SALS virtual machine is created.  Also, a major bottleneck in
-systems with large numbers of processors and cores are mutual
-exclusion or {\emph{mutex}} locks that protect shared resources.  The
-SALS virtual machine avoids all mutexes in the memory layer by using
-these separate dedicated memory pools for each hyperthread in each CPU
-core for memory allocation and concurrent garbage collection.  Mutexes
-are provided in the SALS architecture but low-level memory allocation
-and collection can operate at full-speed without any mutex locks for
+allocated for each of the SALS virtual processors.  CPUs that have 4
+cores and 2 hyperthreads per core, 8 memory pools are allocated when
+the SALS virtual machine is created.  A major bottleneck in systems
+with large numbers of processors and cores are mutual exclusion or
+{\emph{mutex}} locks that protect shared resources.  The SALS virtual
+machine avoids all mutexes in the memory layer by using these separate
+dedicated memory pools for each hyperthread in each CPU core for
+memory allocation and concurrent garbage collection.  Mutexes are
+provided in the SALS architecture but low-level memory allocation and
+collection can operate at full-speed without any mutex locks for
 low-level memory operations.
 {\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
 example of how SALS allocates virtual processors for a hardware
@@ -224,8 +224,8 @@ parallel processing system, a given fiber will often start a number of
 child fibers that handle part of the processing for the parent fiber.
 When a new fiber is created, the child fiber inherits the causal
 variable bindings of its parent fiber, enabling the same procedural
-tracing options for the child as well.  So, causal reflective tracing
-is one of the basic tools for keeping track of which pieces of memory
+tracing options for the child as well.  Causal reflective tracing is
+one of the basic tools for keeping track of which pieces of memory
 were created, mutated, or read by which other fibers.  When evaluating
 the theoretical time complexity of concurrent procedurally reflective
 control algorithms, it should be noted that creating procedural trace
@@ -693,9 +693,9 @@ out-> [concept_version_space
   {\tt{concept\_version\_space}} conjunctive hypothesis learning
   algorithm.  This object keeps a list of the most specific hypotheses
   that support positive output predictions as well as the most general
-  hypotheses that support negative output predictions.  Also, there is
-  a set of variable names, or frame slot names, that the algorithm has
-  seen previously.}
+  hypotheses that support negative output predictions.  There is a set
+  of variable names, or frame slot names, that the algorithm has seen
+  previously.}
 \label{figure:concept_version_space}
 \end{figure}
 \begin{figure}[h]
@@ -806,3 +806,14 @@ out-> []
 
 \section{Compiling, Imagining and Executing a Natural Language Plan}
 
+{\mbox{\autoref{figure:compile_natural_language}}} shows the initial
+expansion during the process of compiling a natural language plan.
+\begin{figure}
+\centering
+\includegraphics[height=12cm]{gfx/compile_natural_language}
+\caption[Hierarchical reflective trace of imagined plan execution
+  during compiling phase of language interpretation.]{Hierarchical
+  reflective trace of imagined plan execution during compiling phase
+  of language interpretation.}
+\label{figure:compile_natural_language}
+\end{figure}

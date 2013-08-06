@@ -810,10 +810,20 @@ out-> []
 expansion during the process of compiling a natural language plan.
 \begin{figure}
 \centering
-\includegraphics[height=12cm]{gfx/compile_natural_language}
-\caption[Hierarchical reflective trace of imagined plan execution
-  during compiling phase of language interpretation.]{Hierarchical
-  reflective trace of imagined plan execution during compiling phase
-  of language interpretation.}
+\includegraphics[width=12cm]{gfx/compile_natural_language}
+\caption[Procedural trace of partially imagined plan execution during
+  compiling phase of language interpretation.]{Procedural trace of
+  partially imagined plan execution during compiling phase of language
+  interpretation.  Rectangles with rounded corners represent language
+  expressions that must be interpreted.  The top rounded rectangle is
+  the initial language phrase that causes this entire prodecural trace
+  to be created.  Rectangles with sharp corners represent abstract
+  analogy pattern templates that match the rounded rectangle
+  immediately above them.  Analogy templates expand into multiple step
+  plans that include more language phrases to be interpreted.  Labels
+  (A) and (B) mark two analogy patterns that simultaneously match the
+  language phrase above them.  (A) will eventually lead to a correct
+  and complete interpretation, while (B) will lead to an incomplete
+  interpretation.}
 \label{figure:compile_natural_language}
 \end{figure}

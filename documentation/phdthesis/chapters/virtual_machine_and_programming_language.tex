@@ -831,7 +831,7 @@ compiling phase of natural language interpretation.
   partially imagined plan execution during compiling phase of language
   interpretation.  Rectangles with rounded corners represent language
   expressions that must be interpreted.  The top rounded rectangle is
-  the initial language phrase that causes this entire prodecural trace
+  the initial language phrase that causes this entire procedural trace
   to be created.  Rectangles with sharp corners represent abstract
   analogy pattern templates that match the rounded rectangle
   immediately above them.  Analogy templates expand into multiple step
@@ -845,33 +845,32 @@ compiling phase of natural language interpretation.
 Procedural traces such as this one are easy to create because of the
 causal context that is provided by default in the SALS virtual
 machine.  The causal context for a natural language plan that is being
-interpretted is as follows:
+interpreted is as follows:
 \begin{itemize}
-\item {\tt{execution\_mode}}: Compiled plans can either be
-  interpretted in one of two modes: {\tt{imagine}} or {\tt{execute}}.
-  When a plan is executed in the {\tt{imagine}} mode, the plan uses
-  learned hypothetical models of actions in order to predict their
-  effects in a counterfactual event knowledge base within the planning
-  layer.  A plan is generally interpretted in the {\tt{imagine}} mode
-  before it is interpretted in the {\tt{execute}} mode.  The
-  reflective trace that is produced from interpretting a plan in the
-  {\tt{imagine}} mode is used for a second compile stage that produces
-  an executable plan that contains neither natural language nor other
-  forms of ambiguity.  Sensory functions that check for the existence
-  of partial states access the counterfactual knowledge base when a
-  plan is interpreted in the {\tt{imagine}} mode.  When a plan is
-  interpreted in the {\tt{execute}} mode, actions are actually
-  executed by activating and suppressing resources in the layer below.
-  Also, a plan interpreted in the {\tt{execute}} mode directly
-  accesses the layer below when checking whether or not partial states
-  exist for sensory functions.
+\item {\tt{execution\_mode}}: Compiled plans can either be interpreted
+  in one of two modes: {\tt{imagine}} or {\tt{execute}}.  When a plan
+  is executed in the {\tt{imagine}} mode, the plan uses learned
+  hypothetical models of actions in order to predict their effects in
+  a counterfactual event knowledge base within the planning layer.  A
+  plan is generally interpreted in the {\tt{imagine}} mode before it
+  is interpreted in the {\tt{execute}} mode.  The reflective trace
+  that is produced from interpreting a plan in the {\tt{imagine}} mode
+  is used for a second compile stage that produces an executable plan
+  that contains neither natural language nor other forms of ambiguity.
+  Sensory functions that check for the existence of partial states
+  access the counterfactual knowledge base when a plan is interpreted
+  in the {\tt{imagine}} mode.  When a plan is interpreted in the
+  {\tt{execute}} mode, actions are actually executed by activating and
+  suppressing resources in the layer below.  Also, a plan interpreted
+  in the {\tt{execute}} mode directly accesses the layer below when
+  checking whether or not partial states exist for sensory functions.
 \item {\tt{top\_plan}}: The initial top-level plan that has caused the
   rest of the procedural trace structure to exist.  A plan
   interpretation process usually begins with a natural language
   phrase, such as ``{\tt{stack a cube on a pyramid}}.''  Analogous
   plans are then found that might provide interpretations of this
   initial phrase.  These newly created analogous plans are each
-  interpretted as top-level plans to see if the result of their
+  interpreted as top-level plans to see if the result of their
   imagined interpretations are complete and successful.
 \item {\tt{imagine\_time}}: Only used when the {\tt{execution\_mode}}
   is set to {\tt{imagine}}, the {\tt{imagine\_time}} causal context

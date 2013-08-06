@@ -800,14 +800,29 @@ out-> []
   example, attempting to find new support whenever the previous
   hypothetical support is lost.  In this case, a positive example of a
   {\tt{green}} {\tt{cube}} is attempting to maintain hypothetical
-  support in the concept's hypothesis space.}
+  support in the concept's hypothesis space.  Each sharp cornered
+  rectangular box introduces an additional causal scope for all of the
+  processes this interpretation step causes to execute.}
 \label{figure:concept_version_space_hypothetical_support}
 \end{figure}
 
 \section{Compiling, Imagining and Executing a Natural Language Plan}
 
-{\mbox{\autoref{figure:compile_natural_language}}} shows the initial
-expansion during the process of compiling a natural language plan.
+The causal reflective tracing features introduced in the SALS virtual
+machine allow simple but powerful forms of organizational structure in
+the implementation of complex reasoning processes.  As an example, the
+process that compiles natural language plans is the part of the SALS
+AI that is the most complex and that benefits the most from the causal
+reflective tracing features of the virtual machine.  Natural language
+plans are compiled in each planning layer, including the deliberative,
+reflective, and super-reflective planning layers.  The main overview
+and structure of the natural language plan interpretation process is
+described in {\mbox{\autoref{chapter:learning_from_being_told}}}.  The
+low-level causal reflective tracing features of the SALS virtual
+machine are critical to the organization of this plan interpretation
+process.  {\mbox{\autoref{figure:compile_natural_language}}} shows a
+procedural trace of a partially imagined plan execution during the
+compiling phase of natural language interpretation.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/compile_natural_language}
@@ -827,3 +842,101 @@ expansion during the process of compiling a natural language plan.
   interpretation.}
 \label{figure:compile_natural_language}
 \end{figure}
+Procedural traces such as this one are easy to create because of the
+causal context that is provided by default in the SALS virtual
+machine.  The causal context for a natural language plan that is being
+interpretted is as follows:
+\begin{itemize}
+\item {\tt{execution\_mode}}: Compiled plans can either be
+  interpretted in one of two modes: {\tt{imagine}} or {\tt{execute}}.
+  When a plan is executed in the {\tt{imagine}} mode, the plan uses
+  learned hypothetical models of actions in order to predict their
+  effects in a counterfactual event knowledge base within the planning
+  layer.  A plan is generally interpretted in the {\tt{imagine}} mode
+  before it is interpretted in the {\tt{execute}} mode.  The
+  reflective trace that is produced from interpretting a plan in the
+  {\tt{imagine}} mode is used for a second compile stage that produces
+  an executable plan that contains neither natural language nor other
+  forms of ambiguity.  Sensory functions that check for the existence
+  of partial states access the counterfactual knowledge base when a
+  plan is interpreted in the {\tt{imagine}} mode.  When a plan is
+  interpreted in the {\tt{execute}} mode, actions are actually
+  executed by activating and suppressing resources in the layer below.
+  Also, a plan interpreted in the {\tt{execute}} mode directly
+  accesses the layer below when checking whether or not partial states
+  exist for sensory functions.
+\item {\tt{top\_plan}}: The initial top-level plan that has caused the
+  rest of the procedural trace structure to exist.  A plan
+  interpretation process usually begins with a natural language
+  phrase, such as ``{\tt{stack a cube on a pyramid}}.''  Analogous
+  plans are then found that might provide interpretations of this
+  initial phrase.  These newly created analogous plans are each
+  interpretted as top-level plans to see if the result of their
+  imagined interpretations are complete and successful.
+\item {\tt{imagine\_time}}: Only used when the {\tt{execution\_mode}}
+  is set to {\tt{imagine}}, the {\tt{imagine\_time}} causal context
+  slot stores the current hypothetical time that an imagined action
+  would occur during the current imagined plan interpretation process.
+  This causal context is used for the addition of partial state
+  existence events to the counterfactual event knowledge base of the
+  planning layer.  Also, this imagined time is used when imagined
+  sensory functions access the counterfactual event knowledge base,
+  which stores all events in an interval tree for efficient access.
+\item {\tt{check\_exists\_partial\_state\_set}}: A set of partial
+  states that have been checked for by sensory functions within the
+  currently interpreted plan.  This set is used as an auxiliary set of
+  hypotheses about the effects of plan execution.  This set is useful
+  when the SALS AI has very little experience executing a specific
+  type of plan or set of actions.  For example, if a plan assures a
+  partial state exists for ``{\tt{a gripper that is me to be holding a
+      cube}},'' then although the SALS AI has no experience executing
+  this plan, it can hypothesize that this might be an effect of the
+  plan, given this set from the causal context of the plan
+  interpretation.
+\item {\tt{current\_plan\_execution\_set}}: When the
+  {\tt{execution\_mode}} is set to {\tt{imagine}}, all possible
+  conditional branches of a plan are interpreted and their effects are
+  imagined with distinct causal contextual scopes.  The
+  {\tt{current\_plan\_execution\_set}} is used to keep track of which
+  plans are currently being interpreted on the plan stack.  This
+  allows for stack-based recursive loops to be compiled and their
+  effects completely imagined, while avoiding the potential infinite
+  loops that may result from the actual execution of these plans.
+\item {\tt{imagine\_event\_tree}}: The current set of events that have
+  been imagined within this causal scope.  This is necessary for
+  scoping the results returned from the counterfactual event knowledge
+  base required for sensory functions to check whether or not partial
+  states may hypothetically exist.
+\item {\tt{resource\_activation\_set}}: The current set of resource
+  activations that have occurred within this causal scope.
+\end{itemize}
+The ability to quickly add various new forms of causal context that
+are available at any point in a compiled plan greatly simplifies that
+task of maintaining intricate procedural traces of the most complex
+aspects of the SALS AI, the multiple-staged process of compiling
+natural language plans, including processes that imagine the effects
+of various interpretations during the second compile stage.
+
+\section{Summary}
+
+The SALS virtual machine and low-level programming language are the
+foundation upon which the SALS cognitive architecture has been
+constructed.  I have described the details of the concurrent hardware
+abstractions, including multiple core and hyperthreaded CPUs as well
+as distributed memory pointers.  The low-level basics of causal
+reflective tracing have been discussed, along with how a simple
+rule-learning algorithm may be applied to a hypothetical prediction,
+and how new hypothetical support for knowledge can be regained when
+previous supports have been lost.  Basic programming examples have
+been given for implementing basic causal reflective tracing as well as
+this simple rule-learning example.  Finally, I have discussed how the
+most complex processes in the SALS AI are organized by the scoping of
+causal contexts in the multiple-staged compile process that is used
+for compiling natural language plans through imagining their possible
+conditional effects.  In the next chapter, I will describe related
+research to the four contributions that I have described in the
+previous four chapters.  In {\mbox{\autoref{chapter:evaluation}}}, I
+will present multiple evaluations that defend the point that the
+time-complexity of the SALS AI only increases linearly as more
+reflective layers are added to the architecture.
+

@@ -425,7 +425,8 @@
 [defunk compile_rct_papers [context]
   [shelter [mkdir [get context root_dir]]]
   [shelter [mkdir [string-concat [get context root_dir] 'papers/']]]
-  [let [[paper_names `['morgan2005-experts_think_together_to_solve_hard_problems.pdf'
+  [let [[paper_names `['morgan2013-substrate_for_accountable_layered_systems.pdf'
+		       'morgan2005-experts_think_together_to_solve_hard_problems.pdf'
 		       'morgan2009-funk2__a_distributed_processing_language_for_reflective_tracing_of_a_large_critic_selector_cognitive_architecture.pdf'
 		       'morgan2009-funk2__a_frame_based_programming_language_with_causally_reflective_capabilities.pdf'
 		       'morgan2010-a_computational_theory_of_the_communication_of_problem_solving_knowledge_between_parents_and_children.pdf'

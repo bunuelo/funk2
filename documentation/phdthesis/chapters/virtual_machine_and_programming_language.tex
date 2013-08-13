@@ -46,36 +46,35 @@ procedural abstraction barriers of the SALS virtual machine.
 The SALS virtual machine is designed to take advantage of the next
 generation of multithreaded and multicore CPUs, so that new reflective
 algorithms will more easily be designed to exhibit ``strong'' scaling
-properties \cite[]{sodan:2010}.  In order to allow the development of
-these new types of algorithms, the SALS virtual machine includes an
-explicit representation, called a {\emph{virtual processor}} object,
-that represents each hyperthread in each core of each CPU in the
-target hardware platform.  Each of the SALS virtual processors is used
-in order to organize the scheduling of SALS {\emph{fiber}} objects,
-which are the bytecode threads that execute in the SALS virtual
-machine.  In this way, each SALS fiber can be assigned to a specific
-hyperthread in the target hardware platform.  In order to prevent
-local cache misses for on-chip caches, the SALS virtual machine has a
-separate memory pool allocated for each of the SALS virtual
-processors.  So, for CPUs that has 4 cores and 2 hyperthreads per
-core, 8 memory pools are allocated when the SALS virtual machine is
-created.  Also, a major bottleneck in systems with large numbers of
-processors and cores are mutual exclusion or {\emph{mutex}} locks that
-protect shared resources.  The SALS virtual machine avoids all mutexes
-in the memory layer by using these separate dedicated memory pools for
-each hyperthread in each CPU core for memory allocation and concurrent
-garbage collection.  Mutexes are provided in the SALS architecture but
-low-level memory allocation and collection can operate at full-speed
-without any mutex locks for low-level memory operations.
+properties \cite[]{sodan:2010}.  To allow the development of these new
+types of algorithms, the SALS virtual machine includes an explicit
+representation, called a {\emph{virtual processor}} object, that
+represents each hyperthread in each core of each CPU in the target
+hardware platform.  Each of the SALS virtual processors is used in
+order to organize the scheduling of SALS {\emph{fiber}} objects, which
+are the bytecode threads that execute in the SALS virtual machine.  In
+this way, each SALS fiber can be assigned to a specific hyperthread in
+the target hardware platform.  To prevent local cache misses for
+on-chip caches, the SALS virtual machine has a separate memory pool
+allocated for each of the SALS virtual processors.  So, for CPUs that
+has 4 cores and 2 hyperthreads per core, 8 memory pools are allocated
+when the SALS virtual machine is created.  Also, a major bottleneck in
+systems with large numbers of processors and cores are mutual
+exclusion or {\emph{mutex}} locks that protect shared resources.  The
+SALS virtual machine avoids all mutexes in the memory layer by using
+these separate dedicated memory pools for each hyperthread in each CPU
+core for memory allocation and concurrent garbage collection.  Mutexes
+are provided in the SALS architecture but low-level memory allocation
+and collection can operate at full-speed without any mutex locks for
+low-level memory operations.
 {\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
 example of how SALS allocates virtual processors for a hardware
 configuration with two processors, each having four cores and each
 core having two hyperthreads.  Each hyperthread is organized into a
-binary tree structure that is used in order to calculate distances
-between hardware hyperthreads.  This binary tree distance metric is
-used to dynamically distribute fiber loads across hyperthreaded CPU
-cores in order to attempt to utilize as much on-chip CPU cache as
-possible.
+binary tree structure that is used to calculate distances between
+hardware hyperthreads.  This binary tree distance metric is used to
+dynamically distribute fiber loads across hyperthreaded CPU cores in
+order to attempt to utilize as much on-chip CPU cache as possible.
 \begin{figure}
 \centering
 \includegraphics[width=12cm]{gfx/cpu_core_hyperthread_distances}
@@ -85,8 +84,8 @@ possible.
   (VP) for a hardware configuration with two multithreaded multicore
   processors, each having four cores and each core having two
   hyperthreads (HT).  Each hyperthread is organized into a binary tree
-  structure that is used in order to calculate distances between
-  hardware hyperthreads.  This binary tree distance metric is used to
+  structure that is used to calculate distances between hardware
+  hyperthreads.  This binary tree distance metric is used to
   dynamically distribute fiber loads across hyperthreaded CPU cores in
   order to attempt to utilize as much on-chip CPU cache as possible.}
 \label{figure:cpu_core_hyperthread_distances}
@@ -145,10 +144,10 @@ programs that consist of many thousands of lines of code.  For
 example, the examples presented in this dissertation depend on loading
 154 packages, which are composed of over 30,000 lines of code that are
 written in the SALS low-level Lisp-like programming language.  The
-SALS programming language includes a package manager in order to
-organize dependencies within this codebase.  In addition to a
-low-level Lisp-like codebase of packages, the SALS virtual machine has
-the ability to load packages that contain optimized routines that are
+SALS programming language includes a package manager to organize
+dependencies within this codebase.  In addition to a low-level
+Lisp-like codebase of packages, the SALS virtual machine has the
+ability to load packages that contain optimized routines that are
 composed of compiled machine code.  Machine code extensions to the
 SALS virtual machine are written in the C programming language.  The C
 codebase that compiles to this machine code totals over 150,000 lines
@@ -231,15 +230,15 @@ virtual machine is an approximation.
 While causal reflective tracing focuses the procedural event tracing
 to memory interactions of specific groups of fibers, this still
 results in millions of events to consider every real-time second of
-execution.  In order to further focus on specific objects within the
-memory system, specific pieces of memory can be created called
+execution.  To further focus on specific objects within the memory
+system, specific pieces of memory can be created called
 {\emph{semantic memory}}.  Semantic memory objects are created,
 mutated, and accessed in roughly the same way as all of the
 frame-based objects in the memory system with a few extra reflective
 tracing features.  For example, semantic objects provide event streams
 that can be subscribed to by a number of different parallel listeners
 in different fibers.  Also semantic object pointers are bidirectional
-in order to ease traversal by reflective pattern matching algorithms.
+to ease traversal by reflective pattern matching algorithms.
 
 Because it becomes awkward to subscribe to each and every frame-based
 object that may be interesting to the reflective focus, semantic
@@ -255,11 +254,11 @@ semantic frames to and from the knowledge base.
 While knowledge base reconstructions are extremely fast to reference,
 $O(1)$, they require a duplication of the memory requirements of the
 focus knowledge base for every different point in time that is
-required.  In order to allow efficient access of the state of
-knowledge bases at arbitrary points in the past, {\emph{semantic event
-    knowledge bases}} are another type of representation that is
-reflectively and asynchronously maintained in order to not slow down
-the primary procedure under reflective focus.
+required.  To allow efficient access of the state of knowledge bases
+at arbitrary points in the past, {\emph{semantic event knowledge
+    bases}} are another type of representation that is reflectively
+and asynchronously maintained to not slow down the primary procedure
+under reflective focus.
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}
 describes how the SALS asynchronous learning algorithm uses the event
 knowledge base object to calculate partial state transframes.  I will
@@ -280,9 +279,9 @@ time, where $n$ is the number of events stored in the semantic event
 knowledge base.  Although the time complexity is not as efficient as
 the constant, $O(1)$, access time of the reflectively reconstructed
 semantic knowledge base, the semantic event interval tree knowledge
-base only requires $O(n)$ memory complexity in order to allow access
-to the structure of the knowledge base at any point in the past, where
-$n$ is the number of semantic events.
+base only requires $O(n)$ memory complexity to allow access to the
+structure of the knowledge base at any point in the past, where $n$ is
+the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
 create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
 in the SALS low-level Lisp-like interactive programming language.
@@ -318,9 +317,9 @@ streams of a semantic frame-based object, no reflective events are
 created, allowing the use of the object to run at full speed.  When a
 listener subscribes to the procedural use of a specific semantic
 memory object, events are added to ordered streams for the listening
-subscribers.  In order to conserve memory resources, when multiple
-parallel listeners are subscribed to a given event stream, only those
-events that have not already been seen by all of the subscribers are
+subscribers.  To conserve memory resources, when multiple parallel
+listeners are subscribed to a given event stream, only those events
+that have not already been seen by all of the subscribers are
 remembered.  Once all subscribers have processed an event, all events
 before this event are forgotten.  This type of memory conserving event
 stream is referred to as a {\emph{forgetful event stream}}.  In this
@@ -452,11 +451,11 @@ machine, they provide a means of tracing any event that modifies any
 part of the SALS virtual machine.
 {\mbox{\autoref{figure:cause_group_statistics}}} shows an example of
 causal reflective tracing that takes advantage of cause group objects
-in order to gather run-time statistics of a fiber execution.
+to gather run-time statistics of a fiber execution.
 {\mbox{\autoref{figure:hierarchical_cause_group_statistics}}} shows
 another example of using a hierarchy of multiple cause group objects
-in order to causally scope the tracing of $30$ parallel fibers that
-are hierarchically organized into $3$ cause groups that contain $10$
+to causally scope the tracing of $30$ parallel fibers that are
+hierarchically organized into $3$ cause groups that contain $10$
 fibers each.
 \begin{figure}[h]
 \centering

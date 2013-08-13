@@ -1,5 +1,6 @@
 %*****************************************
-\chapter{Future}\label{chapter:future}
+\chapter{Future}
+\label{chapter:future}
 %*****************************************
 
 The primary focus of this thesis is a tractable implementation of a
@@ -47,9 +48,9 @@ areas of research that would improve every layer in the SALS AI:
 \end{packed_enumerate}
 In addition to making improvements to the existent structure of the
 SALS AI, there are a number of aspects missing from the SALS AI that
-could be added to the architecture in order to better model human
-commonsense thinking.  A few selected ideas for new additions to the
-SALS AI are as follows:
+could be added to the architecture to better model human commonsense
+thinking.  A few selected ideas for new additions to the SALS AI are
+as follows:
 \begin{packed_enumerate}
 \item{Self-reflective and self-consciously reflective thinking, the
   top two layers of the Emotion Machine theory of human commonsense
@@ -76,14 +77,13 @@ current implementation are the ``{\tt{relationship}}'' and
 ``{\tt{property}}'' types that have been described in
 {\mbox{\autoref{chapter:learning_from_being_told}}}.  Implementing
 more general types of partial state abstraction in the SALS AI must be
-done carefully in order to keep the architecture tractable at higher
-layers.  One goal for implementing perceptual partial state
-abstractions of greater complexity would be to allow for implementing
-critics from EM-ONE \cite[]{singh:2005b}.  Putting efficiency aside
-for the moment, implementing new types of partial state abstractions
-for the SALS AI is a straightforward task.  There are two places in
-each planning layer where partial state abstraction processes are
-executed:
+done carefully to keep the architecture tractable at higher layers.
+One goal for implementing perceptual partial state abstractions of
+greater complexity would be to allow for implementing critics from
+EM-ONE \cite[]{singh:2005b}.  Putting efficiency aside for the moment,
+implementing new types of partial state abstractions for the SALS AI
+is a straightforward task.  There are two places in each planning
+layer where partial state abstraction processes are executed:
 \begin{packed_enumerate}
 \item{\emph{Asynchronous Procedural Event Stream Abstraction}: The
   asynchronous learning algorithm that exists in each reflective layer
@@ -100,28 +100,28 @@ the layer below, the planning layer integrates this change into a
 reconstructed copy of that knowledge base.  The reconstructed
 knowledge base represents the state of the knowledge base that the
 planning layer is trying to control at a point in the past.  The
-asynchronous abstraction process works on this reconstruction in order
-to determine whether or not the change has either created a new
-instance of a type of partial state or has removed a previously
-existing instance.  The asynchronous procedural event stream
-abstraction of partial state types works in order to learn causal
-hypotheses for the effects of resource executions in the layer below.
-When a plan is currently executing in the planning layer, it is
-sometimes useful to determine whether or not a specific partial state
-currently exists in the knowledge base that the planning layer is
-trying to control.  The asynchronous partial state abstraction cannot
-be used for this type of real-time query because the asynchronous
-abstraction algorithm works on an historical copy of the knowledge in
-question.  Therefore, the direct real-time read abstraction of a
-specific partial state from the current state of the knowledge base is
-sometimes necessary for this purpose.
+asynchronous abstraction process works on this reconstruction to
+determine whether or not the change has either created a new instance
+of a type of partial state or has removed a previously existing
+instance.  The asynchronous procedural event stream abstraction of
+partial state types works to learn causal hypotheses for the effects
+of resource executions in the layer below.  When a plan is currently
+executing in the planning layer, it is sometimes useful to determine
+whether or not a specific partial state currently exists in the
+knowledge base that the planning layer is trying to control.  The
+asynchronous partial state abstraction cannot be used for this type of
+real-time query because the asynchronous abstraction algorithm works
+on an historical copy of the knowledge in question.  Therefore, the
+direct real-time read abstraction of a specific partial state from the
+current state of the knowledge base is sometimes necessary for this
+purpose.
 
-In order to demonstrate the difference in time-complexity between
-these two methods of abstracting types of partial states, let us
-consider that a partial state is a specific subgraph that is to be
-symbolically reified both asynchronously as well as by direct read
-access from a graph representation of the frame-based knowledge base
-that the planning layer is trying to control.
+To demonstrate the difference in time-complexity between these two
+methods of abstracting types of partial states, let us consider that a
+partial state is a specific subgraph that is to be symbolically
+reified both asynchronously as well as by direct read access from a
+graph representation of the frame-based knowledge base that the
+planning layer is trying to control.
 {\mbox{\autoref{figure:general_partial_state_arch}}} shows an example
 of a more complex type of partial state than the SALS AI can currently
 abstract, which represents an ``arch,'' similar to the arch category
@@ -221,8 +221,8 @@ computational process that can have multiple ambiguous values.  The
 propagator network also has the ability to track the provenance of the
 derivations for the values stored in these cells.  The advantage of
 TMSs and propagator networks is the ability to perform dependency
-directed backtracking in order to find new justifications for beliefs
-when contradictions in knowledge are encountered.  If the knowledge
+directed backtracking to find new justifications for beliefs when
+contradictions in knowledge are encountered.  If the knowledge
 derivations in the SALS AI were built based upon a propagator network,
 the contradictions between hypothetical assumptions and new
 experiential input could be propagated efficiently to the effects that
@@ -247,11 +247,11 @@ sets of knowledge sources in different circumstances.
 %% hypothesis space for each reflective layer.  Learning of hypothesis
 %% priors that predict which hypothesis spaces may contain the correct
 %% hypothesis for specific types of resource executions and problem
-%% domains would be a useful addition to the SALS AI.  In Bayesian terms,
-%% a general approach could amount to learning hierarchical hypotheses
-%% over structured priors \cite[]{mansinghka:2012}, adapted in order to
-%% learn a distinct hierarchical model of priors for each reflective
-%% planning layer domain in the SALS AI.
+%% domains would be a useful addition to the SALS AI.  In Bayesian
+%% terms, a general approach could amount to learning hierarchical
+%% hypotheses over structured priors \cite[]{mansinghka:2012}, adapted
+%% to learn a distinct hierarchical model of priors for each
+%% reflective planning layer domain in the SALS AI.
 
 \section{General Natural Language Grammar}
 
@@ -289,14 +289,13 @@ immediately applicable to the SALS AI:
   perceptual knowledge bases of the built-in reactive layer and
   propagates upward through the planning layers until the natural
   language phrase is completely understood.}
-\item{\emph{Incremental Natural Language Understanding}: In order to
-  increase the realism of the SALS natural language interpreter, the
-  ability of the interpreter to receive and process a stream of
-  phonetic or character-level symbols in temporal order, rather than
-  in template form, could allow the SALS AI to begin imagining
-  multiple possible interpretations of a statement or phrase before
-  that statement or phrase has been completely communicated to the
-  SALS AI.}
+\item{\emph{Incremental Natural Language Understanding}: To increase
+  the realism of the SALS natural language interpreter, the ability of
+  the interpreter to receive and process a stream of phonetic or
+  character-level symbols in temporal order, rather than in template
+  form, could allow the SALS AI to begin imagining multiple possible
+  interpretations of a statement or phrase before that statement or
+  phrase has been completely communicated to the SALS AI.}
 \item{\emph{Natural Language Analogies Between Layers}: The inherent
   ambiguity of natural language plans allows analogies to be made
   between plans within any given planning layer.  An exciting avenue
@@ -328,6 +327,7 @@ natural language in the SALS AI.
 %% \section{Distributed Hardware Support}
 
 \section{Self-Reflective Thinking}
+\label{section:self_reflective_thinking}
 
 The {\emph{self-reflective}} and {\emph{self-conscious}} layers are
 the top two layers of the Emotion Machine theory of human commonsense
@@ -406,6 +406,7 @@ object types may lead to an object model that could naturally be
 extended for learning self-models and other-models.
 
 \section{Self-Conscious Thinking}
+\label{section:self_conscious_thinking}
 
 The {\emph{self-conscious}} layer is the top layer of the Emotion
 Machine theory of human commonsense thinking.  The self-conscious
@@ -470,8 +471,8 @@ actions that accomplish the goals, while a story understanding system
 is given a sequence of actions that are used to generate a set of
 goals that explain those actions.  Wilensky emphasizes that both story
 understanding and planning require representations of meta-goals and
-meta-plans in order to reason about common types of human thinking.
-Plan recognition could occur analogously in each layer of the SALS AI.
+meta-plans to reason about common types of human thinking.  Plan
+recognition could occur analogously in each layer of the SALS AI.
 Resource executions are the actions of each planning layer.  The plan
 recognition problem for the deliberative layer could be considered to
 be a problem that takes a collection of resource execution events and
@@ -605,43 +606,44 @@ debugged by the SALS AI.
 
 %% \section{A Physically Grounded Social Problem Domain}
 
-%% The IsisWorld simulation \cite[]{smith:2010} is a rigid-body physics
-%% simulation that is capable of handling semantic commonsense objects
-%% and actions involved in kitchen cooking tasks.  In order to help us
+%% The IsisWorld simulation \cite[]{smith:2010} is a rigid-body
+%% physics simulation that is capable of handling semantic commonsense
+%% objects and actions involved in kitchen cooking tasks.  To help us
 %% define a grounded problem domain, I have chosen to focus on a
-%% rigid-body physical simulation of parents and children in the context
-%% of basic cooking tasks in a kitchen environment. I chose parents and
-%% children because I feel that major parts of social learning develops
-%% during early stages involving these familiar social relationships. I
-%% chose the domain of basic kitchen cooking tasks because this is a
-%% non-trivial social commonsense reasoning domain that exists in some
-%% form in all human cultures.
+%% rigid-body physical simulation of parents and children in the
+%% context of basic cooking tasks in a kitchen environment. I chose
+%% parents and children because I feel that major parts of social
+%% learning develops during early stages involving these familiar
+%% social relationships. I chose the domain of basic kitchen cooking
+%% tasks because this is a non-trivial social commonsense reasoning
+%% domain that exists in some form in all human cultures.
 
 %% \section{The Self/Other Distinction and Self-Reflective Thinking}
 
-%% I have described \cite[]{morgan:2011} a theory of how self-reflective
-%% states are communicated or inferred in other agents by correlating a
-%% physical perceptual stream with a reflective perceptual stream,
-%% allowing the agent to use these correlations to predict the reflective
-%% states of other agents based purely on their physical actions. For
-%% example, if one agent performs a series of physical actions in order
-%% to accomplish a goal, such as preparing a slice of buttered toast
-%% using a knife and a loaf of bread and some butter in a kitchen, then
-%% these actions have been correlated with this agent's reflective
-%% states, including the current goals that the agent is pursuing. If
-%% this agent then sees the physical world changing, and he knows that he
-%% is not causing those changes, then he can attempt to infer the state
-%% of mind of another agent. This type of inference process, based on the
-%% previous correlations of physical and reflective perceptual streams,
-%% is what could be referred to as a self-reflective thought process. A
-%% self-reflective thought process introduces the social distinction
-%% between Self and Other reflective state knowledge that is inferred by
-%% using the previously learned correlations between physical perceptions
-%% and reflective perceptions.  This is a type of self-reflective
+%% I have described \cite[]{morgan:2011} a theory of how
+%% self-reflective states are communicated or inferred in other agents
+%% by correlating a physical perceptual stream with a reflective
+%% perceptual stream, allowing the agent to use these correlations to
+%% predict the reflective states of other agents based purely on their
+%% physical actions. For example, if one agent performs a series of
+%% physical actions to accomplish a goal, such as preparing a slice of
+%% buttered toast using a knife and a loaf of bread and some butter in
+%% a kitchen, then these actions have been correlated with this
+%% agent's reflective states, including the current goals that the
+%% agent is pursuing. If this agent then sees the physical world
+%% changing, and he knows that he is not causing those changes, then
+%% he can attempt to infer the state of mind of another agent. This
+%% type of inference process, based on the previous correlations of
+%% physical and reflective perceptual streams, is what could be
+%% referred to as a self-reflective thought process. A self-reflective
+%% thought process introduces the social distinction between Self and
+%% Other reflective state knowledge that is inferred by using the
+%% previously learned correlations between physical perceptions and
+%% reflective perceptions.  This is a type of self-reflective
 %% knowledge that is knowledge that allows thinking about what someone
-%% else is thinking about.  Sometimes this self-reflective knowledge is
-%% referred to as "theory of mind" knowledge in the cognitive science
-%% literature.
+%% else is thinking about.  Sometimes this self-reflective knowledge
+%% is referred to as "theory of mind" knowledge in the cognitive
+%% science literature.
 
 %% With self-reflective knowlege, an agent can choose to act
 %% altruistically by helping another agent accomplish their goals or
@@ -660,27 +662,27 @@ debugged by the SALS AI.
 
 %% \section{Guilt, Pride, and Self-Conscious Thinking}
 
-%% It is interesting to consider how children learn from parents as well
-%% as how parents guide a child's cooperative behavior, but to study this
-%% type of thinking, the AI must be extended in order to allow for
-%% modeling what one agent thinks about what another agent thinks about
-%% her.  This form of double reflective recursion is self-conscious
-%% knowledge and the problems that are represented in this type of
-%% knowledge are handled by what is called self-conscious thought
-%% processes. For example, a little boy may be cooking something in the
-%% kitchen and he may carelessly work against the goals of his sister;
-%% this situation may be recognized by an onlooking parent, and the
-%% parent may inform the boy of a self-reflective mistake he has made:
-%% "Ralph, your sister was going to use some of that butter that you just
-%% finished." The little boy, Ralph in this case, thinks that his mother
-%% thinks that he made a self-reflective mistake. I hypothesize that
-%% modeling this form of double reflective recursion in conjunction with
-%% respectful social relationships may be useful for understanding
-%% emotions such as Guilt and Pride.  I have described
-%% \cite[]{morgan:2010} a theory of children could learn cooperative
-%% behavior in the context of a supervisory parent that makes corrections
-%% to different layers of knowledge within the child's mind, up to
-%% self-reflective knowledge.
+%% It is interesting to consider how children learn from parents as
+%% well as how parents guide a child's cooperative behavior, but to
+%% study this type of thinking, the AI must be extended to allow for
+%% modeling what one agent thinks about what another agent thinks
+%% about her.  This form of double reflective recursion is
+%% self-conscious knowledge and the problems that are represented in
+%% this type of knowledge are handled by what is called self-conscious
+%% thought processes. For example, a little boy may be cooking
+%% something in the kitchen and he may carelessly work against the
+%% goals of his sister; this situation may be recognized by an
+%% onlooking parent, and the parent may inform the boy of a
+%% self-reflective mistake he has made: "Ralph, your sister was going
+%% to use some of that butter that you just finished." The little boy,
+%% Ralph in this case, thinks that his mother thinks that he made a
+%% self-reflective mistake. I hypothesize that modeling this form of
+%% double reflective recursion in conjunction with respectful social
+%% relationships may be useful for understanding emotions such as
+%% Guilt and Pride.  I have described \cite[]{morgan:2010} a theory of
+%% children could learn cooperative behavior in the context of a
+%% supervisory parent that makes corrections to different layers of
+%% knowledge within the child's mind, up to self-reflective knowledge.
 
 %% \section{Imprimers}
 

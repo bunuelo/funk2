@@ -279,9 +279,9 @@ by the third:
       deliberative planner to be focusing on a plan that has failed to
       achieve the goal for a cube to be on a pyramid}}.''}
 \end{packed_enumerate}
-In order to continue to reference physical knowledge in higher layers,
-the natural language phrases become longer, more complex, and take
-more time to interpret and compile to their reified symbolic forms.
+To continue to reference physical knowledge in higher layers, the
+natural language phrases become longer, more complex, and take more
+time to interpret and compile to their reified symbolic forms.
 {\mbox{\autoref{table:time_complexity_of_recursive_reification}}}
 shows a comparison of the time-complexities for interpreting each of
 these three natural language phrases.
@@ -745,15 +745,15 @@ processors and multicore processors with hardware hyperthreads.
 {\mbox{\autoref{chapter:virtual_machine_and_programming_language}}}
 discusses the details of the parallel and concurrent processing
 features of the SALS virtual machine and low-level Lisp-like
-programming language.  To briefly review, in order to reduce cache
-misses, a separate memory pool is allocated for each separate hardware
+programming language.  To briefly review, to reduce cache misses, a
+separate memory pool is allocated for each separate hardware
 hyperthread in the target hardware platform.  Each of these memory
 pools is allocated a virtual processor object in the SALS virtual
 machine.  Each concurrent virtual processor has a separate scheduler
 that simulates parallelism for a number of parallel processes, called
-{\emph{fibers}} in order to distinguish them from the low-level
-operating system thread objects.  The SALS garbage collector is a
-concurrent implementation of a tricolor garbage collection algorithm.
+{\emph{fibers}} to distinguish them from the low-level operating
+system thread objects.  The SALS garbage collector is a concurrent
+implementation of a tricolor garbage collection algorithm.
 {\mbox{\autoref{figure:parallel_processing_speedup}}} compares the
 speedup gained by executing multiple processes in parallel on the SALS
 virtual machine to the optimal speedup that could be expected.  These
@@ -801,15 +801,14 @@ grid style={dashed, gray!30},
   processor with 4 cores, each with 2 hardware hyperthreads.  In these
   tests, 8 virtual processors and 8 memory pools were allocated, one
   for each hyperthread in the target hardware platform.  Each test was
-  performed 100 times in order to average out variations caused by
-  intermittent garbage collections.  The optimal speedup is calculated
-  by a short C program that uses POSIX thread primitives, optimized C
-  arithmetic, and no memory allocation or garbage collection.  The
-  SALS AI has a small overhead for each additional parallel process,
-  which is seen by the downward slope of the solid plot.  The SALS
-  virtual machine performs most efficiently on this hardware with 7
-  parallel fibers executing.  These tests were executed on a GNU/Linux
-  system.}
+  performed 100 times to average out variations caused by intermittent
+  garbage collections.  The optimal speedup is calculated by a short C
+  program that uses POSIX thread primitives, optimized C arithmetic,
+  and no memory allocation or garbage collection.  The SALS AI has a
+  small overhead for each additional parallel process, which is seen
+  by the downward slope of the solid plot.  The SALS virtual machine
+  performs most efficiently on this hardware with 7 parallel fibers
+  executing.  These tests were executed on a GNU/Linux system.}
 \label{figure:parallel_processing_speedup}
 \end{figure}
 \begin{figure}
@@ -852,8 +851,8 @@ process is used as the unity standard for the speedup comparisons.
 These tests were run on an Intel Core i7 processor with 4 cores, each
 with 2 hardware hyperthreads.  In these tests, 8 virtual processors
 and 8 memory pools were allocated, one for each hyperthread in the
-target hardware platform.  Each test was performed 100 times in order
-to average out variations caused by intermittent garbage collections.
+target hardware platform.  Each test was performed 100 times to
+average out variations caused by intermittent garbage collections.
 The optimal speedup is calculated by a short C program that uses POSIX
 thread primitives, optimized C arithmetic, and no memory allocation or
 garbage collection.  The SALS AI has a small overhead for each

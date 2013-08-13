@@ -148,7 +148,9 @@ phdthesis.pdf: \
   gfx/reflective_and_deliberative_layers.pdf \
   gfx/physical_knowledge_base_graph.pdf \
   gfx/deliberative_plan_knowledge_base_graph.pdf \
+  gfx/deliberative_plan_knowledge_base_graph-handdrawn.pdf \
   gfx/reflective_plan_knowledge_base_graph.pdf \
+  gfx/reflective_plan_knowledge_base_graph-handdrawn.pdf \
   gfx/learning_from_being_told_in_layers.pdf \
   gfx/relationship_partial_state_graph.pdf \
   gfx/property_partial_state_graph.pdf \

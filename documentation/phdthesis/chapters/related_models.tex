@@ -76,39 +76,48 @@ the EM-ONE architecture is based on a Prolog substrate, it has the
 ability to refer to arbitrary partial states of a problem domain,
 while the SALS AI is currently limited to the two simple
 ``{\tt{relationship}}'' and ``{\tt{property}}'' types of partial
-states.  {\mbox{Chapter~\ref{chapter:future}}} describes a plan for
-defining general subgraphs as partial states in the SALS AI.  The
-EM-ONE architecture can easily define critics that recognize
-arbitrarily complex declarative patterns in the problem domain.  The
-disadvantage of relying on a declarative substrate, such as Prolog, is
-that the procedural aspects of this substrate are not reflectively
-traced and cannot be optimized by the EM-ONE architecture.  While the
-SALS architecture must have explicit plans for recognizing more
-complex partial states, the fact that these procedures are plans in
-the SALS AI means that different procedures for recognizing these
-partial states in the problem domain can be reflected upon, modified,
-compared and optimized by the SALS AI.  The addition of critics as
-well as self-reflective and self-conscious layers of thinking is
-described as a future extension for the SALS architecture in
+states.  This limitation is not fundamental to the SALS approach.  The
+addition of more specific types of partial states requires
+modification of the existing partial state reification process.
+{\mbox{Chapter~\ref{chapter:future}}} describes a plan for defining a
+process that would allow general types of subgraphs as partial states
+that could be reified automatically by the SALS AI.  The EM-ONE
+architecture can easily define critics that recognize arbitrarily
+complex declarative patterns in the problem domain.  The disadvantage
+of relying on a declarative substrate, such as Prolog, is that the
+procedural aspects of this substrate are not reflectively traced and
+cannot be optimized by the EM-ONE architecture.  While the SALS
+architecture must have explicit plans for recognizing more complex
+partial states, the fact that these procedures are plans in the SALS
+AI means that different procedures for recognizing these partial
+states in the problem domain can be reflected upon, modified, compared
+and optimized by the SALS AI.  The addition of critics as well as
+self-reflective and self-conscious layers of thinking is described as
+a future extension for the SALS architecture in
 {\mbox{\autoref{chapter:future}}}.
 
 \section{Computational Metacognition}
 
 The type of reflection implemented in this thesis is a form of
 {\emph{computational metacognition}}
-\cite[]{cox_and_raja:2008,cox:2010}: the ability to think about
-accomplishing thinking goals in addition to thinking about
-accomplishing physical goals.  Computational metacognition as
-described by Cox and Raja begins with a {\emph{ground level}}, which
-is the problem domain for the AI to control.  The computational
-metacognition ground level is analogous to the physical knowledge base
-and physical agency of the learned reactive layer in the SALS Emotion
-Machine cognitive architecture.  The {\emph{object level}} of
-computational metacognition is a control loop that receives inputs
-from the ground level, processes these, and sends commands back to the
-ground level.  The object level of computational metacognition is
-analogous to the deliberative planning layer in the SALS Emotion
-Machine cognitive architecture.  The {\emph{meta-level}} of
+\cite[]{cox_and_raja:2008,cox:2010}, which begins with a {\emph{ground
+    level}}, the problem domain for the AI to control.  A reasoning
+layer reasons about and solves problems in this ground level problem
+domain.  This problem solver is refered to as the {\emph{object
+    level}} reasoner.  In addition to the object level reasoner
+solving problems in the ground domain, a {\emph{meta-level}} reasoner
+solves problems in the object level reasoner.  This cascading of two
+levels of reasoners, where one reasoner reasons about a problem domain
+and another reasoner that reasons about the first object level
+reasoner is similar to the lower four layers of the Emotion Machine
+architecture that have been implemented in this thesis.  The bottom
+two reactive layers of the SALS AI can be roughly thought of as
+analogous to the ground level of computational metacognition.  The
+object level of computational metacognition is a control loop that
+receives inputs from the ground level, processes these, and sends
+commands back to the ground level.  The object level of computational
+metacognition is analogous to the deliberative planning layer in the
+SALS Emotion Machine cognitive architecture.  The meta-level of
 computational metacognition completes two cascaded control loops: the
 object level controlling the ground level and the meta-level
 controlling the object level.  The meta-level of computational
@@ -119,7 +128,7 @@ SALS Emotion Machine cognitive architecture.
 \hline
 Metacognition Meta Level   &${\approx}$ &Emotion Machine Reflective Layer \\
 Metacognition Object Level &${\approx}$ &Emotion Machine Deliberative Layer \\
-Metacognition Ground Level &${\approx}$ &Emotion Machine Learned Reactive Layer \\
+Metacognition Ground Level &${\approx}$ &Emotion Machine Reactive Layers \\
 \hline
 \end{tabular}
 \caption{The levels of computational metacognition mapped to the
@@ -144,7 +153,7 @@ goals and plans in PANDORA are analogous to the goals and plans in the
 SALS deliberative planning layer, while the meta-goals and meta-plans
 are analogous to the goals and plans in the SALS reflective planning
 layer.  Wilensky describes story understanding as a form of inverse
-planning or plan recognition.  In this sense, a planning system is
+planning or plan recognition \cite[]{kautz:1987,charniak:1993,kerkez:2003}.  In this sense, a planning system is
 given a set of goals that are used to generate a sequence of actions
 that accomplish the goals, while a story understanding system is given
 a sequence of actions that are used to generate a set of goals that
@@ -203,23 +212,24 @@ self-reflective knowledge, requiring the AI to have self-models, a
 future extension of the SALS AI.  The Genesis AI has a deliberative
 reasoning layer that uses analogies to English stories that the AI has
 been told in the past to infer causal connections between the ground
-level story elements.  The knowledge that causally connects the ground
-level of the Genesis AI is referred to as an {\emph{elaboration
-    graph}}, which I will refer to as the deliberative elaboration
-graph.  The deliberative elaboration graph in the Genesis AI is
-analogous to the deliberative plans and transframes in the SALS AI,
-which provide causal explanations for changes between physical partial
-states.  The construction of the deliberative elaboration graph in the
-Genesis AI is analogous to the deliberative interpretation and
-compiling of natural language plans in the SALS AI.  Above the
-deliberative reasoning layer in the Genesis AI is a reflective
-reasoning layer that has a separate collection of reflective English
-stories that it has been told in the past.  Reflective English stories
-in the Genesis AI are used to find analogical causal explanations that
-are combined to create a reflective elaboration graph that explains
-the deliberative elaboration graph.  Winston describes two of the
-primary motivating hypotheses that have guided the development of the
-Genesis AI:
+level story elements.
+
+The knowledge that causally connects the ground level of the Genesis
+AI is referred to as an {\emph{elaboration graph}}, which I will refer
+to as the deliberative elaboration graph.  The deliberative
+elaboration graph in the Genesis AI is analogous to the deliberative
+plans and transframes in the SALS AI, which provide causal
+explanations for changes between physical partial states.  The
+construction of the deliberative elaboration graph in the Genesis AI
+is analogous to the deliberative interpretation and compiling of
+natural language plans in the SALS AI.  Above the deliberative
+reasoning layer in the Genesis AI is a reflective reasoning layer that
+has a separate collection of reflective English stories that it has
+been told in the past.  Reflective English stories in the Genesis AI
+are used to find analogical causal explanations that are combined to
+create a reflective elaboration graph that explains the deliberative
+elaboration graph.  Winston describes two of the primary motivating
+hypotheses that have guided the development of the Genesis AI:
 \begin{packed_enumerate}
 \item{{\emph{The Strong Story Hypothesis}}: The mechanisms that enable
   humans to tell, understand, and recombine stories separate human
@@ -246,7 +256,7 @@ low-level sketch at any given point in time.  Ullman suggests the
 following primitive visual operations:
 \begin{packed_enumerate}
 \item{\emph{Shift of Processing Focus}: A process that controls where
-  a visual operating is applied.}
+  a visual operation is applied.}
 \item{\emph{Indexing}: Locations that are ``interesting'' in the base
   sketch, such as a blue patch in an otherwise completely red scene.}
 \item{\emph{Bounded Activation or Coloring}: The spreading of
@@ -322,7 +332,7 @@ solutions to problems become necessary \cite[]{simon:1957,simon:1982}.
 \cite{good:1971} describes a decision making problem that includes
 costs for acting as well as costs for decision making that he calls
 {\emph{type II rationality}}, a type of metacognition.
-\cite{zilberstein:2008} describes {\emph{optimal metareasoning}} as an
+\cite{zilberstein:2011} describes {\emph{optimal metareasoning}} as an
 approach to developing a formalism for evaluating the performance of a
 problem solver that is performing type II rationality.  Optimal
 metacognition does not imply that the object level problem solver is
@@ -330,7 +340,7 @@ optimal but instead that the meta-level problem solver is optimal.  In
 {\emph{bounded optimality}} the object level problem solver has
 certain trade-offs, such as solution quality versus time, that can be
 optimally manipulated by the meta-level problem solver
-\cite[]{russell:1991}.  \cite{zilberstein:2008} describes bounded
+\cite[]{russell:1991}.  \cite{zilberstein:2011} describes bounded
 optimality:
 \begin{quote}
 This approach marks a shift from optimization over actions to

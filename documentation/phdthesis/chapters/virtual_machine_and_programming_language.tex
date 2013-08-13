@@ -39,7 +39,12 @@ meta-information about a task, such as in what way a compiled
 procedure should be executed, which can be used for causally
 organizing the effects of groups of parallel tasks, controlling and
 monitoring the occurrence of any type of event through any of the
-procedural abstraction barriers of the SALS virtual machine.
+procedural abstraction barriers of the SALS virtual machine.  Every
+parallel process in the SALS virtual machine has a trace that we can
+compute from, that we can reason about.  The built-in processes for
+reasoning about reflective traces in the SALS virtual machine are
+critical to the asynchronous learning examples presented in the
+previous two chapters.
 
 \section{Virtual Machine}
 
@@ -56,16 +61,16 @@ are the bytecode threads that execute in the SALS virtual machine.  In
 this way, each SALS fiber can be assigned to a specific hyperthread in
 the target hardware platform.  To prevent local cache misses for
 on-chip caches, the SALS virtual machine has a separate memory pool
-allocated for each of the SALS virtual processors.  So, for CPUs that
-has 4 cores and 2 hyperthreads per core, 8 memory pools are allocated
-when the SALS virtual machine is created.  Also, a major bottleneck in
-systems with large numbers of processors and cores are mutual
-exclusion or {\emph{mutex}} locks that protect shared resources.  The
-SALS virtual machine avoids all mutexes in the memory layer by using
-these separate dedicated memory pools for each hyperthread in each CPU
-core for memory allocation and concurrent garbage collection.  Mutexes
-are provided in the SALS architecture but low-level memory allocation
-and collection can operate at full-speed without any mutex locks for
+allocated for each of the SALS virtual processors.  CPUs that have 4
+cores and 2 hyperthreads per core, 8 memory pools are allocated when
+the SALS virtual machine is created.  A major bottleneck in systems
+with large numbers of processors and cores are mutual exclusion or
+{\emph{mutex}} locks that protect shared resources.  The SALS virtual
+machine avoids all mutexes in the memory layer by using these separate
+dedicated memory pools for each hyperthread in each CPU core for
+memory allocation and concurrent garbage collection.  Mutexes are
+provided in the SALS architecture but low-level memory allocation and
+collection can operate at full-speed without any mutex locks for
 low-level memory operations.
 {\mbox{\autoref{figure:cpu_core_hyperthread_distances}}} shows an
 example of how SALS allocates virtual processors for a hardware
@@ -151,9 +156,11 @@ ability to load packages that contain optimized routines that are
 composed of compiled machine code.  Machine code extensions to the
 SALS virtual machine are written in the C programming language.  The C
 codebase that compiles to this machine code totals over 150,000 lines
-of C code.  The following is a declaration of a package definition in
-the SALS low-level Lisp-like language that helps to organize these
-different types of dependencies within the SALS codebase:
+of C code.  The virtual machine compiles and runs on any POSIX
+compliant operating system.  The following is a declaration of a
+package definition in the SALS low-level Lisp-like language that helps
+to organize these different types of dependencies within the SALS
+codebase:
 \begin{samepage}
 \begin{Verbatim}
   [defpackage semantic_knowledge_base
@@ -178,21 +185,21 @@ in this example: (1) ``{\tt{packages}},'' (2) ``{\tt{sources}},'' and
 (3) ``{\tt{dynamic libraries}}.''  The ``{\tt{packages}}'' optional
 argument specifies a list of other packages that must be loaded before
 this package is loaded.  The ``{\tt{sources}}'' optional argument
-specifies a list of SALS low-level Lisp-like programming language
-files that are to be loaded when this package is loaded.  The
-``{\tt{dynamic libraries}}'' optional argument specifies a list of
-files that contain machine code extensions that should be loaded into
-the SALS virtual machine when this package is loaded.
+specifies a list of SALS files that are to be loaded when this package
+is loaded.  The ``{\tt{dynamic libraries}}'' optional argument
+specifies a list of files that contain machine code extensions that
+should be loaded into the SALS virtual machine when this package is
+loaded.
 
 Every package and machine code extension to the SALS virtual machine
 and programming language performs ``causal reflective tracing'' on
 each concurrently executing process.  The following sections describe
 examples of different uses of the causal reflective tracing features
 that have been implemented throughout the SALS virtual machine and its
-extensions.  At the end of this chapter I will describe one high-level
-package in the SALS programming language that performs the conjunctive
-hypothesis space version space rule-learning algorithm, which is key
-to the asynchronous experiential learning presented in
+extensions.  At the end of this chapter, I will describe one
+high-level package in the SALS programming language that performs the
+conjunctive hypothesis space version space rule-learning algorithm,
+which is key to the asynchronous experiential learning presented in
 {\mbox{\autoref{chapter:learning_asynchronously_from_experience}}}.
 
 \section{Causal Reflective Tracing}
@@ -202,25 +209,25 @@ order to distinguish them from the {\emph{threads}} in the underlying
 operating system kernel.  The parallel fibers create, mutate, and read
 from memory as they execute sequences of compiled bytecodes.  At any
 point between bytecode executions, the memory system is static and can
-be saved or loaded from non-volatile memory, such as a harddisk.  The
-current execution state of every fiber is represented in the global
-environment.  To be fully reflective on all of the procedural effects
-of any given fiber, I introduce a technique called {\emph{causal
-    reflective tracing}}.  Causal reflective tracing is a way of
-defining variables that are specific to each fiber that can be used to
-control the low-level memory access, mutation, and creation functions.
-This allows one fiber to subscribe to the procedural trace events of
-another fiber without receiving procedural trace events of its own
-execution, which would lead to an infinite regress, halting the
-system.  Further, because the virtual machine is inherently a parallel
-processing system, a given fiber will often start a number of child
-fibers that handle part of the processing for the parent fiber.  When
-a new fiber is created, the child fiber inherits the causal variable
-bindings of its parent fiber, enabling the same procedural tracing
-options for the child as well.  So, causal reflective tracing is one
-of the basic tools for keeping track of which pieces of memory were
-created, mutated, or read by which other fibers.  When evaluating the
-theoretical time complexity of concurrent procedurally reflective
+be saved to or loaded from non-volatile memory, such as a harddisk.
+The current execution state of every fiber is represented in the
+global environment.  To be fully reflective on all of the procedural
+effects of any given fiber, I introduce a technique called
+{\emph{causal reflective tracing}}.  Causal reflective tracing is a
+way of defining variables that are specific to each fiber that can be
+used to control the low-level memory access, mutation, and creation
+functions.  This allows one fiber to subscribe to the procedural trace
+events of another fiber without receiving procedural trace events of
+its own execution, which would lead to an infinite regress, halting
+the system.  Further, because the virtual machine is inherently a
+parallel processing system, a given fiber will often start a number of
+child fibers that handle part of the processing for the parent fiber.
+When a new fiber is created, the child fiber inherits the causal
+variable bindings of its parent fiber, enabling the same procedural
+tracing options for the child as well.  Causal reflective tracing is
+one of the basic tools for keeping track of which pieces of memory
+were created, mutated, or read by which other fibers.  When evaluating
+the theoretical time complexity of concurrent procedurally reflective
 control algorithms, it should be noted that creating procedural trace
 events for the execution of a given fiber slows the fiber down only by
 a constant factor, not affecting the algorithm's ``big-O'' time
@@ -264,24 +271,25 @@ describes how the SALS asynchronous learning algorithm uses the event
 knowledge base object to calculate partial state transframes.  I will
 briefly review the features of the event knowledge base as well as a
 few details about how this object is initialized and used in the SALS
-low-level Lisp-like programming language.  The semantic event
-knowledge base stores a type of semantic frame called a
-{\emph{semantic event}}.  A semantic event is a type of semantic frame
-object that represents an interval in time, which may include partial
-knowledge if the start or end times do not exist, making the interval
-potentially open-ended.  Semantic event knowledge bases are
-reflectively traced and the knowledge is always stored in two
-different representations, the basic semantic event frames as well as
-a balanced interval tree that always represents the current state of
-the semantic event knowledge base.  The balanced interval tree allows
-accessing the state of the focus knowledge base in $O(\log{(n)})$
-time, where $n$ is the number of events stored in the semantic event
-knowledge base.  Although the time complexity is not as efficient as
-the constant, $O(1)$, access time of the reflectively reconstructed
-semantic knowledge base, the semantic event interval tree knowledge
-base only requires $O(n)$ memory complexity to allow access to the
-structure of the knowledge base at any point in the past, where $n$ is
-the number of semantic events.
+low-level Lisp-like programming language.
+
+The semantic event knowledge base stores a type of semantic frame
+called a {\emph{semantic event}}.  A semantic event is a type of
+semantic frame object that represents an interval in time, which may
+include partial knowledge if the start or end times do not exist,
+making the interval potentially open-ended.  Semantic event knowledge
+bases are reflectively traced and the knowledge is always stored in
+two different representations, the basic semantic event frames as well
+as a balanced interval tree that always represents the current state
+of the semantic event knowledge base.  The balanced interval tree
+allows accessing the state of the focus knowledge base in
+$O(\log{(n)})$ time, where $n$ is the number of events stored in the
+semantic event knowledge base.  Although the time complexity is not as
+efficient as the constant, $O(1)$, access time of the reflectively
+reconstructed semantic knowledge base, the semantic event interval
+tree knowledge base only requires $O(n)$ memory complexity to allow
+access to the structure of the knowledge base at any point in the
+past, where $n$ is the number of semantic events.
 {\mbox{\autoref{figure:semantic_event_knowledge_base}}} shows how to
 create a new ``{\tt{semantic\_event\_knowledge\_base}}'' type object
 in the SALS low-level Lisp-like interactive programming language.
@@ -327,13 +335,22 @@ way semantic frames report the addition and removal of slot values to
 reflective forgetful event stream subscribers.  Once a knowledge base
 is created and we have an {\emph{important event stream iterator}}, we
 can define a concurrent reflective fiber that processes the events
-reflectively, after the real-time execution of the processes that
+reflectively after the real-time execution of the processes that
 modify this knowledge base.
 {\mbox{\autoref{figure:reflective_fiber}}} shows an example of how a
 reflective fiber can be created to process a
 {\tt{forgetful\_event\_stream}} generated by a
-{\tt{semantic\_knowledge\_base}}, which includes a traced
-{\tt{semantic\_planner}}.
+{\tt{semantic\_knowledge\_base}}, which includes the state of a
+planning machine, represented by a {\tt{semantic\_planner}} object.
+Note that this example runs at a constant factor slower than full
+speed because of the creation of mutation events for the
+{\tt{semantic\_planner}} object, but this factor has been kept
+relatively small, so this example completes almost immediately.  The
+reflective process runs slower because it must consider how to print
+these events to the terminal in a readable form.
+{\mbox{\autoref{figure:remove_add_set_events}}} shows the last two
+events created by the last line of this example that mutates the
+{\tt{imagine\_time}} slot value for the planner.
 \begin{figure}[h]
 \centering
 {\scriptsize
@@ -366,15 +383,7 @@ out-> []
   {\tt{forgetful\_event\_stream}}.]{A reflective fiber can be created
   to process a {\tt{forgetful\_event\_stream}} generated by a
   {\tt{semantic\_knowledge\_base}}, which includes a traced
-  {\tt{semantic\_planner}}.  Note that this example runs at a constant
-  factor slower than full speed because of the creation of mutation
-  events for the {\tt{semantic\_planner}} object, but this factor has
-  been kept relatively small, so this example completes almost
-  immediately.  The reflective process runs slower because it must
-  consider how to print these events to the terminal in a readable
-  form.  {\mbox{\autoref{figure:remove_add_set_events}}} shows the
-  last two events created by the last line of this example that
-  mutates the {\tt{imagine\_time}} slot value for the planner.}
+  {\tt{semantic\_planner}}.}
 \label{figure:reflective_fiber}
 \end{figure}
 
@@ -684,9 +693,9 @@ out-> [concept_version_space
   {\tt{concept\_version\_space}} conjunctive hypothesis learning
   algorithm.  This object keeps a list of the most specific hypotheses
   that support positive output predictions as well as the most general
-  hypotheses that support negative output predictions.  Also, there is
-  a set of variable names, or frame slot names, that the algorithm has
-  seen previously.}
+  hypotheses that support negative output predictions.  There is a set
+  of variable names, or frame slot names, that the algorithm has seen
+  previously.}
 \label{figure:concept_version_space}
 \end{figure}
 \begin{figure}[h]
@@ -791,8 +800,142 @@ out-> []
   example, attempting to find new support whenever the previous
   hypothetical support is lost.  In this case, a positive example of a
   {\tt{green}} {\tt{cube}} is attempting to maintain hypothetical
-  support in the concept's hypothesis space.}
+  support in the concept's hypothesis space.  Each sharp cornered
+  rectangular box introduces an additional causal scope for all of the
+  processes this interpretation step causes to execute.}
 \label{figure:concept_version_space_hypothetical_support}
 \end{figure}
 
+\section{Compiling, Imagining and Executing a Natural Language Plan}
+
+The causal reflective tracing features introduced in the SALS virtual
+machine allow simple but powerful forms of organizational structure in
+the implementation of complex reasoning processes.  As an example, the
+process that compiles natural language plans is the part of the SALS
+AI that is the most complex and that benefits the most from the causal
+reflective tracing features of the virtual machine.  Natural language
+plans are compiled in each planning layer, including the deliberative,
+reflective, and super-reflective planning layers.  The main overview
+and structure of the natural language plan interpretation process is
+described in {\mbox{\autoref{chapter:learning_from_being_told}}}.  The
+low-level causal reflective tracing features of the SALS virtual
+machine are critical to the organization of this plan interpretation
+process.  {\mbox{\autoref{figure:compile_natural_language}}} shows a
+procedural trace of a partially imagined plan execution during the
+compiling phase of natural language interpretation.
+\begin{figure}
+\centering
+\includegraphics[width=12cm]{gfx/compile_natural_language}
+\caption[Procedural trace of partially imagined plan execution during
+  compiling phase of language interpretation.]{Procedural trace of
+  partially imagined plan execution during compiling phase of language
+  interpretation.  Rectangles with rounded corners represent language
+  expressions that must be interpreted.  The top rounded rectangle is
+  the initial language phrase that causes this entire procedural trace
+  to be created.  Rectangles with sharp corners represent abstract
+  analogy pattern templates that match the rounded rectangle
+  immediately above them.  Analogy templates expand into multiple step
+  plans that include more language phrases to be interpreted.  Labels
+  (A) and (B) mark two analogy patterns that simultaneously match the
+  language phrase above them.  (A) will eventually lead to a correct
+  and complete interpretation, while (B) will lead to an incomplete
+  interpretation.}
+\label{figure:compile_natural_language}
+\end{figure}
+Procedural traces such as this one are easy to create because of the
+causal context that is provided by default in the SALS virtual
+machine.  The causal context for a natural language plan that is being
+interpreted is as follows:
+\begin{itemize}
+\item {\tt{execution\_mode}}: Compiled plans can either be interpreted
+  in one of two modes: {\tt{imagine}} or {\tt{execute}}.  When a plan
+  is executed in the {\tt{imagine}} mode, the plan uses learned
+  hypothetical models of actions in order to predict their effects in
+  a counterfactual event knowledge base within the planning layer.  A
+  plan is generally interpreted in the {\tt{imagine}} mode before it
+  is interpreted in the {\tt{execute}} mode.  The reflective trace
+  that is produced from interpreting a plan in the {\tt{imagine}} mode
+  is used for a second compile stage that produces an executable plan
+  that contains neither natural language nor other forms of ambiguity.
+  Sensory functions that check for the existence of partial states
+  access the counterfactual knowledge base when a plan is interpreted
+  in the {\tt{imagine}} mode.  When a plan is interpreted in the
+  {\tt{execute}} mode, actions are actually executed by activating and
+  suppressing resources in the layer below.  Also, a plan interpreted
+  in the {\tt{execute}} mode directly accesses the layer below when
+  checking whether or not partial states exist for sensory functions.
+\item {\tt{top\_plan}}: The initial top-level plan that has caused the
+  rest of the procedural trace structure to exist.  A plan
+  interpretation process usually begins with a natural language
+  phrase, such as ``{\tt{stack a cube on a pyramid}}.''  Analogous
+  plans are then found that might provide interpretations of this
+  initial phrase.  These newly created analogous plans are each
+  interpreted as top-level plans to see if the result of their
+  imagined interpretations are complete and successful.
+\item {\tt{imagine\_time}}: Only used when the {\tt{execution\_mode}}
+  is set to {\tt{imagine}}, the {\tt{imagine\_time}} causal context
+  slot stores the current hypothetical time that an imagined action
+  would occur during the current imagined plan interpretation process.
+  This causal context is used for the addition of partial state
+  existence events to the counterfactual event knowledge base of the
+  planning layer.  Also, this imagined time is used when imagined
+  sensory functions access the counterfactual event knowledge base,
+  which stores all events in an interval tree for efficient access.
+\item {\tt{check\_exists\_partial\_state\_set}}: A set of partial
+  states that have been checked for by sensory functions within the
+  currently interpreted plan.  This set is used as an auxiliary set of
+  hypotheses about the effects of plan execution.  This set is useful
+  when the SALS AI has very little experience executing a specific
+  type of plan or set of actions.  For example, if a plan assures a
+  partial state exists for ``{\tt{a gripper that is me to be holding a
+      cube}},'' then although the SALS AI has no experience executing
+  this plan, it can hypothesize that this might be an effect of the
+  plan, given this set from the causal context of the plan
+  interpretation.
+\item {\tt{current\_plan\_execution\_set}}: When the
+  {\tt{execution\_mode}} is set to {\tt{imagine}}, all possible
+  conditional branches of a plan are interpreted and their effects are
+  imagined with distinct causal contextual scopes.  The
+  {\tt{current\_plan\_execution\_set}} is used to keep track of which
+  plans are currently being interpreted on the plan stack.  This
+  allows for stack-based recursive loops to be compiled and their
+  effects completely imagined, while avoiding the potential infinite
+  loops that may result from the actual execution of these plans.
+\item {\tt{imagine\_event\_tree}}: The current set of events that have
+  been imagined within this causal scope.  This is necessary for
+  scoping the results returned from the counterfactual event knowledge
+  base required for sensory functions to check whether or not partial
+  states may hypothetically exist.
+\item {\tt{resource\_activation\_set}}: The current set of resource
+  activations that have occurred within this causal scope.
+\end{itemize}
+The ability to quickly add various new forms of causal context that
+are available at any point in a compiled plan greatly simplifies that
+task of maintaining intricate procedural traces of the most complex
+aspects of the SALS AI, the multiple-staged process of compiling
+natural language plans, including processes that imagine the effects
+of various interpretations during the second compile stage.
+
+\section{Summary}
+
+The SALS virtual machine and low-level programming language are the
+foundation upon which the SALS cognitive architecture has been
+constructed.  I have described the details of the concurrent hardware
+abstractions, including multiple core and hyperthreaded CPUs as well
+as distributed memory pointers.  The low-level basics of causal
+reflective tracing have been discussed, along with how a simple
+rule-learning algorithm may be applied to a hypothetical prediction,
+and how new hypothetical support for knowledge can be regained when
+previous supports have been lost.  Basic programming examples have
+been given for implementing basic causal reflective tracing as well as
+this simple rule-learning example.  Finally, I have discussed how the
+most complex processes in the SALS AI are organized by the scoping of
+causal contexts in the multiple-staged compile process that is used
+for compiling natural language plans through imagining their possible
+conditional effects.  In the next chapter, I will describe related
+research to the four contributions that I have described in the
+previous four chapters.  In {\mbox{\autoref{chapter:evaluation}}}, I
+will present multiple evaluations that defend the point that the
+time-complexity of the SALS AI only increases linearly as more
+reflective layers are added to the architecture.
 

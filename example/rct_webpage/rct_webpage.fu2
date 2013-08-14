@@ -346,6 +346,9 @@
     ]]
 
 [defunk rct-generate_all_undergraduate_students []
+  `[]]
+
+`[defunk rct-generate_all_undergraduate_students []
   `[,[let [[this [new htmldoc_person]]]
        [set this username    'jj']
        [set this name        'Jing Jian']

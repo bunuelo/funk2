@@ -44,7 +44,7 @@ digraph G {
     reflective2_x1_node7_relation_reflective2_x1_triangle -> reflective2_x1_triangle [style="-triangle 45,dashed",color=red];
 
     reflective2_x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    reflective2_x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    reflective2_x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     reflective2_x_1 -> reflective2_x_1_reflecting [style=dashed,arrowhead=none];
     reflective2_x_1_reflecting -> reflective2_x1_node1 [style="-triangle 45,dashed", color=red];
     //reflective2_x_1_reflecting -> reflective2_x1_node1_relation_reflective2_x1_node2 [style="-triangle 45,dashed", color=red,constraint=true];
@@ -154,7 +154,7 @@ digraph G {
     x4_plan_1_execute_x4_expectation_failure_1 -> x4_expectation_failure_1 [style="-triangle 45",color=red];
     
     x_4 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_4_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_4_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_4 -> x_4_reflecting [style=dashed,arrowhead=none];
     x_4_reflecting -> x4_planning_machine_1 [style="-triangle 45,dashed", color=red];
     x_4_reflecting -> x4_planning_machine_1_execute_x4_plan_1 [style="-triangle 45,dashed", color=red];
@@ -246,7 +246,7 @@ digraph G {
     resource1_planning_machine_1_executing_resource1_complete_execution -> resource1_complete_execution [style="-triangle 45",color=red];
     
     resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
-    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    resource_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     resource_1 -> resource_1_reflecting [style=dashed,arrowhead=none];
     resource_1_reflecting -> resource1_planning_machine_1 [style="-triangle 45,dashed", color=red];
     resource_1_reflecting -> resource1_complete_execution [style="-triangle 45,dashed", color=red];

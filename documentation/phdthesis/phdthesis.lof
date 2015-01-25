@@ -1,0 +1,68 @@
+\select@language {american}
+\vspace {-10\cftbeforechapskip }
+\select@language {american}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces An example problem domain.\relax }}{4}{figure.caption.6}
+\contentsline {figure}{\numberline {2}{\ignorespaces An example program.\relax }}{4}{figure.caption.7}
+\contentsline {figure}{\numberline {3}{\ignorespaces Exponential growth in planning as search.\relax }}{5}{figure.caption.8}
+\contentsline {figure}{\numberline {4}{\ignorespaces Exponential growth example with heuristics.\relax }}{6}{figure.caption.9}
+\contentsline {figure}{\numberline {5}{\ignorespaces Dependency traces.}}{8}{figure.caption.10}
+\contentsline {figure}{\numberline {6}{\ignorespaces Tracing bug dependencies.}}{8}{figure.caption.11}
+\contentsline {figure}{\numberline {7}{\ignorespaces Temporal and reflective learning complexities with one-shot learning opportunities.\relax }}{9}{figure.caption.12}
+\contentsline {figure}{\numberline {8}{\ignorespaces The derivative nature of the contributions.\relax }}{10}{figure.caption.13}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9}{\ignorespaces ``The Treason of Images'' (``This is not a pipe'') by \cite {magritte:1919} is an image of a pipe.}}{15}{figure.caption.14}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {10}{\ignorespaces The lower layers of Model-6 mapped to the suggested $\text {reflective}^n$ order notation.\relax }}{41}{figure.caption.15}
+\contentsline {figure}{\numberline {11}{\ignorespaces The lower levels of Cox and Raja's metareasoning model mapped to the suggested $\text {reflective}^n$ order notation.\relax }}{43}{figure.caption.16}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {12}{\ignorespaces An example for simulation.\relax }}{50}{figure.caption.17}
+\contentsline {figure}{\numberline {13}{\ignorespaces A labelled graph representation of a state space.}}{52}{figure.caption.18}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {14}{\ignorespaces An example of the representation for symbolic reference.}}{56}{figure.caption.19}
+\contentsline {figure}{\numberline {15}{\ignorespaces A shorthand visualization for a symbolic reference.}}{56}{figure.caption.20}
+\contentsline {figure}{\numberline {16}{\ignorespaces Example of a perceived first-order symbolic reference to the physical layer of activity.}}{57}{figure.caption.21}
+\contentsline {figure}{\numberline {17}{\ignorespaces Example of a non-perceived symbol, or symbolic memory.}}{58}{figure.caption.22}
+\contentsline {figure}{\numberline {18}{\ignorespaces Example of a second-order symbol representing first-order symbolization activity.}}{58}{figure.caption.23}
+\contentsline {figure}{\numberline {19}{\ignorespaces An example of a first-order reflective resource.}}{60}{figure.caption.24}
+\contentsline {figure}{\numberline {20}{\ignorespaces Four examples of resource activation and suppression Spatial relationships.}}{60}{figure.caption.25}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {21}{\ignorespaces Example simultaneity of positive and negative symbolic perceptions.}}{62}{figure.caption.26}
+\contentsline {figure}{\numberline {22}{\ignorespaces An example of two transitions ordering three simultaneities.}}{63}{figure.caption.27}
+\contentsline {figure}{\numberline {23}{\ignorespaces An example of a factual event transframe.}}{66}{figure.caption.28}
+\contentsline {figure}{\numberline {24}{\ignorespaces An example of a first-order reflective resource with an activation event.}}{68}{figure.caption.29}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {25}{\ignorespaces An example of a conjunctive hypothesis space.}}{70}{figure.caption.30}
+\contentsline {figure}{\numberline {26}{\ignorespaces An example of a resource activation hypothesis space.}}{72}{figure.caption.31}
+\contentsline {figure}{\numberline {27}{\ignorespaces An example of a counterfactual transframe.}}{74}{figure.caption.32}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {28}{\ignorespaces An example of a plan with four composable plan operators.}}{76}{figure.caption.33}
+\contentsline {figure}{\numberline {29}{\ignorespaces An example of a two-step plan.}}{77}{figure.caption.34}
+\contentsline {figure}{\numberline {30}{\ignorespaces An example of a planning machine.}}{78}{figure.caption.35}
+\contentsline {figure}{\numberline {31}{\ignorespaces An example of a one-step plan with a factual expectation failure.}}{82}{figure.caption.36}
+\contentsline {figure}{\numberline {32}{\ignorespaces An example of a second-order counterfactual transframe predicting a plan execution failure.}}{84}{figure.caption.37}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {33}{\ignorespaces An example of a global environment with concurrent processors and parallel fibers.}}{91}{figure.caption.38}
+\contentsline {figure}{\numberline {34}{\ignorespaces FiberMon application monitoring many fibers}}{94}{figure.caption.39}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {35}{\ignorespaces The implemented mind monitoring application, MindMon.}}{102}{figure.caption.40}
+\contentsline {figure}{\numberline {36}{\ignorespaces The implemented physical knowledge-base.}}{103}{figure.caption.41}
+\contentsline {figure}{\numberline {37}{\ignorespaces The implemented semantic event knowledge base.}}{104}{figure.caption.42}
+\contentsline {figure}{\numberline {38}{\ignorespaces The implemented first-order resource activator.}}{104}{figure.caption.43}
+\contentsline {figure}{\numberline {39}{\ignorespaces The implemented first-order planning machine knowledge.}}{104}{figure.caption.44}
+\contentsline {figure}{\numberline {40}{\ignorespaces The implemented first-order plan activator.}}{105}{figure.caption.45}
+\contentsline {figure}{\numberline {41}{\ignorespaces The implemented second-order resource activator.}}{106}{figure.caption.46}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {42}{\ignorespaces The top layers of Model-6 roughly mapped to the suggested $\text {self}^m\text { reflective}^n$ stratum notation.\relax }}{116}{figure.caption.47}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

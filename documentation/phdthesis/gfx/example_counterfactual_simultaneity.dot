@@ -18,7 +18,7 @@ digraph G {
     x1_gripper_1_being_above_x1_block_1 -> x1_block_1 [style="-triangle 45",color=red];
     
     x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_1_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_1 -> x_1_reflecting [style=dashed,arrowhead=none];
     x_1_reflecting -> x1_gripper_1 [style="-triangle 45,dashed", color=red];
     x_1_reflecting -> x1_block_1 [style="-triangle 45,dashed", color=red];
@@ -34,7 +34,7 @@ digraph G {
     x2_block_2_sitting_on_x2_table_1 -> x2_table_1 [style="-triangle 45",color=red];
     
     x_2 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
     x_2_reflecting -> x2_block_2 [style="-triangle 45,dashed", color=red];
     x_2_reflecting -> x2_table_1 [style="-triangle 45,dashed", color=red];
@@ -50,7 +50,7 @@ digraph G {
     x3_block_2_sitting_on_x3_block_1 -> x3_block_1 [style="-triangle 45",color=red];
     
     x_3 [texlbl = "{\huge{\tt{Symbol*}}}"];
-    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
     x_3_reflecting -> x3_block_2 [style="-triangle 45,dashed", color=red];
     x_3_reflecting -> x3_block_1 [style="-triangle 45,dashed", color=red];

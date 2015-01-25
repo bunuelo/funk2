@@ -1,0 +1,83 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: phdthesis.aux
+A level-1 auxiliary file: frontbackmatter/dirtytitlepage.aux
+A level-1 auxiliary file: frontbackmatter/titlepage.aux
+A level-1 auxiliary file: frontbackmatter/titleback.aux
+A level-1 auxiliary file: frontbackmatter/dedication.aux
+A level-1 auxiliary file: frontbackmatter/abstract.aux
+A level-1 auxiliary file: frontbackmatter/publication.aux
+A level-1 auxiliary file: frontbackmatter/acknowledgments.aux
+A level-1 auxiliary file: frontbackmatter/contents.aux
+A level-1 auxiliary file: chapters/introduction.aux
+A level-1 auxiliary file: chapters/modelling_the_continuously_dynamic.aux
+A level-1 auxiliary file: chapters/learning_causal_hypotheses.aux
+A level-1 auxiliary file: chapters/layers_of_reflective_thinking.aux
+A level-1 auxiliary file: chapters/learning_from_success_and_failure.aux
+A level-1 auxiliary file: chapters/problematic_interpretations.aux
+A level-1 auxiliary file: chapters/related_models.aux
+A level-1 auxiliary file: chapters/introducing_simulation.aux
+A level-1 auxiliary file: chapters/graph_notation.aux
+A level-1 auxiliary file: chapters/symbolic_representation.aux
+A level-1 auxiliary file: chapters/grounded_factual_knowledge.aux
+A level-1 auxiliary file: chapters/hypotheses_and_counterfactual_knowledge.aux
+A level-1 auxiliary file: chapters/the_planning_machine.aux
+A level-1 auxiliary file: chapters/introducing_computation.aux
+A level-1 auxiliary file: chapters/computational_activities_in_duration.aux
+A level-1 auxiliary file: chapters/causally_reflective_procedural_tracing.aux
+A level-1 auxiliary file: chapters/the_mind_monitor_application.aux
+A level-1 auxiliary file: chapters/related_implementations.aux
+A level-1 auxiliary file: chapters/evaluation.aux
+A level-1 auxiliary file: chapters/future.aux
+A level-1 auxiliary file: chapters/science.aux
+A level-1 auxiliary file: chapters/education.aux
+A level-1 auxiliary file: chapters/the_code.aux
+A level-1 auxiliary file: frontbackmatter/bibliography.aux
+The style file: agsm.bst
+A level-1 auxiliary file: frontbackmatter/colophon.aux
+A level-1 auxiliary file: frontbackmatter/declaration.aux
+Database file #1: bibliography.bib
+Warning--empty institution in dennett:2009
+Warning--empty institution in magritte:1919
+You've used 25 entries,
+            2909 wiz_defined-function locations,
+            807 strings with 8843 characters,
+and the built_in function-call counts, 61008 in all, are:
+= -- 9513
+> -- 864
+< -- 2
++ -- 4263
+- -- 255
+* -- 4847
+:= -- 13077
+add.period$ -- 25
+call.type$ -- 25
+change.case$ -- 347
+chr.to.int$ -- 25
+cite$ -- 27
+duplicate$ -- 388
+empty$ -- 746
+format.name$ -- 335
+if$ -- 10841
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 20
+newline$ -- 78
+num.names$ -- 256
+pop$ -- 152
+preamble$ -- 1
+purify$ -- 375
+quote$ -- 0
+skip$ -- 320
+stack$ -- 0
+substring$ -- 12858
+swap$ -- 54
+text.length$ -- 352
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 94
+warning$ -- 2
+while$ -- 544
+width$ -- 0
+write$ -- 317
+(There were 2 warnings)

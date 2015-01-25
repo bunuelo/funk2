@@ -33,7 +33,7 @@ digraph G {
     // x_2^*
     
     x_2 [texlbl = "{\huge{\tt{x-1*}}}"];
-    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_2_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_2 -> x_2_reflecting [style=dashed,arrowhead=none];
     x_2_reflecting -> block_1 [style="-triangle 45,dashed", color=red];
     x_2_reflecting -> table_1 [style="-triangle 45,dashed", color=red];
@@ -42,7 +42,7 @@ digraph G {
     // x_3^*
     
     x_3 [texlbl = "{\huge{\tt{x-3*}}}"];
-    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055";
+    x_3_reflecting [shape=trapezium,style=filled,label="{\huge{$\Psi$}}",nodesep="0.02",margin="0.11,0.055"];
     x_3 -> x_3_reflecting [style=dashed,arrowhead=none];
     x_3_reflecting -> gripper_1 [style="-triangle 45,dashed", color=red];
     x_3_reflecting -> block_1 [style="-triangle 45,dashed", color=red];

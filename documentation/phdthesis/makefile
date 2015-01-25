@@ -128,7 +128,8 @@ phdthesis.pdf: \
 	neato $< -Tpdf > $@
 
 %.pdf: %.dot makefile
-	dot -Txdot $< | dot2tex -c -d -ftikz -traw > temp.tex
+	dot -Txdot $< > $<.dotout
+	dot2tex --debug -c -d -ftikz -traw $<.dotout > temp.tex
 	pdflatex temp.tex
 	rm -f temp.tex
 	mv -f temp.pdf $@

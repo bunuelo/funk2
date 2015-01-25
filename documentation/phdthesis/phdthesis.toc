@@ -1,0 +1,182 @@
+\select@language {american}
+\vspace {-\cftbeforepartskip }
+\select@language {american}
+\contentsline {chapter}{\numberline {1}\spacedlowsmallcaps {Introduction}}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}The Substrate}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}The Simulation}{2}{section.1.2}
+\contentsline {section}{\numberline {1.3}The Model}{3}{section.1.3}
+\contentsline {section}{\numberline {1.4}Document Overview}{3}{section.1.4}
+\contentsline {section}{\numberline {1.5}Programming}{3}{section.1.5}
+\contentsline {section}{\numberline {1.6}State Space Planning}{5}{section.1.6}
+\contentsline {section}{\numberline {1.7}Heuristics}{6}{section.1.7}
+\contentsline {section}{\numberline {1.8}Representing Actions}{6}{section.1.8}
+\contentsline {section}{\numberline {1.9}Learning to Plan for Successful Execution}{7}{section.1.9}
+\contentsline {section}{\numberline {1.10}Finding a Bug}{8}{section.1.10}
+\contentsline {section}{\numberline {1.11}Comparing Temporal and Reflective Learning}{8}{section.1.11}
+\contentsline {section}{\numberline {1.12}Reflection}{9}{section.1.12}
+\contentsline {section}{\numberline {1.13}The Derivative Nature of the Contributions}{10}{section.1.13}
+\contentsline {part}{\uppercase {i}\hspace {1em}\spacedlowsmallcaps {The Model}}{11}{part.1}
+\contentsline {chapter}{\numberline {2}\spacedlowsmallcaps {Modelling the Continuously Dynamic}}{13}{chapter.2}
+\contentsline {section}{\numberline {2.1}Symbols and Continuity}{13}{section.2.1}
+\contentsline {section}{\numberline {2.2}Dynamically Grounded Description}{16}{section.2.2}
+\contentsline {section}{\numberline {2.3}Activities in Duration}{16}{section.2.3}
+\contentsline {section}{\numberline {2.4}Actual Reflection}{17}{section.2.4}
+\contentsline {section}{\numberline {2.5}Order of Space}{17}{section.2.5}
+\contentsline {section}{\numberline {2.6}Modelling the Dynamic}{18}{section.2.6}
+\contentsline {section}{\numberline {2.7}Spatial Reflection}{18}{section.2.7}
+\contentsline {section}{\numberline {2.8}The Physical Layer}{19}{section.2.8}
+\contentsline {section}{\numberline {2.9}Orders of Reflective Layers}{19}{section.2.9}
+\contentsline {section}{\numberline {2.10}Consciousness, Awareness, and Experience}{20}{section.2.10}
+\contentsline {section}{\numberline {2.11}Extensive and Intensive Quantities}{21}{section.2.11}
+\contentsline {section}{\numberline {2.12}Number}{21}{section.2.12}
+\contentsline {section}{\numberline {2.13}Time as Space}{22}{section.2.13}
+\contentsline {section}{\numberline {2.14}Temporal Reflection}{23}{section.2.14}
+\contentsline {section}{\numberline {2.15}Simultaneity and Transition}{23}{section.2.15}
+\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Learning Causal Hypotheses}}{25}{chapter.3}
+\contentsline {section}{\numberline {3.1}Resources}{25}{section.3.1}
+\contentsline {section}{\numberline {3.2}Activation and Suppression}{25}{section.3.2}
+\contentsline {section}{\numberline {3.3}Cause and Effect}{26}{section.3.3}
+\contentsline {section}{\numberline {3.4}Goal Activities}{26}{section.3.4}
+\contentsline {section}{\numberline {3.5}Causal Hypothesis}{26}{section.3.5}
+\contentsline {section}{\numberline {3.6}Limitations of Logical Goals}{27}{section.3.6}
+\contentsline {section}{\numberline {3.7}Physical Goals}{27}{section.3.7}
+\contentsline {section}{\numberline {3.8}Reflective Classes of Causal Models}{27}{section.3.8}
+\contentsline {section}{\numberline {3.9}Probabilistic Causal Models}{28}{section.3.9}
+\contentsline {chapter}{\numberline {4}\spacedlowsmallcaps {Layers of Reflective Thinking}}{29}{chapter.4}
+\contentsline {section}{\numberline {4.1}First-order Reflective Thinking}{29}{section.4.1}
+\contentsline {section}{\numberline {4.2}$n^\text {th}$-Order Reflective Thinking}{29}{section.4.2}
+\contentsline {section}{\numberline {4.3}Limitations of First-order Reflective Thinking}{30}{section.4.3}
+\contentsline {section}{\numberline {4.4}Second-order Reflection on Symbolization}{30}{section.4.4}
+\contentsline {section}{\numberline {4.5}Non-existence of Symbolic References}{30}{section.4.5}
+\contentsline {section}{\numberline {4.6}Planning Symbolic Refinement}{31}{section.4.6}
+\contentsline {section}{\numberline {4.7}The Distractive Nature of Non-existence}{31}{section.4.7}
+\contentsline {section}{\numberline {4.8}Third-order Reflection on Existence}{32}{section.4.8}
+\contentsline {section}{\numberline {4.9}``Sub-symbolic Thinking''}{33}{section.4.9}
+\contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Learning from Success and Failure}}{35}{chapter.5}
+\contentsline {section}{\numberline {5.1}Plan Execution}{35}{section.5.1}
+\contentsline {section}{\numberline {5.2}Plan Instructions}{35}{section.5.2}
+\contentsline {section}{\numberline {5.3}Failures and Success}{35}{section.5.3}
+\contentsline {section}{\numberline {5.4}Activation Failure}{36}{section.5.4}
+\contentsline {section}{\numberline {5.5}Compiling Plans to Resources}{36}{section.5.5}
+\contentsline {section}{\numberline {5.6}Expectation Failure}{36}{section.5.6}
+\contentsline {section}{\numberline {5.7}Learning Below and Above the Failure}{36}{section.5.7}
+\contentsline {section}{\numberline {5.8}First-order Reflective Thinking Activities}{37}{section.5.8}
+\contentsline {section}{\numberline {5.9}First-order Reflective Thinking Goals}{38}{section.5.9}
+\contentsline {chapter}{\numberline {6}\spacedlowsmallcaps {Problematic Interpretations}}{39}{chapter.6}
+\contentsline {section}{\numberline {6.1}The Mistake of Subjective Idealism}{39}{section.6.1}
+\contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {Related Models}}{41}{chapter.7}
+\contentsline {section}{\numberline {7.1}The Emotion Machine}{41}{section.7.1}
+\contentsline {section}{\numberline {7.2}Interior Grounding}{42}{section.7.2}
+\contentsline {section}{\numberline {7.3}Metareasoning}{42}{section.7.3}
+\contentsline {section}{\numberline {7.4}Propagators}{43}{section.7.4}
+\contentsline {part}{\uppercase {ii}\hspace {1em}\spacedlowsmallcaps {The Simulation}}{45}{part.2}
+\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Introducing Simulation}}{47}{chapter.8}
+\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Graph Notation}}{49}{chapter.9}
+\contentsline {section}{\numberline {9.1}Dynamic Activities as a Set}{49}{section.9.1}
+\contentsline {section}{\numberline {9.2}A Graph Representation}{49}{section.9.2}
+\contentsline {section}{\numberline {9.3}Graph Isomorphism}{50}{section.9.3}
+\contentsline {section}{\numberline {9.4}Representing Continuous Space as a Graph}{51}{section.9.4}
+\contentsline {section}{\numberline {9.5}Dot Notation for Graph-based Frame Objects}{51}{section.9.5}
+\contentsline {section}{\numberline {9.6}Simulated Existence}{52}{section.9.6}
+\contentsline {chapter}{\numberline {10}\spacedlowsmallcaps {Symbolic Representation}}{53}{chapter.10}
+\contentsline {section}{\numberline {10.1}Representing Reflective Thinking Activity}{53}{section.10.1}
+\contentsline {section}{\numberline {10.2}Physical Activity is Any Prior Existing Graph}{53}{section.10.2}
+\contentsline {section}{\numberline {10.3}Defining N Layers of Reflective Thinking Activities}{53}{section.10.3}
+\contentsline {section}{\numberline {10.4}Representing Static Symbols}{54}{section.10.4}
+\contentsline {section}{\numberline {10.5}Representing Symbolic Reference}{55}{section.10.5}
+\contentsline {section}{\numberline {10.6}A Visualization of a Reflective Relationship}{55}{section.10.6}
+\contentsline {section}{\numberline {10.7}Representing Symbolic Perception and Memory}{57}{section.10.7}
+\contentsline {section}{\numberline {10.8}Second-order Symbolic Representation}{57}{section.10.8}
+\contentsline {section}{\numberline {10.9}Representing Symbolic Resources}{59}{section.10.9}
+\contentsline {chapter}{\numberline {11}\spacedlowsmallcaps {Grounded Factual Knowledge}}{61}{chapter.11}
+\contentsline {section}{\numberline {11.1}Simultaneities}{61}{section.11.1}
+\contentsline {section}{\numberline {11.2}Transitions}{62}{section.11.2}
+\contentsline {section}{\numberline {11.3}Perceptual Events}{64}{section.11.3}
+\contentsline {section}{\numberline {11.4}Event Transframes}{65}{section.11.4}
+\contentsline {section}{\numberline {11.5}Resource Activation Events}{65}{section.11.5}
+\contentsline {chapter}{\numberline {12}\spacedlowsmallcaps {Hypotheses and Counterfactual Knowledge}}{69}{chapter.12}
+\contentsline {section}{\numberline {12.1}Hypotheses}{69}{section.12.1}
+\contentsline {section}{\numberline {12.2}Hypothesis Space}{69}{section.12.2}
+\contentsline {section}{\numberline {12.3}The General-to-Specific Ordering of Hypotheses}{69}{section.12.3}
+\contentsline {section}{\numberline {12.4}Concept Version Spaces}{69}{section.12.4}
+\contentsline {section}{\numberline {12.5}Hypothesizing Transframes from Preconditions}{70}{section.12.5}
+\contentsline {section}{\numberline {12.6}Decisions with Hypothesis Dependencies}{71}{section.12.6}
+\contentsline {section}{\numberline {12.7}Counterfactual Transframes}{71}{section.12.7}
+\contentsline {chapter}{\numberline {13}\spacedlowsmallcaps {The Planning Machine}}{75}{chapter.13}
+\contentsline {section}{\numberline {13.1}Plan Operators}{75}{section.13.1}
+\contentsline {section}{\numberline {13.2}A Planning Machine}{75}{section.13.2}
+\contentsline {section}{\numberline {13.3}Symbolizing Goals}{79}{section.13.3}
+\contentsline {section}{\numberline {13.4}Second-order Resources}{79}{section.13.4}
+\contentsline {section}{\numberline {13.5}Critical Failure Heuristics}{80}{section.13.5}
+\contentsline {section}{\numberline {13.6}Planning Failures}{80}{section.13.6}
+\contentsline {section}{\numberline {13.7}Factual Plan Failure Knowledge}{81}{section.13.7}
+\contentsline {section}{\numberline {13.8}Prediction of Failure Based on Plan Structure}{81}{section.13.8}
+\contentsline {part}{\uppercase {iii}\hspace {1em}\spacedlowsmallcaps {The Implementation}}{85}{part.3}
+\contentsline {chapter}{\numberline {14}\spacedlowsmallcaps {Introducing Computation}}{87}{chapter.14}
+\contentsline {section}{\numberline {14.1}Digital Abstraction}{87}{section.14.1}
+\contentsline {section}{\numberline {14.2}The Combinational Device}{87}{section.14.2}
+\contentsline {section}{\numberline {14.3}Digital Reflection}{87}{section.14.3}
+\contentsline {section}{\numberline {14.4}The Programmer}{88}{section.14.4}
+\contentsline {chapter}{\numberline {15}\spacedlowsmallcaps {Computational Activities in Duration}}{89}{chapter.15}
+\contentsline {section}{\numberline {15.1}The Funk Virtual Operating System}{89}{section.15.1}
+\contentsline {section}{\numberline {15.2}The Global Environment}{90}{section.15.2}
+\contentsline {section}{\numberline {15.3}The Global Scheduler}{90}{section.15.3}
+\contentsline {section}{\numberline {15.4}Fibers Simulate Activities}{90}{section.15.4}
+\contentsline {section}{\numberline {15.5}Stepping the Simulation State}{91}{section.15.5}
+\contentsline {section}{\numberline {15.6}Programming Language}{92}{section.15.6}
+\contentsline {section}{\numberline {15.7}Sequential and Parallel Programs}{92}{section.15.7}
+\contentsline {section}{\numberline {15.8}Fibers Create Objects}{93}{section.15.8}
+\contentsline {section}{\numberline {15.9}Creating Parallel Fibers}{93}{section.15.9}
+\contentsline {section}{\numberline {15.10}Monitoring Simulated Activities}{94}{section.15.10}
+\contentsline {section}{\numberline {15.11}Pausing and Resuming Activities}{94}{section.15.11}
+\contentsline {section}{\numberline {15.12}Mutual Exclusion}{95}{section.15.12}
+\contentsline {section}{\numberline {15.13}Fiber Triggers}{95}{section.15.13}
+\contentsline {section}{\numberline {15.14}Fiber Complete and Bug-Found Triggers}{95}{section.15.14}
+\contentsline {chapter}{\numberline {16}\spacedlowsmallcaps {Causally Reflective Procedural Tracing}}{97}{chapter.16}
+\contentsline {section}{\numberline {16.1}Semantic Memory Focuses Reflective Tracing}{97}{section.16.1}
+\contentsline {section}{\numberline {16.2}Forgetful Event Streams}{98}{section.16.2}
+\contentsline {section}{\numberline {16.3}Semantic Knowledge-Bases}{98}{section.16.3}
+\contentsline {section}{\numberline {16.4}Reflectively Reconstructed Semantic Knowledge-Bases}{99}{section.16.4}
+\contentsline {section}{\numberline {16.5}Semantic Event Interval-Tree Knowledge-Bases}{99}{section.16.5}
+\contentsline {chapter}{\numberline {17}\spacedlowsmallcaps {The Mind Monitor Application}}{101}{chapter.17}
+\contentsline {section}{\numberline {17.1}The Physical Knowledge-Base}{101}{section.17.1}
+\contentsline {section}{\numberline {17.2}Semantic Event Knowledge-Base}{101}{section.17.2}
+\contentsline {section}{\numberline {17.3}First-order Resource Activator}{101}{section.17.3}
+\contentsline {section}{\numberline {17.4}First-order Planning Machine Knowledge}{101}{section.17.4}
+\contentsline {section}{\numberline {17.5}First-order Plan Activator}{105}{section.17.5}
+\contentsline {section}{\numberline {17.6}Second-order Resource Activator}{105}{section.17.6}
+\contentsline {chapter}{\numberline {18}\spacedlowsmallcaps {Related Implementations}}{107}{chapter.18}
+\contentsline {section}{\numberline {18.1}HACKER}{107}{section.18.1}
+\contentsline {section}{\numberline {18.2}EM-ONE}{107}{section.18.2}
+\contentsline {part}{\uppercase {iv}\hspace {1em}\spacedlowsmallcaps {Conclusion}}{109}{part.4}
+\contentsline {chapter}{\numberline {19}\spacedlowsmallcaps {Evaluation}}{111}{chapter.19}
+\contentsline {section}{\numberline {19.1}Streaming Constant-Time Symbolization}{111}{section.19.1}
+\contentsline {chapter}{\numberline {20}\spacedlowsmallcaps {Future}}{113}{chapter.20}
+\contentsline {section}{\numberline {20.1}Propogating Knowledge Dependencies}{113}{section.20.1}
+\contentsline {section}{\numberline {20.2}Self Reflection}{113}{section.20.2}
+\contentsline {section}{\numberline {20.3}Circular Objects}{114}{section.20.3}
+\contentsline {section}{\numberline {20.4}Body and World}{114}{section.20.4}
+\contentsline {section}{\numberline {20.5}$m^\text {th}$-Stratum Self Reflection}{115}{section.20.5}
+\contentsline {section}{\numberline {20.6}Imprimers}{116}{section.20.6}
+\contentsline {part}{\uppercase {v}\hspace {1em}\spacedlowsmallcaps {Appendix}}{119}{part.5}
+\contentsline {chapter}{\numberline {A}\spacedlowsmallcaps {Science}}{121}{appendix.A}
+\contentsline {section}{\numberline {A.1}Object and Subject}{121}{section.A.1}
+\contentsline {section}{\numberline {A.2}Body and World}{122}{section.A.2}
+\contentsline {section}{\numberline {A.3}The Dynamic as ``Out There''}{122}{section.A.3}
+\contentsline {section}{\numberline {A.4}Physics}{123}{section.A.4}
+\contentsline {section}{\numberline {A.5}Neuroscience}{124}{section.A.5}
+\contentsline {section}{\numberline {A.6}Neural Networks}{124}{section.A.6}
+\contentsline {section}{\numberline {A.7}Computational Neural Networks}{125}{section.A.7}
+\contentsline {section}{\numberline {A.8}Brain and Mind}{125}{section.A.8}
+\contentsline {chapter}{\numberline {B}\spacedlowsmallcaps {Education}}{127}{appendix.B}
+\contentsline {section}{\numberline {B.1}Skill and Understanding}{127}{section.B.1}
+\contentsline {section}{\numberline {B.2}Coaching and Teaching}{127}{section.B.2}
+\contentsline {section}{\numberline {B.3}Understanding and Mechanical Simulation}{127}{section.B.3}
+\contentsline {section}{\numberline {B.4}Education through Neuroscience}{128}{section.B.4}
+\contentsline {chapter}{\numberline {C}\spacedlowsmallcaps {The Code}}{129}{appendix.C}
+\contentsline {section}{\numberline {C.1}Open-Source Download}{129}{section.C.1}
+\contentsline {section}{\numberline {C.2}README}{129}{section.C.2}
+\contentsline {section}{\numberline {C.3}File Listing}{130}{section.C.3}
+\vspace {\beforebibskip }
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{145}{dummy.4}
+\contentsline {paragraph}{note:}{147}{appendix*.48}

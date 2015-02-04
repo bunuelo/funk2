@@ -1,0 +1,97 @@
+digraph G {
+
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+        
+
+    // counterfactual_transframe_1
+    
+    counterfactual_transframe_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Counterfactual-}}}\\\text{\huge{\tt{Transframe}}}\end{array}$"];
+    
+
+    // counterfactual_transframe_2
+    
+    counterfactual_transframe_2 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Counterfactual-}}}\\\text{\huge{\tt{Transframe}}}\end{array}$"];
+    
+
+    // counterfactual_transframe_3
+    
+    //counterfactual_transframe_3 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Counterfactual-}}}\\\text{\huge{\tt{Transframe}}}\end{array}$"];
+    
+    // resource_1^*
+
+    resource_1 [texlbl = "{\huge{\tt{Resource*}}}"];
+    
+    // activation_operator_1
+    
+    activation_operator_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Activation-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    activation_operator_1_resource_counterfactual_transframe_1 [shape=box,style=filled,label="{\huge{\tt{counterfactual-transframe}}}"];
+    activation_operator_1 -> activation_operator_1_resource_counterfactual_transframe_1 [arrowhead=none];
+    activation_operator_1_resource_counterfactual_transframe_1 -> counterfactual_transframe_1 [style="-triangle 45"];
+    
+    // activation_operator_2
+    
+    activation_operator_2 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Activation-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    activation_operator_2_resource_counterfactual_transframe_2 [shape=box,style=filled,label="{\huge{\tt{counterfactual-transframe}}}"];
+    activation_operator_2 -> activation_operator_2_resource_counterfactual_transframe_2 [arrowhead=none];
+    activation_operator_2_resource_counterfactual_transframe_2 -> counterfactual_transframe_2 [style="-triangle 45"];
+    
+    // suppression_operator_1
+    
+    suppression_operator_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Supression-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    suppression_operator_1_resource_resource_1 [shape=box,style=filled,label="{\huge{\tt{resource}}}"];
+    suppression_operator_1 -> suppression_operator_1_resource_resource_1 [arrowhead=none];
+    suppression_operator_1_resource_resource_1 -> resource_1 [style="-triangle 45"];
+    
+
+    // parallel_operator_1
+    
+    parallel_operator_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Parallel-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    parallel_operator_1_operator_activation_operator_1 [shape=box,style=filled,label="{\huge{\tt{operator}}}"];
+    parallel_operator_1 -> parallel_operator_1_operator_activation_operator_1 [arrowhead=none];
+    parallel_operator_1_operator_activation_operator_1 -> activation_operator_1 [style="-triangle 45"];
+    
+    parallel_operator_1_operator_suppression_operator_1 [shape=box,style=filled,label="{\huge{\tt{operator}}}"];
+    parallel_operator_1 -> parallel_operator_1_operator_suppression_operator_1 [arrowhead=none];
+    parallel_operator_1_operator_suppression_operator_1 -> suppression_operator_1 [style="-triangle 45"];
+    
+    // sequence_operator_1
+    
+    sequence_operator_1 [texlbl = "$\begin{array}{c}\text{\huge{\tt{Sequence-}}}\\\text{\huge{\tt{Operator}}}\end{array}$"];
+    
+    sequence_operator_1_first_operator_parallel_operator_1 [shape=box,style=filled,label="{\huge{\tt{first-operator}}}"];
+    sequence_operator_1 -> sequence_operator_1_first_operator_parallel_operator_1 [arrowhead=none];
+    sequence_operator_1_first_operator_parallel_operator_1 -> parallel_operator_1 [style="-triangle 45"];
+    
+    sequence_operator_1_next_operator_activation_operator_2 [shape=box,style=filled,label="{\huge{\tt{next-operator}}}"];
+    sequence_operator_1 -> sequence_operator_1_next_operator_activation_operator_2 [arrowhead=none];
+    sequence_operator_1_next_operator_activation_operator_2 -> activation_operator_2 [style="-triangle 45"];
+    
+    // plan_1
+    
+    plan_1 [texlbl = "{\huge{\tt{Plan}}}"];
+    
+    plan_1_start_operator_sequence_operator_1 [shape=box,style=filled,label="{\huge{\tt{start-operator}}}"];
+    plan_1 -> plan_1_start_operator_sequence_operator_1 [arrowhead=none];
+    plan_1_start_operator_sequence_operator_1 -> sequence_operator_1 [style="-triangle 45"];
+    
+    // reflective^1
+    
+    reflective_1 [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    reflective_1_plan_plan_1 [shape=box,style=filled,label="{\huge{\tt{plan}}}"];
+    reflective_1 -> reflective_1_plan_plan_1 [arrowhead=none];
+    reflective_1_plan_plan_1 -> plan_1 [style="-triangle 45"];
+    
+    
+  }
+}

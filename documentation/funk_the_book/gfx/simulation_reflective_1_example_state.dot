@@ -1,0 +1,131 @@
+digraph G {
+
+  //subgraph cluster_0 {
+  //  label = "{\\huge{The $\\text{Reflective}^0$ Layer}}";
+  //  //labelloc = "b";
+  //  color=black;
+  //  
+  //  // reflective^0
+  //  node [fillcolor = white, color = "#000000", style = filled];
+  //  edge [color = "#000000"];
+  //  
+  //  physical_gripper [texlbl = "{\huge{\tt{Gripper}}}"];
+  //  physical_block   [texlbl = "{\huge{\tt{Block}}}"];
+  //  physical_table   [texlbl = "{\huge{\tt{Table}}}"];
+  //  
+  //  physical_gripper_being_above_physical_table [shape=box,label="{\huge{\tt{being-above}}}"];
+  //  physical_gripper -> physical_gripper_being_above_physical_table [arrowhead=none];
+  //  physical_gripper_being_above_physical_table -> physical_table [style="-triangle 45"];
+  //  
+  //  physical_block_sitting_on_physical_table [shape=box,style=filled,label="{\huge{\tt{sitting-on}}}"];
+  //  physical_block -> physical_block_sitting_on_physical_table [arrowhead=none];
+  //  physical_block_sitting_on_physical_table -> physical_table [style="-triangle 45"];
+  //}
+  
+  subgraph cluster_1 {
+    label = "{\\huge{The $\\text{Reflective}^1$ Layer}}";
+    labelloc = "t";
+    color=blue
+    
+    // reflective
+    node [fillcolor = white, color = "#0000CC", style = filled];
+    edge [color = "#0000CC"];
+    
+    v_1 [texlbl = "{\huge{\tt{Node}}}"];
+    v_2 [texlbl = "{\huge{\tt{Node}}}"];
+    v_3 [texlbl = "{\huge{\tt{Node}}}"];
+    
+    reflective1_gripper [texlbl = "{\huge{\tt{Gripper}}}"];
+    reflective1_block   [texlbl = "{\huge{\tt{Block}}}"];
+    reflective1_table   [texlbl = "{\huge{\tt{Table}}}"];
+    
+    v_1_label_reflective1_gripper [shape=box,label="{\huge{\tt{label}}}"];
+    v_1 -> v_1_label_reflective1_gripper [arrowhead=none];
+    v_1_label_reflective1_gripper -> reflective1_gripper [style="-triangle 45"];
+    
+    v_2_label_reflective1_block [shape=box,label="{\huge{\tt{label}}}"];
+    v_2 -> v_2_label_reflective1_block [arrowhead=none];
+    v_2_label_reflective1_block -> reflective1_block [style="-triangle 45"];
+    
+    v_3_label_reflective1_table [shape=box,label="{\huge{\tt{label}}}"];
+    v_3 -> v_3_label_reflective1_table [arrowhead=none];
+    v_3_label_reflective1_table -> reflective1_table [style="-triangle 45"];
+    
+    //v_1 -> physical_gripper [style="-triangle 45,dashed",color=red]
+    //v_2 -> physical_block   [style="-triangle 45,dashed",color=red]
+    //v_3 -> physical_table   [style="-triangle 45,dashed",color=red]
+    
+    
+    being_above [texlbl = "{\huge{\tt{being-above}}}"];
+    sitting_on  [texlbl = "{\huge{\tt{sitting-on}}}"];
+    
+    reflective [texlbl = "{\huge{\tt{Reflective}}}"];
+    
+    x_1 [texlbl = "{\huge{\tt{Symbol*}}}"];
+    
+    reflective_symbol_x_1 [shape=box,style=filled,label="{\huge{\tt{symbol}}}",nodesep="0.02"];
+    reflective -> reflective_symbol_x_1 [arrowhead=none];
+    reflective_symbol_x_1 -> x_1 [style="-triangle 45"];
+    
+    // node references
+    
+    x_1_node_v_1 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep="0.02"];
+    x_1 -> x_1_node_v_1 [arrowhead=none];
+    x_1_node_v_1 -> v_1 [style="-triangle 45"];
+    
+    x_1_node_v_2 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
+    x_1 -> x_1_node_v_2 [arrowhead=none];
+    x_1_node_v_2 -> v_2 [style="-triangle 45"];
+    
+    x_1_node_v_3 [shape=box,style=filled,label="{\huge{\tt{node}}}",nodesep=0.02];
+    x_1 -> x_1_node_v_3 [arrowhead=none];
+    x_1_node_v_3 -> v_3 [style="-triangle 45"];
+    
+    // x_1_edge_1: Block-1 sitting-on Table-1
+    
+    x_1_edge_1 [texlbl = "{\huge{\tt{Edge}}}"];
+    
+    x_1_edge_x_1_edge_1 [shape=box,style=filled,label="{\huge{\tt{edge}}}"];
+    x_1 -> x_1_edge_x_1_edge_1 [arrowhead=none];
+    x_1_edge_x_1_edge_1 -> x_1_edge_1 [style="-triangle 45"];
+        
+    x_1_edge_1_tail_v_2 [shape=box,style=filled,label="{\huge{\tt{tail}}}"];
+    x_1_edge_1 -> x_1_edge_1_tail_v_2 [arrowhead=none];
+    x_1_edge_1_tail_v_2 -> v_2 [style="-triangle 45"];
+        
+    x_1_edge_1_head_v_3 [shape=box,style=filled,label="{\huge{\tt{head}}}"];
+    x_1_edge_1 -> x_1_edge_1_head_v_3 [arrowhead=none];
+    x_1_edge_1_head_v_3 -> v_3 [style="-triangle 45"];
+        
+    x_1_edge_1_label_v_3 [shape=box,style=filled,label="{\huge{\tt{label}}}"];
+    x_1_edge_1 -> x_1_edge_1_label_v_3 [arrowhead=none];
+    x_1_edge_1_label_v_3 -> sitting_on [style="-triangle 45"];
+        
+    //x_1_edge_1 -> physical_block_sitting_on_physical_table [style="-triangle 45,dashed",color=red]
+
+
+    // x_1_edge_2: Gripper-1 being-above Table-1
+    
+    x_1_edge_2 [texlbl = "{\huge{\tt{Edge}}}"];
+    
+    x_1_edge_x_1_edge_2 [shape=box,style=filled,label="{\huge{\tt{edge}}}"];
+    x_1 -> x_1_edge_x_1_edge_2 [arrowhead=none];
+    x_1_edge_x_1_edge_2 -> x_1_edge_2 [style="-triangle 45"];
+        
+    x_1_edge_2_tail_block_2 [shape=box,style=filled,label="{\huge{\tt{tail}}}"];
+    x_1_edge_2 -> x_1_edge_2_tail_block_2 [arrowhead=none];
+    x_1_edge_2_tail_block_2 -> v_1 [style="-triangle 45"];
+        
+    x_1_edge_2_head_v_3 [shape=box,style=filled,label="{\huge{\tt{head}}}"];
+    x_1_edge_2 -> x_1_edge_2_head_v_3 [arrowhead=none];
+    x_1_edge_2_head_v_3 -> v_3 [style="-triangle 45"];
+    
+    x_1_edge_2_label_v_3 [shape=box,style=filled,label="{\huge{\tt{label}}}"];
+    x_1_edge_2 -> x_1_edge_2_label_v_3 [arrowhead=none];
+    x_1_edge_2_label_v_3 -> being_above [style="-triangle 45"];
+        
+    //x_1_edge_2 -> physical_gripper_being_above_physical_table [style="-triangle 45,dashed",color=red]
+
+    
+  }
+}

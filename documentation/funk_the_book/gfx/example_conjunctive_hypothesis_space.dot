@@ -1,0 +1,56 @@
+digraph G {
+
+  node [fillcolor = white, color = "#000000", style = filled, width=0.5, height=0.5];
+  edge [color = "#000000"];
+        
+  nil [texlbl = "\emph{True}"];
+  A [texlbl = "$A$"];
+  B [texlbl = "$B$"];
+  C [texlbl = "$C$"];
+  D [texlbl = "$D$"];
+  AB [texlbl = "$A \wedge B$"];
+  AC [texlbl = "$A \wedge C$"];
+  AD [texlbl = "$A \wedge D$"];
+  BC [texlbl = "$B \wedge C$"];
+  BD [texlbl = "$B \wedge D$"];
+  CD [texlbl = "$C \wedge D$"];
+  ABC [texlbl = "$A \wedge B \wedge C$"];
+  ABD [texlbl = "$A \wedge B \wedge D$"];
+  ACD [texlbl = "$A \wedge C \wedge D$"];
+  BCD [texlbl = "$B \wedge C \wedge D$"];
+  ABCD [texlbl = "$A \wedge B \wedge C \wedge D$"];
+  
+  nil -> A [style="-triangle 45"];
+  nil -> B [style="-triangle 45"];
+  nil -> C [style="-triangle 45"];
+  nil -> D [style="-triangle 45"];
+  A -> AB [style="-triangle 45"];
+  A -> AC [style="-triangle 45"];
+  A -> AD [style="-triangle 45"];
+  B -> AB [style="-triangle 45"];
+  B -> BC [style="-triangle 45"];
+  B -> BD [style="-triangle 45"];
+  C -> AC [style="-triangle 45"];
+  C -> BC [style="-triangle 45"];
+  C -> CD [style="-triangle 45"];
+  D -> AD [style="-triangle 45"];
+  D -> BD [style="-triangle 45"];
+  D -> CD [style="-triangle 45"];
+  AB -> ABC [style="-triangle 45"];
+  AB -> ABD [style="-triangle 45"];
+  AC -> ABC [style="-triangle 45"];
+  AC -> ACD [style="-triangle 45"];
+  AD -> ABD [style="-triangle 45"];
+  AD -> ACD [style="-triangle 45"];
+  BC -> ABC [style="-triangle 45"];
+  BC -> BCD [style="-triangle 45"];
+  BD -> ABD [style="-triangle 45"];
+  BD -> BCD [style="-triangle 45"];
+  CD -> ACD [style="-triangle 45"];
+  CD -> BCD [style="-triangle 45"];
+  ABC -> ABCD [style="-triangle 45"];
+  ABD -> ABCD [style="-triangle 45"];
+  ACD -> ABCD [style="-triangle 45"];
+  BCD -> ABCD [style="-triangle 45"];
+
+}

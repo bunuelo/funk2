@@ -1,0 +1,73 @@
+This is BibTeX, Version 0.99d (TeX Live 2013/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: funkthebook.aux
+A level-1 auxiliary file: frontbackmatter/titlepage.aux
+A level-1 auxiliary file: frontbackmatter/titleback.aux
+A level-1 auxiliary file: frontbackmatter/contents.aux
+A level-1 auxiliary file: chapters/modelling_the_continuously_dynamic.aux
+A level-1 auxiliary file: chapters/learning_causal_hypotheses.aux
+A level-1 auxiliary file: chapters/layers_of_reflective_thinking.aux
+A level-1 auxiliary file: chapters/learning_from_success_and_failure.aux
+A level-1 auxiliary file: chapters/problematic_interpretations.aux
+A level-1 auxiliary file: chapters/introducing_simulation.aux
+A level-1 auxiliary file: chapters/graph_notation.aux
+A level-1 auxiliary file: chapters/symbolic_representation.aux
+A level-1 auxiliary file: chapters/grounded_factual_knowledge.aux
+A level-1 auxiliary file: chapters/hypotheses_and_counterfactual_knowledge.aux
+A level-1 auxiliary file: chapters/the_planning_machine.aux
+A level-1 auxiliary file: chapters/introducing_computation.aux
+A level-1 auxiliary file: chapters/computational_activities_in_duration.aux
+A level-1 auxiliary file: chapters/causally_reflective_procedural_tracing.aux
+A level-1 auxiliary file: chapters/the_mind_monitor_application.aux
+A level-1 auxiliary file: chapters/science.aux
+A level-1 auxiliary file: chapters/education.aux
+A level-1 auxiliary file: chapters/the_code.aux
+A level-1 auxiliary file: frontbackmatter/bibliography.aux
+The style file: agsm.bst
+A level-1 auxiliary file: frontbackmatter/colophon.aux
+A level-1 auxiliary file: frontbackmatter/declaration.aux
+Database file #1: bibliography.bib
+Warning--empty institution in dennett:2009
+Warning--empty institution in magritte:1919
+You've used 15 entries,
+            2909 wiz_defined-function locations,
+            739 strings with 7256 characters,
+and the built_in function-call counts, 32514 in all, are:
+= -- 5032
+> -- 433
+< -- 0
++ -- 2230
+- -- 127
+* -- 2506
+:= -- 7126
+add.period$ -- 15
+call.type$ -- 15
+change.case$ -- 208
+chr.to.int$ -- 15
+cite$ -- 17
+duplicate$ -- 217
+empty$ -- 415
+format.name$ -- 169
+if$ -- 5727
+int.to.chr$ -- 5
+int.to.str$ -- 0
+missing$ -- 11
+newline$ -- 48
+num.names$ -- 152
+pop$ -- 98
+preamble$ -- 1
+purify$ -- 225
+quote$ -- 0
+skip$ -- 175
+stack$ -- 0
+substring$ -- 6753
+swap$ -- 21
+text.length$ -- 210
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 56
+warning$ -- 2
+while$ -- 320
+width$ -- 0
+write$ -- 185
+(There were 2 warnings)

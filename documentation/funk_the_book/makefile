@@ -1,8 +1,8 @@
-default: phdthesis.pdf
+default: funkthebook.pdf
 
-phdthesis.pdf: \
+funkthebook.pdf: \
   makefile \
-  phdthesis.tex \
+  funkthebook.tex \
   bibliography.bib \
   frontbackmatter/abstract.tex \
   frontbackmatter/acknowledgments.tex \
@@ -119,10 +119,10 @@ phdthesis.pdf: \
   gfx/transframe.pdf \
   gfx/fibermon_many_fibers.pdf \
   gfx/magritte_pipe.pdf
-	pdflatex phdthesis
-	bibtex   phdthesis
-	pdflatex phdthesis
-	pdflatex phdthesis
+	pdflatex funkthebook
+	bibtex   funkthebook
+	pdflatex funkthebook
+	pdflatex funkthebook
 
 %.pdf: %.neato makefile
 	neato $< -Tpdf > $@
@@ -144,16 +144,16 @@ phdthesis.pdf: \
 #	rm -f $<.ps
 
 clean:
-	rm -f phdthesis.pdf
+	rm -f funkthebook.pdf
 	rm -f chapters/*.aux
 	rm -f frontbackmatter/*.aux
-	rm -f phdthesis.aux
-	rm -f phdthesis.lof
-	rm -f phdthesis.log
-	rm -f phdthesis.lol
-	rm -f phdthesis.lot
-	rm -f phdthesis.out
-	rm -f phdthesis.toc
-	rm -f phdthesis.bbl
-	rm -f phdthesis.blg
+	rm -f funkthebook.aux
+	rm -f funkthebook.lof
+	rm -f funkthebook.log
+	rm -f funkthebook.lol
+	rm -f funkthebook.lot
+	rm -f funkthebook.out
+	rm -f funkthebook.toc
+	rm -f funkthebook.bbl
+	rm -f funkthebook.blg
 

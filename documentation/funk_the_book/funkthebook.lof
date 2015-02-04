@@ -1,0 +1,52 @@
+\select@language {american}
+\vspace {-10\cftbeforechapskip }
+\select@language {american}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {1}{\ignorespaces ``The Treason of Images'' (``This is not a pipe'') by \cite {magritte:1919} is an image of a pipe.}}{5}{figure.caption.3}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2}{\ignorespaces An example for simulation.\relax }}{36}{figure.caption.4}
+\contentsline {figure}{\numberline {3}{\ignorespaces A labelled graph representation of a state space.}}{38}{figure.caption.5}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4}{\ignorespaces An example of the representation for symbolic reference.}}{42}{figure.caption.6}
+\contentsline {figure}{\numberline {5}{\ignorespaces A shorthand visualization for a symbolic reference.}}{42}{figure.caption.7}
+\contentsline {figure}{\numberline {6}{\ignorespaces Example of a perceived first-order symbolic reference to the physical layer of activity.}}{43}{figure.caption.8}
+\contentsline {figure}{\numberline {7}{\ignorespaces Example of a non-perceived symbol, or symbolic memory.}}{44}{figure.caption.9}
+\contentsline {figure}{\numberline {8}{\ignorespaces Example of a second-order symbol representing first-order symbolization activity.}}{44}{figure.caption.10}
+\contentsline {figure}{\numberline {9}{\ignorespaces An example of a first-order reflective resource.}}{46}{figure.caption.11}
+\contentsline {figure}{\numberline {10}{\ignorespaces Four examples of resource activation and suppression Spatial relationships.}}{46}{figure.caption.12}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {11}{\ignorespaces Example simultaneity of positive and negative symbolic perceptions.}}{48}{figure.caption.13}
+\contentsline {figure}{\numberline {12}{\ignorespaces An example of two transitions ordering three simultaneities.}}{49}{figure.caption.14}
+\contentsline {figure}{\numberline {13}{\ignorespaces An example of a factual event transframe.}}{52}{figure.caption.15}
+\contentsline {figure}{\numberline {14}{\ignorespaces An example of a first-order reflective resource with an activation event.}}{54}{figure.caption.16}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {15}{\ignorespaces An example of a conjunctive hypothesis space.}}{56}{figure.caption.17}
+\contentsline {figure}{\numberline {16}{\ignorespaces An example of a resource activation hypothesis space.}}{58}{figure.caption.18}
+\contentsline {figure}{\numberline {17}{\ignorespaces An example of a counterfactual transframe.}}{60}{figure.caption.19}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {18}{\ignorespaces An example of a plan with four composable plan operators.}}{62}{figure.caption.20}
+\contentsline {figure}{\numberline {19}{\ignorespaces An example of a two-step plan.}}{63}{figure.caption.21}
+\contentsline {figure}{\numberline {20}{\ignorespaces An example of a planning machine.}}{64}{figure.caption.22}
+\contentsline {figure}{\numberline {21}{\ignorespaces An example of a one-step plan with a factual expectation failure.}}{68}{figure.caption.23}
+\contentsline {figure}{\numberline {22}{\ignorespaces An example of a second-order counterfactual transframe predicting a plan execution failure.}}{70}{figure.caption.24}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {23}{\ignorespaces An example of a global environment with concurrent processors and parallel fibers.}}{77}{figure.caption.25}
+\contentsline {figure}{\numberline {24}{\ignorespaces FiberMon application monitoring many fibers}}{80}{figure.caption.26}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {25}{\ignorespaces The implemented mind monitoring application, MindMon.}}{88}{figure.caption.27}
+\contentsline {figure}{\numberline {26}{\ignorespaces The implemented physical knowledge-base.}}{89}{figure.caption.28}
+\contentsline {figure}{\numberline {27}{\ignorespaces The implemented semantic event knowledge base.}}{90}{figure.caption.29}
+\contentsline {figure}{\numberline {28}{\ignorespaces The implemented first-order resource activator.}}{90}{figure.caption.30}
+\contentsline {figure}{\numberline {29}{\ignorespaces The implemented first-order planning machine knowledge.}}{90}{figure.caption.31}
+\contentsline {figure}{\numberline {30}{\ignorespaces The implemented first-order plan activator.}}{91}{figure.caption.32}
+\contentsline {figure}{\numberline {31}{\ignorespaces The implemented second-order resource activator.}}{92}{figure.caption.33}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }

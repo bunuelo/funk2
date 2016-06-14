@@ -46,7 +46,7 @@ void libavcodec__video_encode_example(const char *filename) {
   uint8_t *outbuf, *picture_buf;
   
   // find the mpeg1 video encoder
-  codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+  codec = avcodec_find_encoder(AV_CODEC_ID_MPEG1VIDEO);
   if (!codec) {
     printf("codec not found\n");
     return;
@@ -64,7 +64,7 @@ void libavcodec__video_encode_example(const char *filename) {
   c->time_base= (AVRational){1,25};
   c->gop_size = 10; // emit one intra frame every ten frames
   c->max_b_frames=1;
-  c->pix_fmt = PIX_FMT_YUV420P;
+  c->pix_fmt = AV_PIX_FMT_YUV420P;
   
   // open it
   if (avcodec_open(c, codec) < 0) {
@@ -161,7 +161,7 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
   this->av_codec_context = NULL;
   
   // find the mpeg1 video encoder
-  this->av_codec = avcodec_find_encoder(CODEC_ID_MPEG1VIDEO);
+  this->av_codec = avcodec_find_encoder(AV_CODEC_ID_MPEG1VIDEO);
   if (this->av_codec == NULL) {
     printf("codec not found\n");
     return boolean__false;
@@ -176,7 +176,7 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
   this->av_codec_context->time_base.den = frames_per_second;
   this->av_codec_context->gop_size      = 10; // emit one intra frame every ten frames
   this->av_codec_context->max_b_frames  = 1;
-  this->av_codec_context->pix_fmt       = PIX_FMT_YUV420P;
+  this->av_codec_context->pix_fmt       = AV_PIX_FMT_YUV420P;
   this->av_codec_context->qmin          = 3;
   
   if (avcodec_open(this->av_codec_context, this->av_codec) < 0) {
@@ -191,10 +191,10 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
       return boolean__false;
     }
     
-    this->rgb_picture_frame__size   = avpicture_get_size(PIX_FMT_RGB32, width, height);
+    this->rgb_picture_frame__size   = avpicture_get_size(AV_PIX_FMT_RGB32, width, height);
     this->rgb_picture_frame__buffer = (u8*)from_ptr(f2__malloc(this->rgb_picture_frame__size));
     
-    avpicture_fill((AVPicture*)this->rgb_picture_frame, this->rgb_picture_frame__buffer, PIX_FMT_RGB32, width, height);
+    avpicture_fill((AVPicture*)this->rgb_picture_frame, this->rgb_picture_frame__buffer, AV_PIX_FMT_RGB32, width, height);
   }
   
   {    
@@ -204,13 +204,13 @@ boolean_t funk2_movie_context__init(funk2_movie_context_t* this, s64 width, s64 
       return boolean__false;
     }
     
-    this->yuv_picture_frame__size   = avpicture_get_size(PIX_FMT_YUV420P, width, height);
+    this->yuv_picture_frame__size   = avpicture_get_size(AV_PIX_FMT_YUV420P, width, height);
     this->yuv_picture_frame__buffer = (u8*)from_ptr(f2__malloc(this->yuv_picture_frame__size));
     
-    avpicture_fill((AVPicture*)this->yuv_picture_frame, this->yuv_picture_frame__buffer, PIX_FMT_YUV420P, width, height);
+    avpicture_fill((AVPicture*)this->yuv_picture_frame, this->yuv_picture_frame__buffer, AV_PIX_FMT_YUV420P, width, height);
   }
   
-  this->image_convert_context = sws_getContext(width, height, PIX_FMT_RGB32, width, height, PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
+  this->image_convert_context = sws_getContext(width, height, AV_PIX_FMT_RGB32, width, height, AV_PIX_FMT_YUV420P, SWS_BICUBIC, NULL, NULL, NULL);
   
   this->out_buffer_size = bit_rate;
   this->out_buffer      = (u8*)from_ptr(f2__malloc(this->out_buffer_size));
